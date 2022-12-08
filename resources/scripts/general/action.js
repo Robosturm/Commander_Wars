@@ -94,4 +94,18 @@ var ACTION =
     {
         return "";
     },
+
+    isEmptyFieldAndHasNotMoved : function(action, unit, actionTargetField, targetField, map)
+    {
+        if ((unit.getHasMoved() === false) &&
+            (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y))) ||
+            (action.getMovementTarget() === null && (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) > 0)))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    },
 };

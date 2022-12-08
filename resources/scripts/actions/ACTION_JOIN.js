@@ -6,16 +6,11 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
 		var targetUnit = action.getMovementTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
+        if (unit.getHasMoved() === false &&
+            unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) > 0 &&
+            targetUnit !== null
+            (actionTargetField.x !== targetField.x || actionTargetField.y !== targetField.y))
         {
-            return false;
-        }
-        if (((actionTargetField.x !== targetField.x) || (actionTargetField.y !== targetField.y)) &&
-            (targetUnit !== null))
-        {
-
-
             if ((targetUnit.getOwner() === unit.getOwner()) &&
                 (targetUnit.getUnitID() === unit.getUnitID()) &&
                 // join is only allowed with units that don't have anything loaded

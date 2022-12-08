@@ -15,10 +15,32 @@ DamageTablePage::DamageTablePage()
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     auto unitIds = pUnitSpriteManager->getUnitsSorted();
     const qint32 tableSize = unitIds.size() + 2;
-    const qint32 itemStart = 10;
+    const qint32 itemStart = 40;
     const QColor color(200, 200, 200, 50);
+    const float scale = 0.5f;
+    const qint32 itemStartCount = 2;
+    const qint32 tableWidth = entryWidth * tableSize;
+    const qint32 tableHeight = entryHeight * tableSize;
+    const qint32 totalWidth = tableWidth * scale + itemStart * itemStartCount;
+    const qint32 totalHeight = tableHeight * scale + itemStart * itemStartCount;
+
 
     oxygine::spActor pActor = oxygine::spActor::create();
+
+    spLabel pText = spLabel::create(tableWidth + itemStart * itemStartCount);
+    oxygine::TextStyle infoStyle(FontManager::getMainFont24());
+    infoStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    pText->setStyle(infoStyle);
+    pText->setHtmlText(tr("Defender"));
+    pText->setPosition(0, 0);
+    pActor->addChild(pText);
+
+    pText = spLabel::create(tableHeight + itemStart * itemStartCount);
+    pText->setStyle(infoStyle);
+    pText->setHtmlText(tr("Attacker"));
+    pText->setPosition(0, tableHeight + itemStart * itemStartCount);
+    pText->setRotationDegrees(-90);
+    pActor->addChild(pText);
 
     auto pPlayer = spPlayer::create(nullptr);
     pPlayer->init();
@@ -64,7 +86,7 @@ DamageTablePage::DamageTablePage()
         spUnit pUnit = spUnit::create(unitId, pPlayer.get(), false, nullptr);
         matchups.append(pUnit);
     }
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("damageTable20"));
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
 
@@ -121,10 +143,22 @@ DamageTablePage::DamageTablePage()
         pActor->addChild(pUnitX2);
     }
 
-    const float scale = 0.5f;
+    pText = spLabel::create(tableWidth + itemStart * itemStartCount);
+    pText->setStyle(infoStyle);
+    pText->setHtmlText(tr("Defender"));
+    pText->setPosition(0, tableHeight + itemStart * itemStartCount);
+    pActor->addChild(pText);
+
+    pText = spLabel::create(tableHeight + itemStart * itemStartCount);
+    pText->setStyle(infoStyle);
+    pText->setHtmlText(tr("Attacker"));
+    pText->setPosition(tableWidth + itemStart * itemStartCount, 0);
+    pText->setRotationDegrees(90);
+    pActor->addChild(pText);
+
     pActor->setScale(scale);
     m_pPanel->addItem(pActor);
 
-    m_pPanel->setContentWidth(entryWidth * tableSize * scale + 50);
-    m_pPanel->setContentHeigth(entryHeight * tableSize * scale + 50);
+    m_pPanel->setContentWidth(totalWidth);
+    m_pPanel->setContentHeigth(totalHeight);
 }

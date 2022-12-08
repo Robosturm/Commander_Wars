@@ -12,10 +12,8 @@ var Constructor = function()
         var unitLimit = map.getGameRules().getUnitLimit();
         var unitCount = unit.getOwner().getUnitCount();
 
-
         if ((unit.getHasMoved() === true) ||
             (costs > funds) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0) ||
             (!unit.hasAmmo2()))
         {
             return false;

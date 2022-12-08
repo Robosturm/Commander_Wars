@@ -5,15 +5,11 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-                (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
         var ret = false;
         // are we allowed to attack from this field?
-        if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
-            ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
+        if (unit.getHasMoved() === false &&
+           ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
+           ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField) && (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) > 0)))
         {
             var minRange = unit.getMinRange(actionTargetField);
             var fields = globals.getCircle(minRange, unit.getMaxRange(actionTargetField));

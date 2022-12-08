@@ -5,14 +5,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-        if ((((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
-            (action.getMovementTarget() === null)) &&
-             unit.hasAmmo1())
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map) &&
+            unit.hasAmmo1())
         {
             var terrain = map.getTerrain(actionTargetField.x, actionTargetField.y);
             if (terrain.getID() === "PLAINS")

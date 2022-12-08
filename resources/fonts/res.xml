@@ -2,6 +2,7 @@
 <fonts>
     <font file="segoeuiBold.ttf" type="main16" pixelSize="16" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
     <font file="segoeuiBold.ttf" type="main24" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
+    <font file="segoeuiBold.ttf" type="damageTable20" pixelSize="20" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
     <font file="segoeuiBold.ttf" type="mainBlack24" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="true" mainColor="#000000" />
     <font file="segoeuiBold.ttf" type="main32" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
     <font file="segoeuiBold.ttf" type="main48" pixelSize="48" offsetX="0" offsetY="0" bold="true" antialiasing="true" />

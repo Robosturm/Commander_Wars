@@ -164,13 +164,13 @@
 <context>
     <name>ACTION_BUILD_TEMP_AIRPORT</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="28"/>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="83"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="22"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="77"/>
         <source>Build Airport</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="87"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="81"/>
         <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -178,13 +178,13 @@
 <context>
     <name>ACTION_BUILD_TEMP_HARBOUR</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="28"/>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="85"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="22"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="79"/>
         <source>Build Harbour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="89"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="83"/>
         <source>Orders an apc to build a harbour on a beach which can be used to resupply sea units. The harbour will reduce the material of the apc by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -210,17 +210,17 @@
 <context>
     <name>ACTION_BUILD_WATERPLANE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="54"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="52"/>
         <source>Build waterplane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="90"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="88"/>
         <source>Build Waterplane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="94"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="92"/>
         <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -251,13 +251,13 @@
 <context>
     <name>ACTION_CAPTURE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="59"/>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="142"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="56"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="139"/>
         <source>Capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="146"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="143"/>
         <source>Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -265,13 +265,13 @@
 <context>
     <name>ACTION_CO_UNIT_0</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="32"/>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="50"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="31"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="49"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="54"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="53"/>
         <source>Deploys your first co onto the given unit. All units inside the co range of this unit will get the buff of your first co.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -279,13 +279,13 @@
 <context>
     <name>ACTION_CO_UNIT_1</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="32"/>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="50"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="31"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="49"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="54"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="53"/>
         <source>Deploys your second co onto the given unit. All units inside the co range of this unit will get the buff of your second co.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -343,18 +343,18 @@
 <context>
     <name>ACTION_DISABLE_MINE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="56"/>
-        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="126"/>
+        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="51"/>
+        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="121"/>
         <source>Remove mine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="91"/>
+        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="86"/>
         <source>Destroys a mine without it damaging another unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="130"/>
+        <location filename="../resources/scripts/actions/ACTION_DISABLE_MINE.js" line="125"/>
         <source>Removes an enemy mine from the map.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -376,13 +376,13 @@
 <context>
     <name>ACTION_EXPLODE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="25"/>
-        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="117"/>
+        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="19"/>
+        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="111"/>
         <source>Explode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="121"/>
+        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="115"/>
         <source>Destroys the current unit in a large explosion. The explosion will deal damage to all units around it.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -390,33 +390,33 @@
 <context>
     <name>ACTION_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="84"/>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="892"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="80"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="888"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="488"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="484"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="521"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="517"/>
         <source>Dmg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="521"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="517"/>
         <source>Min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="521"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="517"/>
         <source>Max</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="896"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="892"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -424,13 +424,13 @@
 <context>
     <name>ACTION_FLARE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="23"/>
-        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="131"/>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="21"/>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="129"/>
         <source>Flare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="135"/>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="133"/>
         <source>Fires a flare rocket at the given location. The flare rocket will reveal all terrains in an area around the target during fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -438,17 +438,17 @@
 <context>
     <name>ACTION_HOELLIUM_WAIT</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="27"/>
+        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="23"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="54"/>
+        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="50"/>
         <source>Oozium Wait</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="58"/>
+        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="54"/>
         <source>Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -560,13 +560,13 @@
 <context>
     <name>ACTION_JOIN</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="35"/>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="111"/>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="30"/>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="106"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="115"/>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="110"/>
         <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. Hp exceeding the maximum will be added in form of funds to your war funds.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -592,13 +592,13 @@
 <context>
     <name>ACTION_LOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="64"/>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="97"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="60"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="93"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="101"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="97"/>
         <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -620,13 +620,13 @@
 <context>
     <name>ACTION_MISSILE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="35"/>
-        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="139"/>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="29"/>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="133"/>
         <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="143"/>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="137"/>
         <source>Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -786,17 +786,17 @@
 <context>
     <name>ACTION_PLACE_WATERMINE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="62"/>
+        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="55"/>
         <source>Place Mine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="137"/>
+        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="130"/>
         <source>Place Watermine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="141"/>
+        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="134"/>
         <source>Places a stealthed Watermine at a given Position. The Mine automatically explodes at the start of a turn if an enemy is in explosion range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -832,13 +832,13 @@
 <context>
     <name>ACTION_STEALTH</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="25"/>
-        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="68"/>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="19"/>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="62"/>
         <source>Stealth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="72"/>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="66"/>
         <source>&lt;r&gt;Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when a unit is nearby it. In addition only units of the same Unit Type &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; Ground, Naval or Air&lt;/div&gt;&lt;r&gt; can attack it. In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -846,13 +846,13 @@
 <context>
     <name>ACTION_SUPPORTALL_CLOAK</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="17"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="91"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="16"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="90"/>
         <source>Cloak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="95"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_CLOAK.js" line="94"/>
         <source>Cloaks all own units in a 2x2 square. A cloaked unit is only visible when a unit is nearby it, but can be attacked normally.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -860,21 +860,21 @@
 <context>
     <name>ACTION_SUPPORTALL_RATION</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="59"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="176"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="53"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="170"/>
         <source>Ration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="108"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="126"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="145"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="163"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="102"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="120"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="139"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="157"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="180"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="174"/>
         <source>Refills fuel and ammo to all units surrounding this unit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -882,22 +882,22 @@
 <context>
     <name>ACTION_SUPPORTALL_RATION_MONEY</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="59"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="53"/>
         <source>Ration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="111"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="105"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="159"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="153"/>
         <source>Ration + Money</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="163"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION_MONEY.js" line="157"/>
         <source>Refills fuel and ammo to all units surrounding this unit and grants money based on the amount of resupply.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -905,22 +905,22 @@
 <context>
     <name>ACTION_SUPPORTSINGLE_FREEREPAIR</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="26"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="20"/>
         <source>Repair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="111"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="105"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="124"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="118"/>
         <source>Free repair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="128"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="122"/>
         <source>Repairs and refills the target unit. The repair costs don&apos;t have to be paid.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -928,22 +928,22 @@
 <context>
     <name>ACTION_SUPPORTSINGLE_IRON_SHIELD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="26"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="20"/>
         <source>Iron Shield</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="109"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="103"/>
         <source>DEFENSE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="122"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="116"/>
         <source>Iron shield</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="126"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="120"/>
         <source>Shields an allied unit. This highly increases the defense of the unit until the start of the next turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -951,18 +951,18 @@
 <context>
     <name>ACTION_SUPPORTSINGLE_REPAIR</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="26"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="124"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="20"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="118"/>
         <source>Repair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="111"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="105"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="128"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="122"/>
         <source>Repairs and refills the target unit. The player has to pay for the repair.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -970,22 +970,22 @@
 <context>
     <name>ACTION_SUPPORTSINGLE_SUPPLY</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="27"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="21"/>
         <source>Ration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="113"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="107"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="125"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="119"/>
         <source>Supply one unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="129"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_SUPPLY.js" line="123"/>
         <source>Refills the target unit ammo and fuel.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1098,18 +1098,18 @@
 <context>
     <name>ACTION_UNLOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="103"/>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="351"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="95"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="343"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="271"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="263"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="355"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="347"/>
         <source>Unloads loaded units. Units that have been loaded this turn can&apos;t move. Units that were loaded in previous turns can immediatly move after beeing unloaded.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1117,13 +1117,13 @@
 <context>
     <name>ACTION_UNSTEALTH</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="25"/>
-        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="68"/>
+        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="19"/>
+        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="62"/>
         <source>Unstealth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="72"/>
+        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="66"/>
         <source>Unstealths a unit and makes it visible to all enemies.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1131,13 +1131,13 @@
 <context>
     <name>ACTION_WAIT</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="25"/>
-        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="47"/>
+        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="19"/>
+        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="41"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="51"/>
+        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="45"/>
         <source>Orders a unit to wait at the current position and end all actions for this turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2311,6 +2311,21 @@
     <message>
         <location filename="../game/ui/damagecalculator.cpp" line="320"/>
         <source>Post battle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DamageTablePage</name>
+    <message>
+        <location filename="../wiki/damagetablepage.cpp" line="34"/>
+        <location filename="../wiki/damagetablepage.cpp" line="148"/>
+        <source>Defender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/damagetablepage.cpp" line="40"/>
+        <location filename="../wiki/damagetablepage.cpp" line="154"/>
+        <source>Attacker</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24995,8 +25010,8 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/powerplant.js" line="39"/>
-        <source>A power plant that when captured increases how fast the powermeter charges.</source>
+        <location filename="../resources/scripts/building/powerplant.js" line="40"/>
+        <source>A power plant that when captured increases how fast the powermeter charges by %0%.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

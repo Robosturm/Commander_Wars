@@ -919,11 +919,11 @@ namespace oxygine
         }
         rs.transform.x = static_cast<qint32>(rs.transform.x);
         rs.transform.y = static_cast<qint32>(rs.transform.y);
-        m_onScreen = onScreen(rs);
-        if (m_onScreen)
-        {
+//        m_onScreen = onScreen(rs);
+//        if (m_onScreen)
+//        {
             doRender(rs);
-        }
+//        }
 #endif
         return true;
     }

@@ -8,14 +8,10 @@ var Constructor = function ()
         var targetField = action.getTarget();
         var targetUnit = action.getMovementTarget();
         var transportTerrain = action.getMovementTerrain();
-
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-        if (((actionTargetField.x !== targetField.x) || (actionTargetField.y !== targetField.y)) &&
-            (targetUnit !== null))
+        if (unit.getHasMoved() === false &&
+            targetUnit !== null &&
+            unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) > 0 &&
+            (actionTargetField.x !== targetField.x || actionTargetField.y !== targetField.y))
         {
             if ((targetUnit.getOwner() === unit.getOwner()) &&
                 (targetUnit.getTransportUnits().indexOf(unit.getUnitID()) >= 0) &&

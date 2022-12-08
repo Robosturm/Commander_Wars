@@ -30,13 +30,16 @@ var Constructor = function()
     {
         return qsTr("Power plant");
     };
+    this.powerChargeBonus = 20;
     this.getPowerChargeBonus = function(building, map)
     {
-        return 20;
+        return POWERPLANT.powerChargeBonus;
     };
     this.getDescription = function()
     {
-        return qsTr("A power plant that when captured increases how fast the powermeter charges.");
+        var text = qsTr("A power plant that when captured increases how fast the powermeter charges by %0%.");
+        text = replaceTextArgs(text, [POWERPLANT.powerChargeBonus]);
+        return text;
     };
 
     this.getVisionHide = function(building)

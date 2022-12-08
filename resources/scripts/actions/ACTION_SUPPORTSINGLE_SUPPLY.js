@@ -5,15 +5,9 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0) ||
-             !unit.hasAmmo2())
-        {
-            return false;
-        }
-        if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null)) &&
-            (ACTION_SUPPORTSINGLE_SUPPLY.getRepairFields(action, map).length > 0))
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map) &&
+            ACTION_SUPPORTSINGLE_SUPPLY.getRepairFields(action, map).length > 0 &&
+            unit.hasAmmo2())
         {
             return true;
         }

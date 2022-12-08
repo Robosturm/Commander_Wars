@@ -6,8 +6,7 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
         var building = action.getTargetBuilding();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
+        if ((unit.getHasMoved() === true))
         {
             return false;
         }

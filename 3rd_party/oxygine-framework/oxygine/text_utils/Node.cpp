@@ -63,23 +63,13 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
             QFont font = style.font.font;
             painter.setTransform(QTransform(rs.transform.a, rs.transform.b, rs.transform.c, rs.transform.d, rs.transform.x, rs.transform.y));
-            qint32 height = 0;
-            if (m_lines.size() > 2)
-            {
-                height = m_offsets[1].y() - m_offsets[0].y();
-            }
-            float windowHeight = oxygine::Stage::getStage()->getScaledHeight() + oxygine::Actor::safetyArea;
             painter.setPen(QPen(drawColor, 0, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
             painter.setFont(font);
             for (qint32 i = 0; i < m_lines.size(); ++i)
             {
                 qint32 x = static_cast<qint32>(m_offsets[i].x() + style.font.offsetX);
                 qint32 y = static_cast<qint32>(m_offsets[i].y() + style.font.offsetY);
-                if (y + height >= -oxygine::Actor::safetyArea &&
-                    y <= windowHeight)
-                {
-                    painter.drawText(x, y, m_lines[i]);
-                }
+                painter.drawText(x, y, m_lines[i]);
             }
             drawChildren(rs, style, drawColor, painter);
 #endif
