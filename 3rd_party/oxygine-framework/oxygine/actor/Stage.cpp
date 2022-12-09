@@ -4,9 +4,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
-
-#include <QPainter>
-#include <QPainterPath>
+#include "3rd_party/oxygine-framework/oxygine/Material.h"
 
 namespace oxygine
 {

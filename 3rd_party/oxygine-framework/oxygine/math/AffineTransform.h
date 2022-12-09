@@ -42,22 +42,15 @@ namespace oxygine
             y = det * (t.b * t.x - t.a * t.y);
         }
 
-        static affineTransform& multiply(affineTransform& out, const affineTransform& t1, const affineTransform& t2)
-        {
-            out.a = t1.a * t2.a + t1.b * t2.c;
-            out.b = t1.a * t2.b + t1.b * t2.d;
-            out.c = t1.c * t2.a + t1.d * t2.c;
-            out.d = t1.c * t2.b + t1.d * t2.d;
-            out.x = t1.x * t2.a + t1.y * t2.c + t2.x;
-            out.y = t1.x * t2.b + t1.y * t2.d + t2.y;
-
-            return out;
-        }
-
         affineTransform operator * (const affineTransform& t2) const
         {
             affineTransform r;
-            multiply(r, *this, t2);
+            r.a = a * t2.a + b * t2.c;
+            r.b = a * t2.b + b * t2.d;
+            r.c = c * t2.a + d * t2.c;
+            r.d = c * t2.b + d * t2.d;
+            r.x = x * t2.a + y * t2.c + t2.x;
+            r.y = x * t2.b + y * t2.d + t2.y;
             return r;
         }
 
@@ -67,12 +60,12 @@ namespace oxygine
                        a * v.x + c * v.y + x,
                        b * v.x + d * v.y + y);
         }
-        T a{1};
-        T b{0};
-        T c{0};
-        T d{1};
-        T x{0};
-        T y{0};
+        T a{1}; // m11
+        T b{0}; // m12
+        T c{0}; // m21
+        T d{1}; // m22
+        T x{0}; // m31
+        T y{0}; // m32
     };
 
     using AffineTransform = AffineTransformT<float>;

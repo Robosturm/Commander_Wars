@@ -892,24 +892,6 @@ namespace oxygine
         return true;
     }
 
-    bool Actor::onScreen(RenderState& rs)
-    {
-#ifdef GRAPHICSUPPORT
-        float width = oxygine::Stage::getStage()->getScaledWidth() + safetyArea;
-        float height = oxygine::Stage::getStage()->getScaledHeight() + safetyArea;
-        auto scaledWidth = m_size.x * rs.transform.a;
-        auto scaledHeight = m_size.y * rs.transform.d;
-        if (rs.transform.x > width ||
-            rs.transform.y > height ||
-            rs.transform.x + scaledWidth < -safetyArea ||
-            rs.transform.y + scaledHeight < -safetyArea)
-        {
-            return false;
-        }
-#endif
-        return true;
-    }
-
     bool Actor::internalRender(RenderState& rs, const RenderState& parentRS)
     {
 #ifdef GRAPHICSUPPORT
@@ -917,13 +899,7 @@ namespace oxygine
         {
             return false;
         }
-        rs.transform.x = static_cast<qint32>(rs.transform.x);
-        rs.transform.y = static_cast<qint32>(rs.transform.y);
-//        m_onScreen = onScreen(rs);
-//        if (m_onScreen)
-//        {
-            doRender(rs);
-//        }
+        doRender(rs);
 #endif
         return true;
     }

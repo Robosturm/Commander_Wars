@@ -1,6 +1,9 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/Material.h"
+#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
+#include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "coreengine/globalutils.h"
 #include <functional>
 #include <vector>
 
@@ -104,26 +107,26 @@ namespace oxygine
             p4 = transform.transform(p4);
 
             vt.z = 0;
-            vt.x = p1.x;
-            vt.y = p1.y;
+            vt.x = static_cast<qint32>(p1.x);
+            vt.y = static_cast<qint32>(p1.y);
             vt.u = u;
             vt.v = v;
             quad[0] = vt;
 
-            vt.x = p2.x;
-            vt.y = p2.y;
+            vt.x = static_cast<qint32>(p2.x);
+            vt.y = GlobalUtils::roundUp(p2.y);
             vt.u = u;
             vt.v = v + dv;
             quad[1] = vt;
 
-            vt.x = p3.x;
-            vt.y = p3.y;
+            vt.x = GlobalUtils::roundUp(p3.x);
+            vt.y = static_cast<qint32>(p3.y);
             vt.u = u + du;
             vt.v = v;
             quad[2] = vt;
 
-            vt.x = p4.x;
-            vt.y = p4.y;
+            vt.x = GlobalUtils::roundUp(p4.x);
+            vt.y = GlobalUtils::roundUp(p4.y);
             vt.u = u + du;
             vt.v = v + dv;
             quad[3] = vt;

@@ -414,7 +414,6 @@ namespace oxygine
         virtual void sizeChanged(const Vector2& size);
         spTween __addTween(spTween tween, bool rel);
         bool prepareRender(RenderState& rs, const RenderState& parentRS);
-        bool onScreen(RenderState& rs);
         void markTranformDirty();
         void updateTransform() const;
         void internalUpdate(const UpdateState& us);
