@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Gear Head");
+        return qsTr("Mechanic");
     };
 };
 
