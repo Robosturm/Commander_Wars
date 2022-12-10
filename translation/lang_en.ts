@@ -17560,27 +17560,27 @@ Units loose firepower but the firepower is unaffected by loss of HP.</source>
 <context>
     <name>co_kanbei</name>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="216"/>
         <source>The emperor of Yellow Comet. A skilled commander who has a soft spot for his daughter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="220"/>
         <source>Sonja</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="224"/>
         <source>Computers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="228"/>
         <source>All units have high offensive and defensive capabilities, but are expensive to deploy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="232"/>
         <source>
 Special Unit:
 Royal Guard
@@ -17588,14 +17588,14 @@ Royal Guard
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="233"/>
         <source>
 Global Effect: 
 Units have %0% stronger firepower and defense, but are %1% more expensive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="234"/>
         <source>
 
 CO Zone Effect: 
@@ -17603,82 +17603,82 @@ Units have %2% stronger firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="235"/>
-        <source>Increases firepower and defence of all units.</source>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="240"/>
+        <source>Increases firepower to %0% and defence to %0% of all units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="246"/>
         <source>Morale Boost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="243"/>
-        <source>Greatly strengthens offensive and defensive abilities of all units. Counterattacks are stronger.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="247"/>
-        <source>Samurai Spirit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="251"/>
-        <source>Who shall taste my wrath?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="252"/>
-        <source>Observe the heart of a true Samurai.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="253"/>
-        <source>Your numbers mean nothing!  Nothing can stop me!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="254"/>
-        <source>My mind is honed for battle.  That is the essence of a samurai!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="255"/>
-        <source>True Samurai don&apos;t know the meaning of retreat.</source>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="250"/>
+        <source>Greatly strengthens offensive to %0% and defensive to %1% of all units  and counter attacks are %2% stronger.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_kanbei.js" line="256"/>
-        <source>I hope you thoroughly enjoy the taste of my sword!</source>
+        <source>Samurai Spirit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_kanbei.js" line="260"/>
-        <source>Kanbei is victorious! We shall meet again!</source>
+        <source>Who shall taste my wrath?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_kanbei.js" line="261"/>
-        <source>Raise your voices in victory!</source>
+        <source>Observe the heart of a true Samurai.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_kanbei.js" line="262"/>
-        <source>No enemy can stand before Kanbei!</source>
+        <source>Your numbers mean nothing!  Nothing can stop me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="266"/>
-        <source>Preposterous! So many of Kanbei&apos;s forces defeated in such a short time? Withdraw!</source>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="263"/>
+        <source>My mind is honed for battle.  That is the essence of a samurai!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kanbei.js" line="267"/>
-        <source>Regardless of the odds, Kanbei should never lose this many units! Withdraw!</source>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="264"/>
+        <source>True Samurai don&apos;t know the meaning of retreat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="265"/>
+        <source>I hope you thoroughly enjoy the taste of my sword!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="269"/>
+        <source>Kanbei is victorious! We shall meet again!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="270"/>
+        <source>Raise your voices in victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_kanbei.js" line="271"/>
+        <source>No enemy can stand before Kanbei!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="275"/>
+        <source>Preposterous! So many of Kanbei&apos;s forces defeated in such a short time? Withdraw!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="276"/>
+        <source>Regardless of the odds, Kanbei should never lose this many units! Withdraw!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_kanbei.js" line="280"/>
         <source>Kanbei</source>
         <translation type="unfinished"></translation>
     </message>

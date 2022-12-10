@@ -145,6 +145,11 @@ var Constructor = function()
     this.coZoneBonus = 50;
     this.globalBonus = 15;
     this.costIncrease = 20;
+    this.powerAtkBonus = 60;
+    this.superPowerAtkBonus = 70;
+    this.superPowerCounterBonus = 140;
+    this.powerDefBonus = 60;
+    this.superPowerDefBonus = 70;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
@@ -154,11 +159,11 @@ var Constructor = function()
         case GameEnums.PowerMode_Superpower:
             if (isDefender)
             {
-                return 140;
+                return CO_KANBEI.superPowerCounterBonus;
             }
-            return 70;
+            return CO_KANBEI.superPowerAtkBonus;
         case GameEnums.PowerMode_Power:
-            return 60;
+            return CO_KANBEI.powerAtkBonus;
         default:
             if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
@@ -175,9 +180,9 @@ var Constructor = function()
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 70;
+            return CO_KANBEI.superPowerDefBonus;
         case GameEnums.PowerMode_Power:
-            return 60;
+            return CO_KANBEI.powerDefBonus;
         default:
             if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
@@ -232,7 +237,9 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Increases firepower and defence of all units.");
+        var text = qsTr("Increases firepower to %0% and defence to %0% of all units.");
+        text = replaceTextArgs(text, [CO_KANBEI.powerAtkBonus, CO_KANBEI.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -240,7 +247,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Greatly strengthens offensive and defensive abilities of all units. Counterattacks are stronger.");
+        var text =  qsTr("Greatly strengthens offensive to %0% and defensive to %1% of all units  and counter attacks are %2% stronger.");
+        text = replaceTextArgs(text, [CO_KANBEI.superPowerAtkBonus, CO_KANBEI.superPowerDefBonus, CO_KANBEI.superPowerCounterBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

@@ -23,7 +23,7 @@ CO_KANBEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     case GameEnums.PowerMode_Tagpower:
     case GameEnums.PowerMode_Superpower:
     case GameEnums.PowerMode_Power:
-        return 60;
+        return CO_KANBEI.powerAtkBonus;
     default:
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
         {
@@ -41,7 +41,7 @@ CO_KANBEI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     case GameEnums.PowerMode_Tagpower:
     case GameEnums.PowerMode_Superpower:
     case GameEnums.PowerMode_Power:
-        return 60;
+        return CO_KANBEI.powerDefBonus;
     default:
         if (co.inCORange(Qt.point(defPosX, defPosY), defender))
         {

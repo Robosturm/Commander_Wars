@@ -9,6 +9,11 @@ CO_KANBEI.getCostModifier = function(co, id, baseCost, posX, posY, map)
 CO_KANBEI.coZoneBonus = 0;
 CO_KANBEI.globalBonus = 30;
 CO_KANBEI.costIncrease = 20;
+CO_KANBEI.powerAtkBonus = 50;
+CO_KANBEI.superPowerAtkBonus = 50;
+CO_KANBEI.superPowerCounterBonus = 100;
+CO_KANBEI.powerDefBonus = 40;
+CO_KANBEI.superPowerDefBonus = 60;
 CO_KANBEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
@@ -20,11 +25,11 @@ CO_KANBEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             if (isDefender)
             {
-                return 100;
+                return CO_KANBEI.superPowerCounterBonus;
             }
-            return 50;
+            return CO_KANBEI.powerBonus;
         case GameEnums.PowerMode_Power:
-            return 50;
+            return CO_KANBEI.superPowerBonus;
         default:
             return CO_KANBEI.globalBonus;
         }
@@ -40,9 +45,9 @@ CO_KANBEI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 60;
+            return CO_KANBEI.superPowerDefBonus;
         case GameEnums.PowerMode_Power:
-            return 40;
+            return CO_KANBEI.powerDefBonus;
         default:
             return CO_KANBEI.globalBonus;
         }
