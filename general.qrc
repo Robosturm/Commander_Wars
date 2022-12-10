@@ -2076,5 +2076,7 @@
         <file>mods/map_creator/scripts/movementtables/move_small_boat.js</file>
         <file>resources/scripts/building/zdestroyed_gate_e_w.js</file>
         <file>resources/scripts/building/zdestroyed_gate_n_s.js</file>
+        <file>resources/scripts/co_perks/co_perk_no_plain_fighter.js</file>
+        <file>resources/scripts/co_perks/co_perk_plain_fighter.js</file>
     </qresource>
 </RCC>

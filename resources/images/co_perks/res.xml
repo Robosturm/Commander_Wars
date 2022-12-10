@@ -65,6 +65,7 @@
         <image file="tax_hike.png" />
         <image file="underpowered.png" />
         <image file="unusual_hat.png" />
+        <image file="no_plainfighter.png" />        
     </atlas>
 </resources>
 

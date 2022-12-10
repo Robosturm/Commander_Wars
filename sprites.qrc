@@ -4885,5 +4885,6 @@
         <file>resources/images/building/destroyed_gate+e+w+mask.png</file>
         <file>resources/images/building/destroyed_gate+n+s.png</file>
         <file>resources/images/building/destroyed_gate+n+s+mask.png</file>
+        <file>resources/images/co_perks/no_plainfighter.png</file>
     </qresource>
 </RCC>
