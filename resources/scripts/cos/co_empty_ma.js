@@ -49,7 +49,7 @@ var Constructor = function()
                qsTr("The Metal Army is an army of robots. The robots were initially invented by Lash. ") +
                qsTr("The Robots AI developped its own behaviour instead of following Lash's or Dark Matters orders. ") +
                qsTr("The Metal Army defends it's own territory at all costs when it loses it's territory. The Army tries to reconquer it.") +
-               qsTr("Besides this the Metal Army is very defensive orientated and doesn't attack anyone.") ;
+               qsTr("Besides this the Metal Army is very defensive oriented and doesn't attack anyone.") ;
     };
     this.getHits = function(co)
     {
