@@ -249,9 +249,17 @@ QString Terrain::getTerrainName() const
     return m_terrainName;
 }
 
-void Terrain::setTerrainName(const QString &value)
+void Terrain::setTerrainName(const QString &value, bool customName)
 {
+    m_customName = customName;
     m_terrainName = value;
+    if (m_terrainName.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function = "getName";
+        QJSValue ret = pInterpreter->doFunction(m_terrainID, function);
+        m_terrainName = ret.toString();
+    }
 }
 
 void Terrain::syncAnimation(oxygine::timeMS syncTime)
@@ -1522,6 +1530,7 @@ void Terrain::serializeObject(QDataStream& pStream) const
     pStream << m_hp;
 
     pStream << m_terrainName;
+    pStream << m_customName;
     pStream << m_terrainDescription;
     m_Variables.serializeObject(pStream);
 
@@ -1645,7 +1654,16 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 4)
     {
-        pStream >> m_terrainName;
+        QString terrainName;
+        pStream >> terrainName;
+        if (version > 10)
+        {
+            pStream >> m_customName;
+        }
+        if (m_customName)
+        {
+            m_terrainName = terrainName;
+        }
         pStream >> m_terrainDescription;
     }
     if (version > 5 && version < 9)

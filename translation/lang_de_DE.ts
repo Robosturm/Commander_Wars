@@ -2496,7 +2496,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="133"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="136"/>
         <source>Base image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2516,42 +2516,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="77"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="80"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="80"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="83"/>
         <source>Custom Description of the Terrain. Empty description equals the default description.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="169"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="172"/>
         <source>Terrain Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="173"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="176"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="194"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="197"/>
         <source>Overlays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="91"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="94"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="99"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="102"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="259"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="262"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20014,7 +20014,7 @@ CO Zone Effect:
     </message>
     <message>
         <location filename="../resources/scripts/co_perks/co_perk_gear_head.js" line="22"/>
-        <source>Mechanic</source>
+        <source>Gear Head</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -20264,7 +20264,7 @@ CO Zone Effect:
     </message>
     <message>
         <location filename="../resources/scripts/co_perks/co_perk_mechanic.js" line="22"/>
-        <source>Gear Head</source>
+        <source>Mechanic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

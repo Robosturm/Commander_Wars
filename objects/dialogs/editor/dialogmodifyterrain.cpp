@@ -68,7 +68,10 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     pTextbox->setTooltipText(tr("Custom Name of the Terrain. Empty name equals the default name."));
     pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
     pTextbox->setCurrentText(pTerrain->getTerrainName());
-    connect(pTextbox.get(), &Textbox::sigTextChanged, pTerrain, &Terrain::setTerrainName, Qt::QueuedConnection);
+    connect(pTextbox.get(), &Textbox::sigTextChanged, pTerrain, [pTerrain](QString value)
+    {
+        pTerrain->setTerrainName(value, !value.isEmpty());
+    }, Qt::QueuedConnection);
     m_pPanel->addItem(pTextbox);
     y += 40;
 
