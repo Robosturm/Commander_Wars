@@ -57,6 +57,23 @@ var UserLoginDialog =
     {
         return qsTr("Let's you delete your account on the servers.");
     },
+    loginOnServerText : function()
+    {
+        return qsTr("Login on Server");
+    },
+    usernameText : function()
+    {
+        return qsTr("Username:");
+    },
+    passwordText : function()
+    {
+        return qsTr("Password:");
+    },
+    passwordHelpText : function()
+    {
+        return qsTr("Password of your account.");
+    },
+
     primaryPassword : function(input)
     {
         var variables = userLogin.getVariables();

@@ -1,5 +1,50 @@
 var CreateAccountDialog =
 {
+    getCreateAccountText : function()
+    {
+        return qsTr("Create Account");
+    },
+    getUsernameText : function()
+    {
+        return qsTr("Username:");
+    },
+    getPasswordText : function()
+    {
+        return qsTr("Password:");
+    },
+    getPasswordHelpText : function()
+    {
+        return qsTr("Password of your account. Needs to contain 8 letters, one capital one small letter a number and a special char.");
+    },
+    getRepeatPasswordText : function()
+    {
+        return qsTr("Repeat password:");
+    },
+    getMailText : function()
+    {
+        return qsTr("E-Mail:");
+    },
+    getMailHelpText : function()
+    {
+        return qsTr("E-Mail-Address for your account.");
+    },
+    getAbortText : function()
+    {
+        return qsTr("Abort");
+    },
+    getAbortHelpText : function()
+    {
+        return qsTr("Aborts the new account creation on the server.");
+    },
+    getCreateText : function()
+    {
+        return qsTr("Create");
+    },
+    getCreateHelpText : function()
+    {
+        return qsTr("Creates a new account on the server.");
+    },
+
     primaryPassword : function(input)
     {
         var variables = createAccount.getVariables();

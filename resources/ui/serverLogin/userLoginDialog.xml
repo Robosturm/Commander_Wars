@@ -11,7 +11,7 @@
                 <y>settings.getHeight() / 2 - 180</y>
                 <width>500</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Login on Server")</text>
+                <text>UserLoginDialog.loginOnServerText()</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
             </Label>
@@ -20,7 +20,7 @@
                 <y>settings.getHeight() / 2 - 100</y>
                 <width>200</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Username:")</text>
+                <text>UserLoginDialog.usernameText()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -38,7 +38,7 @@
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Password:")</text>
+                <text>UserLoginDialog.passwordText()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -47,7 +47,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>400</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Password of your account.")</tooltip>
+                <tooltip>UserLoginDialog.passwordHelpText()</tooltip>
                 <startValue>""</startValue>
                 <onEvent>UserLoginDialog.primaryPassword(input);</onEvent>
             </Passwordbox>

@@ -3615,34 +3615,19 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.xml" line="14"/>
-        <source>Login on Server</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.xml" line="23"/>
         <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="23"/>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="23"/>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="23"/>
         <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="23"/>
         <source>Username:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.xml" line="41"/>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="41"/>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="41"/>
         <source>Password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.xml" line="50"/>
-        <source>Password of your account.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="69"/>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="105"/>
         <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="105"/>
         <source>Creates a new account on the server.</source>
         <translation type="unfinished"></translation>
@@ -3665,27 +3650,23 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="41"/>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="77"/>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="77"/>
         <source>E-Mail:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="50"/>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="86"/>
         <source>E-Mail-Address for your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="59"/>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="95"/>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="95"/>
         <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="95"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="60"/>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="96"/>
         <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="96"/>
         <source>Aborts the new account creation on the server.</source>
         <translation type="unfinished"></translation>
@@ -3696,11 +3677,6 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="14"/>
-        <source>Create Account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="14"/>
         <source>Delete Account</source>
         <translation type="unfinished"></translation>
@@ -3708,8 +3684,6 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="50"/>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="68"/>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="50"/>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="68"/>
         <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="68"/>
         <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="86"/>
         <source>Password of your account. Needs to contain 8 letters, one capital one small letter a number and a special char.</source>
@@ -3717,7 +3691,6 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="59"/>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="59"/>
         <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="77"/>
         <source>Repeat password:</source>
         <translation type="unfinished"></translation>
@@ -3740,11 +3713,6 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="105"/>
         <source>Deletes your account on the server.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.xml" line="104"/>
-        <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -15173,7 +15141,7 @@ Air units have increased firepower.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="52"/>
-        <source>Besides this the Metal Army is very defensive orientated and doesn&apos;t attack anyone.</source>
+        <source>Besides this the Metal Army is very defensive oriented and doesn&apos;t attack anyone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -20287,6 +20255,24 @@ CO Zone Effect:
     </message>
 </context>
 <context>
+    <name>co_perk_no_plain_fighter</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_no_plain_fighter.js" line="29"/>
+        <source>Increases the attack from plains by %0%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_no_plain_fighter.js" line="39"/>
+        <source>Plain fighter %0%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_no_plain_fighter.js" line="45"/>
+        <source>Terrain Debuff</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_perk_no_sherpa</name>
     <message>
         <location filename="../resources/scripts/co_perks/co_perk_no_sherpa.js" line="29"/>
@@ -20354,6 +20340,24 @@ CO Zone Effect:
     </message>
     <message>
         <location filename="../resources/scripts/co_perks/co_perk_pathfinder.js" line="48"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_perk_plain_fighter</name>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_plain_fighter.js" line="29"/>
+        <source>Increases the attack from plains by %0%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_plain_fighter.js" line="39"/>
+        <source>Plain fighter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/co_perks/co_perk_plain_fighter.js" line="43"/>
         <source>Terrain</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23887,32 +23891,87 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>createAccountDialog</name>
     <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="5"/>
+        <source>Create Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="9"/>
+        <source>Username:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="13"/>
+        <source>Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="17"/>
+        <source>Password of your account. Needs to contain 8 letters, one capital one small letter a number and a special char.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="21"/>
+        <source>Repeat password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="25"/>
+        <source>E-Mail:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="29"/>
+        <source>E-Mail-Address for your account.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="33"/>
-        <source>Invalid password entered. The password needs to contain 8 letters, one capital one small letter a number and a special char.</source>
+        <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="37"/>
-        <source>Your passwords don&apos;t match.</source>
+        <source>Aborts the new account creation on the server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="41"/>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="45"/>
+        <source>Creates a new account on the server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="78"/>
+        <source>Invalid password entered. The password needs to contain 8 letters, one capital one small letter a number and a special char.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="82"/>
+        <source>Your passwords don&apos;t match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="86"/>
         <source>You entered an invalid email address.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="61"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="106"/>
         <source>Account successfully created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="66"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="111"/>
         <source>An account with the current username exists already. Please change your username in the options menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="71"/>
+        <location filename="../resources/ui/serverLogin/createAccountDialog.js" line="116"/>
         <source>Unknown error happened while creating the new account. No account was created.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24436,7 +24495,7 @@ Units have increased firepower during sandstorm.</source>
     <name>metallarmy</name>
     <message>
         <location filename="../resources/scripts/wiki/metallarmy.js" line="7"/>
-        <source>The Metal Army is an army of robots. The robots were initially invented by Lash. The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. The Metal Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it. Besides this the Metal Army is very defensive orientated and doesn&apos;t attack anyone.</source>
+        <source>The Metal Army is an army of robots. The robots were initially invented by Lash. The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. The Metal Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it. Besides this the Metal Army is very defensive oriented and doesn&apos;t attack anyone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24741,12 +24800,12 @@ Units have increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="9"/>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="10"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="13"/>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="15"/>
         <source>Allows to modify a unit, e.g. it&apos;s health, fuel, ammo etc.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25891,22 +25950,42 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="81"/>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="62"/>
+        <source>Login on Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="66"/>
+        <source>Username:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="70"/>
+        <source>Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="74"/>
+        <source>Password of your account.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="98"/>
         <source>Logged onto the server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="88"/>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="105"/>
         <source>Your password isn&apos;t correct.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="94"/>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="111"/>
         <source>No account with your username was found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="107"/>
+        <location filename="../resources/ui/serverLogin/userLoginDialog.js" line="124"/>
         <source>Unknown error happened.</source>
         <translation type="unfinished"></translation>
     </message>
