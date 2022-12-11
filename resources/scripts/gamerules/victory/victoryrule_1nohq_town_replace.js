@@ -50,7 +50,7 @@ var Constructor = function()
             for (var i2 = 0; i2 < size; i2++)
             {
                 var building = buildings.at(i2);
-                if (building.getBuildingID() === "HQ")
+                if (building.getBuildingID() === "HQ" && pointsX.length === 0)
                 {
                     pointsX.push(building.getX());
                     pointsY.push(building.getY());
@@ -68,12 +68,27 @@ var Constructor = function()
         var variable = variables.getVariable(variableName);
         var buildings = player.getBuildings("HQ");
         var size = buildings.size();
-        for (var i2 = 1; i2 < size; i2++)
+        // replace none starting hq's
+        var variableHqXsName = "HqXs" + playerID.toString();
+        var variableHqYsName = "HqYs" + playerID.toString();
+        var variableHqXs = variables.createVariable(variableHqXsName);
+        var variableHqYs = variables.createVariable(variableHqYsName);
+        var pointHqX = variableHqXs.readDataListInt32()[0];
+        var pointHqY = variableHqYs.readDataListInt32()[0];
+        for (var i2 = 0; i2 < size; i2++)
         {
-            var terrain = buildings.at(i2).getTerrain();
-            terrain.loadBuilding("TOWN");
-            terrain.getBuilding().setOwner(player);
+            var building = buildings.at(i2);
+            var x = building.getX();
+            var y = building.getY();
+            if (x !== pointHqX ||
+                y !== pointHqY)
+            {
+                var terrain = building.getTerrain();
+                terrain.loadBuilding("TOWN");
+                terrain.getBuilding().setOwner(player);
+            }
         }
+        // check if is defeatable by hq
         var value = variable.readDataBool();
         if (value === false)
         {
