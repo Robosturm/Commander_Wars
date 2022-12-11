@@ -508,12 +508,12 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
         {
             Settings::setFullscreen(true);
             Settings::setBorderless(false);
-#ifdef ANDROID
-            showMaximized();
-            // set window info
-            Settings::setWidth(width() * getActiveDpiFactor());
-            Settings::setHeight(height() * getActiveDpiFactor());
-#else
+//#ifdef ANDROID
+//            showMaximized();
+//            // set window info
+//            Settings::setWidth(width() * getActiveDpiFactor());
+//            Settings::setHeight(height() * getActiveDpiFactor());
+//#else
             showFullScreen();
             QScreen* screen = QApplication::primaryScreen();
             QRect screenSize = screen->geometry();
@@ -522,7 +522,7 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
             Settings::setHeight(screenSize.height() * getActiveDpiFactor());
             setGeometry(screenSize);
             setPosition(0, 0);
-#endif
+//#endif
             break;
         }
         default:

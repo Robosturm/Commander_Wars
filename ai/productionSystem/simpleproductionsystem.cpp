@@ -101,6 +101,7 @@ void SimpleProductionSystem::onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlV
         }
     }
     updateActiveProductionSystem(pBuildings);
+    updateIslandSizeForBuildings(pBuildings);
 }
 
 void SimpleProductionSystem::updateActiveProductionSystem(QmlVectorBuilding* pBuildings)
@@ -129,6 +130,34 @@ void SimpleProductionSystem::updateActiveProductionSystem(QmlVectorBuilding* pBu
             else
             {
                 ++i;
+            }
+        }
+    }
+}
+
+void SimpleProductionSystem::updateIslandSizeForBuildings(QmlVectorBuilding* pBuildings)
+{
+    m_averageMoverange.clear();
+    for (auto & pBuilding : pBuildings->getVector())
+    {
+        if (pBuilding->isProductionBuilding())
+        {
+            qint32 x = pBuilding->getX();
+            qint32 y = pBuilding->getY();
+            float averageCount = 0;
+            QStringList prodList = pBuilding->getConstructionList();
+            auto & item = m_averageMoverange[pBuilding.get()];
+            for (const auto & unitId : prodList)
+            {
+                spUnit pUnit = spUnit::create(unitId, m_owner->getPlayer(), false, m_owner->getMap());
+                float islandSize = m_owner->getIslandSize(pUnit.get(), x, y);
+                item.averageValue += islandSize;
+                item.islandSizes[unitId] = islandSize;
+                ++averageCount;
+            }
+            if (averageCount > 0)
+            {
+                item.averageValue = item.averageValue / averageCount;
             }
         }
     }
@@ -217,7 +246,7 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
     }
 }
 
-bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode)
+bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode, float minAverageIslandSize)
 {
     bool success = false;
     GameMap* pMap = m_owner->getMap();
@@ -226,7 +255,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         auto & item = m_initialProduction[i];
         for (auto & unitId : item.unitIds)
         {
-            success = buildUnit(pBuildings, unitId);
+            success = buildUnit(pBuildings, unitId, minAverageIslandSize);
             if (success)
             {
                 --item.count;
@@ -264,7 +293,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
             {
                 for (auto & unitId : forcedProduction.unitIds)
                 {
-                    success = buildUnit(pBuildings, unitId);
+                    success = buildUnit(pBuildings, unitId, minAverageIslandSize);
                     if (success)
                     {
                         break;
@@ -290,7 +319,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
             {
                 if (count == 1)
                 {
-                    success = buildUnit(pBuildings, item.distribution.unitIds[0]);
+                    success = buildUnit(pBuildings, item.distribution.unitIds[0], minAverageIslandSize);
                 }
                 else
                 {
@@ -302,7 +331,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
                         {
                             if (roll < chance + item.distribution.chance[i2])
                             {
-                                success = buildUnit(pBuildings, item.distribution.unitIds[i2]);
+                                success = buildUnit(pBuildings, item.distribution.unitIds[i2], minAverageIslandSize);
                                 break;
                             }
                             else
@@ -459,15 +488,19 @@ bool SimpleProductionSystem::getInit() const
     return m_init;
 }
 
-bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString unitId)
+bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString unitId, float minAverageIslandSize)
 {
     bool success = false;
     for (auto & pBuilding : pBuildings->getVector())
     {
-        success = buildUnit(pBuilding->getX(), pBuilding->getY(), unitId);
-        if (success)
+        auto & item = m_averageMoverange[pBuilding.get()];
+        if (item.averageValue * minAverageIslandSize >= item.islandSizes[unitId])
         {
-            break;
+            success = buildUnit(pBuilding->getX(), pBuilding->getY(), unitId);
+            if (success)
+            {
+                break;
+            }
         }
     }
     if (!success)

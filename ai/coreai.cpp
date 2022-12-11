@@ -17,6 +17,7 @@
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/weaponmanager.h"
+#include "resource_management/unitspritemanager.h"
 
 #include <QFile>
 #include <QSettings>
@@ -1925,6 +1926,11 @@ void CoreAI::rebuildIsland(spQmlVectorUnit & pUnits)
             }
         }
     }
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    for (const auto & unitId : m_pPlayer->getBuildList())
+    {
+        createIslandMap(pUnitSpriteManager->getMovementType(unitId), unitId);
+    }
 }
 
 void CoreAI::sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits)
@@ -2080,6 +2086,18 @@ qint32 CoreAI::getIsland(Unit* pUnit) const
         }
     }
     return -1;
+}
+
+qint32 CoreAI::getIslandSize(Unit* pUnit, qint32 x, qint32 y) const
+{
+    for (auto & island : m_IslandMaps)
+    {
+        if (island->getMovementType() == pUnit->getMovementType())
+        {
+            return island->getIslandSize(island->getIsland(x, y));
+        }
+    }
+    return 0;
 }
 
 qint32 CoreAI::getIslandIndex(Unit* pUnit) const

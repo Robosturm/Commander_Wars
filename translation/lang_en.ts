@@ -20258,7 +20258,7 @@ CO Zone Effect:
     <name>co_perk_no_plain_fighter</name>
     <message>
         <location filename="../resources/scripts/co_perks/co_perk_no_plain_fighter.js" line="29"/>
-        <source>Increases the attack from plains by %0%.</source>
+        <source>Decreases the attack from plains by %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -10,6 +10,7 @@
 #include "coreengine/scriptvariables.h"
 #include "game/unit.h"
 
+class Building;
 class CoreAI;
 class QmlVectorUnit;
 class QmlVectorBuilding;
@@ -43,6 +44,11 @@ public:
     {
         float currentValue;
         BuildDistribution distribution;
+    };
+    struct AverageBuildData
+    {
+        float averageValue{0};
+        std::map<QString, qint32> islandSizes;
     };
 
     explicit SimpleProductionSystem(CoreAI * owner);
@@ -85,7 +91,7 @@ public slots:
     void resetBuildDistribution();
     void resetForcedProduction();
     void resetInitialProduction();
-    bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode);
+    bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode, float minAverageIslandSize = 0.025f);
     void addInitialProduction(const QStringList & unitIds, qint32 count);
     void addForcedProduction(const QStringList & unitId, qint32 x = -1, qint32 y = -1);
     void addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, float distribution, qint32 buildMode, const QString & guardCondition = "", float maxUnitDistribution = 1.0f);
@@ -96,8 +102,9 @@ public slots:
      */
     Unit* getDummyUnit(const QString & unitId);
     qint32 getProductionFromList(const QStringList & unitIds, QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, qint32 minBuildMode, qint32 maxBuildMode, const QVector<bool> & enableList = QVector<bool>());
+    void updateIslandSizeForBuildings(QmlVectorBuilding* pBuildings);
 private:
-    bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId);
+    bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, float minAverageIslandSize);
     bool buildUnit(qint32 x, qint32 y, QString unitId);
     void getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode);
     void updateActiveProductionSystem(QmlVectorBuilding* pBuildings);
@@ -109,6 +116,7 @@ private:
     std::vector<ForcedProduction> m_forcedProduction;
     std::map<QString, BuildDistribution> m_buildDistribution;
     std::map<QString, BuildDistribution> m_activeBuildDistribution;
+    std::map<Building*, AverageBuildData> m_averageMoverange;
     ScriptVariables m_Variables;
     spUnit m_dummy;
 };

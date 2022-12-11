@@ -9,7 +9,7 @@ var COREAI =
     mediumTankGroup : ["MEDIUM_TANK_GROUP", ["ANTITANKCANNON", "HEAVY_TANK", "ROCKETTHROWER", "ZCOUNIT_CRYSTAL_TANK", "ZCOUNIT_NEOSPIDER_TANK", "ZCOUNIT_ROYAL_GUARD", "ZCOUNIT_TANK_HUNTER"],
         [30,               70,           10,              40,                     40,                       40,                    40],
         20, 2, "", 1.0],
-    heavyTankGroup : ["HEAVY_TANK_GROUP", ["MEGATANK", "NEOTANK", "ZCOUNIT_SIEGE_CANNON"],
+    heavyTankGroup : ["HEAVY_TANK_GROUP", ["MEGATANK", "NEOTANK", "ZCOUNIT_SIEGE_CANNON", "PIPERUNNER"],
         [60,       30,        60,],
         10, 3, "", 1.0],
     lightAmphibiousGroup : ["LIGHT_AMPHIBIOUS_GROUP", ["ARTILLERYCRAFT", "HOVERCRAFT", "HOVERFLAK"],
@@ -55,6 +55,7 @@ var COREAI =
     minTankTransporterDay : 3,
     tankTransporterDayDifference : 3,
     transporterRatio : 0.04,
+    minAverageIslandSize : 0.1,
 
     initializeSimpleProductionSystem : function(system, ai, map, groupDistribution, buildInitialInfantry = true)
     {
@@ -362,7 +363,7 @@ var COREAI =
                 break;
             }
         }
-        return system.buildNextUnit(buildings, units, minMode, maxMode);
+        return system.buildNextUnit(buildings, units, minMode, maxMode, COREAI.minAverageIslandSize);
     },
 
     getFactoryMenuItem : function(ai, action, ids, costs, enabled, units, buildings, owner, map)

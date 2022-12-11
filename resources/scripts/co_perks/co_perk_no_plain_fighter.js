@@ -26,7 +26,7 @@ var Constructor = function()
     // Perk - Intel
     this.getDescription = function()
     {
-        var text = qsTr("Increases the attack from plains by %0%.");
+        var text = qsTr("Decreases the attack from plains by %0%.");
         text = replaceTextArgs(text, [CO_PERK_NO_PLAIN_FIGHTER.bonus]);
         return text;
     };

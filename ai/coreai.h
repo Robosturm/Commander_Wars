@@ -452,6 +452,14 @@ public slots:
      */
     qint32 getIsland(Unit* pUnit) const;
     /**
+     * @brief getIslandSize
+     * @param pUnit
+     * @param x
+     * @param y
+     * @return
+     */
+    qint32 getIslandSize(Unit* pUnit, qint32 x, qint32 y) const;
+    /**
      * @brief getIslandIndex
      * @param pUnit1
      * @return
