@@ -80,6 +80,7 @@ void MainServer::release()
 MainServer::MainServer()
     : QObject(),
       m_updateTimer(this),
+      m_scriptExecutionTimer(this),
       m_pGameServer(spTCPServer::create(this)),
       m_pSlaveServer(spTCPServer::create(this))
 {
@@ -101,9 +102,14 @@ MainServer::MainServer()
     // internal updates
     connect(this, &MainServer::sigStartRemoteGame, this, &MainServer::slotStartRemoteGame, Qt::QueuedConnection);
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
+    connect(&m_scriptExecutionTimer, &QTimer::timeout, this, &MainServer::executeScript, Qt::QueuedConnection);
     parseSlaveAddressOptions();
 
     initDatabase();
+
+    m_scriptExecutionTimer.setSingleShot(false);
+    m_scriptExecutionTimer.start(5);
+
     if (m_serverData != nullptr)
     {
         QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
@@ -725,6 +731,24 @@ void MainServer::playerJoined(qint64 socketId)
 {
     CONSOLE_PRINT("Player joined the server " + QString::number(socketId), GameConsole::eDEBUG);
     emit m_pGameServer->sigSetIsActive(socketId, false);
+}
+
+void MainServer::executeScript()
+{
+    CONSOLE_PRINT("MainServer::executeScript", GameConsole::eDEBUG);
+    const char* const SCRIPTFILE = "serverScript.js";
+    if (QFile::exists(SCRIPTFILE))
+    {
+        CONSOLE_PRINT("Loading server script", GameConsole::eDEBUG);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        if (pInterpreter->openScript(SCRIPTFILE, false))
+        {
+            CONSOLE_PRINT("Executing server script", GameConsole::eDEBUG);
+            QJSValueList args({pInterpreter->newQObject(this)});
+            pInterpreter->doFunction("serverScript", args);
+        }
+        QFile::remove(SCRIPTFILE);
+    }
 }
 
 void MainServer::sendGameDataToClient(qint64 socketId)

@@ -122,6 +122,10 @@ private slots:
      * @param result
      */
     void onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief executeScript
+     */
+    void executeScript();
 private:
     /**
      * @brief spawnSlaveGame checks if a slave game can be spawned and spawns a slave game on the server
@@ -328,6 +332,10 @@ private:
      * @brief m_updateTimer update timer to send lobby data to clients if needed
      */
     QTimer m_updateTimer;
+    /**
+     * @brief m_scriptExecutionTimer
+     */
+    QTimer m_scriptExecutionTimer;
     /**
      * guard marking if new lobby data is available or not.
      */
