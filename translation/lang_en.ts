@@ -311,7 +311,7 @@
 <context>
     <name>ACTION_DEATHRAY_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="17"/>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="18"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26851,7 +26851,7 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_E.js" line="127"/>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="128"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26864,7 +26864,7 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_N.js" line="127"/>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="128"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26877,7 +26877,7 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_S.js" line="123"/>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="124"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26890,7 +26890,7 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_W.js" line="126"/>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="127"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -53,7 +53,7 @@ var Constructor = function()
                 {
                     var damage = Global[building.getBuildingID()].getDamage(building, unit);
                     animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                    animation.addSprite("talon+gun+hit", -map.getImageSize() * 1.1, -map.getImageSize() * 1.5, 0, 1.33);
+                    animation.addSprite("talon+gun+hit", -map.getImageSize() * 0.95, -map.getImageSize() * 1.6, 0, 1.33);
                     if (!soundAdded)
                     {
                         soundAdded = true;

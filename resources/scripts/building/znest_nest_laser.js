@@ -82,6 +82,10 @@ var Constructor = function()
         {
             building.loadSprite("nest_laser+SW", false, 400, Qt.point(0, building.getImageSize()));
         }
+        if (day > 1)
+        {
+            audio.playSound("nestlaserrotate.wav");
+        }
         building.setFireCount(1);
     };
     this.getActionTargetFields = function(building)

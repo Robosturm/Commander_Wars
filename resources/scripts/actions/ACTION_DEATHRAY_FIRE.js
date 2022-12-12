@@ -2,6 +2,7 @@ var Constructor = function()
 {
     this.canBePerformed = function(action, map)
     {
+        return true;
         var building = action.getTargetBuilding();
         if (building.getFireCount() >= 7)
         {
@@ -36,8 +37,7 @@ var Constructor = function()
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
 
         var animation = Global[building.getBuildingID()].createRayAnimation(building, x, y, fields, map);
-        animation.setEndOfAnimationCall("ACTION_DEATHRAY_FIRE", "performPostAnimation");
-        animation.addSound("deathray_fire.wav");
+        animation.setEndOfAnimationCall("ACTION_DEATHRAY_FIRE", "performPostAnimation");        
         ACTION_DEATHRAY_FIRE.postAnimationX = x;
         ACTION_DEATHRAY_FIRE.postAnimationY = y;
         ACTION_DEATHRAY_FIRE.postAnimationBuilding = building;
