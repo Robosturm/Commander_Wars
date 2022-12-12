@@ -64,17 +64,17 @@ var DeleteAccountDialog =
         else if (errorCode === GameEnums.LoginError_WrongPassword)
         {
             deleteAccount.showMessageBox(qsTr("Password is incorrect didn't delete account."));
-            deleteAccount.changeEnableForItems(true);
+            DeleteAccountDialog.changeEnableForItems(true);
         }
         else if (errorCode === GameEnums.LoginError_WrongEmailAdress)
         {
             deleteAccount.showMessageBox(qsTr("E-mail address is incorrect didn't delete account."));
-            deleteAccount.changeEnableForItems(true);
+            DeleteAccountDialog.changeEnableForItems(true);
         }
         else if (errorCode === GameEnums.LoginError_AccountDoesntExist)
         {
             deleteAccount.showMessageBox(qsTr("An account with the current username doesn't exists."));
-            deleteAccount.changeEnableForItems(true);
+            DeleteAccountDialog.changeEnableForItems(true);
         }
         else
         {

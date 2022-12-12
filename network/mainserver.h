@@ -359,7 +359,7 @@ private:
     /**
      * @brief m_serverData
      */
-    static QScopedPointer<QSqlDatabase> m_serverData;
+    static QSqlDatabase* m_serverData;
     /**
      * @brief m_mailSender
      */

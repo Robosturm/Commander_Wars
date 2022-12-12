@@ -459,6 +459,10 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             {
                 onPublicKeyChangePassword(socketID, objData, action);
             }
+            else if (action == NetworkCommands::PublicKeyActions::DeleteAccount)
+            {
+                onPublicKeyDeleteAccount(socketID, objData, action);
+            }
             else
             {
                 CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", GameConsole::eDEBUG);
@@ -582,28 +586,24 @@ void LobbyMenu::handleAccountMessage(quint64 socketID, const QJsonObject & objDa
 {
     auto action = objData.value(JsonKeys::JSONKEY_RECEIVEACTION).toInt();
     auto accountError = objData.value(JsonKeys::JSONKEY_ACCOUNT_ERROR).toInt();
-    if (action >= static_cast<qint32>(NetworkCommands::PublicKeyActions::CreateAccount) &&
-        action <= static_cast<qint32>(NetworkCommands::PublicKeyActions::ChangePassword))
+    const char * const jsScripts[] =
     {
-        const char * const jsScripts[] =
-        {
-            "",
-            "CreateAccountDialog",
-            "UserLoginDialog",
-            "ForgotPasswordDialog",
-            "ChangePasswordDialog",
-            "",
-            "DeleteAccountDialog",
-        };
-        QString object = jsScripts[action];
-        if (!object.isEmpty())
-        {
-            CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", GameConsole::eDEBUG);
-            Interpreter* pInterpreter = Interpreter::getInstance();
-            QJSValueList args;
-            args.append(accountError);
-            pInterpreter->doFunction(object, "onAccountMessage", args);
-        }
+        "",
+        "CreateAccountDialog",
+        "UserLoginDialog",
+        "ForgotPasswordDialog",
+        "ChangePasswordDialog",
+        "",
+        "DeleteAccountDialog",
+    };
+    QString object = jsScripts[action];
+    if (!object.isEmpty())
+    {
+        CONSOLE_PRINT("Calling function " + object + ".onAccountMessage(" + QString::number(accountError) + ")", GameConsole::eDEBUG);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValueList args;
+        args.append(accountError);
+        pInterpreter->doFunction(object, "onAccountMessage", args);
     }
     else
     {
@@ -661,6 +661,18 @@ void LobbyMenu::deleteServerAccount(const QString & password, const QString & em
 }
 
 void LobbyMenu::onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
+{
+    auto & cypher = Mainapp::getInstance()->getCypher();
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
+    data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    QJsonDocument doc(data);
+    QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
 {
     auto & cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data;

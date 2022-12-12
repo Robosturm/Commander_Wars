@@ -31,7 +31,7 @@ const char* const SQL_VALIDPASSWORD = "validPassword";
 const char* const SQL_LASTLOGIN = "lastLogin";
 
 spMainServer MainServer::m_pInstance{nullptr};
-QScopedPointer<QSqlDatabase> MainServer::m_serverData;
+QSqlDatabase* MainServer::m_serverData{nullptr};
 
 MainServer* MainServer::getInstance()
 {
@@ -49,10 +49,10 @@ bool MainServer::exists()
 
 void MainServer::initDatabase()
 {
-    if(QSqlDatabase::isDriverAvailable(DRIVER) && m_serverData.isNull())
+    if(QSqlDatabase::isDriverAvailable(DRIVER) && m_serverData == nullptr)
     {
-        static QSqlDatabase database =QSqlDatabase::addDatabase(DRIVER);
-        m_serverData.reset(&database);
+        static QSqlDatabase database = QSqlDatabase::addDatabase(DRIVER);
+        m_serverData = &database;
         QString path = Settings::getUserPath() + "/commanderWars.db";
         if (Settings::getUserPath().isEmpty())
         {
@@ -63,10 +63,7 @@ void MainServer::initDatabase()
         {
             CONSOLE_PRINT("Unable to open player error: " + m_serverData->lastError().text(), GameConsole::eERROR);
             CONSOLE_PRINT("Unable to open player native error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
-        }
-        else
-        {
-            m_serverData.reset();
+            m_serverData = nullptr;
         }
     }
     else
@@ -107,7 +104,7 @@ MainServer::MainServer()
     parseSlaveAddressOptions();
 
     initDatabase();
-    if (!m_serverData.isNull())
+    if (m_serverData != nullptr)
     {
         QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
                                             SQL_USERNAME + " TEXT PRIMARY KEY, " +
@@ -121,7 +118,7 @@ MainServer::MainServer()
             CONSOLE_PRINT("Unable to create player table " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
         }
     }
-    if (!m_serverData.isNull())
+    if (m_serverData != nullptr)
     {
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start();
@@ -865,7 +862,7 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc, Netwo
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Creating account with username " + username + " and email adress " + mailAdress, GameConsole::eDEBUG);
     bool success = false;
-    QSqlQuery query = getAccountInfo(*m_serverData.get(), username, success);
+    QSqlQuery query = getAccountInfo(*m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
     if (!query.first() && success)
     {
@@ -916,26 +913,33 @@ void MainServer::deleteAccount(qint64 socketId, const QJsonDocument & doc, Netwo
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Deleting account with username " + username + " and email adress " + mailAdress, GameConsole::eDEBUG);
     bool success = false;
-    QSqlQuery query = getAccountInfo(*m_serverData.get(), username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
-    auto dbMailAdress = query.value(SQL_MAILADRESS);
-    if (dbMailAdress.toString() == mailAdress)
+    QSqlQuery query = getAccountInfo(*m_serverData, username, success);
+    if (query.first() && success)
     {
-        result = checkPassword(*m_serverData.get(), username, password);
-        if (result == GameEnums::LoginError_None)
+        auto dbMailAdress = query.value(SQL_MAILADRESS);
+        if (dbMailAdress.toString() == mailAdress)
         {
-            QString command = QString("DELETE FROM ") + SQL_TABLE_PLAYERS + " WHERE " +
-                              SQL_USERNAME + " = '" + username + "';";
-            query = m_serverData->exec(command);
-            if (sqlQueryFailed(query))
+            result = checkPassword(*m_serverData, username, password);
+            if (result == GameEnums::LoginError_None)
             {
-                result = GameEnums::LoginError_AccountDoesntExist;
+                QString command = QString("DELETE FROM ") + SQL_TABLE_PLAYERS + " WHERE " +
+                                  SQL_USERNAME + " = '" + username + "';";
+                query = m_serverData->exec(command);
+                if (sqlQueryFailed(query))
+                {
+                    result = GameEnums::LoginError_DatabaseNotAccesible;
+                }
             }
+        }
+        else
+        {
+            result = GameEnums::LoginError_WrongEmailAdress;
         }
     }
     else
     {
-        result = GameEnums::LoginError_WrongEmailAdress;
+        result = GameEnums::LoginError_AccountDoesntExist;
     }
 
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
@@ -955,7 +959,7 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
     QByteArray password = cypher.toByteArray(data.value(JsonKeys::JSONKEY_PASSWORD).toArray());
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Login to account with username " + username, GameConsole::eDEBUG);
-    auto result = checkPassword(*m_serverData.get(), username, password);
+    auto result = checkPassword(*m_serverData, username, password);
     if (result == GameEnums::LoginError_None)
     {
         // mark client as logged in
@@ -1006,9 +1010,9 @@ GameEnums::LoginError MainServer::checkPassword(QSqlDatabase & database, const Q
 GameEnums::LoginError MainServer::verifyLoginData(const QString & username, const QByteArray & password)
 {
     GameEnums::LoginError valid = GameEnums::LoginError_DatabaseNotAccesible;
-    if (!m_serverData.isNull())
+    if (m_serverData != nullptr)
     {
-        valid = checkPassword(*m_serverData.get(), username, password);
+        valid = checkPassword(*m_serverData, username, password);
     }
     return valid;
 }
@@ -1020,7 +1024,7 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Resetting account with username " + username + " and email adress " + mailAdress, GameConsole::eDEBUG);
     bool success = false;
-    QSqlQuery query = getAccountInfo(*m_serverData.get(), username, success);
+    QSqlQuery query = getAccountInfo(*m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
     if (query.first() && success)
     {
@@ -1143,7 +1147,7 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & do
     bool success = false;
     QString username = data.value(JsonKeys::JSONKEY_USERNAME).toString();
     CONSOLE_PRINT("Login to account with username " + username, GameConsole::eDEBUG);
-    QSqlQuery query = getAccountInfo(*m_serverData.get(), username, success);
+    QSqlQuery query = getAccountInfo(*m_serverData, username, success);
     GameEnums::LoginError result = GameEnums::LoginError_None;
     if (query.first() && success)
     {

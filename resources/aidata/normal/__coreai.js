@@ -55,7 +55,7 @@ var COREAI =
     minTankTransporterDay : 3,
     tankTransporterDayDifference : 3,
     transporterRatio : 0.04,
-    minAverageIslandSize : 0.1,
+    minAverageIslandSize : 0.025,
 
     initializeSimpleProductionSystem : function(system, ai, map, groupDistribution, buildInitialInfantry = true)
     {
