@@ -3,6 +3,7 @@
 #include "coreengine/interpreter.h"
 
 ActionWikipage::ActionWikipage(WikiDatabase::PageData item)
+    : Wikipage(item.m_id)
 {
     Interpreter::setCppOwnerShip(this);
 #ifdef GRAPHICSUPPORT

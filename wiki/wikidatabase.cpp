@@ -245,7 +245,7 @@ spWikipage WikiDatabase::getPage(PageData data)
         spPlayer pPlayer = spPlayer::create(nullptr);
         pPlayer->init();
         spCO pCO = spCO::create(data.m_id, pPlayer.get(), nullptr);
-        ret = spWikipage::create();
+        ret = spWikipage::create(data.m_id);
         spCOInfoActor pInfo = spCOInfoActor::create(nullptr, ret->getPanel()->getScaledWidth());
         pInfo->showCO(pCO, pPlayer);
         ret->getPanel()->addItem(pInfo);
@@ -272,7 +272,7 @@ spWikipage WikiDatabase::getPage(PageData data)
     }
     else if (data.m_id == DAMAGE_TABLE_NAME)
     {
-        ret = spDamageTablePage::create();
+        ret = spDamageTablePage::create(DAMAGE_TABLE_NAME);
     }
     else if (!data.m_mainId.isEmpty() || pGameManager->exists(data.m_id))
     {        
@@ -281,7 +281,7 @@ spWikipage WikiDatabase::getPage(PageData data)
     else if (QFile::exists(data.m_id))
     {
         // default loader
-        ret = spWikipage::create();
+        ret = spWikipage::create(data.m_id);
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->openScript(data.m_id, false);
         QJSValueList args({pInterpreter->newQObject(ret.get())});

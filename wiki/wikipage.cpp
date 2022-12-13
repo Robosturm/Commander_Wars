@@ -11,7 +11,9 @@
 
 #include "game/player.h"
 
-Wikipage::Wikipage()
+QStringList Wikipage::m_pageStack;
+
+Wikipage::Wikipage(QString pageID)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Wikipage");
@@ -47,6 +49,13 @@ Wikipage::Wikipage()
     connect(pApp, &Mainapp::sigKeyDown, this, &Wikipage::keyInput, Qt::QueuedConnection);
     connect(this, &Wikipage::sigShowLink, this, &Wikipage::showLink, Qt::QueuedConnection);
     connect(this, &Wikipage::sigFinished, this, &Wikipage::remove, Qt::QueuedConnection);
+
+    m_pageStack.append(pageID);
+}
+
+Wikipage::~Wikipage()
+{
+    m_pageStack.removeAll(m_pageID);
 }
 
 void Wikipage::keyInput(oxygine::KeyEvent event)
@@ -97,16 +106,23 @@ void Wikipage::loadHeadline(QString text)
     m_y += pLabel->getTextRect().getHeight() + 10;
 }
 
+QStringList & Wikipage::getPageStack()
+{
+    return m_pageStack;
+}
+
 void Wikipage::showLink(QString pageID)
 {
-    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    auto entry = pWikiDatabase->getEntry(pageID);
-    if (!entry.m_name.isEmpty() &&
-        !entry.m_id.isEmpty())
+    if (!m_pageStack.contains(pageID))
     {
-        oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(entry));
+        WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+        auto entry = pWikiDatabase->getEntry(pageID);
+        if (!entry.m_name.isEmpty() &&
+            !entry.m_id.isEmpty())
+        {
+            oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(entry));
+        }
     }
-    
 }
 
 void Wikipage::loadImage(QString file, float scale, QString pageID)

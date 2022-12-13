@@ -3,6 +3,7 @@
 #include "coreengine/interpreter.h"
 
 DefaultWikipage::DefaultWikipage(QString item)
+    : Wikipage(item)
 {
     Interpreter::setCppOwnerShip(this);
 #ifdef GRAPHICSUPPORT

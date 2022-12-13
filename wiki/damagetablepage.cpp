@@ -7,7 +7,8 @@
 
 #include "objects/base/label.h"
 
-DamageTablePage::DamageTablePage()
+DamageTablePage::DamageTablePage(const QString & pageId)
+    : Wikipage(pageId)
 {
     const qint32 bonusWidth = 30;
     const qint32 entryWidth = GameMap::defaultImageSize + bonusWidth;

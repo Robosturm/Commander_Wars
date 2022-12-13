@@ -2,6 +2,7 @@
 
 #include "wiki/unitinfo.h"
 #include "wiki/wikidatabase.h"
+#include "wiki/wikipage.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/movementtablemanager.h"
@@ -595,7 +596,9 @@ void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
 
 void UnitInfo::showLink(QString pageID)
 {
-    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
-    
+    if (!Wikipage::getPageStack().contains(pageID))
+    {
+        WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+        oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
+    }
 }

@@ -2317,14 +2317,14 @@
 <context>
     <name>DamageTablePage</name>
     <message>
-        <location filename="../wiki/damagetablepage.cpp" line="34"/>
-        <location filename="../wiki/damagetablepage.cpp" line="148"/>
+        <location filename="../wiki/damagetablepage.cpp" line="35"/>
+        <location filename="../wiki/damagetablepage.cpp" line="149"/>
         <source>Defender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/damagetablepage.cpp" line="40"/>
-        <location filename="../wiki/damagetablepage.cpp" line="154"/>
+        <location filename="../wiki/damagetablepage.cpp" line="41"/>
+        <location filename="../wiki/damagetablepage.cpp" line="155"/>
         <source>Attacker</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10227,87 +10227,87 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>UnitInfo</name>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="47"/>
+        <location filename="../wiki/unitinfo.cpp" line="48"/>
         <source>Unit Information </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="79"/>
+        <location filename="../wiki/unitinfo.cpp" line="80"/>
         <source>Unit Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="98"/>
+        <location filename="../wiki/unitinfo.cpp" line="99"/>
         <source>Firerange:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="114"/>
+        <location filename="../wiki/unitinfo.cpp" line="115"/>
         <source>Movepoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="129"/>
+        <location filename="../wiki/unitinfo.cpp" line="130"/>
         <source>Vision:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="144"/>
+        <location filename="../wiki/unitinfo.cpp" line="145"/>
         <source>Fuel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="168"/>
+        <location filename="../wiki/unitinfo.cpp" line="169"/>
         <source>Ammo 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="185"/>
+        <location filename="../wiki/unitinfo.cpp" line="186"/>
         <source>Ammo 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="201"/>
+        <location filename="../wiki/unitinfo.cpp" line="202"/>
         <source>Costs:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="218"/>
+        <location filename="../wiki/unitinfo.cpp" line="219"/>
         <source>Loading Place:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="230"/>
+        <location filename="../wiki/unitinfo.cpp" line="231"/>
         <source>Loadable Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="242"/>
+        <location filename="../wiki/unitinfo.cpp" line="243"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="254"/>
+        <location filename="../wiki/unitinfo.cpp" line="255"/>
         <source>Actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="263"/>
+        <location filename="../wiki/unitinfo.cpp" line="264"/>
         <source>Transporters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="279"/>
+        <location filename="../wiki/unitinfo.cpp" line="280"/>
         <source>Movement </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="381"/>
+        <location filename="../wiki/unitinfo.cpp" line="382"/>
         <source>Weapon 1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="392"/>
+        <location filename="../wiki/unitinfo.cpp" line="393"/>
         <source>Weapon 2 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -10554,7 +10554,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Wikipage</name>
     <message>
-        <location filename="../wiki/wikipage.cpp" line="32"/>
+        <location filename="../wiki/wikipage.cpp" line="34"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>

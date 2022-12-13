@@ -3,6 +3,7 @@
 #include "wiki/unitinfo.h"
 
 FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)
+    : Wikipage(pUnit != nullptr ? pUnit->getUnitID() : pTerrain->getID())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("FieldInfo");

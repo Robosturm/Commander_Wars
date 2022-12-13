@@ -162,7 +162,7 @@ namespace oxygine
         {
             return;
         }
-        if (isDescendant(safeSpCast<Actor>(ev->target)))
+        if (isDescendant(safeSpCast<Actor>(ev->target).get()))
         {
             return;
         }
@@ -633,9 +633,9 @@ namespace oxygine
         return false;
     }
 
-    bool Actor::isDescendant(const spActor& actor) const
+    bool Actor::isDescendant(const Actor* actor) const
     {
-        const Actor* act = actor.get();
+        const Actor* act = actor;
         while (act)
         {
             if (act == this)

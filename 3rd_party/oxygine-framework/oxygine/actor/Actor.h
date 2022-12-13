@@ -315,7 +315,7 @@ namespace oxygine
         }
         virtual bool isOn(const Vector2& localPosition, float localScale = 1.0f);
         /**Returns true if actor is child or located deeper in current subtree*/
-        bool isDescendant(const spActor& actor) const;
+        bool isDescendant(const Actor* actor) const;
         void addChild(spActor actor);
         /**Remove one child*/
         void removeChild(spActor & actor);
