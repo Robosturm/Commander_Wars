@@ -2,7 +2,6 @@ var Constructor = function()
 {
     this.canBePerformed = function(action, map)
     {
-        return true;
         var building = action.getTargetBuilding();
         if (building.getFireCount() >= 7)
         {
