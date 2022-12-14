@@ -1703,8 +1703,15 @@ GameAnimationDialog* CO::createPowerSentence()
     QJSValueList args({pInterpreter->newQObject(this),
                       pInterpreter->newQObject(m_pMap)});
     QStringList sentences = pInterpreter->doFunction(m_coID, "getPowerSentences", args).toVariant().toStringList();
-    QString sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
-
+    QString sentence = "No sentence found.";
+    if (sentences.length() > 0)
+    {
+        sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
+    }
+    else
+    {
+        CONSOLE_PRINT("Error in co: " + m_coID + " no power sentence defined", GameConsole::eERROR);
+    }
     GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(m_pMap, sentence, m_coID, GameEnums::COMood_Normal, m_pOwner->getColor());
     pGameAnimationDialog->setFinishDelay(500);
 
