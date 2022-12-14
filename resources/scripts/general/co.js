@@ -545,12 +545,12 @@ var CO =
         return CO.getAiUsePowerAtStart(co, powerSurplus, turnMode, map);
     },
 
-//    getAiCoUnitBonus : function(co, unit)
-//    {
-//        implement this function for a co to make the ai build more of the co's good units and to increase the chance
-//        the ai deploys a co unit in it. The return value is capped at 10 and -10
-//        return 0;
-//    },
+    getAiCoUnitBonus : function(co, unit)
+    {
+        // implement this function for a co to make the ai build more of the co's good units and to increase the chance
+        // the ai deploys a co unit in it. The return value is capped at 10 and -10
+        return 1;
+    },
 
     getAiCoBuildRatioModifier : function(co, map)
     {
