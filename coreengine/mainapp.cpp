@@ -412,7 +412,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 {
                     const char* const prefix = "--";
                     const QString program = QCoreApplication::applicationFilePath();
-                    QStringList args({//QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
+                    QStringList args({QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
                                       QString(prefix) + CommandLineParser::ARG_NOAUDIO,
                                       QString(prefix) + CommandLineParser::ARG_MODS,
                                       Settings::getConfigString(Settings::getActiveMods()),
