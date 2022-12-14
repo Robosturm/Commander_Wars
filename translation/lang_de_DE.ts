@@ -311,17 +311,17 @@
 <context>
     <name>ACTION_DEATHRAY_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="18"/>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="17"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="80"/>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="79"/>
         <source>Fire with death ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="84"/>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="83"/>
         <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
         <translation type="unfinished"></translation>
     </message>

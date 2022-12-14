@@ -45,7 +45,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("iron_shield_generator+walk+mask", GameEnums.Recoloring_Matrix, 2);
-        animation.setSound("movetank.wav", -2);
+        animation.setSound("movewalker.wav", -2);
         return animation;
     };
     this.getDescription = function()
