@@ -77,8 +77,7 @@ Mainapp::Mainapp()
     m_Networkthread->setObjectName("Networkthread");
     m_GameServerThread->setObjectName("GameServerThread");
 #endif
-    m_Worker.reset(new WorkerThread());
-
+    m_Worker = new WorkerThread();
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
@@ -413,13 +412,14 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 {
                     const char* const prefix = "--";
                     const QString program = QCoreApplication::applicationFilePath();
-                    QStringList args({QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
+                    QStringList args({//QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
                                       QString(prefix) + CommandLineParser::ARG_NOAUDIO,
                                       QString(prefix) + CommandLineParser::ARG_MODS,
                                       Settings::getConfigString(Settings::getActiveMods()),
                                       QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS,
                                       "0",
-                                      QString(prefix) + CommandLineParser::ARG_AISLAVE,});
+                                      QString(prefix) + CommandLineParser::ARG_AISLAVE});
+                    CONSOLE_PRINT("Launching ai subprocess: " + program + " " +  args.join(" "), GameConsole::eDEBUG);
                     m_aiSubProcess->setObjectName("AiSubprocess");
                     m_aiSubProcess->start(program, args);
                 }
@@ -819,15 +819,15 @@ void Mainapp::createBaseDirs()
 void Mainapp::onQuit()
 {
     QCoreApplication::processEvents();
+    if (m_Worker != nullptr)
+    {
+        m_Worker->deleteLater();
+        m_Worker = nullptr;
+    }
     if (m_Workerthread->isRunning())
     {
         m_Workerthread->quit();
         m_Workerthread->wait();
-    }
-    if (!m_Worker.isNull())
-    {
-        m_Worker->moveToThread(QThread::currentThread());
-        m_Worker.reset(nullptr);
     }
     QCoreApplication::processEvents();
     m_AudioManager.reset(nullptr);

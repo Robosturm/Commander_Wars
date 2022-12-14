@@ -249,8 +249,8 @@ public:
     ~Settings() = default;
     static Settings* getInstance();
     static void shutdown();
-
-    static void loadSettings();
+    void setup();
+    static void loadSettings();    
     static void saveSettings();
     static void resetSettings();
 

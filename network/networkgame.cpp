@@ -12,11 +12,19 @@
 
 #include "game/gamemap.h"
 
-NetworkGame::NetworkGame(QObject* pParent)
+NetworkGame::NetworkGame(QObject* pParent, const QString & serverName)
     : QObject(pParent),
-      m_closeTimer(pParent)
+      m_closeTimer(pParent),
+      m_serverName(serverName)
+
 {
+    CONSOLE_PRINT("Creating NetworkGame " + m_serverName, GameConsole::eDEBUG);
     connect(&m_closeTimer, &QTimer::timeout, this, &NetworkGame::closeTimerExpired, Qt::QueuedConnection);
+}
+
+NetworkGame::~NetworkGame()
+{
+    CONSOLE_PRINT("Deleting NetworkGame " + m_serverName, GameConsole::eDEBUG);
 }
 
 void NetworkGame::startCloseTimer()
@@ -150,11 +158,6 @@ QString NetworkGame::getServerName() const
     return m_serverName;
 }
 
-void NetworkGame::setServerName(const QString &serverName)
-{
-    m_serverName = serverName;
-}
-
 QByteArray NetworkGame::getDataBuffer() const
 {
     return m_dataBuffer;
@@ -167,10 +170,15 @@ void NetworkGame::setDataBuffer(const QByteArray &dataBuffer)
 
 void NetworkGame::processFinished(int value, QProcess::ExitStatus)
 {
-    CONSOLE_PRINT("Networkgame Closing game cause slave game has been terminated with code " + QString::number(value), GameConsole::eDEBUG);
+    CONSOLE_PRINT("Networkgame closing game " + m_serverName + " cause slave game has been terminated with code " + QString::number(value), GameConsole::eDEBUG);
     closeGame();
     Interpreter* pInterpreter = Interpreter::getInstance();
     emit pInterpreter->sigNetworkGameFinished(value - 1, m_id);
+}
+
+void NetworkGame::errorOccurred(QProcess::ProcessError error)
+{
+    CONSOLE_PRINT("Networkgame error in game " + m_serverName + " with code " + QString::number(error), GameConsole::eDEBUG);
 }
 
 void NetworkGame::closeGame()

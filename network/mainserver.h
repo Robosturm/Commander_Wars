@@ -304,7 +304,7 @@ private:
     class InternNetworkGame : public oxygine::ref_counter
     {
     public:
-        std::shared_ptr<QProcess> process;
+        QScopedPointer<QProcess> process;
         spNetworkGame game;
     };
     explicit MainServer();

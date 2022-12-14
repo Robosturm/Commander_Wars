@@ -143,8 +143,11 @@ namespace oxygine
     void STDRenderer::release()
     {
         indices16.clear();
-        m_uberShader->release();
-        m_uberShader.reset(nullptr);
+        if (!m_uberShader.isNull())
+        {
+            m_uberShader->release();
+            m_uberShader.reset(nullptr);
+        }
         if (white)
         {
             white->release();

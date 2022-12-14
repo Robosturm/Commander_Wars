@@ -44,11 +44,11 @@ WorkerThread::WorkerThread()
     setObjectName("WorkerThread");
 #endif
     Interpreter::setCppOwnerShip(this);
-    moveToThread(Mainapp::getWorkerthread());
     connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigShowMainwindow, this, &WorkerThread::showMainwindow, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigStartSlaveGame, this, &WorkerThread::startSlaveGame, Qt::QueuedConnection);
     connect(Mainapp::getWorkerthread(), &QThread::finished, this, &WorkerThread::onQuit);
+    moveToThread(Mainapp::getWorkerthread());
 }
 
 void WorkerThread::start()

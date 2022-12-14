@@ -5905,89 +5905,89 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1115"/>
-        <location filename="../menue/gamemenue.cpp" line="1699"/>
-        <location filename="../menue/gamemenue.cpp" line="1736"/>
+        <location filename="../menue/gamemenue.cpp" line="1113"/>
+        <location filename="../menue/gamemenue.cpp" line="1697"/>
+        <location filename="../menue/gamemenue.cpp" line="1734"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1123"/>
+        <location filename="../menue/gamemenue.cpp" line="1121"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1158"/>
+        <location filename="../menue/gamemenue.cpp" line="1156"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1559"/>
+        <location filename="../menue/gamemenue.cpp" line="1557"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1560"/>
+        <location filename="../menue/gamemenue.cpp" line="1558"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1561"/>
+        <location filename="../menue/gamemenue.cpp" line="1559"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1562"/>
+        <location filename="../menue/gamemenue.cpp" line="1560"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1563"/>
+        <location filename="../menue/gamemenue.cpp" line="1561"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1564"/>
+        <location filename="../menue/gamemenue.cpp" line="1562"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1565"/>
+        <location filename="../menue/gamemenue.cpp" line="1563"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1566"/>
+        <location filename="../menue/gamemenue.cpp" line="1564"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1590"/>
+        <location filename="../menue/gamemenue.cpp" line="1588"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1600"/>
+        <location filename="../menue/gamemenue.cpp" line="1598"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2057"/>
+        <location filename="../menue/gamemenue.cpp" line="2055"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2088"/>
+        <location filename="../menue/gamemenue.cpp" line="2086"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2114"/>
+        <location filename="../menue/gamemenue.cpp" line="2112"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2291"/>
+        <location filename="../menue/gamemenue.cpp" line="2289"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6268,92 +6268,92 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="265"/>
+        <location filename="../coreengine/mainapp.cpp" line="264"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="272"/>
+        <location filename="../coreengine/mainapp.cpp" line="271"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="279"/>
+        <location filename="../coreengine/mainapp.cpp" line="278"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="286"/>
+        <location filename="../coreengine/mainapp.cpp" line="285"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="227"/>
+        <location filename="../coreengine/mainapp.cpp" line="226"/>
         <source>Checking for new version...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="256"/>
+        <location filename="../coreengine/mainapp.cpp" line="255"/>
         <source>Loading Building Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="295"/>
+        <location filename="../coreengine/mainapp.cpp" line="294"/>
         <source>Loading Terrain Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="302"/>
+        <location filename="../coreengine/mainapp.cpp" line="301"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="309"/>
+        <location filename="../coreengine/mainapp.cpp" line="308"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="316"/>
+        <location filename="../coreengine/mainapp.cpp" line="315"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="323"/>
+        <location filename="../coreengine/mainapp.cpp" line="322"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="330"/>
+        <location filename="../coreengine/mainapp.cpp" line="329"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="337"/>
+        <location filename="../coreengine/mainapp.cpp" line="336"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="344"/>
+        <location filename="../coreengine/mainapp.cpp" line="343"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="351"/>
+        <location filename="../coreengine/mainapp.cpp" line="350"/>
         <source>Loading Movement planner addin Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="358"/>
+        <location filename="../coreengine/mainapp.cpp" line="357"/>
         <source>Loading Ui Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="365"/>
+        <location filename="../coreengine/mainapp.cpp" line="364"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="375"/>
+        <location filename="../coreengine/mainapp.cpp" line="374"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9621,7 +9621,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="1878"/>
+        <location filename="../coreengine/settings.cpp" line="1881"/>
         <source>Default device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10474,43 +10474,43 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WikiDatabase</name>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="51"/>
+        <location filename="../wiki/wikidatabase.cpp" line="49"/>
         <source>CO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="57"/>
+        <location filename="../wiki/wikidatabase.cpp" line="55"/>
         <source>Terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="62"/>
+        <location filename="../wiki/wikidatabase.cpp" line="60"/>
         <source>Building</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="68"/>
+        <location filename="../wiki/wikidatabase.cpp" line="66"/>
         <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="76"/>
-        <location filename="../wiki/wikidatabase.cpp" line="87"/>
+        <location filename="../wiki/wikidatabase.cpp" line="74"/>
+        <location filename="../wiki/wikidatabase.cpp" line="85"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="98"/>
+        <location filename="../wiki/wikidatabase.cpp" line="96"/>
         <source>Perk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="101"/>
+        <location filename="../wiki/wikidatabase.cpp" line="99"/>
         <source>Damage Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikidatabase.cpp" line="101"/>
+        <location filename="../wiki/wikidatabase.cpp" line="99"/>
         <source>Others</source>
         <translation type="unfinished"></translation>
     </message>

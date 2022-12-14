@@ -935,7 +935,6 @@ void GameMenue::despawnSlave()
     {
         if (m_saveAllowed)
         {
-#if 0 // disabled cause code isn't finished for next release
             QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".msav";
             saveMap(saveFile);
             spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
@@ -964,21 +963,20 @@ void GameMenue::despawnSlave()
                 Player* pPlayer = m_pMap->getPlayer(i);
                 if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
                 {
-                    CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), Console::eDEBUG);
+                    CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
                     usernames.append(pPlayer->getPlayerNameId());
                 }
                 else
                 {
-                    CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), Console::eDEBUG);
+                    CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
                 }
             }
             data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
             QJsonDocument doc(data);
-            CONSOLE_PRINT("Sending command " + command + " to server", Console::eDEBUG);
+            CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
             emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
             QThread::currentThread()->msleep(350);
-            CONSOLE_PRINT("Closing slave cause all players have disconnected.", Console::eDEBUG);
-#endif
+            CONSOLE_PRINT("Closing slave cause all players have disconnected.", GameConsole::eDEBUG);
             QCoreApplication::exit(0);
         }
         else

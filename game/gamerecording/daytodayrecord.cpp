@@ -9,7 +9,6 @@ DayToDayRecord::DayToDayRecord(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("DayToDayRecord");
 #endif
-    moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -19,7 +18,6 @@ DayToDayRecord::DayToDayRecord(GameMap* pMap, qint32 playerCount)
 #ifdef GRAPHICSUPPORT
     setObjectName("DayToDayRecord");
 #endif
-    moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     for (qint32 i = 0; i < playerCount; i++)
     {

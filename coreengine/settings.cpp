@@ -50,189 +50,6 @@ Settings::Settings()
     setObjectName("Settings");
 #endif
     Interpreter::setCppOwnerShip(this);
-    QSize size;
-#ifdef GRAPHICSUPPORT
-    size = QApplication::primaryScreen()->availableSize() * QApplication::primaryScreen()->devicePixelRatio();
-#endif
-    bool smallScreenDevice = hasSmallScreen();
-    QString defaultPath = "";
-    qint32 defaultCoCount = 0;
-    if (smallScreenDevice)
-    {
-        defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
-        defaultCoCount = 1;
-    }
-#ifdef USEAPPCONFIGPATH
-    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
-#endif
-    Mainapp::getInstance()->getParser().getUserPath(defaultPath);
-    while (defaultPath.contains("//"))
-    {
-        defaultPath = defaultPath.replace("//", "/");
-    }
-    auto devices = QInputDevice::devices();
-    bool hasTouch = false;
-    for (const auto & device: qAsConst(devices))
-    {
-        if (device->type() == QInputDevice::DeviceType::TouchScreen)
-        {
-            hasTouch = true;
-            break;
-        }
-    }
-
-    m_SettingValues =
-    {
-        // resolution
-        new Value<qint32>{"Resolution", "x", &m_x, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max(), true},
-        new Value<qint32>{"Resolution", "y", &m_y, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max(), true},
-        new Value<qint32>{"Resolution", "width", &m_width, size.width(), 1, size.width(), true},
-        new Value<qint32>{"Resolution", "height", &m_height, size.height(), 1, size.height(), true},
-        new Value<float>{"Resolution", "brightness", &m_brightness, 0, -50, 50},
-        new Value<float>{"Resolution", "gamma", &m_gamma, 1, 0, 50},
-        new Value<bool>{"Resolution", "borderless", &m_borderless, true, false, true, true},
-        new Value<bool>{"Resolution", "fullscreen", &m_fullscreen, false, false, true, true},
-        new Value<bool>{"Resolution", "recordgames", &m_record, false, false, true},
-        new Value<bool>{"Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true},
-        new Value<bool>{"Resolution", "UseHighDpi", &m_useHighDpi, false, false, true},
-
-        // general
-        new Value<QString>{"General", "language", &m_language, "en", "", ""},
-        new Value<float>{"General", "MouseSensitivity", &m_mouseSensitivity, -0.75f, -100, 100},
-        new Value<QString>{"General", "UserPath", &m_userPath, defaultPath, "", ""},
-        new Value<bool>{"General", "TouchScreen", &m_touchScreen, hasTouch, false, true},
-        new Value<qint32>{"General", "TouchPointSensitivity", &m_touchPointSensitivity, 15, 0, size.width()},
-        new Value<bool>{"General", "GamepadEnabled", &m_gamepadEnabled, false, false, true},
-        new Value<bool>{"General", "AutomaticUpdates", &m_automaticUpdates, true, false, true},
-        new Value<float>{"General", "GamepadSensitivity", &m_gamepadSensitivity, 1.0f, 0.1f, 100},
-        new Value<qint32>{"General", "MaxFPS", &m_framesPerSecond, 60, 30, 60},
-        // keys
-        new Value<Qt::Key>{"Keys", "key_escape", &m_key_escape, Qt::Key_Escape, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_console", &m_key_console, Qt::Key_F1, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_screenshot", &m_key_screenshot, Qt::Key_F5, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_mapshot", &m_key_mapshot, Qt::Key_F6, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_up", &m_key_up, Qt::Key_W, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_down", &m_key_down, Qt::Key_S, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_right", &m_key_right, Qt::Key_D, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_left", &m_key_left, Qt::Key_A, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_confirm", &m_key_confirm, Qt::Key_Space, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_cancel", &m_key_cancel, Qt::Key_B, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_next", &m_key_next, Qt::Key_E, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_previous", &m_key_previous, Qt::Key_Q, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_quicksave1", &m_key_quicksave1, Qt::Key_F9, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_quicksave2", &m_key_quicksave2, Qt::Key_F11, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_quickload1", &m_key_quickload1, Qt::Key_F10, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_quickload2", &m_key_quickload2, Qt::Key_F12, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_information", &m_key_information, Qt::Key_I, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapUp", &m_key_moveMapUp, Qt::Key_Down, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapDown", &m_key_moveMapDown, Qt::Key_Up, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapRight", &m_key_moveMapRight, Qt::Key_Left, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapLeft", &m_key_moveMapLeft, Qt::Key_Right, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_MapZoomOut", &m_key_MapZoomOut, Qt::Key_Minus, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_MapZoomIn", &m_key_MapZoomIn, Qt::Key_Plus, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_ShowAttackFields", &m_key_ShowAttackFields, Qt::Key_2, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_ShowIndirectAttackFields", &m_key_ShowIndirectAttackFields, Qt::Key_1, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_up2", &m_key_up2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_down2", &m_key_down2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_right2", &m_key_right2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_left2", &m_key_left2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_confirm2", &m_key_confirm2, Qt::Key_Return, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_cancel2", &m_key_cancel2, Qt::Key_Backspace, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_next2", &m_key_next2, Qt::Key_Tab, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_previous2", &m_key_previous2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_information2", &m_key_information2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapUp2", &m_key_moveMapUp2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapDown2", &m_key_moveMapDown2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapRight2", &m_key_moveMapRight2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_moveMapLeft2", &m_key_moveMapLeft2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_MapZoomOut2", &m_key_MapZoomOut2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_MapZoomIn2", &m_key_MapZoomIn2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_ShowAttackFields2", &m_key_ShowAttackFields2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_ShowIndirectAttackFields2", &m_key_ShowIndirectAttackFields2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_EditorPlaceTerrain", &m_key_EditorPlaceTerrain, Qt::Key_1, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_EditorPlaceBuilding", &m_key_EditorPlaceBuilding, Qt::Key_2, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_EditorPlaceUnit", &m_key_EditorPlaceUnit, Qt::Key_3, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_EditorNextTeam", &m_key_EditorNextTeam, Qt::Key_Tab, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_EditorPreviousTeam", &m_key_EditorPreviousTeam, Qt::Key_Asterisk, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_EditorSelectionRight", &m_key_EditorSelectionRight, Qt::Key_R, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        new Value<Qt::Key>{"Keys", "key_EditorSelectionLeft", &m_key_EditorSelectionLeft, Qt::Key_T, static_cast<Qt::Key>(0), Qt::Key_unknown},
-        // sound
-        new Value<qint32>{"Sound", "TotalVolume", &m_TotalVolume, 100, 0, 100},
-        new Value<qint32>{"Sound", "MusicVolume", &m_MusicVolume, 80, 0, 100},
-        new Value<qint32>{"Sound", "SoundVolume", &m_SoundVolume, 100, 0, 100},
-        new Value<bool>{"Sound", "Muted", &m_muted, false, false, true},
-#ifdef AUDIOSUPPORT
-        new AudioDeviceValue{"Sound", "AudioDevice", &m_audioOutput, DEFAULT_AUDIODEVICE},
-#endif
-        // game
-        new Value<QString>{"Game", "Username", &m_Username, "", "", "", true},
-        new Value<bool>{"Game", "OverworldAnimations", &m_overworldAnimations, true, false, true},
-        new Value<GameEnums::BattleAnimationMode>{"Game", "BattleAnimationMode", &m_battleAnimationsMode, GameEnums::BattleAnimationMode_All, GameEnums::BattleAnimationMode_None, GameEnums::BattleAnimationMode_Enemy},
-        new Value<GameEnums::BattleAnimationType>{"Game", "BattleAnimationType", &m_battleAnimationType, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_FullscreenTransparent},
-        new Value<quint32>{"Game", "AnimationSpeed", &m_animationSpeed, 1, 1, 100},
-        new Value<quint32>{"Game", "BattleAnimationSpeed", &m_battleAnimationSpeed, 1, 1, 100},
-        new Value<quint32>{"Game", "WalkAnimationSpeed", &m_walkAnimationSpeed, 20, 1, 100},
-        new Value<quint32>{"Game", "DialogAnimationSpeed", &m_dialogAnimationSpeed, 1, 1, 100},
-        new Value<quint32>{"Game", "CaptureAnimationSpeed", &m_captureAnimationSpeed, 1, 1, 100},
-        new Value<quint32>{"Game", "MultiTurnCounter", &multiTurnCounter, 4, 1, 10},
-        new Value<qint32>{"Game", "MenuItemCount", &m_MenuItemCount, 13, 5, std::numeric_limits<qint32>::max()},
-        new Value<qint32>{"Game", "MenuItemRowCount", &m_MenuItemRowCount, 2, 1, std::numeric_limits<qint32>::max()},
-        new Value<float>{"Game", "SupplyWarning", &m_supplyWarning, 0.33f, 0.0f, 1.0f},
-        new Value<bool>{"Game", "StaticMarkedFields", &m_StaticMarkedFields, false, false, true},
-        new Value<qint32>{"Game", "ShowCoCount", &m_showCoCount, defaultCoCount, 0, std::numeric_limits<qint32>::max()},
-        new Value<bool>{"Game", "DialogAnimation", &m_dialogAnimation, true, false, true},
-        new Value<bool>{"Game", "CaptureAnimation", &m_captureAnimation, true, false, true},
-        new Value<bool>{"Game", "Day2DayScreen", &m_day2dayScreen, true, false, true},
-        new Value<bool>{"Game", "MovementAnimations", &m_movementAnimations, true, false, true},
-        new Value<QString>{"Game", "LastSaveGame", &m_LastSaveGame, "", "", ""},
-        new Value<QString>{"Game", "DefaultRuleset", &m_defaultRuleset, "", "", ""},
-        new Value<QString>{"Game", "DefaultBannlist", &m_defaultBannlist, "", "", ""},
-        new Value<bool>{"Game", "ShowCursor", &m_ShowCursor, true, false, true},
-        new Value<bool>{"Game", "AutoEndTurn", &m_AutoEndTurn, false, false, true},
-        new Value<bool>{"Game", "AutoCamera", &m_autoCamera, true, false, true},
-        new Value<bool>{"Game", "ShowIngameCoordinates", &m_showIngameCoordinates, true, false, true},
-        new Value<bool>{"Game", "CenterOnSelection", &m_centerOnMarkedField, true, false, true},
-        new Value<bool>{"Game", "SyncAnimations", &m_syncAnimations, false, false, true},
-        new Value<bool>{"Game", "AutoMoveCursor", &m_autoMoveCursor, true, false, true},
-        new Value<bool>{"Game", "UseCoMinis", &m_useCoMinis, true, false, true},
-        new Value<bool>{"Game", "AutoScrolling", &m_autoScrolling, true, false, true},
-        new Value<bool>{"Game", "ShowDetailedBattleForcast", &m_showDetailedBattleForcast, true, false, true},
-        new Value<bool>{"Game", "SimpleDeselect", &m_simpleDeselect, false, false, true},
-        new Value<GameEnums::COInfoPosition>{"Game", "COInfoPosition", &m_coInfoPosition, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Right},
-        new Value<GameEnums::AutoFocusing>{"Game", "AutoFocusing", &m_autoFocusing, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_Owned},
-        new Value<qint32>{"Game", "PauseAfterAction", &m_pauseAfterAction, 0, 0, 100},
-        new Value<QString>{"Game", "AiPipeUuid", &m_pipeUuid, "", "", ""},
-        new Value<bool>{"Game", "UseAiProcess", &m_spawnAiProcess, false, false, true},
-
-        // network
-        new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},
-        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "192.46.216.113", "", ""},
-        new Value<QString>{"Network", "SecondaryServerAdress", &m_secondaryServerAdress, "2600:3c00::f03c:93ff:fe86:009e", "", ""},
-        new Value<quint16>{"Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()},
-        new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
-        new Value<bool>{"Network", "Server", &m_Server, false, false, true},
-        new Value<QString>{"Network", "ServerListenAdress", &m_serverListenAdress, "", "", ""},
-        new Value<QString>{"Network", "ServerSecondaryListenAdress", &m_serverSecondaryListenAdress, "", "", ""},
-        new Value<QString>{"Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""},
-        new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&&10000&20000;::1&&50000&65535", "", ""},
-        new Value<std::chrono::seconds>{"Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(60), std::chrono::seconds(60 * 60 * 24 * 96)},
-        // mailing
-        new Value<QString>{"Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""},
-        new Value<quint16>{"Mailing", "MailServerPort", &m_mailServerPort, 0, 0, std::numeric_limits<quint16>::max()},
-        new Value<qint32>{"Mailing", "MailServerConnectionType", &m_mailServerConnectionType, 2, 0, 2},
-        new Value<QString>{"Mailing", "MailServerUsername", &m_mailServerUsername, "", "", ""},
-        new Value<qint32>{"Mailing", "MailServerAuthMethod", &m_mailServerAuthMethod, 1, 0, 1},
-        new Value<QString>{"Mailing", "MailServerSendAddress", &m_mailServerSendAddress, "", "", ""},
-
-        // auto saving
-        new Value<std::chrono::seconds>{"Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)},
-        new Value<qint32>{"Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 0, 100},
-        // mods
-        new Value<QStringList>{"Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()},
-        // logging
-        new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
-        new Value<GameConsole::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL},
-    };
 }
 
 QString Settings::getPipeUuid()
@@ -1230,6 +1047,192 @@ bool Settings::getRecord()
 void Settings::setRecord(bool record)
 {
     m_pInstance->m_record = record;
+}
+
+void Settings::setup()
+{
+    QSize size;
+#ifdef GRAPHICSUPPORT
+    size = QApplication::primaryScreen()->availableSize() * QApplication::primaryScreen()->devicePixelRatio();
+#endif
+    bool smallScreenDevice = hasSmallScreen();
+    QString defaultPath = "";
+    qint32 defaultCoCount = 0;
+    if (smallScreenDevice)
+    {
+        defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
+        defaultCoCount = 1;
+    }
+#ifdef USEAPPCONFIGPATH
+    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
+#endif
+    Mainapp::getInstance()->getParser().getUserPath(defaultPath);
+    while (defaultPath.contains("//"))
+    {
+        defaultPath = defaultPath.replace("//", "/");
+    }
+    auto devices = QInputDevice::devices();
+    bool hasTouch = false;
+    for (const auto & device: qAsConst(devices))
+    {
+        if (device->type() == QInputDevice::DeviceType::TouchScreen)
+        {
+            hasTouch = true;
+            break;
+        }
+    }
+    m_SettingValues =
+    {
+        // resolution
+        new Value<qint32>{"Resolution", "x", &m_x, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max(), true},
+        new Value<qint32>{"Resolution", "y", &m_y, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max(), true},
+        new Value<qint32>{"Resolution", "width", &m_width, size.width(), 1, size.width(), true},
+        new Value<qint32>{"Resolution", "height", &m_height, size.height(), 1, size.height(), true},
+        new Value<float>{"Resolution", "brightness", &m_brightness, 0, -50, 50},
+        new Value<float>{"Resolution", "gamma", &m_gamma, 1, 0, 50},
+        new Value<bool>{"Resolution", "borderless", &m_borderless, true, false, true, true},
+        new Value<bool>{"Resolution", "fullscreen", &m_fullscreen, false, false, true, true},
+        new Value<bool>{"Resolution", "recordgames", &m_record, false, false, true},
+        new Value<bool>{"Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true},
+        new Value<bool>{"Resolution", "UseHighDpi", &m_useHighDpi, false, false, true},
+
+        // general
+        new Value<QString>{"General", "language", &m_language, "en", "", ""},
+        new Value<float>{"General", "MouseSensitivity", &m_mouseSensitivity, -0.75f, -100, 100},
+        new Value<QString>{"General", "UserPath", &m_userPath, defaultPath, "", ""},
+        new Value<bool>{"General", "TouchScreen", &m_touchScreen, hasTouch, false, true},
+        new Value<qint32>{"General", "TouchPointSensitivity", &m_touchPointSensitivity, 15, 0, size.width()},
+        new Value<bool>{"General", "GamepadEnabled", &m_gamepadEnabled, false, false, true},
+        new Value<bool>{"General", "AutomaticUpdates", &m_automaticUpdates, true, false, true},
+        new Value<float>{"General", "GamepadSensitivity", &m_gamepadSensitivity, 1.0f, 0.1f, 100},
+        new Value<qint32>{"General", "MaxFPS", &m_framesPerSecond, 60, 30, 60},
+        // keys
+        new Value<Qt::Key>{"Keys", "key_escape", &m_key_escape, Qt::Key_Escape, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_console", &m_key_console, Qt::Key_F1, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_screenshot", &m_key_screenshot, Qt::Key_F5, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_mapshot", &m_key_mapshot, Qt::Key_F6, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_up", &m_key_up, Qt::Key_W, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_down", &m_key_down, Qt::Key_S, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_right", &m_key_right, Qt::Key_D, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_left", &m_key_left, Qt::Key_A, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_confirm", &m_key_confirm, Qt::Key_Space, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_cancel", &m_key_cancel, Qt::Key_B, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_next", &m_key_next, Qt::Key_E, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_previous", &m_key_previous, Qt::Key_Q, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_quicksave1", &m_key_quicksave1, Qt::Key_F9, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_quicksave2", &m_key_quicksave2, Qt::Key_F11, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_quickload1", &m_key_quickload1, Qt::Key_F10, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_quickload2", &m_key_quickload2, Qt::Key_F12, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_information", &m_key_information, Qt::Key_I, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapUp", &m_key_moveMapUp, Qt::Key_Down, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapDown", &m_key_moveMapDown, Qt::Key_Up, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapRight", &m_key_moveMapRight, Qt::Key_Left, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapLeft", &m_key_moveMapLeft, Qt::Key_Right, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_MapZoomOut", &m_key_MapZoomOut, Qt::Key_Minus, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_MapZoomIn", &m_key_MapZoomIn, Qt::Key_Plus, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_ShowAttackFields", &m_key_ShowAttackFields, Qt::Key_2, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_ShowIndirectAttackFields", &m_key_ShowIndirectAttackFields, Qt::Key_1, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_up2", &m_key_up2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_down2", &m_key_down2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_right2", &m_key_right2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_left2", &m_key_left2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_confirm2", &m_key_confirm2, Qt::Key_Return, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_cancel2", &m_key_cancel2, Qt::Key_Backspace, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_next2", &m_key_next2, Qt::Key_Tab, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_previous2", &m_key_previous2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_information2", &m_key_information2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapUp2", &m_key_moveMapUp2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapDown2", &m_key_moveMapDown2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapRight2", &m_key_moveMapRight2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_moveMapLeft2", &m_key_moveMapLeft2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_MapZoomOut2", &m_key_MapZoomOut2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_MapZoomIn2", &m_key_MapZoomIn2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_ShowAttackFields2", &m_key_ShowAttackFields2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_ShowIndirectAttackFields2", &m_key_ShowIndirectAttackFields2, static_cast<Qt::Key>(0), static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_EditorPlaceTerrain", &m_key_EditorPlaceTerrain, Qt::Key_1, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_EditorPlaceBuilding", &m_key_EditorPlaceBuilding, Qt::Key_2, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_EditorPlaceUnit", &m_key_EditorPlaceUnit, Qt::Key_3, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_EditorNextTeam", &m_key_EditorNextTeam, Qt::Key_Tab, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_EditorPreviousTeam", &m_key_EditorPreviousTeam, Qt::Key_Asterisk, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_EditorSelectionRight", &m_key_EditorSelectionRight, Qt::Key_R, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        new Value<Qt::Key>{"Keys", "key_EditorSelectionLeft", &m_key_EditorSelectionLeft, Qt::Key_T, static_cast<Qt::Key>(0), Qt::Key_unknown},
+        // sound
+        new Value<qint32>{"Sound", "TotalVolume", &m_TotalVolume, 100, 0, 100},
+        new Value<qint32>{"Sound", "MusicVolume", &m_MusicVolume, 80, 0, 100},
+        new Value<qint32>{"Sound", "SoundVolume", &m_SoundVolume, 100, 0, 100},
+        new Value<bool>{"Sound", "Muted", &m_muted, false, false, true},
+#ifdef AUDIOSUPPORT
+        new AudioDeviceValue{"Sound", "AudioDevice", &m_audioOutput, DEFAULT_AUDIODEVICE},
+#endif
+        // game
+        new Value<QString>{"Game", "Username", &m_Username, "", "", "", true},
+        new Value<bool>{"Game", "OverworldAnimations", &m_overworldAnimations, true, false, true},
+        new Value<GameEnums::BattleAnimationMode>{"Game", "BattleAnimationMode", &m_battleAnimationsMode, GameEnums::BattleAnimationMode_All, GameEnums::BattleAnimationMode_None, GameEnums::BattleAnimationMode_Enemy},
+        new Value<GameEnums::BattleAnimationType>{"Game", "BattleAnimationType", &m_battleAnimationType, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_Detail, GameEnums::BattleAnimationType_FullscreenTransparent},
+        new Value<quint32>{"Game", "AnimationSpeed", &m_animationSpeed, 1, 1, 100},
+        new Value<quint32>{"Game", "BattleAnimationSpeed", &m_battleAnimationSpeed, 1, 1, 100},
+        new Value<quint32>{"Game", "WalkAnimationSpeed", &m_walkAnimationSpeed, 20, 1, 100},
+        new Value<quint32>{"Game", "DialogAnimationSpeed", &m_dialogAnimationSpeed, 1, 1, 100},
+        new Value<quint32>{"Game", "CaptureAnimationSpeed", &m_captureAnimationSpeed, 1, 1, 100},
+        new Value<quint32>{"Game", "MultiTurnCounter", &multiTurnCounter, 4, 1, 10},
+        new Value<qint32>{"Game", "MenuItemCount", &m_MenuItemCount, 13, 5, std::numeric_limits<qint32>::max()},
+        new Value<qint32>{"Game", "MenuItemRowCount", &m_MenuItemRowCount, 2, 1, std::numeric_limits<qint32>::max()},
+        new Value<float>{"Game", "SupplyWarning", &m_supplyWarning, 0.33f, 0.0f, 1.0f},
+        new Value<bool>{"Game", "StaticMarkedFields", &m_StaticMarkedFields, false, false, true},
+        new Value<qint32>{"Game", "ShowCoCount", &m_showCoCount, defaultCoCount, 0, std::numeric_limits<qint32>::max()},
+        new Value<bool>{"Game", "DialogAnimation", &m_dialogAnimation, true, false, true},
+        new Value<bool>{"Game", "CaptureAnimation", &m_captureAnimation, true, false, true},
+        new Value<bool>{"Game", "Day2DayScreen", &m_day2dayScreen, true, false, true},
+        new Value<bool>{"Game", "MovementAnimations", &m_movementAnimations, true, false, true},
+        new Value<QString>{"Game", "LastSaveGame", &m_LastSaveGame, "", "", ""},
+        new Value<QString>{"Game", "DefaultRuleset", &m_defaultRuleset, "", "", ""},
+        new Value<QString>{"Game", "DefaultBannlist", &m_defaultBannlist, "", "", ""},
+        new Value<bool>{"Game", "ShowCursor", &m_ShowCursor, true, false, true},
+        new Value<bool>{"Game", "AutoEndTurn", &m_AutoEndTurn, false, false, true},
+        new Value<bool>{"Game", "AutoCamera", &m_autoCamera, true, false, true},
+        new Value<bool>{"Game", "ShowIngameCoordinates", &m_showIngameCoordinates, true, false, true},
+        new Value<bool>{"Game", "CenterOnSelection", &m_centerOnMarkedField, true, false, true},
+        new Value<bool>{"Game", "SyncAnimations", &m_syncAnimations, false, false, true},
+        new Value<bool>{"Game", "AutoMoveCursor", &m_autoMoveCursor, true, false, true},
+        new Value<bool>{"Game", "UseCoMinis", &m_useCoMinis, true, false, true},
+        new Value<bool>{"Game", "AutoScrolling", &m_autoScrolling, true, false, true},
+        new Value<bool>{"Game", "ShowDetailedBattleForcast", &m_showDetailedBattleForcast, true, false, true},
+        new Value<bool>{"Game", "SimpleDeselect", &m_simpleDeselect, false, false, true},
+        new Value<GameEnums::COInfoPosition>{"Game", "COInfoPosition", &m_coInfoPosition, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Flipping, GameEnums::COInfoPosition_Right},
+        new Value<GameEnums::AutoFocusing>{"Game", "AutoFocusing", &m_autoFocusing, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_LastPos, GameEnums::AutoFocusing_Owned},
+        new Value<qint32>{"Game", "PauseAfterAction", &m_pauseAfterAction, 0, 0, 100},
+        new Value<QString>{"Game", "AiPipeUuid", &m_pipeUuid, "", "", ""},
+        new Value<bool>{"Game", "UseAiProcess", &m_spawnAiProcess, false, false, true},
+
+        // network
+        new Value<quint16>{"Network", "GamePort", &m_GamePort, 9001, 0, std::numeric_limits<quint16>::max()},
+        new Value<QString>{"Network", "ServerAdress", &m_ServerAdress, "192.46.216.113", "", ""},
+        new Value<QString>{"Network", "SecondaryServerAdress", &m_secondaryServerAdress, "2600:3c00::f03c:93ff:fe86:009e", "", ""},
+        new Value<quint16>{"Network", "SlaveServerPort", &m_slaveServerPort, 9003, 0, std::numeric_limits<quint16>::max()},
+        new Value<quint16>{"Network", "ServerPort", &m_ServerPort, 9002, 0, std::numeric_limits<quint16>::max()},
+        new Value<bool>{"Network", "Server", &m_Server, false, false, true},
+        new Value<QString>{"Network", "ServerListenAdress", &m_serverListenAdress, "", "", ""},
+        new Value<QString>{"Network", "ServerSecondaryListenAdress", &m_serverSecondaryListenAdress, "", "", ""},
+        new Value<QString>{"Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""},
+        new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&&10000&20000;::1&&50000&65535", "", ""},
+        new Value<std::chrono::seconds>{"Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(60), std::chrono::seconds(60 * 60 * 24 * 96)},
+        // mailing
+        new Value<QString>{"Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""},
+        new Value<quint16>{"Mailing", "MailServerPort", &m_mailServerPort, 0, 0, std::numeric_limits<quint16>::max()},
+        new Value<qint32>{"Mailing", "MailServerConnectionType", &m_mailServerConnectionType, 2, 0, 2},
+        new Value<QString>{"Mailing", "MailServerUsername", &m_mailServerUsername, "", "", ""},
+        new Value<qint32>{"Mailing", "MailServerAuthMethod", &m_mailServerAuthMethod, 1, 0, 1},
+        new Value<QString>{"Mailing", "MailServerSendAddress", &m_mailServerSendAddress, "", "", ""},
+
+        // auto saving
+        new Value<std::chrono::seconds>{"Autosaving", "AutoSavingTime", &m_autoSavingCylceTime, std::chrono::seconds(60 * 5), std::chrono::seconds(0), std::chrono::seconds(60 * 60 * 24)},
+        new Value<qint32>{"Autosaving", "AutoSavingCycle", &m_autoSavingCycle, 3, 0, 100},
+        // mods
+        new Value<QStringList>{"Mods", "Mods", &m_activeMods, QStringList(), QStringList(), QStringList()},
+        // logging
+        new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
+        new Value<GameConsole::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL},
+    };
 }
 
 void Settings::loadSettings()

@@ -37,8 +37,6 @@ WikiDatabase::WikiDatabase()
 #ifdef GRAPHICSUPPORT
     setObjectName("WikiDatabase");
 #endif
-    Mainapp* pMainapp = Mainapp::getInstance();
-    moveToThread(pMainapp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
 }
 

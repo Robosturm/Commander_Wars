@@ -15,7 +15,6 @@ GameRecorder::GameRecorder(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameRecorder");
 #endif
-    moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

@@ -151,7 +151,7 @@ public:
      */
     static WorkerThread* getWorker()
     {
-        return getInstance()->m_Worker.get();
+        return getInstance()->m_Worker;
     }
     static QProcess & GetAiSubProcess()
     {
@@ -317,7 +317,7 @@ private:
     QScopedPointer<QThread> m_Networkthread;
     QScopedPointer<QThread> m_GameServerThread;
     QScopedPointer<QProcess> m_aiSubProcess;
-    QScopedPointer<WorkerThread> m_Worker;
+    WorkerThread* m_Worker;
     QScopedPointer<AudioManager> m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;
     spTCPClient m_slaveClient;
