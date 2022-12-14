@@ -34,7 +34,7 @@ var Constructor = function()
         building.setFireCount(building.getFireCount() - 1);
 
         var owner = building.getOwner();        
-        var talonGunAnimation = GameAnimationFactory.createAnimation(map, x, y);
+        var talonGunAnimation = GameAnimationFactory.createAnimation(map, x, y, 120);
         talonGunAnimation.addSprite("talon+gun+fire", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, 0, 1.33);
         talonGunAnimation.addSpriteAnimTable("talon+gun+fire+mask", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, owner, 0, 1.33, 1.33, 0, 0, GameEnums.Recoloring_Matrix);
         talonGunAnimation.addSound("talongunattack.wav");
@@ -67,7 +67,7 @@ var Constructor = function()
                 }
             }
         }
-        var talonGunInAnimation = GameAnimationFactory.createAnimation(map, x, y);
+        var talonGunInAnimation = GameAnimationFactory.createAnimation(map, x, y, 120);
         talonGunInAnimation.addSprite("talon+gun+in", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, 0, 1.33);
         talonGunInAnimation.addSpriteAnimTable("talon+gun+in+mask", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, owner, 0, 1.33, 1.33, 0, 0, GameEnums.Recoloring_Matrix);
         talonGunAnimation.queueAnimation(talonGunInAnimation);
