@@ -37,7 +37,7 @@ public:
      * @param player
      * @param value
      */
-    void sendPlayerReady(quint64 socketID, const QVector<qint32> & player, bool value);
+    void sendPlayerReady(quint64 socketID);
     /**
      * @brief setSaveGame
      * @param value

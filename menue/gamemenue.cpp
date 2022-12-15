@@ -864,6 +864,7 @@ void GameMenue::disconnected(quint64 socketID)
         bool observerDisconnect = observer.contains(socketID);
         if (observerDisconnect)
         {
+            CONSOLE_PRINT("Observer has disconnected " + QString::number(socketID), GameConsole::eDEBUG);
             observer.removeAll(socketID);
         }
         else
@@ -889,6 +890,7 @@ void GameMenue::disconnected(quint64 socketID)
                 }
                 if (showDisconnect && socketID > 0)
                 {
+                    CONSOLE_PRINT("Connection to host lost", GameConsole::eDEBUG);
                     m_gameStarted = false;
                     spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
                     addChild(pDialogMessageBox);
@@ -911,6 +913,7 @@ void GameMenue::disconnected(quint64 socketID)
                 }
                 else
                 {
+                    CONSOLE_PRINT("Client connection lost", GameConsole::eDEBUG);
                     spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("A client has disconnected from the game. The client may reconnect to the game."));
                     addChild(pDialogMessageBox);
                 }
@@ -922,15 +925,20 @@ void GameMenue::disconnected(quint64 socketID)
 
 void GameMenue::startDespawnTimer()
 {
-    constexpr qint32 MS_PER_SECOND = 1000;
-    m_slaveDespawnTimer.setSingleShot(true);
-    m_slaveDespawnTimer.start(MS_PER_SECOND);
-    m_slaveDespawnElapseTimer.start();
+    if (m_pNetworkInterface->getConnectedSockets().size() == 0)
+    {
+        CONSOLE_PRINT("GameMenue::startDespawnTimer", GameConsole::eDEBUG);
+        constexpr qint32 MS_PER_SECOND = 1000;
+        m_slaveDespawnTimer.setSingleShot(true);
+        m_slaveDespawnTimer.start(MS_PER_SECOND);
+        m_slaveDespawnElapseTimer.start();
+    }
 }
 
 void GameMenue::despawnSlave()
 {
     std::chrono::milliseconds ms = Settings::getSlaveDespawnTime();
+    CONSOLE_PRINT("GameMenue::despawnSlave elapsed seconds " + QString::number(m_slaveDespawnElapseTimer.elapsed() / 1000), GameConsole::eDEBUG);
     if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
     {
         if (m_saveAllowed)

@@ -1740,14 +1740,8 @@ void Multiplayermenu::startGame()
     }
     else
     {
-        QString command = QString(NetworkCommands::STARTSERVERGAME);
-        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         markGameReady();
-        changeButtonText();
-        QByteArray sendData;
-        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << command;
-        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        changeButtonText();        
     }
 }
 
@@ -1811,20 +1805,10 @@ void Multiplayermenu::sendServerReady(bool value)
         {
             emit m_pNetworkInterface->sigContinueListening();
         }
-        QVector<qint32> player;
-        for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
-        {
-            GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
-            if (aiType != GameEnums::AiTypes_Open &&
-                aiType != GameEnums::AiTypes_ProxyAi)
-            {
-                player.append(i);
-            }
-        }
         CONSOLE_PRINT("Setting player ready information to local players with value "  + QString::number(value), GameConsole::eDEBUG);
         m_pPlayerSelection->setPlayerReady(value);
         CONSOLE_PRINT("Sending ready information to all players with value " + QString::number(value), GameConsole::eDEBUG);
-        m_pPlayerSelection->sendPlayerReady(0, player, value);
+        m_pPlayerSelection->sendPlayerReady(0);
     }
 }
 

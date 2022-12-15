@@ -1296,6 +1296,7 @@ void PlayerSelection::joinObserver(quint64 socketID)
                 auto client = server->getClient(socketID);
                 client->setIsObserver(true);
             }
+            sendPlayerReady(0);
         }
         else
         {
@@ -1363,25 +1364,24 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
     {
         bool value = false;
         stream >> value;
-        QVector<qint32> player;
+        CONSOLE_PRINT("PlayerSelection::recievePlayerReady for socket " + QString::number(socketID) + " is " + (value ? "ready" : "not ready"), GameConsole::eDEBUG);
         for  (qint32 i = 0; i < m_playerSockets.size(); i++)
         {
             if (m_playerSockets[i] == socketID)
             {
-                m_playerReadyFlags[i] = true;
+                m_playerReadyFlags[i] = value;
                 Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
                 if (pCheckbox != nullptr)
                 {
                     pCheckbox->setChecked(value);
                 }
-                player.append(i);
             }
         }
-        sendPlayerReady(socketID, player, value);
+        sendPlayerReady(0);
     }
 }
 
-void PlayerSelection::sendPlayerReady(quint64 socketID, const QVector<qint32> & player, bool value)
+void PlayerSelection::sendPlayerReady(quint64 socketID)
 {
     if (m_pNetworkInterface->getIsServer())
     {
@@ -1389,12 +1389,12 @@ void PlayerSelection::sendPlayerReady(quint64 socketID, const QVector<qint32> & 
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        auto playerCount = m_pMap->getPlayerCount();
         sendStream << command;
-        sendStream << value;
-        sendStream << static_cast<qint32>(player.size());
-        for  (qint32 i = 0; i < player.size(); i++)
+        sendStream << static_cast<qint32>(m_pMap->getPlayerCount());
+        for  (qint32 i = 0; i < playerCount; i++)
         {
-            sendStream << player[i];
+            sendStream << m_playerReadyFlags[i];
         }
         emit m_pNetworkInterface.get()->sigForwardData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer);
     }
@@ -1402,16 +1402,14 @@ void PlayerSelection::sendPlayerReady(quint64 socketID, const QVector<qint32> & 
 
 void PlayerSelection::recievePlayerServerReady(quint64, QDataStream& stream)
 {
-    bool value = false;
-    stream >> value;
     qint32 size = 0;
     stream >> size;
     for  (qint32 i = 0; i < size; i++)
     {
-        qint32 player = 0;
-        stream >> player;
-        m_playerReadyFlags[player] = true;
-        Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(player));
+        bool value = false;
+        stream >> value;
+        m_playerReadyFlags[i] = value;
+        Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
         if (pCheckbox != nullptr)
         {
             pCheckbox->setChecked(value);
@@ -1532,6 +1530,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             // send player update
             emit m_pNetworkInterface->sig_sendData(socketID, sendDataRequester, NetworkInterface::NetworkSerives::Multiplayer, false);
             emit m_pNetworkInterface.get()->sigForwardData(socketID, sendDataOtherClients, NetworkInterface::NetworkSerives::Multiplayer);
+            sendPlayerReady(0);
         }
         else
         {
