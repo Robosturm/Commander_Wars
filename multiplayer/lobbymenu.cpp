@@ -188,11 +188,11 @@ void LobbyMenu::requestUpdateGames()
 {
     if (m_mode == GameViewMode::OpenGames)
     {
-        requestUserUpdateGames();
+        requestServerGames();
     }
     else
     {
-        requestServerGames();
+        requestUserUpdateGames();
     }
 }
 
@@ -280,20 +280,30 @@ void LobbyMenu::hostServer()
 
 void LobbyMenu::joinGame()
 {
-    if (m_currentGame.getUuid() != 0 &&
-       (m_mode == GameViewMode::OwnGames || m_currentGame.hasOpenPlayers()))
+    if (m_currentGame.getUuid() != 0)
     {
-        if (m_currentGame.getLocked())
+        if ((m_mode == GameViewMode::OwnGames || m_currentGame.hasOpenPlayers()))
         {
-            spDialogPassword pDialogTextInput = spDialogPassword::create(tr("Enter Password"), true, "");
-            addChild(pDialogTextInput);
-            connect(pDialogTextInput.get(), &DialogPassword::sigTextChanged, this, &LobbyMenu::joinGamePassword, Qt::QueuedConnection);
-            
+            if (m_currentGame.getLocked())
+            {
+                spDialogPassword pDialogTextInput = spDialogPassword::create(tr("Enter Password"), true, "");
+                addChild(pDialogTextInput);
+                connect(pDialogTextInput.get(), &DialogPassword::sigTextChanged, this, &LobbyMenu::joinGamePassword, Qt::QueuedConnection);
+
+            }
+            else
+            {
+                joinGamePassword("");
+            }
         }
         else
         {
-            joinGamePassword("");
+            CONSOLE_PRINT("Joining game " + m_currentGame.getSlaveName() + " not possible.", GameConsole::eDEBUG);
         }
+    }
+    else
+    {
+        CONSOLE_PRINT("Server error no valid uuid found for game " + m_currentGame.getSlaveName(), GameConsole::eDEBUG);
     }
 }
 

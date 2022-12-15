@@ -359,7 +359,7 @@ private:
     /**
      *
      */
-    qint64 m_uuidGameCounter{0};
+    qint64 m_uuidGameCounter{1};
     /**
      * @brief m_freeAddresses addresses of slaves that have been used and are now free again
      */

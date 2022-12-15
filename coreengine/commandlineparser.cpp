@@ -174,6 +174,14 @@ bool CommandLineParser::getUserPath(QString & path)
 void CommandLineParser::parseArgsPhaseTwo()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    if (m_parser.isSet(m_spawnAiProcess))
+    {
+        Settings::setSpawnAiProcess(m_parser.value(m_spawnAiProcess) == "1");
+    }
+    if (m_parser.isSet(m_aiSlave) && !Settings::getSpawnAiProcess())
+    {
+        Settings::setAiSlave(true);
+    }
     if (m_parser.isSet(m_slaveName))
     {
         QString value = m_parser.value(m_slaveName);

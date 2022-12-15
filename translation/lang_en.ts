@@ -6205,24 +6205,24 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="288"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="363"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="289"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="373"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="331"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="345"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="341"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="355"/>
         <source>Enter Host address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="434"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="444"/>
         <source>Failed to relaunch game on server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="440"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="450"/>
         <source>Host game is no longer available.</source>
         <translation type="unfinished"></translation>
     </message>
