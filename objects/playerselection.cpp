@@ -1369,6 +1369,7 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
         {
             if (m_playerSockets[i] == socketID)
             {
+                CONSOLE_PRINT("Changing player " + QString::number(i), GameConsole::eDEBUG);
                 m_playerReadyFlags[i] = value;
                 Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
                 if (pCheckbox != nullptr)
@@ -1394,6 +1395,7 @@ void PlayerSelection::sendPlayerReady(quint64 socketID)
         sendStream << static_cast<qint32>(m_pMap->getPlayerCount());
         for  (qint32 i = 0; i < playerCount; i++)
         {
+            CONSOLE_PRINT("Player " + QString::number(i) + " is " + (m_playerReadyFlags[i] ? "ready" :  "not ready"), GameConsole::eDEBUG);
             sendStream << m_playerReadyFlags[i];
         }
         emit m_pNetworkInterface.get()->sigForwardData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer);
@@ -1800,7 +1802,8 @@ void PlayerSelection::recievePlayerArmy(quint64, QDataStream& stream)
 
 void PlayerSelection::disconnected(quint64 socketID)
 {
-    if (m_pNetworkInterface->getIsServer())
+    if (m_pNetworkInterface.get() != nullptr &&
+        m_pNetworkInterface->getIsServer())
     {
         CONSOLE_PRINT("Reopening players for socket " + QString::number(socketID) + " after disconnecting", GameConsole::eLogLevels::eDEBUG);
         // handle disconnect of clients here
@@ -2067,7 +2070,7 @@ void PlayerSelection::setPlayerReady(bool value)
         if (m_pMap->getPlayer(i)->getControlType() >= GameEnums::AiTypes_Human &&
             m_pMap->getPlayer(i)->getControlType() != GameEnums::AiTypes_Open)
         {
-            m_playerReadyFlags[i] = true;
+            m_playerReadyFlags[i] = value;
             Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
             if (pCheckbox != nullptr)
             {

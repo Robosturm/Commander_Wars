@@ -1531,7 +1531,7 @@ void Multiplayermenu::exitMenu()
 void Multiplayermenu::disconnected(quint64 socket)
 {
     CONSOLE_PRINT("Multiplayermenu::disconnected", GameConsole::eDEBUG);
-    if (m_networkMode == NetworkMode::Host)
+    if (m_networkMode == NetworkMode::Host && m_local)
     {
         // handled in player selection
         if (Mainapp::getSlave() && m_hostSocket == socket)
@@ -1789,7 +1789,10 @@ void Multiplayermenu::startCountdown()
     {
         CONSOLE_PRINT("Stoping countdown", GameConsole::eDEBUG);
         m_GameStartTimer.stop();
-        sendServerReady(false);
+        if (m_local)
+        {
+            sendServerReady(false);
+        }
     }
 }
 
