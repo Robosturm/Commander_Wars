@@ -51,6 +51,10 @@ private:
         virtual void readValue(QSettings & settings) override
         {
             settings.beginGroup(m_group);
+            if (!settings.contains(m_name))
+            {
+                CONSOLE_PRINT("Key " + QString(m_name) + " in group " + m_group + " not found using default value", GameConsole::eDEBUG);
+            }
             if constexpr(std::is_floating_point<TType>::value)
             {
                 bool ok = false;
@@ -188,6 +192,10 @@ private:
         virtual void readValue(QSettings & settings) override
         {
             settings.beginGroup(m_group);
+            if (!settings.contains(m_name))
+            {
+                CONSOLE_PRINT("Key " + QString(m_name) + " in group " + m_group + " not found using default value", GameConsole::eDEBUG);
+            }
             const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
             QString description = settings.value(m_name, m_defaultValue).toString();
             if (description == DEFAULT_AUDIODEVICE)

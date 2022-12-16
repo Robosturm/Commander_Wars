@@ -173,6 +173,7 @@ bool CommandLineParser::getUserPath(QString & path)
 
 void CommandLineParser::parseArgsPhaseTwo()
 {
+    CONSOLE_PRINT("CommandLineParser::parseArgsPhaseTwo()", GameConsole::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     if (m_parser.isSet(m_spawnAiProcess))
     {

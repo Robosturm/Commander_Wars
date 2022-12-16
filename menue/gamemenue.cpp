@@ -776,6 +776,7 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
     sendStream << m_actionPerformer.getSyncCounter();
     if (playerAis.size() > 0 && m_slaveDespawnTimer.isActive())
     {
+        CONSOLE_PRINT("Stopping slave despawn timer", GameConsole::eDEBUG);
         m_slaveDespawnTimer.stop();
     }
     emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
@@ -929,16 +930,18 @@ void GameMenue::startDespawnTimer()
     {
         CONSOLE_PRINT("GameMenue::startDespawnTimer", GameConsole::eDEBUG);
         constexpr qint32 MS_PER_SECOND = 1000;
-        m_slaveDespawnTimer.setSingleShot(true);
-        m_slaveDespawnTimer.start(MS_PER_SECOND);
         m_slaveDespawnElapseTimer.start();
+        m_slaveDespawnTimer.setSingleShot(false);
+        m_slaveDespawnTimer.start(MS_PER_SECOND);
     }
 }
 
 void GameMenue::despawnSlave()
 {
+    const auto multiplier = 0.001f;
     std::chrono::milliseconds ms = Settings::getSlaveDespawnTime();
-    CONSOLE_PRINT("GameMenue::despawnSlave elapsed seconds " + QString::number(m_slaveDespawnElapseTimer.elapsed() / 1000), GameConsole::eDEBUG);
+    auto elapsed = m_slaveDespawnElapseTimer.elapsed();
+    CONSOLE_PRINT("GameMenue::despawnSlave elapsed seconds " + QString::number(elapsed * multiplier) + " target time " + QString::number(ms.count() * multiplier), GameConsole::eDEBUG);
     if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
     {
         if (m_saveAllowed)

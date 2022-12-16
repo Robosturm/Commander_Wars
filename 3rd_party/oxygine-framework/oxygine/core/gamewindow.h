@@ -115,7 +115,7 @@ namespace oxygine
 
         bool isMainThread() const
         {
-            return QThread::currentThread() == m_pMainThread;
+            return QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr;
         }
         virtual void launchGame() override;
 

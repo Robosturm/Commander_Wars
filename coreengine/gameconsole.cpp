@@ -66,6 +66,28 @@ GameConsole::GameConsole()
     setObjectName("Console");
 #endif
     Interpreter::setCppOwnerShip(this);
+    m_output.reserve(m_outputSize);
+    m_lastmsgs.reserve(m_lastMsgSize);
+}
+
+GameConsole* GameConsole::getInstance()
+{
+    if (m_pConsole.get() == nullptr)
+    {
+        m_pConsole = spConsole::create();
+        qInstallMessageHandler(GameConsole::messageOutput);
+        CONSOLE_PRINT("Console created", GameConsole::eDEBUG);
+    }
+    return m_pConsole.get();
+}
+
+bool GameConsole::hasInstance()
+{
+    return m_pConsole.get() != nullptr;
+}
+
+void GameConsole::init()
+{
     // move console to top
     oxygine::Actor::setPriority(static_cast<qint32>(Mainapp::ZOrder::Console));
     m_pBackgroundsprite = oxygine::spColorRectSprite::create();
@@ -97,29 +119,6 @@ GameConsole::GameConsole()
         event->stopPropagation();
         emit sigFocused();
     });
-
-    m_output.reserve(m_outputSize);
-    m_lastmsgs.reserve(m_lastMsgSize);
-}
-
-GameConsole* GameConsole::getInstance()
-{
-    if (m_pConsole.get() == nullptr)
-    {
-        m_pConsole = spConsole::create();
-        qInstallMessageHandler(GameConsole::messageOutput);
-        CONSOLE_PRINT("Console created", GameConsole::eDEBUG);
-    }
-    return m_pConsole.get();
-}
-
-bool GameConsole::hasInstance()
-{
-    return m_pConsole.get() != nullptr;
-}
-
-void GameConsole::init()
-{
     // Print some Info
     CONSOLE_PRINT("Started with: " + QCoreApplication::arguments().join(" "), GameConsole::eINFO);
     CONSOLE_PRINT("Enter \"help()\" for console info.", GameConsole::eLogLevels::eINFO);

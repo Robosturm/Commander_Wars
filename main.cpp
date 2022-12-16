@@ -36,6 +36,7 @@ int main(qint32 argc, char* argv[])
         Settings* pSettings = Settings::getInstance();
         auto & parser = window.getParser();
         parser.parseArgsPhaseOne(app);
+        GameConsole::getInstance();
         pSettings->setup();
         Settings::loadSettings();
         parser.parseArgsPhaseTwo();

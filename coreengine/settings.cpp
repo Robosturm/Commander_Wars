@@ -1215,7 +1215,7 @@ void Settings::setup()
         new Value<QString>{"Network", "ServerSecondaryListenAdress", &m_serverSecondaryListenAdress, "", "", ""},
         new Value<QString>{"Network", "SlaveListenAdress", &m_slaveListenAdress, "", "", ""},
         new Value<QString>{"Network", "SlaveHostOptions", &m_slaveHostOptions, "::1&&10000&20000;::1&&50000&65535", "", ""},
-        new Value<std::chrono::seconds>{"Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(60), std::chrono::seconds(60 * 60 * 24 * 96)},
+        new Value<std::chrono::seconds>{"Network", "SlaveDespawnTime", &m_slaveDespawnTime, std::chrono::seconds(60 * 60 * 24), std::chrono::seconds(1), std::chrono::seconds(60 * 60 * 24 * 96)},
         // mailing
         new Value<QString>{"Mailing", "MailServerAddress", &m_mailServerAddress, "", "", ""},
         new Value<quint16>{"Mailing", "MailServerPort", &m_mailServerPort, 0, 0, std::numeric_limits<quint16>::max()},
@@ -1237,6 +1237,7 @@ void Settings::setup()
 
 void Settings::loadSettings()
 {
+    CONSOLE_PRINT("Settings::loadSettings()", GameConsole::eDEBUG);
     bool ok = false;
     QSettings settings(m_pInstance->m_settingFile, QSettings::IniFormat);
     for (auto setting : m_pInstance->m_SettingValues)
