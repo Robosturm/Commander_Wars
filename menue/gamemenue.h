@@ -343,6 +343,13 @@ protected slots:
      */
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
+     * @brief recieveServerData
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    /**
      * @brief disconnected
      * @param socketID
      */
@@ -424,6 +431,10 @@ protected slots:
      * @brief executeCommand
      */
     void executeCommand(QString command);
+    /**
+     * @brief closeSlave
+     */
+    void closeSlave();
 protected:
     /**
      * @brief startDespawnTimer
@@ -476,7 +487,7 @@ protected:
     QString m_saveFile;
     bool m_saveMap{false};
     bool m_exitAfterSave{false};
-    bool m_saveAllowed{false};
+    bool m_saveAllowed{true};
     bool m_isReplay{false};
     quint8 m_terminated{0};
 

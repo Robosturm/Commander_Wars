@@ -261,4 +261,9 @@ namespace NetworkCommands
      * @brief SLAVEINFODESPAWNING
      */
     const char* const SLAVEINFODESPAWNING = "SLAVEINFODESPAWNING";
+
+    /**
+     * @brief DESPAWNSLAVE
+     */
+    const char* const DESPAWNSLAVE = "DESPAWNSLAVE";
 }

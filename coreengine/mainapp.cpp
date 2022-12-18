@@ -390,6 +390,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 Settings::setFramesPerSecond(Settings::getFramesPerSecond());
                 m_Timer.start(m_timerCycle, this);
             }
+            GameConsole::getInstance()->moveToThread(Mainapp::getWorkerthread());
             emit m_Worker->sigStart();
             break;
         }

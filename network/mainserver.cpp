@@ -323,6 +323,7 @@ void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData
                 break;
             }
         }
+        game->game->onSlaveRelaunched();
     }
     else
     {
@@ -335,7 +336,25 @@ void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & obj
     SuspendedSlaveInfo slaveInfo;
     slaveInfo.savefile = objData.value(JsonKeys::JSONKEY_SAVEFILE).toString();
     slaveInfo.game.fromJson(objData);
+    setUuidForGame(slaveInfo.game);
     m_runningSlaves.append(slaveInfo);
+    QString command = NetworkCommands::DESPAWNSLAVE;
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QJsonDocument doc(data);
+    CONSOLE_PRINT("Sending command " + command + " to slave to socket " + QString::number(socketID), GameConsole::eDEBUG);
+    emit m_pSlaveServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void MainServer::setUuidForGame(NetworkGameData & game)
+{
+    game.setUuid(m_uuidGameCounter);
+    ++m_uuidGameCounter;
+    if (m_uuidGameCounter == 0)
+    {
+        ++m_uuidGameCounter;
+    }
+
 }
 
 void MainServer::onSlaveReady(quint64 socketID, const QJsonObject & objData)
@@ -463,8 +482,7 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
         // only send valid game data to clients
         if (game->game.get() != nullptr &&
             game->game->getServerName() == slave &&
-            game->game->getSlaveRunning() &&
-            game->game->getData().getPlayers() > 0)
+            game->game->getSlaveRunning())
         {
             // send data
             QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
@@ -601,12 +619,16 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo)
         game->game->getData().setSlaveAddress(slaveAddress);
         game->game->getData().setSlaveSecondaryAddress(slaveSecondaryAddress);
         game->game->getData().setSlavePort(slavePort);
-        game->game->getData().setUuid(m_uuidGameCounter);
-        ++m_uuidGameCounter;
-        if (m_uuidGameCounter == 0)
-        {
-            ++m_uuidGameCounter;
-        }
+        game->game->getData().setSlaveName(slaveName);
+        setUuidForGame(game->game->getData());
+        // copy over suspended slave data
+        game->game->getData().setPlayerNames(slaveInfo.game.getPlayerNames());
+        game->game->getData().setMapName(slaveInfo.game.getMapName());
+        game->game->getData().setDescription(slaveInfo.game.getDescription());
+        game->game->getData().setMods(slaveInfo.game.getMods());
+        game->game->getData().setMaxPlayers(slaveInfo.game.getMaxPlayers());
+        game->game->getData().setLocked(slaveInfo.game.getLocked());
+        // connect signals and spawn process
         connect(game->process.get(), &QProcess::finished, game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->process.get(), &QProcess::errorOccurred, game->game.get(), &NetworkGame::errorOccurred, Qt::QueuedConnection);
         connect(game->game.get(), &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
@@ -685,12 +707,8 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         game->game->getData().setSlaveAddress(slaveAddress);
         game->game->getData().setSlaveSecondaryAddress(slaveSecondaryAddress);
         game->game->getData().setSlavePort(slavePort);
-        game->game->getData().setUuid(m_uuidGameCounter);
-        ++m_uuidGameCounter;
-        if (m_uuidGameCounter == 0)
-        {
-            ++m_uuidGameCounter;
-        }
+        game->game->getData().setMods(mods);
+        setUuidForGame(game->game->getData());
         connect(game->process.get(), &QProcess::finished, game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->process.get(), &QProcess::errorOccurred, game->game.get(), &NetworkGame::errorOccurred, Qt::QueuedConnection);
         connect(game->game.get(), &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);

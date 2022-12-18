@@ -74,7 +74,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     m_pNetworkInterface = pNetworkInterface;
     loadGameMenue();
     loadUIButtons();
-    if (m_pNetworkInterface.get() != nullptr && !startDirectly)
+    if (m_pNetworkInterface.get() != nullptr)
     {
         
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -89,26 +89,35 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         }
         connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &GameMenue::disconnected, Qt::QueuedConnection);
         connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &GameMenue::recieveData, Qt::QueuedConnection);
+        if (Mainapp::getSlave())
+        {
+            CONSOLE_PRINT("GameMenue is listening to master server data", GameConsole::eDEBUG);
+            spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+            connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &GameMenue::recieveServerData, Qt::QueuedConnection);
+        }
         if (m_pNetworkInterface->getIsServer())
         {
+            CONSOLE_PRINT("GameMenue server is listening to new players", GameConsole::eDEBUG);
             m_PlayerSockets = m_pNetworkInterface->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
         }
-        spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players"), 1000 * 60 * 5);
-        addChild(pDialogConnecting);
-        connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
-        if (pNetworkInterface->getIsObserver() || rejoin)
+        if (!startDirectly)
         {
-            connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
-            connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
-            connect(this, &GameMenue::sigSyncFinished, this, &GameMenue::startGame, Qt::QueuedConnection);
+            spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players"), 1000 * 60 * 5);
+            addChild(pDialogConnecting);
+            connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
+            if (pNetworkInterface->getIsObserver() || rejoin)
+            {
+                connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+                connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+                connect(this, &GameMenue::sigSyncFinished, this, &GameMenue::startGame, Qt::QueuedConnection);
+            }
+            else
+            {
+                connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+                connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
+            }
         }
-        else
-        {
-            connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
-            connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
-        }
-
         m_pChat = spChat::create(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat, this);
         m_pChat->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);
@@ -355,12 +364,32 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             m_ChatButton->addTween(m_chatButtonShineTween);
         }
     }
-    else if (service == NetworkInterface::NetworkSerives::Game)
-    {
-    }
     else
     {
         CONSOLE_PRINT("Unknown service " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+    }
+}
+
+void GameMenue::recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+{
+    if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
+    {
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject objData = doc.object();
+        QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
+        CONSOLE_PRINT("Master server Network Command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        if (messageType == NetworkCommands::DESPAWNSLAVE)
+        {
+            closeSlave();
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown master server service " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 
@@ -929,9 +958,9 @@ void GameMenue::startDespawnTimer()
     if (m_pNetworkInterface->getConnectedSockets().size() == 0)
     {
         CONSOLE_PRINT("GameMenue::startDespawnTimer", GameConsole::eDEBUG);
-        constexpr qint32 MS_PER_SECOND = 1000;
         m_slaveDespawnElapseTimer.start();
         m_slaveDespawnTimer.setSingleShot(false);
+        constexpr qint32 MS_PER_SECOND = 1000;
         m_slaveDespawnTimer.start(MS_PER_SECOND);
     }
 }
@@ -986,15 +1015,19 @@ void GameMenue::despawnSlave()
             QJsonDocument doc(data);
             CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
             emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-            QThread::currentThread()->msleep(350);
-            CONSOLE_PRINT("Closing slave cause all players have disconnected.", GameConsole::eDEBUG);
-            QCoreApplication::exit(0);
+            m_slaveDespawnTimer.stop();
         }
         else
         {
             GameAnimationFactory::skipAllAnimations();
         }
     }
+}
+
+void GameMenue::closeSlave()
+{
+    CONSOLE_PRINT("Closing slave cause all players have disconnected.", GameConsole::eDEBUG);
+    QCoreApplication::exit(0);
 }
 
 bool GameMenue::isNetworkGame()
@@ -1976,6 +2009,7 @@ void GameMenue::sendGameStartedToServer()
         data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
         QJsonDocument doc(data);
         emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        startDespawnTimer();
     }
 }
 

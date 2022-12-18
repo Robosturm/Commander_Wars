@@ -200,7 +200,7 @@ void Multiplayermenu::showMapSelection()
 
 void Multiplayermenu::playerJoined(quint64 socketID)
 {
-    CONSOLE_PRINT("Multiplayermenu::playerJoined", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Multiplayermenu::playerJoined " +QString::number(socketID) , GameConsole::eDEBUG);
     if (m_pNetworkInterface->getIsServer() &&
        (m_local || Mainapp::getSlave()))
     {
@@ -241,13 +241,17 @@ void Multiplayermenu::recieveServerData(quint64 socketID, QByteArray data, Netwo
         {
             launchGameOnServer(stream);
         }
+        else
+        {
+            CONSOLE_PRINT("Unknown master server command " + messageType + " received", GameConsole::eDEBUG);
+        }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
     {
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        CONSOLE_PRINT("Master server network command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
 
@@ -258,7 +262,7 @@ void Multiplayermenu::recieveServerData(quint64 socketID, QByteArray data, Netwo
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unknown master server command " + messageType + " received", GameConsole::eDEBUG);
         }
     }
 }
@@ -634,7 +638,7 @@ void Multiplayermenu::onServerRelaunchSlave(quint64 socketID, const QJsonObject 
     QString savefile = objData.value(JsonKeys::JSONKEY_MAPNAME).toString();
     if (QFile::exists(savefile))
     {
-        CONSOLE_PRINT("Relaunching slave with savefile " + savefile, GameConsole::eERROR);
+        CONSOLE_PRINT("Relaunching slave with savefile " + savefile, GameConsole::eDEBUG);
         spGameMap pMap = spGameMap::create(savefile, false, false, true);
         spGameMenue pMenu = spGameMenue::create(pMap, true, m_pNetworkInterface, false, true);
         oxygine::Stage::getStage()->addChild(pMenu);
@@ -648,6 +652,8 @@ void Multiplayermenu::onServerRelaunchSlave(quint64 socketID, const QJsonObject 
         spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
         emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         oxygine::Actor::detach();
+        CONSOLE_PRINT("Deleting relaunched savefile " + savefile, GameConsole::eDEBUG);
+        QFile::remove(savefile);
     }
     else
     {

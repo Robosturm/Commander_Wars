@@ -75,7 +75,7 @@ public:
     void startCloseTimer();
     const QString &getSlaveRespawnFile() const;
     void setSlaveRespawnFile(const QString &newSlaveRespawnFile);
-
+    void onSlaveRelaunched();
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);

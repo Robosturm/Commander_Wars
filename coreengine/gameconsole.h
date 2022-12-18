@@ -220,22 +220,18 @@ private:
     oxygine::spTextField m_editTextfield;
 };
 
-static inline void CONSOLE_PRINT(const QString & message, GameConsole::eLogLevels logLevel)
-{
-    if (logLevel >= GameConsole::getLogLevel())
-    {
-        GameConsole::print(message, logLevel);
+#define CONSOLE_PRINT(message, logLevel) \
+    if (logLevel >= GameConsole::getLogLevel()) \
+    {  \
+        GameConsole::print(message, logLevel); \
     }
-}
 
 #ifdef GAMEDEBUG
-static inline void AI_CONSOLE_PRINT(const QString & message, GameConsole::eLogLevels logLevel)
-{
-    if (logLevel >= GameConsole::getLogLevel())
-    {
-        GameConsole::print(message, logLevel);
+#define AI_CONSOLE_PRINT(message, logLevel) \
+    if (logLevel >= GameConsole::getLogLevel()) \
+    { \
+        GameConsole::print(message, logLevel); \
     }
-}
 #else
 #define AI_CONSOLE_PRINT(text, logLevel)
 #endif

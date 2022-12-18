@@ -564,6 +564,7 @@ void LobbyMenu::selectGame()
 
 void LobbyMenu::connected(quint64 socket)
 {
+    CONSOLE_PRINT("LobbyMenu::connected " + QString::number(socket), GameConsole::eDEBUG);
     QString password = Settings::getServerPassword();
     spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
     addChild(pDialog);

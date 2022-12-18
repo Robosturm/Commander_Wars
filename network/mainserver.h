@@ -128,6 +128,11 @@ private slots:
     void executeScript();
 private:
     /**
+     * @brief setUuidForGame
+     * @param game
+     */
+    void setUuidForGame(NetworkGameData & game);
+    /**
      * @brief spawnSlaveGame checks if a slave game can be spawned and spawns a slave game on the server
      * @param stream
      * @param socketID
