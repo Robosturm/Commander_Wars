@@ -323,10 +323,9 @@ void LobbyMenu::joinGamePassword(QString password)
     }
     if (exists)
     {
-        CONSOLE_PRINT("Leaving Lobby Menue to join server game", GameConsole::eDEBUG);
         QString command = QString(NetworkCommands::SERVERJOINGAME);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
-
+        showContactingServer();
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_SLAVENAME, m_currentGame.getSlaveName());
@@ -334,6 +333,22 @@ void LobbyMenu::joinGamePassword(QString password)
         emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         m_password = password;
     }
+}
+
+void LobbyMenu::showContactingServer()
+{
+    spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Contacting server"), 1000 * 60 * 5);
+    addChild(pDialogConnecting);
+    connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &LobbyMenu::cancelWaitingForServer, Qt::QueuedConnection);
+    connect(this, &LobbyMenu::sigServerResponded, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+}
+
+void LobbyMenu::cancelWaitingForServer()
+{
+    CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
+    spLobbyMenu newMenu = spLobbyMenu::create();
+    oxygine::Stage::getStage()->addChild(newMenu);
+    oxygine::Actor::detach();
 }
 
 void LobbyMenu::joinAdress()
@@ -441,13 +456,14 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         else if (messageType == NetworkCommands::SERVERNOGAMESLOTSAVAILABLE)
         {
             spDialogMessageBox pDialogMessageBox;
-            pDialogMessageBox = spDialogMessageBox::create(tr("Failed to relaunch game on server."));
+            pDialogMessageBox = spDialogMessageBox::create(tr("Failed to launch game on server cause no more game slots are available."));
             addChild(pDialogMessageBox);
         }
         else if (messageType == NetworkCommands::SERVERGAMENOLONGERAVAILABLE)
         {
+            emit sigServerResponded();
             spDialogMessageBox pDialogMessageBox;
-            pDialogMessageBox = spDialogMessageBox::create(tr("Host game is no longer available."));
+            pDialogMessageBox = spDialogMessageBox::create(tr("Host game is no longer available or is currently relaunched."));
             addChild(pDialogMessageBox);
         }
         else if (messageType == NetworkCommands::SENDPUBLICKEY)
@@ -504,6 +520,7 @@ void LobbyMenu::updateGameData(const QJsonObject & objData)
 
 void LobbyMenu::joinSlaveGame(const QJsonObject & objData)
 {
+    emit sigServerResponded();
     QString slaveAddress = objData.value(JsonKeys::JSONKEY_ADDRESS).toString();
     QString secondarySlaveAddress = objData.value(JsonKeys::JSONKEY_SECONDARYADDRESS).toString();
     quint16 slavePort = objData.value(JsonKeys::JSONKEY_PORT).toInteger();

@@ -2129,3 +2129,52 @@ void PlayerSelection::changeAllTeams(qint32 value)
         }
     }
 }
+
+void PlayerSelection::serializeObject(QDataStream& stream) const
+{
+    stream << getVersion();
+    stream << static_cast<qint32>(m_playerReadyFlags.size());
+    for (auto & item : m_playerReadyFlags)
+    {
+        stream << item;
+    }
+    if (m_pCampaign.get() != nullptr)
+    {
+        stream << true;
+        m_pCampaign->serializeObject(stream);
+    }
+    else
+    {
+        stream << false;
+    }
+    stream << m_saveGame;
+    stream << m_playerReady;
+    stream << m_isServerGame;
+    m_pMap->serializeObject(stream);
+}
+
+void PlayerSelection::deserializeObject(QDataStream& stream)
+{
+    qint32 version = 0;
+    stream >> version;
+    qint32 size = 0;
+    stream >> size;
+    for (qint32 i = 0; i < size; ++i)
+    {
+        bool ready = false;
+        stream >> ready;
+        m_playerReadyFlags.append(ready);
+    }
+    bool hasCampaign = false;
+    stream >> hasCampaign;
+    if (hasCampaign)
+    {
+        m_pCampaign = spCampaign::create();
+        m_pCampaign->deserializeObject(stream);
+    }
+    stream >> m_saveGame;
+    stream >> m_playerReady;
+    stream >> m_isServerGame;
+    m_pMap = new GameMap(stream, m_saveGame);
+}
+

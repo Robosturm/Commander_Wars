@@ -10,16 +10,36 @@
 #include "game/gamemap.h"
 #include "game/campaign.h"
 
+#include "coreengine/fileserializable.h"
+
 class DropDownmenu;
 class PlayerSelection;
 using spPlayerSelection = oxygine::intrusive_ptr<PlayerSelection>;
 
-class PlayerSelection final : public CreatedGui
+class PlayerSelection final : public CreatedGui, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit PlayerSelection(qint32 width, qint32 heigth);
     ~PlayerSelection() = default;
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serializeObject(QDataStream& stream) const;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& stream);
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() const
+    {
+        return 1;
+    }
     void showPlayerSelection();    
     void attachNetworkInterface(spNetworkInterface pNetworkInterface);    
     void attachCampaign(spCampaign campaign);

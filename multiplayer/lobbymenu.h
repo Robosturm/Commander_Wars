@@ -41,6 +41,7 @@ signals:
     void sigUpdateGamesView();
     void sigChangeLobbyMode();
     void sigRequestUpdateGames();
+    void sigServerResponded();
 public slots:
     bool getServerRequestNewPassword() const;
     void setServerRequestNewPassword(bool newServerRequestNewPassword);
@@ -71,6 +72,8 @@ public slots:
     void enableServerButtons(bool enable);
     void changeLobbyMode();
     void requestUpdateGames();
+    void showContactingServer();
+    void cancelWaitingForServer();
 protected slots:
     virtual void onEnter() override;
 private:

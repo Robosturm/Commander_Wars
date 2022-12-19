@@ -67,12 +67,13 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_HitSprite->setSize(100, 16);
     m_HitSprite->setScale(2.5f);
     m_HitSprite->setPosition(10, 200);
+    auto blackStyle = style;
+    blackStyle.color = Qt::black;
     oxygine::spTextField pTextField = oxygine::spTextField::create();
     pTextField->setPosition(14, 1);
-    pTextField->setStyle(style);
+    pTextField->setStyle(blackStyle);
     pTextField->setScale(1 / m_HitSprite->getScaleX());
     pTextField->setHtmlText(tr("Hit"));
-    pTextField->setY(3);
     m_HitSprite->setWidth(pTextField->getTextRect().getWidth() / m_HitSprite->getScaleX() + 21);
     m_HitSprite->addChild(pTextField);
     addChild(m_HitSprite);
@@ -88,10 +89,9 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_MissSprite->setPosition(10, 300);
     pTextField = oxygine::spTextField::create();
     pTextField->setPosition(14, 1);
-    pTextField->setStyle(style);
+    pTextField->setStyle(blackStyle);
     pTextField->setScale(1 / m_MissSprite->getScaleX());
     pTextField->setHtmlText(tr("Miss"));
-    pTextField->setY(3);
     m_MissSprite->setWidth(pTextField->getTextRect().getWidth() / m_MissSprite->getScaleX()  + 21);
     m_MissSprite->addChild(pTextField);
     addChild(m_MissSprite);

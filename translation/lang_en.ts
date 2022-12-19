@@ -1445,12 +1445,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="74"/>
+        <location filename="../objects/coinfoactor.cpp" line="76"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="93"/>
+        <location filename="../objects/coinfoactor.cpp" line="94"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6206,24 +6206,29 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="289"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="373"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="388"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="341"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="355"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="340"/>
+        <source>Contacting server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/lobbymenu.cpp" line="356"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="370"/>
         <source>Enter Host address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="444"/>
-        <source>Failed to relaunch game on server.</source>
+        <location filename="../multiplayer/lobbymenu.cpp" line="459"/>
+        <source>Failed to launch game on server cause no more game slots are available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="450"/>
-        <source>Host game is no longer available.</source>
+        <location filename="../multiplayer/lobbymenu.cpp" line="466"/>
+        <source>Host game is no longer available or is currently relaunched.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
