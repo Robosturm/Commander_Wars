@@ -13,6 +13,7 @@ namespace JsonKeys
     const char* const JSONKEY_JOINEDPLAYERS = "joinedPlayers";
     const char* const JSONKEY_MAXPLAYERS = "maxPlayers";
     const char* const JSONKEY_USEDMODS = "usedMods";
+    const char* const JSONKEY_RUNNINGGAME = "runningGame";
     const char* const JSONKEY_MOD = "mod";
     const char* const JSONKEY_GAMES = "games";
     const char* const JSONKEY_GAMEDATA = "gameData";

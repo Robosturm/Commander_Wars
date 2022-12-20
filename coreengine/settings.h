@@ -20,7 +20,7 @@
 
 class GLGraphicsView;
 class Settings;
-using spSettings = oxygine::intrusive_ptr<Settings>;
+using spSettings = QScopedPointer<Settings>;
 
 class Settings final : public QObject, public oxygine::ref_counter
 {
@@ -256,7 +256,6 @@ public:
 
     ~Settings() = default;
     static Settings* getInstance();
-    static void shutdown();
     void setup();
     static void loadSettings();    
     static void saveSettings();

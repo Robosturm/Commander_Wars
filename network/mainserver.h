@@ -354,6 +354,10 @@ private:
      */
     QVector<SuspendedSlaveInfo> m_runningSlaves;
     /**
+     * @brief m_runningLobbies
+     */
+    QVector<SuspendedSlaveInfo> m_runningLobbies;
+    /**
      * @brief m_lastUsedAddressIndex last used index in the m_slaveAddressOptions
      */
     qint32 m_lastUsedAddressIndex{0};

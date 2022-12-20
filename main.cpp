@@ -79,7 +79,6 @@ int main(qint32 argc, char* argv[])
     Userdata::getInstance()->release();
     CONSOLE_PRINT("Saving settings", GameConsole::eDEBUG);
     Settings::saveSettings();
-    Settings::shutdown();
     CONSOLE_PRINT("Shutting down main window", GameConsole::eDEBUG);
     window.shutdown();
     // give os time to save the settings

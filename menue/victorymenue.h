@@ -104,7 +104,18 @@ protected slots:
      * @brief quitOnAiPipe
      */
     void quitOnAiPipe();
+    /**
+     * @brief recieveServerData
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 protected:
+    /**
+     * @brief closeSlave
+     */
+    void closeSlave();
     /**
      * @brief drawGraphStep
      */

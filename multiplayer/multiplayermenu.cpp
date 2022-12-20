@@ -93,6 +93,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
     // change the name of the start button
     if (m_networkMode == NetworkMode::Client)
     {
+        // m_pReadyAndLeave->setVisible(true);
         dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
     }
     else if (m_networkMode == NetworkMode::Observer)
@@ -123,7 +124,94 @@ void Multiplayermenu::init()
         emit sigLoadSaveGame();
     });
     connect(this, &Multiplayermenu::sigLoadSaveGame, this, &Multiplayermenu::showLoadSaveGameDialog, Qt::QueuedConnection);
+
+    m_pReadyAndLeave = ObjectManager::createButton(tr("Ready + Exit"));
+    m_pReadyAndLeave->setPosition(Settings::getWidth() - m_pReadyAndLeave->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
+                                       Settings::getHeight() - 10 - m_pReadyAndLeave->getScaledHeight());
+    addChild(m_pReadyAndLeave);
+    m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    {
+        emit sigReadyAndLeave();
+    });
+    connect(this, &Multiplayermenu::sigReadyAndLeave, this, &Multiplayermenu::readyAndLeave, Qt::QueuedConnection);
+    m_pReadyAndLeave->setVisible(false);
+
     connect(&m_GameStartTimer, &QTimer::timeout, this, &Multiplayermenu::countdown, Qt::QueuedConnection);
+    connect(&m_slaveDespawnTimer, &QTimer::timeout, this, &Multiplayermenu::despawnSlave, Qt::QueuedConnection);
+}
+
+void Multiplayermenu::despawnSlave()
+{
+    const auto multiplier = 0.001f;
+    std::chrono::milliseconds ms = Settings::getSlaveDespawnTime();
+    auto elapsed = m_slaveDespawnElapseTimer.elapsed();
+    CONSOLE_PRINT("Multiplayermenu::despawnSlave elapsed seconds " + QString::number(elapsed * multiplier) + " target time " + QString::number(ms.count() * multiplier), GameConsole::eDEBUG);
+    if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
+    {
+        QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".lsav";
+        saveLobbyState(saveFile);
+        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+        QString command = NetworkCommands::SLAVEINFODESPAWNING;
+        spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, 0);
+        data.insert(JsonKeys::JSONKEY_MAXPLAYERS, pMap->getPlayerCount());
+        data.insert(JsonKeys::JSONKEY_MAPNAME, pMap->getMapName());
+        data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, "");
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+        data.insert(JsonKeys::JSONKEY_HASPASSWORD, pMap->getGameRules()->getPassword().getIsSet());
+        data.insert(JsonKeys::JSONKEY_UUID, 0);
+        data.insert(JsonKeys::JSONKEY_SAVEFILE, saveFile);
+        data.insert(JsonKeys::JSONKEY_RUNNINGGAME, false);
+        auto activeMods = Settings::getActiveMods();
+        QJsonObject mods;
+        for (qint32 i = 0; i < activeMods.size(); ++i)
+        {
+            mods.insert(JsonKeys::JSONKEY_MOD + QString::number(i), activeMods[i]);
+        }
+        data.insert(JsonKeys::JSONKEY_USEDMODS, mods);
+        QJsonArray usernames;
+        qint32 count = pMap->getPlayerCount();
+        for (qint32 i = 0; i < count; ++i)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
+            {
+                CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+                usernames.append(pPlayer->getPlayerNameId());
+            }
+            else
+            {
+                CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+            }
+        }
+        data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
+        QJsonDocument doc(data);
+        CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
+        emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        m_slaveDespawnTimer.stop();
+    }
+}
+
+void Multiplayermenu::saveLobbyState(const QString & filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    QDataStream stream(&file);
+    m_pPlayerSelection->serializeObject(stream);
+    file.close();
+}
+
+void Multiplayermenu::closeSlave()
+{
+    CONSOLE_PRINT("Closing slave cause all players have disconnected.", GameConsole::eDEBUG);
+    QCoreApplication::exit(0);
+}
+
+void Multiplayermenu::readyAndLeave()
+{
+
 }
 
 void Multiplayermenu::showIPs()
@@ -158,8 +246,7 @@ void Multiplayermenu::showIPs()
 }
 
 void Multiplayermenu::showLoadSaveGameDialog()
-{    
-    // dummy impl for loading
+{
     QStringList wildcards;
     wildcards.append("*.msav");
     QString path = Settings::getUserPath() + "savegames";
@@ -252,18 +339,22 @@ void Multiplayermenu::recieveServerData(quint64 socketID, QByteArray data, Netwo
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
         CONSOLE_PRINT("Master server network command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
-        if (messageType == NetworkCommands::SLAVEADDRESSINFO)
-        {
-
-        }
-        else if (messageType == NetworkCommands::SERVERRELAUNCHSLAVE)
+        if (messageType == NetworkCommands::SERVERRELAUNCHSLAVE)
         {
             onServerRelaunchSlave(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::DESPAWNSLAVE)
+        {
+            closeSlave();
         }
         else
         {
             CONSOLE_PRINT("Unknown master server command " + messageType + " received", GameConsole::eDEBUG);
         }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown master service command " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 
@@ -419,6 +510,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         else if (messageType == NetworkCommands::REQUESTUSERNAME)
         {
             sendUsername(socketID, objData);
+        }
+        else if (messageType == NetworkCommands::DESPAWNSLAVE)
+        {
+            closeSlave();
         }
         else
         {
@@ -1537,14 +1632,20 @@ void Multiplayermenu::exitMenu()
 void Multiplayermenu::disconnected(quint64 socket)
 {
     CONSOLE_PRINT("Multiplayermenu::disconnected", GameConsole::eDEBUG);
-    if (m_networkMode == NetworkMode::Host && m_local)
+    if (Mainapp::getSlave())
     {
-        // handled in player selection
-        if (Mainapp::getSlave() && m_hostSocket == socket)
+        if (m_pNetworkInterface->getConnectedSockets().size() == 0)
         {
-            CONSOLE_PRINT("Closing slave cause the host has disconnected.", GameConsole::eDEBUG);
-            QCoreApplication::exit(0);
+            CONSOLE_PRINT("Multiplayermenu::startDespawnTimer", GameConsole::eDEBUG);
+            m_slaveDespawnElapseTimer.start();
+            m_slaveDespawnTimer.setSingleShot(false);
+            constexpr qint32 MS_PER_SECOND = 1000;
+            m_slaveDespawnTimer.start(MS_PER_SECOND);
         }
+    }
+    else if (m_networkMode == NetworkMode::Host && m_local)
+    {
+        // do nothing
     }
     else
     {
@@ -1557,7 +1658,16 @@ void Multiplayermenu::disconnected(quint64 socket)
 
 void Multiplayermenu::buttonBack()
 {
-    if (m_networkMode != NetworkMode::Host ||
+    if (m_networkMode == NetworkMode::Host && !m_local && m_MapSelectionStep == MapSelectionStep::selectPlayer)
+    {
+        QString command = NetworkCommands::DESPAWNSLAVE;
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        CONSOLE_PRINT("Sending command " + command + " to slave", GameConsole::eDEBUG);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+    else if (m_networkMode != NetworkMode::Host ||
         m_MapSelectionStep == MapSelectionStep::selectMap ||
         !m_local)
     {
@@ -1594,7 +1704,6 @@ void Multiplayermenu::buttonNext()
         m_password.setPassword(pMap->getGameRules()->getPassword());
         if (m_local)
         {
-            m_pHostAdresse->setVisible(true);
             m_pNetworkInterface = spTCPServer::create(nullptr);
             m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
             m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
@@ -1605,7 +1714,8 @@ void Multiplayermenu::buttonNext()
         }
         else
         {
-            MapSelectionMapsMenue::hideRuleSelection();
+            m_MapSelectionStep = MapSelectionStep::selectPlayer;
+            // m_pReadyAndLeave->setVisible(true);
             connectNetworkSlots();
             startGameOnServer();
         }

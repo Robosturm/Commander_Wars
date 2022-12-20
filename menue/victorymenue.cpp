@@ -1,4 +1,5 @@
 #include <QtMath>
+#include <QJsonObject>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -27,6 +28,9 @@
 #include "objects/base/moveinbutton.h"
 #include "objects/base/checkbox.h"
 
+#include "network/JsonKeys.h"
+#include "network/tcpclient.h"
+
 VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay)
     : m_ProgressTimer(this),
       m_despawnSlaveTimer(this),
@@ -42,7 +46,13 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Entering Victory Menue", GameConsole::eDEBUG);
     m_pMap->setMenu(nullptr); // remove outdated link
-    
+
+    if (Mainapp::getSlave())
+    {
+        CONSOLE_PRINT("VictoryMenue is listening to master server data", GameConsole::eDEBUG);
+        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &VictoryMenue::recieveServerData, Qt::QueuedConnection);
+    }
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -541,6 +551,35 @@ void VictoryMenue::despawnSlave()
         ret = erg.toInt();
     }
     QCoreApplication::exit(ret);
+}
+
+void VictoryMenue::recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+{
+    if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
+    {
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject objData = doc.object();
+        QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
+        CONSOLE_PRINT("Master server network command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        if (messageType == NetworkCommands::DESPAWNSLAVE)
+        {
+            closeSlave();
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown master server command " + messageType + " received", GameConsole::eDEBUG);
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown master service command " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+    }
+}
+
+void VictoryMenue::closeSlave()
+{
+    CONSOLE_PRINT("Closing slave cause all players have disconnected.", GameConsole::eDEBUG);
+    QCoreApplication::exit(0);
 }
 
 void VictoryMenue::createStatisticsView()

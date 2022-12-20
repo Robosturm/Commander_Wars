@@ -989,6 +989,7 @@ void GameMenue::despawnSlave()
             data.insert(JsonKeys::JSONKEY_HASPASSWORD, m_pMap->getGameRules()->getPassword().getIsSet());
             data.insert(JsonKeys::JSONKEY_UUID, 0);
             data.insert(JsonKeys::JSONKEY_SAVEFILE, saveFile);
+            data.insert(JsonKeys::JSONKEY_RUNNINGGAME, true);
             auto activeMods = Settings::getActiveMods();
             QJsonObject mods;
             for (qint32 i = 0; i < activeMods.size(); ++i)
@@ -1079,10 +1080,10 @@ void GameMenue::loadGameMenue()
     m_mapSlidingActor->addChild(m_pMap);
     m_pMap->centerMap(m_pMap->getMapWidth() / 2, m_pMap->getMapHeight() / 2);
 
-    connect(&m_slaveDespawnTimer, &QTimer::timeout, this, &GameMenue::despawnSlave, Qt::QueuedConnection);
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connectMap();
 
+    connect(&m_slaveDespawnTimer, &QTimer::timeout, this, &GameMenue::despawnSlave, Qt::QueuedConnection);
     connect(this, &GameMenue::sigVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);

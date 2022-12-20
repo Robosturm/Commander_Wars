@@ -333,11 +333,23 @@ void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData
 
 void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData)
 {
-    SuspendedSlaveInfo slaveInfo;
-    slaveInfo.savefile = objData.value(JsonKeys::JSONKEY_SAVEFILE).toString();
-    slaveInfo.game.fromJson(objData);
-    setUuidForGame(slaveInfo.game);
-    m_runningSlaves.append(slaveInfo);
+    bool runningGame = objData.value(JsonKeys::JSONKEY_RUNNINGGAME).toBool();
+    if (runningGame)
+    {
+        SuspendedSlaveInfo slaveInfo;
+        slaveInfo.savefile = objData.value(JsonKeys::JSONKEY_SAVEFILE).toString();
+        slaveInfo.game.fromJson(objData);
+        setUuidForGame(slaveInfo.game);
+        m_runningSlaves.append(slaveInfo);
+    }
+    else
+    {
+        SuspendedSlaveInfo slaveInfo;
+        slaveInfo.savefile = objData.value(JsonKeys::JSONKEY_SAVEFILE).toString();
+        slaveInfo.game.fromJson(objData);
+        setUuidForGame(slaveInfo.game);
+        m_runningLobbies.append(slaveInfo);
+    }
     QString command = NetworkCommands::DESPAWNSLAVE;
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
@@ -354,7 +366,6 @@ void MainServer::setUuidForGame(NetworkGameData & game)
     {
         ++m_uuidGameCounter;
     }
-
 }
 
 void MainServer::onSlaveReady(quint64 socketID, const QJsonObject & objData)

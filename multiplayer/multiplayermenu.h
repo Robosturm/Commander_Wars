@@ -63,6 +63,7 @@ signals:
     void sigHostGameLaunched();
     void sigLoadSaveGame();
     void sigShowIPs();
+    void sigReadyAndLeave();
 public slots:
 
     // general slots
@@ -108,10 +109,35 @@ public slots:
      * @param objData
      */
     void onServerRelaunchSlave(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief despawnSlave
+     */
+    void despawnSlave();
 
 protected slots:
+    /**
+     * @brief countdown
+     */
     void countdown();
+    /**
+     * @brief closeSlave
+     */
+    void closeSlave();
+    /**
+     * @brief readyAndLeave
+     */
+    void readyAndLeave();
+
 protected:
+    /**
+     * @brief saveLobbyState
+     * @param filename
+     */
+    void saveLobbyState(const QString & filename);
+    /**
+     * @brief getGameReady
+     * @return
+     */
     bool getGameReady();
     void sendServerReady(bool value);
     void initClientGame(quint64 socketID, QDataStream &stream);
@@ -272,12 +298,15 @@ private:
     QTimer m_GameStartTimer;
     qint32 m_counter{5};
     oxygine::spButton m_pButtonLoadSavegame;
+    oxygine::spButton m_pReadyAndLeave;
     bool m_saveGame{false};
     bool m_local{true};
     bool m_slaveGameReady{false};
     Password m_password;
     quint64 m_hostSocket{0};
     spDialogConnecting m_pDialogConnecting;
+    QElapsedTimer m_slaveDespawnElapseTimer;
+    QTimer m_slaveDespawnTimer{this};
 };
 
 #endif // MULTIPLAYERMENU_H
