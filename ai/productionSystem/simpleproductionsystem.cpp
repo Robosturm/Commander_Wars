@@ -494,7 +494,7 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
     for (auto & pBuilding : pBuildings->getVector())
     {
         auto & item = m_averageMoverange[pBuilding.get()];
-        if (item.averageValue * minAverageIslandSize >= item.islandSizes[unitId])
+        if (item.averageValue * minAverageIslandSize <= item.islandSizes[unitId])
         {
             success = buildUnit(pBuilding->getX(), pBuilding->getY(), unitId);
             if (success)

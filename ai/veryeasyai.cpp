@@ -351,9 +351,9 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
         qint32 loadingIslandIdx = getIslandIndex(pUnit);
         qint32 loadingIsland = getIsland(pUnit);
         // can we use the unit?
-        if (pUnit->getAiMode() == GameEnums::GameAi_Normal &&
-            (m_usedTransportSystem || (!pUnit->getHasMoved() && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits.get(), pEnemyBuildings.get(),
-                                                                           loadingIslandIdx, loadingIsland, false))))
+        if (pUnit->getAiMode() == GameEnums::GameAi_Normal && !pUnit->getHasMoved() &&
+            (m_usedTransportSystem || hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits.get(), pEnemyBuildings.get(),
+                                                 loadingIslandIdx, loadingIsland, false)))
         {
             std::vector<QVector3D> targets;
             std::vector<QVector3D> transporterTargets;
@@ -627,9 +627,9 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
                     }
                 }
             }
+            pAction->setActionID(ACTION_WAIT);
             if (pAction->canBePerformed())
             {
-                pAction->setActionID(ACTION_WAIT);
                 emit performAction(pAction);
                 return true;
             }
