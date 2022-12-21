@@ -132,6 +132,11 @@ void SimpleProductionSystem::updateActiveProductionSystem(QmlVectorBuilding* pBu
                 ++i;
             }
         }
+        distribution.second.totalChance = 0;
+        for (auto & itemChance : distribution.second.chance)
+        {
+            distribution.second.totalChance += itemChance;
+        }
     }
 }
 
@@ -230,14 +235,6 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
             item.guardCondition = guardCondition;
             item.chance = chance;
             m_buildDistribution[group] = item;
-        }
-
-
-        auto & item = m_buildDistribution[group];
-        item.totalChance = 0;
-        for (auto & itemChance : item.chance)
-        {
-            item.totalChance += itemChance;
         }
     }
     else

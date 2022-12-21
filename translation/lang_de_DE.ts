@@ -592,13 +592,13 @@
 <context>
     <name>ACTION_LOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="60"/>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="93"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="61"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="94"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="97"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="98"/>
         <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
         <translation type="unfinished"></translation>
     </message>

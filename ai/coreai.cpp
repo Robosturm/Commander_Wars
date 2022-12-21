@@ -146,7 +146,6 @@ TargetedUnitPathFindingSystem* CoreAI::createTargetedPfs(Unit* pUnit, const QVec
     return ret;
 }
 
-
 void CoreAI::loadIni(QString file)
 {
         AI_CONSOLE_PRINT("CoreAI::loadIni " + file, GameConsole::eDEBUG);
@@ -1428,6 +1427,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
         {
             // assuming unit transporter only have space for one unit
             if (pTransporterUnit->canTransportUnit(pUnit) &&
+                pTransporterUnit->getLoadedUnitCount() == 0 &&
                 pTransporterUnit->getLoadingPlace() == 1)
             {
                 bool goodTransporter = false;

@@ -15,7 +15,8 @@ var Constructor = function ()
         {
             if ((targetUnit.getOwner() === unit.getOwner()) &&
                 (targetUnit.getTransportUnits().indexOf(unit.getUnitID()) >= 0) &&
-                (targetUnit.getLoadedUnitCount() < targetUnit.getLoadingPlace())) {
+                (targetUnit.getLoadedUnitCount() < targetUnit.getLoadingPlace()))
+            {
                 return ACTION_LOAD.isLoadingTerrain(targetUnit, transportTerrain);
             }
         }
