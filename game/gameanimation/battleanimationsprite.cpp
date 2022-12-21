@@ -784,9 +784,25 @@ void BattleAnimationSprite::addMoveTweenToLastLoadedSprites(qint32 deltaX, qint3
                 {
                     time /= Settings::getBattleAnimationSpeed();
                 }
-                oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(sprite->getX() + deltaX, sprite->getY() + deltaY)),
-                                                                  oxygine::timeMS(time),
-                                                                  loops, true);
+                oxygine::spTween moveTween;
+                if (-1 < deltaX && deltaX < 1)
+                {
+                    moveTween = oxygine::createTween(oxygine::Actor::TweenY(sprite->getY() + deltaY),
+                                                     oxygine::timeMS(time),
+                                                     loops, true);
+                }
+                else if (-1 < deltaY && deltaY < 1)
+                {
+                    moveTween = oxygine::createTween(oxygine::Actor::TweenX(sprite->getX() + deltaX),
+                                                     oxygine::timeMS(time),
+                                                     loops, true);
+                }
+                else
+                {
+                    moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(sprite->getX() + deltaX, sprite->getY() + deltaY)),
+                                                      oxygine::timeMS(time),
+                                                      loops, true);
+                }
                 sprite->addTween(moveTween);
                 moveTween->setElapsed(oxygine::timeMS(delayPerUnitMs * count));
                 ++count;

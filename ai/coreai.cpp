@@ -1100,7 +1100,7 @@ qint32 CoreAI::getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitI
             qint32 loadingIslandIdx = getIslandIndex(pUnit.get());
             qint32 loadingIsland = getIsland(pUnit.get());
             if ((pUnit->hasAmmo1() || pUnit->hasAmmo2()) &&
-                !hasTargets(0, pUnit.get(), false, pEnemyUnits, pEnemyBuildings, loadingIslandIdx, loadingIsland, true, true))
+                !hasTargets(0, pUnit.get(), false, pEnemyUnits, pEnemyBuildings, loadingIslandIdx, loadingIsland, true, true, true))
             {
                 ++count;
             }
@@ -1110,7 +1110,7 @@ qint32 CoreAI::getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitI
 }
 
 bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings,
-                        qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit, bool onlyTrueIslands)
+                        qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit, bool onlyTrueIslands, bool useEnemyProductionBuildings)
 {
     bool found = false;
     QPoint unitPos(pLoadingUnit->Unit::getX(), pLoadingUnit->Unit::getY());
@@ -1130,6 +1130,26 @@ bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool can
                 // this unit can do stuff skip it
                 found = true;
                 break;
+            }
+        }
+    }
+    if (!found && useEnemyProductionBuildings)
+    {
+        for (auto & pBuilding : pEnemyBuildings->getVector())
+        {
+            qint32 x = pBuilding->Building::getX();
+            qint32 y = pBuilding->Building::getY();
+            if (fastUnit || onlyTrueIslands || GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
+            {
+                if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland)
+                {
+                    if (pBuilding->isProductionBuilding())
+                    {
+                        // this unit can do stuff skip it
+                        found = true;
+                        break;
+                    }
+                }
             }
         }
     }

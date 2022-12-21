@@ -550,7 +550,7 @@ public slots:
      * @return
      */
     bool hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings,
-                    qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit = true, bool onlyTrueIslands = false);
+                    qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit = true, bool onlyTrueIslands = false, bool useEnemyProductionBuildings = false);
     /**
      * @brief CoreAI::getIdleUnitCount
      * @param pUnits

@@ -10,7 +10,7 @@ var COREAI =
         [30,               70,           10,              40,                     40,                       40,                    40],
         20, 2, "", 1.0],
     heavyTankGroup : ["HEAVY_TANK_GROUP", ["MEGATANK", "NEOTANK", "ZCOUNIT_SIEGE_CANNON", "PIPERUNNER"],
-        [60,       30,        60,],
+                                          [60,          30,        60,                      5],
         10, 3, "", 1.0],
     lightAmphibiousGroup : ["LIGHT_AMPHIBIOUS_GROUP", ["ARTILLERYCRAFT", "HOVERCRAFT", "HOVERFLAK"],
         [15,               80,           10,],
@@ -304,7 +304,7 @@ var COREAI =
             (lowFuelUnitCount > 2 ||
              COREAI.minInfantryTransporterMapSize <= map.getMapWidth() * map.getMapHeight()))
         {
-            system.addForcedProduction(supplyUnits);
+            system.addForcedProduction(COREAI.supplyUnits);
         }
     },
 
