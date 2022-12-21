@@ -1128,6 +1128,29 @@ qint32 CoreAI::getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitI
     return count;
 }
 
+bool CoreAI::shareIslandWithEnemy(QmlVectorUnit* pUnits, QmlVectorBuilding * pBuildings, QmlVectorBuilding * pEnemyBuildings)
+{
+    for (auto & unit : pUnits->getVector())
+    {
+        for (auto & pBuilding : pBuildings->getVector())
+        {
+            if (onSameIsland(unit.get(), pBuilding.get()) &&
+                pBuilding->isProductionBuilding())
+            {
+                for (auto & pEnemyBuilding : pEnemyBuildings->getVector())
+                {
+                    if (onSameIsland(unit.get(), pEnemyBuilding.get()) &&
+                        pEnemyBuilding->isProductionBuilding())
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
 bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings,
                         qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit, bool onlyTrueIslands, bool useEnemyProductionBuildings)
 {

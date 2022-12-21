@@ -567,6 +567,14 @@ public slots:
      * @return
      */
     qint32 getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
+    /**
+     * @brief shareIslandWithEnemy
+     * @param pUnits
+     * @param pBuildings
+     * @param pEnemyBuildings
+     * @return
+     */
+    bool shareIslandWithEnemy(QmlVectorUnit* pUnits, QmlVectorBuilding * pBuildings, QmlVectorBuilding * pEnemyBuildings);
 protected:
     void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
 

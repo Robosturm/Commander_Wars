@@ -86,7 +86,7 @@ var COREAI =
         var air = variableAirBattle.readDataInt32();
         if (air > 0)
         {
-            groundModifer *= 1 / (air > 0);
+            groundModifer *= 1 / air;
         }
 
         COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightTankGroup, groundModifer * groupDistribution[1] * player.getCoGroupModifier(COREAI.lightTankGroup[1], system));
@@ -243,29 +243,48 @@ var COREAI =
                 var naval = variableNavalBattle.readDataInt32();
                 var variableAirBattle = variables.createVariable("AIRBATTLE");
                 var air = variableAirBattle.readDataInt32();
-                if (naval === 0 && air === 0 && idleUnitCount > 0)
+                if (idleUnitCount > 0)
                 {
+                    naval = 0;
+                    air = 0;
+                    var shareIsland = ai.shareIslandWithEnemy(units, units, enemyUnits);
                     var harbourCount = buildings.getBuildingCount("HARBOUR") + enemyBuildings.getBuildingCount("HARBOUR");
                     var airportCount = buildings.getBuildingCount("AIRPORT") + enemyBuildings.getBuildingCount("AIRPORT");
                     if (harbourCount > 0)
                     {
-                        GameConsole.print("Detected naval map", 0);
-                        naval += 2;
-                        if (airportCount === 0)
+                        if (shareIsland)
+                        {
+                            GameConsole.print("Shared naval map", 0);
+                            naval += 1;
+                        }
+                        else if (airportCount === 0)
                         {
                             GameConsole.print("Detected primary naval map", 0);
                             naval += 3;
+                        }
+                        else
+                        {
+                            GameConsole.print("Detected naval map", 0);
+                            naval += 2;
                         }
                         variableNavalBattle.writeDataInt32(naval);
                     }
                     if (airportCount > 0)
                     {
-                        GameConsole.print("Detected air map", 0);
-                        air += 2;
-                        if (harbourCount === 0)
+                        if (shareIsland)
+                        {
+                            GameConsole.print("Shared air map", 0);
+                            air += 1;
+                        }
+                        else if (harbourCount === 0)
                         {
                             GameConsole.print("Detected primary air map", 0);
                             air += 3;
+                        }
+                        else
+                        {
+                            GameConsole.print("Detected air map", 0);
+                            naval += 2;
                         }
                         variableAirBattle.writeDataInt32(air);
                     }
