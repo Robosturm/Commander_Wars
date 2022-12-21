@@ -36,17 +36,25 @@ public:
     ENUM_CLASS ThreadLevel
     {
         Normal,
-                High,
-                Hq,
-                Max,
+        High,
+        Hq,
+        Max,
     };
 
     ENUM_CLASS CircleReturns
     {
         Stop,
-                Fail,
-                Success,
+        Fail,
+        Success,
     };
+
+    ENUM_CLASS TargetDistance
+    {
+        NoTarget,
+        FarTarget,
+        CloseTarget,
+    };
+
 
     struct UnitCountData
     {
@@ -607,7 +615,7 @@ protected:
      * @param loadingIsland
      * @return
      */
-    bool hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, QmlVectorBuilding * pEnemyBuildings,
+    TargetDistance hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, QmlVectorBuilding * pEnemyBuildings,
                           qint32 loadingIslandIdx, qint32 loadingIsland, bool onlyTrueIslands = false);
     /**
      * @brief appendNearestUnloadTargets searches for unload fields closest to our current position

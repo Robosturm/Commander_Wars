@@ -1017,11 +1017,31 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
                     bool canCapture = pLoadingUnit->getActionList().contains(ACTION_CAPTURE);
                     qint32 loadingIslandIdx = getIslandIndex(pLoadingUnit);
                     qint32 loadingIsland = getIsland(pLoadingUnit);
+                    qint32 localDistanceModifier = distanceModifier;
                     if (addCaptureTargets && canCapture)
                     {
                         // no targets found -> try to speed up those infis
-                        found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings.get(),
-                                                 loadingIslandIdx, loadingIsland, onlyTrueIslands);
+                        auto distance = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings.get(),
+                                                         loadingIslandIdx, loadingIsland, onlyTrueIslands);
+                        switch (distance)
+                        {
+                            case TargetDistance::CloseTarget:
+                            {
+                                found = true;
+                                break;
+                            }
+                            case TargetDistance::FarTarget:
+                            {
+                                localDistanceModifier *= 3;
+                                found = false;
+                                break;
+                            }
+                            case TargetDistance::NoTarget:
+                            {
+                                found = false;
+                                break;
+                            }
+                        }
                     }
                     else if (!pLoadingUnit->getHasMoved())
                     {
@@ -1072,9 +1092,9 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
                             min += transporterMovement;
                             max += transporterMovement;
                         }
-                        if (found && (virtualLoading || !GlobalUtils::contains(targets, QVector3D(targetX, targetY, distanceModifier))))
+                        if (found && (virtualLoading || !GlobalUtils::contains(targets, QVector3D(targetX, targetY, localDistanceModifier))))
                         {
-                            targets.push_back(QVector3D(targetX, targetY, distanceModifier));
+                            targets.push_back(QVector3D(targetX, targetY, localDistanceModifier));
                             transportUnits.push_back(pLoadingUnit);
                             if (!all)
                             {
@@ -1155,16 +1175,16 @@ bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool can
     }
     if (!found)
     {
-        found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
-                                 loadingIslandIdx, loadingIsland);
+        found = (hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
+                                 loadingIslandIdx, loadingIsland) >= TargetDistance::FarTarget);
     }
     return found;
 }
 
-bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, QmlVectorBuilding * pEnemyBuildings,
+CoreAI::TargetDistance CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, QmlVectorBuilding * pEnemyBuildings,
                               qint32 loadingIslandIdx, qint32 loadingIsland, bool onlyTrueIslands)
 {
-    bool found = false;
+    TargetDistance found = TargetDistance::NoTarget;
     // check for capturing or missiles next
     if (canCapture)
     {
@@ -1176,14 +1196,21 @@ bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, QmlVectorBuil
         {
             qint32 x = pBuilding->Building::getX();
             qint32 y = pBuilding->Building::getY();
-            if (onlyTrueIslands || GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
+            if (onlyTrueIslands)
             {
                 if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland &&
                     pBuilding->isCaptureOrMissileBuilding(missileTarget))
                 {
                     // this unit can do stuff skip it
-                    found = true;
-                    break;
+                    if (GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
+                    {
+                        found = TargetDistance::CloseTarget;
+                        break;
+                    }
+                    else
+                    {
+                        found = TargetDistance::FarTarget;
+                    }
                 }
             }
         }
@@ -1407,7 +1434,8 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
                 // check captures on this island
                 qint32 transporterIslandIdx = getIslandIndex(pTransporterUnit.get());
                 qint32 transporterIsland = getIsland(pTransporterUnit.get());
-                if (!hasCaptureTarget(pUnit, true, pEnemyBuildings.get(), transporterIslandIdx, transporterIsland))
+                auto hasTargets = hasCaptureTarget(pUnit, true, pEnemyBuildings.get(), transporterIslandIdx, transporterIsland);
+                if (hasTargets <= TargetDistance::FarTarget)
                 {
                     for (auto & pEnemyBuilding : pEnemyBuildings->getVector())
                     {
@@ -1427,8 +1455,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
                     }
                     if (goodTransporter)
                     {
-
-                        targets.push_back(QVector3D(pTransporterUnit->Unit::getX(), pTransporterUnit->Unit::getY(), 1));
+                        targets.push_back(QVector3D(pTransporterUnit->Unit::getX(), pTransporterUnit->Unit::getY(), GlobalUtils::roundUp(m_minSameIslandDistance)));
                     }
                 }
             }

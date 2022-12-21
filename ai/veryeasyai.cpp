@@ -465,10 +465,11 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
                 // we need to move to a loading place
                 std::vector<QVector3D> targets;
                 std::vector<QVector3D> transporterTargets;
-                appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets);
+                appendCaptureTargets(actions, pUnit, pEnemyBuildings, targets);
+                appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets, false, 5);
                 if (targets.size() == 0)
                 {
-                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, false, targets);
+                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, false, targets, false, 5);
                 }
                 if (moveUnit(pAction, pUnit, actions, targets, transporterTargets))
                 {

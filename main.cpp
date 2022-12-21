@@ -82,7 +82,11 @@ int main(qint32 argc, char* argv[])
     CONSOLE_PRINT("Shutting down main window", GameConsole::eDEBUG);
     window.shutdown();
     // give os time to save the settings
-    QThread::currentThread()->msleep(350);
+    for (qint32 i = 0; i < 450; ++i)
+    {
+        QCoreApplication::processEvents();
+        QThread::currentThread()->msleep(1);
+    }
     CONSOLE_PRINT("Checking for memory leak during runtime", GameConsole::eDEBUG);
     static constexpr qint32 finalObjects = 20;
     if (oxygine::ref_counter::getAlloctedObjectCount() > finalObjects)
