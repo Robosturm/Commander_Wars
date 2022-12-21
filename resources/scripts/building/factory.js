@@ -61,7 +61,7 @@ var Constructor = function()
 
     this.getRepairTypes = function(building)
     {
-        return [GameEnums.UnitType_Ground, GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Infantry];
+        return [GameEnums.UnitType_Ground, GameEnums.UnitType_Infantry];
     };
 	this.onWeatherChanged = function(building, weather, map)
 	{	
