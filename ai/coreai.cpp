@@ -1132,17 +1132,23 @@ bool CoreAI::shareIslandWithEnemy(QmlVectorUnit* pUnits, QmlVectorBuilding * pBu
 {
     for (auto & unit : pUnits->getVector())
     {
-        for (auto & pBuilding : pBuildings->getVector())
+        if (unit->getUnitType() != static_cast<qint32>(GameEnums::UnitType::UnitType_Infantry) &&
+            unit->getUnitType() != static_cast<qint32>(GameEnums::UnitType::UnitType_Hovercraft) &&
+            unit->getUnitType() != static_cast<qint32>(GameEnums::UnitType::UnitType_Air) &&
+            unit->getUnitType() != static_cast<qint32>(GameEnums::UnitType::UnitType_Naval))
         {
-            if (onSameIsland(unit.get(), pBuilding.get()) &&
-                pBuilding->isProductionBuilding())
+            for (auto & pBuilding : pBuildings->getVector())
             {
-                for (auto & pEnemyBuilding : pEnemyBuildings->getVector())
+                if (onSameIsland(unit.get(), pBuilding.get()) &&
+                    pBuilding->isProductionBuilding())
                 {
-                    if (onSameIsland(unit.get(), pEnemyBuilding.get()) &&
-                        pEnemyBuilding->isProductionBuilding())
+                    for (auto & pEnemyBuilding : pEnemyBuildings->getVector())
                     {
-                        return true;
+                        if (onSameIsland(unit.get(), pEnemyBuilding.get()) &&
+                            pEnemyBuilding->isProductionBuilding())
+                        {
+                            return true;
+                        }
                     }
                 }
             }

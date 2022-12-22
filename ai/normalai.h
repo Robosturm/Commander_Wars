@@ -284,7 +284,7 @@ protected:
      * @param pUnits
      * @return
      */
-    bool fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint32 maxfireRange,
+    bool fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint32 minMaxfireRange, qint32 maxfireRange,
                        spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief suicide

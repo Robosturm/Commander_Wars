@@ -305,9 +305,9 @@ bool NormalAi::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
     else if (m_aiStep <= AISteps::moveUnits && joinCaptureBuildings(pUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && moveSupport(AISteps::moveUnits, pUnits, false)){}
     // indirect units
-    else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
+    else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 1, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
     // direct units
-    else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 1, 1, pBuildings, pEnemyBuildings)){}
+    else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 1, 1, 1, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveUnits && repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveToTargets && refillUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
@@ -605,7 +605,7 @@ bool NormalAi::joinCaptureBuildings(spQmlVectorUnit & pUnits)
     return false;
 }
 
-bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint32 maxfireRange,
+bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint32 minMaxfireRange, qint32 maxfireRange,
                              spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("NormalAi::fireWithUnits()", GameConsole::eDEBUG);
@@ -618,6 +618,7 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
             ++unitData.nextAiStep;
             if (!pUnit->getHasMoved() &&
                 unitData.minFireRange >= minfireRange &&
+                unitData.maxFireRange >= minMaxfireRange &&
                 unitData.maxFireRange <= maxfireRange &&
                 (pUnit->getAmmo1() != 0 || pUnit->getAmmo2() != 0) &&
                 unitData.actions.contains(CoreAI::ACTION_FIRE) &&

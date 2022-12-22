@@ -241,13 +241,13 @@ var COREAI =
                 var unitCount = units.size();
                 var variableNavalBattle = variables.createVariable("NAVALBATTLE");
                 var naval = variableNavalBattle.readDataInt32();
-                var variableAirBattle = variables.createVariable("AIRBATTLE");
+                var variableAirBattle = variables.createVariable("AIRBATTLE");                
                 var air = variableAirBattle.readDataInt32();
                 if (idleUnitCount > 0)
                 {
                     naval = 0;
                     air = 0;
-                    var shareIsland = ai.shareIslandWithEnemy(units, units, enemyUnits);
+                    var shareIsland = ai.shareIslandWithEnemy(units, buildings, enemyBuildings);
                     var harbourCount = buildings.getBuildingCount("HARBOUR") + enemyBuildings.getBuildingCount("HARBOUR");
                     var airportCount = buildings.getBuildingCount("AIRPORT") + enemyBuildings.getBuildingCount("AIRPORT");
                     if (harbourCount > 0)
@@ -260,7 +260,7 @@ var COREAI =
                         else if (airportCount === 0)
                         {
                             GameConsole.print("Detected primary naval map", 0);
-                            naval += 3;
+                            naval += 4;
                         }
                         else
                         {
@@ -279,7 +279,7 @@ var COREAI =
                         else if (harbourCount === 0)
                         {
                             GameConsole.print("Detected primary air map", 0);
-                            air += 3;
+                            air += 4;
                         }
                         else
                         {
