@@ -2845,13 +2845,13 @@ void Unit::createMoveVision(QVector<QPoint> & movePath)
 void Unit::createMoveVisionAction(GameAction* pAction)
 {
     auto path = pAction->getMovePath();
-    createMoveVision(path);
+    moveUnit(path);
 }
 
 void Unit::createMoveVisionFromAction(GameAction* pAction)
 {
     auto path = pAction->getMovePath();
-    moveUnit(path);
+    createMoveVision(path);
 }
 
 QVector<QVector3D> Unit::getVisionFields(QPoint position)
