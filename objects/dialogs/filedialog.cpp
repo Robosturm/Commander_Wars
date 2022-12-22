@@ -75,7 +75,9 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
     });
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
-        if (m_isSaveDialog)
+        if (m_isSaveDialog &&
+            (QFile::exists(m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText()) ||
+             QFile::exists(Settings::getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText())))
         {
             emit sigShowOverwriteWarning();
         }

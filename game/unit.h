@@ -662,6 +662,11 @@ public slots:
      */
     void createMoveVision(QVector<QPoint> & movePath);
     /**
+     * @brief createMoveVisionFromAction
+     * @param pAction
+     */
+    void createMoveVisionFromAction(GameAction* pAction);
+    /**
      * @brief createMoveVision
      * @param x
      * @param y

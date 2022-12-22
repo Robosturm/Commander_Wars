@@ -3569,13 +3569,13 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="100"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="102"/>
         <source>Do you want to overwrite the item </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="325"/>
-        <location filename="../objects/dialogs/filedialog.cpp" line="366"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="327"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="368"/>
         <source>Do you want to delete the item </source>
         <translation type="unfinished"></translation>
     </message>

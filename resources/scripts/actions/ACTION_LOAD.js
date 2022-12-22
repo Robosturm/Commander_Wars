@@ -75,7 +75,7 @@ var Constructor = function ()
         // we need to move the unit to the target position
         ACTION_LOAD.postAnimationUnit = action.getTargetUnit();
         ACTION_LOAD.postAnimationTargetUnit = action.getMovementTarget();
-        ACTION_LOAD.postAnimationUnit.createMoveVision(action.getMovePath());
+        ACTION_LOAD.postAnimationUnit.createMoveVisionFromAction(action);
         var animation = Global[ACTION_LOAD.postAnimationUnit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_LOAD", "performPostAnimation");
 
