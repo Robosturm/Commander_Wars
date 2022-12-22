@@ -7416,11 +7416,6 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="381"/>
-        <source>Selects the amount of CO Perks that can be assigned per CO.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="392"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
@@ -7582,6 +7577,11 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <location filename="../objects/ruleselection.cpp" line="502"/>
         <location filename="../objects/ruleselection.cpp" line="512"/>
         <source>Fog of War</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="381"/>
+        <source>Selects the total cost of co perks that can be assigned per CO.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

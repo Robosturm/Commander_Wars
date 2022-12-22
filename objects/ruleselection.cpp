@@ -378,7 +378,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         spSpinBox pSpinbox = spSpinBox::create(400, 0, 900);
-        pSpinbox->setTooltipText(tr("Selects the amount of CO Perks that can be assigned per CO."));
+        pSpinbox->setTooltipText(tr("Selects the total cost of co perks that can be assigned per CO."));
         pSpinbox->setPosition(textWidth, textField->getY());
         pSpinbox->setInfinityValue(-1);
         pSpinbox->setEnabled(m_ruleChangeEabled);

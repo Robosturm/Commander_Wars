@@ -170,7 +170,22 @@ void PerkSelection::updatePerkCount()
 {
     if (!m_banning)
     {
-        bool enable = (m_pCO->getPerkList().size() < m_maxPerks);
+        qint32 perkScore = 0;
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        for (auto & perk : m_pCO->getPerkList())
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, "getCosts");
+            if (erg.isNumber())
+            {
+                perkScore += erg.toInt();
+            }
+            else
+            {
+                CONSOLE_PRINT("Unable to get costs for perk " + perk, GameConsole::eERROR);
+                perkScore += 1;
+            }
+        }
+        bool enable = (perkScore < m_maxPerks);
         for (qint32 i = 0; i < m_Checkboxes.size(); ++i)
         {
             bool selectable = getPerkEnabled(m_perkIds[i]);

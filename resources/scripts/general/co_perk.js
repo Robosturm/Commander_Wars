@@ -339,4 +339,9 @@ var CO_PERK =
     {
         return qsTr("General");
     },
+
+    getCosts : function()
+    {
+        return 1;
+    },
 }
