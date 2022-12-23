@@ -108,6 +108,7 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_InfoText = oxygine::spTextField::create();
     m_InfoText->setStyle(style);
     m_InfoText->setWidth(m_pCurrentCO->getX() - 50);
+    m_InfoText->setX(10);
     addChild(m_InfoText);
 
     m_pCoPowermeter = spCoPowermeter::create(m_pMap, nullptr);

@@ -50,6 +50,14 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
 
     spTerrain pIconTerrain = Terrain::createTerrain(pTerrain->getTerrainID(), -1, -1, "", pTerrain->getMap());
     pIconTerrain->loadSprites();
+    Building* pTerrainBuildiong = pTerrain->getBuilding();
+    if (pTerrainBuildiong != nullptr)
+    {
+        spBuilding pBuilding = spBuilding::create(pTerrainBuildiong->getBuildingID(), nullptr);
+        pIconTerrain->setBuilding(pBuilding);
+        pBuilding->setOwner(pTerrainBuildiong->getOwner());
+        pBuilding->scaleAndShowOnSingleTile();
+    }
     pIconTerrain->setPosition(width / 2 - pIconTerrain->getScaledWidth() / 2, y + 20);
     addChild(pIconTerrain);
     y += pIconTerrain->getScaledHeight() + 30;

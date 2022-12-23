@@ -10,7 +10,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "";
+        return "surrender";
     };
     this.perform = function(action, map)
     {

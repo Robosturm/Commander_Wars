@@ -1455,27 +1455,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="154"/>
+        <location filename="../objects/coinfoactor.cpp" line="155"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="159"/>
+        <location filename="../objects/coinfoactor.cpp" line="160"/>
         <source>Active Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="170"/>
+        <location filename="../objects/coinfoactor.cpp" line="171"/>
         <source>Global Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="176"/>
+        <location filename="../objects/coinfoactor.cpp" line="177"/>
         <source>CO Zone Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="201"/>
         <location filename="../objects/coinfoactor.cpp" line="202"/>
         <location filename="../objects/coinfoactor.cpp" line="203"/>
         <location filename="../objects/coinfoactor.cpp" line="204"/>
@@ -1484,16 +1483,17 @@
         <location filename="../objects/coinfoactor.cpp" line="207"/>
         <location filename="../objects/coinfoactor.cpp" line="208"/>
         <location filename="../objects/coinfoactor.cpp" line="209"/>
+        <location filename="../objects/coinfoactor.cpp" line="210"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="256"/>
+        <location filename="../objects/coinfoactor.cpp" line="257"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="281"/>
+        <location filename="../objects/coinfoactor.cpp" line="282"/>
         <source>Progress: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -10193,27 +10193,27 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="70"/>
+        <location filename="../wiki/terraininfo.cpp" line="78"/>
         <source>Defense:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="87"/>
+        <location filename="../wiki/terraininfo.cpp" line="95"/>
         <source>Income:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="105"/>
+        <location filename="../wiki/terraininfo.cpp" line="113"/>
         <source>Builds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="118"/>
+        <location filename="../wiki/terraininfo.cpp" line="126"/>
         <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="138"/>
+        <location filename="../wiki/terraininfo.cpp" line="146"/>
         <source>Movement Costs</source>
         <translation type="unfinished"></translation>
     </message>
