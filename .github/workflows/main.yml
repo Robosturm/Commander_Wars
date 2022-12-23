@@ -252,13 +252,13 @@ jobs:
       if: matrix.target == 'android'
       uses: JesseTG/rm@v1.0.3
       with:
-        path: "${{github.workspace}}/qt/Qt/Tools
+        path: "${{github.workspace}}/qt/Qt/Tools"
 
     - name: Clean up unneed includes
       if: matrix.target == 'android'
       uses: JesseTG/rm@v1.0.3
       with:
-        path: "${{github.workspace}}/qt/Qt/Docs
+        path: "${{github.workspace}}/qt/Qt/Docs"
         
     # apk preparation and signing
     - name: Setup JDK
