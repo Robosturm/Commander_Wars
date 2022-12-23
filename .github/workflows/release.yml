@@ -263,13 +263,49 @@ jobs:
     #   uses: JesseTG/rm@v1.0.3
     #   with:
     #     path: "${{github.workspace}}/build/qrc_music.o"
-        
+
     # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
     - name: Clean up unneed win dll
       if: matrix.target == 'android'
       uses: JesseTG/rm@v1.0.3
       with:
         path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/lib"
+        
+    - name: Clean up unneed includes
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/include"
+
+    - name: Clean up unneed includes
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/include"
+
+    - name: Clean up unneed includes
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/translations"
+
+    - name: Clean up unneed includes
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/translations"
+
+    - name: Clean up unneed includes
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/qt/Qt/Tools
+
+    - name: Clean up unneed includes
+      if: matrix.target == 'android'
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: "${{github.workspace}}/qt/Qt/Docs
         
     # apk preparation and signing
     - name: Setup JDK
