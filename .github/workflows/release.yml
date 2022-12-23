@@ -98,7 +98,7 @@ jobs:
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
-            target-api-level: '27'
+            target-api-level: '23'
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
@@ -112,7 +112,7 @@ jobs:
             COMPILER_VERSION: 'android_arm64_v8a'
             qtPath: 'android_arm64_v8a'
             target: 'android'
-            target-api-level: '27'
+            target-api-level: '23'
             abi : "arm64-v8a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
@@ -198,7 +198,7 @@ jobs:
         cmake \
         -S "${{github.workspace}}/source" \
         -B "${{github.workspace}}/build" \
-        -DCMAKE_GENERATOR="NMake Makefiles JOM" \
+        -DCMAKE_GENERATOR="Ninja" \
         -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" \
         -DQT_QMAKE_EXECUTABLE="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
@@ -206,6 +206,7 @@ jobs:
         -DANDROID_NATIVE_API_LEVEL="${{ matrix.target-api-level }}" \
         -DANDROID_ABI="${{matrix.abi}}" \
         -DANDROID_STL="c++_shared" \
+        -DCMAKE_CXX_FLAGS_INIT:STRING= \
         -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DCMAKE_TOOLCHAIN_FILE="${{env.NDK_Root}}/build/cmake/android.toolchain.cmake" \
         -DANDROID_NDK="${{env.NDK_Root}}" \
@@ -214,14 +215,13 @@ jobs:
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
         -DOPENSSL_USE_STATIC_LIBS=ON \
         -DPRECOMPILEDOPENSSL=ON \
+        -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
+        -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi" \
         -DDEFAULTAIPIPE=OFF \
         -DUPDATESUPPORT=OFF \
         -DCOW_BUILD_TAG="${{github.ref}}" \
         -DCOW_UPDATETARGET="${{matrix.asset_name}}" \
-        -DCOW_INSTALL_DIR="Commander_Wars_Release" \
-        -DOPENSSL_ROOT_DIR="${{github.workspace}}/android_openssl" \
-        -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
-        -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi"
+        -DCOW_INSTALL_DIR="Commander_Wars_Release"
 
     - name: Build other
       if: matrix.target != 'android'
@@ -283,25 +283,25 @@ jobs:
       with:
         path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/include"
 
-    - name: Clean up unneed includes
+    - name: Clean up unneed translations
       if: matrix.target == 'android'
       uses: JesseTG/rm@v1.0.3
       with:
         path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/translations"
 
-    - name: Clean up unneed includes
+    - name: Clean up unneed translations
       if: matrix.target == 'android'
       uses: JesseTG/rm@v1.0.3
       with:
         path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/translations"
 
-    - name: Clean up unneed includes
+    - name: Clean up unneed tools
       if: matrix.target == 'android'
       uses: JesseTG/rm@v1.0.3
       with:
         path: "${{github.workspace}}/qt/Qt/Tools"
 
-    - name: Clean up unneed includes
+    - name: Clean up unneed docs
       if: matrix.target == 'android'
       uses: JesseTG/rm@v1.0.3
       with:
