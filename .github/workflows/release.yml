@@ -214,8 +214,8 @@ jobs:
         -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
         -DOPENSSL_USE_STATIC_LIBS=ON \
         -DPRECOMPILEDOPENSSL=ON \
-        -DOPENSSL_INCLUDE_DIR="${{github.workspace}}\android_openssl\static\include" \
-        -DOPENSSL_LIB_PATH="${{github.workspace}}\android_openssl\static\lib\multiabi" \
+        -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
+        -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi" \
         -DDEFAULTAIPIPE=OFF \
         -DUPDATESUPPORT=OFF \
         -DCOW_BUILD_TAG="${{github.ref}}" \
