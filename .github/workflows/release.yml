@@ -102,7 +102,7 @@ jobs:
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            installerCommands1: 'choco install jom'
+            installerCommands1: ''
             installerCommands2: ''
             source_asset: 'android-build/build/outputs/apk/release/android-build-release-unsigned.apk'
             asset_name: 'Commander_Wars_armeabi-v7a.apk'
@@ -116,7 +116,7 @@ jobs:
             abi : "arm64-v8a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            installerCommands1: 'choco install jom'
+            installerCommands1: ''
             installerCommands2: ''
             source_asset: 'android-build/build/outputs/apk/release/android-build-release-unsigned.apk'
             asset_name: 'Commander_Wars_arm64-v8a.apk'
@@ -206,7 +206,6 @@ jobs:
         -DANDROID_NATIVE_API_LEVEL="${{ matrix.target-api-level }}" \
         -DANDROID_ABI="${{matrix.abi}}" \
         -DANDROID_STL="c++_shared" \
-        -DCMAKE_CXX_FLAGS_INIT:STRING= \
         -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DCMAKE_TOOLCHAIN_FILE="${{env.NDK_Root}}/build/cmake/android.toolchain.cmake" \
         -DANDROID_NDK="${{env.NDK_Root}}" \
