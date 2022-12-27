@@ -172,6 +172,10 @@ public slots:
      */
     void memoryUsage();
     /**
+     * @brief resetMaps
+     */
+    void resetMapsGameRules(const QString & folder);
+    /**
      * @brief update
      * @param us
      */

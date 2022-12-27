@@ -94,6 +94,10 @@ signals:
     void sigVictory(qint32 team);
 public slots:
     /**
+     * @brief reset
+     */
+    void reset();
+    /**
      * @brief resetWeatherSprites
      */
     void resetWeatherSprites();

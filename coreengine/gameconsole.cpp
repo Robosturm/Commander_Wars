@@ -16,6 +16,8 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 
+#include "game/gamemap.h"
+
 #include "resource_management/fontmanager.h"
 
 #include "spritingsupport/spritecreator.h"
@@ -55,6 +57,7 @@ const char* const GameConsole::functions[] =
     "extractResources",
     "memoryUsage",
     "printObjectDetails",
+    "resetMapsGameRules",
     ""
 };
 const char* const GameConsole::compileTime = __TIME__;
@@ -415,6 +418,25 @@ void GameConsole::memoryUsage()
     CONSOLE_PRINT("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), GameConsole::eINFO);
     CONSOLE_PRINT("Materials cached=" + QString::number(oxygine::MaterialCache::mc().getSize()), GameConsole::eINFO);
     CONSOLE_PRINT("Sounds buffered=" + QString::number(pApp->getAudioManager()->getSoundsBuffered()), GameConsole::eINFO);
+}
+
+void GameConsole::resetMapsGameRules(const QString & folder)
+{
+    QStringList filters;
+    filters << "*.map";
+    QDirIterator dirIter(folder, filters, QDir::Files, QDirIterator::IteratorFlag::Subdirectories);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString filePath = dirIter.fileInfo().canonicalFilePath();
+        spGameMap pMap = spGameMap::create(filePath, true, true, false);
+        pMap->getGameRules()->reset();
+        QFile file(filePath);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        pMap->serializeObject(stream);
+        file.close();
+    }
 }
 
 void GameConsole::createfunnymessage(qint32 message){

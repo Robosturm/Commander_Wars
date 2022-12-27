@@ -22,6 +22,15 @@ GameRules::GameRules(GameMap* pMap)
     setObjectName("GameRules");
 #endif
     Interpreter::setCppOwnerShip(this);
+    reset();
+}
+
+void GameRules::reset()
+{
+    m_WeatherChances.clear();
+    m_Weathers.clear();
+    m_VictoryRules.clear();
+    m_COBannlist.clear();
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     if (getWeatherCount() != pGameRuleManager->getWeatherCount())
     {
