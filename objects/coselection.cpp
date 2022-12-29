@@ -290,7 +290,7 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
     oxygine::ResAnim* pAnim = nullptr;
     oxygine::spSprite pSprite;
     oxygine::spActor actor = oxygine::spActor::create();
-    if (COArmy == army)
+    if (COArmy == army && !coid.isEmpty())
     {
         QString resAnim = coid.toLower() + "+face";
         pAnim = pCOSpriteManager->getResAnim(resAnim);        
@@ -300,12 +300,11 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
     }
     else
     {
-        pAnim = pObjectManager->getResAnim("no_co");
+        pAnim = pCOSpriteManager->getResAnim("no_co+face");
         pSprite = oxygine::spSprite::create();
         pSprite->setResAnim(pAnim);
         actor->addChild(pSprite);
         coid = "";
-
     }
     pSprite->setScale(scale);
     pAnim = pObjectManager->getResAnim("co_background");

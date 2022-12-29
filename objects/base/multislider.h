@@ -5,10 +5,10 @@
 #include <QString>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/slider.h"
+#include "objects/base/label.h"
 #include "objects/base/tooltip.h"
 
 class Multislider;
@@ -18,7 +18,9 @@ class Multislider final : public Tooltip
 {
     Q_OBJECT
 public:
-    explicit Multislider(QStringList texts, qint32 width, QVector<qint32> values = {});
+    static const qint32 SLIDER_OFFSET_X = 10;
+    static const qint32 SLIDER_LOCK_BUTTON_WIDTH = SLIDER_OFFSET_X + 110 + 50;
+    explicit Multislider(QStringList texts, qint32 width, QVector<qint32> values = {}, qint32 startX = -1);
     ~Multislider() = default;
     qint32 getSliderValue(qint32 slider);
     virtual void setEnabled(bool value) override;
@@ -28,7 +30,7 @@ signals:
 public slots:
     void sliderValueChanged(qint32 slider);
 private:
-    QVector<oxygine::spTextField> m_Textfields;
+    QVector<spLabel> m_Textfields;
     QVector<spSlider> m_Slider;
     QVector<oxygine::spButton> m_lockButtons;
     QVector<bool> m_locked;

@@ -5,7 +5,7 @@
 
 #include "coreengine/interpreter.h"
 
-Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values)
+Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values, qint32 startX)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Multislider");
@@ -16,26 +16,37 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
+
+    qint32 sliderX = startX;
     for (qint32 i = 0; i < texts.size(); i++)
     {
-        m_Textfields.append(oxygine::spTextField::create());
+        m_Textfields.append(spLabel::create(100));
         m_Textfields[i]->setStyle(style);
         m_Textfields[i]->setHtmlText(texts[i]);
         m_Textfields[i]->setY(i * 40);
-        if (m_Textfields[i]->getTextRect().getWidth() > textWidth)
+        if (startX > 0)
+        {
+            textWidth = startX;
+        }
+        else if (m_Textfields[i]->getTextRect().getWidth() > textWidth)
         {
             textWidth = m_Textfields[i]->getTextRect().getWidth();
+            sliderX = m_Textfields[i]->getTextRect().getWidth() + SLIDER_OFFSET_X;
         }
         addChild(m_Textfields[i]);
     }
-    width = width - textWidth - 10 - 110 - 50;
+    for (auto & textField : m_Textfields)
+    {
+        textField->setWidth(textWidth);
+    }
+    width = width - textWidth - SLIDER_LOCK_BUTTON_WIDTH ;
     qint32 totalSliderValue = 0;
     setSize(width, texts.size() * 40);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     for (qint32 i = 0; i < texts.size(); i++)
     {
         m_Slider.append(spSlider::create(width, 0, 100));
-        m_Slider[i]->setX(textWidth + 10);
+        m_Slider[i]->setX(sliderX);
         m_Slider[i]->setY(i * 40);
         if (values.size() != texts.size())
         {
