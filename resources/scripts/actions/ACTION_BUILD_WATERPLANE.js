@@ -49,7 +49,7 @@ var Constructor = function()
         }
         else
         {
-            return qsTr("Build waterplane")
+            return ACTION_BUILD_WATERPLANE.getName()
         }
     };
 
@@ -85,7 +85,7 @@ var Constructor = function()
     };    
     this.getName = function()
     {
-        return qsTr("Build Waterplane");
+        return qsTr("Build waterplane");
     };
     this.getDescription = function()
     {

@@ -210,13 +210,8 @@
 <context>
     <name>ACTION_BUILD_WATERPLANE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="52"/>
-        <source>Build waterplane</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="88"/>
-        <source>Build Waterplane</source>
+        <source>Build waterplane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7544,11 +7539,6 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="690"/>
-        <source>If checked: ships and boats can move through bridges placed on sea tiles, like in Advance Wars Dark conflict.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="704"/>
         <source>If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn.</source>
         <translation type="unfinished"></translation>
@@ -7674,6 +7664,11 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     <message>
         <location filename="../objects/ruleselection.cpp" line="686"/>
         <source>Ship bridges:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="690"/>
+        <source>If checked: ships and boats can move through ship bridges placed on sea tiles, like in Advance Wars Dark conflict.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

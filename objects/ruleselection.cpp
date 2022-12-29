@@ -225,7 +225,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     textField->setHtmlText(tr("Environment"));
     textField->setPosition(30, y);
     addChild(textField);
-    y += 60;
+    y += 70;
 
 
     QStringList weatherStrings;
@@ -294,7 +294,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     textField->setHtmlText(tr("Gameplay"));
     textField->setPosition(30, y);
     addChild(textField);
-    y += 60;
+    y += 70;
 
     textField = spLabel::create(textWidth - 40);
     textField->setStyle(style);
@@ -410,7 +410,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setHtmlText(tr("CO Powergain"));
         textField->setPosition(30, y);
         addChild(textField);
-        y += 60;
+        y += 70;
 
         textField = spLabel::create(textWidth - 40);
         textField->setStyle(style);
@@ -502,7 +502,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     textField->setHtmlText(tr("Fog of War"));
     textField->setPosition(30, y);
     addChild(textField);
-    y += 60;
+    y += 70;
 
     textField = spLabel::create(textWidth - 40);
     textField->setStyle(style);
@@ -756,7 +756,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setHtmlText(tr("Miscellaneous"));
         textField->setPosition(30, y);
         addChild(textField);
-        y += 60;
+        y += 70;
 
         textField = spLabel::create(textWidth - 40);
         textField->setStyle(style);
@@ -824,7 +824,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     textField->setHtmlText(tr("Victory Rules"));
     textField->setPosition(30, y);
     addChild(textField);
-    y += 60;
+    y += 70;
 
     qint32 initCount = m_pMap->getGameRules()->getVictoryRuleSize();
     CONSOLE_PRINT("Creating ruleset number of initial rules " + QString::number(initCount), GameConsole::eDEBUG);
