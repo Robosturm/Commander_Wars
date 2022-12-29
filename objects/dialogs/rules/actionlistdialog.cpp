@@ -54,7 +54,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
 
     QStringList actionList = pGameManager->getLoadedRessources();
 
-    qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
+    qint32 y = pLabel->getY() + pLabel->getTextRect().getHeight() + 10;
     qint32 x = 10;
     
     m_CurrentActionList = m_pMap->getGameRules()->getAllowedActions();

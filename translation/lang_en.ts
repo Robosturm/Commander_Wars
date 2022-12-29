@@ -6826,23 +6826,28 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="114"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="110"/>
+        <source>Perk List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="126"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="123"/>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="156"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="135"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="168"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="133"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="145"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="239"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="251"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>

@@ -52,14 +52,14 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
 
     spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 40);
     pLabel->setStyle(headerStyle);
-    pLabel->setHtmlText(tr("CO Bann List"));
+    pLabel->setHtmlText(tr("CO bann list"));
     pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     if (pLabel->getX() < 20)
     {
         pLabel->setX(20);
     }
     pPanel->addItem(pLabel);
-    qint32 y = 40 + pLabel->getTextRect().getHeight();
+    qint32 y = pLabel->getY() + pLabel->getTextRect().getHeight() + 10;
     qint32 x = 10;
 
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
