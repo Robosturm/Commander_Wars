@@ -1852,7 +1852,10 @@ QStringList Settings::getAvailableMods()
         if (!folder.endsWith("."))
         {
             QString mod = GlobalUtils::makePathRelative(info.filePath());
-            mods.append(mod);
+            if (!mods.contains(mod))
+            {
+                mods.append(mod);
+            }
         }
     }
     return mods;
