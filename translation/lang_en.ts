@@ -1398,7 +1398,7 @@
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="55"/>
-        <source>CO Bann List</source>
+        <source>CO bann list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3077,7 +3077,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="64"/>
-        <source>Victory Info</source>
+        <source>Victory info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

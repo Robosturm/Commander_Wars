@@ -59,15 +59,15 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     GameRules* pRules = pMap->getGameRules();
 
     qint32 y = 10;
-    oxygine::spTextField pTextfield = oxygine::spTextField::create();
-    pTextfield->setStyle(headerStyle);
-    pTextfield->setHtmlText(tr("Victory Info"));
-    pTextfield->setPosition(Settings::getWidth() / 2 - pTextfield->getTextRect().getWidth(), y);
-    pPanel->addItem(pTextfield);
-    y += 60;
+    spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 40);
+    pLabel->setStyle(headerStyle);
+    pLabel->setHtmlText(tr("Victory info"));
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, y);
+    pPanel->addItem(pLabel);
+    y += 70;
     QString info = pMap->getGameScript()->getVictoryInfo();
 
-    pTextfield = oxygine::spTextField::create();
+    oxygine::spTextField pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(info);
     pTextfield->setWidth(Settings::getWidth() - 90);
