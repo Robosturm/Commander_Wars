@@ -1321,47 +1321,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="270"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="285"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="278"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="293"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="279"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="294"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="280"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="295"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="281"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="296"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="282"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="297"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="299"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="314"/>
         <source>Do you want to make the saved build list the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="299"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="314"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="299"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="314"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>

@@ -208,14 +208,29 @@ void BuildListDialog::setBuildlist(qint32 item)
     QStringList data;
     if (item == 0) // Commander Wars
     {
-        data = QStringList({QString("APC"), QString("ARTILLERY"), QString("ARTILLERYCRAFT"), QString("BATTLESHIP"), QString("BOMBER"),
-                            QString("CRUISER"), QString("FIGHTER"), QString("FLAK"), QString("SNIPER"), QString("WATERMINE"),
-                            QString("HEAVY_TANK"), QString("INFANTRY"), QString("K_HELI"), QString("LANDER"), QString("LIGHT_TANK"), QString("MECH"), QString("MISSILE"),
-                            QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI"), QString("NEOTANK"), QString("MEGATANK"),
-                            QString("AIRCRAFTCARRIER"), QString("ANTITANKCANNON"), QString("CANNONBOAT"), QString("DUSTER"), QString("FLARE"),
-                            QString("MOTORBIKE"), QString("WATERPLANE"), QString("BLACK_BOAT"), QString("BLACK_BOMB"), QString("PIPERUNNER"),
-                            QString("STEALTHBOMBER"), QString("DESTROYER"), QString("HEAVY_HOVERCRAFT"), QString("HOVERCRAFT"),
-                            QString("HOVERFLAK"), QString("TRANSPORTPLANE"), QString("HOELLIUM")});
+        data = QStringList({QString("AIRCRAFTCARRIER"), QString("ANTITANKCANNON"), QString("APC"), QString("ARTILLERY"), QString("ARTILLERYCRAFT"),
+                            QString("BATTLECRUISER"), QString("BATTLESHIP"), QString("BLACK_BOAT"), QString("BLACK_BOMB"), QString("BOMBER"),
+                            QString("CANNONBOAT"), QString("CRUISER"),
+                            QString("DESTROYER"), QString("DUSTER"),
+                            QString("FIGHTER"), QString("FLAK"), QString("FLARE"), QString("FRIGATE"),
+                            QString("GUNBOAT"),
+                            QString("HEAVY_HOVERCRAFT"), QString("HEAVY_TANK"), QString("HOELLIUM"), QString("HOVERCRAFT"), QString("HOVERFLAK"),
+                            QString("INFANTRY"),
+                            QString("K_HELI"),
+                            QString("LANDER"),  QString("LIGHT_TANK"),
+                            QString("MECH"), QString("MEGATANK"), QString("MISSILE"), QString("MOTORBIKE"),
+                            QString("NEOTANK"),
+                            QString("PIPERUNNER"),
+                            QString("RECON"), QString("ROCKETTHROWER"),
+                            QString("SNIPER"), QString("STEALTHBOMBER"), QString("SUBMARINE"),
+                            QString("T_HELI"), QString("TORPEDOBOAT"), QString("TRANSPORTPLANE"),
+                            QString("WATERMINE"), QString("WATERPLANE"),
+                            QString("ZCOUNIT_AT_CYCLE"), QString("ZCOUNIT_AUTO_TANK"), QString("ZCOUNIT_CHAPERON"), QString("ZCOUNIT_COMMANDO"),
+                            QString("ZCOUNIT_CRYSTAL_TANK"), QString("ZCOUNIT_HOT_TANK"), QString("ZCOUNIT_INTEL_TRUCK"), QString("ZCOUNIT_IRON_SHIELD_GENERATOR"),
+                            QString("ZCOUNIT_CRYSTAL_KIROV"), QString("ZCOUNIT_LOGIC_TRUCK"), QString("ZCOUNIT_MISSILE_SUB"), QString("ZCOUNIT_NEOSPIDER_TANK"),
+                            QString("ZCOUNIT_PARTISAN"), QString("ZCOUNIT_RANGER"), QString("ZCOUNIT_REPAIR_TANK"), QString("ZCOUNIT_ROYAL_GUARD"),
+                            QString("ZCOUNIT_SIEGE_CANNON"), QString("ZCOUNIT_SMUGGLER"), QString("ZCOUNIT_TANK_HUNTER")
+                             });
     }
     else if (item == 1) // advance wars dc
     {

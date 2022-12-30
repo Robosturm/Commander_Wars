@@ -229,14 +229,16 @@ void RuleSelection::showRuleSelection(bool advanced)
 
 
     QStringList weatherStrings;
+    QStringList weatherPrefixStrings;
     QVector<qint32> weatherChances;
     for (qint32 i = 0; i < m_pMap->getGameRules()->getWeatherCount(); i++)
     {
         Weather* pWeather = m_pMap->getGameRules()->getWeather(i);
         weatherStrings.append(pWeather->getWeatherName());
+        weatherPrefixStrings.append(pWeather->getWeatherName() + ": ");
         weatherChances.append(m_pMap->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
     }
-    m_pWeatherSlider = spMultislider::create(weatherStrings, Settings::getWidth() - 100, weatherChances);
+    m_pWeatherSlider = spMultislider::create(weatherPrefixStrings, Settings::getWidth() - 100, weatherChances);
     m_pWeatherSlider->setTooltipText(tr("The chance each weather can appear if random weather is active."));
     m_pWeatherSlider->setPosition(30, y);
     m_pWeatherSlider->setEnabled(m_ruleChangeEabled);

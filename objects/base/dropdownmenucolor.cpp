@@ -6,7 +6,6 @@
 #include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     : DropDownmenuBase(width, items.size()),
