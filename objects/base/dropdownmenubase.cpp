@@ -89,31 +89,28 @@ void DropDownmenuBase::focusedLost()
 void DropDownmenuBase::showDropDown()
 {
 #ifdef GRAPHICSUPPORT
-    if (m_OriginalOwner.get() == nullptr)
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
+    m_Panel->setVisible(true);
+    m_OriginalOwner = getParent();
+    m_OriginalPosition = getPosition();
+    auto transform = computeGlobalTransform();
+    setPosition(transform.x, transform.y);
+    oxygine::spActor pMe = oxygine::spActor(this);
+    oxygine::Stage::getStage()->addChild(pMe);
+    if (getY() > Settings::getHeight() / 2)
     {
-        setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
-        m_Panel->setVisible(true);
-        m_OriginalOwner = getParent();
-        m_OriginalPosition = getPosition();
-        auto transform = computeGlobalTransform();
-        setPosition(transform.x, transform.y);
-        oxygine::spActor pMe = oxygine::spActor(this);
-        oxygine::Stage::getStage()->addChild(pMe);
-        if (getY() > Settings::getHeight() / 2)
+        if (m_Panel->getH_Scrollbar()->getVisible())
         {
-            if (m_Panel->getH_Scrollbar()->getVisible())
-            {
-                m_Panel->setY(-m_Panel->getScaledHeight());
-            }
-            else
-            {
-                m_Panel->setY(-m_Panel->getScaledHeight() + m_Panel->getV_Scrollbar()->getScaledHeight() + 7);
-            }
+            m_Panel->setY(-m_Panel->getScaledHeight());
         }
         else
         {
-            m_Panel->setY(m_Box->getScaledHeight());
+            m_Panel->setY(-m_Panel->getScaledHeight() + m_Panel->getV_Scrollbar()->getScaledHeight() + 7);
         }
+    }
+    else
+    {
+        m_Panel->setY(m_Box->getScaledHeight());
     }
 #endif
 }
@@ -125,7 +122,15 @@ void DropDownmenuBase::hideDropDown()
         item->setAddColor(QColor(0, 0, 0, 0));
     }
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    if (m_OriginalOwner.get() != nullptr)
+    if (m_OriginalOwner.get() != nullptr &&
+        m_OriginalOwner->getParent() == nullptr)
+    {
+        m_Panel->setVisible(false);
+        hideTooltip();
+        stopTooltiptimer();
+        m_OriginalOwner = nullptr;
+    }
+    else if (m_Panel->getVisible())
     {
         m_Panel->setVisible(false);
         hideTooltip();
@@ -134,6 +139,10 @@ void DropDownmenuBase::hideDropDown()
         m_OriginalOwner->addChild(pMe);
         setPosition(m_OriginalPosition);
         m_OriginalOwner = nullptr;
+    }
+    else if (oxygine::Stage::getStage().get() == getParent())
+    {
+        detach();
     }
 }
 

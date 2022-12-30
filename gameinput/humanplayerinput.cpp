@@ -267,8 +267,9 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
     // try to show fire ranges :)
     
     Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-    if ((pUnit != nullptr) &&
-        (!pUnit->isStealthed(m_pPlayer)))
+    if (pUnit != nullptr &&
+        pUnit->hasWeapons() &&
+        !pUnit->isStealthed(m_pPlayer))
     {
         if (pUnit->hasAmmo1() || pUnit->hasAmmo2())
         {
