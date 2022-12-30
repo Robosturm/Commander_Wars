@@ -627,7 +627,7 @@ void EditorMenue::showNewMap()
     info.mapWidth = 20;
     info.mapHeigth = 20;
     info.playerCount = 4;
-    spMapEditDialog mapEditDialog = spMapEditDialog::create(info);
+    spMapEditDialog mapEditDialog = spMapEditDialog::create(info, tr("Do you want to discard all current changes and create a new map?"));
     connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
     connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     addChild(mapEditDialog);
@@ -648,7 +648,7 @@ void EditorMenue::showEditMap()
     info.turnLimit = pGameMap->getGameRecorder()->getMapTime();
     info.deployLimit = pGameMap->getGameRecorder()->getDeployLimit();
     info.mapFlags = pGameMap->getMapFlags();
-    spMapEditDialog mapEditDialog = spMapEditDialog::create(info);
+    spMapEditDialog mapEditDialog = spMapEditDialog::create(info, tr("Do you want to apply the map changes?"));
     connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
     connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     addChild(mapEditDialog);
@@ -681,7 +681,7 @@ void EditorMenue::rotateY()
 
 void EditorMenue::showRandomMap()
 {
-    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create();
+    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create(tr("Do you want to create a random map and discard all current changes?"));
     addChild(pDialogRandomMap);
     connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &EditorMenue::createRandomMap, Qt::QueuedConnection);
     setFocused(false);

@@ -4,6 +4,7 @@
 #include "coreengine/globalutils.h"
 
 #include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -11,8 +12,9 @@
 
 constexpr const char* const MapEdit = "mapEdit";
 
-MapEditDialog::MapEditDialog(MapEditInfo info)
-    : m_info(info)
+MapEditDialog::MapEditDialog(MapEditInfo info, const QString & confirmMessage)
+    : m_info(info),
+      m_confirmMessage(confirmMessage)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("MapEditDialog");
@@ -51,6 +53,20 @@ void MapEditDialog::cancel()
 }
 
 void MapEditDialog::finished()
+{
+    if (!m_confirmMessage.isEmpty())
+    {
+        spDialogMessageBox pDialogConfirm = spDialogMessageBox::create(m_confirmMessage, true);
+        connect(pDialogConfirm.get(), &DialogMessageBox::sigOk, this, &MapEditDialog::onConfirm, Qt::QueuedConnection);
+        addChild(pDialogConfirm);
+    }
+    else
+    {
+        onConfirm();
+    }
+}
+
+void MapEditDialog::onConfirm()
 {
     emit editFinished(m_info);
     emit sigFinished();

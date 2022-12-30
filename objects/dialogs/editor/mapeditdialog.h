@@ -26,7 +26,7 @@ public:
         quint32 deployLimit{0};
         GameEnums::MapFilterFlags mapFlags{GameEnums::MapFilterFlags_None};
     };
-    explicit MapEditDialog(MapEditInfo info);
+    explicit MapEditDialog(MapEditInfo info, const QString & confirmMessage);
     ~MapEditDialog();
 
 signals:
@@ -58,11 +58,13 @@ public slots:
 
     void cancel();
     void finished();
+    void onConfirm();
 private slots:
     void scriptFileChanged(QString file);
     void remove();
 private:
     MapEditInfo m_info;
+    QString m_confirmMessage;
 };
 
 Q_DECLARE_INTERFACE(MapEditDialog, "MapEditDialog");

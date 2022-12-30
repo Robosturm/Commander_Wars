@@ -22,7 +22,7 @@ class DialogRandomMap final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit DialogRandomMap();
+    explicit DialogRandomMap(const QString & confirmMessage);
     ~DialogRandomMap() = default;
 signals:
     void sigFinished(QString mapName, QString author, QString description,
@@ -51,6 +51,7 @@ public slots:
     void playerChanged(qreal);
     void remove();
     void generatorFinished();
+    void finished();
 private:
     void createUnitChances();
     void checkIfGenerationIsAllowed();
@@ -91,6 +92,7 @@ private:
     QStringList m_UnitIDs;
     QVector<qint32> m_UnitChanceValues;
     spPanel m_pPanel;
+    QString m_confirmMessage;
 };
 
 #endif // DIALOGRANDOMMAP_H

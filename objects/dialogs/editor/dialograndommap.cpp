@@ -1,5 +1,6 @@
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
@@ -16,7 +17,8 @@ namespace
     static const qint32 LABEL_X = 30;
 }
 
-DialogRandomMap::DialogRandomMap()
+DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
+    : m_confirmMessage(confirmMessage)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogRandomMap");
@@ -296,7 +298,7 @@ DialogRandomMap::DialogRandomMap()
     }, Qt::QueuedConnection);
     connect(this, &DialogRandomMap::sigCancel, this, &DialogRandomMap::remove, Qt::QueuedConnection);
     connect(this, &DialogRandomMap::sigClose, this, &DialogRandomMap::remove, Qt::QueuedConnection);
-    connect(this, &DialogRandomMap::sigFinish, this, &DialogRandomMap::generatorFinished, Qt::QueuedConnection);
+    connect(this, &DialogRandomMap::sigFinish, this, &DialogRandomMap::finished, Qt::QueuedConnection);
 }
 
 void DialogRandomMap::checkIfGenerationIsAllowed()
@@ -304,6 +306,19 @@ void DialogRandomMap::checkIfGenerationIsAllowed()
     m_OkButton->setEnabled(!m_mirrored->getChecked() || static_cast<qint32>(m_MapPlayerCount->getCurrentValue()) % 2 == 0);
 }
 
+void DialogRandomMap::finished()
+{
+    if (!m_confirmMessage.isEmpty())
+    {
+        spDialogMessageBox pDialogConfirm = spDialogMessageBox::create(m_confirmMessage, true);
+        connect(pDialogConfirm.get(), &DialogMessageBox::sigOk, this, &DialogRandomMap::generatorFinished, Qt::QueuedConnection);
+        addChild(pDialogConfirm);
+    }
+    else
+    {
+        generatorFinished();
+    }
+}
 void DialogRandomMap::generatorFinished()
 {
     auto* pTerrainChances = m_TerrainChances.get();

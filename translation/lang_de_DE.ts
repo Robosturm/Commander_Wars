@@ -2769,224 +2769,224 @@ This is immediately applied.</source>
 <context>
     <name>DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="45"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="47"/>
         <source>Generator:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="49"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="51"/>
         <source>Selects the generator script used to generate the random map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="53"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="55"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="67"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="69"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="71"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="73"/>
         <source>Selects the name of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="80"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="82"/>
         <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="84"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="86"/>
         <source>Selects the author of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="93"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="95"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="97"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="99"/>
         <source>Selects the description for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="106"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="108"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="110"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="112"/>
         <source>Selects the width of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="123"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="125"/>
         <source>Selects the height of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="163"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="165"/>
         <source>The seed to generate the new map. Using the same map settings with the same seed will generate the same map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="190"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="192"/>
         <source>The percent of randomly placed buildings versus buildings placed near each HQ. A lower percentage places more buildings randomly across the whole map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="222"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="224"/>
         <source>Total amount of units that get spawned. If no valid position for a unit is found no unit will be spawned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="236"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="238"/>
         <source>The percentage of units which are spawned near the HQ of the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="249"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="251"/>
         <source>Random: Units are spawned at random.
 Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="482"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="497"/>
         <source>The percentage of buildings distributed between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="119"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="121"/>
         <source>Heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="132"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="134"/>
         <source>Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="136"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="138"/>
         <source>Selects the amount of players for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="146"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="148"/>
         <source>Mirrored Map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="150"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="152"/>
         <source>If the map should be created in a mirrored/rotated base. This requires an even number of players to work.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="159"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="161"/>
         <source>Seed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="172"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="174"/>
         <source>Create Road:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="176"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="178"/>
         <source>If selected roads are created between the HQ&apos;s of the players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="185"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="187"/>
         <source>Base Size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="198"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="200"/>
         <source>Terrain Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="204"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="206"/>
         <source>Building Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="210"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="212"/>
         <source>Owner Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="218"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="220"/>
         <source>Unit Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="231"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="233"/>
         <source>Units near HQ:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="244"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="246"/>
         <source>Units spawn mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="247"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="249"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="247"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="249"/>
         <source>Distributed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="256"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="258"/>
         <source>Unit distribution:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="262"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="264"/>
         <source>Unit spawn chance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="269"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="271"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="276"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="278"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="377"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="392"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="473"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="488"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="478"/>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="520"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="493"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="535"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="525"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="540"/>
         <source>The percent unit distribution between the players. Note units that can&apos;t be spawned still count to the distribution.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="532"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="547"/>
         <source>The percent distribution between the units that will be spawned. Note units that can&apos;t be spawned still count to the distribution.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2994,12 +2994,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>DialogRandomMap::DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="433"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="448"/>
         <source>The percentage of different terrain types distributed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="450"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="465"/>
         <source>The percentage of different buildings types distributed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3502,6 +3502,21 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="592"/>
         <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="630"/>
+        <source>Do you want to discard all current changes and create a new map?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="651"/>
+        <source>Do you want to apply the map changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="684"/>
+        <source>Do you want to create a random map and discard all current changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6393,7 +6408,7 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>MapEditDialog</name>
     <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="191"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="207"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>

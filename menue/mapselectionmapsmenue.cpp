@@ -423,7 +423,7 @@ void MapSelectionMapsMenue::defeatClosedPlayers()
 
 void MapSelectionMapsMenue::showRandomMap()
 {
-    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create();
+    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create("");
     addChild(pDialogRandomMap);
     connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &MapSelectionMapsMenue::selectRandomMap, Qt::QueuedConnection);
 }
