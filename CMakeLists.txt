@@ -815,6 +815,8 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
             "general.qrc"
             )
     endif()
+else()
+    message("Deploying resources")
 endif()
 
 ##############################################################################
