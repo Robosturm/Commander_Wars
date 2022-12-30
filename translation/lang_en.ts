@@ -6175,7 +6175,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="135"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="243"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="244"/>
         <source>Show my games</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6185,34 +6185,34 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="237"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="238"/>
         <source>Show open games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="289"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="388"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="290"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="389"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="340"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="341"/>
         <source>Contacting server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="356"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="370"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="357"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="371"/>
         <source>Enter Host address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="459"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="460"/>
         <source>Failed to launch game on server cause no more game slots are available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="466"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="467"/>
         <source>Host game is no longer available or is currently relaunched.</source>
         <translation type="unfinished"></translation>
     </message>

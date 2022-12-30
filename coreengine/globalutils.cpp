@@ -477,3 +477,35 @@ QUrl GlobalUtils::getUrlForFile(const QString & file)
     }
     return url;
 }
+
+QVector<qint32> GlobalUtils::calcWidths(const QVector<qint32> & maxWidths, const QVector<float> & distribution, qint32 totalWidth)
+{
+    QVector<qint32> ret;
+    for (auto & item : distribution)
+    {
+        ret.append(totalWidth * item);
+    }
+    for (qint32 i = 0; i < maxWidths.size(); ++i)
+    {
+        qint32 count = ret[i] - maxWidths[i];
+        if (count > 0)
+        {
+            ret[i] = maxWidths[i];
+            qint32 item = 0;
+            while (count > 0)
+            {
+                if (ret[item] < maxWidths[item])
+                {
+                    ++ret[item];
+                    --count;
+                }
+                ++item;
+                if (item >= maxWidths.size())
+                {
+                    item = 0;
+                }
+            }
+        }
+    }
+    return ret;
+}

@@ -159,8 +159,9 @@ LobbyMenu::LobbyMenu()
     }
 
     QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods"), tr("Locked")};
-    qint32 itemWidth = (Settings::getWidth() - 20 - 80 - 100 - 90) / 3;
-    QVector<qint32> widths = {itemWidth, 100, itemWidth, itemWidth, 90};
+    QVector<qint32> widths = GlobalUtils::calcWidths({Settings::getWidth(), 200, Settings::getWidth(), Settings::getWidth(), 200},
+                                                     {0.25f, 0.125f, 0.25f, 0.25f, 0.125f},
+                                                     Settings::getWidth() - 20 - 80);
     m_gamesview = spComplexTableView::create(widths, header, height);
     m_gamesview->setPosition(10, 10 + 10 + pButtonJoinAdress->getScaledHeight());
     addChild(m_gamesview);

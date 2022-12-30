@@ -29,6 +29,7 @@ public:
     static QFileInfoList getInfoList(const QString & folder, const QStringList & list = QStringList());
     static QUrl getUrlForFile(const QString & file);
     static QString getByteArrayString(const QByteArray & bytes);
+    static QVector<qint32> calcWidths(const QVector<qint32> & maxWidths, const QVector<float> & distribution, qint32 totalWidth);
     template<typename TData>
     static bool contains(const std::vector<TData> & vec, const TData & data)
     {
