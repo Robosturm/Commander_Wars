@@ -71,8 +71,6 @@ protected:
     QVector<oxygine::spBox9Sprite> m_Items;
     spPanel m_Panel;
     qint32 m_currentItem{0};
-    oxygine::spActor m_OriginalOwner;
-    oxygine::Vector2 m_OriginalPosition;
 };
 
 #endif // DROPDOWNMENU_H

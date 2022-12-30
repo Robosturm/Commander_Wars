@@ -91,13 +91,8 @@ void DropDownmenuBase::showDropDown()
 #ifdef GRAPHICSUPPORT
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
-    m_OriginalOwner = getParent();
-    m_OriginalPosition = getPosition();
     auto transform = computeGlobalTransform();
-    setPosition(transform.x, transform.y);
-    oxygine::spActor pMe = oxygine::spActor(this);
-    oxygine::Stage::getStage()->addChild(pMe);
-    if (getY() > Settings::getHeight() / 2)
+    if (transform.y > Settings::getHeight() / 2)
     {
         if (m_Panel->getH_Scrollbar()->getVisible())
         {
@@ -122,28 +117,9 @@ void DropDownmenuBase::hideDropDown()
         item->setAddColor(QColor(0, 0, 0, 0));
     }
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    if (m_OriginalOwner.get() != nullptr &&
-        m_OriginalOwner->getParent() == nullptr)
-    {
-        m_Panel->setVisible(false);
-        hideTooltip();
-        stopTooltiptimer();
-        m_OriginalOwner = nullptr;
-    }
-    else if (m_Panel->getVisible())
-    {
-        m_Panel->setVisible(false);
-        hideTooltip();
-        stopTooltiptimer();
-        oxygine::spActor pMe = oxygine::spActor(this);
-        m_OriginalOwner->addChild(pMe);
-        setPosition(m_OriginalPosition);
-        m_OriginalOwner = nullptr;
-    }
-    else if (oxygine::Stage::getStage().get() == getParent())
-    {
-        detach();
-    }
+    m_Panel->setVisible(false);
+    hideTooltip();
+    stopTooltiptimer();
 }
 
 void DropDownmenuBase::setEnabled(bool value)
