@@ -2685,12 +2685,12 @@ This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="271"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="294"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rank. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="345"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="357"/>
         <source>Selects the unit loaded by the transporter. Enter &apos;-&apos; for no unit. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2715,32 +2715,22 @@ This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="268"/>
-        <source>CO 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="269"/>
-        <source>CO 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="313"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="325"/>
         <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="390"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="402"/>
         <source>Move Point: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="422"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="434"/>
         <source>Add Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="430"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="442"/>
         <source>Remove last Point</source>
         <translation type="unfinished"></translation>
     </message>
