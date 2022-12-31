@@ -11,7 +11,7 @@
 
 #include "menue/editormenue.h"
 
-void GameMap::importAWDCMap(QString file, EditorMenue* pMenu)
+void GameMap::importAW4Map(QString file, EditorMenue* pMenu)
 {
     quint8 sign = 0;
     if (QFile::exists(file))
@@ -461,7 +461,7 @@ void GameMap::importAWDCMap(QString file, EditorMenue* pMenu)
     updateSprites();
 }
 
-void GameMap::exportAWDCMap(QString)
+void GameMap::exportAW4Map(QString)
 {
 //    If Objektverwalter.Spielfeld.Spieler.Length <= 9 Then
 //                Using Writer As New IO.FileStream(File, IO.FileMode.OpenOrCreate, IO.FileAccess.Write, IO.FileShare.Write)

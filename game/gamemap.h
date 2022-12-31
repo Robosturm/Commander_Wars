@@ -761,20 +761,20 @@ public slots:
      */
     void exportAWDSMap(QString file);
     /**
-     * @brief importAWDCMap
+     * @brief importAW4Map
      * @param file
      */
-    void importAWDCMap(QString file, EditorMenue* pMenu);
+    void importAW4Map(QString file, EditorMenue* pMenu);
     /**
      * @brief importAWByWebMap
      * @param file
      */
     void importAWByWebMap(QString file, EditorMenue* pMenu);
     /**
-     * @brief exportAWDCMap
+     * @brief exportAW4Map
      * @param file
      */
-    void exportAWDCMap(QString file);
+    void exportAW4Map(QString file);
 
     void setMapNameFromFilename(QString filename);
     QString getMapName() const;

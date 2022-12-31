@@ -183,10 +183,10 @@ public slots:
      */
     void exportAWDSAwsMap(QString filename);
     /**
-     * @brief importAWDCAw4Map
+     * @brief importAW4Aw4Map
      * @param filename
      */
-    void importAWDCAw4Map(QString filename);
+    void importAW4Aw4Map(QString filename);
     /**
      * @brief importAWByWeb
      * @param filename

@@ -291,7 +291,7 @@ void BuildListDialog::showSaveBannlist()
 QStringList BuildListDialog::getNameList()
 {
     QStringList items = {tr("Commander Wars"),
-                              tr("Advance Wars DoR"),
+                              tr("Advance Wars 4"),
                               tr("Advance Wars DS"),
                               tr("Advance Wars 2"),
                               tr("Advance Wars")};

@@ -131,7 +131,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Import CoW Txt"), "IMPORTCOWTXT", 3, tr("Deletes the current map and imports an old Commander Wars Map from a file."));
     m_Topbar->addItem(tr("Import AWDS Aws"), "IMPORTAWDSAWS", 3, tr("Deletes the current map and imports an AWS Map Editor from a file."));
     m_Topbar->addItem(tr("Export AWDS Aws"), "EXPORTAWDSAWS", 3, tr("Exports the map to an AWS Map Editor file"));
-    m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3, tr("Deletes the current map and imports an AW DoR/DC Map Editor from a file."));
+    m_Topbar->addItem(tr("Import AW4 Aw4"), "IMPORTAW4AW4", 3, tr("Deletes the current map and imports an AW 4 map editor file."));
     m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
     m_Topbar->finishCreation();
     addChild(m_Topbar);
@@ -365,7 +365,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("IMPORTCOWTXT",        &EditorMenue::showImportCoWTxTMap),
         MenuItem("IMPORTAWDSAWS",       &EditorMenue::showImportAwdsAws),
         MenuItem("EXPORTAWDSAWS",       &EditorMenue::showExportAwdsAws),
-        MenuItem("IMPORTAWDCAW4",       &EditorMenue::showImportAwdsAw4),
+        MenuItem("IMPORTAW4AW4",       &EditorMenue::showImportAwdsAw4),
         MenuItem("IMPORTAWBYWEB",       &EditorMenue::showImportAwByWeb),
         MenuItem("NEWMAP",              &EditorMenue::showNewMap),
         MenuItem("EDITMAP",             &EditorMenue::showEditMap),
@@ -603,7 +603,7 @@ void EditorMenue::showImportAwdsAw4()
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAW4Aw4Map, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     setFocused(false);
 }
@@ -1591,16 +1591,16 @@ void EditorMenue::loadMap(QString filename)
     updateGrids();
 }
 
-void EditorMenue::importAWDCAw4Map(QString filename)
+void EditorMenue::importAW4Aw4Map(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::importAWDCAw4Map " + filename, GameConsole::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::importAW4Aw4Map " + filename, GameConsole::eDEBUG);
     if (filename.endsWith(".aw4"))
     {
         QFile file(filename);
         if (file.exists())
         {
             cleanTemp(-1);
-            m_pMap->importAWDCMap(filename, this);
+            m_pMap->importAW4Map(filename, this);
             m_EditorSelection->createPlayerSelection();
         }
     }

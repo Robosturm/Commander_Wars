@@ -268,7 +268,7 @@ void OptionMenue::showMods()
     QStringList versions = {tr("Unknown"),
                             tr("Commander Wars"),
                             tr("Advance Wars DS"),
-                            tr("Advance Wars DC")};
+                            tr("Advance Wars 4")};
     m_pModSelection = spDropDownmenu::create(300, versions);
     m_pModSelection->setTooltipText(tr("Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game."));
     m_pModSelection->setX(260);

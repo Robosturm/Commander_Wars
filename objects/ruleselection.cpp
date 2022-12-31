@@ -689,7 +689,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         pCheckbox = spCheckbox::create();
-        pCheckbox->setTooltipText(tr("If checked: ships and boats can move through ship bridges placed on sea tiles, like in Advance Wars Dark conflict."));
+        pCheckbox->setTooltipText(tr("If checked: ships and boats can move through ship bridges placed on sea tiles, like in Advance Wars 4."));
         pCheckbox->setPosition(textWidth, textField->getY());
         pCheckbox->setEnabled(m_ruleChangeEabled);
         addChild(pCheckbox);
