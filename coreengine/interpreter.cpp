@@ -295,12 +295,6 @@ void Interpreter::networkGameFinished(qint32 value, QString id)
     }
 }
 
-void Interpreter::exitJsCall()
-{
-    --m_inJsCall;
-    Q_ASSERT(m_inJsCall >= 0);
-}
-
 bool Interpreter::getInJsCall() const
 {
     return m_inJsCall > 0;

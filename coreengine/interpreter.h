@@ -215,7 +215,15 @@ private:
      * @brief init
      */
     void init();
-    void exitJsCall();
+    void exitJsCall()
+    {
+        --m_inJsCall;
+        Q_ASSERT(m_inJsCall >= 0);
+        if (m_inJsCall == 0)
+        {
+            m_jsObjects.clear();
+        }
+    }
 private:
     static spInterpreter m_pInstance;
     QString m_runtimeData;
