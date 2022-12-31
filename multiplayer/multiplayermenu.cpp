@@ -93,7 +93,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
     // change the name of the start button
     if (m_networkMode == NetworkMode::Client)
     {
-        // m_pReadyAndLeave->setVisible(true);
+        m_pReadyAndLeave->setVisible(true);
         dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
     }
     else if (m_networkMode == NetworkMode::Observer)
@@ -129,7 +129,7 @@ void Multiplayermenu::init()
     m_pReadyAndLeave->setPosition(Settings::getWidth() - m_pReadyAndLeave->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
                                        Settings::getHeight() - 10 - m_pReadyAndLeave->getScaledHeight());
     addChild(m_pReadyAndLeave);
-    m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    m_pReadyAndLeave->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigReadyAndLeave();
     });
@@ -211,7 +211,7 @@ void Multiplayermenu::closeSlave()
 
 void Multiplayermenu::readyAndLeave()
 {
-
+    markGameReady(true);
 }
 
 void Multiplayermenu::showIPs()
@@ -430,6 +430,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             receivePlayerControlledInfo(stream, socketID);
         }
+        else if (messageType == NetworkCommands::DISCONNECTINGFROMSERVER)
+        {
+            buttonBack();
+        }
         else
         {
             CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
@@ -503,7 +507,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", GameConsole::eDEBUG);
             }
         }
-        else if (messageType == NetworkCommands::DISCONNECTINGFOFROMSERVER)
+        else if (messageType == NetworkCommands::DISCONNECTINGFROMSERVER)
         {
             showDisconnectReason(socketID, objData);
         }
@@ -590,7 +594,7 @@ void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socke
     else
     {
         CONSOLE_PRINT("Client login data are invalid. Closing connection.", GameConsole::eDEBUG);
-        QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
+        QString command = QString(NetworkCommands::DISCONNECTINGFROMSERVER);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
@@ -1715,7 +1719,7 @@ void Multiplayermenu::buttonNext()
         else
         {
             m_MapSelectionStep = MapSelectionStep::selectPlayer;
-            // m_pReadyAndLeave->setVisible(true);
+            m_pReadyAndLeave->setVisible(true);
             connectNetworkSlots();
             startGameOnServer();
         }
@@ -1861,7 +1865,7 @@ void Multiplayermenu::startGame()
     }
 }
 
-void Multiplayermenu::markGameReady()
+void Multiplayermenu::markGameReady(bool fixed)
 {
     QString command = QString(NetworkCommands::CLIENTREADY);
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
@@ -1869,6 +1873,7 @@ void Multiplayermenu::markGameReady()
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << command;
+    sendStream << fixed;
     sendStream << m_pPlayerSelection->getPlayerReady();
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
 }

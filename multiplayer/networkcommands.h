@@ -169,7 +169,7 @@ namespace NetworkCommands
     /**
      * @brief DISCONNECTINFOFROMSERVER
      */
-    const char* const DISCONNECTINGFOFROMSERVER = "DISCONNECTINGFOFROMSERVER";
+    const char* const DISCONNECTINGFROMSERVER = "DISCONNECTINGFROMSERVER";
     /**
      * @brief REQUESTUSERNAME
      */

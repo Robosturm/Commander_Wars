@@ -285,7 +285,7 @@ private:
     /**
      * @brief markGameReady
      */
-    void markGameReady();
+    void markGameReady(bool fixed = false);
     /**
      * @brief changeButtonText
      */

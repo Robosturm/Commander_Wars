@@ -255,14 +255,17 @@ bool PlayerSelection::hasNetworkInterface() const
 {
     return m_pNetworkInterface.get() != nullptr;
 }
+
 bool PlayerSelection::getIsServerNetworkInterface() const
 {
     return m_pNetworkInterface.get() != nullptr && m_pNetworkInterface->getIsServer() || m_isServerGame;
 }
+
 bool PlayerSelection::getIsObserverNetworkInterface() const
 {
     return m_pNetworkInterface.get() != nullptr && m_pNetworkInterface->getIsObserver();
 }
+
 bool PlayerSelection::isNotServerChangeable(Player* pPlayer) const
 {
     bool notServerChangeAblePlayer = false;
@@ -364,10 +367,12 @@ QString PlayerSelection::getStartColorName(qint32 player)
 void PlayerSelection::initializeMap()
 {
     m_playerReadyFlags.clear();
+    m_lockedInCaseOfDisconnect.clear();
     m_playerSockets.clear();
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_playerReadyFlags.append(false);
+        m_lockedInCaseOfDisconnect.append(false);
         m_playerSockets.append(0);
     }
     if (!m_saveGame)
@@ -1300,7 +1305,7 @@ void PlayerSelection::joinObserver(quint64 socketID)
         }
         else
         {
-            QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
+            QString command = QString(NetworkCommands::DISCONNECTINGFROMSERVER);
             CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
@@ -1362,8 +1367,10 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
 {
     if (m_pNetworkInterface->getIsServer())
     {
+        bool fixed = false;
         bool value = false;
         stream >> value;
+        stream >> fixed;
         CONSOLE_PRINT("PlayerSelection::recievePlayerReady for socket " + QString::number(socketID) + " is " + (value ? "ready" : "not ready"), GameConsole::eDEBUG);
         for  (qint32 i = 0; i < m_playerSockets.size(); i++)
         {
@@ -1371,6 +1378,7 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
             {
                 CONSOLE_PRINT("Changing player " + QString::number(i), GameConsole::eDEBUG);
                 m_playerReadyFlags[i] = value;
+                m_lockedInCaseOfDisconnect[i] = value;
                 Checkbox* pCheckbox = getCastedObject<Checkbox>(OBJECT_READY_PREFIX + QString::number(i));
                 if (pCheckbox != nullptr)
                 {
@@ -1379,6 +1387,15 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
             }
         }
         sendPlayerReady(0);
+        if (fixed)
+        {
+            QString command = QString(NetworkCommands::DISCONNECTINGFROMSERVER);
+            CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+            QByteArray data;
+            QDataStream stream(&data, QIODevice::WriteOnly);
+            stream << command;
+            emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+        }
     }
 }
 
@@ -1455,95 +1472,117 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
         qint32 aiType;
         stream >> aiType;
         GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
-        // the client wants any player?
+        bool rejoin = false;
         if (player < 0)
         {
             for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                if (isOpenPlayer(i))
+                auto* pPlayer = m_pMap->getPlayer(i);
+                if (pPlayer->getPlayerNameId() == username &&
+                    pPlayer->getSocketId() == 0)
                 {
-                    player = i;
-                    break;
+                    remoteChangePlayerOwner(socketID, username, i, eAiType);
+                    rejoin = true;
                 }
             }
         }
-        bool allowed = joinAllowed(socketID, username, eAiType);
-        // opening a player is always valid changing to an human with an open player is also valid
-        if (allowed &&
-            (isOpenPlayer(player) ||
-             eAiType == GameEnums::AiTypes_Open))
+        if (!rejoin)
         {
-            CONSOLE_PRINT("Player " + username + " change for " + QString::number(player) + " changed locally to ai-type " + QString::number(eAiType), GameConsole::eDEBUG);
-            // valid request
-            // change data locally and send remote update
-            Player* pPlayer = m_pMap->getPlayer(player);
-            // we need to handle opening a player slightly different here...
-
-            DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
-            if (eAiType == GameEnums::AiTypes_Open)
+            // the client wants any player?
+            if (player < 0)
             {
-                pPlayer->setControlType(eAiType);
-                pPlayer->setBaseGameInput(spBaseGameInputIF());
-                pPlayer->setPlayerNameId("");
-                pPlayer->setSocketId(0);
-                if (pDropDownmenu != nullptr)
+                for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
                 {
-                    pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
+                    if (isOpenPlayer(i))
+                    {
+                        player = i;
+                        break;
+                    }
                 }
-                m_playerSockets[player] = 0;
+            }
+            bool allowed = joinAllowed(socketID, username, eAiType);
+            // opening a player is always valid changing to an human with an open player is also valid
+            if (allowed &&
+                (isOpenPlayer(player) ||
+                 eAiType == GameEnums::AiTypes_Open))
+            {
+                remoteChangePlayerOwner(socketID, username, player, eAiType);
             }
             else
             {
-                pPlayer->setControlType(eAiType);
-                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes_ProxyAi));
-                pPlayer->setPlayerNameId(username);
-                pPlayer->setSocketId(socketID);
-                if (pDropDownmenu != nullptr)
-                {
-                    pDropDownmenu->setCurrentItemText(username);
-                }
-                m_playerSockets[player] = socketID;
+                CONSOLE_PRINT("Player change rejected. Cause player isn't open anymore or a player with the same username is in the game", GameConsole::eDEBUG);
+                QString command = NetworkCommands::PLAYERACCESSDENIED;
+                QByteArray accessDenied;
+                QDataStream sendStream(&accessDenied, QIODevice::WriteOnly);
+                sendStream << command;
+                emit m_pNetworkInterface->sig_sendData(socketID, accessDenied, NetworkInterface::NetworkSerives::Multiplayer, false);
             }
-            updatePlayerData(player);
-
-            qint32 aiType = 0;
-            if (eAiType == GameEnums::AiTypes_Open)
-            {
-                aiType = static_cast<qint32>(GameEnums::AiTypes_Open);
-            }
-            else
-            {
-                aiType = static_cast<qint32>(GameEnums::AiTypes_Human);
-            }
-            CONSOLE_PRINT("Player change " + QString::number(player) + " changing remote to ai-type " + QString::number(aiType), GameConsole::eDEBUG);
-            QByteArray sendDataRequester;
-            createPlayerChangedData(sendDataRequester, socketID, username, aiType, player, true);
-            // create data block for other clients
-            if (eAiType == GameEnums::AiTypes_Open)
-            {
-                aiType = static_cast<qint32>(GameEnums::AiTypes_Open);
-            }
-            else
-            {
-                aiType = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
-            }
-            QByteArray sendDataOtherClients;
-            createPlayerChangedData(sendDataOtherClients, socketID, username, aiType, player, false);
-            // send player update
-            emit m_pNetworkInterface->sig_sendData(socketID, sendDataRequester, NetworkInterface::NetworkSerives::Multiplayer, false);
-            emit m_pNetworkInterface.get()->sigForwardData(socketID, sendDataOtherClients, NetworkInterface::NetworkSerives::Multiplayer);
-            sendPlayerReady(0);
-        }
-        else
-        {
-            CONSOLE_PRINT("Player change rejected. Cause player isn't open anymore or a player with the same username is in the game", GameConsole::eDEBUG);
-            QString command = NetworkCommands::PLAYERACCESSDENIED;
-            QByteArray accessDenied;
-            QDataStream sendStream(&accessDenied, QIODevice::WriteOnly);
-            sendStream << command;
-            emit m_pNetworkInterface->sig_sendData(socketID, accessDenied, NetworkInterface::NetworkSerives::Multiplayer, false);
         }
     }
+}
+
+void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType)
+{
+    CONSOLE_PRINT("Player " + username + " change for " + QString::number(player) + " changed locally to ai-type " + QString::number(eAiType), GameConsole::eDEBUG);
+    // valid request
+    // change data locally and send remote update
+    Player* pPlayer = m_pMap->getPlayer(player);
+    m_lockedInCaseOfDisconnect[player] = false;
+    // we need to handle opening a player slightly different here...
+    DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
+    if (eAiType == GameEnums::AiTypes_Open)
+    {
+        pPlayer->setControlType(eAiType);
+        pPlayer->setBaseGameInput(spBaseGameInputIF());
+        pPlayer->setPlayerNameId("");
+        pPlayer->setSocketId(0);
+        if (pDropDownmenu != nullptr)
+        {
+            pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
+        }
+        m_playerSockets[player] = 0;
+    }
+    else
+    {
+        pPlayer->setControlType(eAiType);
+        pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes_ProxyAi));
+        pPlayer->setPlayerNameId(username);
+        pPlayer->setSocketId(socketID);
+        if (pDropDownmenu != nullptr)
+        {
+            pDropDownmenu->setCurrentItemText(username);
+        }
+        m_playerSockets[player] = socketID;
+    }
+    updatePlayerData(player);
+
+    qint32 aiType = 0;
+    if (eAiType == GameEnums::AiTypes_Open)
+    {
+        aiType = static_cast<qint32>(GameEnums::AiTypes_Open);
+    }
+    else
+    {
+        aiType = static_cast<qint32>(GameEnums::AiTypes_Human);
+    }
+    CONSOLE_PRINT("Player change " + QString::number(player) + " changing remote to ai-type " + QString::number(aiType), GameConsole::eDEBUG);
+    QByteArray sendDataRequester;
+    createPlayerChangedData(sendDataRequester, socketID, username, aiType, player, true);
+    // create data block for other clients
+    if (eAiType == GameEnums::AiTypes_Open)
+    {
+        aiType = static_cast<qint32>(GameEnums::AiTypes_Open);
+    }
+    else
+    {
+        aiType = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
+    }
+    QByteArray sendDataOtherClients;
+    createPlayerChangedData(sendDataOtherClients, socketID, username, aiType, player, false);
+    // send player update
+    emit m_pNetworkInterface->sig_sendData(socketID, sendDataRequester, NetworkInterface::NetworkSerives::Multiplayer, false);
+    emit m_pNetworkInterface.get()->sigForwardData(socketID, sendDataOtherClients, NetworkInterface::NetworkSerives::Multiplayer);
+    sendPlayerReady(0);
 }
 
 bool PlayerSelection::joinAllowed(quint64 socketId, QString username, GameEnums::AiTypes eAiType)
@@ -1554,7 +1593,8 @@ bool PlayerSelection::joinAllowed(quint64 socketId, QString username, GameEnums:
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
         {
             Player* pPlayer = m_pMap->getPlayer(i);
-            if (pPlayer->getPlayerNameId() == username && socketId != pPlayer->getSocketId())
+            if (pPlayer->getPlayerNameId() == username &&
+                socketId != pPlayer->getSocketId())
             {
                 joinAllowed = false;
                 break;
@@ -1813,14 +1853,21 @@ void PlayerSelection::disconnected(quint64 socketID)
             if (m_playerSockets[i] == socketID &&
                 m_pMap->getPlayer(i)->getControlType() != GameEnums::AiTypes_Open)
             {
-                // reopen all players
-                m_pMap->getPlayer(i)->setControlType(GameEnums::AiTypes_Open);
-                DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
-                if (pDropDownmenu != nullptr)
+                if (m_lockedInCaseOfDisconnect[i])
                 {
-                    pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
+                    m_pMap->getPlayer(i)->setSocketId(0);
                 }
-                selectAI(i);
+                else
+                {
+                    // reopen all players
+                    m_pMap->getPlayer(i)->setControlType(GameEnums::AiTypes_Open);
+                    DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
+                    if (pDropDownmenu != nullptr)
+                    {
+                        pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
+                    }
+                    selectAI(i);
+                }
             }
         }
         CONSOLE_PRINT("Removing socket " + QString::number(socketID) + " from observer list", GameConsole::eLogLevels::eDEBUG);
@@ -2138,6 +2185,10 @@ void PlayerSelection::serializeObject(QDataStream& stream) const
     {
         stream << item;
     }
+    for (auto & item : m_lockedInCaseOfDisconnect)
+    {
+        stream << item;
+    }
     if (m_pCampaign.get() != nullptr)
     {
         stream << true;
@@ -2161,9 +2212,15 @@ void PlayerSelection::deserializeObject(QDataStream& stream)
     stream >> size;
     for (qint32 i = 0; i < size; ++i)
     {
-        bool ready = false;
-        stream >> ready;
-        m_playerReadyFlags.append(ready);
+        bool value = false;
+        stream >> value;
+        m_playerReadyFlags.append(value);
+    }
+    for (qint32 i = 0; i < size; ++i)
+    {
+        bool value = false;
+        stream >> value;
+        m_lockedInCaseOfDisconnect.append(value);
     }
     bool hasCampaign = false;
     stream >> hasCampaign;

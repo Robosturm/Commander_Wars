@@ -217,6 +217,13 @@ protected:
      */
     bool joinAllowed(quint64 socketId, QString username, GameEnums::AiTypes eAiType);
     /**
+     * @brief remoteChangePlayerOwner
+     * @param username
+     * @param player
+     * @param eAiType
+     */
+    void remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType);
+    /**
      * @brief sendOpenPlayerCount
      */
     void sendOpenPlayerCount();
@@ -299,6 +306,7 @@ private:
      */
     QVector<quint64> m_playerSockets;
     QVector<bool> m_playerReadyFlags;
+    QVector<bool> m_lockedInCaseOfDisconnect;
 
     spNetworkInterface m_pNetworkInterface{nullptr};
     spCampaign m_pCampaign;
