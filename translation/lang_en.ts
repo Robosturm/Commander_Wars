@@ -6265,7 +6265,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="159"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="158"/>
         <source>&lt;r&gt;Meteor pieces which can be attacked and destroyed &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;to eliminate plasma.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>

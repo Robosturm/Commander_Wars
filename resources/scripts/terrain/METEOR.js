@@ -150,7 +150,6 @@ var Constructor = function()
             {
                 plasmaFields.push(points.at(i));
             }
-            pfs.killTerrainFindingSystem();
         }
         return plasmaFields;
     };

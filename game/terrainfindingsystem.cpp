@@ -67,7 +67,6 @@ qint32 TerrainFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32, 
 
 void TerrainFindingSystem::killTerrainFindingSystem()
 {
-    deleteLater();
 }
 
 TerrainFlowData* TerrainFindingSystem::getFlowData()
