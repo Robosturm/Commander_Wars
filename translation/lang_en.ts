@@ -6525,7 +6525,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/movementplanner.cpp" line="146"/>
+        <location filename="../menue/movementplanner.cpp" line="150"/>
         <source>Updating map</source>
         <translation type="unfinished"></translation>
     </message>
