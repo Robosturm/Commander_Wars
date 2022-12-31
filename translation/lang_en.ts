@@ -6525,7 +6525,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/movementplanner.cpp" line="139"/>
+        <location filename="../menue/movementplanner.cpp" line="146"/>
         <source>Updating map</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12387,27 +12387,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/aircraftcarrier.js" line="108"/>
-        <source>Naval Unit. Can </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="109"/>
-        <source>carry X 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="110"/>
-        <source> air units and </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="111"/>
-        <source>produce </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="112"/>
-        <source>Waterplanes</source>
+        <source>&lt;r&gt;Naval Unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;carry X&lt;/div&gt;&lt;r&gt; air units and &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;produce &lt;/div&gt;&lt;r&gt;Waterplanes.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -27109,7 +27089,7 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zlaser.js" line="72"/>
+        <location filename="../resources/scripts/building/zlaser.js" line="73"/>
         <source>Black Hole Laser that can deal 5 HP of damage to all units in 4 rays from the laser.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -103,12 +103,20 @@ void MovementPlanner::addAddIn(QStringList & loadedGroups, QString newAddInId)
 
 void MovementPlanner::onShowPlanner()
 {
+    if (m_input.get() != nullptr)
+    {
+        m_input->cleanUpInput();
+    }
     m_animationSkipper.storeAnimationSettings();
     m_animationSkipper.startSeeking();
 }
 
 void MovementPlanner::onExitPlanner()
 {
+    if (m_input.get() != nullptr)
+    {
+        m_input->cleanUpInput();
+    }
     m_animationSkipper.restoreAnimationSettings();
 }
 
@@ -125,7 +133,10 @@ void MovementPlanner::reloadMap()
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->show();
-
+    if (m_input.get() != nullptr)
+    {
+        m_input->cleanUpInput();
+    }
     GameMap* pSourceMap = m_pOwner->getMap();
     QBuffer buffer;
     buffer.open(QIODevice::ReadWrite);
@@ -177,6 +188,10 @@ void MovementPlanner::reloadMap()
 void MovementPlanner::clickedTopbar(QString itemID)
 {
     CONSOLE_PRINT("clickedTopbar(" + itemID + ")", GameConsole::eDEBUG);
+    if (m_input.get() != nullptr)
+    {
+        m_input->cleanUpInput();
+    }
     struct MenuItem
     {
         MenuItem(const char* const id, void (MovementPlanner::*func)())
