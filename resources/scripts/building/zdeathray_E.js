@@ -41,7 +41,7 @@ var Constructor = function()
     {
 		var targets = globals.getEmptyPointArray();
         // laser to not fire infinitly but the range is still fucking huge :)
-        for (var i = 1; i < 60; i++)
+        for (var i = 1; i < 80; i++)
         {
             targets.append(Qt.point(i, -1));
             targets.append(Qt.point(i, 0));

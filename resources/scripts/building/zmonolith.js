@@ -27,7 +27,7 @@ var Constructor = function()
     };
     this.getActionTargetFields = function(building)
     {
-        return globals.getCircle(1, 3);
+        return globals.getCircle(0, 3);
     };
     this.getName = function()
     {
