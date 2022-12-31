@@ -1332,7 +1332,7 @@
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="294"/>
-        <source>Advance Wars DoR</source>
+        <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1397,6 +1397,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="262"/>
+        <source>Advance Wars 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="55"/>
         <source>CO bann list</source>
         <translation type="unfinished"></translation>
@@ -1409,11 +1414,6 @@
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="261"/>
         <source>Commander Wars</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="262"/>
-        <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3272,6 +3272,16 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="134"/>
+        <source>Import AW4 Aw4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="134"/>
+        <source>Deletes the current map and imports an AW 4 map editor file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="91"/>
         <source>View Map Stats</source>
         <translation type="unfinished"></translation>
@@ -3419,16 +3429,6 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="133"/>
         <source>Exports the map to an AWS Map Editor file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="134"/>
-        <source>Import AWDC Aw4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="134"/>
-        <source>Deletes the current map and imports an AW DoR/DC Map Editor from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6690,6 +6690,11 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/optionmenue.cpp" line="271"/>
+        <source>Advance Wars 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/optionmenue.cpp" line="273"/>
         <source>Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game.</source>
         <translation type="unfinished"></translation>
@@ -6722,11 +6727,6 @@ Host mods: </source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="270"/>
         <source>Advance Wars DS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="271"/>
-        <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7549,6 +7549,11 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/ruleselection.cpp" line="692"/>
+        <source>If checked: ships and boats can move through ship bridges placed on sea tiles, like in Advance Wars 4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/ruleselection.cpp" line="706"/>
         <source>If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn.</source>
         <translation type="unfinished"></translation>
@@ -7674,11 +7679,6 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     <message>
         <location filename="../objects/ruleselection.cpp" line="688"/>
         <source>Ship bridges:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="692"/>
-        <source>If checked: ships and boats can move through ship bridges placed on sea tiles, like in Advance Wars Dark conflict.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
