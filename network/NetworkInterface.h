@@ -135,6 +135,7 @@ public:
     }
 
 signals:
+    void sigDisconnectTCP();
     /**
      * @brief recieveData emitted when Data is recieved
      * @param data

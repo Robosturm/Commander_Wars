@@ -64,6 +64,7 @@ signals:
     void sigLoadSaveGame();
     void sigShowIPs();
     void sigReadyAndLeave();
+    void sigServerResponded();
 public slots:
 
     // general slots
@@ -129,6 +130,14 @@ protected slots:
     void readyAndLeave();
 
 protected:
+    /**
+     * @brief relaunchRunningGame
+     */
+    void relaunchRunningGame(quint64 socketID, const QString & savefile);
+    /**
+     * @brief relaunchRunningLobby
+     */
+    void relaunchRunningLobby(quint64 socketID, const QString & savefile);
     /**
      * @brief saveLobbyState
      * @param filename
@@ -290,6 +299,10 @@ private:
      * @brief changeButtonText
      */
     void changeButtonText();
+    /**
+     * @brief showInformingServer
+     */
+    void showInformingServer();
 private:
     NetworkMode m_networkMode{NetworkMode::Client};
     spNetworkInterface m_pNetworkInterface;

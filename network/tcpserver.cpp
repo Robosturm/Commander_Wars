@@ -45,6 +45,7 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
             connect(m_pTCPServer[1].get(), &QTcpServer::newConnection, this, &TCPServer::onConnect, Qt::QueuedConnection);
         }
         connect(this, &TCPServer::sigDisconnectClient, this, &TCPServer::disconnectClient, Qt::QueuedConnection);
+        connect(this, &TCPServer::sigDisconnectTCP, this, &TCPServer::disconnectTCP, Qt::QueuedConnection);
         connect(this, &TCPServer::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
         connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
         connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);

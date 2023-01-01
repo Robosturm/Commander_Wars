@@ -1090,16 +1090,19 @@ void PlayerSelection::selectAI(qint32 player)
     {
         if (m_pNetworkInterface->getIsServer())
         {
-            CONSOLE_PRINT(name + " AI " + QString::number(type) + " selected for player " + QString::number(player) + " sending data.", GameConsole::eDEBUG);
             quint64 socket = m_pNetworkInterface->getSocketID();
-            m_playerSockets[player] = socket;
-
             createAi(player, type, name);
-
             qint32 ai = type;
-            if (type == GameEnums::AiTypes_Open)
+            m_playerSockets[player] = socket;
+            if (type == GameEnums::AiTypes_Closed)
+            {
+                ai = static_cast<qint32>(GameEnums::AiTypes_Closed);
+                m_playerSockets[player] = 0;
+            }
+            else if (type == GameEnums::AiTypes_Open)
             {
                 ai = static_cast<qint32>(GameEnums::AiTypes_Open);
+                m_playerSockets[player] = 0;
             }
             else if (m_isServerGame &&
                      Mainapp::getSlave() &&
@@ -1115,6 +1118,7 @@ void PlayerSelection::selectAI(qint32 player)
             QByteArray data;
             createPlayerChangedData(data, socket, name, ai, player, false);
             // update data for all clients
+            CONSOLE_PRINT(name + " AI " + QString::number(type) + " selected for player " + QString::number(player) + " and socket " + QString::number(socket) + " sending data.", GameConsole::eDEBUG);
             emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             updatePlayerData(player);
         }
@@ -1369,8 +1373,8 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
     {
         bool fixed = false;
         bool value = false;
-        stream >> value;
         stream >> fixed;
+        stream >> value;
         CONSOLE_PRINT("PlayerSelection::recievePlayerReady for socket " + QString::number(socketID) + " is " + (value ? "ready" : "not ready"), GameConsole::eDEBUG);
         for  (qint32 i = 0; i < m_playerSockets.size(); i++)
         {
@@ -1524,7 +1528,6 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
 
 void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType)
 {
-    CONSOLE_PRINT("Player " + username + " change for " + QString::number(player) + " changed locally to ai-type " + QString::number(eAiType), GameConsole::eDEBUG);
     // valid request
     // change data locally and send remote update
     Player* pPlayer = m_pMap->getPlayer(player);
@@ -1553,8 +1556,16 @@ void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & 
         {
             pDropDownmenu->setCurrentItemText(username);
         }
-        m_playerSockets[player] = socketID;
+        if (eAiType == GameEnums::AiTypes_Closed)
+        {
+            m_playerSockets[player] = 0;
+        }
+        else
+        {
+            m_playerSockets[player] = socketID;
+        }
     }
+    CONSOLE_PRINT("Player " + username + " change for " + QString::number(player) + " changed locally to ai-type " + QString::number(eAiType) + " for socket " + QString::number(m_playerSockets[player]), GameConsole::eDEBUG);
     updatePlayerData(player);
 
     qint32 aiType = 0;
@@ -1627,7 +1638,15 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             GameEnums::AiTypes originalAiType = static_cast<GameEnums::AiTypes>(aiType);
             if (player <m_playerSockets.size() && m_pMap != nullptr)
             {
-                m_playerSockets[player] = socket;
+                if (aiType != GameEnums::AiTypes::AiTypes_Open &&
+                    aiType != GameEnums::AiTypes::AiTypes_Closed)
+                {
+                    m_playerSockets[player] = socket;
+                }
+                else
+                {
+                    m_playerSockets[player] = 0;
+                }
                 if (Mainapp::getSlave())
                 {
                     if (aiType != GameEnums::AiTypes::AiTypes_Open &&

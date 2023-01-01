@@ -42,6 +42,7 @@ class MainServer final : public QObject, public oxygine::ref_counter
     struct SuspendedSlaveInfo
     {
         bool relaunched{false};
+        bool runningGame{false};
         QVector<quint64> pendingSockets;
         QString savefile;
         NetworkGameData game;
@@ -158,6 +159,14 @@ private:
      * @param stream
      */
     void joinSlaveGame(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief MainServer::tryJoinSuspendedGame
+     * @param socketID
+     * @param slave
+     * @param games
+     * @return
+     */
+    bool tryJoinSuspendedGame(quint64 socketID, const QString & slave, QVector<SuspendedSlaveInfo> & games);
     /**
      * @brief closeGame
      * @param pGame

@@ -103,6 +103,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
     // quit on host connection lost
     connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
     connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
+
     connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     // wait 10 minutes till timeout
     spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Connecting"), 1000 * 60 * 5);
@@ -206,6 +207,11 @@ void Multiplayermenu::saveLobbyState(const QString & filename)
 void Multiplayermenu::closeSlave()
 {
     CONSOLE_PRINT("Closing slave cause all players have disconnected.", GameConsole::eDEBUG);
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        emit m_pNetworkInterface->sigDisconnectTCP();
+        QCoreApplication::processEvents();
+    }
     QCoreApplication::exit(0);
 }
 
@@ -737,20 +743,15 @@ void Multiplayermenu::onServerRelaunchSlave(quint64 socketID, const QJsonObject 
     QString savefile = objData.value(JsonKeys::JSONKEY_MAPNAME).toString();
     if (QFile::exists(savefile))
     {
-        CONSOLE_PRINT("Relaunching slave with savefile " + savefile, GameConsole::eDEBUG);
-        spGameMap pMap = spGameMap::create(savefile, false, false, true);
-        spGameMenue pMenu = spGameMenue::create(pMap, true, m_pNetworkInterface, false, true);
-        oxygine::Stage::getStage()->addChild(pMenu);
-        QString command = NetworkCommands::SLAVERELAUNCHED;
-        QJsonObject data;
-        QString slavename = Settings::getSlaveServerName();
-        data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        data.insert(JsonKeys::JSONKEY_SLAVENAME, slavename);
-        QJsonDocument doc(data);
-        CONSOLE_PRINT("Sending command " + command + " for slave " + slavename, GameConsole::eDEBUG);
-        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-        emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-        oxygine::Actor::detach();
+        bool runningGame = objData.value(JsonKeys::JSONKEY_RUNNINGGAME).toBool();
+        if (runningGame)
+        {
+            relaunchRunningGame(socketID, savefile);
+        }
+        else
+        {
+            relaunchRunningLobby(socketID, savefile);
+        }
         CONSOLE_PRINT("Deleting relaunched savefile " + savefile, GameConsole::eDEBUG);
         QFile::remove(savefile);
     }
@@ -759,6 +760,30 @@ void Multiplayermenu::onServerRelaunchSlave(quint64 socketID, const QJsonObject 
         CONSOLE_PRINT("Failed to relaunch slave with savefile " + savefile, GameConsole::eERROR);
         QCoreApplication::exit(0);
     }
+}
+
+void Multiplayermenu::relaunchRunningGame(quint64 socketID, const QString & savefile)
+{
+    CONSOLE_PRINT("Relaunching running game on slave with savefile " + savefile, GameConsole::eDEBUG);
+    spGameMap pMap = spGameMap::create(savefile, false, false, true);
+    spGameMenue pMenu = spGameMenue::create(pMap, true, m_pNetworkInterface, false, true);
+    oxygine::Stage::getStage()->addChild(pMenu);
+    QString command = NetworkCommands::SLAVERELAUNCHED;
+    QJsonObject data;
+    QString slavename = Settings::getSlaveServerName();
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_SLAVENAME, slavename);
+    QJsonDocument doc(data);
+    CONSOLE_PRINT("Sending command " + command + " for slave " + slavename, GameConsole::eDEBUG);
+    spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+    emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    oxygine::Actor::detach();
+}
+
+void Multiplayermenu::relaunchRunningLobby(quint64 socketID, const QString & savefile)
+{
+    CONSOLE_PRINT("Relaunching running lobby on slave with savefile " + savefile, GameConsole::eDEBUG);
+
 }
 
 void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 socketID)
@@ -1654,11 +1679,13 @@ void Multiplayermenu::disconnected(quint64 socket)
     }
     else
     {
+        emit sigServerResponded();
         CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
         disconnectNetwork();
         oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
     }
+
 }
 
 void Multiplayermenu::buttonBack()
@@ -1670,7 +1697,8 @@ void Multiplayermenu::buttonBack()
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         QJsonDocument doc(data);
         CONSOLE_PRINT("Sending command " + command + " to slave", GameConsole::eDEBUG);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        showInformingServer();
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);        
     }
     else if (m_networkMode != NetworkMode::Host ||
         m_MapSelectionStep == MapSelectionStep::selectMap ||
@@ -1698,6 +1726,13 @@ void Multiplayermenu::buttonBack()
             m_pPlayerSelection->setSaveGame(m_saveGame);
         }
     }
+}
+
+void Multiplayermenu::showInformingServer()
+{
+    spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Informing server"), 1000 * 60 * 5, false);
+    addChild(pDialogConnecting);
+    connect(this, &Multiplayermenu::sigServerResponded, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
 }
 
 void Multiplayermenu::buttonNext()
@@ -1734,6 +1769,8 @@ void Multiplayermenu::buttonNext()
 
 void Multiplayermenu::connectNetworkSlots()
 {
+    CONSOLE_PRINT("Multiplayermenu::connectNetworkSlots", GameConsole::eDEBUG);
+    disconnectNetworkSlots();
     connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined, Qt::QueuedConnection);
     connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
     connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
@@ -1741,6 +1778,7 @@ void Multiplayermenu::connectNetworkSlots()
 
 void Multiplayermenu::disconnectNetworkSlots()
 {
+    CONSOLE_PRINT("Multiplayermenu::disconnectNetworkSlots", GameConsole::eDEBUG);
     disconnect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined);
     disconnect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData);
     disconnect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected);
@@ -1870,13 +1908,14 @@ void Multiplayermenu::startGame()
 void Multiplayermenu::markGameReady(bool fixed)
 {
     QString command = QString(NetworkCommands::CLIENTREADY);
-    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     m_pPlayerSelection->setPlayerReady(!m_pPlayerSelection->getPlayerReady());
+    bool ready = m_pPlayerSelection->getPlayerReady();
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << command;
     sendStream << fixed;
-    sendStream << m_pPlayerSelection->getPlayerReady();
+    sendStream << ready;
+    CONSOLE_PRINT("Sending command " + command + " with fixed=" + QString::number(fixed) + " and ready=" + QString::number(ready), GameConsole::eDEBUG);
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 

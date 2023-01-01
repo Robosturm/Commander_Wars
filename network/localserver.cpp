@@ -23,6 +23,7 @@ void LocalServer::connectTCP(QString primaryAdress, quint16 port, QString second
     m_pTCPServer->listen(primaryAdress);
     connect(m_pTCPServer, &QLocalServer::newConnection, this, &LocalServer::onConnect, Qt::QueuedConnection);
     connect(this, &LocalServer::sigDisconnectClient, this, &LocalServer::disconnectClient, Qt::QueuedConnection);
+    connect(this, &LocalServer::sigDisconnectTCP, this, &LocalServer::disconnectTCP, Qt::QueuedConnection);
     connect(this, &LocalServer::sigForwardData, this, &LocalServer::forwardData, Qt::QueuedConnection);
     connect(this, &LocalServer::sigContinueListening, this, &LocalServer::continueListening, Qt::QueuedConnection);
     connect(this, &LocalServer::sigPauseListening, this, &LocalServer::pauseListening, Qt::QueuedConnection);

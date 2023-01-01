@@ -339,6 +339,7 @@ void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & obj
         SuspendedSlaveInfo slaveInfo;
         slaveInfo.savefile = objData.value(JsonKeys::JSONKEY_SAVEFILE).toString();
         slaveInfo.game.fromJson(objData);
+        slaveInfo.runningGame = runningGame;
         setUuidForGame(slaveInfo.game);
         m_runningSlaves.append(slaveInfo);
     }
@@ -347,6 +348,7 @@ void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & obj
         SuspendedSlaveInfo slaveInfo;
         slaveInfo.savefile = objData.value(JsonKeys::JSONKEY_SAVEFILE).toString();
         slaveInfo.game.fromJson(objData);
+        slaveInfo.runningGame = runningGame;
         setUuidForGame(slaveInfo.game);
         m_runningLobbies.append(slaveInfo);
     }
@@ -510,17 +512,10 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
     }
     if (!found)
     {
-        for (auto & game : m_runningSlaves)
+        found = tryJoinSuspendedGame(socketID, slave, m_runningSlaves);
+        if (!found)
         {
-            if (game.game.getSlaveName() == slave)
-            {
-                game.pendingSockets.append(socketID);
-                if (!game.relaunched)
-                {
-                    spawnSlave(socketID, game);
-                }
-                found = true;
-            }
+            found = tryJoinSuspendedGame(socketID, slave, m_runningLobbies);
         }
     }
     if (!found)
@@ -533,6 +528,25 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
         QJsonDocument doc(data);
         emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
+}
+
+bool MainServer::tryJoinSuspendedGame(quint64 socketID, const QString & slave, QVector<SuspendedSlaveInfo> & games)
+{
+    bool found = false;
+    for (auto & game : games)
+    {
+        if (game.game.getSlaveName() == slave)
+        {
+            game.pendingSockets.append(socketID);
+            if (!game.relaunched)
+            {
+                spawnSlave(socketID, game);
+            }
+            found = true;
+            break;
+        }
+    }
+    return found;
 }
 
 void MainServer::startRemoteGame(const QString & initScript, const QString & id)
@@ -639,6 +653,7 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo)
         game->game->getData().setMods(slaveInfo.game.getMods());
         game->game->getData().setMaxPlayers(slaveInfo.game.getMaxPlayers());
         game->game->getData().setLocked(slaveInfo.game.getLocked());
+        game->game->setRunningGame(slaveInfo.runningGame);
         // connect signals and spawn process
         connect(game->process.get(), &QProcess::finished, game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->process.get(), &QProcess::errorOccurred, game->game.get(), &NetworkGame::errorOccurred, Qt::QueuedConnection);
@@ -813,6 +828,12 @@ void MainServer::sendGameDataToClient(qint64 socketId)
             games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
             ++i;
         }
+    }
+    for (auto & game : qAsConst(m_runningLobbies))
+    {
+        QJsonObject obj = game.game.toJson();
+        games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+        ++i;
     }
     data.insert(JsonKeys::JSONKEY_GAMES, games);
     // send server data to all connected clients

@@ -41,6 +41,16 @@ void NetworkGame::closeTimerExpired()
     }
 }
 
+bool NetworkGame::getRunningGame() const
+{
+    return m_runningGame;
+}
+
+void NetworkGame::setRunningGame(bool newRunningGame)
+{
+    m_runningGame = newRunningGame;
+}
+
 const QString &NetworkGame::getSlaveRespawnFile() const
 {
     return m_slaveRespawnFile;
@@ -155,6 +165,7 @@ void NetworkGame::onConnectToLocalServer(quint64 socketId, spTCPServer & pTcpSer
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_MAPNAME, m_slaveRespawnFile);
+        data.insert(JsonKeys::JSONKEY_RUNNINGGAME, m_runningGame);
         QJsonDocument doc(data);
         emit pTcpServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }

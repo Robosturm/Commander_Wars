@@ -29,6 +29,7 @@ void LocalClient::connectTCP(QString primaryAdress, quint16 port, QString second
     connect(m_pSocket, &QLocalSocket::disconnected, this, &LocalClient::disconnectTCP, Qt::QueuedConnection);
     connect(m_pSocket, &QLocalSocket::errorOccurred, this, &LocalClient::displayLocalError, Qt::QueuedConnection);
     connect(m_pSocket, &QLocalSocket::connected, this, &LocalClient::connected, Qt::QueuedConnection);
+    connect(this, &LocalClient::sigDisconnectTCP, this, &LocalClient::disconnectTCP, Qt::QueuedConnection);
 
     // Start RX-Task
     m_pRXTask = spRxTask::create(m_pSocket, 0, this, true);
@@ -54,9 +55,9 @@ void LocalClient::disconnectTCP()
         m_pSocket->disconnect();
         m_pSocket->close();
         m_pSocket = nullptr;
+        CONSOLE_PRINT("Local Client disconnected.", GameConsole::eDEBUG);
+        emit sigDisconnected(0);
     }
-    CONSOLE_PRINT("Local Client disconnected.", GameConsole::eDEBUG);
-    emit sigDisconnected(0);
 }
 
 QVector<quint64> LocalClient::getConnectedSockets()

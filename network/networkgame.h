@@ -76,6 +76,9 @@ public:
     const QString &getSlaveRespawnFile() const;
     void setSlaveRespawnFile(const QString &newSlaveRespawnFile);
     void onSlaveRelaunched();
+    bool getRunningGame() const;
+    void setRunningGame(bool newRunningGame);
+
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);
@@ -106,6 +109,7 @@ private:
     QString m_serverName;
     bool m_slaveRunning{false};
     bool m_closing{false};
+    bool m_runningGame{false};
     NetworkGameData m_data;
     QString m_id;
     QString m_slaveRespawnFile;

@@ -50,6 +50,7 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
     connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QAbstractSocket::stateChanged, this, &TCPClient::displayStateChange, Qt::QueuedConnection);
     connect(this, &TCPClient::sigDisconnectClient, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
+    connect(this, &TCPClient::sigDisconnectTCP, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     connect(m_pSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     m_pSocket->connectToHost(address, port);
     // Start RX-Task
@@ -82,11 +83,11 @@ void TCPClient::disconnectTCP()
             m_pSocket->disconnect();
             m_pSocket->close();
             m_pSocket = nullptr;
-        }
-        if (!m_onServer)
-        {
-            emit sigDisconnected(m_socketID);
-        }
+            if (!m_onServer)
+            {
+                emit sigDisconnected(m_socketID);
+            }
+        }        
     }
 }
 
