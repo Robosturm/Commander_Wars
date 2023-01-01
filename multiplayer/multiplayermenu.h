@@ -72,6 +72,7 @@ public slots:
     virtual void buttonNext() override;
     virtual void startGame() override;
     virtual void exitMenu() override;
+    void exitMenuToLobby();
 
     // network slots
     void playerJoined(quint64 socketID);

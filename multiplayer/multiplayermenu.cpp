@@ -206,7 +206,7 @@ void Multiplayermenu::saveLobbyState(const QString & filename)
 
 void Multiplayermenu::closeSlave()
 {
-    CONSOLE_PRINT("Closing slave cause all players have disconnected.", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Closing slave.", GameConsole::eDEBUG);
     if (m_pNetworkInterface.get() != nullptr)
     {
         emit m_pNetworkInterface->sigDisconnectTCP();
@@ -438,7 +438,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         }
         else if (messageType == NetworkCommands::DISCONNECTINGFROMSERVER)
         {
-            buttonBack();
+            exitMenuToLobby();
         }
         else
         {
@@ -1659,6 +1659,14 @@ void Multiplayermenu::exitMenu()
     oxygine::Actor::detach();
 }
 
+void Multiplayermenu::exitMenuToLobby()
+{
+    CONSOLE_PRINT("Leaving Map Selection Menue and going back to lobby menu", GameConsole::eDEBUG);
+    disconnectNetwork();
+    oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
+    oxygine::Actor::detach();
+}
+
 void Multiplayermenu::disconnected(quint64 socket)
 {
     CONSOLE_PRINT("Multiplayermenu::disconnected", GameConsole::eDEBUG);
@@ -1705,9 +1713,7 @@ void Multiplayermenu::buttonBack()
         !m_local)
     {
         CONSOLE_PRINT("Leaving Map Selection Menue button back pressed", GameConsole::eDEBUG);
-        disconnectNetwork();
-        oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
-        oxygine::Actor::detach();
+        exitMenuToLobby();
     }
     else if (m_networkMode == NetworkMode::Host)
     {
@@ -1949,7 +1955,7 @@ void Multiplayermenu::startCountdown()
     }
     else
     {
-        CONSOLE_PRINT("Stoping countdown", GameConsole::eDEBUG);
+        CONSOLE_PRINT("Stopping countdown", GameConsole::eDEBUG);
         m_GameStartTimer.stop();
         if (m_local)
         {

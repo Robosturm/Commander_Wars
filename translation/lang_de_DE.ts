@@ -6535,7 +6535,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="82"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="97"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1930"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1936"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6662,17 +6662,17 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1733"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1739"/>
         <source>Informing server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1801"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1807"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1926"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1932"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
