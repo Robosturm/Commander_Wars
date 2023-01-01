@@ -370,7 +370,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
-        CONSOLE_PRINT("Local Network Command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        CONSOLE_PRINT("Local Network Command in Multiplayermenu::recieveData received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::MAPINFO)
         {
             clientMapInfo(stream, socketID);
@@ -436,7 +436,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unknown command in Multiplayermenu::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
@@ -521,7 +521,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unknown command in Multiplayermenu::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
 }
@@ -999,6 +999,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
             }
             else
             {
+                CONSOLE_PRINT("Multiplayermenu::sendInitUpdate requesting player", GameConsole::eDEBUG);
                 m_pPlayerSelection->sendPlayerRequest(socketID, -1, GameEnums::AiTypes_Human);
             }
             emit sigConnected();
@@ -1718,7 +1719,8 @@ void Multiplayermenu::buttonNext()
         }
         else
         {
-            m_MapSelectionStep = MapSelectionStep::selectPlayer;
+            // m_MapSelectionStep = MapSelectionStep::selectPlayer;
+            MapSelectionMapsMenue::hideRuleSelection();
             m_pReadyAndLeave->setVisible(true);
             connectNetworkSlots();
             startGameOnServer();

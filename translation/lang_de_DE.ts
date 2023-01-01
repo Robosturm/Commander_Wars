@@ -6535,7 +6535,7 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="82"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="97"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1889"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1891"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6631,43 +6631,43 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1189"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1190"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1193"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1194"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1208"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1209"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1212"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1213"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1312"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1313"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1323"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1324"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1761"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1763"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1885"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1887"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

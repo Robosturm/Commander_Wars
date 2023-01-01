@@ -501,7 +501,7 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unknown command in LobbyMenu::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
 }

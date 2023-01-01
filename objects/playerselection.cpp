@@ -1088,7 +1088,6 @@ void PlayerSelection::selectAI(qint32 player)
     CONSOLE_PRINT("Selecting ai type " + QString::number(type) + " with name " + name + " for payer " + QString::number(player), GameConsole::eDEBUG);
     if (m_pNetworkInterface.get() != nullptr)
     {
-
         if (m_pNetworkInterface->getIsServer())
         {
             CONSOLE_PRINT(name + " AI " + QString::number(type) + " selected for player " + QString::number(player) + " sending data.", GameConsole::eDEBUG);
@@ -1121,6 +1120,7 @@ void PlayerSelection::selectAI(qint32 player)
         }
         else
         {
+            CONSOLE_PRINT("PlayerSelection::selectAI requesting player " + QString::number(player) + " with ai type " + QString::number(type), GameConsole::eDEBUG);
             sendPlayerRequest(0, player, type);
         }
     }
@@ -1481,6 +1481,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
                 if (pPlayer->getPlayerNameId() == username &&
                     pPlayer->getSocketId() == 0)
                 {
+                    CONSOLE_PRINT("Player username " + username + " rejoined lobby game.", GameConsole::eDEBUG);
                     remoteChangePlayerOwner(socketID, username, i, eAiType);
                     rejoin = true;
                 }
@@ -1491,7 +1492,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             // the client wants any player?
             if (player < 0)
             {
-                for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+                for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
                 {
                     if (isOpenPlayer(i))
                     {
@@ -1501,16 +1502,16 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
                 }
             }
             bool allowed = joinAllowed(socketID, username, eAiType);
+            bool isOpen = isOpenPlayer(player);
             // opening a player is always valid changing to an human with an open player is also valid
             if (allowed &&
-                (isOpenPlayer(player) ||
-                 eAiType == GameEnums::AiTypes_Open))
+                (isOpen || eAiType == GameEnums::AiTypes_Open))
             {
                 remoteChangePlayerOwner(socketID, username, player, eAiType);
             }
             else
             {
-                CONSOLE_PRINT("Player change rejected. Cause player isn't open anymore or a player with the same username is in the game", GameConsole::eDEBUG);
+                CONSOLE_PRINT("Player change for username " + username + " rejected. Cause player " + QString::number(player) + " for ai " + QString::number(aiType) + " allowed=" + QString::number(allowed) + " open=" + QString::number(isOpen), GameConsole::eDEBUG);
                 QString command = NetworkCommands::PLAYERACCESSDENIED;
                 QByteArray accessDenied;
                 QDataStream sendStream(&accessDenied, QIODevice::WriteOnly);

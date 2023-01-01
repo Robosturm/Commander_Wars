@@ -214,7 +214,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
-        CONSOLE_PRINT("Local Network Command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        CONSOLE_PRINT("Local Network command in GameMenue::recieveData received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::CLIENTINITGAME)
         {
             if (m_pNetworkInterface->getIsServer())
@@ -304,7 +304,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }    
     else if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
@@ -312,7 +312,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        CONSOLE_PRINT("Server Network Command in GameMenue::recieveData received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::VERIFYLOGINDATA)
         {
             verifyLoginData(objData, socketID);
@@ -356,7 +356,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
     else if (service == NetworkInterface::NetworkSerives::GameChat)
@@ -373,7 +373,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
     }
     else
     {
-        CONSOLE_PRINT("Unknown service " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+        CONSOLE_PRINT("Unknown service in GameMenue::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 
@@ -391,7 +391,7 @@ void GameMenue::recieveServerData(quint64 socketID, QByteArray data, NetworkInte
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
     else

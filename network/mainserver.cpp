@@ -235,7 +235,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unknown command in MainServer::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHosting)
@@ -250,7 +250,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         }        
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unknown command in MainServer::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
 }
@@ -289,7 +289,7 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Unknown command in MainServer::receivedSlaveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
 }
