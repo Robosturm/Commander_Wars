@@ -75,12 +75,14 @@ bool PlayerSelection::isOpenPlayer(qint32 player)
         DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
         if (pDropDownmenu != nullptr)
         {
-            if (pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 1)
+            if (pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 1 &&
+                m_pMap->getPlayer(player)->getControlType() != GameEnums::AiTypes_Closed)
             {
                 return true;
             }
         }
-        else if (m_pMap->getPlayer(player)->getControlType() == GameEnums::AiTypes_Open)
+        else if (m_pMap->getPlayer(player)->getControlType() == GameEnums::AiTypes_Open &&
+                 m_pMap->getPlayer(player)->getControlType() != GameEnums::AiTypes_Closed)
         {
             return true;
         }
@@ -251,6 +253,23 @@ bool PlayerSelection::getIsArmyCustomizationAllowed()
             GameConsole::getDeveloperMode());
 }
 
+void PlayerSelection::setLockedAiControl(qint32 player, bool value)
+{
+    if (player >= 0 && player < m_lockedAiControl.size())
+    {
+        m_lockedAiControl[player] = value;
+    }
+}
+
+bool PlayerSelection::getLockedAiControl(qint32 player)
+{
+    if (player >= 0 && player < m_lockedAiControl.size())
+    {
+        return m_lockedAiControl[player];
+    }
+    return false;
+}
+
 bool PlayerSelection::hasNetworkInterface() const
 {
     return m_pNetworkInterface.get() != nullptr;
@@ -368,11 +387,13 @@ void PlayerSelection::initializeMap()
 {
     m_playerReadyFlags.clear();
     m_lockedInCaseOfDisconnect.clear();
+    m_lockedAiControl.clear();
     m_playerSockets.clear();
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         m_playerReadyFlags.append(false);
         m_lockedInCaseOfDisconnect.append(false);
+        m_lockedAiControl.append(false);
         m_playerSockets.append(0);
     }
     if (!m_saveGame)
@@ -407,8 +428,10 @@ void PlayerSelection::initializeMap()
                     }
                     pPlayer->setControlType(ai);
                 }
-                else
+                else if (pPlayer->getControlType() != GameEnums::AiTypes_Open &&
+                         pPlayer->getControlType() != GameEnums::AiTypes_Closed)
                 {
+                    CONSOLE_PRINT("PlayerSelection::initializeMap changing player " + QString::number(i) + " to human", GameConsole::eDEBUG);
                     pPlayer->setBaseGameInput(spHumanPlayerInput::create(m_pMap));
                     pPlayer->setControlType(GameEnums::AiTypes_Human);
                 }
@@ -424,6 +447,7 @@ void PlayerSelection::initializeMap()
         // reassign each a unique team
         if (allPlayer1)
         {
+            CONSOLE_PRINT("PlayerSelection::initializeMap fixing team's cause all players are team 1", GameConsole::eDEBUG);
             for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
                 m_pMap->getPlayer(i)->setTeam(i);
@@ -431,6 +455,7 @@ void PlayerSelection::initializeMap()
         }
         if (allHuman)
         {
+            CONSOLE_PRINT("PlayerSelection::initializeMap fixing ai's cause all players are human", GameConsole::eDEBUG);
             for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
                 if (i != 0)
@@ -2147,6 +2172,10 @@ void PlayerSelection::updatePlayerData(qint32 player)
                 pDropDownmenuColor->setEnabled(false);
             }
         }
+        if (m_lockedAiControl[player])
+        {
+            pDropDownmenuAI->setEnabled(false);
+        }
     }
 }
 
@@ -2240,6 +2269,10 @@ void PlayerSelection::serializeObject(QDataStream& stream) const
     {
         stream << item;
     }
+    for (auto & item : m_lockedAiControl)
+    {
+        stream << item;
+    }
     if (m_pCampaign.get() != nullptr)
     {
         stream << true;
@@ -2261,17 +2294,26 @@ void PlayerSelection::deserializeObject(QDataStream& stream)
     stream >> version;
     qint32 size = 0;
     stream >> size;
+    m_playerReadyFlags.clear();
     for (qint32 i = 0; i < size; ++i)
     {
         bool value = false;
         stream >> value;
         m_playerReadyFlags.append(value);
     }
+    m_lockedInCaseOfDisconnect.clear();
     for (qint32 i = 0; i < size; ++i)
     {
         bool value = false;
         stream >> value;
         m_lockedInCaseOfDisconnect.append(value);
+    }
+    m_lockedAiControl.clear();
+    for (qint32 i = 0; i < size; ++i)
+    {
+        bool value = false;
+        stream >> value;
+        m_lockedAiControl.append(value);
     }
     bool hasCampaign = false;
     stream >> hasCampaign;

@@ -2129,7 +2129,7 @@ void Player::serializeObject(QDataStream& pStream) const
     }
     pStream << m_team;
     pStream << m_isDefeated;
-    BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get());
+    BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get(), m_controlType);
     qint32 width = m_FogVisionFields.size();
     qint32 heigth = 0;
     if (width > 0)

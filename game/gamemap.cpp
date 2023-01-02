@@ -1492,6 +1492,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     CONSOLE_PRINT("Loading players count: " + QString::number(m_headerInfo.m_playerCount), GameConsole::eDEBUG);
     for (qint32 i = 0; i < m_headerInfo.m_playerCount; i++)
     {
+         CONSOLE_PRINT("Loading player " + QString::number(i), GameConsole::eDEBUG);
         // create player
         m_players.append(spPlayer::create(this));
         // get player data from stream

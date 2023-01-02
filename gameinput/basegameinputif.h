@@ -26,7 +26,7 @@ public:
 
     virtual void init(GameMenue* pMenu) = 0;
     virtual void onGameStart();
-    static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input);
+    static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input, GameEnums::AiTypes aiType);
 
     static spBaseGameInputIF deserializeInterface(GameMap* pMap, QDataStream& pStream, qint32 version);
 

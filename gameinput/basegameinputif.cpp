@@ -44,11 +44,11 @@ void BaseGameInputIF::setEnableNeutralTerrainAttack(bool value)
     m_enableNeutralTerrainAttack = value;
 }
 
-void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* input)
+void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* input, GameEnums::AiTypes aiType)
 {
     if (input == nullptr)
     {
-        pStream << static_cast<qint32>(GameEnums::AiTypes_Open);
+        pStream << static_cast<qint32>(aiType);
     }
     else
     {
@@ -160,10 +160,6 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
             break;
         }
         case GameEnums::AiTypes_Open:
-        {
-            ret = nullptr;
-            break;
-        }
         case GameEnums::AiTypes_Closed:
         {
             ret = nullptr;

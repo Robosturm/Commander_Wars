@@ -70,6 +70,18 @@ signals:
      */
     void sigDisconnect();
 public slots:
+    /**
+     * @brief setLockedAiControl
+     * @param player
+     * @param value
+     */
+    void setLockedAiControl(qint32 player, bool value);
+    /**
+     * @brief getLockedAiControl
+     * @param player
+     * @return
+     */
+    bool getLockedAiControl(qint32 player);
     bool hasNetworkInterface() const;
     bool getIsServerNetworkInterface() const;
     bool getIsObserverNetworkInterface() const;
@@ -308,6 +320,7 @@ private:
     QVector<quint64> m_playerSockets;
     QVector<bool> m_playerReadyFlags;
     QVector<bool> m_lockedInCaseOfDisconnect;
+    QVector<bool> m_lockedAiControl;
 
     spNetworkInterface m_pNetworkInterface{nullptr};
     spCampaign m_pCampaign;

@@ -5690,7 +5690,7 @@ Distributed: Units are spawned at the given rate.</source>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="77"/>
         <location filename="../game/gamemap.cpp" line="557"/>
         <location filename="../game/gamemap.cpp" line="680"/>
-        <location filename="../game/gamemap.cpp" line="1522"/>
+        <location filename="../game/gamemap.cpp" line="1523"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -5827,7 +5827,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="557"/>
-        <location filename="../game/gamemap.cpp" line="1522"/>
+        <location filename="../game/gamemap.cpp" line="1523"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -5847,22 +5847,22 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1550"/>
+        <location filename="../game/gamemap.cpp" line="1551"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1560"/>
+        <location filename="../game/gamemap.cpp" line="1561"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1568"/>
+        <location filename="../game/gamemap.cpp" line="1569"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1580"/>
+        <location filename="../game/gamemap.cpp" line="1581"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6941,52 +6941,52 @@ Host mods: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="109"/>
-        <location filename="../objects/playerselection.cpp" line="1175"/>
+        <location filename="../objects/playerselection.cpp" line="111"/>
+        <location filename="../objects/playerselection.cpp" line="1200"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1209"/>
+        <location filename="../objects/playerselection.cpp" line="1234"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1332"/>
+        <location filename="../objects/playerselection.cpp" line="1357"/>
         <source>Connection failed.Reason: No more players available or user is already in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1163"/>
-        <location filename="../objects/playerselection.cpp" line="1184"/>
-        <location filename="../objects/playerselection.cpp" line="1198"/>
+        <location filename="../objects/playerselection.cpp" line="1188"/>
+        <location filename="../objects/playerselection.cpp" line="1209"/>
+        <location filename="../objects/playerselection.cpp" line="1223"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1163"/>
+        <location filename="../objects/playerselection.cpp" line="1188"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1163"/>
+        <location filename="../objects/playerselection.cpp" line="1188"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1163"/>
+        <location filename="../objects/playerselection.cpp" line="1188"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1163"/>
+        <location filename="../objects/playerselection.cpp" line="1188"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1187"/>
-        <location filename="../objects/playerselection.cpp" line="1194"/>
-        <location filename="../objects/playerselection.cpp" line="1198"/>
+        <location filename="../objects/playerselection.cpp" line="1212"/>
+        <location filename="../objects/playerselection.cpp" line="1219"/>
+        <location filename="../objects/playerselection.cpp" line="1223"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
