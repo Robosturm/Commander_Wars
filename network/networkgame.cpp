@@ -29,6 +29,7 @@ NetworkGame::~NetworkGame()
 
 void NetworkGame::startCloseTimer()
 {
+    CONSOLE_PRINT("Starting close timer", GameConsole::eDEBUG);
     m_closeTimer.setSingleShot(true);
     m_closeTimer.start(std::chrono::minutes(5));
 }
@@ -206,6 +207,7 @@ void NetworkGame::closeGame()
 {
     if (!m_closing)
     {
+        CONSOLE_PRINT("Closing slave process.", GameConsole::eDEBUG);
         m_closing = true;
         emit sigClose(this);
     }

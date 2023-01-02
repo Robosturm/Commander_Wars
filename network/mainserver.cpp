@@ -587,16 +587,7 @@ void MainServer::slotStartRemoteGame(QString initScript, QString id)
 
 void MainServer::disconnected(qint64 socketId)
 {
-    // check if we have a slave in start up state associated with this socket
-    for (auto & game : qAsConst(m_games))
-    {
-        if (game->game->getData().getPlayers() == 0 &&
-            game->game->getHostingSocket() == socketId)
-        {
-            game->game->startCloseTimer();
-            break;
-        }
-    }
+    // nothing to do.
 }
 
 void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data, QString initScript, QString id)

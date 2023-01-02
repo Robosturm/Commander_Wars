@@ -139,6 +139,7 @@ void Multiplayermenu::init()
 
     connect(&m_GameStartTimer, &QTimer::timeout, this, &Multiplayermenu::countdown, Qt::QueuedConnection);
     connect(&m_slaveDespawnTimer, &QTimer::timeout, this, &Multiplayermenu::despawnSlave, Qt::QueuedConnection);
+    startDespawnTimer();
 }
 
 void Multiplayermenu::despawnSlave()
@@ -191,6 +192,7 @@ void Multiplayermenu::despawnSlave()
         QJsonDocument doc(data);
         CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
         emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        CONSOLE_PRINT("Stopping despawn timer", GameConsole::eDEBUG);
         m_slaveDespawnTimer.stop();
     }
 }
@@ -321,6 +323,7 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         CONSOLE_PRINT("Requesting public key for initial map update", GameConsole::eDEBUG);
         emit m_pNetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
+    CONSOLE_PRINT("Stopping despawn timer", GameConsole::eDEBUG);
     m_slaveDespawnTimer.stop();
 }
 
@@ -1720,11 +1723,14 @@ void Multiplayermenu::disconnected(quint64 socket)
 
 void Multiplayermenu::startDespawnTimer()
 {
-    CONSOLE_PRINT("Multiplayermenu::startDespawnTimer", GameConsole::eDEBUG);
-    m_slaveDespawnElapseTimer.start();
-    m_slaveDespawnTimer.setSingleShot(false);
-    constexpr qint32 MS_PER_SECOND = 1000;
-    m_slaveDespawnTimer.start(MS_PER_SECOND);
+    if (Mainapp::getSlave())
+    {
+        CONSOLE_PRINT("Multiplayermenu::startDespawnTimer", GameConsole::eDEBUG);
+        m_slaveDespawnElapseTimer.start();
+        m_slaveDespawnTimer.setSingleShot(false);
+        constexpr qint32 MS_PER_SECOND = 1000;
+        m_slaveDespawnTimer.start(MS_PER_SECOND);
+    }
 }
 
 void Multiplayermenu::buttonBack()

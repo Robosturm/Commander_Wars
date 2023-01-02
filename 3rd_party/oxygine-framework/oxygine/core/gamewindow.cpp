@@ -79,6 +79,7 @@ namespace oxygine
 
     void GameWindow::quit(qint32 exitCode)
     {
+        CONSOLE_PRINT("Quitting game with " + QString::number(exitCode), GameConsole::eDEBUG);
         QCoreApplication::exit(exitCode);
     }
 
