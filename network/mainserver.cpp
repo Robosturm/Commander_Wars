@@ -470,6 +470,15 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
             ++i;
         }
     }
+    for (auto & game : qAsConst(m_runningLobbies))
+    {
+        if (game.game.getPlayerNames().contains(username))
+        {
+            QJsonObject obj = game.game.toJson();
+            games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+            ++i;
+        }
+    }
     data.insert(JsonKeys::JSONKEY_GAMES, games);
     // send server data to all connected clients
     QJsonDocument doc(data);
