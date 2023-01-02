@@ -384,7 +384,7 @@ void GameMenue::recieveServerData(quint64 socketID, QByteArray data, NetworkInte
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Master server Network Command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        CONSOLE_PRINT("Master server Network Command GameMenue::recieveServerData: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::DESPAWNSLAVE)
         {
             closeSlave();

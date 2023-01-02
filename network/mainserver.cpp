@@ -303,32 +303,48 @@ void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData
         const auto & game = iter.value();
         // send data
         QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
-        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_ADDRESS, game->game->getData().getSlaveAddress());
         data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, game->game->getData().getSlaveSecondaryAddress());
         data.insert(JsonKeys::JSONKEY_PORT, static_cast<qint64>(game->game->getData().getSlavePort()));
         QJsonDocument doc(data);
-        for (qint32 i = 0; i < m_runningSlaves.size(); ++i)
+        if (!informClientsAboutRelaunch(m_runningSlaves, slaveName, doc))
         {
-            auto & game = m_runningSlaves[i];
-            if (game.game.getSlaveName() == slaveName)
+            if (informClientsAboutRelaunch(m_runningLobbies, slaveName, doc))
             {
-                for (auto & socket : game.pendingSockets)
-                {
-                    emit m_pGameServer->sig_sendData(socket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-                }
-                m_runningSlaves.removeAt(i);
-                break;
+                game->game->onSlaveRelaunched();
             }
         }
-        game->game->onSlaveRelaunched();
+        else
+        {
+            game->game->onSlaveRelaunched();
+        }
     }
     else
     {
         CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), GameConsole::eDEBUG);
     }
+}
+
+bool MainServer::informClientsAboutRelaunch(QVector<SuspendedSlaveInfo> & games, const QString & slaveName, const QJsonDocument & doc)
+{
+    for (qint32 i = 0; i < games.size(); ++i)
+    {
+        auto & game = games[i];
+        if (game.game.getSlaveName() == slaveName)
+        {
+            CONSOLE_PRINT("Found slave game " + slaveName, GameConsole::eDEBUG);
+            for (auto & socket : game.pendingSockets)
+            {
+                CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socket), GameConsole::eDEBUG);
+                emit m_pGameServer->sig_sendData(socket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            }
+            games.removeAt(i);
+            return true;
+        }
+    }
+    return false;
 }
 
 void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData)

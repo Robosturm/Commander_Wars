@@ -10,14 +10,8 @@
 
 #include "ai/coreai.h"
 
-#include "resource_management/terrainmanager.h"
-#include "resource_management/buildingspritemanager.h"
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/movementtablemanager.h"
-#include "resource_management/weaponmanager.h"
-#include "resource_management/gamemanager.h"
-#include "resource_management/cospritemanager.h"
-#include "resource_management/gamerulemanager.h"
 
 #include "game/unit.h"
 #include "game/player.h"
@@ -1326,7 +1320,7 @@ bool GameMap::canBePlaced(const QString & terrainID, qint32 x, qint32 y)
 
 void GameMap::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing map", GameConsole::eDEBUG);
+    CONSOLE_PRINT("GameMap::serializeObject", GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     // store header
@@ -1414,6 +1408,11 @@ void GameMap::updateMapFlags() const
     }
 }
 
+void GameMap::setSavegame(bool newSavegame)
+{
+    m_savegame = newSavegame;
+}
+
 BaseGamemenu *GameMap::getMenu() const
 {
     return m_pMenu;
@@ -1472,6 +1471,7 @@ void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
 
 void GameMap::deserializer(QDataStream& pStream, bool fast)
 {
+    CONSOLE_PRINT("GameMap::deserializer", GameConsole::eDEBUG);
     clearMap();
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     // restore map header

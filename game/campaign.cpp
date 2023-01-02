@@ -234,7 +234,7 @@ void Campaign::getCampaignMapData(CampaignMapData & pCampaignMapData)
 
 void Campaign::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing campaign", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Campaign::serializeObject", GameConsole::eDEBUG);
     pStream << getVersion();
     pStream << m_script;
     pStream << m_scriptFile;
@@ -243,7 +243,7 @@ void Campaign::serializeObject(QDataStream& pStream) const
 
 void Campaign::deserializeObject(QDataStream& pStream)
 {
-    CONSOLE_PRINT("reading campaign", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Campaign::deserializeObject", GameConsole::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     pStream >> m_script;

@@ -140,6 +140,14 @@ protected:
      */
     void relaunchRunningLobby(quint64 socketID, const QString & savefile);
     /**
+     * @brief sendSlaveRelaunched
+     */
+    void sendSlaveRelaunched(quint64 socketID);
+    /**
+     * @brief startDespawnTimer
+     */
+    void startDespawnTimer();
+    /**
      * @brief saveLobbyState
      * @param filename
      */

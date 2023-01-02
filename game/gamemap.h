@@ -280,6 +280,11 @@ public:
      */
     void setMenu(BaseGamemenu *newMenu);
     BaseGamemenu *getMenu() const;
+    /**
+     * @brief setSavegame
+     * @param newSavegame
+     */
+    void setSavegame(bool newSavegame);
 
 signals:
     void signalExitGame();

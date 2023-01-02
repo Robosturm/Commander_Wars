@@ -476,3 +476,52 @@ void MapSelectionView::updateMapData()
     m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
     m_MapTags->setY(m_pVictoryInfo->getY() + 55 * Userdata::MAX_VICTORY_INFO_PER_MAP);
 }
+
+void MapSelectionView::serializeObject(QDataStream& stream) const
+{
+    CONSOLE_PRINT("MapSelectionView::serializeObject", GameConsole::eDEBUG);
+    stream << getVersion();
+    QString file = GlobalUtils::makePathRelative(m_currentMapFile.filePath(), false);
+    stream << file;
+    if (m_CurrentSetCampaign.get() != nullptr)
+    {
+        stream << true;
+        m_CurrentSetCampaign->serializeObject(stream);
+    }
+    else
+    {
+        stream << false;
+    }
+    if (m_CurrentLoadedCampaign.get() != nullptr)
+    {
+        stream << true;
+        m_CurrentLoadedCampaign->serializeObject(stream);
+    }
+    else
+    {
+        stream << false;
+    }
+    m_pCurrentMap->serializeObject(stream);
+}
+
+void MapSelectionView::deserializeObject(QDataStream& stream)
+{
+    CONSOLE_PRINT("MapSelectionView::deserializeObject", GameConsole::eDEBUG);
+    qint32 version = 0;
+    stream >> version;
+    QString file;
+    stream >> file;
+    m_currentMapFile.setFile(file);
+    bool exists = false;
+    stream >> exists;
+    if (exists)
+    {
+        m_CurrentSetCampaign->deserializeObject(stream);
+    }
+    stream >> exists;
+    if (exists)
+    {
+        m_CurrentLoadedCampaign->deserializeObject(stream);
+    }
+    m_pCurrentMap = spGameMap::create<QDataStream&, bool>(stream, false);
+}

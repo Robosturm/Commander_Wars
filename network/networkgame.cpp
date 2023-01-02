@@ -120,7 +120,10 @@ void NetworkGame::setId(QString & id)
 void NetworkGame::onSlaveRelaunched()
 {
     m_slaveRunning = true;
-    m_data.setLaunched(true);
+    if (m_runningGame)
+    {
+        m_data.setLaunched(true);
+    }
 }
 
 bool NetworkGame::getSlaveRunning() const

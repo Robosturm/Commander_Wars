@@ -205,6 +205,13 @@ private:
      */
     void onSlaveRelaunched(quint64 socketID, const QJsonObject & objData);
     /**
+     * @brief informClientsAboutRelaunch
+     * @param games
+     * @param slaveName
+     * @param doc
+     */
+    bool informClientsAboutRelaunch(QVector<SuspendedSlaveInfo> & games, const QString & slaveName, const QJsonDocument & doc);
+    /**
      * @brief onGameRunningOnServer called once the game has loaded all data needed for hosting a game and players can join
      * @param socketID
      * @param stream

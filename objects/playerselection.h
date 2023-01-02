@@ -96,6 +96,7 @@ public slots:
     void setPlayerReady(bool value);
     QStringList getDefaultAiNames() const;
     QStringList getAiNames() const;
+    QString getNameFromAiType(GameEnums::AiTypes aiType) const;
     QStringList getTeamNames() const;
     QStringList getDropDownColorNames() const;
     /**

@@ -200,6 +200,7 @@ void Multiplayermenu::saveLobbyState(const QString & filename)
     QFile file(filename);
     file.open(QIODevice::WriteOnly | QIODevice::Truncate);
     QDataStream stream(&file);
+    m_pMapSelectionView->serializeObject(stream);
     m_pPlayerSelection->serializeObject(stream);
     file.close();
 }
@@ -320,6 +321,7 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         CONSOLE_PRINT("Requesting public key for initial map update", GameConsole::eDEBUG);
         emit m_pNetworkInterface->sig_sendData(socketID, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::SendInitialMapUpdate), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
+    m_slaveDespawnTimer.stop();
 }
 
 void Multiplayermenu::recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -450,7 +452,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        CONSOLE_PRINT("Server Network Command Multiplayermenu::recieveData: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::SLAVEADDRESSINFO)
         {
             connectToSlave(objData, socketID);
@@ -768,6 +770,38 @@ void Multiplayermenu::relaunchRunningGame(quint64 socketID, const QString & save
     spGameMap pMap = spGameMap::create(savefile, false, false, true);
     spGameMenue pMenu = spGameMenue::create(pMap, true, m_pNetworkInterface, false, true);
     oxygine::Stage::getStage()->addChild(pMenu);
+    sendSlaveRelaunched(socketID);
+    oxygine::Actor::detach();
+}
+
+void Multiplayermenu::relaunchRunningLobby(quint64 socketID, const QString & savefile)
+{
+    CONSOLE_PRINT("Relaunching running lobby on slave with savefile " + savefile, GameConsole::eDEBUG);
+    QFile file(savefile);
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QDataStream stream(&file);
+        m_pMapSelectionView->deserializeObject(stream);
+        m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
+        m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
+        m_pPlayerSelection->setIsServerGame(true);
+        loadMultiplayerMap();
+        m_pPlayerSelection->deserializeObject(stream);
+        m_pMapSelectionView->getCurrentMap()->setSavegame(m_pPlayerSelection->getSaveGame());
+        createChat();
+        m_slaveGameReady = true;
+        sendSlaveRelaunched(socketID);
+        startDespawnTimer();
+    }
+    else
+    {
+        CONSOLE_PRINT("Failed to open savefile " + savefile, GameConsole::eERROR);
+        QCoreApplication::exit(0);
+    }
+}
+
+void Multiplayermenu::sendSlaveRelaunched(quint64 socketID)
+{
     QString command = NetworkCommands::SLAVERELAUNCHED;
     QJsonObject data;
     QString slavename = Settings::getSlaveServerName();
@@ -777,13 +811,6 @@ void Multiplayermenu::relaunchRunningGame(quint64 socketID, const QString & save
     CONSOLE_PRINT("Sending command " + command + " for slave " + slavename, GameConsole::eDEBUG);
     spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
     emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-    oxygine::Actor::detach();
-}
-
-void Multiplayermenu::relaunchRunningLobby(quint64 socketID, const QString & savefile)
-{
-    CONSOLE_PRINT("Relaunching running lobby on slave with savefile " + savefile, GameConsole::eDEBUG);
-
 }
 
 void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 socketID)
@@ -1247,9 +1274,9 @@ void Multiplayermenu::requestMap(quint64 socketID)
     if (m_pNetworkInterface->getIsServer())
     {
         QString command = QString(NetworkCommands::MAPDATA);
-        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QString file = GlobalUtils::makePathRelative(m_pMapSelectionView->getCurrentFile().filePath(), false);
         QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
+        CONSOLE_PRINT("Sending command " + command + " with map file " + file + " and script file " + scriptFile, GameConsole::eDEBUG);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << command;
@@ -1289,7 +1316,7 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         stream >> mapFile;
         QString scriptFile;
         stream >> scriptFile;
-
+        CONSOLE_PRINT("Multiplayermenu::recieveMap with map file " + mapFile + " and script file " + scriptFile, GameConsole::eDEBUG);
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         if (pMap.get() != nullptr)
         {
@@ -1674,11 +1701,7 @@ void Multiplayermenu::disconnected(quint64 socket)
     {
         if (m_pNetworkInterface->getConnectedSockets().size() == 0)
         {
-            CONSOLE_PRINT("Multiplayermenu::startDespawnTimer", GameConsole::eDEBUG);
-            m_slaveDespawnElapseTimer.start();
-            m_slaveDespawnTimer.setSingleShot(false);
-            constexpr qint32 MS_PER_SECOND = 1000;
-            m_slaveDespawnTimer.start(MS_PER_SECOND);
+            startDespawnTimer();
         }
     }
     else if (m_networkMode == NetworkMode::Host && m_local)
@@ -1693,7 +1716,15 @@ void Multiplayermenu::disconnected(quint64 socket)
         oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
     }
+}
 
+void Multiplayermenu::startDespawnTimer()
+{
+    CONSOLE_PRINT("Multiplayermenu::startDespawnTimer", GameConsole::eDEBUG);
+    m_slaveDespawnElapseTimer.start();
+    m_slaveDespawnTimer.setSingleShot(false);
+    constexpr qint32 MS_PER_SECOND = 1000;
+    m_slaveDespawnTimer.start(MS_PER_SECOND);
 }
 
 void Multiplayermenu::buttonBack()
