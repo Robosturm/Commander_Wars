@@ -80,7 +80,7 @@ void MainServer::release()
 MainServer::MainServer()
     : QObject(),
       m_updateTimer(this),
-      m_scriptExecutionTimer(this),
+      m_periodicExecutionTimer(this),
       m_pGameServer(spTCPServer::create(this)),
       m_pSlaveServer(spTCPServer::create(this))
 {
@@ -88,8 +88,8 @@ MainServer::MainServer()
     Interpreter::setCppOwnerShip(this);
     m_updateTimer.setSingleShot(true);
     m_updateTimer.start(1000 * 60 * 3);
-    m_scriptExecutionTimer.setSingleShot(false);
-    m_scriptExecutionTimer.start(5000);
+    m_periodicExecutionTimer.setSingleShot(false);
+    m_periodicExecutionTimer.start(30 * 1000);
     // publish server to js environment for ai training
     QString javascriptName = "mainServer";
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -103,7 +103,7 @@ MainServer::MainServer()
     // internal updates
     connect(this, &MainServer::sigStartRemoteGame, this, &MainServer::slotStartRemoteGame, Qt::QueuedConnection);
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
-    connect(&m_scriptExecutionTimer, &QTimer::timeout, this, &MainServer::executeScript, Qt::QueuedConnection);
+    connect(&m_periodicExecutionTimer, &QTimer::timeout, this, &MainServer::periodicTasks, Qt::QueuedConnection);
     parseSlaveAddressOptions();
 
     initDatabase();
@@ -356,6 +356,7 @@ void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & obj
         slaveInfo.savefile = objData.value(JsonKeys::JSONKEY_SAVEFILE).toString();
         slaveInfo.game.fromJson(objData);
         slaveInfo.runningGame = runningGame;
+        slaveInfo.despawnTime.start();
         setUuidForGame(slaveInfo.game);
         m_runningSlaves.append(slaveInfo);
     }
@@ -365,6 +366,7 @@ void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & obj
         slaveInfo.savefile = objData.value(JsonKeys::JSONKEY_SAVEFILE).toString();
         slaveInfo.game.fromJson(objData);
         slaveInfo.runningGame = runningGame;
+        slaveInfo.despawnTime.start();
         setUuidForGame(slaveInfo.game);
         m_runningLobbies.append(slaveInfo);
     }
@@ -806,6 +808,34 @@ void MainServer::playerJoined(qint64 socketId)
 {
     CONSOLE_PRINT("Player joined the server " + QString::number(socketId), GameConsole::eDEBUG);
     emit m_pGameServer->sigSetIsActive(socketId, false);
+}
+
+void MainServer::periodicTasks()
+{
+    CONSOLE_PRINT("MainServer::periodicTasks", GameConsole::eDEBUG);
+    cleanUpSuspendedGames(m_runningSlaves);
+    cleanUpSuspendedGames(m_runningLobbies);
+    executeScript();
+}
+
+void MainServer::cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> & games)
+{
+    qint32 i = 0;
+    std::chrono::milliseconds ms = Settings::getSuspendedDespawnTime();
+    while (i < games.size())
+    {
+        auto & game = games[i];
+        if (game.despawnTime.hasExpired(ms.count()))
+        {
+            CONSOLE_PRINT("Removing game with savefile " + game.savefile + " from suspended game list.", GameConsole::eDEBUG);
+            QFile::remove(game.savefile);
+            games.removeAt(i);
+        }
+        else
+        {
+            ++i;
+        }
+    }
 }
 
 void MainServer::executeScript()

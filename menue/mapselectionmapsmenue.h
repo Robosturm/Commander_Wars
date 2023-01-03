@@ -36,7 +36,7 @@ public:
     void hideRuleSelection();
     virtual void showRuleSelection();
     void hidePlayerSelection();
-    virtual void showPlayerSelection();    
+    virtual void showPlayerSelection(bool relaunchedLobby = false);
 signals:
     void sigButtonBack();
     void sigButtonNext();

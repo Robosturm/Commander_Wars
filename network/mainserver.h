@@ -46,7 +46,7 @@ class MainServer final : public QObject, public oxygine::ref_counter
         QVector<quint64> pendingSockets;
         QString savefile;
         NetworkGameData game;
-        QDateTime despawnTime;
+        QElapsedTimer despawnTime;
     };
 
 public:
@@ -127,7 +127,16 @@ private slots:
      * @brief executeScript
      */
     void executeScript();
+    /**
+     * @brief periodicTasks
+     */
+    void periodicTasks();
 private:
+    /**
+     * @brief cleanUpSuspendedGames
+     * @param games
+     */
+    void cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> & games);
     /**
      * @brief setUuidForGame
      * @param game
@@ -356,7 +365,7 @@ private:
     /**
      * @brief m_scriptExecutionTimer
      */
-    QTimer m_scriptExecutionTimer;
+    QTimer m_periodicExecutionTimer;
     /**
      * guard marking if new lobby data is available or not.
      */

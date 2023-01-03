@@ -318,6 +318,9 @@ public slots:
     static const std::chrono::seconds &getSlaveDespawnTime();
     static void setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
 
+    static const std::chrono::seconds &getSuspendedDespawnTime();
+    static void setSuspendedDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
+
     static QString getDefaultBannlist();
     static void setDefaultBannlist(const QString &newDefaultBannlist);
 
@@ -942,6 +945,7 @@ private:
     QString m_slaveListenAdress{"::1"};
     QString m_slaveHostOptions{"::1&&10000&20000;::1&&50000&65535"};
     std::chrono::seconds m_slaveDespawnTime{std::chrono::minutes(0)};
+    std::chrono::seconds m_suspendedDespawnTime{std::chrono::minutes(0)};
 
     // mailing
     QString m_mailServerAddress;

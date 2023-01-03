@@ -41,6 +41,7 @@ const char* const CommandLineParser::ARG_SERVERLISTENPORT               = "serve
 const char* const CommandLineParser::ARG_SERVERSLAVELISTENADDRESS       = "serverSlaveListenAddress";
 const char* const CommandLineParser::ARG_SERVERSLAVELISTENPORT          = "serverSlaveListenPort";
 const char* const CommandLineParser::ARG_SERVERSLAVEDESPAWNTIME         = "serverSlaveDespawnTime";
+const char* const CommandLineParser::ARG_SERVERSLAVESUSPENDEDTIME       = "serverSuspendedDespawnTime";
 
 const char* const CommandLineParser::ARG_MAILSERVERADDRESS = "mailServerAddress";
 const char* const CommandLineParser::ARG_MAILSERVERPORT = "mailServerPort";
@@ -76,6 +77,7 @@ CommandLineParser::CommandLineParser()
       m_serverSlaveListenAddress(ARG_SERVERSLAVELISTENADDRESS, tr("The address on which the server will listen for slave games. Empty for all addresses."), "slaveListenAddress", "::1"),
       m_serverSlaveListenPort(ARG_SERVERSLAVELISTENPORT, tr("Port on which the server will listen for slave games."), tr("port"), ""),
       m_serverSlaveDespawnTime(ARG_SERVERSLAVEDESPAWNTIME, tr("Time in seconds till a slave game with no connected clients get despawned in seconds."), tr("time"), "60000"),
+      m_serverSuspendedDespawnTime(ARG_SERVERSLAVESUSPENDEDTIME, tr("Time in seconds till a suspended game with no connected clients get despawned in seconds."), tr("time"), "60000"),
       m_mailServerAddress(ARG_MAILSERVERADDRESS, tr("Mail server address for the server for sending mails to accounts."), tr("address"), ""),
       m_mailServerPort(ARG_MAILSERVERPORT, tr("Mail server port for the server for sending mails to accounts."), tr("port"), ""),
       m_mailServerConnectionType(ARG_MAILSERVERCONNECTIONTYPE, tr("Mail server connection type (TLS, TCP, SSL) for the server for sending mails to accounts."), tr("connection"), ""),
@@ -113,6 +115,7 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_serverSlaveListenAddress);
     m_parser.addOption(m_serverSlaveListenPort);
     m_parser.addOption(m_serverSlaveDespawnTime);
+    m_parser.addOption(m_serverSuspendedDespawnTime);
     m_parser.addOption(m_mailServerAddress);
     m_parser.addOption(m_mailServerPort);
     m_parser.addOption(m_mailServerConnectionType);
@@ -275,6 +278,12 @@ void CommandLineParser::parseArgsPhaseTwo()
         QString value = m_parser.value(m_serverSlaveDespawnTime);
         CONSOLE_PRINT("Using slave despawn time adress " + value, GameConsole::eDEBUG);
         Settings::setSlaveDespawnTime(std::chrono::seconds(value.toInt()));
+    }
+    if (m_parser.isSet(m_serverSuspendedDespawnTime))
+    {
+        QString value = m_parser.value(m_serverSuspendedDespawnTime);
+        CONSOLE_PRINT("Using suspended despawn time adress " + value, GameConsole::eDEBUG);
+        Settings::setSuspendedDespawnTime(std::chrono::seconds(value.toInt()));
     }
     if (m_parser.isSet(m_mailServerAddress))
     {

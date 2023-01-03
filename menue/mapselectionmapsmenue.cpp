@@ -368,14 +368,14 @@ void MapSelectionMapsMenue::ruleSelectionSizeChanged()
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 40);
 }
 
-void MapSelectionMapsMenue::showPlayerSelection()
+void MapSelectionMapsMenue::showPlayerSelection(bool relaunchedLobby)
 {
     m_pButtonStart->setVisible(true);
     m_pButtonNext->setVisible(false);
     m_pButtonSaveMap->setVisible(true);
     m_pPlayerSelection->setVisible(true);
     m_pPlayerSelection->setMap(m_pMapSelectionView->getCurrentMap().get());
-    m_pPlayerSelection->showPlayerSelection();
+    m_pPlayerSelection->showPlayerSelection(relaunchedLobby);
 }
 
 void MapSelectionMapsMenue::hidePlayerSelection()

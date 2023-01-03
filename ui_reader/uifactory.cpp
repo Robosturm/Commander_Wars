@@ -136,75 +136,78 @@ void UiFactory::shutdown()
 
 void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
 {
-    CONSOLE_PRINT("Loading ui " + uiXml, GameConsole::eDEBUG);
-    if (m_dropDownPlayer.get() == nullptr)
+    if (!Mainapp::getInstance()->getNoUi())
     {
-        m_dropDownPlayer = spPlayer::create(nullptr);
-        m_dropDownPlayer->init();
-    }
-    m_creationCount = 0;
-    QStringList uiFiles;
-    // make sure to overwrite existing js stuff
-    for (qint32 i = Settings::getMods().size() - 1; i >= 0; --i)
-    {
-        uiFiles.append(Settings::getMods().at(i) + "/" + uiXml);
-    }
-    uiFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/" + uiXml);
-    uiFiles.append("resources/" + uiXml);
-    for (const auto & uiFile : qAsConst(uiFiles))
-    {
-        if (QFile::exists(uiFile))
+        CONSOLE_PRINT("Loading ui " + uiXml, GameConsole::eDEBUG);
+        if (m_dropDownPlayer.get() == nullptr)
         {
-            QDomDocument document;
-            QFile file(uiFile);
-            if (file.open(QIODevice::ReadOnly))
+            m_dropDownPlayer = spPlayer::create(nullptr);
+            m_dropDownPlayer->init();
+        }
+        m_creationCount = 0;
+        QStringList uiFiles;
+        // make sure to overwrite existing js stuff
+        for (qint32 i = Settings::getMods().size() - 1; i >= 0; --i)
+        {
+            uiFiles.append(Settings::getMods().at(i) + "/" + uiXml);
+        }
+        uiFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/" + uiXml);
+        uiFiles.append("resources/" + uiXml);
+        for (const auto & uiFile : qAsConst(uiFiles))
+        {
+            if (QFile::exists(uiFile))
             {
-                QString error;
-                qint32 line;
-                qint32 column;
-                bool loaded = document.setContent(&file, &error, &line, &column);
-                if (loaded)
+                QDomDocument document;
+                QFile file(uiFile);
+                if (file.open(QIODevice::ReadOnly))
                 {
-                    oxygine::spActor root = oxygine::spActor::create();
-                    bool success = true;
-                    auto rootElement = document.documentElement();
-                    auto node = rootElement.firstChild();
-                    while (!node.isNull())
+                    QString error;
+                    qint32 line;
+                    qint32 column;
+                    bool loaded = document.setContent(&file, &error, &line, &column);
+                    if (loaded)
                     {
-                        while (node.isComment())
+                        oxygine::spActor root = oxygine::spActor::create();
+                        bool success = true;
+                        auto rootElement = document.documentElement();
+                        auto node = rootElement.firstChild();
+                        while (!node.isNull())
                         {
+                            while (node.isComment())
+                            {
+                                node = node.nextSibling();
+                            }
+                            if (!node.isNull())
+                            {
+                                oxygine::spActor item;
+                                success = createItem(root, node.toElement(), item, pMenu);
+                                if (!success)
+                                {
+                                    CONSOLE_PRINT("Unknown item: " + node.toElement().nodeName() + " found. UI creation failed.", GameConsole::eERROR);
+                                }
+                            }
                             node = node.nextSibling();
                         }
-                        if (!node.isNull())
+                        if (success)
                         {
-                            oxygine::spActor item;
-                            success = createItem(root, node.toElement(), item, pMenu);
-                            if (!success)
-                            {
-                                CONSOLE_PRINT("Unknown item: " + node.toElement().nodeName() + " found. UI creation failed.", GameConsole::eERROR);
-                            }
+                            pMenu->addFactoryUiItem(root);
+                            break;
                         }
-                        node = node.nextSibling();
-                    }
-                    if (success)
-                    {
-                        pMenu->addFactoryUiItem(root);
-                        break;
+                        else
+                        {
+                            CONSOLE_PRINT("Unable to load: " + uiFile, GameConsole::eERROR);
+                        }
                     }
                     else
                     {
                         CONSOLE_PRINT("Unable to load: " + uiFile, GameConsole::eERROR);
+                        CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR);
                     }
                 }
                 else
                 {
-                    CONSOLE_PRINT("Unable to load: " + uiFile, GameConsole::eERROR);
-                    CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR);
+                    CONSOLE_PRINT("Unable to open existing file: " + uiFile, GameConsole::eERROR);
                 }
-            }
-            else
-            {
-                CONSOLE_PRINT("Unable to open existing file: " + uiFile, GameConsole::eERROR);
             }
         }
     }

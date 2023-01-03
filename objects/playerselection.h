@@ -40,7 +40,7 @@ public:
     {
         return 1;
     }
-    void showPlayerSelection();    
+    void showPlayerSelection(bool relaunchedLobby = false);
     void attachNetworkInterface(spNetworkInterface pNetworkInterface);    
     void attachCampaign(spCampaign campaign);
 
@@ -287,11 +287,11 @@ protected:
     /**
      * @brief initializeMap sets predefined stuff and fixes old maps
      */
-    void initializeMap();
+    void initializeMap(bool relaunchedLobby);
     /**
      * @brief updateInitialState
      */
-    void updateInitialState();
+    void updateInitialState(bool relaunchedLobby);
     /**
      * @brief selectInitialCos
      * @param player
@@ -303,7 +303,7 @@ protected:
      * @param ai
      * @param aiList
      */
-    void selectInitialAi(qint32 player, DropDownmenu* pPlayerAi, qint32 & ai, const QStringList & aiList, const QStringList & defaultAiList);
+    void selectInitialAi(bool relaunchedLobby, qint32 player, DropDownmenu* pPlayerAi, qint32 & ai, const QStringList & aiList, const QStringList & defaultAiList);
     /**
      * @brief createInitialAi
      * @param pPlayerAi

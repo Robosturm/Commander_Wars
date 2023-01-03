@@ -57,7 +57,7 @@ public:
      * @brief showRuleSelection
      */
     virtual void showRuleSelection() override;
-    virtual void showPlayerSelection() override;
+    virtual void showPlayerSelection(bool relaunchedLobby = false) override;
 signals:
     void sigConnected();
     void sigHostGameLaunched();
@@ -159,7 +159,7 @@ protected:
     bool getGameReady();
     void sendServerReady(bool value);
     void initClientGame(quint64 socketID, QDataStream &stream);
-    void loadMultiplayerMap();
+    void loadMultiplayerMap(bool relaunchedLobby = false);
     void showIPs();
     spGameMap createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);    

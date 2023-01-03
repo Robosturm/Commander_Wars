@@ -34,6 +34,7 @@ public:
     static const char* const ARG_SERVERSLAVELISTENADDRESS;
     static const char* const ARG_SERVERSLAVELISTENPORT;
     static const char* const ARG_SERVERSLAVEDESPAWNTIME;
+    static const char* const ARG_SERVERSLAVESUSPENDEDTIME;
 
     static const char* const ARG_MAILSERVERADDRESS;
     static const char* const ARG_MAILSERVERPORT;
@@ -79,6 +80,7 @@ private:
     QCommandLineOption m_serverSlaveListenAddress;
     QCommandLineOption m_serverSlaveListenPort;
     QCommandLineOption m_serverSlaveDespawnTime;
+    QCommandLineOption m_serverSuspendedDespawnTime;
     QCommandLineOption m_mailServerAddress;
     QCommandLineOption m_mailServerPort;
     QCommandLineOption m_mailServerConnectionType;

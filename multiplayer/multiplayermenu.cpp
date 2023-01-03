@@ -788,7 +788,7 @@ void Multiplayermenu::relaunchRunningLobby(quint64 socketID, const QString & sav
         m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
         m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
         m_pPlayerSelection->setIsServerGame(true);
-        loadMultiplayerMap();
+        loadMultiplayerMap(true);
         m_pPlayerSelection->deserializeObject(stream);
         m_pMapSelectionView->getCurrentMap()->setSavegame(m_pPlayerSelection->getSaveGame());
         createChat();
@@ -1524,11 +1524,11 @@ QString Multiplayermenu::getNewFileName(QString filename)
     return newName;
 }
 
-void Multiplayermenu::loadMultiplayerMap()
+void Multiplayermenu::loadMultiplayerMap(bool relaunchedLobby)
 {    
     m_pMapSelectionView->getCurrentMap()->getGameScript()->init();
     m_pMapSelectionView->updateMapData();
-    showPlayerSelection();
+    showPlayerSelection(relaunchedLobby);
 }
 
 void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
@@ -1672,9 +1672,9 @@ void Multiplayermenu::showRuleSelection()
     m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth());
 }
 
-void Multiplayermenu::showPlayerSelection()
+void Multiplayermenu::showPlayerSelection(bool relaunchedLobby)
 {
-    MapSelectionMapsMenue::showPlayerSelection();
+    MapSelectionMapsMenue::showPlayerSelection(relaunchedLobby);
     if (m_networkMode == NetworkMode::Observer)
     {
         m_pButtonStart->setVisible(false);

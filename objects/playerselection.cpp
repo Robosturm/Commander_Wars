@@ -68,6 +68,7 @@ void PlayerSelection::attachCampaign(spCampaign campaign)
 
 bool PlayerSelection::isOpenPlayer(qint32 player)
 {
+    bool ret = false;
     if (m_pNetworkInterface.get() != nullptr &&
         player >= 0 &&
         player < m_pMap->getPlayerCount())
@@ -75,19 +76,19 @@ bool PlayerSelection::isOpenPlayer(qint32 player)
         DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
         if (pDropDownmenu != nullptr)
         {
-            if (pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 1 &&
-                m_pMap->getPlayer(player)->getControlType() != GameEnums::AiTypes_Closed)
+            if (pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 1)
             {
-                return true;
+                ret = true;
             }
         }
-        else if (m_pMap->getPlayer(player)->getControlType() == GameEnums::AiTypes_Open &&
-                 m_pMap->getPlayer(player)->getControlType() != GameEnums::AiTypes_Closed)
+        else if (player >= 0 &&
+                 player < m_pMap->getPlayerCount() &&
+                 m_pMap->getPlayer(player)->getControlType() == GameEnums::AiTypes_Open)
         {
-            return true;
+            ret = true;
         }
     }
-    return false;
+    return ret;
 }
 
 bool PlayerSelection::isClosedPlayer(qint32 player)
@@ -100,19 +101,21 @@ bool PlayerSelection::isClosedPlayer(qint32 player)
         {
             if (m_pNetworkInterface.get() != nullptr)
             {
-                if (pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 2 &&
-                    m_pNetworkInterface->getIsServer())
+                if (m_pNetworkInterface->getIsServer())
+                {
+                    if (pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 2)
+                    {
+                        ret = true;
+                    }
+                }
+                else if (player >= 0 &&
+                         player < m_pMap->getPlayerCount() &&
+                         m_pMap->getPlayer(player)->getControlType() == GameEnums::AiTypes_Closed)
                 {
                     ret = true;
                 }
-                else
-                {
-                    QString aiName = pDropDownmenu->getCurrentItemText();
-                    ret = (aiName == tr("Closed"));
-                }
             }
-            else if (m_pNetworkInterface.get() == nullptr &&
-                     pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 1 &&
+            else if (pDropDownmenu->getCurrentItem() == pDropDownmenu->getItemCount() - 1 &&
                      pDropDownmenu->getItemCount() > 1)
             {
                 ret = true;
@@ -383,7 +386,7 @@ QString PlayerSelection::getStartColorName(qint32 player)
     return startColor.name();
 }
 
-void PlayerSelection::initializeMap()
+void PlayerSelection::initializeMap(bool relaunchedLobby)
 {
     m_playerReadyFlags.clear();
     m_lockedInCaseOfDisconnect.clear();
@@ -396,7 +399,7 @@ void PlayerSelection::initializeMap()
         m_lockedAiControl.append(false);
         m_playerSockets.append(0);
     }
-    if (!m_saveGame)
+    if (!m_saveGame && !relaunchedLobby)
     {
         bool allPlayer1 = true;
         bool allHuman = true;
@@ -435,6 +438,10 @@ void PlayerSelection::initializeMap()
                     pPlayer->setBaseGameInput(spHumanPlayerInput::create(m_pMap));
                     pPlayer->setControlType(GameEnums::AiTypes_Human);
                 }
+                else
+                {
+                    allHuman = false;
+                }
             }
         }
         else
@@ -469,19 +476,20 @@ void PlayerSelection::initializeMap()
     }
 }
 
-void PlayerSelection::showPlayerSelection()
+void PlayerSelection::showPlayerSelection(bool relaunchedLobby)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     resetUi();
-    initializeMap();
+    initializeMap(relaunchedLobby);
     UiFactory::getInstance().createUi("ui/game/playerSelection.xml", this);
-    updateInitialState();
+    updateInitialState(relaunchedLobby);
     pApp->continueRendering();
 }
 
-void PlayerSelection::updateInitialState()
+void PlayerSelection::updateInitialState(bool relaunchedLobby)
 {
+    CONSOLE_PRINT("PlayerSelection::updateInitialState", GameConsole::eDEBUG);
     // add player selection information
     QStringList aiList = getAiNames();
     QStringList defaultAiList = getDefaultAiNames();
@@ -493,16 +501,24 @@ void PlayerSelection::updateInitialState()
         // update co view
         selectInitialCos(i);
         // update ai view
-        selectInitialAi(i, pPlayerAi, ai, aiList, defaultAiList);
+        selectInitialAi(relaunchedLobby, i, pPlayerAi, ai, aiList, defaultAiList);
         createInitialAi(pPlayerAi, ai, i);
     }
 }
 
-void PlayerSelection::selectInitialAi(qint32 player, DropDownmenu* pPlayerAi, qint32 & ai, const QStringList & aiList, const QStringList & defaultAiList)
+void PlayerSelection::selectInitialAi(bool relaunchedLobby, qint32 player, DropDownmenu* pPlayerAi, qint32 & ai, const QStringList & aiList, const QStringList & defaultAiList)
 {
+    CONSOLE_PRINT("PlayerSelection::selectInitialAi player=" + QString::number(player) + " ai=" + QString::number(ai) + " relaunchedLobby=" + QString::number(relaunchedLobby), GameConsole::eDEBUG);
     Player* pPlayer = m_pMap->getPlayer(player);
     const bool isCampaign = getIsCampaign();
-    if (isCampaign)
+    if (relaunchedLobby)
+    {
+        if (pPlayerAi != nullptr)
+        {
+            pPlayerAi->setCurrentItemText(pPlayer->getPlayerNameId());
+        }
+    }
+    else if (isCampaign)
     {
         if (ai == 0)
         {
@@ -554,7 +570,7 @@ void PlayerSelection::selectInitialAi(qint32 player, DropDownmenu* pPlayerAi, qi
             }
             else
             {
-                ai = 0;
+                ai = GameEnums::AiTypes_Human;
                 if (pPlayerAi != nullptr)
                 {
                     pPlayerAi->setCurrentItem(0);
@@ -1090,10 +1106,12 @@ void PlayerSelection::selectAI(qint32 player)
     }
     if (isOpenPlayer(player))
     {
+        CONSOLE_PRINT("PlayerSelection::selectAI player " + QString::number(player) + " is open.", GameConsole::eDEBUG);
         type = GameEnums::AiTypes_Open;
     }
     else if (isClosedPlayer(player))
     {
+        CONSOLE_PRINT("PlayerSelection::selectAI player " + QString::number(player) + " is closed.", GameConsole::eDEBUG);
         type = GameEnums::AiTypes_Closed;
     }
     QString name = m_pMap->getPlayer(player)->getPlayerNameId();
