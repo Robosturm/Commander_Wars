@@ -1923,6 +1923,7 @@ void GameMenue::startGame()
         auto* pInput = pPlayer->getBaseGameInput();
         if (pInput != nullptr)
         {
+            CONSOLE_PRINT("Controller for player " + QString::number(i) + " is " + QString::number(pInput->getAiType()) + " original ai is " + QString::number(pPlayer->getControlType()), GameConsole::eDEBUG);
             pInput->onGameStart();
         }
         qint32 coCount = pPlayer->getMaxCoCount();
@@ -1995,6 +1996,7 @@ void GameMenue::startGame()
     }
     Mainapp::getAiProcessPipe().onGameStarted(this);
     sendGameStartedToServer();
+    CONSOLE_PRINT("Game started", GameConsole::eDEBUG);
 }
 
 void GameMenue::sendGameStartedToServer()

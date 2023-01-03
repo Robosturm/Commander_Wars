@@ -35,7 +35,7 @@
 #include "resource_management/fontmanager.h"
 
 Multiplayermenu::Multiplayermenu(QString address, QString secondaryAddress, quint16 port, QString password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 380),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
       m_password(password)
@@ -66,7 +66,7 @@ Multiplayermenu::Multiplayermenu(QString address, QString secondaryAddress, quin
 }
 
 Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getHeight() - 380),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
       m_networkMode(networkMode),
       m_local(false),
       m_password(password)
@@ -1868,9 +1868,9 @@ void Multiplayermenu::createChat()
     else
     {
         m_Chat = spChat::create(m_pNetworkInterface,
-                                QSize(Settings::getWidth() - 20, 300),
+                                QSize(Settings::getWidth() - 20, 150),
                                 NetworkInterface::NetworkSerives::GameChat, nullptr);
-        m_Chat->setPosition(10, Settings::getHeight() - 360);
+        m_Chat->setPosition(10, Settings::getHeight() - 210);
     }
     addChild(m_Chat);    
 }

@@ -5978,22 +5978,22 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2115"/>
+        <location filename="../menue/gamemenue.cpp" line="2117"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2146"/>
+        <location filename="../menue/gamemenue.cpp" line="2148"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2172"/>
+        <location filename="../menue/gamemenue.cpp" line="2174"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2349"/>
+        <location filename="../menue/gamemenue.cpp" line="2351"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6947,51 +6947,51 @@ Host mods: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1218"/>
+        <location filename="../objects/playerselection.cpp" line="1225"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1252"/>
+        <location filename="../objects/playerselection.cpp" line="1259"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1375"/>
+        <location filename="../objects/playerselection.cpp" line="1382"/>
         <source>Connection failed.Reason: No more players available or user is already in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1206"/>
-        <location filename="../objects/playerselection.cpp" line="1227"/>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
+        <location filename="../objects/playerselection.cpp" line="1213"/>
+        <location filename="../objects/playerselection.cpp" line="1234"/>
+        <location filename="../objects/playerselection.cpp" line="1248"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1206"/>
+        <location filename="../objects/playerselection.cpp" line="1213"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1206"/>
+        <location filename="../objects/playerselection.cpp" line="1213"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1206"/>
+        <location filename="../objects/playerselection.cpp" line="1213"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1206"/>
+        <location filename="../objects/playerselection.cpp" line="1213"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1230"/>
         <location filename="../objects/playerselection.cpp" line="1237"/>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
+        <location filename="../objects/playerselection.cpp" line="1244"/>
+        <location filename="../objects/playerselection.cpp" line="1248"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>

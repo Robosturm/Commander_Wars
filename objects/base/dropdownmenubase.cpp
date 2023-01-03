@@ -26,15 +26,15 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     m_pClipActor->setSize(m_Box->getScaledWidth() - 20 - 45, m_Box->getScaledHeight());
     m_pClipActor->setX(10);
     addChild(m_Box);
-    qint32 maxItemCount = 6;
-    qint32 changedCount = Settings::getHeight() / 40 / 3;
+    qint32 maxItemCount = 2;
+    qint32 changedCount = Settings::getHeight() / 40 / 4;
     if (changedCount > maxItemCount)
     {
         maxItemCount = changedCount;
     }
-    if (Settings::getHeight() / 2 < maxItemCount * 40)
+    if (Settings::getHeight() / 4 < maxItemCount * 40)
     {
-        maxItemCount = Settings::getHeight() / 2 / 40;
+        maxItemCount = Settings::getHeight() / 4 / 40;
     }
     qint32 scrollHeigth = maxItemCount * 40;
     if (itemcount < maxItemCount)

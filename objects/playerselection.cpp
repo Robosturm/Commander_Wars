@@ -401,6 +401,7 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
     }
     if (!m_saveGame && !relaunchedLobby)
     {
+        CONSOLE_PRINT("PlayerSelection::initializeMap fixing outdated specs.", GameConsole::eDEBUG);
         bool allPlayer1 = true;
         bool allHuman = true;
         const bool isCampaign = getIsCampaign();
@@ -611,6 +612,7 @@ void PlayerSelection::selectInitialAi(bool relaunchedLobby, qint32 player, DropD
 
 void PlayerSelection::createInitialAi(DropDownmenu* pPlayerAi, qint32 ai, qint32 player)
 {
+    CONSOLE_PRINT("PlayerSelection::createInitialAi for player " + QString::number(player) + " with control type " + QString::number(ai), GameConsole::eDEBUG);
     Player* pPlayer = m_pMap->getPlayer(player);
     // create initial selected ai's
     QString displayName = pPlayer->getPlayerNameId();
@@ -1086,6 +1088,7 @@ void PlayerSelection::selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType)
 {
     if (player >= 0 && player < m_pMap->getPlayerCount())
     {
+        CONSOLE_PRINT("PlayerSelection::selectPlayerAi for player " + QString::number(player) + " with control type " + QString::number(eAiType), GameConsole::eDEBUG);
         m_pMap->getPlayer(player)->setControlType(eAiType);
         DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
         if (pDropDownmenu != nullptr)
@@ -1098,6 +1101,7 @@ void PlayerSelection::selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType)
 
 void PlayerSelection::selectAI(qint32 player)
 {
+    CONSOLE_PRINT("PlayerSelection::selectAI for player " + QString::number(player), GameConsole::eDEBUG);
     GameEnums::AiTypes type = m_pMap->getPlayer(player)->getControlType();
     DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(player));
     if (pDropDownmenu != nullptr)
@@ -1153,8 +1157,10 @@ void PlayerSelection::selectAI(qint32 player)
                      Mainapp::getSlave() &&
                      type != GameEnums::AiTypes_Human)
             {
+                CONSOLE_PRINT("Remapping ai " + QString::number(ai) + " to proxy ai on slave", GameConsole::eDEBUG);
                 ai = type;
                 createAi(player, GameEnums::AiTypes_ProxyAi, name);
+                m_pMap->getPlayer(player)->setControlType(type);
             }
             else if (Mainapp::getSlave())
             {
@@ -1190,6 +1196,7 @@ void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type, QString d
 {    
     if(m_pMap != nullptr)
     {
+        CONSOLE_PRINT("PlayerSelection::createAi for player " + QString::number(player) + " with control type " + QString::number(type) + " with display name " + displayName, GameConsole::eDEBUG);
         Player* pPlayer = m_pMap->getPlayer(player);
         pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, type));
         pPlayer->setPlayerNameId(displayName);
@@ -1727,7 +1734,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                     {
                         aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
                     }
-                    CONSOLE_PRINT("Slave remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", GameConsole::eDEBUG);
+                    CONSOLE_PRINT("Slave remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation. Orignal ai " + QString::number(originalAiType), GameConsole::eDEBUG);
                 }
                 else if (m_isServerGame)
                 {
@@ -1736,7 +1743,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                     {
                         aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
                     }
-                    CONSOLE_PRINT("Server remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", GameConsole::eDEBUG);
+                    CONSOLE_PRINT("Server remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation. Orignal ai " + QString::number(originalAiType), GameConsole::eDEBUG);
                 }
                 else if (!clientRequest)
                 {
@@ -1745,7 +1752,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                     {
                         aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
                     }
-                    CONSOLE_PRINT("Remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", GameConsole::eDEBUG);
+                    CONSOLE_PRINT("Remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation. Orignal ai " + QString::number(originalAiType), GameConsole::eDEBUG);
                 }
                 GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
                 setPlayerAi(player, eAiType, name);

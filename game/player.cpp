@@ -2107,7 +2107,7 @@ void Player::setMenu(GameMenue *newMenu)
 
 void Player::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing player", GameConsole::eDEBUG);
+    CONSOLE_PRINT("storing player with control type " + QString::number(m_controlType), GameConsole::eDEBUG);
     pStream << getVersion();
     quint32 color = m_Color.rgb();
     pStream << color;
@@ -2371,5 +2371,5 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             m_controlType = GameEnums::AiTypes_Human;
         }
     }
-    CONSOLE_PRINT("Loaded player " + m_playerNameId, GameConsole::eDEBUG);
+    CONSOLE_PRINT("Loaded player " + m_playerNameId + " with control type " + QString::number(m_controlType), GameConsole::eDEBUG);
 }
