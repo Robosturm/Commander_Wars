@@ -893,6 +893,7 @@ void Multiplayermenu::receivePlayerControlledInfo(QDataStream & stream, quint64 
         BaseGameInputIF* pInput = pPlayer->getBaseGameInput();
         if (playerAis.contains(i))
         {
+            CONSOLE_PRINT("updating ai for player " + QString::number(i) + " to " + QString::number(aiTypes[playerAis.indexOf(i)]), GameConsole::eDEBUG);
             pPlayer->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), aiTypes[playerAis.indexOf(i)]));
         }
         else if (pInput != nullptr &&
@@ -1533,14 +1534,17 @@ void Multiplayermenu::loadMultiplayerMap(bool relaunchedLobby)
 
 void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
 {
+    CONSOLE_PRINT("Multiplayermenu::initClientGame", GameConsole::eDEBUG);
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     pMap->setVisible(false);
+    quint32 seed;
+    stream >> seed;
+    GlobalUtils::seed(seed);
+    GlobalUtils::setUseSeed(true);
     if (!m_saveGame)
     {
         pMap->initPlayers();
     }
-    quint32 seed;
-    stream >> seed;
     for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
         GameEnums::AiTypes aiType = GameEnums::AiTypes::AiTypes_Closed;
@@ -1554,9 +1558,6 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
         pMap->getPlayer(i)->deserializeObject(stream);
         pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), aiType));
     }
-    GlobalUtils::seed(seed);
-    GlobalUtils::setUseSeed(true);
-
     if (!m_saveGame)
     {
         pMap->getGameScript()->gameStart();
@@ -2024,7 +2025,7 @@ void Multiplayermenu::countdown()
 {
     if (getGameReady())
     {
-        m_counter--;
+        --m_counter;
         if (m_Chat.get() != nullptr)
         {
             CONSOLE_PRINT("Sending game counter..." + QString::number(m_counter), GameConsole::eDEBUG);
@@ -2047,14 +2048,14 @@ void Multiplayermenu::countdown()
             QDataStream stream(&data, QIODevice::WriteOnly);
             stream << command;
             quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+            GlobalUtils::seed(seed);
+            GlobalUtils::setUseSeed(true);
             stream << seed;
             for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
             {
                 CONSOLE_PRINT("AI on server for player " + QString::number(i) + " is " + QString::number(pMap->getPlayer(i)->getBaseGameInput()->getAiType()), GameConsole::eDEBUG);
                 pMap->getPlayer(i)->serializeObject(stream);
             }
-            GlobalUtils::seed(seed);
-            GlobalUtils::setUseSeed(true);
             if (!m_saveGame)
             {
                 pMap->getGameScript()->gameStart();

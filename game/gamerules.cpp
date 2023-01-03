@@ -27,6 +27,7 @@ GameRules::GameRules(GameMap* pMap)
 
 void GameRules::reset()
 {
+    CONSOLE_PRINT("GameRules::reset", GameConsole::eDEBUG);
     m_WeatherChances.clear();
     m_Weathers.clear();
     m_VictoryRules.clear();
@@ -181,6 +182,7 @@ void GameRules::removeVictoryRule(const QString & rule)
 
 void GameRules::init()
 {
+    CONSOLE_PRINT("GameRules::init", GameConsole::eDEBUG);
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
         m_VictoryRules[i]->init();
@@ -366,6 +368,7 @@ qint32 GameRules::getWeatherChance(const QString & weatherId)
 
 void GameRules::startOfTurn(bool newDay)
 {
+    CONSOLE_PRINT("GameRules::startOfTurn newDay=" + QString::number(newDay), GameConsole::eDEBUG);
     if (newDay && m_WeatherDays.size() > 0)
     {
         m_WeatherDays.removeAt(0);
@@ -454,7 +457,7 @@ void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay
 {
     if (weatherId >= 0 && weatherId < m_Weathers.size())
     {
-        
+        CONSOLE_PRINT("GameRules::changeWeather to " + m_Weathers[weatherId]->getWeatherId() + " for " + QString::number(duration) + " from upcoming day " + QString::number(startDay), GameConsole::eDEBUG);
         qint32 startPlayer = m_pMap->getCurrentPlayer()->getPlayerID();
         qint32 playerCount = m_pMap->getPlayerCount();
         qint32 day = startDay;
@@ -514,7 +517,6 @@ void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay
 
 void GameRules::setCurrentWeather(qint32 weatherId)
 {
-    
     if (weatherId >= 0 && weatherId < m_Weathers.size())
     {
         if (m_CurrentWeather != weatherId)
@@ -524,14 +526,14 @@ void GameRules::setCurrentWeather(qint32 weatherId)
                 m_Weathers[m_CurrentWeather]->deactivate();
             }
             m_CurrentWeather = weatherId;
+            CONSOLE_PRINT("Setting current weather to " + m_Weathers[m_CurrentWeather]->getWeatherId(), GameConsole::eDEBUG);
             m_Weathers[m_CurrentWeather]->activate();
         }
     }
 }
 
 void GameRules::onWeatherChanged()
-{
-    
+{    
     if (m_pMap != nullptr)
     {
         m_pMap->onWeatherChanged(m_Weathers[m_CurrentWeather].get());
@@ -1292,11 +1294,12 @@ void GameRules::serializeObject(QDataStream& pStream) const
         pStream << m_WeatherChances[i];
     }
 
+    CONSOLE_PRINT("Saving weather prediction for days " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
     pStream << static_cast<qint32>(m_WeatherDays.size());
-    for (qint32 i = 0; i < m_WeatherDays.size(); i++)
+    for (qint32 i = 0; i < m_WeatherDays.size(); ++i)
     {
         pStream << static_cast<qint32>(m_WeatherDays[i].size());
-        for (qint32 i2 = 0; i2 < m_WeatherDays[i].size(); i2++)
+        for (qint32 i2 = 0; i2 < m_WeatherDays[i].size(); ++i2)
         {
             pStream << m_WeatherDays[i][i2];
         }
@@ -1449,8 +1452,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         m_StartWeather = 0;
     }
     if (version <= 4)
-    {
-        
+    {        
         qint32 startPlayer  = m_pMap->getCurrentPlayer()->getPlayerID();
         qint32 playerCount = m_pMap->getPlayerCount();
         qint32 day = 0;
@@ -1647,4 +1649,5 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     {
         pStream >> m_multiplayerObserver;
     }
+    CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }

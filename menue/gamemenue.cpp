@@ -103,8 +103,10 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         }
         if (!startDirectly)
         {
-            if (m_pNetworkInterface->getConnectedSockets().length() == 0)
+            if (m_pNetworkInterface->getIsServer() &&
+                m_pNetworkInterface->getConnectedSockets().length() == 0)
             {
+                CONSOLE_PRINT("GameMenue starting game directly cause it's a relaunched game with no clients connected.", GameConsole::eDEBUG);
                 startGame();
             }
             else
@@ -114,12 +116,14 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
                 connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
                 if (pNetworkInterface->getIsObserver() || rejoin)
                 {
+                    CONSOLE_PRINT("Closing connection dialog on sync finished signal", GameConsole::eDEBUG);
                     connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
                     connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
                     connect(this, &GameMenue::sigSyncFinished, this, &GameMenue::startGame, Qt::QueuedConnection);
                 }
                 else
                 {
+                    CONSOLE_PRINT("Closing connection dialog on start game signal", GameConsole::eDEBUG);
                     connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
                     connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
                 }
@@ -133,6 +137,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     }
     else
     {
+        CONSOLE_PRINT("GameMenue starting game directly cause it's a single player game.", GameConsole::eDEBUG);
         startGame();
         if (m_pNetworkInterface.get() != nullptr &&
             Mainapp::getSlave())
@@ -1955,7 +1960,7 @@ void GameMenue::startGame()
         m_ReplayRecorder.startRecording();
         CONSOLE_PRINT("Triggering action next player in order to start the game.", GameConsole::eDEBUG);
         spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap.get());
-        if (m_pNetworkInterface.get() != nullptr)
+        if (GlobalUtils::getUseSeed())
         {
             pAction->setSeed(GlobalUtils::getSeed());
         }
@@ -1971,11 +1976,13 @@ void GameMenue::startGame()
         pApp->getAudioManager()->playRandom();
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();
+        auto* pInput = m_pMap->getCurrentPlayer()->getBaseGameInput();
         if ((m_pNetworkInterface.get() == nullptr ||
              m_pNetworkInterface->getIsServer()) &&
-            !m_gameStarted)
+            !m_gameStarted ||
+            (pInput != nullptr && pInput->getAiType() != GameEnums::AiTypes_ProxyAi && pInput->getAiType() != GameEnums::AiTypes_DummyAi))
         {
-            CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
+            CONSOLE_PRINT("GameMenue::startGame emitting sigActionPerformed()", GameConsole::eDEBUG);
             emit m_actionPerformer.sigActionPerformed();
         }
     }

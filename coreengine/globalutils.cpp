@@ -277,6 +277,14 @@ bool GlobalUtils::getUseSeed()
 void GlobalUtils::setUseSeed(bool useSeed)
 {
     m_pInstace->m_useSeed = useSeed;
+    if (m_pInstace->m_useSeed)
+    {
+        CONSOLE_PRINT("Running with seed " + QString::number(m_pInstace->m_seed), GameConsole::eDEBUG);
+    }
+    else
+    {
+        CONSOLE_PRINT("Stop running with seed", GameConsole::eDEBUG);
+    }
 }
 
 QStringList GlobalUtils::getFiles(const QString & folder, const QStringList & filter)

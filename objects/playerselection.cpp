@@ -1710,7 +1710,6 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             GameEnums::AiTypes originalAiType = static_cast<GameEnums::AiTypes>(aiType);
             if (player <m_playerSockets.size() && m_pMap != nullptr)
             {
-                GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
                 if (aiType != GameEnums::AiTypes::AiTypes_Open &&
                     aiType != GameEnums::AiTypes::AiTypes_Closed)
                 {
@@ -1719,7 +1718,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                 else
                 {
                     m_playerSockets[player] = 0;
-                    name = getNameFromAiType(eAiType);
+                    name = getNameFromAiType(static_cast<GameEnums::AiTypes>(aiType));
                 }
                 if (Mainapp::getSlave())
                 {
@@ -1748,6 +1747,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                     }
                     CONSOLE_PRINT("Remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", GameConsole::eDEBUG);
                 }
+                GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
                 setPlayerAi(player, eAiType, name);
                 m_pMap->getPlayer(player)->deserializeObject(stream);
                 m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType));

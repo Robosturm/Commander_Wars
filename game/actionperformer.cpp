@@ -52,7 +52,6 @@ void ActionPerformer::performAction(spGameAction pGameAction)
     {
         CONSOLE_PRINT("GameMenue::performAction " + pGameAction->getActionID() + " at X: " + QString::number(pGameAction->getTarget().x())
                       + " at Y: " + QString::number(pGameAction->getTarget().y()), GameConsole::eDEBUG);
-
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = false;
         if (m_pMenu != nullptr)
@@ -72,7 +71,10 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             m_pMenu->addChild(pDialogMessageBox);
         }
         else
-        {
+        {            
+            // perform action
+            GlobalUtils::seed(pGameAction->getSeed());
+            GlobalUtils::setUseSeed(true);
             if (multiplayer &&
                 baseGameInput != nullptr &&
                 baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi)
@@ -88,6 +90,9 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             {
                 pGameAction = doMultiTurnMovement(pGameAction);
             }
+
+            GlobalUtils::seed(pGameAction->getSeed());
+            GlobalUtils::setUseSeed(true);
             Unit * pMoveUnit = pGameAction->getTargetUnit();
             doTrapping(pGameAction);
             // send action to other players if needed
@@ -117,10 +122,6 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             {
                 m_pMenu->getReplayRecorder().recordAction(pGameAction);
             }
-
-            // perform action
-            GlobalUtils::seed(pGameAction->getSeed());
-            GlobalUtils::setUseSeed(true);
             if (pMoveUnit != nullptr)
             {
                 pMoveUnit->setMultiTurnPath(pGameAction->getMultiTurnPath());
