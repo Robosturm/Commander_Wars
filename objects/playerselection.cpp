@@ -1537,9 +1537,17 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
                 if (pPlayer->getPlayerNameId() == username &&
                     pPlayer->getSocketId() == 0)
                 {
-                    CONSOLE_PRINT("Player username " + username + " rejoined lobby game.", GameConsole::eDEBUG);
+                    CONSOLE_PRINT("Player " + QString::number(i) + " username " + username + " rejoined lobby game.", GameConsole::eDEBUG);
                     remoteChangePlayerOwner(socketID, username, i, eAiType);
                     rejoin = true;
+                }
+                else if (Mainapp::getSlave() &&
+                         pPlayer->getSocketId() == 0 &&
+                         pPlayer->getBaseGameInput() != nullptr &&
+                         pPlayer->getControlType() > GameEnums::AiTypes::AiTypes_Human)
+                {
+                    CONSOLE_PRINT("Slave player " + QString::number(i) + " ai " + pPlayer->getPlayerNameId() + " control type " + QString::number(pPlayer->getControlType()) + " transferred control to socket " + QString::number(socketID), GameConsole::eDEBUG);
+                    remoteChangePlayerOwner(socketID, pPlayer->getPlayerNameId(), i, pPlayer->getControlType(), true);
                 }
             }
         }
@@ -1582,7 +1590,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
     }
 }
 
-void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType)
+void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType)
 {
     // valid request
     // change data locally and send remote update
@@ -1625,14 +1633,17 @@ void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & 
     CONSOLE_PRINT("Player " + username + " change for " + QString::number(player) + " changed locally to ai-type " + QString::number(eAiType) + " for socket " + QString::number(m_playerSockets[player]), GameConsole::eDEBUG);
     updatePlayerData(player);
 
-    qint32 aiType = 0;
-    if (eAiType == GameEnums::AiTypes_Open)
+    qint32 aiType = eAiType;
+    if (!forceAiType)
     {
-        aiType = static_cast<qint32>(GameEnums::AiTypes_Open);
-    }
-    else
-    {
-        aiType = static_cast<qint32>(GameEnums::AiTypes_Human);
+        if (eAiType == GameEnums::AiTypes_Open)
+        {
+            aiType = static_cast<qint32>(GameEnums::AiTypes_Open);
+        }
+        else
+        {
+            aiType = static_cast<qint32>(GameEnums::AiTypes_Human);
+        }
     }
     CONSOLE_PRINT("Player change " + QString::number(player) + " changing remote to ai-type " + QString::number(aiType), GameConsole::eDEBUG);
     QByteArray sendDataRequester;
@@ -1704,7 +1715,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
         QString name;
         qint32 aiType;
         qint32 player;
-        bool clientRequest = false;;
+        bool clientRequest = false;
         stream >> clientRequest;
         stream >> socket;
         stream >> name;
@@ -1798,6 +1809,10 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
         {
             CONSOLE_PRINT("Update ignored", GameConsole::eDEBUG);
         }
+    }
+    else
+    {
+        CONSOLE_PRINT("Illegal access to PlayerSelection::changePlayer ignored request", GameConsole::eDEBUG);
     }
 }
 

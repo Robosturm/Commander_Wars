@@ -235,7 +235,7 @@ protected:
      * @param player
      * @param eAiType
      */
-    void remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType);
+    void remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType = false);
     /**
      * @brief sendOpenPlayerCount
      */

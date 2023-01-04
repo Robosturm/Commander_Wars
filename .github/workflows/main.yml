@@ -280,5 +280,6 @@ jobs:
         --output ${{env.workspace}}/build/android-build \
         --android-platform android-31 \
         --gradle \
-        --release
-# --sign              
+        --release \
+        --sign
+              
