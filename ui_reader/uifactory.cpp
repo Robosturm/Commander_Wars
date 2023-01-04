@@ -138,7 +138,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
 {
     if (!Mainapp::getInstance()->getNoUi())
     {
-        CONSOLE_PRINT("Loading ui " + uiXml, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Loading ui " + uiXml, GameConsole::eDEBUG, GameConsole::eUiFactory);
         if (m_dropDownPlayer.get() == nullptr)
         {
             m_dropDownPlayer = spPlayer::create(nullptr);
@@ -1519,7 +1519,7 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
             }
             else
             {
-                CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ". Using \"" + value + "\" as value.", GameConsole::eDEBUG);
+                CONSOLE_PRINT_MODULE("Error while parsing " + line + " Error: " + erg.toString() + ". Using \"" + value + "\" as value.", GameConsole::eDEBUG, GameConsole::eUiFactory);
             }
         }
         else if (erg.isString())
@@ -1538,7 +1538,7 @@ QString UiFactory::getStringValue(QString line, QString objectId, qint32 loopIdx
             }
             else
             {
-                CONSOLE_PRINT("Unable to determine a string value while interpreting. Line: " + line + " using line as value", GameConsole::eDEBUG);
+                CONSOLE_PRINT_MODULE("Unable to determine a string value while interpreting. Line: " + line + " using line as value", GameConsole::eDEBUG, GameConsole::eUiFactory);
             }
         }
     }

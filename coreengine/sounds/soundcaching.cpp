@@ -1,5 +1,5 @@
 #include "coreengine/audiomanager.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 #ifdef AUDIOSUPPORT
@@ -20,7 +20,7 @@ void AudioManager::fillSoundCache(qint32 count, QString folder, QString file)
         QUrl cacheUrl = GlobalUtils::getUrlForFile(folder + file);
         std::shared_ptr<SoundData> cache = std::make_shared<SoundData>();
         cache->cacheUrl = cacheUrl;
-        CONSOLE_PRINT("Caching sound " + folder + file + " with amount " + QString::number(count), Console::eDEBUG);
+        CONSOLE_PRINT_MODULE("Caching sound " + folder + file + " with amount " + QString::number(count), GameConsole::eDEBUG, GameConsole::eAudio);
         for (qint32 i = 0; i < count; ++i)
         {
             cache->sound[i] = new QSoundEffect(this);
@@ -45,7 +45,7 @@ bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soun
     if (!soundCache->sound[i]->isPlaying() &&
         !soundCache->timer[i]->isActive())
     {
-        CONSOLE_PRINT("Playing sound: " + file + " using cache sound " + QString::number(i), Console::eDEBUG);
+        CONSOLE_PRINT_MODULE("Playing sound: " + file + " using cache sound " + QString::number(i), GameConsole::eDEBUG, GameConsole::eAudio);
 
         soundCache->sound[i]->setVolume(sound);
         if (loops < 0)

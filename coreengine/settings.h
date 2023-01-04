@@ -86,10 +86,32 @@ private:
                     *m_value = m_defaultValue;
                 }
             }
+            else if constexpr (std::is_same<TType, quint64>::value)
+            {
+                bool ok = false;
+                *m_value = settings.value(m_name, m_defaultValue).toULongLong(&ok);
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
             else if constexpr (std::is_same<TType, qint32>::value)
             {
                 bool ok = false;
                 *m_value = settings.value(m_name, m_defaultValue).toInt(&ok);
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
+            else if constexpr (std::is_same<TType, qint64>::value)
+            {
+                bool ok = false;
+                *m_value = settings.value(m_name, m_defaultValue).toLongLong(&ok);
                 if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
@@ -271,6 +293,7 @@ public:
     static void setPipeUuid(const QString & newPipeUuid);
 
 public slots:
+
     static QString getLastSaveGame();
     static QString getUpdateStep();
     static bool getAiSlave();
@@ -1019,6 +1042,7 @@ private:
     // logging
     bool m_LogActions{false};
     GameConsole::eLogLevels m_defaultLogLevel{static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL)};
+    quint64 m_defaultLogModuls{GameConsole::eGeneral | GameConsole::eJavaScript};
 };
 
 Q_DECLARE_INTERFACE(Settings, "Settings");

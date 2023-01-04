@@ -22,7 +22,7 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     }
     for (const auto & folder : qAsConst(fullList))
     {
-        CONSOLE_PRINT("Adding files for folder: " + folder, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Adding files for folder: " + folder, GameConsole::eDEBUG, GameConsole::eFileSupport);
         addHash(myHash, folder, filter);
     }
     return myHash.result();
@@ -35,7 +35,7 @@ void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStri
     for (auto & item : list)
     {
         QString filePath = item.filePath();
-        CONSOLE_PRINT("Adding file: " + filePath + " to hash", GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Adding file: " + filePath + " to hash", GameConsole::eDEBUG, GameConsole::eFileSupport);
         QFile file(filePath);
         file.open(QIODevice::ReadOnly);
         while (!file.atEnd())

@@ -78,7 +78,7 @@ void AudioManager::initAudio()
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        CONSOLE_PRINT("AudioThread::initAudio", GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("AudioThread::initAudio", GameConsole::eDEBUG, GameConsole::eAudio);
         const auto& value = Settings::getAudioOutput();
         if (value.typeId() == QMetaType::QString &&
             value.toString() == Settings::DEFAULT_AUDIODEVICE)
@@ -145,7 +145,7 @@ void AudioManager::readSoundCacheFromXml(QString folder)
 {
     if (!m_noAudio)
     {
-        CONSOLE_PRINT("Loading sound cache from " + folder + "res.xml", GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Loading sound cache from " + folder + "res.xml", GameConsole::eDEBUG, GameConsole::eAudio);
         QDomDocument document;
         QFile file(folder + "res.xml");
         file.open(QIODevice::ReadOnly);
@@ -178,8 +178,8 @@ void AudioManager::readSoundCacheFromXml(QString folder)
         }
         else
         {
-            CONSOLE_PRINT("Unable to load: " + folder + "res.xml", GameConsole::eERROR);
-            CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR);
+            CONSOLE_PRINT_MODULE("Unable to load: " + folder + "res.xml", GameConsole::eERROR, GameConsole::eAudio);
+            CONSOLE_PRINT_MODULE("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR, GameConsole::eAudio);
         }
     }
 }
@@ -189,7 +189,7 @@ void AudioManager::createPlayer()
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        CONSOLE_PRINT("AudioThread::createPlayer()", GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("AudioThread::createPlayer()", GameConsole::eDEBUG, GameConsole::eAudio);
         m_player.reset(new Player(this));
         m_player->m_player.setAudioOutput(&m_audioOutput);
         connect(&m_player->m_player, &QMediaPlayer::mediaStatusChanged, this, &AudioManager::mediaStatusChanged, Qt::QueuedConnection);
@@ -239,7 +239,7 @@ void AudioManager::SlotChangeAudioDevice(const QVariant& value)
     if (!m_noAudio)
     {
         m_audioDevice = value.value<QAudioDevice>();
-        CONSOLE_PRINT("Changing to audio device: " + m_audioDevice.description(), GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Changing to audio device: " + m_audioDevice.description(), GameConsole::eDEBUG, GameConsole::eAudio);
         m_audioOutput.setDevice(m_audioDevice);
         m_player->m_player.setAudioOutput(&m_audioOutput);
         m_soundCaches.clear();
@@ -323,13 +323,13 @@ void AudioManager::SlotClearPlayList()
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        CONSOLE_PRINT("AudioThread::SlotClearPlayList() start clearing", GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("AudioThread::SlotClearPlayList() start clearing", GameConsole::eDEBUG, GameConsole::eAudio);
         m_PlayListdata.clear();
         m_player->m_currentMedia = -1;
         m_player->m_nextMedia = -1;
         m_player->m_player.stop();
         m_player->m_player.setSource(QUrl());
-        CONSOLE_PRINT("AudioThread::SlotClearPlayList() playlist cleared", GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("AudioThread::SlotClearPlayList() playlist cleared", GameConsole::eDEBUG, GameConsole::eAudio);
     }
 #endif
 }
@@ -341,7 +341,7 @@ void AudioManager::SlotPlayMusic(qint32 file)
     {
         if (file >= 0 && file < m_PlayListdata.size())
         {
-            CONSOLE_PRINT("Starting music for player: " + m_PlayListdata[file].m_file, GameConsole::eDEBUG);
+            CONSOLE_PRINT_MODULE("Starting music for player: " + m_PlayListdata[file].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
             m_player->m_player.stop();
             m_player->m_currentMedia = -1;
             m_player->m_nextMedia = -1;
@@ -374,7 +374,7 @@ void AudioManager::SlotPlayRandom()
 #ifdef AUDIOSUPPORT
     if (!m_noAudio && !Settings::getMuted())
     {
-        CONSOLE_PRINT("AudioThread::SlotPlayRandom", GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("AudioThread::SlotPlayRandom", GameConsole::eDEBUG, GameConsole::eAudio);
         qint32 size = m_PlayListdata.size();
         if (size > 0)
         {
@@ -384,7 +384,7 @@ void AudioManager::SlotPlayRandom()
                 m_player->m_currentMedia = GlobalUtils::randIntBase(0, size - 1);
                 loadMediaForFile(m_PlayListdata[m_player->m_currentMedia].m_file);
                 m_player->m_player.play();
-                CONSOLE_PRINT("Buffering music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file, GameConsole::eDEBUG);
+                CONSOLE_PRINT_MODULE("Buffering music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
             }
             else if (m_player->m_currentMedia == m_player->m_nextMedia)
             {
@@ -403,7 +403,7 @@ void AudioManager::SlotPlayRandom()
                 {
                     m_player->m_player.setPosition(loopPos);
                 }
-                CONSOLE_PRINT("Seeking music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file + " to " + QString::number(loopPos), GameConsole::eDEBUG);
+                CONSOLE_PRINT_MODULE("Seeking music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file + " to " + QString::number(loopPos), GameConsole::eDEBUG, GameConsole::eAudio);
             }
             else
             {
@@ -411,13 +411,13 @@ void AudioManager::SlotPlayRandom()
                 m_player->m_currentMedia = m_player->m_nextMedia;
                 loadMediaForFile(m_PlayListdata[m_player->m_currentMedia].m_file);
                 m_player->m_player.play();
-                CONSOLE_PRINT("Buffering music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file, GameConsole::eDEBUG);
+                CONSOLE_PRINT_MODULE("Buffering music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file, GameConsole::eDEBUG, GameConsole::eAudio);
             }
             m_player->m_nextMedia = GlobalUtils::randIntBase(0, size - 1);
         }
         else
         {
-            CONSOLE_PRINT("Playlist is empty", GameConsole::eDEBUG);
+            CONSOLE_PRINT_MODULE("Playlist is empty", GameConsole::eDEBUG, GameConsole::eAudio);
         }
     }
 #endif
@@ -443,7 +443,7 @@ void AudioManager::SlotSetVolume(qint32 value)
                 SlotPlayRandom();
             }
         }
-        CONSOLE_PRINT("Setting volume to : " + QString::number(volume), GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Setting volume to : " + QString::number(volume), GameConsole::eDEBUG, GameConsole::eAudio);
         m_audioOutput.setVolume(volume);
     }
 #endif
@@ -461,7 +461,7 @@ void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoi
             currentPath = Settings::getUserPath() + file;
             if (!QFile::exists(currentPath))
             {
-                CONSOLE_PRINT("Unable to locate music file: " + currentPath + " using compiled path.", GameConsole::eDEBUG);
+                CONSOLE_PRINT_MODULE("Unable to locate music file: " + currentPath + " using compiled path.", GameConsole::eDEBUG, GameConsole::eAudio);
                 currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
             }
         }
@@ -483,7 +483,7 @@ void AudioManager::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
     if (!m_noAudio)
     {
-        CONSOLE_PRINT("Media status changed for player to " + QString::number(status), GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Media status changed for player to " + QString::number(status), GameConsole::eDEBUG, GameConsole::eAudio);
         switch (status)
         {
             case QMediaPlayer::NoMedia:
@@ -493,17 +493,17 @@ void AudioManager::mediaStatusChanged(QMediaPlayer::MediaStatus status)
             case QMediaPlayer::EndOfMedia:
             {
                 m_player->m_currentMedia = -1;
-                CONSOLE_PRINT("Music stopped at position " + QString::number(m_player->m_player.position()), GameConsole::eDEBUG);
+                CONSOLE_PRINT_MODULE("Music stopped at position " + QString::number(m_player->m_player.position()), GameConsole::eDEBUG, GameConsole::eAudio);
                 // shuffle through loaded media
                 SlotPlayRandom();
                 break;
             }
             case QMediaPlayer::InvalidMedia:
             {
-                CONSOLE_PRINT("Invalid media detected for player", GameConsole::eWARNING);
+                CONSOLE_PRINT_MODULE("Invalid media detected for player", GameConsole::eWARNING, GameConsole::eAudio);
                 if (m_player->m_currentMedia < m_PlayListdata.size())
                 {
-                    CONSOLE_PRINT("Unable to play: " +  m_PlayListdata[m_player->m_currentMedia].m_file, GameConsole::eWARNING);
+                    CONSOLE_PRINT_MODULE("Unable to play: " +  m_PlayListdata[m_player->m_currentMedia].m_file, GameConsole::eWARNING, GameConsole::eAudio);
                 }
             }
             default:
@@ -522,7 +522,7 @@ void AudioManager::loadNextAudioFile()
 #ifdef AUDIOSUPPORT
 void AudioManager::mediaPlaybackStateChanged(QMediaPlayer::PlaybackState newState)
 {
-    CONSOLE_PRINT("Playback state changed to " + QString::number(newState) + " for player", GameConsole::eDEBUG);
+    CONSOLE_PRINT_MODULE("Playback state changed to " + QString::number(newState) + " for player", GameConsole::eDEBUG, GameConsole::eAudio);
 }
 #endif
 
@@ -564,7 +564,7 @@ void AudioManager::loadMusicFolder(QString folder, QStringList& loadedSounds)
         }
         else
         {
-            CONSOLE_PRINT("Unable to locate music folder: " + folder, GameConsole::eDEBUG);
+            CONSOLE_PRINT_MODULE("Unable to locate music folder: " + folder, GameConsole::eDEBUG, GameConsole::eAudio);
         }
     }
 #endif
@@ -572,7 +572,7 @@ void AudioManager::loadMusicFolder(QString folder, QStringList& loadedSounds)
 
 void AudioManager::addMusicToPlaylist(QString file, qint64 startPointMs, qint64 endPointMs)
 {
-    CONSOLE_PRINT("Adding " + file + " to play list", GameConsole::eDEBUG);
+    CONSOLE_PRINT_MODULE("Adding " + file + " to play list", GameConsole::eDEBUG, GameConsole::eAudio);
 #ifdef AUDIOSUPPORT
     m_PlayListdata.append(PlaylistData(file, startPointMs, endPointMs));
 #endif
@@ -596,7 +596,7 @@ void AudioManager::SlotCheckMusicEnded(qint64 duration)
         qint64 loopPos = m_PlayListdata[m_player->m_currentMedia].m_endpointMs;
         if (loopPos > 0 && duration >= loopPos && m_player->m_currentMedia == m_player->m_nextMedia)
         {
-            CONSOLE_PRINT("Player reached loop end desired position " + QString::number(loopPos) + " actual loop position " + QString::number(duration) + " for player", GameConsole::eDEBUG);
+            CONSOLE_PRINT_MODULE("Player reached loop end desired position " + QString::number(loopPos) + " actual loop position " + QString::number(duration) + " for player", GameConsole::eDEBUG, GameConsole::eAudio);
             // shuffle load new media
             SlotPlayRandom();
         }
@@ -687,7 +687,7 @@ void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float
                 }
                 if (!started)
                 {
-                    CONSOLE_PRINT("no free cached sound found.", GameConsole::eDEBUG);
+                    CONSOLE_PRINT_MODULE("no free cached sound found.", GameConsole::eDEBUG, GameConsole::eAudio);
                 }
             }
         }
@@ -702,7 +702,7 @@ void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float
 void AudioManager::SlotStopAllSounds()
 {
 #ifdef AUDIOSUPPORT
-    CONSOLE_PRINT("Stopping all sounds", GameConsole::eDEBUG);
+    CONSOLE_PRINT_MODULE("Stopping all sounds", GameConsole::eDEBUG, GameConsole::eAudio);
     for (auto & soundCache : m_soundCaches)
     {
         for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
@@ -718,7 +718,7 @@ void AudioManager::SlotStopSound(QString file)
 #ifdef AUDIOSUPPORT
     if (m_soundCaches.contains(file))
     {
-        CONSOLE_PRINT("Stopping sound " + file, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Stopping sound " + file, GameConsole::eDEBUG, GameConsole::eAudio);
         auto & soundCache = m_soundCaches[file];
         for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
         {
@@ -749,7 +749,7 @@ bool AudioManager::stopSoundAtIndex(SoundData* soundData, qint32 index)
 
 void AudioManager::stopOldestSound(SoundData* soundData)
 {
-    CONSOLE_PRINT("Stopping oldest sound sound of " + soundData->cacheUrl.toString(), GameConsole::eDEBUG);
+    CONSOLE_PRINT_MODULE("Stopping oldest sound sound of " + soundData->cacheUrl.toString(), GameConsole::eDEBUG, GameConsole::eAudio);
     bool stopped = false;
     for (qint32 i = soundData->nextSoundToUse; i < SoundData::MAX_SAME_SOUNDS; ++i)
     {

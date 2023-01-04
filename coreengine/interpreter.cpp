@@ -28,7 +28,7 @@ Interpreter::Interpreter()
 
 bool Interpreter::reloadInterpreter(const QString runtime)
 {
-    CONSOLE_PRINT("Reloading interpreter", GameConsole::eDEBUG);
+    CONSOLE_PRINT_MODULE("Reloading interpreter", GameConsole::eDEBUG, GameConsole::eJavaScript);
     m_pInstance = nullptr;
     m_pInstance = spInterpreter::create();
     m_pInstance->init();
@@ -107,7 +107,7 @@ bool Interpreter::openScript(const QString & script, bool setup)
     }
     else
     {
-        CONSOLE_PRINT("Loading script " + script, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Loading script " + script, GameConsole::eDEBUG, GameConsole::eJavaScript);
         QTextStream stream(&scriptFile);
         QString contents = stream.readAll();
         if (setup && Settings::getRecord())
@@ -139,14 +139,14 @@ bool Interpreter::openScript(const QString & script, bool setup)
 bool Interpreter::loadScript(const QString & content, const QString & script)
 {
     bool success = false;
-    CONSOLE_PRINT("Interpreter::loadScript: " + script, GameConsole::eDEBUG);
+    CONSOLE_PRINT_MODULE("Interpreter::loadScript: " + script, GameConsole::eDEBUG, GameConsole::eJavaScript);
     QJSValue value = evaluate(content, script);
     if (value.isError())
     {
         QString error = value.toString() + " in script " + script + " in File: " +
                         value.property("fileName").toString() + " at Line: " +
                         value.property("lineNumber").toString();
-        CONSOLE_PRINT(error, GameConsole::eERROR);        
+        CONSOLE_PRINT(error, GameConsole::eERROR);
     }
     else
     {

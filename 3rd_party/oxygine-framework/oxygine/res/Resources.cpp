@@ -107,7 +107,7 @@ namespace oxygine
 
         if (!file.exists() || file.size() == 0)
         {
-            CONSOLE_PRINT("can't load xml file: '" + xmlFile + "'", GameConsole::eDEBUG);
+            CONSOLE_PRINT_MODULE("can't load xml file: '" + xmlFile + "'", GameConsole::eDEBUG, GameConsole::eResources);
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::loadXML can't find xml file");
             return false;
         }
@@ -122,7 +122,7 @@ namespace oxygine
         if (loaded)
         {
             QDomElement resources = doc.documentElement();
-            CONSOLE_PRINT("loading xml resources", GameConsole::eDEBUG);
+            CONSOLE_PRINT_MODULE("loading xml resources", GameConsole::eDEBUG, GameConsole::eResources);
             XmlWalker walker("", 1.0f, resources);
             while (true)
             {
@@ -149,7 +149,7 @@ namespace oxygine
                 context.m_xml_name = xmlFile;
                 context.m_resources = this;
 
-                CONSOLE_PRINT("resource: " + context.m_xml_name, GameConsole::eDEBUG);
+                CONSOLE_PRINT_MODULE("resource: " + context.m_xml_name, GameConsole::eDEBUG, GameConsole::eResources);
                 spResource res = r.cb(context);
                 if (res.get() == nullptr)
                 {
@@ -162,7 +162,7 @@ namespace oxygine
                     m_resources.push_back(res);
                 }
             }
-            CONSOLE_PRINT("xml loaded", GameConsole::eDEBUG);
+            CONSOLE_PRINT_MODULE("xml loaded", GameConsole::eDEBUG, GameConsole::eResources);
         }
         else
         {
@@ -176,13 +176,13 @@ namespace oxygine
     {
         if (r.get() == nullptr)
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::add adding empty ressource");
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::add adding empty ressource", GameConsole::eResources);
             return;
         }
         QString name = r->getName().toLower();
         if (name.isEmpty())
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "adding resource with no name");
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "adding resource with no name", GameConsole::eResources);
         }
         r->setName(name);
         m_resourcesMap[name] = r;
@@ -211,7 +211,7 @@ namespace oxygine
         {
             return it.value().get();
         }
-        handleErrorPolicy(ep, "can't find resource: '" + id + "' in '" + m_name + "'");
+        handleErrorPolicy(ep, "can't find resource: '" + id + "' in '" + m_name + "'", GameConsole::eResources);
 #endif
         return nullptr;
     }

@@ -24,7 +24,7 @@
 
 // values which differ from release to debug build
 GameConsole::eLogLevels GameConsole::m_LogLevel = static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL);
-
+quint64 GameConsole::m_activeModules = eGeneral | eJavaScript;
 bool GameConsole::m_show = false;
 bool GameConsole::m_toggled = false;
 bool GameConsole::m_developerMode = false;
@@ -71,6 +71,28 @@ GameConsole::GameConsole()
     Interpreter::setCppOwnerShip(this);
     m_output.reserve(m_outputSize);
     m_lastmsgs.reserve(m_lastMsgSize);
+}
+
+void GameConsole::setActiveModules(quint64 newActiveModules)
+{
+    m_activeModules = newActiveModules;
+}
+
+void GameConsole::setModuleMode(quint64 newActiveModule, bool enable)
+{
+    if (enable)
+    {
+        m_activeModules |= newActiveModule;
+    }
+    else
+    {
+        m_activeModules &= ~newActiveModule;
+    }
+}
+
+bool GameConsole::isActiveModule(quint64 module)
+{
+    return m_activeModules & module;
 }
 
 GameConsole* GameConsole::getInstance()
@@ -195,10 +217,13 @@ void GameConsole::dotask(QString message)
 
 void GameConsole::print(const QString & message, qint8 logLevel)
 {
-    print(message, static_cast<eLogLevels>(logLevel));
+    if (m_activeModules & eJavaScript)
+    {
+        printDirectly(message, static_cast<eLogLevels>(logLevel));
+    }
 }
 
-void GameConsole::print(const QString & message, eLogLevels logLevel)
+void GameConsole::printDirectly(const QString & message, eLogLevels logLevel)
 {
     QMutexLocker locker(&m_datalocker);
 
@@ -330,7 +355,7 @@ bool GameConsole::getDeveloperMode()
 {
     if (m_developerMode)
     {
-        print("Developer Mode enabled! And used for changing some data.", GameConsole::eINFO);
+        printDirectly("Developer Mode enabled! And used for changing some data.", GameConsole::eINFO);
     }
     return m_developerMode;
 }
@@ -340,7 +365,7 @@ void GameConsole::setDeveloperMode(bool developerMode)
     m_developerMode = developerMode;
     if (m_developerMode)
     {
-        print("Developer Mode enabled! Note this may lead to crashes or weird behaviour.", GameConsole::eWARNING);
+        printDirectly("Developer Mode enabled! Note this may lead to crashes or weird behaviour.", GameConsole::eWARNING);
         setLogLevel(eLogLevels::eDEBUG);
     }
 }
@@ -370,7 +395,7 @@ void GameConsole::help(qint32 start, qint32 end)
 
 void GameConsole::version()
 {
-    print(QCoreApplication::applicationVersion() + " Builddate: " + compileDate + " " + compileTime, GameConsole::eINFO);
+    printDirectly(QCoreApplication::applicationVersion() + " Builddate: " + compileDate + " " + compileTime, GameConsole::eINFO);
 }
 
 void GameConsole::logActions(bool log)
@@ -1458,7 +1483,7 @@ void GameConsole::createfunnymessage(qint32 message){
             printmessage = "No more funny Messages found. Delete your Harddisk instead";
             break;
     }
-    print(printmessage, GameConsole::eINFO);
+    printDirectly(printmessage, GameConsole::eINFO);
 }
 
 bool GameConsole::doHandleEvent(QEvent *event)

@@ -94,14 +94,14 @@ public slots:
                 QString error = ret.toString() + " in File: " +
                                 ret.property("fileName").toString() + " at Line: " +
                                 ret.property("lineNumber").toString();
-                CONSOLE_PRINT(error, GameConsole::eERROR);
+                CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
             }
 #ifdef GAMEDEBUG
         }
         else
         {
             QString error = "Error: attemp to call a non function value. Call:" + func;
-            CONSOLE_PRINT(error, GameConsole::eERROR);
+            CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
         }
 #endif
         return ret;
@@ -128,20 +128,20 @@ public slots:
                     QString error = ret.toString() + " in File: " +
                                     ret.property("fileName").toString() + " at Line: " +
                                     ret.property("lineNumber").toString();
-                    CONSOLE_PRINT(error, GameConsole::eERROR);
+                    CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
                 }
 #ifdef GAMEDEBUG
             }
             else
             {
                 QString error = "Error: attemp to call a non function value. Call:" + obj + "." + func;
-                CONSOLE_PRINT(error, GameConsole::eERROR);
+                CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
             }
         }
         else
         {
             QString error = "Error: attemp to call a non object value in order to call a function. Call:" + obj + "." + func;
-            CONSOLE_PRINT(error, GameConsole::eERROR);
+            CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
         }
 #endif
         return ret;

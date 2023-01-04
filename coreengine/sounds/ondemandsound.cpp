@@ -22,7 +22,7 @@ void AudioManager::fillSoundCache(qint32 count, QString folder, QString file)
         QUrl cacheUrl = GlobalUtils::getUrlForFile(folder + file);
         std::shared_ptr<SoundData> cache = std::make_shared<SoundData>();
         cache->cacheUrl = cacheUrl;
-        CONSOLE_PRINT("Caching sound " + folder + file + " with amount " + QString::number(count), GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Caching sound " + folder + file + " with amount " + QString::number(count), GameConsole::eDEBUG, GameConsole::eAudio);
         for (qint32 i = 0; i < count; ++i)
         {
             cache->timer[i] = std::make_shared<QTimer>(this);
@@ -42,7 +42,7 @@ bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soun
     if (soundCache->sound[i] == nullptr &&
         !soundCache->timer[i]->isActive())
     {
-        CONSOLE_PRINT("Playing sound: " + file + " using cache sound " + QString::number(i), GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Playing sound: " + file + " using cache sound " + QString::number(i), GameConsole::eDEBUG, GameConsole::eAudio);
         auto* soundItem = new QSoundEffect(this);
         soundItem->setObjectName(file + QString::number(i));
         soundItem->setAudioDevice(m_audioDevice);
@@ -85,7 +85,7 @@ bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soun
             if (pSoundCache->sound[i] != nullptr &&
                 pSoundCache->sound[i]->status() == QSoundEffect::Error)
             {
-                CONSOLE_PRINT("Error: Occured when playing sound: " + pSoundCache->cacheUrl.toString(), GameConsole::eDEBUG);
+                CONSOLE_PRINT_MODULE("Error: Occured when playing sound: " + pSoundCache->cacheUrl.toString(), GameConsole::eDEBUG, GameConsole::eAudio);
             }
         }, Qt::QueuedConnection);
         started = true;
@@ -98,7 +98,7 @@ bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soun
 #ifdef AUDIOSUPPORT
 void AudioManager::stopSound(SoundData* soundData, qint32 soundIndex)
 {
-    CONSOLE_PRINT("Stopping sound at index " + QString::number(soundIndex), GameConsole::eDEBUG);
+    CONSOLE_PRINT_MODULE("Stopping sound at index " + QString::number(soundIndex), GameConsole::eDEBUG, GameConsole::eAudio);
     if (soundData->sound[soundIndex] != nullptr)
     {
         soundData->sound[soundIndex]->stop();
@@ -109,7 +109,7 @@ void AudioManager::stopSound(SoundData* soundData, qint32 soundIndex)
 
 void AudioManager::playDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound)
 {
-    CONSOLE_PRINT("Starting delayed sound", GameConsole::eDEBUG);
+    CONSOLE_PRINT_MODULE("Starting delayed sound", GameConsole::eDEBUG, GameConsole::eAudio);
     if (stopOldestSound)
     {
         AudioManager::stopOldestSound(soundData);
@@ -125,7 +125,7 @@ void AudioManager::deleteSound(SoundData* soundData, qint32 soundIndex)
     if (soundData->sound[soundIndex] != nullptr &&
         !soundData->sound[soundIndex]->isPlaying())
     {
-        CONSOLE_PRINT("Stopping sound on playing changed.", GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Stopping sound on playing changed.", GameConsole::eDEBUG, GameConsole::eAudio);
         soundData->sound[soundIndex]->stop();
         soundData->sound[soundIndex]->deleteLater();
         soundData->sound[soundIndex] = nullptr;

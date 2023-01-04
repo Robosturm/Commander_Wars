@@ -1238,6 +1238,7 @@ void Settings::setup()
         // logging
         new Value<bool>{"Logging", "LogActions", &m_LogActions, false, false, true},
         new Value<GameConsole::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL},
+        new Value<quint64>{"Logging", "LogModules", &m_defaultLogModuls, GameConsole::eGeneral | GameConsole::eJavaScript, 0, std::numeric_limits<quint64>::max()},
     };
 }
 
@@ -1258,6 +1259,7 @@ void Settings::loadSettings()
     setFramesPerSecond(Settings::getInstance()->m_framesPerSecond);
     setActiveMods(Settings::getInstance()->m_activeMods);
     GameConsole::setLogLevel(Settings::getInstance()->m_defaultLogLevel);
+    GameConsole::setActiveModules(Settings::getInstance()->m_defaultLogModuls);
     if (Settings::hasSmallScreen())
     {
         Settings::getInstance()->m_autoScrolling = false;

@@ -18,7 +18,7 @@ namespace oxygine
             CONSOLE_PRINT("core::reset() done", GameConsole::eDEBUG);
         }
     }
-    void handleErrorPolicy(error_policy ep, const QString & message)
+    void handleErrorPolicy(error_policy ep, const QString & message, quint64 module)
     {
         switch (ep)
         {
@@ -27,10 +27,10 @@ namespace oxygine
                 OXY_ASSERT(false);
                 break;
             case ep_show_warning:
-                CONSOLE_PRINT(message, GameConsole::eWARNING);
+                CONSOLE_PRINT_MODULE(message, GameConsole::eWARNING, module);
                 break;
             case ep_ignore_error:
-                CONSOLE_PRINT(message, GameConsole::eDEBUG);
+                CONSOLE_PRINT_MODULE(message, GameConsole::eDEBUG, module);
                 break;
             default:
                 OXY_ASSERT(!"not implemented");

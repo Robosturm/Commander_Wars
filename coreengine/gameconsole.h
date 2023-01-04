@@ -37,6 +37,18 @@ public:
     };
     Q_ENUM(eLogLevels)
 
+    enum eModules : quint64
+    {
+        eGeneral     = 1 << 1,
+        eResources   = 1 << 2,
+        eAI          = 1 << 3,
+        eFileSupport = 1 << 4,
+        eJavaScript  = 1 << 4,
+        eAudio       = 1 << 5,
+        eUiFactory   = 1 << 6,
+    };
+    Q_ENUM(eModules)
+
     enum
     {
         BLINKFREQG = 250,
@@ -50,11 +62,36 @@ public:
     static void messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
     void init();
     void release();
+
+
 signals:
     void sigToggleView();
     void sigExecuteCommand(QString command);
     // use slots here since they're part of QMetaObject thus they get published to JSEngine.
 public slots:
+    /**
+     * @brief setActiveModules
+     * @param newActiveModules
+     */
+    static void setActiveModules(quint64 newActiveModules);
+    /**
+     * @brief getActiveModules
+     * @return
+     */
+    static quint64 getActiveModules()
+    {
+        return m_activeModules;
+    }
+    /**
+     * @brief setActiveModules
+     * @param newActiveModules
+     */
+    static void setModuleMode(quint64 newActiveModule, bool enable);
+    /**
+     * @brief getActiveModules
+     * @return
+     */
+    static bool isActiveModule(quint64 module);
     /**
      * @brief getDeveloperMode
      * @return
@@ -66,6 +103,7 @@ public slots:
      */
     static void setDeveloperMode(bool developerMode);
     /**
+     * Prints onto the console using the javascript-module
      * @brief print
      * @param message
      * @param LogLevel
@@ -76,7 +114,7 @@ public slots:
      * @param message
      * @param debugMessage false for Errors or Setup Messages. True for Ingame Actions used for Debugging. But unneeded in release build
      */
-    static void print(const QString & message, GameConsole::eLogLevels logLevel);
+    static void printDirectly(const QString & message, GameConsole::eLogLevels logLevel);
     /**
      * @brief printObject
      * @param message
@@ -209,6 +247,7 @@ private:
     static const qint32 m_lastMsgSize{10};
     static spConsole m_pConsole;
     static eLogLevels m_LogLevel;
+    static quint64 m_activeModules;
     static std::vector<QString> m_lastmsgs;
     static qint32 m_curlastmsgpos;
     static bool m_show;
@@ -225,16 +264,22 @@ private:
 };
 
 #define CONSOLE_PRINT(message, logLevel) \
-    if (logLevel >= GameConsole::getLogLevel()) \
+    if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & GameConsole::eGeneral) \
     {  \
-        GameConsole::print(message, logLevel); \
+        GameConsole::printDirectly(message, logLevel); \
+    }
+
+#define CONSOLE_PRINT_MODULE(message, logLevel, module) \
+    if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & module) \
+    {  \
+        GameConsole::printDirectly(message, logLevel); \
     }
 
 #ifdef GAMEDEBUG
 #define AI_CONSOLE_PRINT(message, logLevel) \
-    if (logLevel >= GameConsole::getLogLevel()) \
+    if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & GameConsole::eAI) \
     { \
-        GameConsole::print(message, logLevel); \
+        GameConsole::printDirectly(message, logLevel); \
     }
 #else
 #define AI_CONSOLE_PRINT(text, logLevel)
