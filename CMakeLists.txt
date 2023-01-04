@@ -53,8 +53,9 @@ message("CMake Binary dir: ${CMAKE_CURRENT_BINARY_DIR}")
 message("OpenSsL-Dir:" ${OPENSSL_ROOT_DIR})
 message("Toolchain-file: ${CMAKE_TOOLCHAIN_FILE}")
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    message("SDK: ${ANDROID_SDK}")
-    message("NDK: ${ANDROID_SDK_ROOT}")
+    message("SDK: ${ANDROID_SDK_ROOT}")
+    message("NDK: ${ANDROID_NDK}")
+    message("STL: ${ANDROID_STL}")
 endif()
 
 

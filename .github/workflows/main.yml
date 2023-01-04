@@ -158,7 +158,7 @@ jobs:
         -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
         -DANDROID_NATIVE_API_LEVEL="${{matrix.target-api-level}}" \
         -DANDROID_ABI="${{matrix.abi}}" \
-        -DANDROID_STL="c++_shared" \
+        -DANDROID_STL="c++_static" \
         -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DCMAKE_TOOLCHAIN_FILE="${{env.NDK_Root}}/build/cmake/android.toolchain.cmake" \
         -DANDROID_NDK="${{env.NDK_Root}}" \
