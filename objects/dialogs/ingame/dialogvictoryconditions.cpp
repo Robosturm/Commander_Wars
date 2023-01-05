@@ -1,15 +1,15 @@
 #include "objects/dialogs/ingame/dialogvictoryconditions.h"
 #include "objects/base/panel.h"
+#include "objects/base/label.h"
 #include "objects/dialogs/ingame/victoryrulepopup.h"
-
-#include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
 
 #include "resource_management/fontmanager.h"
+
+#include "menue/basegamemenu.h"
 
 #include "game/gamemap.h"
 #include "game/gamerules.h"
@@ -85,7 +85,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
         pTextfield->setHtmlText(info);
         pTextfield->setPosition(10, y);
         pPanel->addItem(pTextfield);
-        y += 30 + pTextfield->getTextRect().getHeight();
+        y += 50 + pTextfield->getTextRect().getHeight();
 
         qint32 x = 10;
         qint32 stepWidth = 250;
@@ -101,7 +101,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
                     ruleValue = 0;
                 }
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
-                info = tr("Player ") + QString::number(i2 + 1) + ": " + QString::number(playerValue) + "/" + QString::number(ruleValue);
+                info = QString(tr("Player %1: %2/%3")).arg(i2 + 1).arg(playerValue).arg(ruleValue);
                 spBuilding building = spBuilding::create("HQ", pMap);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
@@ -128,8 +128,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
         {
             emit sigShowPopup(pVictoryRule->getRuleID());
         });
-
-        y += 40;
+        y += 60;
     }
     pPanel->setContentHeigth(y + 40);
     connect(this, &DialogVictoryConditions::sigShowPopup, this, &DialogVictoryConditions::showPopup, Qt::QueuedConnection);

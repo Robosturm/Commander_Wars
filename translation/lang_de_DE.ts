@@ -3078,7 +3078,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="104"/>
-        <source>Player </source>
+        <source>Player %1: %2/%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
