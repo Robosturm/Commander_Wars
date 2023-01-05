@@ -24842,6 +24842,76 @@ Units have increased firepower during sandstorm.</source>
         <source>Allows to modify a unit, e.g. it&apos;s health, fuel, ammo etc.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="17"/>
+        <source>HP:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="21"/>
+        <source>HP of the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="25"/>
+        <source>Ammo 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="29"/>
+        <source>Ammo 1 of the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="33"/>
+        <source>Ammo 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="37"/>
+        <source>Ammo 2 of the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="41"/>
+        <source>Fuel:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="45"/>
+        <source>Fuel of the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="49"/>
+        <source>Has moved:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="53"/>
+        <source>If the unit has moved this turn or not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="57"/>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="61"/>
+        <source>Applies the changes to the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="65"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_modifyunit.js" line="69"/>
+        <source>Cancels the dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>movementplanneraddin_reset</name>
@@ -25009,6 +25079,66 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="15"/>
         <source>Allows to modify a unit, e.g. it&apos;s health, fuel, ammo etc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="19"/>
+        <source>Unit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="23"/>
+        <source>Unit that will be spawned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="27"/>
+        <source>Owner:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="31"/>
+        <source>Owner of the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="35"/>
+        <source>HP:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="39"/>
+        <source>HP of the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="43"/>
+        <source>Has moved:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="47"/>
+        <source>If the unit has moved this turn or not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="51"/>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="55"/>
+        <source>Spawns the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="59"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.js" line="63"/>
+        <source>Cancels the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -14,6 +14,54 @@ var Constructor = function()
     {
         return qsTr("Allows to modify a unit, e.g. it's health, fuel, ammo etc.");
     };
+    this.getUnitLabel = function()
+    {
+        return qsTr("Unit:");
+    };
+    this.getUnitTooltip = function()
+    {
+        return qsTr("Unit that will be spawned.");
+    };
+    this.getOwnerLabel = function()
+    {
+        return qsTr("Owner:");
+    };
+    this.getOwnerTooltip = function()
+    {
+        return qsTr("Owner of the unit.");
+    };
+    this.getHpLabel = function()
+    {
+        return qsTr("HP:");
+    };
+    this.getHpTooltip = function()
+    {
+        return qsTr("HP of the unit.");
+    };
+    this.getHasMovedLabel = function()
+    {
+        return qsTr("Has moved:");
+    };
+    this.getHasMovedTooltip = function()
+    {
+        return qsTr("If the unit has moved this turn or not.");
+    };
+    this.getApplyLabel = function()
+    {
+        return qsTr("Apply");
+    };
+    this.getApplyTooltip = function()
+    {
+        return qsTr("Spawns the unit.");
+    };
+    this.getCancelLabel = function()
+    {
+        return qsTr("Cancel");
+    };
+    this.getCancelTooltip = function()
+    {
+        return qsTr("Cancels the dialog.");
+    };
 
     this.startAddIn = function(addIn)
     {

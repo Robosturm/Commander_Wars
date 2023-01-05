@@ -7,21 +7,21 @@
         <height>settings.getHeight()</height>
         <childs>
             <Label>
-                <x>settings.getWidth() / 2 - 300</x>
+                <x>20</x>
                 <y>10</y>
-                <width>600</width>
+                <width>settings.getWidth() / 2 - 40</width>
                 <height>60</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Modify Unit")</text>
+                <text>MOVEMENTPLANNERADDIN_MODIFYUNIT.getName()</text>
                 <font>"main"</font>
+                <hAlign>"Middle"</hAlign>
                 <fontSize>48</fontSize>
             </Label>
-
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","HP:")</text>
+                <text>MOVEMENTPLANNERADDIN_MODIFYUNIT.getHpLabel()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -29,7 +29,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>150</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","HP of the unit")</tooltip>
+                <tooltip>MOVEMENTPLANNERADDIN_MODIFYUNIT.getHpTooltip()</tooltip>
                 <startValue>MOVEMENTPLANNERADDIN_MODIFYUNIT.getSelectedUnit(addIn).getHpRounded()</startValue>
                 <infinite>0</infinite>
                 <min>1</min>
@@ -41,7 +41,7 @@
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Ammo 1:")</text>
+                <text>MOVEMENTPLANNERADDIN_MODIFYUNIT.getAmmo1Label()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -49,7 +49,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>150</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Ammo 1 of the unit")</tooltip>
+                <tooltip>MOVEMENTPLANNERADDIN_MODIFYUNIT.getAmmo1Tooltip()</tooltip>
                 <startValue>MOVEMENTPLANNERADDIN_MODIFYUNIT.getSelectedUnit(addIn).getAmmo1()</startValue>
                 <infinite>-1</infinite>
                 <min>0</min>
@@ -61,7 +61,7 @@
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Ammo 2:")</text>
+                <text>MOVEMENTPLANNERADDIN_MODIFYUNIT.getAmmo2Label()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -69,7 +69,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>150</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Ammo 2 of the unit")</tooltip>
+                <tooltip>MOVEMENTPLANNERADDIN_MODIFYUNIT.getAmmo2Tooltip()</tooltip>
                 <startValue>MOVEMENTPLANNERADDIN_MODIFYUNIT.getSelectedUnit(addIn).getAmmo2()</startValue>
                 <infinite>-1</infinite>
                 <min>0</min>
@@ -81,7 +81,7 @@
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Fuel:")</text>
+                <text>MOVEMENTPLANNERADDIN_MODIFYUNIT.getFuelLabel()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -89,7 +89,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>150</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Fuel of the unit")</tooltip>
+                <tooltip>MOVEMENTPLANNERADDIN_MODIFYUNIT.getFuelTooltip()</tooltip>
                 <startValue>MOVEMENTPLANNERADDIN_MODIFYUNIT.getSelectedUnit(addIn).getFuel()</startValue>
                 <infinite>-1</infinite>
                 <min>0</min>
@@ -101,14 +101,14 @@
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Has moved:")</text>
+                <text>MOVEMENTPLANNERADDIN_MODIFYUNIT.getHasMovedLabel()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the unit has moved this turn or not.")</tooltip>
+                <tooltip>MOVEMENTPLANNERADDIN_MODIFYUNIT.getHasMovedTooltip()</tooltip>
                 <startValue>MOVEMENTPLANNERADDIN_MODIFYUNIT.getSelectedUnit(addIn).getHasMoved()</startValue>
                 <onEvent>MOVEMENTPLANNERADDIN_MODIFYUNIT.changeHasMoved(addIn, input)</onEvent>
             </Checkbox>
@@ -116,16 +116,16 @@
                 <x>settings.getWidth() / 2 + 10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>150</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Apply")</text>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Applies the changes to the unit")</tooltip>
+                <text>MOVEMENTPLANNERADDIN_MODIFYUNIT.getApplyLabel()</text>
+                <tooltip>MOVEMENTPLANNERADDIN_MODIFYUNIT.getApplyTooltip()</tooltip>
                 <onEvent>addIn.onMenuInputDone()</onEvent>
             </Button>
             <Button>
                 <x>settings.getWidth() / 2 - 160</x>
                 <y>lastY</y>
                 <width>150</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Cancels the dialog")</tooltip>
+                <text>MOVEMENTPLANNERADDIN_MODIFYUNIT.getCancelLabel()</text>
+                <tooltip>MOVEMENTPLANNERADDIN_MODIFYUNIT.getCancelTooltip()</tooltip>
                 <onEvent>addIn.hide()</onEvent>
             </Button>
         </childs>
