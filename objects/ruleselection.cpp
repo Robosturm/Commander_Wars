@@ -238,7 +238,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         weatherPrefixStrings.append(pWeather->getWeatherName() + ": ");
         weatherChances.append(m_pMap->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
     }
-    m_pWeatherSlider = spMultislider::create(weatherPrefixStrings, Settings::getWidth() - 100, weatherChances);
+    m_pWeatherSlider = spMultislider::create(weatherPrefixStrings, Settings::getWidth() - 100, weatherChances, textWidth - 30);
     m_pWeatherSlider->setTooltipText(tr("The chance each weather can appear if random weather is active."));
     m_pWeatherSlider->setPosition(30, y);
     m_pWeatherSlider->setEnabled(m_ruleChangeEabled);

@@ -39,7 +39,7 @@ public:
      */
     virtual QString getDescription() override
     {
-        return tr("Building captured X: ") + QString::number(m_x) + " Y: " + QString::number(m_y);
+        return QString(tr("Building captured X: %1 Y: %2")).arg(m_x).arg(m_y);
     }
     /**
      * @brief showEditConditin

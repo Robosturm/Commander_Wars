@@ -5484,18 +5484,8 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="69"/>
-        <source>Delete all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/ui/game/playerSelection.xml" line="70"/>
         <source>Changes all co&apos;s to no co.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="79"/>
-        <source>Delete CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5504,8 +5494,18 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="69"/>
+        <source>All delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="79"/>
+        <source>CO 1 delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/ui/game/playerSelection.xml" line="88"/>
-        <source>Delete CO 2</source>
+        <source>CO 2 delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7889,7 +7889,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.h" line="42"/>
-        <source>Building captured X: </source>
+        <source>Building captured X: %1 Y: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7917,7 +7917,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.h" line="41"/>
-        <source>Building Destroyed X: </source>
+        <source>Building Destroyed X: %1 Y: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
