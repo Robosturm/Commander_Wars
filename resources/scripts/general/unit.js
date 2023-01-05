@@ -366,4 +366,9 @@ var UNIT =
     {
         return true;
     },
+
+    getEditorPlacementSound : function()
+    {
+        return "";
+    },
 };

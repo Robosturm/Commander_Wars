@@ -128,7 +128,10 @@ var Constructor = function()
                 spriteId + "+S+W",
                 spriteId + "+W",];
     };
-
+    this.getEditorPlacementSound = function()
+    {
+        return "placeStreet.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var __BASEBRIDGE = new Constructor();

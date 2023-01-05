@@ -1344,7 +1344,19 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeTerrain", GameConsole::eDEBUG);
     QVector<QPoint> points;
-    
+    Mainapp* pApp = Mainapp::getInstance();
+    QString terrainID = m_EditorSelection->getCurrentTerrainID();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue sound = pInterpreter->doFunction(terrainID, "getEditorPlacementSound");
+    if (sound.isString())
+    {
+        QString soundName = sound.toString();
+        if (!soundName.isEmpty())
+        {
+            pApp->getAudioManager()->playSound(soundName);
+        }
+    }
+
     switch (m_EditorSelection->getSizeMode())
     {
         case EditorSelection::PlacementSize::None:
@@ -1379,14 +1391,12 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             break;
         }
     }
-    Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     for (auto point : points)
     {
         // nice we can place the terrain
         if (canTerrainBePlaced(point.x(), point.y()))
         {
-            QString terrainID = m_EditorSelection->getCurrentTerrainID();
             spUnit pUnit;
             m_pMap->getTerrain(point.x(), point.y())->setUnit(pUnit);
             Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1409,7 +1419,18 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeBuilding", GameConsole::eDEBUG);    
-    
+    Mainapp* pApp = Mainapp::getInstance();
+    spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue sound = pInterpreter->doFunction(pCurrentBuilding->getBuildingID(), "getEditorPlacementSound");
+    if (sound.isString() )
+    {
+        QString soundName = sound.toString();
+        if (!soundName.isEmpty())
+        {
+            pApp->getAudioManager()->playSound(soundName);
+        }
+    }
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1445,9 +1466,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             break;
         }
     }
-    Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
     if (pCurrentBuilding->getBuildingWidth() > 1 ||
         pCurrentBuilding->getBuildingHeigth() > 1)
     {
@@ -1494,6 +1513,19 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
 void EditorMenue::placeUnit(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeUnit", GameConsole::eDEBUG);
+    Mainapp* pApp = Mainapp::getInstance();
+    spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue sound = pInterpreter->doFunction(pCurrentUnit->getUnitID(), "getEditorPlacementSound");
+    if (sound.isString() )
+    {
+        QString soundName = sound.toString();
+        if (!soundName.isEmpty())
+        {
+            pApp->getAudioManager()->playSound(soundName);
+        }
+    }
+
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1534,7 +1566,6 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         qint32 curY = point.y();
         if (canUnitBePlaced(curX, curY))
         {
-            spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
             spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, m_pMap.get());
             pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);            
             m_pMap->getTerrain(curX, curY)->setUnit(pUnit);            

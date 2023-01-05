@@ -223,6 +223,10 @@ var Constructor = function()
         return [spriteId + "+E+W",
                 spriteId + "+N+S"];
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeBuilding.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var __BASEWELD = new Constructor();

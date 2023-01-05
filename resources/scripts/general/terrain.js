@@ -433,4 +433,9 @@ var TERRAIN =
     {
         return true;
     },
+
+    getEditorPlacementSound : function()
+    {
+        return "";
+    },
 };

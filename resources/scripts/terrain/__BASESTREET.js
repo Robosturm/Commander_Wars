@@ -337,6 +337,10 @@ var Constructor = function()
                 spriteId + "+S+W+shadow",
                 spriteId + "+W+shadow",]
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeStreet.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var __BASESTREET = new Constructor();

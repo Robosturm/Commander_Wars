@@ -155,5 +155,7 @@
         <file>resources/sounds/nestmortarlaunch.wav</file>
         <file>resources/sounds/talongunattack.wav</file>
         <file>resources/sounds/talonguntargeting.wav</file>
+        <file>resources/sounds/placeBuilding.wav</file>
+        <file>resources/sounds/placeHq.wav</file>
     </qresource>
 </RCC>

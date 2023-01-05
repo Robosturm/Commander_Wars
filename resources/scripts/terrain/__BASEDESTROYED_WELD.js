@@ -264,6 +264,10 @@ var Constructor = function()
             return TERRAIN.getTerrainAnimationBackground(unit, terrain, defender, map);
         }
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeBuilding.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var __BASEDESTROYED_WELD = new Constructor();

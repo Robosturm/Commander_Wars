@@ -202,6 +202,10 @@ var Constructor = function()
                 spriteId + "+S+W",
                 spriteId + "+W"];
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeBuilding.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var __BASEPIPELINE = new Constructor();

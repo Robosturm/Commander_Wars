@@ -377,4 +377,9 @@ var BUILDING =
     {
         return 0;
     },
+
+    getEditorPlacementSound : function()
+    {
+        return "placeBuilding.wav";
+    },
 };
