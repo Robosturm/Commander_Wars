@@ -129,6 +129,10 @@ protected slots:
      * @brief readyAndLeave
      */
     void readyAndLeave();
+    /**
+     * @brief doReadyAndLeave
+     */
+    void doReadyAndLeave();
 
 protected:
     /**

@@ -218,9 +218,25 @@ void Multiplayermenu::closeSlave()
     QCoreApplication::exit(0);
 }
 
-void Multiplayermenu::readyAndLeave()
+void Multiplayermenu::doReadyAndLeave()
 {
     markGameReady(true);
+}
+
+void Multiplayermenu::readyAndLeave()
+{
+    QString message;
+    if (m_pNetworkInterface->getIsServer() && !m_local)
+    {
+        message = tr("Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?\nNote: You won't be able to change any rules when reentering the lobby later.");
+    }
+    else
+    {
+        message = tr("Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?");
+    }
+    spDialogMessageBox pDialogAccept = spDialogMessageBox::create(message, true);
+    connect(pDialogAccept.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::doReadyAndLeave, Qt::QueuedConnection);
+    addChild(pDialogAccept);
 }
 
 void Multiplayermenu::showIPs()
