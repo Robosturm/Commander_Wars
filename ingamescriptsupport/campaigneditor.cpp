@@ -823,7 +823,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
 
     qint32 y = 10;
     qint32 width = 300;
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = spLabel::create(Settings::getWidth() - 60);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Enable Variable"));
     pText->setPosition(10, y);
@@ -901,7 +901,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(checkBox);
     y += 40;
 
-    pText = spLabel::create(width - 10);
+    pText = spLabel::create(Settings::getWidth() - 60);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Disable Variable"));
     pText->setPosition(10, y);
