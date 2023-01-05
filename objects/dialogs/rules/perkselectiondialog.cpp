@@ -132,14 +132,14 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
             emit sigCancel();
         });
 
-        oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-        pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
+        m_pSave = pObjectManager->createButton(tr("Save"), 150);
+        m_pSave->setPosition(Settings::getWidth() / 2 - m_pSave->getScaledWidth() / 2,
                            Settings::getHeight() - 30 - m_CancelButton->getScaledHeight());
-        pSave->addClickListener([this](oxygine::Event*)
+        m_pSave->addClickListener([this](oxygine::Event*)
         {
             emit sigShowSavePerklist();
         });
-        m_pSpriteBox->addChild(pSave);
+        m_pSpriteBox->addChild(m_pSave);
         connect(this, &PerkSelectionDialog::sigShowSavePerklist, this, &PerkSelectionDialog::showSavePerklist, Qt::QueuedConnection);
 
         m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
