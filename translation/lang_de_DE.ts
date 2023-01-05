@@ -9415,7 +9415,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="18"/>
-        <source>Owner: </source>
+        <source>Building: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11060,21 +11060,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="172"/>
-        <source>Clear view. In Fog of War, Infantry unit&apos;s gain </source>
+        <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;&lt;r&gt; It reduces the firepower of units by 20%.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="173"/>
-        <source>vision +3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="174"/>
-        <source> It reduces the firepower of units by 20%.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="178"/>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="176"/>
         <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>

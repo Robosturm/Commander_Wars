@@ -15,7 +15,7 @@ ScriptEventSpawnBuilding::ScriptEventSpawnBuilding(GameMap* pMap)
     m_Items[0].min = 1;
     m_Items[0].infinite = -1;
     m_Items[0].tooltip = tr("Building that gets spawned");
-    m_Items[0].labelText = tr("Owner: ");
+    m_Items[0].labelText = tr("Building: ");
     m_Items[0].types = ScriptEventGeneric::EditTypes::IconSelection;
     m_Items[0].item = "TOWN";
     m_Items[0].beforeCode = "map.replaceBuilding(\"";

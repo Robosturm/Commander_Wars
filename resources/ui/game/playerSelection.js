@@ -67,20 +67,26 @@ var PlayerSelection =
     },
     getIsArmyOrPerkSelectionEnabled : function(menu)
     {
-        var playerIdx = PlayerSelection.readCurrentPlayer();
-        var player = menu.getMap().getPlayer(playerIdx);
-        var ai = player.getBaseGameInput();
-        var aiType = GameEnums.AiTypes_Open;
-        if (ai !== null)
+        if (menu.hasNetworkInterface())
         {
-            aiType = ai.getAiType();
+            var playerIdx = PlayerSelection.readCurrentPlayer();
+            var player = menu.getMap().getPlayer(playerIdx);
+            var ai = player.getBaseGameInput();
+            var aiType = GameEnums.AiTypes_Open;
+            if (ai !== null)
+            {
+                aiType = ai.getAiType();
+            }
+            var isServer = menu.getIsServerNetworkInterface();
+            return !(menu.getSaveGame() ||
+                     menu.getIsObserverNetworkInterface() ||
+                     (player.getControlType() > GameEnums.AiTypes_Human && menu.getIsCampaign()) ||
+                     (isServer && !menu.isNotServerChangeable(player)) ||
+                     (!isServer && aiType !== GameEnums.AiTypes_Human));
         }
-        var isServer = menu.getIsServerNetworkInterface();
-        return !(menu.getSaveGame() ||                 
-                 menu.getIsObserverNetworkInterface() ||
-                (player.getControlType() > GameEnums.AiTypes_Human && menu.getIsCampaign()) ||
-                (isServer && !menu.isNotServerChangeable(player)) ||
-                (!isServer && aiType !== GameEnums.AiTypes_Human))
-
+        else
+        {
+            return true;
+        }
     }
 };

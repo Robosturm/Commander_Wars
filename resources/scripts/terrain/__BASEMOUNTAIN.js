@@ -169,9 +169,7 @@ var Constructor = function()
         }
         else if (baseTerrainId === "DESERT")
         {
-            return "<r>" + qsTr("Clear view. In Fog of War, Infantry unit's gain ") + "</r>" +
-                    "<div c='#00ff00'>" + qsTr("vision +3.") + "</div>" +
-                    "<r>" + qsTr(" It reduces the firepower of units by 20%.") + "</r>"
+            return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +3.</div><r> It reduces the firepower of units by 20%.</r>");
         }
         else
         {
