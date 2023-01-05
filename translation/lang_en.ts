@@ -6843,6 +6843,16 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="48"/>
+        <source>Perks of CO:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="75"/>
+        <source>Fill:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="79"/>
         <source>If checked: clicking the &apos;Random&apos; Button will fill all remaining perk slots instead of replacing all.</source>
         <translation type="unfinished"></translation>

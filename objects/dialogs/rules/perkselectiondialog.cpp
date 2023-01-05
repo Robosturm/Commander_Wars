@@ -45,7 +45,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
     {
         spLabel pLabel = spLabel::create(200);
         pLabel->setStyle(style);
-        pLabel->setHtmlText("Perk's of CO:");
+        pLabel->setHtmlText(tr("Perks of CO:"));
         pLabel->setPosition(30, 30);
         m_pSpriteBox->addChild(pLabel);
         QStringList list;
@@ -72,7 +72,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
 
         pLabel = spLabel::create(100);
         pLabel->setStyle(style);
-        pLabel->setHtmlText("Fill:");
+        pLabel->setHtmlText(tr("Fill:"));
         pLabel->setPosition(pDropDownmenu->getX() + pDropDownmenu->getScaledWidth() + 10, 30);
         m_pSpriteBox->addChild(pLabel);
         m_randomFillCheckbox = spCheckbox::create();
