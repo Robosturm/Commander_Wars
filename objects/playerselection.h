@@ -143,6 +143,7 @@ public slots:
     void playerCO2Changed(QString coid, qint32 playerIdx);
     void updateCO2Sprite(QString coid, qint32 playerIdx);
     void slotCOsRandom(qint32 mode);
+    void slotCOsDelete(qint32 mode);
     void slotShowAllBuildList();
     void slotShowPlayerBuildList(qint32 player);
     void slotChangeAllBuildList(qint32, QStringList buildList);

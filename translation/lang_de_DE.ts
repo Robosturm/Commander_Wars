@@ -5437,6 +5437,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/game/playerSelection.xml" line="14"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="61"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5472,8 +5473,8 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/game/playerSelection.xml" line="51"/>
-        <location filename="../resources/ui/game/playerSelection.xml" line="97"/>
-        <location filename="../resources/ui/game/playerSelection.xml" line="161"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="135"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="199"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5483,52 +5484,82 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="61"/>
-        <source>CO&apos;s</source>
+        <location filename="../resources/ui/game/playerSelection.xml" line="69"/>
+        <source>Delete all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/game/playerSelection.xml" line="70"/>
-        <source>Color</source>
+        <source>Changes all co&apos;s to no co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/game/playerSelection.xml" line="79"/>
-        <source>Controller</source>
+        <source>Delete CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="80"/>
+        <source>Changes the first co of all players to no co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/game/playerSelection.xml" line="88"/>
+        <source>Delete CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="89"/>
+        <source>Changes the second co of all players to no co.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="99"/>
+        <source>CO&apos;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="108"/>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="117"/>
+        <source>Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/playerSelection.xml" line="126"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="107"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="145"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="129"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="167"/>
         <source>Select the color for this player&apos;s army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="141"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="179"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="151"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="189"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="162"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="200"/>
         <source>Allows you to change several values for this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="170"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="208"/>
         <source>Shows which players are ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6968,51 +6999,51 @@ Host mods: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1225"/>
+        <location filename="../objects/playerselection.cpp" line="1241"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1259"/>
+        <location filename="../objects/playerselection.cpp" line="1275"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1382"/>
+        <location filename="../objects/playerselection.cpp" line="1398"/>
         <source>Connection failed.Reason: No more players available or user is already in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1213"/>
-        <location filename="../objects/playerselection.cpp" line="1234"/>
-        <location filename="../objects/playerselection.cpp" line="1248"/>
+        <location filename="../objects/playerselection.cpp" line="1229"/>
+        <location filename="../objects/playerselection.cpp" line="1250"/>
+        <location filename="../objects/playerselection.cpp" line="1264"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1213"/>
+        <location filename="../objects/playerselection.cpp" line="1229"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1213"/>
+        <location filename="../objects/playerselection.cpp" line="1229"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1213"/>
+        <location filename="../objects/playerselection.cpp" line="1229"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1213"/>
+        <location filename="../objects/playerselection.cpp" line="1229"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1237"/>
-        <location filename="../objects/playerselection.cpp" line="1244"/>
-        <location filename="../objects/playerselection.cpp" line="1248"/>
+        <location filename="../objects/playerselection.cpp" line="1253"/>
+        <location filename="../objects/playerselection.cpp" line="1260"/>
+        <location filename="../objects/playerselection.cpp" line="1264"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>

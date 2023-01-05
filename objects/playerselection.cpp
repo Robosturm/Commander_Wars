@@ -1068,6 +1068,22 @@ void PlayerSelection::slotCOsRandom(qint32 mode)
     }
 }
 
+
+void PlayerSelection::slotCOsDelete(qint32 mode)
+{
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    {
+        if ((mode == 0) || mode < 0)
+        {
+            playerCO1Changed("", i);
+        }
+        if ((mode == 1) || mode < 0)
+        {
+            playerCO2Changed("", i);
+        }
+    }
+}
+
 void PlayerSelection::showSelectCOPerks(qint32 player)
 {
     Player* pPlayer = m_pMap->getPlayer(player);
