@@ -24732,27 +24732,77 @@ Units have increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="118"/>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="17"/>
+        <source>Player:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="21"/>
+        <source>Player of which the co power gets activated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="25"/>
+        <source>CO:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="29"/>
+        <source>CO that should activate it&apos;s power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="33"/>
+        <source>Power:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="37"/>
+        <source>Power which should be activated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="41"/>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="45"/>
+        <source>Activates the co power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="49"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="53"/>
+        <source>Cancels the dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="159"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="118"/>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="159"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="122"/>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="163"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="122"/>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="163"/>
         <source>Superpower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="122"/>
+        <location filename="../resources/scripts/movementPlannerAddIns/movementplanneraddin_activatepower.js" line="163"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
