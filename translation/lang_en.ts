@@ -3621,20 +3621,20 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="23"/>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="23"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="23"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="24"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="24"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="24"/>
         <source>Username:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="41"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="42"/>
         <source>Password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="69"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="105"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="70"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="106"/>
         <source>Creates a new account on the server.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3654,31 +3654,31 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="41"/>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="77"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="42"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="78"/>
         <source>E-Mail:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="50"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="51"/>
         <source>E-Mail-Address for your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="59"/>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="95"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="95"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="60"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="96"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="96"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="60"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="96"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="61"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="97"/>
         <source>Aborts the new account creation on the server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="68"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="69"/>
         <source>Reset password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3688,36 +3688,36 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="50"/>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="68"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="68"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="86"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="51"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="69"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="69"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="87"/>
         <source>Password of your account. Needs to contain 8 letters, one capital one small letter a number and a special char.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="59"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="77"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="60"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="78"/>
         <source>Repeat password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="86"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="87"/>
         <source>E-Mail-Address of your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="96"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="97"/>
         <source>Aborts the account deletion on the server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="104"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="105"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="105"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="106"/>
         <source>Deletes your account on the server.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3727,22 +3727,22 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="41"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="42"/>
         <source>Old password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="50"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="51"/>
         <source>You&apos;re old password or password received via mail.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="59"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="60"/>
         <source>New Password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="104"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="105"/>
         <source>Change</source>
         <translation type="unfinished"></translation>
     </message>

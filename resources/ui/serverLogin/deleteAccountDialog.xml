@@ -7,12 +7,13 @@
         <height>settings.getHeight() - 80</height>
         <childs>
             <Label>
-                <x>settings.getWidth() / 2 - 250</x>
+                <x>20</x>
                 <y>settings.getHeight() / 2 - 180</y>
-                <width>500</width>
+                <width>settings.getWidth() - 40</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Delete Account")</text>
                 <font>"main"</font>
+                <hAlign>"Middle"</hAlign>
                 <fontSize>48</fontSize>
             </Label>
             <Label>
