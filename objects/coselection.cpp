@@ -119,7 +119,7 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     m_COName = spLabel::create(m_CoDescription->getScaledWidth());
     m_COName->setStyle(headerStyle);
     m_COName->setSize(width, 55);
-    m_COName->setPosition(0, 10);
+    m_COName->setPosition(10, 10);
     m_CoDescription->addItem(m_COName);
 
     width -= 70;
@@ -128,11 +128,11 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     style.multiline = false;
     m_COPower = spLabel::create(m_CoDescription->getScaledWidth());
     m_COPower->setStyle(style);
-    m_COPower->setPosition(0, 70);
+    m_COPower->setPosition(10, 70);
     m_CoDescription->addItem(m_COPower);
     m_COSuperpower = spLabel::create(m_CoDescription->getScaledWidth());
     m_COSuperpower->setStyle(style);
-    m_COSuperpower->setPosition(0, 100);
+    m_COSuperpower->setPosition(10, 100);
     m_CoDescription->addItem(m_COSuperpower);
 
     style.multiline = true;
@@ -140,12 +140,13 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     m_COBio = oxygine::spTextField::create();
     m_COBio->setStyle(style);
     m_COBio->setSize(width, 20);
-    m_COBio->setY(150);
+    m_COBio->setPosition(10, 150);
     m_CoDescription->addItem(m_COBio);
 
     m_CODesc = oxygine::spTextField::create();
     m_CODesc->setStyle(style);
     m_CODesc->setSize(width, 48);
+    m_CODesc->setX(10);
     m_CoDescription->addItem(m_CODesc);
     armyBannerClicked(m_Armies[0], 0);
 }
@@ -389,7 +390,7 @@ void COSelection::hoveredCOChanged(QString coid)
             coSuperpower = value.toString();
         }
         m_COName->setHtmlText(coName);
-        m_COName->setX(5);
+        m_COName->setX(10);
 
         m_COBio->setHtmlText(coBio);
         m_COBio->setHeight(m_COBio->getTextRect().getHeight() + 20);

@@ -7858,7 +7858,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.h" line="42"/>
-        <source>Building Captured X: </source>
+        <source>Building captured X: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7915,6 +7915,11 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.h" line="42"/>
         <source>Buildings Owned: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.h" line="42"/>
+        <source> Player: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8364,7 +8369,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.h" line="40"/>
-        <source> by Player</source>
+        <source> by Player </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12418,7 +12423,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/aircraftcarrier.js" line="108"/>
-        <source>&lt;r&gt;Naval Unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;carry X&lt;/div&gt;&lt;r&gt; air units and &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;produce &lt;/div&gt;&lt;r&gt;Waterplanes.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Naval Unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;carry %0&lt;/div&gt;&lt;r&gt; air units and &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;produce &lt;/div&gt;&lt;r&gt;Waterplanes.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

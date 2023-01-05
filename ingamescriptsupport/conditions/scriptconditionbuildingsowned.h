@@ -39,7 +39,7 @@ public:
      */
     virtual QString getDescription() override
     {
-        return tr("Buildings Owned: ") + QString::number(m_count) + " Player: " + QString::number(m_player + 1);
+        return tr("Buildings Owned: ") + QString::number(m_count) + tr(" Player: ") + QString::number(m_player + 1);
     }
     /**
      * @brief showEditConditin
