@@ -28,6 +28,7 @@ void Password::deserializeObject(QDataStream& pStream)
 
 void Password::setPassword(QString password)
 {
+    m_password = password;
     if (password.isEmpty())
     {
         m_passwordHash = QByteArray();
@@ -40,6 +41,11 @@ void Password::setPassword(QString password)
         m_passwordHash = myHash.result();
         m_isSet = true;
     }
+}
+
+QString Password::getPassword() const
+{
+    return m_password;
 }
 
 void Password::setPassword(const Password & password)

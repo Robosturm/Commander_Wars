@@ -166,7 +166,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         addChild(textField);
         spTextbox pTexbox = spTextbox::create(Settings::getWidth() - 100 - textWidth);
         pTexbox->setPosition(textWidth, y);
-        pTexbox->setCurrentText("");
+        pTexbox->setCurrentText(m_pMap->getGameRules()->getDescription());
         pTexbox->setTooltipText(tr("Map description shown for players who want to join. Keep it short here."));
         pTexbox->setEnabled(m_ruleChangeEabled);
         connect(pTexbox.get(), &Textbox::sigTextChanged, m_pMap->getGameRules(), &GameRules::setDescription, Qt::QueuedConnection);
@@ -181,8 +181,7 @@ void RuleSelection::showRuleSelection(bool advanced)
 
         spPasswordbox pPasswordbox = spPasswordbox::create(Settings::getWidth() - 100 - textWidth);
         pPasswordbox->setPosition(textWidth, y);
-        pPasswordbox->setCurrentText("");
-        m_pMap->getGameRules()->setPassword("");
+        pPasswordbox->setCurrentText(m_pMap->getGameRules()->getPassword().getPassword());
         pPasswordbox->setTooltipText(tr("Map description shown for players who want to join. Keep it short here."));
         pPasswordbox->setEnabled(m_ruleChangeEabled);
         connect(pPasswordbox.get(), &Passwordbox::sigTextChanged, m_pMap->getGameRules(), &GameRules::setPassword, Qt::QueuedConnection);
@@ -196,7 +195,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         addChild(textField);
         pCheckbox = spCheckbox::create();
         pCheckbox->setPosition(textWidth, y);
-        pCheckbox->setChecked(false);
+        pCheckbox->setChecked(m_pMap->getGameRules()->getCosmeticModsAllowed());
         pCheckbox->setTooltipText(tr("If checked cosmetic mods can be different between host and players.\nWarning this may lead to desynced games or crashes if one of the mods is not a purely cosmetic mod."));
         pCheckbox->setEnabled(m_ruleChangeEabled);
         connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMap->getGameRules(), &GameRules::setCosmeticModsAllowed, Qt::QueuedConnection);

@@ -38,6 +38,16 @@ public:
      * @return
      */
     void setPassword(const Password & password);
+    /**
+     * @brief setPassword
+     * @param password
+     * @return
+     */
+    QString getPassword() const;
+    /**
+     * @brief getHash
+     * @return
+     */
     const QByteArray & getHash() const
     {
         return m_passwordHash;
@@ -50,6 +60,7 @@ public slots:
     bool getIsSet() const;
 private:
     QByteArray m_passwordHash;
+    QString m_password;
     bool m_isSet{false};
 };
 
