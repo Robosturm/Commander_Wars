@@ -602,7 +602,7 @@
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Editor")</text>
                 <font>"main"</font>
-                <fontSize>24</fontSize>
+                <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>

@@ -939,6 +939,10 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     m_EditorMode = EditorModes::RemoveUnits;
                 }
             }
+            else
+            {
+                m_EditorSelection->KeyInput(cur);
+            }
         }
     }
     BaseGamemenu::keyInput(event);
