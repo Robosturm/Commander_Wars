@@ -75,7 +75,7 @@ namespace oxygine
 #else
         static TextStyle m_dummyTextStyle;
         static Rect m_dummyRect;
-        static const char* const m_dummyText;
+        static QString m_dummyText;
         static QColor m_dummyColor;
 #endif
     };

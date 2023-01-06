@@ -13,7 +13,7 @@ namespace oxygine
         QColor TextField::m_dummyColor;
         TextStyle TextField::m_dummyTextStyle = TextStyle(oxygine::Font());
         Rect TextField::m_dummyRect;
-        const char* const TextField::m_dummyText{""};
+        QString TextField::m_dummyText{""};
 #endif
     TextField::TextField()
 #ifdef GRAPHICSUPPORT

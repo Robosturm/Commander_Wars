@@ -256,6 +256,18 @@ bool PlayerSelection::getIsArmyCustomizationAllowed()
             GameConsole::getDeveloperMode());
 }
 
+bool PlayerSelection::hasLockedPlayersInCaseOfDisconnect() const
+{
+    for (auto & locked : m_lockedInCaseOfDisconnect)
+    {
+        if (locked)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void PlayerSelection::setLockedAiControl(qint32 player, bool value)
 {
     if (player >= 0 && player < m_lockedAiControl.size())

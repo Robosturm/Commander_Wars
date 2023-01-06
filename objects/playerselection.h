@@ -71,6 +71,11 @@ signals:
     void sigDisconnect();
 public slots:
     /**
+     * @brief hasLockedPlayersInCaseOfDisconnect
+     * @return
+     */
+    bool hasLockedPlayersInCaseOfDisconnect() const;
+    /**
      * @brief setLockedAiControl
      * @param player
      * @param value
