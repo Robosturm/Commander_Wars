@@ -211,6 +211,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     {
         case StartupPhase::General:
         {
+            CONSOLE_PRINT("Launching game with version: " + getGameVersion(), GameConsole::eDEBUG);
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
