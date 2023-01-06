@@ -43,7 +43,7 @@ public:
      * @param password
      * @return
      */
-    QString getPassword() const;
+    QString getPasswordText() const;
     /**
      * @brief getHash
      * @return

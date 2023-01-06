@@ -17,12 +17,15 @@
 #include "menue/gamemenue.h"
 #include "menue/mainwindow.h"
 
+#include "multiplayer/password.h"
+
 #include "network/tcpclient.h"
 #include "network/tcpserver.h"
 #include "network/mainserver.h"
 #include "network/JsonKeys.h"
 
 #include "game/gamemap.h"
+#include "game/gamerules.h"
 #include "game/player.h"
 
 #include "objects/dialogs/filedialog.h"
@@ -1833,6 +1836,10 @@ void Multiplayermenu::buttonNext()
     else
     {
         MapSelectionMapsMenue::buttonNext();
+        if (m_MapSelectionStep == MapSelectionStep::selectRules)
+        {
+            m_pMapSelectionView->getCurrentMap()->getGameRules()->setPassword("");
+        }
     }
 }
 

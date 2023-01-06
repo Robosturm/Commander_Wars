@@ -43,7 +43,7 @@ void Password::setPassword(QString password)
     }
 }
 
-QString Password::getPassword() const
+QString Password::getPasswordText() const
 {
     return m_password;
 }
