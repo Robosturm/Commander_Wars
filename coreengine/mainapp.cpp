@@ -368,7 +368,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::Sound:
         {
             redrawUi();
-            if (!m_noAudio)
+            if (!m_noAudio && !m_AudioManager.isNull())
             {
                 m_AudioManager->createSoundCache();
             }

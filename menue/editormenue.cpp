@@ -684,6 +684,10 @@ void EditorMenue::showRandomMap()
     spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create(tr("Do you want to create a random map and discard all current changes?"));
     addChild(pDialogRandomMap);
     connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &EditorMenue::createRandomMap, Qt::QueuedConnection);
+    connect(pDialogRandomMap.get(), &DialogRandomMap::sigCancel, this, [this]()
+    {
+        setFocused(true);
+    }, Qt::QueuedConnection);
     setFocused(false);
 }
 

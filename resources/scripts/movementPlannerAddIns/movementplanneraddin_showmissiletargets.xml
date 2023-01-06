@@ -7,12 +7,13 @@
         <height>settings.getHeight()</height>
         <childs>
             <Label>
-                <x>settings.getWidth() / 2 - 300</x>
+                <x>20</x>
                 <y>10</y>
-                <width>600</width>
+                <width>settings.getWidth() / 2 - 40</width>
                 <height>60</height>
                 <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileTargetsText()</text>
                 <font>"main"</font>
+                <hAlign>"Middle"</hAlign>
                 <fontSize>48</fontSize>
             </Label>
             <Label>

@@ -3526,7 +3526,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="733"/>
+        <location filename="../menue/editormenue.cpp" line="737"/>
         <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5437,7 +5437,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/game/playerSelection.xml" line="14"/>
-        <location filename="../resources/ui/game/playerSelection.xml" line="61"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="62"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5473,8 +5473,8 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/game/playerSelection.xml" line="51"/>
-        <location filename="../resources/ui/game/playerSelection.xml" line="135"/>
-        <location filename="../resources/ui/game/playerSelection.xml" line="199"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="138"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="202"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5484,82 +5484,82 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="70"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="72"/>
         <source>Changes all co&apos;s to no co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="80"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="82"/>
         <source>Changes the first co of all players to no co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="69"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="71"/>
         <source>All delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="79"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="81"/>
         <source>CO 1 delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="88"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="90"/>
         <source>CO 2 delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="89"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="91"/>
         <source>Changes the second co of all players to no co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="99"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="102"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="108"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="111"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="117"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="120"/>
         <source>Controller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="126"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="129"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="145"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="148"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="167"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="170"/>
         <source>Select the color for this player&apos;s army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="179"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="182"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="189"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="192"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="200"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="203"/>
         <source>Allows you to change several values for this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="208"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="211"/>
         <source>Shows which players are ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>

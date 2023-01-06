@@ -481,6 +481,6 @@
         <width>150</width>
         <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Cancel the map dialog")</tooltip>
-        <onEvent>mapEdit.finished();</onEvent>
+        <onEvent>mapEdit.cancel();</onEvent>
     </Button>
 </ui>

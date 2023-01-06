@@ -828,9 +828,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pText->setHtmlText(tr("Enable Variable"));
     pText->setPosition(10, y);
     pPanel->addItem(pText);
-    y += 60;
-
-
+    y += 70;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -906,7 +904,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pText->setHtmlText(tr("Disable Variable"));
     pText->setPosition(10, y);
     pPanel->addItem(pText);
-    y += 60;
+    y += 70;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
