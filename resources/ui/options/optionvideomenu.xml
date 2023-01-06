@@ -9,11 +9,11 @@
             <Label>
                 <x>10</x>
                 <y>10</y>
-                <width>400</width>
+                <width>settings.getWidth() - 80</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Screen Settings")</text>
                 <font>"main"</font>
-                <fontSize>24</fontSize>
+                <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>

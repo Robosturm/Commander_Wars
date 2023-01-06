@@ -88,38 +88,38 @@ EditorMenue::EditorMenue()
     pApp->getAudioManager()->playRandom();
 
     m_Topbar->addGroup(tr("Menu"));
-    m_Topbar->addItem(tr("View Map Stats"),     "VIEWMAPSTATS", 0, tr("Shows the general information about the map."));
-    m_Topbar->addItem(tr("Save Map"),           "SAVEMAP",      0, tr("Saves a map to a give file."));
-    m_Topbar->addItem(tr("Load Map"),           "LOADMAP",      0, tr("Loads a map to a give file."));
+    m_Topbar->addItem(tr("View map stats"),     "VIEWMAPSTATS", 0, tr("Shows the general information about the map."));
+    m_Topbar->addItem(tr("Save map"),           "SAVEMAP",      0, tr("Saves a map to a give file."));
+    m_Topbar->addItem(tr("Load map"),           "LOADMAP",      0, tr("Loads a map to a give file."));
     if (!Settings::getSmallScreenDevice())
     {
-        m_Topbar->addItem(tr("Edit Script"),    "EDITSCRIPT",   0, tr("Edit and create a script for any map."));
-        m_Topbar->addItem(tr("Edit Campaign"),  "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
+        m_Topbar->addItem(tr("Edit script"),    "EDITSCRIPT",   0, tr("Edit and create a script for any map."));
+        m_Topbar->addItem(tr("Edit campaign"),  "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
     }
     m_Topbar->addItem(tr("Undo Ctrl+Z"),        "UNDO",         0, tr("Undo the last map modification."));
     m_Topbar->addItem(tr("Redo Ctrl+Y"),        "REDO",         0, tr("Redo the last undo command."));
-    m_Topbar->addItem(tr("Exit Editor"),        "EXIT",         0, tr("Exits the editor"));
+    m_Topbar->addItem(tr("Exit editor"),        "EXIT",         0, tr("Exits the editor"));
 
-    m_Topbar->addGroup(tr("Map Info"));
-    m_Topbar->addItem(tr("New Map"),            "NEWMAP",       1, tr("Create a new map"));
-    m_Topbar->addItem(tr("Edit Map"),           "EDITMAP",      1, tr("Edit the information for a map"));
-    m_Topbar->addItem(tr("Resize Map"),         "RESIZEMAP",    1, tr("Resizes the map using left, top, right and bottom size changes."));
-    m_Topbar->addItem(tr("Flip Map X"),         "FLIPX",        1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
-    m_Topbar->addItem(tr("Flip Map Y"),         "FLIPY",        1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate Map X"),       "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate Map Y"),       "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
-    m_Topbar->addItem(tr("Random Map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
-    m_Topbar->addItem(tr("Toggle Grid Strg+G"), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
-    m_Topbar->addItem(tr("Toggle Cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
+    m_Topbar->addGroup(tr("Map info"));
+    m_Topbar->addItem(tr("New map"),            "NEWMAP",       1, tr("Create a new map"));
+    m_Topbar->addItem(tr("Edit map"),           "EDITMAP",      1, tr("Edit the information for a map"));
+    m_Topbar->addItem(tr("Resiz map"),         "RESIZEMAP",    1, tr("Resizes the map using left, top, right and bottom size changes."));
+    m_Topbar->addItem(tr("Flip map X"),         "FLIPX",        1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
+    m_Topbar->addItem(tr("Flip map Y"),         "FLIPY",        1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
+    m_Topbar->addItem(tr("Rotatm map X"),       "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
+    m_Topbar->addItem(tr("Rotate map Y"),       "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
+    m_Topbar->addItem(tr("Random map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
+    m_Topbar->addItem(tr("Toggle grid Strg+G"), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
+    m_Topbar->addItem(tr("Toggle gross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
 
     m_Topbar->addGroup(tr("Commands"));
-    m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
-    m_Topbar->addItem(tr("Delete Units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2, tr("Selects the editor mode deleting units"));
-    m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2, tr("Selects the editor mode modifying the stats of a unit"));
-    m_Topbar->addItem(tr("Edit Terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain or building"));
-    m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
-    m_Topbar->addItem(tr("Edit Rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
-    m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
+    m_Topbar->addItem(tr("Place selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
+    m_Topbar->addItem(tr("Delete units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2, tr("Selects the editor mode deleting units"));
+    m_Topbar->addItem(tr("Edit units"), "EDITUNITS", 2, tr("Selects the editor mode modifying the stats of a unit"));
+    m_Topbar->addItem(tr("Edit terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain or building"));
+    m_Topbar->addItem(tr("Edit players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
+    m_Topbar->addItem(tr("Edit rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
+    m_Topbar->addItem(tr("Optimize players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
     if (!Settings::getSmallScreenDevice())
     {
         m_Topbar->addItem(tr("Copy Ctrl+C"), "COPY", 2, tr("Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode"));

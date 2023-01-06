@@ -1684,7 +1684,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="967"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="965"/>
         <source>If checked and if the disable variable has been fullfiled this map can&apos;t be played.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1719,54 +1719,54 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="837"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="913"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="835"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="911"/>
         <source>Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="841"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="917"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="839"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="915"/>
         <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="854"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="930"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="852"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="928"/>
         <source>Compare: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="860"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="934"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="858"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="932"/>
         <source>The way how the variable gets compared with the constant. variable compare value </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="872"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="946"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="870"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="944"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="876"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="950"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="874"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="948"/>
         <source>The value that the variable gets checked against.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="889"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="963"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="887"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="961"/>
         <source>Use Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="893"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="891"/>
         <source>If checked the enable variable needs to fullfil the condition to allow this map to be playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="906"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="904"/>
         <source>Disable Variable</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2565,7 +2565,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="84"/>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="91"/>
         <source>Unit: </source>
         <translation type="unfinished"></translation>
@@ -2619,6 +2618,11 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="97"/>
         <source>Selects the custom name of the unit shown instead of the actual unit name. An empty name will display the default name for that unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="84"/>
+        <source>Edit unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2696,8 +2700,28 @@ This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="325"/>
+        <source>Loaded Unit </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="357"/>
         <source>Selects the unit loaded by the transporter. Enter &apos;-&apos; for no unit. This is immediately applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="402"/>
+        <source>Move Point: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="434"/>
+        <source>Add Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="442"/>
+        <source>Remove last Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2718,26 +2742,6 @@ This is immediately applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="233"/>
         <source>Target Enemy HQ</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="325"/>
-        <source>Loaded Unit </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="402"/>
-        <source>Move Point: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="434"/>
-        <source>Add Point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="442"/>
-        <source>Remove last Point</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3104,17 +3108,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="92"/>
-        <source>Save Map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="92"/>
         <source>Saves a map to a give file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="93"/>
-        <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3124,17 +3118,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="96"/>
-        <source>Edit Script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="96"/>
         <source>Edit and create a script for any map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="97"/>
-        <source>Edit Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3164,22 +3148,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="101"/>
-        <source>Exit Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>Exits the editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="103"/>
-        <source>Map Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="104"/>
-        <source>New Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3189,17 +3158,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="105"/>
-        <source>Edit Map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="105"/>
         <source>Edit the information for a map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="106"/>
-        <source>Resize Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3209,17 +3168,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="107"/>
-        <source>Flip Map X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="107"/>
         <source>Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="108"/>
-        <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3229,17 +3178,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="109"/>
-        <source>Rotate Map X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="109"/>
         <source>Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="110"/>
-        <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3249,17 +3188,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="111"/>
-        <source>Random Map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="111"/>
         <source>Creates a new random map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="112"/>
-        <source>Toggle Grid Strg+G</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3269,12 +3198,32 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="113"/>
-        <source>Toggle Cross Strg+M</source>
+        <source>Shows or hides the cross marking the middle of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="113"/>
-        <source>Shows or hides the cross marking the middle of the map.</source>
+        <location filename="../menue/editormenue.cpp" line="116"/>
+        <source>Place selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="117"/>
+        <source>Delete units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="119"/>
+        <source>Edit terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="120"/>
+        <source>Edit players</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="121"/>
+        <source>Edit rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3289,12 +3238,92 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="91"/>
-        <source>View Map Stats</source>
+        <source>Shows the general information about the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="91"/>
-        <source>Shows the general information about the map.</source>
+        <source>View map stats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="92"/>
+        <source>Save map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="93"/>
+        <source>Load map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="96"/>
+        <source>Edit script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="97"/>
+        <source>Edit campaign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="101"/>
+        <source>Exit editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="103"/>
+        <source>Map info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="104"/>
+        <source>New map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="105"/>
+        <source>Edit map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="106"/>
+        <source>Resiz map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="107"/>
+        <source>Flip map X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="108"/>
+        <source>Flip map Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="109"/>
+        <source>Rotatm map X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="110"/>
+        <source>Rotate map Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="111"/>
+        <source>Random map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="112"/>
+        <source>Toggle grid Strg+G</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="113"/>
+        <source>Toggle gross Strg+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3304,17 +3333,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="116"/>
-        <source>Place Selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="116"/>
         <source>Selects the editor mode placing the current tile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="117"/>
-        <source>Delete Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3324,17 +3343,12 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="118"/>
-        <source>Edit Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="118"/>
         <source>Selects the editor mode modifying the stats of a unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="119"/>
-        <source>Edit Terrain</source>
+        <location filename="../menue/editormenue.cpp" line="118"/>
+        <source>Edit units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3344,17 +3358,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="120"/>
-        <source>Edit Players</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="120"/>
         <source>Edit the CO&apos;s and player start setup.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="121"/>
-        <source>Edit Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3364,12 +3368,12 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="122"/>
-        <source>Optimize Players</source>
+        <source>Removes all players with no units or buildings from the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="122"/>
-        <source>Removes all players with no units or buildings from the map</source>
+        <source>Optimize players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
