@@ -1585,8 +1585,9 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
         Mainapp* pApp = Mainapp::getInstance();
         if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
+            QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
             QString slaveName = Settings::getSlaveServerName();
-            file.setFileName(Settings::getUserPath() + slaveName + ".log");
+            file.setFileName(Settings::getUserPath() + slaveName + "-" + date + ".log");
             file.open(QIODevice::WriteOnly);
         }
         else if (!pApp->getSlave())
