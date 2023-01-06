@@ -7,9 +7,9 @@
         <height>settings.getHeight() - 80</height>
         <childs>
             <Label>
-                <x>20</x>
+                <x>40</x>
                 <y>settings.getHeight() / 2 - 180</y>
-                <width>settings.getWidth() - 40</width>
+                <width>settings.getWidth() - 80</width>
                 <height>30</height>
                 <text>CreateAccountDialog.getCreateAccountText()</text>
                 <font>"main"</font>

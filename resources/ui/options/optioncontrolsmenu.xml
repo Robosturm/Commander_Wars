@@ -102,7 +102,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>settings.getWidth() - 60</width>
+                <width>settings.getWidth() - 80</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Keys")</text>
                 <font>"main"</font>
@@ -598,7 +598,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>300</width>
+                <width>settings.getWidth() - 80</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Editor")</text>
                 <font>"main"</font>

@@ -72,7 +72,11 @@ void SelectKey::keyInput(oxygine::KeyEvent event)
 QString SelectKey::getKeycodeText(Qt::Key code)
 {
     QString codeText = tr("Unknown");
-    if (code == Qt::Key_Space)
+    if (code == Qt::Key_Escape)
+    {
+        codeText = tr("Escape");
+    }
+    else if (code == Qt::Key_Space)
     {
         codeText = tr("Space");
     }
