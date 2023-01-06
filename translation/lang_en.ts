@@ -3580,7 +3580,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../objects/dialogs/filedialog.cpp" line="102"/>
-        <source>Do you want to overwrite the item </source>
+        <source>Do you want to overwrite the file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

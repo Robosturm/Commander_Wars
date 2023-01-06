@@ -99,7 +99,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
 void FileDialog::showOverwriteWarning()
 {
     m_focused = false;
-    spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the item ") + m_CurrentFolder->getCurrentText() + "/" +
+    spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the file ") + m_CurrentFolder->getCurrentText() + "/" +
                                                                   m_CurrentFile->getCurrentText() + "?", true);
     connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, &FileDialog::onFileSelected, Qt::QueuedConnection);
     connect(pDialogOverwrite.get(), &DialogMessageBox::sigCancel, this, [this]()
