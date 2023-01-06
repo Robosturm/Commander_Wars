@@ -718,7 +718,7 @@ private:
      * @brief m_pBaseGameInput pointer to the ai or human player
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
-    GameEnums::AiTypes m_controlType;
+    GameEnums::AiTypes m_controlType{GameEnums::AiTypes::AiTypes_Open};
     GameMenue* m_pMenu{nullptr};
     bool m_isDefeated{false};
     struct VisionFieldInfo

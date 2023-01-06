@@ -230,16 +230,9 @@ var UNIT =
 
     canAttackStealthedUnit : function(attacker, defender, map)
     {
-        var attackerType = attacker.getUnitType();
-        attackerType = UNIT.unitTypeToGround(attackerType);
-        var defenderType = defender.getUnitType();
-        defenderType = UNIT.unitTypeToGround(defenderType);
         if (attacker.getBaseMaxRange() === 1)
         {
-            if (attackerType === defenderType)
-            {
-                return true;
-            }
+            return true;
         }
         if (defender.getCloaked() && !defender.getHidden())
         {

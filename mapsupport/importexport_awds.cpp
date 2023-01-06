@@ -34,6 +34,16 @@ void GameMap::importAWDSMap(QString file, EditorMenue* pMenu)
         {
             m_players.append(spPlayer::create(this));
             m_players[i]->init();
+            if (i == 0)
+            {
+                m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
+                m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Human);
+            }
+            else
+            {
+                m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Normal));
+                m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Normal);
+            }
         }
         // read byte for terrain style which we ignore
         stream >> sign;

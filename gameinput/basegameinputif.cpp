@@ -48,7 +48,15 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
 {
     if (input == nullptr)
     {
-        pStream << static_cast<qint32>(aiType);
+        if (aiType == GameEnums::AiTypes_Open ||
+            aiType == GameEnums::AiTypes_Closed)
+        {
+            pStream << static_cast<qint32>(aiType);
+        }
+        else
+        {
+            pStream << GameEnums::AiTypes_Open;
+        }
     }
     else
     {

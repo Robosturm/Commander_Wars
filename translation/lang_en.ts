@@ -5718,26 +5718,26 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="60"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="70"/>
         <source>Loading Empty Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="60"/>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="77"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="70"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
         <location filename="../game/gamemap.cpp" line="557"/>
         <location filename="../game/gamemap.cpp" line="680"/>
-        <location filename="../game/gamemap.cpp" line="1523"/>
+        <location filename="../game/gamemap.cpp" line="1521"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="77"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
         <source>Importing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="1044"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="1054"/>
         <source>Loading Sprites</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5864,7 +5864,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="557"/>
-        <location filename="../game/gamemap.cpp" line="1523"/>
+        <location filename="../game/gamemap.cpp" line="1521"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -5879,27 +5879,27 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1490"/>
+        <location filename="../game/gamemap.cpp" line="1488"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1551"/>
+        <location filename="../game/gamemap.cpp" line="1549"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1561"/>
+        <location filename="../game/gamemap.cpp" line="1559"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1569"/>
+        <location filename="../game/gamemap.cpp" line="1567"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1581"/>
+        <location filename="../game/gamemap.cpp" line="1579"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26155,27 +26155,27 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>unit</name>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="271"/>
+        <location filename="../resources/scripts/general/unit.js" line="264"/>
         <source>Air</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="273"/>
+        <location filename="../resources/scripts/general/unit.js" line="266"/>
         <source>Naval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="275"/>
+        <location filename="../resources/scripts/general/unit.js" line="268"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="277"/>
+        <location filename="../resources/scripts/general/unit.js" line="270"/>
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="279"/>
+        <location filename="../resources/scripts/general/unit.js" line="272"/>
         <source>Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>

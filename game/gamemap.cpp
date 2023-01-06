@@ -1343,8 +1343,6 @@ void GameMap::serializeObject(QDataStream& pStream) const
         }
         m_players[i]->serializeObject(pStream);
     }
-
-
     pStream << currentPlayerIdx;
     pStream << m_currentDay;
     // store map

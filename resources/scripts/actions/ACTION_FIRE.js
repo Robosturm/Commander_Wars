@@ -51,7 +51,7 @@ var Constructor = function()
                                 (defTerrain.getHp() > 0))
                         {
                             if (unit.hasAmmo1() && unit.getWeapon1ID() !== "" &&
-                                    unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y))
+                                unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y))
                             {
                                 if (Global[unit.getWeapon1ID()].getEnviromentDamage(defTerrain.getID()) > 0)
                                 {
@@ -60,7 +60,7 @@ var Constructor = function()
                                 }
                             }
                             if (unit.hasAmmo2() && unit.getWeapon2ID() !== "" &&
-                                    unit.canAttackWithWeapon(1, actionTargetField.x, actionTargetField.y, x, y))
+                                unit.canAttackWithWeapon(1, actionTargetField.x, actionTargetField.y, x, y))
                             {
                                 if (Global[unit.getWeapon2ID()].getEnviromentDamage(defTerrain.getID()) > 0)
                                 {
