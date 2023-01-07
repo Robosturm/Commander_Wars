@@ -12,8 +12,11 @@
 
 #include "objects/base/panel.h"
 
+#include "objects/dialogs/dialogmessagebox.h"
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/base/label.h"
+
+const char* const ActionListDialog::FILEPATH = "data/actionbannlist/";
 
 ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     : m_CurrentActionList(bannlist),
@@ -141,7 +144,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     });
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
+    pSave->setPosition(Settings::getWidth() / 2 + 10,
                        Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSave->addClickListener([this](oxygine::Event*)
     {
@@ -149,6 +152,18 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     });
     m_pSpriteBox->addChild(pSave);
     connect(this, &ActionListDialog::sigShowSaveBannlist, this, &ActionListDialog::showSaveBannlist, Qt::QueuedConnection);
+    connect(this, &ActionListDialog::sigDoSaveBannlist, this, &ActionListDialog::doSaveBannlist, Qt::QueuedConnection);
+
+    oxygine::spButton pDelete = pObjectManager->createButton(tr("Delete"), 150);
+    pDelete->setPosition(Settings::getWidth() / 2 - pDelete->getScaledWidth() - 10,
+                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
+    pDelete->addClickListener([this](oxygine::Event*)
+    {
+        emit sigShowDeleteBannlist();
+    });
+    m_pSpriteBox->addChild(pDelete);
+    connect(this, &ActionListDialog::sigShowDeleteBannlist, this, &ActionListDialog::showDeleteBannlist, Qt::QueuedConnection);
+    connect(this, &ActionListDialog::sigDeleteBannlist, this, &ActionListDialog::deleteBannlist, Qt::QueuedConnection);
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
     m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
@@ -176,8 +191,8 @@ QStringList ActionListDialog::getNameList()
 {
     QStringList items;
     QStringList filters;
-    filters << "*.bl";
-    QDirIterator dirIter("data/actionbannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    filters << QString("*") + Filesupport::LIST_FILENAME_ENDING;
+    QDirIterator dirIter(FILEPATH, filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
     while (dirIter.hasNext())
     {
         dirIter.next();
@@ -192,7 +207,7 @@ void ActionListDialog::setBuildlist(qint32)
 {
     QStringList data;
     QString file = m_PredefinedLists->getCurrentItemText();
-    auto fileData = Filesupport::readList(file + ".bl", "data/actionbannlist/");
+    auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, FILEPATH);
     data = fileData.items;
     m_CurrentActionList = data;
 }
@@ -204,9 +219,46 @@ void ActionListDialog::showSaveBannlist()
     addChild(pSaveInput);    
 }
 
+void ActionListDialog::showDeleteBannlist()
+{
+    if (QFile::exists(FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
+    {
+        QString file = FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
+        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to delete the action bannlist: ") + file + "?", true);
+        connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
+        {
+            emit sigDeleteBannlist(file);
+        }, Qt::QueuedConnection);
+        addChild(pDialogOverwrite);
+    }
+}
+
+void ActionListDialog::deleteBannlist(const QString & file)
+{
+    QFile::remove(file);
+    updatePredefinedList();
+}
+
 void ActionListDialog::saveBannlist(QString filename)
 {    
-    Filesupport::storeList(filename, m_CurrentActionList, "data/actionbannlist/");
+    if (QFile::exists(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING))
+    {
+        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the action bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
+        connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename]
+        {
+            emit sigDoSaveBannlist(filename);
+        }, Qt::QueuedConnection);
+        addChild(pDialogOverwrite);
+    }
+    else
+    {
+        doSaveBannlist(filename);
+    }
+}
+
+void ActionListDialog::doSaveBannlist(QString filename)
+{
+    Filesupport::storeList(filename, m_CurrentActionList, FILEPATH);
     updatePredefinedList();
 }
 

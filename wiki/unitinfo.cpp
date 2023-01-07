@@ -48,7 +48,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText((tr("Unit Information ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 0);
     addChild(pLabel);
-    y += 60;
+    y += 70;
 
     pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);

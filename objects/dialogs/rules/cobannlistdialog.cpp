@@ -11,8 +11,11 @@
 #include "objects/base/panel.h"
 #include "objects/base/label.h"
 
+#include "objects/dialogs/dialogmessagebox.h"
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/dialogs/rules/cobannlistdialog.h"
+
+const char* const COBannListDialog::FILEPATH = "data/cobannlist/";
 
 COBannListDialog::COBannListDialog(QStringList cobannlist)
     : m_CurrentCOBannList(cobannlist)
@@ -147,7 +150,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     });
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
+    pSave->setPosition(Settings::getWidth() / 2 + 10,
                        Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSave->addClickListener([this](oxygine::Event*)
     {
@@ -155,6 +158,18 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     });
     m_pSpriteBox->addChild(pSave);
     connect(this, &COBannListDialog::sigShowSaveBannlist, this, &COBannListDialog::showSaveBannlist, Qt::QueuedConnection);
+    connect(this, &COBannListDialog::sigDoSaveBannlist, this, &COBannListDialog::doSaveBannlist, Qt::QueuedConnection);
+
+    oxygine::spButton pDelete = pObjectManager->createButton(tr("Delete"), 150);
+    pDelete->setPosition(Settings::getWidth() / 2 - pDelete->getScaledWidth() - 10,
+                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
+    pDelete->addClickListener([this](oxygine::Event*)
+    {
+        emit sigShowDeleteBannlist();
+    });
+    m_pSpriteBox->addChild(pDelete);
+    connect(this, &COBannListDialog::sigShowDeleteBannlist, this, &COBannListDialog::showDeleteBannlist, Qt::QueuedConnection);
+    connect(this, &COBannListDialog::sigDeleteBannlist, this, &COBannListDialog::deleteBannlist, Qt::QueuedConnection);
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
     m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
@@ -232,7 +247,7 @@ void COBannListDialog::setCOBannlist(qint32 item)
     else
     {
         QString file = m_PredefinedLists->getCurrentItemText();
-        auto fileData = Filesupport::readList(file + ".bl", "data/cobannlist/");
+        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, FILEPATH);
         data = fileData.items;
     }
     for (qint32 i = 0; i < m_COIDs.size(); i++)
@@ -264,8 +279,8 @@ QStringList COBannListDialog::getNameList()
                               tr("Advance Wars 2"),
                               tr("Advance Wars")};
     QStringList filters;
-    filters << "*.bl";
-    QDirIterator dirIter("data/cobannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    filters << QString("*") + Filesupport::LIST_FILENAME_ENDING;
+    QDirIterator dirIter(FILEPATH, filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
     while (dirIter.hasNext())
     {
         dirIter.next();
@@ -276,9 +291,46 @@ QStringList COBannListDialog::getNameList()
     return items;
 }
 
+void COBannListDialog::showDeleteBannlist()
+{
+    if (QFile::exists(FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
+    {
+        QString file = FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
+        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to delete the action bannlist: ") + file + "?", true);
+        connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
+        {
+            emit sigDeleteBannlist(file);
+        }, Qt::QueuedConnection);
+        addChild(pDialogOverwrite);
+    }
+}
+
+void COBannListDialog::deleteBannlist(const QString & file)
+{
+    QFile::remove(file);
+    updatePredefinedList();
+}
+
 void COBannListDialog::saveBannlist(QString filename)
-{    
-    Filesupport::storeList(filename, m_CurrentCOBannList, "data/cobannlist/");
+{
+    if (QFile::exists(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING))
+    {
+        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the co bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
+        connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename]
+        {
+            emit sigDoSaveBannlist(filename);
+        }, Qt::QueuedConnection);
+        addChild(pDialogOverwrite);
+    }
+    else
+    {
+        doSaveBannlist(filename);
+    }
+}
+
+void COBannListDialog::doSaveBannlist(QString filename)
+{
+    Filesupport::storeList(filename, m_CurrentCOBannList, FILEPATH);
     updatePredefinedList();
 }
 

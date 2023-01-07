@@ -16,6 +16,7 @@ using spActionListDialog = oxygine::intrusive_ptr<ActionListDialog>;
 class ActionListDialog final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
+    static const char* const FILEPATH;
 public:
     explicit ActionListDialog(QStringList bannlist, GameMap* pMap);
     ~ActionListDialog() = default;
@@ -23,6 +24,9 @@ signals:
     void editFinished(QStringList actionList);
     void canceled();
     void sigShowSaveBannlist();
+    void sigShowDeleteBannlist();
+    void sigDoSaveBannlist(QString filename);
+    void sigDeleteBannlist(const QString & file);
     void sigFinished();
 public slots:
     /**
@@ -40,6 +44,9 @@ public slots:
     void saveBannlist(QString filename);
 private slots:
     void remove();
+    void doSaveBannlist(QString filename);
+    void showDeleteBannlist();
+    void deleteBannlist(const QString & file);
 private:
     /**
      * @brief getNameList

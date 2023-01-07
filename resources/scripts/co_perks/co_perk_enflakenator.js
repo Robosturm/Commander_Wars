@@ -51,6 +51,10 @@ var Constructor = function()
     {
         return qsTr("Offensive Debuff");
     };
+    this.getCosts = function()
+    {
+        return -2;
+    };
 };
 
 Constructor.prototype = CO_PERK;

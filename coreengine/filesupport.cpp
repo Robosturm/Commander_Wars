@@ -5,6 +5,8 @@
 #include <QDirIterator>
 #include <QCoreApplication>
 
+const char* const Filesupport::LIST_FILENAME_ENDING = ".bl";
+
 QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & folders)
 {
     Sha256Hash myHash;
@@ -96,7 +98,7 @@ void Filesupport::storeList(const QString & file, const QStringList & items, con
 {
     QDir dir(folder);
     dir.mkpath(".");
-    QFile dataFile(folder + file + ".bl");
+    QFile dataFile(folder + file + LIST_FILENAME_ENDING);
     dataFile.open(QIODevice::WriteOnly);
     QDataStream stream(&dataFile);
     stream << file;

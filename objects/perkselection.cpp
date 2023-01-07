@@ -11,9 +11,10 @@
 #include "game/gamemap.h"
 #include "objects/base/label.h"
 
-PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning, QStringList hiddenList, GameMap* pMap)
+PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerkCosts, qint32 maxPerkCount, bool banning, QStringList hiddenList, GameMap* pMap)
     : m_pCO(pCO),
-      m_maxPerks(maxPerks),
+      m_maxPerkCosts(maxPerkCosts),
+      m_maxPerkCount(maxPerkCount),
       m_banning(banning),
       m_hiddenPerks(hiddenList),
       m_pMap(pMap)
@@ -68,7 +69,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             QString name = pCOPerkManager->getName(index);
             QString icon = pCOPerkManager->getIcon(index);
             oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
-            QString description = pCOPerkManager->getDescription(index);
+            QString description = pCOPerkManager->getDescription(index) + "\n" + tr("Costs: %0").arg(getPerkScore(id));
 
             spCheckbox pCheckbox = spCheckbox::create();
             pCheckbox->setPosition(x, y + 5);
@@ -127,7 +128,7 @@ void PerkSelection::updatePerksView(CO* pCO)
     }
     y += GameMap::getImageSize() * 2 + 10;
     setHeight(y);
-    updatePerkCount();    
+    updatePerkCount();
 }
 
 QVector<PerkSelection::PerkGroup> PerkSelection::getPerksGrouped()
@@ -166,32 +167,58 @@ QVector<PerkSelection::PerkGroup> PerkSelection::getPerksGrouped()
     return ret;
 }
 
+qint32 PerkSelection::getPerkScore(const QStringList & perks) const
+{
+    qint32 perkScore = 0;
+    for (const auto & perk : qAsConst(perks))
+    {
+        perkScore += getPerkScore(perk);
+    }
+    return perkScore;
+}
+
+qint32 PerkSelection::getPerkScore(const QString & perk) const
+{
+    qint32 perkScore = 0;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg = pInterpreter->doFunction(perk, "getCosts");
+    if (erg.isNumber())
+    {
+        perkScore = erg.toInt();
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to get costs for perk " + perk, GameConsole::eERROR);
+        perkScore = 1;
+    }
+    return perkScore;
+}
+
 void PerkSelection::updatePerkCount()
 {
     if (!m_banning)
     {
-        qint32 perkScore = 0;
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        for (auto & perk : m_pCO->getPerkList())
+        // make sure perk list is valid
+        auto perks = m_pCO->getPerkList();
+        qint32 maxPerkCost = m_pMap->getGameRules()->getMaxPerkCost();
+        qint32 maxPerkCount = m_pMap->getGameRules()->getMaxPerkCount();
+        while (getPerkScore(perks) > maxPerkCost ||
+               perks.size() > maxPerkCount)
         {
-            QJSValue erg = pInterpreter->doFunction(perk, "getCosts");
-            if (erg.isNumber())
-            {
-                perkScore += erg.toInt();
-            }
-            else
-            {
-                CONSOLE_PRINT("Unable to get costs for perk " + perk, GameConsole::eERROR);
-                perkScore += 1;
-            }
+            perks.removeLast();
         }
-        bool enable = (perkScore < m_maxPerks);
+        m_pCO->setPerkList(perks);
+        m_perks = perks;
+
+        qint32 perkScore = getPerkScore(perks);
+        bool enable = (m_pCO->getPerkList().size() < m_maxPerkCount);
         for (qint32 i = 0; i < m_Checkboxes.size(); ++i)
         {
             bool selectable = getPerkEnabled(m_perkIds[i]);
+            m_Checkboxes[i]->setChecked(m_perks.contains(m_perkIds[i]));
             if (selectable)
             {
-                if (enable || m_Checkboxes[i]->getChecked())
+                if ((perkScore + getPerkScore(m_perkIds[i]) <= m_maxPerkCosts && enable) || m_Checkboxes[i]->getChecked())
                 {
                     m_Checkboxes[i]->setEnabled(true);
                 }
@@ -205,6 +232,7 @@ void PerkSelection::updatePerkCount()
                 m_Checkboxes[i]->setEnabled(false);
             }
         }
+        emit sigViewPerkUpdate();
     }
 }
 
@@ -247,7 +275,7 @@ void PerkSelection::setHiddenPerks(const QStringList &hiddenPerks)
     m_hiddenPerks = hiddenPerks;
 }
 
-QStringList PerkSelection::getPerks() const
+const QStringList & PerkSelection::getPerks() const
 {
     return m_perks;
 }
@@ -288,12 +316,29 @@ void PerkSelection::selectRandomPerks(bool fill)
     {
         selectedPerks = m_pCO->getPerkList();
     }
-    while (selectedPerks.size() < m_maxPerks &&
-           perks.size() > 0)
+    for (const auto & perk : qAsConst(selectedPerks))
+    {
+        perks.removeAll(perk);
+    }
+    qint32 failCount = 0;
+    while (getPerkScore(selectedPerks) <= m_maxPerkCosts &&
+           selectedPerks.size() < m_maxPerkCount &&
+           perks.size() > 0 &&
+           failCount < 10000)
     {
         qint32 index = GlobalUtils::randInt(0, perks.size() - 1);
-        selectedPerks.append(perks[index]);
-        perks.removeAt(index);
+        QString perk = perks[index];
+        selectedPerks.append(perk);
+        if (getPerkScore(selectedPerks) <= m_maxPerkCosts)
+        {
+            perks.removeAt(index);
+            failCount = 0;
+        }
+        else
+        {
+            selectedPerks.removeAll(perk);
+            ++failCount;
+        }
     }
     setPerks(selectedPerks);
 }

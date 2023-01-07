@@ -29,6 +29,10 @@ var Constructor = function()
     {
         return qsTr("Offensive");
     };
+    this.getCosts = function()
+    {
+        return 3;
+    };
 };
 
 Constructor.prototype = CO_PERK;

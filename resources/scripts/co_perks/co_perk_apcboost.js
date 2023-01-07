@@ -24,6 +24,10 @@ var Constructor = function()
     {
         return qsTr("Boost +1");
     };
+    this.getCosts = function()
+    {
+        return 1;
+    };
 };
 
 Constructor.prototype = CO_PERK;

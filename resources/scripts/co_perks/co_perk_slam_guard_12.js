@@ -29,6 +29,10 @@ var Constructor = function()
     this.getGroup = function()
     {
         return qsTr("Defensive");
+    };    
+    this.getCosts = function()
+    {
+        return 3;
     };
 };
 

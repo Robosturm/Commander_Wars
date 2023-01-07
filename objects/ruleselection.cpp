@@ -375,11 +375,26 @@ void RuleSelection::showRuleSelection(bool advanced)
 
         textField = spLabel::create(textWidth - 40);
         textField->setStyle(style);
-        textField->setHtmlText(tr("CO Perks: "));
+        textField->setHtmlText(tr("CO perk cost: "));
         textField->setPosition(30, y);
         addChild(textField);
         spSpinBox pSpinbox = spSpinBox::create(400, 0, 900);
         pSpinbox->setTooltipText(tr("Selects the total cost of co perks that can be assigned per CO."));
+        pSpinbox->setPosition(textWidth, textField->getY());
+        pSpinbox->setInfinityValue(-1);
+        pSpinbox->setEnabled(m_ruleChangeEabled);
+        addChild(pSpinbox);
+        pSpinbox->setCurrentValue(m_pMap->getGameRules()->getMaxPerkCost());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMap->getGameRules(), &GameRules::setMaxPerkCost, Qt::QueuedConnection);
+        y += 40;
+
+        textField = spLabel::create(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("CO perk count: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+        pSpinbox = spSpinBox::create(400, 0, 900);
+        pSpinbox->setTooltipText(tr("Selects the total amout of co perks that can be assigned per CO."));
         pSpinbox->setPosition(textWidth, textField->getY());
         pSpinbox->setInfinityValue(-1);
         pSpinbox->setEnabled(m_ruleChangeEabled);
@@ -1041,7 +1056,7 @@ void RuleSelection::showCOBannlist()
 
 void RuleSelection::showPerkBannlist()
 {    
-    spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(m_pMap, nullptr, -1, true, QStringList());
+    spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(m_pMap, nullptr, true, QStringList());
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &PerkSelectionDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
 }

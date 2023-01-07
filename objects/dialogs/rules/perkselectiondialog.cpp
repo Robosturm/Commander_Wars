@@ -6,12 +6,16 @@
 #include "objects/base/label.h"
 #include "objects/base/dropdownmenu.h"
 #include "objects/dialogs/dialogtextinput.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "game/gamemap.h"
 
 #include "coreengine/filesupport.h"
 
-PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 maxPerkcount, bool banning, QStringList hiddenList)
+const char* const PerkSelectionDialog::SELECT_FILEPATH = "data/perkselection/";
+const char* const PerkSelectionDialog::BANN_FILEPATH = "data/perkbannlist/";
+
+PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool banning, QStringList hiddenList)
     : m_pPlayer(pPlayer),
       m_banning(banning),
       m_pMap(pMap)
@@ -87,10 +91,23 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
             emit sigSelectRandomPerks();
         });
         connect(this, &PerkSelectionDialog::sigSelectRandomPerks, this, &PerkSelectionDialog::selectRandomPerks, Qt::QueuedConnection);
+
+        m_perkInfo = spLabel::create(Settings::getWidth() - 100);
+        m_perkInfo->setPosition(30, 70);
+        m_pSpriteBox->addChild(m_perkInfo);
     }
 
-    QSize size(Settings::getWidth() - 60,
-               Settings::getHeight() - 40 * 3 - m_OkButton->getScaledHeight());
+    QSize size;
+    if (banning)
+    {
+        size = QSize(Settings::getWidth() - 60,
+                    Settings::getHeight() - 40 * 3 - m_OkButton->getScaledHeight());
+    }
+    else
+    {
+        size = QSize(Settings::getWidth() - 60,
+                    Settings::getHeight() - 40 * 5 - m_OkButton->getScaledHeight());
+    }
     m_pPanel = spPanel::create(true, size, size);
     if (banning)
     {
@@ -98,9 +115,8 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
     }
     else
     {
-        m_pPanel->setPosition(30, 75);
+        m_pPanel->setPosition(30, 115);
     }
-
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -111,7 +127,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
     pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     m_pPanel->addItem(pLabel);
 
-    m_pPerkSelection = spPerkSelection::create(firstCO, Settings::getWidth() - 80, maxPerkcount, banning, hiddenList, m_pMap);
+    m_pPerkSelection = spPerkSelection::create(firstCO, Settings::getWidth() - 80, m_pMap->getGameRules()->getMaxPerkCost(), m_pMap->getGameRules()->getMaxPerkCount(), banning, hiddenList, m_pMap);
     m_pPerkSelection->setY(pLabel->getY() + pLabel->getTextRect().getHeight() + 10);
     m_pPanel->addItem(m_pPerkSelection);
     m_pPanel->setContentHeigth(m_pPerkSelection->getScaledHeight() + m_pPerkSelection->getY() + 40);
@@ -132,18 +148,8 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
             emit sigCancel();
         });
 
-        m_pSave = pObjectManager->createButton(tr("Save"), 150);
-        m_pSave->setPosition(Settings::getWidth() / 2 - m_pSave->getScaledWidth() / 2,
-                           Settings::getHeight() - 30 - m_CancelButton->getScaledHeight());
-        m_pSave->addClickListener([this](oxygine::Event*)
-        {
-            emit sigShowSavePerklist();
-        });
-        m_pSpriteBox->addChild(m_pSave);
-        connect(this, &PerkSelectionDialog::sigShowSavePerklist, this, &PerkSelectionDialog::showSavePerklist, Qt::QueuedConnection);
-
         m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-        m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
+        m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60,
                                  Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
         m_pSpriteBox->addChild(m_ToggleAll);
         m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
@@ -152,30 +158,34 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
             emit sigToggleAll(m_toggle);
         });
         connect(this, &PerkSelectionDialog::sigToggleAll, m_pPerkSelection.get(), &PerkSelection::toggleAll, Qt::QueuedConnection);
-        auto items = getNameList("data/perkbannlist/");
-        m_PredefinedLists = spDropDownmenu::create(260, items);
-
-        m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
-                                       Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
-        m_pSpriteBox->addChild(m_PredefinedLists);
-        connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::setPerkBannlist, Qt::QueuedConnection);
     }
     else
     {
         m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
                                 Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
-
-        m_pSave = pObjectManager->createButton(tr("Save"), 150);
-        m_pSave->setPosition(Settings::getWidth() / 2 + 60 ,
-                           Settings::getHeight() - 30 - m_pSave->getScaledHeight());
-        m_pSave->addClickListener([this](oxygine::Event*)
-        {
-            emit sigShowSavePerklist();
-        });
-        m_pSpriteBox->addChild(m_pSave);
-        connect(this, &PerkSelectionDialog::sigShowSavePerklist, this, &PerkSelectionDialog::showSavePerklist, Qt::QueuedConnection);
-        updatePredefinedList();
+        connect(m_pPerkSelection.get(), &PerkSelection::sigViewPerkUpdate, this, &PerkSelectionDialog::perkViewUpdated, Qt::QueuedConnection);
     }
+    m_pSave = pObjectManager->createButton(tr("Save"), 150);
+    m_pSave->setPosition(Settings::getWidth() / 2 + 10,
+                         Settings::getHeight() - 30 - m_pSave->getScaledHeight());
+    m_pSave->addClickListener([this](oxygine::Event*)
+    {
+        emit sigShowSavePerklist();
+    });
+    m_pSpriteBox->addChild(m_pSave);
+
+    oxygine::spButton pDelete = pObjectManager->createButton(tr("Delete"), 150);
+    pDelete->setPosition(Settings::getWidth() / 2 - pDelete->getScaledWidth() - 10,
+                         m_pSave->getY());
+    pDelete->addClickListener([this](oxygine::Event*)
+    {
+        emit sigShowDeleteBannlist();
+    });
+    m_pSpriteBox->addChild(pDelete);
+    connect(this, &PerkSelectionDialog::sigShowSavePerklist, this, &PerkSelectionDialog::showSavePerklist, Qt::QueuedConnection);
+    connect(this, &PerkSelectionDialog::sigDoSaveBannlist, this, &PerkSelectionDialog::doSaveBannlist, Qt::QueuedConnection);
+    connect(this, &PerkSelectionDialog::sigShowDeleteBannlist, this, &PerkSelectionDialog::showDeleteBannlist, Qt::QueuedConnection);
+    connect(this, &PerkSelectionDialog::sigDeleteBannlist, this, &PerkSelectionDialog::deleteBannlist, Qt::QueuedConnection);
 
     auto* pPerkSelection = m_pPerkSelection.get();
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPerkSelection](oxygine::Event*)
@@ -186,6 +196,18 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 
 
     connect(this, &PerkSelectionDialog::sigCancel, this, &PerkSelectionDialog::remove, Qt::QueuedConnection);
     connect(this, &PerkSelectionDialog::sigFinished, this, &PerkSelectionDialog::remove, Qt::QueuedConnection);
+    updatePredefinedList();
+    perkViewUpdated();
+}
+
+void PerkSelectionDialog::perkViewUpdated()
+{
+    qint32 cost = m_pPerkSelection->getPerkScore(m_pPerkSelection->getPerks());
+    qint32 maxPerkCost = m_pMap->getGameRules()->getMaxPerkCost();
+    qint32 count = m_pPerkSelection->getPerks().size();
+    qint32 maxPerkCount = m_pMap->getGameRules()->getMaxPerkCount();
+    QString text = tr("Perk costs: %1/%2 Perk count %3/%4").arg(cost).arg(maxPerkCost).arg(count).arg(maxPerkCount);
+    m_perkInfo->setHtmlText(text);
 }
 
 void PerkSelectionDialog::remove()
@@ -198,13 +220,13 @@ void PerkSelectionDialog::setPerkBannlist(qint32)
     if (m_banning)
     {
         QString file = m_PredefinedLists->getCurrentItemText();
-        auto fileData = Filesupport::readList(file + ".bl", "data/perkbannlist/");
+        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, BANN_FILEPATH);
         m_pPerkSelection->setPerks(fileData.items);
     }
     else
     {
         QString file = m_PredefinedLists->getCurrentItemText();
-        auto fileData = Filesupport::readList(file + ".bl", "data/perkselection/");
+        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, SELECT_FILEPATH);
         QStringList perks = fileData.items;
         qint32 i = 0;
         
@@ -219,8 +241,10 @@ void PerkSelectionDialog::setPerkBannlist(qint32)
                 perks.removeAt(i);
             }
         }
+        qint32 maxPerkCost = m_pMap->getGameRules()->getMaxPerkCost();
         qint32 maxPerkCount = m_pMap->getGameRules()->getMaxPerkCount();
-        while (perks.size() > maxPerkCount)
+        while (m_pPerkSelection->getPerkScore(perks) > maxPerkCost ||
+               perks.size() > maxPerkCount)
         {
             perks.removeLast();
         }
@@ -246,6 +270,41 @@ void PerkSelectionDialog::changeCO(qint32 index)
     m_pPerkSelection->updatePerksView(pCO);
 }
 
+QString PerkSelectionDialog::getFilepath() const
+{
+    QString path;
+    if (m_banning)
+    {
+        path = BANN_FILEPATH;
+    }
+    else
+    {
+        path = SELECT_FILEPATH;
+    }
+    return path;
+}
+
+void PerkSelectionDialog::showDeleteBannlist()
+{
+    QString path = getFilepath();
+    if (QFile::exists(path + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
+    {
+        QString file = path + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
+        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to delete the action bannlist: ") + file + "?", true);
+        connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
+        {
+            emit sigDeleteBannlist(file);
+        }, Qt::QueuedConnection);
+        addChild(pDialogOverwrite);
+    }
+}
+
+void PerkSelectionDialog::deleteBannlist(const QString & file)
+{
+    QFile::remove(file);
+    updatePredefinedList();
+}
+
 void PerkSelectionDialog::showSavePerklist()
 {    
     spDialogTextInput pSaveInput = spDialogTextInput::create(tr("Perklist Name"), true, "");
@@ -257,7 +316,7 @@ QStringList PerkSelectionDialog::getNameList(QString path)
 {
     QStringList items;
     QStringList filters;
-    filters << "*.bl";
+    filters << QString("*") + Filesupport::LIST_FILENAME_ENDING;
     QDirIterator dirIter(path, filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
     while (dirIter.hasNext())
     {
@@ -271,17 +330,25 @@ QStringList PerkSelectionDialog::getNameList(QString path)
 
 void PerkSelectionDialog::savePerklist(QString filename)
 {
-    QString path;
-    if (m_banning)
+    QString path = getFilepath();
+    if (QFile::exists(path + filename + Filesupport::LIST_FILENAME_ENDING))
     {
-        path = "data/perkbannlist/";
+        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the perk list: ") + path + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
+        connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename, path]
+        {
+            emit sigDoSaveBannlist(filename, path);
+        }, Qt::QueuedConnection);
+        addChild(pDialogOverwrite);
     }
     else
     {
-        path = "data/perkselection/";
+        doSaveBannlist(filename, path);
     }
+}
+
+void PerkSelectionDialog::doSaveBannlist(const QString & filename, const QString & path)
+{
     Filesupport::storeList(filename, m_pPerkSelection->getPerks(), path);
-    auto items = getNameList(path);
     updatePredefinedList();
 }
 
@@ -296,19 +363,11 @@ void PerkSelectionDialog::updatePredefinedList()
     {
         m_PredefinedLists->detach();
     }
-    QString path;
-    if (m_banning)
-    {
-        path = "data/perkbannlist/";
-    }
-    else
-    {
-        path = "data/perkselection/";
-    }
+    QString path = getFilepath();
     auto items = getNameList(path);
     m_PredefinedLists = spDropDownmenu::create(260, items);
     m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
-                                   Settings::getHeight() - 30 - m_pSave->getScaledHeight());
+                                   Settings::getHeight() - 75 - m_pSave->getScaledHeight());
     m_pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::setPerkBannlist, Qt::QueuedConnection);
 }

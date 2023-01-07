@@ -24,6 +24,10 @@ var Constructor = function()
     {
         return qsTr("Stealthy");
     };
+    this.getCosts = function()
+    {
+        return 2;
+    };
 };
 
 Constructor.prototype = CO_PERK;

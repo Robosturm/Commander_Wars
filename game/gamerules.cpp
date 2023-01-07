@@ -980,6 +980,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+qint32 GameRules::getMaxPerkCount() const
+{
+    return m_maxPerkCount;
+}
+
+void GameRules::setMaxPerkCount(qint32 newMaxPerkCount)
+{
+    m_maxPerkCount = newMaxPerkCount;
+}
+
 QVector<quint64> &GameRules::getObserverList()
 {
     return m_observerList;
@@ -1197,14 +1207,14 @@ void GameRules::setSingleRandomCO(bool singleRandomCO)
     m_singleRandomCO = singleRandomCO;
 }
 
-qint32 GameRules::getMaxPerkCount() const
+qint32 GameRules::getMaxPerkCost() const
 {
-    return m_maxPerkCount;
+    return m_maxPerkCost;
 }
 
-void GameRules::setMaxPerkCount(const qint32 &maxPerkCount)
+void GameRules::setMaxPerkCost(const qint32 &maxPerkCost)
 {
-    m_maxPerkCount = maxPerkCount;
+    m_maxPerkCost = maxPerkCost;
 }
 
 GameRules::DayToDayScreen GameRules::getDayToDayScreen() const
@@ -1326,7 +1336,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_VisionBlock;
     pStream << m_BuildingVisionHide;
     pStream << static_cast<quint8>(m_DayToDayScreen);
-    pStream << m_maxPerkCount;
+    pStream << m_maxPerkCost;
     pStream << m_singleRandomCO;
     pStream << m_teamFacingUnits;
     pStream << m_perkBannlistEdited;
@@ -1355,6 +1365,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_powerLoose;
     pStream << m_hpDefenseReduction;
     pStream << m_multiplayerObserver;
+    pStream << m_maxPerkCount;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1561,7 +1572,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     }
     if (version > 10)
     {
-        pStream >> m_maxPerkCount;
+        pStream >> m_maxPerkCost;
     }
     if (version > 11)
     {
@@ -1648,6 +1659,10 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 22)
     {
         pStream >> m_multiplayerObserver;
+    }
+    if (version > 23)
+    {
+        pStream >> m_maxPerkCount;
     }
     CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }

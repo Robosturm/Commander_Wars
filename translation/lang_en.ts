@@ -1198,32 +1198,47 @@
 <context>
     <name>ActionListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="124"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="127"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="135"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="138"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="143"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="146"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="153"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="157"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="168"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="49"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="227"/>
+        <source>Do you want to delete the action bannlist: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="246"/>
+        <source>Do you want to overwrite the action bannlist: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="52"/>
         <source>Action List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="202"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="217"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1296,72 +1311,87 @@
 <context>
     <name>BuildListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="125"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="127"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="136"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="138"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="145"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="147"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="155"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="169"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="56"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="58"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="285"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="158"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="298"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="293"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="308"/>
+        <source>Do you want to delete the action bannlist: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="325"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="294"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="326"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="295"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="327"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="296"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="328"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="297"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="329"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="314"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="347"/>
+        <source>Do you want to overwrite the build bannlist: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="364"/>
         <source>Do you want to make the saved build list the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="314"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="364"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="314"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="364"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1377,58 +1407,73 @@
 <context>
     <name>COBannListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="129"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="132"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="140"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="143"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="149"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="152"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="159"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="174"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="262"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="277"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="55"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="58"/>
         <source>CO bann list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="254"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="163"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="269"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="261"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="276"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="263"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="278"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="264"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="279"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="265"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="280"/>
         <source>Advance Wars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="299"/>
+        <source>Do you want to delete the action bannlist: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="318"/>
+        <source>Do you want to overwrite the co bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6871,56 +6916,83 @@ Host mods: </source>
     </message>
 </context>
 <context>
+    <name>PerkSelection</name>
+    <message>
+        <location filename="../objects/perkselection.cpp" line="72"/>
+        <source>Costs: %0</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PerkSelectionDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="35"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="39"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="48"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="52"/>
         <source>Perks of CO:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="75"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="79"/>
         <source>Fill:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="79"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="83"/>
         <source>If checked: clicking the &apos;Random&apos; Button will fill all remaining perk slots instead of replacing all.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="82"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="86"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="110"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="126"/>
         <source>Perk List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="126"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="142"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="135"/>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="168"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="145"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="151"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="251"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="177"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="209"/>
+        <source>Perk costs: %1/%2 Perk count %3/%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="293"/>
+        <source>Do you want to delete the action bannlist: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="310"/>
         <source>Perklist Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="336"/>
+        <source>Do you want to overwrite the perk list: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7486,112 +7558,107 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="378"/>
-        <source>CO Perks: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="393"/>
+        <location filename="../objects/ruleselection.cpp" line="408"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="397"/>
+        <location filename="../objects/ruleselection.cpp" line="412"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="411"/>
+        <location filename="../objects/ruleselection.cpp" line="426"/>
         <source>CO Powergain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="418"/>
+        <location filename="../objects/ruleselection.cpp" line="433"/>
         <source>CO Powergain zone: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="421"/>
+        <location filename="../objects/ruleselection.cpp" line="436"/>
         <source>Global</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="421"/>
+        <location filename="../objects/ruleselection.cpp" line="436"/>
         <source>Global and CO Zone Bonus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="421"/>
+        <location filename="../objects/ruleselection.cpp" line="436"/>
         <source>Only CO Zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="423"/>
+        <location filename="../objects/ruleselection.cpp" line="438"/>
         <source>Defines where a player can gain power for his co powermeter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="437"/>
+        <location filename="../objects/ruleselection.cpp" line="452"/>
         <source>CO Powergain mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="440"/>
+        <location filename="../objects/ruleselection.cpp" line="455"/>
         <source>Money</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="440"/>
+        <location filename="../objects/ruleselection.cpp" line="455"/>
         <source>Money only attacker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="440"/>
+        <location filename="../objects/ruleselection.cpp" line="455"/>
         <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="440"/>
+        <location filename="../objects/ruleselection.cpp" line="455"/>
         <source>HP only attacker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="442"/>
+        <location filename="../objects/ruleselection.cpp" line="457"/>
         <source>Defines how the powermeter fills.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="455"/>
+        <location filename="../objects/ruleselection.cpp" line="470"/>
         <source>Powergain reduction: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="459"/>
+        <location filename="../objects/ruleselection.cpp" line="474"/>
         <source>The reduction in powergain for each time a co powers was used. Making each consecutive power more expensive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="471"/>
+        <location filename="../objects/ruleselection.cpp" line="486"/>
         <source>Powergain Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="475"/>
+        <location filename="../objects/ruleselection.cpp" line="490"/>
         <source>The speed at which the power bar fills up. This affects gains from HP damage or Funds damage based on the mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="487"/>
+        <location filename="../objects/ruleselection.cpp" line="502"/>
         <source>CO Power loss: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="491"/>
+        <location filename="../objects/ruleselection.cpp" line="506"/>
         <source>The percentage of the CO gauge lost when the CO unit gets destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="515"/>
+        <location filename="../objects/ruleselection.cpp" line="530"/>
         <source>Select the fog of war rule for the current game. 
  In Mist of War all units can be seen but not targeted without Vision. 
  In Fog of War all units cannot be seen without vision. 
@@ -7599,59 +7666,64 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="558"/>
+        <location filename="../objects/ruleselection.cpp" line="573"/>
         <source>If checked units can&apos;t see over certain terrains, reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="572"/>
+        <location filename="../objects/ruleselection.cpp" line="587"/>
         <source>If checked most buildings deny vision. This means you can hide a unit in a building similar to a forest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="587"/>
+        <location filename="../objects/ruleselection.cpp" line="602"/>
         <source>If set to &apos;Permanent&apos; the New Day screen for Human players will remain on screen until dismissed. If set to &apos;Default&apos; this feature will be off except in Fog of War games. This setting only takes effect in games with more than 1 Human players on the Host&apos;s PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="677"/>
+        <location filename="../objects/ruleselection.cpp" line="692"/>
         <source>If checked: the impact of terrain defense stars is reduced the less hp a unit has.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="691"/>
+        <location filename="../objects/ruleselection.cpp" line="706"/>
         <source>If checked: ships and boats can move through ship bridges placed on sea tiles, like in Advance Wars 4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="705"/>
+        <location filename="../objects/ruleselection.cpp" line="720"/>
         <source>If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="768"/>
+        <location filename="../objects/ruleselection.cpp" line="783"/>
         <source>If checked: CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no CO for a player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="796"/>
+        <location filename="../objects/ruleselection.cpp" line="811"/>
         <source>The amount of funds you are refunded for selling a unit. Selling is only possible if the &apos;Sell&apos; action is active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="813"/>
+        <location filename="../objects/ruleselection.cpp" line="828"/>
         <source>If checked units of the same team face the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="1062"/>
+        <location filename="../objects/ruleselection.cpp" line="1077"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="503"/>
-        <location filename="../objects/ruleselection.cpp" line="513"/>
+        <location filename="../objects/ruleselection.cpp" line="518"/>
+        <location filename="../objects/ruleselection.cpp" line="528"/>
         <source>Fog of War</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="378"/>
+        <source>CO perk cost: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7660,159 +7732,169 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="510"/>
+        <location filename="../objects/ruleselection.cpp" line="393"/>
+        <source>CO perk count: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="397"/>
+        <source>Selects the total amout of co perks that can be assigned per CO.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="525"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="513"/>
+        <location filename="../objects/ruleselection.cpp" line="528"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="513"/>
+        <location filename="../objects/ruleselection.cpp" line="528"/>
         <source>Mist of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="513"/>
+        <location filename="../objects/ruleselection.cpp" line="528"/>
         <source>Shroud of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="554"/>
+        <location filename="../objects/ruleselection.cpp" line="569"/>
         <source>Vision Block: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="568"/>
+        <location filename="../objects/ruleselection.cpp" line="583"/>
         <source>Building Hiding:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="582"/>
+        <location filename="../objects/ruleselection.cpp" line="597"/>
         <source>Day Screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="585"/>
+        <location filename="../objects/ruleselection.cpp" line="600"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="585"/>
+        <location filename="../objects/ruleselection.cpp" line="600"/>
         <source>Permanent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="602"/>
+        <location filename="../objects/ruleselection.cpp" line="617"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="609"/>
+        <location filename="../objects/ruleselection.cpp" line="624"/>
         <source>CO Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="612"/>
-        <location filename="../objects/ruleselection.cpp" line="628"/>
-        <location filename="../objects/ruleselection.cpp" line="644"/>
+        <location filename="../objects/ruleselection.cpp" line="627"/>
+        <location filename="../objects/ruleselection.cpp" line="643"/>
+        <location filename="../objects/ruleselection.cpp" line="659"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="625"/>
+        <location filename="../objects/ruleselection.cpp" line="640"/>
         <source>Perk Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="641"/>
+        <location filename="../objects/ruleselection.cpp" line="656"/>
         <source>Action Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="657"/>
+        <location filename="../objects/ruleselection.cpp" line="672"/>
         <source>Terrain Defense: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="661"/>
+        <location filename="../objects/ruleselection.cpp" line="676"/>
         <source>The defense each terrain star grants a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="673"/>
+        <location filename="../objects/ruleselection.cpp" line="688"/>
         <source>HP Defense Impact:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="687"/>
+        <location filename="../objects/ruleselection.cpp" line="702"/>
         <source>Ship bridges:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="701"/>
+        <location filename="../objects/ruleselection.cpp" line="716"/>
         <source>Transporter refresh: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="715"/>
+        <location filename="../objects/ruleselection.cpp" line="730"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="719"/>
+        <location filename="../objects/ruleselection.cpp" line="734"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="732"/>
+        <location filename="../objects/ruleselection.cpp" line="747"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="735"/>
+        <location filename="../objects/ruleselection.cpp" line="750"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="739"/>
+        <location filename="../objects/ruleselection.cpp" line="754"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="757"/>
+        <location filename="../objects/ruleselection.cpp" line="772"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="764"/>
+        <location filename="../objects/ruleselection.cpp" line="779"/>
         <source>Unique CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="778"/>
+        <location filename="../objects/ruleselection.cpp" line="793"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="782"/>
+        <location filename="../objects/ruleselection.cpp" line="797"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="792"/>
+        <location filename="../objects/ruleselection.cpp" line="807"/>
         <source>Unit sell value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="809"/>
+        <location filename="../objects/ruleselection.cpp" line="824"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="825"/>
+        <location filename="../objects/ruleselection.cpp" line="840"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>

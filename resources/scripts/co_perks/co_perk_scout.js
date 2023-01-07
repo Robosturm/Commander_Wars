@@ -21,6 +21,10 @@ var Constructor = function()
     {
         return qsTr("Scout");
     };
+    this.getCosts = function()
+    {
+        return 1;
+    };
 };
 
 Constructor.prototype = CO_PERK;

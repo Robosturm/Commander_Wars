@@ -21,6 +21,10 @@ var Constructor = function()
     {
         return qsTr("Sale Price -8%");
     };
+    this.getCosts = function()
+    {
+        return 3;
+    };
 };
 
 Constructor.prototype = CO_PERK;

@@ -16,6 +16,8 @@
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/label.h"
 
+const char* const BuildListDialog::FILEPATH = "data/unitbannlist/";
+
 BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList)
     : m_CurrentBuildList(buildList),
       m_Player(player),
@@ -143,7 +145,7 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     });
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 - pSave->getScaledWidth() / 2,
+    pSave->setPosition(Settings::getWidth() / 2 + 10,
                        Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSave->addClickListener([this](oxygine::Event*)
     {
@@ -151,6 +153,18 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     });
     m_pSpriteBox->addChild(pSave);
     connect(this, &BuildListDialog::sigShowSaveBannlist, this, &BuildListDialog::showSaveBannlist, Qt::QueuedConnection);
+    connect(this, &BuildListDialog::sigDoSaveBannlist, this, &BuildListDialog::doSaveBannlist, Qt::QueuedConnection);
+
+    oxygine::spButton pDelete = pObjectManager->createButton(tr("Delete"), 150);
+    pDelete->setPosition(Settings::getWidth() / 2 - pDelete->getScaledWidth() - 10,
+                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
+    pDelete->addClickListener([this](oxygine::Event*)
+    {
+        emit sigShowDeleteBannlist();
+    });
+    m_pSpriteBox->addChild(pDelete);
+    connect(this, &BuildListDialog::sigShowDeleteBannlist, this, &BuildListDialog::showDeleteBannlist, Qt::QueuedConnection);
+    connect(this, &BuildListDialog::sigDeleteBannlist, this, &BuildListDialog::deleteBannlist, Qt::QueuedConnection);
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
     m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
@@ -262,7 +276,7 @@ void BuildListDialog::setBuildlist(qint32 item)
     else
     {
         QString file = m_PredefinedLists->getCurrentItemText();
-        auto fileData = Filesupport::readList(file + ".bl", "data/unitbannlist/");
+        auto fileData = Filesupport::readList(file + Filesupport::LIST_FILENAME_ENDING, FILEPATH);
         data = fileData.items;
     }
     for (qint32 i = 0; i < m_UnitList.size(); i++)
@@ -280,12 +294,30 @@ void BuildListDialog::setBuildlist(qint32 item)
 }
 
 void BuildListDialog::showSaveBannlist()
-{
-    
+{    
     spDialogTextInput pSaveInput = spDialogTextInput::create(tr("Banlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &BuildListDialog::saveBannlist, Qt::QueuedConnection);
-    addChild(pSaveInput);
-    
+    addChild(pSaveInput);    
+}
+
+void BuildListDialog::showDeleteBannlist()
+{
+    if (QFile::exists(FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
+    {
+        QString file = FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
+        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to delete the action bannlist: ") + file + "?", true);
+        connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
+        {
+            emit sigDeleteBannlist(file);
+        }, Qt::QueuedConnection);
+        addChild(pDialogOverwrite);
+    }
+}
+
+void BuildListDialog::deleteBannlist(const QString & file)
+{
+    QFile::remove(file);
+    updatePredefinedList();
 }
 
 QStringList BuildListDialog::getNameList()
@@ -296,8 +328,8 @@ QStringList BuildListDialog::getNameList()
                               tr("Advance Wars 2"),
                               tr("Advance Wars")};
     QStringList filters;
-    filters << "*.bl";
-    QDirIterator dirIter("data/unitbannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    filters << QString("*") + Filesupport::LIST_FILENAME_ENDING;
+    QDirIterator dirIter(FILEPATH, filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
     while (dirIter.hasNext())
     {
         dirIter.next();
@@ -309,13 +341,31 @@ QStringList BuildListDialog::getNameList()
 }
 
 void BuildListDialog::saveBannlist(QString filename)
-{    
-    Filesupport::storeList(filename, m_CurrentBuildList, "data/unitbannlist/");
+{
+    if (QFile::exists(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING))
+    {
+        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the build bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
+        connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename]
+        {
+            emit sigDoSaveBannlist(filename);
+        }, Qt::QueuedConnection);
+        addChild(pDialogOverwrite);
+    }
+    else
+    {
+        doSaveBannlist(filename);
+    }
+}
+
+void BuildListDialog::doSaveBannlist(QString filename)
+{
+    Filesupport::storeList(filename, m_CurrentBuildList, FILEPATH);
+    updatePredefinedList();
     spDialogMessageBox pMessageBox = spDialogMessageBox::create(tr("Do you want to make the saved build list the default ruleset?"), true, tr("Yes"), tr("No"));
     addChild(pMessageBox);
     connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
     {
-        Settings::setDefaultBannlist("data/unitbannlist/" + filename + ".bl");
+        Settings::setDefaultBannlist(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING);
     }, Qt::QueuedConnection);
     updatePredefinedList();
 }

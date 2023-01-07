@@ -21,6 +21,7 @@ class BuildListDialog final : public QObject, public oxygine::Actor
         QString name;
         QStringList units;
     };
+    static const char* const FILEPATH;
 public:
     explicit BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList);
     ~BuildListDialog() = default;
@@ -28,6 +29,9 @@ signals:
     void editFinished(qint32 player, QStringList buildList);
     void canceled();
     void sigShowSaveBannlist();
+    void sigShowDeleteBannlist();
+    void sigDoSaveBannlist(const QString & filename);
+    void sigDeleteBannlist(const QString & file);
     void sigFinished();
 public slots:
     /**
@@ -45,6 +49,9 @@ public slots:
     void saveBannlist(QString filename);
 private slots:
     void remove();
+    void doSaveBannlist(QString filename);
+    void showDeleteBannlist();
+    void deleteBannlist(const QString & file);
 private:
     QStringList getNameList();
     QVector<UnitGroup> getUnitGroups();
