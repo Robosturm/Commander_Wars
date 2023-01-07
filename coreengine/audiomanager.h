@@ -62,7 +62,7 @@ signals:
     void sigLoadNextAudioFile();
 #ifdef AUDIOSUPPORT
     void sigDeleteSound(AudioManager::SoundData* soundData, qint32 soundIndex);
-    void sigStopSoundInternal(SoundData* soundData, qint32 soundIndex);
+    void sigStopSoundInternal(AudioManager::SoundData* soundData, qint32 soundIndex);
     void sigPlayDelayedSound(AudioManager::SoundData* soundData, qint32 soundIndex, bool stopOldestSound, qint32 duration);
 #endif
 public slots:
@@ -156,12 +156,14 @@ protected slots:
      * @param playerIndex
      */
     void loadNextAudioFile();
+#ifdef AUDIOSUPPORT
     /**
      * @brief stopSound
      * @param soundData
      * @param soundIndex
      */
-    void stopSoundInternal(SoundData* soundData, qint32 soundIndex);
+    void stopSoundInternal(AudioManager::SoundData* soundData, qint32 soundIndex);
+#endif
 protected:
     /**
      * @brief createPlayer
