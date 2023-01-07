@@ -1347,7 +1347,7 @@
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="308"/>
-        <source>Do you want to delete the action bannlist: </source>
+        <source>Do you want to delete the build bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1468,7 +1468,7 @@
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="299"/>
-        <source>Do you want to delete the action bannlist: </source>
+        <source>Do you want to delete the co bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3232,6 +3232,11 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="109"/>
+        <source>Rotate map X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="110"/>
         <source>Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed.</source>
         <translation type="unfinished"></translation>
@@ -3249,6 +3254,11 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="113"/>
         <source>Shows or hides the cross marking the middle of the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="113"/>
+        <source>Toggle cross Strg+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3352,11 +3362,6 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="109"/>
-        <source>Rotatm map X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="110"/>
         <source>Rotate map Y</source>
         <translation type="unfinished"></translation>
@@ -3369,11 +3374,6 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="112"/>
         <source>Toggle grid Strg+G</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="113"/>
-        <source>Toggle gross Strg+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6977,6 +6977,11 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="296"/>
+        <source>Do you want to delete the perk list: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="151"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
@@ -6984,11 +6989,6 @@ Host mods: </source>
     <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="177"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="296"/>
-        <source>Do you want to delete the action bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
