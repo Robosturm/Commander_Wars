@@ -44,6 +44,7 @@ AudioManager::AudioManager(bool noAudio)
 #ifdef AUDIOSUPPORT
         connect(this, &AudioManager::sigDeleteSound,       this, &AudioManager::deleteSound, Qt::QueuedConnection);
         connect(this, &AudioManager::sigPlayDelayedSound,  this, &AudioManager::playDelayedSound, Qt::QueuedConnection);
+        connect(this, &AudioManager::sigStopSoundInternal, this, &AudioManager::stopSoundInternal, Qt::QueuedConnection);
 #endif
     }
 }
@@ -291,9 +292,9 @@ void AudioManager::playRandom()
     emit sigPlayRandom();
 }
 
-void AudioManager::playSound(QString file, qint32 loops, qint32 delay, float volume, bool stopOldestSound)
+void AudioManager::playSound(QString file, qint32 loops, qint32 delay, float volume, bool stopOldestSound, qint32 duration)
 {
-    emit sigPlaySound(file, loops, delay, volume, stopOldestSound);
+    emit sigPlaySound(file, loops, delay, volume, stopOldestSound, duration);
 }
 
 void AudioManager::stopSound(QString file)
@@ -643,7 +644,7 @@ void AudioManager::reportReplayError(QMediaPlayer::Error error, const QString &e
 }
 #endif
 
-void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float volume, bool stopOldestSound)
+void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float volume, bool stopOldestSound, qint32 duration)
 {
 #ifdef AUDIOSUPPORT
     if (Settings::getMuted() || m_noAudio)
@@ -667,7 +668,7 @@ void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float
                 }
                 else if (tryPlaySoundAtCachePosition(soundCache, i,
                                                      file, loops, delay, sound,
-                                                     stopOldestSound))
+                                                     stopOldestSound, duration))
                 {
                     started = true;
                     break;
@@ -679,7 +680,7 @@ void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float
                 {
                     if (tryPlaySoundAtCachePosition(soundCache, i,
                                                     file, loops, delay, sound,
-                                                    stopOldestSound))
+                                                    stopOldestSound, duration))
                     {
                         started = true;
                         break;
@@ -735,7 +736,7 @@ bool AudioManager::stopSoundAtIndex(SoundData* soundData, qint32 index)
     if (soundData->sound[index] != nullptr &&
         soundData->sound[index]->isPlaying())
     {
-        stopSound(soundData, index);
+        stopSoundInternal(soundData, index);
         stopped = true;
     }
     if (soundData->timer[index] != nullptr &&

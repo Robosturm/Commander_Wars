@@ -60,6 +60,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movetank.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

@@ -67,6 +67,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movebike.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

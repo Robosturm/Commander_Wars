@@ -29,12 +29,12 @@
     <sound file="falling_bomb.wav"              cachesize = "5"/>
     <sound file="flare_explosion.wav"           cachesize = "2"/>
     <sound file="flare_launch.wav"              cachesize = "2"/>
-    <sound file="heavy_tank_move.wav"           cachesize = "5"/>
+    <sound file="heavy_tank_move.wav"           cachesize = "10"/>
     <sound file="hoellium_explode.wav"          cachesize = "10"/>
-    <sound file="hoellium_move.wav"             cachesize = "5"/>
+    <sound file="hoellium_move.wav"             cachesize = "10"/>
     <sound file="impact_explosion.wav"          cachesize = "5"/>
     <sound file="impossible.wav"                cachesize = "5"/>
-    <sound file="infantry_move.wav"             cachesize = "5"/>
+    <sound file="infantry_move.wav"             cachesize = "10"/>
     <sound file="load.wav"                      cachesize = "5"/>
     <sound file="megacannon_weapon_fire.wav"    cachesize = "10"/>
     <sound file="mg_impact.wav"                 cachesize = "10"/>
@@ -66,10 +66,10 @@
     <sound file="movewalk.wav"                  cachesize = "5"/>
     <sound file="movewalker.wav"                cachesize = "5"/>
     <sound file="neocannonweapon_fire.wav"      cachesize = "5"/>
-    <sound file="neotank_move.wav"              cachesize = "5"/>
+    <sound file="neotank_move.wav"              cachesize = "10"/>
     <sound file="okay.wav"                      cachesize = "3"/>
     <sound file="oozium_dying.wav"              cachesize = "10"/>
-    <sound file="oozium_move.wav"               cachesize = "5"/>
+    <sound file="oozium_move.wav"               cachesize = "10"/>
     <sound file="pipe_destroyed.wav"            cachesize = "5"/>
     <sound file="pipecannon_weapon_fire.wav"    cachesize = "5"/>
     <sound file="power.wav"                     cachesize = "10"/>
@@ -99,7 +99,7 @@
     <sound file="powerready.wav"                cachesize = "2"/>
     <sound file="power_activation.wav"          cachesize = "10"/>
     <sound file="rain.wav"                      cachesize = "2"/>
-    <sound file="recon_move.wav"                cachesize = "5"/>
+    <sound file="recon_move.wav"                cachesize = "10"/>
     <sound file="repair_1.wav"                  cachesize = "10"/>
     <sound file="repair_2.wav"                  cachesize = "10"/>
     <sound file="rocket_flying.wav"             cachesize = "5"/>
@@ -118,7 +118,7 @@
     <sound file="switchfield.wav"               cachesize = "15"/>
     <sound file="switchmenu.wav"                cachesize = "15"/>
     <sound file="tank_explode.wav"              cachesize = "5"/>
-    <sound file="tank_move.wav"                 cachesize = "5"/>
+    <sound file="tank_move.wav"                 cachesize = "10"/>
     <sound file="tank_shot.wav"                 cachesize = "5"/>
     <sound file="tank_weapon_fire.wav"          cachesize = "5"/>
     <sound file="target.wav"                    cachesize = "10"/>

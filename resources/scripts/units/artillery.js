@@ -58,6 +58,10 @@ var Constructor = function()
     {
         return GameEnums.WeaponType_Indirect;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movetank.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

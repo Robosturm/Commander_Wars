@@ -95,6 +95,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movemassiveair.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

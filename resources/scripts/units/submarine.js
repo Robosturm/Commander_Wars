@@ -106,6 +106,10 @@ var Constructor = function()
     {
         unit.setHidden(true);
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movesub.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

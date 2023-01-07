@@ -38,7 +38,7 @@ void AudioManager::fillSoundCache(qint32 count, QString folder, QString file)
 
 #ifdef AUDIOSUPPORT
 bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
-                                              QString & file, qint32 loops, qint32 delay, qreal sound, bool stopOldestSound)
+                                              QString & file, qint32 loops, qint32 delay, qreal sound, bool stopOldestSound, qint32 duration)
 {
     bool started = false;
 
@@ -62,23 +62,20 @@ bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soun
         // start play
         if (delay > 0)
         {
-            soundCache->timer[i]->start(delay);
+            disconnect(soundCache->timer[i].get(), nullptr, nullptr, nullptr);
             connect(soundCache->timer[i].get(), &QTimer::timeout, this, [=]()
             {
-                if (stopOldestSound)
-                {
-                    AudioThread::stopOldestSound(pSoundCache);
-                }
-                pSoundCache->sound[i]->play();
+                emit sigPlayDelayedSound(pSoundCache, i, stopOldestSound, duration);
             });
+            soundCache->timer[i]->start(delay);
         }
         else
         {
             if (stopOldestSound)
             {
-                AudioThread::stopOldestSound(pSoundCache);
+                AudioManager::stopOldestSound(pSoundCache);
             }
-            soundCache->sound[i]->play();
+            playSoundInternal(pSoundCache, i, duration);
         }
         started = true;
         soundCache->nextSoundToUse = i + 1;
@@ -88,7 +85,7 @@ bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soun
 #endif
 
 #ifdef AUDIOSUPPORT
-void AudioManager::stopSound(SoundData* soundData, qint32 soundIndex)
+void AudioManager::stopSoundInternal(SoundData* soundData, qint32 soundIndex)
 {
     if (soundData->sound[soundIndex] != nullptr)
     {
@@ -102,9 +99,31 @@ void AudioManager::deleteSound(SoundData* soundData, qint32 soundIndex)
 {
 }
 
-
-void AudioManager::playDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound)
+void AudioManager::playSoundInternal(SoundData* soundData, qint32 soundIndex, qint32 duration)
 {
+    if (soundData->sound[soundIndex] != nullptr)
+    {
+        if (duration > 0)
+        {
+            disconnect(soundData->timer[soundIndex].get(), nullptr, nullptr, nullptr);
+            connect(soundData->timer[soundIndex].get(), &QTimer::timeout, soundData->sound[soundIndex], [this, soundData, soundIndex]()
+            {
+                emit sigStopSoundInternal(soundData, soundIndex);
+            });
+            soundData->timer[soundIndex]->start(duration);
+        }
+        soundData->sound[soundIndex]->play();
+    }
+}
+
+void AudioManager::playDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound, qint32 duration)
+{
+    CONSOLE_PRINT_MODULE("Starting delayed sound", GameConsole::eDEBUG, GameConsole::eAudio);
+    if (stopOldestSound)
+    {
+        AudioManager::stopOldestSound(soundData);
+    }
+    playSoundInternal(soundData, soundIndex, duration);
 }
 
 #endif

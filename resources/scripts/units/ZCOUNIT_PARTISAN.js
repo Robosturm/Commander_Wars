@@ -98,6 +98,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movewalk.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

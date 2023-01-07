@@ -73,7 +73,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             QString description = pCOPerkManager->getDescription(index) + "\n" + tr("Cost: %0").arg(cost);
 
             spCheckbox pCheckbox = spCheckbox::create();
-            pCheckbox->setPosition(x, y + 5);
+            pCheckbox->setPosition(x, y + 15);
             pCheckbox->setTooltipText(description);
             pCheckbox->setChecked(m_perks.contains(id));
             connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, id](bool value)
@@ -103,7 +103,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             m_perkIds.append(id);
             addChild(pCheckbox);
 
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            spTooltip pSprite = spTooltip::create();
             pSprite->setResAnim(pAnim);
             if (pAnim != nullptr)
             {
@@ -111,10 +111,12 @@ void PerkSelection::updatePerksView(CO* pCO)
             }
             pSprite->setPosition(x + 45, y);
             addChild(pSprite);
+
             spLabel pLabel = spLabel::create(350);
             pLabel->setStyle(style);
-            pLabel->setText(name + " " + tr("Cost: %0").arg(cost));
-            pLabel->setPosition(x + GameMap::getImageSize() * 2 + 50, y + 10);
+            pLabel->setText(name + "\n" + tr("Cost: %0").arg(cost));
+            pLabel->setHeight(pLabel->getTextRect().getHeight());
+            pLabel->setPosition(x + GameMap::getImageSize() * 2 + 50, y);
             addChild(pLabel);
 
             x += width;

@@ -6919,7 +6919,7 @@ Host mods: </source>
     <name>PerkSelection</name>
     <message>
         <location filename="../objects/perkselection.cpp" line="73"/>
-        <location filename="../objects/perkselection.cpp" line="116"/>
+        <location filename="../objects/perkselection.cpp" line="117"/>
         <source>Cost: %0</source>
         <translation type="unfinished"></translation>
     </message>

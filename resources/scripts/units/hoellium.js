@@ -66,6 +66,10 @@ var Constructor = function()
         animation.setSound("hoellium_explode.wav");
         return animation;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "hoellium_move.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

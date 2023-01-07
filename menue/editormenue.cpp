@@ -1530,7 +1530,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         QString soundName = sound.toString();
         if (!soundName.isEmpty())
         {
-            pApp->getAudioManager()->playSound(soundName);
+            pApp->getAudioManager()->playSound(soundName, 1, 0, 1.0f, false, 250);
         }
     }
 

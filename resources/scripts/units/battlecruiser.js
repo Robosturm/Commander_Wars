@@ -112,6 +112,10 @@ var Constructor = function()
     {
         return GameEnums.WeaponType_Direct;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveship.wav";
+    };
 }
 
 Constructor.prototype = UNIT;
