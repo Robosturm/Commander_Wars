@@ -63,6 +63,7 @@ public slots:
     void itemChangeTimerExpired();
     void createItemContainer(qint32 y, qint32 width, qint32 height);
     void filterChanged();
+    void refresh();
 private:
     QStringList m_filter;
     QString m_currentFolder;

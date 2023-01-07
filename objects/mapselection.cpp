@@ -286,6 +286,11 @@ void MapSelection::setCurrentItem(QString item)
     m_currentItem = item;
 }
 
+void MapSelection::refresh()
+{
+    changeFolder(m_currentFolder);
+}
+
 void MapSelection::changeFolder(QString folder)
 {    
     CONSOLE_PRINT("MapSelection::changeFolder " + folder, GameConsole::eDEBUG);

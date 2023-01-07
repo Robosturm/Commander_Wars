@@ -334,6 +334,7 @@ void MapSelectionMapsMenue::showMapSelection()
     m_pRandomMap->setVisible(true);
     m_pMapFilter->setVisible(true);
     m_pMapSelectionView->setVisible(true);    
+    m_pMapSelectionView->getMapSelection()->refresh();
 }
 
 void MapSelectionMapsMenue::hideRuleSelection()
