@@ -106,11 +106,11 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Resiz map"),         "RESIZEMAP",    1, tr("Resizes the map using left, top, right and bottom size changes."));
     m_Topbar->addItem(tr("Flip map X"),         "FLIPX",        1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
     m_Topbar->addItem(tr("Flip map Y"),         "FLIPY",        1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
-    m_Topbar->addItem(tr("Rotatm map X"),       "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
+    m_Topbar->addItem(tr("Rotate map X"),       "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
     m_Topbar->addItem(tr("Rotate map Y"),       "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
     m_Topbar->addItem(tr("Random map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
     m_Topbar->addItem(tr("Toggle grid Strg+G"), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
-    m_Topbar->addItem(tr("Toggle gross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
+    m_Topbar->addItem(tr("Toggle cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
 
     m_Topbar->addGroup(tr("Commands"));
     m_Topbar->addItem(tr("Place selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));

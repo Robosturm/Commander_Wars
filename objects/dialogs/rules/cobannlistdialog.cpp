@@ -296,7 +296,7 @@ void COBannListDialog::showDeleteBannlist()
     if (QFile::exists(FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
     {
         QString file = FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
-        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to delete the action bannlist: ") + file + "?", true);
+        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to delete the co bannlist: ") + file + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
         {
             emit sigDeleteBannlist(file);
