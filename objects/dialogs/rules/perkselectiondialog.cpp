@@ -149,7 +149,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
         });
 
         m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-        m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60,
+        m_ToggleAll->setPosition(Settings::getWidth() / 2 + 10,
                                  Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
         m_pSpriteBox->addChild(m_ToggleAll);
         m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
@@ -369,7 +369,7 @@ void PerkSelectionDialog::updatePredefinedList()
     QString path = getFilepath();
     auto items = getNameList(path);
     m_PredefinedLists = spDropDownmenu::create(260, items);
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
+    m_PredefinedLists->setPosition(Settings::getWidth() / 2  - m_PredefinedLists->getScaledWidth() - 10,
                                    Settings::getHeight() - 75 - m_pSave->getScaledHeight());
     m_pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::setPerkBannlist, Qt::QueuedConnection);

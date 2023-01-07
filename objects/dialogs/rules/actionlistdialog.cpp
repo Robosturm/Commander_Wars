@@ -68,7 +68,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
         QString icon = pGameManager->getActionIcon(actionId);
         if (!icon.isEmpty())
         {
-            pLabel = spLabel::create(250);
+            pLabel = spLabel::create(300);
             pLabel->setStyle(style);
             pLabel->setHtmlText(pGameManager->getName(i));
             pLabel->setPosition(x + 90, y);
@@ -111,8 +111,8 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
             pPanel->addItem(pLabel);
             pPanel->addItem(pTooltip);
 
-            x += 350;
-            if (x + 350 > pPanel->getContentWidth())
+            x += 400;
+            if (x + 400 > pPanel->getContentWidth())
             {
                 y += 40;
                 x = 10;
@@ -166,7 +166,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     connect(this, &ActionListDialog::sigDeleteBannlist, this, &ActionListDialog::deleteBannlist, Qt::QueuedConnection);
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 ,
+    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 10,
                              Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
     m_pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
@@ -270,7 +270,7 @@ void ActionListDialog::updatePredefinedList()
     }
     auto items = getNameList();
     m_PredefinedLists = spDropDownmenu::create(300, items);
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getScaledWidth(),
+    m_PredefinedLists->setPosition(Settings::getWidth() / 2 - m_PredefinedLists->getScaledWidth() - 10,
                                    Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
     m_pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &ActionListDialog::setBuildlist, Qt::QueuedConnection);
