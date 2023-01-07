@@ -51,7 +51,7 @@ void PerkSelection::updatePerksView(CO* pCO)
     qint32 x = 0;
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     
-    const qint32 width = 370;
+    const qint32 width = 470;
     auto perkGroups = getPerksGrouped();
     for (const auto & group : perkGroups)
     {
@@ -69,7 +69,8 @@ void PerkSelection::updatePerksView(CO* pCO)
             QString name = pCOPerkManager->getName(index);
             QString icon = pCOPerkManager->getIcon(index);
             oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
-            QString description = pCOPerkManager->getDescription(index) + "\n" + tr("Costs: %0").arg(getPerkScore(id));
+            qint32 cost = getPerkScore(id);
+            QString description = pCOPerkManager->getDescription(index) + "\n" + tr("Cost: %0").arg(cost);
 
             spCheckbox pCheckbox = spCheckbox::create();
             pCheckbox->setPosition(x, y + 5);
@@ -110,9 +111,9 @@ void PerkSelection::updatePerksView(CO* pCO)
             }
             pSprite->setPosition(x + 45, y);
             addChild(pSprite);
-            spLabel pLabel = spLabel::create(250);
+            spLabel pLabel = spLabel::create(350);
             pLabel->setStyle(style);
-            pLabel->setText(name);
+            pLabel->setText(name + " " + tr("Cost: %0").arg(cost));
             pLabel->setPosition(x + GameMap::getImageSize() * 2 + 50, y + 10);
             addChild(pLabel);
 

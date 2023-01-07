@@ -6918,8 +6918,9 @@ Host mods: </source>
 <context>
     <name>PerkSelection</name>
     <message>
-        <location filename="../objects/perkselection.cpp" line="72"/>
-        <source>Costs: %0</source>
+        <location filename="../objects/perkselection.cpp" line="73"/>
+        <location filename="../objects/perkselection.cpp" line="116"/>
+        <source>Cost: %0</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6966,6 +6967,11 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="211"/>
+        <source>Perk costs: %1/%2     Perk count %3/%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="151"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
@@ -6976,22 +6982,17 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="209"/>
-        <source>Perk costs: %1/%2 Perk count %3/%4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="293"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="296"/>
         <source>Do you want to delete the action bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="310"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="313"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="336"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="339"/>
         <source>Do you want to overwrite the perk list: </source>
         <translation type="unfinished"></translation>
     </message>

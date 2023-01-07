@@ -202,12 +202,15 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
 
 void PerkSelectionDialog::perkViewUpdated()
 {
-    qint32 cost = m_pPerkSelection->getPerkScore(m_pPerkSelection->getPerks());
-    qint32 maxPerkCost = m_pMap->getGameRules()->getMaxPerkCost();
-    qint32 count = m_pPerkSelection->getPerks().size();
-    qint32 maxPerkCount = m_pMap->getGameRules()->getMaxPerkCount();
-    QString text = tr("Perk costs: %1/%2 Perk count %3/%4").arg(cost).arg(maxPerkCost).arg(count).arg(maxPerkCount);
-    m_perkInfo->setHtmlText(text);
+    if (m_perkInfo.get() != nullptr)
+    {
+        qint32 cost = m_pPerkSelection->getPerkScore(m_pPerkSelection->getPerks());
+        qint32 maxPerkCost = m_pMap->getGameRules()->getMaxPerkCost();
+        qint32 count = m_pPerkSelection->getPerks().size();
+        qint32 maxPerkCount = m_pMap->getGameRules()->getMaxPerkCount();
+        QString text = tr("Perk costs: %1/%2     Perk count %3/%4").arg(cost).arg(maxPerkCost).arg(count).arg(maxPerkCount);
+        m_perkInfo->setHtmlText(text);
+    }
 }
 
 void PerkSelectionDialog::remove()
