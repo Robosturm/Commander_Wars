@@ -11657,12 +11657,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="63"/>
-        <source>Build a given amount of </source>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="60"/>
+        <source>Build a given amount of %0.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="65"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="67"/>
         <source>Builded unit</source>
         <translation type="unfinished"></translation>
     </message>
