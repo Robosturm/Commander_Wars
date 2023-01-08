@@ -70,7 +70,7 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigExitMenue, this, &LobbyMenu::exitMenue, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Direct Host"));
+    oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Direct Host"), 220);
     addChild(pButtonHost);
     pButtonHost->setPosition(Settings::getWidth() - pButtonHost->getScaledWidth() - 10,
                              Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
@@ -80,7 +80,7 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigHostLocal, this, &LobbyMenu::hostLocal, Qt::QueuedConnection);
 
-    m_pButtonHostOnServer = ObjectManager::createButton(tr("Server Host"));
+    m_pButtonHostOnServer = ObjectManager::createButton(tr("Server Host"), 220);
     addChild(m_pButtonHostOnServer);
     m_pButtonHostOnServer->setPosition(Settings::getWidth() - pButtonHost->getScaledWidth() - 10,
                                        Settings::getHeight() - pButtonExit->getScaledHeight() * 2 - 10);
