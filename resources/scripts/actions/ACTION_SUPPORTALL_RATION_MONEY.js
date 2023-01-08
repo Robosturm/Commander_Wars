@@ -102,7 +102,7 @@ var Constructor = function()
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
                 var animation = GameAnimationFactory.createAnimation(map, x, y);
-                var width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+                var width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, -2, 1);
                 animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
                 animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
                 animation.addSound("repair_1.wav");

@@ -77,93 +77,50 @@ var Constructor = function()
         ACTION_SUPPORTALL_RATION.postAnimationUnit = null;
     };
 
+    this.giveSingleRation = function(unit, x, y, refillMaterial, queueAnimation, map)
+    {
+        if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y, map))
+        {
+            let refillUnit = map.getTerrain(x, y).getUnit();
+            refillUnit.refill(refillMaterial);
+            if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
+            {
+                let animation = GameAnimationFactory.createAnimation(map, x, y);
+                let width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, -2, 1);
+                animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
+                animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
+                animation.addSound("repair_1.wav");
+                if (queueAnimation !== null)
+                {
+                    queueAnimation.queueAnimation(animation);
+                }
+            }
+        }
+    };
+
     this.giveRation = function(unit, map)
     {
-        var refillRule = map.getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL");
-        var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
-        var x = unit.getX() + 1;
-        var y = unit.getY();
-        var animation = null;
-        var refillUnit= null;
-        var width = 0;
-        var animationCount = GameAnimationFactory.getAnimationCount();
-        var queueAnimation = null;
+        let refillRule = map.getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL");
+        let refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
+        let animation = null;
+        let refillUnit= null;
+        let width = 0;
+        let animationCount = GameAnimationFactory.getAnimationCount();
+        let queueAnimation = null;
         if (animationCount > 0)
         {
             queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
         }
-        if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y, map))
-        {
-            refillUnit = map.getTerrain(x, y).getUnit();
-            refillUnit.refill(refillMaterial);
-            if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
-            {
-                animation = GameAnimationFactory.createAnimation(map, x, y);
-                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
-                animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
-                animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
-                animation.addSound("repair_1.wav");
-                if (queueAnimation !== null)
-                {
-                    queueAnimation.queueAnimation(animation);
-                }
-            }
-        }
+        let x = unit.getX() + 1;
+        let y = unit.getY();
+        ACTION_SUPPORTALL_RATION.giveSingleRation(unit, x, y, refillMaterial, queueAnimation, map);
         x = unit.getX() - 1;
-        if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y, map))
-        {
-            refillUnit = map.getTerrain(x, y).getUnit();
-            refillUnit.refill(refillMaterial);
-            if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
-            {
-                animation = GameAnimationFactory.createAnimation(map, x, y);
-                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
-                animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
-                animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
-                animation.addSound("repair_1.wav");
-                if (queueAnimation !== null)
-                {
-                    queueAnimation.queueAnimation(animation);
-                }
-            }
-        }
+        ACTION_SUPPORTALL_RATION.giveSingleRation(unit, x, y, refillMaterial, queueAnimation, map);
         x = unit.getX();
         y = unit.getY() + 1;
-        if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y, map))
-        {
-            refillUnit = map.getTerrain(x, y).getUnit();
-            refillUnit.refill(refillMaterial);
-            if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
-            {
-                animation = GameAnimationFactory.createAnimation(map, x, y);
-                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
-                animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
-                animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
-                animation.addSound("repair_1.wav");
-                if (queueAnimation !== null)
-                {
-                    queueAnimation.queueAnimation(animation);
-                }
-            }
-        }
+        ACTION_SUPPORTALL_RATION.giveSingleRation(unit, x, y, refillMaterial, queueAnimation, map);
         y = unit.getY() - 1;
-        if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y, map))
-        {
-            refillUnit = map.getTerrain(x, y).getUnit();
-            refillUnit.refill(refillMaterial);
-            if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
-            {
-                animation = GameAnimationFactory.createAnimation(map, x, y);
-                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
-                animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
-                animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
-                animation.addSound("repair_1.wav");
-                if (queueAnimation !== null)
-                {
-                    queueAnimation.queueAnimation(animation);
-                }
-            }
-        }
+        ACTION_SUPPORTALL_RATION.giveSingleRation(unit, x, y, refillMaterial, queueAnimation, map);
 	};
     this.getName = function()
     {

@@ -764,7 +764,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="71"/>
-        <source>Music</source>
+        <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -856,20 +856,17 @@
     <name>ACTION_SUPPORTALL_RATION</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="53"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="170"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="127"/>
         <source>Ration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="102"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="120"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="139"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="157"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="89"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="174"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="131"/>
         <source>Refills fuel and ammo to all units surrounding this unit.</source>
         <translation type="unfinished"></translation>
     </message>

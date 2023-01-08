@@ -221,15 +221,15 @@ var BUILDING =
             var width = 0;
             if (repairAmount > 0)
             {
-                width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
+                width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, -2, 1);
             }
             else if (repairAmount < 0)
             {
-                width = animation.addText(qsTr("DAMAGE"), map.getImageSize() / 2 + 25, 2, 1);
+                width = animation.addText(qsTr("DAMAGE"), map.getImageSize() / 2 + 25, -2, 1);
             }
             else
             {
-                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, -2, 1);
             }
 
             animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
