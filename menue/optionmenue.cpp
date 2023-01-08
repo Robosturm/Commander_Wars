@@ -253,9 +253,10 @@ void OptionMenue::showMods()
     style.multiline = true;
     m_ModDescriptionText = oxygine::spTextField::create();
     m_ModDescriptionText->setStyle(style);
-    m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 60, 500);
+    m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 70, 500);
+    m_ModDescriptionText->setX(10);
     m_modThumbnail = oxygine::spSprite::create();
-    m_modThumbnail->setPosition(5, 5);
+    m_modThumbnail->setPosition(10, 10);
     m_pModDescription->addItem(m_modThumbnail);
     m_pModDescription->addItem(m_ModDescriptionText);
 
@@ -419,7 +420,7 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
         m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     }
     pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
-    qint32 y = 0;
+    qint32 y = 10;
     if (!thumbnail.isEmpty())
     {
         QImage img;

@@ -10,7 +10,6 @@
                 <x>10</x>
                 <y>10</y>
                 <width>settings.getWidth() - 80</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Network Settings")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -19,7 +18,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","1. dedicated address:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -36,7 +34,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","2. dedicated address:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -53,7 +50,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Dedicated port:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -73,7 +69,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Dedicated server:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -89,7 +84,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Game port:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

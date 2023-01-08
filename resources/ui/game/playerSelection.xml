@@ -10,7 +10,6 @@
                 <x>5</x>
                 <y>5</y>
                 <width>50</width>
-                <height>24</height>
                 <text>QT_TRANSLATE_NOOP("GAME","All")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -58,7 +57,6 @@
                     <x>5</x>
                     <y>lastY + lastHeight + 5</y>
                     <width>50</width>
-                    <height>24</height>
                     <text>QT_TRANSLATE_NOOP("GAME","All")</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
@@ -98,7 +96,7 @@
                 <x>5</x>
                 <y>lastY + lastHeight + 5</y>
                 <width>70</width>
-                <height>24</height>
+                <height>45</height>
                 <text>QT_TRANSLATE_NOOP("GAME","CO's")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -107,7 +105,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>110</width>
-                <height>24</height>
+                <height>45</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Color")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -116,7 +114,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>220</width>
-                <height>24</height>
+                <height>45</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Controller")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -125,7 +123,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>160</width>
-                <height>24</height>
+                <height>45</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Team")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -134,7 +132,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>170</width>
-                <height>24</height>
+                <height>45</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -144,7 +142,7 @@
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
                     <width>80</width>
-                    <height>24</height>
+                    <height>45</height>
                     <text>QT_TRANSLATE_NOOP("GAME","Ready")</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
@@ -154,7 +152,7 @@
                 <Sprite>
                     <Id>"CO1_" + loopIdx</Id>
                     <x>5</x>
-                    <y>lastY + 35</y>
+                    <y>lastY + lastHeight + 5</y>
                     <width>32</width>
                     <height>12</height>
                     <scale>2</scale>

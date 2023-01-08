@@ -10,7 +10,6 @@
                 <x>20</x>
                 <y>10</y>
                 <width>settings.getWidth() / 2 - 40</width>
-                <height>60</height>
                 <text>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getName()</text>
                 <font>"main"</font>
                 <hAlign>"Middle"</hAlign>
@@ -20,7 +19,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
-                <height>30</height>
                 <text>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getPlayerLabel()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -40,7 +38,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
-                <height>30</height>
                 <text>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getCOLabel()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -57,7 +54,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getPowerLabel()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

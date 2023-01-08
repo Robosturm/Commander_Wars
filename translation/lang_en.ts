@@ -3661,40 +3661,40 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>GAME</name>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="825"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="474"/>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="163"/>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="104"/>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="125"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="771"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="441"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="148"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="99"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="119"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="826"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="772"/>
         <source>Closes the map filter dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="24"/>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="24"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="24"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="22"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="22"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="22"/>
         <source>Username:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="42"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="38"/>
         <source>Password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="70"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="106"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="66"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="100"/>
         <source>Creates a new account on the server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="56"/>
         <location filename="../resources/ui/menu/playermenu.xml" line="57"/>
-        <location filename="../resources/ui/menu/playermenu.xml" line="58"/>
         <location filename="../resources/ui/menu/mainsinglemenu.xml" line="71"/>
         <location filename="../resources/ui/menu/mainsinglemenu.xml" line="72"/>
         <location filename="../resources/ui/menu/mainoptionmenu.xml" line="77"/>
@@ -3703,1101 +3703,1101 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="14"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="13"/>
         <source>Reset Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="42"/>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="78"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="38"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="72"/>
         <source>E-Mail:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="51"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="47"/>
         <source>E-Mail-Address for your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="60"/>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="96"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="96"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="56"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="90"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="90"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="61"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="97"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="57"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="91"/>
         <source>Aborts the new account creation on the server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="69"/>
+        <location filename="../resources/ui/serverLogin/forgotPasswordDialog.xml" line="65"/>
         <source>Reset password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="14"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="13"/>
         <source>Delete Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="51"/>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="69"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="69"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="87"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="47"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="64"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="64"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="81"/>
         <source>Password of your account. Needs to contain 8 letters, one capital one small letter a number and a special char.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="60"/>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="78"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="55"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="72"/>
         <source>Repeat password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="87"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="81"/>
         <source>E-Mail-Address of your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="97"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="91"/>
         <source>Aborts the account deletion on the server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="105"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="99"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="106"/>
+        <location filename="../resources/ui/serverLogin/deleteAccountDialog.xml" line="100"/>
         <source>Deletes your account on the server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="14"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="13"/>
         <source>Change password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="42"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="38"/>
         <source>Old password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="51"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="47"/>
         <source>You&apos;re old password or password received via mail.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="60"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="55"/>
         <source>New Password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="105"/>
+        <location filename="../resources/ui/serverLogin/changePasswordDialog.xml" line="99"/>
         <source>Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="14"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="13"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="23"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="21"/>
         <source>Language:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="31"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="29"/>
         <source>Selects the language for the game. Note: Not everything may be translated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="41"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="38"/>
         <source>Screen Resolution:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="49"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="46"/>
         <source>Selects the screen resolution for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="60"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="56"/>
         <source>Screen Mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="68"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="64"/>
         <source>Selects the screen mode for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="79"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="74"/>
         <source>Brightness:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="87"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="82"/>
         <source>Selects the brightness for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="99"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="93"/>
         <source>Gamma:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="107"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="101"/>
         <source>Selects the gamma factor for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="119"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="112"/>
         <source>Small screen:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="126"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="119"/>
         <source>If checked several UI elements are hidden and accessible with an additional button. Warning: disabling this on a smaller screen may lead to unplayable game experience.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="136"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="128"/>
         <source>Use High DPI:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="143"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="135"/>
         <source>If checked the game will use the high dpi option of the screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="152"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="143"/>
         <source>Max FPS:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="160"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="151"/>
         <source>Selects the maximum FPS, use it to reduce power consumption on smartphones.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="172"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="162"/>
         <source>Automatic updates:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="179"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="169"/>
         <source>If checked: The game tries to keep the game at the up to date by. Updating to the latest release if required.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="14"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="13"/>
         <source>Network Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="23"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="21"/>
         <source>1. dedicated address:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="31"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="29"/>
         <source>Provide the address to the multiplayer game server you want to connect to which is used for the first connection attempt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="40"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="37"/>
         <source>2. dedicated address:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="48"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="45"/>
         <source>Provide the address to the multiplayer game server you want to connect used when the first address fails to connect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="57"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="53"/>
         <source>Dedicated port:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="65"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="61"/>
         <source>Selects the port dedicated server use for the lobby chat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="77"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="72"/>
         <source>Dedicated server:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="84"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="79"/>
         <source>Enables this game as global server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="93"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="87"/>
         <source>Game port:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="101"/>
+        <location filename="../resources/ui/options/optionnetworkmenu.xml" line="95"/>
         <source>Selects the game port used to play on a dedicated server or through a direct connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="14"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="13"/>
         <location filename="../resources/ui/menu/mainoptionmenu.xml" line="37"/>
         <location filename="../resources/ui/menu/mainoptionmenu.xml" line="38"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="188"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="177"/>
         <source>Subprocess ai:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="195"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="184"/>
         <source>If enabled the ai is calculated in a separate thread. This improves the game performance. If you encounter ai bugs disable this feature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="23"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="21"/>
         <source>Overworld Animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="30"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="28"/>
         <source>If active walk, capture, power animations, etc. will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="39"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="36"/>
         <source>Battle Animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="47"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="44"/>
         <source>Select which in-game animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="57"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="53"/>
         <source>Battle Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="75"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="70"/>
         <source>Dialogs:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="83"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="78"/>
         <source>Selects if dialogs are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="93"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="87"/>
         <source>Capture animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="101"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="95"/>
         <source>Selects if capture animations are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="111"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="104"/>
         <source>Day 2 Day animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="119"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="112"/>
         <source>Selects if the day to day screen gets skipped or not. Note: On fog of war maps the screen is still shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="129"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="121"/>
         <source>Movement animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="137"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="129"/>
         <source>Selects if movement animations get shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="147"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="138"/>
         <source>Animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="155"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="146"/>
         <source>Selects the speed at which basic animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="167"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="157"/>
         <source>Walk animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="175"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="165"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="187"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="176"/>
         <source>Battle animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="195"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="184"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="207"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="195"/>
         <source>Capture animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="215"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="203"/>
         <source>Selects the speed at which capture animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="227"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="214"/>
         <source>Dialog animation Speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="235"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="222"/>
         <source>Selects the speed at which dialog animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="247"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="233"/>
         <source>Multi Turn Plantime:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="255"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="241"/>
         <source>Selects the amount of turns you can preplan with a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="267"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="252"/>
         <source>Auto end turn:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="274"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="259"/>
         <source>If enabled the game will automatically end your turn if you can&apos;t give any orders anymore.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="283"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="267"/>
         <source>Detailed battle info:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="290"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="274"/>
         <source>If enabled the game will show a detailed battle forecast info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="300"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="283"/>
         <source>Auto saving time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="308"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="291"/>
         <source>Selects the time between auto saves in hours:minutes:seconds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="317"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="299"/>
         <source>Auto saving cycle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="325"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="307"/>
         <source>Selects the number of auto saves that are kept during games. A value of 0 disables this feature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="337"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="318"/>
         <source>Record games:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="344"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="325"/>
         <source>If checked: games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="353"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="333"/>
         <source>Menu heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="361"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="341"/>
         <source>Amount of items per row for in-game menus before a new row is added.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="373"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="352"/>
         <source>Menu width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="381"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="360"/>
         <source>Amount of columns for in-game menus before a scrollable menu is shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="393"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="371"/>
         <source>Shown players:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="401"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="379"/>
         <source>Selects the amount of players shown in-game on the sidebar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="413"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="390"/>
         <source>Supply warning:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="421"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="398"/>
         <source>Selects when the supply warnings for ammo and fuel appear.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="433"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="409"/>
         <source>Action delay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="441"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="417"/>
         <source>The delay after an action before an ai or replay action gets triggered.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="453"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="428"/>
         <source>Show pc cursor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="460"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="435"/>
         <source>If active the Computer&apos;s cursor is hidden during a game, giving you a more Gameboy like feeling.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="469"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="443"/>
         <source>Warp pc cursor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="476"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="450"/>
         <source>If active the Computer&apos;s cursor is moved to the first entry when opening menus or similar actions. Only disable this feature if you intend to play using a mouse only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="485"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="458"/>
         <source>Animated marked fields:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="492"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="465"/>
         <source>If active the currently selectable fields get animated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="501"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="473"/>
         <source>CO info position:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="509"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="481"/>
         <source>Flipping&apos; positions the info opposite the side of the screen where the cursor is located.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="519"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="490"/>
         <source>Auto scrolling:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="526"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="497"/>
         <source>If active: the map is scrolled automatically when the cursor is at the edge of the screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="536"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="506"/>
         <source>Show coordinates:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="543"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="513"/>
         <source>If active: map coordinates are shown during a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="552"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="521"/>
         <source>Auto camera:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="559"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="528"/>
         <source>If active: the screen will center on every unit performing an action, except when not visible within Fog of War.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="568"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="536"/>
         <source>Camera center mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="576"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="544"/>
         <source>Select where the screen starts during your player phase. This setting only applies while auto focusing is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="586"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="553"/>
         <source>Center camera on fields:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="593"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="560"/>
         <source>Selects if the camera centers on marked fields for an action or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="602"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="568"/>
         <source>Synchronize animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="609"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="575"/>
         <source>If checked: units and building animations on the map are synchronized. Note: changing this doesn&apos;t have an immediate effect in-game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="618"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="583"/>
         <source>Simple cancel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="625"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="590"/>
         <source>If active units and actions can be canceled by a long-press. This is only recommended for devices without a keyboard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="635"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="599"/>
         <source>Default rules:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="644"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="608"/>
         <source>The relative path from the exe to the default ruleset.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="652"/>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="677"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="616"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="640"/>
         <source>Select file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="660"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="623"/>
         <source>Default bannlist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="669"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="632"/>
         <source>The relative path from the exe to the default bannlist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="14"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="13"/>
         <source>Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="23"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="21"/>
         <source>Touch screen:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="30"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="28"/>
         <source>If checked some ingame inputs require double clicks or other gestures. This is automatically detected and changing it isn&apos;t recommended.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="39"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="36"/>
         <source>Touch Sensitivity:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="47"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="44"/>
         <source>Selects how long a touch is treated as the same point. Used for detecting long-press events.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="59"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="55"/>
         <source>Gamepad:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="66"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="62"/>
         <source>Enables Gamepad support for controllers. Note: This is an experimental feature and won&apos;t work 100% with all controllers. This feature isn&apos;t supported for Android, iOS, MacOS and Linux.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="75"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="76"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="71"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="72"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="85"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="80"/>
         <source>Gamepad Sensitivity:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="93"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="88"/>
         <source>Selects how often events are sent by a gamepad. Lowering this value will increase cursor speed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="107"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="101"/>
         <source>Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="116"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="109"/>
         <source>Key Up:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="116"/>
         <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="123"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="130"/>
         <source>Key for moving the cursor up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="139"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="131"/>
         <source>Key Left:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="146"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="153"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="138"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="145"/>
         <source>Key for moving the cursor left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="162"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="153"/>
         <source>Key Down:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="169"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="176"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="160"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="167"/>
         <source>Key for moving the cursor down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="185"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="175"/>
         <source>Key Right:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="192"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="199"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="182"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="189"/>
         <source>Key for moving the cursor right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="208"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="197"/>
         <source>Key Confirm:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="215"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="222"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="204"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="211"/>
         <source>Key for confirming any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="231"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="219"/>
         <source>Key Cancel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="238"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="245"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="226"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="233"/>
         <source>Key for canceling any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="254"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="241"/>
         <source>Key Next:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="261"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="268"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="248"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="255"/>
         <source>Key for moving the cursor to the next possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="277"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="263"/>
         <source>Key Previous:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="284"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="291"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="270"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="277"/>
         <source>Key for moving the cursor to the previous possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="300"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="285"/>
         <source>Key Quicksave 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="307"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="292"/>
         <source>Key for quick saving slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="316"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="300"/>
         <source>Key Quickload 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="323"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="307"/>
         <source>Key for quick loading slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="332"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="315"/>
         <source>Key Quicksave 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="339"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="322"/>
         <source>Key for quick saving slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="348"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="330"/>
         <source>Key Quickload 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="355"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="337"/>
         <source>Key for quick loading slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="364"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="345"/>
         <source>Key Information:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="371"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="378"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="352"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="359"/>
         <source>Key to show information about the current field, action, unit at any time in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="387"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="367"/>
         <source>Key Move Map Up:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="394"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="401"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="374"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="381"/>
         <source>Key to move the map a field up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="410"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="389"/>
         <source>Key Move Map Left:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="417"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="424"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="396"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="403"/>
         <source>Key to move the map a field left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="433"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="411"/>
         <source>Key Move Map Down:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="418"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="425"/>
+        <source>Key to move the map a field down.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="433"/>
+        <source>Key Move Map Right:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="440"/>
         <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="447"/>
-        <source>Key to move the map a field down.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="456"/>
-        <source>Key Move Map Right:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="463"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="470"/>
         <source>Key to move the map a field right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="479"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="455"/>
         <source>Key Zoom In:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="486"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="493"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="462"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="469"/>
         <source>Key to zoom into the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="502"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="477"/>
         <source>Key Zoom Out:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="509"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="516"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="484"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="491"/>
         <source>Key to zoom out of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="525"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="499"/>
         <source>Key Show Indirects:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="532"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="539"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="506"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="513"/>
         <source>Key to show where all enemy indirect units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="548"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="521"/>
         <source>Key Show all:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="555"/>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="562"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="528"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="535"/>
         <source>Key to show where all enemy units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="571"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="543"/>
         <source>Key Screenshot:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="578"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="550"/>
         <source>Key for taking a screenshot.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="587"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="558"/>
         <source>Key Mapshot:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="594"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="565"/>
         <source>Key for taking a mapshot. Saving the current map in an image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="603"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="573"/>
         <source>Key Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="612"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="581"/>
         <source>Key Place Terrain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="619"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="588"/>
         <source>Key to select Place Terrain in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="628"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="596"/>
         <source>Key Place Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="635"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="603"/>
         <source>Key to select Place Unit in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="644"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="611"/>
         <source>Key Place Building:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="651"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="618"/>
         <source>Key to select Place Building in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="660"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="626"/>
         <source>Key Next Team:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="667"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="633"/>
         <source>Key to select the next player in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="676"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="641"/>
         <source>Key Previous Team:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="683"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="648"/>
         <source>Key to select the previous player in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="692"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="656"/>
         <source>Key Next Item:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="699"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="663"/>
         <source>Key to select the next editor item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="708"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="671"/>
         <source>Key Previous Item:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="715"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="678"/>
         <source>Key to select the previous editor item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="724"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="686"/>
         <source>Quit game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="731"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="693"/>
         <source>Key for quiting a running match.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="14"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="13"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="23"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="21"/>
         <source>Muted:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="30"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="28"/>
         <source>If checked: mutes all sounds and music.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="39"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="36"/>
         <source>Audio Device:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="47"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="44"/>
         <source>Selects the primary audio output device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="57"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="53"/>
         <source>Master Volume:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="65"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="61"/>
         <source>Selects the master volume for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="77"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="72"/>
         <source>Music Volume:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="85"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="80"/>
         <source>Selects the music volume for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="97"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="91"/>
         <source>Sound Volume:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionaudiomenu.xml" line="105"/>
+        <location filename="../resources/ui/options/optionaudiomenu.xml" line="99"/>
         <source>Selects the sound volume for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="16"/>
         <location filename="../resources/ui/menu/playermenu.xml" line="17"/>
-        <location filename="../resources/ui/menu/playermenu.xml" line="18"/>
         <source>Change username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="24"/>
         <location filename="../resources/ui/menu/playermenu.xml" line="25"/>
-        <location filename="../resources/ui/menu/playermenu.xml" line="26"/>
         <source>Shop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="32"/>
         <location filename="../resources/ui/menu/playermenu.xml" line="33"/>
-        <location filename="../resources/ui/menu/playermenu.xml" line="34"/>
         <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="40"/>
         <location filename="../resources/ui/menu/playermenu.xml" line="41"/>
-        <location filename="../resources/ui/menu/playermenu.xml" line="42"/>
         <source>Achievements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/menu/playermenu.xml" line="48"/>
         <location filename="../resources/ui/menu/playermenu.xml" line="49"/>
-        <location filename="../resources/ui/menu/playermenu.xml" line="50"/>
         <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4916,819 +4916,819 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="14"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="13"/>
         <source>Map Filter Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="23"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="21"/>
         <source>Map name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="31"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="29"/>
         <source>Name or part of the map name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="40"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="40"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="37"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="37"/>
         <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="48"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="45"/>
         <source>Name or part of the author.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="57"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="100"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="53"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="94"/>
         <source>Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="65"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="61"/>
         <source>Minimum amount of players for the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="77"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="117"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="157"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="72"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="110"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="148"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="85"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="80"/>
         <source>Maximum amount of players for the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="97"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="120"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="91"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="113"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="105"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="99"/>
         <source>Minimum width of the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="125"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="118"/>
         <source>Maximum width of the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="137"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="140"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="129"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="132"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="145"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="137"/>
         <source>Minimum height of the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="165"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="156"/>
         <source>Maximum height of the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="177"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="167"/>
         <source>Has to be placed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="187"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="175"/>
         <source>Bases:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="194"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="182"/>
         <source>If the map needs to have bases.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="203"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="235"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="267"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="299"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="331"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="363"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="405"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="437"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="469"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="501"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="533"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="565"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="597"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="639"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="671"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="712"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="744"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="776"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="808"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="190"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="220"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="250"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="280"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="310"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="340"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="378"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="408"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="438"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="468"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="498"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="528"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="558"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="596"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="626"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="664"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="694"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="724"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="754"/>
         <source>Is Optional:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="210"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="242"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="274"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="306"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="338"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="370"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="412"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="444"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="476"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="508"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="540"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="572"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="604"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="646"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="678"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="719"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="751"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="783"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="815"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="197"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="227"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="257"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="287"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="317"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="347"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="385"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="415"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="445"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="475"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="505"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="535"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="565"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="603"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="633"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="671"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="701"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="731"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="761"/>
         <source>If the flag is optional to find. If all active flags are optional at least one must but found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="219"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="205"/>
         <source>Airports:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="226"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="212"/>
         <source>If the map needs to have airports.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="251"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="235"/>
         <source>Harbours:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="258"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="242"/>
         <source>If the map needs to have harbours.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="283"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="265"/>
         <source>Towers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="290"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="272"/>
         <source>If the map needs to have towers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="315"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="295"/>
         <source>Teleport tiles:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="322"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="302"/>
         <source>If the map needs to have teleport tiles.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="347"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="219"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="325"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="205"/>
         <source>Predeployed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="354"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="428"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="332"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="400"/>
         <source>If the map needs to be predeoployed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="379"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="235"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="355"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="220"/>
         <source>Map layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="389"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="245"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="363"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="228"/>
         <source>Mixed bases:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="396"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="370"/>
         <source>If the map needs to have mixed bases.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="421"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="261"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="393"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="243"/>
         <source>Symetric:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="453"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="277"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="423"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="258"/>
         <source>PvP:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="460"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="430"/>
         <source>If the map needs to be a player versus player map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="485"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="293"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="453"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="273"/>
         <source>FTA:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="492"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="460"/>
         <source>If the map needs to have a first turn advantage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="517"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="309"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="483"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="288"/>
         <source>Versus AI:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="524"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="316"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="490"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="295"/>
         <source>If the map is designed to be played against an ai.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="549"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="325"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="513"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="303"/>
         <source>Team Play:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="556"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="332"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="520"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="310"/>
         <source>If the map is designed to be played teams versus teams.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="543"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="318"/>
+        <source>Historical:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="550"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="325"/>
+        <source>If the map is designed as historical map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="573"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="333"/>
+        <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="581"/>
         <location filename="../resources/ui/mapEditDialog.xml" line="341"/>
-        <source>Historical:</source>
+        <source>Low funds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="588"/>
         <location filename="../resources/ui/mapEditDialog.xml" line="348"/>
-        <source>If the map is designed as historical map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="613"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="357"/>
-        <source>Funds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="623"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="367"/>
-        <source>Low funds:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="630"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="374"/>
         <source>If the map is designed as low funds map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="655"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="383"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="611"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="356"/>
         <source>High funds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="662"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="390"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="618"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="363"/>
         <source>If the map is designed as high funds map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="687"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="399"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="641"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="371"/>
         <source>Battle type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="696"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="409"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="649"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="379"/>
         <source>Naval map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="703"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="416"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="656"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="386"/>
         <source>If the map is designed as naval map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="728"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="425"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="679"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="394"/>
         <source>Ground map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="735"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="432"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="686"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="401"/>
         <source>If the map is designed as ground map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="760"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="441"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="709"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="409"/>
         <source>Air map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="767"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="448"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="716"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="416"/>
         <source>If the map is designed as air map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="792"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="457"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="739"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="424"/>
         <source>Scripted map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="799"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="464"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="746"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="431"/>
         <source>If the map is designed as scripted map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="14"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="13"/>
         <source>Map Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="23"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="21"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="31"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="29"/>
         <source>The name of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="48"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="45"/>
         <source>The author of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="57"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="53"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="65"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="61"/>
         <source>The description for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="74"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="69"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="83"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="78"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="91"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="86"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="92"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="87"/>
         <source>Shows the scriptfile select dialog </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="108"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="102"/>
         <source>The amount of players for this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="128"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="121"/>
         <source>The width of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="148"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="140"/>
         <source>The heigth of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="160"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="151"/>
         <source>Score Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="169"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="159"/>
         <source>Turn Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="177"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="167"/>
         <source>The amount of turns in which the map needs to be finished to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="189"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="178"/>
         <source>Deploy Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="197"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="186"/>
         <source>The amount of units allowed to be deploayed to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="209"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="197"/>
         <source>Map Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="226"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="212"/>
         <source>If the map is predeoployed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="252"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="235"/>
         <source>If the map is a mixed bases map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="268"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="250"/>
         <source>If the map is symetric.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="284"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="265"/>
         <source>If the map is a player versus player map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="300"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="280"/>
         <source>If the map has a first turn advantage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="475"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="442"/>
         <source>Closes the map dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="482"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="449"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="483"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="450"/>
         <source>Cancel the map dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="26"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="25"/>
         <source>1) Previous unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="35"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="33"/>
         <source>2) Left mouse button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="44"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="41"/>
         <source>3) Move map cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="53"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="49"/>
         <source>4) Left mouse button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="62"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="57"/>
         <source>5) Scroll and Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="71"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="65"/>
         <source>6) Show info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="80"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="73"/>
         <source>7) Show info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="89"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="81"/>
         <source>8) Next unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="98"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="89"/>
         <source>9) Right mouse button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="107"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="97"/>
         <source>10) Show info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="116"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="105"/>
         <source>11) Show info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="125"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="113"/>
         <source>12) Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="134"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="121"/>
         <source>13) Accept</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="143"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="129"/>
         <source>14) Move mouse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="152"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="137"/>
         <source>15) Right mouse button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/gamepadInfoDialog.xml" line="164"/>
+        <location filename="../resources/ui/gamepadInfoDialog.xml" line="149"/>
         <source>Closes the gamepad dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="14"/>
-        <location filename="../resources/ui/game/playerSelection.xml" line="62"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="13"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="60"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="22"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="21"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="23"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="22"/>
         <source>Changes all co&apos;s to random.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="32"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="31"/>
         <source>CO 1 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="33"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="32"/>
         <source>Changes the first co of all players to random.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="41"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="40"/>
         <source>CO 2 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="42"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="41"/>
         <source>Changes the second co of all players to random.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="51"/>
-        <location filename="../resources/ui/game/playerSelection.xml" line="138"/>
-        <location filename="../resources/ui/game/playerSelection.xml" line="202"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="50"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="136"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="200"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="52"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="51"/>
         <source>Allows you to change several values for all players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="72"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="70"/>
         <source>Changes all co&apos;s to no co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="82"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="80"/>
         <source>Changes the first co of all players to no co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="71"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="69"/>
         <source>All delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="81"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="79"/>
         <source>CO 1 delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="90"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="88"/>
         <source>CO 2 delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="91"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="89"/>
         <source>Changes the second co of all players to no co.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="102"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="100"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="111"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="109"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="120"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="118"/>
         <source>Controller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="129"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="127"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="148"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="146"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="170"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="168"/>
         <source>Select the color for this player&apos;s army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="182"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="180"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="192"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="190"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="203"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="201"/>
         <source>Allows you to change several values for this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/playerSelection.xml" line="211"/>
+        <location filename="../resources/ui/game/playerSelection.xml" line="209"/>
         <source>Shows which players are ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="14"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="13"/>
         <source>Edit all player data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="23"/>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="23"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="21"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="21"/>
         <source>Start funds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="31"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="29"/>
         <source>Select how much funds all player start the game with.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="44"/>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="45"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="41"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="42"/>
         <source>Income modifier:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="52"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="49"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="66"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="62"/>
         <source>Preset teams:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="74"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="70"/>
         <source>Automatically changes the teams of all players so the teams are equally distributed, according to the team count. Teams are assigned in a way that the first turn advantage is the least relevant.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="88"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="83"/>
         <source>All buildlists:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="96"/>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="98"/>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="116"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="91"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="93"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="110"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="97"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="92"/>
         <source>Selects which units all players can build.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="105"/>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="126"/>
+        <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="100"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="120"/>
         <source>Closes this dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="14"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="13"/>
         <source>Edit player data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="31"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="29"/>
         <source>Select how much funds this player starts the game with.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="53"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="50"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="68"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="64"/>
         <source>Player army:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="77"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="73"/>
         <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="90"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="85"/>
         <source>CO Perks:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="99"/>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="117"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="94"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="111"/>
         <source>Selects which units this players can build.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="108"/>
+        <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="102"/>
         <source>Build List:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/example.xml" line="7"/>
+        <location filename="../resources/ui/example.xml" line="23"/>
         <location filename="../resources/ui/example.xml" line="24"/>
-        <location filename="../resources/ui/example.xml" line="25"/>
-        <location filename="../resources/ui/example.xml" line="33"/>
-        <location filename="../resources/ui/example.xml" line="47"/>
-        <location filename="../resources/ui/example.xml" line="58"/>
-        <location filename="../resources/ui/example.xml" line="66"/>
-        <location filename="../resources/ui/example.xml" line="86"/>
+        <location filename="../resources/ui/example.xml" line="32"/>
+        <location filename="../resources/ui/example.xml" line="46"/>
+        <location filename="../resources/ui/example.xml" line="57"/>
+        <location filename="../resources/ui/example.xml" line="65"/>
+        <location filename="../resources/ui/example.xml" line="85"/>
+        <location filename="../resources/ui/example.xml" line="105"/>
         <location filename="../resources/ui/example.xml" line="106"/>
-        <location filename="../resources/ui/example.xml" line="107"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6792,32 +6792,32 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="268"/>
+        <location filename="../menue/optionmenue.cpp" line="269"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="271"/>
+        <location filename="../menue/optionmenue.cpp" line="272"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="273"/>
+        <location filename="../menue/optionmenue.cpp" line="274"/>
         <source>Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="366"/>
+        <location filename="../menue/optionmenue.cpp" line="367"/>
         <source>Filters mods by given tags.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="455"/>
+        <location filename="../menue/optionmenue.cpp" line="456"/>
         <source>The mod author designated this mod as &apos;Cosmetic&apos; and may be used during multiplayer matches based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="265"/>
+        <location filename="../menue/optionmenue.cpp" line="266"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6827,56 +6827,56 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="269"/>
+        <location filename="../menue/optionmenue.cpp" line="270"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="270"/>
+        <location filename="../menue/optionmenue.cpp" line="271"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="282"/>
+        <location filename="../menue/optionmenue.cpp" line="283"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="364"/>
+        <location filename="../menue/optionmenue.cpp" line="365"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="457"/>
+        <location filename="../menue/optionmenue.cpp" line="458"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="462"/>
+        <location filename="../menue/optionmenue.cpp" line="463"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="467"/>
+        <location filename="../menue/optionmenue.cpp" line="468"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="472"/>
+        <location filename="../menue/optionmenue.cpp" line="473"/>
         <source>Tags:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="477"/>
+        <location filename="../menue/optionmenue.cpp" line="478"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="629"/>
+        <location filename="../menue/optionmenue.cpp" line="630"/>
         <source>This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu.</source>
         <translation type="unfinished"></translation>
     </message>

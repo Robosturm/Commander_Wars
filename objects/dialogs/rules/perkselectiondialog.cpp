@@ -70,7 +70,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
             }
         }
         spDropDownmenu pDropDownmenu = spDropDownmenu::create(250, list);
-        pDropDownmenu->setPosition(210, 30);
+        pDropDownmenu->setPosition(pLabel->getY() + pLabel->getWidth() + 10, 30);
         m_pSpriteBox->addChild(pDropDownmenu);
         connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::changeCO, Qt::QueuedConnection);
 

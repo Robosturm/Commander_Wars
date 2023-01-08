@@ -300,7 +300,7 @@ bool UiFactory::createItem(oxygine::spActor parent, QDomElement element, oxygine
 bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
 {
     auto childs = element.childNodes();
-    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrText, attrFont});
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrText, attrFont});
     if (success)
     {
         QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
@@ -320,7 +320,6 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         pLabel->setVisible(visible);
-        pLabel->setHeight(height);
         pLabel->setX(x);
         pLabel->setY(y);
         pLabel->setStyle(style);
@@ -328,6 +327,10 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         pLabel->setTooltipText(tooltip);
         pLabel->setObjectName(id);
         pLabel->setEnabled(enabled);
+        if (height > 0)
+        {
+            pLabel->setHeight(height);
+        }
         QString onUpdateLine = getAttribute(childs, attrOnUpdate);
         if (!onUpdateLine.isEmpty())
         {

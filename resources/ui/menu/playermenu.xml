@@ -4,7 +4,6 @@
         <x>10</x>
         <y>MainMenu.getButtonY(0) - 70</y>
         <width>settings.getWidth() - 20</width>
-        <height>60</height>
         <text>settings.getUsername()</text>
         <font>"mainBlack"</font>
         <fontSize>48</fontSize>

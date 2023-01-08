@@ -10,7 +10,6 @@
                 <x>10</x>
                 <y>10</y>
                 <width>settings.getWidth() - 80</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Screen Settings")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -19,7 +18,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Language:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -37,7 +35,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Screen Resolution:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -56,7 +53,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Screen Mode:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -75,7 +71,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Brightness:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -95,7 +90,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Gamma:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -115,7 +109,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Small screen:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -132,7 +125,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Use High DPI:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -148,7 +140,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Max FPS:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -168,7 +159,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Automatic updates:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -184,7 +174,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Subprocess ai:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

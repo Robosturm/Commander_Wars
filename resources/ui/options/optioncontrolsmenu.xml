@@ -10,7 +10,6 @@
                 <x>10</x>
                 <y>10</y>
                 <width>settings.getWidth() - 80</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Inputs")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -19,7 +18,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Touch screen:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -35,7 +33,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Touch Sensitivity:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -55,7 +52,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Gamepad:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -81,7 +77,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Gamepad Sensitivity:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -103,7 +98,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>settings.getWidth() - 80</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Keys")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -112,7 +106,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Up:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -135,7 +128,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Left:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -158,7 +150,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Down:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -181,7 +172,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Right:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -204,7 +194,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Confirm:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -227,7 +216,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Cancel:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -250,7 +238,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Next:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -273,7 +260,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Previous:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -296,7 +282,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Quicksave 1:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -312,7 +297,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Quickload 1:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -328,7 +312,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Quicksave 2:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -344,7 +327,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Quickload 2:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -360,7 +342,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Information:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -383,7 +364,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Move Map Up:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -406,7 +386,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Move Map Left:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -429,7 +408,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Move Map Down:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -452,7 +430,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Move Map Right:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -475,7 +452,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Zoom In:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -498,7 +474,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Zoom Out:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -521,7 +496,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Show Indirects:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -544,7 +518,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Show all:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -567,7 +540,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Screenshot:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -583,7 +555,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Mapshot:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -599,7 +570,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>settings.getWidth() - 80</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Editor")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -608,7 +578,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Place Terrain:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -624,7 +593,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Place Unit:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -640,7 +608,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Place Building:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -656,7 +623,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Next Team:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -672,7 +638,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Previous Team:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -688,7 +653,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Next Item:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -704,12 +668,11 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Previous Item:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
-                <SelectKey>
+            <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to select the previous editor item.")</tooltip>
@@ -720,7 +683,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Quit game:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

@@ -20,7 +20,6 @@
         <x>settings.getWidth() - 200</x>
         <y>10</y>
         <width>100</width>
-        <height>30</height>
         <text>QT_TRANSLATE_NOOP("GAME","Test")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
         <font>"main"</font>

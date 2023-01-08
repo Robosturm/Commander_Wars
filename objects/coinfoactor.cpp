@@ -103,7 +103,7 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_InfoSprite = oxygine::spSprite::create();
     m_InfoSprite->setResAnim(pCOSpriteManager->getResAnim("skill"));
     m_InfoSprite->setScale(2.5f);
-    m_InfoSprite->setPosition((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_InfoSprite->getScaledWidth() / 2, 400);
+    m_InfoSprite->setPosition(14, 400);
     addChild(m_InfoSprite);
     m_InfoText = oxygine::spTextField::create();
     m_InfoText->setStyle(style);

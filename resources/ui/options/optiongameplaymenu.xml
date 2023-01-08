@@ -10,7 +10,6 @@
                 <x>10</x>
                 <y>10</y>
                 <width>settings.getWidth() - 80</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Gameplay")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -19,7 +18,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Overworld Animations:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -35,7 +33,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Battle Animations:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -53,7 +50,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Battle Type:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -71,7 +67,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Dialogs:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -89,7 +84,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Capture animations:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -107,7 +101,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Day 2 Day animations:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -125,7 +118,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Movement animations:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -143,7 +135,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Animation speed:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -163,7 +154,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Walk animation speed:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -183,7 +173,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Battle animation speed:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -203,7 +192,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Capture animation speed:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -223,7 +211,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Dialog animation Speed:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -243,7 +230,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Multi Turn Plantime:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -263,7 +249,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Auto end turn:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -279,7 +264,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Detailed battle info:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -296,7 +280,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Auto saving time:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -313,7 +296,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Auto saving cycle:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -333,7 +315,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Record games:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -349,7 +330,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Menu heigth:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -369,7 +349,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Menu width:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -389,7 +368,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Shown players:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -409,7 +387,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Supply warning:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -429,7 +406,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Action delay:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -449,7 +425,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Show pc cursor:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -465,7 +440,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Warp pc cursor:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -481,7 +455,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Animated marked fields:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -497,7 +470,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","CO info position:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -515,7 +487,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Auto scrolling:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -532,7 +503,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Show coordinates:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -548,7 +518,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Auto camera:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -564,7 +533,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Camera center mode:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -582,7 +550,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Center camera on fields:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -598,7 +565,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Synchronize animations:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -614,7 +580,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Simple cancel:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -631,7 +596,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Default rules:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -656,7 +620,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Default bannlist:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

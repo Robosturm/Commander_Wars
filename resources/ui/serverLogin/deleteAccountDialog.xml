@@ -10,7 +10,6 @@
                 <x>40</x>
                 <y>settings.getHeight() / 2 - 180</y>
                 <width>settings.getWidth() - 80</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Delete Account")</text>
                 <font>"main"</font>
                 <hAlign>"Middle"</hAlign>
@@ -20,7 +19,6 @@
                 <x>settings.getWidth() / 2 - 310</x>
                 <y>settings.getHeight() / 2 - 100</y>
                 <width>220</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Username:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -29,7 +27,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>220</width>
-                <height>30</height>
                 <text>settings.getUsername()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -38,7 +35,6 @@
                 <x>settings.getWidth() / 2 - 310</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>220</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Password:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -56,7 +52,6 @@
                 <x>settings.getWidth() / 2 - 310</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>220</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Repeat password:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -74,7 +69,6 @@
                 <x>settings.getWidth() / 2 - 310</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>220</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","E-Mail:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
