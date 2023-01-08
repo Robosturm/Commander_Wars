@@ -68,7 +68,7 @@ var Constructor = function()
     this.getItemInfos = function()
     {
         return [[qsTr("Game Options"), "ACTION_OPTIONS_OPTIONS", "options", qsTr("Allows you to modify the game settings.")],
-                [qsTr("Music"), "ACTION_OPTIONS_SOUND", "music", qsTr("Allows you to modify the audio settings.")]]
+                [qsTr("Audio"), "ACTION_OPTIONS_SOUND", "music", qsTr("Allows you to modify the audio settings.")]]
     };
     this.getSubWikiInfoCount = function()
     {
