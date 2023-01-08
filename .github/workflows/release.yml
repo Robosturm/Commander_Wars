@@ -221,8 +221,8 @@ jobs:
         -DDEFAULTAIPIPE=OFF \
         -DCOW_BUILD_TAG="Dummy" \
         -DCOW_UPDATETARGET="Dummy" \
-        -DCOW_INSTALL_DIR="Commander_Wars_Release"
-        -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
+        -DCOW_INSTALL_DIR="Commander_Wars_Release" \
+        -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install"
 
     - name: Build other
       if: matrix.target != 'android'
