@@ -148,7 +148,7 @@ public slots:
     }
     void cleanMemory();
     /**
-     * @brief doString immediatly interprates the string with the javascript-interpreter
+     * @brief doString immediately interprates the string with the javascript-interpreter
      * @param task string parsed to the interpreter
      */
     QJSValue doString(const QString & task);

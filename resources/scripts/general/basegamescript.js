@@ -2,7 +2,7 @@ var BASEGAMESCRIPT =
 {
     immediateStart : function(map)
     {
-        // called to check if the game should start immediatly
+        // called to check if the game should start immediately
         return false;
     },
 

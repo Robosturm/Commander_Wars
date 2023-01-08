@@ -121,7 +121,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="125"/>
-        <source>Orders a Black Hole Factory to produce a unit at the first door. The unit is able to move immediatly.</source>
+        <source>Orders a Black Hole Factory to produce a unit at the first door. The unit is able to move immediately.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -139,7 +139,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="126"/>
-        <source>Orders a Black Hole Factory to produce a unit at the second door. The unit is able to move immediatly.</source>
+        <source>Orders a Black Hole Factory to produce a unit at the second door. The unit is able to move immediately.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -157,7 +157,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="126"/>
-        <source>Orders a Black Hole Factory to produce a unit at the third door. The unit is able to move immediatly.</source>
+        <source>Orders a Black Hole Factory to produce a unit at the third door. The unit is able to move immediately.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -267,7 +267,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="53"/>
-        <source>Deploys your first co onto the given unit. All units inside the co range of this unit will get the buff of your first co.</source>
+        <source>Deploys your first co onto the given unit. All units inside the CO range of this unit will get the buff of your first CO.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -281,7 +281,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="53"/>
-        <source>Deploys your second co onto the given unit. All units inside the co range of this unit will get the buff of your second co.</source>
+        <source>Deploys your second co onto the given unit. All units inside the CO range of this unit will get the buff of your second CO.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -294,12 +294,12 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CRYSTALL_HEAL.js" line="63"/>
-        <source>Heal with Crystall</source>
+        <source>Heal with crystal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CRYSTALL_HEAL.js" line="67"/>
-        <source>Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.</source>
+        <source>Orders a crystal or monolith to heal all own units around it and also refills their ammo and fuel.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -658,7 +658,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_NEST_FACTORY_DOOR.js" line="120"/>
-        <source>Orders the Nest to produce a none naval unit.  The unit is able to move immediatly.</source>
+        <source>Orders the Nest to produce a none naval unit.  The unit is able to move immediately.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1105,7 +1105,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="347"/>
-        <source>Unloads loaded units. Units that have been loaded this turn can&apos;t move. Units that were loaded in previous turns can immediatly move after beeing unloaded.</source>
+        <source>Unloads loaded units. Units that have been loaded this turn can&apos;t move. Units that were loaded in previous turns can immediately move after beeing unloaded.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2291,7 +2291,7 @@
     </message>
     <message>
         <location filename="../game/ui/damagecalculator.cpp" line="233"/>
-        <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied.</source>
+        <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediately applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11400,7 +11400,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <name>__zblackhole_factorybase</name>
     <message>
         <location filename="../resources/scripts/building/__zblackhole_factorybase.js" line="73"/>
-        <source>Black Hole Factory that can build 3 units each turn which can immediatly move.</source>
+        <source>Black Hole Factory that can build 3 units each turn which can immediately move.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

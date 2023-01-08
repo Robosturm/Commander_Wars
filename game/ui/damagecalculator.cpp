@@ -230,7 +230,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     };
 
     unitData.m_unitRank = spDropDownmenuSprite::create(105, rankItems, unitRankCreator, 30);
-    unitData.m_unitRank->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied."));
+    unitData.m_unitRank->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediately applied."));
     unitData.m_unitRank->setCurrentItem(-GameEnums::UnitRank_CO1);
     unitData.m_unitRank->setPosition(x, y);
     addItem(unitData.m_unitRank);

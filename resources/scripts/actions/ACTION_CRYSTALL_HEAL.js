@@ -60,11 +60,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Heal with Crystall");
+        return qsTr("Heal with crystal");
     };
     this.getDescription = function()
     {
-        return qsTr("Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.");
+        return qsTr("Orders a crystal or monolith to heal all own units around it and also refills their ammo and fuel.");
     };
 }
 

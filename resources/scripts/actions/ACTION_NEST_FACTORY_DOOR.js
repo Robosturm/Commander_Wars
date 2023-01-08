@@ -117,7 +117,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Orders the Nest to produce a none naval unit.  The unit is able to move immediatly.");
+        return qsTr("Orders the Nest to produce a none naval unit.  The unit is able to move immediately.");
     };
 }
 

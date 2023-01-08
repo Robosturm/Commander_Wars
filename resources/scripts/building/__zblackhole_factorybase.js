@@ -70,7 +70,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Black Hole Factory that can build 3 units each turn which can immediatly move.");
+        return qsTr("Black Hole Factory that can build 3 units each turn which can immediately move.");
     };
 }
 
