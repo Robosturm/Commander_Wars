@@ -205,13 +205,14 @@ jobs:
         -DANDROID_NATIVE_API_LEVEL="${{matrix.target-api-level}}" \
         -DANDROID_NDK="${{env.NDK_Root}}" \
         -DCMAKE_TOOLCHAIN_FILE="${{env.NDK_Root}}/build/cmake/android.toolchain.cmake" \
-        -DANDROID_USE_LEGACY_TOOLCHAIN_FILE=ON \        
+        -DANDROID_USE_LEGACY_TOOLCHAIN_FILE=ON \
         -DANDROID_ABI="${{matrix.abi}}" \
-        -DANDROID_STL="c++_static" \        
+        -DANDROID_STL="c++_static" \
         -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL=ON \
         -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
         -DANDROID_SDK_ROOT="${ANDROID_SDK_ROOT}" \
+        -DCMAKE_CXX_FLAGS_INIT:STRING="" \
         -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi" \
         -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
         -DOPENSSL_USE_STATIC_LIBS=ON \
