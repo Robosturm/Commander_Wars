@@ -23,7 +23,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "build";
+        return "TEMPORARY_AIRPORT";
     };
     this.perform = function(action, map)
     {

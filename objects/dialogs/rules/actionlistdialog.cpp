@@ -114,7 +114,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
             x += 400;
             if (x + 400 > pPanel->getContentWidth())
             {
-                y += 40;
+                y += 50;
                 x = 10;
             }
         }

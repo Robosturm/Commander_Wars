@@ -14,6 +14,7 @@
 QStringList Wikipage::m_pageStack;
 
 Wikipage::Wikipage(QString pageID)
+    : m_pageID(pageID)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Wikipage");

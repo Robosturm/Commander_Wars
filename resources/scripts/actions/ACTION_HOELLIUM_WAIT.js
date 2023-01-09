@@ -7,8 +7,8 @@ var Constructor = function()
         var targetField = action.getTarget();
 		var targetUnit = action.getMovementTarget();
         if (unit.getHasMoved() === false &&
-           ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
-           (targetUnit === null || (targetUnit !== null && unit.getOwner().isEnemyUnit(targetUnit)) && unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) > 0))
+           (actionTargetField.x === targetField.x && actionTargetField.y === targetField.y) ||
+           ((targetUnit === null || unit.getOwner().isEnemyUnit(targetUnit)) && unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) > 0))
         {
             return true;
         }
