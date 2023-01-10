@@ -157,5 +157,7 @@
         <file>resources/sounds/talonguntargeting.wav</file>
         <file>resources/sounds/placeBuilding.wav</file>
         <file>resources/sounds/placeHq.wav</file>
+        <file>resources/sounds/placeReaf.wav</file>
+        <file>resources/sounds/placeStreet.wav</file>
     </qresource>
 </RCC>
