@@ -35,7 +35,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Crystall");
+        return qsTr("Crystal");
     };
     this.getActionTargetFields = function(building)
     {

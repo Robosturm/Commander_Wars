@@ -46,7 +46,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     pLabel->setHtmlText((tr("Terrain Information ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 0);
     addChild(pLabel);
-    y += 90;
+    y += pLabel->getTextRect().getHeight() + 10 + GameMap::getImageSize();
 
     spTerrain pIconTerrain = Terrain::createTerrain(pTerrain->getTerrainID(), -1, -1, "", pTerrain->getMap());
     pIconTerrain->loadSprites();
@@ -146,7 +146,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     pLabel->setHtmlText(tr("Movement Costs"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
-    y += 60;
+    y += 10 + pLabel->getTextRect().getHeight();
 
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     qint32 x = 0;

@@ -4629,87 +4629,87 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="573"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="581"/>
         <source>Key Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="581"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="589"/>
         <source>Key Place Terrain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="588"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="596"/>
         <source>Key to select Place Terrain in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="596"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="604"/>
         <source>Key Place Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="603"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="611"/>
         <source>Key to select Place Unit in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="611"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="619"/>
         <source>Key Place Building:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="618"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="626"/>
         <source>Key to select Place Building in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="626"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="634"/>
         <source>Key Next Team:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="633"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="641"/>
         <source>Key to select the next player in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="641"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="649"/>
         <source>Key Previous Team:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="648"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="656"/>
         <source>Key to select the previous player in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="656"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="664"/>
         <source>Key Next Item:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="663"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="671"/>
         <source>Key to select the next editor item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="671"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="679"/>
         <source>Key Previous Item:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="678"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="686"/>
         <source>Key to select the previous editor item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="686"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="694"/>
         <source>Quit game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="693"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="573"/>
         <source>Key for quiting a running match.</source>
         <translation type="unfinished"></translation>
     </message>
