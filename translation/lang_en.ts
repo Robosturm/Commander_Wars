@@ -27264,7 +27264,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <name>zcrystall</name>
     <message>
         <location filename="../resources/scripts/building/zcrystall.js" line="38"/>
-        <source>Crystall</source>
+        <source>Crystal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

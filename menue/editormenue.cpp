@@ -1354,17 +1354,6 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     QVector<QPoint> points;
     Mainapp* pApp = Mainapp::getInstance();
     QString terrainID = m_EditorSelection->getCurrentTerrainID();
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue sound = pInterpreter->doFunction(terrainID, "getEditorPlacementSound");
-    if (sound.isString())
-    {
-        QString soundName = sound.toString();
-        if (!soundName.isEmpty())
-        {
-            pApp->getAudioManager()->playSound(soundName);
-        }
-    }
-
     switch (m_EditorSelection->getSizeMode())
     {
         case EditorSelection::PlacementSize::None:
@@ -1400,6 +1389,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         }
     }
     pApp->pauseRendering();
+    bool placed = false;
     for (auto point : points)
     {
         // nice we can place the terrain
@@ -1411,7 +1401,29 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
             m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false);
+            placed = true;
         }
+        else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())
+        {
+            placed = true;
+        }
+    }
+    if (placed)
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue sound = pInterpreter->doFunction(terrainID, "getEditorPlacementSound");
+        if (sound.isString())
+        {
+            QString soundName = sound.toString();
+            if (!soundName.isEmpty())
+            {
+                pApp->getAudioManager()->playSound(soundName);
+            }
+        }
+    }
+    else
+    {
+        pApp->getAudioManager()->playSound("impossible.wav");
     }
     if (points.size() > 30)
     {
@@ -1429,16 +1441,6 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     CONSOLE_PRINT("EditorMenue::placeBuilding", GameConsole::eDEBUG);    
     Mainapp* pApp = Mainapp::getInstance();
     spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue sound = pInterpreter->doFunction(pCurrentBuilding->getBuildingID(), "getEditorPlacementSound");
-    if (sound.isString() )
-    {
-        QString soundName = sound.toString();
-        if (!soundName.isEmpty())
-        {
-            pApp->getAudioManager()->playSound(soundName);
-        }
-    }
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1480,6 +1482,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     {
         points = PathFindingSystem::getFields(x, y, 0, 0);
     }
+    bool placed = false;
     for (qint32 i = 0; i < points.size(); i++)
     {
         // point still on the map great :)
@@ -1500,8 +1503,25 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID(), m_pMap.get());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
                 m_pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
+                placed = true;
             }
         }
+    }
+    if (placed)
+    {    Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue sound = pInterpreter->doFunction(pCurrentBuilding->getBuildingID(), "getEditorPlacementSound");
+        if (sound.isString() )
+        {
+            QString soundName = sound.toString();
+            if (!soundName.isEmpty())
+            {
+                pApp->getAudioManager()->playSound(soundName);
+            }
+        }
+    }
+    else
+    {
+        pApp->getAudioManager()->playSound("impossible.wav");
     }
     if (points.size() > 30)
     {
@@ -1523,17 +1543,6 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
     CONSOLE_PRINT("EditorMenue::placeUnit", GameConsole::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue sound = pInterpreter->doFunction(pCurrentUnit->getUnitID(), "getEditorPlacementSound");
-    if (sound.isString() )
-    {
-        QString soundName = sound.toString();
-        if (!soundName.isEmpty())
-        {
-            pApp->getAudioManager()->playSound(soundName, 1, 0, 1.0f, false, 250);
-        }
-    }
-
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1567,6 +1576,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
             break;
         }
     }
+    bool placed = false;
     for (auto & point : points)
     {
         // point still on the map great :)
@@ -1575,9 +1585,27 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         if (canUnitBePlaced(curX, curY))
         {
             spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, m_pMap.get());
-            pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);            
-            m_pMap->getTerrain(curX, curY)->setUnit(pUnit);            
+            pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
+            m_pMap->getTerrain(curX, curY)->setUnit(pUnit);
+            placed = true;
         }
+    }
+    if (placed)
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue sound = pInterpreter->doFunction(pCurrentUnit->getUnitID(), "getEditorPlacementSound");
+        if (sound.isString() )
+        {
+            QString soundName = sound.toString();
+            if (!soundName.isEmpty())
+            {
+                pApp->getAudioManager()->playSound(soundName, 1, 0, 1.0f, false, 250);
+            }
+        }
+    }
+    else
+    {
+        pApp->getAudioManager()->playSound("impossible.wav");
     }
     if (Settings::getSyncAnimations())
     {
