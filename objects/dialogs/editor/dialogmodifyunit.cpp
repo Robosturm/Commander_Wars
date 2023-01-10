@@ -88,7 +88,7 @@ void DialogModifyUnit::updateData()
     qint32 y = 30 + pLabel->getTextRect().getHeight();
     pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Unit: "));
+    pLabel->setHtmlText(tr("Custom name: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     spTextbox pTexbox = spTextbox::create(Settings::getWidth() - 40 - sliderOffset);

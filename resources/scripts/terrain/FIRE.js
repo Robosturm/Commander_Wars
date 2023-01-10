@@ -56,6 +56,10 @@ var Constructor = function()
     {
         terrain.loadBaseSprite("fire");
     };
+    this.getTerrainSprites = function(map)
+    {
+        return ["fire"];
+    };
     this.getMiniMapIcon = function()
     {
         return "minimap_fire";

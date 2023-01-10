@@ -196,7 +196,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setX(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -213,7 +213,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setY(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -230,7 +230,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setWidth(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -247,14 +247,14 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setHeigth(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     spLabel pTextInfo = spLabel::create(width - 10);
     pTextInfo->setStyle(style);
     pTextInfo->setHtmlText(getPlayerInfo());
     pTextInfo->setPosition(30, y);
     pBox->addItem(pTextInfo);
-    y += 40;
+    y += pTextInfo->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -266,7 +266,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(1);
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     oxygine::spButton pButton = ObjectManager::createButton(tr("Add Player"), 200);
     pButton->setPosition(30, y);

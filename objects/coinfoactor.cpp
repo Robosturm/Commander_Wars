@@ -46,12 +46,13 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     m_COName->setStyle(headerStyle);
     m_COName->setY(m_pCurrentCoFaction->getY() + 40);
+    m_COName->setText(tr("Unknown"));
     addChild(m_COName);
 
     m_pCurrentCO = oxygine::spSprite::create();
     m_pCurrentCO->setScale((Settings::getHeight() - 200) / 352.0f);
     m_pCurrentCO->setSize(208, 352);
-    m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), m_COName->getY() + 60);
+    m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), m_COName->getY() + m_COName->getTextRect().getHeight() + 10);
     addChild(m_pCurrentCO);
 
 
@@ -59,7 +60,7 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_COBio = oxygine::spTextField::create();
     m_COBio->setStyle(style);
     m_COBio->setWidth(m_pCurrentCO->getX() - 50);
-    m_COBio->setPosition(10, m_COName->getY() + 60);
+    m_COBio->setPosition(10, m_COName->getY() + m_COName->getTextRect().getHeight() + 10);
     addChild(m_COBio);
 
     m_HitSprite = oxygine::spBox9Sprite::create();
@@ -79,7 +80,7 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     addChild(m_HitSprite);
     m_HitText = oxygine::spTextField::create();
     m_HitText->setStyle(style);
-    m_HitText->setX(m_HitSprite->getX() + m_HitSprite->getScaledWidth() +10);
+    m_HitText->setX(m_HitSprite->getX() + m_HitSprite->getScaledWidth() + 10);
     addChild(m_HitText);
 
     m_MissSprite = oxygine::spBox9Sprite::create();
@@ -305,7 +306,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     {
         m_SynergyText->setY(y);
         m_synergySprite->setY(y);
-        y += 40;
+        y += m_SynergyText->getTextRect().getHeight() + 10;
 
         // show co synergys
         for (qint32 i = 0; i < m_SynergyCONames.size(); i++)
@@ -356,7 +357,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
                     }
                     addChild(pActor);
                     m_SynergyStarActors.append(pActor);
-                    y += 40;
+                    y += pText->getTextRect().getHeight() + 10;
                 }
             }
         }
@@ -365,11 +366,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     {
         m_synergySprite->setY(y);
         m_SynergyText->setY(y);
-        y += 40;
+        y += m_SynergyText->getTextRect().getHeight() + 10;
     }
 
     m_PerkText->setPosition(10, y);
-    y += 40;
+    y += m_PerkText->getTextRect().getHeight() + 10;
     showPerks(pCO, y);
     y += 50;
 

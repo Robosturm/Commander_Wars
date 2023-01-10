@@ -9,7 +9,7 @@
             <Label>
                 <x>40</x>
                 <y>settings.getHeight() / 2 - 180</y>
-                <width>settings.getWidth() - 80</width>
+                <width>parentWidth - 80</width>
                 <text>UserLoginDialog.loginOnServerText()</text>
                 <font>"main"</font>
                 <hAlign>"Middle"</hAlign>

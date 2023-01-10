@@ -333,6 +333,7 @@ private:
     static UiFactory* m_pUiFactory;
     QVector<FactoryItem> m_factoryItems;
     QRect m_lastCoordinates;
+    QSize m_parentSize;
     quint32 m_creationCount{0};
     spPlayer m_dropDownPlayer;
 };

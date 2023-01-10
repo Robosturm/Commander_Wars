@@ -48,10 +48,11 @@ CampaignEditor::CampaignEditor()
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     qint32 y = 30;
+    const qint32 labelWidth = 250;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    oxygine::spTextField pText =  oxygine::spTextField::create();
+    spLabel pText = spLabel::create(labelWidth);
     pText->setStyle(style);
     pText->setHtmlText(tr("Folder:"));
     pText->setPosition(30, y);
@@ -69,9 +70,9 @@ CampaignEditor::CampaignEditor()
     {
         emit sigShowSelectFolder();
     });
+    y += pText->getHeight() + 10;
 
-    y += 40;
-    pText =  oxygine::spTextField::create();
+    pText = spLabel::create(labelWidth);
     pText->setStyle(style);
     pText->setHtmlText(tr("Name:"));
     pText->setPosition(30, y);
@@ -81,9 +82,9 @@ CampaignEditor::CampaignEditor()
     m_Name->setPosition(300, y);
     m_Name->setCurrentText("");
     pSpriteBox->addChild(m_Name);
+    y += pText->getHeight() + 10;
 
-    y += 40;
-    pText =  oxygine::spTextField::create();
+    pText = spLabel::create(labelWidth);
     pText->setStyle(style);
     pText->setHtmlText(tr("Author:"));
     pText->setPosition(30, y);
@@ -93,9 +94,9 @@ CampaignEditor::CampaignEditor()
     m_Author->setPosition(300, y);
     m_Author->setCurrentText(Settings::getUsername());
     pSpriteBox->addChild(m_Author);
+    y += pText->getHeight() + 10;
 
-    y += 40;
-    pText =  oxygine::spTextField::create();
+    pText = spLabel::create(labelWidth);
     pText->setStyle(style);
     pText->setHtmlText(tr("Description:"));
     pText->setPosition(30, y);
@@ -105,8 +106,8 @@ CampaignEditor::CampaignEditor()
     m_Description->setPosition(300, y);
     m_Description->setCurrentText("");
     pSpriteBox->addChild(m_Description);
+    y += pText->getHeight() + 10;
 
-    y += 50;
     QSize size(Settings::getWidth() - 80, Settings::getHeight() - 280);
     m_Panel = spPanel::create(true, size, size);
     m_Panel->setPosition(40, y);
@@ -254,8 +255,7 @@ void CampaignEditor::clearCampaignData()
 }
 
 void CampaignEditor::updateCampaignData()
-{
-    
+{    
     m_Panel->clearContent();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     for (qint32 i = 0; i < mapDatas.size(); i++)
@@ -828,7 +828,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pText->setHtmlText(tr("Enable Variable"));
     pText->setPosition(10, y);
     pPanel->addItem(pText);
-    y += 70;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -845,7 +845,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableEnableName = value;
     });
     pPanel->addItem(textBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -863,7 +863,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableEnableCompare = dropDown->getCurrentItemText();
     });
     pPanel->addItem(dropDown);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -880,7 +880,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableEnableValue = value;
     });
     pPanel->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -897,14 +897,14 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableEnableActive = value;
     });
     pPanel->addItem(checkBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(Settings::getWidth() - 60);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Disable Variable"));
     pText->setPosition(10, y);
     pPanel->addItem(pText);
-    y += 70;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -921,7 +921,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableDisableName = value;
     });
     pPanel->addItem(textBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -937,7 +937,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableDisableCompare = dropDown->getCurrentItemText();
     });
     pPanel->addItem(dropDown);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -954,7 +954,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableDisableValue = value;
     });
     pPanel->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -971,7 +971,8 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableDisableActive = value;
     });
     pPanel->addItem(checkBox);
-    y += 40;
+    y += pText->getHeight() + 10;
+
     pPanel->setContentHeigth(y);
     CampaignEditor::addChild(pBox);
     

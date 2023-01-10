@@ -882,6 +882,8 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
         pPanel->setVisible(visible);
         pPanel->setObjectName(id);
         pPanel->setEnabled(enabled);
+        m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
+        m_parentSize = QSize(pPanel->getScaledWidth(), pPanel->getScaledHeight());
         auto node = getNode(childs, attrChilds).firstChild();
         qint32 maxWidth = 0;
         qint32 maxHeight = 0;
@@ -913,8 +915,8 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
         pPanel->setContentHeigth(maxHeight + 40);
         pPanel->setContentWidth(maxWidth + 40);
         parent->addChild(pPanel);
+        m_parentSize = QSize(0, 0);
         item = pPanel;
-        m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
     }
     return success;
 }
@@ -1175,6 +1177,8 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
         pPanel->setScale(1);
         pPanel->setVisible(visible);
         pPanel->setEnabled(enabled);
+        m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
+        m_parentSize = QSize(pPanel->getScaledWidth(), pPanel->getScaledHeight());
         auto node = getNode(childs, attrChilds).firstChild();
         while (!node.isNull())
         {
@@ -1194,8 +1198,8 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
             node = node.nextSibling();
         }
         parent->addChild(pPanel);
+        m_parentSize = QSize(0, 0);
         item = pPanel;
-        m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
     }
     return success;
 }
@@ -1272,7 +1276,9 @@ qint32 UiFactory::getIntValue(QString line, QString objectId, qint32 loopIdx, Cr
         QString coordinates = "var lastX = " + QString::number(m_lastCoordinates.x()) + ";" +
                               "var lastY = " + QString::number(m_lastCoordinates.y()) + ";" +
                               "var lastWidth = " + QString::number(m_lastCoordinates.width()) + ";" +
-                              "var lastHeight = " + QString::number(m_lastCoordinates.height()) + ";"; +
+                              "var lastHeight = " + QString::number(m_lastCoordinates.height()) + ";" +
+                              "var parentWidth = " + QString::number(m_parentSize.width()) + ";" +
+                              "var parentHeight = " + QString::number(m_parentSize.height()) + ";" +
                               "var objectId = \"" + objectId + "\";" +
                               "var loopIdx = " + QString::number(loopIdx) + ";";
         QJSValue obj = pInterpreter->newQObject(pMenu);
@@ -1332,7 +1338,9 @@ quint64 UiFactory::getUInt64Value(QString line, QString objectId, qint32 loopIdx
         QString coordinates = "var lastX = " + QString::number(m_lastCoordinates.x()) + ";" +
                               "var lastY = " + QString::number(m_lastCoordinates.y()) + ";" +
                               "var lastWidth = " + QString::number(m_lastCoordinates.width()) + ";" +
-                              "var lastHeight = " + QString::number(m_lastCoordinates.height()) + ";"; +
+                              "var lastHeight = " + QString::number(m_lastCoordinates.height()) + ";" +
+                              "var parentWidth = " + QString::number(m_parentSize.width()) + ";" +
+                              "var parentHeight = " + QString::number(m_parentSize.height()) + ";" +
                               "var objectId = \"" + objectId + "\";" +
                               "var loopIdx = " + QString::number(loopIdx) + ";";
         QJSValue obj = pInterpreter->newQObject(pMenu);
@@ -1393,6 +1401,8 @@ float UiFactory::getFloatValue(QString line, QString objectId, qint32 loopIdx, C
                               "var lastY = " + QString::number(m_lastCoordinates.y()) + ";" +
                               "var lastWidth = " + QString::number(m_lastCoordinates.width()) + ";" +
                               "var lastHeight = " + QString::number(m_lastCoordinates.height()) + ";" +
+                              "var parentWidth = " + QString::number(m_parentSize.width()) + ";" +
+                              "var parentHeight = " + QString::number(m_parentSize.height()) + ";" +
                               "var objectId = \"" + objectId + "\";" +
                               "var loopIdx = " + QString::number(loopIdx) + ";";
         QJSValue obj = pInterpreter->newQObject(pMenu);

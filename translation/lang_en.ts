@@ -1482,37 +1482,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="76"/>
+        <location filename="../objects/coinfoactor.cpp" line="77"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="94"/>
+        <location filename="../objects/coinfoactor.cpp" line="95"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="155"/>
+        <location filename="../objects/coinfoactor.cpp" line="156"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="160"/>
+        <location filename="../objects/coinfoactor.cpp" line="161"/>
         <source>Active Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="171"/>
+        <location filename="../objects/coinfoactor.cpp" line="172"/>
         <source>Global Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="177"/>
+        <location filename="../objects/coinfoactor.cpp" line="178"/>
         <source>CO Zone Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="202"/>
+        <location filename="../objects/coinfoactor.cpp" line="49"/>
         <location filename="../objects/coinfoactor.cpp" line="203"/>
         <location filename="../objects/coinfoactor.cpp" line="204"/>
         <location filename="../objects/coinfoactor.cpp" line="205"/>
@@ -1521,16 +1521,17 @@
         <location filename="../objects/coinfoactor.cpp" line="208"/>
         <location filename="../objects/coinfoactor.cpp" line="209"/>
         <location filename="../objects/coinfoactor.cpp" line="210"/>
+        <location filename="../objects/coinfoactor.cpp" line="211"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="257"/>
+        <location filename="../objects/coinfoactor.cpp" line="258"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="282"/>
+        <location filename="../objects/coinfoactor.cpp" line="283"/>
         <source>Progress: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1614,79 +1615,79 @@
 <context>
     <name>CampaignEditor</name>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="56"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="57"/>
         <source>Folder:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="60"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="61"/>
         <source>Folder containing the campaign maps. All maps for this campaign should be directly below this folder. The folder name must end with .camp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="65"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="66"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="76"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="77"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="80"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="81"/>
         <source>Name of the campaign shown in the map selection screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="88"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="89"/>
         <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="92"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="93"/>
         <source>Name of the author shown in the map selection screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="100"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="101"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="104"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="105"/>
         <source>Description of the campaign shown in the map selection screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="116"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="117"/>
         <source>Add Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="125"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="203"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="126"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="204"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="135"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="193"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="136"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="194"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="145"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="146"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="167"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="168"/>
         <source>Do you want to exit the campaign editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="183"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="184"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2607,11 +2608,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="91"/>
-        <source>Unit: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="107"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
@@ -2665,6 +2661,11 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="84"/>
         <source>Edit unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="91"/>
+        <source>Custom name: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3590,7 +3591,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FIRE.js" line="69"/>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="73"/>
         <source>&lt;r&gt;In Fog of War, fire make a &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;5 square &lt;/div&gt;&lt;r&gt;area around them visible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3658,8 +3659,8 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>GAME</name>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="771"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="441"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="772"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="442"/>
         <location filename="../resources/ui/gamepadInfoDialog.xml" line="148"/>
         <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="99"/>
         <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="119"/>
@@ -3667,7 +3668,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="772"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="773"/>
         <source>Closes the map filter dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4918,356 +4919,356 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="21"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="22"/>
         <source>Map name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="29"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="30"/>
         <source>Name or part of the map name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="37"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="37"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="38"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="38"/>
         <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="45"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="46"/>
         <source>Name or part of the author.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="53"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="94"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="54"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="95"/>
         <source>Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="61"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="62"/>
         <source>Minimum amount of players for the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="72"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="110"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="148"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="73"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="111"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="149"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="80"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="81"/>
         <source>Maximum amount of players for the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="91"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="113"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="92"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="114"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="99"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="100"/>
         <source>Minimum width of the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="118"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="119"/>
         <source>Maximum width of the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="129"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="132"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="130"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="133"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="137"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="138"/>
         <source>Minimum height of the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="156"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="157"/>
         <source>Maximum height of the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="167"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="168"/>
         <source>Has to be placed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="175"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="176"/>
         <source>Bases:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="182"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="183"/>
         <source>If the map needs to have bases.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="190"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="220"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="250"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="280"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="310"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="340"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="378"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="408"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="438"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="468"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="498"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="528"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="558"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="596"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="626"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="664"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="694"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="724"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="754"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="191"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="221"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="251"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="281"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="311"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="341"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="379"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="409"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="439"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="469"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="499"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="529"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="559"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="597"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="627"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="665"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="695"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="725"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="755"/>
         <source>Is Optional:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="197"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="227"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="257"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="287"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="317"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="347"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="385"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="415"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="445"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="475"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="505"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="535"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="565"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="603"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="633"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="671"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="701"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="731"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="761"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="198"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="228"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="258"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="288"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="318"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="348"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="386"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="416"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="446"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="476"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="506"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="536"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="566"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="604"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="634"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="672"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="702"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="732"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="762"/>
         <source>If the flag is optional to find. If all active flags are optional at least one must but found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="205"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="206"/>
         <source>Airports:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="212"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="213"/>
         <source>If the map needs to have airports.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="235"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="236"/>
         <source>Harbours:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="242"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="243"/>
         <source>If the map needs to have harbours.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="265"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="266"/>
         <source>Towers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="272"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="273"/>
         <source>If the map needs to have towers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="295"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="296"/>
         <source>Teleport tiles:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="302"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="303"/>
         <source>If the map needs to have teleport tiles.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="325"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="205"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="326"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="206"/>
         <source>Predeployed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="332"/>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="400"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="333"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="401"/>
         <source>If the map needs to be predeoployed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="355"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="220"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="356"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="221"/>
         <source>Map layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="363"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="228"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="364"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="229"/>
         <source>Mixed bases:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="370"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="371"/>
         <source>If the map needs to have mixed bases.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="393"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="243"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="394"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="244"/>
         <source>Symetric:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="423"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="258"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="424"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="259"/>
         <source>PvP:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="430"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="431"/>
         <source>If the map needs to be a player versus player map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="453"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="273"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="454"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="274"/>
         <source>FTA:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="460"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="461"/>
         <source>If the map needs to have a first turn advantage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="483"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="288"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="484"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="289"/>
         <source>Versus AI:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="490"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="295"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="491"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="296"/>
         <source>If the map is designed to be played against an ai.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="513"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="303"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="514"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="304"/>
         <source>Team Play:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="520"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="310"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="521"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="311"/>
         <source>If the map is designed to be played teams versus teams.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="543"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="318"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="544"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="319"/>
         <source>Historical:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="550"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="325"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="551"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="326"/>
         <source>If the map is designed as historical map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="573"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="333"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="574"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="334"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="581"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="341"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="582"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="342"/>
         <source>Low funds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="588"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="348"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="589"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="349"/>
         <source>If the map is designed as low funds map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="611"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="356"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="612"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="357"/>
         <source>High funds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="618"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="363"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="619"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="364"/>
         <source>If the map is designed as high funds map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="641"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="371"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="642"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="372"/>
         <source>Battle type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="649"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="379"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="650"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="380"/>
         <source>Naval map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="656"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="386"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="657"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="387"/>
         <source>If the map is designed as naval map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="679"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="394"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="680"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="395"/>
         <source>Ground map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="686"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="401"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="687"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="402"/>
         <source>If the map is designed as ground map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="709"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="409"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="710"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="410"/>
         <source>Air map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="716"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="416"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="717"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="417"/>
         <source>If the map is designed as air map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="739"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="424"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="740"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="425"/>
         <source>Scripted map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="746"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="431"/>
+        <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="747"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="432"/>
         <source>If the map is designed as scripted map.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5277,132 +5278,132 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="21"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="22"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="29"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="30"/>
         <source>The name of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="45"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="46"/>
         <source>The author of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="53"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="54"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="61"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="62"/>
         <source>The description for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="69"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="70"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="78"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="79"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="86"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="87"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="87"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="88"/>
         <source>Shows the scriptfile select dialog </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="102"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="103"/>
         <source>The amount of players for this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="121"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="122"/>
         <source>The width of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="140"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="141"/>
         <source>The heigth of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="151"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="152"/>
         <source>Score Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="159"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="160"/>
         <source>Turn Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="167"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="168"/>
         <source>The amount of turns in which the map needs to be finished to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="178"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="179"/>
         <source>Deploy Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="186"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="187"/>
         <source>The amount of units allowed to be deploayed to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="197"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="198"/>
         <source>Map Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="212"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="213"/>
         <source>If the map is predeoployed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="235"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="236"/>
         <source>If the map is a mixed bases map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="250"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="251"/>
         <source>If the map is symetric.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="265"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="266"/>
         <source>If the map is a player versus player map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="280"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="281"/>
         <source>If the map has a first turn advantage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="442"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="443"/>
         <source>Closes the map dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="449"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="450"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="450"/>
+        <location filename="../resources/ui/mapEditDialog.xml" line="451"/>
         <source>Cancel the map dialog</source>
         <translation type="unfinished"></translation>
     </message>

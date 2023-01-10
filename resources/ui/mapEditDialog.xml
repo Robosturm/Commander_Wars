@@ -7,11 +7,12 @@
         <height>settings.getHeight() - 80</height>
         <childs>
             <Label>
-                <x>settings.getWidth() / 2 - 300</x>
+                <x>40</x>
                 <y>10</y>
-                <width>600</width>
+                <width>parentWidth - 80</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Map Settings")</text>                
                 <font>"main"</font>
+                <hAlign>"Middle"</hAlign>
                 <fontSize>48</fontSize>
             </Label>
             <Label>

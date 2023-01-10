@@ -57,7 +57,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     pLabel->setHtmlText(tr("Information"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    y += 60;
+    y += pLabel->getHeight() + 10;
 
     pLabel = spLabel::create(190);
     pLabel->setStyle(style);
@@ -73,7 +73,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
         pTerrain->setTerrainName(value, !value.isEmpty());
     }, Qt::QueuedConnection);
     m_pPanel->addItem(pTextbox);
-    y += 40;
+    y += pLabel->getHeight() + 10;
 
     pLabel = spLabel::create(190);
     pLabel->setStyle(style);
@@ -86,7 +86,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     connect(pTextbox.get(), &Textbox::sigTextChanged, pTerrain, &Terrain::setTerrainDescription, Qt::QueuedConnection);
     m_pPanel->addItem(pTextbox);
     m_pPanel->addItem(pLabel);
-    y += 60;
+    y += pLabel->getHeight() + 10;
 
     loadBaseImageview(y, pTerrain);
     loadOverlayview(y, pTerrain);
@@ -136,7 +136,7 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
     pLabel->setHtmlText(tr("Base image"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    y += 60;
+    y += pLabel->getHeight() + GameMap::getImageSize() * 2 + 10;
 
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = 0; i < pTerrainStyles.size(); i++)
@@ -176,7 +176,7 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
     m_pTextbox->setTooltipText(tr("Current select terrain image or terrain path or empty for default selection."));
     m_pTextbox->setPosition(200 + 20 + pTextfield->getX(), y);
     m_pPanel->addItem(m_pTextbox);
-    y += 80;
+    y += pTextfield->getHeight() + 20;
 }
 
 void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
@@ -197,7 +197,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
         pLabel->setHtmlText(tr("Overlays"));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
-        y += 60;
+        y += pLabel->getHeight() + 10;
 
         TerrainManager* pTerrainManager = TerrainManager::getInstance();
         for (qint32 i = 0; i < overlayTerrainStyles.size(); i++)

@@ -93,7 +93,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
         setX(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -109,7 +109,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
         setY(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -126,7 +126,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
         setOffsetX(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -143,7 +143,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
         setOffsetY(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -160,7 +160,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
         setColor(value);
     });
     pBox->addItem(colorBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -177,7 +177,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
         setSleepAfterFinish(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -194,7 +194,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
         setScaleX(static_cast<float>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -211,7 +211,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
         setScaleY(static_cast<float>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -228,7 +228,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
         setDelay(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -251,7 +251,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     {
          emit sigShowLoadDialog();
     });
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -268,7 +268,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
         setFrames(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pScriptEditor->addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateEvents, Qt::QueuedConnection);
