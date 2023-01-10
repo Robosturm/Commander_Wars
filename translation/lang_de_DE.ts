@@ -2540,62 +2540,67 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="136"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="144"/>
         <source>Base image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="64"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="72"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="57"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="58"/>
+        <source>Edit terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="65"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="68"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="76"/>
         <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="80"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="88"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="83"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="91"/>
         <source>Custom Description of the Terrain. Empty description equals the default description.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="172"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="180"/>
         <source>Terrain Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="176"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="184"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="197"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="205"/>
         <source>Overlays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="94"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="102"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="102"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="110"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="262"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="270"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>

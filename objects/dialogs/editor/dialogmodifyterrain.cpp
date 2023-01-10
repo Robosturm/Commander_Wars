@@ -51,8 +51,16 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
-
+    auto style3 = style2;
+    style3.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
+    pLabel->setStyle(style3);
+    pLabel->setHtmlText(tr("Edit terrain"));
+    pLabel->setPosition(25, y);
+    m_pPanel->addItem(pLabel);
+    y += pLabel->getHeight() + 10;
+
+    pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
     pLabel->setStyle(style2);
     pLabel->setHtmlText(tr("Information"));
     pLabel->setPosition(10, y);
