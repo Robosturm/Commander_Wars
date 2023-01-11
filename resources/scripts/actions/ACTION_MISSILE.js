@@ -130,7 +130,7 @@ var Constructor = function()
             }
         }
         var animation = GameAnimationFactory.createAnimation(map, ACTION_MISSILE.postAnimationTargetX - radius, ACTION_MISSILE.postAnimationTargetY - radius - 2, 50);
-        animation.addSprite("silo+impact", -4, 0, 0, 2, 0);
+        animation.addSprite("silo+impact", -4, map.getImageSize(), 0, 2, 0);
         animation.setSound("missle_explosion.wav");
         ACTION_MISSILE.postAnimationTargetX = -1;
         ACTION_MISSILE.postAnimationTargetY = -1;
