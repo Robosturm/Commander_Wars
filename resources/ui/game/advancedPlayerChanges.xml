@@ -93,7 +93,7 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Edit")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Selects which units this players can build.")</tooltip>
                 <onEvent>currentMenu.getUiParent().showSelectCOPerks(PlayerSelection.readCurrentPlayer());</onEvent>
-                <enabled>PlayerSelection.getIsArmyOrPerkSelectionEnabled(currentMenu.getUiParent())</enabled>
+                <enabled>PlayerSelection.getIsArmySelectionEnabled(currentMenu.getUiParent())</enabled>
             </Button>
             <Label>
                 <x>10</x>

@@ -65,6 +65,18 @@ var PlayerSelection =
                    menu.getIsObserverNetworkInterface() ||
                   !menu.getIsArmyCustomizationAllowed());
     },
+    getIsArmySelectionEnabled : function(menu)
+    {
+        var playerIdx = PlayerSelection.readCurrentPlayer();
+        var player = menu.getMap().getPlayer(playerIdx);
+        var hasCo = player.getCO(0) !== null || player.getCO(1) !== null;
+        if (hasCo)
+        {
+            return PlayerSelection.getIsArmyOrPerkSelectionEnabled(menu);
+        }
+        return false;
+    },
+
     getIsArmyOrPerkSelectionEnabled : function(menu)
     {
         if (menu.hasNetworkInterface())
