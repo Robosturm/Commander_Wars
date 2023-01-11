@@ -4899,5 +4899,6 @@
         <file>resources/images/co_perks/urbanFighter.png</file>
         <file>resources/images/co_perks/brawler2.png</file>
         <file>resources/images/co_perks/mechanic - Kopie.png</file>
+        <file>resources/images/game/transferUnit.png</file>
     </qresource>
 </RCC>

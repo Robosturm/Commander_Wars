@@ -39,7 +39,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "next_player";
+        return "transferUnit";
     };
     this.isFinalStep = function(action, map)
     {

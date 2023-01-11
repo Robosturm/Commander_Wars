@@ -394,7 +394,8 @@
         <image file="wiki.png" />
         <image file="rules.png" />
         <image file="statistics.png" />
-        <image file="calculator.png" />        
+        <image file="calculator.png" />
+        <image file="transferUnit.png" />        
         
         <!-- z information label -->
         <image file="z_information_label.png" cols = "8" />
