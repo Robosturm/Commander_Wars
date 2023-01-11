@@ -616,12 +616,12 @@
     <name>ACTION_MISSILE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="29"/>
-        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="133"/>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="141"/>
         <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="137"/>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="145"/>
         <source>Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.</source>
         <translation type="unfinished"></translation>
     </message>

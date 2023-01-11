@@ -335,7 +335,6 @@
         <file>resources/images/co_perks/icebreaker.png</file>
         <file>resources/images/co_perks/invader.png</file>
         <file>resources/images/co_perks/luck.png</file>
-        <file>resources/images/co_perks/mechanic.png</file>
         <file>resources/images/co_perks/mistwalker.png</file>
         <file>resources/images/co_perks/mountaineer.png</file>
         <file>resources/images/co_perks/prairiedog.png</file>
@@ -4900,5 +4899,7 @@
         <file>resources/images/co_perks/brawler2.png</file>
         <file>resources/images/co_perks/mechanic - Kopie.png</file>
         <file>resources/images/game/transferUnit.png</file>
+        <file>resources/images/animations/silo+impact.png</file>
+        <file>resources/images/animations/silo+launch.png</file>
     </qresource>
 </RCC>
