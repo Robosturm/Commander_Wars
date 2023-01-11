@@ -442,7 +442,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
             {
                 if (m_TerrainIDs[i] == "Buildings")
                 {
-                    terrainStrings.append(m_TerrainIDs[i] + ":");
+                    terrainStrings.append(tr("Buildings:"));
                 }
                 else
                 {

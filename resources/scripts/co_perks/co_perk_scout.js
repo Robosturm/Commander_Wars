@@ -15,7 +15,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "eagleeye";
+        return "scout";
     };
     this.getName = function()
     {

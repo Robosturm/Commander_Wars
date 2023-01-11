@@ -15,7 +15,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "invader";
+        return "conqueror";
     };
     this.getName = function()
     {

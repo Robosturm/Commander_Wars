@@ -65,7 +65,19 @@
         <image file="tax_hike.png" />
         <image file="underpowered.png" />
         <image file="unusual_hat.png" />
-        <image file="no_plainfighter.png" />        
+        <image file="no_plainfighter.png" />
+        <image file="backstab.png" />
+        <image file="conqueror.png" />
+        <image file="fireSale.png" />
+        <image file="pathfinder.png" />
+        <image file="scout.png" />
+        <image file="slamShield.png" />
+        <image file="sniper.png" />
+        <image file="snipeShield.png" />
+        <image file="stealthy.png" />
+        <image file="urbanFighter.png" />
+        <image file="brawler2.png" />
+        <image file="gearHead.png" />
     </atlas>
 </resources>
 

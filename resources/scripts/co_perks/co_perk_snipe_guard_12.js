@@ -20,7 +20,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "snipeguard";
+        return "snipeShield";
     };
     this.getName = function()
     {

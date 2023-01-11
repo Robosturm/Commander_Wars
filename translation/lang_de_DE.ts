@@ -3057,6 +3057,11 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>DialogRandomMap::DialogRandomMap</name>
     <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="445"/>
+        <source>Buildings:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="456"/>
         <source>The percentage of different terrain types distributed.</source>
         <translation type="unfinished"></translation>
@@ -20133,7 +20138,7 @@ CO Zone Effect:
     <name>co_perk_gear_head</name>
     <message>
         <location filename="../resources/scripts/co_perks/co_perk_gear_head.js" line="14"/>
-        <source>Increases the base repair by 1.</source>
+        <source>Increases the base repair by 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -20383,7 +20388,7 @@ CO Zone Effect:
     <name>co_perk_mechanic</name>
     <message>
         <location filename="../resources/scripts/co_perks/co_perk_mechanic.js" line="14"/>
-        <source>Increases the base repair by 2.</source>
+        <source>Increases the base repair by 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

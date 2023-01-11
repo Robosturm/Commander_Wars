@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "seamanship";
+        return "backstab";
     };
     this.getName = function()
     {

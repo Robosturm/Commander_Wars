@@ -18,7 +18,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "sneaky";
+        return "stealthy";
     };
     this.getName = function()
     {

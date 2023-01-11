@@ -37,7 +37,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "ranger";
+        return "pathfinder";
     };
     this.getName = function()
     {

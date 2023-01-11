@@ -4886,5 +4886,18 @@
         <file>resources/images/building/destroyed_gate+n+s.png</file>
         <file>resources/images/building/destroyed_gate+n+s+mask.png</file>
         <file>resources/images/co_perks/no_plainfighter.png</file>
+        <file>resources/images/co_perks/backstab.png</file>
+        <file>resources/images/co_perks/conqueror.png</file>
+        <file>resources/images/co_perks/fireSale.png</file>
+        <file>resources/images/co_perks/gearHead.png</file>
+        <file>resources/images/co_perks/pathfinder.png</file>
+        <file>resources/images/co_perks/scout.png</file>
+        <file>resources/images/co_perks/slamShield.png</file>
+        <file>resources/images/co_perks/sniper.png</file>
+        <file>resources/images/co_perks/snipeShield.png</file>
+        <file>resources/images/co_perks/stealthy.png</file>
+        <file>resources/images/co_perks/urbanFighter.png</file>
+        <file>resources/images/co_perks/brawler2.png</file>
+        <file>resources/images/co_perks/mechanic - Kopie.png</file>
     </qresource>
 </RCC>
