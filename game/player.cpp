@@ -140,7 +140,14 @@ void Player::loadCOMusic()
     {
         Mainapp* pApp = Mainapp::getInstance();
         qint32 count = GlobalUtils::randIntBase(0, 1);
-        pApp->getAudioManager()->addMusic("resources/music/cos/no_co" + QString::number(count) + ".mp3", 4726, 58364);
+        if (count == 0)
+        {
+            pApp->getAudioManager()->addMusic("resources/music/cos/no_co0.mp3", 4726, 58364);
+        }
+        else
+        {
+            pApp->getAudioManager()->addMusic("resources/music/cos/no_co1.mp3", 4726, 58364);
+        }
     }
 }
 
