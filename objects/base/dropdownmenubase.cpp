@@ -4,8 +4,6 @@
 
 #include "resource_management/objectmanager.h"
 
-#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
-
 DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 {
 #ifdef GRAPHICSUPPORT
@@ -49,7 +47,6 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     m_Box->addChild(m_pArrowDown);
     m_pArrowDown->setPosition(m_Box->getScaledWidth() - 45, 10);
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
-    m_pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Actor* pPtrDown = m_pArrowDown.get();
     m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [pPtrDown](oxygine::Event*)
     {
@@ -112,11 +109,11 @@ void DropDownmenuBase::showDropDown()
 
 void DropDownmenuBase::hideDropDown()
 {
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     for (auto & item : m_Items)
     {
         item->setAddColor(QColor(0, 0, 0, 0));
     }
-    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_Panel->setVisible(false);
     hideTooltip();
     stopTooltiptimer();
@@ -146,7 +143,6 @@ const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item,
     pBox->setPosition(0, 40 * m_Items.size());
 
     m_Items.append(pBox);
-    pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_Panel->addItem(pBox);
     // add some event handling :)
     oxygine::Actor* pPtrBox = pBox.get();

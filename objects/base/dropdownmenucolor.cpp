@@ -3,9 +3,7 @@
 #include "objects/base/dropdownmenucolor.h"
 #include "objects/dialogs/colorselectiondialog.h"
 
-#include "coreengine/interpreter.h"
-
-#include "resource_management/objectmanager.h"
+#include "coreengine/settings.h"
 
 DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     : DropDownmenuBase(width, items.size()),
@@ -14,9 +12,6 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
 #ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenuColor");
 #endif
-    Interpreter::setCppOwnerShip(this);
-
-    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
 
     oxygine::spColorRectSprite colorField = oxygine::spColorRectSprite::create();

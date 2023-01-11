@@ -210,21 +210,21 @@ void OptionMenue::changeHighDpi(bool value)
 
 void OptionMenue::loadModPanels()
 {
+    m_ModSelector = oxygine::spActor::create();
+    m_ModSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    m_ModSelector->setPosition(10, 10);
     QSize size(Settings::getWidth() - 20,
                Settings::getHeight() - 70);
     size.setWidth(Settings::getWidth() - 60);
     size.setHeight(size.height() - 50);
     m_pMods = spPanel::create(true,  size - QSize(0, 50), size);
     m_pMods->setPosition(10, 110);
-    addChild(m_pMods);
+    m_ModSelector->addChild(m_pMods);
     size.setHeight(size.height() + 70);
     m_pModDescription = spPanel::create(true,  size, size, "panel");
     m_pModDescription->setPosition(Settings::getWidth() - 1, 25);
-    auto moveInButton = spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth());
+    auto moveInButton = spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth() + 10);
     m_pModDescription->addChild(moveInButton);
-    addChild(m_pModDescription);
-    m_ModSelector = oxygine::spActor::create();
-    m_ModSelector->setPosition(10, 10);
     connect(this, &OptionMenue::sigUpdateModFilter, this, &OptionMenue::updateModFilter, Qt::QueuedConnection);
     connect(this, &OptionMenue::sigLoadModInfo, this, &OptionMenue::loadModInfo, Qt::QueuedConnection);
     connect(this, &OptionMenue::sigShowResetBox, this, &OptionMenue::showResetBox, Qt::QueuedConnection);
@@ -235,18 +235,7 @@ void OptionMenue::showMods()
 {    
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    if (m_pMods.get() == nullptr)
-    {
-        loadModPanels();
-    }
-    m_pMods->clearContent();
-    m_pModDescription->clearContent();
-    m_ModBoxes.clear();
-    m_ModCheckboxes.clear();
-    m_ModSelector->removeChildren();
-    m_pMods->setVisible(true);
-    m_ModSelector->setVisible(true);
-    m_pModDescription->setVisible(true);
+    loadModPanels();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -376,6 +365,7 @@ void OptionMenue::showMods()
         emit sigUpdateModFilter(tag);
     });
     m_ModSelector->addChild(pTagSelection);
+    m_ModSelector->addChild(m_pModDescription);
     updateModFilter("");
     updateModCheckboxes();
     pApp->continueRendering();
