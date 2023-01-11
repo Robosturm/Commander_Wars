@@ -2450,18 +2450,25 @@ void GameMap::initPlayersAndSelectCOs()
         {
             qint32 count = 0;
             QStringList perkList = pPlayer->getCO(0)->getPerkList();
-            while (pPlayer->getCO(0)->getCoID() == CO::CO_RANDOM ||
-                   pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_"))
+            if (bannList.size() > 0)
             {
-                pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 0);
-                pPlayer->getCO(0)->setCoStyleFromUserdata();
-                count++;
-                if (count > 2000 * bannList.size())
+                while (pPlayer->getCO(0)->getCoID() == CO::CO_RANDOM ||
+                       pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_") )
                 {
-                    CONSOLE_PRINT("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", GameConsole::eDEBUG);
-                    pPlayer->setCO("", 0);
-                    break;
+                    pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 0);
+                    pPlayer->getCO(0)->setCoStyleFromUserdata();
+                    count++;
+                    if (count > 2000 * bannList.size())
+                    {
+                        CONSOLE_PRINT("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", GameConsole::eDEBUG);
+                        pPlayer->setCO("", 0);
+                        break;
+                    }
                 }
+            }
+            else
+            {
+                pPlayer->setCO("", 0);
             }
             if (pPlayer->getCO(0) != nullptr)
             {
@@ -2476,18 +2483,25 @@ void GameMap::initPlayersAndSelectCOs()
         {
             qint32 count = 0;
             QStringList perkList = pPlayer->getCO(1)->getPerkList();
-            while ((pPlayer->getCO(1)->getCoID() == CO::CO_RANDOM) ||
-                   (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()) ||
-                   (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")))
+            if (bannList.size() > 0)
             {
-                pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 1);
-                pPlayer->getCO(1)->setCoStyleFromUserdata();
-                if (count > 2000 * bannList.size())
+                while ((pPlayer->getCO(1)->getCoID() == CO::CO_RANDOM) ||
+                       (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()) ||
+                       (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")))
                 {
-                    CONSOLE_PRINT("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", GameConsole::eDEBUG);
-                    pPlayer->setCO("", 1);
-                    break;
+                    pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 1);
+                    pPlayer->getCO(1)->setCoStyleFromUserdata();
+                    if (count > 2000 * bannList.size())
+                    {
+                        CONSOLE_PRINT("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", GameConsole::eDEBUG);
+                        pPlayer->setCO("", 1);
+                        break;
+                    }
                 }
+            }
+            else
+            {
+                pPlayer->setCO("", 0);
             }
             if (pPlayer->getCO(1) != nullptr)
             {
