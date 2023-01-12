@@ -3,6 +3,7 @@
 #include <QTextStream>
 #include <QProcess>
 #include <QScreen>
+#include <QApplication>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
@@ -175,6 +176,11 @@ void OptionMenue::reloadSettings()
     newMenu->m_restartNeeded = m_restartNeeded;
     oxygine::Stage::getStage()->addChild(newMenu);
     oxygine::Actor::detach();
+}
+
+quint8 OptionMenue::getSupportedScreenCount()
+{
+    return QApplication::screens().size() - 1;
 }
 
 void OptionMenue::changeScreenSize(QSize size)

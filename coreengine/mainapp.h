@@ -242,6 +242,7 @@ public slots:
      * @brief createBaseDirs
      */
     void createBaseDirs();
+    void changeScreen(quint8 screen);
     void changeScreenMode(Settings::ScreenModes mode);
     void changeScreenSize(qint32 width, qint32 heigth);
     void changePosition(QPoint pos, bool invert);

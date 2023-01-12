@@ -75,7 +75,8 @@ private:
                 *m_value = settings.value(m_name, m_defaultValue).toString();
             }
             else if constexpr (std::is_same<TType, quint32>::value ||
-                               std::is_same<TType, quint16>::value)
+                               std::is_same<TType, quint16>::value ||
+                               std::is_same<TType, quint8>::value)
             {
                 bool ok = false;
                 *m_value = settings.value(m_name, m_defaultValue).toUInt(&ok);
@@ -97,7 +98,9 @@ private:
                     *m_value = m_defaultValue;
                 }
             }
-            else if constexpr (std::is_same<TType, qint32>::value)
+            else if constexpr (std::is_same<TType, qint32>::value ||
+                               std::is_same<TType, qint16>::value ||
+                               std::is_same<TType, qint8>::value)
             {
                 bool ok = false;
                 *m_value = settings.value(m_name, m_defaultValue).toInt(&ok);
@@ -292,7 +295,11 @@ public:
 
     static void setPipeUuid(const QString & newPipeUuid);
 
+
 public slots:
+
+    static quint8 getScreen();
+    static void setScreen(quint8 newScreen);
 
     static QString getLastSaveGame();
     static QString getUpdateStep();
@@ -877,6 +884,7 @@ private:
     qint32 m_y{0};
     qint32 m_width{1024};
     qint32 m_height{800};
+    quint8 m_screen{0};
     float m_brightness{0.0f};
     float m_gamma{1.0f};
     bool m_smallScreenDevice{false};

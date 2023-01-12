@@ -473,6 +473,24 @@ void Mainapp::doScreenshot()
 #endif
 }
 
+void Mainapp::changeScreen(quint8 screen)
+{
+#ifdef GRAPHICSUPPORT
+    if (m_noUi)
+    {
+        return;
+    }
+    CONSOLE_PRINT("Changing assigned screen to " + QString::number(screen), GameConsole::eDEBUG);
+    auto screens = QApplication::screens();
+    if (screen >= screens.size())
+    {
+        screen = 0;
+        Settings::setScreen(screen);
+    }
+    setScreen(screens[screen]);
+#endif
+}
+
 void Mainapp::changeScreenMode(Settings::ScreenModes mode)
 {
 #ifdef GRAPHICSUPPORT
@@ -480,30 +498,26 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
     {
         return;
     }
+    changeScreen(Settings::getScreen());
     CONSOLE_PRINT("Changing screen mode to " + QString::number(static_cast<qint32>(mode)), GameConsole::eDEBUG);
     hide();
+    auto screens = QApplication::screens();
     switch (mode)
     {
         case Settings::ScreenModes::Borderless:
         {
             setWindowState(Qt::WindowState::WindowNoState);
             setFlag(Qt::FramelessWindowHint);
-            show();
-            setPosition(0, 0);
+            QScreen* screen = screens[Settings::getScreen()];
+            QRect screenSize = screen->availableGeometry();
+            setPosition(screenSize.x(), screenSize.y());
             Settings::setFullscreen(false);
             Settings::setBorderless(true);
-            QScreen* screen = QApplication::primaryScreen();
-            QRect screenSize = screen->availableGeometry();
-            if (screenSize.width() < Settings::getWidth())
-            {
-                setWidth(screenSize.width());
-                Settings::setWidth(screenSize.width() * getActiveDpiFactor());
-            }
-            if (screenSize.height() < Settings::getHeight())
-            {
-                setHeight(screenSize.height());
-                Settings::setHeight(screenSize.height() * getActiveDpiFactor());
-            }
+            setWidth(screenSize.width());
+            Settings::setWidth(screenSize.width() * getActiveDpiFactor());
+            setHeight(screenSize.height());
+            Settings::setHeight(screenSize.height() * getActiveDpiFactor());
+            show();
             break;
         }
         case Settings::ScreenModes::FullScreen:
@@ -516,14 +530,14 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
             Settings::setWidth(width() * getActiveDpiFactor());
             Settings::setHeight(height() * getActiveDpiFactor());
 #else
-            showFullScreen();
-            QScreen* screen = QApplication::primaryScreen();
+            QScreen* screen = screens[Settings::getScreen()];
             QRect screenSize = screen->geometry();
             // set window info
             Settings::setWidth(screenSize.width() * getActiveDpiFactor());
             Settings::setHeight(screenSize.height() * getActiveDpiFactor());
+            setPosition(screenSize.x(), screenSize.y());
             setGeometry(screenSize);
-            setPosition(0, 0);
+            showFullScreen();
 #endif
             break;
         }

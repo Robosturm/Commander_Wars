@@ -71,6 +71,27 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Screen:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select on which screen the game will be shown on.")</tooltip>
+                <startValue>settings.getScreen()</startValue>
+                <infinite>-1</infinite>
+                <spinSpeed>1</spinSpeed>
+                <enabled>currentMenu.getSupportedScreenCount() > 0</enabled>
+                <min>0</min>
+                <max>currentMenu.getSupportedScreenCount()</max>
+                <onEvent>settings.setScreen(input);settings.setScreenMode(settings.getScreenMode());</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Brightness:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

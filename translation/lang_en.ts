@@ -3834,6 +3834,16 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="74"/>
+        <source>Screen:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="82"/>
+        <source>Select on which screen the game will be shown on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/ui/options/optionvideomenu.xml" line="56"/>
         <source>Screen Mode:</source>
         <translation type="unfinished"></translation>
@@ -3844,62 +3854,62 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="74"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="95"/>
         <source>Brightness:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="82"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="103"/>
         <source>Selects the brightness for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="93"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="114"/>
         <source>Gamma:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="101"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="122"/>
         <source>Selects the gamma factor for the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="112"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="133"/>
         <source>Small screen:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="119"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="140"/>
         <source>If checked several UI elements are hidden and accessible with an additional button. Warning: disabling this on a smaller screen may lead to unplayable game experience.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="128"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="149"/>
         <source>Use High DPI:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="135"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="156"/>
         <source>If checked the game will use the high dpi option of the screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="143"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="164"/>
         <source>Max FPS:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="151"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="172"/>
         <source>Selects the maximum FPS, use it to reduce power consumption on smartphones.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="162"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="183"/>
         <source>Automatic updates:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="169"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="190"/>
         <source>If checked: The game tries to keep the game at the up to date by. Updating to the latest release if required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3966,12 +3976,12 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="177"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="198"/>
         <source>Subprocess ai:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionvideomenu.xml" line="184"/>
+        <location filename="../resources/ui/options/optionvideomenu.xml" line="205"/>
         <source>If enabled the ai is calculated in a separate thread. This improves the game performance. If you encounter ai bugs disable this feature.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6462,12 +6472,12 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="708"/>
+        <location filename="../coreengine/mainapp.cpp" line="722"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="714"/>
+        <location filename="../coreengine/mainapp.cpp" line="728"/>
         <source>Please use the details or the crashlog to report a bug at 
 &lt;a href=&apos;https://github.com/Robosturm/Commander_Wars/issues&apos;&gt;https://github.com/Robosturm/Commander_Wars/issues&lt;/a&gt;
  The game will be terminated sadly. :(</source>
@@ -6790,101 +6800,101 @@ Host mods: </source>
 <context>
     <name>OptionMenue</name>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="103"/>
+        <location filename="../menue/optionmenue.cpp" line="104"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="113"/>
+        <location filename="../menue/optionmenue.cpp" line="114"/>
         <source>Reset settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="258"/>
+        <location filename="../menue/optionmenue.cpp" line="264"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="261"/>
+        <location filename="../menue/optionmenue.cpp" line="267"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="263"/>
+        <location filename="../menue/optionmenue.cpp" line="269"/>
         <source>Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="356"/>
+        <location filename="../menue/optionmenue.cpp" line="362"/>
         <source>Filters mods by given tags.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="446"/>
+        <location filename="../menue/optionmenue.cpp" line="452"/>
         <source>The mod author designated this mod as &apos;Cosmetic&apos; and may be used during multiplayer matches based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="255"/>
+        <location filename="../menue/optionmenue.cpp" line="261"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="157"/>
+        <location filename="../menue/optionmenue.cpp" line="158"/>
         <source>Some changes need a restart of the game. The game will restart. Press Ok to restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="259"/>
+        <location filename="../menue/optionmenue.cpp" line="265"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="260"/>
+        <location filename="../menue/optionmenue.cpp" line="266"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="272"/>
+        <location filename="../menue/optionmenue.cpp" line="278"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="354"/>
+        <location filename="../menue/optionmenue.cpp" line="360"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="448"/>
+        <location filename="../menue/optionmenue.cpp" line="454"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="453"/>
+        <location filename="../menue/optionmenue.cpp" line="459"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="458"/>
+        <location filename="../menue/optionmenue.cpp" line="464"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="463"/>
+        <location filename="../menue/optionmenue.cpp" line="469"/>
         <source>Tags:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="468"/>
+        <location filename="../menue/optionmenue.cpp" line="474"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="620"/>
+        <location filename="../menue/optionmenue.cpp" line="626"/>
         <source>This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9812,7 +9822,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="1893"/>
+        <location filename="../coreengine/settings.cpp" line="1906"/>
         <source>Default device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25306,72 +25316,72 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>optionmenu</name>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="155"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="155"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
         <source>Borderless</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="155"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
         <source>Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
         <source>Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="159"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
         <source>Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="167"/>
         <source>Detailed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="167"/>
         <source>Overworld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="167"/>
         <source>Detailed Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="167"/>
         <source>Detailed Transparent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="163"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="167"/>
         <source>Fullscreen Transparent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="167"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="171"/>
         <source>Selects which battle animations are played when fighting an enemy.
 Detailed    - Normal battle animations
 Transparent - Colored background is semi-transparent
@@ -25380,49 +25390,49 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="174"/>
         <location filename="../resources/ui/options/optionmenu.js" line="178"/>
         <location filename="../resources/ui/options/optionmenu.js" line="182"/>
         <location filename="../resources/ui/options/optionmenu.js" line="186"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="190"/>
         <source>off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="174"/>
         <location filename="../resources/ui/options/optionmenu.js" line="178"/>
         <location filename="../resources/ui/options/optionmenu.js" line="182"/>
         <location filename="../resources/ui/options/optionmenu.js" line="186"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="190"/>
         <source>on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="190"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="194"/>
         <source>Flipping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="190"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="194"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="190"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="194"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="194"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="198"/>
         <source>Last position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="194"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="198"/>
         <source>Owned HQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optionmenu.js" line="198"/>
-        <location filename="../resources/ui/options/optionmenu.js" line="207"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="202"/>
+        <location filename="../resources/ui/options/optionmenu.js" line="211"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>

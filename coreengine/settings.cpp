@@ -47,6 +47,16 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
+quint8 Settings::getScreen()
+{
+    return Settings::getInstance()->m_screen;
+}
+
+void Settings::setScreen(quint8 newScreen)
+{
+    Settings::getInstance()->m_screen = newScreen;
+}
+
 QString Settings::getPipeUuid()
 {
     return Settings::getInstance()->m_pipeUuid;
@@ -1058,7 +1068,8 @@ void Settings::setup()
 {
     QSize size;
 #ifdef GRAPHICSUPPORT
-    size = QApplication::primaryScreen()->availableSize() * QApplication::primaryScreen()->devicePixelRatio();
+    auto screens = QApplication::screens();
+    size = screens[Settings::getScreen()]->availableSize() * screens[Settings::getScreen()]->devicePixelRatio();
 #endif
     bool smallScreenDevice = hasSmallScreen();
     QString defaultPath = "";
@@ -1097,6 +1108,7 @@ void Settings::setup()
         new Value<float>{"Resolution", "gamma", &m_gamma, 1, 0, 50},
         new Value<bool>{"Resolution", "borderless", &m_borderless, true, false, true, true},
         new Value<bool>{"Resolution", "fullscreen", &m_fullscreen, false, false, true, true},
+        new Value<quint8>{"Resolution", "screen", &m_screen, 0, 0, 255, true},
         new Value<bool>{"Resolution", "recordgames", &m_record, false, false, true},
         new Value<bool>{"Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true},
         new Value<bool>{"Resolution", "UseHighDpi", &m_useHighDpi, false, false, true},
@@ -1877,7 +1889,8 @@ QStringList Settings::getAvailableMods()
 bool Settings::hasSmallScreen()
 {
 #ifdef GRAPHICSUPPORT
-    QScreen* screen = QApplication::primaryScreen();
+    auto screens = QApplication::screens();
+    QScreen* screen = screens[Settings::getScreen()];
     QRect screenSize = screen->availableGeometry();
     if (screenSize.width() < 960 ||
         screenSize.height() < 640)
@@ -1946,7 +1959,8 @@ QSize Settings::getScreenSize()
 {
     QRect screenSize;
 #ifdef GRAPHICSUPPORT
-    QScreen *screen = QApplication::primaryScreen();
+    auto screens = QApplication::screens();
+    QScreen *screen = screens[Settings::getScreen()];
     if (Settings::getFullscreen())
     {
         screenSize  = screen->geometry();

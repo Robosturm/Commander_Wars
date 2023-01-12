@@ -150,6 +150,10 @@ var OptionMenu =
         var items = OptionMenu.getSupportedScreenSizes();
         currentMenu.changeScreenSize(items[input]);
     },
+    changeScreen : function(input)
+    {
+        currentMenu.changeScreen(input);
+    },
     getScreenModes : function()
     {
         return [qsTr("Window"), qsTr("Borderless"), qsTr("Fullscreen")];

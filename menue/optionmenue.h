@@ -45,6 +45,7 @@ public slots:
     void showResetBox();
     void showGamepadInfo();
     void markRestartNeeded();
+    quint8 getSupportedScreenCount();
 protected slots:
     virtual void onEnter() override;
 private slots:

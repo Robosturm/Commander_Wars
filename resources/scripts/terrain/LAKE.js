@@ -185,6 +185,10 @@ var Constructor = function()
                 "lake+waste+N+W",
                 "lake+waste+S+W",];
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeReaf.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var LAKE = new Constructor();

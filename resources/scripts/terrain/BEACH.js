@@ -325,6 +325,10 @@ var Constructor = function()
                 "sea+overlay+SE",
                 "sea+overlay+SW",];
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeReaf.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var BEACH = new Constructor();

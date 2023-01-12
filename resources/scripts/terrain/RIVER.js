@@ -390,6 +390,10 @@ var Constructor = function()
             }
         }
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeReaf.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var RIVER = new Constructor();
