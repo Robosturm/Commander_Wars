@@ -181,7 +181,7 @@ jobs:
         QT_ANDROID_KEYSTORE_PATH: ${{env.workspace}}/source/android/android_release.keystore
         QT_ANDROID_KEYSTORE_ALIAS: ${{secrets.ANDROIDALIAS}}
         QT_ANDROID_KEYSTORE_STORE_PASS: ${{secrets.ANDROIDSTOREPASS}}
-        QT_ANDROID_KEYSTORE_KEY_PASS: ${{secrets.ANDROIDSTOREPASS}}env:
+        QT_ANDROID_KEYSTORE_KEY_PASS: ${{secrets.ANDROIDSTOREPASS}}
         JAVA_HOME: ${JAVA_HOME_17_X64}
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
