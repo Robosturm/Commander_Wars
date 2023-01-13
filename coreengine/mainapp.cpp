@@ -643,7 +643,6 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
         }
         else
         {
-            CONSOLE_PRINT("keyPressEvent", GameConsole::eDEBUG);
             emit sigKeyDown(oxygine::KeyEvent(event));
         }
     }

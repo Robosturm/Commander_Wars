@@ -6472,12 +6472,12 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="722"/>
+        <location filename="../coreengine/mainapp.cpp" line="721"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="728"/>
+        <location filename="../coreengine/mainapp.cpp" line="727"/>
         <source>Please use the details or the crashlog to report a bug at 
 &lt;a href=&apos;https://github.com/Robosturm/Commander_Wars/issues&apos;&gt;https://github.com/Robosturm/Commander_Wars/issues&lt;/a&gt;
  The game will be terminated sadly. :(</source>

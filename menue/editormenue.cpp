@@ -851,10 +851,10 @@ void EditorMenue::optimizePlayers()
 
 void EditorMenue::keyInput(oxygine::KeyEvent event)
 {
-    if (!event.getContinousPress())
+    Qt::Key cur = event.getKey();
+    if (m_Focused)
     {
-        Qt::Key cur = event.getKey();
-        if (m_Focused)
+        if (!event.getContinousPress())
         {
             if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
             {
@@ -909,7 +909,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                         // do nothing
                         break;
                     }
-                }                
+                }
             }
             else if (cur == Settings::getKey_information() ||
                      cur == Settings::getKey_information2())
@@ -939,6 +939,11 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     m_EditorMode = EditorModes::RemoveUnits;
                 }
             }
+            else if (cur == Settings::getKey_confirm() ||
+                     cur == Settings::getKey_confirm2())
+            {
+                m_placingState.active = true;
+            }
             else
             {
                 m_EditorSelection->KeyInput(cur);
@@ -950,12 +955,16 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
 
 void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
+    CONSOLE_PRINT("EditorMenue::cursorMoved x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     m_Topbar->hide();
     if (m_xyTextInfo.get() != nullptr)
     {
         m_xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
     }
-    
+    if (m_placingState.active)
+    {
+        onMapClickedLeft(x, y);
+    }
     m_copyRectActor->detach();
     if (m_pMap->onMap(x, y))
     {
@@ -1068,14 +1077,18 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
             break;
         }
     }
-    
+    if (!m_placingState.active &&
+        (m_placingState.x != x || m_placingState.y != y))
+    {
+        m_placingState.x = -1;
+        m_placingState.y = -1;
+    }
 }
 
 void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedRight", GameConsole::eDEBUG);
-    // resolve click
-    
+    CONSOLE_PRINT("EditorMenue::onMapClickedRight x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
+    // resolve click    
     switch (m_EditorMode)
     {
         case EditorModes::CopySelection:
@@ -1124,8 +1137,9 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedLeftDown", GameConsole::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::onMapClickedLeftDown x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     // resolve click
+    m_placingState.active = true;
     switch (m_EditorMode)
     {
         case EditorModes::CopySelection:
@@ -1155,7 +1169,8 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedLeftUp", GameConsole::eDEBUG);
+    m_placingState.active = false;
+    CONSOLE_PRINT("EditorMenue::onMapClickedLeftUp x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     // resolve click
     switch (m_EditorMode)
     {
@@ -1186,89 +1201,93 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedLeft", GameConsole::eDEBUG);
-    // resolve click
-    switch (m_EditorMode)
+    if (m_placingState.x != x || m_placingState.y != y)
     {
-        case EditorModes::RemoveUnits:
+        CONSOLE_PRINT("EditorMenue::onMapClickedLeft x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
+        // resolve click
+        switch (m_EditorMode)
         {
-            Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-            if (pUnit != nullptr)
+            case EditorModes::RemoveUnits:
             {
-                createTempFile();
-                pUnit->killUnit();
-            }
-            break;
-        }
-        case EditorModes::EditUnits:
-        {
-            Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-            if (pUnit != nullptr)
-            {
-                createTempFile();
-                spDialogModifyUnit pDialog = spDialogModifyUnit::create(m_pMap.get(), pUnit);
-                addChild(pDialog);
-                connect(pDialog.get(), &DialogModifyUnit::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-                setFocused(false);
-            }
-            break;
-        }
-        case EditorModes::EditTerrain:
-        {
-            Terrain* pTerrain  = m_pMap->getTerrain(x, y);
-            if (pTerrain->getBuilding() == nullptr)
-            {
-                createTempFile();
-                spDialogModifyTerrain pDialog = spDialogModifyTerrain::create(m_pMap.get(), pTerrain);
-                addChild(pDialog);
-                connect(pDialog.get(), &DialogModifyTerrain::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-                setFocused(false);
-            }
-            else
-            {
-                createTempFile();
-                spDialogModifyBuilding pDialog = spDialogModifyBuilding::create(m_pMap.get(), pTerrain->getBuilding());
-                addChild(pDialog);
-                connect(pDialog.get(), &DialogModifyBuilding::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-                setFocused(false);
-            }
-            break;
-        }
-        case EditorModes::PlaceEditorSelection:
-        {
-            switch (m_EditorSelection->getCurrentMode())
-            {
-                case EditorSelection::EditorMode::Terrain:
+                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr)
                 {
                     createTempFile();
-                    placeTerrain(x, y);
-                    break;
+                    pUnit->killUnit();
                 }
-                case EditorSelection::EditorMode::Building:
-                {
-                    createTempFile();
-                    placeBuilding(x, y);
-                    break;
-                }
-                case EditorSelection::EditorMode::Unit:
-                {
-                    createTempFile();
-                    placeUnit(x, y);
-                    break;
-                }
-                case EditorSelection::EditorMode::All:
-                {
-                    break;
-                }
+                break;
             }
-            break;
-        }
-        case EditorModes::CopySelection:
-        {
-            break;
+            case EditorModes::EditUnits:
+            {
+                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr)
+                {
+                    createTempFile();
+                    spDialogModifyUnit pDialog = spDialogModifyUnit::create(m_pMap.get(), pUnit);
+                    addChild(pDialog);
+                    connect(pDialog.get(), &DialogModifyUnit::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+                    setFocused(false);
+                }
+                break;
+            }
+            case EditorModes::EditTerrain:
+            {
+                Terrain* pTerrain  = m_pMap->getTerrain(x, y);
+                if (pTerrain->getBuilding() == nullptr)
+                {
+                    createTempFile();
+                    spDialogModifyTerrain pDialog = spDialogModifyTerrain::create(m_pMap.get(), pTerrain);
+                    addChild(pDialog);
+                    connect(pDialog.get(), &DialogModifyTerrain::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+                    setFocused(false);
+                }
+                else
+                {
+                    createTempFile();
+                    spDialogModifyBuilding pDialog = spDialogModifyBuilding::create(m_pMap.get(), pTerrain->getBuilding());
+                    addChild(pDialog);
+                    connect(pDialog.get(), &DialogModifyBuilding::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+                    setFocused(false);
+                }
+                break;
+            }
+            case EditorModes::PlaceEditorSelection:
+            {
+                switch (m_EditorSelection->getCurrentMode())
+                {
+                    case EditorSelection::EditorMode::Terrain:
+                    {
+                        createTempFile();
+                        placeTerrain(x, y);
+                        break;
+                    }
+                    case EditorSelection::EditorMode::Building:
+                    {
+                        createTempFile();
+                        placeBuilding(x, y);
+                        break;
+                    }
+                    case EditorSelection::EditorMode::Unit:
+                    {
+                        createTempFile();
+                        placeUnit(x, y);
+                        break;
+                    }
+                    case EditorSelection::EditorMode::All:
+                    {
+                        break;
+                    }
+                }
+                break;
+            }
+            case EditorModes::CopySelection:
+            {
+                break;
+            }
         }
     }
-    
+    m_placingState.x = x;
+    m_placingState.y = y;
 }
 
 void EditorMenue::editFinishedCanceled()

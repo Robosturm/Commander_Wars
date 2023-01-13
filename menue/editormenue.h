@@ -32,6 +32,13 @@ public:
         Rect,
         Circle,
     };
+    struct PlacingState
+    {
+        bool active{false};
+        bool placePressed{false};
+        qint32 x{-1};
+        qint32 y{-1};
+    };
 
     explicit EditorMenue();
     virtual ~EditorMenue();
@@ -389,6 +396,7 @@ private:
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
     spTopbar m_Topbar;
     spLabel m_xyTextInfo;
+    PlacingState m_placingState;
 
     qint32 m_tempCounter{0};
 

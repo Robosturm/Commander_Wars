@@ -23,12 +23,15 @@
 const char* const DRIVER = "QSQLITE";
 
 const char* const SQL_TABLE_PLAYERS = "players";
+const char* const SQL_TABLE_PLAYERDATA = "playerData";
+const char* const SQL_TABLE_PLAYER_CO_DATA = "player_CO_Data";
 const char* const SQL_USERNAME = "username";
 const char* const SQL_PASSWORD = "password";
 const char* const SQL_MAILADRESS = "mailAdress";
 const char* const SQL_MMR = "mmr";
 const char* const SQL_VALIDPASSWORD = "validPassword";
 const char* const SQL_LASTLOGIN = "lastLogin";
+
 
 spMainServer MainServer::m_pInstance{nullptr};
 QSqlDatabase* MainServer::m_serverData{nullptr};
