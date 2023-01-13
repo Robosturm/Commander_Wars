@@ -3,9 +3,6 @@ on: [push]
 env:
   BUILD_TYPE: Release
   QT_Version: '6.4.2'
-  NDK_Version: r23
-  # paths which are given with \ instead of / via windows crashing some command tools
-  NDK_Root: 'C:/hostedtoolcache/windows/ndk/r23/x64'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   
 jobs:
@@ -120,13 +117,6 @@ jobs:
     - name: Install OS Dependencies 2
       run: ${{matrix.installerCommands2}}
 
-    - name: setup-ndk
-      if: matrix.target == 'android'        
-      uses: nttld/setup-ndk@v1
-      id: setup-ndk
-      with:
-        ndk-version: ${{env.NDK_Version}}
-
     - name: Configure other cmake
       if: matrix.target != 'android'
       run: |
@@ -154,8 +144,8 @@ jobs:
         -DQT_QMAKE_EXECUTABLE="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DANDROID_NATIVE_API_LEVEL="${{matrix.target-api-level}}" \
-        -DANDROID_NDK="${{env.NDK_Root}}" \
-        -DCMAKE_TOOLCHAIN_FILE="${{env.NDK_Root}}/build/cmake/android.toolchain.cmake" \
+        -DANDROID_NDK="${{ANDROID_NDK_ROOT}}" \
+        -DCMAKE_TOOLCHAIN_FILE="${{ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake" \
         -DANDROID_USE_LEGACY_TOOLCHAIN_FILE=ON \
         -DANDROID_ABI="${{matrix.abi}}" \
         -DANDROID_STL="c++_static" \
