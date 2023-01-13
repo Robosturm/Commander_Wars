@@ -12,8 +12,6 @@ env:
   # paths which are given with \ instead of / via windows crashing some command tools
   NDK_Root: 'C:/hostedtoolcache/windows/ndk/r23/x64'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
-  javaVersion: '17'
-  javaDistribution: 'adopt-openj9'
   
 jobs:
   create_release:
@@ -284,14 +282,6 @@ jobs:
       with:
         path: "${{github.workspace}}/qt/Qt/Docs"
         
-    # apk preparation and signing
-    - name: Setup JDK
-      if: matrix.target == 'android'
-      uses: actions/setup-java@v3
-      with:
-        distribution: ${{env.javaDistribution}}
-        java-version: ${{env.javaVersion}}
-
     - name: Bundle APK
       if: matrix.target == 'android'
       env:
@@ -304,6 +294,7 @@ jobs:
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
         --output ${{env.workspace}}/build/android-build \
         --android-platform android-31 \
+        --jdk "${{JAVA_HOME_17_X64}}" \
         --gradle \
         --release \
         --sign
