@@ -152,7 +152,7 @@ jobs:
         -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
         -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL=ON \
         -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
-        -DANDROID_SDK_ROOT="${NDROID_SDK_ROOT}" \
+        -DANDROID_SDK_ROOT="${ANDROID_SDK_ROOT}" \
         -DCMAKE_CXX_FLAGS_INIT:STRING="" \
         -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi" \
         -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
