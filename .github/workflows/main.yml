@@ -174,70 +174,20 @@ jobs:
       if: matrix.target == 'android'
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --target all -j4
-        
-    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
-    
-    - name: Make space 1
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/android_openssl"
-        
-    - name: Make space 2
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/source/resources"
-        
-    - name: Clean up unneed includes
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/include"
-
-    - name: Clean up unneed includes
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/include"
-
-    - name: Clean up unneed translations
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/translations"
-
-    - name: Clean up unneed translations
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/translations"
-
-    - name: Clean up unneed tools
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/qt/Qt/Tools"
-
-    - name: Clean up unneed docs
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/qt/Qt/Docs"
-                
+            
     - name: Bundle APK
       if: matrix.target == 'android'
       env:
         QT_ANDROID_KEYSTORE_PATH: ${{env.workspace}}/source/android/android_release.keystore
         QT_ANDROID_KEYSTORE_ALIAS: ${{secrets.ANDROIDALIAS}}
         QT_ANDROID_KEYSTORE_STORE_PASS: ${{secrets.ANDROIDSTOREPASS}}
-        QT_ANDROID_KEYSTORE_KEY_PASS: ${{secrets.ANDROIDSTOREPASS}}
+        QT_ANDROID_KEYSTORE_KEY_PASS: ${{secrets.ANDROIDSTOREPASS}}env:
+        JAVA_HOME: ${JAVA_HOME_17_X64}
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
         --output ${{env.workspace}}/build/android-build \
         --android-platform android-31 \
-        --jdk "${JAVA_HOME_17_X64}" \
         --gradle \
         --release \
         --sign
