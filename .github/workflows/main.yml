@@ -183,7 +183,7 @@ jobs:
         QT_ANDROID_KEYSTORE_ALIAS: ${{secrets.ANDROIDALIAS}}
         QT_ANDROID_KEYSTORE_STORE_PASS: ${{secrets.ANDROIDSTOREPASS}}
         QT_ANDROID_KEYSTORE_KEY_PASS: ${{secrets.ANDROIDSTOREPASS}}
-        JAVA_HOME: ${{env.JAVA_PATH}}
+        JAVA_HOME: $JAVA_HOME_17_X64
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
