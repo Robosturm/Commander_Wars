@@ -174,10 +174,38 @@
         <image file="lake+S+W.png" cols = "8" />
         <image file="lake+W.png" cols = "8" />
 
-        <image file="riverend_lake+E.png" cols = "8" />
-        <image file="riverend_lake+S.png" cols = "8" />
-        <image file="riverend_lake+W.png" cols = "8" />
-        <image file="riverend_lake+N.png" cols = "8" />
+        <image file="riverend+E_lake.png" cols = "8" />
+        <image file="riverend+E_lake+E.png" cols = "8" />
+        <image file="riverend+E_lake+N.png" cols = "8" />
+        <image file="riverend+E_lake+N+E.png" cols = "8" />
+        <image file="riverend+E_lake+N+E+S.png" cols = "8" />
+        <image file="riverend+E_lake+N+S.png" cols = "8" />
+        <image file="riverend+E_lake+E+S.png" cols = "8" />
+        <image file="riverend+E_lake+S.png" cols = "8" />
+        <image file="riverend+N_lake.png" cols = "8" />
+        <image file="riverend+N_lake+E.png" cols = "8" />
+        <image file="riverend+N_lake+E+W.png" cols = "8" />
+        <image file="riverend+N_lake+N.png" cols = "8" />
+        <image file="riverend+N_lake+N+E.png" cols = "8" />
+        <image file="riverend+N_lake+N+E+W.png" cols = "8" />
+        <image file="riverend+N_lake+N+W.png" cols = "8" />
+        <image file="riverend+N_lake+W.png" cols = "8" />
+        <image file="riverend+S_lake.png" cols = "8" />
+        <image file="riverend+S_lake+E.png" cols = "8" />
+        <image file="riverend+S_lake+E+S.png" cols = "8" />
+        <image file="riverend+S_lake+E+S+W.png" cols = "8" />
+        <image file="riverend+S_lake+E+W.png" cols = "8" />
+        <image file="riverend+S_lake+S.png" cols = "8" />
+        <image file="riverend+S_lake+S+W.png" cols = "8" />
+        <image file="riverend+S_lake+W.png" cols = "8" />
+        <image file="riverend+W_lake.png" cols = "8" />
+        <image file="riverend+W_lake+N.png" cols = "8" />
+        <image file="riverend+W_lake+N+S.png" cols = "8" />
+        <image file="riverend+W_lake+N+S+W.png" cols = "8" />
+        <image file="riverend+W_lake+N+W.png" cols = "8" />
+        <image file="riverend+W_lake+S.png" cols = "8" />
+        <image file="riverend+W_lake+S+W.png" cols = "8" />
+        <image file="riverend+W_lake+W.png" cols = "8" />
 
         <image file="lake+snow+E+S.png" />
         <image file="lake+snow+E+S+W.png" />
