@@ -4,7 +4,7 @@
 namespace oxygine
 {
     constexpr qint32 BITS_PER_BYTE = 8;
-    void AnimationFrame::init(ResAnim* rs, short col, short row, const spTexture& texture, const RectF& srcRect, const RectF& destRect, const Vector2& frame_size)
+    void AnimationFrame::init(ResAnim* rs, short col, short row, const spTexture& texture, const RectF& srcRect, const RectF& destRect, const Point& frame_size)
     {
         m_column = col;
         m_row = row;
@@ -69,7 +69,7 @@ namespace oxygine
         f.m_srcRect.size = srcRect.size - (m_destRect.size - f.m_destRect.size) * sc;
         f.m_srcRect = f.m_srcRect / Vector2(w, h);
 
-        f.m_frameSize = rect.size;
+        f.m_frameSize = rect.size.cast<Point>();
 
         return f;
     }
@@ -128,6 +128,6 @@ namespace oxygine
         m_texture = t;
         m_srcRect = RectF(0, 0, 1, 1);
         m_destRect = RectF(0, 0, (float)t->getWidth(), (float)t->getHeight());
-        m_frameSize = Vector2((float)t->getWidth(), (float)t->getHeight());
+        m_frameSize = Point(t->getWidth(), t->getHeight());
     }
 }

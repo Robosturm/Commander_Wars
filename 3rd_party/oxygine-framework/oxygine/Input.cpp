@@ -26,7 +26,7 @@ namespace oxygine
         return &m_pointerMouse;
     }
 
-    void Input::sendPointerButtonEvent(spStage & stage, MouseButton button, float x, float y, float pressure, qint32 type, PointerState* ps)
+    void Input::sendPointerButtonEvent(spStage & stage, MouseButton button, qint32 x, qint32 y, float pressure, qint32 type, PointerState* ps)
     {
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
         {
@@ -37,7 +37,7 @@ namespace oxygine
             return;
         }
 
-        Vector2 p(x, y);
+        Point p(x, y);
 
         TouchEvent me(type, true, p);
         me.index = ps->getIndex();
@@ -62,17 +62,17 @@ namespace oxygine
         }
     }
 
-    void Input::sendPointerMotionEvent(spStage & stage, float x, float y, float pressure, PointerState* ps)
+    void Input::sendPointerMotionEvent(spStage & stage, qint32 x, qint32 y, float pressure, PointerState* ps)
     {
 
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
         {
             return;
         }
-        TouchEvent me(TouchEvent::MOVE, true, Vector2(x, y));
+        TouchEvent me(TouchEvent::MOVE, true, Point(x, y));
         me.index = ps->getIndex();
         me.pressure = pressure;
-        ps->m_position = Vector2(x, y);
+        ps->m_position = Point(x, y);
         stage->handleEvent(&me);
     }
 

@@ -437,7 +437,7 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
         m_HealthBar0->setPosition(162, 25);
         m_HealthBar0->setFlippedX(true);
     }
-    m_hpInfo0->setPosition(m_HealthBar0->getPosition() + oxygine::Vector2(spriteWidth / 2 - 16, -19));
+    m_hpInfo0->setPosition(m_HealthBar0->getPosition() + oxygine::Point(spriteWidth / 2 - 16, -19));
     m_HealthBar0->setColor(getHealthBarColor(atkStartHp));
     m_hpInfo0->setText(QString::number(GlobalUtils::roundUp(atkStartHp)));
     addChild(m_HealthBar0);
@@ -456,7 +456,7 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
         m_HealthBar1->setPosition(162, 25);
         m_HealthBar1->setFlippedX(true);
     }
-    m_hpInfo1->setPosition(m_HealthBar1->getPosition() + oxygine::Vector2(spriteWidth / 2 - 16, -19));
+    m_hpInfo1->setPosition(m_HealthBar1->getPosition() + oxygine::Point(spriteWidth / 2 - 16, -19));
     m_HealthBar1->setColor(getHealthBarColor(defStartHp));
     m_hpInfo1->setText(QString::number(GlobalUtils::roundUp(defStartHp)));
     addChild(m_HealthBar1);

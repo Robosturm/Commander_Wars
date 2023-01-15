@@ -1150,6 +1150,11 @@ const Password & GameRules::getPassword() const
     return m_password;
 }
 
+QString GameRules::getPasswordText() const
+{
+    return m_password.getPasswordText();
+}
+
 void GameRules::setPassword(const QString & password)
 {
     m_password.setPassword(password);

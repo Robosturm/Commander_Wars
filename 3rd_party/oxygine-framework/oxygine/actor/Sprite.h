@@ -128,7 +128,7 @@ namespace oxygine
 #endif
         virtual void changeAnimFrame(const AnimationFrame& f);
         virtual void animFrameChanged(const AnimationFrame& f);
-        virtual void sizeChanged(const Vector2& size) override;
+        virtual void sizeChanged(const Point& size) override;
 
     protected:
 #ifdef GRAPHICSUPPORT

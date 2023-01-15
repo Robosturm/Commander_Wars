@@ -83,6 +83,7 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/unitspritemanager.h"
+#include "resource_management/gamerulemanager.h"
 
 void MetaTypeRegister::registerInterfaceData()
 {
@@ -178,6 +179,7 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<COSpriteManager>("COSpriteManager", 1);
     qmlRegisterInterface<UnitSpriteManager>("UnitSpriteManager", 1);
     qmlRegisterInterface<BuildingSpriteManager>("BuildingSpriteManager", 1);
+    qmlRegisterInterface<GameRuleManager>("GameRuleManager", 1);
     qmlRegisterInterface<TerrainManager>("TerrainManager", 1);
     qmlRegisterInterface<COPerkManager>("COPerkManager", 1);
     qmlRegisterInterface<MovementPlannerAddIn>("MovementPlannerAddIn", 1);

@@ -103,7 +103,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addGroup(tr("Map info"));
     m_Topbar->addItem(tr("New map"),            "NEWMAP",       1, tr("Create a new map"));
     m_Topbar->addItem(tr("Edit map"),           "EDITMAP",      1, tr("Edit the information for a map"));
-    m_Topbar->addItem(tr("Resiz map"),         "RESIZEMAP",    1, tr("Resizes the map using left, top, right and bottom size changes."));
+    m_Topbar->addItem(tr("Resize map"),         "RESIZEMAP",    1, tr("Resizes the map using left, top, right and bottom size changes."));
     m_Topbar->addItem(tr("Flip map X"),         "FLIPX",        1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
     m_Topbar->addItem(tr("Flip map Y"),         "FLIPY",        1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
     m_Topbar->addItem(tr("Rotate map X"),       "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));

@@ -392,7 +392,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 m_Timer.start(m_timerCycle, this);
             }
             GameConsole::getInstance()->moveToThread(Mainapp::getWorkerthread());
-            emit m_Worker->sigStart();
+            if (m_Worker != nullptr)
+            {
+                emit m_Worker->sigStart();
+            }
             break;
         }
         case StartupPhase::Finalizing:

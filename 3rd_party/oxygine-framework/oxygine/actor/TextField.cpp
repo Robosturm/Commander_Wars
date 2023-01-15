@@ -94,7 +94,7 @@ namespace oxygine
 #endif
     }
 
-    void TextField::sizeChanged(const Vector2&)
+    void TextField::sizeChanged(const Point&)
     {
         rebuildText();
     }

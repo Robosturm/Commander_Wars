@@ -76,12 +76,8 @@ public:
      */
     void onGameLoaded(BaseGamemenu* pMenu);
 
-    QString getScriptFile() const;
-    void setScriptFile(const QString &value);
 
     QString getVictoryInfo();
-
-signals:
 
 public slots:
     GameMap *getMap() const;
@@ -93,6 +89,9 @@ public slots:
     {
         return &m_Variables;
     }
+    QString getScriptFile() const;
+    void setScriptFile(const QString &value);
+
 private:
     bool m_victoryCalled{false};
     QString m_script;

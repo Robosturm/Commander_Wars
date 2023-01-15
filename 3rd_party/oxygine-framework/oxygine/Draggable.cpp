@@ -33,7 +33,7 @@ namespace oxygine
         actor->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
     }
 
-    void Draggable::startDrag(const Vector2& localCenter)
+    void Draggable::startDrag(const Point& localCenter)
     {
         m_startTm = Clock::getTimeMS();
         m_pressed = true;
@@ -42,13 +42,13 @@ namespace oxygine
         oxygine::Stage::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Draggable::onEvent));
     }
 
-    void Draggable::onMove(const Vector2& position)
+    void Draggable::onMove(const Point& position)
     {
         if (m_pressed && (m_dragEnabled || m_middleButton) &&
             m_dragClient != nullptr)
         {
-            Vector2 localPos = m_dragClient->stage2local(position);
-            Vector2 dragOffset = localPos - m_dragPos;
+            Point localPos = m_dragClient->stage2local(position).cast<Point>();
+            Point dragOffset = localPos - m_dragPos;
             Vector2 converted = convertPosUp(m_dragClient, m_dragClient->getParent(), dragOffset, true);
             Vector2 np;
             bool _clientIsParent = true;
@@ -58,10 +58,10 @@ namespace oxygine
             }
             else
             {
-                np = m_dragClient->getPosition() + converted;
+                np = m_dragClient->getPosition().cast<Vector2>() + converted;
             }
             auto startPos = m_dragClient->getPosition();
-            m_dragClient->setPosition(np);
+            m_dragClient->setPosition(np.cast<Point>());
             snapClient2Bounds();
             if (startPos != m_dragClient->getPosition())
             {
@@ -146,22 +146,21 @@ namespace oxygine
     {
         if (m_dragClient != nullptr)
         {
-            Vector2 np = m_dragClient->getPosition();
+            Point np = m_dragClient->getPosition();
             if (m_bounds.getWidth() != -1 && m_bounds.getHeight() != -1)
             {
-                np.x = std::max(np.x, (float)m_bounds.getX());
-                np.y = std::max(np.y, (float)m_bounds.getY());
-
-                np.x = std::min(np.x, (float)m_bounds.getRight());
-                np.y = std::min(np.y, (float)m_bounds.getBottom());
+                np.x = std::max(np.x, static_cast<qint32>(m_bounds.getX()));
+                np.y = std::max(np.y, static_cast<qint32>(m_bounds.getY()));
+                np.x = std::min(np.x, static_cast<qint32>(m_bounds.getRight()));
+                np.y = std::min(np.y, static_cast<qint32>(m_bounds.getBottom()));
             }
             m_dragClient->setPosition(np);
         }
     }
 
-    Vector2 Draggable::convertPosUp(Actor* src, Actor* dest, const Vector2& pos, bool direction)
+    Point Draggable::convertPosUp(Actor* src, Actor* dest, const Point& pos, bool direction)
     {
-        Vector2 locPos = pos;
+        Point locPos = pos;
 #ifdef GRAPHICSUPPORT
         AffineTransform t;
         while (src != dest && src)
@@ -174,14 +173,14 @@ namespace oxygine
             t.x = 0;
             t.y = 0;
         }
-        locPos = t.transform(locPos);
+        locPos = t.transform(locPos).cast<Point>();
 #endif
         return locPos;
     }
 
-    Vector2 Draggable::convertPosDown(Actor* src, Actor* dest, const Vector2& pos, bool direction)
+    Point Draggable::convertPosDown(Actor* src, Actor* dest, const Point& pos, bool direction)
     {
-        Vector2 locPos = pos;
+        Point locPos = pos;
 #ifdef GRAPHICSUPPORT
         AffineTransform t;
         t = src->getTransform();
@@ -195,7 +194,7 @@ namespace oxygine
             t.x = 0;
             t.y = 0;
         }
-        locPos = t.transform(locPos);
+        locPos = t.transform(locPos).cast<Point>();
 #endif
         return locPos;
     }

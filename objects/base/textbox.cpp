@@ -40,7 +40,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     setSize(width, heigth);
     m_Textfield->setWidth(m_Textbox->getScaledWidth() - 20);
     m_Textfield->setHeight(m_Textbox->getScaledHeight());
-    pClipActor->setSize(m_Textfield->getScaledSize());
+    pClipActor->setSize(m_Textfield->getScaledSize().cast<oxygine::Point>());
     pClipActor->setX(10);
     pClipActor->setY(5);
 

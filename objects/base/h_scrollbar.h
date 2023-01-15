@@ -30,7 +30,7 @@ public:
     qint32 getContentHeigth() const;
 
     virtual void update(const oxygine::UpdateState&) override;
-    virtual void setHeight(float h) override;
+    virtual void setHeight(qint32 h) override;
     bool getSliding() const;
     void setSliding(bool sliding);
 

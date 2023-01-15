@@ -64,14 +64,15 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     m_pPanel = spPanel::create(true,  size, size);
     m_pPanel->setPosition(10, 20);
     m_pPanel->addItem(m_pRuleSelection);
-    m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 40);
-    m_pPanel->setContentWidth(m_pRuleSelection->getScaledWidth());
+    m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 60);
+    m_pPanel->setContentWidth(m_pRuleSelection->getScaledWidth() + 60);
     pSpriteBox->addChild(m_pPanel);
 }
 
 void RuleSelectionDialog::ruleSelectionSizeChanged()
 {
-    m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 40);
+    m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 60);
+    m_pPanel->setContentWidth(m_pRuleSelection->getScaledWidth() + 60);
 }
 
 void RuleSelectionDialog::showLoadRules()

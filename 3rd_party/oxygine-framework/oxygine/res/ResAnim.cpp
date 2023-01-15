@@ -54,7 +54,7 @@ namespace oxygine
             {
                 RectF srcRect(x * iw, y * ih, width, height);
                 RectF destRect(Vector2(0, 0), frameSize * scaleFactor);
-                m_frames[x + y * columns].init(this, x, y, texture, srcRect, destRect, destRect.size);
+                m_frames[x + y * columns].init(this, x, y, texture, srcRect, destRect, destRect.size.cast<Point>());
             }
         }
         init(columns, scaleFactor);
@@ -159,11 +159,11 @@ namespace oxygine
         }
     }
 
-    const Vector2&  ResAnim::getSize() const
+    const Point& ResAnim::getSize() const
     {
         if (m_frames.empty())
         {
-            static Vector2 dummy;
+            static Point dummy;
             return dummy;
         }
         return m_frames[0].getSize();

@@ -18,7 +18,7 @@ void RotatingSprite::setSprite(oxygine::spActor firstSprite, oxygine::spActor se
     m_SecondRect->addChild(m_SecondSprite);
 }
 
-void RotatingSprite::sizeChanged(const oxygine::Vector2& size)
+void RotatingSprite::sizeChanged(const oxygine::Point& size)
 {
     m_SecondRect->setWidth(0);
     m_FirstRect->setWidth(size.x);

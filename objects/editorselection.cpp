@@ -811,7 +811,7 @@ void EditorSelection::selectBuilding(qint32 building)
     qint32 heigth = m_Buildings[building]->getBuildingHeigth();
     qint32 x = GameMap::getImageSize() * (width - 1) / (width);
     qint32 y = GameMap::getImageSize() * (heigth - 1) / (heigth);
-    m_CurrentSelector->setPosition(m_Buildings[building]->oxygine::Actor::getPosition() - oxygine::Vector2(x, y));
+    m_CurrentSelector->setPosition(m_Buildings[building]->oxygine::Actor::getPosition() - oxygine::Point(x, y));
     emit sigSelectionChanged();
 }
 

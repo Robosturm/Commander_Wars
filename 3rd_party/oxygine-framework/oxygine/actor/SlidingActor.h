@@ -39,7 +39,7 @@ namespace oxygine
     protected:
         void destroy();
         virtual void handleEvent(Event* event) override;
-        virtual void sizeChanged(const Vector2& size) override;
+        virtual void sizeChanged(const Point& size) override;
         virtual void doUpdate(const UpdateState& us) override;
         void _newEvent(Event* event);
 

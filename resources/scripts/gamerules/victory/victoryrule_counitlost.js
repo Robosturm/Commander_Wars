@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getRuleName = function(rule, itemNumber, map)
     {
-        return qsTr("Co Units lost");
+        return qsTr("Co units lost");
     };
     // the type how the rule will be represented in the map selection ui
     this.getRuleType = function()

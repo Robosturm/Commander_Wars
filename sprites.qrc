@@ -4901,5 +4901,7 @@
         <file>resources/images/game/transferUnit.png</file>
         <file>resources/images/animations/silo+impact.png</file>
         <file>resources/images/animations/silo+launch.png</file>
+        <file>resources/ui/game/ruleSelection.xml</file>
+        <file>resources/ui/game/ruleSelectionScript.js</file>
     </qresource>
 </RCC>

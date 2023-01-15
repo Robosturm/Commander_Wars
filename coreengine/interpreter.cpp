@@ -8,6 +8,7 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/unitspritemanager.h"
+#include "resource_management/gamerulemanager.h"
 
 #include <QDir>
 #include <QQmlEngine>
@@ -76,6 +77,8 @@ void Interpreter::init()
     globalObject().setProperty("terrainSpriteManager", terrainSpriteManager);
     QJSValue coPerkSpriteManager = newQObject(COPerkManager::getInstance());
     globalObject().setProperty("coPerkSpriteManager", coPerkSpriteManager);
+    QJSValue gameRuleManager = newQObject(GameRuleManager::getInstance());
+    globalObject().setProperty("gameRuleManager", gameRuleManager);
 
     GameEnums::registerEnums();
 

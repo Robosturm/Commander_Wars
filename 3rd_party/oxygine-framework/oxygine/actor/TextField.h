@@ -61,7 +61,7 @@ namespace oxygine
 
         using TweenColor = Property<QColor, const QColor&, TextField, &TextField::getStyleColor, &TextField::setStyleColor>;
     protected:
-        virtual void sizeChanged(const Vector2& size) override;
+        virtual void sizeChanged(const Point& size) override;
         void rebuildText(bool lock = true);
 
     protected:

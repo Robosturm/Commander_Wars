@@ -251,6 +251,11 @@ public slots:
      */
     const Password & getPassword() const;
     /**
+     * @brief getPassword
+     * @return
+     */
+    QString getPasswordText() const;
+    /**
      * @brief setPassword
      * @param password
      */

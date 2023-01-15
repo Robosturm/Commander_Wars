@@ -30,7 +30,7 @@ namespace oxygine
         m_rad = rad;
     }
 
-    void SlidingActorNoClipRect::sizeChanged(const Vector2& size)
+    void SlidingActorNoClipRect::sizeChanged(const Point& size)
     {
         updateDragBounds();
     }
@@ -130,8 +130,8 @@ namespace oxygine
             const RectF& bounds = m_drag.getDragBounds();
             while (m_lastIterTime + fdt <= ct)
             {
-                Vector2 pos = m_content->getPosition();
-                Vector2 newpos = pos + m_speed * (fdt.count() / 1000.0f);
+                Point pos = m_content->getPosition();
+                Point newpos = pos + (m_speed * (static_cast<float>(fdt.count()) / 1000.0f)).cast<Point>();
                 if (newpos.x < bounds.getLeft())
                 {
                     newpos.x = bounds.getLeft();
@@ -318,7 +318,7 @@ namespace oxygine
                                 {
                                     act->setNotPressed((MouseButton)i);
 
-                                    TouchEvent ev(TouchEvent::TOUCH_UP, true, Vector2(-100000, -100000));
+                                    TouchEvent ev(TouchEvent::TOUCH_UP, true, Point(-100000, -100000));
                                     ev.mouseButton = (MouseButton)i;
                                     ev.index = te->index;
                                     ev.bubbles = false;

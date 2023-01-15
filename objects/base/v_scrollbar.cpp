@@ -254,7 +254,10 @@ void V_Scrollbar::setContentWidth(qint32 width)
     {
         m_ContentWidth = width;
         qint32 sliderWidth = 50;
-        sliderWidth = ((m_Width - 20 - 20) * m_Width) / m_ContentWidth;
+        if (m_ContentWidth > 0)
+        {
+            sliderWidth = ((m_Width - 20 - 20) * m_Width) / m_ContentWidth;
+        }
         if (sliderWidth < 11)
         {
             sliderWidth = 11;
@@ -339,7 +342,7 @@ void V_Scrollbar::setScrollvalue(float Scrollvalue)
     }
 }
 
-void V_Scrollbar::setWidth(float w)
+void V_Scrollbar::setWidth(qint32 w)
 {    
     oxygine::Actor::setWidth(w);
     m_Width = w;

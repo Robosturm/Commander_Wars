@@ -26,7 +26,7 @@ void Password::deserializeObject(QDataStream& pStream)
     m_passwordHash = Filesupport::readByteArray(pStream);
 }
 
-void Password::setPassword(QString password)
+void Password::setPassword(const QString & password)
 {
     m_password = password;
     if (password.isEmpty())
@@ -53,7 +53,7 @@ void Password::setPassword(const Password & password)
     m_passwordHash = password.m_passwordHash;
 }
 
-bool Password::isValidPassword(QString password) const
+bool Password::isValidPassword(const QString & password) const
 {
     QByteArray data;
     if (!password.isEmpty())

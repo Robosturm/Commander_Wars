@@ -16,6 +16,7 @@
 #include "objects/base/timespinbox.h"
 #include "objects/base/textbox.h"
 #include "objects/base/multilinetextbox.h"
+#include "objects/base/multislider.h"
 #include "objects/base/panel.h"
 #include "objects/base/slider.h"
 #include "objects/base/spriteobject.h"
@@ -43,6 +44,7 @@ static const char* const itemIcon = "Icon";
 static const char* const itemButton = "Button";
 static const char* const itemIconButton = "IconButton";
 static const char* const itemSlider = "Slider";
+static const char* const itemMultiSlider = "MultiSlider";
 static const char* const itemMoveInButton = "MoveInButton";
 static const char* const itemSprite = "Sprite";
 static const char* const itemTextField = "TextField";
@@ -58,9 +60,12 @@ static const char* const attrY = "y";
 static const char* const attrWidth = "width";
 static const char* const attrHeight = "height";
 static const char* const attrSize = "size";
+static const char* const attrLabelWidth = "labelWidth";
 static const char* const attrTooltip = "tooltip";
 static const char* const attrOnEvent = "onEvent";
 static const char* const attrStartValue = "startValue";
+static const char* const attrStartValues = "startValues";
+static const char* const attrLabels = "labels";
 static const char* const attrText = "text";
 static const char* const attrOnUpdate = "onUpdate";
 static const char* const attrFont = "font";
@@ -119,6 +124,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemDropDownMenuColor), std::bind(&UiFactory::createDropDownMenuColor, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemIf), std::bind(&UiFactory::ifCondition, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemMultilineTextbox), std::bind(&UiFactory::createMultilineTextbox, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.append({QString(itemMultiSlider), std::bind(&UiFactory::createMultiSlider, this, _1, _2, _3, _4, _5)});
 
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
@@ -153,6 +159,7 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
         }
         uiFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/" + uiXml);
         uiFiles.append("resources/" + uiXml);
+        m_lastCoordinates.setRect(0, 0, 0, 0);
         for (const auto & uiFile : qAsConst(uiFiles))
         {
             if (QFile::exists(uiFile))
@@ -184,6 +191,9 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                                 if (!success)
                                 {
                                     CONSOLE_PRINT("Unknown item: " + node.toElement().nodeName() + " found. UI creation failed.", GameConsole::eERROR);
+                                }
+                                else
+                                {
                                 }
                             }
                             node = node.nextSibling();
@@ -344,6 +354,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         item = pLabel;
 
         m_lastCoordinates = QRect(x, y, pLabel->getScaledWidth(), pLabel->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -376,6 +387,7 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
         parent->addChild(pLabel);
         item = pLabel;
         m_lastCoordinates = QRect(x, y, pLabel->getScaledWidth(), pLabel->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -420,6 +432,7 @@ bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygi
         item = pButton;
 
         m_lastCoordinates = QRect(x, y, pButton->getScaledWidth(), pButton->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -453,6 +466,7 @@ bool UiFactory::createSelectKey(oxygine::spActor parent, QDomElement element, ox
         parent->addChild(pButton);
         item = pButton;
         m_lastCoordinates = QRect(x, y, pButton->getScaledWidth(), pButton->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -484,6 +498,7 @@ bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, o
         item = pButton;
 
         m_lastCoordinates = QRect(x, y, pButton->getScaledWidth(), pButton->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -564,6 +579,7 @@ bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygi
         parent->addChild(pSprite);
         item = pSprite;
         m_lastCoordinates = QRect(x, y, pSprite->getScaledWidth(), pSprite->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -597,6 +613,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
         }, Qt::QueuedConnection);
         item = pCheckbox;
         m_lastCoordinates = QRect(x, y, pCheckbox->getScaledWidth(), pCheckbox->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -618,6 +635,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         float spinSpeed = getFloatValue(getAttribute(childs, attrSpinSpeed), id, loopIdx, pMenu, 1.0f);
         QString tooltip = translate(getStringValue(getAttribute(childs,attrTooltip), id, loopIdx, pMenu));
         QString onEventLine = getAttribute(childs,attrOnEvent);
+        QString unit = getStringValue(getAttribute(childs, attrUnit), id, loopIdx, pMenu);
         float value = getFloatValue(getAttribute(childs,attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
@@ -633,6 +651,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         pSpinBox->setY(y);
         pSpinBox->setInfinityValue(infinite);
         pSpinBox->setTooltipText(tooltip);
+        pSpinBox->setUnit(unit);
         pSpinBox->setCurrentValue(value);
         pSpinBox->setObjectName(id);
         pSpinBox->setEnabled(enabled);
@@ -645,6 +664,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         parent->addChild(pSpinBox);
         item = pSpinBox;
         m_lastCoordinates = QRect(x, y, pSpinBox->getScaledWidth(), pSpinBox->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -688,6 +708,43 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
         parent->addChild(pSlider);
         item = pSlider;
         m_lastCoordinates = QRect(x, y, pSlider->getScaledWidth(), pSlider->getScaledHeight());
+        updateMenuSize(pMenu);
+    }
+    return success;
+}
+
+bool UiFactory::createMultiSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrLabels, attrStartValues});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
+        qint32 x = getIntValue(getAttribute(childs,attrX), id, loopIdx, pMenu);
+        qint32 y = getIntValue(getAttribute(childs,attrY), id, loopIdx, pMenu);
+        qint32 width = getIntValue(getAttribute(childs,attrWidth), id, loopIdx, pMenu);
+        qint32 labelWidth = getIntValue(getAttribute(childs, attrLabelWidth), id, loopIdx, pMenu);
+        QString tooltip = translate(getStringValue(getAttribute(childs,attrTooltip), id, loopIdx, pMenu));
+        QString onEventLine = getAttribute(childs, attrOnEvent);
+        QStringList labels = getStringListValue(getAttribute(childs, attrLabels), id, loopIdx, pMenu);
+        QVector<qint32> chances = getInt32ListValue(getAttribute(childs, attrStartValues), id, loopIdx, pMenu);
+        bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
+        bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
+        spMultislider pMultislider = spMultislider::create(labels, width, chances, labelWidth);
+        pMultislider->setX(x);
+        pMultislider->setY(y);
+        pMultislider->setObjectName(id);
+        pMultislider->setEnabled(enabled);
+        pMultislider->setVisible(visible);
+        pMultislider->setTooltipText(tooltip);
+        connect(pMultislider.get(), &Multislider::signalSliderChanged, pMenu, [this, onEventLine, id, loopIdx, pMenu]()
+        {
+            onEvent(onEventLine, 0, id, loopIdx, pMenu);
+        }, Qt::QueuedConnection);
+        parent->addChild(pMultislider);
+        item = pMultislider;
+        m_lastCoordinates = QRect(x, y, pMultislider->getScaledWidth(), pMultislider->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -726,6 +783,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         parent->addChild(pTextbox);
         item = pTextbox;
         m_lastCoordinates = QRect(x, y, pTextbox->getScaledWidth(), pTextbox->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -760,6 +818,7 @@ bool UiFactory::createMultilineTextbox(oxygine::spActor parent, QDomElement elem
         parent->addChild(pTextbox);
         item = pTextbox;
         m_lastCoordinates = QRect(x, y, pTextbox->getScaledWidth(), pTextbox->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -798,6 +857,7 @@ bool UiFactory::createPasswordbox(oxygine::spActor parent, QDomElement element, 
         parent->addChild(pTextbox);
         item = pTextbox;
         m_lastCoordinates = QRect(x, y, pTextbox->getScaledWidth(), pTextbox->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -832,6 +892,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
         parent->addChild(pSpinBox);
         item = pSpinBox;
         m_lastCoordinates = QRect(x, y, pSpinBox->getScaledWidth(), pSpinBox->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -858,6 +919,7 @@ bool UiFactory::createIcon(oxygine::spActor parent, QDomElement element, oxygine
         pIcon->setVisible(visible);
         item = pIcon;
         m_lastCoordinates = QRect(x, y, pIcon->getScaledWidth(), pIcon->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -883,6 +945,7 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
         pPanel->setObjectName(id);
         pPanel->setEnabled(enabled);
         m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
+        updateMenuSize(pMenu);
         m_parentSize = QSize(pPanel->getScaledWidth(), pPanel->getScaledHeight());
         auto node = getNode(childs, attrChilds).firstChild();
         qint32 maxWidth = 0;
@@ -966,6 +1029,7 @@ bool UiFactory::createDropDownMenu(oxygine::spActor parent, QDomElement element,
         parent->addChild(pDropDownmenu);
         item = pDropDownmenu;
         m_lastCoordinates = QRect(x, y, pDropDownmenu->getScaledWidth(), pDropDownmenu->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -1027,6 +1091,7 @@ bool UiFactory::createDropDownMenuColor(oxygine::spActor parent, QDomElement ele
         parent->addChild(pDropDownmenu);
         item = pDropDownmenu;
         m_lastCoordinates = QRect(x, y, pDropDownmenu->getScaledWidth(), pDropDownmenu->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -1149,6 +1214,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
         parent->addChild(pDropDownmenu);
         item = pDropDownmenu;
         m_lastCoordinates = QRect(x, y, pDropDownmenu->getScaledWidth(), pDropDownmenu->getScaledHeight());
+        updateMenuSize(pMenu);
     }
     return success;
 }
@@ -1178,6 +1244,7 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
         pPanel->setVisible(visible);
         pPanel->setEnabled(enabled);
         m_lastCoordinates = QRect(x, y, pPanel->getScaledWidth(), pPanel->getScaledHeight());
+        updateMenuSize(pMenu);
         m_parentSize = QSize(pPanel->getScaledWidth(), pPanel->getScaledHeight());
         auto node = getNode(childs, attrChilds).firstChild();
         while (!node.isNull())
@@ -1628,6 +1695,7 @@ QStringList UiFactory::getStringListValue(QString line, QString objectId, qint32
         else
         {
             value = erg.toVariant().toStringList();
+
             if (success != nullptr)
             {
                 *success = true;
@@ -1642,6 +1710,48 @@ QStringList UiFactory::getStringListValue(QString line, QString objectId, qint32
         }
     }
     return value;
+}
+
+QVector<qint32> UiFactory::getInt32ListValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool * success)
+{
+    QVector<qint32> result;
+    if (!line.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue obj = pInterpreter->newQObject(pMenu);
+        pInterpreter->setGlobal("currentMenu", obj);
+        line = "var objectId = \"" + objectId + "\";" +
+               "var loopIdx = " + QString::number(loopIdx) + ";" + line;
+        QJSValue erg = pInterpreter->evaluate(line);
+        if (erg.isError())
+        {
+            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
+            if (success != nullptr)
+            {
+                *success = false;
+            }
+        }
+        else
+        {
+            auto values = erg.toVariant().toList();
+            for (const auto & value : qAsConst(values))
+            {
+                result.append(value.toInt());
+            }
+            if (success != nullptr)
+            {
+                *success = true;
+            }
+        }
+    }
+    else
+    {
+        if (success != nullptr)
+        {
+            *success = false;
+        }
+    }
+    return result;
 }
 
 oxygine::TextStyle UiFactory::getStyle(const QString & styleName, const QString & fontColor, qint32 size, oxygine::TextStyle::HorizontalAlign hAlign)
@@ -1704,5 +1814,19 @@ void UiFactory::doEvent(QString command, QString objectId, qint32 loopIdx, Creat
     if (erg.isError())
     {
         CONSOLE_PRINT("Error while parsing " + command + " Error: " + erg.toString() + ".", GameConsole::eERROR);
+    }
+}
+
+void UiFactory::updateMenuSize(CreatedGui* pMenu)
+{
+    qint32 width = m_lastCoordinates.x() + m_lastCoordinates.width();
+    if (pMenu->getWidth() < width)
+    {
+        pMenu->setWidth(width);
+    }
+    qint32 height = m_lastCoordinates.y() + m_lastCoordinates.height();
+    if (pMenu->getHeight() < height)
+    {
+        pMenu->setHeight(height);
     }
 }

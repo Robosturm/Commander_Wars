@@ -39,8 +39,7 @@ public:
      */
     void setPassword(const Password & password);
     /**
-     * @brief setPassword
-     * @param password
+     * @brief getPasswordText
      * @return
      */
     QString getPasswordText() const;
@@ -54,8 +53,8 @@ public:
     }
 
 public slots:
-    void setPassword(QString password);
-    bool isValidPassword(QString password) const;
+    void setPassword(const QString & password);
+    bool isValidPassword(const QString & password) const;
     bool areEqualPassword(const Password & password) const;
     bool getIsSet() const;
 private:

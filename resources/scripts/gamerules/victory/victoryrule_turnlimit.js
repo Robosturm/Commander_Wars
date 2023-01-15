@@ -24,7 +24,7 @@ var Constructor = function()
             }
             else
             {
-                return qsTr("The Team winning the game if the time is up. Infinite for all player losing the game.");
+                return qsTr("The team winning the game if the time is up. Infinite for all player losing the game.");
             }
         }
     };
@@ -32,11 +32,11 @@ var Constructor = function()
     {
         if (itemNumber === 0)
         {
-            return qsTr("Turn Limit");
+            return qsTr("Turn limit");
         }
         else
         {
-            return qsTr("Winner Team");
+            return qsTr("Winner team");
         }
     };
     // the type how the rule will be represented in the map selection ui

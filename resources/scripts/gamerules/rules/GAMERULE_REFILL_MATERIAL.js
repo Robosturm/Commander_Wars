@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getRuleName = function(itemNumber)
     {
-        return qsTr("Material Refill");
+        return qsTr("Material refill");
     };
 };
 

@@ -42,14 +42,14 @@ Label::Label(qint32 width, bool showBox)
     addChild(m_clipRect);
 }
 
-void Label::setWidth(float width)
+void Label::setWidth(qint32 width)
 {    
     m_clipRect->setWidth(width);
     m_textField->setWidth(width);
     oxygine::Sprite::setWidth(width);    
 }
 
-void Label::setHeight(float height)
+void Label::setHeight(qint32 height)
 {
     m_clipRect->setHeight(height);
     m_textField->setHeight(height);
@@ -76,9 +76,9 @@ void Label::setStyle(const oxygine::TextStyle& st)
 {    
 #ifdef GRAPHICSUPPORT
     m_textField->setStyle(st);
-    m_clipRect->setPosition(m_clipRect->getPosition() + oxygine::Vector2(0, -m_clipOffset));
+    m_clipRect->setPosition(m_clipRect->getPosition() + oxygine::Point(0, -m_clipOffset));
     m_clipOffset = st.font.offsetY;
-    m_clipRect->setPosition(m_clipRect->getPosition() + oxygine::Vector2(0, m_clipOffset));
+    m_clipRect->setPosition(m_clipRect->getPosition() + oxygine::Point(0, m_clipOffset));
     qint32 height = getTextRect().getHeight();
     m_clipRect->setHeight(height);
     oxygine::Sprite::setHeight(height);

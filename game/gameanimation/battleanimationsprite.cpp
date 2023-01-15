@@ -677,7 +677,7 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
             {
                 endX = xPos - movement.x();
             }
-            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
             if (deleteAfter)
             {
                 moveTween->addDoneCallback([this](oxygine::Event * pEvent)
@@ -799,7 +799,7 @@ void BattleAnimationSprite::addMoveTweenToLastLoadedSprites(qint32 deltaX, qint3
                 }
                 else
                 {
-                    moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(sprite->getX() + deltaX, sprite->getY() + deltaY)),
+                    moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(sprite->getX() + deltaX, sprite->getY() + deltaY)),
                                                       oxygine::timeMS(time),
                                                       loops, true);
                 }

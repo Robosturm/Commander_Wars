@@ -15,6 +15,8 @@ public:
      * @brief reset
      */
     virtual void reset() override;
+
+public slots:
     /**
      * @brief getVictoryRuleID
      * @param position the position in the loaded victory list
@@ -122,5 +124,7 @@ private:
     QStringList m_loadedVictoryRules;
     QStringList m_loadedGameRules;
 };
+
+Q_DECLARE_INTERFACE(GameRuleManager, "GameRuleManager");
 
 #endif // TERRAINMANAGER_H

@@ -206,11 +206,13 @@ void H_Scrollbar::setSliding(bool sliding)
 }
 
 void H_Scrollbar::setContentHeigth(qint32 heigth)
-{
-    
+{    
     m_ContentHeigth = heigth;
     qint32 sliderHeight = 50;
-    sliderHeight = ((getHeight() - 20 - 20) * getHeight()) / m_ContentHeigth;
+    if (m_ContentHeigth > 0)
+    {
+        sliderHeight = ((getHeight() - 20 - 20) * getHeight()) / m_ContentHeigth;
+    }
     if (sliderHeight < 11)
     {
         sliderHeight = 11;
@@ -289,7 +291,7 @@ void H_Scrollbar::setScrollvalue(float Scrollvalue)
     }
 }
 
-void H_Scrollbar::setHeight(float h)
+void H_Scrollbar::setHeight(qint32 h)
 {
     
     oxygine::Actor::setHeight(h);

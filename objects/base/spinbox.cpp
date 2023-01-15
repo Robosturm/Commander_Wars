@@ -39,7 +39,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     setSize(width, 40);
     m_Textfield->setWidth(m_Textbox->getScaledWidth() - 20);
     m_Textfield->setHeight(m_Textbox->getScaledHeight());
-    pClipActor->setSize(m_Textfield->getScaledSize());
+    pClipActor->setSize(m_Textfield->getScaledSize().cast<oxygine::Point>());
     pClipActor->setX(10);
     pClipActor->setY(5);
     addChild(m_Textbox);

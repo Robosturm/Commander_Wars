@@ -27,7 +27,7 @@ namespace oxygine
         {
             return m_bounds;
         }
-        const Vector2& getClientPos() const
+        const Point& getClientPos() const
         {
             return m_clientPos;
         }
@@ -56,17 +56,17 @@ namespace oxygine
     protected:
         Actor* getClient();
         void onEvent(Event* event);
-        void startDrag(const Vector2& localPos);
+        void startDrag(const Point& localPos);
 
         void onDrag(TouchEvent* es);
-        void onMove(const Vector2& position);
+        void onMove(const Point& position);
 
-        Vector2 convertPosUp(Actor* src, Actor* dest, const Vector2& pos, bool direction);
-        Vector2 convertPosDown(Actor* src, Actor* dest, const Vector2& pos, bool direction);
+        Point convertPosUp(Actor* src, Actor* dest, const Point& pos, bool direction);
+        Point convertPosDown(Actor* src, Actor* dest, const Point& pos, bool direction);
     protected:
         RectF m_bounds{0, 0, -1, -1};
-        Vector2 m_dragPos;
-        Vector2 m_clientPos;
+        Point m_dragPos;
+        Point m_clientPos;
         Actor* m_dragClient{nullptr};
         timeMS m_startTm{0};
         bool m_dragEnabled{true};

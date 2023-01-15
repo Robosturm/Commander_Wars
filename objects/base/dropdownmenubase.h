@@ -63,7 +63,7 @@ public slots:
     void hideDropDown();
     virtual void focusedLost() override;
 protected:
-    const oxygine::Vector2& addDropDownItem(oxygine::spActor item, qint32 id);
+    const oxygine::Point& addDropDownItem(oxygine::spActor item, qint32 id);
 protected:
     oxygine::spClipRectActor m_pClipActor;
     oxygine::spBox9Sprite m_Box;

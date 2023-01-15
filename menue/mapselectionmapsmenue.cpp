@@ -360,13 +360,14 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pRuleSelectionView = spRuleSelection::create(pMap.get(), Settings::getWidth() - 80, RuleSelection::Mode::Singleplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &MapSelectionMapsMenue::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
-    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 40);
-    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth());
+    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 60);
+    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth() + 60);
 }
 
 void MapSelectionMapsMenue::ruleSelectionSizeChanged()
 {
-    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 40);
+    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 60);
+    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth() + 60);
 }
 
 void MapSelectionMapsMenue::showPlayerSelection(bool relaunchedLobby)

@@ -78,7 +78,7 @@ namespace oxygine
 
     void Box9Sprite::changeAnimFrame(const AnimationFrame& f)
     {
-        Vector2 size = getSize();
+        Point size = getSize();
         Sprite::changeAnimFrame(f);
         if (!isNormalSprite())
         {
@@ -268,7 +268,7 @@ namespace oxygine
         m_prepared = true;
     }
 
-    void Box9Sprite::sizeChanged(const Vector2&)
+    void Box9Sprite::sizeChanged(const Point&)
     {
         m_prepared = false;
     }
