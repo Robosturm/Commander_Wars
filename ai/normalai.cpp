@@ -3,7 +3,8 @@
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/interpreter.h"
 
 #include "game/player.h"
 #include "game/unit.h"
@@ -27,9 +28,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
 #ifdef GRAPHICSUPPORT
     setObjectName("NormalAi");
 #endif
+    AI_CONSOLE_PRINT("Creating normal ai", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &NormalAi::process, Qt::QueuedConnection);
     m_iniData = { // General
@@ -161,6 +161,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"CounterUnitRatio", "Production", &m_counterUnitRatio, 2.0f, 1.f, 5.0f},
                   {"SpamInfantryChance", "Production", &m_spamInfantryChance, 50.0f, 100.0f, 50.0f},
                   {"SameFundsMatchUpNoMatchUpValue", "Production", &m_sameFundsMatchUpNoMatchUpValue, 0.5f, 0.0f, 1.0f},
+                  {"SpamLightUnitChance", "Production", &m_spamLightUnitChance, 30.0f, 0.0f, 100.0f},
+                  {"SpamMediumUnitChance", "Production", &m_spamMediumUnitChance, 30.0f, 0.0f, 100.0f},
                 };
 
     if (m_pMap != nullptr &&
@@ -173,7 +175,7 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
 
 void NormalAi::process()
 {
-    AI_CONSOLE_PRINT("NormalAi::process()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::process()", GameConsole::eDEBUG);
     if (m_pause)
     {
         m_timer.start(1000);
@@ -186,21 +188,20 @@ void NormalAi::process()
     spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
     spQmlVectorUnit pUnits;
+    pUnits = m_pPlayer->getUnits();
     spQmlVectorUnit pEnemyUnits;
     spQmlVectorBuilding pEnemyBuildings;
     qint32 cost = 0;
     m_pPlayer->getSiloRockettarget(2, 3, cost);
     m_missileTarget = (cost >= m_minSiloDamage);
-    if (useBuilding(pBuildings)){}
+    if (useBuilding(pBuildings, pUnits)){}
     else
     {
-        AI_CONSOLE_PRINT("NormalAi::creating unit arrays()", Console::eDEBUG);
-        pUnits = m_pPlayer->getUnits();
+        AI_CONSOLE_PRINT("NormalAi::creating unit arrays()", GameConsole::eDEBUG);
         pEnemyUnits = m_pPlayer->getEnemyUnits();
         pEnemyUnits->randomize();
         pEnemyBuildings = m_pPlayer->getEnemyBuildings();
         pEnemyBuildings->randomize();
-
         updateAllUnitData(pUnits);
         if (useCOPower(pUnits, pEnemyUnits))
         {
@@ -286,7 +287,7 @@ void NormalAi::hideFrontMap()
 
 void NormalAi::finishTurn()
 {
-    AI_CONSOLE_PRINT("NormalAi::finishTurn()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::finishTurn()", GameConsole::eDEBUG);
     m_productionData.clear();
     m_secondMoveRound = false;
     CoreAI::finishTurn();
@@ -295,7 +296,7 @@ void NormalAi::finishTurn()
 bool NormalAi::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits,
                                   spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("NormalAi::performActionSteps()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::performActionSteps()", GameConsole::eDEBUG);
     if (m_aiStep <= AISteps::moveUnits && buildCOUnit(pUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveFlares(pUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
@@ -304,9 +305,9 @@ bool NormalAi::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
     else if (m_aiStep <= AISteps::moveUnits && joinCaptureBuildings(pUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && moveSupport(AISteps::moveUnits, pUnits, false)){}
     // indirect units
-    else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
+    else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 1, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
     // direct units
-    else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 1, 1, pBuildings, pEnemyBuildings)){}
+    else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 1, 1, 1, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveUnits && repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveToTargets && refillUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
@@ -371,7 +372,7 @@ bool NormalAi::isUsingUnit(Unit* pUnit)
 
 bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("NormalAi::captureBuildings()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::captureBuildings()", GameConsole::eDEBUG);
     std::vector<QVector3D> captureBuildings;
     qint32 cost = 0;
     QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
@@ -447,10 +448,9 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                     }
                     bool perform = false;
                     qint32 targetIndex = 0;
-                    bool productionBuilding = false;
                     if (captures.size() > 0)
                     {
-                        if (captures.size() == 0)
+                        if (captures.size() == 1)
                         {
                             // we have only one target go for it
                             targetIndex = 0;
@@ -458,6 +458,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                         }
                         else
                         {
+                            qint32 prio = -1;
                             // check if we have a building only we can capture and capture it
                             for (qint32 i2 = 0; i2 < captures.size(); i2++)
                             {
@@ -470,38 +471,41 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                                         captureCount++;
                                     }
                                 }
-                                bool isProductionBuilding = m_pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding()->getActionList().contains(ACTION_BUILD_UNITS);
+                                bool isProductionBuilding = m_pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding()->isProductionBuilding();
                                 if ((captureCount == 1 && perform == false) ||
-                                    (captureCount == 1 && productionBuilding == false && perform == true && isProductionBuilding))
+                                    (captureCount == 1 && perform == true && isProductionBuilding))
                                 {
-                                    productionBuilding = isProductionBuilding;
-                                    targetIndex = i2;
+                                    Building* pBuilding = m_pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding();
+                                    qint32 testPrio = std::numeric_limits<qint32>::min();
+                                    if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
+                                    {
+                                        testPrio = std::numeric_limits<qint32>::max();
+                                    }
+                                    else if (pBuilding->isProductionBuilding())
+                                    {
+                                        testPrio = pBuilding->getConstructionList().size();
+                                    }
+                                    if (!perform)
+                                    {
+                                        prio = testPrio;
+                                        targetIndex = i2;
+                                    }
+                                    else
+                                    {
+                                        if (testPrio > prio)
+                                        {
+                                            targetIndex = i2;
+                                            prio = testPrio;
+                                        }
+                                    }
                                     perform = true;
                                 }
                             }
-                            // check if there unique captures open
-                            bool skipUnit = false;
-                            for (auto & buildingPos1 : captureBuildings)
-                            {
-                                qint32 captureCount = 0;
-                                for (auto & buildingPos2 : captureBuildings)
-                                {
-                                    if (static_cast<qint32>(buildingPos2.x()) == static_cast<qint32>(buildingPos1.x()) &&
-                                        static_cast<qint32>(buildingPos2.y()) == static_cast<qint32>(buildingPos1.y()))
-                                    {
-                                        captureCount++;
-                                    }
-                                }
-                                if (captureCount == 1)
-                                {
-                                    skipUnit = true;
-                                }
-                            }
                             // if not we can select a target from the list
-                            if (!skipUnit)
+                            if (!perform)
                             {
+                                prio = -1;
                                 targetIndex = 0;
-                                qint32 prio = -1;
                                 // priorities production buildings over over captures
                                 for (qint32 i2 = 0; i2 < captures.size(); i2++)
                                 {
@@ -511,7 +515,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                                     {
                                         testPrio = std::numeric_limits<qint32>::max();
                                     }
-                                    else if (pBuilding->getActionList().contains(ACTION_BUILD_UNITS))
+                                    else if (pBuilding->isProductionBuilding())
                                     {
                                         testPrio = pBuilding->getConstructionList().size();
                                     }
@@ -561,7 +565,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
 
 bool NormalAi::joinCaptureBuildings(spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("NormalAi::joinCaptureBuildings()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::joinCaptureBuildings()", GameConsole::eDEBUG);
     for (auto & unitData : m_OwnUnits)
     {
         if (unitData.nextAiStep <= m_aiFunctionStep)
@@ -601,10 +605,10 @@ bool NormalAi::joinCaptureBuildings(spQmlVectorUnit & pUnits)
     return false;
 }
 
-bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint32 maxfireRange,
+bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint32 minMaxfireRange, qint32 maxfireRange,
                              spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("NormalAi::fireWithUnits()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::fireWithUnits()", GameConsole::eDEBUG);
     for (auto & unitData : m_OwnUnits)
     {
         if (unitData.nextAiStep <= m_aiFunctionStep)
@@ -614,6 +618,7 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
             ++unitData.nextAiStep;
             if (!pUnit->getHasMoved() &&
                 unitData.minFireRange >= minfireRange &&
+                unitData.maxFireRange >= minMaxfireRange &&
                 unitData.maxFireRange <= maxfireRange &&
                 (pUnit->getAmmo1() != 0 || pUnit->getAmmo2() != 0) &&
                 unitData.actions.contains(CoreAI::ACTION_FIRE) &&
@@ -654,7 +659,7 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
 
 bool NormalAi::refillUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("NormalAi::refillUnits()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::refillUnits()", GameConsole::eDEBUG);
     if (m_aiStep < AISteps::moveToTargets)
     {
         createMovementMap(pBuildings, pEnemyBuildings);
@@ -725,7 +730,7 @@ bool NormalAi::refillUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
                     }
                     else if (m_usedTransportSystem)
                     {
-                        AI_CONSOLE_PRINT("move to supply needed units", Console::eDEBUG);
+                        AI_CONSOLE_PRINT("move to supply needed units", GameConsole::eDEBUG);
                         std::vector<QVector3D> targets;
                         std::vector<QVector3D> transporterTargets;
                         pAction->setActionID(ACTION_WAIT);
@@ -830,7 +835,7 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
                          spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                          qint32 minfireRange, qint32 maxfireRange, bool supportUnits)
 {
-    AI_CONSOLE_PRINT("NormalAi::moveUnits()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::moveUnits()", GameConsole::eDEBUG);
     for (auto & unitData : m_OwnUnits)
     {
         if (unitData.nextAiStep <= m_aiFunctionStep)
@@ -848,13 +853,14 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
                 pUnit->getBaseMaxRange() >= minfireRange &&
                 pUnit->getBaseMaxRange() <= maxfireRange &&
                 pUnit->hasWeapons() && pUnit->getLoadedUnitCount() == 0 &&
-                (m_usedTransportSystem || (isUsingUnit(pUnit) && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                (m_usedTransportSystem || (isUsingUnit(pUnit) && hasTargets(AVERAGE_TRANSPORTER_MOVEMENT, pUnit, canCapture, pEnemyUnits.get(), pEnemyBuildings.get(),
                                                                             loadingIslandIdx, loadingIsland, false))))
             {
                 std::vector<QVector3D> targets;
                 std::vector<QVector3D> transporterTargets;
                 spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
                 QStringList & actions = unitData.actions;
+                qint32 distanceModifier = 1;
                 // find possible targets for this unit
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
@@ -864,21 +870,22 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
                 }
                 if (targets.size() > 0)
                 {
+                    distanceModifier = 4;
                     appendCaptureTransporterTargets(pUnit, pUnits, pEnemyBuildings, transporterTargets);
                     targets.insert(targets.cbegin(), transporterTargets.cbegin(), transporterTargets.cend());
                 }
                 if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
                 {
-                    appendAttackTargets(pUnit, pEnemyUnits, targets);
-                    appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets);
-                    appendTerrainBuildingAttackTargets(pUnit, pEnemyBuildings, targets);
+                    appendAttackTargets(pUnit, pEnemyUnits, targets, distanceModifier);
+                    appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets, distanceModifier);
+                    appendTerrainBuildingAttackTargets(pUnit, pEnemyBuildings, targets, distanceModifier);
                     if (targets.size() == 0)
                     {
                         appendRepairTargets(pUnit, pBuildings, targets);
                     }
                     if (supportUnits)
                     {
-                        appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets);
+                        appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets, distanceModifier);
                     }
                 }
                 if (targets.size() > 0 || transporterTargets.size() > 0)
@@ -907,7 +914,7 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
 
 bool NormalAi::loadUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("NormalAi::loadUnits()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::loadUnits()", GameConsole::eDEBUG);
     m_aiStep = AISteps::loadUnits;
     for (auto & unitData : m_OwnUnits)
     {
@@ -945,7 +952,7 @@ bool NormalAi::loadUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
 
 bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("NormalAi::moveTransporters()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::moveTransporters()", GameConsole::eDEBUG);
     m_aiStep = AISteps::moveTransporters;
     for (auto & unitData : m_OwnUnits)
     {
@@ -975,17 +982,24 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                         QStringList actions = pLoaded->getActionList();
                         if (!captureFound && actions.contains(ACTION_CAPTURE))
                         {
-                            appendUnloadTargetsForCapturing(pUnit, pEnemyBuildings, targets);
+                            appendUnloadTargetsForCapturing(pUnit, pUnits, pEnemyBuildings, targets);
                             captureFound = true;
                         }
-                        if (!attackFound && actions.contains(ACTION_FIRE))
+                    }
+                    if (!captureFound)
+                    {
+                        for (auto & pLoaded : pUnit->getLoadedUnits())
                         {
-                            appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 1);
-                            attackFound = true;
-                        }
-                        if (attackFound && captureFound)
-                        {
-                            break;
+                            QStringList actions = pLoaded->getActionList();
+                            if (!attackFound && actions.contains(ACTION_FIRE))
+                            {
+                                appendUnloadTargetsForAttacking(pUnit, pEnemyUnits, targets, 1);
+                                attackFound = true;
+                            }
+                            if (attackFound)
+                            {
+                                break;
+                            }
                         }
                     }
                     // if not find closest unloading field
@@ -1012,10 +1026,10 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                     std::vector<QVector3D> targets;
                     std::vector<QVector3D> transporterTargets;
                     appendCaptureTargets(actions, pUnit, pEnemyBuildings, targets);
-                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets);
+                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets, false, 5);
                     if (targets.size() == 0)
                     {
-                        appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, false, targets);
+                        appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, false, targets, false, 5);
                     }
                     if (moveUnit(pAction, &unitData, pUnits, actions, targets, transporterTargets, false, pBuildings, pEnemyBuildings))
                     {
@@ -1034,7 +1048,7 @@ bool NormalAi::moveToUnloadArea(spGameAction & pAction, MoveUnitData* pUnitData,
                                 spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                                 spQmlVectorUnit & pEnemyUnits)
 {
-    AI_CONSOLE_PRINT("NormalAi::moveToUnloadArea()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::moveToUnloadArea()", GameConsole::eDEBUG);
     Unit* pUnit = pUnitData->pUnit.get();
     TargetedUnitPathFindingSystem pfs(m_pMap, pUnit, targets, &m_MoveCostMap);
     pfs.explore();
@@ -1156,7 +1170,7 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
         }
         else
         {
-            AI_CONSOLE_PRINT("Error invalid menu data received while unloading units",  Console::eERROR);
+            AI_CONSOLE_PRINT("Error invalid menu data received while unloading units",  GameConsole::eERROR);
             return false;
         }
     }
@@ -1174,7 +1188,7 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
 
 bool NormalAi::repairUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("NormalAi::repairUnits()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::repairUnits()", GameConsole::eDEBUG);
     m_aiStep = AISteps::moveUnits;
     for (auto & unitData : m_OwnUnits)
     {
@@ -1225,7 +1239,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                         bool shortenPathForTarget,
                         spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("NormalAi::moveUnit()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::moveUnit()", GameConsole::eDEBUG);
     Unit* pUnit = pUnitData->pUnit.get();
     TargetedUnitPathFindingSystem pfs(m_pMap, pUnit, targets, &m_MoveCostMap);
     pfs.explore();
@@ -1429,7 +1443,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
 
 bool NormalAi::suicide(spGameAction & pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs, qint32 movepoints)
 {
-    AI_CONSOLE_PRINT("NormalAi::suicide", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::suicide", GameConsole::eDEBUG);
     // we don't have a good option do the best that we can attack with an all in attack :D
     pAction->setActionID(ACTION_FIRE);
     std::vector<QVector3D> ret;
@@ -1461,7 +1475,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(MoveUnitData & unitData, 
                                                        spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                                                        qint32 movePoints)
 {
-    AI_CONSOLE_PRINT("NormalAi::moveToSafety", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::moveToSafety", GameConsole::eDEBUG);
     Unit* pUnit = unitData.pUnit.get();
     auto targets = turnPfs.getAllNodePointsFast(movePoints + 1);
     QPoint ret(pUnit->Unit::getX(), pUnit->Unit::getY());
@@ -1568,7 +1582,8 @@ qint32 NormalAi::getBestAttackTarget(MoveUnitData & unitData, std::vector<CoreAI
         {
             float currentHp = pEnemy->getHp();
             float newHp = currentHp - static_cast<float>(ret[i].hpDamage);
-            fundsDamage = static_cast<qint32>(ret[i].fundsDamage * calculateCaptureBonus(pEnemy, newHp));
+            auto captureBonus = calculateCaptureBonus(pEnemy, newHp);
+            fundsDamage = static_cast<qint32>(ret[i].fundsDamage * captureBonus);
             if (fundsDamage > minFundsDamage && newHp > 0)
             {
                 pEnemy->setVirtualHpValue(newHp);
@@ -1638,11 +1653,10 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
             float minFundsDamage = -pUnitData.pUnit->getCoUnitValue() * m_minAttackFunds;
             if (GlobalUtils::getDistance(moveTarget, position) <= movepoints)
             {
-                spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
-                pAction->setTarget(QPoint(pUnitData.pUnit->Unit::getX(), pUnitData.pUnit->Unit::getY()));
                 std::vector<CoreAI::DamageData> ret;
-                std::vector<QVector3D> moveTargetFields;
-                CoreAI::getAttackTargets(pUnitData.pUnit.get(), pAction, pUnitData.pUnitPfs.get(), ret, moveTargetFields);
+                spQmlVectorPoint firerange;
+                firerange = GlobalUtils::getCircle(pUnitData.minFireRange, pUnitData.maxFireRange);
+                CoreAI::getAttackTargetsFast(pUnitData.pUnit.get(), *firerange.get(), pUnitData.pUnitPfs.get(), ret);
 
                 std::vector<Unit*> pUsedUnits;
                 float newFundsDamage = std::numeric_limits<float>::lowest();
@@ -1742,7 +1756,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
                                        spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                                        bool ignoreOutOfVisionRange) const
 {
-    AI_CONSOLE_PRINT("NormalAi calculateCounterDamage", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi calculateCounterDamage", GameConsole::eDEBUG);
     QCoreApplication::processEvents();
     Unit* pUnit = curUnitData.pUnit.get();
     std::map<QString, qint32> unitDamageData;
@@ -1911,7 +1925,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
                      " total score=" + QString::number(totalCounterDamage) +
                      " counter damage=" + QString::number(counterDamage) +
                      " influence damage=" + QString::number(influenceCounterDamage) +
-                     " building damage=" + QString::number(buildingCounterDamage), Console::eDEBUG);
+                     " building damage=" + QString::number(buildingCounterDamage), GameConsole::eDEBUG);
     return totalCounterDamage;
 }
 
@@ -1947,7 +1961,7 @@ float NormalAi::calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, s
 
 void NormalAi::updateAllUnitData(spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("NormalAi::updateAllUnitData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::updateAllUnitData()", GameConsole::eDEBUG);
     bool initial = m_EnemyUnits.size() == 0;
     spQmlVectorUnit enemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
     rebuildIsland(pUnits);
@@ -1990,7 +2004,7 @@ void NormalAi::createUnitInfluenceMap()
 
 void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & pUnitData, bool enemy, std::vector<MoveUnitData> & otherUnitData)
 {
-    AI_CONSOLE_PRINT("NormalAi::updateEnemyData", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::updateEnemyData", GameConsole::eDEBUG);
     if (pUnitData.size() == 0)
     {
         pUnitData.reserve(pUnits->size());
@@ -2213,13 +2227,18 @@ void NormalAi::clearUnitData()
 bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
                           spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("NormalAi::buildUnits()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::buildUnits()", GameConsole::eDEBUG);
     if (m_aiStep < AISteps::buildUnits)
     {
         m_productionData.clear();
+        m_productionSystem.onNewBuildQueue(pBuildings.get(), pUnits.get(), pEnemyUnits.get(), pEnemyBuildings.get());
     }
     m_aiStep = AISteps::buildUnits;
-    
+    bool executed = false;
+    if (m_productionSystem.buildUnit(pBuildings.get(), pUnits.get(), pEnemyUnits.get(), pEnemyBuildings.get(), executed))
+    {
+        return executed;
+    }
 
     qint32 enemeyCount = 0;
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -2268,10 +2287,20 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     }
     // calc average costs if we would build same cost units on every building
     float fundsPerFactory = funds - m_cappedFunds * (productionBuildings - 1) * m_fundsPerBuildingFactorD;
-    AI_CONSOLE_PRINT("NormalAI: Funds: " + QString::number(funds) + " funds for the next factory: " + QString::number(fundsPerFactory), Console::eDEBUG);
-    if (fundsPerFactory <= m_cappingFunds)
+    AI_CONSOLE_PRINT("NormalAI: Funds: " + QString::number(funds) + " funds for the next factory: " + QString::number(fundsPerFactory), GameConsole::eDEBUG);
+    auto chance = GlobalUtils::randInt(0, 100);
+    if (funds >= m_spamingFunds && productionBuildings > 1 && chance <= m_spamLightUnitChance)
     {
-        auto chance = GlobalUtils::randInt(0, 100);
+        fundsPerFactory = m_spamingFunds;
+    }
+    else if (funds >= m_spamingFunds * m_fundsPerBuildingFactorA && productionBuildings > 1 && chance < m_spamLightUnitChance + m_spamMediumUnitChance)
+    {
+        AI_CONSOLE_PRINT("NormalAI: Building expensive units", GameConsole::eDEBUG);
+        fundsPerFactory = m_spamingFunds * m_fundsPerBuildingFactorA;
+        data[UseHighTechUnits] = FundsMode::Expensive;
+    }
+    else if (fundsPerFactory <= m_cappingFunds)
+    {
         if (funds >= m_spamingFunds && chance > m_spamInfantryChance)
         {
             fundsPerFactory = m_spamingFunds;
@@ -2295,7 +2324,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     }
     else if (fundsPerFactory >= m_spamingFunds * m_fundsPerBuildingFactorC)
     {
-        AI_CONSOLE_PRINT("NormalAI: Building very expensive units", Console::eDEBUG);
+        AI_CONSOLE_PRINT("NormalAI: Building very expensive units", GameConsole::eDEBUG);
         fundsPerFactory = m_spamingFunds * m_fundsPerBuildingFactorC;
         data[UseHighTechUnits] = FundsMode::VeryExpensive;
     }
@@ -2303,17 +2332,17 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     {
         if (fundsPerFactory >= m_spamingFunds * m_fundsPerBuildingFactorA + m_spamingFunds)
         {
-            AI_CONSOLE_PRINT("NormalAI: Building expensive units with no spend malus", Console::eDEBUG);
+            AI_CONSOLE_PRINT("NormalAI: Building expensive units with no spend malus", GameConsole::eDEBUG);
             data[UseHighTechUnits] = NoSpendMalus;
         }
         else
         {
-            AI_CONSOLE_PRINT("NormalAI: Building expensive units", Console::eDEBUG);
+            AI_CONSOLE_PRINT("NormalAI: Building expensive units", GameConsole::eDEBUG);
             data[UseHighTechUnits] = FundsMode::Expensive;
         }
         fundsPerFactory = m_spamingFunds * m_fundsPerBuildingFactorA;
     }
-    AI_CONSOLE_PRINT("NormalAI: fundsPerFactory=" + QString::number(fundsPerFactory), Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAI: fundsPerFactory=" + QString::number(fundsPerFactory), GameConsole::eDEBUG);
     data[DirectUnitRatio] = static_cast<float>(countData.directUnits) / static_cast<float>(countData.indirectUnits + 1);
 
     data[UnitEnemyRatio] = (static_cast<float>(pUnits->size()) + m_ownUnitEnemyUnitRatioAverager) / (static_cast<float>(pEnemyUnits->size()) + m_ownUnitEnemyUnitRatioAverager);
@@ -2465,7 +2494,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
         pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
         spMenuData pData = pAction->getMenuStepData();
         QString unitId = pData->getActionIDs()[unitIDx[item]];
-        AI_CONSOLE_PRINT("NormalAi::buildUnits() producing " + unitId + " with score " + QString::number(scores[item]), Console::eDEBUG);
+        AI_CONSOLE_PRINT("NormalAi::buildUnits() producing " + unitId + " with score " + QString::number(scores[item]), GameConsole::eDEBUG);
         if (transporters[item])
         {
             for (auto & building : m_productionData)
@@ -2500,7 +2529,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
 
 qint32 NormalAi::getIndexInProductionData(Building* pBuilding)
 {
-    AI_CONSOLE_PRINT("NormalAi::getIndexInProductionData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::getIndexInProductionData()", GameConsole::eDEBUG);
     qint32 x = pBuilding->Building::getX();
     qint32 y = pBuilding->Building::getY();
     qint32 ret = -1;
@@ -2529,7 +2558,7 @@ qint32 NormalAi::getUnitProductionIdx(qint32 index, const QString & unitId,
                                       spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                       std::vector<NotAttackableData> & attackCount, std::vector<float> & buildData)
 {
-    AI_CONSOLE_PRINT("NormalAi::getUnitProductionIdx()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::getUnitProductionIdx()", GameConsole::eDEBUG);
     qint32 ret = -1;
     auto & data = m_productionData[index];
     for (qint32 i = 0; i < data.m_buildData.length(); ++i)
@@ -2579,7 +2608,7 @@ void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuild
                                    std::vector<NotAttackableData> & attackCount, std::vector<float> & buildData, const QStringList & buildList)
 {
     QCoreApplication::processEvents();
-    AI_CONSOLE_PRINT("NormalAi::createUnitBuildData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::createUnitBuildData()", GameConsole::eDEBUG);
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     Unit dummy(unitBuildData.unitId, m_pPlayer, false, m_pMap);
     dummy.setVirtuellX(x);
@@ -2772,20 +2801,14 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
             enemyRange = (enemyMovepoints + enemyFirerange) * 0.5f;
         }
         float distance = GlobalUtils::getDistance(position, enemyPosition);
-        float dmg = dummy.getBaseDamage(pEnemyUnit);
+        float dmg = getBaseDamage(&dummy, pEnemyUnit).x();
         float counterDmg = 0.0f;
-        float baseCounterDmg = 0.0f;
-        if (pEnemyUnit->hasWeapons())
-        {
-            baseCounterDmg = pEnemyUnit->getBaseDamage(&dummy);
-        }
-
+        float baseCounterDmg = getBaseDamage(pEnemyUnit, &dummy).x();
         if ((baseCounterDmg < m_lowThreadDamage && dmg >= m_midDamage) ||
             dmg > pEnemyUnit->getHp() * Unit::MAX_UNIT_HP)
         {
             dmg = pEnemyUnit->getHp() * Unit::MAX_UNIT_HP;
         }
-
         counterDmg = baseCounterDmg * pEnemyUnit->getHp() / Unit::MAX_UNIT_HP;
 
         if (counterDmg > m_lowThreadDamage &&
@@ -3063,10 +3086,11 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
     qint32 loadingPlace = dummy.getLoadingPlace();
     qint32 smallTransporterCount = 0;
     qint32 transporterCount = 0;
+    static constexpr float maxDayDistance = 6.0f;
     for (auto & pUnit : pUnits->getVector())
     {
         float distance = GlobalUtils::getDistance(position, pUnit->getPosition());
-        if (distance / movement <= maxDayDistance * maxDayDistance)
+        if (distance / movement <= maxDayDistance)
         {
             relevantUnits->append(pUnit.get());
         }
@@ -3080,7 +3104,8 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
             ++transporterCount;
         }
     }
-    std::vector<Unit*> loadingUnits = appendLoadingTargets(&dummy, relevantUnits, pEnemyUnits, pEnemyBuildings, false, true, targets, true);
+    bool onlyTrueIslands = loadingPlace > 1;
+    std::vector<Unit*> loadingUnits = appendLoadingTargets(&dummy, relevantUnits, pEnemyUnits, pEnemyBuildings, false, true, targets, false, 1, onlyTrueIslands);
     std::vector<Unit*> transporterUnits;
     for (auto target : transportTargets)
     {
@@ -3177,7 +3202,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorU
                              " score=" + QString::number(score) +
                              " loadingCount=" + QString::number(unitBuildData.loadingCount) +
                              " transportCount=" + QString::number(unitBuildData.transportCount) +
-                             " transportCounter=" + QString::number(unitBuildData.transporterCount), Console::eDEBUG);
+                             " transportCounter=" + QString::number(unitBuildData.transporterCount), GameConsole::eDEBUG);
         }
         else if (supplyScore <= 0.0f)
         {
@@ -3281,7 +3306,7 @@ float NormalAi::calcBuildScore(std::vector<float>& data, UnitBuildData & unitBui
                          " and counter damage " + QString::number(data[CounterDamage]) +
                          " attack score=" + QString::number(attackScore) +
                          " attack count score=" + QString::number(attackCountScore) +
-                         " same founds score=" + QString::number(sameFoundsScore), Console::eDEBUG);
+                         " same founds score=" + QString::number(sameFoundsScore), GameConsole::eDEBUG);
     }
     // apply co buff bonus
     score += data[COBonus] * m_coUnitBuffBonus;
@@ -3298,7 +3323,7 @@ float NormalAi::calcBuildScore(std::vector<float>& data, UnitBuildData & unitBui
         score = NO_BUILD_SCORE;
     }
     score *= BaseGameInputIF::getUnitBuildValue(unitBuildData.unitId);
-    AI_CONSOLE_PRINT("NormalAi::calcBuildScore final score=" + QString::number(score) + " for " + unitBuildData.unitId, Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::calcBuildScore final score=" + QString::number(score) + " for " + unitBuildData.unitId, GameConsole::eDEBUG);
     return score;
 }
 
@@ -3360,6 +3385,6 @@ float NormalAi::calcCostScore(std::vector<float>& data, UnitBuildData & unitBuil
         score = m_normalUnitBonusMultiplier * outScore - m_normalUnitBonusMultiplier * (qAbs(normalDifference) - m_targetPriceDifference);
     }
     AI_CONSOLE_PRINT("NormalAi::calcCostScore score=" + QString::number(score) +
-                     " funds ratio=" + QString::number(data[FundsFactoryRatio]), Console::eDEBUG);
+                     " funds ratio=" + QString::number(data[FundsFactoryRatio]), GameConsole::eDEBUG);
     return score;
 }

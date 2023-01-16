@@ -2,12 +2,11 @@
 
 #include "resource_management/buildingspritemanager.h"
 
-#include "game/terrain.h"
 #include "game/building.h"
 #include "game/gamemap.h"
 
 ScriptEventSpawnBuilding::ScriptEventSpawnBuilding(GameMap* pMap)
-    : ScriptEventGeneric(pMap, EventType::SpawnBuilding, ScriptEvent::EventSpawnBuilding)
+    : ScriptEventGeneric(pMap, EventType::SpawnBuilding, ScriptEvent::EventSpawnBuilding, tr("Spawn building"))
 {
     m_Items.append(ScriptEventGeneric::Data());
     m_Items.append(ScriptEventGeneric::Data());
@@ -16,7 +15,7 @@ ScriptEventSpawnBuilding::ScriptEventSpawnBuilding(GameMap* pMap)
     m_Items[0].min = 1;
     m_Items[0].infinite = -1;
     m_Items[0].tooltip = tr("Building that gets spawned");
-    m_Items[0].labelText = tr("Owner: ");
+    m_Items[0].labelText = tr("Building: ");
     m_Items[0].types = ScriptEventGeneric::EditTypes::IconSelection;
     m_Items[0].item = "TOWN";
     m_Items[0].beforeCode = "map.replaceBuilding(\"";

@@ -2,107 +2,111 @@
 <resources>
 	<set path = "resources/images/animations/" />
 	<atlas linearFilter="false">
-		<!-- backgrounds -->
-		<image file="capture_background.png" />
+        <!-- backgrounds -->
+        <image file="capture_background.png" />
 	
 		<!-- buildings -->
-                <image file="airport+mask.png" />
-                <image file="factory+mask.png" />
-                <image file="harbour+mask.png" />
-                <image file="hq+bh.png" />
-                <image file="hq+bh+mask.png" />
-                <image file="hq+bm+mask.png" />
-                <image file="hq+ge+mask.png" />
-                <image file="hq+os+mask.png" />
-                <image file="hq+yc+mask.png" />
-                <image file="town+mask.png" />
-                <image file="labor+mask.png" />
-                <image file="oilrig+mask.png" />
-                <image file="radar+mask.png" />
-                <image file="tower+mask.png" />
+        <image file="airport+mask.png" />
+        <image file="factory+mask.png" />
+        <image file="harbour+mask.png" />
+        <image file="hq+bh.png" />
+        <image file="hq+bh+mask.png" />
+        <image file="hq+bm+mask.png" />
+        <image file="hq+ge+mask.png" />
+        <image file="hq+os+mask.png" />
+        <image file="hq+yc+mask.png" />
+        <image file="town+mask.png" />
+        <image file="labor+mask.png" />
+        <image file="oilrig+mask.png" />
+        <image file="radar+mask.png" />
+        <image file="tower+mask.png" />
 		
-                <!-- soldier -->
-                <image file="soldier+ac+mask.png" cols = "5" />
-                <image file="soldier+bd+mask.png" cols = "5" />
-                <image file="soldier+bg+mask.png" cols = "5" />
-                <image file="soldier+bh+mask.png" cols = "5" />
-                <image file="soldier+bm+mask.png" cols = "5" />
-                <image file="soldier+dm+mask.png" cols = "5" />
-                <image file="soldier+ge+mask.png" cols = "5" />
-                <image file="soldier+gs.png" cols = "5" />
-                <image file="soldier+gs+mask.png" cols = "5" />
-                <image file="soldier+ma+mask.png" cols = "5" />
-                <image file="soldier+os+mask.png" cols = "5" />
-                <image file="soldier+pf+mask.png" cols = "5" />
-                <image file="soldier+ti+mask.png" cols = "5" />
-		<image file="soldier+yc+mask.png" cols = "5" />
-		
-		<!-- field marker -->
-		<image file="cursor+attack.png" cols = "4" />
-		<image file="map_marker.png"  cols = "3" />
-		
-		<!-- talon gun fire -->
-		<image file="talon+gun+hit.png" cols = "10" />
-		<image file="talon+gun+fire.png" cols = "11" />
-		<image file="talon+gun+fire+mask.png" cols = "11" />
-		
-		<!-- animations -->
-		<image file="explosion+land.png" cols = "9" />
-		<image file="explosion+air.png" cols = "8" />
-		<image file="explosion+water.png" cols = "7" />
-		<image file="explosion+silo.png" cols = "15" />
-		<image file="explosion+black_bomb.png" cols = "16" />
-		<image file="flare_explosion.png" cols = "10" />
-		
-		<image file="blackhole_shot.png" cols = "9" />
-		<image file="laserray.png" cols = "9" />
-		<image file="laserray+center.png" cols = "9" />
-		<image file="laserray+center+start.png" cols = "10" />
-		<image file="deathray.png" cols = "22" />
-		<image file="deathray_start.png" cols = "22" />
-		<image file="deathray_start_loading.png" cols = "18" />
-		<image file="volcan_eruption.png" cols = "9" />
-		<image file="volcan_hit.png" cols = "3" />
-		<image file="volcan_fireball.png" />		
-		<image file="blackhole_shot_east.png" cols = "5" />
-		<image file="blackhole_shot_south.png" cols = "5" />
-		<image file="blackhole_shot_west.png" cols = "5" />
-		<image file="blackhole_shot_north.png" cols = "5" />
-		<image file="minicanon_east.png" cols = "8" />
-		<image file="minicanon_north.png" cols = "8" />
-		<image file="minicanon_west.png" cols = "8" />
-		<image file="minicanon_south.png" cols = "8" />
-		
-		<image file="undive.png" cols = "6" />
-		<image file="dive.png" cols = "8" />
-		<image file="stealth.png" cols = "8" />
-		<image file="hoellium_die+mask.png" cols = "9" />
+        <!-- soldier -->
+        <image file="soldier+ac+mask.png" cols = "5" />
+        <image file="soldier+bd+mask.png" cols = "5" />
+        <image file="soldier+bg+mask.png" cols = "5" />
+        <image file="soldier+bh+mask.png" cols = "5" />
+        <image file="soldier+bm+mask.png" cols = "5" />
+        <image file="soldier+dm+mask.png" cols = "5" />
+        <image file="soldier+ge+mask.png" cols = "5" />
+        <image file="soldier+gs.png" cols = "5" />
+        <image file="soldier+gs+mask.png" cols = "5" />
+        <image file="soldier+ma+mask.png" cols = "5" />
+        <image file="soldier+os+mask.png" cols = "5" />
+        <image file="soldier+pf+mask.png" cols = "5" />
+        <image file="soldier+ti+mask.png" cols = "5" />
+        <image file="soldier+yc+mask.png" cols = "5" />
 
-				
-		<!-- static -->
-		<image file="info.png" guideX1="5" guideX2="47" guideY1="5" guideY2="6"/>
-		<image file="ration.png" />
-		<image file="trap.png" />
-		<image file="repair.png" />
-		<image file="defense.png" />
-		<image file="meteor.png" />
-		<image file="white_pixel.png" />
-		
-		<!-- co power animations -->
-		<image file="power0.png" cols = "8" />
-		<image file="power1.png" cols = "8" />
-		<image file="power2.png" cols = "8" />
-		<image file="power3.png" cols = "8" />
-		<image file="power4.png" cols = "8" />
-		<image file="power5.png" cols = "8" />
-		<image file="power6.png" cols = "8" />
-		<image file="power7.png" cols = "8" />
-		<image file="power8.png" cols = "8" />
-		<image file="power9.png" cols = "8" />
-		<image file="power10.png" cols = "9" />
-		<image file="power11.png" cols = "8" />
-		<image file="power12.png" cols = "12" />
-		<image file="power13.png" cols = "8" />
-		<image file="power14.png" cols = "9" />
-	</atlas>
+        <!-- field marker -->
+        <image file="cursor+attack.png" cols = "4" />
+        <image file="map_marker.png"  cols = "3" />
+
+        <!-- talon gun fire -->
+        <image file="talon+gun+hit.png" cols = "10" />
+        <image file="talon+gun+fire.png" cols = "11" />
+        <image file="talon+gun+fire+mask.png" cols = "11" />
+        <image file="talon+gun+in.png" cols = "6" />
+        <image file="talon+gun+in+mask.png" cols = "6" />
+
+        <!-- animations -->
+        <image file="explosion+land.png" cols = "9" />
+        <image file="explosion+air.png" cols = "8" />
+        <image file="explosion+water.png" cols = "7" />
+        <image file="explosion+silo.png" cols = "15" />
+        <image file="explosion+black_bomb.png" cols = "16" />
+        <image file="flare_explosion.png" cols = "10" />
+
+        <image file="blackhole_shot.png" cols = "9" />
+        <image file="laserray.png" cols = "9" />
+        <image file="laserray+center.png" cols = "9" />
+        <image file="laserray+center+start.png" cols = "10" />
+        <image file="deathray.png" cols = "22" />
+        <image file="deathray_start.png" cols = "22" />
+        <image file="deathray_start_loading.png" cols = "18" />
+        <image file="volcan_eruption.png" cols = "9" />
+        <image file="volcan_hit.png" cols = "3" />
+        <image file="volcan_fireball.png" />
+        <image file="blackhole_shot_east.png" cols = "5" />
+        <image file="blackhole_shot_south.png" cols = "5" />
+        <image file="blackhole_shot_west.png" cols = "5" />
+        <image file="blackhole_shot_north.png" cols = "5" />
+        <image file="minicanon_east.png" cols = "8" />
+        <image file="minicanon_north.png" cols = "8" />
+        <image file="minicanon_west.png" cols = "8" />
+        <image file="minicanon_south.png" cols = "8" />
+        <image file="nestlaser.png" cols = "9" />
+        <image file="nestlaser+center.png" cols = "9" />
+        <image file="undive.png" cols = "6" />
+        <image file="dive.png" cols = "8" />
+        <image file="stealth.png" cols = "8" />
+        <image file="hoellium_die+mask.png" cols = "9" />
+        <image file="silo+launch.png" cols = "34" />
+        <image file="silo+impact.png" cols = "28" />
+
+        <!-- static -->
+        <image file="info.png" guideX1="5" guideX2="47" guideY1="5" guideY2="6"/>
+        <image file="ration.png" />
+        <image file="trap.png" />
+        <image file="repair.png" />
+        <image file="defense.png" />
+        <image file="meteor.png" />
+        <image file="white_pixel.png" />
+
+        <!-- co power animations -->
+        <image file="power0.png" cols = "8" />
+        <image file="power1.png" cols = "8" />
+        <image file="power2.png" cols = "8" />
+        <image file="power3.png" cols = "8" />
+        <image file="power4.png" cols = "8" />
+        <image file="power5.png" cols = "8" />
+        <image file="power6.png" cols = "8" />
+        <image file="power7.png" cols = "8" />
+        <image file="power8.png" cols = "8" />
+        <image file="power9.png" cols = "8" />
+        <image file="power10.png" cols = "9" />
+        <image file="power11.png" cols = "8" />
+        <image file="power12.png" cols = "12" />
+        <image file="power13.png" cols = "8" />
+        <image file="power14.png" cols = "9" />
+    </atlas>
 </resources>

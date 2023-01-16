@@ -7,7 +7,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
-        terrain.setTerrainName(__BASEBRIDGE.getName(terrain));
+        terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
     };
     this.canBePlacedBaseId = function(x, y, map, baseId)
     {
@@ -24,10 +24,6 @@ var Constructor = function()
         {
             return false;
         }
-    };
-    this.getName = function()
-    {
-        return qsTr("Bridge");
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
@@ -111,10 +107,6 @@ var Constructor = function()
             }
         }
     };
-    this.getDescription = function()
-    {
-        return qsTr("Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.");
-    };
 
     this.getSprites = function(spriteId)
     {
@@ -136,7 +128,10 @@ var Constructor = function()
                 spriteId + "+S+W",
                 spriteId + "+W",];
     };
-
+    this.getEditorPlacementSound = function()
+    {
+        return "placeStreet.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var __BASEBRIDGE = new Constructor();

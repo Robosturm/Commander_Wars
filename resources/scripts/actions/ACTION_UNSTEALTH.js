@@ -5,13 +5,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null))
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map))
         {
             if (unit.getHidden() === true)
             {
@@ -62,7 +56,11 @@ var Constructor = function()
         ACTION_UNSTEALTH.postAnimationUnit.setHasMoved(true);
         ACTION_UNSTEALTH.postAnimationUnit.setHidden(false);
         ACTION_UNSTEALTH.postAnimationUnit = null;
-    }
+    };
+    this.getName = function()
+    {
+        return qsTr("Unstealth");
+    };
     this.getDescription = function()
     {
         return qsTr("Unstealths a unit and makes it visible to all enemies.");

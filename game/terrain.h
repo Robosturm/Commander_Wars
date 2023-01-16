@@ -116,7 +116,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 10;
+        return 11;
     }
     /**
      * @brief isValid
@@ -330,7 +330,7 @@ public slots:
     QString getTerrainID() const;
 
     QString getTerrainName() const;
-    void setTerrainName(const QString &value);
+    void setTerrainName(const QString &value, bool customName = false);
 
     qint32 getX() const;
     void setX(const qint32 &value);
@@ -578,6 +578,10 @@ private:
      * @brief terrainName terrain name shown in the game
      */
     QString m_terrainName;
+    /**
+     * @brief m_customName
+     */
+    bool m_customName{false};
     /**
      * @brief m_terrainDescription
      */

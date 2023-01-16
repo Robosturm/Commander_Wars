@@ -6,7 +6,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #include "coreengine/interpreter.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "game/player.h"
 
@@ -99,6 +99,13 @@ private:
       * optional: tooltip, id, enabled, visible
       */
     bool createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
+      * Nodename: MultiSlider
+      * supported attributes are:
+      * mandatory: x, y, width, onEvent, startValues, labels
+      * optional: tooltip, id, enabled, visible, labelWidth
+      */
+    bool createMultiSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
       * Nodename: Textbox
       * supported attributes are:
@@ -223,9 +230,11 @@ private:
     QString getStringValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool * success = nullptr);
     Player* getPlayerValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool * success = nullptr);
     QStringList getStringListValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool * success = nullptr);
+    QVector<qint32> getInt32ListValue(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu, bool * success = nullptr);
     oxygine::TextStyle getStyle(const QString & styleName, const QString & fontColor, qint32 size, oxygine::TextStyle::HorizontalAlign hAlign);
     QString getId(QString attribute);
     oxygine::TextStyle::HorizontalAlign getHAlignment(QString line, QString objectId, qint32 loopIdx, CreatedGui* pMenu);
+    void updateMenuSize(CreatedGui* pMenu);
 
     template<typename TType>
     void onEvent(QString line, TType value, QString objectId, qint32 loopIdx, CreatedGui* pMenu)
@@ -247,7 +256,7 @@ private:
         QJSValue erg = pInterpreter->evaluate(args + line);
         if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
         }
     }
 
@@ -279,7 +288,7 @@ private:
         QJSValue erg = pInterpreter->evaluate(args + line);
         if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
         }
     }
 
@@ -305,11 +314,11 @@ private:
         }
         else
         {
-            CONSOLE_PRINT("Unable to determine a return value while interpreting. Line: " + line, Console::eERROR);
+            CONSOLE_PRINT("Unable to determine a return value while interpreting. Line: " + line, GameConsole::eERROR);
         }
         if (erg.isError())
         {
-            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", GameConsole::eERROR);
         }
         return ret;
     }
@@ -333,6 +342,7 @@ private:
     static UiFactory* m_pUiFactory;
     QVector<FactoryItem> m_factoryItems;
     QRect m_lastCoordinates;
+    QSize m_parentSize;
     quint32 m_creationCount{0};
     spPlayer m_dropDownPlayer;
 };

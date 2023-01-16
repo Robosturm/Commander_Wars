@@ -1,10 +1,8 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
@@ -47,10 +45,6 @@ namespace oxygine
         if (!Actor::isOn(localPosition, localScale))
         {
             return false;
-        }
-        if (m_extendedIsOn)
-        {
-            return true;
         }
         ResAnim* pAnim = m_frame.getResAnim();
         if (pAnim == nullptr)
@@ -190,7 +184,7 @@ namespace oxygine
     {
 #ifdef GRAPHICSUPPORT
         m_localScale = s;
-        __setSize(m_frame.getSize().mult(m_localScale));
+        __setSize(m_frame.getSize().cast<Vector2>().mult(m_localScale).cast<Point>());
 #endif
     }
 
@@ -273,7 +267,7 @@ namespace oxygine
         {
             m_frame = frame;
         }
-        __setSize(m_frame.getSize().mult(m_localScale));
+        __setSize(m_frame.getSize().cast<Vector2>().mult(m_localScale).cast<Point>());
 
 
         const spTexture& texture = m_frame.getTexture();
@@ -302,14 +296,14 @@ namespace oxygine
     {
     }
 
-    void Sprite::sizeChanged(const Vector2& size)
+    void Sprite::sizeChanged(const Point& size)
     {
 #ifdef GRAPHICSUPPORT
         Actor::sizeChanged(size);
-        const Vector2& sz = m_frame.getSize();
+        const auto& sz = m_frame.getSize();
         if (sz.x != 0)
         {
-            m_localScale.x = size.x / sz.x;
+            m_localScale.x = static_cast<float>(size.x) / sz.x;
         }
         else
         {
@@ -318,7 +312,7 @@ namespace oxygine
 
         if (sz.y != 0)
         {
-            m_localScale.y = size.y / sz.y;
+            m_localScale.y = static_cast<float>(size.y) / sz.y;
         }
         else
         {

@@ -5,7 +5,6 @@
 #include <QVector>
 #include <QString>
 
-#include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenuSprite;

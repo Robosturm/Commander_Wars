@@ -3,7 +3,6 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/pathfindingsystem.h"
-#include "coreengine/mainapp.h"
 
 const qint32 PathFindingSystem::infinite = std::numeric_limits<qint32>::max();
 
@@ -28,8 +27,6 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
 #ifdef GRAPHICSUPPORT
     setObjectName("PathFindingSystem");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     qint32 count = m_width * m_heigth;
     for (qint32 i = 0; i < count; ++i)
@@ -41,7 +38,7 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
             m_movecosts[i][i2] = infinite;
         }
     }
-    oxygine::ref_counter::addInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 PathFindingSystem::~PathFindingSystem()
@@ -49,7 +46,6 @@ PathFindingSystem::~PathFindingSystem()
     delete[] m_costs;
     delete[] m_DirectionMap;
     delete[] m_movecosts;
-    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 void PathFindingSystem::setStartPoint(qint32 startX, qint32 startY)

@@ -111,10 +111,13 @@ var Constructor = function()
             ACHIEVEMENT_BUILD_UNIT.unitProduced(unitID);
         }
     };
+    this.getName = function(map)
+    {
+        return qsTr("Build unit with nest");
+    };
     this.getDescription = function()
     {
-        return qsTr("Orders the Nest to produce a none naval unit. ") +
-               qsTr("The unit is able to move immediatly.");
+        return qsTr("Orders the Nest to produce a none naval unit.  The unit is able to move immediately.");
     };
 }
 

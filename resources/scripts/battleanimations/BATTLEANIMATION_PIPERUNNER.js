@@ -8,7 +8,7 @@ var Constructor = function()
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSpriteV2("piperunner+mask", GameEnums.Recoloring_Matrix,
-                            BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(10, 30));
+                            BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(0, 30));
         BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
@@ -16,14 +16,14 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(5);
         sprite.loadSpriteV2("piperunner+fire+mask", GameEnums.Recoloring_Matrix,
-                            BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(10, 30),
+                            BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(0, 30),
                             count);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSingleMovingSprite("pipe_rocket_up", false, Qt.point(60, 82),
+            sprite.loadSingleMovingSprite("pipe_rocket_up", false, Qt.point(50, 82),
                                           Qt.point(128, 64), 400, false,
                                           -1, 1, -1, i * 300);
-            sprite.loadSingleMovingSprite("pipe_shot", false, Qt.point(79, 78),
+            sprite.loadSingleMovingSprite("pipe_shot", false, Qt.point(69, 78),
                                           Qt.point(0, 0), 0, false,
                                           1, 1, 5, i * 300);
             sprite.loadSound("pipecannon_weapon_fire.wav", 1, i * 300);

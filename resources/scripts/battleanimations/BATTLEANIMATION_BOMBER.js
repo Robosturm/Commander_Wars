@@ -41,6 +41,7 @@ var Constructor = function()
         var moveTime = data[2];
         sprite.loadMovingSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_BOMBER.getMaxUnitCount(), offset, movement, moveTime);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
     };
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
@@ -48,16 +49,12 @@ var Constructor = function()
         return 0;
     };
 
-    this.loadStandingAnimation = function(sprite, unit, defender, weapon, alive = true)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_BOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
-        if (alive)
-        {
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
-        }
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, alive = true)
     {
         // get army name
         var player = unit.getOwner();        
@@ -66,6 +63,10 @@ var Constructor = function()
         var offset = Qt.point(data[0] + data[1].x, 40);
         sprite.loadMovingSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_BOMBER.getMaxUnitCount(), offset, movement, moveTime);
+        if (alive)
+        {
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
+        }
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -74,7 +75,7 @@ var Constructor = function()
         // get army name
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
-        BATTLEANIMATION_BOMBER.loadStandingAnimation(sprite, unit, defender, weapon);
+        BATTLEANIMATION_BOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
         var data = Global.getDataFromTable(armyName, BATTLEANIMATION_BOMBER.animationData);
         var count = sprite.getUnitCount(5);
         var startPoint = data[3];

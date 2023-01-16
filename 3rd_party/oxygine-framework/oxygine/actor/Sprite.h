@@ -6,7 +6,6 @@
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/TweenAnim.h"
-#include "texture.h"
 
 namespace oxygine
 {
@@ -129,7 +128,7 @@ namespace oxygine
 #endif
         virtual void changeAnimFrame(const AnimationFrame& f);
         virtual void animFrameChanged(const AnimationFrame& f);
-        virtual void sizeChanged(const Vector2& size) override;
+        virtual void sizeChanged(const Point& size) override;
 
     protected:
 #ifdef GRAPHICSUPPORT

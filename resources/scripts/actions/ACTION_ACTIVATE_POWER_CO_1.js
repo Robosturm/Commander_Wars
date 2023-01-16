@@ -15,11 +15,12 @@ var Constructor = function()
     this.getActionText = function(map)
     {
         var text = "";
-        if (map !== null &&
+        if (map &&
+            map !== null &&
             map.getCurrentPlayer() !== null &&
             map.getCurrentPlayer().getCO(1) !== null)
         {
-            text = replaceTextArgs("Power of %0", [map.getCurrentPlayer().getCO(1).getCOName()]);
+            text = replaceTextArgs(qsTr("Power of %0"), [map.getCurrentPlayer().getCO(1).getCOName()]);
         }
         else
         {
@@ -47,6 +48,11 @@ var Constructor = function()
     this.isFinalStep = function(action, map)
     {
         return true;
+    };
+
+    this.getName = function()
+    {
+        return qsTr("Power of CO 2");
     };
 
     this.getDescription = function()

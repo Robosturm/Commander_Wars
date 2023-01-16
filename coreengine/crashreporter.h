@@ -2,14 +2,14 @@
 #define CRASHREPORTER_H
 
 #include <QString>
+#include <QScopedPointer>
 
 class QProcess;
 
 class CrashReporter final
 {
 public:
-    CrashReporter() = delete;
-    ~CrashReporter() = delete;
+    ~CrashReporter() = default;
     /// Function signature for a callback after the log is written.
     /// @param log
     using logWrittenCallback = void (*)(const QString & log);
@@ -23,11 +23,13 @@ public:
     static void _writeLog( const QString &inSignal);
 private:
     static void setOsSignalHandler();
+    CrashReporter() = default;
 private:
-    static QString sCrashReportDirPath;             // log file path
-    static QString sProgramName;                    // the full path to the executable (which we need to resolve symbols)
-    static logWrittenCallback sLogWrittenCallback;  // function to call after we've written the log file
-    static QProcess* sProcess ;                     // process used to capture output of address mapping tool
+    static QScopedPointer<CrashReporter> m_instance;
+    QString sCrashReportDirPath;             // log file path
+    QString sProgramName;                    // the full path to the executable (which we need to resolve symbols)
+    logWrittenCallback sLogWrittenCallback{nullptr};  // function to call after we've written the log file
+    QProcess* sProcess{nullptr};                     // process used to capture output of address mapping tool
 };
 
 #endif // CRASHREPORTER_H

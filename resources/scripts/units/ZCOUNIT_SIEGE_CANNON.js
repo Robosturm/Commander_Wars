@@ -45,7 +45,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("siege_cannon+walk+mask", GameEnums.Recoloring_Matrix, 2);
-        animation.setSound("movetank.wav", -2);
+        animation.setSound("moveheavytank.wav", -2);
         return animation;
     };
 
@@ -118,6 +118,10 @@ var Constructor = function()
     this.getTypeOfWeapon1 = function(unit)
     {
         return GameEnums.WeaponType_Indirect;
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveheavytank.wav";
     };
 }
 

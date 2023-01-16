@@ -25,8 +25,6 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     setObjectName("EditorSelection");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
@@ -813,7 +811,7 @@ void EditorSelection::selectBuilding(qint32 building)
     qint32 heigth = m_Buildings[building]->getBuildingHeigth();
     qint32 x = GameMap::getImageSize() * (width - 1) / (width);
     qint32 y = GameMap::getImageSize() * (heigth - 1) / (heigth);
-    m_CurrentSelector->setPosition(m_Buildings[building]->oxygine::Actor::getPosition() - oxygine::Vector2(x, y));
+    m_CurrentSelector->setPosition(m_Buildings[building]->oxygine::Actor::getPosition() - oxygine::Point(x, y));
     emit sigSelectionChanged();
 }
 

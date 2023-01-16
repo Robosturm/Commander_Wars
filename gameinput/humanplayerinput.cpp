@@ -14,20 +14,17 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
 #include "ai/coreai.h"
 
-#include "menue/movementplanner.h"
-
-oxygine::spActor HumanPlayerInput::m_ZInformationLabel;
-spHumanPlayerInputMenu HumanPlayerInput::m_CurrentMenu;
+oxygine::spActor HumanPlayerInput::m_ZInformationLabel{nullptr};
+spHumanPlayerInputMenu HumanPlayerInput::m_CurrentMenu{nullptr};
+spMarkedFieldData HumanPlayerInput::m_pMarkedFieldData{nullptr};
 std::vector<oxygine::spActor> HumanPlayerInput::m_Fields;
 std::vector<QPoint> HumanPlayerInput::m_FieldPoints;
-spMarkedFieldData HumanPlayerInput::m_pMarkedFieldData;
 std::vector<oxygine::spActor> HumanPlayerInput::m_InfoFields;
 
 HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
@@ -36,8 +33,6 @@ HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("HumanPlayerInput");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -69,6 +64,20 @@ HumanPlayerInput::~HumanPlayerInput()
 {
     m_pGameAction = nullptr;
     m_pUnitPathFindingSystem = nullptr;
+    if (m_ZInformationLabel.get() != nullptr)
+    {
+        m_ZInformationLabel->detach();
+        m_ZInformationLabel = nullptr;
+    }
+    if (m_CurrentMenu.get() != nullptr)
+    {
+        m_CurrentMenu->detach();
+        m_CurrentMenu = nullptr;
+    }
+    m_pMarkedFieldData = nullptr;
+    m_Fields.clear();
+    m_FieldPoints.clear();
+    m_InfoFields.clear();
 }
 
 void HumanPlayerInput::rightClickUp(qint32, qint32)
@@ -91,7 +100,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
         }
         else if (m_pGameAction.get() != nullptr)
         {
-            Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("cancel.wav");
             if ((m_pGameAction->getInputStep() > 0) ||
                 (m_pGameAction->getActionID() != ""))
             {
@@ -112,8 +121,12 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
             {
                 showAttackableFields(x, y);
+                if (m_FieldPoints.size() == 0)
+                {
+                    showVisionFields(x, y);
+                }
             }
-            else if (m_FieldPoints.size() > 0 && !m_showVisionFields)
+            else if (!m_showVisionFields)
             {
                 showVisionFields(x, y);
             }
@@ -169,7 +182,7 @@ void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
         (!pUnit->isStealthed(m_pPlayer)))
     {
         m_showVisionFields = true;
-        Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
         auto points = pUnit->getVisionFields(pUnit->Unit::getPosition());
         for (auto & point : qAsConst(points))
         {
@@ -196,7 +209,7 @@ void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
 
 void HumanPlayerInput::cancelSelection(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("HumanPlayerInput::cancelSelection", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::cancelSelection", GameConsole::eDEBUG);
     Unit* pUnit = m_pGameAction->getTargetUnit();
     if (pUnit != nullptr && !pUnit->getHasMoved() &&
         m_pUnitPathFindingSystem.get() != nullptr &&
@@ -222,7 +235,7 @@ void HumanPlayerInput::cancelSelection(qint32 x, qint32 y)
 
 void HumanPlayerInput::cancelActionInput()
 {
-    CONSOLE_PRINT("HumanPlayerInput::cancelActionInput", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::cancelActionInput", GameConsole::eDEBUG);
     Unit* pUnit = nullptr;
     if (m_pGameAction.get() != nullptr)
     {
@@ -254,15 +267,16 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
     // try to show fire ranges :)
     
     Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-    if ((pUnit != nullptr) &&
-        (!pUnit->isStealthed(m_pPlayer)))
+    if (pUnit != nullptr &&
+        pUnit->hasWeapons() &&
+        !pUnit->isStealthed(m_pPlayer))
     {
         if (pUnit->hasAmmo1() || pUnit->hasAmmo2())
         {
             qint32 maxRange = pUnit->getMaxRange(pUnit->getPosition());
             qint32 minRange = pUnit->getMinRange(pUnit->getPosition());
             spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(minRange, maxRange));
-            Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
             UnitPathFindingSystem pfs(m_pMap, m_pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
             auto points = pfs.getAllNodePointsFast();
@@ -294,7 +308,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             QPoint buildingPos(pBuilding->Building::getX(), pBuilding->Building::getY());
             if (pPoints.get() != nullptr && pPoints->size() > 0)
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
                 for (auto & point : pPoints->getVector())
                 {
                     createMarkedField(buildingPos + targetOffset + point, QColor(255, 0, 0));
@@ -323,7 +337,7 @@ void HumanPlayerInput::syncMarkedFields()
 
 void HumanPlayerInput::cleanUpInput()
 {
-    CONSOLE_PRINT("HumanPlayerInput::cleanUpInput", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::cleanUpInput", GameConsole::eDEBUG);
     clearMenu();
     m_pGameAction = nullptr;
     m_pUnitPathFindingSystem = nullptr;
@@ -377,21 +391,21 @@ void HumanPlayerInput::clearMarkedFields()
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("humanplayer input leftClick() with X " + QString::number(x) + " Y " + QString::number(y), Console::eDEBUG);
     if (m_pMenu != nullptr &&
         GameAnimationFactory::getAnimationCount() == 0)
     {
+        CONSOLE_PRINT("humanplayer input leftClick() with X " + QString::number(x) + " Y " + QString::number(y), GameConsole::eDEBUG);
         Cursor* pCursor = m_pMenu->getCursor();
         bool isViewPlayer = (m_pMap->getCurrentViewPlayer() == m_pPlayer);
         if (!m_pMap->onMap(x, y))
         {
             // do nothing
         }
-        else if (!m_pMenu->getFocused())
+        else if (!m_pMenu->getFocused() && isCurrentPlayer(m_pPlayer))
         {
             if (m_CurrentMenu.get() != nullptr && Settings::getSimpleDeselect())
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("cancel.wav");
                 cancelActionInput();
             }
         }
@@ -465,7 +479,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     }
                     if (possibleActions.size() > 0)
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+                        Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
                         if ((possibleActions.size() == 1) &&
                             (!m_pGameAction->isFinalStep(possibleActions[0])))
                         {
@@ -498,7 +512,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                             }
                             if (possibleActions.size() > 0)
                             {
-                                Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+                                Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
                                 createActionMenu(possibleActions, x, y);
                             }
                             else
@@ -565,7 +579,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 }
                 else
                 {
-                    Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
+                    Mainapp::getInstance()->getAudioManager()->playSound("cancel.wav");
                     cleanUpInput();
                 }
             }
@@ -615,7 +629,7 @@ void HumanPlayerInput::showInfoMenu(qint32 x, qint32 y)
     }
     if (possibleActions.size() > 0)
     {
-        Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
         createActionMenu(possibleActions, x, y);
     }
 
@@ -642,7 +656,7 @@ void HumanPlayerInput::markedFieldSelected(QPoint point)
 
 void HumanPlayerInput::menuItemSelected(const QString & itemID, qint32 cost)
 {
-    CONSOLE_PRINT("HumanPlayerInput::menuItemSelected", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::menuItemSelected", GameConsole::eDEBUG);
     if (m_pGameAction.get() != nullptr)
     {
         // we're currently selecting the action for this action
@@ -677,7 +691,7 @@ void HumanPlayerInput::menuItemSelected(const QString & itemID, qint32 cost)
 void HumanPlayerInput::getNextStepData()
 {
     Mainapp::getInstance()->pauseRendering();
-    CONSOLE_PRINT("HumanPlayerInput::getNextStepData", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::getNextStepData", GameConsole::eDEBUG);
     clearMenu();
     clearMarkedFields();
     if (m_pMenu != nullptr)
@@ -688,7 +702,7 @@ void HumanPlayerInput::getNextStepData()
         QString stepType = m_pGameAction->getStepInputType();
         if (stepType == GameAction::INPUTSTEP_MENU)
         {
-            CONSOLE_PRINT("HumanPlayerInput::getNextStepData show menu", Console::eDEBUG);
+            CONSOLE_PRINT("HumanPlayerInput::getNextStepData show menu", GameConsole::eDEBUG);
             spMenuData pData = m_pGameAction->getMenuStepData();
             if (pData->validData())
             {                
@@ -698,7 +712,7 @@ void HumanPlayerInput::getNextStepData()
         }
         else if (stepType == GameAction::INPUTSTEP_FIELD)
         {
-            CONSOLE_PRINT("HumanPlayerInput::getNextStepData show fields", Console::eDEBUG);
+            CONSOLE_PRINT("HumanPlayerInput::getNextStepData show fields", GameConsole::eDEBUG);
             spMarkedFieldData pData = m_pGameAction->getMarkedFieldStepData();
             QVector<QPoint> & pFields = *pData->getPoints();
             for (auto & field : pFields)
@@ -716,7 +730,7 @@ void HumanPlayerInput::getNextStepData()
         }
         else
         {
-            CONSOLE_PRINT("Unknown step type detected. This will lead to an undefined behaviour. Action " + m_pGameAction->getActionID() + " at step " + QString::number(m_pGameAction->getInputStep()) + " step type " + stepType, Console::eERROR);
+            CONSOLE_PRINT("Unknown step type detected. This will lead to an undefined behaviour. Action " + m_pGameAction->getActionID() + " at step " + QString::number(m_pGameAction->getInputStep()) + " step type " + stepType, GameConsole::eERROR);
         }
     }
     Mainapp::getInstance()->continueRendering();
@@ -724,7 +738,7 @@ void HumanPlayerInput::getNextStepData()
 
 void HumanPlayerInput::finishAction()
 {
-    CONSOLE_PRINT("HumanPlayerInput::finishAction", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::finishAction", GameConsole::eDEBUG);
     if (m_pGameAction.get() != nullptr)
     {
         Unit* pUnit = m_pGameAction->getTargetUnit();
@@ -776,7 +790,7 @@ void HumanPlayerInput::finishAction()
 
 void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("HumanPlayerInput::createActionMenu", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::createActionMenu", GameConsole::eDEBUG);
     clearMarkedFields();
     clearMenu();
     MenuData data(m_pMap);
@@ -823,8 +837,8 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
 
 void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("Selecting unit", Console::eDEBUG);
-    Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+    CONSOLE_PRINT("Selecting unit", GameConsole::eDEBUG);
+    Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
     
     Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
     m_pUnitPathFindingSystem = spUnitPathFindingSystem::create(m_pMap, pUnit, m_pPlayer);
@@ -900,7 +914,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
 
 void HumanPlayerInput::createMarkedMoveFields()
 {
-    CONSOLE_PRINT("createMarkedMoveFields()", Console::eDEBUG);
+    CONSOLE_PRINT("createMarkedMoveFields()", GameConsole::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
     clearMarkedFields();
     if (m_pUnitPathFindingSystem.get() != nullptr)
@@ -949,7 +963,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                  m_pPlayer == nullptr) &&
                  m_pMap->onMap(x, y))
             {
-                CONSOLE_PRINT("HumanPlayerInput::cursorMoved" , Console::eDEBUG);
+                CONSOLE_PRINT("HumanPlayerInput::cursorMoved" , GameConsole::eDEBUG);
                 if (m_pMarkedFieldData.get() != nullptr)
                 {
                     if (m_pMarkedFieldData->getShowZData())
@@ -1031,7 +1045,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 
 void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
 {
-    CONSOLE_PRINT("HumanPlayerInput::createSimpleZInformation " + QString::number(pData->singleValue) , Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::createSimpleZInformation " + QString::number(pData->singleValue) , GameConsole::eDEBUG);
     
     QString labelText = "";
     labelText = QString::number(pData->singleValue) + " %";
@@ -1115,7 +1129,7 @@ bool HumanPlayerInput::inputAllowed()
 
 void HumanPlayerInput::nextTurn()
 {
-    CONSOLE_PRINT("HumanPlayerInput::nextTurn()", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::nextTurn()", GameConsole::eDEBUG);
     if (inputAllowed())
     {
         spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
@@ -1141,7 +1155,7 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
             attackInfo += " enemy: " + QString::number(pData->enemyUnitValues[i]);
         }
     }
-    CONSOLE_PRINT("HumanPlayerInput::createComplexZInformation " + attackInfo, Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::createComplexZInformation " + attackInfo, GameConsole::eDEBUG);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
@@ -1239,7 +1253,7 @@ void HumanPlayerInput::zoomChanged(float zoom)
 
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("HumanPlayerInput::createCursorPath", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::createCursorPath", GameConsole::eDEBUG);
     auto points = m_ArrowPoints;
     QPoint lastPoint = QPoint(-1, -1);
     if (points.size() > 0)
@@ -1309,7 +1323,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 
 QStringList HumanPlayerInput::getEmptyActionList()
 {
-    CONSOLE_PRINT("HumanPlayerInput::getEmptyActionList", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::getEmptyActionList", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->doFunction("ACTION", "getEmptyFieldActions");
     if (value.isString())
@@ -1324,7 +1338,7 @@ QStringList HumanPlayerInput::getEmptyActionList()
 
 QStringList HumanPlayerInput::getViewplayerActionList()
 {
-    CONSOLE_PRINT("HumanPlayerInput::getViewplayerActionList", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::getViewplayerActionList", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->doFunction("ACTION", "getViewplayerActionList");
     if (value.isString())
@@ -1496,7 +1510,7 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 
 void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
 {
-    CONSOLE_PRINT("HumanPlayerInput::showSelectedUnitAttackableFields", Console::eDEBUG);
+    CONSOLE_PRINT("HumanPlayerInput::showSelectedUnitAttackableFields", GameConsole::eDEBUG);
     if (m_pUnitPathFindingSystem.get() != nullptr &&
         m_pGameAction.get() != nullptr &&
         m_CurrentMenu.get() == nullptr &&
@@ -1519,7 +1533,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
         }
         else
         {
-            Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
             for (auto & fields : m_Fields)
             {
                 fields->setVisible(false);
@@ -1954,9 +1968,10 @@ void HumanPlayerInput::autoEndTurn()
 {    
     if (m_pPlayer != nullptr &&
         m_pMap != nullptr &&
-        isCurrentPlayer(m_pPlayer))
+        isCurrentPlayer(m_pPlayer) &&
+        !Settings::getAiSlave())
     {
-        CONSOLE_PRINT("HumanPlayerInput::autoEndTurn", Console::eDEBUG);
+        CONSOLE_PRINT("HumanPlayerInput::autoEndTurn", GameConsole::eDEBUG);
         CO* pCO0 = m_pPlayer->getCO(0);
         CO* pCO1 = m_pPlayer->getCO(1);
         if (Settings::getAutoEndTurn() &&
@@ -1993,7 +2008,7 @@ void HumanPlayerInput::autoEndTurn()
                     }
                 }
             }
-            CONSOLE_PRINT("Auto triggering next player cause current player can't input any actions.", Console::eDEBUG);
+            CONSOLE_PRINT("Auto triggering next player cause current player can't input any actions.", GameConsole::eDEBUG);
             spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
             emit performAction(pAction);
         }

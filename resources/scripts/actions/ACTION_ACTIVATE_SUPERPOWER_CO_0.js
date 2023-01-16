@@ -15,11 +15,12 @@ var Constructor = function()
     this.getActionText = function(map)
     {
         var text = "";
-        if (map !== null &&
+        if (map &&
+            map !== null &&
             map.getCurrentPlayer() !== null &&
             map.getCurrentPlayer().getCO(0) !== null)
         {
-            text = replaceTextArgs("Superpower of %0", [map.getCurrentPlayer().getCO(0).getCOName()]);
+            text = replaceTextArgs(qsTr("Superpower of %0"), [map.getCurrentPlayer().getCO(0).getCOName()]);
         }
         else
         {
@@ -47,6 +48,11 @@ var Constructor = function()
     this.isFinalStep = function(action, map)
     {
         return true;
+    };
+
+    this.getName = function()
+    {
+        return qsTr("Superpower of CO 1");
     };
 
     this.getDescription = function()

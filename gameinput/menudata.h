@@ -84,7 +84,6 @@ public slots:
      */
     void remove()
     {
-        delete this;
     }
 private:
     QStringList m_texts;

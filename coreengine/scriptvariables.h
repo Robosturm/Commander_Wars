@@ -6,7 +6,6 @@
 #include <QVector>
 
 #include "coreengine/scriptvariable.h"
-
 #include "coreengine/fileserializable.h"
 
 /**

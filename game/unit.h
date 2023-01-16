@@ -88,7 +88,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 21;
+        return 22;
     }
 
 
@@ -652,7 +652,22 @@ public slots:
      */
     void moveUnit(QVector<QPoint> & movePath);
     /**
-     * @brief moveUnitToField
+     * @brief createMoveVisionAction
+     * @param pAction
+     */
+    void createMoveVisionAction(GameAction* pAction);
+    /**
+     * @brief moveUnit moves the unit to the target path
+     * @param movePath
+     */
+    void createMoveVision(QVector<QPoint> & movePath);
+    /**
+     * @brief createMoveVisionFromAction
+     * @param pAction
+     */
+    void createMoveVisionFromAction(GameAction* pAction);
+    /**
+     * @brief createMoveVision
      * @param x
      * @param y
      */
@@ -883,6 +898,11 @@ public slots:
      * @return
      */
     qint32 getRepairBonus(QPoint position);
+    /**
+     * @brief getRepairCostModifier
+     * @return
+     */
+    float getRepairCostModifier();
     /**
      * @brief setUnitVisible
      * @param value

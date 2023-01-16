@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QProcess>
+#include <QScopedPointer>
 
 #include "network/tcpserver.h"
-#include "network/tcpclient.h"
 #include "network/networkgamedata.h"
 #include "network/networkgame.h"
 #include "network/smtpmailsender.h"
@@ -38,6 +38,15 @@ class MainServer final : public QObject, public oxygine::ref_counter
         QString address;
         QString secondaryAddress;
         quint16 port;
+    };
+    struct SuspendedSlaveInfo
+    {
+        bool relaunched{false};
+        bool runningGame{false};
+        QVector<quint64> pendingSockets;
+        QString savefile;
+        NetworkGameData game;
+        QElapsedTimer despawnTime;
     };
 
 public:
@@ -114,7 +123,25 @@ private slots:
      * @param result
      */
     void onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action);
+    /**
+     * @brief executeScript
+     */
+    void executeScript();
+    /**
+     * @brief periodicTasks
+     */
+    void periodicTasks();
 private:
+    /**
+     * @brief cleanUpSuspendedGames
+     * @param games
+     */
+    void cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> & games);
+    /**
+     * @brief setUuidForGame
+     * @param game
+     */
+    void setUuidForGame(NetworkGameData & game);
     /**
      * @brief spawnSlaveGame checks if a slave game can be spawned and spawns a slave game on the server
      * @param stream
@@ -142,6 +169,14 @@ private:
      */
     void joinSlaveGame(quint64 socketID, const QJsonObject & objData);
     /**
+     * @brief MainServer::tryJoinSuspendedGame
+     * @param socketID
+     * @param slave
+     * @param games
+     * @return
+     */
+    bool tryJoinSuspendedGame(quint64 socketID, const QString & slave, QVector<SuspendedSlaveInfo> & games);
+    /**
      * @brief closeGame
      * @param pGame
      */
@@ -156,11 +191,35 @@ private:
      */
     void spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data);
     /**
+     * @brief spawnSlave
+     * @param slaveInfo
+     */
+    void spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo);
+    /**
      * @brief onSlaveReady called once a slave is in a state for receiving the data of the game that should be hosted
      * @param socketID
      * @param stream
      */
     void onSlaveReady(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onSlaveInfoDespawning
+     * @param socketID
+     * @param objData
+     */
+    void onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onSlaveRelaunched
+     * @param socketID
+     * @param objData
+     */
+    void onSlaveRelaunched(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief informClientsAboutRelaunch
+     * @param games
+     * @param slaveName
+     * @param doc
+     */
+    bool informClientsAboutRelaunch(QVector<SuspendedSlaveInfo> & games, const QString & slaveName, const QJsonDocument & doc);
     /**
      * @brief onGameRunningOnServer called once the game has loaded all data needed for hosting a game and players can join
      * @param socketID
@@ -215,6 +274,13 @@ private:
      */
     void createAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
     /**
+     * @brief deleteAccount
+     * @param socketId
+     * @param doc
+     * @param action
+     */
+    void deleteAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
+    /**
      * @brief loginToAccount
      * @param socketId
      * @param doc
@@ -268,7 +334,7 @@ private:
     class InternNetworkGame : public oxygine::ref_counter
     {
     public:
-        std::shared_ptr<QProcess> process;
+        QScopedPointer<QProcess> process;
         spNetworkGame game;
     };
     explicit MainServer();
@@ -297,14 +363,25 @@ private:
      */
     QTimer m_updateTimer;
     /**
+     * @brief m_scriptExecutionTimer
+     */
+    QTimer m_periodicExecutionTimer;
+    /**
      * guard marking if new lobby data is available or not.
      */
     bool m_updateGameData{false};
-
     /**
      * @brief m_slaveAddressOptions address/port combination that can used for spawning a slave
      */
     QVector<AddressInfo> m_slaveAddressOptions;
+    /**
+     * @brief m_runningSlaves
+     */
+    QVector<SuspendedSlaveInfo> m_runningSlaves;
+    /**
+     * @brief m_runningLobbies
+     */
+    QVector<SuspendedSlaveInfo> m_runningLobbies;
     /**
      * @brief m_lastUsedAddressIndex last used index in the m_slaveAddressOptions
      */
@@ -316,7 +393,7 @@ private:
     /**
      *
      */
-    qint64 m_uuidGameCounter{0};
+    qint64 m_uuidGameCounter{1};
     /**
      * @brief m_freeAddresses addresses of slaves that have been used and are now free again
      */
@@ -324,11 +401,7 @@ private:
     /**
      * @brief m_serverData
      */
-    static QSqlDatabase m_serverData;
-    /**
-     * @brief m_dataBaseLaunched
-     */
-    static bool m_dataBaseLaunched;
+    static QSqlDatabase* m_serverData;
     /**
      * @brief m_mailSender
      */

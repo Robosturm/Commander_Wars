@@ -8,7 +8,7 @@
 #include "ai/decisiontree/question.h"
 
 class DecisionQuestion;
-typedef oxygine::intrusive_ptr<DecisionQuestion> spDecisionQuestion;
+using spDecisionQuestion = oxygine::intrusive_ptr<DecisionQuestion>;
 
 class DecisionQuestion final : public QObject, public FileSerializable, public oxygine::ref_counter
 {

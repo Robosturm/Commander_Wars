@@ -3,7 +3,7 @@
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/label.h"
 #include "objects/base/spinbox.h"
@@ -39,7 +39,7 @@ void ScriptConditionIsCo::writePostCondition(QTextStream& rStream)
 
 void ScriptConditionIsCo::writeCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionIsCo", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionIsCo", GameConsole::eDEBUG);
     rStream << "        if (map.getPlayer(" << QString::number(m_player) << ").getCO(" << QString::number(m_playerCo) << ").getCoID() === \"" << m_coid << "\" && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " "  << ConditionIsCo << "\n";
     if (subCondition.get() != nullptr)
@@ -63,12 +63,12 @@ void ScriptConditionIsCo::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionIsCo + " End\n";
+    rStream << "        } // " + QString(ConditionIsCo) + " End\n";
 }
 
 void ScriptConditionIsCo::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionIsCo", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionIsCo", GameConsole::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if (map.getPlayer(", "")
                             .replace(").getCO(", ",")

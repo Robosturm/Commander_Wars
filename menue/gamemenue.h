@@ -8,7 +8,6 @@
 #include "network/NetworkInterface.h"
 
 #include "objects/base/chat.h"
-#include "objects/base/closeablepopup.h"
 #include "objects/base/label.h"
 
 #include "game/gamerecording/replayrecorder.h"
@@ -33,9 +32,9 @@ class GameMenue : public BaseGamemenu
 {
     Q_OBJECT
 public:
-    explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin = false);
+    explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin = false, bool startDirectly = false);
     explicit GameMenue(QString map, bool saveGame);
-    explicit GameMenue(spGameMap pMap);
+    explicit GameMenue(spGameMap pMap, bool clearPlayerlist);
     virtual ~GameMenue();
     /**
      * @brief attachInterface
@@ -206,6 +205,10 @@ public slots:
      */
     void exitGame();
     /**
+     * @brief exitGameDelayed
+     */
+    void exitGameDelayed();
+    /**
      * @brief surrenderGame
      */
     void surrenderGame();
@@ -340,6 +343,13 @@ protected slots:
      */
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
+     * @brief recieveServerData
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    /**
      * @brief disconnected
      * @param socketID
      */
@@ -417,7 +427,19 @@ protected slots:
      * @brief onEnter
      */
     virtual void onEnter() override;
+    /**
+     * @brief executeCommand
+     */
+    void executeCommand(QString command);
+    /**
+     * @brief closeSlave
+     */
+    void closeSlave();
 protected:
+    /**
+     * @brief startDespawnTimer
+     */
+    void startDespawnTimer();
     void loadUIButtons();
     void loadGameMenue();
     void connectMap();
@@ -451,6 +473,7 @@ protected:
     QElapsedTimer m_slaveDespawnElapseTimer;
     QTimer m_slaveDespawnTimer{this};
     QTimer m_UpdateTimer{this};
+    QTimer m_exitDelayedTimer{this};
     struct Userdata
     {
         QString username;
@@ -464,8 +487,9 @@ protected:
     QString m_saveFile;
     bool m_saveMap{false};
     bool m_exitAfterSave{false};
-    bool m_saveAllowed{false};
+    bool m_saveAllowed{true};
     bool m_isReplay{false};
+    quint8 m_terminated{0};
 
     ActionPerformer m_actionPerformer;
     spMovementPlanner m_pMovementPlanner;

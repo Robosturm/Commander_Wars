@@ -5,12 +5,11 @@
 
 #include "wiki/wikipage.h"
 
-#include "game/building.h"
 #include "game/unit.h"
 #include "game/terrain.h"
 
 class FieldInfo;
-typedef oxygine::intrusive_ptr<FieldInfo> spFieldInfo;
+using spFieldInfo = oxygine::intrusive_ptr<FieldInfo>;
 
 class FieldInfo final : public Wikipage
 {

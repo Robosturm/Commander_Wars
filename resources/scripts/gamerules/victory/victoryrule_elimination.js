@@ -41,7 +41,7 @@ var Constructor = function()
         }
         else if (type === 1)
         {
-            return qsTr("Team Counter");
+            return qsTr("Team counter");
         }
         else
         {

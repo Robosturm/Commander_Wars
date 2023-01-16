@@ -7,8 +7,8 @@
     <sound file="baazoka_fire.wav"              cachesize = "5"/>
     <sound file="black_canon_destroyed.wav"     cachesize = "2"/>
     <sound file="blackcanon_shot.wav"           cachesize = "2"/>
-    <sound file="button.wav"                    cachesize = "2"/>
-    <sound file="cancel.wav"                    cachesize = "2"/>
+    <sound file="button.wav"                    cachesize = "5"/>
+    <sound file="cancel.wav"                    cachesize = "5"/>
     <sound file="cannon_weapon_explode.wav"     cachesize = "5"/>
     <sound file="cannon_weapon_fire.wav"        cachesize = "5"/>
     <sound file="capture.wav"                   cachesize = "8"/>
@@ -16,7 +16,7 @@
     <sound file="capture_down.wav"              cachesize = "8"/>
     <sound file="capture_enemy.wav"             cachesize = "8"/>
     <sound file="capture_jump.wav"              cachesize = "8"/>
-    <sound file="checkbox.wav"                  cachesize = "2"/>
+    <sound file="checkbox.wav"                  cachesize = "5"/>
     <sound file="crystal_explode.wav"           cachesize = "2"/>
     <sound file="crystal_explode_2.wav"         cachesize = "2"/>
     <sound file="crystal_heal.wav"              cachesize = "10"/>
@@ -29,12 +29,12 @@
     <sound file="falling_bomb.wav"              cachesize = "5"/>
     <sound file="flare_explosion.wav"           cachesize = "2"/>
     <sound file="flare_launch.wav"              cachesize = "2"/>
-    <sound file="heavy_tank_move.wav"           cachesize = "5"/>
+    <sound file="heavy_tank_move.wav"           cachesize = "10"/>
     <sound file="hoellium_explode.wav"          cachesize = "10"/>
-    <sound file="hoellium_move.wav"             cachesize = "5"/>
+    <sound file="hoellium_move.wav"             cachesize = "10"/>
     <sound file="impact_explosion.wav"          cachesize = "5"/>
     <sound file="impossible.wav"                cachesize = "5"/>
-    <sound file="infantry_move.wav"             cachesize = "5"/>
+    <sound file="infantry_move.wav"             cachesize = "10"/>
     <sound file="load.wav"                      cachesize = "5"/>
     <sound file="megacannon_weapon_fire.wav"    cachesize = "10"/>
     <sound file="mg_impact.wav"                 cachesize = "10"/>
@@ -66,10 +66,10 @@
     <sound file="movewalk.wav"                  cachesize = "5"/>
     <sound file="movewalker.wav"                cachesize = "5"/>
     <sound file="neocannonweapon_fire.wav"      cachesize = "5"/>
-    <sound file="neotank_move.wav"              cachesize = "5"/>
+    <sound file="neotank_move.wav"              cachesize = "10"/>
     <sound file="okay.wav"                      cachesize = "3"/>
     <sound file="oozium_dying.wav"              cachesize = "10"/>
-    <sound file="oozium_move.wav"               cachesize = "5"/>
+    <sound file="oozium_move.wav"               cachesize = "10"/>
     <sound file="pipe_destroyed.wav"            cachesize = "5"/>
     <sound file="pipecannon_weapon_fire.wav"    cachesize = "5"/>
     <sound file="power.wav"                     cachesize = "10"/>
@@ -99,7 +99,7 @@
     <sound file="powerready.wav"                cachesize = "2"/>
     <sound file="power_activation.wav"          cachesize = "10"/>
     <sound file="rain.wav"                      cachesize = "2"/>
-    <sound file="recon_move.wav"                cachesize = "5"/>
+    <sound file="recon_move.wav"                cachesize = "10"/>
     <sound file="repair_1.wav"                  cachesize = "10"/>
     <sound file="repair_2.wav"                  cachesize = "10"/>
     <sound file="rocket_flying.wav"             cachesize = "5"/>
@@ -117,12 +117,8 @@
     <sound file="superpowerready.wav"           cachesize = "5"/>
     <sound file="switchfield.wav"               cachesize = "15"/>
     <sound file="switchmenu.wav"                cachesize = "15"/>
-    <sound file="talongunhit.wav"               cachesize = "10"/>
-    <sound file="talongunin.wav"                cachesize = "5"/>
-    <sound file="talongunout.wav"               cachesize = "5"/>
-    <sound file="talongunspin.wav"              cachesize = "5"/>
     <sound file="tank_explode.wav"              cachesize = "5"/>
-    <sound file="tank_move.wav"                 cachesize = "5"/>
+    <sound file="tank_move.wav"                 cachesize = "10"/>
     <sound file="tank_shot.wav"                 cachesize = "5"/>
     <sound file="tank_weapon_fire.wav"          cachesize = "5"/>
     <sound file="target.wav"                    cachesize = "10"/>
@@ -145,7 +141,22 @@
     <sound file="minimapOpen.wav"               cachesize = "2"/>
     <sound file="moveOut.wav"                   cachesize = "2"/>
     <sound file="player_turn.wav"               cachesize = "2"/>
-    <sound file="connect.wav"                   cachesize = "2"/>
-    <sound file="disconnect.wav"                cachesize = "2"/>
+    <sound file="deathray_fire.wav"             cachesize = "2"/>
+    <sound file="connect.wav"                   cachesize = "5"/>
+    <sound file="disconnect.wav"                cachesize = "5"/>
+    <sound file="co_power_letter.wav"           cachesize = "30"/>
+    <sound file="superpower_burst.wav"          cachesize = "5"/>
+    <sound file="nestlasercharge.wav"           cachesize = "2"/>
+    <sound file="nestlaserfire.wav"             cachesize = "2"/>
+    <sound file="nestlaserrotate.wav"           cachesize = "2"/>
+    <sound file="nestmortardetonation.wav"      cachesize = "2"/>
+    <sound file="nestmortarlaunch.wav"          cachesize = "2"/>
+    <sound file="talongunattack.wav"            cachesize = "2"/>
+    <sound file="talonguntargeting.wav"         cachesize = "2"/>
+    <sound file="talongunhit.wav"               cachesize = "10"/>
+    <sound file="placeBuilding.wav"             cachesize = "10"/>
+    <sound file="placeHq.wav"                   cachesize = "10"/>
+    <sound file="placeStreet.wav"               cachesize = "10"/>
+    <sound file="placeReaf.wav"                 cachesize = "10"/>
 </sounds>
 

@@ -303,6 +303,22 @@
         <image file="beach+land+S.png" cols = "8" />
         <image file="beach+land+S+W.png" cols = "8" />
         <image file="beach+land+W.png" cols = "8" />
+        <image file="beach+land+SW.png" cols = "8" />
+        <image file="beach+land+NW.png" cols = "8" />
+        <image file="beach+land+NE.png" cols = "8" />
+        <image file="beach+land+SE.png" cols = "8" />
+        <image file="beach+W+land+SW.png" cols = "8" />
+        <image file="beach+W+land+NW.png" cols = "8" />
+        <image file="beach+S+land+SW.png" cols = "8" />
+        <image file="beach+S+land+SE.png" cols = "8" />
+        <image file="beach+S+W+land+SW.png" cols = "8" />
+        <image file="beach+N+land+NE.png" cols = "8" />
+        <image file="beach+N+land+NW.png" cols = "8" />
+        <image file="beach+N+W+land+NW.png" cols = "8" />
+        <image file="beach+N+E+land+NE.png" cols = "8" />
+        <image file="beach+E+land+NE.png" cols = "8" />
+        <image file="beach+E+land+SE.png" cols = "8" />
+        <image file="beach+E+S+land+SE.png" cols = "8" />
         <image file="beach+N+E+land+S+W.png" cols = "8" />
         <image file="beach+N+land+E.png" cols = "8" />
         <image file="beach+N+land+E+S+W.png" cols = "8" />
@@ -351,11 +367,15 @@
         <image file="beach+SE.png" cols = "8" />
         <image file="beach+N+S.png" cols = "8" />
         <image file="beach+E+W.png" cols = "8" />
-        <image file="sea+beach+W.png" cols = "8" />
-        <image file="sea+beach+E.png" cols = "8" />
-        <image file="sea+beach+S.png" cols = "8" />
-        <image file="sea+beach+N.png" cols = "8" />
-                
+        <image file="beach+overlay+W.png" cols = "8" />
+        <image file="beach+overlay+E.png" cols = "8" />
+        <image file="beach+overlay+S.png" cols = "8" />
+        <image file="beach+overlay+N.png" cols = "8" />
+        <image file="beach+land+SW+overlay.png" cols = "8" />
+        <image file="beach+land+SE+overlay.png" cols = "8" />
+        <image file="beach+land+NW+overlay.png" cols = "8" />
+        <image file="beach+land+NE+overlay.png" cols = "8" />
+
         <image file="ruin+0.png" />
         <image file="ruin+1.png" />
         <image file="ruin+2.png" />

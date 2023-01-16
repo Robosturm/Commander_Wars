@@ -12,7 +12,7 @@ class Label final : public Tooltip
 {
     Q_OBJECT
 public:
-    explicit Label(qint32 width);
+    explicit Label(qint32 width, bool showBox = false);
     ~Label() = default;
     /**
      * @brief setText
@@ -47,17 +47,18 @@ public:
      * @brief setWidth
      * @param width
      */
-    virtual void setWidth(float width) override;
+    virtual void setWidth(qint32 width) override;
     /**
      * @brief setHeigth
      * @param height
      */
-    virtual void setHeight(float height) override;
+    virtual void setHeight(qint32 height) override;
 public slots:
     virtual void focusedLost() override {}
 protected:
     oxygine::spTextField m_textField;
     oxygine::spClipRectActor m_clipRect;
+    qint32 m_clipOffset{0};
 };
 
 #endif // LABEL_H

@@ -3,12 +3,12 @@
 #include "ingamescriptsupport/scriptdialogdialog.h"
 #include "ingamescriptsupport/scripteditor.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
-const QString ScriptEventDialog::m_CurrentPlayerCO0 = "map.getCurrentPlayer().getCO(0).getCoID()";
-const QString ScriptEventDialog::m_CurrentPlayerCO1 = "map.getCurrentPlayer().getCO(1).getCoID()";
+const char* const ScriptEventDialog::m_CurrentPlayerCO0 = "map.getCurrentPlayer().getCO(0).getCoID()";
+const char* const ScriptEventDialog::m_CurrentPlayerCO1 = "map.getCurrentPlayer().getCO(1).getCoID()";
 
-const QString ScriptEventDialog::ScriptEventDialogItem = "ScriptEventDialogItem";
+const char* const ScriptEventDialog::ScriptEventDialogItem = "ScriptEventDialogItem";
 
 ScriptEventDialog::ScriptEventDialog(GameMap* pMap)
     : ScriptEvent(pMap, EventType::dialog)
@@ -52,7 +52,7 @@ spDialogEntry ScriptEventDialog::getDialog(qint32 index)
 
 void ScriptEventDialog::readEvent(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading EventDialog", Console::eDEBUG);
+    CONSOLE_PRINT("Reading EventDialog", GameConsole::eDEBUG);
     line = line.simplified();
     while (!rStream.atEnd())
     {
@@ -60,7 +60,7 @@ void ScriptEventDialog::readEvent(QTextStream& rStream, QString line)
         line = line.simplified();
         if (line.endsWith(EventDialog))
         {
-            CONSOLE_PRINT("Read EventDialog", Console::eDEBUG);
+            CONSOLE_PRINT("Read EventDialog", GameConsole::eDEBUG);
             break;
         }
         else if (line.endsWith(ScriptEventDialogItem))
@@ -75,7 +75,7 @@ void ScriptEventDialog::readEvent(QTextStream& rStream, QString line)
                                     .replace(", GameEnums.COMood_", "@")
                                     .replace(", \"", "@")
                                     .replace("\"); // ", "@").
-                                    replace(" " + ScriptEventDialogItem, "@" + ScriptEventDialogItem).split("@");
+                                    replace(" " + QString(ScriptEventDialogItem), "@" + QString(ScriptEventDialogItem)).split("@");
             qint32 version = 0;
 
             if (items.size() >= 2)
@@ -114,7 +114,7 @@ void ScriptEventDialog::readEvent(QTextStream& rStream, QString line)
 
 void ScriptEventDialog::writeEvent(QTextStream& rStream)
 {
-    rStream << "            // " + EventDialog + "\n";
+    rStream << "            // " + QString(EventDialog) + "\n";
     for (qint32 i = 0; i < m_Dialog.size(); i++)
     {
         rStream <<  "            var dialog" << QString::number(i) << " = GameAnimationFactory.createGameAnimationDialog(map, qsTr(\"";
@@ -155,5 +155,5 @@ void ScriptEventDialog::writeEvent(QTextStream& rStream)
     {
         rStream << "            dialog" << QString::number(i) << ".queueAnimation(dialog" << QString::number(i + 1) << ");\n";
     }
-    rStream << "            // " + EventDialog + "\n";
+    rStream << "            // " + QString(EventDialog) + "\n";
 }

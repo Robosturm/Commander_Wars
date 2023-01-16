@@ -27,7 +27,7 @@ var Constructor = function()
     this.performPostAnimation = function(postAnimation, map)
     {
         var animation = GameAnimationFactory.createAnimation(map, ACTION_TRAP.postAnimationTrapSignX, ACTION_TRAP.postAnimationTrapSignY);
-        var width = animation.addText(qsTr("TRAP!"), map.getImageSize() / 2 + 25, 2, 1);
+        var width = animation.addText(qsTr("TRAP!"), map.getImageSize() / 2 + 25, -2, 1);
         animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
         animation.addSprite("trap", map.getImageSize() / 2 + 4, 4, 400, 2);
         audio.playSound("trap.wav");
@@ -125,9 +125,17 @@ var Constructor = function()
         }
     }
 
+    this.getIcon = function(map)
+    {
+        return "help";
+    };
+    this.getName = function(map)
+    {
+        return qsTr("Trap");
+    };
     this.getDescription = function()
     {
-        return qsTr("This action can't be disabled.");
+        return qsTr("This action can't be disabled and traps a unit if you try to move over a hidden unit.");
     };
     this.isTrap = function(action, moveUnit, targetFieldUnit, targetX, targetY, previousX, previousY, moveCost, map)
     {

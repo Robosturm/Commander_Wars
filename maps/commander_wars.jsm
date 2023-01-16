@@ -95,6 +95,36 @@ var Constructor = function()
             ++mapWinCount;
         }
         // --------------------------------------------------------------
+        // --------------------------------------------------------------
+        // Take and Hold
+        // --------------------------------------------------------------
+        //if (oilInTheDesert.readDataBool() === true)
+        //{
+            var takeAndHoldName = "Take and Hold";
+            var takeAndHold = variables.createVariable(takeAndHoldName);
+            var takeAndHoldPos = Qt.point(0.26, 0.525);
+            if (takeAndHold.readDataBool() === false)
+            {
+                openMaps.push(takeAndHoldPos);
+                openMapNames.push("takeAndHold.map");
+                var newTakeAndHold = variables.createVariable("new" + takeAndHoldName);
+                if (newTakeAndHold.readDataBool() === false)
+                {
+                    newMapPositions.push(mapCount);
+                    newTakeAndHold.writeDataBool(true);
+                }
+                ++mapCount;
+            }
+            else
+            {
+                if (lastWonMapName === takeAndHoldName)
+                {
+                    data.setNewlyWonMap(mapWinCount);
+                }
+                wonMaps.push(oilInTheDesertPos);
+                ++mapWinCount;
+            }
+        //}
 
         // --------------------------------------------------------------
         // Day at the beach
@@ -221,7 +251,7 @@ var Constructor = function()
                 ++mapWinCount;
             }
         }
-        // --------------------------------------------------------------
+        // --------------------------------------------------------------        
 
         data.setOpenMapPositions(openMaps);
         data.setNewMapPosition(newMapPositions);

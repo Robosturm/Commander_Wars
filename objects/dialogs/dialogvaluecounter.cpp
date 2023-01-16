@@ -1,4 +1,5 @@
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
 
 #include "resource_management/objectmanager.h"
@@ -16,7 +17,7 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");

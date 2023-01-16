@@ -3,8 +3,8 @@
 
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
-#include "coreengine/console.h"
-#include "coreengine/mainapp.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/terrainmanager.h"
 #include "resource_management/gameanimationmanager.h"
@@ -40,7 +40,7 @@ spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, 
         }
         else
         {
-            CONSOLE_PRINT("Unable to load Terrain " + terrainID, Console::eERROR);
+            CONSOLE_PRINT("Unable to load Terrain " + terrainID, GameConsole::eERROR);
         }
     }
     return pTerrain;
@@ -56,8 +56,6 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("Terrain");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setPriority(getMapTerrainDrawPriority());
     setSize(GameMap::getImageSize(),
@@ -251,9 +249,17 @@ QString Terrain::getTerrainName() const
     return m_terrainName;
 }
 
-void Terrain::setTerrainName(const QString &value)
+void Terrain::setTerrainName(const QString &value, bool customName)
 {
+    m_customName = customName;
     m_terrainName = value;
+    if (m_terrainName.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function = "getName";
+        QJSValue ret = pInterpreter->doFunction(m_terrainID, function);
+        m_terrainName = ret.toString();
+    }
 }
 
 void Terrain::syncAnimation(oxygine::timeMS syncTime)
@@ -492,7 +498,11 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
         addChild(pSprite);
         m_terrainSpriteName = spriteID;
         QImage img;
-        if (QFile::exists(Settings::getUserPath() + m_terrainSpriteName))
+        if (QFile::exists(m_terrainSpriteName))
+        {
+            img = QImage(m_terrainSpriteName);
+        }
+        else if (QFile::exists(Settings::getUserPath() + m_terrainSpriteName))
         {
             img = QImage(Settings::getUserPath() + m_terrainSpriteName);
         }
@@ -514,7 +524,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
     }
     else
     {
-        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -523,6 +533,7 @@ bool Terrain::customSpriteExists() const
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(m_terrainSpriteName, oxygine::error_policy::ep_ignore_error);
     return pAnim != nullptr ||
+           QFile::exists(m_terrainSpriteName) ||
            QFile::exists(Settings::getUserPath() + m_terrainSpriteName) ||
            QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
 }
@@ -801,7 +812,7 @@ void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qin
     }
     else
     {
-        CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, GameConsole::eDEBUG);
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainOverlay));
@@ -1519,6 +1530,7 @@ void Terrain::serializeObject(QDataStream& pStream) const
     pStream << m_hp;
 
     pStream << m_terrainName;
+    pStream << m_customName;
     pStream << m_terrainDescription;
     m_Variables.serializeObject(pStream);
 
@@ -1642,7 +1654,16 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 4)
     {
-        pStream >> m_terrainName;
+        QString terrainName;
+        pStream >> terrainName;
+        if (version > 10)
+        {
+            pStream >> m_customName;
+        }
+        if (m_customName)
+        {
+            m_terrainName = terrainName;
+        }
         pStream >> m_terrainDescription;
     }
     if (version > 5 && version < 9)

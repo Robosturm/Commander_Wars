@@ -3,12 +3,12 @@
 #include "objects/loadingscreen.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/fontmanager.h"
 
-spLoadingScreen LoadingScreen::m_pLoadingScreen;
+spLoadingScreen LoadingScreen::m_pLoadingScreen{nullptr};
 
 spLoadingScreen LoadingScreen::getInstance()
 {
@@ -29,11 +29,12 @@ LoadingScreen::LoadingScreen()
 }
 LoadingScreen::~LoadingScreen()
 {
-    CONSOLE_PRINT("LoadingScreen::deleted", Console::eDEBUG);
+    CONSOLE_PRINT("LoadingScreen::deleted", GameConsole::eDEBUG);
 }
 
 void LoadingScreen::show()
 {    
+    CONSOLE_PRINT("LoadingScreen::show", GameConsole::eDEBUG);
     oxygine::Stage::getStage()->addChild(spLoadingScreen(this));
     removeChildren();
     oxygine::ResAnim* pBackground;
@@ -62,18 +63,17 @@ void LoadingScreen::show()
     m_LoadingBar->setColor(Qt::red);
     addChild(m_LoadingBar);
 
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
-    m_workText = oxygine::spTextField::create();
+    m_workText = spLabel::create(Settings::getWidth());
     m_workText->setStyle(style);
-    m_workText->setWidth(Settings::getWidth() - 20);
-    m_workText->setX(20);
+    m_workText->setX(0);
     m_workText->setY(Settings::getHeight() / 2);
     addChild(m_workText);
-    m_loadingProgress = oxygine::spTextField::create();
+    m_loadingProgress = spLabel::create(Settings::getWidth());
     m_loadingProgress->setStyle(style);
-    m_loadingProgress->setPosition(Settings::getWidth() / 2 - 40, Settings::getHeight() - 50);
+    m_loadingProgress->setPosition(0, Settings::getHeight() - 50);
     addChild(m_loadingProgress);
     m_workText->setHtmlText("Loading...");
     m_loadingProgress->setHtmlText("0 %");
@@ -83,7 +83,7 @@ void LoadingScreen::show()
 
 void LoadingScreen::setProgress(QString workText, qint32 value)
 {
-    CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), Console::eDEBUG);
+    CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), GameConsole::eDEBUG);
     m_workText->setHtmlText(workText);
     m_loadingProgress->setHtmlText(QString::number(value) + " %");
     m_LoadingBar->setWidth(value * Settings::getWidth() / 100);
@@ -100,7 +100,7 @@ void LoadingScreen::setWorktext(QString workText)
 
 void LoadingScreen::hide()
 {
-    CONSOLE_PRINT("LoadingScreen::hide", Console::eDEBUG);
+    CONSOLE_PRINT("LoadingScreen::hide", GameConsole::eDEBUG);
     m_pLoadingScreen->detach();
     m_pLoadingScreen = nullptr;
 }

@@ -33,13 +33,15 @@ var Constructor = function()
         var y = building.getY() + offset.y;
         building.setFireCount(building.getFireCount() - 1);
 
-        var owner = building.getOwner();
-        var talonGunAnimation = GameAnimationFactory.createAnimation(map, x, y);
+        var owner = building.getOwner();        
+        var talonGunAnimation = GameAnimationFactory.createAnimation(map, x, y, 120);
         talonGunAnimation.addSprite("talon+gun+fire", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, 0, 1.33);
         talonGunAnimation.addSpriteAnimTable("talon+gun+fire+mask", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, owner, 0, 1.33, 1.33, 0, 0, GameEnums.Recoloring_Matrix);
+        talonGunAnimation.addSound("talongunattack.wav");
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var animation = null;
         var size = fields.size();
+        var soundAdded = false;
         for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
@@ -50,22 +52,33 @@ var Constructor = function()
                     (owner.isEnemyUnit(unit)))
                 {
                     var damage = Global[building.getBuildingID()].getDamage(building, unit);
-                    unit.setHp(unit.getHpRounded() - damage);
                     animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
-                    animation.addSprite("talon+gun+hit", -map.getImageSize() * 1.1, -map.getImageSize() * 1.5, 0, 1.33);
-                    talonGunAnimation.queueAnimation(animation);
-                    if (unit.getHp() <= 0)
+                    animation.addSprite("talon+gun+hit", -map.getImageSize() * 0.95, -map.getImageSize() * 1.6, 0, 1.33);
+                    if (!soundAdded)
                     {
-                        unit.killUnit();
+                        soundAdded = true;
+                        animation.addSound("talongunhit.wav");
                     }
+                    talonGunAnimation.queueAnimation(animation);
+                    animation.writeDataInt32(x + point.x);
+                    animation.writeDataInt32(y + point.y);
+                    animation.writeDataInt32(damage);
+                    animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamageKill");
                 }
             }
         }
-        fields.remove();
+        var talonGunInAnimation = GameAnimationFactory.createAnimation(map, x, y, 120);
+        talonGunInAnimation.addSprite("talon+gun+in", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, 0, 1.33);
+        talonGunInAnimation.addSpriteAnimTable("talon+gun+in+mask", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, owner, 0, 1.33, 1.33, 0, 0, GameEnums.Recoloring_Matrix);
+        talonGunAnimation.queueAnimation(talonGunInAnimation);
+    };
+    this.getName = function()
+    {
+        return qsTr("Fire with talon gun");
     };
     this.getDescription = function()
     {
-        return qsTr("Fire with Talon Gun");
+        return qsTr("Commands the talon gun to attack all enemy units around the talon gun dealing 5 Hp of damage to them.");
     };
 }
 

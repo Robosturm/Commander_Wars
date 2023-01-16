@@ -1,10 +1,9 @@
 #include "game/ui/humanquickbuttons.h"
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "ui_reader/uifactory.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 constexpr const char* const quickButtonsMenu = "quickButtonsMenu";
 
@@ -13,8 +12,6 @@ HumanQuickButtons::HumanQuickButtons(GameMenue* pMenu)
 #ifdef GRAPHICSUPPORT
     setObjectName("MapSelectionFilterDialog");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
@@ -26,5 +23,8 @@ HumanQuickButtons::HumanQuickButtons(GameMenue* pMenu)
 HumanQuickButtons::~HumanQuickButtons()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(quickButtonsMenu);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(quickButtonsMenu);
+    }
 }

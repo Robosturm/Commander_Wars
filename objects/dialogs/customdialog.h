@@ -13,8 +13,7 @@ class CustomDialog final : public CreatedGui
 public:
     CustomDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu, const QString & confirmText = "");
     ~CustomDialog();
-signals:
-    void sigFinished();
+
 public slots:
     /**
      * @brief loadXmlFile

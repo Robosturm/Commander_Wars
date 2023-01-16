@@ -22,11 +22,9 @@ class BaseGamemenu : public Basemenu
 {
     Q_OBJECT
 public:
-    explicit BaseGamemenu(spGameMap pMap);
+    explicit BaseGamemenu(spGameMap pMap, bool clearPlayerlist);
     explicit BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savegame);
     virtual ~BaseGamemenu();
-    void deleteMenu();
-
     Cursor* getCursor();
     void calcNewMousePosition(qint32 x, qint32 y);
     QPoint getMousePos(qint32 x, qint32 y);
@@ -36,7 +34,6 @@ public:
     void updateSlidingActorSize();
     oxygine::spActor getMapSlidingActor() const;
     oxygine::spSlidingActorNoClipRect getMapSliding() const;
-    static BaseGamemenu* getInstance();
     /**
      * @brief getCurrentViewPlayer
      * @return

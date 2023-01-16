@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionUnitsDestroyed;
-typedef oxygine::intrusive_ptr<ScriptConditionUnitsDestroyed> spScriptConditionUnitsDestroyed;
+using spScriptConditionUnitsDestroyed = oxygine::intrusive_ptr<ScriptConditionUnitsDestroyed>;
 
 class ScriptConditionUnitsDestroyed final : public ScriptCondition
 {
@@ -37,7 +37,7 @@ public:
      */
     virtual QString getDescription() override
     {
-        return tr("Units killed: ") + QString::number(m_count) + tr(" by Player") + QString::number(m_player + 1);
+        return tr("Units killed: ") + QString::number(m_count) + tr(" by Player ") + QString::number(m_player + 1);
     }
     /**
      * @brief showEditConditin

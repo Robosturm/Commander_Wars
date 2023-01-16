@@ -1,14 +1,16 @@
 #include "ingamescriptsupport/scriptdata.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
-const QString ScriptData::victoryInfo = "victoryInfo";
-const QString ScriptData::immediateStart = "immediateStart";
-const QString ScriptData::victory = "victory";
-const QString ScriptData::turnStart = "turnStart";
-const QString ScriptData::scriptStart = "scriptStart";
-const QString ScriptData::scriptEnd = "scriptEnd";
-const QString ScriptData::actionConditions = "actionConditions";
+const char* const ScriptData::victoryInfo = "victoryInfo";
+const char* const ScriptData::immediateStart = "immediateStart";
+const char* const ScriptData::victory = "victory";
+const char* const ScriptData::turnStart = "turnStart";
+const char* const ScriptData::scriptStart = "scriptStart";
+const char* const ScriptData::scriptEnd = "scriptEnd";
+const char* const ScriptData::actionConditions = "actionConditions";
+const char* const ScriptData::campaignVariables = "campaignVariables";
+const char* const ScriptData::variables = "variables";
 
 quint32 ScriptData::m_variableCounter = 0;
 
@@ -46,7 +48,7 @@ QString ScriptData::getVariableName()
 
 void ScriptData::readScript(QTextStream& rStream)
 {
-    CONSOLE_PRINT("ScriptData::readScript", Console::eDEBUG);
+    CONSOLE_PRINT("ScriptData::readScript", GameConsole::eDEBUG);
     clearData();
     bool started = false;
     while (!rStream.atEnd())
@@ -61,7 +63,7 @@ void ScriptData::readScript(QTextStream& rStream)
         {
             if (line.endsWith(victoryInfo))
             {
-                CONSOLE_PRINT("Reading victory info", Console::eDEBUG);
+                CONSOLE_PRINT("Reading victory info", GameConsole::eDEBUG);
                 while (!rStream.atEnd())
                 {
                     line = rStream.readLine();
@@ -71,11 +73,11 @@ void ScriptData::readScript(QTextStream& rStream)
                         break;
                     }
                 }
-                CONSOLE_PRINT("Read victory info", Console::eDEBUG);
+                CONSOLE_PRINT("Read victory info", GameConsole::eDEBUG);
             }
             else if (line.endsWith(immediateStart))
             {
-                CONSOLE_PRINT("Reading immediate start", Console::eDEBUG);
+                CONSOLE_PRINT("Reading immediate start", GameConsole::eDEBUG);
                 while (!rStream.atEnd())
                 {
                     line = rStream.readLine();
@@ -93,41 +95,41 @@ void ScriptData::readScript(QTextStream& rStream)
                         break;
                     }
                 }
-                CONSOLE_PRINT("Read immediate start", Console::eDEBUG);
+                CONSOLE_PRINT("Read immediate start", GameConsole::eDEBUG);
             }
             else if (line.endsWith(victory))
             {
-                CONSOLE_PRINT("Reading victory code", Console::eDEBUG);
+                CONSOLE_PRINT("Reading victory code", GameConsole::eDEBUG);
                 readData(victory, rStream, m_customVictoryCode, &m_Victory);
-                CONSOLE_PRINT("Read victory code", Console::eDEBUG);
+                CONSOLE_PRINT("Read victory code", GameConsole::eDEBUG);
             }
             else if (line.endsWith(turnStart))
             {
-                CONSOLE_PRINT("Reading turn start code", Console::eDEBUG);
+                CONSOLE_PRINT("Reading turn start code", GameConsole::eDEBUG);
                 readData(turnStart, rStream, m_customStartOfTurnCode, &m_DayConditions);
-                CONSOLE_PRINT("Read turn start code", Console::eDEBUG);
+                CONSOLE_PRINT("Read turn start code", GameConsole::eDEBUG);
             }
             else if (line.endsWith(actionConditions))
             {
-                CONSOLE_PRINT("Reading action code", Console::eDEBUG);
+                CONSOLE_PRINT("Reading action code", GameConsole::eDEBUG);
                 readData(actionConditions, rStream, m_customActionConditions, &m_ActionConditions);
-                CONSOLE_PRINT("Read action code", Console::eDEBUG);
+                CONSOLE_PRINT("Read action code", GameConsole::eDEBUG);
             }
             else if (line.endsWith(scriptEnd))
             {
-                CONSOLE_PRINT("Reading script end", Console::eDEBUG);
+                CONSOLE_PRINT("Reading script end", GameConsole::eDEBUG);
                 break;
             }
             else
             {
-                CONSOLE_PRINT("Reading custom code", Console::eDEBUG);
+                CONSOLE_PRINT("Reading custom code", GameConsole::eDEBUG);
                 m_customCode += orgLine + "\n";
             }
         }
     }
     if (rStream.status() != QTextStream::Ok)
     {
-        CONSOLE_PRINT("Error occured while reading ScriptData", Console::eERROR);
+        CONSOLE_PRINT("Error occured while reading ScriptData", GameConsole::eERROR);
     }
 }
 
@@ -140,25 +142,25 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
         QString trimmedLine = line.simplified();
         if (trimmedLine.endsWith(id))
         {
-            CONSOLE_PRINT("Read end for " + id, Console::eDEBUG);
+            CONSOLE_PRINT("Read end for " + id, GameConsole::eDEBUG);
             break;
         }
         if (line.endsWith("precondition"))
         {
-            CONSOLE_PRINT("Reading precondition", Console::eDEBUG);
+            CONSOLE_PRINT("Reading precondition", GameConsole::eDEBUG);
             while (!rStream.atEnd())
             {
                 QString line = rStream.readLine();
                 line = line.simplified();
                 if (line.endsWith("preconditionend"))
                 {
-                    CONSOLE_PRINT("Read precondition", Console::eDEBUG);
+                    CONSOLE_PRINT("Read precondition", GameConsole::eDEBUG);
                     break;
                 }
             }
             continue;
         }
-        CONSOLE_PRINT("Adding new top condition", Console::eDEBUG);
+        CONSOLE_PRINT("Adding new top condition", GameConsole::eDEBUG);
         spScriptCondition pCondition = ScriptCondition::createReadCondition(m_pMap, rStream, line);
         if (pCondition.get() != nullptr)
         {
@@ -173,22 +175,22 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
 
 void ScriptData::writeScript(QTextStream& rStream)
 {
-    CONSOLE_PRINT("ScriptData::writeScript", Console::eDEBUG);
+    CONSOLE_PRINT("ScriptData::writeScript", GameConsole::eDEBUG);
     m_variableCounter = 0;
-    rStream << "var Constructor = function() { // " + scriptStart + "\n";
-    rStream << "    this.immediateStart = function(map) { // " + immediateStart + "\n";
+    rStream << "var Constructor = function() { // " + QString(scriptStart) + "\n";
+    rStream << "    this.immediateStart = function(map) { // " + QString(immediateStart) + "\n";
     rStream << "        return " + QVariant(m_startMode).toString() +  ";\n";
-    rStream << "    }; // " + immediateStart + "\n";
+    rStream << "    }; // " + QString(immediateStart) + "\n";
 
-    rStream << "    this.getVictoryInfo = function(map) // " + victoryInfo + "\n";
+    rStream << "    this.getVictoryInfo = function(map) // " + QString(victoryInfo) + "\n";
     rStream << "    {\n";
     rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
     rStream << "        var textData = " << variables << ".createVariable(\"victory_info\");\n";
     rStream << "        return textData.readDataString();\n";
-    rStream << "    }; // " + victoryInfo + "\n";
+    rStream << "    }; // " + QString(victoryInfo) + "\n";
 
     // victory
-    rStream << "    this.victory = function(team, map) { // " + victory + "\n";
+    rStream << "    this.victory = function(team, map) { // " + QString(victory) + "\n";
     rStream << "    // precondition\n";
     rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
     rStream << "        var " << campaignVariables << ";\n";
@@ -205,11 +207,11 @@ void ScriptData::writeScript(QTextStream& rStream)
         m_Victory[i]->writeCondition(rStream);
     }
     rStream << m_customVictoryCode;
-    rStream << "    }; // " + victory + "\n";
+    rStream << "    }; // " + QString(victory) + "\n";
 
 
     // turn start
-    rStream << "    this.turnStart = function(turn, player, map) { // " + turnStart + "\n";
+    rStream << "    this.turnStart = function(turn, player, map) { // " + QString(turnStart) + "\n";
     rStream << "    // precondition\n";
     rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
     rStream << "        var " << campaignVariables << ";\n";
@@ -226,10 +228,10 @@ void ScriptData::writeScript(QTextStream& rStream)
         m_DayConditions[i]->writeCondition(rStream);
     }
     rStream << m_customStartOfTurnCode;
-    rStream << "    }; // " + turnStart + "\n";
+    rStream << "    }; // " + QString(turnStart) + "\n";
 
     // action conditions
-    rStream << "    this.actionDone = function(action, map) { // " + actionConditions + "\n";
+    rStream << "    this.actionDone = function(action, map) { // " + QString(actionConditions) + "\n";
     rStream << "    // precondition\n";
     rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
     rStream << "        var " << campaignVariables << ";\n";
@@ -246,10 +248,10 @@ void ScriptData::writeScript(QTextStream& rStream)
         m_ActionConditions[i]->writeCondition(rStream);
     }
     rStream << m_customActionConditions;
-    rStream << "    }; // " + actionConditions + "\n";
+    rStream << "    }; // " + QString(actionConditions) + "\n";
 
     rStream << m_customCode;
-    rStream << "// " + scriptEnd + "\n};\n";
+    rStream << "// " + QString(scriptEnd) + "\n};\n";
     rStream << "Constructor.prototype = BASEGAMESCRIPT;\n";
     rStream << "var gameScript = new Constructor();\n";
 }

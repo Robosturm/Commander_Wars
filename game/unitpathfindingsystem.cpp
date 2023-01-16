@@ -1,11 +1,10 @@
-#include "qvector4d.h"
+#include <QVector4D>
 
 #include "resource_management/movementtablemanager.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "game/player.h"
-#include "game/co.h"
 #include "game/gamemap.h"
 #include "game/unitpathfindingsystem.h"
 
@@ -22,8 +21,6 @@ UnitPathFindingSystem::UnitPathFindingSystem(GameMap* pMap, Unit* pUnit, Player*
 #ifdef GRAPHICSUPPORT
     setObjectName("UnitPathFindingSystem");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (m_pPlayer == nullptr)
     {

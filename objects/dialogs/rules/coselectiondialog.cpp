@@ -1,17 +1,13 @@
-#include "coselectiondialog.h"
+#include "objects/dialogs/rules/coselectiondialog.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
-
-#include "resource_management/fontmanager.h"
-
 #include "resource_management/cospritemanager.h"
 
 #include "objects/dialogs/ingame/coinfodialog.h"
 
 #include "game/co.h"
-
 
 COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, qint32 player, QStringList coids)
     : m_player(player),
@@ -22,8 +18,6 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
     setObjectName("COSelectionDialog");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");

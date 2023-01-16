@@ -3,7 +3,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include <QMultiMap>
-#include <qmutex.h>
+#include <QMutex>
+#include <QScopedPointer>
 
 namespace oxygine
 {
@@ -22,7 +23,6 @@ namespace oxygine
     class MaterialCache final
     {
     public:
-        explicit MaterialCache() = default;
         ~MaterialCache() = default;
         spMaterial cache(const Material& other)
         {
@@ -42,8 +42,9 @@ namespace oxygine
 
         QMutex m_lock;
         qint32 m_addCounter{0};
-
     private:
-        static MaterialCache mcache;
+        explicit MaterialCache() = default;
+    private:
+        static QScopedPointer<MaterialCache> mcache;
     };
 }

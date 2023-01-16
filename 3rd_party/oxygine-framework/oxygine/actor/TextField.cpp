@@ -1,7 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.h"
 #include "resource_management/fontmanager.h"
@@ -14,7 +13,7 @@ namespace oxygine
         QColor TextField::m_dummyColor;
         TextStyle TextField::m_dummyTextStyle = TextStyle(oxygine::Font());
         Rect TextField::m_dummyRect;
-        QString TextField::m_dummyText;
+        QString TextField::m_dummyText{""};
 #endif
     TextField::TextField()
 #ifdef GRAPHICSUPPORT
@@ -26,9 +25,7 @@ namespace oxygine
     bool TextField::isOn(const Vector2& localPosition, float)
     {
 #ifdef GRAPHICSUPPORT
-        Rect r = getTextRect();
-        r.expand(Point(m_extendedIsOn, m_extendedIsOn), Point(m_extendedIsOn, m_extendedIsOn));
-        return r.pointIn(Point((int)localPosition.x, (int)localPosition.y));
+        return getTextRect().pointIn(Point((int)localPosition.x, (int)localPosition.y));
 #else
         return false;
 #endif
@@ -97,7 +94,7 @@ namespace oxygine
 #endif
     }
 
-    void TextField::sizeChanged(const Vector2&)
+    void TextField::sizeChanged(const Point&)
     {
         rebuildText();
     }

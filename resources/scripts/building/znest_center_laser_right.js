@@ -54,6 +54,10 @@ var Constructor = function()
         }
         return targets;
     };
+    this.getRotation = function(building)
+    {
+        return 0;
+    };
     this.getDamage = function(building, unit)
     {
         return 8;

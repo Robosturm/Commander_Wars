@@ -84,7 +84,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -138,7 +137,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
@@ -218,7 +216,6 @@ var Constructor = function()
                     }
                 }
             }
-            units.remove();
         }
 
         switch (co.getPowerMode())

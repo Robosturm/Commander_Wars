@@ -2,8 +2,7 @@
 
 #include "network/networkgamedata.h"
 #include "network/JsonKeys.h"
-
-#include "coreengine/filesupport.h"
+#include "coreengine/gameconsole.h"
 
 bool NetworkGameData::hasOpenPlayers()
 {
@@ -32,15 +31,15 @@ void NetworkGameData::setSlavePort(quint16 newPort)
 
 QJsonObject NetworkGameData::toJson() const
 {
+    CONSOLE_PRINT("NetworkGameData::toJson", GameConsole::eDEBUG);
     QJsonObject obj;
-    obj.insert(JsonKeys::JSONKEY_VERSION, getVersion());
-    obj.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, static_cast<qint64>(m_players));
-    obj.insert(JsonKeys::JSONKEY_MAXPLAYERS, static_cast<qint64>(m_maxPlayers));
+    obj.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, m_players);
+    obj.insert(JsonKeys::JSONKEY_MAXPLAYERS, m_maxPlayers);
     obj.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, m_description);
     obj.insert(JsonKeys::JSONKEY_MAPNAME, m_mapName);
     obj.insert(JsonKeys::JSONKEY_SLAVENAME, m_slaveName);
     obj.insert(JsonKeys::JSONKEY_HASPASSWORD, m_locked);
-    obj.insert(JsonKeys::JSONKEY_UUID, m_uuid);
+    obj.insert(JsonKeys::JSONKEY_UUID, QString::number(m_uuid));
     QJsonObject mods;
     for (qint32 i = 0; i < m_Mods.size(); ++i)
     {
@@ -48,9 +47,11 @@ QJsonObject NetworkGameData::toJson() const
     }
     obj.insert(JsonKeys::JSONKEY_USEDMODS, mods);
 
+    CONSOLE_PRINT("Adding players to slavegame " + m_slaveName, GameConsole::eDEBUG);
     QJsonArray usernames;
     for (qint32 i = 0; i < m_playerNames.size(); ++i)
     {
+        CONSOLE_PRINT("user: " + m_playerNames[i], GameConsole::eDEBUG);
         usernames.push_back(m_playerNames[i]);
     }
     obj.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
@@ -59,8 +60,8 @@ QJsonObject NetworkGameData::toJson() const
 
 void NetworkGameData::fromJson(const QJsonObject & obj)
 {
-    m_players = obj.value(JsonKeys::JSONKEY_JOINEDPLAYERS).toInteger();
-    m_maxPlayers = obj.value(JsonKeys::JSONKEY_MAXPLAYERS).toInteger();
+    m_players = obj.value(JsonKeys::JSONKEY_JOINEDPLAYERS).toInt();
+    m_maxPlayers = obj.value(JsonKeys::JSONKEY_MAXPLAYERS).toInt();
     QJsonObject mods = obj.value(JsonKeys::JSONKEY_USEDMODS).toObject();
     for (const auto & mod : mods)
     {
@@ -70,7 +71,7 @@ void NetworkGameData::fromJson(const QJsonObject & obj)
     m_mapName = obj.value(JsonKeys::JSONKEY_MAPNAME).toString();
     m_slaveName = obj.value(JsonKeys::JSONKEY_SLAVENAME).toString();
     m_locked = obj.value(JsonKeys::JSONKEY_HASPASSWORD).toBool();
-    m_uuid = obj.value(JsonKeys::JSONKEY_UUID).toInteger();
+    m_uuid = obj.value(JsonKeys::JSONKEY_UUID).toString().toLongLong();
     QJsonArray usernames = obj.value(JsonKeys::JSONKEY_USERNAMES).toArray();
     for (const auto & username : usernames)
     {

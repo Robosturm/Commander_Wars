@@ -13,13 +13,13 @@ namespace oxygine
         explicit AnimationFrame(spTexture & t);
         ~AnimationFrame() = default;
         void init(ResAnim* rs, short column, short row, const spTexture& texture,
-                   const RectF& srcRect, const RectF& destRect, const Vector2& frame_size);
+                   const RectF& srcRect, const RectF& destRect, const Point& frame_size);
         /**ResAnim should be valid!*/
         AnimationFrame getClipped(const RectF& rect) const;
         AnimationFrame getFlipped(bool vertical, bool horizontal) const;
 
         /**Returns size of frame in pixels*/
-        const Vector2&  getSize() const
+        const Point&  getSize() const
         {
             return m_frameSize;
         }
@@ -79,13 +79,13 @@ namespace oxygine
         {
             m_texture = tex;
         }
-        void setSize(const Vector2& size)
+        void setSize(const Point& size)
         {
             m_frameSize = size;
         }
-        void setSize(float w, float h)
+        void setSize(qint32 w, qint32 h)
         {
-            setSize(Vector2(w, h));
+            setSize(Point(w, h));
         }
         void setRow(qint32 v)
         {
@@ -100,10 +100,10 @@ namespace oxygine
     private:
         void updateHittestdata();
     private:
-        spTexture m_texture;
+        spTexture m_texture{nullptr};
         RectF m_srcRect{0, 0, 1, 1};
         RectF m_destRect{0, 0, 1, 1};
-        Vector2 m_frameSize;
+        Point m_frameSize;
         ResAnim*  m_resAnim{nullptr};
         short m_row{0};
         short m_column{0};

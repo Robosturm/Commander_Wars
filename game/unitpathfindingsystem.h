@@ -6,7 +6,7 @@
 #include "game/unit.h"
 
 class UnitPathFindingSystem;
-typedef oxygine::intrusive_ptr<UnitPathFindingSystem> spUnitPathFindingSystem;
+using spUnitPathFindingSystem = oxygine::intrusive_ptr<UnitPathFindingSystem>;
 
 class UnitPathFindingSystem : public PathFindingSystem
 {

@@ -208,6 +208,10 @@ var Constructor = function()
         }
         return false;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveboots.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

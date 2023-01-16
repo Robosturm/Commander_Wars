@@ -21,6 +21,14 @@ var Constructor = function()
     {
         return __BASEBRIDGE.canBePlacedBaseId(x, y, map, "BRIDGE");
     };
+    this.getName = function()
+    {
+        return qsTr("Ship bridge");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.");
+    };
 };
 Constructor.prototype = __BASEBRIDGE;
 var BRIDGE = new Constructor();

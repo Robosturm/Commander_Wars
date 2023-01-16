@@ -7,28 +7,27 @@
         <height>settings.getHeight()</height>
         <childs>
             <Label>
-                <x>settings.getWidth() / 2 - 300</x>
+                <x>40</x>
                 <y>10</y>
-                <width>600</width>
-                <height>60</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Spawn Unit")</text>
+                <width>parentWidth - 80</width>
+                <text>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getName()</text>
                 <font>"main"</font>
+                <hAlign>"Middle"</hAlign>
                 <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
-                <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Owner:")</text>
+                <text>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getPlayerLabel()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>150</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Owner of the unit")</tooltip>
+                <width>300</width>
+                <tooltip>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getPlayerTooltip()</tooltip>
                 <startValue>1</startValue>
                 <infinite>0</infinite>
                 <min>1</min>
@@ -39,16 +38,15 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
-                <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","CO:")</text>
+                <text>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getCOLabel()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
             <DropDownMenu>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>150</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","CO that should activate it's power")</tooltip>
+                <width>300</width>
+                <tooltip>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getCOTooltip()</tooltip>
                 <items>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getCoList()</items>
                 <onEvent>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.changeCo(addIn, input)</onEvent>
             </DropDownMenu>
@@ -56,16 +54,15 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Power:")</text>
+                <text>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getPowerLabel()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
             <DropDownMenu>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>150</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Power which should be activated")</tooltip>
+                <width>300</width>
+                <tooltip>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getPowerTooltip()</tooltip>
                 <items>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getPowerList()</items>
                 <onEvent>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.changePower(addIn, input)</onEvent>
             </DropDownMenu>
@@ -73,16 +70,16 @@
                 <x>settings.getWidth() / 2 + 10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>150</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Apply")</text>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Applies the changes to the unit")</tooltip>
+                <text>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getApplyLabel()</text>
+                <tooltip>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getApplyTooltip()</tooltip>
                 <onEvent>addIn.onMenuInputDone()</onEvent>
             </Button>
             <Button>
                 <x>settings.getWidth() / 2 - 160</x>
                 <y>lastY</y>
                 <width>150</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Cancels the dialog")</tooltip>
+                <text>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getCancelLabel()</text>
+                <tooltip>MOVEMENTPLANNERADDIN_ACTIVATEPOWER.getCancelTooltip()</tooltip>
                 <onEvent>addIn.getPlanner().stopAddIn()</onEvent>
             </Button>
         </childs>

@@ -37,7 +37,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "ranger";
+        return "pathfinder";
     };
     this.getName = function()
     {
@@ -46,6 +46,10 @@ var Constructor = function()
     this.getGroup = function()
     {
         return qsTr("Terrain");
+    };
+    this.getCosts = function()
+    {
+        return 2;
     };
 };
 

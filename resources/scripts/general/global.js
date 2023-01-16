@@ -79,7 +79,8 @@ getDataFromTable = function(entry, table)
 
 replaceTextArgs = function(text, args)
 {
-    for (var i = 0; i < args.length; i++)
+    var length = args.length;
+    for (var i = length - 1; i >= 0 ; --i)
     {
         while (text.includes("%" + i.toString()))
         {

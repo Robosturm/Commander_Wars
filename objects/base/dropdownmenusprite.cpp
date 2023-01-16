@@ -1,11 +1,5 @@
 #include "objects/base/dropdownmenusprite.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/interpreter.h"
-
-#include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
-
 DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth, bool autoScale)
     : DropDownmenuBase(width, items.size()),
       m_Creator(creator),
@@ -19,11 +13,7 @@ DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::fu
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "DropDownmenuSprite item count is below 0");
     }
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
-    Interpreter::setCppOwnerShip(this);
 
-    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
     m_pClipActor->setY(5);
 

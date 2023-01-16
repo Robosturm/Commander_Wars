@@ -22,7 +22,7 @@ class DialogRandomMap final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit DialogRandomMap();
+    explicit DialogRandomMap(const QString & confirmMessage);
     ~DialogRandomMap() = default;
 signals:
     void sigFinished(QString mapName, QString author, QString description,
@@ -51,6 +51,7 @@ public slots:
     void playerChanged(qreal);
     void remove();
     void generatorFinished();
+    void finished();
 private:
     void createUnitChances();
     void checkIfGenerationIsAllowed();
@@ -71,12 +72,12 @@ private:
     spCheckbox m_CreateRoad;
     spSlider m_BaseSize;
     QStringList m_TerrainIDs;
-    oxygine::spTextField m_TerrainChanceLabel;
+    spLabel m_TerrainChanceLabel;
     spMultislider m_TerrainChances;
     QStringList m_BuildingIDs;
-    oxygine::spTextField m_BuildingChanceLabel;
+    spLabel m_BuildingChanceLabel;
     spMultislider m_BuildingChances;
-    oxygine::spTextField m_OwnerDistributionLabel;
+    spLabel m_OwnerDistributionLabel;
     spMultislider m_OwnerDistribution;
     spLabel m_unitCountLabel;
     spSpinBox m_unitCount;
@@ -84,13 +85,14 @@ private:
     spSpinBox m_unitsNearHq;
     spLabel m_unitDistributionLabel;
     spDropDownmenu m_unitDistributionSelection;
-    oxygine::spTextField m_UnitDistributionLabel;
+    spLabel m_UnitDistributionLabel;
     spMultislider m_unitDistribution;
-    oxygine::spTextField m_UnitChanceLabel;
+    spLabel m_UnitChanceLabel;
     spMultislider m_UnitChances;
     QStringList m_UnitIDs;
     QVector<qint32> m_UnitChanceValues;
     spPanel m_pPanel;
+    QString m_confirmMessage;
 };
 
 #endif // DIALOGRANDOMMAP_H

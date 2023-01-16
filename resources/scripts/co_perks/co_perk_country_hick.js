@@ -36,6 +36,10 @@ var Constructor = function()
     {
         return qsTr("Terrain Debuff");
     };
+    this.getCosts = function()
+    {
+        return -1;
+    };
 };
 
 Constructor.prototype = CO_PERK;

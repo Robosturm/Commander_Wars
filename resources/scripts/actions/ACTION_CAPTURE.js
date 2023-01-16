@@ -19,15 +19,12 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0) ||
-            (unit.getOwner().getFieldVisibleType(actionTargetField.x, actionTargetField.y) === GameEnums.VisionType_Shrouded))
+        if (unit.getOwner().getFieldVisibleType(actionTargetField.x, actionTargetField.y) === GameEnums.VisionType_Shrouded)
         {
             return false;
         }
         var capturableBuildings = ACTION_CAPTURE.getCapturableBuildings();
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null))
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map))
         {
             var building = action.getMovementBuilding();
             if (building !== null)
@@ -51,7 +48,7 @@ var Constructor = function()
     {
         return ["AIRPORT", "FACTORY", "HARBOUR", "HQ", "LABOR", "MINE",
                 "PIPESTATION", "RADAR", "TOWER", "TOWN", "TEMPORARY_AIRPORT",
-                "TEMPORARY_HARBOUR", "OILRIG", "POWERPLANT"];
+                "TEMPORARY_HARBOUR", "OILRIG", "POWERPLANT", "AMPHIBIOUSFACTORY"];
     };
 
     this.getActionText = function(map)
@@ -136,6 +133,10 @@ var Constructor = function()
     this.isFinalStep = function(action, map)
     {
         return true;
+    };
+    this.getName = function()
+    {
+        return qsTr("Capture");
     };
     this.getDescription = function()
     {

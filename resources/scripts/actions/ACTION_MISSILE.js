@@ -6,14 +6,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
         var missileBuildings = ACTION_MISSILE.getMissileBuildings();
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null))
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map))
         {
             var building = action.getMovementBuilding();
             if ((building !== null) &&
@@ -69,13 +63,14 @@ var Constructor = function()
     this.postAnimationUnit = null;
     this.postAnimationTargetX = -1;
     this.postAnimationTargetY = -1;
+    this.postAnimationUnitX = -1;
+    this.postAnimationUnitY = -1;
     this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
         var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
-        animation.setSound("missile_launch.wav");
-        animation.setEndOfAnimationCall("ACTION_MISSILE", "performPostAnimation");
+        animation.setEndOfAnimationCall("ACTION_MISSILE", "performLaunchSiloPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
         // disable unit commandments for this turn
@@ -94,6 +89,16 @@ var Constructor = function()
             ACHIEVEMENT_CAPTURED_BUILDING.siloFired();
         }
     };
+    this.performLaunchSiloPostAnimation = function(postAnimation, map)
+    {
+        // replace silo with rocket with
+        ACTION_MISSILE.postAnimationUnit.getTerrain().loadBuilding("SILO");
+        var animation = GameAnimationFactory.createAnimation(map, ACTION_MISSILE.postAnimationUnit.getX() - 1, ACTION_MISSILE.postAnimationUnit.getY() - 7, 30);
+        animation.addSprite("silo+launch", map.getImageSize() / 4, -map.getImageSize() / 2, 0, 2, 0);
+        animation.setSound("missile_launch.wav");
+        animation.setEndOfAnimationCall("ACTION_MISSILE", "performPostAnimation");
+    };
+
     this.performPostAnimation = function(postAnimation, map)
     {
         var radius = 2;
@@ -124,16 +129,16 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
-        var animation = GameAnimationFactory.createAnimation(map, ACTION_MISSILE.postAnimationTargetX - radius, ACTION_MISSILE.postAnimationTargetY - radius - 1);
-        animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
+        var animation = GameAnimationFactory.createAnimation(map, ACTION_MISSILE.postAnimationTargetX - radius, ACTION_MISSILE.postAnimationTargetY - radius - 2, 50);
+        animation.addSprite("silo+impact", -4, map.getImageSize(), 0, 2, 0);
         animation.setSound("missle_explosion.wav");
-        // replace silo with rocket with
-        ACTION_MISSILE.postAnimationUnit.getTerrain().loadBuilding("SILO");
-
         ACTION_MISSILE.postAnimationTargetX = -1;
         ACTION_MISSILE.postAnimationTargetY = -1;
         ACTION_MISSILE.postAnimationUnit = null;
+    };
+    this.getName = function()
+    {
+        return qsTr("Missile");
     };
     this.getDescription = function()
     {

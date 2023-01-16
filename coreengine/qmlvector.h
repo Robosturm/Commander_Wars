@@ -9,7 +9,6 @@
 
 #include "game/unit.h"
 #include "game/building.h"
-#include "game/terrain.h"
 
 #include "coreengine/globalutils.h"
 
@@ -21,7 +20,7 @@ class QmlVectorPoint final : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit QmlVectorPoint();
-    ~QmlVectorPoint();
+    ~QmlVectorPoint() = default;
     const std::vector<QPoint> & getVector() const
     {
         return m_Vector;
@@ -46,7 +45,6 @@ public slots:
     }
     void remove()
     {
-        delete this;
     }
 private:
     std::vector<QPoint> m_Vector;
@@ -61,7 +59,7 @@ class QmlVectorUnit final : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit QmlVectorUnit();
-    ~QmlVectorUnit();
+    ~QmlVectorUnit() = default;
     const std::vector<spUnit> & getVector() const
     {
         return m_Vector;
@@ -82,7 +80,6 @@ public slots:
     }
     void remove()
     {
-        delete this;
     }
     void removeAt(qint32 i)
     {
@@ -97,6 +94,12 @@ public slots:
      * @brief sortShortestMovementRange
      */
     void sortShortestMovementRange(bool infantriesLast);
+    /**
+     * @brief QmlVectorUnit::getUnitCount
+     * @param unitId
+     * @return
+     */
+    qint32 getUnitCount(const QString & unitId);
 private:
     std::vector<spUnit> m_Vector;
 };
@@ -110,7 +113,7 @@ class QmlVectorBuilding final : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit QmlVectorBuilding();
-    ~QmlVectorBuilding();
+    ~QmlVectorBuilding() = default;
     const std::vector<spBuilding> & getVector() const
     {
         return m_Vector;
@@ -129,9 +132,9 @@ public slots:
     {
         return m_Vector.size();
     }
+    qint32 getBuildingCount(const QString & buildingId);
     void remove()
     {
-        delete this;
     }
     void removeAt(qint32 i)
     {

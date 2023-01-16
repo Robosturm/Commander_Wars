@@ -2,7 +2,7 @@
 #include <QFile>
 #include "QVector"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -14,7 +14,7 @@
 
 #include "objects/loadingscreen.h"
 
-void GameMap::importAWByWebMap(QString file)
+void GameMap::importAWByWebMap(QString file, EditorMenue* pMenu)
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->show();
@@ -49,6 +49,16 @@ void GameMap::importAWByWebMap(QString file)
         {
             m_players.append(spPlayer::create(this));
             m_players[i]->init();
+            if (i == 0)
+            {
+                m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
+                m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Human);
+            }
+            else
+            {
+                m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Normal));
+                m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Normal);
+            }
         }
         // load empty map
         qint32 mapHeigth = mapIDs.size();
@@ -1028,7 +1038,7 @@ void GameMap::importAWByWebMap(QString file)
                         break;
                     }
                     default:
-                        CONSOLE_PRINT("Unable terrain id: " + QString::number(mapIDs[y][x]), Console::eERROR);
+                        CONSOLE_PRINT("Unable terrain id: " + QString::number(mapIDs[y][x]), GameConsole::eERROR);
                         break;
                 }
             }
@@ -1039,7 +1049,7 @@ void GameMap::importAWByWebMap(QString file)
         m_headerInfo.m_mapDescription = "";
         m_headerInfo.m_mapAuthor = Settings::getUsername();
     }
-    dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance())->optimizePlayers();
+    pMenu->optimizePlayers();
     // update the whole fucking map
     pLoadingScreen->setProgress(tr("Loading Sprites"), 90);
     updateSprites();

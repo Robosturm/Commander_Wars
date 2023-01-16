@@ -226,6 +226,10 @@ var Constructor = function()
                 "reaf+NW+S",
                 "reaf+NW",];
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeReaf.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var REAF = new Constructor();

@@ -5,19 +5,15 @@
 #include "objects/base/selectkey.h"
 #include "objects/base/label.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 SelectKey::SelectKey(Qt::Key code)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("SelectKey");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setSize(180, 40);
     m_Button = ObjectManager::createButton("", getWidth());
@@ -36,8 +32,8 @@ SelectKey::SelectKey(Qt::Key code)
         emit sigFocused();
     });
     addChild(m_Button);
-    setKeycode(code);
-    connect(pApp, &Mainapp::sigKeyDown, this, &SelectKey::keyInput, Qt::QueuedConnection);
+    setKeycode(code);    
+    connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &SelectKey::keyInput, Qt::QueuedConnection);
 }
 
 void SelectKey::focusedLost()
@@ -76,7 +72,11 @@ void SelectKey::keyInput(oxygine::KeyEvent event)
 QString SelectKey::getKeycodeText(Qt::Key code)
 {
     QString codeText = tr("Unknown");
-    if (code == Qt::Key_Space)
+    if (code == Qt::Key_Escape)
+    {
+        codeText = tr("Escape");
+    }
+    else if (code == Qt::Key_Space)
     {
         codeText = tr("Space");
     }
@@ -203,7 +203,7 @@ void SelectKey::setKeycode(Qt::Key code)
     {
         m_currentCode = code;
         Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild().get());
-        pText->setHtmlText((tr("Key ") + codeText));
+        pText->setHtmlText(codeText);
         pText->setX(m_Button->getScaledWidth() / 2 - pText->getTextRect().getWidth() / 2);
         if (pText->getX() < 5)
         {

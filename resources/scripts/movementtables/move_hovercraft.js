@@ -22,6 +22,7 @@ var Constructor = function()
                                 ["HQ", 1],
                                 ["PIPESTATION", 1],
                                 ["POWERPLANT", 1],
+                                ["AMPHIBIOUSFACTORY", 1],
                                 ["RADAR", 1],
                                 ["TOWER", 1],
                                 ["TOWN", 1],
@@ -31,6 +32,8 @@ var Constructor = function()
                                 ["LABOR", 1],
                                 ["TEMPORARY_AIRPORT", 1],
                                 ["TEMPORARY_HARBOUR", 1],
+                                ["ZDESTROYED_GATE_E_W", 1],
+                                ["ZDESTROYED_GATE_N_S", 1],
                                 ["OILRIG", 1],
                                 ["RIVER", 1],
                                 ["DESERT", 1],
@@ -82,7 +85,8 @@ var Constructor = function()
         }
         var costs = MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_HOVERCRAFT.movementpointsTable);
         if (baseId === "LAKE" ||
-            currentBaseId === "LAKE")
+            currentBaseId === "LAKE" ||
+            currentId === "BEACH")
         {
             return costs;
         }
@@ -101,7 +105,9 @@ var Constructor = function()
                 var y = fields.at(i).y + terrain.getY();
                 if (map.onMap(x, y))
                 {
-                    if (map.getTerrain(x, y).getTerrainGroup() > 0)
+                    var areaTerrain = map.getTerrain(x, y);
+                    if (areaTerrain.getTerrainGroup() > 0 || 
+                        areaTerrain.getID() === "BEACH")
                     {
                         // not a sea tile. -> land tile
                         valid = true;
@@ -109,7 +115,6 @@ var Constructor = function()
                     }
                 }
             }
-            fields.remove();
             if (!valid)
             {
                 return -1;

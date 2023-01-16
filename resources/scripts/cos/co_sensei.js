@@ -105,7 +105,6 @@ var Constructor = function()
                 }
             }
         }
-        buildings.remove();
     };
 
     this.getCOUnitRange = function(co, map)

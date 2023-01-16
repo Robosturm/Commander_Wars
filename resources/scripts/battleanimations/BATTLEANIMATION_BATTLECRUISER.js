@@ -38,7 +38,7 @@ var Constructor = function()
                                   false, 200, rocketEndFrame, rocketStartFrame);
         sprite.loadMovingSpriteV2("battlecruiser" + mgSprite + "+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_BATTLECRUISER.getMaxUnitCount(), Qt.point(startPos.x + 100, startPos.y + 64),
-                                  movement, moveTime, false, 3, 1, 0, 0,
+                                  movement, moveTime, false, 2, 1, 0, 0,
                                   false, 100, mgEndFrame, mgStartFrame);
     };
 
@@ -82,14 +82,14 @@ var Constructor = function()
         }
         else
         {
-            BATTLEANIMATION_BATTLECRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 0, 3,
+            BATTLEANIMATION_BATTLECRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 0, 2,
                                                  0, 0, "+cannon", "+flak+fire");
             offset = Qt.point(29, 109);
             for (var i2 = 0; i2 < 2; ++i2)
             {
-                sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(),
+                sprite.loadSprite("mg_shot_air", false, sprite.getMaxUnitCount(),
                                   Qt.point(offset.x - i2 * 17, offset.y - i2 * 11),
-                                  1, 1, 0, 0, false, true);
+                                  2, 1, 0, 0, false, true);
             }
             sprite.loadSound("anti_air_gun_fire.wav", 1, 0);
             sprite.loadSound("anti_air_gun_fire.wav", 1, 100, 1, true);

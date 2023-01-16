@@ -3,6 +3,7 @@
 #include <QTextStream>
 #include <QProcess>
 #include <QScreen>
+#include <QApplication>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
@@ -11,78 +12,68 @@
 #include "menue/mainwindow.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
-#include "coreengine/globalutils.h"
-#include "coreengine/audiothread.h"
-#include "coreengine/Gamepad.h"
-
-#include "game/gamemap.h"
+#include "coreengine/audiomanager.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "objects/base/slider.h"
-#include "objects/base/selectkey.h"
-#include "objects/base/spinbox.h"
-#include "objects/base/textbox.h"
 #include "objects/base/label.h"
-#include "objects/base/timespinbox.h"
 #include "objects/base/moveinbutton.h"
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/dialogs/gamepadinfo.h"
 
 #include "ui_reader/uifactory.h"
 
-QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
-{
-    // enabled                                // disabled
-    OptionMenue::GamemodeMods(QStringList(), {"mods/aw_unloading",
-                                              "mods/aw2_damage_formula",
-                                              "mods/awds_unit",
-                                              "mods/awds_co",
-                                              "mods/awds_weather",
-                                              "mods/awdc_co",
-                                              "mods/awdc_unit",
-                                              "mods/awdc_powergain",
-                                              "mods/awdc_weather",
-                                              "mods/awdc_terrain",
-                                              "mods/awdc_flare",
-                                              "map_creator",
-                                              "coop_mod"}),
-    OptionMenue::GamemodeMods(
-    {"mods/aw_unloading",
-     "mods/aw2_damage_formula",
-     "mods/awds_unit",
-     "mods/awds_co",
-     "mods/awds_weather"},
-    {"mods/awdc_co",
-     "mods/awdc_unit",
-     "mods/awdc_powergain",
-     "mods/awdc_weather",
-     "mods/awdc_terrain",
-     "mods/awdc_flare",
-     "map_creator",
-     "coop_mod"}),
-    OptionMenue::GamemodeMods(
-    {"mods/aw_unloading",
-     "mods/awdc_co",
-     "mods/awdc_unit",
-     "mods/awdc_powergain",
-     "mods/awdc_weather",
-     "mods/awdc_terrain",
-     "mods/awdc_flare"},
-    {"mods/aw2_damage_formula",
-     "mods/awds_unit",
-     "mods/awds_co",
-     "mods/awds_weather",
-     "map_creator",
-     "coop_mod"})
-};
-
 OptionMenue::OptionMenue(const QString & xmlFile)
-    : m_xmlFile(xmlFile)
+    : m_xmlFile(xmlFile),
+      m_gamemodeMods(
+{
+          // enabled                                // disabled
+          OptionMenue::GamemodeMods(QStringList(), {"mods/aw_unloading",
+                                                    "mods/aw2_damage_formula",
+                                                    "mods/awds_unit",
+                                                    "mods/awds_co",
+                                                    "mods/awds_weather",
+                                                    "mods/awdc_co",
+                                                    "mods/awdc_unit",
+                                                    "mods/awdc_powergain",
+                                                    "mods/awdc_weather",
+                                                    "mods/awdc_terrain",
+                                                    "mods/awdc_flare",
+                                                    "map_creator",
+                                                    "coop_mod"}),
+          OptionMenue::GamemodeMods(
+              {"mods/aw_unloading",
+               "mods/aw2_damage_formula",
+               "mods/awds_unit",
+               "mods/awds_co",
+               "mods/awds_weather"},
+              {"mods/awdc_co",
+               "mods/awdc_unit",
+               "mods/awdc_powergain",
+               "mods/awdc_weather",
+               "mods/awdc_terrain",
+               "mods/awdc_flare",
+               "map_creator",
+               "coop_mod"}),
+          OptionMenue::GamemodeMods(
+              {"mods/aw_unloading",
+               "mods/awdc_co",
+               "mods/awdc_unit",
+               "mods/awdc_powergain",
+               "mods/awdc_weather",
+               "mods/awdc_terrain",
+               "mods/awdc_flare"},
+              {"mods/aw2_damage_formula",
+               "mods/awds_unit",
+               "mods/awds_co",
+               "mods/awds_weather",
+               "map_creator",
+               "coop_mod"})
+          })
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("OptionMenue");
@@ -90,8 +81,7 @@ OptionMenue::OptionMenue(const QString & xmlFile)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
-    moveToThread(pApp->getWorkerthread());
-    CONSOLE_PRINT("Entering Option Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Option Menue", GameConsole::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -107,9 +97,9 @@ OptionMenue::OptionMenue(const QString & xmlFile)
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/credits_options");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/credits_options");
+    pApp->getAudioManager()->playRandom();
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"), 200);
     addChild(pButtonExit);
@@ -153,7 +143,7 @@ void OptionMenue::onEnter()
     QString func = "optionMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -165,13 +155,13 @@ void OptionMenue::exitMenue()
     Settings::saveSettings();
     if (m_restartNeeded)
     {
-        spDialogMessageBox pMessage = spDialogMessageBox::create("Some changes need a restart of the game. The game will restart. Press Ok to restart.", true);
+        spDialogMessageBox pMessage = spDialogMessageBox::create(tr("Some changes need a restart of the game. The game will restart. Press Ok to restart."), true);
         connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::restart, Qt::QueuedConnection);
         addChild(pMessage);
     }
     else
     {
-        CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
         auto window = spMainwindow::create("ui/menu/mainoptionmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
         oxygine::Actor::detach();
@@ -180,12 +170,17 @@ void OptionMenue::exitMenue()
 
 void OptionMenue::reloadSettings()
 {    
-    CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
     spOptionMenue newMenu = spOptionMenue::create(m_xmlFile);
     // carry over restart flag
     newMenu->m_restartNeeded = m_restartNeeded;
     oxygine::Stage::getStage()->addChild(newMenu);
     oxygine::Actor::detach();
+}
+
+quint8 OptionMenue::getSupportedScreenCount()
+{
+    return QApplication::screens().size() - 1;
 }
 
 void OptionMenue::changeScreenSize(QSize size)
@@ -221,21 +216,21 @@ void OptionMenue::changeHighDpi(bool value)
 
 void OptionMenue::loadModPanels()
 {
+    m_ModSelector = oxygine::spActor::create();
+    m_ModSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    m_ModSelector->setPosition(10, 10);
     QSize size(Settings::getWidth() - 20,
                Settings::getHeight() - 70);
     size.setWidth(Settings::getWidth() - 60);
     size.setHeight(size.height() - 50);
     m_pMods = spPanel::create(true,  size - QSize(0, 50), size);
     m_pMods->setPosition(10, 110);
-    addChild(m_pMods);
+    m_ModSelector->addChild(m_pMods);
     size.setHeight(size.height() + 70);
     m_pModDescription = spPanel::create(true,  size, size, "panel");
     m_pModDescription->setPosition(Settings::getWidth() - 1, 25);
-    auto moveInButton = spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth());
+    auto moveInButton = spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth() + 10);
     m_pModDescription->addChild(moveInButton);
-    addChild(m_pModDescription);
-    m_ModSelector = oxygine::spActor::create();
-    m_ModSelector->setPosition(10, 10);
     connect(this, &OptionMenue::sigUpdateModFilter, this, &OptionMenue::updateModFilter, Qt::QueuedConnection);
     connect(this, &OptionMenue::sigLoadModInfo, this, &OptionMenue::loadModInfo, Qt::QueuedConnection);
     connect(this, &OptionMenue::sigShowResetBox, this, &OptionMenue::showResetBox, Qt::QueuedConnection);
@@ -246,40 +241,30 @@ void OptionMenue::showMods()
 {    
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    if (m_pMods.get() == nullptr)
-    {
-        loadModPanels();
-    }
-    m_pMods->clearContent();
-    m_pModDescription->clearContent();
-    m_ModBoxes.clear();
-    m_ModCheckboxes.clear();
-    m_ModSelector->removeChildren();
-    m_pMods->setVisible(true);
-    m_ModSelector->setVisible(true);
-    m_pModDescription->setVisible(true);
+    loadModPanels();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     m_ModDescriptionText = oxygine::spTextField::create();
     m_ModDescriptionText->setStyle(style);
-    m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 60, 500);
+    m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 70, 500);
+    m_ModDescriptionText->setX(10);
     m_modThumbnail = oxygine::spSprite::create();
-    m_modThumbnail->setPosition(5, 5);
+    m_modThumbnail->setPosition(10, 10);
     m_pModDescription->addItem(m_modThumbnail);
     m_pModDescription->addItem(m_ModDescriptionText);
 
-    spLabel pLabel = spLabel::create(250);
+    spLabel pLabel = spLabel::create(260, true);
     style.multiline = false;
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Advance Wars Game:"));
     m_ModSelector->addChild(pLabel);
     qint32 y = 0;
     QStringList versions = {tr("Unknown"),
-                                 tr("Commander Wars"),
-                                 tr("Advance Wars DS"),
-                                 tr("Advance Wars DC")};
+                            tr("Commander Wars"),
+                            tr("Advance Wars DS"),
+                            tr("Advance Wars 4")};
     m_pModSelection = spDropDownmenu::create(300, versions);
     m_pModSelection->setTooltipText(tr("Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game."));
     m_pModSelection->setX(260);
@@ -287,7 +272,7 @@ void OptionMenue::showMods()
     m_ModSelector->addChild(m_pModSelection);
     updateModSelection();
     y += 50;
-    pLabel = spLabel::create(250);
+    pLabel = spLabel::create(260, true);
     style.multiline = false;
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Tag Filter:"));
@@ -386,6 +371,7 @@ void OptionMenue::showMods()
         emit sigUpdateModFilter(tag);
     });
     m_ModSelector->addChild(pTagSelection);
+    m_ModSelector->addChild(m_pModDescription);
     updateModFilter("");
     updateModCheckboxes();
     pApp->continueRendering();
@@ -430,7 +416,7 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
         m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     }
     pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
-    qint32 y = 0;
+    qint32 y = 10;
     if (!thumbnail.isEmpty())
     {
         QImage img;
@@ -507,7 +493,7 @@ void OptionMenue::selectMods(qint32 item)
         {
             Settings::addMod(addMod);
         }
-        CONSOLE_PRINT("Marking restart cause mods changed.", Console::eDEBUG);
+        CONSOLE_PRINT("Marking restart cause mods changed.", GameConsole::eDEBUG);
         m_restartNeeded = true;
         showMods();
     }
@@ -623,7 +609,7 @@ void OptionMenue::updateModFilter(QString tag)
 
 void OptionMenue::restart()
 {
-    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
+    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", GameConsole::eDEBUG);
     removeChildren();
     detach();
     emit Mainapp::getInstance()->sigQuit(1);
@@ -637,7 +623,7 @@ void OptionMenue::showGamepadInfo()
 
 void OptionMenue::showResetBox()
 {
-    spDialogMessageBox pMessage = spDialogMessageBox::create("This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu. ", true);
+    spDialogMessageBox pMessage = spDialogMessageBox::create(tr("This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu."), true);
     connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::onReset, Qt::QueuedConnection);
     addChild(pMessage);
 }

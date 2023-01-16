@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QVector>
 
-
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/base/checkbox.h"
@@ -22,6 +21,7 @@ class BuildListDialog final : public QObject, public oxygine::Actor
         QString name;
         QStringList units;
     };
+    static const char* const FILEPATH;
 public:
     explicit BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList);
     ~BuildListDialog() = default;
@@ -29,6 +29,9 @@ signals:
     void editFinished(qint32 player, QStringList buildList);
     void canceled();
     void sigShowSaveBannlist();
+    void sigShowDeleteBannlist();
+    void sigDoSaveBannlist(const QString & filename);
+    void sigDeleteBannlist(const QString & file);
     void sigFinished();
 public slots:
     /**
@@ -46,13 +49,18 @@ public slots:
     void saveBannlist(QString filename);
 private slots:
     void remove();
+    void doSaveBannlist(QString filename);
+    void showDeleteBannlist();
+    void deleteBannlist(const QString & file);
 private:
     QStringList getNameList();
     QVector<UnitGroup> getUnitGroups();
+    void updatePredefinedList();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ToggleAll;
     oxygine::spButton m_ExitButton;
+    oxygine::spBox9Sprite m_pSpriteBox;
     spDropDownmenu m_PredefinedLists;
     QVector<spCheckbox> m_Checkboxes;
     QStringList m_UnitList;

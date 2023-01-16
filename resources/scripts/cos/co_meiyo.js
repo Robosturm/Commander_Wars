@@ -52,7 +52,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -104,7 +103,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.postAnimationRanking = function(postAnimation, map)
@@ -335,8 +333,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("You getting better recuit."),
-                qsTr("Tsss! Some recruits have one! A catastroph.")];
+        return [qsTr("You getting better recruit."),
+                qsTr("Tsss! Some recruits have one! A catastrophe.")];
     };
     this.getName = function()
     {

@@ -56,7 +56,7 @@ namespace oxygine
         virtual bool isOn(const Vector2& localPosition, float localScale) override;
         virtual RectF getDestRect() const override;
     protected:
-        virtual void sizeChanged(const Vector2& size)  override;
+        virtual void sizeChanged(const Point& size)  override;
         virtual void animFrameChanged(const AnimationFrame& f) override;
         virtual void changeAnimFrame(const AnimationFrame& f) override;
         virtual void doRender(const RenderState&) override;

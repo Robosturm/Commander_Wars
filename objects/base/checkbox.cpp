@@ -1,18 +1,15 @@
-#include "checkbox.h"
+#include "objects/base/checkbox.h"
 
 #include "resource_management/objectmanager.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 Checkbox::Checkbox()
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Checkbox");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("checkbox");
@@ -56,7 +53,7 @@ Checkbox::Checkbox()
             {
                 setAnimFrame(pAnim, 1);
             }
-            Mainapp::getInstance()->getAudioThread()->playSound("checkbox.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("checkbox.wav");
             emit checkChanged(m_Checked);
         });
         setSize(pAnim->getWidth(), pAnim->getHeight());
@@ -70,15 +67,18 @@ bool Checkbox::getChecked() const
 
 void Checkbox::setChecked(bool Checked)
 {    
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("checkbox");
-    m_Checked = Checked;
-    if (m_Checked)
+    if (m_Checked != Checked)
     {
-        setAnimFrame(pAnim, 3);
+        ObjectManager* pObjectManager = ObjectManager::getInstance();
+        oxygine::ResAnim* pAnim = pObjectManager->getResAnim("checkbox");
+        m_Checked = Checked;
+        if (m_Checked)
+        {
+            setAnimFrame(pAnim, 3);
+        }
+        else
+        {
+            setAnimFrame(pAnim, 0);
+        }
     }
-    else
-    {
-        setAnimFrame(pAnim, 0);
-    }    
 }

@@ -7,7 +7,7 @@
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -60,7 +60,7 @@ void ScriptConditionPlayerReachedArea::setHeigth(const qint32 &heigth)
 
 void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionPlayerReachedArea", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionPlayerReachedArea", GameConsole::eDEBUG);
     line = line.simplified();
     QStringList list = line.split("//");
     if (list.size() >= 2)
@@ -112,7 +112,7 @@ void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream, QStri
 
 void ScriptConditionPlayerReachedArea::writePreCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionPlayerReachedArea", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionPlayerReachedArea", GameConsole::eDEBUG);
     m_executed = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
     if (subCondition.get() != nullptr)
@@ -156,7 +156,7 @@ void ScriptConditionPlayerReachedArea::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionPlayerReachedArea + " End\n";
+    rStream << "        } // " + QString(ConditionPlayerReachedArea) + " End\n";
 }
 
 void ScriptConditionPlayerReachedArea::writePostCondition(QTextStream& rStream)
@@ -196,7 +196,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setX(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -213,7 +213,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setY(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -230,7 +230,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setWidth(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -247,14 +247,14 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setHeigth(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     spLabel pTextInfo = spLabel::create(width - 10);
     pTextInfo->setStyle(style);
     pTextInfo->setHtmlText(getPlayerInfo());
     pTextInfo->setPosition(30, y);
     pBox->addItem(pTextInfo);
-    y += 40;
+    y += pTextInfo->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -266,7 +266,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(1);
     pBox->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     oxygine::spButton pButton = ObjectManager::createButton(tr("Add Player"), 200);
     pButton->setPosition(30, y);

@@ -7,8 +7,6 @@
 #include "ai/targetedunitpathfindingsystem.h"
 #include "ai/neuralnetwork/neural/neuralnetwork.h"
 
-#include "game/unitpathfindingsystem.h"
-
 #include "coreengine/LUPDATE_MACROS.h"
 
 class GameMap;
@@ -684,7 +682,7 @@ private:
 
     // static constants
     static const qint32 minSiloDamage;
-    static const QStringList NeuralNetworkNames;
+    static const char* const NeuralNetworkNames[];
     static const char* const NeuralNetworkFileEnding;
     static const char* const NeuralNetworkPath;
 };

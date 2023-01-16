@@ -105,6 +105,10 @@ var Constructor = function()
     {
         return "fore_walltop";
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeBuilding.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var WEAK_WALL = new Constructor();

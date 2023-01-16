@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionBuildingDestroyed;
-typedef oxygine::intrusive_ptr<ScriptConditionBuildingDestroyed> spScriptConditionBuildingDestroyed;
+using spScriptConditionBuildingDestroyed = oxygine::intrusive_ptr<ScriptConditionBuildingDestroyed>;
 
 class ScriptConditionBuildingDestroyed : public ScriptCondition
 {
@@ -38,7 +38,7 @@ public:
      */
     virtual QString getDescription() override
     {
-        return tr("Building Destroyed X: ") + QString::number(m_x) + " Y: " + QString::number(m_y);
+        return  QString(tr("Building Destroyed X: %1 Y: %2")).arg(m_x).arg(m_y);
     }
     /**
      * @brief showEditConditin

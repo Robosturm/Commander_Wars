@@ -66,7 +66,7 @@ private:
     spH_Scrollbar m_HScrollbar;
     spV_Scrollbar m_VScrollbar;
     QTimer m_hideTimer;
-    bool m_stopMouseWheel{false};
+    bool m_stopMouseWheel{true};
 };
 
 #endif // PANEL_H

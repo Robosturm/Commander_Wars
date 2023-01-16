@@ -14,6 +14,7 @@ public:
         QString name;
         QStringList items;
     };
+    static const char* const LIST_FILENAME_ENDING;
     Filesupport() = delete;
     ~Filesupport() = delete;
     /**

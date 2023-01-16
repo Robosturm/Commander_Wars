@@ -1,7 +1,6 @@
 #include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
@@ -12,8 +11,6 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
 #ifdef GRAPHICSUPPORT
     setObjectName("Panel");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

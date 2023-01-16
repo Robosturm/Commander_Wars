@@ -129,7 +129,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 400 - 150 + 150 * sprite.getUnitCount(BATTLEANIMATION_SUBMARINE.getMaxUnitCount());
+        return 400 - 150 + 150 * sprite.getUnitCount(5);
     };
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)

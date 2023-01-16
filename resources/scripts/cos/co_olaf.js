@@ -110,7 +110,6 @@ var Constructor = function()
                     animation.writeDataInt32(value);
                     animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
                 }
-                units.remove();
             }
         }
     };

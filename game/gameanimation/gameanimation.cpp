@@ -9,11 +9,10 @@
 #include "resource_management/gameanimationmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/console.h"
-#include "coreengine/mainapp.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
     : m_frameTime(frameTime / Settings::getAnimationSpeed()),
@@ -22,8 +21,6 @@ GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimation");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (m_frameTime <= 0)
     {
@@ -58,10 +55,10 @@ void GameAnimation::start()
         setVisible(true);
         m_previousAnimation = nullptr;
         doPreAnimationCall();
-        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         for (auto & data : m_SoundData)
         {
-            pAudioThread->playSound(data.soundFile, data.loops, data.delayMs / Settings::getAnimationSpeed(), data.volume, data.stopOldestSound);
+            pAudioThread->playSound(data.soundFile, data.loops, static_cast<float>(data.delayMs) / Settings::getAnimationSpeed(), data.volume, data.stopOldestSound);
         }
     }
 }
@@ -70,7 +67,7 @@ void GameAnimation::doPreAnimationCall()
 {
     if ((!m_jsPreActionObject.isEmpty()) && (!m_jsPreActionObject.isEmpty()))
     {
-        CONSOLE_PRINT("Calling post Animation function " + m_jsPreActionObject + "." + m_jsPreActionFunction, Console::eDEBUG);
+        CONSOLE_PRINT("Calling post Animation function " + m_jsPreActionObject + "." + m_jsPreActionFunction, GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({pInterpreter->newQObject(this),
                            pInterpreter->newQObject(m_pMap)});
@@ -200,7 +197,7 @@ void GameAnimation::addSpriteAnimTable(QString spriteID, float offsetX, float of
     }
     else
     {
-        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -215,7 +212,11 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
     else
     {
         QImage img;
-        if (QFile::exists(Settings::getUserPath() + spriteID))
+        if (QFile::exists(spriteID))
+        {
+            img = QImage(spriteID);
+        }
+        else if (QFile::exists(Settings::getUserPath() + spriteID))
         {
             img = QImage(Settings::getUserPath() + spriteID);
         }
@@ -225,7 +226,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
         }
         else
         {
-            CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eDEBUG);
+            CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
             return;
         }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
@@ -248,7 +249,7 @@ void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint3
         setSize(width, heigth);
         if (sleepAfterFinish > 0)
         {
-            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
+            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(static_cast<float>(sleepAfterFinish) / Settings::getAnimationSpeed())), 1);
             m_lastCreatedTweenQueue->add(tween1);
         }
         pBox->addTween(m_lastCreatedTweenQueue);
@@ -283,11 +284,11 @@ void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, 
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         oxygine::spTweenQueue queuedAnim = oxygine::spTweenQueue::create();
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * m_frameTime), 1, false, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())));
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * m_frameTime), 1, false, oxygine::timeMS(static_cast<qint64>(static_cast<float>(delay) / Settings::getAnimationSpeed())));
         queuedAnim->add(tween);
         if (sleepAfterFinish > 0)
         {
-            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
+            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(static_cast<float>(sleepAfterFinish) / Settings::getAnimationSpeed())), 1);
             queuedAnim->add(tween1);
         }
         pSprite->setScaleX(scaleX);
@@ -326,11 +327,11 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
         {
             totalFrames = pAnim->getTotalFrames();
         }
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(totalFrames * m_frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())), easeType);
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(totalFrames * m_frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(static_cast<float>(delay) / Settings::getAnimationSpeed())), easeType);
         m_lastCreatedTweenQueue->add(tween);
         if (sleepAfterFinish > 0)
         {
-            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
+            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(static_cast<float>(sleepAfterFinish) / Settings::getAnimationSpeed())), 1);
             m_lastCreatedTweenQueue->add(tween1);
         }
         setSize(pAnim->getSize());
@@ -399,7 +400,7 @@ bool GameAnimation::onFinished(bool skipping)
             {
                 if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
                 {
-                    Mainapp::getInstance()->getAudioThread()->stopSound(data.soundFile);
+                    Mainapp::getInstance()->getAudioManager()->stopSound(data.soundFile);
                 }
             }
         }
@@ -411,7 +412,7 @@ bool GameAnimation::onFinished(bool skipping)
         m_QueuedAnimations.clear();
         if ((!m_jsPostActionObject.isEmpty()) && (!m_jsPostActionObject.isEmpty()))
         {
-            CONSOLE_PRINT("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, Console::eDEBUG);
+            CONSOLE_PRINT("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, GameConsole::eDEBUG);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QJSValueList args({pInterpreter->newQObject(this),
                                pInterpreter->newQObject(m_pMap)});
@@ -466,13 +467,13 @@ void GameAnimation::addSound(QString soundFile, qint32 loops, qint32 delayMs, fl
 
 void GameAnimation::addTweenScale(float endScale, qint32 duration, QEasingCurve::Type easeType)
 {
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenScale(endScale), oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
+    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenScale(endScale), oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
     addTween(tween1);
 }
 
 void GameAnimation::addTweenPosition(QPoint point, qint32 duration, QEasingCurve::Type easeType)
 {
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(point.x(), point.y())), oxygine::timeMS(static_cast<qint64>(duration/ Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
+    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(point.x(), point.y())), oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
     addTween(tween1);
 }
 
@@ -486,7 +487,7 @@ void GameAnimation::addTweenColor(qint32 spriteIdx, QColor startColor, QColor en
         {
             sprite->setColor(startColor);
             oxygine::Sprite::TweenColor tweenColor(endColor);
-            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1, twoSided, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())), easeType);
+            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, twoSided, oxygine::timeMS(static_cast<qint64>(static_cast<float>(delay) / Settings::getAnimationSpeed())), easeType);
             sprite->addTween(tween);
         }
     }
@@ -494,7 +495,7 @@ void GameAnimation::addTweenColor(qint32 spriteIdx, QColor startColor, QColor en
 
 void GameAnimation::addTweenWait(qint32 duration, QEasingCurve::Type easeType)
 {
-    oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
+    oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
     addTween(tween1);
     if(!m_finishQueued)
     {
@@ -508,26 +509,26 @@ void GameAnimation::addTweenWait(qint32 duration, QEasingCurve::Type easeType)
 
 void GameAnimation::addTweenWaitToLastQueue(qint32 duration, QEasingCurve::Type easeType)
 {
-    oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
+    oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
     m_lastCreatedTweenQueue->add(tween1);
 }
 
 void GameAnimation::addTweenScaleToLastQueue(float endScale, qint32 duration, QEasingCurve::Type easeType)
 {
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenScale(endScale), oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
+    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenScale(endScale), oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
     m_lastCreatedTweenQueue->add(tween1);
 }
 
 void GameAnimation::addTweenPositionToLastQueue(QPoint point, qint32 duration, QEasingCurve::Type easeType)
 {
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(point.x(), point.y())), oxygine::timeMS(static_cast<qint64>(duration/ Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
+    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(point.x(), point.y())), oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
     m_lastCreatedTweenQueue->add(tween1);
 }
 
 void GameAnimation::addTweenColorToLastQueue(QColor endColor, qint32 duration, bool twoSided, qint32 delay, QEasingCurve::Type easeType)
 {
     oxygine::Sprite::TweenColor tweenColor(endColor);
-    oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1, twoSided, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())), easeType);
+    oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, twoSided, oxygine::timeMS(static_cast<qint64>(static_cast<float>(delay) / Settings::getAnimationSpeed())), easeType);
     m_lastCreatedTweenQueue->add(tween);
 }
 
@@ -554,8 +555,9 @@ void GameAnimation::emitFinished()
 
 void GameAnimation::addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs, QEasingCurve::Type easeType)
 {
-    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
-                                                  oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())), easeType);
+    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, static_cast<float>(decay) / Settings::getAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
+                                                  oxygine::timeMS(static_cast<qint64>(static_cast<float>(durationMs) / Settings::getAnimationSpeed())), 1, false,
+                                                  oxygine::timeMS(static_cast<qint64>(static_cast<float>(delayMs) / Settings::getAnimationSpeed())), easeType);
     m_stageTweens.append(tween);
     oxygine::Stage::getStage()->addTween(tween);
 

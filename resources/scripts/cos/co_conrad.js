@@ -36,7 +36,8 @@ var Constructor = function()
         var animations = [];
         var counter = 0;
         units.randomize();
-        for (var i = 0; i < units.size(); i++)
+        var size = units.size();
+        for (var i = 0; i < size; i++)
         {
             var unit = units.at(i);
             var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
@@ -71,8 +72,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
-
         var variables = co.getVariables();
         var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
         dmgModVar.writeDataFloat(CO_CONRAD.bonusLuckDamage);
@@ -124,7 +123,8 @@ var Constructor = function()
         }
         var units = co.getOwner().getUnits();
         var visionCount = 0;
-        for (var i = 0; i < units.size(); i++)
+        var size = units.size();
+        for (var i = 0; i < size; i++)
         {
             var unit = units.at(i);
             var x = unit.getX();
@@ -135,7 +135,6 @@ var Constructor = function()
                 visionCount += 1;
             }
         }
-        units.remove();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:

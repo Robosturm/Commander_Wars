@@ -19,8 +19,6 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
 #ifdef GRAPHICSUPPORT
     setObjectName("TerrainInfo");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     setWidth(width);
@@ -48,7 +46,21 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     pLabel->setHtmlText((tr("Terrain Information ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 0);
     addChild(pLabel);
-    y += 60;
+    y += pLabel->getTextRect().getHeight() + 10 + GameMap::getImageSize();
+
+    spTerrain pIconTerrain = Terrain::createTerrain(pTerrain->getTerrainID(), -1, -1, "", pTerrain->getMap());
+    pIconTerrain->loadSprites();
+    Building* pTerrainBuildiong = pTerrain->getBuilding();
+    if (pTerrainBuildiong != nullptr)
+    {
+        spBuilding pBuilding = spBuilding::create(pTerrainBuildiong->getBuildingID(), nullptr);
+        pIconTerrain->setBuilding(pBuilding);
+        pBuilding->setOwner(pTerrainBuildiong->getOwner());
+        pBuilding->scaleAndShowOnSingleTile();
+    }
+    pIconTerrain->setPosition(width / 2 - pIconTerrain->getScaledWidth() / 2, y + 20);
+    addChild(pIconTerrain);
+    y += pIconTerrain->getScaledHeight() + 30;
 
     pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
@@ -134,7 +146,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     pLabel->setHtmlText(tr("Movement Costs"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
-    y += 60;
+    y += 10 + pLabel->getTextRect().getHeight();
 
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     qint32 x = 0;

@@ -5,15 +5,11 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-                (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
         var ret = false;
         // are we allowed to attack from this field?
-        if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
-            ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
+        if (unit.getHasMoved() === false &&
+           ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
+           ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField) && (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) > 0)))
         {
             var minRange = unit.getMinRange(actionTargetField);
             var fields = globals.getCircle(minRange, unit.getMaxRange(actionTargetField));
@@ -25,7 +21,6 @@ var Constructor = function()
                 {
                     fields.append(minFields.at(i))
                 }
-                minFields.remove();
             }
 
             // check all fields we can attack
@@ -56,7 +51,7 @@ var Constructor = function()
                                 (defTerrain.getHp() > 0))
                         {
                             if (unit.hasAmmo1() && unit.getWeapon1ID() !== "" &&
-                                    unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y))
+                                unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y))
                             {
                                 if (Global[unit.getWeapon1ID()].getEnviromentDamage(defTerrain.getID()) > 0)
                                 {
@@ -65,7 +60,7 @@ var Constructor = function()
                                 }
                             }
                             if (unit.hasAmmo2() && unit.getWeapon2ID() !== "" &&
-                                    unit.canAttackWithWeapon(1, actionTargetField.x, actionTargetField.y, x, y))
+                                unit.canAttackWithWeapon(1, actionTargetField.x, actionTargetField.y, x, y))
                             {
                                 if (Global[unit.getWeapon2ID()].getEnviromentDamage(defTerrain.getID()) > 0)
                                 {
@@ -77,7 +72,6 @@ var Constructor = function()
                     }
                 }
             }
-            fields.remove();
         }
         return ret;
     };
@@ -336,7 +330,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
         return ret;
     };
     this.doSupportDamageReduction = function(damage, attacker, attackerPosition, defender, defenderPosition)
@@ -359,7 +352,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
         return reduction;
     };
 
@@ -405,7 +397,7 @@ var Constructor = function()
                         var defPos = defUnit.getPosition();
                         var defFirststrike = false;
                         var atkFirststrike = false;
-                        if (fastInaccurate !== false)
+                        if (fastInaccurate === false)
                         {
                             defFirststrike = defUnit.getFirstStrike(defPos, attacker, true, actionTargetField);
                             atkFirststrike = attacker.getFirstStrike(actionTargetField, defUnit, false, defPos);
@@ -485,7 +477,6 @@ var Constructor = function()
             {
                 fields.append(minFields.at(i))
             }
-            minFields.remove();
         }
 
         data.setColor("#FFFF0000");
@@ -564,7 +555,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
     };
     this.isFinalStep = function(action, map)
     {
@@ -892,6 +882,10 @@ var Constructor = function()
         }
         ACTION_FIRE.postBuildingAnimationTerrain = null;
         ACTION_FIRE.postAnimationAction = null;
+    };
+    this.getName = function()
+    {
+        return qsTr("Fire");
     };
     this.getDescription = function()
     {

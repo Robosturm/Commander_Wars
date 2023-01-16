@@ -12,6 +12,86 @@ var Constructor = function()
     {
         return qsTr("Allows you to see where missiles and meteors are going to hit.");
     };
+    this.getMissileTargetsText = function()
+    {
+        return qsTr("Missile targets");
+    };
+    this.getMissileCountText = function()
+    {
+        return qsTr("Missile count:");
+    };
+    this.getMissileCountTooltipText = function()
+    {
+        return qsTr("Amount of missile targets that should be shown simultaneously.");
+    };
+    this.getMissileInfoText = function()
+    {
+        return qsTr("Missile Info");
+    };
+    this.getMissileColorText = function()
+    {
+        return qsTr("Color:");
+    };
+    this.getMissileColorTooltipText = function()
+    {
+        return qsTr("Color of the missile target that will be dropped.");
+    };
+    this.getMissileTargetTypeText = function()
+    {
+        return qsTr("Target Type:");
+    };
+    this.getMissileTargetTypeTooltipText = function()
+    {
+        return qsTr("The way this missile detects it target.");
+    };
+    this.getMissileRangeText = function()
+    {
+        return qsTr("Range:");
+    };
+    this.getMissileRangeTooltipText = function()
+    {
+        return qsTr("Area that the missile is going to hit.");
+    };
+    this.getMissileDamageText = function()
+    {
+        return qsTr("Damage:");
+    };
+    this.getMissileDamageTooltipText = function()
+    {
+        return qsTr("HP damage dealt to each unit in the area.");
+    };
+    this.getMissileOwnerText = function()
+    {
+        return qsTr("Owner:");
+    };
+    this.getMissileOwnerTooltipText = function()
+    {
+        return qsTr("Owner the missile.");
+    };
+    this.getMissileApplyText = function()
+    {
+        return qsTr("Apply");
+    };
+    this.getMissileApplyTooltipText = function()
+    {
+        return qsTr("Applies the changes to the unit.");
+    };
+    this.getMissileStopText = function()
+    {
+        return qsTr("Stop");
+    };
+    this.getMissileStopTooltipText = function()
+    {
+        return qsTr("Stops showing the missile targets.");
+    };
+    this.getMissileCancelText = function()
+    {
+        return qsTr("Cancel");
+    };
+    this.getMissileCancelTooltipText = function()
+    {
+        return qsTr("Cancels the dialog.");
+    };
     this.startAddIn = function(addIn)
     {
         var variables = addIn.getVariables();
@@ -92,7 +172,6 @@ var Constructor = function()
                     addIn.addSprite("marked+field", x, y, 0, 0, color);
                 }
             }
-            fields.remove();
         }
     };
     this.stopAddIn = function(addIn)

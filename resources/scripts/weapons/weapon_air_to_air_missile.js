@@ -6,11 +6,11 @@ var Constructor = function()
     };
     this.damageTable = [["DUSTER", 80],
                         ["FIGHTER", 55],
-                        ["BOMBER", 65],
-                        ["STEALTHBOMBER", 65],
+                        ["BOMBER", 100],
+                        ["STEALTHBOMBER", 85],
                         ["TRANSPORTPLANE", 120],
                         ["BLACK_BOMB", 120],
-                        ["WATERPLANE", 65],
+                        ["WATERPLANE", 85],
                         ["K_HELI", 120],
                         ["T_HELI", 120]];
 

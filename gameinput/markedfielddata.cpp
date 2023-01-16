@@ -1,22 +1,14 @@
 #include "gameinput/markedfielddata.h"
 
 #include "coreengine/interpreter.h"
-#include "coreengine/mainapp.h"
 
 MarkedFieldData::MarkedFieldData()
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("MarkedFieldData");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    oxygine::ref_counter::addInstanceCounter();
-}
-
-MarkedFieldData::~MarkedFieldData()
-{
-    oxygine::ref_counter::releaseInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 bool MarkedFieldData::getAllFields() const

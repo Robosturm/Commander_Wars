@@ -12,6 +12,63 @@ var Constructor = function()
     {
         return qsTr("Allows to modify a unit, e.g. it's health, fuel, ammo etc.");
     };
+    this.getHpLabel = function()
+    {
+        return qsTr("HP:");
+    };
+    this.getHpTooltip = function()
+    {
+        return qsTr("HP of the unit.");
+    };
+    this.getAmmo1Label = function()
+    {
+        return qsTr("Ammo 1:");
+    };
+    this.getAmmo1Tooltip = function()
+    {
+        return qsTr("Ammo 1 of the unit.");
+    };
+    this.getAmmo2Label = function()
+    {
+        return qsTr("Ammo 2:");
+    };
+    this.getAmmo2Tooltip = function()
+    {
+        return qsTr("Ammo 2 of the unit.");
+    };
+    this.getFuelLabel = function()
+    {
+        return qsTr("Fuel:");
+    };
+    this.getFuelTooltip = function()
+    {
+        return qsTr("Fuel of the unit.");
+    };
+    this.getHasMovedLabel = function()
+    {
+        return qsTr("Has moved:");
+    };
+    this.getHasMovedTooltip = function()
+    {
+        return qsTr("If the unit has moved this turn or not.");
+    };
+    this.getApplyLabel = function()
+    {
+        return qsTr("Apply");
+    };
+    this.getApplyTooltip = function()
+    {
+        return qsTr("Applies the changes to the unit.");
+    };
+    this.getCancelLabel = function()
+    {
+        return qsTr("Cancel");
+    };
+    this.getCancelTooltip = function()
+    {
+        return qsTr("Cancels the dialog.");
+    };
+
     this.startAddIn = function(addIn)
     {
         var variables = addIn.getVariables();

@@ -23,10 +23,21 @@ DamageCalculator::DamageCalculator()
     pApp->pauseRendering();
     setPosition(Settings::getWidth() / 2 - getScaledWidth() / 2,
                 Settings::getHeight() / 2 - getScaledHeight() / 2);
+    if (getX() < 0)
+    {
+        setX(20);
+    }
+    if (getY() < 0)
+    {
+        setY(20);
+    }
     qint32 x = 10;
     qint32 y = 10;
-    spLabel pLabel = spLabel::create(300);
-    pLabel->setPosition(getScaledWidth() / 2 - pLabel->getScaledWidth() / 2, y);
+    spLabel pLabel = spLabel::create(getContentWidth());
+    pLabel->setPosition(0, y);
+    auto style = pLabel->getStyle();
+    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Damage calculator"));
     addItem(pLabel);
 
@@ -71,7 +82,7 @@ DamageCalculator::DamageCalculator()
     loadUnitData(x, y, m_defUnit, rankItems, unitIds, terrainIds, buildingIds);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spButton pCalculateButton = pObjectManager->createButton(tr("Calculate"), 150);
-    pCalculateButton->setPosition(getScaledWidth() / 2 - pCalculateButton->getScaledWidth() / 2, y + 5);
+    pCalculateButton->setPosition(getContentWidth() / 2 - pCalculateButton->getScaledWidth() / 2, y + 5);
 
     pCalculateButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -150,7 +161,7 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
         coData.m_inCoRange->setTooltipText(tr("If the unit is in the co-zone of this co."));
         addItem(coData.m_inCoRange);
         x += coData.m_inCoRange->getScaledWidth() + xAdvance;
-        y += pLabel->getScaledHeight() + 5;
+        y += coData.m_co->getScaledHeight();
     }
 }
 
@@ -184,11 +195,11 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
         oxygine::spSprite pRet = pTerrain;
         if (isBuilding)
         {
-            spBuilding building = spBuilding::create(id, &m_map);
-            building->setTooltipText(building->getName());
-            building->updateBuildingSprites(false);
-            building->addChild(pTerrain);
-            pRet = building;
+            spBuilding pBuilding = spBuilding::create(id, &m_map);
+            pBuilding->setTooltipText(pBuilding->getName());
+            pBuilding->updateBuildingSprites(false);
+            pBuilding->scaleAndShowOnSingleTile();
+            pRet = pBuilding;
         }
         return pRet;
     };
@@ -219,12 +230,12 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
     };
 
     unitData.m_unitRank = spDropDownmenuSprite::create(105, rankItems, unitRankCreator, 30);
-    unitData.m_unitRank->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied."));
+    unitData.m_unitRank->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediately applied."));
     unitData.m_unitRank->setCurrentItem(-GameEnums::UnitRank_CO1);
     unitData.m_unitRank->setPosition(x, y);
     addItem(unitData.m_unitRank);
     x = startX;
-    y += unitData.m_unitRank->getScaledHeight() + 5;
+    y += unitData.m_unitRank->getScaledHeight();
     spLabel pLabel = spLabel::create(150);
     pLabel->setPosition(x, y);
     pLabel->setHtmlText(tr("HP:"));
@@ -340,6 +351,21 @@ void DamageCalculator::calculateDamage()
                                                     pAttacker.get(), 0.0f, atkPos, GameEnums::LuckDamageMode_Min,
                                                     pDefender.get(), 0.0f, defPos, GameEnums::LuckDamageMode_Max,
                                                     true, false);
+    if (minDamage.x() < 0)
+    {
+        if (pAttacker->hasDirectWeapon())
+        {
+            defPos = QPoint(1, 0);
+        }
+        pDefender->getTerrain()->setUnit(spUnit());
+        m_map.getTerrain(defPos.x(), defPos.y())->setUnit(pDefender);
+        spUnit pAttacker = m_map.getTerrain(atkPos.x(), atkPos.y())->getSpUnit();
+        spUnit pDefender = m_map.getTerrain(defPos.x(), defPos.y())->getSpUnit();
+        minDamage = CoreAI::calcVirtuelUnitDamage(&m_map,
+                                                  pAttacker.get(), 0.0f, atkPos, GameEnums::LuckDamageMode_Min,
+                                                  pDefender.get(), 0.0f, defPos, GameEnums::LuckDamageMode_Max,
+                                                  true, false);
+    }
     QRectF avgDamage = CoreAI::calcVirtuelUnitDamage(&m_map,
                                                     pAttacker.get(), 0.0f, atkPos, GameEnums::LuckDamageMode_Average,
                                                     pDefender.get(), 0.0f, defPos, GameEnums::LuckDamageMode_Average,
@@ -362,7 +388,7 @@ void DamageCalculator::calculateDamage()
                      maxPostDamage.width(), avgPostDamage.width(), minPostDamage.width());
 }
 
-void DamageCalculator::updateMapData(QPoint & defPos)
+void DamageCalculator::updateMapData(QPoint & defPos, bool forceDirect)
 {
     m_map.newMap(1, 1, 2);
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -413,6 +439,7 @@ void DamageCalculator::updateMapData(QPoint & defPos)
     qint32 minRange = pAttacker->getMinRange(QPoint(0, 0));
     m_map.changeMap(4 + minRange, 1 + maxBuildingCount, 2);
     defPos = QPoint(minRange, 0);
+
     if (buildingIds.contains(m_defUnit.m_Terrain->getCurrentItemText()))
     {
         m_map.replaceTerrain(GameMap::PLAINS, defPos.x(), defPos.y(), false, false, false);

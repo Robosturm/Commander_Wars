@@ -66,7 +66,6 @@ CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
                                 }
                             }
                         }
-                        directCircle.remove()
                         if (found === true)
                         {
                             break;
@@ -111,7 +110,6 @@ CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
                         }
                     }
                 }
-                circle.remove()
             }
         }
     }

@@ -131,10 +131,13 @@ var Constructor = function()
         }
         return ret;
     };
-
     this.getCOSpecificUnit = function(building)
     {
         return true;
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "movetank.wav";
     };
 };
 

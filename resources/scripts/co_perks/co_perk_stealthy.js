@@ -18,11 +18,15 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "sneaky";
+        return "stealthy";
     };
     this.getName = function()
     {
         return qsTr("Stealthy");
+    };
+    this.getCosts = function()
+    {
+        return 2;
     };
 };
 

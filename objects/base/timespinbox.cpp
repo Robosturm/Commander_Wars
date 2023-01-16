@@ -1,9 +1,6 @@
 #include "objects/base/timespinbox.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
 #include "coreengine/interpreter.h"
-
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -17,8 +14,6 @@ TimeSpinBox::TimeSpinBox(qint32 width)
 #ifdef GRAPHICSUPPORT
     setObjectName("TimeSpinBox");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

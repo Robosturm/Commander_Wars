@@ -1,6 +1,6 @@
 #include "objects/base/textinput.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
@@ -39,10 +39,13 @@ TextInput::~TextInput()
 
 void TextInput::editFinished()
 {
-    if (onEditFinished())
+    if (getFocused())
     {
-        looseFocusInternal();
-        Tooltip::setEnabled(true);
+        if (onEditFinished())
+        {
+            looseFocusInternal();
+            Tooltip::setEnabled(true);
+        }
     }
 }
 
@@ -70,7 +73,14 @@ void TextInput::setCurrentText(const QString & text)
 {
     if (m_lineEdit != nullptr)
     {
-        emit sigSetText(text);
+        if (Mainapp::getInstance()->isMainThread())
+        {
+            m_lineEdit->setPlainText(text);
+        }
+        else
+        {
+            emit sigSetText(text);
+        }
     }
 }
 
@@ -119,7 +129,7 @@ bool TextInput::doHandleEvent(QEvent *event)
             }
             default:
             {
-                CONSOLE_PRINT("Ignoring event: " + QString::number(event->type()), Console::eDEBUG);
+                CONSOLE_PRINT("Ignoring event: " + QString::number(event->type()), GameConsole::eDEBUG);
                 break;
             }
         }

@@ -2,7 +2,6 @@
 
 #include "game/gamemap.h"
 #include "game/player.h"
-#include "game/co.h"
 
 #include "coreengine/mainapp.h"
 
@@ -16,7 +15,6 @@ GameRecorder::GameRecorder(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameRecorder");
 #endif
-    moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

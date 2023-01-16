@@ -1,7 +1,7 @@
 #include <QDataStream>
 #include <QFile>
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -11,7 +11,7 @@
 
 #include "menue/editormenue.h"
 
-void GameMap::importAWDSMap(QString file)
+void GameMap::importAWDSMap(QString file, EditorMenue* pMenu)
 {
     quint8 sign = 0;
     if (QFile::exists(file))
@@ -34,6 +34,16 @@ void GameMap::importAWDSMap(QString file)
         {
             m_players.append(spPlayer::create(this));
             m_players[i]->init();
+            if (i == 0)
+            {
+                m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
+                m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Human);
+            }
+            else
+            {
+                m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Normal));
+                m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Normal);
+            }
         }
         // read byte for terrain style which we ignore
         stream >> sign;
@@ -1609,7 +1619,7 @@ void GameMap::importAWDSMap(QString file)
             m_headerInfo.m_mapDescription += static_cast<char>(sign);
         }
         m_headerInfo.m_mapDescription = m_headerInfo.m_mapDescription.replace("\n", " ");
-        dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance())->optimizePlayers();
+        pMenu->optimizePlayers();
         // update the whole fucking map
         updateSprites();
     }

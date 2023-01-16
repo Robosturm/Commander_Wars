@@ -1,5 +1,4 @@
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 namespace oxygine
 {
@@ -12,7 +11,8 @@ namespace oxygine
     {
         m_index = index;
         m_pressed = 0;
-        m_position.setZero();
+        m_position.x = 0.0f;
+        m_position.y = 0.0f;
     }
 
     bool PointerState::isPressed(MouseButton mb) const

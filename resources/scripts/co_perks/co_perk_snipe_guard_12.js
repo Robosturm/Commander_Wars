@@ -20,7 +20,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "snipeguard";
+        return "snipeShield";
     };
     this.getName = function()
     {
@@ -29,6 +29,10 @@ var Constructor = function()
     this.getGroup = function()
     {
         return qsTr("Defensive");
+    };
+    this.getCosts = function()
+    {
+        return 2;
     };
 };
 

@@ -86,8 +86,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
-
         var playerCounter = map.getPlayerCount();
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
@@ -131,7 +129,6 @@ var Constructor = function()
                         }
                     }
                 }
-                units.remove();
             }
         }
     };
@@ -282,7 +279,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Enemy loses half of their ammo, take 2 HP damage, his troops can move 2 points more and their defense rises extremly.");
+        return qsTr("Enemy loses half of their ammo, take 2 HP damage, his troops can move 2 points more and their defense rises extremely.");
     };
     this.getSuperPowerName = function(co)
     {

@@ -105,7 +105,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
         CO_STURM.postAnimationThrowMeteorTarget = null;
         CO_STURM.postAnimationThrowMeteorDamage = 0;
     };

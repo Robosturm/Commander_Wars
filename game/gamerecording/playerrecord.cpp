@@ -1,6 +1,5 @@
 #include "game/gamerecording/playerrecord.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 PlayerRecord::PlayerRecord()
@@ -8,7 +7,6 @@ PlayerRecord::PlayerRecord()
 #ifdef GRAPHICSUPPORT
     setObjectName("PlayerRecord");
 #endif
-    moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -25,7 +23,6 @@ PlayerRecord::PlayerRecord(qint32 day, qint32 player, qint32 funds, qint32 incom
 #ifdef GRAPHICSUPPORT
     setObjectName("PlayerRecord");
 #endif
-    moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

@@ -1,10 +1,6 @@
 #include "objects/base/slider.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-
-#include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
     : V_Scrollbar (width - 90, (width - 90) * 100 / 10),
@@ -15,8 +11,6 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
 #ifdef GRAPHICSUPPORT
     setObjectName("Slider");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     V_Scrollbar::setScrollspeed( width / (maxValue - minValue));

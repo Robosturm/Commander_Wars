@@ -25,3 +25,8 @@ BATTLESHIP.canMoveAndFire = function()
 {
     return false;
 };
+
+BATTLESHIP.canCounterOnRangeAttacks = function(unit, defX, defY, attacker, atkX, atkY, pAction, luckMode, map)
+{
+    return false;
+};

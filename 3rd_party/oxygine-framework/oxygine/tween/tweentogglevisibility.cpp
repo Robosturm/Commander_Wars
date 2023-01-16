@@ -1,5 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 TweenToggleVisibility::TweenToggleVisibility(float start, float end)
     : m_startFraction(start),

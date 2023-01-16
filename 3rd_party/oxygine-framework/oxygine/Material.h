@@ -26,7 +26,6 @@ namespace oxygine
               m_base(other->m_base),
               m_table(other->m_table),
               m_blend(other->m_blend),
-              m_uberShader(other->m_uberShader),
               m_addColor(other->m_addColor),
               m_fracShader(other->m_fracShader)
         {
@@ -47,7 +46,6 @@ namespace oxygine
         void apply();
         void flush();
         void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest);
-        void render(const QColor& c, const RectF& src, const RectF& dest);
         void setMatrixMode(bool set);
     private:
         void xapply();
@@ -57,7 +55,6 @@ namespace oxygine
         spTexture    m_base;
         spTexture    m_table;
         VideoDriver::blend_mode m_blend;
-        UberShaderProgram* m_uberShader;
         QColor             m_addColor;
         UberShaderProgram::ColorMode m_fracShader;
     };    

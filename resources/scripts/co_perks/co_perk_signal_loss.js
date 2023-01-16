@@ -26,6 +26,10 @@ var Constructor = function()
     this.getGroup = function()
     {
         return qsTr("Offensive Debuff");
+    };    
+    this.getCosts = function()
+    {
+        return -1;
     };
 };
 

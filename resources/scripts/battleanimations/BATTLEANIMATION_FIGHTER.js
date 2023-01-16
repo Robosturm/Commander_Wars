@@ -49,6 +49,7 @@ var Constructor = function()
         var offset = data[0];
         sprite.loadSpriteV2("fighter+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset, -1);
+        sprite.addMoveTweenToLastLoadedSprites(0, -5, 1200);
     };
 
 

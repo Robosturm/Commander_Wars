@@ -20,7 +20,6 @@ public:
         if (m_pInstance == nullptr)
         {
             m_pInstance = new FontManager();
-            Interpreter::setCppOwnerShip(m_pInstance);
         }
         return m_pInstance;
     }
@@ -30,7 +29,7 @@ public:
      */
     inline static const oxygine::Font & getMainFont16()
     {
-        return m_mainFont16;
+        return m_pInstance->m_fonts[MAINFONT + QString::number(16)];
     }
     /**
      * @brief getMainFont24
@@ -38,7 +37,7 @@ public:
      */
     inline static const oxygine::Font & getMainFont24()
     {
-        return m_mainFont24;
+        return m_pInstance->m_fonts[MAINFONT + QString::number(24)];
     }
     /**
      * @brief getMainFont32
@@ -46,7 +45,7 @@ public:
      */
     inline static const oxygine::Font & getMainFont32()
     {
-        return m_menuFont32;
+        return m_pInstance->m_fonts[MAINFONT + QString::number(32)];
     }
     /**
      * @brief getMainFont32
@@ -54,7 +53,7 @@ public:
      */
     inline static const oxygine::Font & getMenuFont32()
     {
-        return m_menuFont32;
+        return m_pInstance->m_fonts[MENUFONT + QString::number(32)];
     }
     /**
      * @brief getMainFont48
@@ -62,7 +61,7 @@ public:
      */
     inline static const oxygine::Font & getMainFont48()
     {
-        return m_mainFont48;
+        return m_pInstance->m_fonts[MAINFONT + QString::number(48)];
     }
     /**
      * @brief getMainFont72
@@ -70,7 +69,7 @@ public:
      */
     inline static const oxygine::Font & getMainFont72()
     {
-        return m_mainFont72;
+        return m_pInstance->m_fonts[MAINFONT + QString::number(72)];
     }
     /**
      * @brief getLogoFont
@@ -78,7 +77,7 @@ public:
      */
     inline static const oxygine::Font & getLogoFont()
     {
-        return m_logoFont;
+        return m_pInstance->m_fonts[LOGOFONT + QString::number(16)];
     }
     /**
      * @brief getFont
@@ -89,9 +88,9 @@ public:
     static const oxygine::Font & getFont(QString fontType, qint32 size)
     {
         QString key = fontType + QString::number(size);
-        if (m_fonts.contains(key))
+        if (m_pInstance->m_fonts.contains(key))
         {
-            return m_fonts[key];
+            return m_pInstance->m_fonts[key];
         }
         else
         {
@@ -107,9 +106,9 @@ public:
     static const oxygine::Font & getFont(QString fontType)
     {
         QString key = fontType;
-        if (m_fonts.contains(key))
+        if (m_pInstance->m_fonts.contains(key))
         {
-            return m_fonts[key];
+            return m_pInstance->m_fonts[key];
         }
         else
         {
@@ -134,18 +133,9 @@ protected:
     ~FontManager() = default;
 
 private:
-    static QColor m_defaultColor;
     static FontManager* m_pInstance;
-    static QMap<QString, oxygine::Font> m_fonts;
-
-    static oxygine::Font m_mainFont16;
-    static oxygine::Font m_mainFont24;
-    static oxygine::Font m_mainFont32;
-    static oxygine::Font m_mainFont48;
-    static oxygine::Font m_mainFont72;
-    static oxygine::Font m_logoFont;
-    static oxygine::Font m_menuFont32;
-
+    QMap<QString, oxygine::Font> m_fonts;
+    QColor m_defaultColor{QColor(250, 210, 0)};
 };
 
 #endif // FONTMANAGER_H

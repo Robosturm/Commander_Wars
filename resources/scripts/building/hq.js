@@ -128,6 +128,10 @@ var Constructor = function()
 				};
 			};
 	};
+    this.getEditorPlacementSound = function()
+    {
+        return "placeHq.wav";
+    };
 }
 
 Constructor.prototype = BUILDING;

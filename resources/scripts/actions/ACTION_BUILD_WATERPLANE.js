@@ -12,10 +12,8 @@ var Constructor = function()
         var unitLimit = map.getGameRules().getUnitLimit();
         var unitCount = unit.getOwner().getUnitCount();
 
-
         if ((unit.getHasMoved() === true) ||
             (costs > funds) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0) ||
             (!unit.hasAmmo2()))
         {
             return false;
@@ -37,15 +35,22 @@ var Constructor = function()
 
     this.getActionText = function(map)
     {
-        var unitID = "WATERPLANE";
-        var costs = Global[unitID].getBaseCost();
-        if (map !== null &&
-            map.getCurrentPlayer() !== null)
+        if (map &&
+            map !== null)
         {
-            costs = map.getCurrentPlayer().getCosts(unitID, Qt.point(-1, -1));
+            var unitID = "WATERPLANE";
+            var costs = Global[unitID].getBaseCost();
+            if (map.getCurrentPlayer() !== null)
+            {
+                costs = map.getCurrentPlayer().getCosts(unitID, Qt.point(-1, -1));
+            }
+            var name = Global[unitID].getName();
+            return name + " " + costs.toString();
         }
-        var name = Global[unitID].getName();
-        return qsTr(name + " " + costs.toString());
+        else
+        {
+            return ACTION_BUILD_WATERPLANE.getName()
+        }
     };
 
     this.getIcon = function(map)
@@ -78,6 +83,10 @@ var Constructor = function()
             ACHIEVEMENT_BUILD_UNIT.unitProduced(unitID);
         }
     };    
+    this.getName = function()
+    {
+        return qsTr("Build waterplane");
+    };
     this.getDescription = function()
     {
         return qsTr("Orders an aircraft carrier to produce a waterplane which can be launched next turn.");

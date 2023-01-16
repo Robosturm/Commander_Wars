@@ -172,6 +172,7 @@ var Constructor = function()
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset);
             }
             BATTLEANIMATION.showMgBullets(sprite, offset);
+            var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_RANGER.getMaxUnitCount());
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);

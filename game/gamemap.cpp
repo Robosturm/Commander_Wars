@@ -4,20 +4,14 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/userdata.h"
 
 #include "ai/coreai.h"
 
-#include "resource_management/terrainmanager.h"
-#include "resource_management/buildingspritemanager.h"
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/movementtablemanager.h"
-#include "resource_management/weaponmanager.h"
-#include "resource_management/gamemanager.h"
-#include "resource_management/cospritemanager.h"
-#include "resource_management/gamerulemanager.h"
 
 #include "game/unit.h"
 #include "game/player.h"
@@ -32,11 +26,10 @@
 
 #include "menue/gamemenue.h"
 #include "menue/basegamemenu.h"
-#include "menue/movementplanner.h"
 
 #include "objects/loadingscreen.h"
 
-const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
+const char* const GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
 const char* const GameMap::PLAINS = "PLAINS";
 static constexpr qint32 loadingScreenSize = 900;
@@ -54,8 +47,6 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     m_headerInfo.m_mapAuthor = Settings::getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
@@ -70,8 +61,6 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     loadMapData();
     GameMap::deserializeObject(stream);
     m_loaded = true;
@@ -85,9 +74,7 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
 #endif
-    CONSOLE_PRINT("Loading map: " + map, Console::eDEBUG);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    CONSOLE_PRINT("Loading map: " + map, GameConsole::eDEBUG);
     loadMapData();
     loadMap(map, onlyLoad, fast, savegame);
 }
@@ -350,7 +337,7 @@ bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> & playerIDs)
 
 GameMap::~GameMap()
 {
-    CONSOLE_PRINT("deleting map.", Console::eDEBUG);
+    CONSOLE_PRINT("deleting map.", GameConsole::eDEBUG);
     // clean up session
     for (qint32 y = 0; y < m_fields.size(); ++y)
     {
@@ -530,7 +517,7 @@ void GameMap::setCurrentPlayer(qint32 player)
 
 void GameMap::onWeatherChanged(Weather* pWeather)
 {
-    CONSOLE_PRINT("GameMap::onWeatherChanged()", Console::eDEBUG);
+    CONSOLE_PRINT("GameMap::onWeatherChanged()", GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     for (qint32 y = 0; y < heigth; y++)
@@ -547,7 +534,7 @@ void GameMap::onWeatherChanged(Weather* pWeather)
 
 void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool showLoadingScreen)
 {
-    CONSOLE_PRINT("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), Console::eDEBUG);
+    CONSOLE_PRINT("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (showLoadingScreen)
     {
@@ -669,10 +656,9 @@ void GameMap::finishUpdateSprites(bool showLoadingScreen)
     {
         m_Rules->createWeatherSprites();
     }
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updateSlidingActorSize();
+        m_pMenu->updateSlidingActorSize();
     }
     if (showLoadingScreen)
     {
@@ -682,7 +668,7 @@ void GameMap::finishUpdateSprites(bool showLoadingScreen)
 
 void GameMap::syncTerrainAnimations(bool showLoadingScreen)
 {
-    CONSOLE_PRINT("synchronizing animations", Console::eDEBUG);
+    CONSOLE_PRINT("synchronizing animations", GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
@@ -705,7 +691,7 @@ void GameMap::syncTerrainAnimations(bool showLoadingScreen)
 
 void GameMap::syncUnitsAndBuildingAnimations()
 {
-    CONSOLE_PRINT("Synchronizing units and building animations", Console::eDEBUG);
+    CONSOLE_PRINT("Synchronizing units and building animations", GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     auto timeMs = oxygine::Stage::getStage()->getClock()->getTime();
@@ -797,7 +783,7 @@ void GameMap::removePlayer(qint32 index)
 
 Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range, bool ignoreMovement)
 {
-    CONSOLE_PRINT("spawning Unit", Console::eDEBUG);
+    CONSOLE_PRINT("spawning Unit", GameConsole::eDEBUG);
     if (owner != nullptr)
     {
         qint32 heigth = getMapHeight();
@@ -817,7 +803,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* own
             else if (i == m_players.size() - 1)
             {
                 // cancel since we have no owner for the unit
-                CONSOLE_PRINT("Invalid player selected. Didn't spawn unit " + unitID, Console::eERROR);
+                CONSOLE_PRINT("Invalid player selected. Didn't spawn unit " + unitID, GameConsole::eERROR);
                 return nullptr;
             }
         }
@@ -826,7 +812,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* own
         qint32 unitCount = pPlayer->getUnitCount();
         if (unitLimit > 0 && unitCount >= unitLimit)
         {
-            CONSOLE_PRINT("Didn't spawn unit " + unitID + " cause unit limit is reached", Console::eDEBUG);
+            CONSOLE_PRINT("Didn't spawn unit " + unitID + " cause unit limit is reached", GameConsole::eDEBUG);
             return nullptr;
         }
         spUnit pUnit = spUnit::create(unitID, pPlayer.get(), true, this);
@@ -923,7 +909,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* own
             }
         }
     }
-    CONSOLE_PRINT("Didn't spawn unit " + unitID + " didn't find an empty field", Console::eDEBUG);
+    CONSOLE_PRINT("Didn't spawn unit " + unitID + " didn't find an empty field", GameConsole::eDEBUG);
     return nullptr;
 }
 
@@ -1096,19 +1082,18 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
     if (onMap(x, y))
     {
         // draw point
-        BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-        if (pMenu != nullptr)
+        if (m_pMenu != nullptr)
         {
-            oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
-            oxygine::spActor pMapSlidingActor = pMenu->getMapSlidingActor();
+            oxygine::spSlidingActorNoClipRect pMapSliding = m_pMenu->getMapSliding();
+            oxygine::spActor pMapSlidingActor = m_pMenu->getMapSlidingActor();
             if (pMapSliding.get() != nullptr &&
                 pMapSlidingActor.get() != nullptr)
             {
                 qint32 newX = pMapSliding->getScaledWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f;
                 qint32 newY = pMapSliding->getScaledHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f;
-                limitPosition(pMenu, newX, newY);
+                limitPosition(m_pMenu, newX, newY);
                 pMapSlidingActor->setPosition(newX, newY);
-                pMenu->getCursor()->setMapPoint(x, y);
+                m_pMenu->getCursor()->setMapPoint(x, y);
             }
         }
         if (updateMinimapPosition)
@@ -1120,13 +1105,12 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
 
 QPoint GameMap::getCenteredPosition()
 {
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
     qint32 x = 0;
     qint32 y = 0;
-    if (pMenu != nullptr)
+    if (m_pMenu != nullptr)
     {
-        oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
-        oxygine::spActor pMapSlidingActor = pMenu->getMapSlidingActor();
+        oxygine::spSlidingActorNoClipRect pMapSliding = m_pMenu->getMapSliding();
+        oxygine::spActor pMapSlidingActor = m_pMenu->getMapSlidingActor();
         x = -(pMapSlidingActor->getX() - pMapSliding->getScaledWidth() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
         y = -(pMapSlidingActor->getY() - pMapSliding->getScaledHeight() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
     }
@@ -1135,16 +1119,15 @@ QPoint GameMap::getCenteredPosition()
 
 void GameMap::moveMap(qint32 x, qint32 y)
 {
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMenu != nullptr)
     {
         // draw point
-        oxygine::spActor pActor = pMenu->getMapSlidingActor();
+        oxygine::spActor pActor = m_pMenu->getMapSlidingActor();
         if (pActor.get() != nullptr)
         {
             qint32 newX = pActor->getX() + x;
             qint32 newY = pActor->getY() + y;
-            limitPosition(pMenu, newX, newY);
+            limitPosition(m_pMenu, newX, newY);
             pActor->setPosition(newX, newY);
             emit sigMovedMap();
         }
@@ -1203,10 +1186,9 @@ void GameMap::setZoom(float zoom)
         // all fine
     }
     setScale(curZoom);
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMenu != nullptr)
     {
-        pMenu->updateSlidingActorSize();
+        m_pMenu->updateSlidingActorSize();
     }
     emit sigZoomChanged(curZoom);
 }
@@ -1338,7 +1320,7 @@ bool GameMap::canBePlaced(const QString & terrainID, qint32 x, qint32 y)
 
 void GameMap::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing map", Console::eDEBUG);
+    CONSOLE_PRINT("GameMap::serializeObject", GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     // store header
@@ -1361,8 +1343,6 @@ void GameMap::serializeObject(QDataStream& pStream) const
         }
         m_players[i]->serializeObject(pStream);
     }
-
-
     pStream << currentPlayerIdx;
     pStream << m_currentDay;
     // store map
@@ -1426,7 +1406,17 @@ void GameMap::updateMapFlags() const
     }
 }
 
-void GameMap::setMenu(GameMenue *newMenu)
+void GameMap::setSavegame(bool newSavegame)
+{
+    m_savegame = newSavegame;
+}
+
+BaseGamemenu *GameMap::getMenu() const
+{
+    return m_pMenu;
+}
+
+void GameMap::setMenu(BaseGamemenu *newMenu)
 {
     m_pMenu = newMenu;
 }
@@ -1479,12 +1469,13 @@ void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
 
 void GameMap::deserializer(QDataStream& pStream, bool fast)
 {
+    CONSOLE_PRINT("GameMap::deserializer", GameConsole::eDEBUG);
     clearMap();
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     // restore map header
     readMapHeader(pStream, m_headerInfo);
 
-    CONSOLE_PRINT("Loading map " + m_headerInfo.m_mapName + " Fast =" + (fast ? "true" : "false"), Console::eDEBUG);
+    CONSOLE_PRINT("Loading map " + m_headerInfo.m_mapName + " Fast =" + (fast ? "true" : "false"), GameConsole::eDEBUG);
     qint32 mapSize = m_headerInfo.m_width * m_headerInfo.m_heigth;
     setSize(m_headerInfo.m_width * GameMap::getImageSize(), m_headerInfo.m_heigth * GameMap::getImageSize());
     bool showLoadingScreen = (mapSize >= loadingScreenSize) && !fast;
@@ -1496,9 +1487,10 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         pLoadingScreen->setProgress(tr("Loading Players"), 5);
     }
-    CONSOLE_PRINT("Loading players count: " + QString::number(m_headerInfo.m_playerCount), Console::eDEBUG);
+    CONSOLE_PRINT("Loading players count: " + QString::number(m_headerInfo.m_playerCount), GameConsole::eDEBUG);
     for (qint32 i = 0; i < m_headerInfo.m_playerCount; i++)
     {
+         CONSOLE_PRINT("Loading player " + QString::number(i), GameConsole::eDEBUG);
         // create player
         m_players.append(spPlayer::create(this));
         // get player data from stream
@@ -1704,7 +1696,7 @@ void GameMap::showDamageCalculator()
 
 void GameMap::startGame()
 {
-    CONSOLE_PRINT("GameMap::startGame()", Console::eDEBUG);
+    CONSOLE_PRINT("GameMap::startGame()", GameConsole::eDEBUG);
     m_Recorder = spGameRecorder::create(this);
     for (qint32 y = 0; y < m_fields.size(); y++)
     {
@@ -1730,7 +1722,7 @@ void GameMap::startGame()
         if (pAI != nullptr)
         {
             pAI->setEnableNeutralTerrainAttack(m_Rules->getAiAttackTerrain());
-            CONSOLE_PRINT("Player " + QString::number(i) + " uses ai " + QString::number(m_players[i]->getBaseGameInput()->getAiType()), Console::eDEBUG);
+            CONSOLE_PRINT("Player " + QString::number(i) + " uses ai " + QString::number(m_players[i]->getBaseGameInput()->getAiType()), GameConsole::eDEBUG);
         }
         else if (pHuman != nullptr)
         {
@@ -1740,7 +1732,7 @@ void GameMap::startGame()
                 buildList.removeAll(unitId);
             }
             m_players[i]->setBuildList(buildList);
-            CONSOLE_PRINT("Player " + QString::number(i) + " uses ai " + QString::number(m_players[i]->getBaseGameInput()->getAiType()), Console::eDEBUG);
+            CONSOLE_PRINT("Player " + QString::number(i) + " uses ai " + QString::number(m_players[i]->getBaseGameInput()->getAiType()), GameConsole::eDEBUG);
         }
     }
     QStringList mods = Settings::getMods();
@@ -1997,7 +1989,7 @@ void GameMap::endOfTurn(Player* pPlayer)
 
 void GameMap::endOfTurnPlayer(Player* pPlayer)
 {
-    CONSOLE_PRINT("Doing end of turn for player " + QString::number(pPlayer->getPlayerID()), Console::eDEBUG);
+    CONSOLE_PRINT("Doing end of turn for player " + QString::number(pPlayer->getPlayerID()), GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
@@ -2047,7 +2039,7 @@ void GameMap::startOfTurn(Player* pPlayer)
 
 void GameMap::startOfTurnNeutral()
 {
-    CONSOLE_PRINT("Doing start of turn for neutrals", Console::eDEBUG);
+    CONSOLE_PRINT("Doing start of turn for neutrals", GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
@@ -2072,7 +2064,7 @@ void GameMap::startOfTurnNeutral()
 
 void GameMap::startOfTurnPlayer(Player* pPlayer)
 {
-    CONSOLE_PRINT("Doing start of turn for player " + QString::number(pPlayer->getPlayerID()), Console::eDEBUG);
+    CONSOLE_PRINT("Doing start of turn for player " + QString::number(pPlayer->getPlayerID()), GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     qint32 playerId = pPlayer->getPlayerID();
@@ -2312,7 +2304,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
 {
     if (anyPlayerAlive())
     {
-        CONSOLE_PRINT("GameMap::nextTurn", Console::eDEBUG);
+        CONSOLE_PRINT("GameMap::nextTurn", GameConsole::eDEBUG);
         m_Rules->checkVictory();
         endOfTurn(m_CurrentPlayer.get());
         bool nextDay = nextPlayer();
@@ -2381,16 +2373,17 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         checkFuel(m_CurrentPlayer.get());
         m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
         m_Rules->initRoundTime();
-        if (m_pMenu != nullptr)
+        auto* pMenu = dynamic_cast<GameMenue*>(m_pMenu);
+        if (pMenu != nullptr)
         {
-            m_pMenu->updatePlayerinfo();
-            m_pMenu->updateMinimap();
+            pMenu->updatePlayerinfo();
+            pMenu->updateMinimap();
         }
         playMusic();
         if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
         {
             Mainapp* pApp = Mainapp::getInstance();
-            pApp->getAudioThread()->playSound("player_turn.wav");
+            pApp->getAudioManager()->playSound("player_turn.wav");
         }
     }
 }
@@ -2400,23 +2393,23 @@ void GameMap::playMusic()
     if (m_mapMusic.isEmpty())
     {
         Mainapp* pApp = Mainapp::getInstance();
-        pApp->getAudioThread()->clearPlayList();
+        pApp->getAudioManager()->clearPlayList();
         m_CurrentPlayer->loadCOMusic();
-        pApp->getAudioThread()->playRandom();
+        pApp->getAudioManager()->playRandom();
     }
     else if (m_loadedMapMusic != m_mapMusic)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        pApp->getAudioThread()->clearPlayList();
-        pApp->getAudioThread()->addMusic(m_mapMusic, m_startLoopMs, m_endLoopMs);
+        pApp->getAudioManager()->clearPlayList();
+        pApp->getAudioManager()->addMusic(m_mapMusic, m_startLoopMs, m_endLoopMs);
         m_loadedMapMusic = m_mapMusic;
-        pApp->getAudioThread()->playRandom();
+        pApp->getAudioManager()->playRandom();
     }
 }
 
 void GameMap::initPlayersAndSelectCOs()
 {
-    CONSOLE_PRINT("GameMap::initPlayersAndSelectCOs", Console::eDEBUG);
+    CONSOLE_PRINT("GameMap::initPlayersAndSelectCOs", GameConsole::eDEBUG);
     bool singleCO = m_Rules->getSingleRandomCO();
     QStringList bannList = m_Rules->getCOBannlist();
     for (qint32 i = 0; i < getPlayerCount(); i++)
@@ -2443,7 +2436,7 @@ void GameMap::initPlayersAndSelectCOs()
         Player* pPlayer = getPlayer(i);
         if (pPlayer->getBaseGameInput() == nullptr)
         {
-            CONSOLE_PRINT("Forcing AI for player " + QString::number(i) + " to human.", Console::eDEBUG);
+            CONSOLE_PRINT("Forcing AI for player " + QString::number(i) + " to human.", GameConsole::eDEBUG);
             pPlayer->setBaseGameInput(spHumanPlayerInput::create(this));
         }
         // resolve CO 1 beeing set and CO 0 not
@@ -2457,18 +2450,25 @@ void GameMap::initPlayersAndSelectCOs()
         {
             qint32 count = 0;
             QStringList perkList = pPlayer->getCO(0)->getPerkList();
-            while (pPlayer->getCO(0)->getCoID() == CO::CO_RANDOM ||
-                   pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_"))
+            if (bannList.size() > 0)
             {
-                pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 0);
-                pPlayer->getCO(0)->setCoStyleFromUserdata();
-                count++;
-                if (count > 2000 * bannList.size())
+                while (pPlayer->getCO(0)->getCoID() == CO::CO_RANDOM ||
+                       pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_") )
                 {
-                    CONSOLE_PRINT("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", Console::eDEBUG);
-                    pPlayer->setCO("", 0);
-                    break;
+                    pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 0);
+                    pPlayer->getCO(0)->setCoStyleFromUserdata();
+                    count++;
+                    if (count > 2000 * bannList.size())
+                    {
+                        CONSOLE_PRINT("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", GameConsole::eDEBUG);
+                        pPlayer->setCO("", 0);
+                        break;
+                    }
                 }
+            }
+            else
+            {
+                pPlayer->setCO("", 0);
             }
             if (pPlayer->getCO(0) != nullptr)
             {
@@ -2483,18 +2483,25 @@ void GameMap::initPlayersAndSelectCOs()
         {
             qint32 count = 0;
             QStringList perkList = pPlayer->getCO(1)->getPerkList();
-            while ((pPlayer->getCO(1)->getCoID() == CO::CO_RANDOM) ||
-                   (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()) ||
-                   (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")))
+            if (bannList.size() > 0)
             {
-                pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 1);
-                pPlayer->getCO(1)->setCoStyleFromUserdata();
-                if (count > 2000 * bannList.size())
+                while ((pPlayer->getCO(1)->getCoID() == CO::CO_RANDOM) ||
+                       (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()) ||
+                       (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")))
                 {
-                    CONSOLE_PRINT("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", Console::eDEBUG);
-                    pPlayer->setCO("", 1);
-                    break;
+                    pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 1);
+                    pPlayer->getCO(1)->setCoStyleFromUserdata();
+                    if (count > 2000 * bannList.size())
+                    {
+                        CONSOLE_PRINT("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", GameConsole::eDEBUG);
+                        pPlayer->setCO("", 1);
+                        break;
+                    }
                 }
+            }
+            else
+            {
+                pPlayer->setCO("", 0);
             }
             if (pPlayer->getCO(1) != nullptr)
             {

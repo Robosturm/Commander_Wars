@@ -2,8 +2,8 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.setAmmo1(1);
-        unit.setMaxAmmo1(1);
+        unit.setAmmo1(3);
+        unit.setMaxAmmo1(3);
         unit.setWeapon1ID("WEAPON_ANTI_SHIP_MISSILE");
 
         unit.setAmmo2(3);
@@ -12,10 +12,10 @@ var Constructor = function()
 
         unit.setFuel(100);
         unit.setMaxFuel(100);
-        unit.setBaseMovementPoints(6);
+        unit.setBaseMovementPoints(7);
         unit.setMinRange(1);
         unit.setMaxRange(1);
-		unit.setVision(2);
+        unit.setVision(3);
     };
     
     this.loadSprites = function(unit)
@@ -32,7 +32,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Missile boat");
+        return qsTr("Destroyer");
     };
     this.startOfTurn = function(unit, map)
     {
@@ -60,7 +60,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
+        animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Matrix, 1);
         animation.setSound("moveship.wav", -2);
         return animation;
     };
@@ -98,6 +98,10 @@ var Constructor = function()
     this.getUnitType = function()
     {
         return GameEnums.UnitType_Naval;
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveship.wav";
     };
 }
 

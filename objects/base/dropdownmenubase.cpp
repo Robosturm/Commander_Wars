@@ -1,20 +1,14 @@
 #include "objects/base/dropdownmenubase.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
-
-#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenuBase");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -30,15 +24,15 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     m_pClipActor->setSize(m_Box->getScaledWidth() - 20 - 45, m_Box->getScaledHeight());
     m_pClipActor->setX(10);
     addChild(m_Box);
-    qint32 maxItemCount = 6;
-    qint32 changedCount = Settings::getHeight() / 40 / 3;
+    qint32 maxItemCount = 2;
+    qint32 changedCount = Settings::getHeight() / 40 / 4;
     if (changedCount > maxItemCount)
     {
         maxItemCount = changedCount;
     }
-    if (Settings::getHeight() / 2 < maxItemCount * 40)
+    if (Settings::getHeight() / 4 < maxItemCount * 40)
     {
-        maxItemCount = Settings::getHeight() / 2 / 40;
+        maxItemCount = Settings::getHeight() / 4 / 40;
     }
     qint32 scrollHeigth = maxItemCount * 40;
     if (itemcount < maxItemCount)
@@ -53,7 +47,6 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     m_Box->addChild(m_pArrowDown);
     m_pArrowDown->setPosition(m_Box->getScaledWidth() - 45, 10);
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
-    m_pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Actor* pPtrDown = m_pArrowDown.get();
     m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [pPtrDown](oxygine::Event*)
     {
@@ -95,13 +88,8 @@ void DropDownmenuBase::showDropDown()
 #ifdef GRAPHICSUPPORT
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
-    m_OriginalOwner = getParent();
-    m_OriginalPosition = getPosition();
     auto transform = computeGlobalTransform();
-    setPosition(transform.x, transform.y);
-    oxygine::spActor pMe = oxygine::spActor(this);
-    oxygine::Stage::getStage()->addChild(pMe);
-    if (getY() > Settings::getHeight() / 2)
+    if (transform.y > Settings::getHeight() / 2)
     {
         if (m_Panel->getH_Scrollbar()->getVisible())
         {
@@ -121,33 +109,14 @@ void DropDownmenuBase::showDropDown()
 
 void DropDownmenuBase::hideDropDown()
 {
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     for (auto & item : m_Items)
     {
         item->setAddColor(QColor(0, 0, 0, 0));
     }
-    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    if (m_OriginalOwner.get() != nullptr &&
-        m_OriginalOwner->getParent() == nullptr)
-    {
-        m_Panel->setVisible(false);
-        hideTooltip();
-        stopTooltiptimer();
-        m_OriginalOwner = nullptr;
-    }
-    else if (m_Panel->getVisible())
-    {
-        m_Panel->setVisible(false);
-        hideTooltip();
-        stopTooltiptimer();
-        oxygine::spActor pMe = oxygine::spActor(this);
-        m_OriginalOwner->addChild(pMe);
-        setPosition(m_OriginalPosition);
-        m_OriginalOwner = nullptr;
-    }
-    else if (oxygine::Stage::getStage().get() == getParent())
-    {
-        detach();
-    }
+    m_Panel->setVisible(false);
+    hideTooltip();
+    stopTooltiptimer();
 }
 
 void DropDownmenuBase::setEnabled(bool value)
@@ -163,7 +132,7 @@ qint32 DropDownmenuBase::getCurrentItem() const
     return m_currentItem;
 }
 
-const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item, qint32 id)
+const oxygine::Point& DropDownmenuBase::addDropDownItem(oxygine::spActor item, qint32 id)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
@@ -174,7 +143,6 @@ const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item,
     pBox->setPosition(0, 40 * m_Items.size());
 
     m_Items.append(pBox);
-    pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_Panel->addItem(pBox);
     // add some event handling :)
     oxygine::Actor* pPtrBox = pBox.get();

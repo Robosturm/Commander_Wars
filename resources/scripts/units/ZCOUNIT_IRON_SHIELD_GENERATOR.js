@@ -45,12 +45,12 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("iron_shield_generator+walk+mask", GameEnums.Recoloring_Matrix, 2);
-        animation.setSound("movetank.wav", -2);
+        animation.setSound("movewalker.wav", -2);
         return animation;
     };
     this.getDescription = function()
     {
-        return "Unarmed unit that can give an allied unit a huge defense boost.";
+        return qsTr("Unarmed unit that can give an allied unit a huge defense boost.");
     };
     this.getUnitType = function()
     {
@@ -59,6 +59,10 @@ var Constructor = function()
     this.getCOSpecificUnit = function(building)
     {
         return true;
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "movewalker.wav";
     };
 }
 

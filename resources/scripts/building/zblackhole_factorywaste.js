@@ -14,6 +14,10 @@ var Constructor = function()
         building.loadSprite("blackhole+factory+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
         building.loadSprite("blackhole+factory+waste_pipe", false);
     };
+    this.getName = function()
+    {
+        return qsTr("Black Hole waste factory");
+    };
 };
 
 Constructor.prototype = __ZBLACKHOLE_FACTORYBASE;

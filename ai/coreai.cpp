@@ -1,7 +1,7 @@
 #include "ai/coreai.h"
 #include "ai/targetedunitpathfindingsystem.h"
+#include "ai/aiprocesspipe.h"
 
-#include "game/gameanimation/gameanimationfactory.h"
 #include "game/gamemap.h"
 #include "game/unit.h"
 #include "game/gameaction.h"
@@ -10,63 +10,70 @@
 #include "game/co.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 #include "resource_management/cospritemanager.h"
+#include "resource_management/weaponmanager.h"
+#include "resource_management/unitspritemanager.h"
 
 #include <QFile>
 #include <QSettings>
 #include <map>
 
-const QString CoreAI::ACTION_WAIT = "ACTION_WAIT";
-const QString CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
-const QString CoreAI::ACTION_SUPPORTSINGLE = "ACTION_SUPPORTSINGLE";
-const QString CoreAI::ACTION_SUPPORTSINGLE_REPAIR = "ACTION_SUPPORTSINGLE_REPAIR";
-const QString CoreAI::ACTION_SUPPORTSINGLE_FREEREPAIR = "ACTION_SUPPORTSINGLE_FREEREPAIR";
-const QString CoreAI::ACTION_SUPPORTSINGLE_SUPPLY = "ACTION_SUPPORTSINGLE_SUPPLY";
-const QString CoreAI::ACTION_SUPPORTALL = "ACTION_SUPPORTALL";
-const QString CoreAI::ACTION_SUPPORTALL_RATION = "ACTION_SUPPORTALL_RATION";
-const QString CoreAI::ACTION_SUPPORTALL_RATION_MONEY = "ACTION_SUPPORTALL_RATION_MONEY";
-const QString CoreAI::ACTION_UNSTEALTH = "ACTION_UNSTEALTH";
-const QString CoreAI::ACTION_STEALTH = "ACTION_STEALTH";
-const QString CoreAI::ACTION_BUILD_UNITS = "ACTION_BUILD_UNITS";
-const QString CoreAI::ACTION_CAPTURE = "ACTION_CAPTURE";
-const QString CoreAI::ACTION_MISSILE = "ACTION_MISSILE";
-const QString CoreAI::ACTION_PLACE = "ACTION_PLACE";
-const QString CoreAI::ACTION_FIRE = "ACTION_FIRE";
-const QString CoreAI::ACTION_JOIN = "ACTION_JOIN";
-const QString CoreAI::ACTION_UNLOAD = "ACTION_UNLOAD";
-const QString CoreAI::ACTION_LOAD = "ACTION_LOAD";
-const QString CoreAI::ACTION_NEXT_PLAYER = "ACTION_NEXT_PLAYER";
-const QString CoreAI::ACTION_SWAP_COS = "ACTION_SWAP_COS";
-const QString CoreAI::ACTION_ACTIVATE_TAGPOWER = "ACTION_ACTIVATE_TAGPOWER";
-const QString CoreAI::ACTION_ACTIVATE_POWER_CO_0 = "ACTION_ACTIVATE_POWER_CO_0";
-const QString CoreAI::ACTION_ACTIVATE_POWER_CO_1 = "ACTION_ACTIVATE_POWER_CO_1";
-const QString CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_0 = "ACTION_ACTIVATE_SUPERPOWER_CO_0";
-const QString CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_1 = "ACTION_ACTIVATE_SUPERPOWER_CO_1";
-const QString CoreAI::ACTION_CO_UNIT_0 = "ACTION_CO_UNIT_0";
-const QString CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
-const QString CoreAI::ACTION_EXPLODE = "ACTION_EXPLODE";
-const QString CoreAI::ACTION_FLARE = "ACTION_FLARE";
-const QString CoreAI::ACTION_TRAP = "ACTION_TRAP";
+const char* const CoreAI::ACTION_WAIT = "ACTION_WAIT";
+const char* const CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
+const char* const CoreAI::ACTION_SUPPORTSINGLE = "ACTION_SUPPORTSINGLE";
+const char* const CoreAI::ACTION_SUPPORTSINGLE_REPAIR = "ACTION_SUPPORTSINGLE_REPAIR";
+const char* const CoreAI::ACTION_SUPPORTSINGLE_FREEREPAIR = "ACTION_SUPPORTSINGLE_FREEREPAIR";
+const char* const CoreAI::ACTION_SUPPORTSINGLE_SUPPLY = "ACTION_SUPPORTSINGLE_SUPPLY";
+const char* const CoreAI::ACTION_SUPPORTALL = "ACTION_SUPPORTALL";
+const char* const CoreAI::ACTION_SUPPORTALL_RATION = "ACTION_SUPPORTALL_RATION";
+const char* const CoreAI::ACTION_SUPPORTALL_RATION_MONEY = "ACTION_SUPPORTALL_RATION_MONEY";
+const char* const CoreAI::ACTION_UNSTEALTH = "ACTION_UNSTEALTH";
+const char* const CoreAI::ACTION_STEALTH = "ACTION_STEALTH";
+const char* const CoreAI::ACTION_BUILD_UNITS = "ACTION_BUILD_UNITS";
+const char* const CoreAI::ACTION_CAPTURE = "ACTION_CAPTURE";
+const char* const CoreAI::ACTION_MISSILE = "ACTION_MISSILE";
+const char* const CoreAI::ACTION_PLACE = "ACTION_PLACE";
+const char* const CoreAI::ACTION_FIRE = "ACTION_FIRE";
+const char* const CoreAI::ACTION_JOIN = "ACTION_JOIN";
+const char* const CoreAI::ACTION_UNLOAD = "ACTION_UNLOAD";
+const char* const CoreAI::ACTION_LOAD = "ACTION_LOAD";
+const char* const CoreAI::ACTION_NEXT_PLAYER = "ACTION_NEXT_PLAYER";
+const char* const CoreAI::ACTION_SWAP_COS = "ACTION_SWAP_COS";
+const char* const CoreAI::ACTION_ACTIVATE_TAGPOWER = "ACTION_ACTIVATE_TAGPOWER";
+const char* const CoreAI::ACTION_ACTIVATE_POWER_CO_0 = "ACTION_ACTIVATE_POWER_CO_0";
+const char* const CoreAI::ACTION_ACTIVATE_POWER_CO_1 = "ACTION_ACTIVATE_POWER_CO_1";
+const char* const CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_0 = "ACTION_ACTIVATE_SUPERPOWER_CO_0";
+const char* const CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_1 = "ACTION_ACTIVATE_SUPERPOWER_CO_1";
+const char* const CoreAI::ACTION_CO_UNIT_0 = "ACTION_CO_UNIT_0";
+const char* const CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
+const char* const CoreAI::ACTION_EXPLODE = "ACTION_EXPLODE";
+const char* const CoreAI::ACTION_FLARE = "ACTION_FLARE";
+const char* const CoreAI::ACTION_TRAP = "ACTION_TRAP";
+const char* const CoreAI::ACTION_BLACKHOLEFACTORY_DOOR1 = "ACTION_BLACKHOLEFACTORY_DOOR1";
+const char* const CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2 = "ACTION_BLACKHOLEFACTORY_DOOR2";
+const char* const CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 = "ACTION_BLACKHOLEFACTORY_DOOR3";
+const char* const CoreAI::ACTION_NEST_FACTORY_DOOR = "ACTION_NEST_FACTORY_DOOR";
 
-const QString CoreAI::UNIT_INFANTRY = "INFANTRY";
-const QString CoreAI::BUILDING_HQ = "HQ";
+
+const char* const CoreAI::UNIT_INFANTRY = "INFANTRY";
+const char* const CoreAI::BUILDING_HQ = "HQ";
+
+std::map<QString, float> CoreAI::m_baseDamageTable;
 
 CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     : BaseGameInputIF(pMap, aiType),
-      m_aiName(jsName)
+      m_aiName(jsName),
+      m_productionSystem(this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("CoreAI");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
 
     // load static information from scripts to improve performance
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -85,6 +92,7 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     {
         m_flareInfo.unfogRange = erg.toNumber();
     }
+    AI_CONSOLE_PRINT("Creating core ai", GameConsole::eDEBUG);
 }
 
 void CoreAI::init(GameMenue* pMenu)
@@ -93,8 +101,17 @@ void CoreAI::init(GameMenue* pMenu)
     {
         m_initDone = true;
         m_pMenu = pMenu;
-        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-        connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        if (Settings::getAiSlave())
+        {
+            // connect to ai pipe
+            connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+            connect(this, &CoreAI::performAction, &Mainapp::getAiProcessPipe(), &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
+        }
+        else if (!Settings::getSpawnAiProcess())
+        {
+            connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+            connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        }
         if (m_pMap != nullptr)
         {
             qint32 heigth = m_pMap->getMapHeight();
@@ -111,6 +128,11 @@ void CoreAI::init(GameMenue* pMenu)
     }
 }
 
+void CoreAI::onGameStart()
+{
+    m_productionSystem.initialize();
+}
+
 TargetedUnitPathFindingSystem* CoreAI::createTargetedPfs(Unit* pUnit, const QVector<QVector3D> & targets)
 {
     std::vector<QVector3D> stdTargets;
@@ -124,10 +146,9 @@ TargetedUnitPathFindingSystem* CoreAI::createTargetedPfs(Unit* pUnit, const QVec
     return ret;
 }
 
-
 void CoreAI::loadIni(QString file)
 {
-        AI_CONSOLE_PRINT("CoreAI::loadIni " + file, Console::eDEBUG);
+        AI_CONSOLE_PRINT("CoreAI::loadIni " + file, GameConsole::eDEBUG);
         m_iniFiles.append(file);
         QStringList searchFiles;
         if (!file.isEmpty())
@@ -155,7 +176,7 @@ void CoreAI::readIni(QString name)
     if (QFile::exists(name))
     {
         QSettings settings(name, QSettings::IniFormat);
-        AI_CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), Console::eDEBUG);
+        AI_CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), GameConsole::eDEBUG);
         QString lastGroup = "";
         for (auto & entry : m_iniData)
         {
@@ -185,7 +206,7 @@ void CoreAI::readIni(QString name)
 void CoreAI::saveIni(QString name) const
 {
     QSettings settings(name, QSettings::IniFormat);
-    AI_CONSOLE_PRINT("NormalAi::saveIni status=" + QString::number(settings.status()), Console::eDEBUG);
+    AI_CONSOLE_PRINT("NormalAi::saveIni status=" + QString::number(settings.status()), GameConsole::eDEBUG);
     QString lastGroup = "";
     for (auto & entry : m_iniData)
     {
@@ -276,7 +297,6 @@ double CoreAI::getInitValue(QString name) const
 
 void CoreAI::nextAction()
 {
-    AI_CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
     // check if it's our turn
     if (!m_processing)
     {
@@ -286,10 +306,10 @@ void CoreAI::nextAction()
             m_pPlayer == m_pMap->getCurrentPlayer() &&
             m_pMenu->getGameStarted())
         {
-
+            AI_CONSOLE_PRINT("CoreAI::nextAction for player " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), GameConsole::eDEBUG);
             if (!processPredefinedAi())
             {
-                AI_CONSOLE_PRINT("Processing ai specific behaviour", Console::eDEBUG);
+                AI_CONSOLE_PRINT("Processing ai specific behaviour", GameConsole::eDEBUG);
                 // if so execute next action
                 process();
             }
@@ -298,7 +318,7 @@ void CoreAI::nextAction()
     }
     else
     {
-        AI_CONSOLE_PRINT("Unexpected nextAction call", Console::eDEBUG);
+        AI_CONSOLE_PRINT("Unexpected nextAction call", GameConsole::eDEBUG);
     }
 }
 
@@ -330,7 +350,7 @@ qint32 CoreAI::index(std::vector<QVector3D>& points, const QPoint & point)
 
 bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::useCOPower()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::useCOPower()", GameConsole::eDEBUG);
     std::vector<float> data;
     data.push_back(-1);
     data.push_back(0);
@@ -460,7 +480,7 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Buildi
 
 void CoreAI::createMovementMap(spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
-    AI_CONSOLE_PRINT("CoreAI::createMovementMap", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::createMovementMap", GameConsole::eDEBUG);
     
     if (m_pMap != nullptr)
     {
@@ -634,8 +654,7 @@ void CoreAI::getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindi
 }
 
 void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, std::vector<DamageData>& ret, std::vector<QVector3D>& moveTargetFields) const
-{
-    
+{    
     // much easier case
     // check if the action can be performed here
     if (pAction->canBePerformed())
@@ -762,7 +781,7 @@ QRectF CoreAI::calcVirtuelUnitDamage(GameMap* pMap,
 
 bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::moveAwayFromProduction", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::moveAwayFromProduction", GameConsole::eDEBUG);
     m_aiStep = AISteps::moveAway;
     
     for (auto & pUnit : pUnits->getVector())
@@ -820,7 +839,7 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
 
 void CoreAI::addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost)
 {
-    AI_CONSOLE_PRINT("CoreAI::addMenuItemData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::addMenuItemData()", GameConsole::eDEBUG);
     pGameAction->writeDataString(itemID);
     // increase costs and input step
     pGameAction->setCosts(pGameAction->getCosts() + cost);
@@ -829,7 +848,7 @@ void CoreAI::addMenuItemData(spGameAction & pGameAction, const QString & itemID,
 
 void CoreAI::addSelectedFieldData(spGameAction & pGameAction, const QPoint & point)
 {
-    AI_CONSOLE_PRINT("CoreAI::addSelectedFieldData()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::addSelectedFieldData()", GameConsole::eDEBUG);
     pGameAction->writeDataInt32(point.x());
     pGameAction->writeDataInt32(point.y());
     pGameAction->setInputStep(pGameAction->getInputStep() + 1);
@@ -977,86 +996,109 @@ CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 
 std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
                                                 spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                                 bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
-                                                bool all, qint32 distanceModifier)
+                                                bool all, qint32 distanceModifier, bool onlyTrueIslands)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
     std::vector<Unit*> transportUnits;
     qint32 transporterMovement = pUnit->getMovementpoints(pUnit->Unit::getPosition());
-    for (auto & pOtherUnit : pUnits->getVector())
+    if (transporterMovement > 0)
     {
-        Unit* pLoadingUnit = pOtherUnit.get();
-        if (pLoadingUnit != pUnit && pLoadingUnit->getHp() > 0.0f)
+        for (auto & pOtherUnit : pUnits->getVector())
         {
-            // can we transport it?
-            if (pUnit->canTransportUnit(pLoadingUnit, virtualLoading))
+            Unit* pLoadingUnit = pOtherUnit.get();
+            if (pLoadingUnit != pUnit && pLoadingUnit->getHp() > 0.0f)
             {
-                bool found = false;
-                bool canCapture = pLoadingUnit->getActionList().contains(ACTION_CAPTURE);
-                qint32 loadingIslandIdx = getIslandIndex(pLoadingUnit);
-                qint32 loadingIsland = getIsland(pLoadingUnit);
-                if (addCaptureTargets && canCapture)
+                // can we transport it?
+                if (pUnit->canTransportUnit(pLoadingUnit, virtualLoading))
                 {
-                    // no targets found -> try to speed up those infis
-                    found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
-                                             loadingIslandIdx, loadingIsland);
-                }
-                else if (!pLoadingUnit->getHasMoved())
-                {
-                    found = hasTargets(transporterMovement, pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
-                                       loadingIslandIdx, loadingIsland);
-                }
-                if (!found)
-                {
-                    // no targets for this unit :(
-                    found = false;
-                    qint32 targetX = 0;
-                    qint32 targetY = 0;
-                    qint32 min = 1;
-                    qint32 max = transporterMovement;
-                    CircleReturns circleResult = CircleReturns::Fail;
-                    qint32 unitX = pLoadingUnit->getX();
-                    qint32 unitY = pLoadingUnit->getY();
-                    while (circleResult == CircleReturns::Fail)
+                    bool found = false;
+                    bool canCapture = pLoadingUnit->getActionList().contains(ACTION_CAPTURE);
+                    qint32 loadingIslandIdx = getIslandIndex(pLoadingUnit);
+                    qint32 loadingIsland = getIsland(pLoadingUnit);
+                    qint32 localDistanceModifier = distanceModifier;
+                    if (addCaptureTargets && canCapture)
                     {
-                        circleResult = doExtendedCircleAction(unitX, unitY, min, max, [this, pUnit, loadingIslandIdx, loadingIsland, unitIslandIdx, unitIsland, &targetX, &targetY, &found](qint32 x, qint32 y)
+                        // no targets found -> try to speed up those infis
+                        auto distance = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings.get(),
+                                                         loadingIslandIdx, loadingIsland, onlyTrueIslands);
+                        switch (distance)
                         {
-                            if (m_pMap->onMap(x, y))
+                            case TargetDistance::CloseTarget:
                             {
-                                Unit* pFieldUnit = m_pMap->getTerrain(x, y)->getUnit();
-                                if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland)
+                                found = true;
+                                break;
+                            }
+                            case TargetDistance::FarTarget:
+                            {
+                                localDistanceModifier *= 3;
+                                found = false;
+                                break;
+                            }
+                            case TargetDistance::NoTarget:
+                            {
+                                found = false;
+                                break;
+                            }
+                        }
+                    }
+                    else if (!pLoadingUnit->getHasMoved())
+                    {
+                        found = hasTargets(transporterMovement, pLoadingUnit, canCapture, pEnemyUnits.get(), pEnemyBuildings.get(),
+                                           loadingIslandIdx, loadingIsland, onlyTrueIslands);
+                    }
+                    if (!found)
+                    {
+                        // no targets for this unit :(
+                        found = false;
+                        qint32 targetX = 0;
+                        qint32 targetY = 0;
+                        qint32 min = 1;
+                        qint32 max = transporterMovement;
+                        CircleReturns circleResult = CircleReturns::Fail;
+                        qint32 unitX = pLoadingUnit->getX();
+                        qint32 unitY = pLoadingUnit->getY();
+                        while (circleResult == CircleReturns::Fail)
+                        {
+                            circleResult = doExtendedCircleAction(unitX, unitY, min, max, [this, pUnit, loadingIslandIdx, loadingIsland, unitIslandIdx, unitIsland, &targetX, &targetY, &found](qint32 x, qint32 y)
+                            {
+                                if (m_pMap->onMap(x, y))
                                 {
-                                    if ((m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
-                                        (pFieldUnit == nullptr || pFieldUnit == pUnit) &&
-                                        isLoadingTerrain(pUnit, m_pMap->getTerrain(x, y)))
+                                    Unit* pFieldUnit = m_pMap->getTerrain(x, y)->getUnit();
+                                    if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland)
                                     {
-                                        found = true;
-                                        targetX = x;
-                                        targetY = y;
-                                        return CircleReturns::Success;
+                                        if ((m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
+                                            (pFieldUnit == nullptr || pFieldUnit == pUnit) &&
+                                            isLoadingTerrain(pUnit, m_pMap->getTerrain(x, y)))
+                                        {
+                                            found = true;
+                                            targetX = x;
+                                            targetY = y;
+                                            return CircleReturns::Success;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return CircleReturns::Stop;
                                     }
                                 }
                                 else
                                 {
                                     return CircleReturns::Stop;
                                 }
-                            }
-                            else
-                            {
-                                return CircleReturns::Stop;
-                            }
-                            return CircleReturns::Fail;
-                        });
-                        min += transporterMovement;
-                        max += transporterMovement;
-                    }
-                    if (found && (virtualLoading || !GlobalUtils::contains(targets, QVector3D(targetX, targetY, distanceModifier))))
-                    {
-                        targets.push_back(QVector3D(targetX, targetY, distanceModifier));
-                        transportUnits.push_back(pLoadingUnit);
-                        if (!all)
+                                return CircleReturns::Fail;
+                            });
+                            min += transporterMovement;
+                            max += transporterMovement;
+                        }
+                        if (found && (virtualLoading || !GlobalUtils::contains(targets, QVector3D(targetX, targetY, localDistanceModifier))))
                         {
-                            break;
+                            targets.push_back(QVector3D(targetX, targetY, localDistanceModifier));
+                            transportUnits.push_back(pLoadingUnit);
+                            if (!all)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
@@ -1066,8 +1108,57 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
     return transportUnits;
 }
 
-bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                        qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit)
+qint32 CoreAI::getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
+{
+    qint32 count = 0;
+    for (auto & pUnit : pUnits->getVector())
+    {
+        if (unitIds.size() == 0 ||
+            unitIds.contains(pUnit->getUnitID()))
+        {
+            qint32 loadingIslandIdx = getIslandIndex(pUnit.get());
+            qint32 loadingIsland = getIsland(pUnit.get());
+            if ((pUnit->hasAmmo1() || pUnit->hasAmmo2()) &&
+                !hasTargets(0, pUnit.get(), false, pEnemyUnits, pEnemyBuildings, loadingIslandIdx, loadingIsland, true, true, true))
+            {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
+bool CoreAI::shareIslandWithEnemy(QmlVectorUnit* pUnits, QmlVectorBuilding * pBuildings, QmlVectorBuilding * pEnemyBuildings)
+{
+    for (auto & unit : pUnits->getVector())
+    {
+        if (unit->getUnitType() != static_cast<qint32>(GameEnums::UnitType::UnitType_Infantry) &&
+            unit->getUnitType() != static_cast<qint32>(GameEnums::UnitType::UnitType_Hovercraft) &&
+            unit->getUnitType() != static_cast<qint32>(GameEnums::UnitType::UnitType_Air) &&
+            unit->getUnitType() != static_cast<qint32>(GameEnums::UnitType::UnitType_Naval))
+        {
+            for (auto & pBuilding : pBuildings->getVector())
+            {
+                if (onSameIsland(unit.get(), pBuilding.get()) &&
+                    pBuilding->isProductionBuilding())
+                {
+                    for (auto & pEnemyBuilding : pEnemyBuildings->getVector())
+                    {
+                        if (onSameIsland(unit.get(), pEnemyBuilding.get()) &&
+                            pEnemyBuilding->isProductionBuilding())
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings,
+                        qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit, bool onlyTrueIslands, bool useEnemyProductionBuildings)
 {
     bool found = false;
     QPoint unitPos(pLoadingUnit->Unit::getX(), pLoadingUnit->Unit::getY());
@@ -1079,8 +1170,7 @@ bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool can
     {
         qint32 x = pEnemy->Unit::getX();
         qint32 y = pEnemy->Unit::getY();
-        if (GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance ||
-            fastUnit)
+        if (fastUnit || onlyTrueIslands || GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
         {
             if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland &&
                 pLoadingUnit->isAttackable(pEnemy.get(), true))
@@ -1091,18 +1181,38 @@ bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool can
             }
         }
     }
+    if (!found && useEnemyProductionBuildings)
+    {
+        for (auto & pBuilding : pEnemyBuildings->getVector())
+        {
+            qint32 x = pBuilding->Building::getX();
+            qint32 y = pBuilding->Building::getY();
+            if (fastUnit || onlyTrueIslands || GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
+            {
+                if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland)
+                {
+                    if (pBuilding->isProductionBuilding())
+                    {
+                        // this unit can do stuff skip it
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
     if (!found)
     {
-        found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
-                                 loadingIslandIdx, loadingIsland);
+        found = (hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
+                                 loadingIslandIdx, loadingIsland) >= TargetDistance::FarTarget);
     }
     return found;
 }
 
-bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorBuilding & pEnemyBuildings,
-                              qint32 loadingIslandIdx, qint32 loadingIsland)
+CoreAI::TargetDistance CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, QmlVectorBuilding * pEnemyBuildings,
+                              qint32 loadingIslandIdx, qint32 loadingIsland, bool onlyTrueIslands)
 {
-    bool found = false;
+    TargetDistance found = TargetDistance::NoTarget;
     // check for capturing or missiles next
     if (canCapture)
     {
@@ -1114,14 +1224,21 @@ bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorBu
         {
             qint32 x = pBuilding->Building::getX();
             qint32 y = pBuilding->Building::getY();
-            if (GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
+            if (onlyTrueIslands)
             {
                 if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland &&
                     pBuilding->isCaptureOrMissileBuilding(missileTarget))
                 {
                     // this unit can do stuff skip it
-                    found = true;
-                    break;
+                    if (GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
+                    {
+                        found = TargetDistance::CloseTarget;
+                        break;
+                    }
+                    else
+                    {
+                        found = TargetDistance::FarTarget;
+                    }
                 }
             }
         }
@@ -1129,7 +1246,7 @@ bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorBu
     return found;
 }
 
-void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets)
+void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     spQmlVectorPoint unitFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     
@@ -1147,7 +1264,7 @@ void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUni
                         if (m_pMap->onMap(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y()) &&
                             m_pMap->getTerrain(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y())->getUnit() == nullptr)
                         {
-                            QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 2);
+                            QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 1 + distanceModifier);
                             if (!GlobalUtils::contains(targets, point))
                             {
                                 targets.push_back(point);
@@ -1166,7 +1283,7 @@ void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUni
                     if (m_pMap->onMap(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y()) &&
                         m_pMap->getTerrain(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y())->getUnit() == nullptr)
                     {
-                        QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 2);
+                        QVector3D point = QVector3D(pUnit->Unit::getX() + field.x(), pUnit->Unit::getY() + field.y(), 1 + distanceModifier);
                         if (!GlobalUtils::contains(targets, point))
                         {
                             targets.push_back(point);
@@ -1198,7 +1315,7 @@ void CoreAI::appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQm
     }
 }
 
-void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets)
+void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     
     qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
@@ -1226,7 +1343,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std
                                 stealthMalus /= 2;
                             }
                         }
-                        QVector3D possibleTarget(x, y, 1 + stealthMalus);
+                        QVector3D possibleTarget(x, y, distanceModifier + stealthMalus);
                         if (!GlobalUtils::contains(targets, possibleTarget))
                         {
                             targets.push_back(possibleTarget);
@@ -1238,7 +1355,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std
     }
 }
 
-void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets)
+void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     
     for (auto & pEnemy : pEnemyUnits->getVector())
@@ -1268,7 +1385,7 @@ void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pE
                                 stealthMalus /= 2;
                             }
                         }
-                        QVector3D possibleTarget(x, y, 4 + stealthMalus);
+                        QVector3D possibleTarget(x, y, 4 + distanceModifier + stealthMalus);
                         if (!GlobalUtils::contains(targets, possibleTarget))
                         {
                             targets.push_back(possibleTarget);
@@ -1339,13 +1456,15 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
         {
             // assuming unit transporter only have space for one unit
             if (pTransporterUnit->canTransportUnit(pUnit) &&
+                pTransporterUnit->getLoadedUnitCount() == 0 &&
                 pTransporterUnit->getLoadingPlace() == 1)
             {
                 bool goodTransporter = false;
                 // check captures on this island
                 qint32 transporterIslandIdx = getIslandIndex(pTransporterUnit.get());
                 qint32 transporterIsland = getIsland(pTransporterUnit.get());
-                if (!hasCaptureTarget(pUnit, true, pEnemyBuildings, transporterIslandIdx, transporterIsland))
+                auto hasTargets = hasCaptureTarget(pUnit, true, pEnemyBuildings.get(), transporterIslandIdx, transporterIsland);
+                if (hasTargets <= TargetDistance::FarTarget)
                 {
                     for (auto & pEnemyBuilding : pEnemyBuildings->getVector())
                     {
@@ -1365,8 +1484,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
                     }
                     if (goodTransporter)
                     {
-
-                        targets.push_back(QVector3D(pTransporterUnit->Unit::getX(), pTransporterUnit->Unit::getY(), 1));
+                        targets.push_back(QVector3D(pTransporterUnit->Unit::getX(), pTransporterUnit->Unit::getY(), GlobalUtils::roundUp(m_minSameIslandDistance)));
                     }
                 }
             }
@@ -1376,7 +1494,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
 
 void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
-    AI_CONSOLE_PRINT("CoreAI::appendNearestUnloadTargets", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::appendNearestUnloadTargets", GameConsole::eDEBUG);
     std::map<QString, std::vector<qint32>> checkedIslands;
     std::vector<qint32> loadedUnitIslandIdx;
 
@@ -1520,7 +1638,7 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction & pAction, UnitPathFin
     }
     if (score > 0)
     {
-        AI_CONSOLE_PRINT("Found flare target with score: " + QString::number(score), Console::eDEBUG);
+        AI_CONSOLE_PRINT("Found flare target with score: " + QString::number(score), GameConsole::eDEBUG);
     }
     pAction->setMovepath(QVector<QPoint>(), 0);
 }
@@ -1625,7 +1743,7 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, std::vector
     }
 }
 
-void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
+void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorUnit & ownUnits, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
@@ -1638,6 +1756,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
             capturUnits.push_back(pLoadedUnit.get());
         }
     }
+    QVector<qint32> usedIsland;
     if (capturUnits.size() > 0)
     {
         spQmlVectorPoint pUnloadArea = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
@@ -1647,7 +1766,9 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
         bool hasMoved = capturUnits[0]->getHasMoved();
         // simulate a not moved unit for checking if we can capture the building or fire a missile from it.
         capturUnits[0]->setHasMoved(false);
+        auto island = getIslandIndex(capturUnits[0]);
         bool missileTarget = hasMissileTarget();
+        constexpr qint32 usedIslandMalus = 3;
         for (auto & pBuilding : pEnemyBuildings->getVector())
         {
             QPoint point(pBuilding->Building::getX(), pBuilding->Building::getY());
@@ -1657,6 +1778,24 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
                 if (pBuilding->isCaptureOrMissileBuilding(missileTarget) &&
                     pBuilding->getTerrain()->getUnit() == nullptr)
                 {
+                    auto islandIdx = m_IslandMaps[island]->getIsland(point.x(), point.y());
+                    qint32 finalDistanceModifier = distanceModifier;
+                    if (usedIsland.contains(islandIdx))
+                    {
+                        finalDistanceModifier += usedIslandMalus;
+                    }
+                    else
+                    {
+                        for (auto & unit : ownUnits->getVector())
+                        {
+                            if (unit->canCapture() && onSameIsland(island, point.x(), point.y(), unit->getX(), unit->getY()))
+                            {
+                                finalDistanceModifier += usedIslandMalus;
+                                usedIsland.append(islandIdx);
+                                break;
+                            }
+                        }
+                    }
                     // check unload fields
                     for (auto & unloadPos : pUnloadArea->getVector())
                     {
@@ -1664,7 +1803,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
                         qint32 y = point.y() + unloadPos.y();
                         if (m_pMap->onMap(x, y) &&
                             m_pMap->getTerrain(x, y)->getUnit() == nullptr &&
-                            !GlobalUtils::contains(targets, QVector3D(x, y, distanceModifier)))
+                            !GlobalUtils::contains(targets, QVector3D(x, y, finalDistanceModifier)))
                         {
                             if (isUnloadTerrain(pUnit, m_pMap->getTerrain(x, y)))
                             {
@@ -1675,7 +1814,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
                                     {
                                         if (captureUnit->canMoveOver(x, y))
                                         {
-                                            targets.push_back(QVector3D(x, y, distanceModifier));
+                                            targets.push_back(QVector3D(x, y, finalDistanceModifier));
                                             break;
                                         }
                                     }
@@ -1759,7 +1898,7 @@ void CoreAI::appendUnloadTargetsForAttacking(Unit* pUnit, spQmlVectorUnit & pEne
     }
 }
 
-void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets)
+void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     
     qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
@@ -1798,7 +1937,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
                         {
                             if (pUnit->canMoveOver(x, y))
                             {
-                                QVector3D possibleTarget(x, y, 2);
+                                QVector3D possibleTarget(x, y, 1 + distanceModifier);
                                 if (!GlobalUtils::contains(targets, possibleTarget))
                                 {
                                     targets.push_back(possibleTarget);
@@ -1847,7 +1986,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
 
 void CoreAI::rebuildIsland(spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::rebuildIsland", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::rebuildIsland", GameConsole::eDEBUG);
     // and create one
     for (auto & pUnit : pUnits->getVector())
     {
@@ -1862,6 +2001,11 @@ void CoreAI::rebuildIsland(spQmlVectorUnit & pUnits)
                 createIslandMap(pLoadedUnit->getMovementType(), pLoadedUnit->getUnitID());
             }
         }
+    }
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    for (const auto & unitId : m_pPlayer->getBuildList())
+    {
+        createIslandMap(pUnitSpriteManager->getMovementType(unitId), unitId);
     }
 }
 
@@ -2020,6 +2164,18 @@ qint32 CoreAI::getIsland(Unit* pUnit) const
     return -1;
 }
 
+qint32 CoreAI::getIslandSize(Unit* pUnit, qint32 x, qint32 y) const
+{
+    for (auto & island : m_IslandMaps)
+    {
+        if (island->getMovementType() == pUnit->getMovementType())
+        {
+            return island->getIslandSize(island->getIsland(x, y));
+        }
+    }
+    return 0;
+}
+
 qint32 CoreAI::getIslandIndex(Unit* pUnit) const
 {
     for (qint32 i = 0; i < m_IslandMaps.size(); i++)
@@ -2034,7 +2190,7 @@ qint32 CoreAI::getIslandIndex(Unit* pUnit) const
 
 void CoreAI::finishTurn()
 {
-    AI_CONSOLE_PRINT("CoreAI::finishTurn(()", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::finishTurn(()", GameConsole::eDEBUG);
     m_usedTransportSystem = false;
     m_usedPredefinedAi = false;
     spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER, m_pMap);
@@ -2071,10 +2227,9 @@ void CoreAI::finishTurn()
     emit performAction(pAction);
 }
 
-bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
+bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::useBuilding", Console::eDEBUG);
-    
+    AI_CONSOLE_PRINT("CoreAI::useBuilding", GameConsole::eDEBUG);
     for (auto & pBuilding : pBuildings->getVector())
     {
         QStringList actions = pBuilding->getActionList();
@@ -2102,47 +2257,53 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                                 if (stepType == GameAction::INPUTSTEP_FIELD)
                                 {
                                     QPoint target(0, 0);
-                                    qint32 maxValue = std::numeric_limits<qint32>::lowest();
                                     spMarkedFieldData pData = pAction->getMarkedFieldStepData();
-                                    if (pData->getAllFields())
+                                    if (!getBuildingTargetPointFromScript(pAction, pData, target))
                                     {
-                                        qint32 width = m_pMap->getMapWidth();
-                                        qint32 height = m_pMap->getMapHeight();
-                                        for (qint32 x = 0; x < width; ++x)
+                                        qint32 maxValue = std::numeric_limits<qint32>::lowest();
+                                        if (pData->getAllFields())
                                         {
-                                            for (qint32 y = 0; y < height; ++y)
+                                            qint32 width = m_pMap->getMapWidth();
+                                            qint32 height = m_pMap->getMapHeight();
+                                            for (qint32 x = 0; x < width; ++x)
                                             {
-                                                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                                                for (qint32 y = 0; y < height; ++y)
+                                                {
+                                                    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                                                    if (pUnit != nullptr)
+                                                    {
+                                                        qint32 unitValue = pUnit->getCoUnitValue();
+                                                        if (unitValue > maxValue)
+                                                        {
+                                                            maxValue = unitValue;
+                                                            target = QPoint(x, y);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            QVector<QPoint> & points = *pData->getPoints();
+                                            qint32 index = -1;
+                                            for (qint32 i2 = 0; i2 < points.size(); ++i2)
+                                            {
+                                                Unit* pUnit = m_pMap->getTerrain(points[i2].x(), points[i2].y())->getUnit();
                                                 qint32 unitValue = pUnit->getCoUnitValue();
                                                 if (pUnit != nullptr && unitValue > maxValue)
                                                 {
                                                     maxValue = unitValue;
-                                                    target = QPoint(x, y);
+                                                    index = i2;
                                                 }
                                             }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        QVector<QPoint> & points = *pData->getPoints();
-                                        qint32 index = -1;
-                                        for (qint32 i2 = 0; i2 < points.size(); ++i2)
-                                        {
-                                            Unit* pUnit = m_pMap->getTerrain(points[i2].x(), points[i2].y())->getUnit();
-                                            qint32 unitValue = pUnit->getCoUnitValue();
-                                            if (pUnit != nullptr && unitValue > maxValue)
+                                            if (index < 0)
                                             {
-                                                maxValue = unitValue;
-                                                index = i2;
+                                                target = points.at(GlobalUtils::randIntBase(0, points.size() -1));
                                             }
-                                        }
-                                        if (index < 0)
-                                        {
-                                            target = points.at(GlobalUtils::randIntBase(0, points.size() -1));
-                                        }
-                                        else
-                                        {
-                                            target = points.at(index);
+                                            else
+                                            {
+                                                target = points.at(index);
+                                            }
                                         }
                                     }
                                     addSelectedFieldData(pAction, target);
@@ -2152,28 +2313,41 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
                                     spMenuData pData = pAction->getMenuStepData();
                                     if (pData->validData())
                                     {
-                                        QStringList items = pData->getActionIDs();
+                                        qint32 selection = -1;
                                         auto enable = pData->getEnabledList();
-                                        qint32 i = 0;
-                                        while (i < enable.size())
+                                        QStringList items = pData->getActionIDs();
+                                        auto costs = pData->getCostList();
+                                        if (!getBuildingMenuItemFromScript(pAction, pUnits, pBuildings, pData, selection))
                                         {
-                                            if (enable[i])
+                                            qint32 i = 0;
+                                            while (i < enable.size())
                                             {
-                                                i++;
+                                                if (enable[i])
+                                                {
+                                                    i++;
+                                                }
+                                                else
+                                                {
+                                                    items.removeAt(i);
+                                                    enable.removeAt(i);
+                                                }
                                             }
-                                            else
-                                            {
-                                                items.removeAt(i);
-                                                enable.removeAt(i);
-                                            }
+                                            selection = GlobalUtils::randIntBase(0, items.size() - 1);
                                         }
-                                        qint32 selection = GlobalUtils::randIntBase(0, items.size() - 1);
-                                        addMenuItemData(pAction, items[selection], pData->getCostList()[selection]);
+                                        if (selection >= 0 && selection < items.size() && enable[selection])
+                                        {
+                                            addMenuItemData(pAction, items[selection], costs[selection]);
+                                        }
+                                        else
+                                        {
+                                            CONSOLE_PRINT("Illegal menu selection skipping building action", GameConsole::eERROR);
+                                            break;
+                                        }
                                     }
                                 }
                                 else
                                 {
-                                    CONSOLE_PRINT("Uknown action step type: " + stepType, Console::eERROR);
+                                    CONSOLE_PRINT("Uknown action step type: " + stepType, GameConsole::eERROR);
                                     break;
                                 }
                             }
@@ -2192,6 +2366,109 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
         }
     }
     return false;
+}
+
+bool CoreAI::getBuildingTargetPointFromScript(spGameAction & pAction, const spMarkedFieldData & pData, QPoint & target)
+{
+    bool ret = false;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg(false);
+    QString function1 = "getBuildingTarget";
+    QVector<QPoint> & points = *pData->getPoints();
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pAction.get()),
+                       pInterpreter->toScriptValue(points),
+                       pData->getAllFields(),
+                       pInterpreter->newQObject(m_pPlayer),
+                       pInterpreter->newQObject(m_pMap)});
+    if (pInterpreter->exists(GameScript::m_scriptName, function1))
+    {
+        erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+        if (erg.isVariant())
+        {
+            target = erg.toVariant().toPoint();
+        }
+    }
+    if (erg.isBool() && !erg.toBool())
+    {
+        if (pInterpreter->exists(m_aiName, function1))
+        {
+            erg = pInterpreter->doFunction(m_aiName, function1, args);
+            if (erg.isVariant())
+            {
+                target = erg.toVariant().toPoint();
+            }
+        }
+    }
+    if (m_pMap->onMap(target.x(), target.y()))
+    {
+        ret = true;
+    }
+    if (erg.isBool())
+    {
+        ret = erg.toBool();
+    }
+    if (ret && !points.contains(target))
+    {
+        CONSOLE_PRINT("Illegal target selection skipping building action target x=" + QString::number(target.x()) +  " target y=" + QString::number(target.y()) +
+                      " building x=" + QString::number(pAction->getTarget().x()) +  " building y=" + QString::number(pAction->getTarget().y()), GameConsole::eERROR);
+        ret = false;
+    }
+    return ret;
+}
+
+bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, const spMenuData & pData, qint32 & index)
+{
+    bool ret = false;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    auto enable = pData->getEnabledList();
+    QStringList items = pData->getActionIDs();
+    auto costs = pData->getCostList();
+    QJSValue erg(false);
+    QString function1 = "getBuildingMenuItem";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pAction.get()),
+                       pInterpreter->toScriptValue(items),
+                       pInterpreter->toScriptValue(costs),
+                       pInterpreter->toScriptValue(enable),
+                       pInterpreter->newQObject(pUnits.get()),
+                       pInterpreter->newQObject(pBuildings.get()),
+                       pInterpreter->newQObject(m_pPlayer),
+                       pInterpreter->newQObject(m_pMap)});
+    if (pInterpreter->exists(GameScript::m_scriptName, function1))
+    {
+        erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
+        if (erg.isNumber())
+        {
+            index = erg.toInt();
+        }
+    }
+    if (erg.isBool() && !erg.toBool())
+    {
+        if (pInterpreter->exists(m_aiName, function1))
+        {
+            erg = pInterpreter->doFunction(m_aiName, function1, args);
+            if (erg.isNumber())
+            {
+                index = erg.toInt();
+            }
+        }
+    }
+    if (index >= 0 && index < enable.size())
+    {
+        ret = true;
+    }
+    if (erg.isBool())
+    {
+        ret = erg.toBool();
+    }
+    if (ret && !enable[index])
+    {
+        CONSOLE_PRINT("Illegal menu selection skipping building action target item index=" + QString::number(index) +
+                      " building x=" + QString::number(pAction->getTarget().x()) +  " building y=" + QString::number(pAction->getTarget().y()), GameConsole::eERROR);
+        ret = false;
+    }
+    return ret;
 }
 
 float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
@@ -2226,6 +2503,77 @@ float CoreAI::getAiCoBuildRatioModifier()
         }
     }
     return multiplier;
+}
+
+qint32 CoreAI::getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp, qint32 minFuel)
+{
+    qint32 count = 0;
+    for (auto & pUnit : pUnits->getVector())
+    {
+        if (pUnit->getHp() >= minHp &&
+            pUnit->getFuel() >= minFuel &&
+           (unitIds.length() == 0 || unitIds.contains(pUnit->getUnitID())))
+        {
+            ++count;
+        }
+        auto loadedUnits = pUnit->getLoadedUnits();
+        for (auto & loadedUnit : loadedUnits)
+        {
+            if (loadedUnit->getHp() >= minHp &&
+                loadedUnit->getFuel() >= minFuel &&
+               (unitIds.length() == 0 || unitIds.contains(loadedUnit->getUnitID())))
+            {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
+qint32 CoreAI::getEnemyUnitCountNearOwnUnits(QmlVectorUnit * pUnits, QmlVectorUnit * pEnemyUnits, const QStringList & unitIds, qint32 distance, float minHp)
+{
+    qint32 count = 0;
+    for (auto & pUnit : pEnemyUnits->getVector())
+    {
+        if (pUnit->getHp() >= minHp &&
+            unitIds.contains(pUnit->getUnitID()))
+        {
+            for (auto & ownUnit : pUnits->getVector())
+            {
+                if (GlobalUtils::getDistance(ownUnit->getPosition(), pUnit->getPosition()) <= distance)
+                {
+                    ++count;
+                    break;
+                }
+            }
+        }
+    }
+    return count;
+}
+
+qint32 CoreAI::getBuildingCountsOnEnemyIslands(QmlVectorUnit * pUnits, QmlVectorBuilding * pEnemyBuildings)
+{
+    qint32 count = 0;
+    for (auto & pBuilding : pEnemyBuildings->getVector())
+    {
+        qint32 x = pBuilding->getX();
+        qint32 y = pBuilding->getY();
+        bool reachable = false;
+        for (auto & pUnit : pUnits->getVector())
+        {
+            qint32 island = getIslandIndex(pUnit.get());
+            if (onSameIsland(island, pUnit->getX(), pUnit->getY(), x, y))
+            {
+                reachable = true;
+                break;
+            }
+        }
+        if (!reachable)
+        {
+            ++count;
+        }
+    }
+    return count;
 }
 
 void CoreAI::GetOwnUnitCounts(std::vector<MoveUnitData> & units, spQmlVectorUnit & pOwnUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
@@ -2272,7 +2620,7 @@ void CoreAI::GetOwnUnitCounts(std::vector<MoveUnitData> & units, spQmlVectorUnit
 
 bool CoreAI::buildCOUnit(spQmlVectorUnit & pUnits)
 {
-    AI_CONSOLE_PRINT("CoreAI::buildCOUnit", Console::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::buildCOUnit", GameConsole::eDEBUG);
     spGameAction pAction = spGameAction::create(m_pMap);
     for (quint8 i2 = 0; i2 < 2; i2++)
     {
@@ -2407,9 +2755,124 @@ bool CoreAI::isMoveableTile(Building* pBuilding) const
             !pBuilding->isProductionBuilding();
 }
 
+QString CoreAI::getAiName() const
+{
+    return m_aiName;
+}
+
+SimpleProductionSystem* CoreAI::getSimpleProductionSystem()
+{
+    return &m_productionSystem;
+}
+
+void CoreAI::getAttackTargetsFast(Unit* pUnit, QmlVectorPoint & firePoints, UnitPathFindingSystem* pPfs, std::vector<DamageData>& ret, qint32 maxDistance) const
+{
+    getAttacksFromFieldFast(pUnit, pUnit->getPosition(), firePoints, ret);
+    if (pUnit->canMoveAndFire(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())))
+    {
+        if (m_pMap != nullptr)
+        {
+            auto targets = pPfs->getAllNodePointsFast(maxDistance);
+            for (auto & target : targets)
+            {
+                Terrain* pTerrain = m_pMap->getTerrain(target.x(), target.y());
+                if (pTerrain->getUnit() == nullptr)
+                {
+                    getAttacksFromFieldFast(pUnit, target, firePoints, ret);
+                }
+            }
+        }
+    }
+}
+
+void CoreAI::getAttacksFromFieldFast(Unit* pUnit, QPoint position, QmlVectorPoint & firePoints, std::vector<DamageData>& ret) const
+{
+    for (auto & target : qAsConst(firePoints.getVector()))
+    {
+        QPoint finalPos = target + position;
+        if (m_pMap->onMap(finalPos.x(), finalPos.y()))
+        {
+            Terrain* pTerrain = m_pMap->getTerrain(finalPos.x(), finalPos.y());
+            Unit* pDef = pTerrain->getUnit();
+            if (pDef != nullptr)
+            {
+                QRectF damage = calcUnitDamageFast(pUnit, pDef);
+                QPointF dmg = calcFundsDamage(damage, pUnit, pDef);
+                DamageData data;
+                data.x = finalPos.x();
+                data.y = finalPos.y();
+                data.fundsDamage = dmg.y();
+                data.hpDamage = dmg.x();
+                ret.push_back(data);
+            }
+        }
+    }
+}
+
+QRectF CoreAI::calcUnitDamageFast(Unit* pAttacker, Unit* pDefender)
+{
+    QRectF ret;
+    QPointF atkDmg = getBaseDamage(pAttacker, pDefender);
+    QPointF defDmg = getBaseDamage(pAttacker, pDefender);
+    ret.setX(atkDmg.x());
+    ret.setY(atkDmg.y());
+    ret.setWidth(defDmg.x());
+    ret.setHeight(defDmg.y());
+    return ret;
+}
+
+QPointF CoreAI::getBaseDamage(Unit* pAttacker, Unit* pDefender)
+{
+    float damage1 = -1.0f;
+    QPointF ret;
+    if (pAttacker->hasAmmo1())
+    {
+        QString key = pAttacker->getWeapon1ID() + pDefender->getUnitID();
+        if (m_baseDamageTable.contains(key))
+        {
+            damage1 = m_baseDamageTable[key];
+        }
+        else
+        {
+            damage1 = getBaseDamage(pAttacker->getWeapon1ID(), pDefender);
+            m_baseDamageTable[key] = damage1;
+        }
+    }
+    float damage2 = -1.0f;
+    if (pAttacker->hasAmmo2())
+    {
+        QString key = pAttacker->getWeapon2ID() + pDefender->getUnitID();
+        if (m_baseDamageTable.contains(key))
+        {
+            damage2 = m_baseDamageTable[key];
+        }
+        else
+        {
+            damage2 = getBaseDamage(pAttacker->getWeapon2ID(), pDefender);
+            m_baseDamageTable[key] = damage2;
+        }
+    }
+    if (damage1 > damage2)
+    {
+        ret.setX(damage1);
+        ret.setY(0);
+    }
+    else
+    {
+        ret.setX(damage2);
+        ret.setY(0);
+    }
+    return ret;
+}
+
+float CoreAI::getBaseDamage(const QString & weaponID, Unit* pDefender)
+{
+    return WeaponManager::getInstance()->getBaseDamage(weaponID, pDefender);
+}
+
 void CoreAI::serializeObject(QDataStream& stream) const
 {    
-    AI_CONSOLE_PRINT("storing core ai", Console::eDEBUG);
+    AI_CONSOLE_PRINT("storing core ai", GameConsole::eDEBUG);
     stream << getVersion();
     stream << m_enableNeutralTerrainAttack;
     stream << static_cast<qint32>(m_BuildingChanceModifier.size());
@@ -2441,11 +2904,12 @@ void CoreAI::serializeObject(QDataStream& stream) const
         stream << *item.m_value;
     }
     m_Variables.serializeObject(stream);
+    m_productionSystem.serializeObject(stream);
 }
 
 void CoreAI::deserializeObject(QDataStream& stream)
 {
-    AI_CONSOLE_PRINT("reading core ai", Console::eDEBUG);
+    AI_CONSOLE_PRINT("reading core ai", GameConsole::eDEBUG);
     qint32 version;
     stream >> version;
     deserializeObjectVersion(stream, version);
@@ -2529,5 +2993,9 @@ void CoreAI::deserializeObjectVersion(QDataStream &stream, qint32 version)
     if (version > 8)
     {
         m_Variables.deserializeObject(stream);
+    }
+    if (version > 9)
+    {
+        m_productionSystem.deserializeObject(stream);
     }
 }

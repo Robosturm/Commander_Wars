@@ -2,7 +2,6 @@
 
 #include "game/GameEnums.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 void GameEnums::registerEnums()
@@ -103,7 +102,7 @@ void GameEnums::registerEnums()
     value.setProperty("AiTurnMode_DuringDay", AiTurnMode_DuringDay);
     value.setProperty("AiTurnMode_EndOfDay", AiTurnMode_EndOfDay);
 
-
+    value.setProperty("AiTypes_DummyAi", AiTypes_DummyAi);
     value.setProperty("AiTypes_MovePlanner", AiTypes_MovePlanner);
     value.setProperty("AiTypes_ProxyAi", AiTypes_ProxyAi);
     value.setProperty("AiTypes_Human", AiTypes_Human);
@@ -189,6 +188,7 @@ void GameEnums::registerEnums()
     value.setProperty("LoginError_PasswordOutdated", LoginError_PasswordOutdated);
     value.setProperty("LoginError_DatabaseNotAccesible", LoginError_DatabaseNotAccesible);
     value.setProperty("LoginError_SendingMailFailed", LoginError_SendingMailFailed);
+    value.setProperty("LoginError_WrongEmailAdress", LoginError_WrongEmailAdress);
 
     value.setProperty("QEasingCurve_Linear", QEasingCurve::Linear);
     value.setProperty("QEasingCurve_InQuad", QEasingCurve::InQuad);

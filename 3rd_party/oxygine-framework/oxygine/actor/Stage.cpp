@@ -3,16 +3,12 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
-
-#include <QPainter>
-#include <QPainterPath>
-#include "resource_management/fontmanager.h"
+#include "3rd_party/oxygine-framework/oxygine/Material.h"
 
 namespace oxygine
 {
-    spStage Stage::instance;
+    spStage Stage::instance{nullptr};
 
     Stage::Stage()
         : m_statUpdate(0)

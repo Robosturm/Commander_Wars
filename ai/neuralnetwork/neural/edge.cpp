@@ -1,7 +1,5 @@
 #include "ai/neuralnetwork/neural/edge.h"
 #include "ai/neuralnetwork/neural/neuron.h"
-#include "ai/neuralnetwork/neural/layer.h"
-#include "ai/neuralnetwork/neural/neuralnetwork.h"
 
 Edge::Edge(Neuron *nextNeuron, Neuron* previousNeuron, double weight)
     : m_nextNeuron(nextNeuron),

@@ -21,6 +21,14 @@ var Constructor = function()
         action.setIsLocal(true);
         return true;
     };
+    this.getName = function(map)
+    {
+        return qsTr("Exit Game");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Exits the current game.");
+    };
 }
 
 

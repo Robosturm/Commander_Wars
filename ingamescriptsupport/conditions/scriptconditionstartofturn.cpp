@@ -5,8 +5,7 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -43,7 +42,7 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream, QString lin
     QStringList items = line.replace("if (turn === ", "")
                             .replace(" && player === ", ",")
                             .replace(") { // ", ",").split(",");
-    CONSOLE_PRINT("Reading ConditionStartOfTurn " + line, Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionStartOfTurn " + line, GameConsole::eDEBUG);
     if (items.size() >= 2)
     {
         day = items[0].toInt();
@@ -52,7 +51,7 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream, QString lin
         {
             if (readSubCondition(m_pMap, rStream, ConditionStartOfTurn, line))
             {
-                CONSOLE_PRINT("Read ConditionStartOfTurn", Console::eDEBUG);
+                CONSOLE_PRINT("Read ConditionStartOfTurn", GameConsole::eDEBUG);
                 break;
             }
             spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
@@ -62,7 +61,7 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream, QString lin
             }
             else
             {
-                CONSOLE_PRINT("unable to determine event", Console::eWARNING);
+                CONSOLE_PRINT("unable to determine event", GameConsole::eWARNING);
             }
         }
     }
@@ -70,9 +69,9 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream, QString lin
 
 void ScriptConditionStartOfTurn::writeCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionStartOfTurn", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionStartOfTurn", GameConsole::eDEBUG);
     rStream << "        if (turn === " + QString::number(day) + " && player === " + QString::number(player) + ") { // "
-            << QString::number(getVersion()) << " " << ConditionStartOfTurn + "\n";
+            << QString::number(getVersion()) << " " << QString(ConditionStartOfTurn) + "\n";
     for (qint32 i = 0; i < events.size(); i++)
     {
         events[i]->writeEvent(rStream);
@@ -81,7 +80,7 @@ void ScriptConditionStartOfTurn::writeCondition(QTextStream& rStream)
     {
         subCondition->writeCondition(rStream);
     }
-    rStream << "        } // " + ConditionStartOfTurn + " End\n";
+    rStream << "        } // " + QString(ConditionStartOfTurn) + " End\n";
 }
 
 void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)

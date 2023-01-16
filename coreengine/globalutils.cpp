@@ -1,26 +1,26 @@
-
+#include <QCoreApplication>
 #include <QFileInfo>
 #include <QDirIterator>
 #include <QDateTime>
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 
 #include "game/gamemap.h"
 
-GlobalUtils GlobalUtils::m_pInstace = GlobalUtils();
+QScopedPointer<GlobalUtils> GlobalUtils::m_pInstace;
 
-QRandomGenerator GlobalUtils::m_randGenerator;
-bool GlobalUtils::m_useSeed{false};
-quint32 GlobalUtils::m_seed = 0;
-
-GlobalUtils::GlobalUtils()
+void GlobalUtils::setup()
 {
-    Interpreter::setCppOwnerShip(this);
+    m_pInstace.reset(new GlobalUtils());
+    srand(static_cast<unsigned>(time(nullptr)));
+    Interpreter::setCppOwnerShip(m_pInstace.get());
     quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
-    m_randGenerator.seed(seedValue);
+    m_pInstace->m_randGenerator.seed(seedValue);
+    m_pInstace->m_useSeed = false;
+    m_pInstace->m_seed = 0;
 }
 
 QString GlobalUtils::getByteArrayString(const QByteArray & bytes)
@@ -35,14 +35,14 @@ QString GlobalUtils::getByteArrayString(const QByteArray & bytes)
 
 void GlobalUtils::seed(quint32 seed)
 {
-    m_seed = seed;
-    m_randGenerator.seed(seed);
-    CONSOLE_PRINT("Seeding with " + QString::number(m_seed), Console::eDEBUG);
+    m_pInstace->m_seed = seed;
+    m_pInstace->m_randGenerator.seed(seed);
+    CONSOLE_PRINT("Seeding with " + QString::number(m_pInstace->m_seed), GameConsole::eDEBUG);
 }
 
 quint32 GlobalUtils::getSeed()
 {
-    return m_seed;
+    return m_pInstace->m_seed;
 }
 
 qint32 GlobalUtils::randInt(qint32 low, qint32 high)
@@ -51,9 +51,9 @@ qint32 GlobalUtils::randInt(qint32 low, qint32 high)
     {
         return low;
     }
-    if (m_useSeed)
+    if (m_pInstace->m_useSeed)
     {
-        return m_randGenerator.bounded(low, high + 1);
+        return m_pInstace->m_randGenerator.bounded(low, high + 1);
     }
     else
     {
@@ -67,9 +67,9 @@ float GlobalUtils::randFloat(float low, float high)
     {
         return low;
     }
-    if (m_useSeed)
+    if (m_pInstace->m_useSeed)
     {
-        return m_randGenerator.bounded(high - low + 0.00001f) + low;
+        return m_pInstace->m_randGenerator.bounded(high - low + 0.00001f) + low;
     }
     else
     {
@@ -83,9 +83,9 @@ double GlobalUtils::randDouble(double low, double high)
     {
         return low;
     }
-    if (m_useSeed)
+    if (m_pInstace->m_useSeed)
     {
-        return m_randGenerator.bounded(high - low + 0.00001) + low;
+        return m_pInstace->m_randGenerator.bounded(high - low + 0.00001) + low;
     }
     else
     {
@@ -271,12 +271,20 @@ bool GlobalUtils::isEven(qint32 value)
 
 bool GlobalUtils::getUseSeed()
 {
-    return m_useSeed;
+    return m_pInstace->m_useSeed;
 }
 
 void GlobalUtils::setUseSeed(bool useSeed)
 {
-    m_useSeed = useSeed;
+    m_pInstace->m_useSeed = useSeed;
+    if (m_pInstace->m_useSeed)
+    {
+        CONSOLE_PRINT("Running with seed " + QString::number(m_pInstace->m_seed), GameConsole::eDEBUG);
+    }
+    else
+    {
+        CONSOLE_PRINT("Stop running with seed", GameConsole::eDEBUG);
+    }
 }
 
 QStringList GlobalUtils::getFiles(const QString & folder, const QStringList & filter)
@@ -302,7 +310,7 @@ QStringList GlobalUtils::getFiles(const QString & folder, const QStringList & fi
 
 void GlobalUtils::importFilesFromDirectory(QString folder, QString targetDirectory, QStringList filter, bool replace, QStringList excludeFolders)
 {
-    CONSOLE_PRINT("GlobalUtils::importFilesFromDirectory", Console::eDEBUG);
+    CONSOLE_PRINT("GlobalUtils::importFilesFromDirectory", GameConsole::eDEBUG);
     QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
     while (dirIter.hasNext())
     {
@@ -374,14 +382,14 @@ QVector<qint32> GlobalUtils::getRandomizedArray(qint32 min, qint32 max)
     }
     else
     {
-        CONSOLE_PRINT("getRandomizedArray(min, max) min " + QString::number(min) + " is not smaller than max " + QString::number(max), Console::eERROR);
+        CONSOLE_PRINT("getRandomizedArray(min, max) min " + QString::number(min) + " is not smaller than max " + QString::number(max), GameConsole::eERROR);
     }
     return ret;
 }
 
 QString GlobalUtils::getNextAutosavePath(const QString & path, const QString & ending, qint32 max)
 {
-    CONSOLE_PRINT("GlobalUtils::getNextAutosavePath", Console::eDEBUG);
+    CONSOLE_PRINT("GlobalUtils::getNextAutosavePath", GameConsole::eDEBUG);
     QString finalPath = path + QString::number(1) + ending;
     QDateTime oldestDate = QFileInfo(finalPath).lastModified();
     for (qint32 i = 2; i <= max; ++i)
@@ -414,7 +422,7 @@ QString GlobalUtils::getNextAutosavePath(const QString & path, const QString & e
 
 QString GlobalUtils::makePathRelative(QString file, bool full)
 {
-    QDir dir ("");
+    QDir dir (QCoreApplication::applicationDirPath());
     QString path = dir.absolutePath();
     file = file.replace(path + "/", "");
     file = file.replace(path, "");
@@ -476,4 +484,36 @@ QUrl GlobalUtils::getUrlForFile(const QString & file)
         url = QUrl::fromLocalFile(Settings::getUserPath() + file);
     }
     return url;
+}
+
+QVector<qint32> GlobalUtils::calcWidths(const QVector<qint32> & maxWidths, const QVector<float> & distribution, qint32 totalWidth)
+{
+    QVector<qint32> ret;
+    for (auto & item : distribution)
+    {
+        ret.append(totalWidth * item);
+    }
+    for (qint32 i = 0; i < maxWidths.size(); ++i)
+    {
+        qint32 count = ret[i] - maxWidths[i];
+        if (count > 0)
+        {
+            ret[i] = maxWidths[i];
+            qint32 item = 0;
+            while (count > 0)
+            {
+                if (ret[item] < maxWidths[item])
+                {
+                    ++ret[item];
+                    --count;
+                }
+                ++item;
+                if (item >= maxWidths.size())
+                {
+                    item = 0;
+                }
+            }
+        }
+    }
+    return ret;
 }

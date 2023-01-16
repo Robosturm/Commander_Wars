@@ -31,7 +31,7 @@ public:
 
     virtual void update(const oxygine::UpdateState& us) override;
 
-    virtual void setWidth(float w) override;
+    virtual void setWidth(qint32 w) override;
     float getScrollspeed() const;
     void setScrollspeed(float Scrollspeed);
 

@@ -34,7 +34,6 @@ ACTION_EXPLODE.performPostAnimation = function(postAnimation, map)
             audio.playSound("explosion+land.wav");
         }
     }
-    fields.remove();
     // we destroyed a unit
     map.getGameRecorder().destroyedUnit(owner.getPlayerID(), ACTION_EXPLODE.postAnimationUnit.getUnitID(), ACTION_EXPLODE.postAnimationUnit.getOwner().getPlayerID());
     ACTION_EXPLODE.postAnimationUnit.killUnit();

@@ -1,12 +1,11 @@
-#include "dialogconnecting.h"
+#include "objects/dialogs/dialogconnecting.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
-DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
+DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCancel)
     : QObject(),
       m_Message(text),
       m_Timer(this),
@@ -15,8 +14,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogConnecting");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -37,15 +35,18 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
     m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - 40);
     pSpriteBox->addChild(m_Text);
 
-    m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_CancelButton->setPosition(Settings::getWidth() / 2 - m_CancelButton->getScaledWidth() / 2,
-                                Settings::getHeight() / 2 + 10);
-    pSpriteBox->addChild(m_CancelButton);
-    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    if (showCancel)
     {
-        emit sigCancel();
-    });
-    connect(this, &DialogConnecting::sigCancel, this, &DialogConnecting::cancel, Qt::QueuedConnection);
+        m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
+        m_CancelButton->setPosition(Settings::getWidth() / 2 - m_CancelButton->getScaledWidth() / 2,
+                                    Settings::getHeight() / 2 + 10);
+        pSpriteBox->addChild(m_CancelButton);
+        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+        {
+            emit sigCancel();
+        });
+        connect(this, &DialogConnecting::sigCancel, this, &DialogConnecting::cancel, Qt::QueuedConnection);
+    }
     m_Timer.setInterval(250);
     m_Timer.setSingleShot(false);
     m_Timer.start();

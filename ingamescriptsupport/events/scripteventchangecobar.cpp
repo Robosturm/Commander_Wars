@@ -5,8 +5,6 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
@@ -130,7 +128,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,
             [this](qreal value)
     {
-        setStars(static_cast<qint32>(value));
+        setStars(value);
     });
     pBox->addItem(spinBox);
 

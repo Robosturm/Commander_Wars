@@ -58,7 +58,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -106,7 +105,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.loadCOMusic = function(co, map)
@@ -265,7 +263,7 @@ var Constructor = function()
     {
         return [qsTr("What was that? A waste of my time!"),
                 qsTr("Graaa! Blaarrgggg! Smaaarrgggghhh!!"),
-                qsTr("Enough weakling's footing around!")];
+                qsTr("Enough weaklings footing around!")];
     };
     this.getDefeatSentences = function(co)
     {

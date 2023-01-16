@@ -3,13 +3,12 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
 
 #include "resource_management/unitspritemanager.h"
-#include "resource_management/gamemanager.h"
 #include "resource_management/weaponmanager.h"
 #include "resource_management/movementtablemanager.h"
 
 #include "ai/coreai.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
@@ -29,8 +28,6 @@ Unit::Unit(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("Unit");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setHeight(GameMap::getImageSize());
     setWidth(GameMap::getImageSize());
@@ -47,8 +44,6 @@ Unit::Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap)
 #endif
     setHeight(GameMap::getImageSize());
     setWidth(GameMap::getImageSize());
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (!m_UnitID.isEmpty())
     {
@@ -291,7 +286,7 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
     }
     else
     {
-        CONSOLE_PRINT("Unable to load unit sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load unit sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -501,7 +496,7 @@ QString Unit::getUnitRangName(qint32 rang)
     {
         return ret.toString();
     }
-    return "Unknown";
+    return tr("Unknown");
 }
 
 void Unit::setUnitRank(const qint32 &UnitRank, bool force)
@@ -1180,7 +1175,7 @@ void Unit::loadUnit(Unit* pUnit, qint32 index)
 
 void Unit::loadSpawnedUnit(const QString & unitId)
 {
-    CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, Console::eDEBUG);
+    CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, GameConsole::eDEBUG);
     spUnit pUnit = spUnit::create(unitId, m_pOwner, true, m_pMap);
     if (canTransportUnit(pUnit.get()))
     {
@@ -1190,7 +1185,7 @@ void Unit::loadSpawnedUnit(const QString & unitId)
 
 Unit* Unit::spawnUnit(const QString & unitID)
 {
-    CONSOLE_PRINT("Unit::spawnUnit " + unitID, Console::eDEBUG);
+    CONSOLE_PRINT("Unit::spawnUnit " + unitID, GameConsole::eDEBUG);
 
     if (m_pMap != nullptr)
     {
@@ -1511,7 +1506,26 @@ float Unit::getTrueDamage(GameAction* pAction, float damage, QPoint position, qi
 
 bool Unit::canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode)
 {
-    bool directCombat = qAbs(position.x() - defPosition.x()) + qAbs(position.y() - defPosition.y()) == 1 ;
+    bool canCounter = qAbs(position.x() - defPosition.x()) + qAbs(position.y() - defPosition.y()) == 1;
+    if (!canCounter)
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "canCounterOnRangeAttacks";
+        QJSValueList args({pInterpreter->newQObject(this),
+                           position.x(),
+                           position.y(),
+                           pInterpreter->newQObject(pDefender),
+                           defPosition.x(),
+                           defPosition.y(),
+                           pInterpreter->newQObject(pAction),
+                           luckMode,
+                           pInterpreter->newQObject(m_pMap)});
+        QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
+        if (erg.isBool())
+        {
+            canCounter = erg.toBool();
+        }
+    }
     CO* pCO = m_pOwner->getCO(0);
     auto mode = GameEnums::CounterAttackMode_Undefined;
     if (pCO != nullptr)
@@ -1532,7 +1546,6 @@ bool Unit::canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefende
     }
     if (mode != GameEnums::CounterAttackMode_Impossible)
     {
-
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = m_pMap->getPlayer(i);
@@ -1569,7 +1582,7 @@ bool Unit::canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefende
             }
         }
     }
-    return (directCombat || mode == GameEnums::CounterAttackMode_Possible) &&
+    return (canCounter || mode == GameEnums::CounterAttackMode_Possible) &&
             mode != GameEnums::CounterAttackMode_Impossible;
 }
 
@@ -1776,6 +1789,31 @@ qint32 Unit::getRepairBonus(QPoint position)
     return bonus;
 }
 
+float Unit::getRepairCostModifier()
+{
+    float modifier = 1.0f;
+    if (m_pMap != nullptr)
+    {
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer != nullptr)
+            {
+                if (pPlayer->isEnemy(m_pOwner))
+
+                {
+                    modifier += pPlayer->getEnemyRepairCostModifier(this);
+                }
+                else if ( m_pOwner == pPlayer)
+                {
+                    modifier += pPlayer->getRepairCostModifier(this);
+                }
+            }
+        }
+    }
+    return modifier;
+}
+
 void Unit::setUnitVisible(bool value, Player* pPlayer)
 {
     if (m_CORange.get() != nullptr)
@@ -1805,7 +1843,7 @@ void Unit::setUnitVisible(bool value, Player* pPlayer)
 
 void Unit::makeCOUnit(quint8 co, bool force)
 {
-    CONSOLE_PRINT("Unit::makeCOUnit for " + QString::number(co) + " force=" + QString::number(force), Console::eDEBUG);
+    CONSOLE_PRINT("Unit::makeCOUnit for " + QString::number(co) + " force=" + QString::number(force), GameConsole::eDEBUG);
     CO* pCO = m_pOwner->getCO(co);
     if (pCO != nullptr &&
         (pCO->getCOUnit() == nullptr || force))
@@ -2770,7 +2808,16 @@ void Unit::moveUnitAction(GameAction* pAction)
 }
 
 void Unit::moveUnit(QVector<QPoint> & movePath)
-{    
+{
+    createMoveVision(movePath);
+    if (movePath.size() > 1)
+    {
+        moveUnitToField(movePath[0].x(), movePath[0].y());
+    }
+}
+
+void Unit::createMoveVision(QVector<QPoint> & movePath)
+{
     if (movePath.size() < 1)
     {
         movePath.append(QPoint(Unit::getX(), Unit::getY()));
@@ -2793,10 +2840,18 @@ void Unit::moveUnit(QVector<QPoint> & movePath)
             }
         }
     }
-    if (movePath.size() > 1)
-    {
-        moveUnitToField(movePath[0].x(), movePath[0].y());
-    }
+}
+
+void Unit::createMoveVisionAction(GameAction* pAction)
+{
+    auto path = pAction->getMovePath();
+    moveUnit(path);
+}
+
+void Unit::createMoveVisionFromAction(GameAction* pAction)
+{
+    auto path = pAction->getMovePath();
+    createMoveVision(path);
 }
 
 QVector<QVector3D> Unit::getVisionFields(QPoint position)
@@ -2971,7 +3026,8 @@ void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration,
 
     for (qint32 i = 0; i < m_pIconSprites.size(); i++)
     {
-        if (m_pIconSprites[i]->getResAnim()->getName() == iconID)
+        if (m_pIconSprites[i]->getResAnim() == nullptr ||
+            m_pIconSprites[i]->getResAnim()->getName() == iconID)
         {
             // already loaded icon
             return;
@@ -3323,7 +3379,7 @@ void Unit::setAiMode(const GameEnums::GameAi &AiMode)
     unloadIcon("patrol_loop");
     unloadIcon("hq");
     unloadIcon("scripted");
-    if (dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance()) != nullptr)
+    if (dynamic_cast<EditorMenue*>(m_pMap->getMenu()) != nullptr)
     {
         switch (m_AiMode)
         {
@@ -3612,6 +3668,7 @@ void Unit::serializeObject(QDataStream& pStream) const
     pStream << m_maxRange;
     pStream << m_maxFuel;
     pStream << m_baseMovementPoints;
+    pStream << m_MovementType;
     size = m_customRangeInfo.size();
     pStream << size;
     for (qint32 i = 0; i < size; i++)
@@ -3893,6 +3950,10 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             pStream >> m_maxRange;
             pStream >> m_maxFuel;
             pStream >> m_baseMovementPoints;
+            if (version > 21)
+            {
+                pStream >> m_MovementType;
+            }
         }
         else
         {
@@ -3907,6 +3968,10 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             pStream >> dummy2;
             pStream >> dummy2;
             pStream >> dummy2;
+            if (version > 21)
+            {
+                pStream >> dummy;
+            }
         }
     }
     setAmmo1(bufAmmo1);

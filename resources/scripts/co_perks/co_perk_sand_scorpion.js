@@ -32,6 +32,11 @@ var Constructor = function()
     {
         return qsTr("Weather");
     };
+
+    this.getCosts = function()
+    {
+        return 2;
+    };
 };
 
 Constructor.prototype = CO_PERK;

@@ -1,8 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
-#include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
-
-#include "coreengine/console.h"
 
 namespace oxygine
 {

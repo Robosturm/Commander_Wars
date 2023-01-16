@@ -1,7 +1,7 @@
 #include <QIODevice>
 #include <QDataStream>
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "network/txtask.h"
 #include "network/NetworkInterface.h"
@@ -33,7 +33,7 @@ void TxTask::send(quint64 socketID, QByteArray data, NetworkInterface::NetworkSe
         // send data this function should be blocking.
         if (m_pSocket->write(block) != block.size())
         {
-            CONSOLE_PRINT("Error during writing data via TCP.", Console::eERROR);
+            CONSOLE_PRINT("Error during writing data via TCP.", GameConsole::eERROR);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace NetworkCommands
         ResetPassword,
         ChangePassword,
         RequestLoginData,
+        DeleteAccount,
     };
 
     enum DisconnectReason
@@ -168,7 +169,7 @@ namespace NetworkCommands
     /**
      * @brief DISCONNECTINFOFROMSERVER
      */
-    const char* const DISCONNECTINGFOFROMSERVER = "DISCONNECTINGFOFROMSERVER";
+    const char* const DISCONNECTINGFROMSERVER = "DISCONNECTINGFROMSERVER";
     /**
      * @brief REQUESTUSERNAME
      */
@@ -213,6 +214,10 @@ namespace NetworkCommands
      */
     const char* const SLAVEREADY = "SLAVEREADY";
     /**
+     * @brief SLAVERELAUNCHED
+     */
+    const char* const SLAVERELAUNCHED = "SLAVERELAUNCHED";
+    /**
      * @brief SLAVEADDRESSINFO
      */
     const char* const SLAVEADDRESSINFO = "SLAVEADDRESSINFO";
@@ -248,4 +253,17 @@ namespace NetworkCommands
      * @brief SERVERREQUESTGAMES
      */
     const char* const SERVERREQUESTGAMES = "SERVERREQUESTGAMES";
+    /**
+     * @brief SERVERRELAUNCHSLAVE
+     */
+    const char* const SERVERRELAUNCHSLAVE = "SERVERRELAUNCHSLAVE";
+    /**
+     * @brief SLAVEINFODESPAWNING
+     */
+    const char* const SLAVEINFODESPAWNING = "SLAVEINFODESPAWNING";
+
+    /**
+     * @brief DESPAWNSLAVE
+     */
+    const char* const DESPAWNSLAVE = "DESPAWNSLAVE";
 }

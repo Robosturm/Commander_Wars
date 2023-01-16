@@ -1,7 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include <QDomElement>
 #include <vector>
@@ -88,6 +88,7 @@ namespace oxygine
             QString m_text;
             std::vector<QString> m_lines;
             std::vector<QPoint> m_offsets;
+            QPainterPath m_path;
         };
 
         class DivNode final : public Node

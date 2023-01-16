@@ -1,10 +1,7 @@
 #include "game/viewplayer.h"
 #include "game/gamemap.h"
 
-#include "game/gameanimation/gameanimationfactory.h"
-
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 Viewplayer::Viewplayer(GameMenue* pMenu, GameMap* pMap)
     : Player(pMap),

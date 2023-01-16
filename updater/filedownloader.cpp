@@ -1,6 +1,6 @@
 #include "updater/filedownloader.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 FileDownloader::FileDownloader(const QString & targetFile,
                                const QString & baseUrl,
@@ -14,6 +14,7 @@ FileDownloader::FileDownloader(const QString & targetFile,
       m_resolveEnd(resolveEnd),
       m_currentTag(currentTag)
 {
+    m_currentTag.replace("refs/tags/", "");
     connect(&m_webCtrl, &QNetworkAccessManager::finished, this, &FileDownloader::onResponseFinished);
 
     m_requestUrl = QUrl(m_baseUrl + m_resolveEnd);
@@ -24,17 +25,17 @@ FileDownloader::FileDownloader(const QString & targetFile,
 
 void FileDownloader::onResponseFinished(QNetworkReply* pReply)
 {
-    if (!m_downloading)
+    if (!m_downloading && !m_downloadFailed)
     {
         m_downloading = true;
         QUrl url = m_reply->url();
         QString latestTag = url.toString();
         latestTag = latestTag.replace(m_baseUrl + "tag/", "");
-        Console::print("Current " + m_currentTag + " latest version tag " + latestTag, Console::eDEBUG);
+        GameConsole::print("Current " + m_currentTag + " latest version tag " + latestTag, GameConsole::eDEBUG);
         if (latestTag != m_currentTag)
         {
             QString targetFile = m_baseUrl + "download/" + latestTag + "/" + m_targetFile;
-            Console::print("Starting download of " + targetFile, Console::eINFO);
+            GameConsole::print("Starting download of " + targetFile, GameConsole::eINFO);
             QUrl targetUrl(targetFile);
             downloadFile(targetUrl);
             emit sigNewState(State::DownloadingNewVersion);
@@ -86,5 +87,6 @@ void FileDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 
 void FileDownloader::errorOccurred(QNetworkReply::NetworkError code)
 {
+    m_downloadFailed = true;
     emit sigNewState(State::DownloadingFailed);
 }

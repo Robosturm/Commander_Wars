@@ -2,6 +2,12 @@
 <resources>
     <set path = "resources/images/building/" />
     <atlas linearFilter = "false">
+
+        <!-- amphibiousfactory -->
+        <image file="amphibiousfactory+mask.png" cols = "2" />
+        <image file="amphibiousfactory.png" cols = "2" />
+        <image file="amphibiousfactory+neutral.png" />
+
         <!-- factory -->
         <image file="factory.png" cols = "8" />
         <image file="factory+mask.png" cols = "4" />
@@ -142,6 +148,11 @@
         <image file="gate+n+s+shadow+snow.png" />
         <image file="gate+n+s+shadow+plains.png" />
         <image file="gate+n+s+shadow+waste.png" />
+        
+        <image file="destroyed_gate+n+s.png" />
+        <image file="destroyed_gate+n+s+mask.png" />
+        <image file="destroyed_gate+e+w.png" />
+        <image file="destroyed_gate+e+w+mask.png" />
         
         <!-- weld -->
         <image file="weld+E+W.png" />

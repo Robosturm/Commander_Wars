@@ -38,6 +38,10 @@ var Constructor = function()
     {
         return qsTr("Terrain");
     };
+    this.getCosts = function()
+    {
+        return 2;
+    };
 };
 
 Constructor.prototype = CO_PERK;

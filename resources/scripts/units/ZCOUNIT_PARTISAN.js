@@ -93,11 +93,14 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
     };
     this.getCOSpecificUnit = function(building)
     {
         return true;
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "movewalk.wav";
     };
 }
 

@@ -2,10 +2,7 @@
 
 #include "objects/coinfoactor.h"
 
-#include "coreengine/mainapp.h"
-
 #include "resource_management/cospritemanager.h"
-#include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
@@ -38,27 +35,32 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     pLabel->setHtmlText(tr("CO Information"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     addChild(pLabel);
-    m_pCurrentCO = oxygine::spSprite::create();
-    m_pCurrentCO->setScale((Settings::getHeight() - 200) / 352.0f);
-    m_pCurrentCO->setSize(208, 352);
-    m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), 90);
-    addChild(m_pCurrentCO);
 
     m_pCurrentCoFaction = oxygine::spSprite::create();
-    m_pCurrentCoFaction->setPosition(Settings::getWidth() * 0.25f, 100);
+    m_pCurrentCoFaction->setPosition(width * 0.5f - 36 * 0.5f, pLabel->getY() + pLabel->getTextRect().getHeight() + 5);
     m_pCurrentCoFaction->setScale(2.0f);
     addChild(m_pCurrentCoFaction);
 
     m_COName = oxygine::spTextField::create();
+    m_COName->setWidth(width);
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     m_COName->setStyle(headerStyle);
     m_COName->setY(m_pCurrentCoFaction->getY() + 40);
+    m_COName->setText(tr("Unknown"));
     addChild(m_COName);
+
+    m_pCurrentCO = oxygine::spSprite::create();
+    m_pCurrentCO->setScale((Settings::getHeight() - 200) / 352.0f);
+    m_pCurrentCO->setSize(208, 352);
+    m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), m_COName->getY() + m_COName->getTextRect().getHeight() + 10);
+    addChild(m_pCurrentCO);
+
 
     style.multiline = true;
     m_COBio = oxygine::spTextField::create();
     m_COBio->setStyle(style);
     m_COBio->setWidth(m_pCurrentCO->getX() - 50);
-    m_COBio->setPosition(10, m_COName->getY() + 60);
+    m_COBio->setPosition(10, m_COName->getY() + m_COName->getTextRect().getHeight() + 10);
     addChild(m_COBio);
 
     m_HitSprite = oxygine::spBox9Sprite::create();
@@ -66,18 +68,19 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_HitSprite->setSize(100, 16);
     m_HitSprite->setScale(2.5f);
     m_HitSprite->setPosition(10, 200);
+    auto blackStyle = style;
+    blackStyle.color = Qt::black;
     oxygine::spTextField pTextField = oxygine::spTextField::create();
     pTextField->setPosition(14, 1);
-    pTextField->setStyle(style);
+    pTextField->setStyle(blackStyle);
     pTextField->setScale(1 / m_HitSprite->getScaleX());
     pTextField->setHtmlText(tr("Hit"));
-    pTextField->setY(3);
     m_HitSprite->setWidth(pTextField->getTextRect().getWidth() / m_HitSprite->getScaleX() + 21);
     m_HitSprite->addChild(pTextField);
     addChild(m_HitSprite);
     m_HitText = oxygine::spTextField::create();
     m_HitText->setStyle(style);
-    m_HitText->setX(m_HitSprite->getX() + m_HitSprite->getScaledWidth() +10);
+    m_HitText->setX(m_HitSprite->getX() + m_HitSprite->getScaledWidth() + 10);
     addChild(m_HitText);
 
     m_MissSprite = oxygine::spBox9Sprite::create();
@@ -87,10 +90,9 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_MissSprite->setPosition(10, 300);
     pTextField = oxygine::spTextField::create();
     pTextField->setPosition(14, 1);
-    pTextField->setStyle(style);
+    pTextField->setStyle(blackStyle);
     pTextField->setScale(1 / m_MissSprite->getScaleX());
     pTextField->setHtmlText(tr("Miss"));
-    pTextField->setY(3);
     m_MissSprite->setWidth(pTextField->getTextRect().getWidth() / m_MissSprite->getScaleX()  + 21);
     m_MissSprite->addChild(pTextField);
     addChild(m_MissSprite);
@@ -102,11 +104,12 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_InfoSprite = oxygine::spSprite::create();
     m_InfoSprite->setResAnim(pCOSpriteManager->getResAnim("skill"));
     m_InfoSprite->setScale(2.5f);
-    m_InfoSprite->setPosition((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_InfoSprite->getScaledWidth() / 2, 400);
+    m_InfoSprite->setPosition(14, 400);
     addChild(m_InfoSprite);
     m_InfoText = oxygine::spTextField::create();
     m_InfoText->setStyle(style);
     m_InfoText->setWidth(m_pCurrentCO->getX() - 50);
+    m_InfoText->setX(10);
     addChild(m_InfoText);
 
     m_pCoPowermeter = spCoPowermeter::create(m_pMap, nullptr);
@@ -197,15 +200,15 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_pCoPowermeter->setMap(m_pMap);
     m_pCurrentCO->setResAnim(pAnim);
 
-    QString coName = "Unknown";
-    QString coBio = "Unknown";
-    QString coHits = "Unknown";
-    QString coMiss = "Unknown";
-    QString coDesc = "Unknown";
-    QString coPower = "Unknown";
-    QString coPowerDesc = "Unknown";
-    QString coSuperpower = "Unknown";
-    QString coSuperpowerDesc = "Unknown";
+    QString coName = tr("Unknown");
+    QString coBio = tr("Unknown");
+    QString coHits = tr("Unknown");
+    QString coMiss = tr("Unknown");
+    QString coDesc = tr("Unknown");
+    QString coPower = tr("Unknown");
+    QString coPowerDesc = tr("Unknown");
+    QString coSuperpower = tr("Unknown");
+    QString coSuperpowerDesc = tr("Unknown");
     QString powerProgress = "-/-";
     qint32 corange = 0;
     if (pCO.get() != nullptr)
@@ -224,9 +227,12 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         }
         auto* pResAnim = pGameManager->getResAnim("icon_" + pCO->getCOArmy().toLower(), oxygine::ep_ignore_error);
         m_pCurrentCoFaction->setResAnim(pResAnim);
+        if (pResAnim != nullptr)
+        {
+            m_pCurrentCoFaction->setScale(36 / pResAnim->getWidth());
+        }
     }
     m_COName->setHtmlText(coName);
-    m_COName->setX((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth());
     if (pCO.get() != nullptr)
     {
         coBio = pCO->getBio();
@@ -300,7 +306,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     {
         m_SynergyText->setY(y);
         m_synergySprite->setY(y);
-        y += 40;
+        y += m_SynergyText->getTextRect().getHeight() + 10;
 
         // show co synergys
         for (qint32 i = 0; i < m_SynergyCONames.size(); i++)
@@ -351,7 +357,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
                     }
                     addChild(pActor);
                     m_SynergyStarActors.append(pActor);
-                    y += 40;
+                    y += pText->getTextRect().getHeight() + 10;
                 }
             }
         }
@@ -360,11 +366,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     {
         m_synergySprite->setY(y);
         m_SynergyText->setY(y);
-        y += 40;
+        y += m_SynergyText->getTextRect().getHeight() + 10;
     }
 
     m_PerkText->setPosition(10, y);
-    y += 40;
+    y += m_PerkText->getTextRect().getHeight() + 10;
     showPerks(pCO, y);
     y += 50;
 
@@ -373,6 +379,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         m_UnitDataActors[i]->detach();
     }
     m_UnitDataActors.clear();
+
+    if (y < m_pCurrentCO->getY() + m_pCurrentCO->getHeight() + 10)
+    {
+        y = m_pCurrentCO->getY() + m_pCurrentCO->getHeight() + 10;
+    }
 
     qint32 x = 10;
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
@@ -459,15 +470,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     qint32 defBonus = 0;
     qint32 firerangeBonus = 0;
     qint32 movementBonus = 0;
-    // not sure which one is better for ingame data
-    //        if (m_Ingame)
-    //        {
-    //            offBonus = pUnit->getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
-    //            defBonus = pUnit->getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
-    //            firerangeBonus = pUnit->getBonusMaxRange(QPoint(-1, -1));
-    //            movementBonus = pUnit->getBonusMovementpoints(QPoint(-1, -1));
-    //        }
-    //        else
+
     if (pCO.get() != nullptr)
     {
         offBonus = pCO->getOffensiveBonus(nullptr, pUnit.get(), pUnit->getPosition(), nullptr, pUnit->getPosition(), false, GameEnums::LuckDamageMode_Off);

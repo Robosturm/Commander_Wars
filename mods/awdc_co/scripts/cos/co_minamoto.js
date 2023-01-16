@@ -18,25 +18,7 @@ CO_MINAMOTO.getSuperPowerName = function()
 CO_MINAMOTO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                   defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
-    var nearMountains = false;
-    if (map !== null)
-    {
-        var fields = globals.getCircle(0, 2);
-        for (var i = 0; i < fields.size(); i++)
-        {
-            var x = fields.at(i).x + atkPosX;
-            var y = fields.at(i).y + atkPosY;
-            if (map.onMap(x, y))
-            {
-                if (map.getTerrain(x, y).getID() === "MOUNTAIN")
-                {
-                    nearMountains = true;
-                    break;
-                }
-            }
-        }
-        fields.remove();
-    }
+    var nearMountains = CO_MINAMOTO.getNearMountain(map, atkPosX, atkPosY);
     switch (co.getPowerMode())
     {
     case GameEnums.PowerMode_Tagpower:

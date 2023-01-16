@@ -1,4 +1,4 @@
-#include "qdatetime.h"
+#include <QDateTime>
 
 #include "gameinput/mapmover.h"
 

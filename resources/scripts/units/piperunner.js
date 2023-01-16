@@ -61,6 +61,14 @@ var Constructor = function()
     {
         return GameEnums.WeaponType_Indirect;
     };
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
+    {
+        return "fore_pipeline";
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "movepipe.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

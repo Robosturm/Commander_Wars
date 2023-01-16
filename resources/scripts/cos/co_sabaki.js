@@ -58,7 +58,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -106,7 +105,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.loadCOMusic = function(co, map)
@@ -241,7 +239,7 @@ var Constructor = function()
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Rejuvination Raid");
+        return qsTr("Rejuvenation Raid");
     };
     this.getPowerSentences = function(co)
     {

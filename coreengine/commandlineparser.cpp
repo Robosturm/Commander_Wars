@@ -27,6 +27,10 @@ const char* const CommandLineParser::ARG_SLAVEPORT              = "slavePort";
 const char* const CommandLineParser::ARG_MASTERADDRESS          = "masterAdress";
 const char* const CommandLineParser::ARG_MASTERPORT             = "masterPort";
 const char* const CommandLineParser::ARG_UPDATE                 = "update";
+const char* const CommandLineParser::ARG_SPAWNAIPROCESS         = "spawnAiProcess";
+const char* const CommandLineParser::ARG_AISLAVE                = "aiSlave";
+const char* const CommandLineParser::ARG_USERPATH               = "userPath";
+const char* const CommandLineParser::ARG_DEBUGLEVEL             = "debugLevel";
 
 // options required for hosting a dedicated server
 const char* const CommandLineParser::ARG_SERVER                     = "server";
@@ -37,6 +41,7 @@ const char* const CommandLineParser::ARG_SERVERLISTENPORT               = "serve
 const char* const CommandLineParser::ARG_SERVERSLAVELISTENADDRESS       = "serverSlaveListenAddress";
 const char* const CommandLineParser::ARG_SERVERSLAVELISTENPORT          = "serverSlaveListenPort";
 const char* const CommandLineParser::ARG_SERVERSLAVEDESPAWNTIME         = "serverSlaveDespawnTime";
+const char* const CommandLineParser::ARG_SERVERSLAVESUSPENDEDTIME       = "serverSuspendedDespawnTime";
 
 const char* const CommandLineParser::ARG_MAILSERVERADDRESS = "mailServerAddress";
 const char* const CommandLineParser::ARG_MAILSERVERPORT = "mailServerPort";
@@ -47,7 +52,11 @@ const char* const CommandLineParser::ARG_MAILSERVERSENDADDRESS = "mailServerSend
 const char* const CommandLineParser::ARG_MAILSERVERAUTHMETHOD = "mailServerAuthMethod";
 
 CommandLineParser::CommandLineParser()
-    : m_mods(ARG_MODS, tr("mods that should be loaded. As a string list separated by ';'"), tr("mod list"), ""),
+    : m_debugLevel(ARG_DEBUGLEVEL, tr("Debug level for the next sessions"), tr("level"), "1"),
+      m_userPath(ARG_USERPATH, tr("Userpath for the game to use for user files to be stored"), tr("path"), ""),
+      m_aiSlave(ARG_AISLAVE, tr("Acts as ai slave process")),
+      m_spawnAiProcess(ARG_SPAWNAIPROCESS, tr("mode for starting the sub ai process. Off=0 Spawn=1"), tr("mode"), "1"),
+      m_mods(ARG_MODS, tr("mods that should be loaded. As a string list separated by ';'"), tr("mod list"), ""),
       m_update(ARG_UPDATE, tr("Only used internal to tell the game that an update is in progresss"), tr("update step"), ""),
       m_slave(ARG_SLAVE, tr("If the exe is started as a slave process.")),
       m_noUi(ARG_NOUI, tr("If the exe is started in headless mode")),
@@ -55,7 +64,7 @@ CommandLineParser::CommandLineParser()
       m_iniScript(ARG_INITSCRIPT, tr("Path to a js script that gets triggered by the game to automate or test things"), tr("script"), ""),
       m_createSlaveLogs(ARG_CREATESLAVELOGS, tr("If the game should create logs for spawned slave processes")),
       m_slaveAddress(ARG_SLAVEADDRESS, tr("Address on which the game will listen for new clients"), tr("ip-adress"), ""),
-      m_secondarySlaveAddress(ARG_SLAVESECONDARYADDRESS, tr("Secondary address on which the game will listen for new clients"), tr("ip-adress"), ""),
+      m_secondarySlaveAddress(ARG_SLAVESECONDARYADDRESS, tr("Secondary address on which the game will listen for new clients"), tr("ip-address"), ""),
       m_slavePort(ARG_SLAVEPORT, tr("Port on which the game will listen for new clients"), tr("port"), "0"),
       m_masterAddress(ARG_MASTERADDRESS, tr("Address on which the game will connect to the hosting server to exchange data"), "ip-address", "::1"),
       m_masterPort(ARG_MASTERPORT, tr("Port on which the game will connect to the hosting server to exchange data"), tr("port"), ""),
@@ -68,6 +77,7 @@ CommandLineParser::CommandLineParser()
       m_serverSlaveListenAddress(ARG_SERVERSLAVELISTENADDRESS, tr("The address on which the server will listen for slave games. Empty for all addresses."), "slaveListenAddress", "::1"),
       m_serverSlaveListenPort(ARG_SERVERSLAVELISTENPORT, tr("Port on which the server will listen for slave games."), tr("port"), ""),
       m_serverSlaveDespawnTime(ARG_SERVERSLAVEDESPAWNTIME, tr("Time in seconds till a slave game with no connected clients get despawned in seconds."), tr("time"), "60000"),
+      m_serverSuspendedDespawnTime(ARG_SERVERSLAVESUSPENDEDTIME, tr("Time in seconds till a suspended game with no connected clients get despawned in seconds."), tr("time"), "60000"),
       m_mailServerAddress(ARG_MAILSERVERADDRESS, tr("Mail server address for the server for sending mails to accounts."), tr("address"), ""),
       m_mailServerPort(ARG_MAILSERVERPORT, tr("Mail server port for the server for sending mails to accounts."), tr("port"), ""),
       m_mailServerConnectionType(ARG_MAILSERVERCONNECTIONTYPE, tr("Mail server connection type (TLS, TCP, SSL) for the server for sending mails to accounts."), tr("connection"), ""),
@@ -79,7 +89,11 @@ CommandLineParser::CommandLineParser()
     m_parser.setApplicationDescription("Commander Wars game");
     m_parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     m_parser.addHelpOption();
-    m_parser.addVersionOption();
+    m_parser.addVersionOption();    
+    m_parser.addOption(m_debugLevel);
+    m_parser.addOption(m_userPath);
+    m_parser.addOption(m_aiSlave);
+    m_parser.addOption(m_spawnAiProcess);
     m_parser.addOption(m_mods);
     m_parser.addOption(m_update);
     m_parser.addOption(m_slave);
@@ -101,6 +115,7 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_serverSlaveListenAddress);
     m_parser.addOption(m_serverSlaveListenPort);
     m_parser.addOption(m_serverSlaveDespawnTime);
+    m_parser.addOption(m_serverSuspendedDespawnTime);
     m_parser.addOption(m_mailServerAddress);
     m_parser.addOption(m_mailServerPort);
     m_parser.addOption(m_mailServerConnectionType);
@@ -118,6 +133,10 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     {
         pApp->setCreateSlaveLogs(true);
     }
+    if (m_parser.isSet(m_userPath))
+    {
+        Settings::setUserPath(m_parser.value(m_userPath));
+    }
     if (m_parser.isSet(m_slaveName))
     {
         QString value = m_parser.value(m_slaveName);
@@ -127,6 +146,14 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     {
         pApp->actAsSlave();
     }
+    if (m_parser.isSet(m_spawnAiProcess))
+    {
+        Settings::setSpawnAiProcess(m_parser.value(m_spawnAiProcess) == "1");
+    }
+    if (m_parser.isSet(m_aiSlave) && !Settings::getSpawnAiProcess())
+    {
+        Settings::setAiSlave(true);
+    }
     if (m_parser.isSet(m_update))
     {
         QString value = m_parser.value(m_update);
@@ -134,9 +161,31 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     }
 }
 
+bool CommandLineParser::getUserPath(QString & path)
+{
+    if (m_parser.isSet(m_userPath))
+    {
+        path = m_parser.value(m_userPath);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void CommandLineParser::parseArgsPhaseTwo()
 {
+    CONSOLE_PRINT("CommandLineParser::parseArgsPhaseTwo()", GameConsole::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
+    if (m_parser.isSet(m_spawnAiProcess))
+    {
+        Settings::setSpawnAiProcess(m_parser.value(m_spawnAiProcess) == "1");
+    }
+    if (m_parser.isSet(m_aiSlave) && !Settings::getSpawnAiProcess())
+    {
+        Settings::setAiSlave(true);
+    }
     if (m_parser.isSet(m_slaveName))
     {
         QString value = m_parser.value(m_slaveName);
@@ -177,12 +226,12 @@ void CommandLineParser::parseArgsPhaseTwo()
                     ++i;
                 }
             }
-            CONSOLE_PRINT("Using injected mod list: " + mods, Console::eDEBUG);
+            CONSOLE_PRINT("Using injected mod list: " + mods, GameConsole::eDEBUG);
             Settings::setActiveMods(modList);
         }
         else
         {
-            CONSOLE_PRINT("Using no mods", Console::eDEBUG);
+            CONSOLE_PRINT("Using no mods", GameConsole::eDEBUG);
             Settings::setActiveMods(QStringList());
         }
     }
@@ -193,7 +242,7 @@ void CommandLineParser::parseArgsPhaseTwo()
     if (m_parser.isSet(m_server))
     {
         Settings::setServer(m_parser.value(m_server) == "1");
-    }
+    }    
     if (m_parser.isSet(m_serverSlaveHostOptions))
     {
         Settings::setSlaveHostOptions(m_parser.value(m_serverSlaveHostOptions));
@@ -214,21 +263,27 @@ void CommandLineParser::parseArgsPhaseTwo()
     if (m_parser.isSet(m_serverSlaveListenAddress))
     {
         QString value = m_parser.value(m_serverSlaveListenAddress);
-        CONSOLE_PRINT("Using slave listen adress " + value, Console::eDEBUG);
+        CONSOLE_PRINT("Using slave listen adress " + value, GameConsole::eDEBUG);
         Settings::setSlaveListenAdress(value);
     }
     if (m_parser.isSet(m_serverSlaveListenPort))
     {
         QString value = m_parser.value(m_serverSlaveListenPort);
-        CONSOLE_PRINT("Using slave listen port " + value, Console::eDEBUG);
+        CONSOLE_PRINT("Using slave listen port " + value, GameConsole::eDEBUG);
         bool ok = false;
         Settings::setSlaveServerPort(value.toInt(&ok));
     }
     if (m_parser.isSet(m_serverSlaveDespawnTime))
     {
         QString value = m_parser.value(m_serverSlaveDespawnTime);
-        CONSOLE_PRINT("Using slave despawn time adress " + value, Console::eDEBUG);
+        CONSOLE_PRINT("Using slave despawn time adress " + value, GameConsole::eDEBUG);
         Settings::setSlaveDespawnTime(std::chrono::seconds(value.toInt()));
+    }
+    if (m_parser.isSet(m_serverSuspendedDespawnTime))
+    {
+        QString value = m_parser.value(m_serverSuspendedDespawnTime);
+        CONSOLE_PRINT("Using suspended despawn time adress " + value, GameConsole::eDEBUG);
+        Settings::setSuspendedDespawnTime(std::chrono::seconds(value.toInt()));
     }
     if (m_parser.isSet(m_mailServerAddress))
     {
@@ -283,11 +338,16 @@ void CommandLineParser::parseArgsPhaseTwo()
         }
         Settings::setMailServerAuthMethod(static_cast<qint32>(value));
     }
+    if (m_parser.isSet(m_debugLevel))
+    {
+        QString level = m_parser.value(m_debugLevel);
+        GameConsole::setLogLevel(static_cast<GameConsole::eLogLevels>(level.toInt()));
+    }
 }
 
 void CommandLineParser::disableUi()
 {
-    CONSOLE_PRINT("Running without ui", Console::eDEBUG);
+    CONSOLE_PRINT("Running without ui", GameConsole::eDEBUG);
     AnimationSkipper::disableAllAnimations();
     Mainapp* pApp = Mainapp::getInstance();
     pApp->setNoUi();
@@ -329,7 +389,7 @@ void CommandLineParser::startSlaveGame() const
         }
     }
     CONSOLE_PRINT("Slave address " + slaveAddress + " port " + QString::number(slavePort) + " secondary slave address " + secondarySlaveAddress +
-                  " master address " + masterAddress + " port " + QString::number(masterPort), Console::eDEBUG);
+                  " master address " + masterAddress + " port " + QString::number(masterPort), GameConsole::eDEBUG);
     if (!slaveAddress.isEmpty() && masterPort > 0 && slavePort > 0 && !masterAddress.isEmpty())
     {
         MainServer::initDatabase();
@@ -345,11 +405,10 @@ void CommandLineParser::startSlaveGame() const
         connect(pSlaveMasterConnection.get(), &TCPClient::sigConnected, pMenu.get(), &Multiplayermenu::onSlaveConnectedToMaster, Qt::QueuedConnection);
         connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, pMenu.get(), &Multiplayermenu::recieveServerData, Qt::QueuedConnection);
         emit pSlaveMasterConnection->sig_connect(masterAddress, masterPort, "");
-
     }
     else
     {
-        CONSOLE_PRINT("Despawning game cause slave game configuration is invalid", Console::eDEBUG);
+        CONSOLE_PRINT("Despawning game cause slave game configuration is invalid", GameConsole::eDEBUG);
         QCoreApplication::exit(-3);
     }
 }

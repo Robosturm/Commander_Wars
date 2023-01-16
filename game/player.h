@@ -7,7 +7,6 @@
 #include <QVector>
 #include <QVector3D>
 
-#include "coreengine/mainapp.h"
 #include "coreengine/qmlvector.h"
 #include "coreengine/fileserializable.h"
 
@@ -16,6 +15,7 @@
 
 #include "gameinput/basegameinputif.h"
 
+class SimpleProductionSystem;
 class GameMap;
 class Player;
 using spPlayer = oxygine::intrusive_ptr<Player>;
@@ -134,6 +134,12 @@ public:
     void setControlType(const GameEnums::AiTypes &newControlType);
 
 public slots:
+    /**
+     * @brief getCoGroupModifier
+     * @param unitIds
+     * @return
+     */
+    float getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
     /**
      * @brief getControlType
      * @return this is the ai type set during game creation this may differ to the instanciated ai type during multiplayer matches
@@ -633,6 +639,18 @@ public slots:
     {
         return &m_Variables;
     }
+    /**
+     * @brief getEnemyRepairCostModifier
+     * @param pUnit
+     * @return
+     */
+    float getEnemyRepairCostModifier(Unit* pUnit);
+    /**
+     * @brief getBonusRepairCostModifier
+     * @param pUnit
+     * @return
+     */
+    float getRepairCostModifier(Unit* pUnit);
 private:
     /**
      * @brief loadTable
@@ -700,7 +718,7 @@ private:
      * @brief m_pBaseGameInput pointer to the ai or human player
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
-    GameEnums::AiTypes m_controlType;
+    GameEnums::AiTypes m_controlType{GameEnums::AiTypes::AiTypes_Open};
     GameMenue* m_pMenu{nullptr};
     bool m_isDefeated{false};
     struct VisionFieldInfo

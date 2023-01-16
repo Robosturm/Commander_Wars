@@ -328,7 +328,6 @@ var Constructor = function() { // scriptStart
                 }
             }
         }
-        fields.remove();
     }
 
 // scriptEnd

@@ -1,9 +1,11 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/Material.h"
+#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
+#include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "coreengine/globalutils.h"
 #include <functional>
 #include <vector>
-#include <QPainter>
 
 namespace oxygine
 {
@@ -21,7 +23,7 @@ namespace oxygine
     };    
 
     class STDRenderer;
-    typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
+    using spSTDRenderer = oxygine::intrusive_ptr<STDRenderer>;
     class STDRenderer final : public ShaderProgramChangedHook, public oxygine::ref_counter
     {
     public:
@@ -43,7 +45,6 @@ namespace oxygine
 
         /**White 4x4 Texture*/
         static spTexture white;
-        static UberShaderProgram uberShader;
         static std::vector<quint16> indices16;
         static size_t maxVertices;
 
@@ -64,7 +65,6 @@ namespace oxygine
         void setFracShader(UberShaderProgram::ColorMode fracShader);
         void setViewProj(const QMatrix4x4& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
-        void setUberShaderProgram(UberShaderProgram* pr);
         void setBaseShaderFlags(quint32 fl);
         /**Sets World transformation.*/
         void setTransform(const AffineTransform& world);
@@ -107,26 +107,26 @@ namespace oxygine
             p4 = transform.transform(p4);
 
             vt.z = 0;
-            vt.x = p1.x;
-            vt.y = p1.y;
+            vt.x = static_cast<qint32>(p1.x);
+            vt.y = static_cast<qint32>(p1.y);
             vt.u = u;
             vt.v = v;
             quad[0] = vt;
 
-            vt.x = p2.x;
-            vt.y = p2.y;
+            vt.x = static_cast<qint32>(p2.x);
+            vt.y = GlobalUtils::roundUp(p2.y);
             vt.u = u;
             vt.v = v + dv;
             quad[1] = vt;
 
-            vt.x = p3.x;
-            vt.y = p3.y;
+            vt.x = GlobalUtils::roundUp(p3.x);
+            vt.y = static_cast<qint32>(p3.y);
             vt.u = u + du;
             vt.v = v;
             quad[2] = vt;
 
-            vt.x = p4.x;
-            vt.y = p4.y;
+            vt.x = GlobalUtils::roundUp(p4.x);
+            vt.y = GlobalUtils::roundUp(p4.y);
             vt.u = u + du;
             vt.v = v + dv;
             quad[3] = vt;
@@ -145,10 +145,10 @@ namespace oxygine
         ShaderProgramChangedHook* m_sphookFirst;
         ShaderProgramChangedHook* m_sphookLast;
 
-        UberShaderProgram* m_uberShader{nullptr};
         spTexture m_prevRT;
     private:
         static bool m_restored;
+        static QScopedPointer<UberShaderProgram> m_uberShader;
     };
 
     class RenderStateCache

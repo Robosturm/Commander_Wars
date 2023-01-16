@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionVictory;
-typedef oxygine::intrusive_ptr<ScriptConditionVictory> spScriptConditionVictory;
+using spScriptConditionVictory = oxygine::intrusive_ptr<ScriptConditionVictory>;
 
 class ScriptConditionVictory final : public ScriptCondition
 {

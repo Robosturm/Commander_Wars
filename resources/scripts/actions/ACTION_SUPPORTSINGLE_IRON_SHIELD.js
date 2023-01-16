@@ -5,14 +5,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-        if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null)) &&
-            (ACTION_SUPPORTSINGLE_IRON_SHIELD.getDefenseFields(action, map).length > 0))
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map) &&
+            ACTION_SUPPORTSINGLE_IRON_SHIELD.getDefenseFields(action, map).length > 0)
         {
             return true;
         }
@@ -106,7 +100,7 @@ var Constructor = function()
         var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY);
         var defenseUnit = terrain.getUnit();
         var animation = GameAnimationFactory.createAnimation(map, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY);
-        var width = animation.addText(qsTr("DEFENSE"), map.getImageSize() / 2 + 25, 2, 1);
+        var width = animation.addText(qsTr("DEFENSE"), map.getImageSize() / 2 + 25, -2, 1);
         animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
         animation.addSprite("defense", map.getImageSize() / 2 + 4, 4, 400, 2);
         defenseUnit.addDefensiveBonus(200);
@@ -116,6 +110,10 @@ var Constructor = function()
         ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationUnit = null;
         ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX = -1;
         ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY = -1;
+    };
+    this.getName = function()
+    {
+        return qsTr("Iron shield");
     };
     this.getDescription = function()
     {

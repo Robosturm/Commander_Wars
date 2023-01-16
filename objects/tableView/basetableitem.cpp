@@ -1,5 +1,4 @@
 #include "objects/tableView/basetableitem.h"
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 BaseTableItem::BaseTableItem(QObject *parent)
@@ -9,6 +8,4 @@ BaseTableItem::BaseTableItem(QObject *parent)
 #ifdef GRAPHICSUPPORT
     setObjectName("BaseTableItem");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
 }

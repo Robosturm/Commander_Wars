@@ -116,6 +116,10 @@ var Constructor = function()
                 "fog+SW",
                 "fog+NW",];
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeReaf.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var FOG = new Constructor();

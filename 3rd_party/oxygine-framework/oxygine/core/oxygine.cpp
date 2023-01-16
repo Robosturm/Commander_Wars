@@ -4,7 +4,7 @@
 
 #include <qmutex.h>
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 namespace oxygine
 {
@@ -12,25 +12,25 @@ namespace oxygine
     {
         void reset()
         {
-            CONSOLE_PRINT("core::reset()", Console::eDEBUG);
+            CONSOLE_PRINT("core::reset()", GameConsole::eDEBUG);
             STDRenderer::reset();
             VideoDriver::instance->reset();
-            CONSOLE_PRINT("core::reset() done", Console::eDEBUG);
+            CONSOLE_PRINT("core::reset() done", GameConsole::eDEBUG);
         }
     }
-    void handleErrorPolicy(error_policy ep, const QString & message)
+    void handleErrorPolicy(error_policy ep, const QString & message, quint64 module)
     {
         switch (ep)
         {
             case ep_show_error:
-                CONSOLE_PRINT(message, Console::eERROR);
+                CONSOLE_PRINT(message, GameConsole::eERROR);
                 OXY_ASSERT(false);
                 break;
             case ep_show_warning:
-                CONSOLE_PRINT(message, Console::eWARNING);
+                CONSOLE_PRINT_MODULE(message, GameConsole::eWARNING, module);
                 break;
             case ep_ignore_error:
-                CONSOLE_PRINT(message, Console::eDEBUG);
+                CONSOLE_PRINT_MODULE(message, GameConsole::eDEBUG, module);
                 break;
             default:
                 OXY_ASSERT(!"not implemented");

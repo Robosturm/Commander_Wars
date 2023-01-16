@@ -3,7 +3,6 @@
 #include <QString>
 
 #include "ai/decisiontree/decisionnode.h"
-#include "coreengine/fileserializable.h"
 
 class Leaf;
 using spLeaf = oxygine::intrusive_ptr<Leaf>;

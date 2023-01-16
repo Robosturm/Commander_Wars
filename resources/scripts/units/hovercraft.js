@@ -55,6 +55,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Hovercraft;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movehovercraft.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

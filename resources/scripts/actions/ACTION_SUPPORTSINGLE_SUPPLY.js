@@ -5,15 +5,9 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0) ||
-             !unit.hasAmmo2())
-        {
-            return false;
-        }
-        if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null)) &&
-            (ACTION_SUPPORTSINGLE_SUPPLY.getRepairFields(action, map).length > 0))
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map) &&
+            ACTION_SUPPORTSINGLE_SUPPLY.getRepairFields(action, map).length > 0 &&
+            unit.hasAmmo2())
         {
             return true;
         }
@@ -110,7 +104,7 @@ var Constructor = function()
         var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetX, ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetY);
         var repairUnit = terrain.getUnit();
         var animation = GameAnimationFactory.createAnimation(map, ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetX, ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetY);
-        var width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+        var width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, -2, 1);
         animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
         animation.addSprite("RATION", map.getImageSize() / 2 + 4, 4, 400, 2);
         animation.addSound("repair_1.wav");
@@ -120,9 +114,13 @@ var Constructor = function()
         ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetX = -1;
         ACTION_SUPPORTSINGLE_SUPPLY.postAnimationTargetY = -1;
     };
+    this.getName = function()
+    {
+        return qsTr("Supply one unit");
+    };
     this.getDescription = function()
     {
-        return qsTr("Refills the target unit.");
+        return qsTr("Refills the target unit ammo and fuel.");
     };
 }
 

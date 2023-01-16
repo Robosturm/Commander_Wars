@@ -3,13 +3,10 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 
-#include "texture.h"
-
 #include "spritingsupport/spritecreator.h"
 
 namespace oxygine
 {
-    AnimationFrame ResAnim::m_emptyFrame;
     ResAnim::ResAnim(Resource* atlas)
         : m_columns(1),
           m_atlas(atlas),
@@ -57,7 +54,7 @@ namespace oxygine
             {
                 RectF srcRect(x * iw, y * ih, width, height);
                 RectF destRect(Vector2(0, 0), frameSize * scaleFactor);
-                m_frames[x + y * columns].init(this, x, y, texture, srcRect, destRect, destRect.size);
+                m_frames[x + y * columns].init(this, x, y, texture, srcRect, destRect, destRect.size.cast<Point>());
             }
         }
         init(columns, scaleFactor);
@@ -145,7 +142,12 @@ namespace oxygine
         {
             return m_frames[index];
         }
-        return m_emptyFrame;
+        static QScopedPointer<AnimationFrame> emptyFrame;
+        if (emptyFrame.isNull())
+        {
+            emptyFrame.reset(new AnimationFrame());
+        }
+        return *emptyFrame.get();
     }
 
     void ResAnim::setFrame(qint32 col, qint32 row, const AnimationFrame& frame)
@@ -157,11 +159,11 @@ namespace oxygine
         }
     }
 
-    const Vector2&  ResAnim::getSize() const
+    const Point& ResAnim::getSize() const
     {
         if (m_frames.empty())
         {
-            static Vector2 dummy;
+            static Point dummy;
             return dummy;
         }
         return m_frames[0].getSize();

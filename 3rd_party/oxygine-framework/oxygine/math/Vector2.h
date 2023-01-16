@@ -1,17 +1,16 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/math/ScalarMath.h"
 
-#include <qmath.h>
+#include <QtMath>
 
 namespace oxygine
 {
     template <class T>
     class VectorT2 final
     {
-        typedef VectorT2<T> vector2;
+        using vector2 = VectorT2<T>;
     public:
-        typedef T type;
+        using type = T;
         explicit VectorT2() = default;
         explicit VectorT2(T, T);
 
@@ -27,11 +26,7 @@ namespace oxygine
             x = x_;
             y = y_;
         }
-        void setZero()
-        {
-            x = 0;
-            y = 0;
-        }
+
         template <class R>
         VectorT2 operator * (R s) const
         {
@@ -79,8 +74,8 @@ namespace oxygine
         template<typename R>
         R cast() const
         {
-            typedef R vec2;
-            typedef typename R::type vec2type;
+            using vec2 = R;
+            using vec2type = typename R::type;
             return vec2(vec2type(x), vec2type(y));
         }
 
@@ -88,41 +83,11 @@ namespace oxygine
         bool operator == (const VectorT2& r) const;
         bool operator != (const VectorT2& r) const;
 
-        T length() const
-        {
-            return (T)qSqrt(x * x + y * y);
-        }
         T sqlength() const
         {
-            return dot(*this);
+            return x * x + y * y;
         }
 
-        void normalize()
-        {
-            normalize(*this, *this);
-        }
-        void normalizeTo(T len)
-        {
-            normalize();
-            *this *= len;
-        }
-        VectorT2 normalized() const
-        {
-            VectorT2 t = *this;
-            t.normalize();
-            return t;
-        }
-        float distance(const VectorT2& v) const
-        {
-            return VectorT2(x - v.x, y - v.y).length();
-        }
-        T dot(const VectorT2& vr) const
-        {
-            return dot(*this, vr);
-        }
-
-        static T dot(const VectorT2& v1, const VectorT2& v2);
-        static VectorT2& normalize(VectorT2& out, const VectorT2& v);
         T x{0};
         T y{0};
     };
@@ -180,21 +145,6 @@ namespace oxygine
         return VectorT2<T>(-x, -y);
     }
 
-    template <class T>
-    inline T VectorT2<T>::dot(const VectorT2& v1, const VectorT2& v2)
-    {
-        return v1.x * v2.x + v1.y * v2.y;
-    }
-
-    template <class T>
-    inline VectorT2<T>& VectorT2<T>::normalize(VectorT2<T>& out, const VectorT2<T>& v)
-    {
-        T norm = T(1.0) / qSqrt(v.x * v.x + v.y * v.y);
-        out = v;
-        out.x *= norm;
-        out.y *= norm;
-        return out;
-    }
-    typedef VectorT2<float> Vector2;
-    typedef VectorT2<int> Point;
+    using Vector2 = VectorT2<float>;
+    using Point = VectorT2<int>;
 }

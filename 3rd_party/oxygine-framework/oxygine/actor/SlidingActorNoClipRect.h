@@ -3,7 +3,6 @@
 #include "3rd_party/oxygine-framework/oxygine/Draggable.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 namespace oxygine
 {
@@ -40,7 +39,7 @@ namespace oxygine
         protected:
             void destroy();
             virtual void handleEvent(Event* event) override;
-            virtual void sizeChanged(const Vector2& size) override;
+            virtual void sizeChanged(const Point& size) override;
             virtual void doUpdate(const UpdateState& us) override;
 
             void _newEvent(Event* event);

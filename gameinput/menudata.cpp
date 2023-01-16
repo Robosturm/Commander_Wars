@@ -1,14 +1,11 @@
 #include "gameinput/menudata.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "resource_management/gamemanager.h"
-#include "resource_management/buildingspritemanager.h"
-#include "resource_management/unitspritemanager.h"
 
 #include "game/gamemap.h"
 #include "game/unit.h"
-#include "game/player.h"
 #include "game/co.h"
 
 MenuData::MenuData(GameMap* pMap)
@@ -17,15 +14,12 @@ MenuData::MenuData(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("MenuData");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    oxygine::ref_counter::addInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 MenuData::~MenuData()
 {
-    oxygine::ref_counter::releaseInstanceCounter();
 }
 
 void MenuData::addData(QString text, QString actionID, QString icon, qint32 costs, bool enabled)
@@ -72,7 +66,7 @@ bool MenuData::validData()
     {
         return true;
     }
-    CONSOLE_PRINT("Menu data is inconsistent and considered broken. Game gets stucked now. This may stop the ai from working.", Console::eERROR);
+    CONSOLE_PRINT("Menu data is inconsistent and considered broken. Game gets stucked now. This may stop the ai from working.", GameConsole::eERROR);
     return false;
 }
 

@@ -19,25 +19,25 @@ class ScriptEvent : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    static const QString EventDialog;
-    static const QString EventSpawnUnit;
-    static const QString EventDefeatPlayer;
-    static const QString EventChangeBuildlist;
-    static const QString EventAddFunds;
-    static const QString EventChangeWeather;
-    static const QString EventChangeCOBar;
-    static const QString EventModifyUnit;
-    static const QString EventAnimation;
-    static const QString EventModifyTerrain;
-    static const QString EventVictoryInfo;
-    static const QString EventModifyVariable;
-    static const QString EventChangeUnitAI;
-    static const QString EventChangeBuildingOwner;
-    static const QString EventChangeUnitOwner;
-    static const QString EventChangePlayerTeam;
-    static const QString EventSpawnBuilding;
-    static const QString EventCenterMap;
-    static const QString EventPlaySound;
+    static const char* const EventDialog;
+    static const char* const EventSpawnUnit;
+    static const char* const EventDefeatPlayer;
+    static const char* const EventChangeBuildlist;
+    static const char* const EventAddFunds;
+    static const char* const EventChangeWeather;
+    static const char* const EventChangeCOBar;
+    static const char* const EventModifyUnit;
+    static const char* const EventAnimation;
+    static const char* const EventModifyTerrain;
+    static const char* const EventVictoryInfo;
+    static const char* const EventModifyVariable;
+    static const char* const EventChangeUnitAI;
+    static const char* const EventChangeBuildingOwner;
+    static const char* const EventChangeUnitOwner;
+    static const char* const EventChangePlayerTeam;
+    static const char* const EventSpawnBuilding;
+    static const char* const EventCenterMap;
+    static const char* const EventPlaySound;
 
 
     ENUM_CLASS EventType

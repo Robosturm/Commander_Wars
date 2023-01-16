@@ -107,6 +107,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Air;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movetransportcopter.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

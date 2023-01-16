@@ -10,6 +10,7 @@ var Constructor = function()
                                 ["SEA", 1],
                                 ["LAKE", 1],
                                 ["FOG", 1],
+                                ["BEACH", 1],
                                 ["ROUGH_SEA", 2],
                                 ["REAF", 2],
                                 ["TELEPORTTILE", 0]];

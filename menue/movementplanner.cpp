@@ -2,7 +2,7 @@
 #include "game/gamemap.h"
 
 #include "coreengine/interpreter.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "ui_reader/uifactory.h"
 
@@ -13,7 +13,7 @@
 #include "wiki/fieldinfo.h"
 
 MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
-    : GameMenue(spGameMap::create(1, 1, 2)),
+    : GameMenue(spGameMap::create(1, 1, 2), false),
       m_pOwner(pOwner),
       m_pViewPlayer(pViewPlayer)
 {
@@ -44,7 +44,7 @@ MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
     connect(this, &MovementPlanner::sigHide, pOwner, &GameMenue::hideMovementPlanner, Qt::QueuedConnection);
     connect(this, &MovementPlanner::sigLeftClick, this, &MovementPlanner::leftClick, Qt::QueuedConnection);
     connect(this, &MovementPlanner::sigRightClick, this, &MovementPlanner::rightClick, Qt::QueuedConnection);
-    connect(&m_actionPerformer, &ActionPerformer::actionPerformed, this, &MovementPlanner::updateUpdateAddIns, Qt::QueuedConnection);
+    connect(&m_actionPerformer, &ActionPerformer::sigActionPerformed, this, &MovementPlanner::updateUpdateAddIns, Qt::QueuedConnection);
 
     if (m_pPlayerinfo.get())
     {
@@ -103,12 +103,20 @@ void MovementPlanner::addAddIn(QStringList & loadedGroups, QString newAddInId)
 
 void MovementPlanner::onShowPlanner()
 {
+    if (m_input.get() != nullptr)
+    {
+        m_input->cleanUpInput();
+    }
     m_animationSkipper.storeAnimationSettings();
     m_animationSkipper.startSeeking();
 }
 
 void MovementPlanner::onExitPlanner()
 {
+    if (m_input.get() != nullptr)
+    {
+        m_input->cleanUpInput();
+    }
     m_animationSkipper.restoreAnimationSettings();
 }
 
@@ -125,7 +133,10 @@ void MovementPlanner::reloadMap()
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->show();
-
+    if (m_input.get() != nullptr)
+    {
+        m_input->cleanUpInput();
+    }
     GameMap* pSourceMap = m_pOwner->getMap();
     QBuffer buffer;
     buffer.open(QIODevice::ReadWrite);
@@ -176,7 +187,11 @@ void MovementPlanner::reloadMap()
 
 void MovementPlanner::clickedTopbar(QString itemID)
 {
-    CONSOLE_PRINT("clickedTopbar(" + itemID + ")", Console::eDEBUG);
+    CONSOLE_PRINT("clickedTopbar(" + itemID + ")", GameConsole::eDEBUG);
+    if (m_input.get() != nullptr)
+    {
+        m_input->cleanUpInput();
+    }
     struct MenuItem
     {
         MenuItem(const char* const id, void (MovementPlanner::*func)())
@@ -289,7 +304,7 @@ void MovementPlanner::execute()
                        pInterpreter->newQObject(this)});
     if (readyToExecute())
     {
-        CONSOLE_PRINT("Executing active addin " + m_activeAddIn->getAddIn(), Console::eDEBUG);
+        CONSOLE_PRINT("Executing active addin " + m_activeAddIn->getAddIn(), GameConsole::eDEBUG);
         QJSValue erg = pInterpreter->doFunction(m_activeAddIn->getAddIn(), "execute", args);
         updateUpdateAddIns();
         if ((erg.isBool() && erg.toBool()) ||

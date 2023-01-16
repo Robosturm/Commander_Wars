@@ -39,7 +39,7 @@ public:
      */
     virtual QString getDescription() override
     {
-        return tr("Modify Unit");
+        return tr("Modify terrain");
     }
 
     /**

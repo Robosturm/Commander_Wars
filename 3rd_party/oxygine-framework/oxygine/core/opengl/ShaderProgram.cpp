@@ -2,7 +2,7 @@
 
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 namespace oxygine
 {
@@ -23,11 +23,11 @@ namespace oxygine
         QString log = m_program.log();
         if (success)
         {
-            CONSOLE_PRINT("compiled shader program", Console::eDEBUG);
+            CONSOLE_PRINT("compiled shader program", GameConsole::eDEBUG);
         }
         else
         {
-            CONSOLE_PRINT("can't compile program: " + log, Console::eFATAL);
+            CONSOLE_PRINT("can't compile program: " + log, GameConsole::eFATAL);
         }
     }
 

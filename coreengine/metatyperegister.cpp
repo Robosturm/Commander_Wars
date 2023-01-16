@@ -4,11 +4,11 @@
 
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
-#include "coreengine/audiothread.h"
 #include "coreengine/scriptvariable.h"
 #include "coreengine/scriptvariables.h"
 #include "coreengine/scriptvariablefile.h"
 
+#include "ai/productionSystem/simpleproductionsystem.h"
 #include "ai/heavyai.h"
 #include "ai/normalai.h"
 #include "ai/influencefrontmap.h"
@@ -24,11 +24,12 @@
 #include "menue/achievementmenu.h"
 #include "menue/optionmenue.h"
 #include "menue/basemenu.h"
-#include "menue/replaymenu.h"
 #include "menue/movementplanner.h"
 
 #include "ui_reader/uifactory.h"
 #include "ui_reader/createdgui.h"
+
+#include "network/networkgame.h"
 
 #include "game/terrain.h"
 #include "game/player.h"
@@ -77,13 +78,12 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
-#include "network/mainserver.h"
-
 #include "resource_management/cospritemanager.h"
 #include "resource_management/terrainmanager.h"
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/unitspritemanager.h"
+#include "resource_management/gamerulemanager.h"
 
 void MetaTypeRegister::registerInterfaceData()
 {
@@ -115,7 +115,7 @@ void MetaTypeRegister::registerInterfaceData()
     qRegisterMetaType<GameEnums::PowerGainZone>("GameEnums::PowerGainZone");
     qRegisterMetaType<GameEnums::PowerGainMode>("GameEnums::PowerGainMode");
     qRegisterMetaType<QEasingCurve::Type>("QEasingCurve::Type");
-    qRegisterMetaType<Console::eLogLevels>("Console::eLogLevels");
+    qRegisterMetaType<GameConsole::eLogLevels>("Console::eLogLevels");
     qRegisterMetaType<Mainapp::StartupPhase>("Mainapp::StartupPhase");
     qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
     qRegisterMetaType<spScriptEvent>("spScriptEvent");
@@ -168,6 +168,7 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<Settings>("Settings", 1);
     qmlRegisterInterface<Wikipage>("Wikipage", 1);
     qmlRegisterInterface<HeavyAi>("HeavyAi", 1);
+    qmlRegisterInterface<SimpleProductionSystem>("SimpleProductionSystem", 1);
     qmlRegisterInterface<InfluenceFrontMap>("InfluenceFrontMap", 1);
     qmlRegisterInterface<InfluenceInfo>("InfluenceInfo", 1);
 
@@ -178,6 +179,7 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<COSpriteManager>("COSpriteManager", 1);
     qmlRegisterInterface<UnitSpriteManager>("UnitSpriteManager", 1);
     qmlRegisterInterface<BuildingSpriteManager>("BuildingSpriteManager", 1);
+    qmlRegisterInterface<GameRuleManager>("GameRuleManager", 1);
     qmlRegisterInterface<TerrainManager>("TerrainManager", 1);
     qmlRegisterInterface<COPerkManager>("COPerkManager", 1);
     qmlRegisterInterface<MovementPlannerAddIn>("MovementPlannerAddIn", 1);
@@ -205,5 +207,5 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<BaseGamemenu>("BaseGamemenu", 1);
     qmlRegisterInterface<Basemenu>("Basemenu", 1);
-    qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
+    qmlRegisterInterface<CustomDialog>("CustomDialog", 1);    
 }

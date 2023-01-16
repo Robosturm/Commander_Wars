@@ -7,7 +7,7 @@
 #include "objects/base/spinbox.h"
 
 class Slider;
-typedef oxygine::intrusive_ptr<Slider> spSlider;
+using spSlider = oxygine::intrusive_ptr<Slider>;
 
 class Slider final : public V_Scrollbar
 {

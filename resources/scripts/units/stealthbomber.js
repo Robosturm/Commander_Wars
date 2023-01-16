@@ -29,7 +29,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 22000;
+        return 21000;
     };
     this.getName = function()
     {
@@ -110,6 +110,14 @@ var Constructor = function()
     this.getUnitType = function()
     {
         return GameEnums.UnitType_Air;
+    };
+    this.buildedUnit = function(unit, player, map)
+    {
+        unit.setHidden(true);
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveair.wav";
     };
 }
 

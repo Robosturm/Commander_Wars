@@ -1,6 +1,5 @@
 #include "objects/base/topbar.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
@@ -11,8 +10,6 @@ Topbar::Topbar(qint32 x, qint32 width)
 #ifdef GRAPHICSUPPORT
     setObjectName("Topbar");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     // create the box for the bar in which everything will be placed

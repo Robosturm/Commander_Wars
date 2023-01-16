@@ -57,11 +57,14 @@ var Constructor = function()
             var sound = Global[building.getBuildingID()].getHealSound();
             animation.addSound(sound);
         }
-        fields.remove();
+    };
+    this.getName = function()
+    {
+        return qsTr("Heal with crystal");
     };
     this.getDescription = function()
     {
-        return qsTr("Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.");
+        return qsTr("Orders a crystal or monolith to heal all own units around it and also refills their ammo and fuel.");
     };
 }
 

@@ -7,7 +7,7 @@ var Constructor = function()
     };
     this.getActionText = function(map)
     {
-        return qsTr("Next Player");
+        return qsTr("Next player");
     };
     this.getIcon = function(map)
     {
@@ -20,6 +20,10 @@ var Constructor = function()
     this.isFinalStep = function(action, map)
     {
         return true;
+    };
+    this.getName = function()
+    {
+        return qsTr("Next player");
     };
     this.getDescription = function()
     {

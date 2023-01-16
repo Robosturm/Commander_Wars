@@ -6,8 +6,6 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
-#include "objects/base/checkbox.h"
-
 class GameMap;
 class DialogVictoryConditions;
 using spDialogVictoryConditions = oxygine::intrusive_ptr<DialogVictoryConditions>;

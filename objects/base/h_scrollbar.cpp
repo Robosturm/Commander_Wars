@@ -2,8 +2,6 @@
 
 #include "resource_management/objectmanager.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
 #include "coreengine/interpreter.h"
 
 H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
@@ -13,8 +11,6 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
 #ifdef GRAPHICSUPPORT
     setObjectName("H_Scrollbar");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     m_ScrollTimer.start();
@@ -210,11 +206,13 @@ void H_Scrollbar::setSliding(bool sliding)
 }
 
 void H_Scrollbar::setContentHeigth(qint32 heigth)
-{
-    
+{    
     m_ContentHeigth = heigth;
     qint32 sliderHeight = 50;
-    sliderHeight = ((getHeight() - 20 - 20) * getHeight()) / m_ContentHeigth;
+    if (m_ContentHeigth > 0)
+    {
+        sliderHeight = ((getHeight() - 20 - 20) * getHeight()) / m_ContentHeigth;
+    }
     if (sliderHeight < 11)
     {
         sliderHeight = 11;
@@ -293,7 +291,7 @@ void H_Scrollbar::setScrollvalue(float Scrollvalue)
     }
 }
 
-void H_Scrollbar::setHeight(float h)
+void H_Scrollbar::setHeight(qint32 h)
 {
     
     oxygine::Actor::setHeight(h);

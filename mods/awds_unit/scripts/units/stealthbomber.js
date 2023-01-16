@@ -35,3 +35,6 @@ STEALTHBOMBER.startOfTurn = function(unit, map)
     }
     unit.setFuel(unit.getFuel() - fuelCosts);
 };
+STEALTHBOMBER.buildedUnit = function(unit, player, map)
+{
+};

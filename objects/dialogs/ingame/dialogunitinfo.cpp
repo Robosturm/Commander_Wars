@@ -2,27 +2,26 @@
 
 #include "objects/dialogs/ingame/dialogunitinfo.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "game/player.h"
 #include "game/gamemap.h"
-#include "gameinput/humanplayerinput.h"
+
+#include "menue/basegamemenu.h"
 
 #include "objects/base/panel.h"
-
-#include "menue/movementplanner.h"
+#include "objects/base/label.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
 DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
+    : m_pPlayer(pPlayer)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogUnitInfo");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -55,26 +54,26 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
 
     spLabel pText = spLabel::create(140);
     pText->setStyle(style);
-    pText->setHtmlText("HP");
+    pText->setHtmlText(tr("HP"));
     pText->setPosition(160 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
 
     pText = spLabel::create(140);
     pText->setStyle(style);
-    pText->setHtmlText("Fuel");
+    pText->setHtmlText(tr("Fuel"));
     pText->setPosition(310 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(140);
     pText->setStyle(style);
-    pText->setHtmlText("Ammo 1");
+    pText->setHtmlText(tr("Ammo 1"));
     pText->setPosition(460 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = spLabel::create(140);
     pText->setStyle(style);
-    pText->setHtmlText("Ammo 2");
+    pText->setHtmlText(tr("Ammo 2"));
     pText->setPosition(610 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
@@ -179,11 +178,15 @@ void DialogUnitInfo::remove()
 
 void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)
 {    
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    auto* pMap = m_pPlayer->getMap();
+    if (pMap != nullptr)
     {
-        pMenu->MoveMap(posX, posY);
-        pMenu->calcNewMousePosition(posX, posY);
+        BaseGamemenu* pMenu = pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            pMenu->getMap()->centerMap(posX, posY);
+            pMenu->calcNewMousePosition(posX, posY);
+        }
     }
     emit sigFinished();
     oxygine::Actor::detach();

@@ -1,5 +1,5 @@
 #pragma once
-#include <qcolor.h>
+#include <QColor>
 #include <QPoint>
 #include <QRect>
 

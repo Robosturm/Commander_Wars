@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QQmlEngine>
+#include <QVector>
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
 
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
@@ -44,12 +45,32 @@ public:
      * @brief getRuntimeData
      * @return
      */
-    static QString getRuntimeData();
+    QString getRuntimeData();
     /**
      * @brief reloadInterpreter
      * @param runtime
      */
-    static bool reloadInterpreter(const QString & runtime);
+    static bool reloadInterpreter(QString runtime);
+
+    bool getInJsCall() const;
+
+    template<typename _TType, template<typename T> class _TVectorList>
+    QJSValue arraytoJSValue(const _TVectorList<_TType> & array)
+    {
+        QJSValue jsArray = newArray(array.size());
+        for (qint32 i = 0; i < array.size(); i++)
+        {
+            if constexpr (std::is_same<_TType, QPoint>::value)
+            {
+                jsArray.setProperty(i, toScriptValue(array[i]));
+            }
+            else
+            {
+                jsArray.setProperty(i, array[i]);
+            }
+        }
+        return jsArray;
+    }
 
 signals:
     void sigNetworkGameFinished(qint32 value, QString id);
@@ -65,20 +86,22 @@ public slots:
         if (funcPointer.isCallable())
         {
 #endif
+            ++m_inJsCall;
             ret = funcPointer.call(args);
+            exitJsCall();
             if (ret.isError())
             {
                 QString error = ret.toString() + " in File: " +
                                 ret.property("fileName").toString() + " at Line: " +
                                 ret.property("lineNumber").toString();
-                CONSOLE_PRINT(error, Console::eERROR);
+                CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
             }
 #ifdef GAMEDEBUG
         }
         else
         {
             QString error = "Error: attemp to call a non function value. Call:" + func;
-            CONSOLE_PRINT(error, Console::eERROR);
+            CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
         }
 #endif
         return ret;
@@ -97,33 +120,35 @@ public slots:
             if (funcPointer.isCallable())
             {
 #endif
+                ++m_inJsCall;
                 ret = funcPointer.call(args);
+                exitJsCall();
                 if (ret.isError())
                 {
                     QString error = ret.toString() + " in File: " +
                                     ret.property("fileName").toString() + " at Line: " +
                                     ret.property("lineNumber").toString();
-                    CONSOLE_PRINT(error, Console::eERROR);
+                    CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
                 }
 #ifdef GAMEDEBUG
             }
             else
             {
                 QString error = "Error: attemp to call a non function value. Call:" + obj + "." + func;
-                CONSOLE_PRINT(error, Console::eERROR);
+                CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
             }
         }
         else
         {
             QString error = "Error: attemp to call a non object value in order to call a function. Call:" + obj + "." + func;
-            CONSOLE_PRINT(error, Console::eERROR);
+            CONSOLE_PRINT_MODULE(error, GameConsole::eERROR, GameConsole::eJavaScript);
         }
 #endif
         return ret;
     }
     void cleanMemory();
     /**
-     * @brief doString immediatly interprates the string with the javascript-interpreter
+     * @brief doString immediately interprates the string with the javascript-interpreter
      * @param task string parsed to the interpreter
      */
     QJSValue doString(const QString & task);
@@ -179,6 +204,8 @@ public slots:
         }
         return false;
     }
+    void trackJsObject(oxygine::ref_counter* pObj);
+
 private slots:
     void networkGameFinished(qint32 value, QString id);
 private:
@@ -188,10 +215,20 @@ private:
      * @brief init
      */
     void init();
-
+    void exitJsCall()
+    {
+        --m_inJsCall;
+        Q_ASSERT(m_inJsCall >= 0);
+        if (m_inJsCall == 0)
+        {
+            m_jsObjects.clear();
+        }
+    }
 private:
-    static QString m_runtimeData;
     static spInterpreter m_pInstance;
+    QString m_runtimeData;
+    qint32 m_inJsCall{0};
+    QVector<oxygine::intrusive_ptr<oxygine::ref_counter>> m_jsObjects;
 };
 
 #endif // INTERPRETER_H

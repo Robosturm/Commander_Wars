@@ -1,20 +1,20 @@
 #include <QFile>
 
 #include "3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 #include "game/gameanimation/gameanimationdialog.h"
 #include "game/gameanimation/gameanimationfactory.h"
 #include "game/gamemap.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
-
-#include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/audiomanager.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
+
+#include "menue/basegamemenu.h"
 
 GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     : GameAnimation (frameTime, pMap),
@@ -24,8 +24,6 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationDialog");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     connect(this, &GameAnimationDialog::sigStartFinishTimer, this, &GameAnimationDialog::startFinishTimer, Qt::QueuedConnection);
     connect(&m_finishTimer, &QTimer::timeout, this, [this]()
@@ -99,7 +97,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     });
     connect(this, &GameAnimationDialog::sigRightClick, GameAnimationFactory::getInstance(), &GameAnimationFactory::finishAllAnimationsWithEmitFinished, Qt::QueuedConnection);
     connect(this, &GameAnimationDialog::sigLeftClick, this, &GameAnimationDialog::nextDialogStep, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigKeyDown, this, &GameAnimationDialog::keyInput, Qt::QueuedConnection);
+    connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &GameAnimationDialog::keyInput, Qt::QueuedConnection);
 }
 
 void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
@@ -198,7 +196,7 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
             else
             {
                 Mainapp* pApp = Mainapp::getInstance();
-                pApp->getAudioThread()->playSound("speaking.wav");
+                pApp->getAudioManager()->playSound("speaking.wav");
             }
             updateShownText();
         }
@@ -311,11 +309,14 @@ void GameAnimationDialog::setTextSpeed(qint32 speed)
 
 void GameAnimationDialog::restart()
 {
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMap != nullptr)
     {
-        m_stopped = false;
-        pMenu->addChild(spGameAnimationDialog(this));
+        auto* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            m_stopped = false;
+            pMenu->addChild(spGameAnimationDialog(this));
+        }
     }
 }
 
@@ -344,7 +345,7 @@ void GameAnimationDialog::loadBackground(const QString & file)
     }
     else
     {
-        CONSOLE_PRINT("Ignoring loading of empty image. GameAnimationDialog::loadBackground", Console::eDEBUG);
+        CONSOLE_PRINT("Ignoring loading of empty image. GameAnimationDialog::loadBackground", GameConsole::eDEBUG);
     }
 }
 

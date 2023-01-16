@@ -5,21 +5,19 @@
         <y>10</y>
         <width>settings.getWidth() - 20</width>
         <height>settings.getHeight() - 90</height>
-        <childs>
+        <childs>            
             <Label>
                 <x>10</x>
                 <y>10</y>
-                <width>400</width>
-                <height>30</height>
+                <width>settings.getWidth() - 80</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Screen Settings")</text>
                 <font>"main"</font>
-                <fontSize>24</fontSize>
+                <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Language:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -37,7 +35,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Screen Resolution:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -56,7 +53,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Screen Mode:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -75,7 +71,27 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Screen:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select on which screen the game will be shown on.")</tooltip>
+                <startValue>settings.getScreen()</startValue>
+                <infinite>-1</infinite>
+                <spinSpeed>1</spinSpeed>
+                <enabled>currentMenu.getSupportedScreenCount() > 0</enabled>
+                <min>0</min>
+                <max>currentMenu.getSupportedScreenCount()</max>
+                <onEvent>settings.setScreen(input);settings.setScreenMode(settings.getScreenMode());</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Brightness:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -95,7 +111,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Gamma:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -115,7 +130,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Small screen:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -132,7 +146,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Use High DPI:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -142,13 +155,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If checked the game will use the high dpi option of the screen.")</tooltip>
                 <startValue>settings.getUseHighDpi()</startValue>
-                <onEvent>settings.changeHighDpi(input)</onEvent>
+                <onEvent>currentMenu.changeHighDpi(input)</onEvent>
             </Checkbox>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Max FPS:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -168,7 +180,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Automatic updates:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -179,6 +190,22 @@
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: The game tries to keep the game at the up to date by. Updating to the latest release if required.")</tooltip>
                 <startValue>settings.getAutomaticUpdates()</startValue>
                 <onEvent>settings.setAutomaticUpdates(input)</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Subprocess ai:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If enabled the ai is calculated in a separate thread. This improves the game performance. If you encounter ai bugs disable this feature.")</tooltip>
+                <enabled>!settings.getSmallScreenDevice()</enabled>
+                <startValue>settings.getSpawnAiProcess()</startValue>
+                <onEvent>settings.setSpawnAiProcess(input);currentMenu.markRestartNeeded();</onEvent>
             </Checkbox>
         </childs>
     </Panel>

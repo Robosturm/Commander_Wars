@@ -25,6 +25,7 @@ var Constructor = function()
                                 ["AIRPORT", 1],
                                 ["FACTORY", 1],
                                 ["HARBOUR", 1],
+                                ["AMPHIBIOUSFACTORY", 1],
                                 ["HQ", 1],
                                 ["DEPOT", 1],
                                 ["MINE", 2],
@@ -40,6 +41,8 @@ var Constructor = function()
 								["TEMPORARY_AIRPORT_DESERT", 1],
 								["TEMPORARY_AIRPORT_SNOW", 1],
                                 ["TEMPORARY_HARBOUR", 1],
+                                ["ZDESTROYED_GATE_E_W", 1],
+                                ["ZDESTROYED_GATE_N_S", 1],
                                 ["MOUNTAIN", 2],
                                 ["RIVER", 2],
                                 ["DESERT", 1],
@@ -72,12 +75,6 @@ var Constructor = function()
 
     this.getMovementpoints = function(terrain, unit, trapChecking = false)
     {
-        var terrainId = terrain.getBaseTerrainID()
-        if (terrainId !== "SEA" &&
-            terrainId !== "LAKE" )
-        {
-            return 1;
-        }
         var id = terrain.getID();
         if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&
             (unit !== null) &&

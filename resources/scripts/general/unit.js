@@ -60,6 +60,10 @@ var UNIT =
         return -1;
     },
 
+    buildedUnit : function(unit, player, map)
+    {
+    },
+
     createExplosionAnimation : function(x, y, unit, map)
     {
         var animation = GameAnimationFactory.createAnimation(map, x, y);
@@ -89,6 +93,11 @@ var UNIT =
     },
 
     canMoveAndFire : function(unit, map)
+    {
+        return false;
+    },
+
+    canCounterOnRangeAttacks : function(unit, defX, defY, attacker, atkX, atkY, pAction, luckMode, map)
     {
         return false;
     },
@@ -143,10 +152,11 @@ var UNIT =
             healingDone = 10 - hp;
         }
         var funds = unit.getOwner().getFunds();
+        var modifier = unit.getRepairCostModifier();
         // check if we can pay for all healing
         for (var i = healingDone; i >= 0; i--)
         {
-            if (i * costs / 10  <= funds)
+            if (i * costs / 10 * modifier  <= funds)
             {
                 healingDone = i;
                 break;
@@ -160,7 +170,7 @@ var UNIT =
         // heal unit
         unit.setHp(hp + healingDone);
         // pay for healing
-        unit.getOwner().addFunds(-healingDone / 10 * costs);
+        unit.getOwner().addFunds(-healingDone * costs / 10 * modifier);
     },
 
     getTerrainAnimationBase : function(unit, terrain, defender, map)
@@ -220,16 +230,9 @@ var UNIT =
 
     canAttackStealthedUnit : function(attacker, defender, map)
     {
-        var attackerType = attacker.getUnitType();
-        attackerType = UNIT.unitTypeToGround(attackerType);
-        var defenderType = defender.getUnitType();
-        defenderType = UNIT.unitTypeToGround(defenderType);
         if (attacker.getBaseMaxRange() === 1)
         {
-            if (attackerType === defenderType)
-            {
-                return true;
-            }
+            return true;
         }
         if (defender.getCloaked() && !defender.getHidden())
         {
@@ -286,7 +289,7 @@ var UNIT =
     unitHovercraftSortList : ["ARTILLERYCRAFT", "HOVERCRAFT", "HOVERFLAK", "HEAVY_HOVERCRAFT"],
     unitAirSortList : ["T_HELI", "K_HELI", "DUSTER", "TRANSPORTPLANE", "BOMBER", "FIGHTER", "STEALTHBOMBER", "BLACK_BOMB"],
     unitGroundSortList : ["RECON", "APC", "FLARE", "ARTILLERY", "LIGHT_TANK", "FLAK", "ANTITANKCANNON", "HEAVY_TANK", "NEOTANK", "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"],
-    unitNavalSortList : ["CANNONBOAT", "BLACK_BOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"],
+    unitNavalSortList : ["GUNBOAT", "CANNONBOAT", "BLACK_BOAT", "TORPEDOBOAT", "LANDER", "FRIGATE", "DESTROYER", "CRUISER", "SUBMARINE", "BATTLECRUISER", "BATTLESHIP", "AIRCRAFTCARRIER"],
     getUnitTypeSort1 : function()
     {
         return UNIT.unitGroundSortList;
@@ -355,5 +358,10 @@ var UNIT =
     getShowInEditor : function()
     {
         return true;
+    },
+
+    getEditorPlacementSound : function()
+    {
+        return "";
     },
 };

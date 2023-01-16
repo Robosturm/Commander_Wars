@@ -1,9 +1,5 @@
 #include "objects/base/dropdownmenu.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/interpreter.h"
-
-#include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
 DropDownmenu::DropDownmenu(qint32 width, const QStringList & items)
@@ -13,11 +9,6 @@ DropDownmenu::DropDownmenu(qint32 width, const QStringList & items)
 #ifdef GRAPHICSUPPORT
     setObjectName("DropDownmenu");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
-    Interpreter::setCppOwnerShip(this);
-
-    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
     m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());

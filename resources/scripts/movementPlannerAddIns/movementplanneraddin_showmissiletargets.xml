@@ -7,20 +7,19 @@
         <height>settings.getHeight()</height>
         <childs>
             <Label>
-                <x>settings.getWidth() / 2 - 300</x>
+                <x>40</x>
                 <y>10</y>
-                <width>600</width>
-                <height>60</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Missile targets")</text>
+                <width>parentWidth - 80</width>
+                <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileTargetsText()</text>
                 <font>"main"</font>
+                <hAlign>"Middle"</hAlign>
                 <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
-                <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Missile count:")</text>
+                <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileCountText()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
@@ -28,7 +27,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>150</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Amount of missile targets that should be shown simultaneously.")</tooltip>
+                <tooltip>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileCountTooltipText()</tooltip>
                 <startValue>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getTargetCount(addIn)</startValue>
                 <infinite>0</infinite>
                 <min>1</min>
@@ -37,11 +36,10 @@
             </Spinbox>
             <loop count="MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getTargetCount(addIn)">
                 <Label>
-                    <x>settings.getWidth() / 2 - 300</x>
+                    <x>10</x>
                     <y>lastY + lastHeight + 20</y>
-                    <width>600</width>
-                    <height>60</height>
-                    <text>QT_TRANSLATE_NOOP("GAME","Missile Info")</text>
+                    <width>parentWidth - 80</width>
+                    <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileInfoText()</text>
                     <font>"main"</font>
                     <fontSize>48</fontSize>
                 </Label>
@@ -49,8 +47,7 @@
                     <x>10</x>
                     <y>lastY + lastHeight + 20</y>
                     <width>200</width>
-                    <height>30</height>
-                    <text>QT_TRANSLATE_NOOP("GAME","Color:")</text>
+                    <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileColorText()</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
                 </Label>
@@ -58,7 +55,7 @@
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
                     <width>250</width>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","Unit that will be spawned")</tooltip>
+                    <tooltip>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileColorTooltipText()</tooltip>
                     <startValue>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getStartColor(addIn, loopIdx)</startValue>
                     <items>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getColors()</items>
                     <onEvent>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.changeColor(addIn, input, loopIdx)</onEvent>
@@ -67,8 +64,7 @@
                     <x>10</x>
                     <y>lastY + lastHeight + 20</y>
                     <width>200</width>
-                    <height>30</height>
-                    <text>QT_TRANSLATE_NOOP("GAME","Target Type:")</text>
+                    <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileTargetTypeText()</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
                 </Label>
@@ -76,7 +72,7 @@
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
                     <width>250</width>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","Unit that will be spawned")</tooltip>
+                    <tooltip>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileTargetTypeTooltipText()</tooltip>
                     <startValue>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getStartType(addIn, loopIdx)</startValue>
                     <items>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getTargetTypes()</items>
                     <onEvent>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.changeTargetType(addIn, input, loopIdx)</onEvent>
@@ -85,8 +81,7 @@
                     <x>10</x>
                     <y>lastY + lastHeight + 20</y>
                     <width>200</width>
-                    <height>30</height>
-                    <text>QT_TRANSLATE_NOOP("GAME","Range:")</text>
+                    <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileRangeText()</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
                 </Label>
@@ -94,7 +89,7 @@
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
                     <width>250</width>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","Area that the missile is going to hit.")</tooltip>
+                    <tooltip>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileRangeTooltipText()</tooltip>
                     <startValue>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getStartRange(addIn, loopIdx)</startValue>
                     <infinite>-1</infinite>
                     <min>0</min>
@@ -105,8 +100,7 @@
                     <x>10</x>
                     <y>lastY + lastHeight + 20</y>
                     <width>200</width>
-                    <height>30</height>
-                    <text>QT_TRANSLATE_NOOP("GAME","Damage:")</text>
+                    <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileDamageText()</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
                 </Label>
@@ -114,7 +108,7 @@
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
                     <width>250</width>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","HP damage dealt to each unit in the area.")</tooltip>
+                    <tooltip>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileDamageTooltipText()</tooltip>
                     <startValue>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getStartDamage(addIn, loopIdx)</startValue>
                     <infinite>-1</infinite>
                     <min>1</min>
@@ -125,8 +119,7 @@
                     <x>10</x>
                     <y>lastY + lastHeight + 20</y>
                     <width>200</width>
-                    <height>30</height>
-                    <text>QT_TRANSLATE_NOOP("GAME","Owner:")</text>
+                    <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileOwnerText()</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
                 </Label>
@@ -134,7 +127,7 @@
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
                     <width>250</width>
-                    <tooltip>QT_TRANSLATE_NOOP("GAME","Owner of the unit")</tooltip>
+                    <tooltip>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileOwnerTooltipText()</tooltip>
                     <startValue>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getStartOwner(addIn, loopIdx)</startValue>
                     <infinite>0</infinite>
                     <min>1</min>
@@ -146,25 +139,25 @@
                 <x>settings.getWidth() / 2 + 80</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>150</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Apply")</text>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Applies the changes to the unit")</tooltip>
+                <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileApplyText()</text>
+                <tooltip>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileApplyTooltipText()</tooltip>
                 <onEvent>addIn.onMenuInputDone()</onEvent>
             </Button>
             <Button>
                 <x>settings.getWidth() / 2 - 80</x>
                 <y>lastY</y>
                 <width>150</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Stop")</text>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Stops showing the missile targets")</tooltip>
+                <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileStopText()</text>
+                <tooltip>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileStopTooltipText()</tooltip>
                 <onEvent>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.stopAddIn(addIn)</onEvent>
             </Button>
             <Button>
                 <x>settings.getWidth() / 2 - 240</x>
                 <y>lastY</y>
                 <width>150</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Cancels the dialog")</tooltip>
-                <onEvent>addIn.getPlanner().stopAddIn()</onEvent>
+                <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileCancelText()</text>
+                <tooltip>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileCancelTooltipText()</tooltip>
+                <onEvent>addIn.hide()</onEvent>
             </Button>
         </childs>
     </Panel>

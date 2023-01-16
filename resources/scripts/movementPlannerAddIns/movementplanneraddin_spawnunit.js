@@ -4,14 +4,65 @@ var Constructor = function()
     {
         return qsTr("Spawn unit");
     };
+
     this.getGroupName = function()
     {
         return qsTr("Units");
     };
+
     this.getDescription = function()
     {
         return qsTr("Allows to modify a unit, e.g. it's health, fuel, ammo etc.");
     };
+    this.getUnitLabel = function()
+    {
+        return qsTr("Unit:");
+    };
+    this.getUnitTooltip = function()
+    {
+        return qsTr("Unit that will be spawned.");
+    };
+    this.getOwnerLabel = function()
+    {
+        return qsTr("Owner:");
+    };
+    this.getOwnerTooltip = function()
+    {
+        return qsTr("Owner of the unit.");
+    };
+    this.getHpLabel = function()
+    {
+        return qsTr("HP:");
+    };
+    this.getHpTooltip = function()
+    {
+        return qsTr("HP of the unit.");
+    };
+    this.getHasMovedLabel = function()
+    {
+        return qsTr("Has moved:");
+    };
+    this.getHasMovedTooltip = function()
+    {
+        return qsTr("If the unit has moved this turn or not.");
+    };
+    this.getApplyLabel = function()
+    {
+        return qsTr("Apply");
+    };
+    this.getApplyTooltip = function()
+    {
+        return qsTr("Spawns the unit.");
+    };
+    this.getCancelLabel = function()
+    {
+        return qsTr("Cancel");
+    };
+    this.getCancelTooltip = function()
+    {
+        return qsTr("Cancels the dialog.");
+    };
+
     this.startAddIn = function(addIn)
     {
         var variables = addIn.getVariables();
@@ -25,6 +76,7 @@ var Constructor = function()
         cursorData.setYOffset(0);
         cursorData.setScale(1.0);
     };
+
     this.onFieldSelected = function(addIn, x, y, map, planner)
     {
         var variables = addIn.getVariables();
@@ -39,6 +91,7 @@ var Constructor = function()
             stepInputVariable.writeDataInt32(1);
         }
     };
+
     this.nextInputType = function(addIn, map, planner)
     {
         var variables = addIn.getVariables();
@@ -66,10 +119,12 @@ var Constructor = function()
             return GameEnums.AddinStepType_Menu;
         }
     };
+
     this.getUiXml = function(addIn, map, planner)
     {
         return "scripts/movementPlannerAddIns/movementplanneraddin_spawnunit.xml";
     };
+
     this.readyToExecute = function(addIn, map, planner)
     {
         var variables = addIn.getVariables();
@@ -89,12 +144,14 @@ var Constructor = function()
             return false;
         }
     };
+
     this.onMenuInputDone = function(addIn, map, planner)
     {
         var variables = addIn.getVariables();
         var stepInputVariable = variables.createVariable("stepInput");
         stepInputVariable.writeDataInt32(2);
     };
+
     this.execute = function(addIn, map, planner)
     {
         addIn.hide();
@@ -135,24 +192,28 @@ var Constructor = function()
         var y = yVariable.readDataInt32();
         return addIn.getMap().getTerrain(x, y).getUnit();
     };
+
     this.changeUnitId = function(addIn, unitId)
     {
         var variables = addIn.getVariables();
         var unitIdVariable = variables.createVariable("unitId");
         unitIdVariable.writeDataString(unitId)
     };
+
     this.changeHp = function(addIn, hp)
     {
         var variables = addIn.getVariables();
         var hpVariable = variables.createVariable("hp");
         hpVariable.writeDataInt32(hp)
     };
+
     this.changeOwner = function(addIn, owner)
     {
         var variables = addIn.getVariables();
         var ownerVariable = variables.createVariable("owner");
         ownerVariable.writeDataInt32(owner)
     };
+
     this.changeHasMoved = function(addIn, value)
     {
         var variables = addIn.getVariables();

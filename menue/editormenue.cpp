@@ -7,10 +7,10 @@
 #include "menue/mainwindow.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/pathfindingsystem.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/sha256hash.h"
 
 #include "resource_management/movementtablemanager.h"
@@ -77,50 +77,49 @@ EditorMenue::EditorMenue()
     m_mapSliding->setLocked(true);
     loadHandling();
     changeBackground("editormenu");
-    moveToThread(pApp->getWorkerthread());
 
     m_EditorSelection = spEditorSelection::create(selectionWidth, smallScreen, m_pMap.get());
     addChild(m_EditorSelection);
 
     m_Topbar = spTopbar::create(0, Settings::getWidth());
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/mapeditor");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/mapeditor");
+    pApp->getAudioManager()->playRandom();
 
     m_Topbar->addGroup(tr("Menu"));
-    m_Topbar->addItem(tr("View Map Stats"),     "VIEWMAPSTATS", 0, tr("Shows the general information about the map."));
-    m_Topbar->addItem(tr("Save Map"),           "SAVEMAP",      0, tr("Saves a map to a give file."));
-    m_Topbar->addItem(tr("Load Map"),           "LOADMAP",      0, tr("Loads a map to a give file."));
+    m_Topbar->addItem(tr("View map stats"),     "VIEWMAPSTATS", 0, tr("Shows the general information about the map."));
+    m_Topbar->addItem(tr("Save map"),           "SAVEMAP",      0, tr("Saves a map to a give file."));
+    m_Topbar->addItem(tr("Load map"),           "LOADMAP",      0, tr("Loads a map to a give file."));
     if (!Settings::getSmallScreenDevice())
     {
-        m_Topbar->addItem(tr("Edit Script"),    "EDITSCRIPT",   0, tr("Edit and create a script for any map."));
-        m_Topbar->addItem(tr("Edit Campaign"),  "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
+        m_Topbar->addItem(tr("Edit script"),    "EDITSCRIPT",   0, tr("Edit and create a script for any map."));
+        m_Topbar->addItem(tr("Edit campaign"),  "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
     }
     m_Topbar->addItem(tr("Undo Ctrl+Z"),        "UNDO",         0, tr("Undo the last map modification."));
     m_Topbar->addItem(tr("Redo Ctrl+Y"),        "REDO",         0, tr("Redo the last undo command."));
-    m_Topbar->addItem(tr("Exit Editor"),        "EXIT",         0, tr("Exits the editor"));
+    m_Topbar->addItem(tr("Exit editor"),        "EXIT",         0, tr("Exits the editor"));
 
-    m_Topbar->addGroup(tr("Map Info"));
-    m_Topbar->addItem(tr("New Map"),            "NEWMAP",       1, tr("Create a new map"));
-    m_Topbar->addItem(tr("Edit Map"),           "EDITMAP",      1, tr("Edit the information for a map"));
-    m_Topbar->addItem(tr("Resize Map"),         "RESIZEMAP",    1, tr("Resizes the map using left, top, right and bottom size changes."));
-    m_Topbar->addItem(tr("Flip Map X"),         "FLIPX",        1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
-    m_Topbar->addItem(tr("Flip Map Y"),         "FLIPY",        1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate Map X"),       "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
-    m_Topbar->addItem(tr("Rotate Map Y"),       "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
-    m_Topbar->addItem(tr("Random Map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
-    m_Topbar->addItem(tr("Toggle Grid Strg+G"), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
-    m_Topbar->addItem(tr("Toggle Cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
+    m_Topbar->addGroup(tr("Map info"));
+    m_Topbar->addItem(tr("New map"),            "NEWMAP",       1, tr("Create a new map"));
+    m_Topbar->addItem(tr("Edit map"),           "EDITMAP",      1, tr("Edit the information for a map"));
+    m_Topbar->addItem(tr("Resize map"),         "RESIZEMAP",    1, tr("Resizes the map using left, top, right and bottom size changes."));
+    m_Topbar->addItem(tr("Flip map X"),         "FLIPX",        1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
+    m_Topbar->addItem(tr("Flip map Y"),         "FLIPY",        1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
+    m_Topbar->addItem(tr("Rotate map X"),       "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
+    m_Topbar->addItem(tr("Rotate map Y"),       "ROTATEY",      1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
+    m_Topbar->addItem(tr("Random map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
+    m_Topbar->addItem(tr("Toggle grid Strg+G"), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
+    m_Topbar->addItem(tr("Toggle cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
 
     m_Topbar->addGroup(tr("Commands"));
-    m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
-    m_Topbar->addItem(tr("Delete Units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2, tr("Selects the editor mode deleting units"));
-    m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2, tr("Selects the editor mode modifying the stats of a unit"));
-    m_Topbar->addItem(tr("Edit Terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain or building"));
-    m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
-    m_Topbar->addItem(tr("Edit Rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
-    m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
+    m_Topbar->addItem(tr("Place selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
+    m_Topbar->addItem(tr("Delete units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2, tr("Selects the editor mode deleting units"));
+    m_Topbar->addItem(tr("Edit units"), "EDITUNITS", 2, tr("Selects the editor mode modifying the stats of a unit"));
+    m_Topbar->addItem(tr("Edit terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain or building"));
+    m_Topbar->addItem(tr("Edit players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
+    m_Topbar->addItem(tr("Edit rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
+    m_Topbar->addItem(tr("Optimize players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
     if (!Settings::getSmallScreenDevice())
     {
         m_Topbar->addItem(tr("Copy Ctrl+C"), "COPY", 2, tr("Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode"));
@@ -132,7 +131,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Import CoW Txt"), "IMPORTCOWTXT", 3, tr("Deletes the current map and imports an old Commander Wars Map from a file."));
     m_Topbar->addItem(tr("Import AWDS Aws"), "IMPORTAWDSAWS", 3, tr("Deletes the current map and imports an AWS Map Editor from a file."));
     m_Topbar->addItem(tr("Export AWDS Aws"), "EXPORTAWDSAWS", 3, tr("Exports the map to an AWS Map Editor file"));
-    m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3, tr("Deletes the current map and imports an AW DoR/DC Map Editor from a file."));
+    m_Topbar->addItem(tr("Import AW4 Aw4"), "IMPORTAW4AW4", 3, tr("Deletes the current map and imports an AW 4 map editor file."));
     m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
     m_Topbar->finishCreation();
     addChild(m_Topbar);
@@ -212,7 +211,7 @@ void EditorMenue::onEnter()
     QString func = "mapEditorMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -251,7 +250,7 @@ void EditorMenue::cleanTemp(qint32 step)
 
 void EditorMenue::createTempFile(bool cleanUp)
 {
-    CONSOLE_PRINT(QString("createTempFile(") + (cleanUp ? "true" : "false") + ")", Console::eDEBUG);
+    CONSOLE_PRINT(QString("createTempFile(") + (cleanUp ? "true" : "false") + ")", GameConsole::eDEBUG);
     if (cleanUp)
     {
         cleanTemp(m_tempCounter);
@@ -295,7 +294,7 @@ void EditorMenue::createTempFile(bool cleanUp)
 
 void EditorMenue::editorUndo()
 {
-    CONSOLE_PRINT("EditorMenue::editorUndo", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::editorUndo", GameConsole::eDEBUG);
     m_tempCounter--;
     if (m_tempCounter >= 0)
     {
@@ -324,7 +323,7 @@ void EditorMenue::editorUndo()
 
 void EditorMenue::editorRedo()
 {
-    CONSOLE_PRINT("EditorMenue::editorRedo", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::editorRedo", GameConsole::eDEBUG);
     m_tempCounter++;
     QFile file("temp/temp" + QString::number(m_tempCounter) + ".tmp");
     if (file.exists())
@@ -343,7 +342,7 @@ void EditorMenue::editorRedo()
 
 void EditorMenue::clickedTopbar(QString itemID)
 {    
-    CONSOLE_PRINT("clickedTopbar(" + itemID + ")", Console::eDEBUG);
+    CONSOLE_PRINT("clickedTopbar(" + itemID + ")", GameConsole::eDEBUG);
     struct MenuItem
     {
         MenuItem(const char* const id, void (EditorMenue::*func)())
@@ -366,7 +365,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("IMPORTCOWTXT",        &EditorMenue::showImportCoWTxTMap),
         MenuItem("IMPORTAWDSAWS",       &EditorMenue::showImportAwdsAws),
         MenuItem("EXPORTAWDSAWS",       &EditorMenue::showExportAwdsAws),
-        MenuItem("IMPORTAWDCAW4",       &EditorMenue::showImportAwdsAw4),
+        MenuItem("IMPORTAW4AW4",       &EditorMenue::showImportAwdsAw4),
         MenuItem("IMPORTAWBYWEB",       &EditorMenue::showImportAwByWeb),
         MenuItem("NEWMAP",              &EditorMenue::showNewMap),
         MenuItem("EDITMAP",             &EditorMenue::showEditMap),
@@ -447,7 +446,7 @@ void EditorMenue::showSaveMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), false, tr("Save"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -459,7 +458,7 @@ void EditorMenue::showLoadMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -468,7 +467,7 @@ void EditorMenue::showLoadMap()
 
 void EditorMenue::showResizeMap()
 {
-    CONSOLE_PRINT("showResizeMap()", Console::eDEBUG);
+    CONSOLE_PRINT("showResizeMap()", GameConsole::eDEBUG);
     
     spGenericBox pBox = spGenericBox::create(true);
 
@@ -566,7 +565,7 @@ void EditorMenue::showImportCoWTxTMap()
     QStringList wildcards;
     wildcards.append("*.txt");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Import"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -578,7 +577,7 @@ void EditorMenue::showImportAwdsAws()
     QStringList wildcards;
     wildcards.append("*.aws");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Import"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -590,7 +589,7 @@ void EditorMenue::showExportAwdsAws()
     QStringList wildcards;
     wildcards.append("*.aws");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Export"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Export"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -602,9 +601,9 @@ void EditorMenue::showImportAwdsAw4()
     QStringList wildcards;
     wildcards.append("*.aw4");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Import"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAW4Aw4Map, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     setFocused(false);
 }
@@ -614,7 +613,7 @@ void EditorMenue::showImportAwByWeb()
     QStringList wildcards;
     wildcards.append("*.txt");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Import"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -628,7 +627,7 @@ void EditorMenue::showNewMap()
     info.mapWidth = 20;
     info.mapHeigth = 20;
     info.playerCount = 4;
-    spMapEditDialog mapEditDialog = spMapEditDialog::create(info);
+    spMapEditDialog mapEditDialog = spMapEditDialog::create(info, tr("Do you want to discard all current changes and create a new map?"));
     connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
     connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     addChild(mapEditDialog);
@@ -649,7 +648,7 @@ void EditorMenue::showEditMap()
     info.turnLimit = pGameMap->getGameRecorder()->getMapTime();
     info.deployLimit = pGameMap->getGameRecorder()->getDeployLimit();
     info.mapFlags = pGameMap->getMapFlags();
-    spMapEditDialog mapEditDialog = spMapEditDialog::create(info);
+    spMapEditDialog mapEditDialog = spMapEditDialog::create(info, tr("Do you want to apply the map changes?"));
     connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
     connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     addChild(mapEditDialog);
@@ -682,9 +681,13 @@ void EditorMenue::rotateY()
 
 void EditorMenue::showRandomMap()
 {
-    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create();
+    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create(tr("Do you want to create a random map and discard all current changes?"));
     addChild(pDialogRandomMap);
     connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &EditorMenue::createRandomMap, Qt::QueuedConnection);
+    connect(pDialogRandomMap.get(), &DialogRandomMap::sigCancel, this, [this]()
+    {
+        setFocused(true);
+    }, Qt::QueuedConnection);
     setFocused(false);
 }
 
@@ -748,7 +751,7 @@ void EditorMenue::copy()
 
 void EditorMenue::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
 {    
-    CONSOLE_PRINT("EditorMenue::resizeMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::resizeMap", GameConsole::eDEBUG);
     m_pMap->resizeMap(left, top, right, bottom);    
     updateGrids();
 }
@@ -767,7 +770,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
                                   bool unitsDistributed,
                                   bool mirrored)
 {
-    CONSOLE_PRINT("EditorMenue::createRandomMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::createRandomMap", GameConsole::eDEBUG);
     cleanTemp(-1);
     RandomMapGenerator::randomMap(m_pMap.get(), width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize, startBaseSize / 100.0f,
@@ -786,7 +789,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
 
 void EditorMenue::playersChanged()
 {    
-    CONSOLE_PRINT("EditorMenue::playersChanged", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::playersChanged", GameConsole::eDEBUG);
     m_EditorSelection->createPlayerSelection();
     
     Mainapp::getInstance()->pauseRendering();
@@ -797,13 +800,13 @@ void EditorMenue::playersChanged()
 
 void EditorMenue::rulesChanged()
 {
-    CONSOLE_PRINT("EditorMenue::rulesChanged", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::rulesChanged", GameConsole::eDEBUG);
     setFocused(true);
 }
 
 void EditorMenue::optimizePlayers()
 {
-    CONSOLE_PRINT("EditorMenue::optimizePlayers", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::optimizePlayers", GameConsole::eDEBUG);
     createTempFile();
     
     QVector<bool> foundPlayers(m_pMap->getPlayerCount(), false);
@@ -848,19 +851,15 @@ void EditorMenue::optimizePlayers()
 
 void EditorMenue::keyInput(oxygine::KeyEvent event)
 {
-    if (!event.getContinousPress())
+    Qt::Key cur = event.getKey();
+    if (m_Focused)
     {
-        Qt::Key cur = event.getKey();
-        if (m_Focused)
+        if (!event.getContinousPress())
         {
             if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
             {
                 switch (cur)
                 {
-                    case Qt::Key_Escape:
-                    {
-                        break;
-                    }
                     case Qt::Key_Y:
                     {
                         editorRedo();
@@ -910,7 +909,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                         // do nothing
                         break;
                     }
-                }                
+                }
             }
             else if (cur == Settings::getKey_information() ||
                      cur == Settings::getKey_information2())
@@ -940,6 +939,15 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     m_EditorMode = EditorModes::RemoveUnits;
                 }
             }
+            else if (cur == Settings::getKey_confirm() ||
+                     cur == Settings::getKey_confirm2())
+            {
+                m_placingState.active = true;
+            }
+            else
+            {
+                m_EditorSelection->KeyInput(cur);
+            }
         }
     }
     BaseGamemenu::keyInput(event);
@@ -947,12 +955,16 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
 
 void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
+    CONSOLE_PRINT("EditorMenue::cursorMoved x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     m_Topbar->hide();
     if (m_xyTextInfo.get() != nullptr)
     {
         m_xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
     }
-    
+    if (m_placingState.active)
+    {
+        onMapClickedLeft(x, y);
+    }
     m_copyRectActor->detach();
     if (m_pMap->onMap(x, y))
     {
@@ -1065,14 +1077,18 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
             break;
         }
     }
-    
+    if (!m_placingState.active &&
+        (m_placingState.x != x || m_placingState.y != y))
+    {
+        m_placingState.x = -1;
+        m_placingState.y = -1;
+    }
 }
 
 void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedRight", Console::eDEBUG);
-    // resolve click
-    
+    CONSOLE_PRINT("EditorMenue::onMapClickedRight x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
+    // resolve click    
     switch (m_EditorMode)
     {
         case EditorModes::CopySelection:
@@ -1121,8 +1137,9 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedLeftDown", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::onMapClickedLeftDown x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     // resolve click
+    m_placingState.active = true;
     switch (m_EditorMode)
     {
         case EditorModes::CopySelection:
@@ -1152,7 +1169,8 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedLeftUp", Console::eDEBUG);
+    m_placingState.active = false;
+    CONSOLE_PRINT("EditorMenue::onMapClickedLeftUp x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
     // resolve click
     switch (m_EditorMode)
     {
@@ -1183,89 +1201,93 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 
 void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::onMapClickedLeft", Console::eDEBUG);
-    // resolve click
-    switch (m_EditorMode)
+    if (m_placingState.x != x || m_placingState.y != y)
     {
-        case EditorModes::RemoveUnits:
+        CONSOLE_PRINT("EditorMenue::onMapClickedLeft x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
+        // resolve click
+        switch (m_EditorMode)
         {
-            Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-            if (pUnit != nullptr)
+            case EditorModes::RemoveUnits:
             {
-                createTempFile();
-                pUnit->killUnit();
-            }
-            break;
-        }
-        case EditorModes::EditUnits:
-        {
-            Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-            if (pUnit != nullptr)
-            {
-                createTempFile();
-                spDialogModifyUnit pDialog = spDialogModifyUnit::create(m_pMap.get(), pUnit);
-                addChild(pDialog);
-                connect(pDialog.get(), &DialogModifyUnit::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-                setFocused(false);
-            }
-            break;
-        }
-        case EditorModes::EditTerrain:
-        {
-            Terrain* pTerrain  = m_pMap->getTerrain(x, y);
-            if (pTerrain->getBuilding() == nullptr)
-            {
-                createTempFile();
-                spDialogModifyTerrain pDialog = spDialogModifyTerrain::create(m_pMap.get(), pTerrain);
-                addChild(pDialog);
-                connect(pDialog.get(), &DialogModifyTerrain::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-                setFocused(false);
-            }
-            else
-            {
-                createTempFile();
-                spDialogModifyBuilding pDialog = spDialogModifyBuilding::create(m_pMap.get(), pTerrain->getBuilding());
-                addChild(pDialog);
-                connect(pDialog.get(), &DialogModifyBuilding::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-                setFocused(false);
-            }
-            break;
-        }
-        case EditorModes::PlaceEditorSelection:
-        {
-            switch (m_EditorSelection->getCurrentMode())
-            {
-                case EditorSelection::EditorMode::Terrain:
+                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr)
                 {
                     createTempFile();
-                    placeTerrain(x, y);
-                    break;
+                    pUnit->killUnit();
                 }
-                case EditorSelection::EditorMode::Building:
-                {
-                    createTempFile();
-                    placeBuilding(x, y);
-                    break;
-                }
-                case EditorSelection::EditorMode::Unit:
-                {
-                    createTempFile();
-                    placeUnit(x, y);
-                    break;
-                }
-                case EditorSelection::EditorMode::All:
-                {
-                    break;
-                }
+                break;
             }
-            break;
-        }
-        case EditorModes::CopySelection:
-        {
-            break;
+            case EditorModes::EditUnits:
+            {
+                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr)
+                {
+                    createTempFile();
+                    spDialogModifyUnit pDialog = spDialogModifyUnit::create(m_pMap.get(), pUnit);
+                    addChild(pDialog);
+                    connect(pDialog.get(), &DialogModifyUnit::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+                    setFocused(false);
+                }
+                break;
+            }
+            case EditorModes::EditTerrain:
+            {
+                Terrain* pTerrain  = m_pMap->getTerrain(x, y);
+                if (pTerrain->getBuilding() == nullptr)
+                {
+                    createTempFile();
+                    spDialogModifyTerrain pDialog = spDialogModifyTerrain::create(m_pMap.get(), pTerrain);
+                    addChild(pDialog);
+                    connect(pDialog.get(), &DialogModifyTerrain::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+                    setFocused(false);
+                }
+                else
+                {
+                    createTempFile();
+                    spDialogModifyBuilding pDialog = spDialogModifyBuilding::create(m_pMap.get(), pTerrain->getBuilding());
+                    addChild(pDialog);
+                    connect(pDialog.get(), &DialogModifyBuilding::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+                    setFocused(false);
+                }
+                break;
+            }
+            case EditorModes::PlaceEditorSelection:
+            {
+                switch (m_EditorSelection->getCurrentMode())
+                {
+                    case EditorSelection::EditorMode::Terrain:
+                    {
+                        createTempFile();
+                        placeTerrain(x, y);
+                        break;
+                    }
+                    case EditorSelection::EditorMode::Building:
+                    {
+                        createTempFile();
+                        placeBuilding(x, y);
+                        break;
+                    }
+                    case EditorSelection::EditorMode::Unit:
+                    {
+                        createTempFile();
+                        placeUnit(x, y);
+                        break;
+                    }
+                    case EditorSelection::EditorMode::All:
+                    {
+                        break;
+                    }
+                }
+                break;
+            }
+            case EditorModes::CopySelection:
+            {
+                break;
+            }
         }
     }
-    
+    m_placingState.x = x;
+    m_placingState.y = y;
 }
 
 void EditorMenue::editFinishedCanceled()
@@ -1275,13 +1297,13 @@ void EditorMenue::editFinishedCanceled()
 
 void EditorMenue::scriptFinished()
 {
-    CONSOLE_PRINT("EditorMenue::scriptFinished", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::scriptFinished", GameConsole::eDEBUG);
     setFocused(true);
 }
 
 void EditorMenue::campaignFinished()
 {
-    CONSOLE_PRINT("EditorMenue::campaignFinished", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::campaignFinished", GameConsole::eDEBUG);
     setFocused(true);
 }
 
@@ -1347,9 +1369,10 @@ void EditorMenue::getSquareTiles(QVector<QPoint> & points, QPoint start, QPoint 
 
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::placeTerrain", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::placeTerrain", GameConsole::eDEBUG);
     QVector<QPoint> points;
-    
+    Mainapp* pApp = Mainapp::getInstance();
+    QString terrainID = m_EditorSelection->getCurrentTerrainID();
     switch (m_EditorSelection->getSizeMode())
     {
         case EditorSelection::PlacementSize::None:
@@ -1384,21 +1407,42 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             break;
         }
     }
-    Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
+    bool placed = false;
     for (auto point : points)
     {
         // nice we can place the terrain
         if (canTerrainBePlaced(point.x(), point.y()))
         {
-            QString terrainID = m_EditorSelection->getCurrentTerrainID();
             spUnit pUnit;
             m_pMap->getTerrain(point.x(), point.y())->setUnit(pUnit);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
             m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false);
+            placed = true;
         }
+        else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())
+        {
+            placed = true;
+        }
+    }
+    if (placed)
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue sound = pInterpreter->doFunction(terrainID, "getEditorPlacementSound");
+        if (sound.isString())
+        {
+            QString soundName = sound.toString();
+            if (!soundName.isEmpty())
+            {
+                pApp->getAudioManager()->playSound(soundName);
+            }
+        }
+    }
+    else
+    {
+        pApp->getAudioManager()->playSound("impossible.wav");
     }
     if (points.size() > 30)
     {
@@ -1413,8 +1457,9 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
 
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::placeBuilding", Console::eDEBUG);    
-    
+    CONSOLE_PRINT("EditorMenue::placeBuilding", GameConsole::eDEBUG);    
+    Mainapp* pApp = Mainapp::getInstance();
+    spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1450,14 +1495,13 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             break;
         }
     }
-    Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
     if (pCurrentBuilding->getBuildingWidth() > 1 ||
         pCurrentBuilding->getBuildingHeigth() > 1)
     {
         points = PathFindingSystem::getFields(x, y, 0, 0);
     }
+    bool placed = false;
     for (qint32 i = 0; i < points.size(); i++)
     {
         // point still on the map great :)
@@ -1478,8 +1522,25 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID(), m_pMap.get());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
                 m_pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
+                placed = true;
             }
         }
+    }
+    if (placed)
+    {    Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue sound = pInterpreter->doFunction(pCurrentBuilding->getBuildingID(), "getEditorPlacementSound");
+        if (sound.isString() )
+        {
+            QString soundName = sound.toString();
+            if (!soundName.isEmpty())
+            {
+                pApp->getAudioManager()->playSound(soundName);
+            }
+        }
+    }
+    else
+    {
+        pApp->getAudioManager()->playSound("impossible.wav");
     }
     if (points.size() > 30)
     {
@@ -1498,7 +1559,9 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
 
 void EditorMenue::placeUnit(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::placeUnit", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::placeUnit", GameConsole::eDEBUG);
+    Mainapp* pApp = Mainapp::getInstance();
+    spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1532,6 +1595,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
             break;
         }
     }
+    bool placed = false;
     for (auto & point : points)
     {
         // point still on the map great :)
@@ -1539,11 +1603,28 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         qint32 curY = point.y();
         if (canUnitBePlaced(curX, curY))
         {
-            spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
             spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, m_pMap.get());
-            pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);            
-            m_pMap->getTerrain(curX, curY)->setUnit(pUnit);            
+            pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
+            m_pMap->getTerrain(curX, curY)->setUnit(pUnit);
+            placed = true;
         }
+    }
+    if (placed)
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue sound = pInterpreter->doFunction(pCurrentUnit->getUnitID(), "getEditorPlacementSound");
+        if (sound.isString() )
+        {
+            QString soundName = sound.toString();
+            if (!soundName.isEmpty())
+            {
+                pApp->getAudioManager()->playSound(soundName, 1, 0, 1.0f, false, 250);
+            }
+        }
+    }
+    else
+    {
+        pApp->getAudioManager()->playSound("impossible.wav");
     }
     if (Settings::getSyncAnimations())
     {
@@ -1553,7 +1634,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
 
 void EditorMenue::saveMap(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::saveMap " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::saveMap " + filename, GameConsole::eDEBUG);
     if (filename.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
     {
         filename.replace(oxygine::Resource::RCC_PREFIX_PATH, Settings::getUserPath());
@@ -1572,7 +1653,7 @@ void EditorMenue::saveMap(QString filename)
 
 void EditorMenue::loadMap(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::loadMap " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::loadMap " + filename, GameConsole::eDEBUG);
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
@@ -1596,16 +1677,16 @@ void EditorMenue::loadMap(QString filename)
     updateGrids();
 }
 
-void EditorMenue::importAWDCAw4Map(QString filename)
+void EditorMenue::importAW4Aw4Map(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::importAWDCAw4Map " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::importAW4Aw4Map " + filename, GameConsole::eDEBUG);
     if (filename.endsWith(".aw4"))
     {
         QFile file(filename);
         if (file.exists())
         {
             cleanTemp(-1);
-            m_pMap->importAWDCMap(filename);
+            m_pMap->importAW4Map(filename, this);
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -1615,14 +1696,14 @@ void EditorMenue::importAWDCAw4Map(QString filename)
 
 void EditorMenue::importAWByWeb(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::importAWByWeb " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::importAWByWeb " + filename, GameConsole::eDEBUG);
     if (filename.endsWith(".txt"))
     {
         QFile file(filename);
         if (file.exists())
         {
             cleanTemp(-1);
-            m_pMap->importAWByWebMap(filename);
+            m_pMap->importAWByWebMap(filename, this);
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -1632,14 +1713,14 @@ void EditorMenue::importAWByWeb(QString filename)
 
 void EditorMenue::importAWDSAwsMap(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::importAWDSAwsMap " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::importAWDSAwsMap " + filename, GameConsole::eDEBUG);
     if (filename.endsWith(".aws"))
     {
         QFile file(filename);
         if (file.exists())
         {
             cleanTemp(-1);
-            m_pMap->importAWDSMap(filename);
+            m_pMap->importAWDSMap(filename, this);
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -1649,7 +1730,7 @@ void EditorMenue::importAWDSAwsMap(QString filename)
 
 void EditorMenue::exportAWDSAwsMap(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::exportAWDSAwsMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::exportAWDSAwsMap", GameConsole::eDEBUG);
     if (filename.endsWith(".aws"))
     {
         m_pMap->exportAWDSMap(filename);
@@ -1659,7 +1740,7 @@ void EditorMenue::exportAWDSAwsMap(QString filename)
 
 void EditorMenue::importCoWTxTMap(QString filename)
 {
-    CONSOLE_PRINT("EditorMenue::importCoWTxTMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::importCoWTxTMap", GameConsole::eDEBUG);
     if (filename.endsWith(".txt"))
     {
         QFile file(filename);
@@ -1676,7 +1757,7 @@ void EditorMenue::importCoWTxTMap(QString filename)
 
 void EditorMenue::newMap(MapEditDialog::MapEditInfo info)
 {
-    CONSOLE_PRINT("EditorMenue::newMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::newMap", GameConsole::eDEBUG);
     cleanTemp(-1);
     
     m_pMap->setMapName(info.mapName);
@@ -1694,7 +1775,7 @@ void EditorMenue::newMap(MapEditDialog::MapEditInfo info)
 
 void EditorMenue::changeMap(MapEditDialog::MapEditInfo info)
 {    
-    CONSOLE_PRINT("EditorMenue::changeMap", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::changeMap", GameConsole::eDEBUG);
     createTempFile();
     
     m_pMap->setMapName(info.mapName);
@@ -1712,7 +1793,7 @@ void EditorMenue::changeMap(MapEditDialog::MapEditInfo info)
 
 void EditorMenue::selectionChanged()
 {
-    CONSOLE_PRINT("EditorMenue::selectionChanged", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::selectionChanged", GameConsole::eDEBUG);
     if (m_EditorMode == EditorModes::PlaceEditorSelection)
     {
         m_mapSliding->setLocked(true);
@@ -1766,7 +1847,7 @@ void EditorMenue::selectionChanged()
 
 void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2, CursorModes mode, QColor color)
 {
-    CONSOLE_PRINT("EditorMenue::createMarkedArea", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::createMarkedArea", GameConsole::eDEBUG);
     pActor->removeChildren();
     switch (mode)
     {
@@ -1897,7 +1978,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
 
 void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection::EditorMode selection)
 {
-    CONSOLE_PRINT("EditorMenue::pasteSelection", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::pasteSelection", GameConsole::eDEBUG);
     
     if (m_pMap->onMap(x, y))
     {
@@ -2026,16 +2107,15 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
 
 void EditorMenue::exitEditor()
 {    
-    CONSOLE_PRINT("Leaving Editor Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Editor Menue", GameConsole::eDEBUG);
     auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
-    deleteMenu();
 }
 
 void EditorMenue::autosave()
 {
-    CONSOLE_PRINT("EditorMenue::autosave", Console::eDEBUG);
+    CONSOLE_PRINT("EditorMenue::autosave", GameConsole::eDEBUG);
     QString filename = "maps/autosave.map";
     if (filename.endsWith(".map"))
     {

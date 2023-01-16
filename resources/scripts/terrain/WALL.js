@@ -35,7 +35,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, map)
     {
-        var surroundings = terrain.getSurroundings("WALL,ZGATE_E_W,ZGATE_N_S,WEAK_WALL", false, false, GameEnums.Directions_Direct, true, true);
+        var surroundings = terrain.getSurroundings("WALL,ZGATE_E_W,ZGATE_N_S,WEAK_WALL,ZDESTROYED_GATE_E_W,ZDESTROYED_GATE_N_S", false, false, GameEnums.Directions_Direct, true, true);
         terrain.loadBaseSprite("wall" + surroundings);
     };
     this.getMiniMapIcon = function()
@@ -74,6 +74,10 @@ var Constructor = function()
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "fore_walltop";
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeBuilding.wav";
     };
 };
 Constructor.prototype = TERRAIN;

@@ -74,4 +74,38 @@ var ACTION =
     {
         return false;
     },
+    getSubWikiInfoCount : function()
+    {
+        return 0;
+    },
+    getSubWikiInfoIcon : function(item)
+    {
+        return "";
+    },
+    getSubWikiInfoName : function(item)
+    {
+        return "";
+    },
+    getSubWikiInfoDescription = function(item)
+    {
+        return "";
+    },
+    getSubWikiInfoId : function(item)
+    {
+        return "";
+    },
+
+    isEmptyFieldAndHasNotMoved : function(action, unit, actionTargetField, targetField, map)
+    {
+        if (unit.getHasMoved() === false &&
+            ((actionTargetField.x === targetField.x && actionTargetField.y === targetField.y) ||
+            (action.getMovementTarget() === null && unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y > 0))))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    },
 };

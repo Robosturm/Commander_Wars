@@ -24,6 +24,8 @@ public slots:
     void moveToUnit(qint32 posX, qint32 posY);
 private slots:
     void remove();
+private:
+    Player* m_pPlayer{nullptr};
 };
 
 #endif // DIALOGUNITINFO_H

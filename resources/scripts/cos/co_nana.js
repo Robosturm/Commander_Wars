@@ -58,7 +58,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -106,7 +105,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.loadCOMusic = function(co, map)
@@ -195,7 +193,6 @@ var Constructor = function()
                                     }
                                 }
                             }
-                            directCircle.remove()
                             if (found === true)
                             {
                                 break;
@@ -239,7 +236,6 @@ var Constructor = function()
                         }
                     }
                 }
-                circle.remove()
             }
         }
     };

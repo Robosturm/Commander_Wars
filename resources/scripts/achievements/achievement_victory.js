@@ -65,7 +65,7 @@ var Constructor = function()
                         ["CO_SONJA",                5,    qsTr("Sees all, knows all!")],
                         ["CO_SOPHIE",               5,    qsTr("Mail call!")],
                         ["CO_STURM",                5,    qsTr("Evil invader!")],
-                        ["CO_TABITHA",              5,    qsTr("Extremly cruel!")],
+                        ["CO_TABITHA",              5,    qsTr("Extremely cruel!")],
                         ["CO_TASHA",                5,    qsTr("Revenge for John!")],
                         ["CO_VARLOT",               5,    qsTr("Caviar and war!")],
                         ["CO_VON_BOLT",             5,    qsTr("Immortal Evil!")],

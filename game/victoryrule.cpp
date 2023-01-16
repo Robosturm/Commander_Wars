@@ -1,14 +1,12 @@
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "game/victoryrule.h"
 #include "game/gamemap.h"
 #include "game/player.h"
-#include "game/co.h"
 
-const QString VictoryRule::checkbox = "checkbox";
-const QString VictoryRule::spinbox = "spinbox";
+const char* const VictoryRule::checkbox = "checkbox";
+const char* const VictoryRule::spinbox = "spinbox";
 
 VictoryRule::VictoryRule(GameMap* pMap)
     : m_pMap{pMap}
@@ -16,8 +14,6 @@ VictoryRule::VictoryRule(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("VictoryRule");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -33,9 +29,7 @@ VictoryRule::VictoryRule(QString ruleID, GameMap* pMap)
 
 void VictoryRule::init()
 {
-    Mainapp* pApp = Mainapp::getInstance();
     Interpreter* pInterpreter = Interpreter::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     QString function1 = "init";
     QJSValueList args({pInterpreter->newQObject(this),
@@ -215,19 +209,19 @@ void VictoryRule::checkDefeat()
                     }
                     case GameEnums::DefeatType_Defeated:
                     {
-                        CONSOLE_PRINT("Defeating player caused by rule " + m_RuleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Defeating player caused by rule " + m_RuleID, GameConsole::eDEBUG);
                         pPlayer->defeatPlayer(nullptr);
                         break;
                     }
                     case GameEnums::DefeatType_ByCurrentPlayer:
                     {
-                        CONSOLE_PRINT("Defeating player and moving ownership of buildings to current player. Caused by rule " + m_RuleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Defeating player and moving ownership of buildings to current player. Caused by rule " + m_RuleID, GameConsole::eDEBUG);
                         pPlayer->defeatPlayer(m_pMap->getCurrentPlayer());
                         break;
                     }
                     case GameEnums::DefeatType_Domination:
                     {
-                        CONSOLE_PRINT("Defeating player and moving ownership of units and buildings to current player. Caused by rule " + m_RuleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Defeating player and moving ownership of units and buildings to current player. Caused by rule " + m_RuleID, GameConsole::eDEBUG);
                         pPlayer->defeatPlayer(m_pMap->getCurrentPlayer(), true);
                         break;
                     }

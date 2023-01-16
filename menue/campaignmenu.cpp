@@ -1,17 +1,13 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "menue/campaignmenu.h"
-#include "menue/mainwindow.h"
 #include "menue/mapselectionmapsmenue.h"
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
-
-#include "multiplayer/multiplayermenu.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
@@ -34,8 +30,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
-    CONSOLE_PRINT("Entering Campaign Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Campaign Menue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -51,9 +46,9 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
         sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/mapselection");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/mapselection");
+    pApp->getAudioManager()->playRandom();
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
@@ -188,7 +183,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
             });
             pSprite->addTween(tween);
             m_pMapBackground->addChild(pSprite);
-            Mainapp::getInstance()->getAudioThread()->playSound("firework.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("firework.wav");
             eventQueueEmpty = false;
         }
     }
@@ -228,7 +223,7 @@ void CampaignMenu::playNextEvent(qint32 event)
     {
         GameManager* pGameManager = GameManager::getInstance();
         oxygine::ResAnim* pAnim = pGameManager->getResAnim("campaignFlagAppear");
-        Mainapp::getInstance()->getAudioThread()->playSound("flagAppear.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("flagAppear.wav");
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         qint32 width = m_pMapBackground->getScaledWidth();
         qint32 height = m_pMapBackground->getScaledHeight();
@@ -297,7 +292,7 @@ void CampaignMenu::showMinimap()
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     if (pMap.get() != nullptr)
     {
-        Mainapp::getInstance()->getAudioThread()->playSound("minimapOpen.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("minimapOpen.wav");
         qint32 x = m_currentMapFlagPosition.x();
         qint32 y = m_currentMapFlagPosition.y();
         GameManager* pGameManager = GameManager::getInstance();
@@ -328,7 +323,7 @@ void CampaignMenu::hideMinimap()
 {
     if (m_pMapSelectionView->getMinimapPanel()->getParent() == m_pMapBackground.get())
     {
-        Mainapp::getInstance()->getAudioThread()->playSound("minimapOpen.wav");
+        Mainapp::getInstance()->getAudioManager()->playSound("minimapOpen.wav");
         m_pMapSelectionView->getMinimapPanel()->detach();
     }
 }
@@ -343,11 +338,15 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
     QString dir;
     if (index >= 0 && index < files.size())
     {
-        dir = Settings::getUserPath() + folder;
+        dir = folder;
         file = files[index];
         if (!QFile::exists(dir + "/" + file))
         {
-            dir = oxygine::Resource::RCC_PREFIX_PATH + folder;
+            dir = Settings::getUserPath() + folder;
+            if (!QFile::exists(dir + "/" + file))
+            {
+                dir = oxygine::Resource::RCC_PREFIX_PATH + folder;
+            }
         }
         QFileInfo info(dir, file);
         if (info != m_pMapSelectionView->getCurrentMapFile())
@@ -426,7 +425,7 @@ void CampaignMenu::createMapSelection(spCampaign & campaign)
 void CampaignMenu::exitMenue()
 {
     QStringList filter = {".jsm"};
-    CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
     auto mapSelectionView = spMapSelectionView::create(filter);
     auto window = spMapSelectionMapsMenue::create(mapSelectionView);
     oxygine::Stage::getStage()->addChild(window);
@@ -440,7 +439,7 @@ void CampaignMenu::onEnter()
     QString func = "campaignMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -479,7 +478,7 @@ void CampaignMenu::mapSelectionItemChanged(QString item)
 
 void CampaignMenu::slotButtonNext()
 {
-    Mainapp::getInstance()->getAudioThread()->playSound("moveOut.wav");
+    Mainapp::getInstance()->getAudioManager()->playSound("moveOut.wav");
     m_pMapSelectionView->loadCurrentMap();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     if (pMap.get() != nullptr)
@@ -491,7 +490,7 @@ void CampaignMenu::slotButtonNext()
             pMap->getGameScript()->gameStart();
             pMap->updateSprites();
             // start game
-            CONSOLE_PRINT("Leaving Campaign Menue", Console::eDEBUG);
+            CONSOLE_PRINT("Leaving Campaign Menue", GameConsole::eDEBUG);
             auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
             oxygine::Stage::getStage()->addChild(window);
             oxygine::Actor::detach();
@@ -514,7 +513,7 @@ void CampaignMenu::showSaveCampaign()
     QStringList wildcards;
     wildcards.append("*.camp");
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Save"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);    
 }
@@ -535,7 +534,7 @@ void CampaignMenu::autosave()
 {
     if (Settings::getAutoSavingCycle() > 0)
     {
-        CONSOLE_PRINT("CampaignMenu::autosave()", Console::eDEBUG);
+        CONSOLE_PRINT("CampaignMenu::autosave()", GameConsole::eDEBUG);
         QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + m_pMapSelectionView->getCurrentCampaign()->getName() + "_autosave_", ".camp", Settings::getAutoSavingCycle());
         saveCampaign(path);
     }

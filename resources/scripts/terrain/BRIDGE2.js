@@ -20,6 +20,14 @@ var Constructor = function()
     {
         return __BASEBRIDGE.canBePlacedBaseId(x, y, map, "BRIDGE2");
     };
+    this.getName = function()
+    {
+        return qsTr("Old bridge");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Bridge over river and seas which allows ground units to cross.");
+    };
 };
 Constructor.prototype = __BASEBRIDGE;
 var BRIDGE2 = new Constructor();

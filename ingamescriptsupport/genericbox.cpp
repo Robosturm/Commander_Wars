@@ -1,9 +1,8 @@
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
@@ -13,8 +12,6 @@ GenericBox::GenericBox(bool cancel)
     setObjectName("GenericBox");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");

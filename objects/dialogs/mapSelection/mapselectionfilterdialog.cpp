@@ -15,8 +15,6 @@ MapSelectionFilterDialog::MapSelectionFilterDialog(MapFilter* filter)
 #ifdef GRAPHICSUPPORT
     setObjectName("MapSelectionFilterDialog");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
@@ -37,7 +35,10 @@ MapSelectionFilterDialog::MapSelectionFilterDialog(MapFilter* filter)
 MapSelectionFilterDialog::~MapSelectionFilterDialog()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(MapSelectionFilter);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(MapSelectionFilter);
+    }
 }
 
 void MapSelectionFilterDialog::exit()

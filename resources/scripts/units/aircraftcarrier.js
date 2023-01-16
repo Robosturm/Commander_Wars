@@ -105,11 +105,9 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return "<r>" + qsTr("Naval Unit. Can ") + "</r>" +
-               "<div c='#00ff00'>"+ qsTr("carry X 2") + "</div>" +
-               "<r>" + qsTr(" air units and ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("produce ") + "</div>" +
-               "<r>" + qsTr("Waterplanes") + "</r>";
+        var text =  qsTr("<r>Naval Unit. Can </r><div c='#00ff00'>carry %0</div><r> air units and </r><div c='#00ff00'>produce </div><r>Waterplanes.</r>");
+        text = replaceTextArgs(text, [AIRCRAFTCARRIER.getLoadingPlace()]);
+        return text;
     };
     this.getUnitType = function()
     {
@@ -118,6 +116,10 @@ var Constructor = function()
     this.getTypeOfWeapon1 = function(unit)
     {
         return GameEnums.WeaponType_Indirect;
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveship.wav";
     };
 }
 

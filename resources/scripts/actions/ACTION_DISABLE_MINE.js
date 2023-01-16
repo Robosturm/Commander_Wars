@@ -7,13 +7,8 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
         var transportTerrain = map.getTerrain(actionTargetField.x, actionTargetField.y);
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-
-        if (ACTION_DISABLE_MINE.getDisableFields(action, map).length > 0)
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map) &&
+            ACTION_DISABLE_MINE.getDisableFields(action, map).length > 0)
         {
             return true;
         }
@@ -120,6 +115,14 @@ var Constructor = function()
         }
         ACTION_DISABLE_MINE.postAnimationTargetX = -1;
         ACTION_DISABLE_MINE.postAnimationTargetY = -1;
+    };
+    this.getName = function(map)
+    {
+        return qsTr("Remove mine");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Removes an enemy mine from the map.");
     };
 }
 

@@ -4,7 +4,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setVisionHigh(1);
-        terrain.setTerrainName(__BASEDESTROYED_WELD.getName(terrain));
+        terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
     };
     this.baseTerrainId = "PLAINS";
     this.getName = function(terrain = null)
@@ -263,6 +263,10 @@ var Constructor = function()
         {
             return TERRAIN.getTerrainAnimationBackground(unit, terrain, defender, map);
         }
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeBuilding.wav";
     };
 };
 Constructor.prototype = TERRAIN;

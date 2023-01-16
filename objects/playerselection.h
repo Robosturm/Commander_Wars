@@ -7,22 +7,40 @@
 
 #include "network/NetworkInterface.h"
 
-#include "gameinput/basegameinputif.h"
-
 #include "game/gamemap.h"
 #include "game/campaign.h"
+
+#include "coreengine/fileserializable.h"
 
 class DropDownmenu;
 class PlayerSelection;
 using spPlayerSelection = oxygine::intrusive_ptr<PlayerSelection>;
 
-class PlayerSelection final : public CreatedGui
+class PlayerSelection final : public CreatedGui, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit PlayerSelection(qint32 width, qint32 heigth);
     ~PlayerSelection() = default;
-    void showPlayerSelection();    
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serializeObject(QDataStream& stream) const;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& stream);
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() const
+    {
+        return 1;
+    }
+    void showPlayerSelection(bool relaunchedLobby = false);
     void attachNetworkInterface(spNetworkInterface pNetworkInterface);    
     void attachCampaign(spCampaign campaign);
 
@@ -39,7 +57,7 @@ public:
      * @param player
      * @param value
      */
-    void sendPlayerReady(quint64 socketID, const QVector<qint32> & player, bool value);
+    void sendPlayerReady(quint64 socketID);
     /**
      * @brief setSaveGame
      * @param value
@@ -52,6 +70,23 @@ signals:
      */
     void sigDisconnect();
 public slots:
+    /**
+     * @brief hasLockedPlayersInCaseOfDisconnect
+     * @return
+     */
+    bool hasLockedPlayersInCaseOfDisconnect() const;
+    /**
+     * @brief setLockedAiControl
+     * @param player
+     * @param value
+     */
+    void setLockedAiControl(qint32 player, bool value);
+    /**
+     * @brief getLockedAiControl
+     * @param player
+     * @return
+     */
+    bool getLockedAiControl(qint32 player);
     bool hasNetworkInterface() const;
     bool getIsServerNetworkInterface() const;
     bool getIsObserverNetworkInterface() const;
@@ -78,6 +113,7 @@ public slots:
     void setPlayerReady(bool value);
     QStringList getDefaultAiNames() const;
     QStringList getAiNames() const;
+    QString getNameFromAiType(GameEnums::AiTypes aiType) const;
     QStringList getTeamNames() const;
     QStringList getDropDownColorNames() const;
     /**
@@ -112,6 +148,7 @@ public slots:
     void playerCO2Changed(QString coid, qint32 playerIdx);
     void updateCO2Sprite(QString coid, qint32 playerIdx);
     void slotCOsRandom(qint32 mode);
+    void slotCOsDelete(qint32 mode);
     void slotShowAllBuildList();
     void slotShowPlayerBuildList(qint32 player);
     void slotChangeAllBuildList(qint32, QStringList buildList);
@@ -199,6 +236,13 @@ protected:
      */
     bool joinAllowed(quint64 socketId, QString username, GameEnums::AiTypes eAiType);
     /**
+     * @brief remoteChangePlayerOwner
+     * @param username
+     * @param player
+     * @param eAiType
+     */
+    void remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType = false);
+    /**
      * @brief sendOpenPlayerCount
      */
     void sendOpenPlayerCount();
@@ -249,11 +293,11 @@ protected:
     /**
      * @brief initializeMap sets predefined stuff and fixes old maps
      */
-    void initializeMap();
+    void initializeMap(bool relaunchedLobby);
     /**
      * @brief updateInitialState
      */
-    void updateInitialState();
+    void updateInitialState(bool relaunchedLobby);
     /**
      * @brief selectInitialCos
      * @param player
@@ -265,7 +309,7 @@ protected:
      * @param ai
      * @param aiList
      */
-    void selectInitialAi(qint32 player, DropDownmenu* pPlayerAi, qint32 & ai, const QStringList & aiList, const QStringList & defaultAiList);
+    void selectInitialAi(bool relaunchedLobby, qint32 player, DropDownmenu* pPlayerAi, qint32 & ai, const QStringList & aiList, const QStringList & defaultAiList);
     /**
      * @brief createInitialAi
      * @param pPlayerAi
@@ -281,6 +325,8 @@ private:
      */
     QVector<quint64> m_playerSockets;
     QVector<bool> m_playerReadyFlags;
+    QVector<bool> m_lockedInCaseOfDisconnect;
+    QVector<bool> m_lockedAiControl;
 
     spNetworkInterface m_pNetworkInterface{nullptr};
     spCampaign m_pCampaign;

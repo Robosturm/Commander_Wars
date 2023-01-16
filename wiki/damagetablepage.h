@@ -8,7 +8,7 @@ using spDamageTablePage = oxygine::intrusive_ptr<DamageTablePage>;
 class DamageTablePage final : public Wikipage
 {
 public:
-    explicit DamageTablePage();
+    explicit DamageTablePage(const QString & pageId);
     ~DamageTablePage() = default;
 private:
     oxygine::spColorRectSprite m_verticalMarker;

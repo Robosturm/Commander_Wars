@@ -1,5 +1,5 @@
 #include "ai/heavyai.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 // code for debugging and neuro evolution is here
@@ -12,7 +12,7 @@ QString HeavyAi::getNeuralNetworkName(qint32 network)
     }
     else
     {
-        AI_CONSOLE_PRINT("HeavyAi::getNeuralNetworkName invalid index " + QString::number(network), Console::eDEBUG);
+        CONSOLE_PRINT("HeavyAi::getNeuralNetworkName invalid index " + QString::number(network), GameConsole::eDEBUG);
     }
     return "";
 }
@@ -25,7 +25,7 @@ void HeavyAi::mutateNeuralNetwork(qint32 network, double mutationChance, double 
     }
     else
     {
-        AI_CONSOLE_PRINT("HeavyAi::mutateNeuralNetwork invalid index " + QString::number(network), Console::eDEBUG);
+        CONSOLE_PRINT("HeavyAi::mutateNeuralNetwork invalid index " + QString::number(network), GameConsole::eDEBUG);
     }
 }
 
@@ -36,7 +36,7 @@ void HeavyAi::setDisabled(qint32 network, bool disabled)
 
 void HeavyAi::combineAi(QStringList aisToUse)
 {
-    AI_CONSOLE_PRINT("HeavyAi::combineAi", Console::eDEBUG);
+    CONSOLE_PRINT("HeavyAi::combineAi", GameConsole::eDEBUG);
     for (qint32 i = 0; i < NeuralNetworksMax; ++i)
     {
         qint32 item = GlobalUtils::randInt(0, aisToUse.length() - 1);
@@ -58,7 +58,7 @@ void HeavyAi::saveNeuralNetwork(qint32 network)
     }
     else
     {
-        AI_CONSOLE_PRINT("HeavyAi::saveNeuralNetwork invalid index " + QString::number(network), Console::eDEBUG);
+        CONSOLE_PRINT("HeavyAi::saveNeuralNetwork invalid index " + QString::number(network), GameConsole::eDEBUG);
     }
 }
 

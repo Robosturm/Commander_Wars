@@ -1,11 +1,11 @@
 #include "ai/proxyai.h"
 
+#include "coreengine/interpreter.h"
+
 #include "game/gamemap.h"
 #include "game/player.h"
-#include "game/co.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include <QMutexLocker>
 
@@ -16,12 +16,23 @@ ProxyAi::ProxyAi(GameMap* pMap)
     setObjectName("ProxyAi");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    AI_CONSOLE_PRINT("Creating proxy ai", GameConsole::eDEBUG);
 }
 
 void ProxyAi::readIni(QString)
 {
+}
+
+
+void ProxyAi::init(GameMenue* pMenu)
+{
+    if (!m_initDone)
+    {
+        m_initDone = true;
+        m_pMenu = pMenu;
+        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+        connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+    }
 }
 
 void ProxyAi::connectInterface(NetworkInterface* pNetworkInterface)
@@ -69,7 +80,7 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
         stream >> player;
         if (m_pPlayer->getPlayerID() == player)
         {
-            CONSOLE_PRINT("Received action from network for player " + QString::number(player), Console::eDEBUG);
+            CONSOLE_PRINT("Received action from network for player " + QString::number(player), GameConsole::eDEBUG);
             QMutexLocker locker(&m_ActionMutex);
             spGameAction pAction = spGameAction::create(m_pMap);
             pAction->deserializeObject(stream);
@@ -82,14 +93,16 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
                 if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
                 {
                     m_ActionBuffer.pop_front();
-                    AI_CONSOLE_PRINT("Emitting action for player " + QString::number(m_pPlayer->getPlayerID()) +
+                    AI_CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for player " + QString::number(m_pPlayer->getPlayerID()) +
                                      " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
-                                     " with sync counter " + QString::number(pAction->getSyncCounter()), Console::eDEBUG);
+                                     " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
                     emit performAction(pAction);
                 }
                 else
                 {
-                    AI_CONSOLE_PRINT("Skipping emit action cause sync counter doesn't match", Console::eDEBUG);
+                    AI_CONSOLE_PRINT("Skipping emit action " + pAction->getActionID() + " cause sync counter doesn't match "
+                                     "action counter=" + QString::number(pAction->getSyncCounter()) +
+                                     " menu counter=" + QString::number(m_pMenu->getSyncCounter() + 1), GameConsole::eDEBUG);
                 }
             }
         }
@@ -109,14 +122,16 @@ void ProxyAi::nextAction()
             if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
             {
                 m_ActionBuffer.pop_front();
-                AI_CONSOLE_PRINT("Emitting action for player " + QString::number(m_pPlayer->getPlayerID()) +
+                AI_CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for player " + QString::number(m_pPlayer->getPlayerID()) +
                                  " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
-                                 " with sync counter " + QString::number(pAction->getSyncCounter()), Console::eDEBUG);
+                                 " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
                 emit performAction(pAction);
             }
             else
             {
-                AI_CONSOLE_PRINT("Skipping emit action cause sync counter doesn't match", Console::eDEBUG);
+                AI_CONSOLE_PRINT("Skipping emit action " + pAction->getActionID() + " cause sync counter doesn't match "
+                                 "action counter=" + QString::number(pAction->getSyncCounter()) +
+                                 " menu counter=" + QString::number(m_pMenu->getSyncCounter() + 1), GameConsole::eDEBUG);
             }
         }
     }

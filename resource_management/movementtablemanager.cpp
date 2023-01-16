@@ -3,8 +3,6 @@
 
 #include "resource_management/movementtablemanager.h"
 
-#include "coreengine/mainapp.h"
-
 #include "modding/csvtableimporter.h"
 
 #include "game/unit.h"

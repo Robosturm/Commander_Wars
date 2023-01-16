@@ -6,7 +6,6 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 
 #include "objects/base/spinbox.h"
@@ -19,9 +18,10 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
-ScriptEventGeneric::ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier)
+ScriptEventGeneric::ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier, const QString & description)
     : ScriptEvent(pMap, type),
-      m_eventIdentifier(eventIdentifier)
+      m_eventIdentifier(eventIdentifier),
+      m_description(description)
 {
     connect(this, &ScriptEventGeneric::sigShowSelectFile, this, &ScriptEventGeneric::showSelectFile, Qt::QueuedConnection);
 }
@@ -211,7 +211,7 @@ void ScriptEventGeneric::showSelectFile(QString filter, QString startFolder, QSt
     QStringList wildcards;
     wildcards.append(filter);
     QString path = Settings::getUserPath() + startFolder;
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, currentFile, false, tr("Select"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, currentFile, false, tr("Select"));
     Textbox* pBox = pTextbox.get();
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, [=](QString id)
     {

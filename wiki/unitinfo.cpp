@@ -2,6 +2,7 @@
 
 #include "wiki/unitinfo.h"
 #include "wiki/wikidatabase.h"
+#include "wiki/wikipage.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/movementtablemanager.h"
@@ -26,10 +27,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
 #ifdef GRAPHICSUPPORT
     setObjectName("UnitInfo");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-
 
     setWidth(width);
 
@@ -50,7 +48,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText((tr("Unit Information ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 0);
     addChild(pLabel);
-    y += 60;
+    y += 70;
 
     pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
@@ -251,23 +249,24 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         }
     }
 
+    y += 10;
     pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Actions"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
-    y += 80;
+    y += 90;
     createActionTable(pUnit.get(), y, width);
-    y += 40;
+    y += 50;
 
     pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Transporters"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
-    y += 80;
+    y += 90;
     createTransportTable(pUnit.get(), y, width);
-    y += 40;
+    y += 50;
 
     if (y - yStart < 210)
     {
@@ -281,7 +280,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText((tr("Movement ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
-    y += 80;
+    y += 90;
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
@@ -374,7 +373,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
             y += GameMap::getImageSize() * 2 + 6;
         }
     }
-    y += 40;
+    y += 60;
 
     if (pUnit->getWeapon1ID() != "" && pWeaponManager->exists(pUnit->getWeapon1ID()))
     {
@@ -383,9 +382,9 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         pLabel->setHtmlText((tr("Weapon 1 ") + pWeaponManager->getName(pUnit->getWeapon1ID())));
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
         addChild(pLabel);
-        y += 80;
+        y += 90;
         createWeaponTable(pUnit.get(), pUnit->getWeapon1ID(), y, width);
-        y += 40;
+        y += 60;
     }
     if (pUnit->getWeapon2ID() != "" && pWeaponManager->exists(pUnit->getWeapon2ID()))
     {
@@ -394,9 +393,9 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         pLabel->setHtmlText((tr("Weapon 2 ") + pWeaponManager->getName(pUnit->getWeapon2ID())));
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
         addChild(pLabel);
-        y += 80;
+        y += 90;
         createWeaponTable(pUnit.get(), pUnit->getWeapon2ID(), y, width);
-        y += 40;
+        y += 60;
     }
     setHeight(y);
     connect(this, &UnitInfo::sigShowLink, this, &UnitInfo::showLink, Qt::QueuedConnection);
@@ -597,7 +596,9 @@ void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
 
 void UnitInfo::showLink(QString pageID)
 {
-    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
-    
+    if (!Wikipage::getPageStack().contains(pageID))
+    {
+        WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+        oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
+    }
 }

@@ -34,5 +34,4 @@ ZCOUNIT_ROYAL_GUARD.startOfTurn = function(unit, map)
             }
         }
     }
-    fields.remove();
 };

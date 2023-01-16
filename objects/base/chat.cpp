@@ -4,16 +4,12 @@
 
 #include "objects/base/chat.h"
 
+#include "menue/basegamemenu.h"
+
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-
-#include "game/gamemap.h"
-
-#include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "network/JsonKeys.h"
 
@@ -23,16 +19,15 @@ const char* const chatNotTeamTarget = "@!Team";
 const char* const chatAllyTarget = "@Ally";
 const char* const chatEnemyTarget = "@Enemy";
 
-Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode)
+Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode, BaseGamemenu* pMenu)
     : m_pInterface(pInterface),
-      m_serviceMode(serviceMode)
+      m_serviceMode(serviceMode),
+      m_pMenu(pMenu)
 {
     setSize(size.width(), size.height());
 #ifdef GRAPHICSUPPORT
     setObjectName("Chat");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
@@ -79,7 +74,7 @@ void Chat::setVisible(bool vis)
     oxygine::Actor::setVisible(vis);
     if (vis)
     {
-        if (BaseGamemenu::getInstance() != nullptr)
+        if (m_pMenu != nullptr)
         {
             QString tooltip = tr("Message to send via chat. Start a message with one of the following items to send "
                                  "a message to specific targets. \n") +
@@ -101,7 +96,7 @@ void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSeriv
 {
     if (service == m_serviceMode)
     {
-        CONSOLE_PRINT("Receiving chat message", Console::eDEBUG);
+        CONSOLE_PRINT("Receiving chat message", GameConsole::eDEBUG);
         QJsonDocument message = QJsonDocument::fromJson(data);
 
         addMessage(message.object());
@@ -109,21 +104,20 @@ void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSeriv
 }
 
 void Chat::addMessage(QJsonObject data, bool local)
-{    
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
+{
     bool show = true;
 
     QString textMessage = data.value(JsonKeys::JSONKEY_ChatMessage).toString();
     QString target = data.value(JsonKeys::JSONKEY_ChatTarget).toString();
     QString sender = data.value(JsonKeys::JSONKEY_ChatSender).toString();
 
-    if (target.startsWith("@") && pMenu != nullptr &&
-        pMenu->getCurrentViewPlayer() != nullptr)
+    if (target.startsWith("@") && m_pMenu != nullptr &&
+        m_pMenu->getCurrentViewPlayer() != nullptr)
     {
         if (target.startsWith(chatTeamTarget))
         {
             qint32 team = target.replace(chatTeamTarget, "").toInt();
-            if (team - 1 != pMenu->getCurrentViewPlayer()->getTeam())
+            if (team - 1 != m_pMenu->getCurrentViewPlayer()->getTeam())
             {
                 show = false;
             }
@@ -131,7 +125,7 @@ void Chat::addMessage(QJsonObject data, bool local)
         else if (target.startsWith(chatAllyTarget))
         {
             qint32 team = target.replace(chatAllyTarget, "").toInt();
-            if (team != pMenu->getCurrentViewPlayer()->getTeam())
+            if (team != m_pMenu->getCurrentViewPlayer()->getTeam())
             {
                 show = false;
             }
@@ -139,7 +133,7 @@ void Chat::addMessage(QJsonObject data, bool local)
         else if (target.startsWith(chatNotTeamTarget))
         {
             qint32 team = target.replace(chatNotTeamTarget, "").toInt();
-            if (team == pMenu->getCurrentViewPlayer()->getTeam())
+            if (team == m_pMenu->getCurrentViewPlayer()->getTeam())
             {
                 show = false;
             }
@@ -147,7 +141,7 @@ void Chat::addMessage(QJsonObject data, bool local)
         else if (target.startsWith(chatPlayerTarget))
         {
             qint32 player = target.replace(chatPlayerTarget, "").toInt();
-            if (player - 1 != pMenu->getCurrentViewPlayer()->getPlayerID())
+            if (player - 1 != m_pMenu->getCurrentViewPlayer()->getPlayerID())
             {
                 show = false;
             }
@@ -191,10 +185,9 @@ void Chat::sendData(QString message)
         data.insert(JsonKeys::JSONKEY_ChatSender, Settings::getUsername());
         QString text;
         QString target;
-        BaseGamemenu* pMenu = GameMenue::getInstance();
         if (message.startsWith("@") &&
-            pMenu != nullptr &&
-            pMenu->getCurrentViewPlayer() != nullptr)
+            m_pMenu != nullptr &&
+            m_pMenu->getCurrentViewPlayer() != nullptr)
         {
             QStringList list = message.split(" ");
             for (qint32 i = 0; i < list.size(); i++)
@@ -203,11 +196,11 @@ void Chat::sendData(QString message)
                 {
                     if (list[i] == chatEnemyTarget)
                     {
-                        target = chatNotTeamTarget + QString::number(pMenu->getCurrentViewPlayer()->getTeam());
+                        target = chatNotTeamTarget + QString::number(m_pMenu->getCurrentViewPlayer()->getTeam());
                     }
                     else if (list[i] == chatAllyTarget)
                     {
-                        target = chatTeamTarget + QString::number(pMenu->getCurrentViewPlayer()->getTeam());
+                        target = chatTeamTarget + QString::number(m_pMenu->getCurrentViewPlayer()->getTeam());
                     }
                     else
                     {
@@ -234,7 +227,7 @@ void Chat::sendData(QString message)
         }
         if (m_pInterface.get() != nullptr)
         {
-            CONSOLE_PRINT("Sending chat message", Console::eDEBUG);
+            CONSOLE_PRINT("Sending chat message", GameConsole::eDEBUG);
             QJsonDocument doc(data);
             emit m_pInterface->sig_sendData(0, doc.toJson(), m_serviceMode, true);
         }

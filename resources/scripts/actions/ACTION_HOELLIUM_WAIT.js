@@ -6,13 +6,9 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
 		var targetUnit = action.getMovementTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (targetUnit === null) || (targetUnit !== null) && (unit.getOwner().isEnemyUnit(targetUnit )))
+        if (unit.getHasMoved() === false &&
+           (actionTargetField.x === targetField.x && actionTargetField.y === targetField.y) ||
+           ((targetUnit === null || unit.getOwner().isEnemyUnit(targetUnit)) && unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) > 0))
         {
             return true;
         }
@@ -48,6 +44,10 @@ var Constructor = function()
         unit.moveUnitAction(action);
         // disable unit commandments for this turn
         unit.setHasMoved(true);
+    };
+    this.getName = function()
+    {
+        return qsTr("Oozium Wait");
     };
     this.getDescription = function()
     {

@@ -29,11 +29,11 @@ var Constructor = function()
     {
         if (itemNumber === 0)
         {
-            return qsTr("Capture Victory");
+            return qsTr("Capture victory");
         }
         else
         {
-            return qsTr("Team Counter");
+            return qsTr("Team counter");
         }
     };
     // the type how the rule will be represented in the map selection ui

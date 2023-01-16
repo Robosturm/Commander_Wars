@@ -19,27 +19,26 @@
 #include "ingamescriptsupport/events/scripteventcentermap.h"
 #include "ingamescriptsupport/events/scripteventplaysound.h"
 
-#include "coreengine/console.h"
 
-const QString ScriptEvent::EventDialog  = "Dialog";
-const QString ScriptEvent::EventSpawnUnit = "Spawn Unit";
-const QString ScriptEvent::EventDefeatPlayer = "Defeat Player";
-const QString ScriptEvent::EventChangeBuildlist = "Change Buildlist";
-const QString ScriptEvent::EventAddFunds = "Add Funds";
-const QString ScriptEvent::EventChangeWeather = "Change Weather";
-const QString ScriptEvent::EventChangeCOBar = "Change CO Bar";
-const QString ScriptEvent::EventModifyUnit = "Modify Unit";
-const QString ScriptEvent::EventAnimation = "Animation";
-const QString ScriptEvent::EventModifyTerrain = "Modify Terrain";
-const QString ScriptEvent::EventVictoryInfo = "Victory Info";
-const QString ScriptEvent::EventModifyVariable = "Modify Variable";
-const QString ScriptEvent::EventChangeUnitAI = "Change Unit AI";
-const QString ScriptEvent::EventChangeBuildingOwner = "Change Building Owner";
-const QString ScriptEvent::EventChangeUnitOwner = "Change Unit Owner";
-const QString ScriptEvent::EventChangePlayerTeam = "Change Player Team";
-const QString ScriptEvent::EventSpawnBuilding = "Spawn Building";
-const QString ScriptEvent::EventCenterMap = "Center Map";
-const QString ScriptEvent::EventPlaySound = "Play Sound";
+const char* const ScriptEvent::EventDialog  = "Dialog";
+const char* const ScriptEvent::EventSpawnUnit = "Spawn Unit";
+const char* const ScriptEvent::EventDefeatPlayer = "Defeat Player";
+const char* const ScriptEvent::EventChangeBuildlist = "Change Buildlist";
+const char* const ScriptEvent::EventAddFunds = "Add Funds";
+const char* const ScriptEvent::EventChangeWeather = "Change Weather";
+const char* const ScriptEvent::EventChangeCOBar = "Change CO Bar";
+const char* const ScriptEvent::EventModifyUnit = "Modify Unit";
+const char* const ScriptEvent::EventAnimation = "Animation";
+const char* const ScriptEvent::EventModifyTerrain = "Modify Terrain";
+const char* const ScriptEvent::EventVictoryInfo = "Victory Info";
+const char* const ScriptEvent::EventModifyVariable = "Modify Variable";
+const char* const ScriptEvent::EventChangeUnitAI = "Change Unit AI";
+const char* const ScriptEvent::EventChangeBuildingOwner = "Change Building Owner";
+const char* const ScriptEvent::EventChangeUnitOwner = "Change Unit Owner";
+const char* const ScriptEvent::EventChangePlayerTeam = "Change Player Team";
+const char* const ScriptEvent::EventSpawnBuilding = "Spawn Building";
+const char* const ScriptEvent::EventCenterMap = "Center Map";
+const char* const ScriptEvent::EventPlaySound = "Play Sound";
 
 
 ScriptEvent::ScriptEvent(GameMap* pMap, EventType type)

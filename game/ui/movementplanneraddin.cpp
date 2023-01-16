@@ -15,8 +15,6 @@ MovementPlannerAddIn::MovementPlannerAddIn(QString addIn, GameMap* pMap, Movemen
       m_pMap(pMap),
       m_pPlanner(pPlanner)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
 #ifdef GRAPHICSUPPORT
     setObjectName("MovementPlannerAddIn");
 #endif
@@ -83,7 +81,10 @@ void MovementPlannerAddIn::onMenuInputDone()
 void MovementPlannerAddIn::hide()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(AddIn);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(AddIn);
+    }
     resetUi();
     detach();
     m_pPlanner->setFocused(true);

@@ -6,11 +6,11 @@ var Constructor = function()
     };
     this.getActionText = function(map)
     {
-        return "unknown";
+        return qsTr("Unknown");
     };
     this.getIcon = function(map)
     {
-        return "";
+        return "surrender";
     };
     this.perform = function(action, map)
     {
@@ -20,6 +20,14 @@ var Constructor = function()
     this.isFinalStep = function(action, map)
     {
         return true;
+    };
+    this.getName = function(map)
+    {
+        return qsTr("Game: surrender game");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("You loose the game.");
     };
 }
 

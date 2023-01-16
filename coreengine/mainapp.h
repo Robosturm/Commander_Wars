@@ -6,6 +6,7 @@
 #include <QThread>
 #include <QCoreApplication>
 #include <QMutex>
+#include <QProcess>
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
@@ -22,13 +23,15 @@
 #include "updater/gameupdater.h"
 #endif
 
+class BaseGamemenu;
 class WorkerThread;
 using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
-class AudioThread;
-using spAudioThread = oxygine::intrusive_ptr<AudioThread>;
-
+class AudioManager;
+using spAudioThread = oxygine::intrusive_ptr<AudioManager>;
 class TCPClient;
 using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
+class AiProcessPipe;
+using spAiProcessPipe = oxygine::intrusive_ptr<AiProcessPipe>;
 
 class Mainapp final : public oxygine::GameWindow
 {
@@ -85,8 +88,8 @@ public:
         Objects,
         FocusedObjects = Objects + 2,
         AnimationFullScreen,
-        Dialogs,
         DropDownList,
+        Dialogs,
         Tooltip,
         Loadingscreen,
         Achievement,
@@ -94,26 +97,26 @@ public:
     };
 
     explicit Mainapp();
-    ~Mainapp() = default;
+    ~Mainapp();
     virtual void shutdown() override;
     static inline Mainapp* getInstance()
     {
         return m_pMainapp;
     }
 
-    inline AudioThread* getAudioThread()
+    inline AudioManager* getAudioManager()
     {
-        return m_Audiothread;
+        return getInstance()->m_AudioManager.get();
     }
 
     inline static QThread* getWorkerthread()
     {
-        return &m_Workerthread;
+        return getInstance()->m_Workerthread.get();
     }
 
     inline static QThread* getNetworkThread()
     {
-        return &m_Networkthread;
+        return getInstance()->m_Networkthread.get();
     }
     /**
      * @brief loadRessources
@@ -148,7 +151,11 @@ public:
      */
     static WorkerThread* getWorker()
     {
-        return m_Worker;
+        return getInstance()->m_Worker;
+    }
+    static QProcess & GetAiSubProcess()
+    {
+        return *(getInstance()->m_aiSubProcess.get());
     }
     /**
      * @brief qsTr
@@ -224,12 +231,18 @@ public:
         return m_rsaCypher;
     }
     StartupPhase getStartUpStep() const;
+    /**
+     * @brief getAiProcessPipe
+     * @return
+     */
+    static AiProcessPipe & getAiProcessPipe();
 
 public slots:
     /**
      * @brief createBaseDirs
      */
     void createBaseDirs();
+    void changeScreen(quint8 screen);
     void changeScreenMode(Settings::ScreenModes mode);
     void changeScreenSize(qint32 width, qint32 heigth);
     void changePosition(QPoint pos, bool invert);
@@ -255,10 +268,6 @@ public slots:
      * @brief doScreenshot
      */
     void doScreenshot();
-    /**
-     * @brief doMapshot
-     */
-    void doMapshot();
     void nextStartUpStep(Mainapp::StartupPhase step);
     /**
      * @brief inputMethodQuery dummy function to rerout qlineedit events
@@ -270,6 +279,7 @@ public slots:
      * @brief createLineEdit
      */
     void createLineEdit();
+    void doMapshot(BaseGamemenu* pMenu);
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -290,13 +300,7 @@ signals:
 
     void sigNextStartUpStep(Mainapp::StartupPhase step);
     void sigCreateLineEdit();
-    /**
-     * @brief cursorPositionChanged dummy function to rerout qlineedit events
-     * @param oldPos
-     * @param newPos
-     */
-    void cursorPositionChanged(int oldPos, int newPos);
-    void cursorPositionChanged();
+    void sigDoMapshot(BaseGamemenu* pMenu);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
@@ -308,15 +312,16 @@ private:
     EventTextEdit* m_pLineEdit{nullptr};
 
     static Mainapp* m_pMainapp;
-    static QMutex m_crashMutex;
-    static QThread m_Workerthread;
-    static QThread m_Networkthread;
-    static QThread m_GameServerThread;
-    static WorkerThread* m_Worker;
-    static AudioThread* m_Audiothread;
-    QThread* m_pMainThread{nullptr};
     static bool m_slave;
-    static spTCPClient m_slaveClient;
+    QMutex m_crashMutex;
+    QScopedPointer<QThread> m_Workerthread;
+    QScopedPointer<QThread> m_Networkthread;
+    QScopedPointer<QThread> m_GameServerThread;
+    QScopedPointer<QProcess> m_aiSubProcess;
+    WorkerThread* m_Worker;
+    QScopedPointer<AudioManager> m_AudioManager;
+    spAiProcessPipe m_aiProcessPipe;
+    spTCPClient m_slaveClient;
     QString m_initScript;
     bool m_createSlaveLogs{false};
     Gamepad m_gamepad{0};

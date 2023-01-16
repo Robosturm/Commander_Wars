@@ -4,22 +4,20 @@
 #include "ingamescriptsupport/scriptdialogdialog.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/base/dropdownmenusprite.h"
+#include "objects/base/dropdownmenucolor.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     : m_Event(scriptEventDialog)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
@@ -255,7 +253,7 @@ void ScriptDialogDialog::showChangeBackground()
         folder = file.path();
         fileName = file.fileName();
     }
-    spFileDialog pFileDialog = spFileDialog::create(folder, QStringList(1, "*.png"), fileName, true, tr("Load"));
+    spFileDialog pFileDialog = spFileDialog::create(folder, QStringList(1, "*.png"), false, fileName, true, tr("Load"));
     addChild(pFileDialog);
     connect(pFileDialog.get(), &FileDialog::sigFileSelected, this, &ScriptDialogDialog::setCurrentDialogBackground, Qt::QueuedConnection);
     
@@ -284,7 +282,11 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
     if (!filename.isEmpty())
     {
         QImage image;
-        if (QFile::exists(Settings::getUserPath() + filename))
+        if (QFile::exists(filename))
+        {
+            image = QImage(filename);
+        }
+        else if (QFile::exists(Settings::getUserPath() + filename))
         {
             image = QImage(Settings::getUserPath() + filename);
         }

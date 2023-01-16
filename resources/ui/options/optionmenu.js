@@ -150,6 +150,10 @@ var OptionMenu =
         var items = OptionMenu.getSupportedScreenSizes();
         currentMenu.changeScreenSize(items[input]);
     },
+    changeScreen : function(input)
+    {
+        currentMenu.changeScreen(input);
+    },
     getScreenModes : function()
     {
         return [qsTr("Window"), qsTr("Borderless"), qsTr("Fullscreen")];
@@ -195,7 +199,7 @@ var OptionMenu =
     },
     showSelectDefaultRuleset : function()
     {
-        currentMenu.showFileDialog(["*.grl"], settings.getUserPath() + "data/gamerules", "OptionMenu", "defaultRulesetSelected", "", false, qsTr("Load"));
+        currentMenu.showFileDialog(["*.grl"], settings.getUserPath() + "data/gamerules", false, "OptionMenu", "defaultRulesetSelected", "", false, qsTr("Load"));
     },
     defaultRulesetSelected : function(currentMenu, filename)
     {
@@ -204,12 +208,12 @@ var OptionMenu =
     },
     showSelectDefaultDannlist : function()
     {
-        currentMenu.showFileDialog(["*.bl"], settings.getUserPath() + "data/unitbannlist", "OptionMenu", "defaultDannlistSelected", "", false, qsTr("Load"));
+        currentMenu.showFileDialog(["*.bl"], settings.getUserPath() + "data/unitbannlist", false, "OptionMenu", "defaultDannlistSelected", "", false, qsTr("Load"));
     },
     defaultDannlistSelected : function(currentMenu, filename)
     {
         settings.setDefaultBannlist(filename);
-        currentMenu.getObject("RulesetTextbox").setCurrentText(filename);
+        currentMenu.getObject("BannlistTextbox").setCurrentText(filename);
     },
     changeLanguage : function(currentMenu, item)
     {

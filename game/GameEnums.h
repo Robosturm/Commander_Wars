@@ -195,6 +195,7 @@ public:
 
     enum AiTypes
     {
+        AiTypes_DummyAi = -3,
         AiTypes_MovePlanner = -2,
         AiTypes_ProxyAi = -1,
         AiTypes_Human = 0,
@@ -339,6 +340,7 @@ public:
         LoginError_PasswordOutdated,
         LoginError_DatabaseNotAccesible,
         LoginError_SendingMailFailed,
+        LoginError_WrongEmailAdress,
     };
     Q_ENUM(LoginError)
 

@@ -8,18 +8,15 @@ var Constructor = function ()
         var targetField = action.getTarget();
         var targetUnit = action.getMovementTarget();
         var transportTerrain = action.getMovementTerrain();
-
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-        if (((actionTargetField.x !== targetField.x) || (actionTargetField.y !== targetField.y)) &&
-            (targetUnit !== null))
+        if (unit.getHasMoved() === false &&
+            targetUnit !== null &&
+            unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) > 0 &&
+            (actionTargetField.x !== targetField.x || actionTargetField.y !== targetField.y))
         {
             if ((targetUnit.getOwner() === unit.getOwner()) &&
                 (targetUnit.getTransportUnits().indexOf(unit.getUnitID()) >= 0) &&
-                (targetUnit.getLoadedUnitCount() < targetUnit.getLoadingPlace())) {
+                (targetUnit.getLoadedUnitCount() < targetUnit.getLoadingPlace()))
+            {
                 return ACTION_LOAD.isLoadingTerrain(targetUnit, transportTerrain);
             }
         }
@@ -78,8 +75,10 @@ var Constructor = function ()
         // we need to move the unit to the target position
         ACTION_LOAD.postAnimationUnit = action.getTargetUnit();
         ACTION_LOAD.postAnimationTargetUnit = action.getMovementTarget();
+        ACTION_LOAD.postAnimationUnit.createMoveVisionFromAction(action);
         var animation = Global[ACTION_LOAD.postAnimationUnit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_LOAD", "performPostAnimation");
+
     };
     this.performPostAnimation = function(postAnimation, map)
     {
@@ -89,6 +88,10 @@ var Constructor = function ()
         audio.playSound("load.wav");
         ACTION_LOAD.postAnimationTargetUnit = null;
         ACTION_LOAD.postAnimationUnit = null;
+    };
+    this.getName = function()
+    {
+        return qsTr("Load");
     };
     this.getDescription = function()
     {

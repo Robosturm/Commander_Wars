@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "game/terrain.h"
-#include "game/cursor.h"
 #include "game/GameEnums.h"
 #include "game/gamerules.h"
 #include "game/gamerecording/gamerecorder.h"
@@ -26,6 +25,7 @@ using spGameAction = oxygine::intrusive_ptr<GameAction>;
 class GameMap;
 using spGameMap = oxygine::intrusive_ptr<GameMap>;
 
+class EditorMenue;
 class BaseGamemenu;
 using spBaseGamemenu = oxygine::intrusive_ptr<BaseGamemenu>;
 
@@ -278,7 +278,13 @@ public:
      * @brief setMenu
      * @param newMenu
      */
-    void setMenu(GameMenue *newMenu);
+    void setMenu(BaseGamemenu *newMenu);
+    BaseGamemenu *getMenu() const;
+    /**
+     * @brief setSavegame
+     * @param newSavegame
+     */
+    void setSavegame(bool newSavegame);
 
 signals:
     void signalExitGame();
@@ -753,27 +759,27 @@ public slots:
      * @brief importAWDSMap
      * @param file
      */
-    void importAWDSMap(QString file);
+    void importAWDSMap(QString file, EditorMenue* pMenu);
     /**
      * @brief exportAWDSMap
      * @param file
      */
     void exportAWDSMap(QString file);
     /**
-     * @brief importAWDCMap
+     * @brief importAW4Map
      * @param file
      */
-    void importAWDCMap(QString file);
+    void importAW4Map(QString file, EditorMenue* pMenu);
     /**
      * @brief importAWByWebMap
      * @param file
      */
-    void importAWByWebMap(QString file);
+    void importAWByWebMap(QString file, EditorMenue* pMenu);
     /**
-     * @brief exportAWDCMap
+     * @brief exportAW4Map
      * @param file
      */
-    void exportAWDCMap(QString file);
+    void exportAW4Map(QString file);
 
     void setMapNameFromFilename(QString filename);
     QString getMapName() const;
@@ -859,7 +865,7 @@ private:
     spCampaign m_Campaign;
     spGameRecorder m_Recorder{spGameRecorder::create(this)};
     spGameScript m_GameScript{spGameScript::create(this)};
-    static const QString m_GameAnimationFactory;
+    static const char* const m_GameAnimationFactory;
     bool m_loaded{false};
     QString m_mapMusic;
     QString m_loadedMapMusic;
@@ -867,7 +873,7 @@ private:
     qint32 m_endLoopMs{-1};
     bool m_savegame{false};
     bool m_isHumanMatch{false};
-    GameMenue* m_pMenu{nullptr};
+    BaseGamemenu* m_pMenu{nullptr};
     static qint32 m_imagesize;
 };
 

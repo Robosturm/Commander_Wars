@@ -13,8 +13,8 @@ class Wikipage : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit Wikipage();
-    virtual ~Wikipage() = default;
+    explicit Wikipage(QString pageID);
+    virtual ~Wikipage();
     /**
      * @brief getPanel
      * @return
@@ -23,6 +23,7 @@ public:
     {
         return m_pPanel.get();
     }
+    static QStringList & getPageStack();
 signals:
     void sigFinished();
     /**
@@ -58,6 +59,8 @@ protected:
     spPanel m_pPanel;
     oxygine::spButton m_OkButton;
     qint32 m_y{10};
+    QString m_pageID;
+    static QStringList m_pageStack;
 };
 
 Q_DECLARE_INTERFACE(Wikipage, "Wikipage");

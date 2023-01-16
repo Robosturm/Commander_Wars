@@ -1,6 +1,6 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
@@ -8,14 +8,14 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/unitspritemanager.h"
+#include "resource_management/gamerulemanager.h"
 
 #include <QDir>
 #include <QQmlEngine>
 #include <QTextStream>
 #include <QThread>
 
-spInterpreter Interpreter::m_pInstance;
-QString Interpreter::m_runtimeData;
+spInterpreter Interpreter::m_pInstance{nullptr};
 
 Interpreter::Interpreter()
     : QQmlEngine()
@@ -27,9 +27,9 @@ Interpreter::Interpreter()
     connect(this, &Interpreter::sigNetworkGameFinished, this, &Interpreter::networkGameFinished, Qt::QueuedConnection);
 }
 
-bool Interpreter::reloadInterpreter(const QString & runtime)
+bool Interpreter::reloadInterpreter(const QString runtime)
 {
-    CONSOLE_PRINT("Reloading interpreter", Console::eDEBUG);
+    CONSOLE_PRINT_MODULE("Reloading interpreter", GameConsole::eDEBUG, GameConsole::eJavaScript);
     m_pInstance = nullptr;
     m_pInstance = spInterpreter::create();
     m_pInstance->init();
@@ -38,6 +38,7 @@ bool Interpreter::reloadInterpreter(const QString & runtime)
 
 Interpreter::~Interpreter()
 {
+    m_jsObjects.clear();
     // free memory
     collectGarbage();
 }
@@ -50,15 +51,14 @@ void Interpreter::release()
 void Interpreter::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     setOutputWarningsToStandardError(false);
     setIncubationController(nullptr);
 
     QJSValue globals = newQObject(GlobalUtils::getInstance());
     globalObject().setProperty("globals", globals);
-    QJSValue audio = newQObject(pApp->getAudioThread());
+    QJSValue audio = newQObject(pApp->getAudioManager());
     globalObject().setProperty("audio", audio);
-    QJSValue console = newQObject(Console::getInstance().get());
+    QJSValue console = newQObject(GameConsole::getInstance());
     globalObject().setProperty("GameConsole", console);
     globalObject().setProperty("console", console);
     QJSValue fontManager = newQObject(FontManager::getInstance());
@@ -77,6 +77,8 @@ void Interpreter::init()
     globalObject().setProperty("terrainSpriteManager", terrainSpriteManager);
     QJSValue coPerkSpriteManager = newQObject(COPerkManager::getInstance());
     globalObject().setProperty("coPerkSpriteManager", coPerkSpriteManager);
+    QJSValue gameRuleManager = newQObject(GameRuleManager::getInstance());
+    globalObject().setProperty("gameRuleManager", gameRuleManager);
 
     GameEnums::registerEnums();
 
@@ -87,7 +89,7 @@ QString Interpreter::getRuntimeData()
 {
     if (m_runtimeData.isEmpty())
     {
-        CONSOLE_PRINT("Trying to access not loaded runtime data in no ui mode", Console::eFATAL);
+        CONSOLE_PRINT("Trying to access not loaded runtime data in no ui mode", GameConsole::eFATAL);
     }
     return m_runtimeData;
 }
@@ -99,16 +101,16 @@ bool Interpreter::openScript(const QString & script, bool setup)
     if (!scriptFile.open(QIODevice::ReadOnly))
     {
         QString error = "Error: attemp to read file " + script + " which could not be opened.";
-        CONSOLE_PRINT(error, Console::eERROR);
+        CONSOLE_PRINT(error, GameConsole::eERROR);
     }
     else if (!scriptFile.exists())
     {
         QString error = "Error: unable to open non existing file " + script + ".";
-        CONSOLE_PRINT(error, Console::eERROR);
+        CONSOLE_PRINT(error, GameConsole::eERROR);
     }
     else
     {
-        CONSOLE_PRINT("Loading script " + script, Console::eDEBUG);
+        CONSOLE_PRINT_MODULE("Loading script " + script, GameConsole::eDEBUG, GameConsole::eJavaScript);
         QTextStream stream(&scriptFile);
         QString contents = stream.readAll();
         if (setup && Settings::getRecord())
@@ -127,7 +129,7 @@ bool Interpreter::openScript(const QString & script, bool setup)
             QString error = value.toString() + " in File:" + script + " in File: " +
                             value.property("fileName").toString() + " at Line: " +
                             value.property("lineNumber").toString();
-            CONSOLE_PRINT(error, Console::eERROR);
+            CONSOLE_PRINT(error, GameConsole::eERROR);
         }
         else
         {
@@ -140,14 +142,14 @@ bool Interpreter::openScript(const QString & script, bool setup)
 bool Interpreter::loadScript(const QString & content, const QString & script)
 {
     bool success = false;
-    CONSOLE_PRINT("Interpreter::loadScript: " + script, Console::eDEBUG);
+    CONSOLE_PRINT_MODULE("Interpreter::loadScript: " + script, GameConsole::eDEBUG, GameConsole::eJavaScript);
     QJSValue value = evaluate(content, script);
     if (value.isError())
     {
         QString error = value.toString() + " in script " + script + " in File: " +
                         value.property("fileName").toString() + " at Line: " +
                         value.property("lineNumber").toString();
-        CONSOLE_PRINT(error, Console::eERROR);        
+        CONSOLE_PRINT(error, GameConsole::eERROR);
     }
     else
     {
@@ -161,10 +163,12 @@ QJSValue Interpreter::doString(const QString & task)
 #ifdef GAMEDEBUG
     OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
 #endif
+    ++m_inJsCall;
     QJSValue value = evaluate(task, "GameCode");
+    exitJsCall();
     if (value.isError())
     {
-        CONSOLE_PRINT(value.toString(), Console::eERROR);
+        CONSOLE_PRINT(value.toString(), GameConsole::eERROR);
     }
     return value;
 }
@@ -207,7 +211,7 @@ qint32 Interpreter::getGlobalInt(const QString & var)
     if (!value.isNumber())
     {
         QString error = "Error: attemp to read " + var + "which is not from type number.";
-        CONSOLE_PRINT(error, Console::eERROR);
+        CONSOLE_PRINT(error, GameConsole::eERROR);
     }
     else
     {
@@ -223,7 +227,7 @@ bool Interpreter::getGlobalBool(const QString & var)
     if (!value.isBool())
     {
         QString error = "Error: attemp to read " + var + "which is not from type bool.";
-        CONSOLE_PRINT(error, Console::eERROR);
+        CONSOLE_PRINT(error, GameConsole::eERROR);
     }
     else
     {
@@ -239,7 +243,7 @@ double Interpreter::getGlobalDouble(const QString & var)
     if (!value.isNumber())
     {
         QString error = "Error: attemp to read " + var + "which is not from type number.";
-        CONSOLE_PRINT(error, Console::eERROR);
+        CONSOLE_PRINT(error, GameConsole::eERROR);
     }
     else
     {
@@ -255,7 +259,7 @@ QString Interpreter::getGlobalString(const QString & var)
     if (!value.isString())
     {
         QString error = "Error: attemp to read " + var + "which is not from type QString.";
-        CONSOLE_PRINT(error, Console::eERROR);
+        CONSOLE_PRINT(error, GameConsole::eERROR);
     }
     else
     {
@@ -291,5 +295,22 @@ void Interpreter::networkGameFinished(qint32 value, QString id)
         QJSValueList args({value,
                            id,});
         doFunction(obj, func, args);
+    }
+}
+
+bool Interpreter::getInJsCall() const
+{
+    return m_inJsCall > 0;
+}
+
+void Interpreter::trackJsObject(oxygine::ref_counter* pObj)
+{
+    if (m_inJsCall == 0)
+    {
+        m_jsObjects.clear();
+    }
+    if (m_inJsCall > 0)
+    {
+        m_jsObjects.append(oxygine::intrusive_ptr(pObj));
     }
 }

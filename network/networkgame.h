@@ -6,7 +6,6 @@
 #include <QTimer>
 #include <QProcess>
 
-#include "network/tcpclient.h"
 #include "network/tcpserver.h"
 #include "network/networkgamedata.h"
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
@@ -22,13 +21,12 @@ class NetworkGame final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    explicit NetworkGame(QObject* pParent);
-    ~NetworkGame() = default;
+    explicit NetworkGame(QObject* pParent, const QString & serverName);
+    ~NetworkGame();
     QByteArray getDataBuffer() const;
     void setDataBuffer(const QByteArray &dataBuffer);
 
     QString getServerName() const;
-    void setServerName(const QString &serverName);
 
     const NetworkGameData & getData() const;
     NetworkGameData & getData();
@@ -75,6 +73,12 @@ public:
      * @brief startCloseTimer
      */
     void startCloseTimer();
+    const QString &getSlaveRespawnFile() const;
+    void setSlaveRespawnFile(const QString &newSlaveRespawnFile);
+    void onSlaveRelaunched();
+    bool getRunningGame() const;
+    void setRunningGame(bool newRunningGame);
+
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);
@@ -85,6 +89,11 @@ public slots:
      * @param exitStatus
      */
     void processFinished(qint32 exitCode, QProcess::ExitStatus exitStatus);
+    /**
+     * @brief errorOccurred
+     * @param error
+     */
+    void errorOccurred(QProcess::ProcessError error);
     /**
      * @brief closeGame
      */
@@ -100,8 +109,10 @@ private:
     QString m_serverName;
     bool m_slaveRunning{false};
     bool m_closing{false};
+    bool m_runningGame{false};
     NetworkGameData m_data;
     QString m_id;
+    QString m_slaveRespawnFile;
     QTimer m_closeTimer;
 };
 

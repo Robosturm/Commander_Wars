@@ -1,5 +1,4 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 #include <limits>
 
@@ -9,8 +8,8 @@ namespace oxygine
     class RectT final
     {
     public:
-        typedef typename point2::type T;
-        typedef point2 type;
+        using T = typename point2::type;
+        using type = point2;
 
         explicit RectT()
             : pos(0, 0),
@@ -54,7 +53,7 @@ namespace oxygine
             return false;
         }
 
-        bool isIntersecting(const RectT& r) const
+        bool isIntersecting(const RectT& r) const // intersects
         {
             RectT l = *this;
             l.clip(r);
@@ -68,7 +67,7 @@ namespace oxygine
             return (p.x >= pos.x) && (p.x < rb.x) && (p.y >= pos.y) && (p.y < rb.y);
         }
 
-        void clip(const RectT& rect)
+        void clip(const RectT& rect) // intersected
         {
             point2 pt = pos + size;
 
@@ -94,7 +93,7 @@ namespace oxygine
             size.y = pt.y - pos.y;
         }
 
-        void unite(const RectT& rect)
+        void unite(const RectT& rect) // united
         {
             point2 rbA = pos + size;
             point2 rbB = rect.pos + rect.size;
@@ -112,10 +111,6 @@ namespace oxygine
             unite(r);
         }
 
-        point2 getCenter() const
-        {
-            return pos + size / 2;
-        }
         point2 getSize() const
         {
             return size;
@@ -174,31 +169,11 @@ namespace oxygine
             return pos.y + size.y;
         }
 
-        void set(T x, T y, T w, T h)
-        {
-            pos.x = x;
-            pos.y = y;
-            size.x = w;
-            size.y = h;
-        }
-        void setPosition(const point2& pos_)
-        {
-            pos = pos_;
-        }
-        void setPosition(T x, T y)
-        {
-            pos.x = x;
-            pos.y = y;
-        }
         void setSize(const point2& size_)
         {
             size = size_;
         }
-        void setSize(T x, T y)
-        {
-            size.x = x;
-            size.y = y;
-        }
+
         void setX(T v)
         {
             pos.x = v;
@@ -215,36 +190,7 @@ namespace oxygine
         {
             size.y = v;
         }
-        void moveLeft(T v)
-        {
-            T p = pos.x;
-            pos.x = v;
-            size.x += p - v;
-        }
-        void moveTop(T v)
-        {
-            T p = pos.y;
-            pos.y = v;
-            size.y += p - v;
-        }
-        void moveRight(T v)
-        {
-            size.x = v - pos.x;
-        }
-        void moveBottom(T v)
-        {
-            size.y = v - pos.y;
-        }
 
-        void expand(const point2& v1, const point2& v2)
-        {
-            pos -= v1;
-            size += v1 + v2;
-        }
-        void expand2(const point2& v)
-        {
-            expand(v, v);
-        }
         template<class R>
         RectT operator * (const VectorT2<R>& v) const
         {
@@ -291,8 +237,8 @@ namespace oxygine
         template<typename R>
         R cast() const
         {
-            typedef R rect;
-            typedef typename R::type rect2type;
+            using rect = R;
+            using rect2type = typename R::type;
             return rect(pos.template cast<rect2type>(), size.template cast<rect2type>());
         }
 

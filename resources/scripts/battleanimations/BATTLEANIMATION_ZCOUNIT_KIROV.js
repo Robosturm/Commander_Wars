@@ -8,6 +8,7 @@ var Constructor = function()
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ZCOUNIT_KIROV.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
     };
 
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)

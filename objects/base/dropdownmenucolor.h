@@ -6,7 +6,6 @@
 #include <QString>
 #include <QColor>
 
-#include "objects/base/panel.h"
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenuColor;

@@ -16,9 +16,9 @@ using spLayer = oxygine::intrusive_ptr<Layer>;
 class Layer final : public FileSerializable, public oxygine::ref_counter
 {
 public:
-    static const QString LAYER_PARAMETER_SIZE;
-    static const QString LAYER_PARAMETER_TYPE;
-    static const QString LAYER_PARAMETER_ACTIVATION;
+    static const char* const LAYER_PARAMETER_SIZE;
+    static const char* const LAYER_PARAMETER_TYPE;
+    static const char* const LAYER_PARAMETER_ACTIVATION;
     enum class LayerType
     {
         STANDARD = 0, //Standard layer : fully connected perceptrons

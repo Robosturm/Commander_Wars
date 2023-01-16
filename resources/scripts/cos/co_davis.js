@@ -58,7 +58,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -106,7 +105,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.loadCOMusic = function(co, map)
@@ -292,7 +290,7 @@ var Constructor = function()
     };
     this.getMiss = function(co)
     {
-        return qsTr("Side with the lossing side");
+        return qsTr("Side with the losing side");
     };
     this.getCODescription = function(co)
     {

@@ -15,11 +15,15 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "invader";
+        return "conqueror";
     };
     this.getName = function()
     {
         return qsTr("Conquerer");
+    };
+    this.getCosts = function()
+    {
+        return 2;
     };
 };
 

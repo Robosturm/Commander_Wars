@@ -58,7 +58,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -106,7 +105,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.loadCOMusic = function(co, map)
@@ -402,7 +400,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("When a unit is built, units of the same type recieve a firepower and defense boost, unhindered by terrain, and production costs reduced by half.");
+        return qsTr("When a unit is built, units of the same type receive a firepower and defense boost, unhindered by terrain, and production costs reduced by half.");
     };
     this.getSuperPowerName = function(co)
     {

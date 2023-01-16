@@ -11,8 +11,6 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     setObjectName("CloseablePopUp");
 #endif
     setSize(width, heigth);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
@@ -24,7 +22,7 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     pAnim = pObjectManager->getResAnim("checkbox");
     pSprite->setResAnim(pAnim);
-    pSprite->setScale(0.5f);
+    pSprite->setScale(1.0f);
     setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     pSprite->setPosition(width - pSprite->getScaledWidth(), 0);
     pSprite->setAnimFrame(pAnim, 3);
@@ -48,9 +46,9 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     m_drag.init(this);
     m_drag.setDragEnabled(true);
     m_drag.setDragBounds(oxygine::RectF(0, 0, Settings::getWidth() - width, Settings::getHeight() - heigth));
-    QSize size(width - 10, heigth - 4 - pSprite->getScaledHeight());
+    QSize size(width - 10, heigth - pSprite->getScaledHeight());
     m_pPanel = spPanel::create(true, size, size);
-    m_pPanel->setPosition(5, pSprite->getScaledHeight());
+    m_pPanel->setPosition(5, pSprite->getScaledHeight() - 5);
     pBox->addChild(m_pPanel);
 }
 

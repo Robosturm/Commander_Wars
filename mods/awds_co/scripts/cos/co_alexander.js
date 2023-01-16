@@ -21,7 +21,6 @@ CO_ALEXANDER.startOfTurn = function(co, map)
                     }
                 }
             }
-            buildings.remove();
         }
     }
 };

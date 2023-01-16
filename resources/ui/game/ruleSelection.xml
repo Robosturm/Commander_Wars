@@ -1,0 +1,818 @@
+<?xml version="1.0"?>
+<ui>
+    <Label>
+        <x>5</x>
+        <y>5</y>
+        <width>300</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Show advanced:")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+    <Checkbox>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Check this to see all game rules.")</tooltip>
+        <startValue>currentMenu.getShowAdvanced()</startValue>
+        <onEvent>currentMenu.setShowAdvanced(input);</onEvent>
+    </Checkbox>
+    <if condition="currentMenu.getIsMultiplayerMode()">
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Game description:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Textbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>settings.getWidth() - 400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","Map description shown for players who want to join. Keep it short here.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getDescription()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setDescription(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Textbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Password:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Passwordbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <Id>"BannlistTextbox"</Id>
+            <width>settings.getWidth() - 400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","Password used to protect your multiplayer game against unwanted joins.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getPasswordText()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setPassword(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Passwordbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Cosmetic mods:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked cosmetic mods can be different between host and players.\nWarning this may lead to desynced games or crashes if one of the mods is not a purely cosmetic mod.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getCosmeticModsAllowed()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setCosmeticModsAllowed(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Observer:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Spinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>200</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","The amount of observers allowed to watch the game. No players can join a fog/shroud of war match.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getMultiplayerObserver()</startValue>
+            <infinite>-1</infinite>
+            <spinSpeed>1</spinSpeed>
+            <min>0</min>
+            <max>40</max>
+            <onEvent>currentMenu.getMap().getGameRules().setMultiplayerObserver(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Spinbox>
+    </if>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>settings.getWidth() - 100</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Environment")</text>
+        <font>"main"</font>
+        <fontSize>48</fontSize>
+    </Label>
+    <MultiSlider>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>settings.getWidth() - 100</width>
+        <labelWidth>310</labelWidth>
+        <Id>"WeatherChances"</Id>
+        <labels>RuleSelectionScript.getWeatherLabelNames()</labels>
+        <startValues>RuleSelectionScript.getWeatherChances()</startValues>
+        <onEvent>currentMenu.weatherChancesChanged("WeatherChances")</onEvent>
+        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+    </MultiSlider>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>300</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Random weather:")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+    <Checkbox>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","If checked random weather appears during the game.")</tooltip>
+        <startValue>currentMenu.getMap().getGameRules().getRandomWeather()</startValue>
+        <onEvent>currentMenu.getMap().getGameRules().setRandomWeather(input);</onEvent>
+        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+    </Checkbox>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>300</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Start weather:")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+    <DropDownMenu>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <width>400</width>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","")</tooltip>
+        <startValue>currentMenu.getMap().getGameRules().getStartWeather()</startValue>
+        <items>RuleSelectionScript.getWeatherNames()</items>
+        <onEvent>currentMenu.startWeatherChanged(input);</onEvent>
+        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+    </DropDownMenu>
+    <if condition="currentMenu.getShowAdvanced()">
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Weather forecast:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked you can see the weather for the next few turns for each player.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getWeatherPrediction()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setWeatherPrediction(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+    </if>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>settings.getWidth() - 100</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Gameplay")</text>
+        <font>"main"</font>
+        <fontSize>48</fontSize>
+    </Label>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>300</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Unit ranking:")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+    <Checkbox>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","If checked units can gain ranks by killing other units.")</tooltip>
+        <startValue>currentMenu.getMap().getGameRules().getRankingSystem()</startValue>
+        <onEvent>currentMenu.getMap().getGameRules().setRankingSystem(input);</onEvent>
+        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+    </Checkbox>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>300</width>
+        <text>QT_TRANSLATE_NOOP("GAME","No CO powers:")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+    <Checkbox>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","If checked CO's can't use CO-powers.")</tooltip>
+        <startValue>currentMenu.getMap().getGameRules().getNoPower()</startValue>
+        <onEvent>currentMenu.getMap().getGameRules().setNoPower(input);</onEvent>
+        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+    </Checkbox>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>300</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Day to day abilities:")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+    <Checkbox>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","If checked CO's have their day to day abilities, when unchecked CO's only have perks active. This has no impact on co powers.")</tooltip>
+        <startValue>currentMenu.getMap().getGameRules().getEnableDayToDayCoAbilities()</startValue>
+        <onEvent>currentMenu.getMap().getGameRules().setEnableDayToDayCoAbilities(input);</onEvent>
+        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+    </Checkbox>
+    <if condition="currentMenu.getShowAdvanced()">
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Single CO's:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked players may only select a single CO.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getSingleCo()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setSingleCo(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","CO specific units:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If unchecked specific CO-Units can't be produced.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getCoUnits()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setCoUnits(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","CO perk cost:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Spinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the total cost of co perks that can be assigned per CO.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getMaxPerkCost()</startValue>
+            <infinite>-1</infinite>
+            <spinSpeed>1</spinSpeed>
+            <min>0</min>
+            <max>1000</max>
+            <onEvent>currentMenu.getMap().getGameRules().setMaxPerkCost(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Spinbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","CO perk count:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Spinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the total amout of co perks that can be assigned per CO.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getMaxPerkCount()</startValue>
+            <infinite>-1</infinite>
+            <spinSpeed>1</spinSpeed>
+            <min>0</min>
+            <max>1000</max>
+            <onEvent>currentMenu.getMap().getGameRules().setMaxPerkCount(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Spinbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Unit limit:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Spinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","The maximum amount of units a single player can own at any time.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getUnitLimit()</startValue>
+            <infinite>0</infinite>
+            <spinSpeed>1</spinSpeed>
+            <min>0</min>
+            <max>9999</max>
+            <onEvent>currentMenu.getMap().getGameRules().setUnitLimit(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Spinbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>settings.getWidth() - 100</width>
+            <text>QT_TRANSLATE_NOOP("GAME","CO powergain")</text>
+            <font>"main"</font>
+            <fontSize>48</fontSize>
+        </Label>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","CO powergain zone:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <DropDownMenu>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","Defines where a player can gain power for his co powermeter.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getPowerGainZone()</startValue>
+            <items>RuleSelectionScript.getCoZoneOptions()</items>
+            <onEvent>currentMenu.getMap().getGameRules().setPowerGainZone(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </DropDownMenu>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","CO powergain mode:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <DropDownMenu>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","Defines how the powermeter fills.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getPowerGainMode()</startValue>
+            <items>RuleSelectionScript.getCoZoneMode()</items>
+            <onEvent>currentMenu.getMap().getGameRules().setPowerGainMode(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </DropDownMenu>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Powergain reduction:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Spinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","The reduction in powergain for each time a co powers was used. Making each consecutive power more expensive.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getPowerUsageReduction()</startValue>
+            <infinite>-1</infinite>
+            <spinSpeed>0.1</spinSpeed>
+            <mode>"Float"</mode>
+            <min>0</min>
+            <max>100</max>
+            <onEvent>currentMenu.getMap().getGameRules().setPowerUsageReduction(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Spinbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Powergain speed:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Spinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","The speed at which the power bar fills up. This affects gains from HP damage or funds damage based on the mode.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getPowerGainSpeed()</startValue>
+            <infinite>-1</infinite>
+            <spinSpeed>0.1</spinSpeed>
+            <mode>"Float"</mode>
+            <min>0</min>
+            <max>100</max>
+            <onEvent>currentMenu.getMap().getGameRules().setPowerGainSpeed(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Spinbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","CO power loss:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Spinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","The percentage of the CO gauge lost when the CO unit gets destroyed.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getPowerLoose()</startValue>
+            <infinite>-1</infinite>
+            <spinSpeed>0.1</spinSpeed>
+            <mode>"Float"</mode>
+            <min>0</min>
+            <max>1</max>
+            <onEvent>currentMenu.getMap().getGameRules().setPowerLoose(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Spinbox>
+    </if>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>settings.getWidth() - 100</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Fog of war")</text>
+        <font>"main"</font>
+        <fontSize>48</fontSize>
+    </Label>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>300</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Fog of war:")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+    <DropDownMenu>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <width>400</width>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Select the fog of war rule for the current game.\n In Mist of War all units can be seen but not targeted without Vision.\n In Fog of War all units cannot be seen without vision.\n In Shroud of War none of the map can be seen until explored, all units cannot be seen without vision.")</tooltip>
+        <startValue>RuleSelectionScript.getFogValue()</startValue>
+        <items>RuleSelectionScript.getFogOfWarRule()</items>
+        <onEvent>RuleSelectionScript.setFogValue(input);</onEvent>
+        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+    </DropDownMenu>
+    <if condition="currentMenu.getShowAdvanced()">
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Vision block:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked units can't see over certain terrains, reducing their vision range. Air units are unaffected by this effect.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getVisionBlock()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setVisionBlock(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Building hiding:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked most buildings deny vision. This means you can hide a unit in a building similar to a forest.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getBuildingVisionHide()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setBuildingVisionHide(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Day screen:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <DropDownMenu>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If set to 'Permanent' the new day screen for human players will remain on screen until dismissed. If set to 'Default' this feature will be off except in fog of war games. This setting only takes effect in games with more than 1 Human players on the host's pc.")</tooltip>
+            <startValue>RuleSelectionScript.getDayToDayScreen()</startValue>
+            <items>RuleSelectionScript.getDayScreen()</items>
+            <onEvent>RuleSelectionScript.setDayToDayScreen(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </DropDownMenu>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>settings.getWidth() - 100</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
+            <font>"main"</font>
+            <fontSize>48</fontSize>
+        </Label>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","CO banlist:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Button>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>260</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Edit")</text>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","Edit")</tooltip>
+            <onEvent>currentMenu.showCOBannlist()</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Button>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Perk banlist:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Button>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>260</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Edit")</text>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","Edit")</tooltip>
+            <onEvent>currentMenu.showPerkBannlist()</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Button>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Action banlist:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Button>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>260</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Edit")</text>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","Edit")</tooltip>
+            <onEvent>currentMenu.showActionBannlist()</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Button>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Terrain defense:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Spinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","The defense each terrain star grants a unit.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getTerrainDefense()</startValue>
+            <infinite>-1</infinite>
+            <spinSpeed>1</spinSpeed>
+            <min>0</min>
+            <max>40</max>
+            <onEvent>currentMenu.getMap().getGameRules().setTerrainDefense(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Spinbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","HP defense impact:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: the impact of terrain defense stars is reduced the less hp a unit has.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getHpDefenseReduction()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setHpDefenseReduction(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Ship bridges:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: ships and boats can move through ship bridges placed on sea tiles, like in Advance Wars 4.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getShipBridges()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setShipBridges(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Transporter refresh:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getTransporterRefresh()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setTransporterRefresh(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Round time:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <TimeSpinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","The maximum amount of time in hh:mm::ss for each turn for each player.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getRoundTimeMs()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setRoundTimeMs(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </TimeSpinbox>
+        <if condition="RuleSelectionScript.showScriptSelection()">
+            <Label>
+                <x>5</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Script:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>"ScriptTextbox"</Id>
+                <width>settings.getWidth() - 160 - 110 - 300</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The relative path from the exe to the script associated with this map.")</tooltip>
+                <startValue>currentMenu.getMap().getGameScript().getScriptFile()</startValue>
+                <onEvent>currentMenu.getMap().getGameScript().setScriptFile(input)</onEvent>
+                <enabled>currentMenu.getRuleChangeEabled()</enabled>
+            </Textbox>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>160</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Select file")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Select file")</tooltip>
+                <onEvent>currentMenu.showSelectScript()</onEvent>
+                <enabled>currentMenu.getRuleChangeEabled()</enabled>
+            </Button>
+        </if>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>settings.getWidth() - 100</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Miscellaneous")</text>
+            <font>"main"</font>
+            <fontSize>48</fontSize>
+        </Label>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Unique CO's:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked: CO's that are randomly selected are unique.\n Note: If not enough CO's are available this may select no CO for a player.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getSingleRandomCO()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setSingleRandomCO(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","AI attack terrain:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked the ai attacks pipe seams and walls etc.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getAiAttackTerrain()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setAiAttackTerrain(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Unit sell value:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Spinbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <width>400</width>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","The amount of funds you are refunded for selling a unit. Selling is only possible if the 'Sell' action is active.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getResellValue()</startValue>
+            <infinite>-1</infinite>
+            <spinSpeed>0.1</spinSpeed>
+            <mode>"Float"</mode>
+            <unit>"%"</unit>
+            <min>0</min>
+            <max>1</max>
+            <onEvent>currentMenu.getMap().getGameRules().setResellValue(input)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Spinbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Team facing:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked units of the same team face the same direction rather than based on player order.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getTeamFacingUnits()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setTeamFacingUnits(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
+            <text>currentMenu.getMap().getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL").getRuleName(0)</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>currentMenu.getMap().getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL").getRuleDescription(0)</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL").getRuleValue(0)</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL").setRuleValue(input, 0)</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+    </if>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>settings.getWidth() - 100</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Victory rules")</text>
+        <font>"main"</font>
+        <fontSize>48</fontSize>
+    </Label>
+    <loop count="gameRuleManager.getVictoryRuleCount()">
+        <loop count="RuleSelectionScript.getRuleElementCount(loopIdx)">
+            <Label>
+                <x>RuleSelectionScript.getRuleX(loopIdx)</x>
+                <y>RuleSelectionScript.getRuleY(loopIdx)</y>
+                <width>300</width>
+                <text>RuleSelectionScript.getRulename(loopIdx)</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <if condition="RuleSelectionScript.getIsRuleCheckboxType(loopIdx)">
+                <Checkbox>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <tooltip>RuleSelectionScript.getRuleDescription(loopIdx)</tooltip>
+                    <startValue>RuleSelectionScript.getRuleValue(loopIdx)</startValue>
+                    <onEvent>RuleSelectionScript.setRuleValue(loopIdx)</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </Checkbox>
+            </if>
+            <if condition="RuleSelectionScript.getIsRuleSpinboxType(loopIdx)">
+                <Spinbox>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>280</width>
+                    <tooltip>RuleSelectionScript.getRuleDescription(loopIdx)</tooltip>
+                    <startValue>RuleSelectionScript.getRuleValue(loopIdx)</startValue>
+                    <infinite>RuleSelectionScript.getInfiniteValue(loopIdx)</infinite>
+                    <spinSpeed>1</spinSpeed>
+                    <min>RuleSelectionScript.getInfiniteValue(loopIdx)</min>
+                    <max>9999</max>
+                    <onEvent>RuleSelectionScript.setRuleValue(input, loopIdx)</onEvent>
+                    <enabled>currentMenu.getRuleChangeEabled()</enabled>
+                </Spinbox>
+            </if>
+        </loop>
+    </loop>
+</ui>

@@ -218,10 +218,9 @@ private:
 
     static oxygine::spActor m_ZInformationLabel;
     static spHumanPlayerInputMenu m_CurrentMenu;
-
+    static spMarkedFieldData m_pMarkedFieldData;
     static std::vector<oxygine::spActor> m_Fields;
     static std::vector<QPoint> m_FieldPoints;
-    static spMarkedFieldData m_pMarkedFieldData;
     static std::vector<oxygine::spActor> m_InfoFields;
 
     std::vector<oxygine::spActor> m_Arrows;

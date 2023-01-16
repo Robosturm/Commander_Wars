@@ -24,7 +24,7 @@ var Constructor = function()
             return qsTr("The team with the highest combined tech and power score wins after the time is up.");
         }
     };
-    this.getRuleName = function(itemNumber)
+    this.getRuleName = function(rule, itemNumber, map)
     {
         if (itemNumber === 0)
         {
@@ -32,7 +32,7 @@ var Constructor = function()
         }
         else
         {
-            return qsTr("Team Counter");
+            return qsTr("Team counter");
         }
     };
     // the type how the rule will be represented in the map selection ui

@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getActionText = function(map)
     {
-        return qsTr("Load Game");
+        return qsTr("Load game");
     };
     this.getIcon = function(map)
     {
@@ -20,6 +20,14 @@ var Constructor = function()
     {
         action.setIsLocal(true);
         return true;
+    };
+    this.getName = function()
+    {
+        return qsTr("Load game");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Allows you to load a save game.");
     };
 }
 

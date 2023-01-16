@@ -131,22 +131,29 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
-        var variables = terrain.getVariables();
-        var variable = variables.getVariable("BACKGROUND_ID");
-        var rand = 0;
-        if (variable === null)
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
+        if (unit !== null &&
+            unit.getMovementType() === "MOVE_SMALL_BOAT")
         {
-            rand = globals.randInt(0, 1);
-            variable = variables.createVariable("BACKGROUND_ID");
-            variable.writeDataInt32(rand);
+            return "back_" + weatherModifier + "river+boat";
         }
         else
         {
-            rand = variable.readDataInt32();
+            var variables = terrain.getVariables();
+            var variable = variables.getVariable("BACKGROUND_ID");
+            var rand = 0;
+            if (variable === null)
+            {
+                rand = globals.randInt(0, 1);
+                variable = variables.createVariable("BACKGROUND_ID");
+                variable.writeDataInt32(rand);
+            }
+            else
+            {
+                rand = variable.readDataInt32();
+            }
+            return "back_" + weatherModifier + "river+" + rand.toString();
         }
-        var weatherModifier = TERRAIN.getWeatherModifier(map);
-        var baseId = terrain.getBaseTerrainID();        
-        return "back_" + weatherModifier + "river+" + rand.toString();
     };
     this.getFlowTiles = function()
     {
@@ -382,6 +389,10 @@ var Constructor = function()
                 terrain.loadBaseSprite(animName);
             }
         }
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeReaf.wav";
     };
 };
 Constructor.prototype = TERRAIN;

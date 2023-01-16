@@ -3,9 +3,9 @@
 
 #include "resource_management/gameanimationmanager.h"
 
-#include "coreengine/console.h"
-#include "coreengine/audiothread.h"
-#include "coreengine/mainapp.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/audiomanager.h"
+#include "coreengine/interpreter.h"
 
 #include "spritingsupport/spritecreator.h"
 
@@ -23,8 +23,6 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationCapture");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_frameTime = GameMap::frameTime / Settings::getCaptureAnimationSpeed();
 }
@@ -66,12 +64,12 @@ void GameAnimationCapture::addBuildingSprite(const QString & spriteID, Player* s
         }
         else
         {
-            CONSOLE_PRINT("Unable to locate file: " + path, Console::eDEBUG);
+            CONSOLE_PRINT("Unable to locate file: " + path, GameConsole::eDEBUG);
         }
     }
     else
     {
-        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -137,7 +135,7 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
         {
             dummyTween->setDoneCallback([=](oxygine::Event *)
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("capture_down.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("capture_down.wav");
             });
             m_audioCbDownAdded = true;
         }
@@ -161,11 +159,11 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
                     pSrite->setResAnim(m_captureBuildingResAnim.get());
                     if (m_pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("capture_enemy.wav");
+                        Mainapp::getInstance()->getAudioManager()->playSound("capture_enemy.wav");
                     }
                     else
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("capture_ally.wav");
+                        Mainapp::getInstance()->getAudioManager()->playSound("capture_ally.wav");
                     }
                 });
             }
@@ -282,7 +280,7 @@ void GameAnimationCapture::addSoldierSprite(const QString & spriteID, Player*  p
     }
     else
     {
-        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -299,6 +297,6 @@ void GameAnimationCapture::addBackgroundSprite(const QString & spriteID)
     }
     else
     {
-        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }

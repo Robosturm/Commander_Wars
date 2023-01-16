@@ -35,11 +35,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Crystall");
+        return qsTr("Crystal");
     };
     this.getActionTargetFields = function(building)
     {
-        return globals.getCircle(1, 2);
+        return globals.getCircle(0, 2);
     };
     this.getMiniMapIcon = function()
     {
