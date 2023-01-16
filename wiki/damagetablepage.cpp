@@ -18,7 +18,7 @@ DamageTablePage::DamageTablePage(const QString & pageId)
     const qint32 tableSize = unitIds.size() + 2;
     const qint32 itemStart = 40;
     const QColor color(200, 200, 200, 50);
-    const float scale = 0.5f;
+    const float scale = 1.0f;
     const qint32 itemStartCount = 2;
     const qint32 tableWidth = entryWidth * tableSize;
     const qint32 tableHeight = entryHeight * tableSize;
@@ -98,9 +98,10 @@ DamageTablePage::DamageTablePage(const QString & pageId)
         pUnitX->setPosition(itemStart + x * entryWidth + bonusWidth  / 2,
                             itemStart);
         pActor->addChild(pUnitX);
-
         for (qint32 y = 1; y < tableSize - 1; ++y)
         {
+            QString tooltip = tr("%1 vs %2\n");
+            tooltip = tooltip.arg(pUnitSpriteManager->getName(unitIds[y - 1]), pUnitX->getName());
             if (x == 1)
             {
                 spUnit pUnitY = spUnit::create(unitIds[y - 1], pPlayer.get(), false, nullptr);
@@ -108,14 +109,13 @@ DamageTablePage::DamageTablePage(const QString & pageId)
                 pUnitY->setPosition(itemStart + bonusWidth  / 2,
                                     itemStart + y * entryHeight);
                 pActor->addChild(pUnitY);
-
                 spUnit pUnitY2 = spUnit::create(unitIds[y - 1], pPlayer.get(), false, nullptr);
                 pUnitY2->setOwner(nullptr);
                 pUnitY2->setPosition(itemStart + (tableSize - 1) * entryWidth +  bonusWidth  / 2,
                                     itemStart + y * entryHeight);
                 pActor->addChild(pUnitY2);
             }
-            spLabel pLabel = spLabel::create(entryWidth);
+            spLabel pLabel = spLabel::create(entryWidth);            
             qint32 posX = itemStart + x * entryWidth;
             qint32 posY = itemStart + y * entryHeight;
             pLabel->setPosition(posX, posY);
@@ -123,11 +123,14 @@ DamageTablePage::DamageTablePage(const QString & pageId)
             qint32 damage = matchups[y - 1]->getBaseDamage(matchups[x - 1].get());
             if (damage >= 0)
             {
-                pLabel->setHtmlText(QString::number(damage) + "%");
+                auto info = QString::number(damage) + "%";
+                pLabel->setHtmlText(info);
+                pLabel->setTooltipText(tooltip + info);
             }
             else
             {
                 pLabel->setHtmlText("-");
+                pLabel->setTooltipText(tooltip + "-");
             }
             pLabel->addEventListener(oxygine::TouchEvent::OVER, [this, posY, posX](oxygine::Event*)
             {
@@ -147,7 +150,7 @@ DamageTablePage::DamageTablePage(const QString & pageId)
     pText = spLabel::create(tableWidth + itemStart * itemStartCount);
     pText->setStyle(infoStyle);
     pText->setHtmlText(tr("Defender"));
-    pText->setPosition(0, tableHeight + itemStart * itemStartCount);
+    pText->setPosition(0, tableHeight + itemStart * itemStartCount - 20);
     pActor->addChild(pText);
 
     pText = spLabel::create(tableHeight + itemStart * itemStartCount);

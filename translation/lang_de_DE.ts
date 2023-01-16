@@ -2362,14 +2362,20 @@
     <name>DamageTablePage</name>
     <message>
         <location filename="../wiki/damagetablepage.cpp" line="35"/>
-        <location filename="../wiki/damagetablepage.cpp" line="149"/>
+        <location filename="../wiki/damagetablepage.cpp" line="152"/>
         <source>Defender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../wiki/damagetablepage.cpp" line="41"/>
-        <location filename="../wiki/damagetablepage.cpp" line="155"/>
+        <location filename="../wiki/damagetablepage.cpp" line="158"/>
         <source>Attacker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/damagetablepage.cpp" line="103"/>
+        <source>%1 vs %2
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -88,6 +88,7 @@ namespace oxygine
             QString m_text;
             std::vector<QString> m_lines;
             std::vector<QPoint> m_offsets;
+            QPainterPath m_path;
         };
 
         class DivNode final : public Node
