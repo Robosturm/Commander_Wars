@@ -185,6 +185,9 @@ var Constructor = function()
                 terrain.loadOverlaySprite("sea+overlay" + surroundingsNW);
             }
         }
+
+
+        var surroundingsBeach = terrain.getSurroundings("BEACH", true, false, GameEnums.Directions_Direct, false);
     };
 
     this.getMiniMapIcon = function()
@@ -323,7 +326,12 @@ var Constructor = function()
                 "sea+overlay+NE",
                 "sea+overlay+NW",
                 "sea+overlay+SE",
-                "sea+overlay+SW",];
+                "sea+overlay+SW",
+                "beach+land+NE+overlay",
+                "beach+land+NW+overlay",
+                "beach+land+SE+overlay",
+                "beach+land+SW+overlay",
+                ];
     };
     this.getEditorPlacementSound = function()
     {

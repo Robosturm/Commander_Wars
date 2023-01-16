@@ -150,7 +150,7 @@ DamageTablePage::DamageTablePage(const QString & pageId)
     pText = spLabel::create(tableWidth + itemStart * itemStartCount);
     pText->setStyle(infoStyle);
     pText->setHtmlText(tr("Defender"));
-    pText->setPosition(0, tableHeight + itemStart * itemStartCount - 20);
+    pText->setPosition(0, tableHeight + itemStart * itemStartCount - 40);
     pActor->addChild(pText);
 
     pText = spLabel::create(tableHeight + itemStart * itemStartCount);

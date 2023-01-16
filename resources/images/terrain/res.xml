@@ -347,7 +347,7 @@
         <image file="beach+land+SE+overlay.png" cols = "8" />
         <image file="beach+land+NW+overlay.png" cols = "8" />
         <image file="beach+land+NE+overlay.png" cols = "8" />
-                
+
         <image file="ruin+0.png" />
         <image file="ruin+1.png" />
         <image file="ruin+2.png" />
