@@ -114,7 +114,7 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
             return m_pos;
 #else
-            return m_dummyVector;
+            return m_dummyPoint;
 #endif
         }
         qint32 getX() const
@@ -204,7 +204,7 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
             return m_size;
 #else
-            return m_dummyVector;
+            return m_dummyPoint;
 #endif
         }
         /**Returns Size*Scale*/
@@ -444,6 +444,7 @@ namespace oxygine
         tweens m_tweens;
         QMutex m_Locked;
 #else
+        static Point m_dummyPoint;
         static Vector2 m_dummyVector;
         static RectF m_dummyRectF;
 #endif
