@@ -6261,7 +6261,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/LAKE.js" line="128"/>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="148"/>
         <source>A calm inland body of water. Naval and air forces have good mobility while hovercraft can freely move on and off.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -4903,5 +4903,53 @@
         <file>resources/images/animations/silo+launch.png</file>
         <file>resources/ui/game/ruleSelection.xml</file>
         <file>resources/ui/game/ruleSelectionScript.js</file>
+        <file>resources/images/terrain/riverend+E_lake.png</file>
+        <file>resources/images/terrain/riverend+E_lake+E.png</file>
+        <file>resources/images/terrain/riverend+E_lake+N.png</file>
+        <file>resources/images/terrain/riverend+E_lake+N+E.png</file>
+        <file>resources/images/terrain/riverend+E_lake+N+E+S.png</file>
+        <file>resources/images/terrain/riverend+E_lake+N+S.png</file>
+        <file>resources/images/terrain/riverend+E_lake+S.png</file>
+        <file>resources/images/terrain/riverend+E_lake+S+E.png</file>
+        <file>resources/images/terrain/riverend+N_lake.png</file>
+        <file>resources/images/terrain/riverend+N_lake+E.png</file>
+        <file>resources/images/terrain/riverend+N_lake+E+W.png</file>
+        <file>resources/images/terrain/riverend+N_lake+N.png</file>
+        <file>resources/images/terrain/riverend+N_lake+N+E.png</file>
+        <file>resources/images/terrain/riverend+N_lake+N+E+W.png</file>
+        <file>resources/images/terrain/riverend+N_lake+N+W.png</file>
+        <file>resources/images/terrain/riverend+N_lake+W.png</file>
+        <file>resources/images/terrain/riverend+S_lake.png</file>
+        <file>resources/images/terrain/riverend+S_lake+E.png</file>
+        <file>resources/images/terrain/riverend+S_lake+E+S.png</file>
+        <file>resources/images/terrain/riverend+S_lake+E+S+W.png</file>
+        <file>resources/images/terrain/riverend+S_lake+E+W.png</file>
+        <file>resources/images/terrain/riverend+S_lake+S.png</file>
+        <file>resources/images/terrain/riverend+S_lake+S+W.png</file>
+        <file>resources/images/terrain/riverend+S_lake+W.png</file>
+        <file>resources/images/terrain/riverend+W_lake.png</file>
+        <file>resources/images/terrain/riverend+W_lake+N.png</file>
+        <file>resources/images/terrain/riverend+W_lake+N+S.png</file>
+        <file>resources/images/terrain/riverend+W_lake+N+S+W.png</file>
+        <file>resources/images/terrain/riverend+W_lake+N+W.png</file>
+        <file>resources/images/terrain/riverend+W_lake+S.png</file>
+        <file>resources/images/terrain/riverend+W_lake+S+W.png</file>
+        <file>resources/images/terrain/riverend+W_lake+W.png</file>
+        <file>resources/images/terrain/riverend+E_lake+N+S+W.png</file>
+        <file>resources/images/terrain/riverend+E_lake+N+W.png</file>
+        <file>resources/images/terrain/riverend+E_lake+S+W.png</file>
+        <file>resources/images/terrain/riverend+E_lake+W.png</file>
+        <file>resources/images/terrain/riverend+N_lake+E+S.png</file>
+        <file>resources/images/terrain/riverend+N_lake+E+S+W.png</file>
+        <file>resources/images/terrain/riverend+N_lake+S.png</file>
+        <file>resources/images/terrain/riverend+N_lake+S+W.png</file>
+        <file>resources/images/terrain/riverend+S_lake+N.png</file>
+        <file>resources/images/terrain/riverend+S_lake+N+E.png</file>
+        <file>resources/images/terrain/riverend+S_lake+N+E+W.png</file>
+        <file>resources/images/terrain/riverend+S_lake+N+W.png</file>
+        <file>resources/images/terrain/riverend+W_lake+E.png</file>
+        <file>resources/images/terrain/riverend+W_lake+N+E.png</file>
+        <file>resources/images/terrain/riverend+W_lake+N+E+S.png</file>
+        <file>resources/images/terrain/riverend+W_lake+S+E.png</file>
     </qresource>
 </RCC>

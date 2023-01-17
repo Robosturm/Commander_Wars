@@ -113,7 +113,7 @@ bool Interpreter::openScript(const QString & script, bool setup)
         CONSOLE_PRINT_MODULE("Loading script " + script, GameConsole::eDEBUG, GameConsole::eJavaScript);
         QTextStream stream(&scriptFile);
         QString contents = stream.readAll();
-        if (setup && Settings::getRecord())
+        if (setup)
         {
             stream.seek(0);
             while (!stream.atEnd())

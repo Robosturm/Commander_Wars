@@ -19,76 +19,96 @@ var Constructor = function()
         terrain.loadBaseSprite("lake");
     };
     this.loadOverlaySprite = function(terrain, map)
-    {
-        var surroundings = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_Direct, false);
-        if (surroundings !== "")
-        {
-            terrain.loadOverlaySprite("lake" + surroundings);
-        }
-
-        // load overlay south east
-        if (!surroundings.includes("+S") && !surroundings.includes("+E"))
-        {
-            var surroundingsSE = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_SouthEast, false);
-            if (surroundingsSE !== "")
-            {
-                terrain.loadOverlaySprite("lake" + surroundingsSE);
-            }
-        }
-        // load overlay north east
-        if (!surroundings.includes("+N") && !surroundings.includes("+E"))
-        {
-            var surroundingsNE = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_NorthEast, false);
-            if (surroundingsNE !== "")
-            {
-                terrain.loadOverlaySprite("lake" + surroundingsNE);
-            }
-        }
-        // load overlay south west
-        if (!surroundings.includes("+S") && !surroundings.includes("+W"))
-        {
-            var surroundingsSW = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_SouthWest, false);
-            if (surroundingsSW !== "")
-            {
-                terrain.loadOverlaySprite("lake" + surroundingsSW);
-            }
-        }
-        // load overlay north west
-        if (!surroundings.includes("+N") && !surroundings.includes("+W"))
-        {
-            var surroundingsNW = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_NorthWest, false);
-            if (surroundingsNW !== "")
-            {
-                terrain.loadOverlaySprite("lake" + surroundingsNW);
-            }
-        }
+    {        
         // load river overlay
-        var surroundingLake = terrain.getSurroundings("LAKE,SEA", true, false, GameEnums.Directions_All, false);
+        var surroundings = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_Direct, false);
+        var surroundingsSea = terrain.getSurroundings("LAKE,SEA", true, false, GameEnums.Directions_Direct, false);
         var surroundingsRiver = terrain.getSurroundings("RIVER", false, false, GameEnums.Directions_Direct, false);
         var surroundingsRiver2 = terrain.getSurroundings("RIVER", true, false, GameEnums.Directions_Direct, false, false, 1);
+
+        GameConsole.print("Sea=" + surroundingsSea, 1);
+        GameConsole.print("Riverend=" + surroundingsRiver, 1);
+        GameConsole.print("Riverend2=" + surroundingsRiver2, 1);
+
+        let placedSea = false;
         // load overlay north
-        if ((surroundingsRiver.includes("+N") || surroundingsRiver2.includes("+N")) &&
-             surroundingLake.includes("+E") && surroundingLake.includes("+W"))
+        if ((surroundingsRiver.includes("+N") || surroundingsRiver2.includes("+N")))
         {
-            terrain.loadOverlaySprite("riverend_lake+N");
+            if (terrain.existsResAnim("riverend+N_lake" + surroundingsSea))
+            {
+                terrain.loadOverlaySprite("riverend+N_lake" + surroundingsSea);
+                placedSea = true;
+            }
         }
         // load overlay east
-        if ((surroundingsRiver.includes("+E") || surroundingsRiver2.includes("+E")) &&
-             surroundingLake.includes("+S") && surroundingLake.includes("+N"))
+        if ((surroundingsRiver.includes("+E") || surroundingsRiver2.includes("+E")))
         {
-            terrain.loadOverlaySprite("riverend_lake+E");
+            if (terrain.existsResAnim("riverend+E_lake" + surroundingsSea))
+            {
+                terrain.loadOverlaySprite("riverend+E_lake" + surroundingsSea);
+                placedSea = true;
+            }
         }
         // load overlay south
-        if ((surroundingsRiver.includes("+S") || surroundingsRiver2.includes("+S")) &&
-             surroundingLake.includes("+E") && surroundingLake.includes("+W"))
+        if ((surroundingsRiver.includes("+S") || surroundingsRiver2.includes("+S")))
         {
-            terrain.loadOverlaySprite("riverend_lake+S");
+            if (terrain.existsResAnim("riverend+S_lake" + surroundingsSea))
+            {
+                terrain.loadOverlaySprite("riverend+S_lake" + surroundingsSea);
+                placedSea = true;
+            }
         }
         // load overlay west
-        if ((surroundingsRiver.includes("+W") || surroundingsRiver2.includes("+W")) &&
-             surroundingLake.includes("+S") && surroundingLake.includes("+N"))
+        if ((surroundingsRiver.includes("+W") || surroundingsRiver2.includes("+W")))
         {
-            terrain.loadOverlaySprite("riverend_lake+W");
+            if (terrain.existsResAnim("riverend+W_lake" + surroundingsSea))
+            {
+                terrain.loadOverlaySprite("riverend+W_lake" + surroundingsSea);
+                placedSea = true;
+            }
+        }
+        if (placedSea === false)
+        {
+            if (surroundings !== "")
+            {
+                terrain.loadOverlaySprite("lake" + surroundings);
+            }
+            // load overlay south east
+            if (!surroundings.includes("+S") && !surroundings.includes("+E"))
+            {
+                var surroundingsSE = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_SouthEast, false);
+                if (surroundingsSE !== "")
+                {
+                    terrain.loadOverlaySprite("lake" + surroundingsSE);
+                }
+            }
+            // load overlay north east
+            if (!surroundings.includes("+N") && !surroundings.includes("+E"))
+            {
+                var surroundingsNE = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_NorthEast, false);
+                if (surroundingsNE !== "")
+                {
+                    terrain.loadOverlaySprite("lake" + surroundingsNE);
+                }
+            }
+            // load overlay south west
+            if (!surroundings.includes("+S") && !surroundings.includes("+W"))
+            {
+                var surroundingsSW = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_SouthWest, false);
+                if (surroundingsSW !== "")
+                {
+                    terrain.loadOverlaySprite("lake" + surroundingsSW);
+                }
+            }
+            // load overlay north west
+            if (!surroundings.includes("+N") && !surroundings.includes("+W"))
+            {
+                var surroundingsNW = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_NorthWest, false);
+                if (surroundingsNW !== "")
+                {
+                    terrain.loadOverlaySprite("lake" + surroundingsNW);
+                }
+            }
         }
 		
         var surroundingsSnow = terrain.getSurroundings("SNOW", true, false, GameEnums.Directions_Direct, false);
@@ -180,38 +200,39 @@ var Constructor = function()
                 "lake+waste+N+S+W",
                 "lake+waste+N+W",
                 "lake+waste+S+W",
-                "riverend+E_lake",
-                "riverend+E_lake+E",
-                "riverend+E_lake+N",
-                "riverend+E_lake+N+E",
-                "riverend+E_lake+N+E+S",
-                "riverend+E_lake+N+S",
-                "riverend+E_lake+E+S",
-                "riverend+E_lake+S",
-                "riverend+N_lake",
-                "riverend+N_lake+E",
-                "riverend+N_lake+E+W",
-                "riverend+N_lake+N",
-                "riverend+N_lake+N+E",
-                "riverend+N_lake+N+E+W",
-                "riverend+N_lake+N+W",
-                "riverend+N_lake+W",
+
+                "riverend+W_lake",
+                "riverend+W_lake+E",
+                "riverend+W_lake+N",
+                "riverend+W_lake+N+E",
+                "riverend+W_lake+N+E+S",
+                "riverend+W_lake+N+S",
+                "riverend+W_lake+E+S",
+                "riverend+W_lake+S",
                 "riverend+S_lake",
                 "riverend+S_lake+E",
-                "riverend+S_lake+E+S",
-                "riverend+S_lake+E+S+W",
                 "riverend+S_lake+E+W",
-                "riverend+S_lake+S",
-                "riverend+S_lake+S+W",
+                "riverend+S_lake+N",
+                "riverend+S_lake+N+E",
+                "riverend+S_lake+N+E+W",
+                "riverend+S_lake+N+W",
                 "riverend+S_lake+W",
-                "riverend+W_lake",
-                "riverend+W_lake+N",
-                "riverend+W_lake+N+S",
-                "riverend+W_lake+N+S+W",
-                "riverend+W_lake+N+W",
-                "riverend+W_lake+S",
-                "riverend+W_lake+S+W",
-                "riverend+W_lake+W",];
+                "riverend+N_lake",
+                "riverend+N_lake+E",
+                "riverend+N_lake+E+S",
+                "riverend+N_lake+E+S+W",
+                "riverend+N_lake+E+W",
+                "riverend+N_lake+S",
+                "riverend+N_lake+S+W",
+                "riverend+N_lake+W",
+                "riverend+E_lake",
+                "riverend+E_lake+N",
+                "riverend+E_lake+N+S",
+                "riverend+E_lake+N+S+W",
+                "riverend+E_lake+N+W",
+                "riverend+E_lake+S",
+                "riverend+E_lake+S+W",
+                "riverend+E_lake+W",];
     };
     this.getEditorPlacementSound = function()
     {
