@@ -2,8 +2,6 @@
     <qresource prefix="/">
         <file>maps/10_player/TERRETORIALE HERAUSFORDERUNG.map</file>
         <file>maps/14_player/7VS7 GAME.map</file>
-        <file>maps/2_player/(2) - Coastside.map</file>
-        <file>maps/2_player/(2) - River of War.map</file>
         <file>maps/2_player/60-ZWEITER KRIEG.map</file>
         <file>maps/2_player/A Love Supreme.map</file>
         <file>maps/2_player/Agitated.map</file>
