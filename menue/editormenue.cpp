@@ -483,13 +483,13 @@ void EditorMenue::showResizeMap()
     pText->setHtmlText(tr("Left: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox leftBox = spSpinBox::create(150, -m_pMap->getMapWidth() + 1, 9999);
+    spSpinBox leftBox = spSpinBox::create(150, -m_pMap->getMapWidth() + 1, 999999);
     leftBox->setTooltipText(tr("Change of the map size on the left map border."));
     leftBox->setPosition(width, y);
     leftBox->setInfinityValue(-m_pMap->getMapWidth());
     leftBox->setCurrentValue(0);
     pBox->addItem(leftBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -502,7 +502,7 @@ void EditorMenue::showResizeMap()
     topBox->setInfinityValue(-m_pMap->getMapHeight());
     topBox->setCurrentValue(0);
     pBox->addItem(topBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -515,7 +515,7 @@ void EditorMenue::showResizeMap()
     rightBox->setInfinityValue(-m_pMap->getMapWidth());
     rightBox->setCurrentValue(0);
     pBox->addItem(rightBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -528,7 +528,7 @@ void EditorMenue::showResizeMap()
     bottomBox->setInfinityValue(-m_pMap->getMapHeight());
     bottomBox->setCurrentValue(0);
     pBox->addItem(bottomBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     addChild(pBox);
     auto* pLeftBox = leftBox.get();

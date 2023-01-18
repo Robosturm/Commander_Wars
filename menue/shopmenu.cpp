@@ -190,7 +190,7 @@ void Shopmenu::filterChanged(qint32 item)
         pLabel->setPosition(95, y);
         pLabel->setHtmlText(QString::number(costs) + " " + item.name);
         m_pPanel->addItem(pLabel);
-        y += 40;
+        y += pLabel->getHeight() + 10;
     }
     m_pPanel->setContentHeigth(y + 40);
     m_pPanel->setContentWidth(width + labelX + 50);

@@ -516,7 +516,7 @@ void ReplayMenu::showConfig()
     pText->setPosition(10, y);
     pPanel->addItem(pText);
     spDropDownmenu dropDown = spDropDownmenu::create(300, teamNames);
-    dropDown->setPosition(width, y);
+    dropDown->setPosition(width - 130, y);
     pPanel->addItem(dropDown);
 
     if (viewType < 0)
@@ -528,14 +528,14 @@ void ReplayMenu::showConfig()
         dropDown->setCurrentItem(viewType);
     }
     connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, &ReplayMenu::setViewTeam, Qt::QueuedConnection);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     spLabel pTextfield = spLabel::create(800);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Gameplay Settings"));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 140);
     pTextfield->setStyle(style);
@@ -548,7 +548,7 @@ void ReplayMenu::showConfig()
     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setOverworldAnimations, Qt::QueuedConnection);
     pCheckbox->setPosition(width - 130, y);
     pPanel->addItem(pCheckbox);
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
@@ -565,7 +565,7 @@ void ReplayMenu::showConfig()
     {
         Settings::setBattleAnimationMode(static_cast<GameEnums::BattleAnimationMode>(value));
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
@@ -582,7 +582,7 @@ void ReplayMenu::showConfig()
     {
         Settings::setBattleAnimationType(static_cast<GameEnums::BattleAnimationType>(value));
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 140);
     pTextfield->setStyle(style);
@@ -599,7 +599,7 @@ void ReplayMenu::showConfig()
     {
         Settings::setDialogAnimation(value);
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 140);
     pTextfield->setStyle(style);
@@ -616,7 +616,7 @@ void ReplayMenu::showConfig()
     {
         Settings::setCaptureAnimation(value);
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 140);
     pTextfield->setStyle(style);
@@ -633,7 +633,7 @@ void ReplayMenu::showConfig()
     {
         Settings::setDay2dayScreen(value);
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 140);
     pTextfield->setStyle(style);
@@ -650,62 +650,62 @@ void ReplayMenu::showConfig()
     {
         Settings::setMovementAnimations(value);
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Animation Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
+    spSlider pAnimationSpeed = spSlider::create(Settings::getWidth() - 40 - width, 1, 100, "");
     pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Note: This does not include capture or battle animations."));
-    pAnimationSpeed->setPosition(width - 150, y);
+    pAnimationSpeed->setPosition(width - 130, y);
     pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getAnimationSpeedValue()));
     pPanel->addItem(pAnimationSpeed);
     connect(pAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
         Settings::setAnimationSpeed(static_cast<quint32>(value));
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Walk Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pWalkSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
+    spSlider pWalkSpeed = spSlider::create(Settings::getWidth() - 40 - width, 1, 100, "");
     pWalkSpeed->setTooltipText(tr("Selects the speed at which units walk across the map."));
-    pWalkSpeed->setPosition(width - 150, y);
+    pWalkSpeed->setPosition(width - 130, y);
     pWalkSpeed->setCurrentValue(static_cast<qint32>(Settings::getWalkAnimationSpeedValue()));
     pPanel->addItem(pWalkSpeed);
     connect(pWalkSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
         Settings::setWalkAnimationSpeed(static_cast<quint32>(value));
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Battle Anim. Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pBattleAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
+    spSlider pBattleAnimationSpeed = spSlider::create(Settings::getWidth() - 40 - width, 1, 100, "");
     pBattleAnimationSpeed->setTooltipText(tr("Selects the speed at which battle animations are played."));
-    pBattleAnimationSpeed->setPosition(width - 150, y);
+    pBattleAnimationSpeed->setPosition(width - 130, y);
     pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getBattleAnimationSpeedValue()));
     pPanel->addItem(pBattleAnimationSpeed);
     connect(pBattleAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
         Settings::setBattleAnimationSpeed(static_cast<quint32>(value));
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Capture Anim. Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pCaptureAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
+    spSlider pCaptureAnimationSpeed = spSlider::create(Settings::getWidth() - 40 - width, 1, 100, "");
     pCaptureAnimationSpeed->setTooltipText(tr("Selects the speed at which capture animations are played."));
     pCaptureAnimationSpeed->setPosition(width - 130, y);
     pCaptureAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getCaptureAnimationSpeedValue()));
@@ -714,14 +714,14 @@ void ReplayMenu::showConfig()
     {
         Settings::setCaptureAnimationSpeed(static_cast<quint32>(value));
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     pTextfield = spLabel::create(width - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Dialog Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pDialogAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
+    spSlider pDialogAnimationSpeed = spSlider::create(Settings::getWidth() - 40 - width, 1, 100, "");
     pDialogAnimationSpeed->setTooltipText(tr("Selects the speed at which dialog animations are played."));
     pDialogAnimationSpeed->setPosition(width - 130, y);
     pDialogAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getDialogAnimationSpeedValue()));
@@ -730,7 +730,7 @@ void ReplayMenu::showConfig()
     {
         Settings::setDialogAnimationSpeed(static_cast<quint32>(value));
     });
-    y += 40;
+    y += pTextfield->getHeight() + 10;
 
     addChild(pBox);
 }

@@ -44,7 +44,7 @@ void PerkSelection::updatePerksView(CO* pCO)
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
-    oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont32());
+    oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont48());
     largeStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     qint32 y = 0;
@@ -60,7 +60,7 @@ void PerkSelection::updatePerksView(CO* pCO)
         textField->setHtmlText(group.name);
         textField->setPosition(getWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
         addChild(textField);
-        y += 45;
+        y += textField->getHeight() + 10;
         x = 0;
         for (qint32 i = 0; i < group.perks.size(); ++i)
         {

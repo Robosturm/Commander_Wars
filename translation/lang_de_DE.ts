@@ -1308,87 +1308,87 @@
 <context>
     <name>BuildListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="127"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="123"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="138"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="134"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="147"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="143"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="169"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="165"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="58"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="54"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="158"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="154"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="298"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="294"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="308"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="304"/>
         <source>Do you want to delete the build bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="325"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="321"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="326"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="322"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="327"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="323"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="328"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="324"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="329"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="325"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="347"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="343"/>
         <source>Do you want to overwrite the build bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="364"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="360"/>
         <source>Do you want to make the saved build list the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="364"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="360"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="364"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="360"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1404,72 +1404,72 @@
 <context>
     <name>COBannListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="132"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="127"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="143"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="138"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="152"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="147"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="174"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="169"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="277"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="272"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="58"/>
-        <source>CO bann list</source>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="53"/>
+        <source>CO banlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="163"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="158"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="269"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="264"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="276"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="271"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="278"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="273"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="279"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="274"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="280"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="275"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="299"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="294"/>
         <source>Do you want to delete the co bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="318"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="313"/>
         <source>Do you want to overwrite the co bannlist: </source>
         <translation type="unfinished"></translation>
     </message>

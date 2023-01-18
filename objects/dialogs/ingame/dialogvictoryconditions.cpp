@@ -64,7 +64,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     pLabel->setHtmlText(tr("Victory info"));
     pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, y);
     pPanel->addItem(pLabel);
-    y += 70;
+    y += pLabel->getHeight() + 10;
     QString info = pMap->getGameScript()->getVictoryInfo();
 
     oxygine::spTextField pTextfield = oxygine::spTextField::create();

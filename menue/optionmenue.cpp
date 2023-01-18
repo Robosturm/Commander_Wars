@@ -271,7 +271,7 @@ void OptionMenue::showMods()
     connect(m_pModSelection.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::selectMods, Qt::QueuedConnection);
     m_ModSelector->addChild(m_pModSelection);
     updateModSelection();
-    y += 50;
+    y += pLabel->getHeight() + 10;
     pLabel = spLabel::create(260, true);
     style.multiline = false;
     pLabel->setStyle(style);

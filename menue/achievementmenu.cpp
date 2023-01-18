@@ -85,7 +85,7 @@ Achievementmenu::Achievementmenu()
         emit sigSearch();
     });
     connect(this, &Achievementmenu::sigSearch, this, &Achievementmenu::search, Qt::QueuedConnection);
-    y += 50;
+    y += pTextfield->getHeight() + 10;
 
     qint32 x = 10;
     pTextfield = spLabel::create(110, true);
@@ -128,7 +128,7 @@ Achievementmenu::Achievementmenu()
         search();
     }, Qt::QueuedConnection);
     x += 10 + m_sort->getScaledWidth();
-    y += 50;
+    y += pTextfield->getHeight() + 10;
 
     QSize size(Settings::getWidth() - 20, Settings::getHeight() - 210);
     m_MainPanel = spPanel::create(true, size, size);

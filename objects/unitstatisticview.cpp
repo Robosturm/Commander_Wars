@@ -51,7 +51,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
     headlineLabel->setHtmlText(headline);
     headlineLabel->setPosition(x, y);
     pPanel->addItem(headlineLabel);
-    y += 80;
+    y += headlineLabel->getHeight() + 10;
 
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     auto sortedList = pUnitSpriteManager->getUnitsSorted();
@@ -110,7 +110,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
         headlineLabel->setHtmlText(tr("Summary"));
         headlineLabel->setPosition(x, y);
         pPanel->addItem(headlineLabel);
-        y += 70;
+        y += headlineLabel->getHeight() + 10;
         for (qint32 i = 0; i < sortedList.size(); ++i)
         {
             if (summaryCount[i] > 0)

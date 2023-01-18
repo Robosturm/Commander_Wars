@@ -200,7 +200,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 break;
             }
         }
-        y += 40;
+        y += pText->getHeight() + 10;
     }
     pScriptEditor->addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateEvents, Qt::QueuedConnection);

@@ -325,8 +325,8 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         condition = condition->getSubCondition();
         if (condition.get() != nullptr)
         {
-            boxY += 40;
-            pSpritebox->setHeight(pSpritebox->getScaledHeight() + 40);
+            boxY += text->getHeight() + 10;
+            pSpritebox->setHeight(pSpritebox->getScaledHeight() + text->getHeight() + 10);
         }
     }
 
