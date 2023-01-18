@@ -11,6 +11,7 @@
 namespace oxygine
 {
 #ifndef GRAPHICSUPPORT
+    Point Actor::m_dummyPoint;
     Vector2 Actor::m_dummyVector;
     RectF Actor::m_dummyRectF;
 #endif

@@ -207,7 +207,11 @@ var Constructor = function()
                 "sea+waste+N+W",
                 "sea+waste+S",
                 "sea+waste+S+W",
-                "sea+waste+W",];
+                "sea+waste+W",
+                "beach+land+NE+overlay",
+                "beach+land+NW+overlay",
+                "beach+land+SE+overlay",
+                "beach+land+SW+overlay",];
     };
     this.getEditorPlacementSound = function()
     {

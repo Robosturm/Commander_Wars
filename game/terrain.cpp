@@ -487,6 +487,26 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
         pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         pSprite->setPriority(static_cast<qint32>(DrawPriority::Terrain));
+
+        QString function2 = "getPalette";
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString palette;
+        QJSValueList args({pInterpreter->newQObject(this),
+                           spriteID,
+                           pInterpreter->newQObject(m_pMap)});
+        QJSValue erg = pInterpreter->doFunction(m_terrainID, function2, args);
+        if (erg.isString())
+        {
+            palette = erg.toString();
+        }
+        if (!palette.isEmpty())
+        {
+            oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(palette, oxygine::error_policy::ep_ignore_error));
+            if (pPaletteAnim.get() != nullptr)
+            {
+                pSprite->setColorTable(pPaletteAnim, true);
+            }
+        }
         addChild(pSprite);
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
@@ -816,6 +836,25 @@ void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qin
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainOverlay));
+    QString function2 = "getPalette";
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString palette;
+    QJSValueList args({pInterpreter->newQObject(this),
+                       spriteID,
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function2, args);
+    if (erg.isString())
+    {
+        palette = erg.toString();
+    }
+    if (!palette.isEmpty())
+    {
+        oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error));
+        if (pPaletteAnim.get() != nullptr)
+        {
+            pSprite->setColorTable(pPaletteAnim, true);
+        }
+    }
     addChild(pSprite);
     m_pOverlaySprites.append(pSprite);
 }

@@ -438,4 +438,8 @@ var TERRAIN =
     {
         return "";
     },
+    getPalette : function(terrain, sprite, map)
+    {
+        return "";
+    },
 };
