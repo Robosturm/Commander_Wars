@@ -52,8 +52,8 @@ namespace oxygine
         void setAddColor(const QColor& color);
         void setAddColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 0);
         virtual void setEnabled(bool value) override;
-        typedef Property<QColor, const QColor&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
-        typedef Property<QColor, const QColor&, VStyleActor, &VStyleActor::getAddColor, &VStyleActor::setAddColor> TweenAddColor;
+        using TweenColor = Property<QColor, const QColor&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor>;
+        using TweenAddColor = Property<QColor, const QColor&, VStyleActor, &VStyleActor::getAddColor, &VStyleActor::setAddColor>;
         QColor getDisableColor() const;
         void setDisableColor(const QColor &value);
 

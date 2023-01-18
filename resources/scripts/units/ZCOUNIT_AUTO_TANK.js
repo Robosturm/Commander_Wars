@@ -91,7 +91,11 @@ var Constructor = function()
                 unitAttackVariable.writeDataInt32(1);
             }
         }
-    }
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveheavytank.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

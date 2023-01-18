@@ -1,16 +1,16 @@
-#include "qfile.h"
-#include "qtextstream.h"
+#include <QFile>
+#include <QTextStream>
 
 #include "game/gamescript.h"
 #include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "menue/basegamemenu.h"
 
-const QString GameScript::m_scriptName = "gameScript";
+const char* const GameScript::m_scriptName = "gameScript";
 
 GameScript::GameScript(GameMap* pMap)
     : m_pMap(pMap)
@@ -18,8 +18,6 @@ GameScript::GameScript(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameScript");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -27,9 +25,12 @@ GameScript::~GameScript()
 {
     if (!m_script.isEmpty())
     {
-        CONSOLE_PRINT("Deleting gameScript", Console::eDEBUG);
+        CONSOLE_PRINT("Deleting gameScript", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->deleteObject(m_scriptName);
+        if (pInterpreter != nullptr)
+        {
+            pInterpreter->deleteObject(m_scriptName);
+        }
     }
 }
 
@@ -62,7 +63,11 @@ void GameScript::init()
     if (!m_scriptFile.isEmpty())
     {
         QFile file;
-        if (QFile::exists(Settings::getUserPath() + m_scriptFile))
+        if (QFile::exists(m_scriptFile))
+        {
+            file.setFileName(m_scriptFile);
+        }
+        else if (QFile::exists(Settings::getUserPath() + m_scriptFile))
         {
             file.setFileName(Settings::getUserPath() + m_scriptFile);
         }
@@ -72,7 +77,7 @@ void GameScript::init()
         }
         if (file.exists())
         {
-            CONSOLE_PRINT("Loading map script " + file.fileName(), Console::eDEBUG);
+            CONSOLE_PRINT("Loading map script " + file.fileName(), GameConsole::eDEBUG);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             m_script = stream.readAll();
@@ -82,7 +87,7 @@ void GameScript::init()
         }
         else
         {
-            CONSOLE_PRINT("Unable to load map script " + file.fileName(), Console::eWARNING);
+            CONSOLE_PRINT("Unable to load map script " + file.fileName(), GameConsole::eWARNING);
             m_scriptFile = "";
             m_script = "";
             m_loaded = false;
@@ -112,7 +117,7 @@ GameMap *GameScript::getMap() const
 
 bool GameScript::immediateStart()
 {
-    if (m_loaded && !Console::getDeveloperMode())
+    if (m_loaded && !GameConsole::getDeveloperMode())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "immediateStart";
@@ -130,7 +135,7 @@ bool GameScript::victory(qint32 team)
 {
     if (m_loaded && !m_victoryCalled)
     {
-        CONSOLE_PRINT("Game script on victory", Console::eDEBUG);
+        CONSOLE_PRINT("Game script on victory", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({team,
                            pInterpreter->newQObject(m_pMap)});
@@ -149,7 +154,7 @@ void GameScript::gameStart()
 {
     if (m_loaded)
     {
-        CONSOLE_PRINT("Game script on game start", Console::eDEBUG);
+        CONSOLE_PRINT("Game script on game start", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "gameStart";
         QJSValueList args({pInterpreter->newQObject(m_pMap)});
@@ -161,7 +166,7 @@ void GameScript::actionDone(spGameAction & pAction)
 {
     if (m_loaded)
     {
-        CONSOLE_PRINT("Game script on action done", Console::eDEBUG);
+        CONSOLE_PRINT("Game script on action done", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "actionDone";
         QJSValueList args({pInterpreter->newQObject(pAction.get()),
@@ -174,7 +179,7 @@ void GameScript::turnStart(qint32 turn, qint32 player)
 {
     if (m_loaded)
     {
-        CONSOLE_PRINT("Game script on turn start", Console::eDEBUG);
+        CONSOLE_PRINT("Game script on turn start", GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "turnStart";
         QJSValueList args({turn,

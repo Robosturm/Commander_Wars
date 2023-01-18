@@ -1,17 +1,12 @@
 #include "ai/neuralnetwork/neural/neuralnetwork.h"
-#include "ai/neuralnetwork/neural/neuron.h"
 #include "ai/neuralnetwork/neural/layer.h"
 
-#include "coreengine/globalutils.h"
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 NeuralNetwork::NeuralNetwork(double maxWeight)
     : m_maxWeight(maxWeight)
 {
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
 }
 
 void NeuralNetwork::autogenerate(bool randomize)

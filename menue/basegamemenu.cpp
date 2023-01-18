@@ -5,17 +5,16 @@
 
 #include "menue/basegamemenu.h"
 
+#include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/audiomanager.h"
 
 #include "resource_management/backgroundmanager.h"
 
 #include "game/gamemap.h"
 
-spBaseGamemenu m_pInstance(nullptr);
-
-BaseGamemenu::BaseGamemenu(spGameMap pMap)
+BaseGamemenu::BaseGamemenu(spGameMap pMap, bool clearPlayerlist)
     : m_MapMoveThread(this),
       m_pMap(pMap)
 {
@@ -23,10 +22,11 @@ BaseGamemenu::BaseGamemenu(spGameMap pMap)
     m_MapMoveThread.setObjectName("MapMoveThread");
 #endif
     Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    pApp->getAudioThread()->clearPlayList();
-    m_pInstance = spBaseGamemenu(this, true);
+    if (clearPlayerlist)
+    {
+        pApp->getAudioManager()->clearPlayList();
+    }
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
@@ -38,10 +38,8 @@ BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savega
     : m_MapMoveThread(this)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    pApp->getAudioThread()->clearPlayList();
-    m_pInstance = spBaseGamemenu(this, true);
+    pApp->getAudioManager()->clearPlayList();
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
@@ -61,7 +59,7 @@ BaseGamemenu::BaseGamemenu(qint32 width, qint32 heigth, QString map, bool savega
 
 BaseGamemenu::~BaseGamemenu()
 {
-    CONSOLE_PRINT("Deleting BaseGamemenu", Console::eDEBUG);
+    CONSOLE_PRINT("Deleting BaseGamemenu", GameConsole::eDEBUG);
 #ifdef GRAPHICSUPPORT
     Mainapp* pApp = Mainapp::getInstance();
     QCursor cursor = pApp->cursor();
@@ -73,7 +71,10 @@ BaseGamemenu::~BaseGamemenu()
     if (!m_jsName.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->deleteObject(m_jsName);
+        if (pInterpreter != nullptr)
+        {
+            pInterpreter->deleteObject(m_jsName);
+        }
     }
     if (m_MapMoveThread.isRunning())
     {
@@ -95,14 +96,9 @@ Player* BaseGamemenu::getCurrentViewPlayer()
     return nullptr;
 }
 
-BaseGamemenu* BaseGamemenu::getInstance()
-{
-    return m_pInstance.get();
-}
-
 void BaseGamemenu::loadBackground()
 {
-    CONSOLE_PRINT("Entering In Game Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering In Game Menue", GameConsole::eDEBUG);
     // load background
     m_backgroundSprite = oxygine::spSprite::create();
     oxygine::Actor::addChild(m_backgroundSprite);
@@ -123,14 +119,9 @@ void BaseGamemenu::changeBackground(QString background)
     }
 }
 
-void BaseGamemenu::deleteMenu()
-{
-    oxygine::Actor::detach();
-    m_pInstance = nullptr;
-}
-
 void BaseGamemenu::loadHandling()
 {
+    m_pMap->setMenu(this);
     if (!m_handlingLoaded)
     {
         m_handlingLoaded = true;
@@ -305,8 +296,7 @@ void BaseGamemenu::autoScroll(QPoint cursorPosition)
 }
 
 void BaseGamemenu::MoveMap(qint32 x, qint32 y)
-{
-    
+{    
     if (m_pMap.get() != nullptr)
     {
         m_pMap->moveMap(x, y);
@@ -345,6 +335,10 @@ void BaseGamemenu::keyInput(oxygine::KeyEvent event)
         {
             emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
             m_lastMapPoint = mapPoint;
+        }
+        else if (cur == Settings::getKey_mapshot())
+        {
+            emit Mainapp::getInstance()->sigDoMapshot(this);
         }
         else
         {
@@ -442,7 +436,7 @@ void BaseGamemenu::centerMapOnCursor()
 
 void BaseGamemenu::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 height)
 {
-    CONSOLE_PRINT("InGameMenue::initSlidingActor() x " + QString::number(x) + " y " + QString::number(y) + " width " + QString::number(width) + " height "  + QString::number(height), Console::eDEBUG);
+    CONSOLE_PRINT("InGameMenue::initSlidingActor() x " + QString::number(x) + " y " + QString::number(y) + " width " + QString::number(width) + " height "  + QString::number(height), GameConsole::eDEBUG);
     if (m_mapSliding.get() == nullptr)
     {
         m_mapSliding = oxygine::spSlidingActorNoClipRect::create();
@@ -474,7 +468,7 @@ void BaseGamemenu::updateSlidingActorSize()
         
         qint32 mapWidth = m_pMap->getScaledWidth();
         qint32 mapHeight = m_pMap->getScaledHeight();
-        CONSOLE_PRINT("InGameMenue::updateSlidingActorSize() width " + QString::number(mapWidth) + " height "  + QString::number(mapHeight), Console::eDEBUG);
+        CONSOLE_PRINT("InGameMenue::updateSlidingActorSize() width " + QString::number(mapWidth) + " height "  + QString::number(mapHeight), GameConsole::eDEBUG);
         if (mapWidth < m_mapSliding->getScaledWidth())
         {
             m_mapSlidingActor->setWidth(m_mapSliding->getScaledWidth());

@@ -20,8 +20,7 @@ var Constructor = function()
 			{
 				var unit = units.at(i);
 				unit.refill();
-			}
-			units.remove();
+            }
 		}
 	};
 	// Perk - Intel
@@ -40,6 +39,10 @@ var Constructor = function()
     this.getGroup = function()
     {
         return qsTr("Power");
+    };
+    this.getCosts = function()
+    {
+        return 1;
     };
 };
 

@@ -4,8 +4,8 @@
 #include "menue/mainwindow.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
 
 #include "resource_management/backgroundmanager.h"
@@ -28,8 +28,7 @@ Achievementmenu::Achievementmenu()
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
-    CONSOLE_PRINT("Entering Achievement Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Achievement Menue", GameConsole::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -44,9 +43,9 @@ Achievementmenu::Achievementmenu()
         sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/credits_options");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/credits_options");
+    pApp->getAudioManager()->playRandom();
 
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
@@ -65,7 +64,7 @@ Achievementmenu::Achievementmenu()
 
     qint32 y = 10;
     qint32 width = 150;
-    spLabel pTextfield = spLabel::create(width - 10);
+    spLabel pTextfield = spLabel::create(width - 10, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Search: "));
     pTextfield->setPosition(10, y);
@@ -89,12 +88,12 @@ Achievementmenu::Achievementmenu()
     y += 50;
 
     qint32 x = 10;
-    pTextfield = spLabel::create(100);
+    pTextfield = spLabel::create(110, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Group: "));
     pTextfield->setPosition(x, y);
     addChild(pTextfield);
-    x += 10 + pTextfield->getScaledWidth();
+    x += pTextfield->getScaledWidth();
 
     QStringList groups{tr("All")};
     Userdata* pUserdata = Userdata::getInstance();
@@ -115,12 +114,12 @@ Achievementmenu::Achievementmenu()
     }, Qt::QueuedConnection);
     x += 10 + m_group->getScaledWidth();
 
-    pTextfield = spLabel::create(100);
+    pTextfield = spLabel::create(110, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sort: "));
     pTextfield->setPosition(x, y);
     addChild(pTextfield);
-    x += 10 + pTextfield->getScaledWidth();
+    x += pTextfield->getScaledWidth();
     m_sort = spDropDownmenu::create(200, QStringList{tr("None"), tr("Ascending"), tr("Descending")});
     m_sort->setPosition(x, y);
     addChild(m_sort);
@@ -148,7 +147,7 @@ Achievementmenu::Achievementmenu()
             }
         }
     }
-    pTextfield = spLabel::create(singleWidth);
+    pTextfield = spLabel::create(singleWidth, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Achievement Progress: ") + QString::number(achieveCount) + " / " + QString::number(achievements->length()));
     pTextfield->setPosition(10, 100);
@@ -165,7 +164,7 @@ void Achievementmenu::onEnter()
     QString func = "achievementMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -173,7 +172,7 @@ void Achievementmenu::onEnter()
 
 void Achievementmenu::exitMenue()
 {    
-    CONSOLE_PRINT("Leaving Achievement Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Achievement Menue", GameConsole::eDEBUG);
     auto window = spMainwindow::create("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
@@ -194,7 +193,7 @@ void Achievementmenu::searchChanged(QString searchText, QString group, SortDirec
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    CONSOLE_PRINT("Achievementmenu::searchChanged " + searchText + " group " + group + " sorting direction " + QString::number(static_cast<qint32>(sortDirection)), Console::eDEBUG);
+    CONSOLE_PRINT("Achievementmenu::searchChanged " + searchText + " group " + group + " sorting direction " + QString::number(static_cast<qint32>(sortDirection)), GameConsole::eDEBUG);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

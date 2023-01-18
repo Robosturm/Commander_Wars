@@ -2,17 +2,14 @@
 
 #include "game/gamemap.h"
 #include "game/unit.h"
-#include "game/cursor.h"
 
 #include "wiki/fieldinfo.h"
 #include "wiki/wikidatabase.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
-#include "coreengine/globalutils.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/audiomanager.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
@@ -29,10 +26,8 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
 #ifdef GRAPHICSUPPORT
     setObjectName("HumanPlayerInputMenu");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInputMenu::keyInput, Qt::QueuedConnection);
+    connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &HumanPlayerInputMenu::keyInput, Qt::QueuedConnection);
     qint32 width = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMenuFont32());
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
@@ -312,15 +307,15 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         textField->setStyle(style);
         textField->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
         textField->setHtmlText(text);
-        pItemBox->addChild(textField);
         textField->setPosition(3 + GameMap::getImageSize(), 0);
-        textField->setSize(width - textField->getX(), GameMap::getImageSize() - 4);
+        textField->setSize(width - textField->getX(), GameMap::getImageSize());
+        pItemBox->addChild(textField);
         addChild(pItemBox);
         oxygine::Actor* pBox = pItemBox.get();
         oxygine::Sprite* pCursor = m_Cursor.get();
         pItemBox->addEventListener(oxygine::TouchEvent::OVER, [this, pCursor, pBox, width, item](oxygine::Event *pEvent)->void
         {
-            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+            Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
             pEvent->stopPropagation();
             pCursor->setY(pBox->getY() + GameMap::getImageSize() / 2 - pCursor->getScaledHeight() / 2);
             pCursor->setX(pBox->getX() + width);
@@ -336,7 +331,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
                     pEvent->stopPropagation();
                     if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
+                        Mainapp::getInstance()->getAudioManager()->playSound("okay.wav");
                         emit sigItemSelected(action, costs);
                     }
                     else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
@@ -438,7 +433,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             if (cur == Settings::getKey_up() ||
                 cur == Settings::getKey_up2())
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction > m_startItem)
                 {
                     m_currentAction--;
@@ -463,7 +458,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_down() ||
                      cur == Settings::getKey_down2())
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction < endItemCount - 1)
                 {
                     m_currentAction++;
@@ -488,7 +483,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             if (cur == Settings::getKey_left() ||
                 cur == Settings::getKey_left2())
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction - m_rowCount >= m_startItem)
                 {
                     m_currentAction -= m_rowCount;
@@ -505,7 +500,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_right() ||
                      cur == Settings::getKey_right2())
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction + m_rowCount < endItemCount)
                 {
                     m_currentAction += m_rowCount;
@@ -525,7 +520,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                         if ((m_EnabledList.size() > 0 && m_EnabledList[m_currentAction]) ||
                             (m_EnabledList.size() == 0))
                         {
-                            Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
+                            Mainapp::getInstance()->getAudioManager()->playSound("okay.wav");
                             if (m_CostList.size() == m_ActionIDs.size())
                             {
                                 emit sigItemSelected(m_ActionIDs[m_currentAction], m_CostList[m_currentAction]);

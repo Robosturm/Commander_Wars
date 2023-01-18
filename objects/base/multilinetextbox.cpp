@@ -1,10 +1,7 @@
 #include "objects/base/multilinetextbox.h"
 
-#include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
 #include "coreengine/interpreter.h"
 
 MultilineTextbox::MultilineTextbox(qint32 width, qint32 heigth)
@@ -12,8 +9,6 @@ MultilineTextbox::MultilineTextbox(qint32 width, qint32 heigth)
 #ifdef GRAPHICSUPPORT
     setObjectName("MultilineTextbox");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setSize(width, heigth);

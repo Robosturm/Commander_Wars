@@ -6,8 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -49,7 +48,7 @@ void ScriptConditionBuildingCaptured::setPlayer(const qint32 &player)
 
 void ScriptConditionBuildingCaptured::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionBuildingCaptured", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionBuildingCaptured", GameConsole::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if (map.getTerrain(", "")
                             .replace(", ", ",")
@@ -94,7 +93,7 @@ void ScriptConditionBuildingCaptured::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionBuildingCaptured::writeCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionBuildingCaptured", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionBuildingCaptured", GameConsole::eDEBUG);
     rStream << "        if (map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getOwner() !== null && map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getOwner().getPlayerID() === "
             << QString::number(m_player) << " && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " "  << ConditionBuildingCaptured << "\n";
@@ -119,7 +118,7 @@ void ScriptConditionBuildingCaptured::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionBuildingCaptured + " End\n";
+    rStream << "        } // " + QString(ConditionBuildingCaptured) + " End\n";
 }
 
 void ScriptConditionBuildingCaptured::writePostCondition(QTextStream& rStream)

@@ -2,7 +2,6 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
-#include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 
 namespace oxygine
@@ -62,7 +61,7 @@ namespace oxygine
 
         using TweenColor = Property<QColor, const QColor&, TextField, &TextField::getStyleColor, &TextField::setStyleColor>;
     protected:
-        virtual void sizeChanged(const Vector2& size) override;
+        virtual void sizeChanged(const Point& size) override;
         void rebuildText(bool lock = true);
 
     protected:

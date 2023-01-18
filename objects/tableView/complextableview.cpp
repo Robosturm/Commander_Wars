@@ -17,8 +17,6 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
 #ifdef GRAPHICSUPPORT
     setObjectName("ComplexTableView");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     qint32 width = DIVIDER_SIZE;
     for (qint32 i = 0; i < m_widths.size(); i++)

@@ -37,7 +37,7 @@ void RxTask::recieveData()
         }
         if (eService == NetworkInterface::NetworkSerives::ServerSocketInfo)
         {
-            CONSOLE_PRINT("Updating Socket ID to: " + QString::number(socketId), Console::eLogLevels::eDEBUG);
+            CONSOLE_PRINT("Updating Socket ID to: " + QString::number(socketId), GameConsole::eLogLevels::eDEBUG);
             m_pIF->setSocketID(socketId);
         }
         else if ((eService < NetworkInterface::NetworkSerives::Game) || (eService >= NetworkInterface::NetworkSerives::Max))

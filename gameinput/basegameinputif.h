@@ -22,13 +22,11 @@ class BaseGameInputIF : public QObject, public FileSerializable, public oxygine:
 {
     Q_OBJECT
 public:
-    explicit BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType);
-    virtual ~BaseGameInputIF() = default;
     void setPlayer(Player* pPlayer);
 
     virtual void init(GameMenue* pMenu) = 0;
-
-    static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input);
+    virtual void onGameStart();
+    static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input, GameEnums::AiTypes aiType);
 
     static spBaseGameInputIF deserializeInterface(GameMap* pMap, QDataStream& pStream, qint32 version);
 
@@ -80,6 +78,19 @@ public slots:
      * @return
      */
     qint32 getMoveCostMapValue(qint32 x, qint32 y);
+
+    Player* getPlayer()
+    {
+        return m_pPlayer;
+    }
+    GameMap* getMap()
+    {
+        return m_pMap;
+    }
+protected:
+    explicit BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType);
+    virtual ~BaseGameInputIF() = default;
+
 protected:
     Player* m_pPlayer{nullptr};
     GameEnums::AiTypes m_AiType{GameEnums::AiTypes_Human};

@@ -350,7 +350,7 @@
         <image file="bm/co_grit+alt3+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_grit+alt4+info.png" />
         <image file="bm/co_grit+alt4+mini.png" />
-        <image file="bm/co_grit+alt4+face.png" cols = "3" />
+        <image file="bm/co_grit+alt4+face.png" cols = "3" rows = "2" />
         <image file="bm/co_grit+alt4+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_grit+alt5+info.png" />
         <image file="bm/co_grit+alt5+mini.png" />
@@ -692,11 +692,11 @@
         <image file="yc/co_sonja+alt2+mini.png" />
         <image file="yc/co_sonja+alt2+nrm.png" scale_factor = "1.2" />
         <image file="yc/co_sonja+alt2+info.png" />
-        <image file="yc/co_sonja+alt2+face.png" cols = "3" rows = "2" />
+        <image file="yc/co_sonja+alt2+face.png" cols = "3" />
         <image file="yc/co_sonja+alt3+info.png" />
         <image file="yc/co_sonja+alt3+mini.png" />
         <image file="yc/co_sonja+alt3+nrm.png" scale_factor = "1.2" />
-        <image file="yc/co_sonja+alt3+face.png" cols = "3" />
+        <image file="yc/co_sonja+alt3+face.png" cols = "3" rows = "2" />
         <image file="yc/co_sonja+alt4+info.png" />
         <image file="yc/co_sonja+alt4+mini.png" />
         <image file="yc/co_sonja+alt4+nrm.png" scale_factor = "1.2" />
@@ -724,9 +724,11 @@
         <image file="yc/co_grimm+nrm.png" />
         <image file="yc/co_grimm+info.png" />
         <image file="yc/co_grimm+face.png" cols = "3" />        
+        <image file="yc/co_grimm+mini.png" />
         <image file="yc/co_grimm+alt+nrm.png" />
         <image file="yc/co_grimm+alt+info.png" />
         <image file="yc/co_grimm+alt+face.png" cols = "3" />
+        <image file="yc/co_grimm+alt+mini.png" />
         <image file="yc/co_rattigan+nrm.png" />
         <image file="yc/co_rattigan+info.png" />
         <image file="yc/co_rattigan+face.png" cols = "3" />
@@ -795,6 +797,7 @@
         <image file="bh/co_lash+alt2+nrm.png" />
         <image file="bh/co_lash+alt2+info.png" />
         <image file="bh/co_lash+alt2+face.png" cols = "3" />
+        <image file="bh/co_lash+alt2+mini.png" />
         <image file="bh/co_officier_bh+face.png" cols = "3" />        
         <image file="bh/co_officier_bh+info.png" />    
         

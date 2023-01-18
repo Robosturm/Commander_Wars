@@ -11,6 +11,9 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+
+class SimpleProductionSystem;
 class Unit;
 using spUnit = oxygine::intrusive_ptr<Unit>;
 class Terrain;
@@ -23,6 +26,7 @@ class GameMap;
 class GameMenue;
 class CO;
 using spCO = oxygine::intrusive_ptr<CO>;
+using spUnit = oxygine::intrusive_ptr<Unit>;
 
 class CO final : public QObject, public oxygine::Actor, public FileSerializable
 {
@@ -91,6 +95,12 @@ public:
     void setMenu(GameMenue *newMenu);
 
 public slots:
+    /**
+     * @brief getCoGroupModifier
+     * @param unitIds
+     * @return
+     */
+    float getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
     /**
      * @brief getGlobalCoZone
      * @return
@@ -245,6 +255,18 @@ public slots:
      * @return
      */
     qint32 getEnemyBonusMisfortune(Unit* pUnit, QPoint position);
+    /**
+     * @brief getEnemyRepairCostModifier
+     * @param pUnit
+     * @return
+     */
+    float getEnemyRepairCostModifier(Unit* pUnit);
+    /**
+     * @brief getRepairCostModifier
+     * @param pUnit
+     * @return
+     */
+    float getRepairCostModifier(Unit* pUnit);
     /**
      * @brief getTerrainDefenseModifier the bonus defense of this co for a terrain
      * @param pUnit the unit we want to get the bonus points from
@@ -779,7 +801,7 @@ private:
     qint32 m_powerStars{0};
     qint32 m_superpowerStars{0};
     double m_powerFilled{0.0};
-    spUnit m_pCOUnit{nullptr};
+    spUnit m_pCOUnit;
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
     ScriptVariables m_Variables;
     qint32 m_powerUsed{0};

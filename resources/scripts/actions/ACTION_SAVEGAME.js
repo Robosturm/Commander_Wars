@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getActionText = function(map)
     {
-        return qsTr("Save Game");
+        return qsTr("Save game");
     };
     this.getIcon = function(map)
     {
@@ -20,6 +20,14 @@ var Constructor = function()
     {
         action.setIsLocal(true);
         return true;
+    };
+    this.getName = function()
+    {
+        return qsTr("Save game");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Allows you to save the game.");
     };
 }
 

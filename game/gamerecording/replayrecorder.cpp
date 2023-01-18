@@ -9,7 +9,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/filesupport.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "gameinput/basegameinputif.h"
 
@@ -25,7 +25,7 @@ ReplayRecorder::ReplayRecorder(GameMap* pMap)
 
 ReplayRecorder::~ReplayRecorder()
 {
-    CONSOLE_PRINT("Saving record", Console::eDEBUG);
+    CONSOLE_PRINT("Saving record", GameConsole::eDEBUG);
     if (m_recording)
     {
         m_dailyMapPos = m_recordFile.pos();
@@ -45,9 +45,9 @@ void ReplayRecorder::startRecording()
     
     if (Settings::getRecord() && m_pMap != nullptr)
     {
-        CONSOLE_PRINT("Starting recording", Console::eDEBUG);
+        CONSOLE_PRINT("Starting recording", GameConsole::eDEBUG);
         // compress script enviroment
-        QByteArray data = Interpreter::getRuntimeData().toUtf8();
+        QByteArray data = Interpreter::getInstance()->getRuntimeData().toUtf8();
         data = qCompress(data);
         QString currentDate = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
         QString fileName = "data/records/" + m_pMap->getMapName() + "-" + currentDate + ".rec";

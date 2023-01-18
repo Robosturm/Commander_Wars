@@ -23,7 +23,7 @@ signals:
 public slots:
     void rightClick();
     void createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop);
-    void createRotatingBackground(const QString & resAnim, const QColor & color);
+    void createRotatingBackground(const QString & resAnim, const QColor & color, qint32 speedX = 3);
     void setDuration(qint32 timeMs);
     void createMovingText(const QString & font, const QString & text, qint32 delay, QPoint startPos, QPoint endPos, qint32 duration, QEasingCurve::Type easeType = QEasingCurve::Linear);
     void addMovingCoSprite(const QString & sprite, float scale, QPoint startPos, QPoint endPos, qint32 duration, qint32 delay = 0, QEasingCurve::Type easeType = QEasingCurve::Linear);

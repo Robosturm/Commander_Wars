@@ -23,12 +23,14 @@ class PerkSelection final : public QObject, public oxygine::Actor
     };
 
 public:
-    explicit PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning, QStringList hiddenList, GameMap* pMap);
+    explicit PerkSelection(CO* pCO, qint32 width, qint32 maxPerkCosts, qint32 maxPerkCount, bool banning, QStringList hiddenList, GameMap* pMap);
     ~PerkSelection() = default;
     void updatePerksView(CO* pCO);
-
+    qint32 getPerkScore(const QStringList & perks) const;
+    qint32 getPerkScore(const QString & perk) const;
 signals:
     void sigUpdatePerkCount();
+    void sigViewPerkUpdate();
 public slots:
     /**
      * @brief getHiddenPerks
@@ -48,7 +50,7 @@ public slots:
      * @brief getPerks
      * @return
      */
-    QStringList getPerks() const;
+    const QStringList & getPerks() const;
     /**
      * @brief setPerks
      * @param perks
@@ -70,7 +72,8 @@ private:
     CO* m_pCO{nullptr};
     QVector<spCheckbox> m_Checkboxes;
     QStringList m_perkIds;
-    qint32 m_maxPerks{0};
+    qint32 m_maxPerkCosts{0};
+    qint32 m_maxPerkCount{0};
     bool m_banning{false};
     QStringList m_perks;
     QStringList m_hiddenPerks;

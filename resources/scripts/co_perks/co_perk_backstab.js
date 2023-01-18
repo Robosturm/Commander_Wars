@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "seamanship";
+        return "backstab";
     };
     this.getName = function()
     {
@@ -28,6 +28,10 @@ var Constructor = function()
     this.getGroup = function()
     {
         return qsTr("Offensive");
+    };
+    this.getCosts = function()
+    {
+        return 1;
     };
 };
 

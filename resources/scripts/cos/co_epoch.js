@@ -58,7 +58,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -106,7 +105,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.loadCOMusic = function(co, map)
@@ -288,7 +286,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Direct combat units gain one movement and indirect combat units recieve one extra range. Hides HP from opponents and firepower is increased.");
+        return qsTr("Direct combat units gain one movement and indirect combat units receive one extra range. Hides HP from opponents and firepower is increased.");
     };
     this.getSuperPowerName = function(co)
     {

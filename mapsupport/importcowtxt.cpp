@@ -1,7 +1,7 @@
 #include <QTextStream>
 #include <QFile>
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -12,101 +12,101 @@
 
 // some local constants to map old cow stuff to this cool version
 static const qint32 terrainCount = 19;
-static const QString terrainIdMapping[terrainCount][2] = {{"SEE", "SEA"},
-                                              {"EBENE", GameMap::PLAINS},
-                                              {"WALD", "FOREST"},
-                                              {"STRAND", "BEACH"},
-                                              {"RIFF", "REAF"},
-                                              {"BERG", "MOUNTAIN"},
-                                              {"STRASSE", "STREET"},
-                                              {"BRUECKE", "BRIDGE"},
-                                              {"KAPUTTESCHWEISSNAHT", "DESTROYEDWELD"},
-                                              {"FEUER", "FIRE"},
-                                              {"METEOR", "METEOR"},
-                                              {"PIPELINE", "PIPELINE"},
-                                              {"PLASMA", "PLASMA"},
-                                              {"FLUSS", "RIVER"},
-                                              {"RAUESEE", "ROUGH_SEA"},
-                                              {"RUINE", "RUIN"},
-                                              {"MAUER", "WALL"},
-                                              {"OEDLAND", "WASTELAND"},
-                                              {"SCHWEISSNAHT", "WELD"}};
+static const char* const terrainIdMapping[terrainCount][2] = {{"SEE", "SEA"},
+                                                              {"EBENE", GameMap::PLAINS},
+                                                              {"WALD", "FOREST"},
+                                                              {"STRAND", "BEACH"},
+                                                              {"RIFF", "REAF"},
+                                                              {"BERG", "MOUNTAIN"},
+                                                              {"STRASSE", "STREET"},
+                                                              {"BRUECKE", "BRIDGE"},
+                                                              {"KAPUTTESCHWEISSNAHT", "DESTROYEDWELD"},
+                                                              {"FEUER", "FIRE"},
+                                                              {"METEOR", "METEOR"},
+                                                              {"PIPELINE", "PIPELINE"},
+                                                              {"PLASMA", "PLASMA"},
+                                                              {"FLUSS", "RIVER"},
+                                                              {"RAUESEE", "ROUGH_SEA"},
+                                                              {"RUINE", "RUIN"},
+                                                              {"MAUER", "WALL"},
+                                                              {"OEDLAND", "WASTELAND"},
+                                                              {"SCHWEISSNAHT", "WELD"}};
 
 static const qint32 buildingCount = 31;
 static const qint32 building3x3Start = 19;
 static const qint32 building4x4Start = 27;
 static const qint32 building3x4Start = 30;
-static const QString buildingIdMapping[buildingCount][2] = {{"FLUGHAFEN", "AIRPORT"},
-                                                            {"BASIS", "FACTORY"},
-                                                            {"WERFT", "HARBOUR"},
-                                                            {"HQ", "HQ"},
-                                                            {"LABOR", "LABOR"},
-                                                            {"MINE", "MINE"},
-                                                            {"PIPESTATION", "PIPESTATION"},
-                                                            {"RADAR", "RADAR"},
-                                                            {"RAKETENSILO", "SILO"},
-                                                            {"RAKETENSILO+RAKETE", "SILO_ROCKET"},
-                                                            {"TURM", "TOWER"},
-                                                            {"STADT", "TOWN"},
-                                                            {"TEMPFLUGHAFEN", "TEMPORARY_AIRPORT"},
-                                                            {"TEMPWERFT", "TEMPORARY_HARBOUR"},
-                                                            {"MINIGESCHUETZ+N", "ZMINICANNON_N"},
-                                                            {"MINIGESCHUETZ+S", "ZMINICANNON_S"},
-                                                            {"MINIGESCHUETZ+W", "ZMINICANNON_W"},
-                                                            {"MINIGESCHUETZ+O", "ZMINICANNON_E"},
-                                                            {"LASER", "ZLASER"},
-                                                            {"SCHOCKLASER+O", "ZDEATHRAY_E"},
-                                                            {"SCHOCKLASER+S", "ZDEATHRAY_S"},
-                                                            {"SCHOCKLASER+N", "ZDEATHRAY_N"},
-                                                            {"SCHOCKLASER+W", "ZDEATHRAY_W"},
-                                                            {"SCHWARZE GESCHUETZ+O", "ZBLACKHOLE_CANNON_E"},
-                                                            {"SCHWARZE GESCHUETZ+S", "ZBLACKHOLE_CANNON_S"},
-                                                            {"SCHWARZE GESCHUETZ+N", "ZBLACKHOLE_CANNON_N"},
-                                                            {"SCHWARZE GESCHUETZ+W", "ZBLACKHOLE_CANNON_W"},
-                                                            {"FESTUNG", "ZFORTRESS"},
-                                                            {"VULKAN", "ZVOLCAN"},
-                                                            {"OMEGARAKETE", "ZOMEGA_BASE"},
-                                                            {"FABRIK", "ZBLACKHOLE_FACTORY"},};
+static const char* const buildingIdMapping[buildingCount][2] = {{"FLUGHAFEN", "AIRPORT"},
+                                                                {"BASIS", "FACTORY"},
+                                                                {"WERFT", "HARBOUR"},
+                                                                {"HQ", "HQ"},
+                                                                {"LABOR", "LABOR"},
+                                                                {"MINE", "MINE"},
+                                                                {"PIPESTATION", "PIPESTATION"},
+                                                                {"RADAR", "RADAR"},
+                                                                {"RAKETENSILO", "SILO"},
+                                                                {"RAKETENSILO+RAKETE", "SILO_ROCKET"},
+                                                                {"TURM", "TOWER"},
+                                                                {"STADT", "TOWN"},
+                                                                {"TEMPFLUGHAFEN", "TEMPORARY_AIRPORT"},
+                                                                {"TEMPWERFT", "TEMPORARY_HARBOUR"},
+                                                                {"MINIGESCHUETZ+N", "ZMINICANNON_N"},
+                                                                {"MINIGESCHUETZ+S", "ZMINICANNON_S"},
+                                                                {"MINIGESCHUETZ+W", "ZMINICANNON_W"},
+                                                                {"MINIGESCHUETZ+O", "ZMINICANNON_E"},
+                                                                {"LASER", "ZLASER"},
+                                                                {"SCHOCKLASER+O", "ZDEATHRAY_E"},
+                                                                {"SCHOCKLASER+S", "ZDEATHRAY_S"},
+                                                                {"SCHOCKLASER+N", "ZDEATHRAY_N"},
+                                                                {"SCHOCKLASER+W", "ZDEATHRAY_W"},
+                                                                {"SCHWARZE GESCHUETZ+O", "ZBLACKHOLE_CANNON_E"},
+                                                                {"SCHWARZE GESCHUETZ+S", "ZBLACKHOLE_CANNON_S"},
+                                                                {"SCHWARZE GESCHUETZ+N", "ZBLACKHOLE_CANNON_N"},
+                                                                {"SCHWARZE GESCHUETZ+W", "ZBLACKHOLE_CANNON_W"},
+                                                                {"FESTUNG", "ZFORTRESS"},
+                                                                {"VULKAN", "ZVOLCAN"},
+                                                                {"OMEGARAKETE", "ZOMEGA_BASE"},
+                                                                {"FABRIK", "ZBLACKHOLE_FACTORY"},};
 
 static const qint32 unitCount = 38;
-static const QString unitIdMapping[unitCount][2] = {{"FLTR", "AIRCRAFTCARRIER"},
-                                                    {"PANZERABWEHRKANONE", "ANTITANKCANNON"},
-                                                    {"TTP", "APC"},
-                                                    {"ART", "ARTILLERY"},
-                                                    {"SCHLFF", "BATTLESHIP"},
-                                                    {"BOMBER", "BOMBER"},
-                                                    {"KANONENBOOT", "CANNONBOAT"},
-                                                    {"KREUZER", "CRUISER"},
-                                                    {"ZERSTOERER", "DESTROYER"},
-                                                    {"AUFKLAERER", "DUSTER"},
-                                                    {"JAEGER", "FIGHTER"},
-                                                    {"FLAK", "FLAK"},
-                                                    {"FLARE", "FLARE"},
-                                                    {"SCHWERESHOVERCRAFT", "HEAVY_HOVERCRAFT"},
-                                                    {"KPZ", "HEAVY_TANK"},
-                                                    {"HOELLIUM", "HOELLIUM"},
-                                                    {"HOVERCRAFT", "HOVERCRAFT"},
-                                                    {"HOVERFLAK", "HOVERFLAK"},
-                                                    {"INF", "INFANTRY"},
-                                                    {"K-HELI", "K_HELI"},
-                                                    {"L-BOOT", "LANDER"},
-                                                    {"JGPZ", "LIGHT_TANK"},
-                                                    {"MECH", "MECH"},
-                                                    {"MEGAPZ", "MEGATANK"},
-                                                    {"MISSILE", "MISSILE"},
-                                                    {"MOTORRAD", "MOTORBIKE"},
-                                                    {"TITANPZ", "NEOTANK"},
-                                                    {"LAEUFER", "PIPERUNNER"},
-                                                    {"SPAEHER", "RECON"},
-                                                    {"RKW", "ROCKETTHROWER"},
-                                                    {"SSIEINHEIT", "SNIPER"},
-                                                    {"TARNK", "STEALTHBOMBER"},
-                                                    {"U-BOOT", "SUBMARINE"},
-                                                    {"T-HELI", "T_HELI"},
-                                                    {"T-FLUGZEUG", "TRANSPORTPLANE"},
-                                                    {"WASSERFLUGZEUG", "WATERPLANE"},
-                                                    {"S-BOOT", "BLACK_BOAT"},
-                                                    {"S-BOMBE", "BLACK_BOMB"}};
+static const char* const unitIdMapping[unitCount][2] = {{"FLTR", "AIRCRAFTCARRIER"},
+                                                        {"PANZERABWEHRKANONE", "ANTITANKCANNON"},
+                                                        {"TTP", "APC"},
+                                                        {"ART", "ARTILLERY"},
+                                                        {"SCHLFF", "BATTLESHIP"},
+                                                        {"BOMBER", "BOMBER"},
+                                                        {"KANONENBOOT", "CANNONBOAT"},
+                                                        {"KREUZER", "CRUISER"},
+                                                        {"ZERSTOERER", "DESTROYER"},
+                                                        {"AUFKLAERER", "DUSTER"},
+                                                        {"JAEGER", "FIGHTER"},
+                                                        {"FLAK", "FLAK"},
+                                                        {"FLARE", "FLARE"},
+                                                        {"SCHWERESHOVERCRAFT", "HEAVY_HOVERCRAFT"},
+                                                        {"KPZ", "HEAVY_TANK"},
+                                                        {"HOELLIUM", "HOELLIUM"},
+                                                        {"HOVERCRAFT", "HOVERCRAFT"},
+                                                        {"HOVERFLAK", "HOVERFLAK"},
+                                                        {"INF", "INFANTRY"},
+                                                        {"K-HELI", "K_HELI"},
+                                                        {"L-BOOT", "LANDER"},
+                                                        {"JGPZ", "LIGHT_TANK"},
+                                                        {"MECH", "MECH"},
+                                                        {"MEGAPZ", "MEGATANK"},
+                                                        {"MISSILE", "MISSILE"},
+                                                        {"MOTORRAD", "MOTORBIKE"},
+                                                        {"TITANPZ", "NEOTANK"},
+                                                        {"LAEUFER", "PIPERUNNER"},
+                                                        {"SPAEHER", "RECON"},
+                                                        {"RKW", "ROCKETTHROWER"},
+                                                        {"SSIEINHEIT", "SNIPER"},
+                                                        {"TARNK", "STEALTHBOMBER"},
+                                                        {"U-BOOT", "SUBMARINE"},
+                                                        {"T-HELI", "T_HELI"},
+                                                        {"T-FLUGZEUG", "TRANSPORTPLANE"},
+                                                        {"WASSERFLUGZEUG", "WATERPLANE"},
+                                                        {"S-BOOT", "BLACK_BOAT"},
+                                                        {"S-BOMBE", "BLACK_BOMB"}};
 
 void GameMap::importTxtMap(QString file)
 {
@@ -175,7 +175,7 @@ void GameMap::importTxtMap(QString file)
                         }
                         else if (i == terrainCount - 1)
                         {
-                            CONSOLE_PRINT("Error unable to import terrain: " + terraindID, Console::eLogLevels::eERROR);
+                            CONSOLE_PRINT("Error unable to import terrain: " + terraindID, GameConsole::eLogLevels::eERROR);
                         }
                     }
                 }
@@ -222,7 +222,7 @@ void GameMap::importTxtMap(QString file)
                         }
                         else if (i == buildingCount - 1)
                         {
-                            CONSOLE_PRINT("Error unable to import building: " + buildingID, Console::eLogLevels::eERROR);
+                            CONSOLE_PRINT("Error unable to import building: " + buildingID, GameConsole::eLogLevels::eERROR);
                         }
                     }
                 }
@@ -247,7 +247,7 @@ void GameMap::importTxtMap(QString file)
                         }
                         else if (i == unitCount - 1)
                         {
-                            CONSOLE_PRINT("Error unable to import unit: " + unitID, Console::eLogLevels::eERROR);
+                            CONSOLE_PRINT("Error unable to import unit: " + unitID, GameConsole::eLogLevels::eERROR);
                         }
                     }
                 }

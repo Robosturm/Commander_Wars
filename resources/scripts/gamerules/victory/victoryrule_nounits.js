@@ -8,11 +8,11 @@ var Constructor = function()
     {
         if (itemNumber === 0)
         {
-            return qsTr("No Units");
+            return qsTr("No units");
         }
         else
         {
-            return qsTr("Ignore Watermines");
+            return qsTr("Ignore watermines");
         }
     };
     // the type how the rule will be represented in the map selection ui

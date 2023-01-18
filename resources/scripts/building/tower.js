@@ -21,14 +21,16 @@ var Constructor = function()
         return 0;
     };
 
+    this.offensiveBonus = 10;
+    this.defensiveBonus = 0;
     this.getOffensiveBonus = function(building)
     {
-        return 5;
+        return TOWER.offensiveBonus;
     };
 
     this.getDefensiveBonus = function(building)
     {
-        return 5;
+        return TOWER.defensiveBonus;
     };
 
     this.getName = function()
@@ -38,7 +40,9 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Once captured the Tower boosts your </r><div c='#00ff00'>attack and defence powers</div><r>.</r>");
+        var text = qsTr("<r>Once captured the Tower boosts your </r><div c='#00ff00'>attack by %0% and defence by %1%</div><r>.</r>");
+        text = replaceTextArgs(text, [TOWER.offensiveBonus, TOWER.defensiveBonus]);
+        return text;
     };
 
     this.getVisionHide = function(building)

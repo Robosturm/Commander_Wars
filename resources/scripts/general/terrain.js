@@ -70,7 +70,7 @@ var TERRAIN =
 
     getName : function()
     {
-        return "";
+        return qsTr("Unknown");
     },
 
     // vision created by this field
@@ -432,5 +432,10 @@ var TERRAIN =
     getShowInEditor : function()
     {
         return true;
+    },
+
+    getEditorPlacementSound : function()
+    {
+        return "";
     },
 };

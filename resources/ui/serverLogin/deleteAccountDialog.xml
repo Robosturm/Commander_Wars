@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getWidth() - 20</width>
+        <height>settings.getHeight() - 80</height>
+        <childs>
+            <Label>
+                <x>40</x>
+                <y>settings.getHeight() / 2 - 180</y>
+                <width>parentWidth - 80</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Delete Account")</text>
+                <font>"main"</font>
+                <hAlign>"Middle"</hAlign>
+                <fontSize>48</fontSize>
+            </Label>
+            <Label>
+                <x>settings.getWidth() / 2 - 310</x>
+                <y>settings.getHeight() / 2 - 100</y>
+                <width>220</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Username:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>220</width>
+                <text>settings.getUsername()</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>settings.getWidth() / 2 - 310</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>220</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Password:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Passwordbox>
+                <Id>PasswordBox</Id>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Password of your account. Needs to contain 8 letters, one capital one small letter a number and a special char.")</tooltip>
+                <startValue>""</startValue>
+                <onEvent>DeleteAccountDialog.primaryPassword(input);</onEvent>
+            </Passwordbox>
+            <Label>
+                <x>settings.getWidth() / 2 - 310</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>220</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Repeat password:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Passwordbox>
+                <Id>ConfirmBox</Id>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Password of your account. Needs to contain 8 letters, one capital one small letter a number and a special char.")</tooltip>
+                <startValue>""</startValue>
+                <onEvent>DeleteAccountDialog.confirmPassword(input);</onEvent>
+            </Passwordbox>
+            <Label>
+                <x>settings.getWidth() / 2 - 310</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>220</width>
+                <text>QT_TRANSLATE_NOOP("GAME","E-Mail:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <Id>EmailBox</Id>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","E-Mail-Address of your account.")</tooltip>
+                <startValue>""</startValue>
+                <onEvent>DeleteAccountDialog.emailAdress(input);</onEvent>
+            </Textbox>
+            <Button>
+                <Id>AbortButton</Id>
+                <x>settings.getWidth() / 2 - 160</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Abort")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Aborts the account deletion on the server.")</tooltip>
+                <onEvent>DeleteAccountDialog.exit();</onEvent>
+            </Button>
+            <Button>
+                <Id>AccountButton</Id>
+                <x>settings.getWidth() / 2 + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Delete")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Deletes your account on the server.")</tooltip>
+                <onEvent>DeleteAccountDialog.deleteAccount()</onEvent>
+            </Button>
+        </childs>
+    </Panel>
+</ui>

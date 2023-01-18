@@ -14,7 +14,7 @@ var ForgotPasswordDialog =
         var menu = forgotPassword.getBaseMenu();
         if (menu.isValidEmailAdress(email) === false)
         {
-            forgotPassword.showMessageBox(qsTr("You entered an invalid email adress."));
+            forgotPassword.showMessageBox(qsTr("You entered an invalid email address."));
         }
         else
         {
@@ -31,7 +31,7 @@ var ForgotPasswordDialog =
         }
         else if (errorCode === GameEnums.LoginError_InvalidPasswordReset)
         {
-            forgotPassword.showMessageBox(qsTr("Invalid e-mail adress which is linked to your account."));
+            forgotPassword.showMessageBox(qsTr("Invalid e-mail address which is linked to your account."));
             ForgotPasswordDialog.changeEnableForItems(true);
         }
         else if (errorCode === GameEnums.LoginError_SendingMailFailed)

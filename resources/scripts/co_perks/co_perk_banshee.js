@@ -28,6 +28,10 @@ var Constructor = function()
     {
         return qsTr("General Debuff");
     };
+    this.getCosts = function()
+    {
+        return -1;
+    };
 };
 
 Constructor.prototype = CO_PERK;

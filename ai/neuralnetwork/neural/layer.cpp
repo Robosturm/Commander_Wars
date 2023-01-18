@@ -1,8 +1,8 @@
 #include "ai/neuralnetwork/neural/layer.h"
 
-const QString Layer::LAYER_PARAMETER_SIZE = "SIZE";
-const QString Layer::LAYER_PARAMETER_TYPE = "TYPE";
-const QString Layer::LAYER_PARAMETER_ACTIVATION = "ACTIVATION";
+const char* const Layer::LAYER_PARAMETER_SIZE = "SIZE";
+const char* const Layer::LAYER_PARAMETER_TYPE = "TYPE";
+const char* const Layer::LAYER_PARAMETER_ACTIVATION = "ACTIVATION";
 
 Layer::Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> & parameters)
 {

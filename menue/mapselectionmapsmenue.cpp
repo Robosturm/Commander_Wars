@@ -4,22 +4,17 @@
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
 #include "menue/campaignmenu.h"
-#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/audiomanager.h"
 
 #include "resource_management/backgroundmanager.h"
-#include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
-#include "resource_management/buildingspritemanager.h"
-#include "resource_management/cospritemanager.h"
 
 #include "game/gamemap.h"
 #include "game/campaign.h"
 #include "game/player.h"
-#include "game/co.h"
 
 #include "mapsupport/randomMapGenerator.h"
 
@@ -43,9 +38,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    CONSOLE_PRINT("Entering Map Selection Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Map Selection Menue", GameConsole::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = oxygine::spSprite::create();
@@ -60,9 +54,9 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/mapselection");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/mapselection");
+    pApp->getAudioManager()->playRandom();
     addChild(m_pMapSelectionView);
 
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged, Qt::QueuedConnection);
@@ -183,7 +177,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
 
 void MapSelectionMapsMenue::buttonBack()
 {    
-    CONSOLE_PRINT("slotButtonBack()", Console::eDEBUG);
+    CONSOLE_PRINT("slotButtonBack()", GameConsole::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
     switch (m_MapSelectionStep)
     {
@@ -209,7 +203,7 @@ void MapSelectionMapsMenue::buttonBack()
             }
             else
             {
-                CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+                CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
                 if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                 {
                     oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
@@ -228,7 +222,7 @@ void MapSelectionMapsMenue::buttonBack()
 
 void MapSelectionMapsMenue::buttonNext()
 {    
-    CONSOLE_PRINT("slotButtonNext()", Console::eDEBUG);
+    CONSOLE_PRINT("slotButtonNext()", GameConsole::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
     switch (m_MapSelectionStep)
     {
@@ -267,7 +261,7 @@ void MapSelectionMapsMenue::buttonNext()
                     if (file.endsWith(".jsm") &&
                         m_pMapSelectionView->getCurrentLoadedCampaign().get() != nullptr)
                     {
-                        CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+                        CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
                         if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                         {
                             oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentLoadedCampaign(), true));
@@ -299,7 +293,7 @@ void MapSelectionMapsMenue::buttonNext()
 
 void MapSelectionMapsMenue::exitMenu()
 {
-    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
     spMainwindow window = spMainwindow::create("ui/menu/mainsinglemenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -324,7 +318,7 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
     }
     else
     {
-        CONSOLE_PRINT("Ignoring map selection change", Console::eDEBUG);
+        CONSOLE_PRINT("Ignoring map selection change", GameConsole::eDEBUG);
     }
 }
 
@@ -340,6 +334,7 @@ void MapSelectionMapsMenue::showMapSelection()
     m_pRandomMap->setVisible(true);
     m_pMapFilter->setVisible(true);
     m_pMapSelectionView->setVisible(true);    
+    m_pMapSelectionView->getMapSelection()->refresh();
 }
 
 void MapSelectionMapsMenue::hideRuleSelection()
@@ -365,23 +360,24 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pRuleSelectionView = spRuleSelection::create(pMap.get(), Settings::getWidth() - 80, RuleSelection::Mode::Singleplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &MapSelectionMapsMenue::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
-    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 40);
-    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth());
+    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 60);
+    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth() + 60);
 }
 
 void MapSelectionMapsMenue::ruleSelectionSizeChanged()
 {
-    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 40);
+    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 60);
+    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getScaledWidth() + 60);
 }
 
-void MapSelectionMapsMenue::showPlayerSelection()
+void MapSelectionMapsMenue::showPlayerSelection(bool relaunchedLobby)
 {
     m_pButtonStart->setVisible(true);
     m_pButtonNext->setVisible(false);
     m_pButtonSaveMap->setVisible(true);
     m_pPlayerSelection->setVisible(true);
     m_pPlayerSelection->setMap(m_pMapSelectionView->getCurrentMap().get());
-    m_pPlayerSelection->showPlayerSelection();
+    m_pPlayerSelection->showPlayerSelection(relaunchedLobby);
 }
 
 void MapSelectionMapsMenue::hidePlayerSelection()
@@ -394,7 +390,7 @@ void MapSelectionMapsMenue::hidePlayerSelection()
 
 void MapSelectionMapsMenue::startGame()
 {    
-    CONSOLE_PRINT("Start game", Console::eDEBUG);
+    CONSOLE_PRINT("Start game", GameConsole::eDEBUG);
     defeatClosedPlayers();
 
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
@@ -404,7 +400,7 @@ void MapSelectionMapsMenue::startGame()
     pMap->getGameScript()->gameStart();
     pMap->updateSprites(-1, -1, false, true);
     // start game
-    CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
     auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -420,7 +416,7 @@ void MapSelectionMapsMenue::defeatClosedPlayers()
             GameEnums::AiTypes aiType =  m_pPlayerSelection->getPlayerAiType(i);
             if (aiType == GameEnums::AiTypes::AiTypes_Closed)
             {
-                CONSOLE_PRINT("Defeating player " + QString::number(i) + " cause he's selected as closed player.", Console::eDEBUG);
+                CONSOLE_PRINT("Defeating player " + QString::number(i) + " cause he's selected as closed player.", GameConsole::eDEBUG);
                 pMap->getPlayer(i)->setIsDefeated(true);
             }
         }
@@ -429,7 +425,7 @@ void MapSelectionMapsMenue::defeatClosedPlayers()
 
 void MapSelectionMapsMenue::showRandomMap()
 {
-    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create();
+    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create("");
     addChild(pDialogRandomMap);
     connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &MapSelectionMapsMenue::selectRandomMap, Qt::QueuedConnection);
 }
@@ -473,7 +469,7 @@ void MapSelectionMapsMenue::showLoadRules()
     QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getUserPath() + "data/gamerules";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::loadRules, Qt::QueuedConnection);
     
@@ -484,7 +480,7 @@ void MapSelectionMapsMenue::showSaveRules()
     QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getUserPath() + "data/gamerules";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Save"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveRules, Qt::QueuedConnection);
 }
@@ -532,7 +528,7 @@ void MapSelectionMapsMenue::showSaveMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + "maps/";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Save"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);
 }
@@ -581,7 +577,7 @@ void MapSelectionMapsMenue::onEnter()
     QString func = "mapsSelection";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }

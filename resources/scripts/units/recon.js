@@ -56,6 +56,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Ground;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movetire.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

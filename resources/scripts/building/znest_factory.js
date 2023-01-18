@@ -45,6 +45,24 @@ var Constructor = function()
     {
         building.setFireCount(1);
     };
+    this.getConstructionList = function(building)
+    {
+        var unitIds = [];
+        var map = building.getMap();
+        var units = map.getAllUnitIDs();
+        var buildlist = building.getOwner().getBuildList();
+        for (var i = 0; i < units.length; i++)
+        {
+            // check all units if they can move over this terrain
+            if (buildlist.includes(units[i]) &&
+                Global[units[i]].getUnitType() !== GameEnums.UnitType_Naval &&
+                Global[units[i]].getCOSpecificUnit() === false)
+            {
+                unitIds.push(units[i]);
+            }
+        }
+        return unitIds;
+    }
 }
 
 Constructor.prototype = BUILDING;

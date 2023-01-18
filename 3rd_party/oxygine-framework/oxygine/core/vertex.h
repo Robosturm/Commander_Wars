@@ -13,8 +13,11 @@ namespace oxygine
             Max,
             VERTEX_TEXCOORD_SIZE = 2,
         };
-        float x, y, z;
-        quint32 color;
-        float u, v;
+        float x{0.0f};
+        float y{0.0f};
+        float z{0.0f};
+        quint32 color{0};
+        float u{0.0f};
+        float v{0.0f};
     };
 }

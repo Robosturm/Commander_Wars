@@ -10,13 +10,12 @@
 #include "network/rsacypherhandler.h"
 #include "network/JsonKeys.h"
 
-#include "coreengine/console.h"
-
-static const auto* CYPHER = EVP_aes_256_ecb();
+#include "coreengine/gameconsole.h"
 
 RsaCypherHandler::RsaCypherHandler()
     : m_privateKey(EVP_PKEY_new()),
-      m_publicKey(EVP_PKEY_new())
+      m_publicKey(EVP_PKEY_new()),
+      CYPHER(EVP_aes_256_ecb())
 {
     ERR_load_CRYPTO_strings();
     seedRng();
@@ -152,7 +151,7 @@ void RsaCypherHandler::printLastError() const
 {
     char errorMsg[512];
     ERR_error_string(ERR_get_error(), errorMsg);
-    CONSOLE_PRINT(QString("Could not encyrpt data") + errorMsg, Console::eLogLevels::eWARNING);
+    CONSOLE_PRINT(QString("Could not encyrpt data") + errorMsg, GameConsole::eLogLevels::eWARNING);
 }
 
 bool RsaCypherHandler::decryptRSA(const QByteArray & encryptedKey, const QByteArray & encrpytedMessage, const QByteArray & iv, QByteArray & decryptedMessage)
@@ -211,7 +210,7 @@ QJsonArray RsaCypherHandler::toJsonArray(const QByteArray & byteArray)
 QByteArray RsaCypherHandler::getRequestKeyMessage(NetworkCommands::PublicKeyActions action) const
 {
     QString command = NetworkCommands::REQUESTPUBLICKEY;
-    CONSOLE_PRINT("Sending message: " + command, Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Sending message: " + command, GameConsole::eLogLevels::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
@@ -222,7 +221,7 @@ QByteArray RsaCypherHandler::getRequestKeyMessage(NetworkCommands::PublicKeyActi
 QByteArray RsaCypherHandler::getPublicKeyMessage(NetworkCommands::PublicKeyActions action) const
 {
     QString command = NetworkCommands::SENDPUBLICKEY;
-    CONSOLE_PRINT("Sending message: " + command, Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Sending message: " + command, GameConsole::eLogLevels::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_PUBLICKEY, m_publicKeyStr);
@@ -246,7 +245,7 @@ QJsonDocument RsaCypherHandler::getEncryptedMessage(const QString & publicKey, N
 {
     QJsonObject data;
     QString command = NetworkCommands::CRYPTEDMESSAGE;
-    CONSOLE_PRINT("Sending message: " + command, Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Sending message: " + command, GameConsole::eLogLevels::eDEBUG);
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QByteArray encryptedKey;

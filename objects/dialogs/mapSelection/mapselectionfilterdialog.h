@@ -14,8 +14,6 @@ class MapSelectionFilterDialog final : public CreatedGui
 public:
     explicit MapSelectionFilterDialog(MapFilter* filter);
     ~MapSelectionFilterDialog();
-signals:
-    void sigFinished();
 public slots:
     void exit();
     void addToFilter(GameEnums::MapFilterFlags flag, bool active, bool isOptional);

@@ -52,7 +52,6 @@ CO_EAGLE.activatePower = function(co, map)
             }
         }
     }
-    units.remove();
 };
 
 CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,

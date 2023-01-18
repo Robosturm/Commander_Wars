@@ -1,10 +1,11 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/settings.h"
-#include "coreengine/globalutils.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include <QDirIterator>
 #include <QCoreApplication>
+
+const char* const Filesupport::LIST_FILENAME_ENDING = ".bl";
 
 QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & folders)
 {
@@ -12,17 +13,18 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     QStringList fullList;
 
     QString userPath = Settings::getUserPath();
-    if (!userPath.isEmpty())
-    {
-        userPath += "/";
-    }
     for (const auto & folder : qAsConst(folders))
     {
         fullList.append(oxygine::Resource::RCC_PREFIX_PATH + folder);
         fullList.append(userPath + folder);
+        if (!userPath.isEmpty())
+        {
+            fullList.append(folder);
+        }
     }
     for (const auto & folder : qAsConst(fullList))
     {
+        CONSOLE_PRINT_MODULE("Adding files for folder: " + folder, GameConsole::eDEBUG, GameConsole::eFileSupport);
         addHash(myHash, folder, filter);
     }
     return myHash.result();
@@ -35,7 +37,7 @@ void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStri
     for (auto & item : list)
     {
         QString filePath = item.filePath();
-        CONSOLE_PRINT("Adding file: " + filePath + " to hash", Console::eDEBUG);
+        CONSOLE_PRINT_MODULE("Adding file: " + filePath + " to hash", GameConsole::eDEBUG, GameConsole::eFileSupport);
         QFile file(filePath);
         file.open(QIODevice::ReadOnly);
         while (!file.atEnd())
@@ -96,7 +98,7 @@ void Filesupport::storeList(const QString & file, const QStringList & items, con
 {
     QDir dir(folder);
     dir.mkpath(".");
-    QFile dataFile(folder + file + ".bl");
+    QFile dataFile(folder + file + LIST_FILENAME_ENDING);
     dataFile.open(QIODevice::WriteOnly);
     QDataStream stream(&dataFile);
     stream << file;
@@ -132,7 +134,7 @@ Filesupport::StringList Filesupport::readList(const QString & file)
     }
     else
     {
-        CONSOLE_PRINT("Unable to open file: " + file + " using empty list", Console::eWARNING);
+        CONSOLE_PRINT("Unable to open file: " + file + " using empty list", GameConsole::eWARNING);
     }
     return ret;
 }

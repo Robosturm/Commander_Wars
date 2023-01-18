@@ -108,7 +108,6 @@ var Constructor = function()
                     animation.setEndOfAnimationCall("CO_GRAVES", "postAnimationDamage");
 
                 }
-                units.remove();
             }
         }
     };
@@ -245,7 +244,7 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Fear is a valuble tool. I suggest you learn how to use it."),
+        return [qsTr("Fear is a valuable tool. I suggest you learn how to use it."),
                 qsTr("Do you desire death that greatly?"),
                 qsTr("You must give everything if you want to win."),
                 qsTr("You are ill prepared to face me."),
@@ -260,8 +259,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Not planed but still not the end."),
-                qsTr("It seems that i underestimate your strenght.")];
+        return [qsTr("Not planned but still not the end."),
+                qsTr("It seems that i underestimate your strength.")];
     };
     this.getName = function()
     {

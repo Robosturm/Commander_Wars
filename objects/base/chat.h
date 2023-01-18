@@ -13,6 +13,7 @@
 #include "objects/base/panel.h"
 #include "objects/base/textbox.h"
 
+class BaseGamemenu;
 class Chat;
 using spChat = oxygine::intrusive_ptr<Chat>;
 
@@ -20,7 +21,7 @@ class Chat final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode);
+    explicit Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode, BaseGamemenu* pMenu);
     ~Chat() = default;
     /**
      * @brief setVisible
@@ -43,7 +44,7 @@ private:
     spTextbox m_ChatInput;
     oxygine::spButton m_Send;
     NetworkInterface::NetworkSerives m_serviceMode{NetworkInterface::NetworkSerives::GameChat};
-
+    BaseGamemenu* m_pMenu{nullptr};
     static const qint32 m_bufferSize = 500;
 };
 

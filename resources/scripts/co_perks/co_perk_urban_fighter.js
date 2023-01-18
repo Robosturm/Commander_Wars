@@ -26,7 +26,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "invader";
+        return "urbanFighter";
     };
     this.getName = function()
     {
@@ -35,6 +35,10 @@ var Constructor = function()
     this.getGroup = function()
     {
         return qsTr("Terrain");
+    };
+    this.getCosts = function()
+    {
+        return 1;
     };
 };
 

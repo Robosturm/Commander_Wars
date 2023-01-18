@@ -102,6 +102,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Naval;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveship.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

@@ -87,7 +87,6 @@ var Constructor = function()
 
             }
         }
-        ACTION_LASER_FIRE.postAnimationActionFields = fields;
         ACTION_LASER_FIRE.postAnimationActionX = x;
         ACTION_LASER_FIRE.postAnimationActionY = y;
     };
@@ -97,10 +96,11 @@ var Constructor = function()
         var y = ACTION_LASER_FIRE.postAnimationActionY;
         var building = map.getTerrain(x, y).getBuilding();
         var damage = Global[building.getBuildingID()].getDamage();
-        var size = ACTION_LASER_FIRE.postAnimationActionFields.size();
+        var fields = Global[building.getBuildingID()].getActionTargetFields(building);
+        var size = fields.size();
         for (var i = 0; i < size; i++)
         {
-            var point = ACTION_LASER_FIRE.postAnimationActionFields.at(i);
+            var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))
             {
                 var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
@@ -114,10 +114,12 @@ var Constructor = function()
                 }
             }
         }
-        ACTION_LASER_FIRE.postAnimationActionFields.remove();
-        ACTION_LASER_FIRE.postAnimationActionFields = null;
         ACTION_LASER_FIRE.postAnimationActionX = -1;
         ACTION_LASER_FIRE.postAnimationActionY = -1;
+    };
+    this.getName = function()
+    {
+        return qsTr("Fire with laser");
     };
     this.getDescription = function()
     {

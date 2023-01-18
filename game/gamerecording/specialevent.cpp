@@ -1,6 +1,5 @@
 #include "game/gamerecording/specialevent.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 SpecialEvent::SpecialEvent()
@@ -8,7 +7,6 @@ SpecialEvent::SpecialEvent()
 #ifdef GRAPHICSUPPORT
     setObjectName("SpecialEvent");
 #endif
-    moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -20,7 +18,6 @@ SpecialEvent::SpecialEvent(qint32 player, qint32 day, GameEnums::GameRecord_Spec
 #ifdef GRAPHICSUPPORT
     setObjectName("SpecialEvent");
 #endif
-    moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

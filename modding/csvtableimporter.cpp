@@ -1,5 +1,5 @@
-#include <qfile.h>
-#include <qtextstream.h>
+#include <QFile>
+#include <QTextStream>
 
 #include "modding/csvtableimporter.h"
 

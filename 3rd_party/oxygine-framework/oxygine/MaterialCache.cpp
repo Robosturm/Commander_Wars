@@ -1,12 +1,11 @@
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
-#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 
-#include "QMutexLocker"
+#include <QMutexLocker>
 
 namespace oxygine
 {
-    MaterialCache MaterialCache::mcache;
+    QScopedPointer<MaterialCache> MaterialCache::mcache;
 
     spMaterial MaterialCache::clone_(const Material& other)
     {
@@ -67,6 +66,10 @@ namespace oxygine
 
     MaterialCache& MaterialCache::mc()
     {
-        return mcache;
+        if (mcache.isNull())
+        {
+            mcache.reset(new MaterialCache());
+        }
+        return *mcache.get();
     }
 }

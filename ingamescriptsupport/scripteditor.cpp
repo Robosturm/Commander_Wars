@@ -3,7 +3,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
@@ -21,8 +21,6 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     setObjectName("ScriptEditor");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
@@ -48,20 +46,20 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     m_ConditionPanel = spPanel::create(true, size, size);
     m_ConditionPanel->setPosition(30, 110);
     pSpriteBox->addChild(m_ConditionPanel);
-    QStringList items = {tr(ScriptCondition::ConditionStartOfTurn.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionVictory.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionEachDay.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionBuildingDestroyed.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionTerrainDestroyed.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionBuildingCaptured.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionPlayerDefeated.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionUnitsDestroyed.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionBuildingsOwned.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionPlayerReachedArea.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionCheckVariable.toStdString().c_str()),
-                         tr(ScriptCondition::ConditionIsCo.toStdString().c_str())};
+    QStringList items = {tr("Start of turn"),
+                         tr("Victory"),
+                         tr("Each day"),
+                         tr("Unit destroyed"),
+                         tr("Building destroyed"),
+                         tr("Terrain destroyed"),
+                         tr("Building captured"),
+                         tr("Player defeated"),
+                         tr("Units destroyed"),
+                         tr("Buildings owned"),
+                         tr("Player in area"),
+                         tr("Unit in area"),
+                         tr("Check variable"),
+                         tr("Is selected co")};
     m_Conditions = spDropDownmenu::create(300, items);
     m_Conditions->setTooltipText(tr("Condition type you want to create. If another condition is selected both must be fulfilled to activate the event."));
     m_Conditions->setPosition(30, Settings::getHeight() / 2 - 45);
@@ -94,25 +92,25 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     m_EventPanel->setPosition(30, Settings::getHeight() / 2 + 40);
     pSpriteBox->addChild(m_EventPanel);
     items = {
-        tr(ScriptEvent::EventDialog.toStdString().c_str()),
-        tr(ScriptEvent::EventSpawnUnit.toStdString().c_str()),
-        tr(ScriptEvent::EventDefeatPlayer.toStdString().c_str()),
-        tr(ScriptEvent::EventChangeBuildlist.toStdString().c_str()),
-        tr(ScriptEvent::EventAddFunds.toStdString().c_str()),
-        tr(ScriptEvent::EventChangeWeather.toStdString().c_str()),
-        tr(ScriptEvent::EventChangeCOBar.toStdString().c_str()),
-        tr(ScriptEvent::EventModifyTerrain.toStdString().c_str()),
-        tr(ScriptEvent::EventModifyUnit.toStdString().c_str()),
-        tr(ScriptEvent::EventAnimation.toStdString().c_str()),
-        tr(ScriptEvent::EventVictoryInfo.toStdString().c_str()),
-        tr(ScriptEvent::EventModifyVariable.toStdString().c_str()),
-        tr(ScriptEvent::EventChangeUnitAI.toStdString().c_str()),
-        tr(ScriptEvent::EventChangeBuildingOwner.toStdString().c_str()),
-        tr(ScriptEvent::EventChangeUnitOwner.toStdString().c_str()),
-        tr(ScriptEvent::EventChangePlayerTeam.toStdString().c_str()),
-        tr(ScriptEvent::EventSpawnBuilding.toStdString().c_str()),
-        tr(ScriptEvent::EventCenterMap.toStdString().c_str()),
-        tr(ScriptEvent::EventPlaySound.toStdString().c_str())
+        tr("Dialog"),
+        tr("Spawn unit"),
+        tr("Defeat player"),
+        tr("Change buildlist"),
+        tr("Add funds"),
+        tr("Change weather"),
+        tr("Change co bar"),
+        tr("Modify terrain"),
+        tr("Modify unit"),
+        tr("Animation"),
+        tr("Victory info"),
+        tr("Modify variable"),
+        tr("Change unit ai"),
+        tr("Change building owner"),
+        tr("Change unit owner"),
+        tr("Change player team"),
+        tr("Spawn building"),
+        tr("Center map"),
+        tr("Play sound")
     };
     m_Events = spDropDownmenu::create(300, items);
     m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));
@@ -194,7 +192,7 @@ void ScriptEditor::showSaveScript()
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Save"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::saveScript, Qt::QueuedConnection);
 }
@@ -204,7 +202,7 @@ void ScriptEditor::showLoadScript()
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::loadScript, Qt::QueuedConnection);
 }

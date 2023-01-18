@@ -1,25 +1,24 @@
 #include "objects/dialogs/editor/mapeditdialog.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
 #include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 #include "ui_reader/uifactory.h"
 
 constexpr const char* const MapEdit = "mapEdit";
 
-MapEditDialog::MapEditDialog(MapEditInfo info)
-    : m_info(info)
+MapEditDialog::MapEditDialog(MapEditInfo info, const QString & confirmMessage)
+    : m_info(info),
+      m_confirmMessage(confirmMessage)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("MapEditDialog");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -42,7 +41,10 @@ MapEditDialog::MapEditDialog(MapEditInfo info)
 MapEditDialog::~MapEditDialog()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(MapEdit);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(MapEdit);
+    }
 }
 
 void MapEditDialog::cancel()
@@ -51,6 +53,20 @@ void MapEditDialog::cancel()
 }
 
 void MapEditDialog::finished()
+{
+    if (!m_confirmMessage.isEmpty())
+    {
+        spDialogMessageBox pDialogConfirm = spDialogMessageBox::create(m_confirmMessage, true);
+        connect(pDialogConfirm.get(), &DialogMessageBox::sigOk, this, &MapEditDialog::onConfirm, Qt::QueuedConnection);
+        addChild(pDialogConfirm);
+    }
+    else
+    {
+        onConfirm();
+    }
+}
+
+void MapEditDialog::onConfirm()
 {
     emit editFinished(m_info);
     emit sigFinished();
@@ -188,7 +204,7 @@ void MapEditDialog::showSelectScript()
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapEditDialog::scriptFileChanged, Qt::QueuedConnection);    
 }

@@ -14,7 +14,6 @@ class CursorData final : public QObject, public oxygine::ref_counter
 public:
     explicit CursorData();
     ~CursorData() = default;
-signals:
 
 public slots:
     QString getCursor() const;

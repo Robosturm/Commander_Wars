@@ -6,7 +6,6 @@
 #include <QVector>
 #include <QColor>
 
-
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
@@ -24,6 +23,8 @@ class COSelection final : public QObject, public oxygine::Actor
 public:
     explicit COSelection(QPoint Position, QSize maxSize, QStringList coids = {});
     ~COSelection() = default;
+    const QStringList &getCoids() const;
+
 signals:
     void armySelectedChange(QString army);
     void coSelected(QString coid);

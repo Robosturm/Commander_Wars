@@ -209,6 +209,10 @@ var Constructor = function()
                 "sea+waste+S+W",
                 "sea+waste+W",];
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeReaf.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var SEA = new Constructor();

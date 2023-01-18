@@ -115,7 +115,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.getCOUnitRange = function(co, map)

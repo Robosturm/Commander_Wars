@@ -1,7 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
-#include "coreengine/globalutils.h"
-#include "coreengine/console.h"
 
 #include <QDomDocument>
 

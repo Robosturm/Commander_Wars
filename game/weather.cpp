@@ -1,7 +1,7 @@
 #include "game/weather.h"
 #include "game/gamemap.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 Weather::Weather(QString weatherId, GameMap* pMap)
     : m_WeatherId(weatherId),
@@ -10,16 +10,12 @@ Weather::Weather(QString weatherId, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("Weather");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
 Weather::Weather(GameMap* pMap)
     : m_pMap{pMap}
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

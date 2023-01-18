@@ -3,11 +3,8 @@
 
 #include <QObject>
 
-
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
-#include "game/building.h"
-#include "game/unit.h"
 #include "game/terrain.h"
 #include "game/player.h"
 

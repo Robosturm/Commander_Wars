@@ -148,8 +148,6 @@ public slots:
      */
     void hideFrontMap();
 protected:
-    static constexpr float maxDayDistance = 6.0f;
-
     bool performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits,
                             spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
@@ -286,7 +284,7 @@ protected:
      * @param pUnits
      * @return
      */
-    bool fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint32 maxfireRange,
+    bool fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint32 minMaxfireRange, qint32 maxfireRange,
                        spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief suicide
@@ -627,6 +625,8 @@ private:
     double m_turnOneDmageMalus{5};
     double m_counterUnitRatio{2};
     double m_spamInfantryChance{50};
+    double m_spamLightUnitChance{50};
+    double m_spamMediumUnitChance{30};
 
     float m_currentDirectIndirectRatio{1.0f};
 

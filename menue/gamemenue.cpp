@@ -9,22 +9,20 @@
 
 #include "menue/gamemenue.h"
 #include "menue/victorymenue.h"
-#include "menue/optionmenue.h"
 #include "menue/movementplanner.h"
 
-#include "coreengine/console.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/gameconsole.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/settings.h"
 #include "coreengine/filesupport.h"
 
 #include "ai/proxyai.h"
+#include "ai/aiprocesspipe.h"
 
-#include "gameinput/humanplayerinput.h"
 #include "game/player.h"
 #include "game/co.h"
 #include "game/gameanimation/gameanimationfactory.h"
-#include "game/unitpathfindingsystem.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -61,8 +59,8 @@
 
 #include "game/ui/damagecalculator.h"
 
-GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin)
-    : BaseGamemenu(pMap),
+GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface, bool rejoin, bool startDirectly)
+    : BaseGamemenu(pMap, true),
       m_ReplayRecorder(m_pMap.get()),
       m_SaveGame(saveGame),
       m_actionPerformer(m_pMap.get(), this)
@@ -70,7 +68,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
 #endif
-    CONSOLE_PRINT("Creating game menu singleton", Console::eDEBUG);
+    CONSOLE_PRINT("Creating game menu singleton", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
@@ -91,27 +89,47 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         }
         connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &GameMenue::disconnected, Qt::QueuedConnection);
         connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &GameMenue::recieveData, Qt::QueuedConnection);
+        if (Mainapp::getSlave())
+        {
+            CONSOLE_PRINT("GameMenue is listening to master server data", GameConsole::eDEBUG);
+            spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+            connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &GameMenue::recieveServerData, Qt::QueuedConnection);
+        }
         if (m_pNetworkInterface->getIsServer())
         {
+            CONSOLE_PRINT("GameMenue server is listening to new players", GameConsole::eDEBUG);
             m_PlayerSockets = m_pNetworkInterface->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
         }
-        spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players"), 1000 * 60 * 5);
-        addChild(pDialogConnecting);
-        connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
-        if (pNetworkInterface->getIsObserver() || rejoin)
+        if (!startDirectly)
         {
-            connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
-            connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
-            connect(this, &GameMenue::sigSyncFinished, this, &GameMenue::startGame, Qt::QueuedConnection);
+            if (m_pNetworkInterface->getIsServer() &&
+                m_pNetworkInterface->getConnectedSockets().length() == 0)
+            {
+                CONSOLE_PRINT("GameMenue starting game directly cause it's a relaunched game with no clients connected.", GameConsole::eDEBUG);
+                startGame();
+            }
+            else
+            {
+                spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players"), 1000 * 60 * 5);
+                addChild(pDialogConnecting);
+                connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
+                if (pNetworkInterface->getIsObserver() || rejoin)
+                {
+                    CONSOLE_PRINT("Closing connection dialog on sync finished signal", GameConsole::eDEBUG);
+                    connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+                    connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+                    connect(this, &GameMenue::sigSyncFinished, this, &GameMenue::startGame, Qt::QueuedConnection);
+                }
+                else
+                {
+                    CONSOLE_PRINT("Closing connection dialog on start game signal", GameConsole::eDEBUG);
+                    connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+                    connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
+                }
+            }
         }
-        else
-        {
-            connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
-            connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
-        }
-
-        m_pChat = spChat::create(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat);
+        m_pChat = spChat::create(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat, this);
         m_pChat->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);
         addChild(m_pChat);
@@ -119,7 +137,13 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     }
     else
     {
+        CONSOLE_PRINT("GameMenue starting game directly cause it's a single player game.", GameConsole::eDEBUG);
         startGame();
+        if (m_pNetworkInterface.get() != nullptr &&
+            Mainapp::getSlave())
+        {
+            startDespawnTimer();
+        }
     }
     if (Settings::getAutoSavingCycle() > 0)
     {
@@ -147,21 +171,21 @@ GameMenue::GameMenue(QString map, bool saveGame)
     }
 }
 
-GameMenue::GameMenue(spGameMap pMap)
-    : BaseGamemenu(pMap),
+GameMenue::GameMenue(spGameMap pMap, bool clearPlayerlist)
+    : BaseGamemenu(pMap, clearPlayerlist),
       m_ReplayRecorder(m_pMap.get()),
       m_actionPerformer(m_pMap.get(), this)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
 #endif
-    CONSOLE_PRINT("Creating game menu singleton", Console::eDEBUG);
+    CONSOLE_PRINT("Creating game menu singleton", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 }
 
 GameMenue::~GameMenue()
 {
-    CONSOLE_PRINT("Deleting GameMenue", Console::eDEBUG);
+    CONSOLE_PRINT("Deleting GameMenue", GameConsole::eDEBUG);
     exitMovementPlanner();
 }
 
@@ -182,11 +206,10 @@ void GameMenue::onEnter()
     QString func = "gameMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
-
 }
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -196,7 +219,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
-        CONSOLE_PRINT("Local Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
+        CONSOLE_PRINT("Local Network command in GameMenue::recieveData received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::CLIENTINITGAME)
         {
             if (m_pNetworkInterface->getIsServer())
@@ -204,7 +227,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 // the given client is ready
                 quint64 socket = 0;
                 stream >> socket;
-                CONSOLE_PRINT("socket game ready " + QString::number(socket), Console::eDEBUG);
+                CONSOLE_PRINT("socket game ready " + QString::number(socket), GameConsole::eDEBUG);
                 m_ReadySockets.append(socket);
                 QVector<quint64> sockets;
                 if (dynamic_cast<TCPServer*>(m_pNetworkInterface.get()))
@@ -217,18 +240,18 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                     if (!m_ReadySockets.contains(sockets[i]))
                     {
                         ready = false;
-                        CONSOLE_PRINT("Still waiting for socket game " + QString::number(sockets[i]), Console::eDEBUG);
+                        CONSOLE_PRINT("Still waiting for socket game " + QString::number(sockets[i]), GameConsole::eDEBUG);
                     }
                     else
                     {
-                        CONSOLE_PRINT("Socket ready: " + QString::number(sockets[i]), Console::eDEBUG);
+                        CONSOLE_PRINT("Socket ready: " + QString::number(sockets[i]), GameConsole::eDEBUG);
                     }
                 }
                 if (ready)
                 {
-                    CONSOLE_PRINT("All players are ready starting game", Console::eDEBUG);
+                    CONSOLE_PRINT("All players are ready starting game", GameConsole::eDEBUG);
                     QString command = QString(NetworkCommands::STARTGAME);
-                    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+                    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << command;
@@ -286,7 +309,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
+            CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }    
     else if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
@@ -294,7 +317,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QJsonDocument doc = QJsonDocument::fromJson(data);
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
-        CONSOLE_PRINT("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
+        CONSOLE_PRINT("Server Network Command in GameMenue::recieveData received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
         if (messageType == NetworkCommands::VERIFYLOGINDATA)
         {
             verifyLoginData(objData, socketID);
@@ -308,7 +331,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             }
             else
             {
-                CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
+                CONSOLE_PRINT("Unknown public key action " + QString::number(static_cast<qint32>(action)) + " received", GameConsole::eDEBUG);
             }
         }
         else if (messageType == NetworkCommands::CRYPTEDMESSAGE)
@@ -321,10 +344,10 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             }
             else
             {
-                CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", Console::eDEBUG);
+                CONSOLE_PRINT("Unknown crypted message action " + QString::number(static_cast<qint32>(action)) + " received", GameConsole::eDEBUG);
             }
         }
-        else if (messageType == NetworkCommands::DISCONNECTINGFOFROMSERVER)
+        else if (messageType == NetworkCommands::DISCONNECTINGFROMSERVER)
         {
             showDisconnectReason(socketID, objData);
         }
@@ -338,7 +361,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else
         {
-            CONSOLE_PRINT("Unknown command " + messageType + " received", Console::eDEBUG);
+            CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
     else if (service == NetworkInterface::NetworkSerives::GameChat)
@@ -353,12 +376,32 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             m_ChatButton->addTween(m_chatButtonShineTween);
         }
     }
-    else if (service == NetworkInterface::NetworkSerives::Game)
+    else
     {
+        CONSOLE_PRINT("Unknown service in GameMenue::recieveData " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+    }
+}
+
+void GameMenue::recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+{
+    if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
+    {
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject objData = doc.object();
+        QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
+        CONSOLE_PRINT("Master server Network Command GameMenue::recieveServerData: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        if (messageType == NetworkCommands::DESPAWNSLAVE)
+        {
+            closeSlave();
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
+        }
     }
     else
     {
-        CONSOLE_PRINT("Unknown service " + QString::number(static_cast<qint32>(service)) + " received", Console::eDEBUG);
+        CONSOLE_PRINT("Unknown master server service " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
     }
 }
 
@@ -374,13 +417,13 @@ void GameMenue::showDisconnectReason(quint64 socketID, const QJsonObject & objDa
     NetworkCommands::DisconnectReason type = static_cast<NetworkCommands::DisconnectReason>(objData.value(JsonKeys::JSONKEY_DISCONNECTREASON).toInt());
     spDialogMessageBox pDialog = spDialogMessageBox::create(reasons[type]);
     addChild(pDialog);
-    emit m_pNetworkInterface->sigDisconnectClient(0);
+    emit m_pNetworkInterface->sigDisconnectClient(socketID);
 }
 
 void GameMenue::sendUsername(quint64 socketID, const QJsonObject & objData)
 {
     QString command = QString(NetworkCommands::SENDUSERNAME);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
@@ -401,7 +444,7 @@ void GameMenue::sendLoginData(quint64 socketID, const QJsonObject & objData, Net
     // send map data to client and make sure password message is crypted
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     QJsonDocument doc(data);
-    CONSOLE_PRINT("Sending login data to slave", Console::eDEBUG);
+    CONSOLE_PRINT("Sending login data to slave", GameConsole::eDEBUG);
     emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
@@ -413,14 +456,14 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
     GameEnums::LoginError valid = MainServer::verifyLoginData(username, password);
     if (valid == GameEnums::LoginError_None)
     {
-        CONSOLE_PRINT("Client login data are valid. Verifying versions", Console::eDEBUG);
+        CONSOLE_PRINT("Client login data are valid. Verifying versions", GameConsole::eDEBUG);
         sendVerifyGameData(socketID);
     }
     else
     {
-        CONSOLE_PRINT("Client login data are invalid. Closing connection.", Console::eDEBUG);
-        QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        CONSOLE_PRINT("Client login data are invalid. Closing connection.", GameConsole::eDEBUG);
+        QString command = QString(NetworkCommands::DISCONNECTINGFROMSERVER);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         auto reason = NetworkCommands::DisconnectReason::InvalidPassword;
@@ -446,8 +489,12 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
                 reason = NetworkCommands::DisconnectReason::PasswordOutdated;
                 break;
             }
+            default:
+            {
+                break;
+            }
         }
-        CONSOLE_PRINT("Login error: " + QString::number(valid) + " reported reason: " + QString::number(reason), Console::eDEBUG);
+        CONSOLE_PRINT("Login error: " + QString::number(valid) + " reported reason: " + QString::number(reason), GameConsole::eDEBUG);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, reason);
         QJsonDocument doc(data);
         emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -457,7 +504,7 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
 void GameMenue::sendVerifyGameData(quint64 socketID)
 {
     QString command = QString(NetworkCommands::VERIFYGAMEDATA);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << command;
@@ -474,10 +521,10 @@ void GameMenue::sendVerifyGameData(quint64 socketID)
         stream << versions[i];
     }
     auto hostHash = Filesupport::getRuntimeHash(mods);
-    if (Console::eDEBUG >= Console::getLogLevel())
+    if (GameConsole::eDEBUG >= GameConsole::getLogLevel())
     {
         QString hostString = GlobalUtils::getByteArrayString(hostHash);
-        CONSOLE_PRINT("Sending host hash: " + hostString, Console::eDEBUG);
+        CONSOLE_PRINT("Sending host hash: " + hostString, GameConsole::eDEBUG);
     }
     Filesupport::writeByteArray(stream, hostHash);
     emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
@@ -531,24 +578,24 @@ void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
-            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            QString command = QString(NetworkCommands::DISCONNECTINGFROMSERVER);
+            CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
             data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::NoMoreObservers);
             QJsonDocument doc(data);
-            emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
     }
     else
     {
-        QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QString command = QString(NetworkCommands::DISCONNECTINGFROMSERVER);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidConnection);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -577,7 +624,7 @@ void GameMenue::startGameSync(quint64 socketID)
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << command;
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
     multiplayerSyncData.m_waitingForSyncFinished = true;
     syncPointReached();
@@ -591,13 +638,13 @@ void GameMenue::joinAsPlayer(QDataStream & stream, quint64 socketID)
     }
     else
     {
-        QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        QString command = QString(NetworkCommands::DISCONNECTINGFROMSERVER);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidConnection);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -610,7 +657,7 @@ void GameMenue::waitForPlayerJoinSyncFinished(QDataStream & stream, quint64 sock
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << command;
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
         auto & multiplayerSyncData = m_actionPerformer.getSyncData();
         multiplayerSyncData.m_waitingForSyncFinished = true;
@@ -654,7 +701,7 @@ void GameMenue::syncPointReached()
         sendStream << command;
         m_pMap->serializeObject(sendStream);
         sendStream << m_actionPerformer.getSyncCounter();
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         for (auto & socketId : multiplayerSyncData.m_connectingSockets)
         {
             emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
@@ -683,7 +730,7 @@ void GameMenue::playerRequestControlInfo(QDataStream & stream, quint64 socketId)
     if (m_requestData.size() > 0)
     {
         QString command = QString(NetworkCommands::REQUESTUSERNAME);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         QJsonDocument doc(data);
@@ -714,9 +761,9 @@ void GameMenue::checkSendPlayerRequestControlInfo()
             }
             else
             {
-                CONSOLE_PRINT("Client login data are invalid. Closing connection.", Console::eDEBUG);
-                QString command = QString(NetworkCommands::DISCONNECTINGFOFROMSERVER);
-                CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+                CONSOLE_PRINT("Client login data are invalid. Closing connection.", GameConsole::eDEBUG);
+                QString command = QString(NetworkCommands::DISCONNECTINGFROMSERVER);
+                CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
                 QJsonObject data;
                 data.insert(JsonKeys::JSONKEY_COMMAND, command);
                 data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::UsernameAlreadyInGame);
@@ -770,6 +817,7 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
     sendStream << m_actionPerformer.getSyncCounter();
     if (playerAis.size() > 0 && m_slaveDespawnTimer.isActive())
     {
+        CONSOLE_PRINT("Stopping slave despawn timer", GameConsole::eDEBUG);
         m_slaveDespawnTimer.stop();
     }
     emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
@@ -799,7 +847,7 @@ void GameMenue::continueAfterSyncGame()
         multiplayerSyncData.m_waitingForSyncFinished)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        pApp->getAudioThread()->playSound("connect.wav");
+        pApp->getAudioManager()->playSound("connect.wav");
         multiplayerSyncData.m_waitingForSyncFinished = false;
         if (m_pNetworkInterface->getIsServer())
         {
@@ -807,7 +855,7 @@ void GameMenue::continueAfterSyncGame()
             QByteArray sendData;
             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
             sendStream << command;
-            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+            CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
         }
         if (multiplayerSyncData.m_postSyncAction.get() != nullptr)
@@ -822,10 +870,10 @@ void GameMenue::playerJoined(quint64 socketID)
 {
     if (m_pNetworkInterface->getIsServer())
     {
-        CONSOLE_PRINT("Player joined with socket: " + QString::number(socketID), Console::eDEBUG);
+        CONSOLE_PRINT("Player joined with socket: " + QString::number(socketID), GameConsole::eDEBUG);
         if (Mainapp::getSlave())
         {
-            CONSOLE_PRINT("Slave requesting login data", Console::eDEBUG);
+            CONSOLE_PRINT("Slave requesting login data", GameConsole::eDEBUG);
             auto & cypher = Mainapp::getInstance()->getCypher();
             emit m_pNetworkInterface->sig_sendData(socketID, cypher.getPublicKeyMessage(NetworkCommands::PublicKeyActions::RequestLoginData), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
@@ -839,7 +887,7 @@ void GameMenue::playerJoined(quint64 socketID)
 void GameMenue::sendRequestJoinReason(quint64 socketID)
 {
     QString command = QString(NetworkCommands::REQUESTJOINREASON);
-    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << command;
@@ -850,7 +898,7 @@ void GameMenue::disconnected(quint64 socketID)
 {
     if (m_pNetworkInterface.get() != nullptr)
     {
-        CONSOLE_PRINT("Handling player GameMenue::disconnect()", Console::eDEBUG);
+        CONSOLE_PRINT("Handling player GameMenue::disconnect()", GameConsole::eDEBUG);
         bool showDisconnect = !m_pNetworkInterface->getIsServer();
         auto & multiplayerSyncData = m_actionPerformer.getSyncData();
         multiplayerSyncData.m_connectingSockets.removeAll(socketID);
@@ -858,12 +906,13 @@ void GameMenue::disconnected(quint64 socketID)
         bool observerDisconnect = observer.contains(socketID);
         if (observerDisconnect)
         {
+            CONSOLE_PRINT("Observer has disconnected " + QString::number(socketID), GameConsole::eDEBUG);
             observer.removeAll(socketID);
         }
         else
         {
             Mainapp* pApp = Mainapp::getInstance();
-            pApp->getAudioThread()->playSound("disconnect.wav");
+            pApp->getAudioManager()->playSound("disconnect.wav");
             if (!m_pNetworkInterface->getIsServer())
             {
                 for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -883,6 +932,7 @@ void GameMenue::disconnected(quint64 socketID)
                 }
                 if (showDisconnect && socketID > 0)
                 {
+                    CONSOLE_PRINT("Connection to host lost", GameConsole::eDEBUG);
                     m_gameStarted = false;
                     spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
                     addChild(pDialogMessageBox);
@@ -901,13 +951,11 @@ void GameMenue::disconnected(quint64 socketID)
                 }
                 if (Mainapp::getSlave())
                 {
-                    constexpr qint32 MS_PER_SECOND = 1000;
-                    m_slaveDespawnTimer.setSingleShot(true);
-                    m_slaveDespawnTimer.start(MS_PER_SECOND);
-                    m_slaveDespawnElapseTimer.start();
+                    startDespawnTimer();
                 }
                 else
                 {
+                    CONSOLE_PRINT("Client connection lost", GameConsole::eDEBUG);
                     spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("A client has disconnected from the game. The client may reconnect to the game."));
                     addChild(pDialogMessageBox);
                 }
@@ -917,14 +965,82 @@ void GameMenue::disconnected(quint64 socketID)
     }
 }
 
+void GameMenue::startDespawnTimer()
+{
+    if (m_pNetworkInterface->getConnectedSockets().size() == 0)
+    {
+        CONSOLE_PRINT("GameMenue::startDespawnTimer", GameConsole::eDEBUG);
+        m_slaveDespawnElapseTimer.start();
+        m_slaveDespawnTimer.setSingleShot(false);
+        constexpr qint32 MS_PER_SECOND = 1000;
+        m_slaveDespawnTimer.start(MS_PER_SECOND);
+    }
+}
+
 void GameMenue::despawnSlave()
 {
+    const auto multiplier = 0.001f;
     std::chrono::milliseconds ms = Settings::getSlaveDespawnTime();
+    auto elapsed = m_slaveDespawnElapseTimer.elapsed();
+    CONSOLE_PRINT("GameMenue::despawnSlave elapsed seconds " + QString::number(elapsed * multiplier) + " target time " + QString::number(ms.count() * multiplier), GameConsole::eDEBUG);
     if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
     {
-        CONSOLE_PRINT("Closing slave cause a player has disconnected.", Console::eDEBUG);
-        QCoreApplication::exit(0);
+        if (m_saveAllowed)
+        {
+            QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".msav";
+            saveMap(saveFile);
+            spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+            QString command = NetworkCommands::SLAVEINFODESPAWNING;
+            QJsonObject data;
+            data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, 0);
+            data.insert(JsonKeys::JSONKEY_MAXPLAYERS, m_pMap->getPlayerCount());
+            data.insert(JsonKeys::JSONKEY_MAPNAME, m_pMap->getMapName());
+            data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, "");
+            data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+            data.insert(JsonKeys::JSONKEY_HASPASSWORD, m_pMap->getGameRules()->getPassword().getIsSet());
+            data.insert(JsonKeys::JSONKEY_UUID, 0);
+            data.insert(JsonKeys::JSONKEY_SAVEFILE, saveFile);
+            data.insert(JsonKeys::JSONKEY_RUNNINGGAME, true);
+            auto activeMods = Settings::getActiveMods();
+            QJsonObject mods;
+            for (qint32 i = 0; i < activeMods.size(); ++i)
+            {
+                mods.insert(JsonKeys::JSONKEY_MOD + QString::number(i), activeMods[i]);
+            }
+            data.insert(JsonKeys::JSONKEY_USEDMODS, mods);
+            QJsonArray usernames;
+            qint32 count = m_pMap->getPlayerCount();
+            for (qint32 i = 0; i < count; ++i)
+            {
+                Player* pPlayer = m_pMap->getPlayer(i);
+                if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
+                {
+                    CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+                    usernames.append(pPlayer->getPlayerNameId());
+                }
+                else
+                {
+                    CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+                }
+            }
+            data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
+            QJsonDocument doc(data);
+            CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
+            emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            m_slaveDespawnTimer.stop();
+        }
+        else
+        {
+            GameAnimationFactory::skipAllAnimations();
+        }
     }
+}
+
+void GameMenue::closeSlave()
+{
+    CONSOLE_PRINT("Closing slave cause all players have disconnected.", GameConsole::eDEBUG);
+    QCoreApplication::exit(0);
 }
 
 bool GameMenue::isNetworkGame()
@@ -938,8 +1054,6 @@ bool GameMenue::isNetworkGame()
 
 void GameMenue::loadGameMenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (m_pNetworkInterface.get() != nullptr)
     {
@@ -978,10 +1092,10 @@ void GameMenue::loadGameMenue()
     m_mapSlidingActor->addChild(m_pMap);
     m_pMap->centerMap(m_pMap->getMapWidth() / 2, m_pMap->getMapHeight() / 2);
 
-    connect(&m_slaveDespawnTimer, &QTimer::timeout, this, &GameMenue::despawnSlave, Qt::QueuedConnection);
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connectMap();
 
+    connect(&m_slaveDespawnTimer, &QTimer::timeout, this, &GameMenue::despawnSlave, Qt::QueuedConnection);
     connect(this, &GameMenue::sigVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
@@ -1331,7 +1445,7 @@ void GameMenue::doPlayerInfoFlipping()
 void GameMenue::updatePlayerinfo()
 {
     Mainapp::getInstance()->pauseRendering();
-    CONSOLE_PRINT("GameMenue::updatePlayerinfo", Console::eDEBUG);
+    CONSOLE_PRINT("GameMenue::updatePlayerinfo", GameConsole::eDEBUG);
     if (m_pPlayerinfo.get() != nullptr)
     {
         m_pPlayerinfo->updateData();
@@ -1368,67 +1482,63 @@ void GameMenue::updateGameInfo()
 
 void GameMenue::victory(qint32 team)
 {
-    if (BaseGamemenu::getInstance() != nullptr)
+    bool humanWin = false;
+    CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team), GameConsole::eDEBUG);
+    // create victorys
+    if (team >= 0)
     {
-        CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team), Console::eDEBUG);
-        
-        bool exit = true;
-        bool humanWin = false;
-        // create victorys
-        if (team >= 0)
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer->getTeam() != team)
             {
-                Player* pPlayer = m_pMap->getPlayer(i);
-                if (pPlayer->getTeam() != team)
-                {
-                    CONSOLE_PRINT("Defeating player " + QString::number(i) + " cause team " + QString::number(team) + " is set to win the game", Console::eDEBUG);
-                    pPlayer->defeatPlayer(nullptr);
-                }
-                if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
-                {
-                    humanWin = true;
-                }
+                CONSOLE_PRINT("Defeating player " + QString::number(i) + " cause team " + QString::number(team) + " is set to win the game", GameConsole::eDEBUG);
+                pPlayer->defeatPlayer(nullptr);
             }
+            if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+            {
+                humanWin = true;
+            }
+        }
+        if (m_terminated == 0)
+        {
             if (humanWin)
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("victory.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("victory.wav");
             }
-            m_pMap->getGameScript()->victory(team);            
+            m_pMap->getGameScript()->victory(team);
         }
-        if (GameAnimationFactory::getAnimationCount() == 0)
+    }
+    if (m_terminated == 0)
+    {
+        m_terminated = 1;
+    }
+    bool exit = GameAnimationFactory::getAnimationCount() == 0;
+    if (exit && !m_isReplay && m_terminated == 1)
+    {
+        m_terminated = 2;
+        if (m_pNetworkInterface.get() != nullptr)
         {
-            exit = true;
+            m_pChat->detach();
+            m_pChat = nullptr;
         }
-        else
+        if (m_pMap->getCampaign() != nullptr)
         {
-            exit = false;
+            CONSOLE_PRINT("Informing campaign about game result. That human player game result is: " + QString::number(humanWin), GameConsole::eDEBUG);
+            m_pMap->getCampaign()->mapFinished(m_pMap.get(), humanWin);
         }
-        if (exit && !m_isReplay)
-        {
-            if (m_pNetworkInterface.get() != nullptr)
-            {
-                m_pChat->detach();
-                m_pChat = nullptr;
-            }
-            if (m_pMap->getCampaign() != nullptr)
-            {
-                CONSOLE_PRINT("Informing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
-                m_pMap->getCampaign()->mapFinished(m_pMap.get(), humanWin);
-            }
-            AchievementManager::getInstance()->onVictory(team, humanWin, m_pMap.get());
-            CONSOLE_PRINT("Leaving Game Menue", Console::eDEBUG);
-            auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface);
-            oxygine::Stage::getStage()->addChild(window);
-            deleteMenu();
-        }
+        AchievementManager::getInstance()->onVictory(team, humanWin, m_pMap.get());
+        CONSOLE_PRINT("Leaving Game Menue", GameConsole::eDEBUG);
+        auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface);
+        oxygine::Stage::getStage()->addChild(window);
+        oxygine::Actor::detach();
     }
 }
 
 void GameMenue::showAttackLog(qint32 player)
 {    
     m_Focused = false;
-    CONSOLE_PRINT("showAttackLog() for player " + QString::number(player), Console::eDEBUG);
+    CONSOLE_PRINT("showAttackLog() for player " + QString::number(player), GameConsole::eDEBUG);
     spDialogAttackLog pAttackLog = spDialogAttackLog::create(m_pMap.get(), m_pMap->getPlayer(player));
     connect(pAttackLog.get(), &DialogAttackLog::sigFinished, this, [this]()
     {
@@ -1440,7 +1550,7 @@ void GameMenue::showAttackLog(qint32 player)
 void GameMenue::showRules()
 {
     m_Focused = false;
-    CONSOLE_PRINT("showRuleSelection()", Console::eDEBUG);
+    CONSOLE_PRINT("showRuleSelection()", GameConsole::eDEBUG);
     spRuleSelectionDialog pRuleSelection = spRuleSelectionDialog::create(m_pMap.get(), RuleSelection::Mode::Singleplayer, false);
     connect(pRuleSelection.get(), &RuleSelectionDialog::sigOk, this, [this]()
     {
@@ -1452,7 +1562,7 @@ void GameMenue::showRules()
 void GameMenue::showUnitInfo(qint32 player)
 {    
     m_Focused = false;
-    CONSOLE_PRINT("showUnitInfo() for player " + QString::number(player), Console::eDEBUG);
+    CONSOLE_PRINT("showUnitInfo() for player " + QString::number(player), GameConsole::eDEBUG);
     spDialogUnitInfo pDialogUnitInfo = spDialogUnitInfo::create(m_pMap->getPlayer(player));
     connect(pDialogUnitInfo.get(), &DialogUnitInfo::sigFinished, this, [this]()
     {
@@ -1469,7 +1579,7 @@ void GameMenue::showUnitStatistics(qint32 player)
 void GameMenue::showPlayerUnitStatistics(Player* pPlayer)
 {
     m_Focused = false;
-    CONSOLE_PRINT("showUnitStatistics()", Console::eDEBUG);
+    CONSOLE_PRINT("showUnitStatistics()", GameConsole::eDEBUG);
     spGenericBox pBox = spGenericBox::create();
     spUnitStatisticView view = spUnitStatisticView::create(m_pMap->getGameRecorder()->getPlayerDataRecords()[pPlayer->getPlayerID()],
                                                            Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer, m_pMap.get());
@@ -1485,7 +1595,7 @@ void GameMenue::showPlayerUnitStatistics(Player* pPlayer)
 void GameMenue::showXmlFileDialog(const QString & xmlFile, bool saveSettings)
 {    
     m_Focused = false;
-    CONSOLE_PRINT("showXmlFile() " + xmlFile, Console::eDEBUG);
+    CONSOLE_PRINT("showXmlFile() " + xmlFile, GameConsole::eDEBUG);
     spCustomDialog pDialogOptions = spCustomDialog::create("", xmlFile, this, "Ok");
     connect(pDialogOptions.get(), &CustomDialog::sigFinished, this, [this, saveSettings]()
     {
@@ -1500,7 +1610,7 @@ void GameMenue::showXmlFileDialog(const QString & xmlFile, bool saveSettings)
 
 void GameMenue::showGameInfo(qint32 player)
 {
-    CONSOLE_PRINT("showGameInfo() for player " + QString::number(player), Console::eDEBUG);
+    CONSOLE_PRINT("showGameInfo() for player " + QString::number(player), GameConsole::eDEBUG);
     QStringList header = {tr("Player"),
                           tr("Produced"),
                           tr("Lost"),
@@ -1574,7 +1684,7 @@ void GameMenue::showGameInfo(qint32 player)
 
 void GameMenue::showCOInfo()
 {    
-    CONSOLE_PRINT("showCOInfo()", Console::eDEBUG);
+    CONSOLE_PRINT("showCOInfo()", GameConsole::eDEBUG);
     
     spCOInfoDialog pCOInfoDialog = spCOInfoDialog::create(m_pMap->getCurrentPlayer()->getspCO(0), m_pMap->getspPlayer(m_pMap->getCurrentPlayer()->getPlayerID()), [this](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
     {
@@ -1641,7 +1751,7 @@ void GameMenue::saveGame()
     QStringList wildcards;
     wildcards.append("*" + getSaveFileEnding());
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), false, tr("Save"));
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, [this](QString filename)
     {
@@ -1666,7 +1776,7 @@ QString GameMenue::getSaveFileEnding()
 
 void GameMenue::showSaveAndExitGame()
 {    
-    CONSOLE_PRINT("showSaveAndExitGame()", Console::eDEBUG);
+    CONSOLE_PRINT("showSaveAndExitGame()", GameConsole::eDEBUG);
     QStringList wildcards;
     if (m_pNetworkInterface.get() != nullptr ||
         m_Multiplayer)
@@ -1678,7 +1788,7 @@ void GameMenue::showSaveAndExitGame()
         wildcards.append("*.sav");
     }
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), false, tr("Save"));
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
     setFocused(false);
@@ -1687,7 +1797,7 @@ void GameMenue::showSaveAndExitGame()
 
 void GameMenue::victoryInfo()
 {    
-    CONSOLE_PRINT("victoryInfo()", Console::eDEBUG);
+    CONSOLE_PRINT("victoryInfo()", GameConsole::eDEBUG);
     spDialogVictoryConditions pVictoryConditions = spDialogVictoryConditions::create(m_pMap.get());
     addChild(pVictoryConditions);
     setFocused(false);
@@ -1698,7 +1808,7 @@ void GameMenue::autoSaveMap()
 {
     if (Settings::getAutoSavingCycle() > 0)
     {
-        CONSOLE_PRINT("GameMenue::autoSaveMap()", Console::eDEBUG);
+        CONSOLE_PRINT("GameMenue::autoSaveMap()", GameConsole::eDEBUG);
         QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + m_pMap->getMapName() + "_autosave_", getSaveFileEnding(), Settings::getAutoSavingCycle());
         saveMap(path, false);
     }
@@ -1706,7 +1816,7 @@ void GameMenue::autoSaveMap()
 
 void GameMenue::saveMap(QString filename, bool skipAnimations)
 {
-    CONSOLE_PRINT("GameMenue::saveMap() " + filename, Console::eDEBUG);
+    CONSOLE_PRINT("GameMenue::saveMap() " + filename, GameConsole::eDEBUG);
     m_saveFile = filename;
     if (!m_saveFile.isEmpty())
     {
@@ -1722,7 +1832,7 @@ void GameMenue::saveMap(QString filename, bool skipAnimations)
     }
     else
     {
-        CONSOLE_PRINT("Trying to save empty map name saving ignored.", Console::eWARNING);
+        CONSOLE_PRINT("Trying to save empty map name saving ignored.", GameConsole::eWARNING);
     }
     setFocused(true);
 }
@@ -1735,43 +1845,61 @@ void GameMenue::saveMapAndExit(QString filename)
 
 void GameMenue::doSaveMap()
 {
-    CONSOLE_PRINT("Saving map under " + m_saveFile, Console::eDEBUG);
-    if (m_saveAllowed)
+    if (Settings::getAiSlave())
     {
-        if (m_saveFile.endsWith(".sav") || m_saveFile.endsWith(".msav"))
-        {
-            QFile file(m_saveFile);
-            file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-            QDataStream stream(&file);
-            
-            m_pMap->serializeObject(stream);
-            file.close();
-            Settings::setLastSaveGame(m_saveFile);
-        }
-        m_saveMap = false;
-        m_saveFile = "";
-        if (m_exitAfterSave)
-        {
-            exitGame();
-        }
+        CONSOLE_PRINT("Ignoring saving request as ai slave", GameConsole::eDEBUG);
     }
     else
     {
-        CONSOLE_PRINT("Save triggered while no saving is allowed. Game wasn't saved", Console::eERROR);
+        CONSOLE_PRINT("Saving map under " + m_saveFile, GameConsole::eDEBUG);
+        if (m_saveAllowed)
+        {
+            if (m_saveFile.endsWith(".sav") || m_saveFile.endsWith(".msav"))
+            {
+                QFile file(m_saveFile);
+                file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+                QDataStream stream(&file);
+
+                m_pMap->serializeObject(stream);
+                file.close();
+                Settings::setLastSaveGame(m_saveFile);
+            }
+            m_saveMap = false;
+            m_saveFile = "";
+            if (m_exitAfterSave)
+            {
+                exitGame();
+            }
+        }
+        else
+        {
+            CONSOLE_PRINT("Save triggered while no saving is allowed. Game wasn't saved", GameConsole::eERROR);
+        }
+    }
+}
+
+void GameMenue::exitGameDelayed()
+{
+    if (!m_exitDelayedTimer.isActive())
+    {
+        connect(&m_exitDelayedTimer, &QTimer::timeout, this, &GameMenue::exitGame, Qt::QueuedConnection);
+        m_exitDelayedTimer.setSingleShot(true);
+        m_exitDelayedTimer.start(2000);
     }
 }
 
 void GameMenue::exitGame()
 {    
-    CONSOLE_PRINT("Finishing running animations and exiting game", Console::eDEBUG);
+    CONSOLE_PRINT("Finishing running animations and exiting game", GameConsole::eDEBUG);
     m_gameStarted = false;
     while (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    auto * ai = m_pMap->getCurrentPlayer()->getBaseGameInput();
-    if (ai != nullptr &&
-        ai->getProcessing())
+    if (m_pMap.get() != nullptr &&
+        m_pMap->getCurrentPlayer() &&
+        m_pMap->getCurrentPlayer()->getBaseGameInput() != nullptr &&
+        m_pMap->getCurrentPlayer()->getBaseGameInput()->getProcessing())
     {
         m_actionPerformer.setExit(true);
     }
@@ -1783,16 +1911,21 @@ void GameMenue::exitGame()
 
 void GameMenue::startGame()
 {
-    CONSOLE_PRINT("GameMenue::startGame", Console::eDEBUG);
+    CONSOLE_PRINT("GameMenue::startGame", GameConsole::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationFactory::clearAllAnimations();
     qint32 count = m_pMap->getPlayerCount();
-    m_pMap->setMenu(this);
     registerAtInterpreter();
     for (qint32 i = 0; i < count; ++i)
     {
         Player* pPlayer = m_pMap->getPlayer(i);
         pPlayer->setMenu(this);
+        auto* pInput = pPlayer->getBaseGameInput();
+        if (pInput != nullptr)
+        {
+            CONSOLE_PRINT("Controller for player " + QString::number(i) + " is " + QString::number(pInput->getAiType()) + " original ai is " + QString::number(pPlayer->getControlType()), GameConsole::eDEBUG);
+            pInput->onGameStart();
+        }
         qint32 coCount = pPlayer->getMaxCoCount();
         for (qint32 co = 0; co < coCount; ++co)
         {
@@ -1805,7 +1938,7 @@ void GameMenue::startGame()
     }
     if (!m_SaveGame)
     {
-        CONSOLE_PRINT("Launching game from start", Console::eDEBUG);
+        CONSOLE_PRINT("Launching game from start", GameConsole::eDEBUG);
         m_pMap->startGame();
         m_pMap->setCurrentPlayer(m_pMap->getPlayerCount() - 1);
         if (m_pNetworkInterface.get() == nullptr)
@@ -1826,9 +1959,9 @@ void GameMenue::startGame()
         pRules->init();
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();
-        CONSOLE_PRINT("Triggering action next player in order to start the game.", Console::eDEBUG);
+        CONSOLE_PRINT("Triggering action next player in order to start the game.", GameConsole::eDEBUG);
         spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap.get());
-        if (m_pNetworkInterface.get() != nullptr)
+        if (GlobalUtils::getUseSeed())
         {
             pAction->setSeed(GlobalUtils::getSeed());
         }
@@ -1836,25 +1969,34 @@ void GameMenue::startGame()
     }
     else
     {
-        CONSOLE_PRINT("Launching game as save game", Console::eDEBUG);
-        pApp->getAudioThread()->clearPlayList();
+        CONSOLE_PRINT("Launching game as save game", GameConsole::eDEBUG);
+        pApp->getAudioManager()->clearPlayList();
         m_pMap->playMusic();
         m_pMap->updateUnitIcons();
         m_pMap->getGameRules()->createFogVision();
-        pApp->getAudioThread()->playRandom();
+        pApp->getAudioManager()->playRandom();
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();
+        auto* pInput = m_pMap->getCurrentPlayer()->getBaseGameInput();
         if ((m_pNetworkInterface.get() == nullptr ||
              m_pNetworkInterface->getIsServer()) &&
-            !m_gameStarted)
+            !m_gameStarted ||
+            (pInput != nullptr && pInput->getAiType() != GameEnums::AiTypes_ProxyAi && pInput->getAiType() != GameEnums::AiTypes_DummyAi))
         {
-            CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
+            CONSOLE_PRINT("GameMenue::startGame emitting sigActionPerformed()", GameConsole::eDEBUG);
             emit m_actionPerformer.sigActionPerformed();
         }
     }
-    m_pMap->setVisible(true);
+    updateQuickButtons();
+    m_pMap->setVisible(true);    
     m_gameStarted = true;
+    if (!isNetworkGame() && !m_isReplay)
+    {
+        connect(GameConsole::getInstance(), &GameConsole::sigExecuteCommand, this, &GameMenue::executeCommand, Qt::QueuedConnection);
+    }
+    Mainapp::getAiProcessPipe().onGameStarted(this);
     sendGameStartedToServer();
+    CONSOLE_PRINT("Game started", GameConsole::eDEBUG);
 }
 
 void GameMenue::sendGameStartedToServer()
@@ -1862,7 +2004,7 @@ void GameMenue::sendGameStartedToServer()
     if (Mainapp::getSlaveClient().get() != nullptr)
     {
         QString command = QString(NetworkCommands::SLAVEGAMESTARTED);
-        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
@@ -1873,17 +2015,18 @@ void GameMenue::sendGameStartedToServer()
             Player* pPlayer = m_pMap->getPlayer(i);
             if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
             {
-                CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), Console::eDEBUG);
+                CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
                 usernames.append(pPlayer->getPlayerNameId());
             }
             else
             {
-                CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), Console::eDEBUG);
+                CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
             }
         }
         data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
         QJsonDocument doc(data);
         emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        startDespawnTimer();
     }
 }
 
@@ -1897,19 +2040,19 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
         {
             if (cur == Settings::getKey_quicksave1())
             {
-                saveMap("savegames/quicksave1.sav");
+                saveMap(Settings::getUserPath() + "savegames/quicksave1.sav");
             }
             else if (cur == Settings::getKey_quicksave2())
             {
-                saveMap("savegames/quicksave2.sav");
+                saveMap(Settings::getUserPath() + "savegames/quicksave2.sav");
             }
             else if (cur == Settings::getKey_quickload1())
             {
-                emit sigLoadSaveGame("savegames/quicksave1.sav");
+                emit sigLoadSaveGame(Settings::getUserPath() + "savegames/quicksave1.sav");
             }
             else if (cur == Settings::getKey_quickload2())
             {
-                emit sigLoadSaveGame("savegames/quicksave2.sav");
+                emit sigLoadSaveGame(Settings::getUserPath() + "savegames/quicksave2.sav");
             }
             else
             {
@@ -1926,7 +2069,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
 
 void GameMenue::keyInputAll(Qt::Key cur)
 {
-    if (cur == Qt::Key_Escape)
+    if (cur == Settings::getKey_Escape())
     {
         emit sigShowExitGame();
     }
@@ -1969,7 +2112,7 @@ Chat* GameMenue::getChat() const
 
 void GameMenue::showExitGame()
 {    
-    CONSOLE_PRINT("showExitGame()", Console::eDEBUG);
+    CONSOLE_PRINT("showExitGame()", GameConsole::eDEBUG);
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the current game?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &GameMenue::exitGame, Qt::QueuedConnection);
@@ -1982,7 +2125,7 @@ void GameMenue::showExitGame()
 
 WikiView* GameMenue::showWiki()
 {
-    CONSOLE_PRINT("showWiki()", Console::eDEBUG);
+    CONSOLE_PRINT("showWiki()", GameConsole::eDEBUG);
     m_Focused = false;
     spGenericBox pBox = spGenericBox::create(false);
     spWikiView pView = spWikiView::create(Settings::getWidth() - 40, Settings::getHeight() - 60);
@@ -2000,7 +2143,7 @@ void GameMenue::showSurrenderGame()
 {
     if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes::AiTypes_Human)
     {
-        CONSOLE_PRINT("showSurrenderGame()", Console::eDEBUG);
+        CONSOLE_PRINT("showSurrenderGame()", GameConsole::eDEBUG);
         m_Focused = false;
         spDialogMessageBox pSurrender = spDialogMessageBox::create(tr("Do you want to surrender the current game?"), true);
         connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &GameMenue::surrenderGame, Qt::QueuedConnection);
@@ -2015,7 +2158,7 @@ void GameMenue::showSurrenderGame()
 
 void GameMenue::surrenderGame()
 {    
-    CONSOLE_PRINT("GameMenue::surrenderGame", Console::eDEBUG);
+    CONSOLE_PRINT("GameMenue::surrenderGame", GameConsole::eDEBUG);
     spGameAction pAction = spGameAction::create(m_pMap.get());
     pAction->setActionID("ACTION_SURRENDER_INTERNAL");
     m_actionPerformer.performAction(pAction);
@@ -2027,7 +2170,7 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
     spUnit pUnit = spUnit(m_pMap->getTerrain(x, y)->getUnit());
     if (pUnit.get() != nullptr)
     {
-        CONSOLE_PRINT("showNicknameUnit()", Console::eDEBUG);
+        CONSOLE_PRINT("showNicknameUnit()", GameConsole::eDEBUG);
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Nickname for the Unit:"), true, pUnit->getName());
         connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, this, [this, x, y](QString value)
         {
@@ -2044,7 +2187,7 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
 
 void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 {
-    CONSOLE_PRINT("GameMenue::nicknameUnit", Console::eDEBUG);
+    CONSOLE_PRINT("GameMenue::nicknameUnit", GameConsole::eDEBUG);
     spGameAction pAction = spGameAction::create(m_pMap.get());
     pAction->setActionID("ACTION_NICKNAME_UNIT_INTERNAL");
     pAction->setTarget(QPoint(x, y));
@@ -2205,7 +2348,7 @@ void GameMenue::showLoadSaveGame()
     QStringList wildcards;
     wildcards.append("*.sav");
     QString path = Settings::getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::loadSaveGame, Qt::QueuedConnection);
     connect(saveDialog.get(), &FileDialog::sigCancel, this, [this]()
@@ -2222,13 +2365,21 @@ void GameMenue::loadSaveGame(const QString savefile)
         Mainapp* pApp = Mainapp::getInstance();
         spGameMenue pMenue = spGameMenue::create(savefile, true);
         oxygine::Stage::getStage()->addChild(pMenue);
-        pApp->getAudioThread()->clearPlayList();
+        pApp->getAudioManager()->clearPlayList();
         pMenue->startGame();
-        CONSOLE_PRINT("Leaving Game Menue", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Game Menue", GameConsole::eDEBUG);
         oxygine::Actor::detach();
     }
     else
     {
         setFocused(true);
+    }
+}
+
+void GameMenue::executeCommand(QString command)
+{
+    if (GameConsole::getDeveloperMode())
+    {
+        Interpreter::getInstance()->doString(command);
     }
 }

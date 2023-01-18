@@ -1,7 +1,7 @@
 #include <QDataStream>
 #include <QFile>
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -11,7 +11,7 @@
 
 #include "menue/editormenue.h"
 
-void GameMap::importAWDCMap(QString file)
+void GameMap::importAW4Map(QString file, EditorMenue* pMenu)
 {
     quint8 sign = 0;
     if (QFile::exists(file))
@@ -31,6 +31,16 @@ void GameMap::importAWDCMap(QString file)
         {
             m_players.append(spPlayer::create(this));
             m_players[i]->init();
+            if (i == 0)
+            {
+                m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
+                m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Human);
+            }
+            else
+            {
+                m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Normal));
+                m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Normal);
+            }
         }
 
         m_fields.reserve(heigth);
@@ -456,12 +466,12 @@ void GameMap::importAWDCMap(QString file)
         m_headerInfo.m_mapName = list[list.size() - 1].remove(list[list.size() - 1].lastIndexOf("."), list[list.size() - 1].size());
         m_headerInfo.m_mapDescription = "";
     }
-    dynamic_cast<EditorMenue*>(BaseGamemenu::getInstance())->optimizePlayers();
+    pMenu->optimizePlayers();
     // update the whole fucking map
     updateSprites();
 }
 
-void GameMap::exportAWDCMap(QString)
+void GameMap::exportAW4Map(QString)
 {
 //    If Objektverwalter.Spielfeld.Spieler.Length <= 9 Then
 //                Using Writer As New IO.FileStream(File, IO.FileMode.OpenOrCreate, IO.FileAccess.Write, IO.FileShare.Write)

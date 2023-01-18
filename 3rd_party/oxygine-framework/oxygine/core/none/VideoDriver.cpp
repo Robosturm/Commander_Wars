@@ -1,11 +1,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 namespace oxygine
 {
     spVideoDriver VideoDriver::instance;
-    VideoDriver::Stats VideoDriver::m_stats;
-    VertexDeclaration VideoDriver::m_VertexDeclaration;
 
     void VideoDriver::setUniform(const char* id, const QMatrix4x4& mat)
     {

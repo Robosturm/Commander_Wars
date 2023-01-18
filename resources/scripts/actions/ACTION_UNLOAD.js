@@ -6,16 +6,8 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
         var transportTerrain = map.getTerrain(actionTargetField.x, actionTargetField.y);
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-
-
         if (ACTION_UNLOAD.isUnloadTerrain(unit, transportTerrain, map) &&
-            (actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null))
+            ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map))
         {
             var size = unit.getLoadedUnitCount();
             for (var i = 0; i < size; i++)
@@ -346,9 +338,13 @@ var Constructor = function()
         ACTION_UNLOAD.postAnimationTransportUnitsPosX = [];
         ACTION_UNLOAD.postAnimationTransportUnitsPosY = [];
     };
+    this.getName = function()
+    {
+        return qsTr("Unload");
+    };
     this.getDescription = function()
     {
-        return qsTr("Unloads loaded units. Units that have been loaded this turn can't move. Units that were loaded in previous turns can immediatly move after beeing unloaded.");
+        return qsTr("Unloads loaded units. Units that have been loaded this turn can't move. Units that were loaded in previous turns can immediately move after beeing unloaded.");
     };
 }
 

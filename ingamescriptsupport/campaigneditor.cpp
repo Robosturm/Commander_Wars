@@ -1,5 +1,4 @@
-#include "qdir.h"
-#include "qfile.h"
+#include <QDir>
 #include "objects/base/label.h"
 
 #include "ingamescriptsupport/campaigneditor.h"
@@ -8,7 +7,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
@@ -19,18 +18,18 @@
 #include "objects/base/spinbox.h"
 #include "objects/dialogs/dialogmessagebox.h"
 
-const QString CampaignEditor::campaign = "campaign";
-const QString CampaignEditor::campaignName = "campaignName";
-const QString CampaignEditor::campaignDescription = "campaignDescription";
-const QString CampaignEditor::campaignAuthor = "campaignAuthor";
-const QString CampaignEditor::campaignMaps = "campaignMaps";
-const QString CampaignEditor::campaignMapsFolder = "campaignMapsFolder";
-const QString CampaignEditor::campaignMapNames = "campaignMapNames";
-const QString CampaignEditor::campaignMapEnabled = "campaignMapEnabled";
-const QString CampaignEditor::campaignMapDisabled = "campaignMapDisabled";
-const QString CampaignEditor::campaignMapAdd = "campaignMapAdd";
-const QString CampaignEditor::campaignMapFinished = "campaignMapFinished";
-const QString CampaignEditor::campaignFinished = "campaignFinished";
+const char* const CampaignEditor::campaign = "campaign";
+const char* const CampaignEditor::campaignName = "campaignName";
+const char* const CampaignEditor::campaignDescription = "campaignDescription";
+const char* const CampaignEditor::campaignAuthor = "campaignAuthor";
+const char* const CampaignEditor::campaignMaps = "campaignMaps";
+const char* const CampaignEditor::campaignMapsFolder = "campaignMapsFolder";
+const char* const CampaignEditor::campaignMapNames = "campaignMapNames";
+const char* const CampaignEditor::campaignMapEnabled = "campaignMapEnabled";
+const char* const CampaignEditor::campaignMapDisabled = "campaignMapDisabled";
+const char* const CampaignEditor::campaignMapAdd = "campaignMapAdd";
+const char* const CampaignEditor::campaignMapFinished = "campaignMapFinished";
+const char* const CampaignEditor::campaignFinished = "campaignFinished";
 
 CampaignEditor::CampaignEditor()
 {
@@ -38,8 +37,6 @@ CampaignEditor::CampaignEditor()
     setObjectName("CampaignEditor");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
@@ -51,10 +48,11 @@ CampaignEditor::CampaignEditor()
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     qint32 y = 30;
+    const qint32 labelWidth = 250;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    oxygine::spTextField pText =  oxygine::spTextField::create();
+    spLabel pText = spLabel::create(labelWidth);
     pText->setStyle(style);
     pText->setHtmlText(tr("Folder:"));
     pText->setPosition(30, y);
@@ -72,9 +70,9 @@ CampaignEditor::CampaignEditor()
     {
         emit sigShowSelectFolder();
     });
+    y += pText->getHeight() + 10;
 
-    y += 40;
-    pText =  oxygine::spTextField::create();
+    pText = spLabel::create(labelWidth);
     pText->setStyle(style);
     pText->setHtmlText(tr("Name:"));
     pText->setPosition(30, y);
@@ -84,9 +82,9 @@ CampaignEditor::CampaignEditor()
     m_Name->setPosition(300, y);
     m_Name->setCurrentText("");
     pSpriteBox->addChild(m_Name);
+    y += pText->getHeight() + 10;
 
-    y += 40;
-    pText =  oxygine::spTextField::create();
+    pText = spLabel::create(labelWidth);
     pText->setStyle(style);
     pText->setHtmlText(tr("Author:"));
     pText->setPosition(30, y);
@@ -96,9 +94,9 @@ CampaignEditor::CampaignEditor()
     m_Author->setPosition(300, y);
     m_Author->setCurrentText(Settings::getUsername());
     pSpriteBox->addChild(m_Author);
+    y += pText->getHeight() + 10;
 
-    y += 40;
-    pText =  oxygine::spTextField::create();
+    pText = spLabel::create(labelWidth);
     pText->setStyle(style);
     pText->setHtmlText(tr("Description:"));
     pText->setPosition(30, y);
@@ -108,8 +106,8 @@ CampaignEditor::CampaignEditor()
     m_Description->setPosition(300, y);
     m_Description->setCurrentText("");
     pSpriteBox->addChild(m_Description);
+    y += pText->getHeight() + 10;
 
-    y += 40;
     QSize size(Settings::getWidth() - 80, Settings::getHeight() - 280);
     m_Panel = spPanel::create(true, size, size);
     m_Panel->setPosition(40, y);
@@ -117,7 +115,7 @@ CampaignEditor::CampaignEditor()
 
     // add campaign
     oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("Add Map"), 200);
-    pAddCampaignButton->setPosition(30, Settings::getHeight() - 30 - pAddCampaignButton->getScaledHeight());
+    pAddCampaignButton->setPosition(30, Settings::getHeight() - 10 - pAddCampaignButton->getScaledHeight());
     pSpriteBox->addChild(pAddCampaignButton);
     pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -127,7 +125,7 @@ CampaignEditor::CampaignEditor()
     // load campaign
     oxygine::spButton pLoadCampaignButton = pObjectManager->createButton(tr("Load"), 150);
     pLoadCampaignButton->setPosition(Settings::getWidth() / 2 - 10 - pLoadCampaignButton->getScaledWidth(),
-                                     Settings::getHeight() - 30 - pLoadCampaignButton->getScaledHeight());
+                                     Settings::getHeight() - 10 - pLoadCampaignButton->getScaledHeight());
     pSpriteBox->addChild(pLoadCampaignButton);
     pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -183,7 +181,7 @@ void CampaignEditor::showAddCampaign()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + m_CampaignFolder->getCurrentText();
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Add"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Add"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);    
 }
@@ -193,7 +191,7 @@ void CampaignEditor::showSaveCampaign()
     QStringList wildcards;
     wildcards.append("*.jsm");
     QString path = Settings::getUserPath() + "maps/";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_Name->getCurrentText(), false, tr("Save"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, m_Name->getCurrentText(), false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);    
 }
@@ -203,7 +201,7 @@ void CampaignEditor::showLoadCampaign()
     QStringList wildcards;
     wildcards.append("*.jsm");
     QString path = Settings::getUserPath() + "maps/";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);    
 }
@@ -257,8 +255,7 @@ void CampaignEditor::clearCampaignData()
 }
 
 void CampaignEditor::updateCampaignData()
-{
-    
+{    
     m_Panel->clearContent();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     for (qint32 i = 0; i < mapDatas.size(); i++)
@@ -388,7 +385,7 @@ void CampaignEditor::loadCampaign(QString filename)
                             {
                                 QStringList items = line.replace("var map", "")
                                                         .replace("Won = variables.createVariable(\"", ",")
-                                                        .replace("\"); // " + campaignMapNames, "")
+                                                        .replace("\"); // " + QString(campaignMapNames), "")
                                                         .split(",");
                                 if (items.size() >= 2)
                                 {
@@ -418,14 +415,14 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
         }
         if (line.endsWith(campaignMapsFolder))
         {
-            m_CampaignFolder->setCurrentText(line.replace("var ret = [\"", "").replace("\"]; // " + campaignMapsFolder, ""));
+            m_CampaignFolder->setCurrentText(line.replace("var ret = [\"", "").replace("\"]; // " + QString(campaignMapsFolder), ""));
         }
         if (line.endsWith(campaignMapNames))
         {
             mapDatas.append(MapData());
             QStringList items = line.replace("var map", "")
                                     .replace("Won = variables.createVariable(\"", ",")
-                                    .replace("\"); // " + campaignMapNames, "")
+                                    .replace("\"); // " + QString(campaignMapNames), "")
                                     .split(",");
             if (items.size() >= 2)
             {
@@ -434,7 +431,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
         }
         if (line.endsWith(campaignMapEnabled))
         {
-            qint32 mapDataIndex = line.replace("var map", "").replace("EnableCount = 0; // " + campaignMapEnabled, "").toInt();
+            qint32 mapDataIndex = line.replace("var map", "").replace("EnableCount = 0; // " + QString(campaignMapEnabled), "").toInt();
             while (!stream.atEnd())
             {
                 line = stream.readLine().simplified();
@@ -453,7 +450,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
         }
         if (line.endsWith(campaignMapDisabled))
         {
-            qint32 mapDataIndex = line.replace("var map", "").replace("DisableCount = 0; // " + campaignMapDisabled, "").toInt();
+            qint32 mapDataIndex = line.replace("var map", "").replace("DisableCount = 0; // " + QString(campaignMapDisabled), "").toInt();
             while (!stream.atEnd())
             {
                 line = stream.readLine().simplified();
@@ -478,7 +475,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                                     .replace(" && ", ",")
                                     .replace("EnableCount >= ", ",")
                                     .replace(") {ret.push(\"", ",")
-                                    .replace("\");} // " + campaignMapAdd, "")
+                                    .replace("\");} // " + QString(campaignMapAdd), "")
                                     .split(",");
             if (items.size() >= 5)
             {
@@ -826,14 +823,12 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
 
     qint32 y = 10;
     qint32 width = 300;
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = spLabel::create(Settings::getWidth() - 60);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Enable Variable"));
     pText->setPosition(10, y);
     pPanel->addItem(pText);
-    y += 60;
-
-
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -850,7 +845,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableEnableName = value;
     });
     pPanel->addItem(textBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -868,7 +863,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableEnableCompare = dropDown->getCurrentItemText();
     });
     pPanel->addItem(dropDown);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -885,7 +880,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableEnableValue = value;
     });
     pPanel->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -902,14 +897,14 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableEnableActive = value;
     });
     pPanel->addItem(checkBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
-    pText = spLabel::create(width - 10);
+    pText = spLabel::create(Settings::getWidth() - 60);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Disable Variable"));
     pText->setPosition(10, y);
     pPanel->addItem(pText);
-    y += 60;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -926,7 +921,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableDisableName = value;
     });
     pPanel->addItem(textBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -942,7 +937,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableDisableCompare = dropDown->getCurrentItemText();
     });
     pPanel->addItem(dropDown);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -959,7 +954,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableDisableValue = value;
     });
     pPanel->addItem(spinBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -976,7 +971,8 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
         mapDatas[index].scriptVariableDisableActive = value;
     });
     pPanel->addItem(checkBox);
-    y += 40;
+    y += pText->getHeight() + 10;
+
     pPanel->setContentHeigth(y);
     CampaignEditor::addChild(pBox);
     

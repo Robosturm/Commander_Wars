@@ -83,6 +83,10 @@ var Constructor = function()
     {
         return qsTr("Movement of naval units is impeded but air units are not affected.");
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "placeReaf.wav";
+    };
 };
 Constructor.prototype = TERRAIN;
 var ROUGH_SEA = new Constructor();

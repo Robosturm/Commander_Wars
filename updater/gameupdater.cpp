@@ -3,7 +3,7 @@
 #include "objects/loadingscreen.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 
 #include <QDir>
@@ -49,10 +49,11 @@ GameUpdater::GameUpdater()
 
 void GameUpdater::cleanUpOldArtifacts()
 {
-    CONSOLE_PRINT("Clean up old artifacts", Console::eDEBUG);
-    if (m_downloadFile.exists())
+    CONSOLE_PRINT("Clean up old artifacts", GameConsole::eDEBUG);
+    QFile downloadFile(DOWNLOADTARGET);
+    if (downloadFile.exists())
     {
-        m_downloadFile.remove();
+        downloadFile.remove();
     }
     QDir dir(QCoreApplication::applicationDirPath() + "/" + UNPACK_PATH);
     dir.removeRecursively();
@@ -60,7 +61,7 @@ void GameUpdater::cleanUpOldArtifacts()
 
 void GameUpdater::install()
 {
-    CONSOLE_PRINT("Installing update", Console::eDEBUG);
+    CONSOLE_PRINT("Installing update", GameConsole::eDEBUG);
     QString path = QCoreApplication::applicationDirPath();
     QDirIterator dirIter(path, QDir::Files, QDirIterator::Subdirectories);
     qint32 count = 0;
@@ -74,9 +75,18 @@ void GameUpdater::install()
             QString targetName = filePath;
             QString targetPath = QCoreApplication::applicationDirPath() + "/../../" + targetName.replace(path, "");
             QFile file(targetPath);
-            file.remove();
+            if (file.exists())
+            {
+                file.remove();
+            }
+            else
+            {
+                QFileInfo info(targetPath);
+                QDir dir(info.absoluteDir().canonicalPath());
+                dir.mkpath(".");
+            }
             QFile::copy(filePath, targetPath);
-            CONSOLE_PRINT("Copying " + filePath + " to " + targetPath, Console::eDEBUG);
+            CONSOLE_PRINT("Copying " + filePath + " to " + targetPath, GameConsole::eDEBUG);
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->setProgress(tr("Copying files to target directory"), count);
             Mainapp::getInstance()->redrawUi();
@@ -98,7 +108,9 @@ void GameUpdater::onNewState(FileDownloader::State state)
     {
         case FileDownloader::State::DownloadingFailed:
         {
-            Console::print("Downloading new version failed.", Console::eINFO);
+            GameConsole::print("Downloading new version failed.", GameConsole::eINFO);
+            continueBooting();
+            break;
         }
         case FileDownloader::State::SameVersion:
         {
@@ -107,7 +119,7 @@ void GameUpdater::onNewState(FileDownloader::State state)
         }
         case FileDownloader::State::DownloadingNewVersion:
         {
-            Console::print("Start downloading new version.", Console::eINFO);
+            GameConsole::print("Start downloading new version.", GameConsole::eINFO);
             break;
         }
         case FileDownloader::State::DownloadingFinished:
@@ -142,7 +154,7 @@ void GameUpdater::finishDownload()
     }
     else
     {
-        Console::print("Failed to extract new version.", Console::eINFO);
+        GameConsole::print("Failed to extract new version.", GameConsole::eINFO);
         continueBooting();
     }
 
@@ -158,19 +170,14 @@ void GameUpdater::launchPatcher()
     QFileInfo info(QCoreApplication::applicationFilePath());
     QString program = info.fileName();
     QString patcherProgram =  QCoreApplication::applicationDirPath() + "/" + UNPACK_PATH + "/" + COW_INSTALLDIR + "/" + program;
-    while (!QFile::exists(patcherProgram))
-    {
-        QThread::currentThread()->msleep(100);
-        QCoreApplication::processEvents();
-    }
     QThread::currentThread()->msleep(350);
     const char* const prefix = "--";
     QStringList args({QString(prefix) + CommandLineParser::ARG_UPDATE,
                       MODE_INSTALL});
-    CONSOLE_PRINT("Starting patcher application " + patcherProgram, Console::eDEBUG);
+    CONSOLE_PRINT("Starting patcher application " + patcherProgram, GameConsole::eDEBUG);
     if (!QProcess::startDetached(patcherProgram, args))
     {
-        CONSOLE_PRINT("Failed to start patcher application", Console::eERROR);
+        CONSOLE_PRINT("Failed to start patcher application " + patcherProgram, GameConsole::eERROR);
     }
 }
 
@@ -181,14 +188,8 @@ void GameUpdater::launchApplication()
     QString program = info.fileName();
     QString workingDir = QCoreApplication::applicationDirPath() + "/../../";
     QString appPath = workingDir + program;
-
-    while (!QFile::exists(appPath))
-    {
-        QThread::currentThread()->msleep(100);
-        QCoreApplication::processEvents();
-    }
     QThread::currentThread()->msleep(350);
-    CONSOLE_PRINT("Starting application " + appPath, Console::eDEBUG);
+    CONSOLE_PRINT("Starting application " + appPath, GameConsole::eDEBUG);
     QProcess process;
     process.setProgram(appPath);
     process.setWorkingDirectory(workingDir);
@@ -197,12 +198,16 @@ void GameUpdater::launchApplication()
 
 void GameUpdater::continueBooting()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-    pLoadingScreen->setProgress(tr("Loading Object Textures ..."), 8);
-    pApp->redrawUi();
-    QCoreApplication::processEvents();
-    emit pApp->sigNextStartUpStep(static_cast<Mainapp::StartupPhase>(static_cast<qint8>(pApp->getStartUpStep()) + 1));
+    if (!m_continued)
+    {
+        m_continued = true;
+        Mainapp* pApp = Mainapp::getInstance();
+        spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+        pLoadingScreen->setProgress(tr("Loading Object Textures ..."), 8);
+        pApp->redrawUi();
+        QCoreApplication::processEvents();
+        emit pApp->sigNextStartUpStep(static_cast<Mainapp::StartupPhase>(static_cast<qint8>(pApp->getStartUpStep()) + 1));
+    }
 }
 
 void GameUpdater::onNewProgress(qint64 bytesReceived, qint64 bytesTotal)

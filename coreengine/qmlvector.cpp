@@ -1,6 +1,6 @@
 #include "coreengine/qmlvector.h"
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/interpreter.h"
 
 #include "ai/coreai.h"
 
@@ -9,15 +9,8 @@ QmlVectorPoint::QmlVectorPoint()
 #ifdef GRAPHICSUPPORT
     setObjectName("QmlVectorPoint");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    oxygine::ref_counter::addInstanceCounter();
-}
-
-QmlVectorPoint::~QmlVectorPoint()
-{
-    oxygine::ref_counter::releaseInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 QmlVectorUnit::QmlVectorUnit()
@@ -25,15 +18,8 @@ QmlVectorUnit::QmlVectorUnit()
 #ifdef GRAPHICSUPPORT
     setObjectName("QmlVectorUnit");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    oxygine::ref_counter::addInstanceCounter();
-}
-
-QmlVectorUnit::~QmlVectorUnit()
-{
-    oxygine::ref_counter::releaseInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 void QmlVectorUnit::randomize()
@@ -96,20 +82,26 @@ void QmlVectorUnit::sortShortestMovementRange(bool infantriesLast)
     }
 }
 
+qint32 QmlVectorUnit::getUnitCount(const QString & unitId)
+{
+    qint32 count = 0;
+    for (auto & unit : m_Vector)
+    {
+        if (unit->getUnitID() == unitId)
+        {
+            ++count;
+        }
+    }
+    return count;
+}
+
 QmlVectorBuilding::QmlVectorBuilding()
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("QmlVectorBuilding");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    oxygine::ref_counter::addInstanceCounter();
-}
-
-QmlVectorBuilding::~QmlVectorBuilding()
-{
-    oxygine::ref_counter::releaseInstanceCounter();
+    Interpreter::getInstance()->trackJsObject(this);
 }
 
 void QmlVectorBuilding::randomize()
@@ -122,4 +114,17 @@ void QmlVectorBuilding::randomize()
     {
         return lhs->getSortValues()[0] > rhs->getSortValues()[0];
     });
+}
+
+qint32 QmlVectorBuilding::getBuildingCount(const QString & buildingId)
+{
+    qint32 count = 0;
+    for (auto & building : m_Vector)
+    {
+        if (building->getBuildingID() == buildingId)
+        {
+            ++count;
+        }
+    }
+    return count;
 }

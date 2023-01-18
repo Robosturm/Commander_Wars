@@ -30,6 +30,10 @@ var Constructor = function()
     {
         return qsTr("Defensive");
     };
+    this.getCosts = function()
+    {
+        return 2;
+    };
 };
 
 Constructor.prototype = CO_PERK;

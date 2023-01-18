@@ -65,22 +65,40 @@ var PlayerSelection =
                    menu.getIsObserverNetworkInterface() ||
                   !menu.getIsArmyCustomizationAllowed());
     },
-    getIsArmyOrPerkSelectionEnabled : function(menu)
+    getIsArmySelectionEnabled : function(menu)
     {
         var playerIdx = PlayerSelection.readCurrentPlayer();
         var player = menu.getMap().getPlayer(playerIdx);
-        var ai = player.getBaseGameInput();
-        var aiType = GameEnums.AiTypes_Open;
-        if (ai !== null)
+        var hasCo = player.getCO(0) !== null || player.getCO(1) !== null;
+        if (hasCo)
         {
-            aiType = ai.getAiType();
+            return PlayerSelection.getIsArmyOrPerkSelectionEnabled(menu);
         }
-        var isServer = menu.getIsServerNetworkInterface();
-        return !(menu.getSaveGame() ||                 
-                 menu.getIsObserverNetworkInterface() ||
-                (player.getControlType() > GameEnums.AiTypes_Human && menu.getIsCampaign()) ||
-                (isServer && !menu.isNotServerChangeable(player)) ||
-                (!isServer && aiType !== GameEnums.AiTypes_Human))
+        return false;
+    },
 
+    getIsArmyOrPerkSelectionEnabled : function(menu)
+    {
+        if (menu.hasNetworkInterface())
+        {
+            var playerIdx = PlayerSelection.readCurrentPlayer();
+            var player = menu.getMap().getPlayer(playerIdx);
+            var ai = player.getBaseGameInput();
+            var aiType = GameEnums.AiTypes_Open;
+            if (ai !== null)
+            {
+                aiType = ai.getAiType();
+            }
+            var isServer = menu.getIsServerNetworkInterface();
+            return !(menu.getSaveGame() ||
+                     menu.getIsObserverNetworkInterface() ||
+                     (player.getControlType() > GameEnums.AiTypes_Human && menu.getIsCampaign()) ||
+                     (isServer && !menu.isNotServerChangeable(player)) ||
+                     (!isServer && aiType !== GameEnums.AiTypes_Human));
+        }
+        else
+        {
+            return true;
+        }
     }
 };

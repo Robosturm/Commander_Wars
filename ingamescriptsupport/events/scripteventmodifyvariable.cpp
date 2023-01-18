@@ -5,8 +5,6 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-
 #include "objects/base/textbox.h"
 #include "objects/base/spinbox.h"
 #include "objects/base/dropdownmenu.h"
@@ -108,7 +106,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(pText);
     QStringList items = {"=", "+", "-", "*", "/", "%"};
     spDropDownmenu dropDown = spDropDownmenu::create(150, items);
-    dropDown->setTooltipText(tr("The way how the variable gets modified."));
+    dropDown->setTooltipText(tr("The way how the variable gets modified.\n = set to value\n+ add value\n- substract value\n* multiply with value\n/ divide with value\n% module with value"));
     dropDown->setPosition(width, 70);
     dropDown->setCurrentItemText(m_Modifier);
     DropDownmenu* pDropDown = dropDown.get();

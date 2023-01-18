@@ -10,7 +10,6 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
 #include "objects/base/panel.h"
-#include "objects/base/checkbox.h"
 #include "objects/base/dropdownmenu.h"
 #include "objects/unitstatisticview.h"
 
@@ -21,7 +20,6 @@
 #include "coreengine/LUPDATE_MACROS.h"
 
 #include "menue/basemenu.h"
-#include "menue/wikimenu.h"
 
 class VictoryMenue;
 using spVictoryMenue = oxygine::intrusive_ptr<VictoryMenue>;
@@ -64,6 +62,7 @@ signals:
     void sigExitMenue();
     void sigShowGraph(VictoryMenue::GraphModes mode);
     void sigFinishCurrentGraph();
+    void sigQuitOnAiPipe();
 public slots:
     /**
      * @brief exitMenue
@@ -101,7 +100,22 @@ protected slots:
      * @brief despawn
      */
     void despawnSlave();
+    /**
+     * @brief quitOnAiPipe
+     */
+    void quitOnAiPipe();
+    /**
+     * @brief recieveServerData
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 protected:
+    /**
+     * @brief closeSlave
+     */
+    void closeSlave();
     /**
      * @brief drawGraphStep
      */

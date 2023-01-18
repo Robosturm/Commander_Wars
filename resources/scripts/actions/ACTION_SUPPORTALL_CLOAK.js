@@ -5,12 +5,11 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map))
         {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     };
     this.getActionText = function(map)
     {
@@ -85,11 +84,14 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
+    };
+    this.getName = function()
+    {
+        return qsTr("Cloak");
     };
     this.getDescription = function()
     {
-        return qsTr("Cloaks all own units.");
+        return qsTr("Cloaks all own units in a 2x2 square. A cloaked unit is only visible when a unit is nearby it, but can be attacked normally.");
     };
 }
 

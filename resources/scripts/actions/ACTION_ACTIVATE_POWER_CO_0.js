@@ -15,11 +15,12 @@ var Constructor = function()
     this.getActionText = function(map)
     {
         var text = "";
-        if (map !== null &&
+        if (map &&
+            map !== null &&
             map.getCurrentPlayer() !== null &&
             map.getCurrentPlayer().getCO(0) !== null)
         {
-            text = replaceTextArgs("Power of %0", [map.getCurrentPlayer().getCO(0).getCOName()]);
+            text = replaceTextArgs(qsTr("Power of %0"), [map.getCurrentPlayer().getCO(0).getCOName()]);
         }
         else
         {
@@ -49,6 +50,12 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getName = function()
+    {
+        return qsTr("Power of CO 1");
+    };
+
     this.getDescription = function()
     {
         return qsTr("Activates the Power of your first CO. Read the CO's power for more information.");

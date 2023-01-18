@@ -32,6 +32,13 @@ public:
         Rect,
         Circle,
     };
+    struct PlacingState
+    {
+        bool active{false};
+        bool placePressed{false};
+        qint32 x{-1};
+        qint32 y{-1};
+    };
 
     explicit EditorMenue();
     virtual ~EditorMenue();
@@ -183,10 +190,10 @@ public slots:
      */
     void exportAWDSAwsMap(QString filename);
     /**
-     * @brief importAWDCAw4Map
+     * @brief importAW4Aw4Map
      * @param filename
      */
-    void importAWDCAw4Map(QString filename);
+    void importAW4Aw4Map(QString filename);
     /**
      * @brief importAWByWeb
      * @param filename
@@ -389,6 +396,7 @@ private:
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
     spTopbar m_Topbar;
     spLabel m_xyTextInfo;
+    PlacingState m_placingState;
 
     qint32 m_tempCounter{0};
 

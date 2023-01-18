@@ -26,14 +26,14 @@ namespace oxygine
         {
             return m_index;
         }
-        const Vector2&  getPosition() const
+        const Point&  getPosition() const
         {
             return m_position;
         }
 
     private:
         friend class Input;
-        Vector2 m_position;
+        Point m_position;
         qint32 m_pressed{0};
         pointer_index m_index{1};
     };

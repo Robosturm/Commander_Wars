@@ -79,7 +79,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -130,7 +129,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.getCOUnitRange = function(co, map)

@@ -57,7 +57,7 @@ namespace oxygine
             return m_atlas;
         }
         /**Returns size of frame*/
-        const Vector2& getSize() const;
+        const Point& getSize() const;
         float getWidth() const;
         float getHeight() const;
         void setFrame(qint32 col, qint32 row, const AnimationFrame& frame);
@@ -85,6 +85,6 @@ namespace oxygine
         QString m_resPath;
 
     private:
-        static AnimationFrame m_emptyFrame;
+
     };
 }

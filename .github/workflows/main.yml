@@ -2,13 +2,9 @@ name: Commnader_Wars
 on: [push]
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.3.1'
-  NDK_Version: r22b
-  # paths which are given with \ instead of / via windows crashing some command tools
-  NDK_Root: 'C:/hostedtoolcache/windows/ndk/r22b/x64'
+  QT_Version: '6.4.2'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
-  javaVersion: '17'
-  javaDistribution: 'microsoft'
+  JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/17.0.5-8/x64/'
   
 jobs:
   install:
@@ -40,7 +36,7 @@ jobs:
             target: 'desktop'
             qtPath: ''
             installerCommands1: 'sudo apt-get update'
-            installerCommands2: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            installerCommands2: 'sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
             cmakeOptions: ''
           - buildTarget: macos-desktop
             os: macos-latest
@@ -55,11 +51,11 @@ jobs:
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
-            target-api-level: '27'
+            target-api-level: '23'
             abi : "armeabi-v7a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            installerCommands1: 'choco install jom'
+            installerCommands1: ''
             installerCommands2: ''
             cmakeOptions: ''
           - buildTarget: android-arm64_v8a
@@ -67,11 +63,11 @@ jobs:
             COMPILER_VERSION: 'android_arm64_v8a'
             qtPath: 'android_arm64_v8a'
             target: 'android'
-            target-api-level: '27'
+            target-api-level: '23'
             abi : "arm64-v8a"
             COMPILER_TOOLS_VERSION: 'win64_mingw'
             qtCoreToolsPath: 'mingw_64'
-            installerCommands1: 'choco install jom'
+            installerCommands1: ''
             installerCommands2: ''
             cmakeOptions: ''
         
@@ -96,7 +92,7 @@ jobs:
 
     - name: Install host os qt
       if: matrix.target == 'android'
-      uses: jurplel/install-qt-action@v2.14.0
+      uses: jurplel/install-qt-action@v3
       with:      
           aqtversion: '==2.0.2'
           target: 'desktop'
@@ -106,7 +102,7 @@ jobs:
           install-deps: "true"
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v2.14.0
+      uses: jurplel/install-qt-action@v3
       with:      
           aqtversion: '==2.0.2'
           target: ${{matrix.target}}
@@ -121,13 +117,6 @@ jobs:
     
     - name: Install OS Dependencies 2
       run: ${{matrix.installerCommands2}}
-
-    - name: setup-ndk
-      if: matrix.target == 'android'        
-      uses: nttld/setup-ndk@v1
-      id: setup-ndk
-      with:
-        ndk-version: ${{env.NDK_Version}}
 
     - name: Configure other cmake
       if: matrix.target != 'android'
@@ -151,74 +140,42 @@ jobs:
         cmake \
         -S "${{github.workspace}}/source" \
         -B "${{github.workspace}}/build" \
-        -DCMAKE_GENERATOR="NMake Makefiles JOM" \
+        -DCMAKE_GENERATOR="Ninja" \
         -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" \
         -DQT_QMAKE_EXECUTABLE="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/bin/qmake.bat" \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
-        -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
         -DANDROID_NATIVE_API_LEVEL="${{matrix.target-api-level}}" \
+        -DANDROID_NDK="${ANDROID_NDK_ROOT}" \
+        -DCMAKE_TOOLCHAIN_FILE="${ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake" \
+        -DANDROID_USE_LEGACY_TOOLCHAIN_FILE=ON \
         -DANDROID_ABI="${{matrix.abi}}" \
-        -DANDROID_STL="c++_shared" \
+        -DANDROID_STL="c++_static" \
         -DCMAKE_FIND_ROOT_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtPath}}/" \
-        -DCMAKE_TOOLCHAIN_FILE="${{env.NDK_Root}}/build/cmake/android.toolchain.cmake" \
-        -DANDROID_NDK="${{env.NDK_Root}}" \
-        -DANDROID_SDK_ROOT="${ANDROID_SDK_ROOT}" \
         -DQT_NO_GLOBAL_APK_TARGET_PART_OF_ALL=ON \
-        -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" \
+        -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
+        -DANDROID_SDK_ROOT="${ANDROID_SDK_ROOT}" \
+        -DCMAKE_CXX_FLAGS_INIT:STRING="" \
+        -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi" \
+        -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
         -DOPENSSL_USE_STATIC_LIBS=ON \
         -DPRECOMPILEDOPENSSL=ON \
         -DUPDATESUPPORT=OFF \
+        -DDEFAULTAIPIPE=OFF \
         -DCOW_BUILD_TAG="Dummy" \
         -DCOW_UPDATETARGET="Dummy" \
-        -DCOW_INSTALLDIR="Commander_Wars_Release" \
-        -DOPENSSL_ROOT_DIR="${{github.workspace}}/android_openssl" \
-        -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
-        -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi"
+        -DCOW_INSTALL_DIR="Commander_Wars_Release" \
+        -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install"
 
     - name: Build other
       if: matrix.target != 'android'
       working-directory: '${{github.workspace}}/build'
-      run: cmake --build '${{github.workspace}}/build' --config ${{env.BUILD_TYPE}} --target install -j4
+      run: cmake --build '${{github.workspace}}/build' --target install -j4
       
     - name: Build android
       if: matrix.target == 'android'
       working-directory: '${{github.workspace}}/build'
-      run: cmake --build '${{github.workspace}}/build' --config ${{env.BUILD_TYPE}} --target all -j4
-
-    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
-    - name: Make space 1
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/build/CMakeFiles"
-        
-    - name: Make space 2
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/android_openssl"
-        
-    - name: Make space 3
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/source/resources"
-           
-    # we need more space on the github runner in certain scenarios due to gradle builds taking 4gb of diskspace
-    - name: Clean up unneed win dll
-      if: matrix.target == 'android'
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/lib"
-                
-    # apk preparation and signing
-    - name: Setup JDK
-      if: matrix.target == 'android'
-      uses: actions/setup-java@v3
-      with:
-        distribution: ${{env.javaDistribution}}
-        java-version: ${{env.javaVersion}}
-        
+      run: cmake --build '${{github.workspace}}/build' --target all -j4
+            
     - name: Bundle APK
       if: matrix.target == 'android'
       env:
@@ -226,6 +183,7 @@ jobs:
         QT_ANDROID_KEYSTORE_ALIAS: ${{secrets.ANDROIDALIAS}}
         QT_ANDROID_KEYSTORE_STORE_PASS: ${{secrets.ANDROIDSTOREPASS}}
         QT_ANDROID_KEYSTORE_KEY_PASS: ${{secrets.ANDROIDSTOREPASS}}
+        JAVA_HOME: ${{env.JAVA_PATH}}
       run:  |
         "${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}/bin/androiddeployqt.exe" \
         --input ${{env.workspace}}/build/android-Commander_Wars-deployment-settings.json \
@@ -233,5 +191,5 @@ jobs:
         --android-platform android-31 \
         --gradle \
         --release \
-        --sign \
-        --verbose                
+        --sign
+              

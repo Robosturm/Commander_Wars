@@ -79,10 +79,7 @@ var Constructor = function()
                     counter = 0;
                 }
             }
-
         }
-        units.remove();
-
         CO_KINDLE.kindleDamage(co, 3, animations, powerNameAnimation, map);
     };
 
@@ -137,7 +134,6 @@ var Constructor = function()
                         }
                     }
                 }
-                units.remove();
             }
         }
     };
@@ -187,7 +183,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.getCOUnitRange = function(co, map)

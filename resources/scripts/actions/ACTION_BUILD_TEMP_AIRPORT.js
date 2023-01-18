@@ -5,14 +5,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-        if ((((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
-            (action.getMovementTarget() === null)) &&
-             unit.hasAmmo1())
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map) &&
+            unit.hasAmmo1())
         {
             var terrain = map.getTerrain(actionTargetField.x, actionTargetField.y);
             if (terrain.getID() === "PLAINS")
@@ -29,7 +23,7 @@ var Constructor = function()
     };
     this.getIcon = function(map)
     {
-        return "build";
+        return "TEMPORARY_AIRPORT";
     };
     this.perform = function(action, map)
     {
@@ -51,17 +45,19 @@ var Constructor = function()
             captured = true;
             unit.setCapturePoints(0);
         }
-        var x = action.getActionTarget().x * map.getImageSize() - 10;
-        var y = action.getActionTarget().y * map.getImageSize() - 30;
-        var captureAnimation = GameAnimationFactory.createGameAnimationCapture(map, x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
-        captureAnimation.addBackgroundSprite("capture_background");
-        var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), ACTION_CAPTURE.armyData);
-        Global["TEMPORARY_AIRPORT"].addCaptureAnimationBuilding(captureAnimation, building, null, unit.getOwner());
-        captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner(), GameEnums.Recoloring_Matrix);
-        captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner(), GameEnums.Recoloring_None);
-
-        animation.queueAnimation(captureAnimation);
-
+        var viewPlayer = map.getCurrentViewPlayer();
+        if (viewPlayer === unit.getOwner() || viewPlayer.getFieldVisible(actionTargetField.x, actionTargetField.y))
+        {
+            var x = action.getActionTarget().x * map.getImageSize() - 10;
+            var y = action.getActionTarget().y * map.getImageSize() - 30;
+            var captureAnimation = GameAnimationFactory.createGameAnimationCapture(map, x, y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
+            captureAnimation.addBackgroundSprite("capture_background");
+            var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), ACTION_CAPTURE.armyData);
+            Global["TEMPORARY_AIRPORT"].addCaptureAnimationBuilding(captureAnimation, building, null, unit.getOwner());
+            captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner(), GameEnums.Recoloring_Matrix);
+            captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner(), GameEnums.Recoloring_None);
+            animation.queueAnimation(captureAnimation);
+        }
         if (captured)
         {
             var terrain = map.getTerrain(actionTargetField.x, actionTargetField.y);
@@ -75,6 +71,10 @@ var Constructor = function()
     this.isFinalStep = function(action, map)
     {
         return true;
+    };
+    this.getName = function()
+    {
+        return qsTr("Build Airport");
     };
     this.getDescription = function()
     {

@@ -26,18 +26,26 @@ void Password::deserializeObject(QDataStream& pStream)
     m_passwordHash = Filesupport::readByteArray(pStream);
 }
 
-void Password::setPassword(QString password)
+void Password::setPassword(const QString & password)
 {
+    m_password = password;
     if (password.isEmpty())
     {
         m_passwordHash = QByteArray();
+        m_isSet = false;
     }
     else
     {
         QCryptographicHash myHash(QCryptographicHash::Sha512);
         myHash.addData(password.toUtf8());
         m_passwordHash = myHash.result();
+        m_isSet = true;
     }
+}
+
+QString Password::getPasswordText() const
+{
+    return m_password;
 }
 
 void Password::setPassword(const Password & password)
@@ -45,7 +53,7 @@ void Password::setPassword(const Password & password)
     m_passwordHash = password.m_passwordHash;
 }
 
-bool Password::isValidPassword(QString password) const
+bool Password::isValidPassword(const QString & password) const
 {
     QByteArray data;
     if (!password.isEmpty())
@@ -60,4 +68,9 @@ bool Password::isValidPassword(QString password) const
 bool Password::areEqualPassword(const Password & password) const
 {
     return (m_passwordHash == password.m_passwordHash);
+}
+
+bool Password::getIsSet() const
+{
+    return m_isSet;
 }

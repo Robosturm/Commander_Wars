@@ -29,18 +29,17 @@ var Constructor = function()
                     break;
                 }
             }
-            units.remove();
         }
         return ret;
     };
     
     this.getActionText = function(map)
     {
-        return qsTr("Transfer Unit");
+        return qsTr("Transfer unit");
     };
     this.getIcon = function(map)
     {
-        return "next_player";
+        return "transferUnit";
     };
     this.isFinalStep = function(action, map)
     {
@@ -102,7 +101,6 @@ var Constructor = function()
 			}
 			data.setShowZData(false);
 			data.setColor("#FF00FF00");
-			units.remove();
 		}
     };
     this.getStepInputType = function(action, map)
@@ -115,6 +113,10 @@ var Constructor = function()
 		{
 			return "FIELD";			
 		}
+    };
+    this.getName = function()
+    {
+        return qsTr("Transfer unit");
     };
 	this.getDescription = function()
 	{

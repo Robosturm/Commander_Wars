@@ -38,16 +38,29 @@ public:
      * @return
      */
     void setPassword(const Password & password);
+    /**
+     * @brief getPasswordText
+     * @return
+     */
+    QString getPasswordText() const;
+    /**
+     * @brief getHash
+     * @return
+     */
     const QByteArray & getHash() const
     {
         return m_passwordHash;
     }
+
 public slots:
-    void setPassword(QString password);
-    bool isValidPassword(QString password) const;
+    void setPassword(const QString & password);
+    bool isValidPassword(const QString & password) const;
     bool areEqualPassword(const Password & password) const;
+    bool getIsSet() const;
 private:
     QByteArray m_passwordHash;
+    QString m_password;
+    bool m_isSet{false};
 };
 
 #endif // PASSWORD_H

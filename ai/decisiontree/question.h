@@ -12,7 +12,7 @@
 #include "game/GameEnums.h"
 
 class Question;
-typedef oxygine::intrusive_ptr<Question> spQuestion;
+using spQuestion = oxygine::intrusive_ptr<Question>;
 
 class Question final : public QObject, public FileSerializable, public oxygine::ref_counter
 {

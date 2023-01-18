@@ -81,7 +81,6 @@ var Constructor = function() { // scriptStart
     {
         var units = map.getPlayer(0).getUnits();
         var unitId = units.at(globals.randInt(0, units.size())).getUnitID();
-        units.remove();
         return unitId;
     };
 

@@ -1,13 +1,9 @@
 #include <limits>
-#include "QRandomGenerator"
-#include "QVector"
-#include "QPoint"
 
 #include "mapsupport/randomMapGenerator.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -53,7 +49,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
         startSeed = GlobalUtils::randInt(0, std::numeric_limits<qint32>::max());
     }
     CONSOLE_PRINT("RandomMapGenerator::randomMap widht=" + QString::number(width) + " heigth=" + QString::number(heigth) +
-                   " seed=" + QString::number(startSeed) + " mirrored=" + QString::number(mirrored), Console::eDEBUG);
+                   " seed=" + QString::number(startSeed) + " mirrored=" + QString::number(mirrored), GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString baseTerrain = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getBaseTerrainID").toString();
     if (!TerrainManager::getInstance()->exists(baseTerrain))
@@ -106,7 +102,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
     }
     CONSOLE_PRINT("Creating map with start width: " + QString::number(startWidth) + " start heigth: " + QString::number(startHeigth) +
                    " mirror Mode X: " + QString::number(static_cast<qint32>(mirrorX)) +
-                   " mirror Mode Y: " + QString::number(static_cast<qint32>(mirrorY)), Console::eDEBUG);
+                   " mirror Mode Y: " + QString::number(static_cast<qint32>(mirrorY)), GameConsole::eDEBUG);
     pMap->newMap(startWidth, startHeigth, playerCount, baseTerrain);
 
     float buildingchance = 0.0f;
@@ -265,7 +261,7 @@ void RandomMapGenerator::randomMapPlaceTerain(GameMap* pMap, QString terrainID, 
 
 qint32 RandomMapGenerator::randomMapPlaceLine(GameMap* pMap, qint32 startX, qint32 startY, qint32 count, QString terrainID, QRandomGenerator& randInt)
 {
-    CONSOLE_PRINT("RandomMapGenerator::randomMapPlaceLine " + terrainID + " at x: " + QString::number(startX) + " y: " + QString::number(startY) + " and size " + QString::number(count), Console::eDEBUG);
+    CONSOLE_PRINT("RandomMapGenerator::randomMapPlaceLine " + terrainID + " at x: " + QString::number(startX) + " y: " + QString::number(startY) + " and size " + QString::number(count), GameConsole::eDEBUG);
     
     QVector<QPoint> points;
     QVector<GameEnums::Directions> directions;
@@ -419,7 +415,7 @@ qint32 RandomMapGenerator::randomMapPlaceLine(GameMap* pMap, qint32 startX, qint
 
 qint32 RandomMapGenerator::randomMapPlaceGroup(GameMap* pMap, qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt)
 {
-    CONSOLE_PRINT("RandomMapGenerator::randomMapPlaceGroup " + terrainID + " at x: " + QString::number(startX) + " y: " + QString::number(startY) + " and size " + QString::number(count), Console::eDEBUG);
+    CONSOLE_PRINT("RandomMapGenerator::randomMapPlaceGroup " + terrainID + " at x: " + QString::number(startX) + " y: " + QString::number(startY) + " and size " + QString::number(count), GameConsole::eDEBUG);
     
     QVector<QPoint> points;
     points.push_back(QPoint(startX, startY));
@@ -550,7 +546,7 @@ void RandomMapGenerator::randomMapPlaceOnTop(GameMap* pMap, QString terrainID, Q
 
 void RandomMapGenerator::randomMapCreateRoad(GameMap* pMap, QRandomGenerator& randInt, QVector<QPoint>& playerPositions)
 {
-    CONSOLE_PRINT("RandomMapGenerator::randomMapCreateRoad", Console::eDEBUG);
+    CONSOLE_PRINT("RandomMapGenerator::randomMapCreateRoad", GameConsole::eDEBUG);
     
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -617,7 +613,7 @@ void RandomMapGenerator::randomMapCreateRoad(GameMap* pMap, QRandomGenerator& ra
 QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint32 buildings, QRandomGenerator& randInt, const QVector<std::tuple<QString, float>> & buildingDistributions, const QVector<float> & ownedBaseSize,
                                                              float startBaseSize, qint32& progress, qint32 maxProgess)
 {
-    CONSOLE_PRINT("RandomMapGenerator::randomMapCreateBuildings " + QString::number(buildings) + " and startBaseSize " + QString::number(startBaseSize), Console::eDEBUG);
+    CONSOLE_PRINT("RandomMapGenerator::randomMapCreateBuildings " + QString::number(buildings) + " and startBaseSize " + QString::number(startBaseSize), GameConsole::eDEBUG);
     
     QVector<QPoint> playerPositions;
     qint32 mapWidth = pMap->getMapWidth();
@@ -730,7 +726,7 @@ void RandomMapGenerator::randomMapPlaceBuildings(GameMap* pMap, QString building
     qint32 innerBase = pMap->getPlayerCount() * 2;
     qint32 playerBuldings = static_cast<qint32>(GlobalUtils::roundUp(count * startBaseSize / static_cast<float>(pMap->getPlayerCount())) * pMap->getPlayerCount());
 
-    CONSOLE_PRINT("RandomMapGenerator::randomMapPlaceBuildings " + buildingId + " with chance " + QString::number(chance) + " placing: " + QString::number(count) + " playerBuldings: " + QString::number(playerBuldings), Console::eDEBUG);
+    CONSOLE_PRINT("RandomMapGenerator::randomMapPlaceBuildings " + buildingId + " with chance " + QString::number(chance) + " placing: " + QString::number(count) + " playerBuldings: " + QString::number(playerBuldings), GameConsole::eDEBUG);
 
     QVector<qint32> ownerBuildings;
     for (qint32 i = 0; i < ownedBaseSize.size(); i++)
@@ -828,7 +824,7 @@ bool RandomMapGenerator::randomMapIsBuildingPlace(GameMap* pMap, QString buildin
 QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(GameMap* pMap, qint32 width, qint32 heigth, qint32 buildings, QRandomGenerator& randInt, const QVector<std::tuple<QString, float>> & buildingDistributions, const QVector<float> & ownedBaseSize,
                                                              float startBaseSize, qint32& progress, qint32 maxProgess, MirrorMode mirrorX, MirrorMode mirrorY)
 {
-    CONSOLE_PRINT("RandomMapGenerator::randomMapCreateBuildings " + QString::number(buildings) + " and startBaseSize " + QString::number(startBaseSize), Console::eDEBUG);
+    CONSOLE_PRINT("RandomMapGenerator::randomMapCreateBuildings " + QString::number(buildings) + " and startBaseSize " + QString::number(startBaseSize), GameConsole::eDEBUG);
     
     qint32 playerCount = pMap->getPlayerCount();
     qint32 mirrorPlacing = 0;
@@ -989,7 +985,7 @@ void RandomMapGenerator::randomMapPlaceBuildings(GameMap* pMap, qint32 width, qi
         ownerBuildings.append(ownedBaseSize[i] / 100.0f * count);
     }
 
-    CONSOLE_PRINT("RandomMapGenerator::randomMapPlaceBuildings " + buildingId + " with chance " + QString::number(chance) + " placing: " + QString::number(count) + " playerBuldings: " + QString::number(playerBuldings), Console::eDEBUG);
+    CONSOLE_PRINT("RandomMapGenerator::randomMapPlaceBuildings " + buildingId + " with chance " + QString::number(chance) + " placing: " + QString::number(count) + " playerBuldings: " + QString::number(playerBuldings), GameConsole::eDEBUG);
     for (qint32 i = 0; i < count; i++)
     {
         qint32 x = -1;
@@ -1041,7 +1037,6 @@ void RandomMapGenerator::randomMapPlaceBuildings(GameMap* pMap, qint32 width, qi
                 {
                     ownerBuildings[player]--;
                     pBuilding->setOwner(pMap->getPlayer(player));
-                    break;
                 }
                 pMap->getTerrain(mirrorPosition.x(), mirrorPosition.y())->setBuilding(pBuilding);
                 if (innerBase > 0)
@@ -1133,7 +1128,7 @@ void RandomMapGenerator::randomMapPlaceUnits(GameMap* pMap, QVector<std::tuple<Q
                                              qint32& progress, qint32 maxProgess, QRandomGenerator& randInt,
                                              MirrorMode mirrorX, MirrorMode mirrorY)
 {
-    CONSOLE_PRINT("RandomMapGenerator::randomMapPlaceUnits", Console::eDEBUG);
+    CONSOLE_PRINT("RandomMapGenerator::randomMapPlaceUnits", GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (distributed)
     {
@@ -1265,7 +1260,7 @@ qint32 RandomMapGenerator::getPlayerForHqPos(GameMap* pMap, qint32 hqPos, Mirror
 
 void RandomMapGenerator::randomMapCreateRoad(GameMap* pMap, qint32 width, qint32 heigth, QRandomGenerator& randInt, QVector<QPoint>& playerPositions, MirrorMode mirrorX, MirrorMode mirrorY)
 {
-    CONSOLE_PRINT("RandomMapGenerator::randomMapCreateRoad", Console::eDEBUG);
+    CONSOLE_PRINT("RandomMapGenerator::randomMapCreateRoad", GameConsole::eDEBUG);
     
     qint32 playerCount = pMap->getPlayerCount();
     qint32 mirrorPlacing = 0;
@@ -1280,7 +1275,7 @@ void RandomMapGenerator::randomMapCreateRoad(GameMap* pMap, qint32 width, qint32
         playerCount /= 2;
     }
     // connect players inside a mirror part
-    CONSOLE_PRINT("connecting allied player hq's with road", Console::eDEBUG);
+    CONSOLE_PRINT("connecting allied player hq's with road", GameConsole::eDEBUG);
     for (qint32 i = 0; i < playerCount - 1; ++i)
     {
         qint32 player1 = i;
@@ -1288,11 +1283,11 @@ void RandomMapGenerator::randomMapCreateRoad(GameMap* pMap, qint32 width, qint32
         QPoint position = playerPositions[player1];
         QPoint endPoint = QPoint(playerPositions[player2].x(),
                           playerPositions[player2].y());
-        CONSOLE_PRINT("Connecting : " + QString::number(player1) + " with: " + QString::number(player2), Console::eDEBUG);
+        CONSOLE_PRINT("Connecting : " + QString::number(player1) + " with: " + QString::number(player2), GameConsole::eDEBUG);
         connectPositionsWithRoad(pMap, randInt, position, endPoint, mirrorX, mirrorY, mirrorPlacing);
     }
     // connect mirror parts
-    CONSOLE_PRINT("connecting enemy player hq's with road", Console::eDEBUG);
+    CONSOLE_PRINT("connecting enemy player hq's with road", GameConsole::eDEBUG);
     qint32 roadCircleCount = 0;
     if (pMap->getPlayerCount() % 4 == 0)
     {
@@ -1316,7 +1311,7 @@ void RandomMapGenerator::randomMapCreateRoad(GameMap* pMap, qint32 width, qint32
                           playerPositions[player2].y());
         endPoint = QPoint(GlobalUtils::roundUp(static_cast<float>((endPoint.x() - position.x()) / 2.0f)) + position.x(),
                           GlobalUtils::roundUp(static_cast<float>((endPoint.y() - position.y()) / 2.0f)) + position.y());
-        CONSOLE_PRINT("Connecting: " + QString::number(player1) + " with: " + QString::number(player2), Console::eDEBUG);
+        CONSOLE_PRINT("Connecting: " + QString::number(player1) + " with: " + QString::number(player2), GameConsole::eDEBUG);
         connectPositionsWithRoad(pMap, randInt, position, endPoint, mirrorX, mirrorY, mirrorPlacing);
     }
 }

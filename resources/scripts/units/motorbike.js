@@ -80,6 +80,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Infantry;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movebike.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

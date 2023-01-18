@@ -1,6 +1,4 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
-#include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
-#include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 
 namespace oxygine
@@ -61,19 +59,12 @@ namespace oxygine
         void TextNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
 #ifdef GRAPHICSUPPORT
-            QPainterPath path;
-            QFont font = style.font.font;
-            if (rs.transform.a != 1)
-            {
-                font.setPixelSize(font.pixelSize() * rs.transform.a);
-            }
-            for (qint32 i = 0; i < m_lines.size(); ++i)
-            {
-                path.addText(rs.transform.x + (m_offsets[i].x() - style.font.borderWidth + style.font.offsetX) * rs.transform.a, rs.transform.y + (m_offsets[i].y() - style.font.borderWidth + style.font.offsetY) * rs.transform.d, font, m_lines[i]);
-            }
-            painter.setPen(QPen(style.font.borderColor, style.font.borderWidth, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
-            painter.setBrush(QBrush(drawColor));
-            painter.drawPath(path);
+            painter.setTransform(QTransform(rs.transform.a, rs.transform.b, rs.transform.c, rs.transform.d, rs.transform.x, rs.transform.y));
+
+//            painter.setPen(QPen(drawColor, -1, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
+//            painter.setBrush(drawColor);
+//            painter.drawPath(m_path);
+            painter.fillPath(m_path, drawColor);
             drawChildren(rs, style, drawColor, painter);
 #endif
         }
@@ -88,15 +79,6 @@ namespace oxygine
                 m_offsets.clear();
                 m_lines.reserve(50);
                 m_offsets.reserve(50);
-                qint32 borderWidth = rd.getStyle().font.borderWidth;
-                if (borderWidth < 0)
-                {
-                    borderWidth = qAbs(borderWidth);
-                }
-                else
-                {
-                    borderWidth = 0;
-                }
                 auto & metrics = rd.getMetrics();
                 bool checkWidth = (rd.getWidth() > 0);
                 for (auto & line : lines)
@@ -105,16 +87,16 @@ namespace oxygine
                     QStringList words = line.split(' ');
                     for (auto & word : words)
                     {
-                        if (checkWidth && metrics.horizontalAdvance(*currentLine + word) > rd.getWidth() - rd.getX() - borderWidth)
+                        if (checkWidth && metrics.horizontalAdvance(*currentLine + word) > rd.getWidth() - rd.getX())
                         {
                             if (rd.getStyle().multiline)
                             {
                                 currentLine = addNewLine(rd);
-                                *currentLine = metrics.elidedText(word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX() - borderWidth);
+                                *currentLine = metrics.elidedText(word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX());
                             }
                             else
                             {
-                                *currentLine = metrics.elidedText(*currentLine + word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX() - borderWidth);
+                                *currentLine = metrics.elidedText(*currentLine + word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX());
                                 break;
                             }
                         }
@@ -129,6 +111,13 @@ namespace oxygine
                 qint32 width = metrics.horizontalAdvance(line);
                 m_offsets[index].setX(rd.getXAlignment(width));
                 rd.nodeEnd(width);
+                m_path.clear();
+                for (qint32 i = 0; i < m_lines.size(); ++i)
+                {
+                    qint32 x = static_cast<qint32>(m_offsets[i].x() + rd.getStyle().font.offsetX);
+                    qint32 y = static_cast<qint32>(m_offsets[i].y() + rd.getStyle().font.offsetY);
+                    m_path.addText(x, y, rd.getStyle().font.font, m_lines[i]);
+                }
             }
 #endif
         }

@@ -14,22 +14,22 @@
 #include "ingamescriptsupport/conditions/scriptconditioncheckvariable.h"
 #include "ingamescriptsupport/conditions/scriptconditionisco.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
-const QString ScriptCondition::ConditionVictory = "Victory";
-const QString ScriptCondition::ConditionStartOfTurn = "Start Of Turn";
-const QString ScriptCondition::ConditionEachDay = "Each Day";
-const QString ScriptCondition::ConditionUnitDestroyed = "Unit Destroyed";
-const QString ScriptCondition::ConditionBuildingDestroyed = "Building Destroyed";
-const QString ScriptCondition::ConditionTerrainDestroyed = "Terrain Destroyed";
-const QString ScriptCondition::ConditionBuildingCaptured = "Building Captured";
-const QString ScriptCondition::ConditionPlayerDefeated = "Player Defeated";
-const QString ScriptCondition::ConditionUnitsDestroyed = "Units Destroyed";
-const QString ScriptCondition::ConditionBuildingsOwned = "Buildings Owned";
-const QString ScriptCondition::ConditionPlayerReachedArea = "Player in Area";
-const QString ScriptCondition::ConditionUnitReachedArea = "Unit in Area";
-const QString ScriptCondition::ConditionCheckVariable = "Check Variable";
-const QString ScriptCondition::ConditionIsCo = "Is selected Co";
+const char* const ScriptCondition::ConditionVictory = "Victory";
+const char* const ScriptCondition::ConditionStartOfTurn = "Start Of Turn";
+const char* const ScriptCondition::ConditionEachDay = "Each Day";
+const char* const ScriptCondition::ConditionUnitDestroyed = "Unit Destroyed";
+const char* const ScriptCondition::ConditionBuildingDestroyed = "Building Destroyed";
+const char* const ScriptCondition::ConditionTerrainDestroyed = "Terrain Destroyed";
+const char* const ScriptCondition::ConditionBuildingCaptured = "Building Captured";
+const char* const ScriptCondition::ConditionPlayerDefeated = "Player Defeated";
+const char* const ScriptCondition::ConditionUnitsDestroyed = "Units Destroyed";
+const char* const ScriptCondition::ConditionBuildingsOwned = "Buildings Owned";
+const char* const ScriptCondition::ConditionPlayerReachedArea = "Player in Area";
+const char* const ScriptCondition::ConditionUnitReachedArea = "Unit in Area";
+const char* const ScriptCondition::ConditionCheckVariable = "Check Variable";
+const char* const ScriptCondition::ConditionIsCo = "Is selected Co";
 
 ScriptCondition::ScriptCondition(GameMap* pMap, ConditionType type)
     : m_Type(type),
@@ -75,7 +75,7 @@ bool ScriptCondition::readSubCondition(GameMap* pMap, QTextStream& rStream, QStr
     }
     if (subCondition.get() != nullptr)
     {
-        CONSOLE_PRINT("Added sub condition to current condition", Console::eDEBUG);
+        CONSOLE_PRINT("Added sub condition to current condition", GameConsole::eDEBUG);
         line = rStream.readLine();
         line = line.simplified();
         if (line.endsWith(id + " End"))
@@ -159,7 +159,7 @@ spScriptCondition ScriptCondition::createCondition(GameMap* pMap, ConditionType 
 spScriptCondition ScriptCondition::createReadCondition(GameMap* pMap, QTextStream& rStream, QString & line)
 {
     line = line.simplified();
-    CONSOLE_PRINT("Creating condition for line " + line, Console::eDEBUG);
+    CONSOLE_PRINT("Creating condition for line " + line, GameConsole::eDEBUG);
     spScriptCondition ret;
     if (line.endsWith(ConditionEachDay))
     {
@@ -219,7 +219,7 @@ spScriptCondition ScriptCondition::createReadCondition(GameMap* pMap, QTextStrea
     }
     if (ret.get() != nullptr)
     {
-        CONSOLE_PRINT("Found valid condition of type " + QString::number(static_cast<qint32>(ret->getType())), Console::eDEBUG);
+        CONSOLE_PRINT("Found valid condition of type " + QString::number(static_cast<qint32>(ret->getType())), GameConsole::eDEBUG);
         ret->readCondition(rStream, line);
     }    
     return ret;
@@ -331,7 +331,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
 
 void ScriptCondition::writePreCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("ScriptCondition::writePreCondition", Console::eDEBUG);
+    CONSOLE_PRINT("ScriptCondition::writePreCondition", GameConsole::eDEBUG);
     if (subCondition.get() != nullptr)
     {
         subCondition->writePreCondition(rStream);
@@ -340,7 +340,7 @@ void ScriptCondition::writePreCondition(QTextStream& rStream)
 
 void ScriptCondition::writePostCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("ScriptCondition::writePostCondition", Console::eDEBUG);
+    CONSOLE_PRINT("ScriptCondition::writePostCondition", GameConsole::eDEBUG);
     if (pParent != nullptr)
     {
         pParent->writePostCondition(rStream);

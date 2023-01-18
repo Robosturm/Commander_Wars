@@ -9,17 +9,15 @@
             <Label>
                 <x>10</x>
                 <y>10</y>
-                <width>260</width>
-                <height>30</height>
+                <width>settings.getWidth() - 80</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Audio Settings")</text>
                 <font>"main"</font>
-                <fontSize>24</fontSize>
+                <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Muted:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -35,7 +33,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Audio Device:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -53,7 +50,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Master Volume:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -73,7 +69,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Music Volume:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -93,7 +88,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Sound Volume:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

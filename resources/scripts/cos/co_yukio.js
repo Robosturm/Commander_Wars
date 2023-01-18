@@ -82,7 +82,6 @@ var Constructor = function()
                         }
                     }
                 }
-                units.remove();
             }
         }
     };
@@ -142,7 +141,6 @@ var Constructor = function()
                 }
             }
         }
-        buildings.remove();
     };
 
     this.loadCOMusic = function(co, map)

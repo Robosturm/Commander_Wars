@@ -63,7 +63,7 @@ public slots:
     void hideDropDown();
     virtual void focusedLost() override;
 protected:
-    const oxygine::Vector2& addDropDownItem(oxygine::spActor item, qint32 id);
+    const oxygine::Point& addDropDownItem(oxygine::spActor item, qint32 id);
 protected:
     oxygine::spClipRectActor m_pClipActor;
     oxygine::spBox9Sprite m_Box;
@@ -71,8 +71,6 @@ protected:
     QVector<oxygine::spBox9Sprite> m_Items;
     spPanel m_Panel;
     qint32 m_currentItem{0};
-    oxygine::spActor m_OriginalOwner;
-    oxygine::Vector2 m_OriginalPosition;
 };
 
 #endif // DROPDOWNMENU_H

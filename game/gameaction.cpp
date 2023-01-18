@@ -1,5 +1,5 @@
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
 #include "game/gameaction.h"
@@ -19,8 +19,6 @@ GameAction::GameAction(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAction");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_buffer.open(QIODevice::ReadWrite);
     m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
@@ -34,8 +32,6 @@ GameAction::GameAction(const QString & actionID, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAction");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_buffer.open(QIODevice::ReadWrite);
     m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
@@ -107,29 +103,29 @@ void GameAction::perform()
 
 void GameAction::printAction()
 {
-    CONSOLE_PRINT("Performing Action " + m_actionID, Console::eINFO);
+    CONSOLE_PRINT("Performing Action " + m_actionID, GameConsole::eINFO);
     CONSOLE_PRINT("Target X " + QString::number(m_target.x()) +
-                   " Target Y " + QString::number(m_target.y()), Console::eINFO);
-    CONSOLE_PRINT("Costs " + QString::number(m_costs), Console::eINFO);
-    CONSOLE_PRINT("Seed " + QString::number(m_seed), Console::eINFO);
+                   " Target Y " + QString::number(m_target.y()), GameConsole::eINFO);
+    CONSOLE_PRINT("Costs " + QString::number(m_costs), GameConsole::eINFO);
+    CONSOLE_PRINT("Seed " + QString::number(m_seed), GameConsole::eINFO);
     Unit* pUnit = getTargetUnit();
     Building* pBuilding = getTargetBuilding();
     if (pUnit != nullptr)
     {
-        CONSOLE_PRINT("Unit " + pUnit->getUnitID(), Console::eINFO);
+        CONSOLE_PRINT("Unit " + pUnit->getUnitID(), GameConsole::eINFO);
     }
     else if (pBuilding != nullptr)
     {
-        CONSOLE_PRINT("Building " + pBuilding->getBuildingID(), Console::eINFO);
+        CONSOLE_PRINT("Building " + pBuilding->getBuildingID(), GameConsole::eINFO);
     }
     if (m_Movepath.size() > 0)
     {
         CONSOLE_PRINT("Moving to X " + QString::number(m_Movepath[0].x()) +
-                " Moving to Y " + QString::number(m_Movepath[0].y()), Console::eINFO);
+                " Moving to Y " + QString::number(m_Movepath[0].y()), GameConsole::eINFO);
     }
     auto bytes = m_buffer.data();
     QString data = GlobalUtils::getByteArrayString(bytes);
-    CONSOLE_PRINT("Data " + data, Console::eINFO);
+    CONSOLE_PRINT("Data " + data, GameConsole::eINFO);
 }
 
 GameMap *GameAction::getMap() const
@@ -505,7 +501,7 @@ void GameAction::setInputStep(const qint32 &value)
 
 void GameAction::serializeObject(QDataStream& stream) const
 {
-    CONSOLE_PRINT("storing game action", Console::eDEBUG);
+    CONSOLE_PRINT("storing game action", GameConsole::eDEBUG);
     stream << getVersion();
     stream << m_actionID;
     stream << m_target;
@@ -535,7 +531,7 @@ void GameAction::serializeObject(QDataStream& stream) const
 
 void GameAction::deserializeObject(QDataStream& stream)
 {
-    CONSOLE_PRINT("reading game action", Console::eDEBUG);
+    CONSOLE_PRINT("reading game action", GameConsole::eDEBUG);
     qint32 version;
     stream >> version;
     stream >> m_actionID;
@@ -594,7 +590,7 @@ void GameAction::revertLastInputStep(const QString & stepType)
     }
     else
     {
-        CONSOLE_PRINT("Uknown action step type: " + stepType, Console::eERROR);
+        CONSOLE_PRINT("Uknown action step type: " + stepType, GameConsole::eERROR);
     }
     if (revertCount > 0)
     {
@@ -626,7 +622,7 @@ void GameAction::revertLastInputStep(const QString & stepType)
                 }
                 default:
                 {
-                    CONSOLE_PRINT("Uknown input data: " + QString::number(static_cast<qint32>(m_storedDataTypes[i])), Console::eERROR);
+                    CONSOLE_PRINT("Uknown input data: " + QString::number(static_cast<qint32>(m_storedDataTypes[i])), GameConsole::eERROR);
                 }
             }
         }
@@ -654,7 +650,7 @@ void GameAction::revertLastInputStep(const QString & stepType)
                 }
                 default:
                 {
-                    CONSOLE_PRINT("Uknown input data: " + QString::number(static_cast<qint32>(m_storedDataTypes[i])), Console::eERROR);
+                    CONSOLE_PRINT("Uknown input data: " + QString::number(static_cast<qint32>(m_storedDataTypes[i])), GameConsole::eERROR);
                 }
             }
         }

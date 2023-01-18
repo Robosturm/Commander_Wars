@@ -5,11 +5,10 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
-#include "objects/base/panel.h"
 #include "objects/tableView/complextableview.h"
 
-#include "network/tcpclient.h"
 #include "network/networkgamedata.h"
+#include "network/NetworkInterface.h"
 
 #include "multiplayer/networkcommands.h"
 #include "multiplayer/password.h"
@@ -42,6 +41,7 @@ signals:
     void sigUpdateGamesView();
     void sigChangeLobbyMode();
     void sigRequestUpdateGames();
+    void sigServerResponded();
 public slots:
     bool getServerRequestNewPassword() const;
     void setServerRequestNewPassword(bool newServerRequestNewPassword);
@@ -65,17 +65,21 @@ public slots:
     bool isValidPassword(const QString & password);
     void leaveServer();
     void createServerAccount(const QString & password, const QString & emailAdress);
+    void deleteServerAccount(const QString & password, const QString & emailAdress);
     void loginToServerAccount(const QString & password);
     void resetPasswordOnServerAccount(const QString & emailAdress);
     void changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress);
     void enableServerButtons(bool enable);
     void changeLobbyMode();
     void requestUpdateGames();
+    void showContactingServer();
+    void cancelWaitingForServer();
 protected slots:
     virtual void onEnter() override;
 private:
     void updateGameData(const QJsonObject & objData);
     void joinSlaveGame(const QJsonObject & objData);
+    void onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void onPublicKeyResetAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
@@ -85,8 +89,8 @@ private:
     void requestUserUpdateGames();
 private:
     spNetworkInterface m_pTCPClient{nullptr};
-    QVector<spNetworkGameData> m_games;
-    spNetworkGameData m_currentGame;
+    QVector<NetworkGameData> m_games;
+    NetworkGameData m_currentGame;
     oxygine::spButton m_pButtonHostOnServer;
     oxygine::spButton m_pButtonGameObserve;    
     oxygine::spButton m_pButtonGameJoin;

@@ -7,19 +7,18 @@
         <height>settings.getHeight() - 80</height>
         <childs>
             <Label>
-                <x>settings.getWidth() / 2 - 300</x>
+                <x>40</x>
                 <y>10</y>
-                <width>600</width>
-                <height>60</height>
+                <width>parentWidth - 80</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Map Filter Settings")</text>
                 <font>"main"</font>
+                <hAlign>"Middle"</hAlign>
                 <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 20</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Map name:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -36,7 +35,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Author:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -53,7 +51,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Player:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -73,7 +70,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>10</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","-")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -93,7 +89,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Width:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -113,7 +108,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>10</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","-")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -133,7 +127,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Height:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -153,7 +146,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>10</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","-")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -173,9 +165,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>350</width>
-                <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Has to be placed")</text>
-
                 <font>"main"</font>
                 <fontSize>32</fontSize>
             </Label>
@@ -183,7 +173,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Bases:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -199,7 +188,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -215,7 +203,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Airports:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -231,7 +218,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -247,7 +233,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Harbours:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -263,7 +248,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -279,7 +263,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Towers:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -295,7 +278,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -311,7 +293,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Teleport tiles:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -327,7 +308,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -343,7 +323,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Predeployed:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -359,7 +338,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -375,9 +353,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>350</width>
-                <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Map layout")</text>
-
                 <font>"main"</font>
                 <fontSize>32</fontSize>
             </Label>
@@ -385,7 +361,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Mixed bases:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -401,7 +376,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -417,7 +391,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Symetric:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -433,7 +406,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -449,7 +421,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","PvP:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -465,7 +436,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -481,7 +451,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","FTA:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -497,7 +466,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -513,7 +481,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Versus AI:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -529,7 +496,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -545,7 +511,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Team Play:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -561,7 +526,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -577,7 +541,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Historical:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -593,7 +556,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -609,9 +571,7 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>350</width>
-                <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Funds")</text>
-
                 <font>"main"</font>
                 <fontSize>32</fontSize>
             </Label>
@@ -619,7 +579,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Low funds:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -635,7 +594,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -651,7 +609,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","High funds:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -667,7 +624,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -683,7 +639,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>350</width>
-                <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Battle type")</text>
                 <font>"main"</font>
                 <fontSize>32</fontSize>
@@ -692,7 +647,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Naval map:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -708,7 +662,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -724,7 +677,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Ground map:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -740,7 +692,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -756,7 +707,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Air map:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -772,7 +722,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -788,7 +737,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Scripted map:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -804,7 +752,6 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>200</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

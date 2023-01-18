@@ -22,15 +22,19 @@ public:
     struct PageData
     {
         explicit PageData() = default;
-        PageData (QString name, QString id, QStringList tags)
+        PageData (QString name, QString id, QStringList tags, QString mainId = "", qint32 item = 0)
             : m_name(name),
               m_id(id),
-              m_tags(tags)
+              m_tags(tags),
+              m_mainId(mainId),
+              m_item(item)
         {
         }
         QString m_name;
         QString m_id;
         QStringList m_tags;
+        QString m_mainId;
+        qint32 m_item{0};
     };
 
     ~WikiDatabase() = default;

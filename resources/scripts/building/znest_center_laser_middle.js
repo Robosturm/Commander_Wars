@@ -33,7 +33,10 @@ var Constructor = function()
     {
         return true;
     };
-
+    this.getRotation = function(building)
+    {
+        return 0;
+    };
     this.onDestroyed = function(building, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts

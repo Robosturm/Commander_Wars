@@ -7,13 +7,14 @@
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
+#include "ai/aiprocesspipe.h"
+
 #include "coreengine/mainapp.h"
 #include "coreengine/workerthread.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/userdata.h"
 
 #include "menue/mainwindow.h"
-#include "menue/basegamemenu.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 
@@ -43,23 +44,24 @@ WorkerThread::WorkerThread()
     setObjectName("WorkerThread");
 #endif
     Interpreter::setCppOwnerShip(this);
-    moveToThread(Mainapp::getWorkerthread());
     connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigShowMainwindow, this, &WorkerThread::showMainwindow, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigStartSlaveGame, this, &WorkerThread::startSlaveGame, Qt::QueuedConnection);
     connect(Mainapp::getWorkerthread(), &QThread::finished, this, &WorkerThread::onQuit);
+    moveToThread(Mainapp::getWorkerthread());
 }
 
 void WorkerThread::start()
 {
-    Console::print("Loading worker thread", Console::eDEBUG);
+    GameConsole::print("Loading worker thread", GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
-    spConsole pConsole = Console::getInstance();
+    spConsole pConsole = spConsole(GameConsole::getInstance());
     // create the initial menue no need to store the object
     // it will add itself to the current stage
     oxygine::Stage::getStage()->addChild(pConsole);
     Interpreter* pInterpreter = Interpreter::createInstance();
+    Settings::setLanguage(Settings::getLanguage());
     pConsole->init();
     UiFactory::getInstance();
     // load General-Base Scripts
@@ -131,61 +133,63 @@ void WorkerThread::start()
     pAchievementManager->loadAll();
     Player::getNeutralTableAnim();
     pInterpreter->doFunction("Global", "finalizeLoading");
-
-    if (pApp->getSlave())
+    if(!Settings::getAiSlave())
     {
-        QString script = pApp->getInitScript();
-        if (!script.isEmpty())
+        if (pApp->getSlave())
         {
-            CONSOLE_PRINT("Remote script is present and will be loaded", Console::eDEBUG);
-            CONSOLE_PRINT("Remote Script=" + script, Console::eDEBUG);
-            pInterpreter->evaluate(script, "remoteInit.js");
+            QString script = pApp->getInitScript();
+            if (!script.isEmpty())
+            {
+                CONSOLE_PRINT("Remote script is present and will be loaded", GameConsole::eDEBUG);
+                CONSOLE_PRINT("Remote Script=" + script, GameConsole::eDEBUG);
+                pInterpreter->evaluate(script, "remoteInit.js");
+            }
+        }
+        else if (QFile::exists("init.js"))
+        {
+            CONSOLE_PRINT("Init script is present and will be loaded", GameConsole::eDEBUG);
+            pInterpreter->openScript("init.js", true);
         }
     }
-    else if (QFile::exists("init.js"))
-    {
-        CONSOLE_PRINT("Init script is present and will be loaded", Console::eDEBUG);
-        pInterpreter->openScript("init.js", true);
-    }
-
     connect(pApp, &Mainapp::sigMousePressEvent, this, &WorkerThread::mousePressEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerThread::mouseReleaseEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
     pLoadingScreen->hide();
     m_started = true;
-    CONSOLE_PRINT("WorkerThread::start Finalizing", Console::eDEBUG);
+    CONSOLE_PRINT("WorkerThread::start Finalizing", GameConsole::eDEBUG);
     emit pApp->sigNextStartUpStep(Mainapp::StartupPhase::Finalizing);
 }
 
 void WorkerThread::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y)
 {
-    oxygine::Input* input = &oxygine::Input::instance;
+    oxygine::Input* input = &oxygine::Input::getInstance();
     input->sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
-                                  oxygine::TouchEvent::TOUCH_DOWN, &input->m_pointerMouse);
+                                  oxygine::TouchEvent::TOUCH_DOWN, input->getPointerMouse());
 }
 
 void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y)
 {
-    oxygine::Input* input = &oxygine::Input::instance;
+    oxygine::Input* input = &oxygine::Input::getInstance();
     input->sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
-                                  oxygine::TouchEvent::TOUCH_UP, &input->m_pointerMouse);
+                                  oxygine::TouchEvent::TOUCH_UP, input->getPointerMouse());
 }
 
 void WorkerThread::wheelEvent(qint32 x, qint32 y)
 {
-    oxygine::Input* input = &oxygine::Input::instance;
-    input->sendPointerWheelEvent(oxygine::Stage::getStage(), oxygine::Vector2(x, y), &input->m_pointerMouse);
+    oxygine::Input* input = &oxygine::Input::getInstance();
+    input->sendPointerWheelEvent(oxygine::Stage::getStage(), oxygine::Vector2(x, y), input->getPointerMouse());
 }
 
 void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 {
-    oxygine::Input* input = &oxygine::Input::instance;
-    input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, &input->m_pointerMouse);
+    oxygine::Input* input = &oxygine::Input::getInstance();
+    input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, input->getPointerMouse());
 }
 
 void WorkerThread::showMainwindow()
 {
+    CONSOLE_PRINT("WorkerThread::showMainwindow", GameConsole::eDEBUG);
     QCoreApplication::processEvents();
     QThread::msleep(5);
 
@@ -202,14 +206,10 @@ bool WorkerThread::getStarted() const
 
 void WorkerThread::onQuit()
 {
-    CONSOLE_PRINT("Shutting down workerthread", Console::eDEBUG);
+    CONSOLE_PRINT("Shutting down workerthread", GameConsole::eDEBUG);
     if (oxygine::Stage::getStage())
     {
         oxygine::Stage::getStage()->cleanup();
-    }
-    if (BaseGamemenu::getInstance() != nullptr)
-    {
-        BaseGamemenu::getInstance()->deleteMenu();
     }
     GameAnimationFactory::getInstance()->release();
     Interpreter::release();
@@ -217,7 +217,8 @@ void WorkerThread::onQuit()
     pLoadingScreen->hide();
     COSpriteManager::getInstance()->release();
     Player::releaseStaticData();
-    Console::getInstance()->release();
+    Mainapp::getAiProcessPipe().quit();
+    GameConsole::getInstance()->release();
 }
 
 void WorkerThread::startSlaveGame()

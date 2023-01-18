@@ -64,7 +64,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -113,7 +112,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.loadCOMusic = function(co, map)
@@ -308,7 +306,7 @@ var Constructor = function()
         return [qsTr("I will brook no opposition. The enemy will be eliminated."),
                 qsTr("Overwhelming forces need overwhelming supplies."),
                 qsTr("Supplies are here!"),
-                qsTr("Admiral Greyfield here. Attack and eleminate them.")];
+                qsTr("Admiral Greyfield here. Attack and eliminate them.")];
     };
     this.getVictorySentences = function(co)
     {

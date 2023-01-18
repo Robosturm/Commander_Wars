@@ -4,7 +4,7 @@
 #include "objects/base/textbox.h"
 
 class Passwordbox;
-typedef oxygine::intrusive_ptr<Passwordbox> spPasswordbox;
+using spPasswordbox = oxygine::intrusive_ptr<Passwordbox>;
 
 class Passwordbox final : public Textbox
 {

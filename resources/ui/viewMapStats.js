@@ -17,6 +17,26 @@ var ViewMapStats =
     {
         return qsTr("Player") + " " + (loopIdx + 1).toString();
     },
+    getOkTooltip : function()
+    {
+        return qsTr("Closes the map filter dialog");
+    },
+    getOk : function()
+    {
+        return qsTr("Ok");
+    },
+    getUnits : function()
+    {
+        return qsTr("Units");
+    },
+    getBuildings : function()
+    {
+        return qsTr("Buildings");
+    },
+    getMapStatistics : function()
+    {
+        return qsTr("Map statistics");
+    },
     getPlayerCount : function(viewMapStats)
     {
         return viewMapStats.getMap().getPlayerCount();

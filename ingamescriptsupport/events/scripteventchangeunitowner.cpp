@@ -1,7 +1,7 @@
 #include "ingamescriptsupport/events/scripteventchangeunitowner.h"
 
 ScriptEventChangeUnitOwner::ScriptEventChangeUnitOwner(GameMap* pMap)
-    : ScriptEventGeneric(pMap, EventType::ChangeUnitOwner, ScriptEvent::EventChangeUnitOwner)
+    : ScriptEventGeneric(pMap, EventType::ChangeUnitOwner, ScriptEvent::EventChangeUnitOwner, tr("Change unit owner"))
 {
     m_Items.append(ScriptEventGeneric::Data());
     m_Items.append(ScriptEventGeneric::Data());

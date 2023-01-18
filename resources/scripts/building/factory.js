@@ -27,10 +27,9 @@ var Constructor = function()
 
     this.actionList = ["ACTION_BUILD_UNITS"];
 
-    this.constructionList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
-                             "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "ARTILLERYCRAFT", "HOVERFLAK",
-                             "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
-                             "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
+    this.constructionList = ["INFANTRY", "MOTORBIKE", "SNIPER", "MECH", "RECON", "APC", "FLARE",
+                             "ARTILLERY", "LIGHT_TANK", "FLAK", "ANTITANKCANNON", "HEAVY_TANK",
+                             "NEOTANK", "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
     this.getConstructionList = function(building)
     {
         return FACTORY.constructionList;
@@ -62,7 +61,7 @@ var Constructor = function()
 
     this.getRepairTypes = function(building)
     {
-        return [GameEnums.UnitType_Ground, GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Infantry];
+        return [GameEnums.UnitType_Ground, GameEnums.UnitType_Infantry];
     };
 	this.onWeatherChanged = function(building, weather, map)
 	{	

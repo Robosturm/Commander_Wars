@@ -24,7 +24,7 @@ namespace oxygine
         };
         struct shader
         {
-            spShaderProgram program;
+            spShaderProgram program{nullptr};
             ColorMode fracShader{COLOR_DEFAULT};
         };
         explicit UberShaderProgram() = default;

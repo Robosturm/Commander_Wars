@@ -3,23 +3,20 @@
 #include "objects/rotatingsprite.h"
 
 #include "resource_management/gamemanager.h"
-#include "resource_management/cospritemanager.h"
 #include "resource_management/fontmanager.h"
 
 #include "menue/basegamemenu.h"
-#include "menue/movementplanner.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/globalutils.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/audiomanager.h"
 
-#include "game/gameanimation/gameanimationfactory.h"
 #include "game/gameanimation/gameanimationpower.h"
-#include "game/player.h"
 #include "game/co.h"
 #include "game/gamemap.h"
 
-GameAnimationPower* GameAnimationPower::m_pGameAnimationPower = nullptr;
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+
+GameAnimationPower* GameAnimationPower::m_pGameAnimationPower{nullptr};
 
 spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap)
 {
@@ -53,8 +50,6 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, CO* pCO, GameMap * pMa
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationPower");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_endTimer.setSingleShot(true);
     connect(&m_endTimer, &QTimer::timeout, this, [this]()
@@ -80,7 +75,7 @@ GameAnimationPower::~GameAnimationPower()
 {
     if (!m_started)
     {
-        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         pAudioThread->clearPlayList();
         m_pCO->loadCOMusic();
         pAudioThread->playRandom();
@@ -99,8 +94,8 @@ void GameAnimationPower::createMovingText(const QString & font, const QString & 
     textField->setStyle(headline);
     textField->setHtmlText(text);
     m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
-    oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), oxygine::timeMS(1), 1, false, oxygine::timeMS(delay));
-    oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endPos.x(), endPos.y())), oxygine::timeMS(duration), 1, false, oxygine::timeMS(0), easeType);
+    oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), oxygine::timeMS(1), 1, false, oxygine::timeMS(static_cast<qint32>(static_cast<float>(delay) / Settings::getAnimationSpeed())));
+    oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(endPos.x(), endPos.y())), oxygine::timeMS(static_cast<qint32>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
     m_lastCreatedTweenQueue->add(tween3);
     m_lastCreatedTweenQueue->add(tween4);
     textField->addTween(m_lastCreatedTweenQueue);
@@ -118,12 +113,12 @@ void GameAnimationPower::addMovingCoSprite(const QString & sprite, float scale, 
         pSprite->setSize(pAnim->getWidth(), pAnim->getHeight());
         pSprite->setPosition(startPos.x(), startPos.y());
         m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
-        oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endPos.x(), endPos.y())), oxygine::timeMS(duration), 1, false, oxygine::timeMS(delay), easeType);
+        oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(endPos.x(), endPos.y())), oxygine::timeMS(static_cast<qint32>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false,
+                                                       oxygine::timeMS(static_cast<qint32>(static_cast<float>(delay) / Settings::getAnimationSpeed())), easeType);
         m_lastCreatedTweenQueue->add(tween1);
         pSprite->addTween(m_lastCreatedTweenQueue);
         addChild(pSprite);
     }
-
 }
 
 QPoint GameAnimationPower::getCoSpriteSize(const QString & sprite) const
@@ -141,10 +136,10 @@ QPoint GameAnimationPower::getCoSpriteSize(const QString & sprite) const
 
 void GameAnimationPower::setDuration(qint32 timeMs)
 {
-    m_endTimer.setInterval(timeMs);
+    m_endTimer.setInterval(static_cast<qint32>(static_cast<float>(timeMs) / Settings::getAnimationSpeed()));
 }
 
-void GameAnimationPower::createRotatingBackground(const QString & resAnim, const QColor & color)
+void GameAnimationPower::createRotatingBackground(const QString & resAnim, const QColor & color, qint32 speedX)
 {
     oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim(resAnim);    
     setSize(Settings::getWidth(), Settings::getHeight());
@@ -170,7 +165,7 @@ void GameAnimationPower::createRotatingBackground(const QString & resAnim, const
         spRotatingSprite rotSprite = spRotatingSprite::create();
         rotSprite->setSize(Settings::getWidth(), Settings::getHeight());
         rotSprite->setSprite(firstSpriteMask, secondSpriteMask);
-        rotSprite->setDirection(3);
+        rotSprite->setDirection(speedX);
         addChild(rotSprite);
     }
 }
@@ -234,7 +229,7 @@ void GameAnimationPower::start()
 {
     if (!m_started)
     {
-        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         pAudioThread->clearPlayList();
         m_pCO->loadCOMusic();
         pAudioThread->playRandom();
@@ -245,10 +240,13 @@ void GameAnimationPower::start()
 
 void GameAnimationPower::restart()
 {
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMap != nullptr)
     {
-        pMenu->addChild(spGameAnimationPower(this));
-        m_endTimer.start();
+        auto* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            pMenu->addChild(spGameAnimationPower(this));
+            m_endTimer.start();
+        }
     }
 }

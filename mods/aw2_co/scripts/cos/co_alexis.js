@@ -23,7 +23,6 @@ CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 }
             }
         }
-        fields.remove();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
@@ -111,8 +110,6 @@ CO_ALEXIS.startOfTurn = function(co, map)
                     }
                 }
             }
-            fields.remove();
-            buildings.remove();
         }
     }
 };

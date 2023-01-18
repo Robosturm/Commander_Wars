@@ -1,5 +1,4 @@
 #include "coreengine/scriptvariablefile.h"
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include <QFile>
@@ -10,8 +9,6 @@ ScriptVariableFile::ScriptVariableFile(const QString & filename)
 #ifdef GRAPHICSUPPORT
     setObjectName("ScriptVariableFile");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

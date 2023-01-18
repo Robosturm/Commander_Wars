@@ -9,7 +9,6 @@
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "ai/neuralnetwork/neural/layer.h"
-#include "ai/neuralnetwork/neural/neuron.h"
 
 class NeuralNetwork;
 class Neuron;

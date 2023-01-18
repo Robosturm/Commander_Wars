@@ -101,7 +101,7 @@ private:
 };
 
 template<class TClass>
-TClass* RessourceManagement<TClass>::m_pInstance = nullptr;
+TClass* RessourceManagement<TClass>::m_pInstance{nullptr};
 
 template<class TClass>
 TClass* RessourceManagement<TClass>::getInstance()
@@ -188,9 +188,12 @@ template<class TClass>
 void RessourceManagement<TClass>::reset(QStringList& list)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    for (qint32 i = 0; i < list.size(); i++)
+    if (pInterpreter != nullptr)
     {
-        pInterpreter->deleteObject(list[i]);
+        for (qint32 i = 0; i < list.size(); i++)
+        {
+            pInterpreter->deleteObject(list[i]);
+        }
     }
     list.clear();
 }
@@ -281,7 +284,7 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
                 {
                     if (m_raiseErrors && !pInterpreter->exists(id))
                     {
-                        CONSOLE_PRINT("File: " + dirIter.fileInfo().filePath() + " didn't add an object named " + id + " to the game", Console::eERROR);
+                        CONSOLE_PRINT("File: " + dirIter.fileInfo().filePath() + " didn't add an object named " + id + " to the game", GameConsole::eERROR);
                     }
                     else
                     {

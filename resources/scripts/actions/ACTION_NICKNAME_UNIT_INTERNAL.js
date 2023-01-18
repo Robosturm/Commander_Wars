@@ -7,11 +7,11 @@ var Constructor = function()
     };
     this.getActionText = function(map)
     {
-        return "unknown";
+        return qsTr("Unknown");
     };
     this.getIcon = function(map)
     {
-        return "";
+        return "nickname";
     };
     this.perform = function(action, map)
     {
@@ -26,6 +26,14 @@ var Constructor = function()
     this.isFinalStep = function(action, map)
     {
         return true;
+    };
+    this.getName = function(map)
+    {
+        return qsTr("Game: Nickname unit");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Allows you to give a unit a special nickname.");
     };
 }
 

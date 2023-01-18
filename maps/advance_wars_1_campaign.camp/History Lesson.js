@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.immediateStart = function()
     {
-        // called to check if the game should start immediatly without changing rules or modifying co's
+        // called to check if the game should start immediately without changing rules or modifying co's
         // return true for an immediate start
         return true;
     };

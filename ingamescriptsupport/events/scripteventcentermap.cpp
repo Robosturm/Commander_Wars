@@ -1,7 +1,7 @@
 #include "ingamescriptsupport/events/scripteventcentermap.h"
 
 ScriptEventCenterMap::ScriptEventCenterMap(GameMap* pMap)
-    : ScriptEventGeneric(pMap, EventType::CenterMap, ScriptEvent::EventCenterMap)
+    : ScriptEventGeneric(pMap, EventType::CenterMap, ScriptEvent::EventCenterMap, tr("Center map"))
 {
     m_Items.append(ScriptEventGeneric::Data());
     m_Items.append(ScriptEventGeneric::Data());

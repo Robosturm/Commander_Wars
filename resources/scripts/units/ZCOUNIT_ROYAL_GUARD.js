@@ -83,7 +83,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
     };
     this.offBonus = 15;
     this.defBonus = 10;
@@ -97,6 +96,10 @@ var Constructor = function()
     this.getCOSpecificUnit = function(building)
     {
         return true;
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveheavytank.wav";
     };
 }
 

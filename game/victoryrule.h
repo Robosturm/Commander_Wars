@@ -17,8 +17,8 @@ class VictoryRule final : public QObject, public FileSerializable, public oxygin
 {
     Q_OBJECT
 public:
-    static const QString checkbox;
-    static const QString spinbox;
+    static const char* const checkbox;
+    static const char* const spinbox;
 
     explicit VictoryRule(GameMap* pMap);
     explicit VictoryRule(QString ruleID, GameMap* pMap);

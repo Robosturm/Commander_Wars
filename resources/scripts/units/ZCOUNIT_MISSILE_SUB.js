@@ -74,7 +74,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return "Submarine that can fire at range at enemy forces without taking a lot of risks.";
+        return qsTr("Submarine that can fire at range at enemy forces without taking a lot of risks.");
     };
 
     this.getTerrainAnimationBase = function(unit, terrain, defender, map)
@@ -110,6 +110,10 @@ var Constructor = function()
     this.getTypeOfWeapon1 = function(unit)
     {
         return GameEnums.WeaponType_Indirect;
+    };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveship.wav";
     };
 }
 

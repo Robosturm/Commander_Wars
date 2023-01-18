@@ -1,7 +1,7 @@
 #ifndef SCRIPTEVENTGENERIC_H
 #define SCRIPTEVENTGENERIC_H
 
-#include <qvector.h>
+#include <QVector>
 
 #include "ingamescriptsupport/events/scriptevent.h"
 
@@ -49,7 +49,7 @@ public:
         QString startFolder;
     };
 
-    explicit ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier);
+    explicit ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier, const QString & description);
     virtual ~ScriptEventGeneric() = default;
 
     /**
@@ -85,7 +85,7 @@ public:
     }
     virtual QString getDescription() override
     {
-        return tr(m_eventIdentifier.toStdString().c_str());
+        return m_description;
     }
 
 signals:
@@ -95,6 +95,7 @@ protected slots:
 protected:
     QVector<Data> m_Items;
     QString m_eventIdentifier;
+    QString m_description;
 };
 
 #endif // SCRIPTEVENTGENERIC_H

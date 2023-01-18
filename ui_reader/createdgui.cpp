@@ -71,9 +71,9 @@ void CreatedGui::setObjectEnabled(const QString id, bool value)
     }
 }
 
-void CreatedGui::showFileDialog(const QStringList & wildcards, const QString & startFolder, const QString & jsObject, const QString & jsCallback, QString startFile, bool preview, QString acceptButtonName)
+void CreatedGui::showFileDialog(const QStringList & wildcards, const QString & startFolder, bool isSaveDialog, const QString & jsObject, const QString & jsCallback, QString startFile, bool preview, QString acceptButtonName)
 {
-    spFileDialog fileDialog = spFileDialog::create(startFolder, wildcards, startFile, preview, acceptButtonName);
+    spFileDialog fileDialog = spFileDialog::create(startFolder, wildcards, isSaveDialog, startFile, preview, acceptButtonName);
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, [this, jsObject, jsCallback](QString filename)
     {
@@ -145,7 +145,7 @@ void CreatedGui::createSubUi(const QString & uiXml, CreatedGui* pBaseUi)
 
 void CreatedGui::restart()
 {
-    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
+    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", GameConsole::eDEBUG);
     removeChildren();
     detach();
     emit Mainapp::getInstance()->sigQuit(1);

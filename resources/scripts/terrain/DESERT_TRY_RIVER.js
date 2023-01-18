@@ -87,20 +87,28 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
-        var variables = terrain.getVariables();
-        var variable = variables.getVariable("BACKGROUND_ID");
-        var rand = 0;
-        if (variable === null)
+        if (unit !== null &&
+            unit.getMovementType() === "MOVE_SMALL_BOAT")
         {
-            rand = globals.randInt(0, 1);
-            variable = variables.createVariable("BACKGROUND_ID");
-            variable.writeDataInt32(rand);
+            return "back_desertriver+boat";
         }
         else
         {
-            rand = variable.readDataInt32();
+            var variables = terrain.getVariables();
+            var variable = variables.getVariable("BACKGROUND_ID");
+            var rand = 0;
+            if (variable === null)
+            {
+                rand = globals.randInt(0, 1);
+                variable = variables.createVariable("BACKGROUND_ID");
+                variable.writeDataInt32(rand);
+            }
+            else
+            {
+                rand = variable.readDataInt32();
+            }
+            return "back_desertriver+" + rand.toString();
         }
-        return "back_desertriver+" + rand.toString();
     };
 };
 Constructor.prototype = TERRAIN;

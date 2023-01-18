@@ -6,8 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -20,7 +19,7 @@ ScriptConditionTerrainDestroyed::ScriptConditionTerrainDestroyed(GameMap* pMap)
 
 void ScriptConditionTerrainDestroyed::readCondition(QTextStream& rStream, QString line)
 {
-    CONSOLE_PRINT("Reading ConditionTerrainDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionTerrainDestroyed", GameConsole::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if (map.getTerrain(", "")
                             .replace(", ", ",")
@@ -57,7 +56,7 @@ void ScriptConditionTerrainDestroyed::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionTerrainDestroyed::writeCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionTerrainDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionTerrainDestroyed", GameConsole::eDEBUG);
     rStream << "        if (" << "map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getHp() <= 0 && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " " << ConditionTerrainDestroyed << "\n";
     if (subCondition.get() != nullptr)
@@ -81,7 +80,7 @@ void ScriptConditionTerrainDestroyed::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionBuildingDestroyed + " End\n";
+    rStream << "        } // " + QString(ConditionBuildingDestroyed) + " End\n";
 }
 
 void ScriptConditionTerrainDestroyed::writePostCondition(QTextStream& rStream)

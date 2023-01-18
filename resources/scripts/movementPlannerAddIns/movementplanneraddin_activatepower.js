@@ -12,6 +12,47 @@ var Constructor = function()
     {
         return qsTr("Activates the power of one player.");
     };
+    this.getPlayerLabel = function()
+    {
+        return qsTr("Player:");
+    };
+    this.getPlayerTooltip = function()
+    {
+        return qsTr("Player of which the co power gets activated.");
+    };
+    this.getCOLabel = function()
+    {
+        return qsTr("CO:");
+    };
+    this.getCOTooltip = function()
+    {
+        return qsTr("CO that should activate it's power.");
+    };
+    this.getPowerLabel = function()
+    {
+        return qsTr("Power:");
+    };
+    this.getPowerTooltip = function()
+    {
+        return qsTr("Power which should be activated.");
+    };
+    this.getApplyLabel = function()
+    {
+        return qsTr("Apply");
+    };
+    this.getApplyTooltip = function()
+    {
+        return qsTr("Activates the co power.");
+    };
+    this.getCancelLabel = function()
+    {
+        return qsTr("Cancel");
+    };
+    this.getCancelTooltip = function()
+    {
+        return qsTr("Cancels the dialog.");
+    };
+
     this.startAddIn = function(addIn)
     {
         var variables = addIn.getVariables();

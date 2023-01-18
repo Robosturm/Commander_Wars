@@ -3,7 +3,6 @@
 #include <QObject>
 #include <QElapsedTimer>
 
-#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 

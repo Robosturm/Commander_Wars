@@ -6,8 +6,7 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
         var building = action.getTargetBuilding();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
+        if ((unit.getHasMoved() === true))
         {
             return false;
         }
@@ -45,9 +44,13 @@ var Constructor = function()
         unit.makeCOUnit(1);
         unit.getOwner().addFunds(-unit.getUnitCosts() / 2);
     };
+    this.getName = function()
+    {
+        return qsTr("CO 2");
+    };
     this.getDescription = function()
     {
-        return qsTr("Deploys your second co onto the given unit. All units inside the co range of this unit will get the buff of your second co.");
+        return qsTr("Deploys your second co onto the given unit. All units inside the CO range of this unit will get the buff of your second CO.");
     };
 }
 

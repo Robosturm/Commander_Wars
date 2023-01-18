@@ -17,14 +17,13 @@ var Constructor = function()
                     break;
                 }
             }
-            units.remove();
         }
         return ret;
     };
     
     this.getActionText = function(map)
     {
-        return qsTr("Sell Unit");
+        return qsTr("Sell unit");
     };
     this.getIcon = function(map)
     {
@@ -88,11 +87,14 @@ var Constructor = function()
         }
         data.setShowZData(false);
         data.setColor("#C8FF0000");
-        units.remove();
     };
     this.getStepInputType = function(action, map)
     {
         return "FIELD";
+    };
+    this.getName = function(map)
+    {
+        return qsTr("Sell unit");
     };
     this.getDescription = function()
 	{

@@ -2,10 +2,9 @@
 
 #include "objects/dialogs/gamepadinfo.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 
 #include "ui_reader/uifactory.h"
 
@@ -16,8 +15,7 @@ GamepadInfo::GamepadInfo()
 #ifdef GRAPHICSUPPORT
     setObjectName("GamepadInfo");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -36,7 +34,10 @@ GamepadInfo::GamepadInfo()
 GamepadInfo::~GamepadInfo()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(GamepadInfoItem);
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->deleteObject(GamepadInfoItem);
+    }
 }
 
 void GamepadInfo::remove()

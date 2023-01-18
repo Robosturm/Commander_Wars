@@ -1,4 +1,4 @@
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
 #include "resource_management/objectmanager.h"
@@ -20,8 +20,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogModifyTerrain");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -52,13 +51,21 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getMainFont48());
-
+    auto style3 = style2;
+    style3.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
+    pLabel->setStyle(style3);
+    pLabel->setHtmlText(tr("Edit terrain"));
+    pLabel->setPosition(25, y);
+    m_pPanel->addItem(pLabel);
+    y += pLabel->getHeight() + 10;
+
+    pLabel = spLabel::create(m_pPanel->getScaledWidth() - 50);
     pLabel->setStyle(style2);
     pLabel->setHtmlText(tr("Information"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    y += 60;
+    y += pLabel->getHeight() + 10;
 
     pLabel = spLabel::create(190);
     pLabel->setStyle(style);
@@ -69,9 +76,12 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     pTextbox->setTooltipText(tr("Custom Name of the Terrain. Empty name equals the default name."));
     pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
     pTextbox->setCurrentText(pTerrain->getTerrainName());
-    connect(pTextbox.get(), &Textbox::sigTextChanged, pTerrain, &Terrain::setTerrainName, Qt::QueuedConnection);
+    connect(pTextbox.get(), &Textbox::sigTextChanged, pTerrain, [pTerrain](QString value)
+    {
+        pTerrain->setTerrainName(value, !value.isEmpty());
+    }, Qt::QueuedConnection);
     m_pPanel->addItem(pTextbox);
-    y += 40;
+    y += pLabel->getHeight() + 10;
 
     pLabel = spLabel::create(190);
     pLabel->setStyle(style);
@@ -84,7 +94,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     connect(pTextbox.get(), &Textbox::sigTextChanged, pTerrain, &Terrain::setTerrainDescription, Qt::QueuedConnection);
     m_pPanel->addItem(pTextbox);
     m_pPanel->addItem(pLabel);
-    y += 60;
+    y += pLabel->getHeight() + 10;
 
     loadBaseImageview(y, pTerrain);
     loadOverlayview(y, pTerrain);
@@ -134,7 +144,7 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
     pLabel->setHtmlText(tr("Base image"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    y += 60;
+    y += pLabel->getHeight() + GameMap::getImageSize() * 2 + 10;
 
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = 0; i < pTerrainStyles.size(); i++)
@@ -174,7 +184,7 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
     m_pTextbox->setTooltipText(tr("Current select terrain image or terrain path or empty for default selection."));
     m_pTextbox->setPosition(200 + 20 + pTextfield->getX(), y);
     m_pPanel->addItem(m_pTextbox);
-    y += 80;
+    y += pTextfield->getHeight() + 20;
 }
 
 void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
@@ -195,7 +205,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
         pLabel->setHtmlText(tr("Overlays"));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
-        y += 60;
+        y += pLabel->getHeight() + 10;
 
         TerrainManager* pTerrainManager = TerrainManager::getInstance();
         for (qint32 i = 0; i < overlayTerrainStyles.size(); i++)
@@ -257,7 +267,7 @@ void DialogModifyTerrain::showLoadDialog()
     QStringList wildcards;
     wildcards.append("*.png");
     QString path = Settings::getUserPath() + "customTerrainImages";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), true, tr("Load"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, m_pMap->getMapName(), true, tr("Load"));
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogModifyTerrain::loadCustomSprite, Qt::QueuedConnection);
     addChild(fileDialog);    
 }

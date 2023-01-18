@@ -82,6 +82,10 @@ var Constructor = function()
         }
         return bonus;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "movetire.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

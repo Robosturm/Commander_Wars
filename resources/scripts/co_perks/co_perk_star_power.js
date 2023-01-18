@@ -25,6 +25,10 @@ var Constructor = function()
     {
         return qsTr("Power");
     };
+    this.getCosts = function()
+    {
+        return 3;
+    };
 };
 
 Constructor.prototype = CO_PERK;

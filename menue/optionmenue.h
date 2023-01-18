@@ -45,6 +45,7 @@ public slots:
     void showResetBox();
     void showGamepadInfo();
     void markRestartNeeded();
+    quint8 getSupportedScreenCount();
 protected slots:
     virtual void onEnter() override;
 private slots:
@@ -67,7 +68,7 @@ private:
         QStringList m_enableMods;
         QStringList m_disableMods;
     };
-    static QVector<GamemodeMods> m_gamemodeMods;
+    const QVector<GamemodeMods> m_gamemodeMods;
     spPanel m_pMods;
     spPanel m_pModDescription;
     spDropDownmenu m_pModSelection;

@@ -1085,7 +1085,6 @@
         <file>mods/awdc_unit/scripts/weapons/weapon_bomb.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_cannon.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_carrier_anti_air_missile.js</file>
-        <file>mods/awdc_unit/scripts/weapons/weapon_destroyer_a_air_gun.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_flare_mg.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_heavy_hovercraft_gun.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_heavy_hovercraft_mg.js</file>
@@ -1269,7 +1268,6 @@
         <file>mods/awds_unit/scripts/weapons/weapon_bomb.js</file>
         <file>mods/awds_unit/scripts/weapons/weapon_cannon.js</file>
         <file>mods/awds_unit/scripts/weapons/weapon_carrier_anti_air_missile.js</file>
-        <file>mods/awds_unit/scripts/weapons/weapon_destroyer_a_air_gun.js</file>
         <file>mods/awds_unit/scripts/weapons/weapon_flare_mg.js</file>
         <file>mods/awds_unit/scripts/weapons/weapon_heavy_hovercraft_gun.js</file>
         <file>mods/awds_unit/scripts/weapons/weapon_heavy_hovercraft_mg.js</file>
@@ -1972,7 +1970,6 @@
         <file>resources/scripts/weapons/weapon_carrier_anti_air_missile.js</file>
         <file>resources/scripts/weapons/weapon_csv_import.txt</file>
         <file>resources/scripts/weapons/weapon_designator.js</file>
-        <file>resources/scripts/weapons/weapon_destroyer_a_air_gun.js</file>
         <file>resources/scripts/weapons/weapon_firebomb.js</file>
         <file>resources/scripts/weapons/weapon_flare.js</file>
         <file>resources/scripts/weapons/weapon_flare_mg.js</file>
@@ -2004,42 +2001,6 @@
         <file>resources/scripts/weapons/weapon_vulcan_cannon.js</file>
         <file>resources/scripts/weapons/weapon_waterplane_missile.js</file>
         <file>resources/scripts/weapons/weapontable.csv</file>
-        <file>resources/scripts/wiki/action_activate_power_co_0.js</file>
-        <file>resources/scripts/wiki/action_activate_power_co_1.js</file>
-        <file>resources/scripts/wiki/action_activate_superpower_co_0.js</file>
-        <file>resources/scripts/wiki/action_activate_superpower_co_1.js</file>
-        <file>resources/scripts/wiki/action_activate_tagpower.js</file>
-        <file>resources/scripts/wiki/action_blackholefactory_door1.js</file>
-        <file>resources/scripts/wiki/action_blackholefactory_door2.js</file>
-        <file>resources/scripts/wiki/action_blackholefactory_door3.js</file>
-        <file>resources/scripts/wiki/action_build_temp_airport.js</file>
-        <file>resources/scripts/wiki/action_build_temp_harbour.js</file>
-        <file>resources/scripts/wiki/action_build_waterplane.js</file>
-        <file>resources/scripts/wiki/action_cannon_fire.js</file>
-        <file>resources/scripts/wiki/action_capture.js</file>
-        <file>resources/scripts/wiki/action_co_unit_0.js</file>
-        <file>resources/scripts/wiki/action_co_unit_1.js</file>
-        <file>resources/scripts/wiki/action_crystall_heal.js</file>
-        <file>resources/scripts/wiki/action_deathray_fire.js</file>
-        <file>resources/scripts/wiki/action_explode.js</file>
-        <file>resources/scripts/wiki/action_fire.js</file>
-        <file>resources/scripts/wiki/action_flare.js</file>
-        <file>resources/scripts/wiki/action_hoellium_wait.js</file>
-        <file>resources/scripts/wiki/action_join.js</file>
-        <file>resources/scripts/wiki/action_laser_fire.js</file>
-        <file>resources/scripts/wiki/action_load.js</file>
-        <file>resources/scripts/wiki/action_missile.js</file>
-        <file>resources/scripts/wiki/action_next_player.js</file>
-        <file>resources/scripts/wiki/action_place_watermine.js</file>
-        <file>resources/scripts/wiki/action_stealth.js</file>
-        <file>resources/scripts/wiki/action_supportall_ration.js</file>
-        <file>resources/scripts/wiki/action_supportsingle_freerepair.js</file>
-        <file>resources/scripts/wiki/action_supportsingle_iron_shield.js</file>
-        <file>resources/scripts/wiki/action_supportsingle_repair.js</file>
-        <file>resources/scripts/wiki/action_talon_gun.js</file>
-        <file>resources/scripts/wiki/action_unload.js</file>
-        <file>resources/scripts/wiki/action_unstealth.js</file>
-        <file>resources/scripts/wiki/action_wait.js</file>
         <file>resources/scripts/wiki/blackhole.js</file>
         <file>resources/scripts/wiki/bluemoon.js</file>
         <file>resources/scripts/wiki/boltguard.js</file>
@@ -2093,5 +2054,31 @@
         <file>resources/aidata/normal/normalaidefensive.js</file>
         <file>resources/aidata/normal/normalaioffensive.js</file>
         <file>resources/aidata/very_easy/veryeasyai.js</file>
+        <file>mods/awdc_terrain/scripts/building/tower.js</file>
+        <file>resources/scripts/units/battlecruiser.js</file>
+        <file>resources/scripts/battleanimations/BATTLEANIMATION_BATTLECRUISER.js</file>
+        <file>resources/scripts/weapons/weapon_battlecruiser_a_air_gun.js</file>
+        <file>mods/awdc_unit/scripts/movementtables/move_ship.js</file>
+        <file>resources/scripts/units/frigate.js</file>
+        <file>resources/scripts/units/gunboat.js</file>
+        <file>resources/scripts/units/torpedoboat.js</file>
+        <file>resources/scripts/weapons/weapon_boat_torpedo.js</file>
+        <file>resources/scripts/weapons/weapon_frigate_naval_gun.js</file>
+        <file>resources/scripts/weapons/weapon_gunboat_naval_gun.js</file>
+        <file>resources/scripts/building/amphibiousfactory.js</file>
+        <file>resources/scripts/battleanimations/BATTLEANIMATION_FRIGATE.js</file>
+        <file>resources/scripts/battleanimations/BATTLEANIMATION_GUNBOAT.js</file>
+        <file>resources/scripts/battleanimations/BATTLEANIMATION_TORPEDOBOAT.js</file>
+        <file>resources/scripts/movementtables/move_small_boat.js</file>
+        <file>maps/commander_wars.camp/takeAndHold.js</file>
+        <file>maps/commander_wars.camp/takeAndHold.map</file>
+        <file>resources/aidata/normal/__coreai.js</file>
+        <file>mods/map_creator/scripts/movementtables/move_small_boat.js</file>
+        <file>resources/scripts/building/zdestroyed_gate_e_w.js</file>
+        <file>resources/scripts/building/zdestroyed_gate_n_s.js</file>
+        <file>resources/scripts/co_perks/co_perk_no_plain_fighter.js</file>
+        <file>resources/scripts/co_perks/co_perk_plain_fighter.js</file>
+        <file>mods/awds_unit/scripts/general/unit.js</file>
+        <file>mods/awdc_unit/scripts/general/unit.js</file>
     </qresource>
 </RCC>

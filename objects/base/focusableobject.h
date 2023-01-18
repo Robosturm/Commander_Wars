@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QVariant>
-#include <memory>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 

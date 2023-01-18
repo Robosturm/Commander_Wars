@@ -4,16 +4,19 @@ var Constructor = function()
     {
         return qsTr("Torpedo");
     };
-    this.damageTable = [["BATTLESHIP", 80],
-                        ["DESTROYER", 120],
-
-                        ["CRUISER", 25],
-                        ["BATTLECRUISER", 95],
-                        ["SUBMARINE", 55],
-
+    this.damageTable = [// ships
+                        ["GUNBOAT", 55],
+                        ["CANNONBOAT", 55],
+                        ["BLACK_BOAT", 55],
+                        ["TORPEDOBOAT", 55],
                         ["LANDER", 120],
-                        ["BLACK_BOAT", 120],
-                        ["AIRCRAFTCARRIER", 120]];
+                        ["FRIGATE", 120],
+                        ["DESTROYER", 120],
+                        ["CRUISER", 25],
+                        ["SUBMARINE", 55],
+                        ["BATTLECRUISER", 95],
+                        ["BATTLESHIP", 80],
+                        ["AIRCRAFTCARRIER", 120],];
 
     this.getBaseDamage = function(unit)
     {

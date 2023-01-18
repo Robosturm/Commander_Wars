@@ -2,7 +2,6 @@
 
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
-#include "texture.h"
 
 namespace oxygine
 {

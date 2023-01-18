@@ -10,7 +10,6 @@
                 <x>5</x>
                 <y>5</y>
                 <width>50</width>
-                <height>24</height>
                 <text>QT_TRANSLATE_NOOP("GAME","All")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -53,11 +52,51 @@
                 <onEvent>currentMenu.createSubUi("ui/game/allAdvancedPlayerChanges.xml", currentMenu)</onEvent>
                 <enabled>PlayerSelection.getIsServerOrSavegameOrCampaignEnabled(currentMenu)</enabled>
             </Button>
+            <if condition="!(currentMenu.getIsCampaign() || currentMenu.hasNetworkInterface())">
+                <Label>
+                    <x>5</x>
+                    <y>lastY + lastHeight + 5</y>
+                    <width>50</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","All")</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                    <visible>!(currentMenu.getIsCampaign() || currentMenu.hasNetworkInterface())</visible>
+                </Label>
+                <Button>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>170</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","All delete")</text>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Changes all co's to no co.")</tooltip>
+                    <onEvent>currentMenu.slotCOsDelete(-1);</onEvent>
+                    <enabled>!currentMenu.getMap().getGameRules().getSingleCo()</enabled>
+                    <visible>!(currentMenu.getIsCampaign() || currentMenu.hasNetworkInterface())</visible>
+                </Button>
+                <Button>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>170</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","CO 1 delete")</text>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Changes the first co of all players to no co.")</tooltip>
+                    <onEvent>currentMenu.slotCOsDelete(0);</onEvent>
+                    <visible>!(currentMenu.getIsCampaign() || currentMenu.hasNetworkInterface())</visible>
+                </Button>
+                <Button>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>170</width>
+                    <text>QT_TRANSLATE_NOOP("GAME","CO 2 delete")</text>
+                    <tooltip>QT_TRANSLATE_NOOP("GAME","Changes the second co of all players to no co.")</tooltip>
+                    <onEvent>currentMenu.slotCOsDelete(1);</onEvent>
+                    <enabled>!currentMenu.getMap().getGameRules().getSingleCo()</enabled>
+                    <visible>!(currentMenu.getIsCampaign() || currentMenu.hasNetworkInterface())</visible>
+                </Button>
+            </if>
             <Label>
                 <x>5</x>
                 <y>lastY + lastHeight + 5</y>
                 <width>70</width>
-                <height>24</height>
+                <height>45</height>
                 <text>QT_TRANSLATE_NOOP("GAME","CO's")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -66,7 +105,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>110</width>
-                <height>24</height>
+                <height>45</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Color")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -75,7 +114,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>220</width>
-                <height>24</height>
+                <height>45</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Controller")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -84,7 +123,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>160</width>
-                <height>24</height>
+                <height>45</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Team")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -93,7 +132,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <width>170</width>
-                <height>24</height>
+                <height>45</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -103,7 +142,7 @@
                     <x>lastX + lastWidth + 10</x>
                     <y>lastY</y>
                     <width>80</width>
-                    <height>24</height>
+                    <height>45</height>
                     <text>QT_TRANSLATE_NOOP("GAME","Ready")</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
@@ -113,7 +152,7 @@
                 <Sprite>
                     <Id>"CO1_" + loopIdx</Id>
                     <x>5</x>
-                    <y>lastY + 30</y>
+                    <y>lastY + lastHeight + 5</y>
                     <width>32</width>
                     <height>12</height>
                     <scale>2</scale>

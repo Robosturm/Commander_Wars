@@ -69,7 +69,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
         return ret;
     };
     this.getStepData = function(action, data, map)
@@ -119,6 +118,10 @@ var Constructor = function()
         }
         postAnimationUnit = null;
         postAnimationBuilding = null;
+    };
+    this.getName = function()
+    {
+        return qsTr("Fire with Cannon");
     };
     this.getDescription = function()
     {

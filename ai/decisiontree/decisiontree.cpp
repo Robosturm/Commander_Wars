@@ -1,7 +1,7 @@
 #include "ai/decisiontree/decisiontree.h"
 #include "ai/decisiontree/leaf.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include <coreengine/settings.h>
 #include <coreengine/sha256hash.h>
 
@@ -85,7 +85,7 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
             std::vector<std::vector<spDecisionQuestion>> questions;
             getTrainingData(trainingDataFile, trainingData, questions);
             m_pRootNode = train(trainingData, questions);
-            CONSOLE_PRINT("Storing tree: " + treeFile, Console::eDEBUG);
+            CONSOLE_PRINT("Storing tree: " + treeFile, GameConsole::eDEBUG);
             // store trained tree for next use.
             file.open(QIODevice::WriteOnly | QIODevice::Truncate);
             QDataStream stream(&file);
@@ -100,15 +100,15 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
 
 float DecisionTree::getDecision(std::vector<float>& input)
 {
-    CONSOLE_PRINT("getDecision() for decision tree()", Console::eDEBUG);
+    CONSOLE_PRINT("getDecision() for decision tree()", GameConsole::eDEBUG);
     float output = m_pRootNode->getDecision(input);
-    CONSOLE_PRINT("Result = " + QString::number(output), Console::eDEBUG);
+    CONSOLE_PRINT("Result = " + QString::number(output), GameConsole::eDEBUG);
     return output;
 }
 
 spDecisionNode DecisionTree::train(std::vector<std::vector<float>>& trainingData, std::vector<std::vector<spDecisionQuestion>>& questions)
 {
-    CONSOLE_PRINT("training decision tree()", Console::eDEBUG);
+    CONSOLE_PRINT("training decision tree()", GameConsole::eDEBUG);
 	float gain = 0;
     spDecisionQuestion pQuestion = findBestSplit(trainingData, gain, questions);
 	if (gain <= 0.0f)
@@ -266,7 +266,7 @@ void DecisionTree::printTree(DecisionNode* pNode, QString spacing)
     Leaf* pLeaf = dynamic_cast<Leaf*>(pNode);
     if (pLeaf != nullptr)
     {
-        CONSOLE_PRINT(spacing + "Predict " + pLeaf->print(), Console::eDEBUG);
+        CONSOLE_PRINT(spacing + "Predict " + pLeaf->print(), GameConsole::eDEBUG);
         return;
     }
     if (pNode != nullptr)
@@ -274,11 +274,11 @@ void DecisionTree::printTree(DecisionNode* pNode, QString spacing)
         auto * pQuestion = pNode->getQuestion();
         if (pQuestion != nullptr)
         {
-            CONSOLE_PRINT(spacing + pQuestion->print(), Console::eDEBUG);
+            CONSOLE_PRINT(spacing + pQuestion->print(), GameConsole::eDEBUG);
         }
         for (qint32 i = 0; i < pNode->getNodeSize(); i++)
         {
-            CONSOLE_PRINT(spacing + "--> " + QString::number(i) + ":", Console::eDEBUG);
+            CONSOLE_PRINT(spacing + "--> " + QString::number(i) + ":", GameConsole::eDEBUG);
             printTree(pNode->getNode(i) , spacing + "    ");
         }
     }

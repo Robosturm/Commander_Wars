@@ -11,7 +11,6 @@
 #include "game/player.h"
 #include "game/building.h"
 
-#include "objects/base/panel.h"
 #include "objects/base/colorselector.h"
 
 class ColorSelectionDialog;

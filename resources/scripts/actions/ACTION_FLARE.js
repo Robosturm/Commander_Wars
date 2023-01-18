@@ -5,11 +5,9 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if (unit.getHasMoved() === true)
-        {
-            return false;
-        }
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y))
+        if (unit.getHasMoved() === false &&
+           (actionTargetField.x === targetField.x) &&
+           (actionTargetField.y === targetField.y))
         {
             if (unit.hasAmmo1())
             {
@@ -77,7 +75,6 @@ var Constructor = function()
                 data.addPoint(Qt.point(x, y));
             }
         }
-        fields.remove();
     };
     this.postAnimationTargetX = -1;
     this.postAnimationTargetY = -1;
@@ -116,7 +113,6 @@ var Constructor = function()
                 ACTION_FLARE.postAnimationPlayer.addVisionField(x, y, 1, true);
             }
         }
-        fields.remove();
         ACTION_FLARE.postAnimationTargetX = -1;
         ACTION_FLARE.postAnimationTargetY = -1;
         ACTION_FLARE.postAnimationPlayer = null;
@@ -127,6 +123,10 @@ var Constructor = function()
         cursorData.setXOffset(- map.getImageSize() * 2);
         cursorData.setYOffset(- map.getImageSize() * 2);
         cursorData.setScale(2);
+    };
+    this.getName = function()
+    {
+        return qsTr("Flare");
     };
     this.getDescription = function()
     {

@@ -1,11 +1,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
-#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 
-#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
-#include "3rd_party/oxygine-framework/oxygine/Clock.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
@@ -23,12 +20,12 @@
 #endif
 #include <limits>
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 
 namespace oxygine
 {
-    GameWindow* GameWindow::m_window = nullptr;
+    GameWindow* GameWindow::m_window(nullptr);
 
     GameWindow::GameWindow()
     {
@@ -40,7 +37,6 @@ namespace oxygine
         setFormat(newFormat);
 #endif
         m_window = this;
-        m_mainHandle = QThread::currentThreadId();
         QObject::connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
         QObject::connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
         QObject::connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);
@@ -61,7 +57,7 @@ namespace oxygine
         VideoDriver::instance = nullptr;
         Material::null = spMaterial();
         Material::current = spMaterial();
-        Input::instance.cleanup();
+        Input::getInstance().cleanup();
         Stage::setStage(spStage());
         Resources::unregisterResourceType("atlas");
         m_window = nullptr;
@@ -69,9 +65,6 @@ namespace oxygine
 
     void GameWindow::updateData()
     {
-        timeMS duration = VideoDriver::m_stats.duration;
-        VideoDriver::m_stats = VideoDriver::Stats();
-        VideoDriver::m_stats.duration = duration;
         if (isActive() && FocusableObject::getFocusedObject() == nullptr)
         {
             showKeyboard(false);
@@ -86,6 +79,7 @@ namespace oxygine
 
     void GameWindow::quit(qint32 exitCode)
     {
+        CONSOLE_PRINT("Quitting game with " + QString::number(exitCode), GameConsole::eDEBUG);
         QCoreApplication::exit(exitCode);
     }
 
@@ -405,14 +399,14 @@ namespace oxygine
         {
             if (visible)
             {
-                CONSOLE_PRINT("Show virtual keyboard", Console::eDEBUG);
+                CONSOLE_PRINT("Show virtual keyboard", GameConsole::eDEBUG);
                 virtualKeyboard->show();
             }
             else
             {
                 if (virtualKeyboard->isVisible())
                 {
-                    CONSOLE_PRINT("Hide virtual keyboard", Console::eDEBUG);
+                    CONSOLE_PRINT("Hide virtual keyboard", GameConsole::eDEBUG);
                     virtualKeyboard->hide();
                 }
             }

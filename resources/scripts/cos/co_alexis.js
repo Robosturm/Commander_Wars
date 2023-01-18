@@ -72,8 +72,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
-        buildings.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -145,8 +143,6 @@ var Constructor = function()
                 }
             }
         }
-        buildings.remove();
-        fields.remove();
         fields = globals.getCircle(0, 1);
         var playerCounter = map.getPlayerCount();
         for (var i3 = 0; i3 < playerCounter; i3++)
@@ -205,9 +201,7 @@ var Constructor = function()
                     }
                 }
             }
-            buildings.remove();
         }
-        fields.remove();
     };
 
     this.loadCOMusic = function(co, map)
@@ -261,7 +255,6 @@ var Constructor = function()
                 }
             }
         }
-        fields.remove();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
@@ -361,8 +354,6 @@ var Constructor = function()
                     }
                 }
             }
-            fields.remove();
-            buildings.remove();
         }
     };
 

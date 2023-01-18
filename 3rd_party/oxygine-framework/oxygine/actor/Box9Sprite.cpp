@@ -3,7 +3,6 @@
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/math/ScalarMath.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
-#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 
 namespace oxygine
 {
@@ -79,7 +78,7 @@ namespace oxygine
 
     void Box9Sprite::changeAnimFrame(const AnimationFrame& f)
     {
-        Vector2 size = getSize();
+        Point size = getSize();
         Sprite::changeAnimFrame(f);
         if (!isNormalSprite())
         {
@@ -269,7 +268,7 @@ namespace oxygine
         m_prepared = true;
     }
 
-    void Box9Sprite::sizeChanged(const Vector2&)
+    void Box9Sprite::sizeChanged(const Point&)
     {
         m_prepared = false;
     }

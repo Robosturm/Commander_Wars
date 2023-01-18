@@ -4,7 +4,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setVisionHigh(1);
-        terrain.setTerrainName(__BASEMOUNTAIN.getName(terrain));
+        terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
     };
     this.baseTerrainId = "PLAINS";
     this.getName = function(terrain = null)
@@ -161,17 +161,15 @@ var Constructor = function()
         }
         if (baseTerrainId === "WASTE")
         {
-            return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +4.</div><r> Extremly high movement costs for infantry units. Waste terrain with reduced defense but clear view. In Fog of War, other unit's gain </r><div c='#00ff00'>vision +1.</div>");
+            return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +4.</div><r> Extremely high movement costs for infantry units. Waste terrain with reduced defense but clear view. In Fog of War, other unit's gain </r><div c='#00ff00'>vision +1.</div>");
         }
         else if (baseTerrainId === "SNOW")
         {
-            return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +3.</div><r> Extremly high movement costs for infantry units.</r>");
+            return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +3.</div><r> Extremely high movement costs for infantry units.</r>");
         }
         else if (baseTerrainId === "DESERT")
         {
-            return "<r>" + qsTr("Clear view. In Fog of War, Infantry unit's gain ") + "</r>" +
-                    "<div c='#00ff00'>" + qsTr("vision +3.") + "</div>" +
-                    "<r>" + qsTr(" It reduces the firepower of units by 20%.") + "</r>"
+            return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +3.</div><r> It reduces the firepower of units by 20%.</r>");
         }
         else
         {

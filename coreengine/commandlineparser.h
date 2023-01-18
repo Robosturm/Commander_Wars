@@ -21,6 +21,10 @@ public:
     static const char* const ARG_MASTERADDRESS;
     static const char* const ARG_MASTERPORT;
     static const char* const ARG_UPDATE;
+    static const char* const ARG_SPAWNAIPROCESS;
+    static const char* const ARG_AISLAVE;
+    static const char* const ARG_USERPATH;
+    static const char* const ARG_DEBUGLEVEL;
 
     static const char* const ARG_SERVER;
     static const char* const ARG_SERVERSLAVEHOSTOPTIONS;
@@ -30,6 +34,7 @@ public:
     static const char* const ARG_SERVERSLAVELISTENADDRESS;
     static const char* const ARG_SERVERSLAVELISTENPORT;
     static const char* const ARG_SERVERSLAVEDESPAWNTIME;
+    static const char* const ARG_SERVERSLAVESUSPENDEDTIME;
 
     static const char* const ARG_MAILSERVERADDRESS;
     static const char* const ARG_MAILSERVERPORT;
@@ -45,9 +50,15 @@ public:
     void parseArgsPhaseTwo();
 
     void startSlaveGame() const;
+    bool getUserPath(QString & path);
+
 private:
     void disableUi();
 private:
+    QCommandLineOption m_debugLevel;
+    QCommandLineOption m_userPath;
+    QCommandLineOption m_aiSlave;
+    QCommandLineOption m_spawnAiProcess;
     QCommandLineOption m_mods;
     QCommandLineOption m_update;
     QCommandLineOption m_slave;
@@ -69,6 +80,7 @@ private:
     QCommandLineOption m_serverSlaveListenAddress;
     QCommandLineOption m_serverSlaveListenPort;
     QCommandLineOption m_serverSlaveDespawnTime;
+    QCommandLineOption m_serverSuspendedDespawnTime;
     QCommandLineOption m_mailServerAddress;
     QCommandLineOption m_mailServerPort;
     QCommandLineOption m_mailServerConnectionType;

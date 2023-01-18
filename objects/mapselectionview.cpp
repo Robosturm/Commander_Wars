@@ -1,7 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
-
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/buildingspritemanager.h"
@@ -10,7 +9,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/mapselectionview.h"
 #include "objects/base/moveinbutton.h"
@@ -246,7 +245,7 @@ void MapSelectionView::loadCurrentMap()
 
 void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
 {
-    CONSOLE_PRINT("MapSelectionView::loadMap " + info.filePath(), Console::eDEBUG);
+    CONSOLE_PRINT("MapSelectionView::loadMap " + info.filePath(), GameConsole::eDEBUG);
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
@@ -476,4 +475,53 @@ void MapSelectionView::updateMapData()
     m_MapTags->setHtmlText(m_pCurrentMap->getMapTagsText());
     m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
     m_MapTags->setY(m_pVictoryInfo->getY() + 55 * Userdata::MAX_VICTORY_INFO_PER_MAP);
+}
+
+void MapSelectionView::serializeObject(QDataStream& stream) const
+{
+    CONSOLE_PRINT("MapSelectionView::serializeObject", GameConsole::eDEBUG);
+    stream << getVersion();
+    QString file = GlobalUtils::makePathRelative(m_currentMapFile.filePath(), false);
+    stream << file;
+    if (m_CurrentSetCampaign.get() != nullptr)
+    {
+        stream << true;
+        m_CurrentSetCampaign->serializeObject(stream);
+    }
+    else
+    {
+        stream << false;
+    }
+    if (m_CurrentLoadedCampaign.get() != nullptr)
+    {
+        stream << true;
+        m_CurrentLoadedCampaign->serializeObject(stream);
+    }
+    else
+    {
+        stream << false;
+    }
+    m_pCurrentMap->serializeObject(stream);
+}
+
+void MapSelectionView::deserializeObject(QDataStream& stream)
+{
+    CONSOLE_PRINT("MapSelectionView::deserializeObject", GameConsole::eDEBUG);
+    qint32 version = 0;
+    stream >> version;
+    QString file;
+    stream >> file;
+    m_currentMapFile.setFile(file);
+    bool exists = false;
+    stream >> exists;
+    if (exists)
+    {
+        m_CurrentSetCampaign->deserializeObject(stream);
+    }
+    stream >> exists;
+    if (exists)
+    {
+        m_CurrentLoadedCampaign->deserializeObject(stream);
+    }
+    m_pCurrentMap = spGameMap::create<QDataStream&, bool>(stream, false);
 }

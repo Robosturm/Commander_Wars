@@ -2,12 +2,10 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
-#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
-#include "texture.h"
 #include <QtMath>
 
 namespace oxygine
@@ -82,10 +80,7 @@ namespace oxygine
     void Actor::calcBounds2(RectF& bounds, const AffineTransform& transform) const
     {
 #ifdef GRAPHICSUPPORT
-        if (!(m_flags & flag_boundsNoChildren))
-        {
-            calcChildrenBounds(bounds, transform);
-        }
+        calcChildrenBounds(bounds, transform);
 
         RectF rect;
         if (getBounds(rect))
@@ -121,14 +116,12 @@ namespace oxygine
     }
 #endif
 
-    pointer_index Actor::getPressed(MouseButton b) const
+    void Actor::setAnchor(float ax, float ay)
     {
-        return m_pressedButton[b];
-    }
-
-    pointer_index Actor::getOvered() const
-    {
-        return m_overred;
+#ifdef GRAPHICSUPPORT
+        m_anchor = Vector2(ax, ay);
+        markTranformDirty();
+#endif
     }
 
     void Actor::setNotPressed(MouseButton b)
@@ -157,7 +150,7 @@ namespace oxygine
 
         TouchEvent up = *te;
         up.bubbles = false;
-        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get());
+        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get()).cast<Point>();
         dispatchEvent(&up);
     }
 
@@ -169,14 +162,14 @@ namespace oxygine
         {
             return;
         }
-        if (isDescendant(safeSpCast<Actor>(ev->target)))
+        if (isDescendant(safeSpCast<Actor>(ev->target).get()))
         {
             return;
         }
         TouchEvent up = *te;
         up.type = TouchEvent::OUTX;
         up.bubbles = false;
-        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get());
+        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get()).cast<Point>();
         dispatchEvent(&up);
         oxygine::Stage::getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
         m_overred = 0;
@@ -261,7 +254,7 @@ namespace oxygine
                 if (TouchEvent::isTouchEvent(event->type))
                 {
                     TouchEvent* me = safeCast<TouchEvent*>(event);
-                    me->localPosition = local2parent(me->localPosition);
+                    me->localPosition = local2parent(me->localPosition).cast<Point>();
                 }
 
                 event->phase = Event::phase_bubbling;
@@ -297,7 +290,7 @@ namespace oxygine
             TouchEvent* me = safeCast<TouchEvent*>(event);
             originalLocalPos = me->localPosition;
             originalLocalScale = me->__localScale;
-            me->localPosition = parent2local(originalLocalPos);
+            me->localPosition = parent2local(originalLocalPos).cast<Point>();
             me->__localScale *= m_transform.a;
             if (me->__localScale == NAN)
             {
@@ -328,7 +321,7 @@ namespace oxygine
                 }
             }
 
-            me->localPosition = originalLocalPos;
+            me->localPosition = originalLocalPos.cast<Point>();
             me->__localScale = originalLocalScale;
         }
     }
@@ -340,98 +333,44 @@ namespace oxygine
 #endif
     }
 
-    void Actor::setAnchor(const Vector2& anchor)
-    {
-#ifdef GRAPHICSUPPORT
-        m_anchor = anchor;
-        m_flags &= ~flag_anchorInPixels;
-        markTranformDirty();
-#endif
-    }
-
-    void Actor::setAnchor(float ax, float ay)
-    {
-        setAnchor(Vector2(ax, ay));
-    }
-
-    void Actor::setAnchorInPixels(const Vector2& anchor)
-    {
-#ifdef GRAPHICSUPPORT
-        m_anchor = anchor;
-        m_flags |= flag_anchorInPixels;
-        markTranformDirty();
-#endif
-    }
-
-    void Actor::setAnchorInPixels(float x, float y)
-    {
-        setAnchorInPixels(Vector2(x, y));
-    }
-
-    void Actor::setPosition(const Vector2& pos)
+    void Actor::setPosition(const Point& pos)
     {
 #ifdef GRAPHICSUPPORT
         if (m_pos == pos)
         {
             return;
         }
-        m_pos.x = static_cast<qint32>(pos.x);
-        m_pos.y = static_cast<qint32>(pos.y);
+        m_pos.x = pos.x;
+        m_pos.y = pos.y;
         markTranformDirty();
 #endif
     }
 
-    void Actor::setPosition(float x, float y)
+    void Actor::setPosition(qint32 x, qint32 y)
     {
-        setPosition(Vector2(x, y));
+        setPosition(Point(x, y));
     }
 
-    void Actor::setX(float x)
+    void Actor::setX(qint32 x)
     {
 #ifdef GRAPHICSUPPORT
         if (m_pos.x == x)
         {
             return;
         }
-        m_pos.x = static_cast<qint32>(x);
+        m_pos.x = x;
         markTranformDirty();
 #endif
     }
 
-    void Actor::setY(float y)
+    void Actor::setY(qint32 y)
     {
 #ifdef GRAPHICSUPPORT
         if (m_pos.y == y)
         {
             return;
         }
-        m_pos.y = static_cast<qint32>(y);
-        markTranformDirty();
-#endif
-    }
-
-    void Actor::setAnchorX(float x)
-    {
-#ifdef GRAPHICSUPPORT
-        if (m_anchor.x == x)
-        {
-            return;
-        }
-        m_anchor.x = x;
-        m_flags &= ~flag_anchorInPixels;
-        markTranformDirty();
-#endif
-    }
-
-    void Actor::setAnchorY(float y)
-    {
-#ifdef GRAPHICSUPPORT
-        if (m_anchor.y == y)
-        {
-            return;
-        }
-        m_anchor.y = y;
-        m_flags &= ~flag_anchorInPixels;
+        m_pos.y = y;
         markTranformDirty();
 #endif
     }
@@ -542,45 +481,45 @@ namespace oxygine
         setRotation(rad);
     }
 
-    void Actor::sizeChanged(const Vector2&)
+    void Actor::sizeChanged(const Point&)
     {
     }
 
-    void Actor::__setSize(const Vector2& size)
+    void Actor::__setSize(const Point& size)
     {
 #ifdef GRAPHICSUPPORT
         if (m_size == size)
         {
             return;
         }
-        m_size.x = static_cast<qint32>(size.x);
-        m_size.y = static_cast<qint32>(size.y);
+        m_size.x = size.x;
+        m_size.y = size.y;
         markTranformDirty();
 #endif
     }
 
-    void Actor::setSize(const Vector2& size)
+    void Actor::setSize(const Point& size)
     {
         __setSize(size);
         sizeChanged(size);
     }
 
-    void Actor::setSize(float w, float h)
+    void Actor::setSize(qint32 w, qint32 h)
     {
-        setSize(Vector2(w, h));
+        setSize(Point(w, h));
     }
 
-    void Actor::setWidth(float w)
+    void Actor::setWidth(qint32 w)
     {
 #ifdef GRAPHICSUPPORT
-        setSize(Vector2(w, m_size.y));
+        setSize(Point(w, m_size.y));
 #endif
     }
 
-    void Actor::setHeight(float h)
+    void Actor::setHeight(qint32 h)
     {
 #ifdef GRAPHICSUPPORT
-        setSize(Vector2(m_size.x, h));
+        setSize(Point(m_size.x, h));
 #endif
     }
 
@@ -616,7 +555,7 @@ namespace oxygine
     }
 #endif
 
-    float Actor::getWidth() const
+    qint32 Actor::getWidth() const
     {
 #ifdef GRAPHICSUPPORT
         return m_size.x;
@@ -625,7 +564,7 @@ namespace oxygine
 #endif
     }
 
-    float Actor::getHeight() const
+    qint32 Actor::getHeight() const
     {
 #ifdef GRAPHICSUPPORT
         return m_size.y;
@@ -676,19 +615,9 @@ namespace oxygine
                      -s * m_scale.y, c * m_scale.y,
                      m_pos.x, m_pos.y);
         }
-
         Vector2 offset;
-        if (m_flags & flag_anchorInPixels)
-        {
-            offset.x = -m_anchor.x;
-            offset.y = -m_anchor.y;
-        }
-        else
-        {
-            offset.x = -float(m_size.x * m_anchor.x);
-            offset.y = -float(m_size.y * m_anchor.y);
-        }
-
+        offset.x = -float(m_size.x * m_anchor.x);
+        offset.y = -float(m_size.y * m_anchor.y);
         tr.translate(offset);
         m_transform = tr;
         m_flags &= ~flag_transformDirty;
@@ -697,19 +626,16 @@ namespace oxygine
 
     bool Actor::isOn(const Vector2& localPosition, float)
     {
-        RectF r = getDestRect();
-        r.expand(Vector2(m_extendedIsOn, m_extendedIsOn), Vector2(m_extendedIsOn, m_extendedIsOn));
-
-        if (r.pointIn(localPosition))
+        if (getDestRect().pointIn(localPosition))
         {
              return true;
         }
         return false;
     }
 
-    bool Actor::isDescendant(const spActor& actor) const
+    bool Actor::isDescendant(const Actor* actor) const
     {
-        const Actor* act = actor.get();
+        const Actor* act = actor;
         while (act)
         {
             if (act == this)
@@ -798,7 +724,7 @@ namespace oxygine
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild wrong parent while removing a child");
             }
             else
-            {                
+            {
                 setParent(actor.get(), nullptr);
                 auto iter = m_children.cbegin();
                 while (iter != m_children.cend())
@@ -960,37 +886,7 @@ namespace oxygine
         }
         else
         {
-            AffineTransform::multiply(rs.transform, tr, parentRS.transform);
-        }
-
-        if (m_flags & flag_cull)
-        {
-            RectF ss_rect = getActorTransformedDestRect(this, rs.transform);
-            RectF intersection = ss_rect;
-            intersection.clip(*rs.clip);
-            if (intersection.isEmpty())
-            {
-                return false;
-            }
-        }
-#endif
-        return true;
-    }
-
-    bool Actor::onScreen(RenderState& rs)
-    {
-#ifdef GRAPHICSUPPORT
-        constexpr float safetyArea = 10;
-        float width = oxygine::Stage::getStage()->getScaledWidth() + safetyArea;
-        float height = oxygine::Stage::getStage()->getScaledHeight() + safetyArea;
-        auto scaledWidth = m_size.x * rs.transform.a;
-        auto scaledHeight = m_size.y * rs.transform.d;
-        if (rs.transform.x > width ||
-            rs.transform.y > height ||
-            rs.transform.x + scaledWidth < -safetyArea ||
-            rs.transform.y + scaledHeight < -safetyArea)
-        {
-            return false;
+            rs.transform = tr * parentRS.transform;
         }
 #endif
         return true;
@@ -1003,13 +899,7 @@ namespace oxygine
         {
             return false;
         }
-        rs.transform.x = static_cast<qint32>(rs.transform.x);
-        rs.transform.y = static_cast<qint32>(rs.transform.y);
-        m_onScreen = onScreen(rs);
-        if (m_onScreen)
-        {
-            doRender(rs);
-        }
+        doRender(rs);
 #endif
         return true;
     }
@@ -1040,7 +930,7 @@ namespace oxygine
     }
 
     spTween Actor::__addTween(spTween tween, bool)
-    {        
+    {
 #ifdef GRAPHICSUPPORT
         if (tween.get() == nullptr)
         {
@@ -1068,7 +958,7 @@ namespace oxygine
     }
 
     void Actor::removeTween(spTween pTween)
-    {        
+    {
 #ifdef GRAPHICSUPPORT
         QMutexLocker lock(&m_Locked);
         if (pTween.get() == nullptr)
@@ -1090,7 +980,7 @@ namespace oxygine
     }
 
     void Actor::removeTweens(bool callComplete)
-    {        
+    {
 #ifdef GRAPHICSUPPORT
         while (m_tweens.size() > 0)
         {
@@ -1108,7 +998,7 @@ namespace oxygine
     }
 
     Vector2 Actor::convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos)
-    {        
+    {
 #ifdef GRAPHICSUPPORT
         if (child->getParent() && child->getParent() != parent)
         {

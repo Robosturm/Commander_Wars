@@ -20,7 +20,7 @@ namespace oxygine
             __LAST      //system
         };
 
-        TouchEvent(eventType type, bool Bubbles = true, const Vector2& locPosition = Vector2(0, 0))
+        TouchEvent(eventType type, bool Bubbles = true, const Point& locPosition = Point(0, 0))
             : Event(type, Bubbles),
               localPosition(locPosition),
               position(locPosition),
@@ -34,9 +34,9 @@ namespace oxygine
         }
 
         /**position in local space for Event::currentTarget Actor*/
-        Vector2 localPosition;
+        Point localPosition;
         /**position in local space for Event::target actor*/
-        Vector2 position;
+        Point position;
 
         MouseButton mouseButton;
         float pressure;

@@ -1,7 +1,7 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include "QTimer"
+#include <QTimer>
 
 /**
  * @brief The Timer class timer with pause resume function -> note only use this timer as a singleshot timer.

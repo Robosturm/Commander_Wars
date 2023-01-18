@@ -57,6 +57,7 @@
         <image file="panel_transparent+mask.png"    guideX1="5" guideX2="117" guideY1="5" guideY2="124"/>
         <!-- dropdownmenu -->
         <image file="dropdownmenu.png"      guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>
+        <image file="label.png"      guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>
         <image file="arrow+down.png"        cols = "3" />
         <!-- dropdownmenu -->
         <image file="filedialog.png"                guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>

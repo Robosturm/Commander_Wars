@@ -60,6 +60,10 @@ var Constructor = function()
     {
         return GameEnums.WeaponType_Indirect;
     };
+    this.getEditorPlacementSound = function()
+    {
+        return "moveheavytire.wav";
+    };
 }
 
 Constructor.prototype = UNIT;

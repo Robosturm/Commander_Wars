@@ -5,13 +5,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null))
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map))
         {
             return true;
         }
@@ -101,7 +95,6 @@ var Constructor = function()
                 }                
             }
         }
-        fields.remove();
         var animation = GameAnimationFactory.createAnimation(map, x - 2, y - 3);
         animation.addSprite("explosion+black_bomb", 0, map.getImageSize() / 2, 0, 1.875);
         animation.setSound("explosion+land.wav");
@@ -112,6 +105,10 @@ var Constructor = function()
         ACTION_EXPLODE.postAnimationUnit = null;
         ACTION_EXPLODE.postAnimationTargetX = -1;
         ACTION_EXPLODE.postAnimationTargetY = -1;
+    };
+    this.getName = function()
+    {
+        return qsTr("Explode");
     };
     this.getDescription = function()
     {

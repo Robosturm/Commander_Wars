@@ -8,21 +8,18 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/gamemanager.h"
-#include "resource_management/cospritemanager.h"
-#include "resource_management/unitspritemanager.h"
-#include "resource_management/coperkmanager.h"
 
 #include "game/player.h"
 
-Wikipage::Wikipage()
+QStringList Wikipage::m_pageStack;
+
+Wikipage::Wikipage(QString pageID)
+    : m_pageID(pageID)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Wikipage");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
@@ -49,9 +46,17 @@ Wikipage::Wikipage()
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
 
+    Mainapp* pApp = Mainapp::getInstance();
     connect(pApp, &Mainapp::sigKeyDown, this, &Wikipage::keyInput, Qt::QueuedConnection);
     connect(this, &Wikipage::sigShowLink, this, &Wikipage::showLink, Qt::QueuedConnection);
     connect(this, &Wikipage::sigFinished, this, &Wikipage::remove, Qt::QueuedConnection);
+
+    m_pageStack.append(pageID);
+}
+
+Wikipage::~Wikipage()
+{
+    m_pageStack.removeAll(m_pageID);
 }
 
 void Wikipage::keyInput(oxygine::KeyEvent event)
@@ -86,7 +91,7 @@ void Wikipage::loadText(QString text)
     pLabel->setWidth(m_pPanel->getContentWidth() - 80);
     pLabel->setPosition(10, m_y);
     m_pPanel->addItem(pLabel);
-    m_y += pLabel->getScaledHeight() + 10;
+    m_y += pLabel->getTextRect().getHeight() + 10;
 }
 
 void Wikipage::loadHeadline(QString text)
@@ -99,26 +104,33 @@ void Wikipage::loadHeadline(QString text)
     pLabel->setHtmlText(text);
     pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth() / 2, m_y);
     m_pPanel->addItem(pLabel);
-    m_y += pLabel->getScaledHeight() + 10;
+    m_y += pLabel->getTextRect().getHeight() + 10;
+}
+
+QStringList & Wikipage::getPageStack()
+{
+    return m_pageStack;
 }
 
 void Wikipage::showLink(QString pageID)
 {
-    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    auto entry = pWikiDatabase->getEntry(pageID);
-    if (!entry.m_name.isEmpty() &&
-        !entry.m_id.isEmpty())
+    if (!m_pageStack.contains(pageID))
     {
-        oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(entry));
+        WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+        auto entry = pWikiDatabase->getEntry(pageID);
+        if (!entry.m_name.isEmpty() &&
+            !entry.m_id.isEmpty())
+        {
+            oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(entry));
+        }
     }
-    
 }
 
 void Wikipage::loadImage(QString file, float scale, QString pageID)
 {
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
     oxygine::spSprite pSprite = pWikiDatabase->getIcon(nullptr, file, 24);
-    pSprite->setScale(scale);
+    pSprite->setScale(scale * pSprite->getScaleX());
     pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, m_y);
     pSprite->addClickListener([this, pageID](oxygine::Event*)
     {

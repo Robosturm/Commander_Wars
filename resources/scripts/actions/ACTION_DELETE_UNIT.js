@@ -14,7 +14,6 @@ var Constructor = function()
                 break;
             }
         }
-        units.remove();
         return ret;
     };
     
@@ -70,11 +69,18 @@ var Constructor = function()
         }
         data.setShowZData(false);
         data.setColor("#C8FF0000");
-        units.remove();
     };
     this.getStepInputType = function(action, map)
     {
         return "FIELD";
+    };
+    this.getName = function(map)
+    {
+        return qsTr("Delete Unit");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Allows you to delete one of your own units that hasn't moved this turn.");
     };
 }
 

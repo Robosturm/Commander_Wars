@@ -1,20 +1,15 @@
-#include "dialogmodifyunit.h"
+#include "objects/dialogs/editor/dialogmodifyunit.h"
 
 #include "game/unit.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
+#include "game/gamemap.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/unitspritemanager.h"
-
-#include "game/gamemap.h"
 
 #include "objects/base/slider.h"
 #include "objects/base/dropdownmenu.h"
@@ -30,8 +25,7 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogModifyUnit");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     m_dropDownPlayer = spPlayer::create(m_pMap);
     m_dropDownPlayer->init();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -87,14 +81,14 @@ void DialogModifyUnit::updateData()
     qint32 sliderOffset = 400;
     spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 80);
     pLabel->setStyle(headerStyle);
-    pLabel->setHtmlText(tr("Unit: ") + m_pUnit->getName());
+    pLabel->setHtmlText(tr("Edit unit"));
     pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     m_pPanel->addItem(pLabel);
 
     qint32 y = 30 + pLabel->getTextRect().getHeight();
     pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Unit: "));
+    pLabel->setHtmlText(tr("Custom name: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     spTextbox pTexbox = spTextbox::create(Settings::getWidth() - 40 - sliderOffset);
@@ -265,35 +259,47 @@ void DialogModifyUnit::updateData()
     pLabel->setHtmlText(tr("Unit Rank: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    items.clear();
+    QStringList rankItems;
     qint32 maxRang = m_pUnit->getMaxUnitRang();
-    for (qint32 i = 0; i <= maxRang; i++)
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getIcon";
+    for (qint32 i = GameEnums::UnitRank_CO1; i <= maxRang; i++)
     {
-        items.append(m_pUnit->getUnitRangName(i));
+        QJSValueList args({i,
+                           pInterpreter->newQObject(m_pMap)});
+        QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
+        rankItems.append(ret.toString());
     }
-    items.append(tr("CO 1"));
-    items.append(tr("CO 2"));
-    pDropdownmenu = spDropDownmenu::create(300, items);
-    pDropdownmenu->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with highest rank. This is immediately applied."));
-    pDropdownmenu->setPosition(sliderOffset - 160, y);
-    pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getUnitRank()));
-    qint32 size = items.size();
-    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [this, size](qint32 value)
+    auto unitRankCreator = [=](QString id)
     {
-        if (size - 2 == value)
+        oxygine::ResAnim* pAnim = nullptr;
+        if (id.isEmpty())
         {
-            m_pUnit->setUnitRank(GameEnums::UnitRank_CO0, true);
-        }
-        else if (size - 1 == value)
-        {
-            m_pUnit->setUnitRank(GameEnums::UnitRank_CO1, true);
+            pAnim = UnitSpriteManager::getInstance()->getResAnim("no_rank");
         }
         else
         {
-            m_pUnit->setUnitRank(value, true);
+            pAnim = UnitSpriteManager::getInstance()->getResAnim(id);
         }
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        if (pAnim != nullptr)
+        {
+            pSprite->setResAnim(pAnim);
+            pSprite->setScale(pAnim->getWidth() / 30.0f);
+            pSprite->setSize(pAnim->getSize());
+        }
+        return pSprite;
+    };
+    spDropDownmenuSprite pDropdownmenuSprite = spDropDownmenuSprite::create(105, rankItems, unitRankCreator, 30);
+    pDropdownmenuSprite->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with highest rank. This is immediately applied."));
+    pDropdownmenuSprite->setPosition(sliderOffset - 160, y);
+    pDropdownmenuSprite->setCurrentItem(static_cast<qint32>(m_pUnit->getUnitRank() - GameEnums::UnitRank_CO1));
+    qint32 size = rankItems.size();
+    connect(pDropdownmenuSprite.get(), &DropDownmenuSprite::sigItemChanged, [this, size](qint32 value)
+    {
+        m_pUnit->setUnitRank(value + GameEnums::UnitRank_CO1, true);
     });
-    m_pPanel->addItem(pDropdownmenu);
+    m_pPanel->addItem(pDropdownmenuSprite);
     y += 40;
 
     for (qint32 i = 0; i < m_pUnit->getLoadedUnitCount(); i++)

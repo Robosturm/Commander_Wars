@@ -1,9 +1,7 @@
 #include "objects/dialogs/ingame/dialogvictoryconditions.h"
 #include "objects/base/panel.h"
+#include "objects/base/label.h"
 #include "objects/dialogs/ingame/victoryrulepopup.h"
-
-#include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "coreengine/mainapp.h"
 
@@ -11,12 +9,12 @@
 
 #include "resource_management/fontmanager.h"
 
+#include "menue/basegamemenu.h"
 
 #include "game/gamemap.h"
 #include "game/gamerules.h"
 #include "game/victoryrule.h"
 #include "game/player.h"
-#include "game/co.h"
 
 DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     : m_pMap(pMap)
@@ -24,8 +22,6 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogVictoryConditions");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -63,15 +59,15 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     GameRules* pRules = pMap->getGameRules();
 
     qint32 y = 10;
-    oxygine::spTextField pTextfield = oxygine::spTextField::create();
-    pTextfield->setStyle(headerStyle);
-    pTextfield->setHtmlText(tr("Victory Info"));
-    pTextfield->setPosition(Settings::getWidth() / 2 - pTextfield->getTextRect().getWidth(), y);
-    pPanel->addItem(pTextfield);
-    y += 60;
+    spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 40);
+    pLabel->setStyle(headerStyle);
+    pLabel->setHtmlText(tr("Victory info"));
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, y);
+    pPanel->addItem(pLabel);
+    y += 70;
     QString info = pMap->getGameScript()->getVictoryInfo();
 
-    pTextfield = oxygine::spTextField::create();
+    oxygine::spTextField pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(info);
     pTextfield->setWidth(Settings::getWidth() - 90);
@@ -89,7 +85,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
         pTextfield->setHtmlText(info);
         pTextfield->setPosition(10, y);
         pPanel->addItem(pTextfield);
-        y += 30 + pTextfield->getTextRect().getHeight();
+        y += 50 + pTextfield->getTextRect().getHeight();
 
         qint32 x = 10;
         qint32 stepWidth = 250;
@@ -105,7 +101,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
                     ruleValue = 0;
                 }
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
-                info = tr("Player ") + QString::number(i2 + 1) + ": " + QString::number(playerValue) + "/" + QString::number(ruleValue);
+                info = QString(tr("Player %1: %2/%3")).arg(i2 + 1).arg(playerValue).arg(ruleValue);
                 spBuilding building = spBuilding::create("HQ", pMap);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
@@ -132,8 +128,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
         {
             emit sigShowPopup(pVictoryRule->getRuleID());
         });
-
-        y += 40;
+        y += 60;
     }
     pPanel->setContentHeigth(y + 40);
     connect(this, &DialogVictoryConditions::sigShowPopup, this, &DialogVictoryConditions::showPopup, Qt::QueuedConnection);
@@ -147,11 +142,14 @@ void DialogVictoryConditions::remove()
 
 void DialogVictoryConditions::showPopup(QString rule)
 {
-    BaseGamemenu* pMenu = GameMenue::getInstance();
-    if (pMenu != nullptr && !VictoryRulePopup::exists(rule))
+    if (m_pMap != nullptr)
     {
-        spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
-        pPopup->setY(Settings::getHeight() - pPopup->getScaledHeight());
-        pMenu->addChild(pPopup);
+        BaseGamemenu* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr && !VictoryRulePopup::exists(rule))
+        {
+            spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
+            pPopup->setY(Settings::getHeight() - pPopup->getScaledHeight());
+            pMenu->addChild(pPopup);
+        }
     }
 }

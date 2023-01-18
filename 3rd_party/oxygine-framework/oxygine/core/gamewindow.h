@@ -115,7 +115,7 @@ namespace oxygine
 
         bool isMainThread() const
         {
-            return QThread::currentThreadId() == m_mainHandle;
+            return QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr;
         }
         virtual void launchGame() override;
 
@@ -154,9 +154,9 @@ namespace oxygine
         static GameWindow* m_window;
         float m_brightness{0.0f};
         float m_gamma{1.0f};
-        Qt::HANDLE m_mainHandle{nullptr};
 
         bool m_shuttingDown{false};
         bool m_launched{false};
+        QThread* m_pMainThread{nullptr};
     };
 }

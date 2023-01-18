@@ -20,6 +20,10 @@ var Constructor = function()
     this.getName = function()
     {
         return qsTr("Sale Price -5%");
+    };    
+    this.getCosts = function()
+    {
+        return 2;
     };
 };
 

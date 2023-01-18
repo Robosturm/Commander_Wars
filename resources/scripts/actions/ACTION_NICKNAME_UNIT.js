@@ -4,14 +4,13 @@ var Constructor = function()
     this.canBePerformed = function(action, map)
     {
 		var units = map.getCurrentPlayer().getUnits();
-		var ret = (units.size() > 0);
-		units.remove();
+        var ret = (units.size() > 0);
         return ret;
     };
     
     this.getActionText = function(map)
     {
-        return qsTr("Nickname Unit");
+        return qsTr("Nickname unit");
     };
     this.getIcon = function(map)
     {
@@ -52,11 +51,18 @@ var Constructor = function()
         }
         data.setShowZData(false);
         data.setColor("#C8FF0000");
-        units.remove();
     };
     this.getStepInputType = function(action, map)
     {
         return "FIELD";
+    };
+    this.getName = function(map)
+    {
+        return qsTr("Nickname unit");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Allows you to give a unit a special nickname.");
     };
 }
 

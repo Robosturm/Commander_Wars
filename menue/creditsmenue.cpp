@@ -7,9 +7,9 @@
 #include "menue/creditsmenue.h"
 #include "menue/mainwindow.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
@@ -25,8 +25,7 @@ CreditsMenue::CreditsMenue()
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
-    CONSOLE_PRINT("Entering Credits Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Credits Menue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -42,9 +41,9 @@ CreditsMenue::CreditsMenue()
         sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/credits_options");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/credits_options");
+    pApp->getAudioManager()->playRandom();
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
@@ -105,11 +104,11 @@ CreditsMenue::CreditsMenue()
     addChild(m_creditsActor);
     m_creditsActor->setY(Settings::getHeight());
     qint32 y = 0;
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::TextStyle headstyle = oxygine::TextStyle(FontManager::getMainFont48());
+    oxygine::TextStyle headstyle = oxygine::TextStyle(FontManager::getFont("mainBlack48"));
     headstyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headstyle.multiline = false;
 
@@ -161,7 +160,7 @@ void CreditsMenue::onEnter()
     QString func = "creditsMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -169,7 +168,7 @@ void CreditsMenue::onEnter()
 
 void CreditsMenue::exitMenue()
 {    
-    CONSOLE_PRINT("Leaving Credits Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Credits Menue", GameConsole::eDEBUG);
     auto window = spMainwindow::create("ui/menu/mainoptionmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    

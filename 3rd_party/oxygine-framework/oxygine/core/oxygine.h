@@ -17,7 +17,7 @@ namespace oxygine
         ep_show_warning,//prints warning to log
         ep_ignore_error//doesn't show any errors
     };
-    void handleErrorPolicy(error_policy ep, const QString & message);
+    void handleErrorPolicy(error_policy ep, const QString & message, quint64 module = 1);
 
     template <class dest, class src>
     dest safeCast(src ptr)

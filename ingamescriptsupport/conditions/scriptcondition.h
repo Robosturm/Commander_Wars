@@ -40,20 +40,20 @@ public:
         checkVariable,
         isCo,
     };
-    static const QString ConditionVictory;
-    static const QString ConditionStartOfTurn;
-    static const QString ConditionEachDay;
-    static const QString ConditionUnitDestroyed;
-    static const QString ConditionBuildingDestroyed;
-    static const QString ConditionTerrainDestroyed;
-    static const QString ConditionBuildingCaptured;
-    static const QString ConditionPlayerDefeated;
-    static const QString ConditionUnitsDestroyed;
-    static const QString ConditionBuildingsOwned;
-    static const QString ConditionPlayerReachedArea;
-    static const QString ConditionUnitReachedArea;
-    static const QString ConditionCheckVariable;
-    static const QString ConditionIsCo;
+    static const char* const ConditionVictory;
+    static const char* const ConditionStartOfTurn;
+    static const char* const ConditionEachDay;
+    static const char* const ConditionUnitDestroyed;
+    static const char* const ConditionBuildingDestroyed;
+    static const char* const ConditionTerrainDestroyed;
+    static const char* const ConditionBuildingCaptured;
+    static const char* const ConditionPlayerDefeated;
+    static const char* const ConditionUnitsDestroyed;
+    static const char* const ConditionBuildingsOwned;
+    static const char* const ConditionPlayerReachedArea;
+    static const char* const ConditionUnitReachedArea;
+    static const char* const ConditionCheckVariable;
+    static const char* const ConditionIsCo;
 
     /**
      * @brief createCondition

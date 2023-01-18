@@ -201,7 +201,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("I'm getting too old for this."),
-                qsTr("Shop's closing for today...")];
+                qsTr("Shop is closing for today...")];
     };
     this.getName = function()
     {

@@ -63,7 +63,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 23;
+        return 24;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -93,6 +93,10 @@ public:
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief reset
+     */
+    void reset();
     /**
      * @brief resetWeatherSprites
      */
@@ -247,6 +251,11 @@ public slots:
      */
     const Password & getPassword() const;
     /**
+     * @brief getPassword
+     * @return
+     */
+    QString getPasswordText() const;
+    /**
      * @brief setPassword
      * @param password
      */
@@ -312,15 +321,25 @@ public slots:
      */
     void setSingleRandomCO(bool singleRandomCO);
     /**
+     * @brief setMaxPerkCost
+     * @return
+     */
+    qint32 getMaxPerkCost() const;
+    /**
+     * @brief setMaxPerkCost
+     * @param maxPerkCost
+     */
+    void setMaxPerkCost(const qint32 &maxPerkCost);
+    /**
      * @brief getMaxPerkCount
      * @return
      */
     qint32 getMaxPerkCount() const;
     /**
      * @brief setMaxPerkCount
-     * @param maxPerkCount
+     * @param newMaxPerkCount
      */
-    void setMaxPerkCount(const qint32 &maxPerkCount);
+    void setMaxPerkCount(qint32 newMaxPerkCount);
     /**
      * @brief getVisionBuildingVisionHide
      * @return
@@ -637,6 +656,7 @@ private:
     bool m_BuildingVisionHide{false};
     bool m_singleRandomCO{false};
     DayToDayScreen m_DayToDayScreen{DayToDayScreen::Default};
+    qint32 m_maxPerkCost{4};
     qint32 m_maxPerkCount{4};
     bool m_teamFacingUnits{false};
     bool m_perkBannlistEdited{false};

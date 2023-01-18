@@ -8,7 +8,6 @@
 #include "game/gamemap.h"
 
 #include "objects/base/dropdownmenusprite.h"
-#include "objects/base/dropdownmenu.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -52,7 +51,7 @@ signals:
 private slots:
     void calculateDamage();
 private:
-    void updateMapData(QPoint & defPos);
+    void updateMapData(QPoint & defPos, bool forceDirect = false);
     void loadCoData(qint32 & x, qint32 & y, CosData & cosData, const QStringList & coIds);
     void loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
                       const QStringList & rankItems, const QStringList & unitIds,

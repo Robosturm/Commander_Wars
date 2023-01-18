@@ -2,8 +2,6 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 
-#include <QPainter>
-
 namespace oxygine
 {
     class RenderDelegate;

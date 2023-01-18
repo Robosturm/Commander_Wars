@@ -5,8 +5,6 @@
 
 #include "network/NetworkInterface.h"
 #include "network/tcpclient.h"
-#include "network/rxtask.h"
-#include "network/txtask.h"
 
 class QTcpServer;
 

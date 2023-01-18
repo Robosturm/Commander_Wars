@@ -16,6 +16,26 @@ var CO =
         }
     },
 
+    getCoGroupModifier : function (co, system, unitIds, map)
+    {
+        var value = 1;
+        var length = unitIds.length;
+        if (length > 0)
+        {
+            value = 0;
+            for (var i = 0; i < length; ++i)
+            {
+                value += 1 + Global[co.getCoID()].getAiCoUnitBonus(co, system.getDummyUnit(unitIds[i]), map) * 0.2;
+            }
+            value /= length;
+        }
+        if (value <= 0)
+        {
+            value = 0.1;
+        }
+        return value;
+    },
+
     loadCOMusic : function(co, map)
     {
         // put the co music in here.
@@ -410,6 +430,16 @@ var CO =
     {
     },
 
+    getEnemyRepairCostModifier : function(co, unit, map)
+    {
+        return 0.0;  // percentage modifier of the unit cost e.g. 0.2 means 20% more expensive
+    },
+
+    getRepairCostModifier : function(co, unit, map)
+    {
+        return 0.0;  // percentage modifier of the unit cost e.g. 0.2 means 20% more expensive
+    },
+
     // CO - Intel
     getBio : function(co, map)
     {
@@ -515,12 +545,12 @@ var CO =
         return CO.getAiUsePowerAtStart(co, powerSurplus, turnMode, map);
     },
 
-//    getAiCoUnitBonus : function(co, unit)
-//    {
-//        implement this function for a co to make the ai build more of the co's good units and to increase the chance
-//        the ai deploys a co unit in it. The return value is capped at 10 and -10
-//        return 0;
-//    },
+    getAiCoUnitBonus : function(co, unit)
+    {
+        // implement this function for a co to make the ai build more of the co's good units and to increase the chance
+        // the ai deploys a co unit in it. The return value is capped at 10 and -10
+        return 1;
+    },
 
     getAiCoBuildRatioModifier : function(co, map)
     {

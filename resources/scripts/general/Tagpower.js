@@ -530,4 +530,14 @@ var TAGPOWER =
     onUnitDeath : function(co, unit, map)
     {
     },
+
+    getEnemyRepairCostModifier : function(co, unit, map)
+    {
+        return 0.0;  // percentage modifier of the unit cost e.g. 0.2 means 20% more expensive
+    },
+
+    getRepairCostModifier : function(co, unit, map)
+    {
+        return 0.0;  // percentage modifier of the unit cost e.g. 0.2 means 20% more expensive
+    },
 };

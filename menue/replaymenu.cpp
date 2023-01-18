@@ -22,7 +22,7 @@
 #include "ingamescriptsupport/genericbox.h"
 
 ReplayMenu::ReplayMenu(QString filename)
-    : GameMenue(spGameMap::create(1, 1, 2))
+    : GameMenue(spGameMap::create(1, 1, 2), true)
 {
     Interpreter::setCppOwnerShip(this);
 #ifdef GRAPHICSUPPORT
@@ -55,7 +55,7 @@ ReplayMenu::ReplayMenu(QString filename)
         m_HumanInput = spHumanPlayerInput::create(m_pMap.get());
         m_HumanInput->init(this);
         m_gameStarted = true;
-        CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
+        CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
     }
 }
 
@@ -66,7 +66,7 @@ void ReplayMenu::onEnter()
     QString func = "replayMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -109,12 +109,12 @@ void ReplayMenu::exitReplay()
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    CONSOLE_PRINT("Restoring interpreter after record replay", Console::eDEBUG);
-    Interpreter::reloadInterpreter(Interpreter::getRuntimeData());
-    CONSOLE_PRINT("Leaving Replay Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Restoring interpreter after record replay", GameConsole::eDEBUG);
+    Interpreter::reloadInterpreter(Interpreter::getInstance()->getRuntimeData());
+    CONSOLE_PRINT("Leaving Replay Menue", GameConsole::eDEBUG);
     auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface, true);
     oxygine::Stage::getStage()->addChild(window);
-    deleteMenu();
+    oxygine::Actor::detach();
 }
 
 void ReplayMenu::nextReplayAction()
@@ -138,12 +138,12 @@ void ReplayMenu::nextReplayAction()
         if (pAction.get() != nullptr)
         {
             --m_replayCounter;
-            CONSOLE_PRINT("Performing next replay action", Console::eDEBUG);
+            CONSOLE_PRINT("Performing next replay action", GameConsole::eDEBUG);
             getActionPerformer().performAction(pAction);
         }
         else
         {
-            CONSOLE_PRINT("Pausing replay", Console::eDEBUG);
+            CONSOLE_PRINT("Pausing replay", GameConsole::eDEBUG);
             m_replayCounter = 0;
             swapPlay();
             togglePlayUi();
@@ -385,7 +385,7 @@ void ReplayMenu::seekToDay(qint32 day)
     QMutexLocker locker(&m_replayMutex);
     if (m_ReplayRecorder.getRecordSize() > 0)
     {
-        CONSOLE_PRINT("Seeking to day " + QString::number(day), Console::eDEBUG);
+        CONSOLE_PRINT("Seeking to day " + QString::number(day), GameConsole::eDEBUG);
         Mainapp::getInstance()->pauseRendering();
         
         // save map position and scale
@@ -420,7 +420,7 @@ void ReplayMenu::swapPlay()
     QMutexLocker locker(&m_replayMutex);
     if (m_paused)
     {
-        CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
+        CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
         m_paused = false;
         emit getActionPerformer().sigActionPerformed();
     }
@@ -433,7 +433,7 @@ void ReplayMenu::swapPlay()
 void ReplayMenu::togglePlayUi()
 {
     QMutexLocker locker(&m_replayMutex);
-    CONSOLE_PRINT("ReplayMenu::swapPlay()", Console::eDEBUG);
+    CONSOLE_PRINT("ReplayMenu::swapPlay()", GameConsole::eDEBUG);
     if (m_playButton->getVisible())
     {
         m_playButton->setVisible(false);
@@ -447,7 +447,7 @@ void ReplayMenu::togglePlayUi()
     }
     else
     {
-        CONSOLE_PRINT("requesting pause", Console::eDEBUG);
+        CONSOLE_PRINT("requesting pause", GameConsole::eDEBUG);
         m_playButton->setVisible(true);
         m_pauseButton->setVisible(false);
         m_pauseRequested = true;

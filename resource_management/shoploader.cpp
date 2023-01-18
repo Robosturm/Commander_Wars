@@ -1,4 +1,4 @@
-#include "shoploader.h"
+#include "resource_management/shoploader.h"
 
 ShopLoader::ShopLoader()
     : RessourceManagement<ShopLoader>("/images/shop/res.xml",

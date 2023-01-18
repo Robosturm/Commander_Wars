@@ -1,7 +1,9 @@
-#include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/userdata.h"
+
+#include "ai/productionSystem/simpleproductionsystem.h"
 
 #include "game/player.h"
 #include "game/unit.h"
@@ -12,7 +14,6 @@
 #include "game/gameaction.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "resource_management/cospritemanager.h"
 
@@ -26,8 +27,6 @@ CO::CO(QString coID, Player* owner, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("CO");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_perkList.append(coID);
     m_perkList.append("TAGPOWER");
@@ -117,6 +116,23 @@ void CO::setCOUnit(Unit* pUnit)
     m_pCOUnit = pUnit;
 }
 
+float CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getCoGroupModifier";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(system),
+                       pInterpreter->arraytoJSValue(unitIds),
+                       pInterpreter->newQObject(m_pMap)});
+    QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
+    float ret = 1.0f;
+    if (erg.isNumber())
+    {
+        ret = erg.toNumber();
+    }
+    return ret;
+}
+
 QString CO::getCoID() const
 {
     return m_coID;
@@ -185,7 +201,7 @@ void CO::setPowerFilled(const double &value)
         {
             limitPowerbar(currentValue);
         }
-        CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue) + " for co " + m_coID + " of player " + QString::number(m_pOwner->getPlayerID()), Console::eDEBUG);
+        CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue) + " for co " + m_coID + " of player " + QString::number(m_pOwner->getPlayerID()), GameConsole::eDEBUG);
     }
     if (m_pMenu != nullptr)
     {
@@ -207,11 +223,11 @@ void CO::limitPowerbar(float previousValue)
         Mainapp* pApp = Mainapp::getInstance();
         if (previousValue < m_powerStars && m_powerFilled >= m_powerStars)
         {
-            pApp->getAudioThread()->playSound("powerready.wav");
+            pApp->getAudioManager()->playSound("powerready.wav");
         }
         else if (previousValue < m_powerStars + m_superpowerStars && m_powerFilled >= m_powerStars + m_superpowerStars)
         {
-            pApp->getAudioThread()->playSound("superpowerready.wav");
+            pApp->getAudioManager()->playSound("superpowerready.wav");
         }
     }
 }
@@ -664,6 +680,50 @@ qint32 CO::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
             if (erg.isNumber())
             {
                 ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue;
+}
+
+float CO::getEnemyRepairCostModifier(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getEnemyRepairCostModifier";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(m_pMap)});
+    float ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toNumber();
+            }
+        }
+    }
+    return ergValue;
+}
+
+float CO::getRepairCostModifier(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getRepairCostModifier";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(m_pMap)});
+    float ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toNumber();
             }
         }
     }
@@ -1643,8 +1703,15 @@ GameAnimationDialog* CO::createPowerSentence()
     QJSValueList args({pInterpreter->newQObject(this),
                       pInterpreter->newQObject(m_pMap)});
     QStringList sentences = pInterpreter->doFunction(m_coID, "getPowerSentences", args).toVariant().toStringList();
-    QString sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
-
+    QString sentence = "No sentence found.";
+    if (sentences.length() > 0)
+    {
+        sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
+    }
+    else
+    {
+        CONSOLE_PRINT("Error in co: " + m_coID + " no power sentence defined", GameConsole::eERROR);
+    }
     GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(m_pMap, sentence, m_coID, GameEnums::COMood_Normal, m_pOwner->getColor());
     pGameAnimationDialog->setFinishDelay(500);
 
@@ -1936,7 +2003,7 @@ void CO::getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info)
 
 void CO::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing co", Console::eDEBUG);
+    CONSOLE_PRINT("storing co", GameConsole::eDEBUG);
     pStream << getVersion();
     pStream << m_coID;
     pStream << m_powerStars;
@@ -1961,7 +2028,7 @@ void CO::deserializeObject(QDataStream& pStream)
 
 void CO::deserializer(QDataStream& pStream, bool fast)
 {
-    CONSOLE_PRINT("reading game co", Console::eDEBUG);
+    CONSOLE_PRINT("reading game co", GameConsole::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     pStream >> m_coID;
@@ -2047,7 +2114,7 @@ void CO::readCoStyleFromStream(QDataStream& pStream)
 {
     qint32 size = 0;
     pStream >> size;
-    CONSOLE_PRINT("reading co styles " + QString::number(size), Console::eDEBUG);
+    CONSOLE_PRINT("reading co styles " + QString::number(size), GameConsole::eDEBUG);
     m_customCOStyles.clear();
     for (qint32 i = 0; i < size; i++)
     {
@@ -2136,7 +2203,7 @@ QString CO::getActiveCoStyle()
 
 void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
 {
-    CONSOLE_PRINT("Loading sprites for CO " + coid, Console::eDEBUG);
+    CONSOLE_PRINT("Loading sprites for CO " + coid, GameConsole::eDEBUG);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     colorTable.convertTo(QImage::Format_ARGB32);
     maskTable.convertTo(QImage::Format_ARGB32);

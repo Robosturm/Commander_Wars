@@ -78,7 +78,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -126,7 +125,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.getCOUnitRange = function(co, map)
@@ -245,7 +243,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("There is a chance he might get a devestating blow, but firepower is reduced.");
+        return qsTr("There is a chance he might get a devastating blow, but firepower is reduced.");
     };
     this.getSuperPowerName = function(co)
     {

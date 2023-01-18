@@ -27,7 +27,7 @@ public:
         QString m_folder;
         QStringList m_mapFilenames;
     };
-    static const QString scriptName;
+    static const char* const scriptName;
     explicit Campaign(QString file);
     explicit Campaign();
     ~Campaign();

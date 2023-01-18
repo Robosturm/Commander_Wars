@@ -1,6 +1,5 @@
-#include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 #include "gameinput/basegameinputif.h"
 #include "gameinput/humanplayerinput.h"
@@ -14,7 +13,6 @@
 #include "game/gameanimation/gameanimation.h"
 
 #include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
 
 #include "resource_management/unitspritemanager.h"
 
@@ -32,8 +30,6 @@ Player::Player(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("Player");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pBaseGameInput = nullptr;
     // for older versions we allow all loaded units to be buildable
@@ -46,13 +42,12 @@ Player::Player(GameMap* pMap)
 
 void Player::init()
 {
+    m_team = getPlayerID();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "loadDefaultPlayerColor";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(m_pMap)});
     pInterpreter->doFunction("PLAYER", function, args);
-    m_team = getPlayerID();
-    setColor(m_Color, m_team);
 }
 
 BaseGameInputIF* Player::getBaseGameInput()
@@ -95,7 +90,7 @@ float Player::getUnitBuildValue(const QString & unitID)
 
 void Player::loadVisionFields()
 {
-    CONSOLE_PRINT("Player::loadVisionFields()", Console::eDEBUG);
+    CONSOLE_PRINT("Player::loadVisionFields()", GameConsole::eDEBUG);
     
     qint32 width = m_pMap->getMapWidth();
     qint32 heigth = m_pMap->getMapHeight();
@@ -145,7 +140,14 @@ void Player::loadCOMusic()
     {
         Mainapp* pApp = Mainapp::getInstance();
         qint32 count = GlobalUtils::randIntBase(0, 1);
-        pApp->getAudioThread()->addMusic("resources/music/cos/no_co" + QString::number(count) + ".mp3", 4726, 58364);
+        if (count == 0)
+        {
+            pApp->getAudioManager()->addMusic("resources/music/cos/no_co0.mp3", 4726, 58364);
+        }
+        else
+        {
+            pApp->getAudioManager()->addMusic("resources/music/cos/no_co1.mp3", 4726, 58364);
+        }
     }
 }
 
@@ -170,7 +172,7 @@ void Player::swapCOs()
 
 void Player::setColor(QColor color, qint32 table)
 {
-    CONSOLE_PRINT("Setting player color", Console::eDEBUG);
+    CONSOLE_PRINT("Setting player color", GameConsole::eDEBUG);
     m_Color = color;
     bool loaded = false;
     if (table >= 0)
@@ -193,7 +195,7 @@ void Player::setColor(QColor color, qint32 table)
 
 bool Player::loadTable(qint32 table)
 {
-    CONSOLE_PRINT("Player::loadTable", Console::eDEBUG);
+    CONSOLE_PRINT("Player::loadTable", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({table,
                       pInterpreter->newQObject(m_pMap)});
@@ -210,7 +212,7 @@ bool Player::loadTable(qint32 table)
 
 bool Player::loadTableFromFile(const QString & tablename)
 {
-    CONSOLE_PRINT("Player::loadTableFromFile " + tablename, Console::eDEBUG);
+    CONSOLE_PRINT("Player::loadTableFromFile " + tablename, GameConsole::eDEBUG);
     bool found = false;
     QStringList searchPaths;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
@@ -241,7 +243,7 @@ bool Player::loadTableFromFile(const QString & tablename)
 
 bool Player::colorToTable(QColor baseColor)
 {
-    CONSOLE_PRINT("Player::colorToTable", Console::eDEBUG);
+    CONSOLE_PRINT("Player::colorToTable", GameConsole::eDEBUG);
     bool found = colorToTableInTable(baseColor);
     if (!found)
     {
@@ -381,7 +383,7 @@ bool Player::colorToTable(QColor baseColor)
 
 bool Player::colorToTableInTable(QColor baseColor)
 {
-    CONSOLE_PRINT("Player::colorToTableInTable", Console::eDEBUG);
+    CONSOLE_PRINT("Player::colorToTableInTable", GameConsole::eDEBUG);
     bool found = false;
     QStringList searchPaths;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
@@ -406,7 +408,7 @@ bool Player::colorToTableInTable(QColor baseColor)
                 img.height() > 255 &&
                 QColor(img.pixel(255, 255)) == baseColor)
             {
-                CONSOLE_PRINT("load table " + path, Console::eDEBUG);
+                CONSOLE_PRINT("load table " + path, GameConsole::eDEBUG);
 #ifdef GRAPHICSUPPORT
                 m_colorTable.load(path);
                 if (m_colorTable.height() > 0)
@@ -433,7 +435,7 @@ bool Player::colorToTableInTable(QColor baseColor)
 void Player::createTable(QColor baseColor)
 {
 #ifdef GRAPHICSUPPORT
-    CONSOLE_PRINT("Player::createTable " + baseColor.name(), Console::eDEBUG);
+    CONSOLE_PRINT("Player::createTable " + baseColor.name(), GameConsole::eDEBUG);
     constexpr qint32 imageSize = 256;
     m_colorTable = QImage(imageSize, imageSize, QImage::Format_RGBA8888);
     m_colorTable.fill(QColor(0, 0, 0, 0));
@@ -1012,13 +1014,19 @@ void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender
 
 void Player::buildedUnit(Unit* pUnit)
 {
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "buildedUnit";
+    QJSValueList args({pInterpreter->newQObject(pUnit),
+                       pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    pInterpreter->doFunction(pUnit->getUnitID(), function1, args);
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)
         {
             pCO->buildedUnit(pUnit);
         }
-    }
+    }    
 }
 
 bool Player::getWeatherImmune()
@@ -1502,6 +1510,32 @@ qint32 Player::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
     return modifier;
 }
 
+float Player::getEnemyRepairCostModifier(Unit* pUnit)
+{
+    float modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getEnemyRepairCostModifier(pUnit);
+        }
+    }
+    return modifier;
+}
+
+float Player::getRepairCostModifier(Unit* pUnit)
+{
+    float modifier = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getRepairCostModifier(pUnit);
+        }
+    }
+    return modifier;
+}
+
 qint32 Player::getWeatherMovementCostModifier(Unit* pUnit, QPoint position)
 {
     qint32 modifier = 0;
@@ -1760,6 +1794,19 @@ qint32 Player::getCoCount() const
         if (pCO.get() != nullptr)
         {
             ++ret;
+        }
+    }
+    return ret;
+}
+
+float Player::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
+{
+    float ret = 1.0f;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            ret += pCO->getCoGroupModifier(unitIds, system);
         }
     }
     return ret;
@@ -2067,7 +2114,7 @@ void Player::setMenu(GameMenue *newMenu)
 
 void Player::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing player", Console::eDEBUG);
+    CONSOLE_PRINT("storing player with control type " + QString::number(m_controlType), GameConsole::eDEBUG);
     pStream << getVersion();
     quint32 color = m_Color.rgb();
     pStream << color;
@@ -2089,7 +2136,7 @@ void Player::serializeObject(QDataStream& pStream) const
     }
     pStream << m_team;
     pStream << m_isDefeated;
-    BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get());
+    BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get(), m_controlType);
     qint32 width = m_FogVisionFields.size();
     qint32 heigth = 0;
     if (width > 0)
@@ -2122,7 +2169,7 @@ void Player::deserializeObject(QDataStream& pStream)
 
 void Player::deserializer(QDataStream& pStream, bool fast)
 {
-    CONSOLE_PRINT("reading player", Console::eDEBUG);
+    CONSOLE_PRINT("reading player", GameConsole::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     quint32 color;
@@ -2179,7 +2226,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             qint32 heigth = 0;
             pStream >> width;
             pStream >> heigth;
-            CONSOLE_PRINT("Loading player vision width " + QString::number(width) + " height " + QString::number(heigth), Console::eDEBUG);
+            CONSOLE_PRINT("Loading player vision width " + QString::number(width) + " height " + QString::number(heigth), GameConsole::eDEBUG);
             m_FogVisionFields.reserve(width);
             for (qint32 x = 0; x < width; x++)
             {
@@ -2285,7 +2332,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         if (!fast)
         {
 #ifdef GRAPHICSUPPORT
-            CONSOLE_PRINT("Loading colortable", Console::eDEBUG);
+            CONSOLE_PRINT("Loading colortable", GameConsole::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
 #endif
@@ -2300,7 +2347,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         if (!fast)
         {
 #ifdef GRAPHICSUPPORT
-            CONSOLE_PRINT("Loading colortable", Console::eDEBUG);
+            CONSOLE_PRINT("Loading colortable", GameConsole::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
 #endif
@@ -2320,5 +2367,16 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         pStream >> type;
         m_controlType = static_cast<GameEnums::AiTypes>(type);
     }
-    CONSOLE_PRINT("Loaded player " + m_playerNameId, Console::eDEBUG);
+    else
+    {
+        if (m_pBaseGameInput.get() != nullptr)
+        {
+            m_controlType = m_pBaseGameInput->getAiType();
+        }
+        else
+        {
+            m_controlType = GameEnums::AiTypes_Human;
+        }
+    }
+    CONSOLE_PRINT("Loaded player " + m_playerNameId + " with control type " + QString::number(m_controlType), GameConsole::eDEBUG);
 }

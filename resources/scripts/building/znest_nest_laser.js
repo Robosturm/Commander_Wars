@@ -7,7 +7,31 @@ var Constructor = function()
     };
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSprite("nest_laser+S", false, 400, Qt.point(0, building.getImageSize()));
+        if (map !== null)
+        {
+            var day = map.getCurrentDay();
+            if (day % 3 === 1)
+            {
+                building.loadSprite("nest_laser+S", false, 400, Qt.point(0, building.getImageSize()));
+            }
+            else if (day % 3 === 2)
+            {
+                building.loadSprite("nest_laser+SE", false, 400, Qt.point(0, building.getImageSize()));
+            }
+            else if (day % 3 === 0)
+            {
+                building.loadSprite("nest_laser+SW", false, 400, Qt.point(0, building.getImageSize()));
+            }
+            if (day > 1)
+            {
+                audio.playSound("nestlaserrotate.wav");
+            }
+
+        }
+        else
+        {
+            building.loadSprite("nest_laser+S", false, 400, Qt.point(0, building.getImageSize()));
+        }
     };
     this.getBaseIncome = function()
     {
@@ -58,6 +82,10 @@ var Constructor = function()
         {
             building.loadSprite("nest_laser+SW", false, 400, Qt.point(0, building.getImageSize()));
         }
+        if (day > 1)
+        {
+            audio.playSound("nestlaserrotate.wav");
+        }
         building.setFireCount(1);
     };
     this.getActionTargetFields = function(building)
@@ -87,6 +115,23 @@ var Constructor = function()
             }
         }
         return targets;
+    };
+    this.getRotation = function(building)
+    {
+        var map = building.getMap();
+        var day = map.getCurrentDay();
+        if (day % 3 === 1)
+        {
+            return 0;
+        }
+        else if (day % 3 === 2)
+        {
+            return -45;
+        }
+        else if (day % 3 === 0)
+        {
+            return 45;
+        }
     };
     this.usesMapLayer = function()
     {

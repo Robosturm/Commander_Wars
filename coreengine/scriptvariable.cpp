@@ -1,6 +1,5 @@
 #include "coreengine/scriptvariable.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/mainapp.h"
 #include "coreengine/filesupport.h"
 
 ScriptVariable::ScriptVariable(QString id)
@@ -9,8 +8,6 @@ ScriptVariable::ScriptVariable(QString id)
 #ifdef GRAPHICSUPPORT
     setObjectName("ScriptVariable");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_buffer.open(QIODevice::ReadWrite);
 }
@@ -20,8 +17,6 @@ ScriptVariable::ScriptVariable()
 #ifdef GRAPHICSUPPORT
     setObjectName("ScriptVariable");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_buffer.open(QIODevice::ReadWrite);
 }

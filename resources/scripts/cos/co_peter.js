@@ -78,7 +78,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.peterDamage = function(co, value, animation2, map)
@@ -133,7 +132,6 @@ var Constructor = function()
                         animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
                     }
                 }
-                units.remove();
             }
         }
     };

@@ -1,6 +1,9 @@
 #include <QtMath>
+#include <QJsonObject>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
+#include "ai/aiprocesspipe.h"
 
 #include "menue/victorymenue.h"
 #include "menue/mainwindow.h"
@@ -14,17 +17,19 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
-#include "resource_management/cospritemanager.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
 
 #include "objects/dialogs/dialogvaluecounter.h"
 #include "objects/base/moveinbutton.h"
+#include "objects/base/checkbox.h"
 
+#include "network/JsonKeys.h"
+#include "network/tcpclient.h"
 
 VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay)
     : m_ProgressTimer(this),
@@ -38,16 +43,21 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    CONSOLE_PRINT("Entering Victory Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Victory Menue", GameConsole::eDEBUG);
     m_pMap->setMenu(nullptr); // remove outdated link
-    
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+
+    if (Mainapp::getSlave())
+    {
+        CONSOLE_PRINT("VictoryMenue is listening to master server data", GameConsole::eDEBUG);
+        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &VictoryMenue::recieveServerData, Qt::QueuedConnection);
+    }
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont72());
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getFont("mainBlack72"));
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
@@ -65,9 +75,9 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/victorymenue");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/victorymenue");
+    pApp->getAudioManager()->playRandom();
 
     GameManager* pGameManager = GameManager::getInstance();
     m_pGraphBackground = oxygine::spBox9Sprite::create();
@@ -296,6 +306,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         panel->setContentWidth(pButtonPlayerStatistic->getX() + pButtonPlayerStatistic->getScaledWidth() + 5);
     }
 
+    style = oxygine::TextStyle(FontManager::getMainFont24());
     m_Textfield = oxygine::spTextField::create();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     m_Textfield->setStyle(headerStyle);
@@ -501,8 +512,15 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     });
     connect(this, &VictoryMenue::sigFinishCurrentGraph, this, &VictoryMenue::finishGraph, Qt::QueuedConnection);
     pApp->continueRendering();
-    if (Mainapp::getSlave())
+    Mainapp::getAiProcessPipe().onQuitGame();
+    if (Settings::getAiSlave())
     {
+        connect(this, &VictoryMenue::sigQuitOnAiPipe, this, &VictoryMenue::quitOnAiPipe, Qt::QueuedConnection);
+        emit sigQuitOnAiPipe();
+    }
+    else if (Mainapp::getSlave())
+    {
+        CONSOLE_PRINT("Killing self on slave", GameConsole::eDEBUG);
         connect(&m_despawnSlaveTimer, &QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
         m_despawnSlaveTimer.start(20000);
     }
@@ -512,10 +530,17 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     }
 }
 
+void VictoryMenue::quitOnAiPipe()
+{
+    CONSOLE_PRINT("Killing vicotry menu on ai slave", GameConsole::eDEBUG);
+    m_pMap->detach();
+    oxygine::Actor::detach();
+}
+
 void VictoryMenue::despawnSlave()
 {
     // despawn slave process on finish
-    CONSOLE_PRINT("Closing slave cause the game is finished.", Console::eDEBUG);
+    CONSOLE_PRINT("Closing slave cause the game is finished.", GameConsole::eDEBUG);
     qint32 ret = m_pMap->getWinnerTeam() + 1;
     QString object = "Init";
     QString func = "onMasterValue";
@@ -526,6 +551,35 @@ void VictoryMenue::despawnSlave()
         ret = erg.toInt();
     }
     QCoreApplication::exit(ret);
+}
+
+void VictoryMenue::recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+{
+    if (service == NetworkInterface::NetworkSerives::ServerHostingJson)
+    {
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject objData = doc.object();
+        QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
+        CONSOLE_PRINT("Master server network command received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
+        if (messageType == NetworkCommands::DESPAWNSLAVE)
+        {
+            closeSlave();
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown master server command " + messageType + " received", GameConsole::eDEBUG);
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Unknown master service command " + QString::number(static_cast<qint32>(service)) + " received", GameConsole::eDEBUG);
+    }
+}
+
+void VictoryMenue::closeSlave()
+{
+    CONSOLE_PRINT("Closing slave cause all players have disconnected.", GameConsole::eDEBUG);
+    QCoreApplication::exit(0);
 }
 
 void VictoryMenue::createStatisticsView()
@@ -582,7 +636,7 @@ void VictoryMenue::addShopMoney()
     }
     if (highestScore > 0 && !m_isReplay)
     {
-        CONSOLE_PRINT("Adding points to userdata.", Console::eDEBUG);
+        CONSOLE_PRINT("Adding points to userdata.", GameConsole::eDEBUG);
         Userdata* pUserdata = Userdata::getInstance();
         spDialogValueCounter pDialogValueCounter = spDialogValueCounter::create(pUserdata->getCredtis(), highestScore);
         connect(pDialogValueCounter.get(), &DialogValueCounter::sigFinished, this, &VictoryMenue::onProgressTimerStart, Qt::QueuedConnection);
@@ -603,7 +657,7 @@ void VictoryMenue::onProgressTimerStart()
 
 void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 {
-    CONSOLE_PRINT("VictoryMenue::showGraph " + QString::number(static_cast<qint32>(mode)), Console::eDEBUG);
+    CONSOLE_PRINT("VictoryMenue::showGraph " + QString::number(static_cast<qint32>(mode)), GameConsole::eDEBUG);
     m_CurrentGraphMode = mode;
     if (m_CurrentGraphMode < GraphModes::Max)
     {
@@ -727,7 +781,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 
 void VictoryMenue::exitMenue()
 {
-    CONSOLE_PRINT("Leaving Victory Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Victory Menue", GameConsole::eDEBUG);
     if (m_pNetworkInterface.get() != nullptr)
     {
         m_pNetworkInterface = nullptr;
@@ -1032,7 +1086,7 @@ qint32 VictoryMenue::getStepTime()
 
 void VictoryMenue::AddScoreToUserdata()
 {
-    CONSOLE_PRINT("VictoryMenue::AddScoreToUserdata", Console::eDEBUG);
+    CONSOLE_PRINT("VictoryMenue::AddScoreToUserdata", GameConsole::eDEBUG);
     
     QString path = m_pMap->getMapPath();
     if (!path.isEmpty() && m_pMap->getWinnerTeam() >= 0 && !m_isReplay)
@@ -1076,13 +1130,13 @@ void VictoryMenue::AddScoreToUserdata()
 
 void VictoryMenue::onEnter()
 {
-    CONSOLE_PRINT("VictoryMenue::onEnter", Console::eDEBUG);
+    CONSOLE_PRINT("VictoryMenue::onEnter", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "onVictory";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -1090,7 +1144,7 @@ void VictoryMenue::onEnter()
 
 void VictoryMenue::showPlayerStatistic(qint32 player)
 {
-    CONSOLE_PRINT("VictoryMenue::showPlayerStatistic for " + QString::number(player), Console::eDEBUG);
+    CONSOLE_PRINT("VictoryMenue::showPlayerStatistic for " + QString::number(player), GameConsole::eDEBUG);
     if (m_statisticsView.get() != nullptr)
     {
         m_statisticsView->detach();

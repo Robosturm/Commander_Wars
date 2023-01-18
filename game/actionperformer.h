@@ -13,7 +13,7 @@ public:
     struct SyncData
     {
         bool m_waitingForSyncFinished{false};
-        spGameAction m_postSyncAction;
+        spGameAction m_postSyncAction{nullptr};
         QVector<bool> m_lockedPlayers;
         QVector<quint64> m_connectingSockets;
     };
@@ -38,6 +38,7 @@ public:
 
 signals:
     void sigActionPerformed();
+    void sigAiProcesseSendAction(spGameAction pGameAction);
 
 public slots:
     /**

@@ -1,13 +1,9 @@
 #include "objects/dialogs/ingame/coinfodialog.h"
 #include "objects/base/panel.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
-#include "resource_management/cospritemanager.h"
-#include "resource_management/unitspritemanager.h"
-#include "resource_management/gamemanager.h"
 
 #include "game/gamemap.h"
 
@@ -22,8 +18,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
 #ifdef GRAPHICSUPPORT
     setObjectName("COInfoDialog");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");

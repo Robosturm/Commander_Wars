@@ -5,8 +5,7 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -42,7 +41,7 @@ void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream, QString l
 
 void ScriptConditionUnitDestroyed::writePreCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Reading ConditionUnitDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionUnitDestroyed", GameConsole::eDEBUG);
     m_executed = ScriptData::getVariableName();
     m_unitID = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
@@ -58,7 +57,7 @@ void ScriptConditionUnitDestroyed::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionUnitDestroyed::writeCondition(QTextStream& rStream)
 {
-    CONSOLE_PRINT("Writing ConditionUnitDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionUnitDestroyed", GameConsole::eDEBUG);
     rStream << "        if (map.getUnit(" << m_unitID << "Value) === null && " << m_executed << ".readDataBool() === false) {"
             << "// " << m_x << " " << m_y << " " << QString::number(getVersion()) << " " << ConditionUnitDestroyed << "\n";
     if (subCondition.get() != nullptr)
@@ -82,7 +81,7 @@ void ScriptConditionUnitDestroyed::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionUnitDestroyed + " End\n";
+    rStream << "        } // " + QString(ConditionUnitDestroyed) + " End\n";
 }
 
 void ScriptConditionUnitDestroyed::writePostCondition(QTextStream& rStream)

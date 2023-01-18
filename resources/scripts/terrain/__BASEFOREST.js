@@ -4,7 +4,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setVisionHigh(1);
-        terrain.setTerrainName(__BASEFOREST.getName(terrain));
+        terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
     };
     this.baseTerrainId = "PLAINS";
     this.getName = function(terrain = null)
@@ -192,8 +192,7 @@ var Constructor = function()
         }
         else if (baseTerrainId === "DESERT")
         {
-            return "<r>" + qsTr("In Fog of War conditions, the woods provide ground unit hiding places.") + "</r>" +
-                    "<div c='#00ff00'>" + qsTr(" It reduces the firepower of units by 20%") + "</div>";
+            return qsTr("<r>In Fog of War conditions, the woods provide ground unit hiding places.</r><div c='#00ff00'> It reduces the firepower of units by 20%</div>");
         }
         else
         {

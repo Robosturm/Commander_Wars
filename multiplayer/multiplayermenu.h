@@ -1,7 +1,6 @@
 #ifndef MULTIPLAYERMENU_H
 #define MULTIPLAYERMENU_H
 
-#include "memory.h"
 #include <QObject>
 #include <QTimer>
 #include <QDir>
@@ -58,12 +57,14 @@ public:
      * @brief showRuleSelection
      */
     virtual void showRuleSelection() override;
-    virtual void showPlayerSelection() override;
+    virtual void showPlayerSelection(bool relaunchedLobby = false) override;
 signals:
     void sigConnected();
     void sigHostGameLaunched();
     void sigLoadSaveGame();
     void sigShowIPs();
+    void sigReadyAndLeave();
+    void sigServerResponded();
 public slots:
 
     // general slots
@@ -71,6 +72,7 @@ public slots:
     virtual void buttonNext() override;
     virtual void startGame() override;
     virtual void exitMenu() override;
+    void exitMenuToLobby();
 
     // network slots
     void playerJoined(quint64 socketID);
@@ -103,14 +105,65 @@ public slots:
      * @param socketID
      */
     void onSlaveConnectedToMaster(quint64 socketID);
+    /**
+     * @brief onServerRelaunchSlave
+     * @param socketID
+     * @param objData
+     */
+    void onServerRelaunchSlave(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief despawnSlave
+     */
+    void despawnSlave();
 
 protected slots:
+    /**
+     * @brief countdown
+     */
     void countdown();
+    /**
+     * @brief closeSlave
+     */
+    void closeSlave();
+    /**
+     * @brief readyAndLeave
+     */
+    void readyAndLeave();
+    /**
+     * @brief doReadyAndLeave
+     */
+    void doReadyAndLeave();
+
 protected:
+    /**
+     * @brief relaunchRunningGame
+     */
+    void relaunchRunningGame(quint64 socketID, const QString & savefile);
+    /**
+     * @brief relaunchRunningLobby
+     */
+    void relaunchRunningLobby(quint64 socketID, const QString & savefile);
+    /**
+     * @brief sendSlaveRelaunched
+     */
+    void sendSlaveRelaunched(quint64 socketID);
+    /**
+     * @brief startDespawnTimer
+     */
+    void startDespawnTimer();
+    /**
+     * @brief saveLobbyState
+     * @param filename
+     */
+    void saveLobbyState(const QString & filename);
+    /**
+     * @brief getGameReady
+     * @return
+     */
     bool getGameReady();
     void sendServerReady(bool value);
     void initClientGame(quint64 socketID, QDataStream &stream);
-    void loadMultiplayerMap();
+    void loadMultiplayerMap(bool relaunchedLobby = false);
     void showIPs();
     spGameMap createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);    
@@ -254,11 +307,15 @@ private:
     /**
      * @brief markGameReady
      */
-    void markGameReady();
+    void markGameReady(bool fixed = false);
     /**
      * @brief changeButtonText
      */
     void changeButtonText();
+    /**
+     * @brief showInformingServer
+     */
+    void showInformingServer();
 private:
     NetworkMode m_networkMode{NetworkMode::Client};
     spNetworkInterface m_pNetworkInterface;
@@ -267,12 +324,15 @@ private:
     QTimer m_GameStartTimer;
     qint32 m_counter{5};
     oxygine::spButton m_pButtonLoadSavegame;
+    oxygine::spButton m_pReadyAndLeave;
     bool m_saveGame{false};
     bool m_local{true};
     bool m_slaveGameReady{false};
     Password m_password;
     quint64 m_hostSocket{0};
     spDialogConnecting m_pDialogConnecting;
+    QElapsedTimer m_slaveDespawnElapseTimer;
+    QTimer m_slaveDespawnTimer{this};
 };
 
 #endif // MULTIPLAYERMENU_H

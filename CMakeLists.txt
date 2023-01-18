@@ -30,6 +30,7 @@ option(PRECOMPILEDOPENSSL "if the openssl are precompiled libs or or package exi
 option(USEAPPCONFIGPATH "use the system location for saving data, instead of the working directory" OFF)
 option(DEPLOY_RESOURCES_AS_FOLDER "if files should be compiled into the exe or deployed as folder" OFF)
 option(UPDATESUPPORT "Enables the automatic updater for the game which updates to the latest github version should be turned off for local builds not supported for android" OFF)
+option(DEFAULTAIPIPE "If the system should use a separate process for the ai as default variant. Disable it for system that can't launch the same exe twice e.g. android." ON)
 ###################################################################################
 # show configuration
 ###################################################################################
@@ -52,8 +53,9 @@ message("CMake Binary dir: ${CMAKE_CURRENT_BINARY_DIR}")
 message("OpenSsL-Dir:" ${OPENSSL_ROOT_DIR})
 message("Toolchain-file: ${CMAKE_TOOLCHAIN_FILE}")
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    message("SDK: ${ANDROID_SDK}")
-    message("NDK: ${ANDROID_SDK_ROOT}")
+    message("SDK: ${ANDROID_SDK_ROOT}")
+    message("NDK: ${ANDROID_NDK}")
+    message("STL: ${ANDROID_STL}")
 endif()
 
 
@@ -178,19 +180,30 @@ else()
     message("Building without user config path")
 endif()
 
+if (DEFAULTAIPIPE)
+    message("Using ai pipe as default")
+    add_definitions(
+        -DDEFAULTAIPIPE=true
+    )
+else()
+    message("Using no ai pipe as default")
+    add_definitions(
+        -DDEFAULTAIPIPE=false
+    )
+endif()
 ###################################################################################
 # General version information
 ###################################################################################
 add_definitions(
     -DVERSION_MAJOR=0
-    -DVERSION_MINOR=24
-    -DVERSION_REVISION=3
-    -DVERSION_SUFFIX="dev"
+    -DVERSION_MINOR=28
+    -DVERSION_REVISION=1
+    -DVERSION_SUFFIX="main"
     -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     )
 
-set(COW_ANDROID_VERSION_NAME "0.24.3-dev")
-set(COW_ANDROID_VERSION_CODE "22")
+set(COW_ANDROID_VERSION_NAME "0.28.1-main")
+set(COW_ANDROID_VERSION_CODE "29")
 
 ###################################################################################
 # Set up some compiler and linking options
@@ -519,8 +532,8 @@ set(${PROJECT_NAME}_SRCS
     coreengine/mainapp.cpp coreengine/mainapp.h
     coreengine/settings.cpp coreengine/settings.h
     coreengine/interpreter.cpp coreengine/interpreter.h
-    coreengine/console.cpp coreengine/console.h
-    coreengine/audiothread.cpp coreengine/audiothread.h
+    coreengine/gameconsole.cpp coreengine/gameconsole.h
+    coreengine/audiomanager.cpp coreengine/audiomanager.h
     coreengine/pathfindingsystem.cpp coreengine/pathfindingsystem.h
     coreengine/qmlvector.cpp coreengine/qmlvector.h
     coreengine/scriptvariables.cpp coreengine/scriptvariables.h
@@ -541,7 +554,9 @@ set(${PROJECT_NAME}_SRCS
     # network engine
     network/smtpmailsender.h network/smtpmailsender.cpp
     network/tcpclient.cpp network/tcpclient.h
-    network/tcpserver.cpp network/tcpserver.h
+    network/tcpserver.cpp network/tcpserver.h    
+    network/localserver.cpp network/localserver.h
+    network/localclient.cpp network/localclient.h
     network/txtask.cpp network/txtask.h
     network/rxtask.cpp network/rxtask.h
     network/NetworkInterface.h
@@ -639,6 +654,10 @@ set(${PROJECT_NAME}_SRCS
     ai/heavyai/heavyaiproduction.cpp
     ai/heavyai/heavyaitraining.cpp
     ai/influencefrontmap.cpp ai/influencefrontmap.h
+    ai/dummyai.h ai/dummyai.cpp
+    ai/aiprocesspipe.h ai/aiprocesspipe.cpp
+    # production system
+    ai/productionSystem/simpleproductionsystem.h ai/productionSystem/simpleproductionsystem.cpp
 
     # neuralnetwork
     ai/neuralnetwork/neural/edge.cpp ai/neuralnetwork/neural/edge.h
@@ -717,6 +736,7 @@ set(${PROJECT_NAME}_SRCS
     wiki/defaultwikipage.cpp wiki/defaultwikipage.h
     wiki/wikiview.cpp wiki/wikiview.h
     wiki/damagetablepage.cpp wiki/damagetablepage.h
+    wiki/actionwikipage.cpp wiki/actionwikipage.h
 
     # table view
     objects/tableView/basetableitem.h objects/tableView/basetableitem.cpp
@@ -796,6 +816,8 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
             "general.qrc"
             )
     endif()
+else()
+    message("Deploying resources")
 endif()
 
 ##############################################################################
@@ -906,7 +928,7 @@ qt_finalize_executable(${PROJECT_NAME})
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     # translation target isn't supported by qt 6 for android right now
     # create translation here :)
-    # set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
+    set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
     message ("Language Update Options: ${LUPDATE_OPTIONS}")
     # created translation files
     set(TS_FILES
@@ -914,16 +936,16 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         translation/lang_en.ts
         )
     # adds the translations and a target for it
+
+    FILE(GLOB_RECURSE scripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.js")
+    FILE(GLOB_RECURSE uiXmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/ui/*.xml")
     qt_create_translation(
         QM_FILES
         ${${PROJECT_NAME}_SRCS}
         ${scripts}
-        ${modScripts}
-        ${GameScripts}
-        ${CampaignScripts}
-        ${UiXmls}
+        ${uiXmls}
         ${TS_FILES}
-        OPTIONS ${LUPDATE_OPTIONS})
+        OPTIONS "${LUPDATE_OPTIONS}")
     qt_add_translation(${PROJECT_NAME}_QM_FILES ${TS_FILES})
     add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
     add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_translations)
@@ -976,6 +998,8 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_SQL_LIBS
         ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite${LibNameEnd}
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
@@ -985,6 +1009,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
     )
+
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     set(LibNameStart "../lib/libQt6")
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
@@ -999,6 +1024,9 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/../plugins/platforms/libqxcb.so
         ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
+        ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_SQL_LIBS
         ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
     )
 
@@ -1074,9 +1102,13 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         install(DIRECTORY data DESTINATION                  "/")
     endif()
     # install libs
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "/" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION                    "/" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "platforms" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS}            DESTINATION     "/"             OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION     "/"             OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION     "platforms"     OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_SQL_LIBS}        DESTINATION     "sqldrivers"    OPTIONAL)
+    install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION     "/"             OPTIONAL)
+    # workaround for qt 6.4.x
+    install(FILES "C:/Windows/System32/mfplat.dll"               DESTINATION    "."             RENAME "mfplat.dll.dll")
 
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
@@ -1092,6 +1124,7 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS}            DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
     install(DIRECTORY templates                                 DESTINATION "share/${PROJECT_NAME_LOWER}"                            OPTIONAL)
+    install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
     install(FILES "icon.png"                                    DESTINATION "share/pixmaps"       RENAME "${PROJECT_NAME_LOWER}.png" OPTIONAL)
     install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
@@ -1133,6 +1166,8 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
             -always-overwrite
         COMMENT "Running macdeployqt..."
     )
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${QT_BIN_DIR}/../plugins/multimedia/libdarwinmediaplugin.dylib "${CMAKE_INSTALL_PREFIX}/Commander_Wars.app/Contents/PlugIns/multimedia/libdarwinmediaplugin.dylib")
 endif()
 
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")

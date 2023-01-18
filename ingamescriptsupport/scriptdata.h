@@ -16,15 +16,15 @@ class ScriptData final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    static const QString scriptStart;
-    static const QString scriptEnd;
-    static const QString immediateStart;
-    static const QString victoryInfo;
-    static const QString victory;
-    static const QString actionConditions;
-    static const QString turnStart;
-    static constexpr auto campaignVariables = "campaignVariables";
-    static constexpr auto variables = "variables";
+    static const char* const scriptStart;
+    static const char* const scriptEnd;
+    static const char* const immediateStart;
+    static const char* const victoryInfo;
+    static const char* const victory;
+    static const char* const actionConditions;
+    static const char* const turnStart;
+    static const char* const campaignVariables;
+    static const char* const variables;
 
     explicit ScriptData(GameMap* pMap);
     ~ScriptData() = default;

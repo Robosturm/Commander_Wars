@@ -10,7 +10,6 @@
                 <x>10</x>
                 <y>10</y>
                 <width>settings.getWidth() - 60</width>
-                <height>50</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Edit all player data")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -19,7 +18,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>250</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Start funds:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -40,7 +38,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>250</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Income modifier:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -62,7 +59,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>250</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Preset teams:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -84,7 +80,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>250</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","All buildlists:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

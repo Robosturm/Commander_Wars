@@ -1,4 +1,4 @@
-#include "customcoboostinfo.h"
+#include "game/ui/customcoboostinfo.h"
 
 const QString &CustomCoBoostInfo::getIconId() const
 {

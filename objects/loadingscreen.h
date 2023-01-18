@@ -6,8 +6,9 @@
 
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
+
+#include "objects/base/label.h"
 
 class LoadingScreen;
 using spLoadingScreen = oxygine::intrusive_ptr<LoadingScreen>;
@@ -42,8 +43,8 @@ private:
     friend class oxygine::intrusive_ptr<LoadingScreen>;
     explicit LoadingScreen();
 private:
-    oxygine::spTextField m_workText;
-    oxygine::spTextField m_loadingProgress;
+    spLabel m_workText;
+    spLabel m_loadingProgress;
     oxygine::spColorRectSprite m_BackgroundBar;
     oxygine::spColorRectSprite m_LoadingBar;
     static spLoadingScreen m_pLoadingScreen;

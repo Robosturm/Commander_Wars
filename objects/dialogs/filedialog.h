@@ -29,7 +29,7 @@ public:
      * @param startFolder initial folder of the file dialog
      * @param wildcards wildcard items will be split at ;
      */
-    explicit FileDialog(QString startFolder, const QStringList & wildcards, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
+    explicit FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
     ~FileDialog() = default;
 
     bool getPreview() const;
@@ -40,12 +40,17 @@ signals:
     void sigCancel();
     void sigShowFolder(QString folder);
     void sigFinished();
+    void sigShowDeleteQuestion();
+    void sigShowOverwriteWarning();
 public slots:
     void showFolder(QString folder);
     void filterChanged(qint32);
     void KeyInput(oxygine::KeyEvent event);
     void deleteItem();
+    void showDeleteQuestion();
     void remove();
+    void onFileSelected();
+    void showOverwriteWarning();
 private:
     spTextbox m_CurrentFolder;
     spTextbox m_CurrentFile;
@@ -61,6 +66,7 @@ private:
     bool m_preview{false};
     bool m_focused{true};
     QVector<oxygine::spResAnim> m_ResAnims;
+    bool m_isSaveDialog{false};
 };
 
 #endif // FILEDIALOG_H

@@ -40,8 +40,9 @@ var Constructor = function()
     this.getActionTargetFields = function(building)
     {
         var targets = globals.getEmptyPointArray();
-        // laser to not fire infinitly but the range is still fucking huge :)
-        for (var i = 1; i < 20; i++)
+        targets.append(Qt.point(0, 0));
+        // laser do not fire infinitly but the range is still fucking huge :)
+        for (var i = 1; i < 40; i++)
         {
             targets.append(Qt.point(0, i));
             targets.append(Qt.point(0, -i));

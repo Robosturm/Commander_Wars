@@ -6,11 +6,13 @@
 #include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
+#include "3rd_party/oxygine-framework/oxygine/Property.h"
 #include <QMutex>
 #include <vector>
 
 namespace oxygine
 {
+
     class TweenOptions
     {
     public:
@@ -81,6 +83,7 @@ namespace oxygine
     class Actor: public EventDispatcher
     {
     public:
+        static constexpr float safetyArea = 10;
         explicit Actor();
         virtual ~Actor();
         using children = std::vector<spActor>;
@@ -106,39 +109,7 @@ namespace oxygine
         }
 #endif
 
-        const Vector2& getAnchor() const
-        {
-#ifdef GRAPHICSUPPORT
-            return m_anchor;
-#else
-            return m_dummyVector;
-#endif
-        }
-        float getAnchorX() const
-        {
-#ifdef GRAPHICSUPPORT
-            return m_anchor.x;
-#else
-            return 0.0f;
-#endif
-        }
-        float getAnchorY() const
-        {
-#ifdef GRAPHICSUPPORT
-            return m_anchor.y;
-#else
-            return 0.0f;
-#endif
-        }
-        bool getIsAnchorInPixels()
-        {
-#ifdef GRAPHICSUPPORT
-            return (m_flags & flag_anchorInPixels) != 0;
-#else
-            return true;
-#endif
-        }
-        const Vector2& getPosition() const
+        const Point& getPosition() const
         {
 #ifdef GRAPHICSUPPORT
             return m_pos;
@@ -146,7 +117,7 @@ namespace oxygine
             return m_dummyVector;
 #endif
         }
-        float getX() const
+        qint32 getX() const
         {
 #ifdef GRAPHICSUPPORT
             return m_pos.x;
@@ -154,7 +125,7 @@ namespace oxygine
             return 0.0f;
 #endif
         }
-        float getY() const
+        qint32 getY() const
         {
 #ifdef GRAPHICSUPPORT
             return m_pos.y;
@@ -228,7 +199,7 @@ namespace oxygine
         {
             return m_parent;
         }
-        const Vector2& getSize() const
+        const Point& getSize() const
         {
 #ifdef GRAPHICSUPPORT
             return m_size;
@@ -240,12 +211,12 @@ namespace oxygine
         Vector2 getScaledSize() const
         {
 #ifdef GRAPHICSUPPORT
-            return m_size.mult(m_scale);
+            return m_size.cast<Vector2>().mult(m_scale);
 #else
             return Vector2();
 #endif
         }
-        float getWidth() const;
+        qint32 getWidth() const;
         float getScaledWidth() const
         {
 #ifdef GRAPHICSUPPORT
@@ -254,7 +225,7 @@ namespace oxygine
             return 0;
 #endif
         }
-        float getHeight() const;
+        qint32 getHeight() const;
         float getScaledHeight() const
         {
 #ifdef GRAPHICSUPPORT
@@ -266,10 +237,6 @@ namespace oxygine
         unsigned char getAlpha() const;
         const spClock& getClock() const;
         virtual RectF getDestRect() const;
-        /**returns touch id if actor is pressed down*/
-        pointer_index getPressed(MouseButton b = MouseButton_Touch) const;
-        /**returns touch id if actor is moused overred*/
-        pointer_index getOvered() const;
 
 #ifdef GRAPHICSUPPORT
         /**return local actor transformation*/
@@ -281,20 +248,11 @@ namespace oxygine
         /**computes actor Bounds rectangle. Iterates children*/
         RectF computeBounds(const AffineTransform& transform = AffineTransform()) const;
 
-        /**Sets Anchor. Anchor also called Pivot point. It is "center" for rotation/scale/position. Anchor could be set in Pixels or in Percents (/100).
-        Default value is (0,0) - top left corner of Actor
-        */
-        void setAnchor(const Vector2& anchor);
+        void setPosition(const Point& pos);
+        void setPosition(qint32 x, qint32 y);
+        void setX(qint32 x);
+        void setY(qint32 y);
         void setAnchor(float ax, float ay);
-        void setAnchorInPixels(const Vector2& anchor);
-        void setAnchorInPixels(float x, float y);
-        void setAnchorX(float x);
-        void setAnchorY(float y);
-
-        void setPosition(const Vector2& pos);
-        void setPosition(float x, float y);
-        void setX(float x);
-        void setY(float y);
 
         /**Overwrites transformation matrix. position/scale/rotation would be ignored until you change them*/
         void setTransform(const AffineTransform& tr);
@@ -311,12 +269,10 @@ namespace oxygine
         void setRotationDegrees(float angle);
 
         /**Sets Size of Actor. Size doesn't scale contents of Actor. Size only affects event handling and rendering if you change Anchor*/
-        void setSize(const Vector2&);
-        void setSize(float w, float h);
-        virtual void setWidth(float w);
-        virtual void setHeight(float h);
-        /**Extends actor's clickable area from each side. Affects only to Actor::isOn. Max value is 127, Min Value is -128*/
-        void setExtendedClickArea(char add) {m_extendedIsOn = add;}
+        void setSize(const Point&);
+        void setSize(qint32 w, qint32 h);
+        virtual void setWidth(qint32 w);
+        virtual void setHeight(qint32 h);
 
         void setClock(spClock & clock);
 
@@ -331,17 +287,7 @@ namespace oxygine
             }
 #endif
         }
-        /**Enable/Disable culling this actor outside of clip area (use it in pair with ClipRectActor)*/
-        void setCull(bool enable)
-        {
-#ifdef GRAPHICSUPPORT
-            m_flags &= ~flag_cull;
-            if (enable)
-            {
-                m_flags |= flag_cull;
-            }
-#endif
-        }
+
         /**Sets transparency. if alpha is 0 actor and children are completely invisible. Invisible Actor doesn't receive Touch events.*/
         void setAlpha(unsigned char alpha);
 
@@ -369,7 +315,7 @@ namespace oxygine
         }
         virtual bool isOn(const Vector2& localPosition, float localScale = 1.0f);
         /**Returns true if actor is child or located deeper in current subtree*/
-        bool isDescendant(const spActor& actor) const;
+        bool isDescendant(const Actor* actor) const;
         void addChild(spActor actor);
         /**Remove one child*/
         void removeChild(spActor & actor);
@@ -440,19 +386,18 @@ namespace oxygine
         /*****************************************************************************************/
         // properties for tweens
         /*****************************************************************************************/
-        typedef Property2Args<float, Vector2, const Vector2&, Actor, &Actor::getPosition, &Actor::setPosition>  TweenPosition;
-        typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>                                       TweenX;
-        typedef Property<float, float, Actor, &Actor::getY, &Actor::setY>                                       TweenY;
-        typedef Property<float, float, Actor, &Actor::getWidth, &Actor::setWidth>                               TweenWidth;
-        typedef Property<float, float, Actor, &Actor::getHeight, &Actor::setHeight>                             TweenHeight;
-        typedef Property2Args2<float, Vector2, const Vector2&, const Vector2&, Actor, &Actor::getSize, &Actor::setSize>TweenSize;
-        typedef Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>                         TweenRotation;
-        typedef Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>           TweenRotationDegrees;
-        typedef Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getScale, &Actor::setScale>    TweenScale;
-        typedef Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getAnchor, &Actor::setAnchor>  TweenAnchor;
-        typedef Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>                             TweenScaleX;
-        typedef Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>                             TweenScaleY;
-        typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>               TweenAlpha;
+        using TweenPosition = Property2Args<qint32, Point, const Point&, Actor, &Actor::getPosition, &Actor::setPosition>;
+        using TweenX = Property<qint32, qint32, Actor, &Actor::getX, &Actor::setX>;
+        using TweenY = Property<qint32, qint32, Actor, &Actor::getY, &Actor::setY>;
+        using TweenWidth = Property<qint32, qint32, Actor, &Actor::getWidth, &Actor::setWidth>;
+        using TweenHeight = Property<qint32, qint32, Actor, &Actor::getHeight, &Actor::setHeight>;
+        using TweenSize = Property2Args2<qint32, Point, const Point&, const Point&, Actor, &Actor::getSize, &Actor::setSize>;
+        using TweenRotation = Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>;
+        using TweenRotationDegrees = Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>;
+        using TweenScale = Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getScale, &Actor::setScale>;
+        using TweenScaleX = Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>;
+        using TweenScaleY = Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>;
+        using TweenAlpha = Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>;
 #ifdef GRAPHICSUPPORT
         QMutex* getLocked();
 #endif
@@ -465,11 +410,10 @@ namespace oxygine
         static void setParent(Actor* actor, Actor* parent);
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
-        void __setSize(const Vector2&);
-        virtual void sizeChanged(const Vector2& size);
+        void __setSize(const Point&);
+        virtual void sizeChanged(const Point& size);
         spTween __addTween(spTween tween, bool rel);
         bool prepareRender(RenderState& rs, const RenderState& parentRS);
-        bool onScreen(RenderState& rs);
         void markTranformDirty();
         void updateTransform() const;
         void internalUpdate(const UpdateState& us);
@@ -485,13 +429,10 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         enum flags
         {
-            flag_anchorInPixels         = 1,
             flag_visible                = 1 << 1,
             flag_transformDirty         = 1 << 2,
             flag_transformInvertDirty   = 1 << 3,
-            flag_cull                   = 1 << 4,
             flag_fastTransform          = 1 << 5,
-            flag_boundsNoChildren       = 1 << 6,
             flag_actorHasBounds         = 1 << 7,
             flag_clickableWithZeroAlpha = 1 << 8,
             flag_reserved               = 1 << 9,
@@ -519,14 +460,13 @@ namespace oxygine
             };
             int32_t m_pressedOvered;
         };
-        char    m_extendedIsOn{0};
     private:
 #ifdef GRAPHICSUPPORT
         unsigned char   m_alpha{255};
-        Vector2 m_pos;
-        Vector2 m_anchor;
+        Point m_pos;
         Vector2 m_scale{1.0f, 1.0f};
-        Vector2 m_size;
+        Point m_size;
+        Vector2 m_anchor;
         float  m_rotation{0};
         qint32 m_zOrder{0};
         qint32 m_onGlobalTouchUpEvent{-1};

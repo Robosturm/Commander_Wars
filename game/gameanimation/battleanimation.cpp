@@ -1,22 +1,23 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenchangenumbertext.h"
 
-#include "menue/gamemenue.h"
-#include "menue/movementplanner.h"
-
-#include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
+
 #include "resource_management/gamemanager.h"
-#include "resource_management/cospritemanager.h"
 #include "resource_management/fontmanager.h"
 
 #include "game/gameanimation/battleanimation.h"
 #include "game/gamemap.h"
 #include "game/player.h"
 #include "game/co.h"
+
+#include "menue/basegamemenu.h"
 
 static constexpr qint32 MIN_HEALTHBAR_WIDTH = 8;
 
@@ -40,8 +41,6 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
 #ifdef GRAPHICSUPPORT
     setObjectName("BattleAnimation");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
@@ -98,7 +97,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     m_battleTimer.setSingleShot(false);
     connect(&m_battleTimer, &QTimer::timeout, this, &BattleAnimation::nextAnimatinStep, Qt::QueuedConnection);
     nextAnimatinStep();
-    CONSOLE_PRINT("BattleAnimation::BattleAnimation()", Console::eDEBUG);
+    CONSOLE_PRINT("BattleAnimation::BattleAnimation()", GameConsole::eDEBUG);
 }
 
 void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
@@ -197,6 +196,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         else
         {
             m_AtkCO0.coSprite->setPosition(getWidth() - 28, -13);
+            m_AtkCO0.coSprite->setFlippedX(true);
         }
         m_AtkCO0.coSprite->setPriority(priorityCO);
         m_AtkCO0.coSprite->setScale(coScale);
@@ -239,6 +239,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         else
         {
             m_AtkCO1.coSprite->setPosition(getWidth() - 28, getHeight() - 28);
+            m_AtkCO1.coSprite->setFlippedX(true);
         }
         m_AtkCO1.coSprite->setPriority(priorityCO);
         m_AtkCO1.coSprite->setScale(coScale);
@@ -282,6 +283,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         else
         {
             m_DefCO0.coSprite->setPosition(getWidth() - 28, -13);
+            m_DefCO0.coSprite->setFlippedX(true);
         }
         m_DefCO0.coSprite->setPriority(priorityCO);
         m_DefCO0.coSprite->setScale(coScale);
@@ -324,6 +326,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         else
         {
             m_DefCO1.coSprite->setPosition(getWidth() - 28, getHeight() - 28);
+            m_DefCO1.coSprite->setFlippedX(true);
         }
         m_DefCO1.coSprite->setPriority(priorityCO);
         m_DefCO1.coSprite->setScale(coScale);
@@ -434,7 +437,7 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
         m_HealthBar0->setPosition(162, 25);
         m_HealthBar0->setFlippedX(true);
     }
-    m_hpInfo0->setPosition(m_HealthBar0->getPosition() + oxygine::Vector2(spriteWidth / 2 - 16, -16));
+    m_hpInfo0->setPosition(m_HealthBar0->getPosition() + oxygine::Point(spriteWidth / 2 - 16, -19));
     m_HealthBar0->setColor(getHealthBarColor(atkStartHp));
     m_hpInfo0->setText(QString::number(GlobalUtils::roundUp(atkStartHp)));
     addChild(m_HealthBar0);
@@ -453,7 +456,7 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
         m_HealthBar1->setPosition(162, 25);
         m_HealthBar1->setFlippedX(true);
     }
-    m_hpInfo1->setPosition(m_HealthBar1->getPosition() + oxygine::Vector2(spriteWidth / 2 - 16, -16));
+    m_hpInfo1->setPosition(m_HealthBar1->getPosition() + oxygine::Point(spriteWidth / 2 - 16, -19));
     m_HealthBar1->setColor(getHealthBarColor(defStartHp));
     m_hpInfo1->setText(QString::number(GlobalUtils::roundUp(defStartHp)));
     addChild(m_HealthBar1);
@@ -634,11 +637,14 @@ QColor BattleAnimation::getHealthBarColor(float hp)
 
 void BattleAnimation::restart()
 {
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMap != nullptr)
     {
-        pMenu->addChild(spBattleAnimation(this));
-        m_battleTimer.start();
+        auto* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            pMenu->addChild(spBattleAnimation(this));
+            m_battleTimer.start();
+        }
     }
 }
 
@@ -668,7 +674,7 @@ void BattleAnimation::stopSound(bool forceStop)
 void BattleAnimation::nextAnimatinStep()
 {
     Mainapp::getInstance()->pauseRendering();
-    CONSOLE_PRINT("BattleAnimation::nextAnimatinStep " + QString::number(static_cast<qint32>(m_currentState)), Console::eDEBUG);
+    CONSOLE_PRINT("BattleAnimation::nextAnimatinStep " + QString::number(static_cast<qint32>(m_currentState)), GameConsole::eDEBUG);
     switch (m_currentState)
     {
         case AnimationProgress::MoveIn:
@@ -953,7 +959,7 @@ void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite & pSprit
 
 void BattleAnimation::startBattleTimer(qint32 duration)
 {
-    CONSOLE_PRINT("Starting battle timer with base duration: " + QString::number(duration), Console::eDEBUG);
+    CONSOLE_PRINT("Starting battle timer with base duration: " + QString::number(duration), GameConsole::eDEBUG);
     m_battleTimer.start(duration / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 

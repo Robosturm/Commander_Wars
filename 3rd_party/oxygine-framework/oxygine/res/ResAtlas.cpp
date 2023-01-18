@@ -3,16 +3,15 @@
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
-#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 namespace oxygine
 {
     void ResAtlas::init_resAnim(spResAnim & rs, const QString & file, const QDomElement & node)
     {
         QString resName = Resource::extractID(node, file, "");
-        CONSOLE_PRINT("Registering ressource: " + resName, Console::eDEBUG);
+        CONSOLE_PRINT("Registering ressource: " + resName, GameConsole::eDEBUG);
         rs->setName(resName);
         setNode(rs, node);
     }

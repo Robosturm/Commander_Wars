@@ -1,4 +1,4 @@
-#include "ruleselectiondialog.h"
+#include "objects/dialogs/rules/ruleselectiondialog.h"
 
 #include "coreengine/mainapp.h"
 
@@ -15,8 +15,6 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     setObjectName("RuleSelectionDialog");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -66,14 +64,15 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     m_pPanel = spPanel::create(true,  size, size);
     m_pPanel->setPosition(10, 20);
     m_pPanel->addItem(m_pRuleSelection);
-    m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 40);
-    m_pPanel->setContentWidth(m_pRuleSelection->getScaledWidth());
+    m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 60);
+    m_pPanel->setContentWidth(m_pRuleSelection->getScaledWidth() + 60);
     pSpriteBox->addChild(m_pPanel);
 }
 
 void RuleSelectionDialog::ruleSelectionSizeChanged()
 {
-    m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 40);
+    m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 60);
+    m_pPanel->setContentWidth(m_pRuleSelection->getScaledWidth() + 60);
 }
 
 void RuleSelectionDialog::showLoadRules()
@@ -81,7 +80,7 @@ void RuleSelectionDialog::showLoadRules()
     QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getUserPath() + "data/gamerules";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Load"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelectionDialog::loadRules, Qt::QueuedConnection);
 }
@@ -91,7 +90,7 @@ void RuleSelectionDialog::showSaveRules()
     QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getUserPath() + "data/gamerules";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "", false, tr("Save"));
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelectionDialog::saveRules, Qt::QueuedConnection);
 }

@@ -3,7 +3,6 @@
 
 #include <QElapsedTimer>
 
-
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
@@ -18,7 +17,7 @@ public:
     void setSprite(oxygine::spActor firstSprite, oxygine::spActor secondSprite);
     qint32 getSpeed() const;
     void setSpeed(const qint32 &value);
-    virtual void sizeChanged(const oxygine::Vector2& size) override;
+    virtual void sizeChanged(const oxygine::Point& size) override;
     qint32 getDirection() const;
     void setDirection(const qint32 &value);
 

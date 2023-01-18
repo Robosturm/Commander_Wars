@@ -1,18 +1,15 @@
 #include "game/gamerule.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
-const QString GameRule::checkbox = "checkbox";
-const QString GameRule::spinbox = "spinbox";
+const char* const GameRule::checkbox = "checkbox";
+const char* const GameRule::spinbox = "spinbox";
 
 GameRule::GameRule()
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameRule");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -28,9 +25,7 @@ GameRule::GameRule(QString ruleID)
 
 void GameRule::init()
 {
-    Mainapp* pApp = Mainapp::getInstance();
     Interpreter* pInterpreter = Interpreter::getInstance();
-    moveToThread(pApp->getWorkerthread());
     QString function1 = "init";
     QJSValueList args({pInterpreter->newQObject(this)});
     pInterpreter->doFunction(m_RuleID, function1, args);

@@ -7,8 +7,8 @@ var Constructor = function()
         var y = building.getY() + 1;
         var firecount = building.getFireCount();
         if ((firecount === 2 || firecount === 3 || firecount === 6 || firecount === 7) &&
-                map.onMap(x, y) && map.getTerrain(x, y).getUnit() === null &&
-                ACTION_BLACKHOLEFACTORY_DOOR2.canBuildUnit(action, map))
+            map.onMap(x, y) && map.getTerrain(x, y).getUnit() === null &&
+            ACTION_BLACKHOLEFACTORY_DOOR2.canBuildUnit(action, map))
         {
             return true;
         }
@@ -117,10 +117,13 @@ var Constructor = function()
             ACHIEVEMENT_BUILD_UNIT.unitProduced(unitID);
         }
     };
+    this.getName = function()
+    {
+        return qsTr("Black Hole Factory Door 2");
+    };
     this.getDescription = function()
     {
-        return qsTr("Orders a Black Hole Factory to produce a unit at the second door. ") +
-               qsTr("The unit is able to move immediatly.");
+        return qsTr("Orders a Black Hole Factory to produce a unit at the second door. The unit is able to move immediately.");
     };
 }
 

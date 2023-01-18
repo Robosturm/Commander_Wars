@@ -57,10 +57,12 @@ var Constructor = function()
         for (var i = 0; i < ACHIEVEMENT_BUILD_UNIT.unitTable.length; ++i)
         {
             var data = ACHIEVEMENT_BUILD_UNIT.unitTable[i];
+            var text = qsTr("Build a given amount of %0.");
+            text = replaceTextArgs(text, [Global[data[0]].getName()]);
             userdata.addAchievement("BUILD_UNIT_" + data[0],
                                     data[1],
                                     data[2],
-                                    qsTr("Build a given amount of ") + Global[data[0]].getName(),
+                                    text,
                                     data[0],
                                     false, qsTr("Builded unit"));
         }

@@ -1,7 +1,6 @@
 #include "objects/base/spinbox.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 
 #include "resource_management/objectmanager.h"
@@ -17,8 +16,6 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
 #ifdef GRAPHICSUPPORT
     setObjectName("SpinBox");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -42,7 +39,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     setSize(width, 40);
     m_Textfield->setWidth(m_Textbox->getScaledWidth() - 20);
     m_Textfield->setHeight(m_Textbox->getScaledHeight());
-    pClipActor->setSize(m_Textfield->getScaledSize());
+    pClipActor->setSize(m_Textfield->getScaledSize().cast<oxygine::Point>());
     pClipActor->setX(10);
     pClipActor->setY(5);
     addChild(m_Textbox);
@@ -235,7 +232,7 @@ qreal SpinBox::getCurrentValue()
 
 qreal SpinBox::checkInput()
 {
-    CONSOLE_PRINT("SpinBox::checkInput", Console::eDEBUG);
+    CONSOLE_PRINT("SpinBox::checkInput", GameConsole::eDEBUG);
     bool ok = false;
     const QString text = getCurrentText();
     qreal value = text.toDouble(&ok);

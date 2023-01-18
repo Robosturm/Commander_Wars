@@ -32,6 +32,16 @@ void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, const QStr
     {
         m_players.append(spPlayer::create(this));
         m_players[m_players.size() - 1]->init();
+        if (i == 0)
+        {
+            m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Human));
+            m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Human);
+        }
+        else
+        {
+            m_players[i]->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes::AiTypes_Normal));
+            m_players[i]->setControlType(GameEnums::AiTypes::AiTypes_Normal);
+        }
     }
     updateSprites(-1, -1, true);
     centerMap(width / 2, heigth / 2);

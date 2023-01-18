@@ -34,6 +34,7 @@ var Constructor = function()
     {
         // we need to move the unit to the target position
         var building = action.getTargetBuilding();
+        building.setFireCount(0);
         var x = building.getX();
         var y = building.getY();
         ACTION_NEST_MORTAR.postAnimationBuildingX = x;
@@ -43,13 +44,12 @@ var Constructor = function()
         var owner = building.getOwner();
         var fireArea = Global[building.getBuildingID()].getAbsoluteActionTargetFields(building);
         var mortarTarget = owner.getRockettarget(ACTION_NEST_MORTAR.radius, damage, 1.2, GameEnums.RocketTarget_Money, fireArea);
-        fireArea.remove();
         ACTION_NEST_MORTAR.postAnimationTargetX = mortarTarget.x;
         ACTION_NEST_MORTAR.postAnimationTargetY = mortarTarget.y;
 
         var animation = GameAnimationFactory.createAnimation(map, ACTION_NEST_MORTAR.postAnimationTargetX - ACTION_NEST_MORTAR.radius, ACTION_NEST_MORTAR.postAnimationTargetY - ACTION_NEST_MORTAR.radius - 1);
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
-        animation.setSound("missle_explosion.wav");
+        animation.setSound("nestmortardetonation.wav");
         animation.setEndOfAnimationCall("ACTION_NEST_MORTAR", "performPostAnimation");
     };
     this.performPostAnimation = function(postAnimation, map)
@@ -78,11 +78,14 @@ var Constructor = function()
                 }
             }
         }
-        targets.remove();
         ACTION_NEST_MORTAR.postAnimationTargetX = -1;
         ACTION_NEST_MORTAR.postAnimationTargetY = -1;
         ACTION_NEST_MORTAR.postAnimationBuildingX = -1;
         ACTION_NEST_MORTAR.postAnimationBuildingY = -1;
+    };
+    this.getName = function()
+    {
+        return qsTr("Fire with nest mortar");
     };
     this.getDescription = function()
     {

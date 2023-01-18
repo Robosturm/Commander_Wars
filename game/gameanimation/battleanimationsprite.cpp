@@ -1,13 +1,13 @@
-#include "QColor"
+#include <QColor>
 
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenshakey.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 
-#include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 
 #include "resource_management/battleanimationmanager.h"
@@ -21,14 +21,14 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h"
 
-const QString BattleAnimationSprite::standingAnimation = "loadStandingAnimation";
-const QString BattleAnimationSprite::impactUnitOverlayAnimation = "loadImpactUnitOverlayAnimation";
-const QString BattleAnimationSprite::impactAnimation = "loadImpactAnimation";
-const QString BattleAnimationSprite::fireAnimation = "loadFireAnimation";
-const QString BattleAnimationSprite::moveInAnimation = "loadMoveInAnimation";
-const QString BattleAnimationSprite::standingFiredAnimation = "loadStandingFiredAnimation";
-const QString BattleAnimationSprite::dyingAnimation = "loadDyingAnimation";
-const QString BattleAnimationSprite::stopAnimation = "loadStopAnimation";
+const char* const BattleAnimationSprite::standingAnimation = "loadStandingAnimation";
+const char* const BattleAnimationSprite::impactUnitOverlayAnimation = "loadImpactUnitOverlayAnimation";
+const char* const BattleAnimationSprite::impactAnimation = "loadImpactAnimation";
+const char* const BattleAnimationSprite::fireAnimation = "loadFireAnimation";
+const char* const BattleAnimationSprite::moveInAnimation = "loadMoveInAnimation";
+const char* const BattleAnimationSprite::standingFiredAnimation = "loadStandingFiredAnimation";
+const char* const BattleAnimationSprite::dyingAnimation = "loadDyingAnimation";
+const char* const BattleAnimationSprite::stopAnimation = "loadStopAnimation";
 
 BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp, bool playSound)
     : m_pUnit(pUnit),
@@ -45,8 +45,6 @@ BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrai
     {
         m_hpRounded = pUnit->getHpRounded();
     }
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     // setup next frame timer
     m_nextFrameTimer.setSingleShot(true);
     setUnitFrameDelay(75);
@@ -588,7 +586,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
     }
     else
     {
-        CONSOLE_PRINT("Unable to load battle sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load battle sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -679,7 +677,7 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
             {
                 endX = xPos - movement.x();
             }
-            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
             if (deleteAfter)
             {
                 moveTween->addDoneCallback([this](oxygine::Event * pEvent)
@@ -732,7 +730,7 @@ void BattleAnimationSprite::loadCoMini(QString spriteID, GameEnums::Recoloring m
     }
     else
     {
-        CONSOLE_PRINT("Unable to load battle sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load battle sprite: " + spriteID, GameConsole::eDEBUG);
     }
 }
 
@@ -786,9 +784,25 @@ void BattleAnimationSprite::addMoveTweenToLastLoadedSprites(qint32 deltaX, qint3
                 {
                     time /= Settings::getBattleAnimationSpeed();
                 }
-                oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(sprite->getX() + deltaX, sprite->getY() + deltaY)),
-                                                                  oxygine::timeMS(time),
-                                                                  loops, true);
+                oxygine::spTween moveTween;
+                if (-1 < deltaX && deltaX < 1)
+                {
+                    moveTween = oxygine::createTween(oxygine::Actor::TweenY(sprite->getY() + deltaY),
+                                                     oxygine::timeMS(time),
+                                                     loops, true);
+                }
+                else if (-1 < deltaY && deltaY < 1)
+                {
+                    moveTween = oxygine::createTween(oxygine::Actor::TweenX(sprite->getX() + deltaX),
+                                                     oxygine::timeMS(time),
+                                                     loops, true);
+                }
+                else
+                {
+                    moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(sprite->getX() + deltaX, sprite->getY() + deltaY)),
+                                                      oxygine::timeMS(time),
+                                                      loops, true);
+                }
                 sprite->addTween(moveTween);
                 moveTween->setElapsed(oxygine::timeMS(delayPerUnitMs * count));
                 ++count;
@@ -875,7 +889,7 @@ void BattleAnimationSprite::loadSound(QString file, qint32 loops, qint32 delay, 
     if (m_playSound)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        AudioThread* pAudio = pApp->getAudioThread();
+        AudioManager* pAudio = pApp->getAudioManager();
         SoundData data;
         data.sound = file;
         data.loops = loops;
@@ -887,7 +901,7 @@ void BattleAnimationSprite::loadSound(QString file, qint32 loops, qint32 delay, 
 void BattleAnimationSprite::stopSound(bool forceStop)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    AudioThread* pAudio = pApp->getAudioThread();
+    AudioManager* pAudio = pApp->getAudioManager();
     qint32 i = 0;
     while (i < m_Sounds.size())
     {
@@ -919,7 +933,7 @@ void BattleAnimationSprite::startNextUnitFrames()
     CONSOLE_PRINT("Progressing next battle frame current=" + QString::number(m_currentFrame.size()) +
                   " next frames=" + QString::number(m_nextFrames.length()) +
                   " frame iterator=" + QString::number(m_frameIterator) +
-                  " owner=" + QString::number(m_pUnit->getOwner()->getPlayerID()), Console::eDEBUG);
+                  " owner=" + QString::number(m_pUnit->getOwner()->getPlayerID()), GameConsole::eDEBUG);
     if (m_currentFrame.size() == 0 && !m_startWithFraming)
     {
         // add initial frames
@@ -968,7 +982,7 @@ void BattleAnimationSprite::startNextUnitFrames()
         ++m_frameIterator;
         if (m_frameIterator >= m_nextFrames[0].size())
         {
-            CONSOLE_PRINT("Progressing next battle animation", Console::eDEBUG);
+            CONSOLE_PRINT("Progressing next battle animation", GameConsole::eDEBUG);
             m_frameIterator = 0;
             m_nextFrames.removeFirst();
             if (m_nextFrames.size() > 0 && m_playNextFrame)

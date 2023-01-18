@@ -20,6 +20,14 @@ var Constructor = function()
     {
         return __BASEBRIDGE.canBePlacedBaseId(x, y, map, "BRIDGE1");
     };
+    this.getName = function()
+    {
+        return qsTr("Bridge");
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Bridge over river and seas which allows ground units to cross.");
+    };
 };
 Constructor.prototype = __BASEBRIDGE;
 var BRIDGE1 = new Constructor();

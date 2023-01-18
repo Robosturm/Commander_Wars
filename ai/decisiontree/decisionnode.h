@@ -8,7 +8,7 @@
 #include "coreengine/fileserializable.h"
 
 class DecisionNode;
-typedef oxygine::intrusive_ptr<DecisionNode> spDecisionNode;
+using spDecisionNode = oxygine::intrusive_ptr<DecisionNode>;
 
 class DecisionNode : public QObject, public FileSerializable, public oxygine::ref_counter
 {

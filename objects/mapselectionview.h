@@ -25,12 +25,30 @@
 class MapSelectionView;
 using spMapSelectionView = oxygine::intrusive_ptr<MapSelectionView>;
 
-class MapSelectionView final : public QObject, public oxygine::Actor
+class MapSelectionView final : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
 public:
     explicit MapSelectionView(QStringList filter, qint32 mapInfoHeight = -1);
     ~MapSelectionView() = default;
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serializeObject(QDataStream& stream) const;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& stream);
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() const
+    {
+        return 1;
+    }
 
     inline MapSelection* getMapSelection()
     {

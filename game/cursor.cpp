@@ -1,5 +1,5 @@
-#include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/interpreter.h"
+#include "coreengine/audiomanager.h"
 
 #include "game/gamemap.h"
 #include "game/cursor.h"
@@ -16,8 +16,6 @@ Cursor::Cursor(GameMap* pMap)
     setObjectName("Cursor");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     changeCursor("cursor+default");
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Cursor));
     m_cursorRangeOutline = oxygine::spActor::create();
@@ -62,7 +60,7 @@ void Cursor::setMapPoint(qint32 x, qint32 y)
             if ((x != m_MapPointX) ||
                 (y != m_MapPointY))
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchfield.wav");
+                Mainapp::getInstance()->getAudioManager()->playSound("switchfield.wav");
             }
             m_MapPointX = x;
             m_MapPointY = y;
@@ -75,18 +73,21 @@ void Cursor::setMapPoint(qint32 x, qint32 y)
 
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {    
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (m_pMap != nullptr && pMenu != nullptr)
+    if (m_pMap != nullptr)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        // auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition() + m_pMap->getPosition();
-        // - position.x) * pApp->getActiveDpiFactor()
-        // - position.y) * pApp->getActiveDpiFactor()
-        // * m_pMap->getZoom())
-        // * m_pMap->getZoom())
-        qint32 x = mousePosX / GameMap::getImageSize();
-        qint32 y = mousePosY / GameMap::getImageSize();
-        setMapPoint(x, y);
+        auto* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr)
+        {
+            // Mainapp* pApp = Mainapp::getInstance();
+            // auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition() + m_pMap->getPosition();
+            // - position.x) * pApp->getActiveDpiFactor()
+            // - position.y) * pApp->getActiveDpiFactor()
+            // * m_pMap->getZoom())
+            // * m_pMap->getZoom())
+            qint32 x = mousePosX / GameMap::getImageSize();
+            qint32 y = mousePosY / GameMap::getImageSize();
+            setMapPoint(x, y);
+        }
     }
 }
 

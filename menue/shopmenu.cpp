@@ -1,15 +1,14 @@
 #include "menue/shopmenu.h"
 #include "menue/mainwindow.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
-#include "coreengine/audiothread.h"
+#include "coreengine/audiomanager.h"
 
 #include "wiki/wikidatabase.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
-#include "resource_management/fontmanager.h"
 #include "resource_management/shoploader.h"
 
 #include "objects/base/dropdownmenu.h"
@@ -25,8 +24,7 @@ Shopmenu::Shopmenu()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
-    moveToThread(pApp->getWorkerthread());
-    CONSOLE_PRINT("Entering Shop Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Shop Menue", GameConsole::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -42,9 +40,9 @@ Shopmenu::Shopmenu()
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
     }
 
-    pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/shop");
-    pApp->getAudioThread()->playRandom();
+    pApp->getAudioManager()->clearPlayList();
+    pApp->getAudioManager()->loadFolder("resources/music/shop");
+    pApp->getAudioManager()->playRandom();
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
@@ -79,7 +77,7 @@ Shopmenu::Shopmenu()
     addChild(m_pPanel);
 
     const qint32 width = 150;
-    spLabel pLabel = spLabel::create(width);
+    spLabel pLabel = spLabel::create(width, true);
     pLabel->setHtmlText(tr("Filter:"));
     pLabel->setPosition(10, 10);
     addChild(pLabel);
@@ -132,7 +130,7 @@ void Shopmenu::onEnter()
     QString func = "shopMenu";
     if (pInterpreter->exists(object, func))
     {
-        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
+        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
         QJSValueList args({pInterpreter->newQObject(this)});
         pInterpreter->doFunction(object, func, args);
     }
@@ -140,7 +138,7 @@ void Shopmenu::onEnter()
 
 void Shopmenu::exitMenue()
 {
-    CONSOLE_PRINT("Leaving Shop Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Shop Menue", GameConsole::eDEBUG);
     auto window = spMainwindow::create("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();

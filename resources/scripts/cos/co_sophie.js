@@ -78,7 +78,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -126,7 +125,6 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
     };
 
     
@@ -178,7 +176,6 @@ var Constructor = function()
             // set attacked twice this turn to false
             variable.writeDataBool(false);
         }
-        units.remove();
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
@@ -199,7 +196,7 @@ var Constructor = function()
                         var damageResult = ACTION_FIRE.calcBattleDamage2(map, action, attacker, Qt.point(attacker.getX(), attacker.getY()),
                                                                          defender.getX(), defender.getY(), GameEnums.LuckDamageMode_On);
                         // do another attack
-                        ACTION_FIRE.battle(attacker, damageResult.x, damageResult.y,
+                        ACTION_FIRE.battle(map, attacker, damageResult.x, damageResult.y,
                                            defender.getX(), defender.getY(), damageResult.width, damageResult.height,
                                            true);
                     }

@@ -7,7 +7,6 @@
 
 #include "game/gameaction.h"
 #include "ai/coreai.h"
-#include "coreengine/mainapp.h"
 
 #include "network/NetworkInterface.h"
 
@@ -48,6 +47,10 @@ public:
      */
     void connectInterface(NetworkInterface* pNetworkInterface);
     void disconnectInterface();
+    /**
+     * @brief init
+     */
+    virtual void init(GameMenue* pMenu) override;
 public slots:
     virtual void nextAction() override;
     void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);

@@ -26,7 +26,7 @@ var Constructor = function()
     };
 
     this.actionList = ["ACTION_BUILD_UNITS"];
-    this.constructionList = ["CANNONBOAT", "BLACK_BOAT", "LANDER", "CRUISER", "SUBMARINE", "BATTLECRUISER", "BATTLESHIP", "AIRCRAFTCARRIER"];
+    this.constructionList = ["GUNBOAT", "CANNONBOAT", "BLACK_BOAT", "LANDER", "TORPEDOBOAT", "FRIGATE", "DESTROYER", "CRUISER", "SUBMARINE", "BATTLECRUISER", "BATTLESHIP", "AIRCRAFTCARRIER"];
     this.getConstructionList = function(building)
     {
         return HARBOUR.constructionList;
@@ -58,7 +58,7 @@ var Constructor = function()
 
     this.getRepairTypes = function(building)
     {
-        return [GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Naval];
+        return [GameEnums.UnitType_Naval];
     };
 	this.onWeatherChanged = function(building, weather, map)
 	{	

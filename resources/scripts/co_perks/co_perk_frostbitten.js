@@ -32,6 +32,10 @@ var Constructor = function()
     {
         return qsTr("Weather Debuff");
     };
+    this.getCosts = function()
+    {
+        return -1;
+    };
 };
 
 Constructor.prototype = CO_PERK;

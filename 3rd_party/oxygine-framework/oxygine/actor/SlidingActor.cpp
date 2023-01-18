@@ -1,6 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 #include "3rd_party/oxygine-framework/oxygine/UpdateState.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
@@ -34,7 +33,7 @@ namespace oxygine
         m_rad = rad;
     }
 
-    void SlidingActor::sizeChanged(const Vector2& size)
+    void SlidingActor::sizeChanged(const Point& size)
     {
         if (m_clip)
         {
@@ -134,8 +133,8 @@ namespace oxygine
             const RectF& bounds = m_drag.getDragBounds();
             while (m_lastIterTime + fdt <= ct)
             {
-                Vector2 pos = m_content->getPosition();
-                Vector2 newpos = pos + m_speed * (fdt.count() / 1000.0f);
+                Point pos = m_content->getPosition();
+                Point newpos = pos + (m_speed * (static_cast<float>(fdt.count()) / 1000.0f)).cast<Point>();
                 if (newpos.x < bounds.getLeft())
                 {
                     newpos.x = bounds.getLeft();
@@ -278,7 +277,7 @@ namespace oxygine
 
                         Vector2 ns = (dr * 1000.0f) / v.count();
 
-                        if (m_speed.dot(ns) < 0)
+                        if (m_speed.x *ns.x + m_speed.y * ns.y < 0)
                         {
                             m_speed = ns;
                         }
@@ -309,7 +308,7 @@ namespace oxygine
                 if (te->index == m_finger)
                 {
                     Vector2 offset = m_downPos - te->localPosition;
-                    float d = offset.dot(offset);
+                    float d = offset.x * offset.x + offset.y * offset.y;
                     if (m_holded && (d >= m_rad * m_rad))
                     {
                         spActor act = safeSpCast<Actor>(m_holded);
@@ -320,7 +319,7 @@ namespace oxygine
                             {
                                 act->setNotPressed((MouseButton)i);
 
-                                TouchEvent ev(TouchEvent::TOUCH_UP, true, Vector2(-100000, -100000));
+                                TouchEvent ev(TouchEvent::TOUCH_UP, true, Point(-100000, -100000));
                                 ev.mouseButton = (MouseButton)i;
                                 ev.index = te->index;
                                 ev.bubbles = false;

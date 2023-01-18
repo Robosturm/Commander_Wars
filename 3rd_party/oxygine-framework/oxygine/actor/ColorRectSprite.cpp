@@ -21,7 +21,7 @@ namespace oxygine
         RenderDelegate::instance->doRender(this, rs);
     }
 
-    void ColorRectSprite::sizeChanged(const Vector2& size)
+    void ColorRectSprite::sizeChanged(const Point& size)
     {
         Actor::sizeChanged(size);
     }

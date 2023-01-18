@@ -4,19 +4,11 @@
 #include <QObject>
 #include <QJsonObject>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
-#include "coreengine/fileserializable.h"
-
-class NetworkGameData;
-using spNetworkGameData = oxygine::intrusive_ptr<NetworkGameData>;
-
 /**
  * @brief The NetworkGameData class Data describing this game
  */
-class NetworkGameData final : public QObject, public oxygine::ref_counter
+class NetworkGameData final
 {
-    Q_OBJECT
 public:
     explicit NetworkGameData() = default;
     ~NetworkGameData() = default;
@@ -30,14 +22,6 @@ public:
      * @param pStream
      */
     void fromJson(const QJsonObject & obj);
-    /**
-     * @brief getVersion stream version for serialization
-     * @return
-     */
-    inline qint32 getVersion() const
-    {
-        return 0;
-    }
 
     QString getMapName() const;
     void setMapName(const QString &mapName);

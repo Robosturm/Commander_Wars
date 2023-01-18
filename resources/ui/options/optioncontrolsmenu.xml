@@ -9,17 +9,15 @@
             <Label>
                 <x>10</x>
                 <y>10</y>
-                <width>400</width>
-                <height>30</height>
+                <width>settings.getWidth() - 80</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Inputs")</text>
                 <font>"main"</font>
-                <fontSize>24</fontSize>
+                <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Touch screen:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -35,7 +33,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Touch Sensitivity:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -55,7 +52,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Gamepad:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -81,7 +77,6 @@
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Gamepad Sensitivity:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -102,17 +97,15 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>400</width>
-                <height>30</height>
+                <width>settings.getWidth() - 80</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Keys")</text>
                 <font>"main"</font>
-                <fontSize>24</fontSize>
+                <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Up:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -122,20 +115,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor up.")</tooltip>
                 <startValue>settings.getKey_up()</startValue>
-                <onEvent>Settings::setKey_up(input)</onEvent>
+                <onEvent>settings.setKey_up(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor up.")</tooltip>
                 <startValue>settings.getKey_up2()</startValue>
-                <onEvent>Settings::setKey_up2(input)</onEvent>
+                <onEvent>settings.setKey_up2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Left:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -145,20 +137,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor left.")</tooltip>
                 <startValue>settings.getKey_left()</startValue>
-                <onEvent>Settings::setKey_left(input)</onEvent>
+                <onEvent>settings.setKey_left(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor left.")</tooltip>
                 <startValue>settings.getKey_left2()</startValue>
-                <onEvent>Settings::setKey_left2(input)</onEvent>
+                <onEvent>settings.setKey_left2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Down:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -168,20 +159,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor down.")</tooltip>
                 <startValue>settings.getKey_down()</startValue>
-                <onEvent>Settings::setKey_down(input)</onEvent>
+                <onEvent>settings.setKey_down(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor down.")</tooltip>
                 <startValue>settings.getKey_down2()</startValue>
-                <onEvent>Settings::setKey_down2(input)</onEvent>
+                <onEvent>settings.setKey_down2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Right:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -191,20 +181,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor right.")</tooltip>
                 <startValue>settings.getKey_right()</startValue>
-                <onEvent>Settings::setKey_right(input)</onEvent>
+                <onEvent>settings.setKey_right(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor right.")</tooltip>
                 <startValue>settings.getKey_right2()</startValue>
-                <onEvent>Settings::setKey_right2(input)</onEvent>
+                <onEvent>settings.setKey_right2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Confirm:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -214,20 +203,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for confirming any action or input in the game.")</tooltip>
                 <startValue>settings.getKey_confirm()</startValue>
-                <onEvent>Settings::setKey_confirm(input)</onEvent>
+                <onEvent>settings.setKey_confirm(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for confirming any action or input in the game.")</tooltip>
                 <startValue>settings.getKey_confirm2()</startValue>
-                <onEvent>Settings::setKey_confirm2(input)</onEvent>
+                <onEvent>settings.setKey_confirm2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Cancel:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -237,20 +225,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for canceling any action or input in the game.")</tooltip>
                 <startValue>settings.getKey_cancel()</startValue>
-                <onEvent>Settings::setKey_cancel(input)</onEvent>
+                <onEvent>settings.setKey_cancel(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for canceling any action or input in the game.")</tooltip>
                 <startValue>settings.getKey_cancel2()</startValue>
-                <onEvent>Settings::setKey_cancel2(input)</onEvent>
+                <onEvent>settings.setKey_cancel2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Next:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -260,20 +247,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor to the next possible field unit etc.")</tooltip>
                 <startValue>settings.getKey_next()</startValue>
-                <onEvent>Settings::setKey_next(input)</onEvent>
+                <onEvent>settings.setKey_next(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor to the next possible field unit etc.")</tooltip>
                 <startValue>settings.getKey_next2()</startValue>
-                <onEvent>Settings::setKey_next2(input)</onEvent>
+                <onEvent>settings.setKey_next2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Previous:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -283,20 +269,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor to the previous possible field unit etc.")</tooltip>
                 <startValue>settings.getKey_previous()</startValue>
-                <onEvent>Settings::setKey_previous(input)</onEvent>
+                <onEvent>settings.setKey_previous(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for moving the cursor to the previous possible field unit etc.")</tooltip>
                 <startValue>settings.getKey_previous2()</startValue>
-                <onEvent>Settings::setKey_previous2(input)</onEvent>
+                <onEvent>settings.setKey_previous2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Quicksave 1:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -306,13 +291,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for quick saving slot 1.")</tooltip>
                 <startValue>settings.getKey_quicksave1()</startValue>
-                <onEvent>Settings::setKey_quicksave1(input)</onEvent>
+                <onEvent>settings.setKey_quicksave1(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Quickload 1:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -322,13 +306,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for quick loading slot 1.")</tooltip>
                 <startValue>settings.getKey_quickload1()</startValue>
-                <onEvent>Settings::setKey_quickload1(input)</onEvent>
+                <onEvent>settings.setKey_quickload1(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Quicksave 2:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -338,13 +321,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for quick saving slot 2.")</tooltip>
                 <startValue>settings.getKey_quicksave2()</startValue>
-                <onEvent>Settings::setKey_quicksave2(input)</onEvent>
+                <onEvent>settings.setKey_quicksave2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Quickload 2:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -354,13 +336,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for quick loading slot 2.")</tooltip>
                 <startValue>settings.getKey_quickload2()</startValue>
-                <onEvent>Settings::setKey_quickload2(input)</onEvent>
+                <onEvent>settings.setKey_quickload2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Information:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -370,20 +351,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to show information about the current field, action, unit at any time in the game.")</tooltip>
                 <startValue>settings.getKey_information()</startValue>
-                <onEvent>Settings::setKey_information(input)</onEvent>
+                <onEvent>settings.setKey_information(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to show information about the current field, action, unit at any time in the game.")</tooltip>
                 <startValue>settings.getKey_information2()</startValue>
-                <onEvent>Settings::setKey_information2(input)</onEvent>
+                <onEvent>settings.setKey_information2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Move Map Up:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -393,20 +373,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to move the map a field up.")</tooltip>
                 <startValue>settings.getKey_moveMapUp()</startValue>
-                <onEvent>Settings::setKey_moveMapUp(input)</onEvent>
+                <onEvent>settings.setKey_moveMapUp(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to move the map a field up.")</tooltip>
                 <startValue>settings.getKey_moveMapUp2()</startValue>
-                <onEvent>Settings::setKey_moveMapUp2(input)</onEvent>
+                <onEvent>settings.setKey_moveMapUp2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Move Map Left:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -416,20 +395,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to move the map a field left.")</tooltip>
                 <startValue>settings.getKey_moveMapLeft()</startValue>
-                <onEvent>Settings::setKey_moveMapLeft(input)</onEvent>
+                <onEvent>settings.setKey_moveMapLeft(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to move the map a field left.")</tooltip>
                 <startValue>settings.getKey_moveMapLeft2()</startValue>
-                <onEvent>Settings::setKey_moveMapLeft2(input)</onEvent>
+                <onEvent>settings.setKey_moveMapLeft2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Move Map Down:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -439,20 +417,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to move the map a field down.")</tooltip>
                 <startValue>settings.getKey_moveMapDown()</startValue>
-                <onEvent>Settings::setKey_moveMapDown(input)</onEvent>
+                <onEvent>settings.setKey_moveMapDown(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to move the map a field down.")</tooltip>
                 <startValue>settings.getKey_moveMapDown2()</startValue>
-                <onEvent>Settings::setKey_moveMapDown2(input)</onEvent>
+                <onEvent>settings.setKey_moveMapDown2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Move Map Right:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -462,20 +439,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to move the map a field right.")</tooltip>
                 <startValue>settings.getKey_moveMapRight()</startValue>
-                <onEvent>Settings::setKey_moveMapRight(input)</onEvent>
+                <onEvent>settings.setKey_moveMapRight(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to move the map a field right.")</tooltip>
                 <startValue>settings.getKey_moveMapRight2()</startValue>
-                <onEvent>Settings::setKey_moveMapRight2(input)</onEvent>
+                <onEvent>settings.setKey_moveMapRight2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Zoom In:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -485,20 +461,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to zoom into the map.")</tooltip>
                 <startValue>settings.getKey_MapZoomIn()</startValue>
-                <onEvent>Settings::setKey_MapZoomIn(input)</onEvent>
+                <onEvent>settings.setKey_MapZoomIn(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to zoom into the map.")</tooltip>
                 <startValue>settings.getKey_MapZoomIn2()</startValue>
-                <onEvent>Settings::setKey_MapZoomIn2(input)</onEvent>
+                <onEvent>settings.setKey_MapZoomIn2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Zoom Out:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -508,20 +483,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to zoom out of the map.")</tooltip>
                 <startValue>settings.getKey_MapZoomOut()</startValue>
-                <onEvent>Settings::setKey_MapZoomOut(input)</onEvent>
+                <onEvent>settings.setKey_MapZoomOut(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to zoom out of the map.")</tooltip>
                 <startValue>settings.getKey_MapZoomOut2()</startValue>
-                <onEvent>Settings::setKey_MapZoomOut2(input)</onEvent>
+                <onEvent>settings.setKey_MapZoomOut2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Show Indirects:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -531,20 +505,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to show where all enemy indirect units can attack near the selected unit.")</tooltip>
                 <startValue>settings.getKey_ShowIndirectAttackFields()</startValue>
-                <onEvent>Settings::setKey_ShowIndirectAttackFields(input)</onEvent>
+                <onEvent>settings.setKey_ShowIndirectAttackFields(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to show where all enemy indirect units can attack near the selected unit.")</tooltip>
                 <startValue>settings.getKey_ShowIndirectAttackFields2()</startValue>
-                <onEvent>Settings::setKey_ShowIndirectAttackFields2(input)</onEvent>
+                <onEvent>settings.setKey_ShowIndirectAttackFields2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Show all:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -554,20 +527,19 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to show where all enemy units can attack near the selected unit.")</tooltip>
                 <startValue>settings.getKey_ShowAttackFields()</startValue>
-                <onEvent>Settings::setKey_ShowAttackFields(input)</onEvent>
+                <onEvent>settings.setKey_ShowAttackFields(input)</onEvent>
             </SelectKey>
             <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to show where all enemy units can attack near the selected unit.")</tooltip>
                 <startValue>settings.getKey_ShowAttackFields2()</startValue>
-                <onEvent>Settings::setKey_ShowAttackFields2(input)</onEvent>
+                <onEvent>settings.setKey_ShowAttackFields2(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Screenshot:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -577,13 +549,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for taking a screenshot.")</tooltip>
                 <startValue>settings.getKey_screenshot()</startValue>
-                <onEvent>Settings::setKey_screenshot(input)</onEvent>
+                <onEvent>settings.setKey_screenshot(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Mapshot:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -593,22 +564,28 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for taking a mapshot. Saving the current map in an image.")</tooltip>
                 <startValue>settings.getKey_mapshot()</startValue>
-                <onEvent>Settings::setKey_mapshot(input)</onEvent>
+                <onEvent>settings.setKey_mapshot(input)</onEvent>
+            </SelectKey>
+            </Label>
+                <SelectKey>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Key for quiting a running match.")</tooltip>
+                <startValue>settings.getKey_Escape()</startValue>
+                <onEvent>settings.setKey_Escape(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>300</width>
-                <height>30</height>
+                <width>settings.getWidth() - 80</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Editor")</text>
                 <font>"main"</font>
-                <fontSize>24</fontSize>
+                <fontSize>48</fontSize>
             </Label>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Place Terrain:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -618,13 +595,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to select Place Terrain in the editor.")</tooltip>
                 <startValue>settings.getKey_EditorPlaceTerrain()</startValue>
-                <onEvent>Settings::setKey_EditorPlaceTerrain(input)</onEvent>
+                <onEvent>settings.setKey_EditorPlaceTerrain(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Place Unit:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -634,13 +610,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to select Place Unit in the editor")</tooltip>
                 <startValue>settings.getKey_EditorPlaceUnit()</startValue>
-                <onEvent>Settings::setKey_EditorPlaceUnit(input)</onEvent>
+                <onEvent>settings.setKey_EditorPlaceUnit(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Place Building:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -650,13 +625,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to select Place Building in the editor.")</tooltip>
                 <startValue>settings.getKey_EditorPlaceBuilding()</startValue>
-                <onEvent>Settings::setKey_EditorPlaceBuilding(input)</onEvent>
+                <onEvent>settings.setKey_EditorPlaceBuilding(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Next Team:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -666,13 +640,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to select the next player in the editor.")</tooltip>
                 <startValue>settings.getKey_EditorNextTeam()</startValue>
-                <onEvent>Settings::setKey_EditorNextTeam(input)</onEvent>
+                <onEvent>settings.setKey_EditorNextTeam(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Previous Team:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -682,13 +655,12 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to select the previous player in the editor.")</tooltip>
                 <startValue>settings.getKey_EditorPreviousTeam()</startValue>
-                <onEvent>Settings::setKey_EditorPreviousTeam(input)</onEvent>
+                <onEvent>settings.setKey_EditorPreviousTeam(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Next Item:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -698,24 +670,30 @@
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to select the next editor item.")</tooltip>
                 <startValue>settings.getKey_EditorSelectionRight()</startValue>
-                <onEvent>Settings::setKey_EditorSelectionRight(input)</onEvent>
+                <onEvent>settings.setKey_EditorSelectionRight(input)</onEvent>
             </SelectKey>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>300</width>
-                <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Previous Item:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
             </Label>
-                <SelectKey>
+            <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key to select the previous editor item.")</tooltip>
                 <startValue>settings.getKey_EditorSelectionLeft()</startValue>
-                <onEvent>Settings::setKey_EditorSelectionLeft(input)</onEvent>
+                <onEvent>settings.setKey_EditorSelectionLeft(input)</onEvent>
             </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Quit game:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
         </childs>
     </Panel>
 </ui>

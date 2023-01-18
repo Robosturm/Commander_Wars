@@ -1,8 +1,6 @@
 #ifndef VERYEASYAI_H
 #define VERYEASYAI_H
 
-#include "qvector.h"
-
 #include "ai/coreai.h"
 #include "ai/decisiontree/decisiontree.h"
 
@@ -97,7 +95,8 @@ protected:
      * @param pUnits
      * @return
      */
-    bool buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits);
+    bool buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
+                    spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief finishTurn
      */

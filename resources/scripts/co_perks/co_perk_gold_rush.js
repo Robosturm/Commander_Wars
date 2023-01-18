@@ -21,6 +21,10 @@ var Constructor = function()
     {
         return qsTr("Gold Rush");
     };
+    this.getCosts = function()
+    {
+        return 3;
+    };
 };
 
 Constructor.prototype = CO_PERK;

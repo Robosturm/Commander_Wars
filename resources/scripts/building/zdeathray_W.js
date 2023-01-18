@@ -41,7 +41,7 @@ var Constructor = function()
     {
 		var targets = globals.getEmptyPointArray();
         // laser to not fire infinitly but the range is still fucking huge :)
-        for (var i = 1; i < 60; i++)
+        for (var i = 1; i < 80; i++)
         {
             targets.append(Qt.point(-i, -1));
             targets.append(Qt.point(-i, 0));
@@ -97,10 +97,11 @@ var Constructor = function()
 
     this.createRayAnimation = function(building, x, y, fields, map)
     {
-        var animation = GameAnimationFactory.createAnimation(map, x + 1, y - 1);
+        var animation = GameAnimationFactory.createAnimation(map, x + 1, y - 1, 200);
         animation.addSprite("deathray_start_loading", 0, 0, 0, 2);
         animation.setRotation(90);
-        var animation2 = GameAnimationFactory.createAnimation(map, x + 1, y - 1);
+        animation.addSound("deathray_fire.wav");
+        var animation2 = GameAnimationFactory.createAnimation(map, x + 1, y - 1, 200);
         animation2.addSprite("deathray_start", 0, 0, 0, 2);
         animation2.setRotation(90);
         animation.queueAnimation(animation2);
@@ -112,7 +113,7 @@ var Constructor = function()
             {
                 if ((point.y === -1) && ((point.x) % 2 === 0))
                 {
-                    animation2 = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
+                    animation2 = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y, 200);
                     animation2.addSprite("deathray", 0, -map.getImageSize() * 0.085, 0, 2);
                     animation2.setRotation(90);
                     animation.queueAnimation(animation2);

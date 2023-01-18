@@ -12,7 +12,7 @@
 #include <QAudioDevice>
 #endif
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
@@ -20,7 +20,7 @@
 
 class GLGraphicsView;
 class Settings;
-using spSettings = oxygine::intrusive_ptr<Settings>;
+using spSettings = QScopedPointer<Settings>;
 
 class Settings final : public QObject, public oxygine::ref_counter
 {
@@ -51,6 +51,10 @@ private:
         virtual void readValue(QSettings & settings) override
         {
             settings.beginGroup(m_group);
+            if (!settings.contains(m_name))
+            {
+                CONSOLE_PRINT("Key " + QString(m_name) + " in group " + m_group + " not found using default value", GameConsole::eDEBUG);
+            }
             if constexpr(std::is_floating_point<TType>::value)
             {
                 bool ok = false;
@@ -58,7 +62,7 @@ private:
                 if(!ok || *m_value <= m_minValue || *m_value >= m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
-                    CONSOLE_PRINT(error, Console::eERROR);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
                     *m_value = m_defaultValue;
                 }
             }
@@ -71,25 +75,50 @@ private:
                 *m_value = settings.value(m_name, m_defaultValue).toString();
             }
             else if constexpr (std::is_same<TType, quint32>::value ||
-                               std::is_same<TType, quint16>::value)
+                               std::is_same<TType, quint16>::value ||
+                               std::is_same<TType, quint8>::value)
             {
                 bool ok = false;
                 *m_value = settings.value(m_name, m_defaultValue).toUInt(&ok);
                 if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
-                    CONSOLE_PRINT(error, Console::eERROR);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
                     *m_value = m_defaultValue;
                 }
             }
-            else if constexpr (std::is_same<TType, qint32>::value)
+            else if constexpr (std::is_same<TType, quint64>::value)
+            {
+                bool ok = false;
+                *m_value = settings.value(m_name, m_defaultValue).toULongLong(&ok);
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
+            else if constexpr (std::is_same<TType, qint32>::value ||
+                               std::is_same<TType, qint16>::value ||
+                               std::is_same<TType, qint8>::value)
             {
                 bool ok = false;
                 *m_value = settings.value(m_name, m_defaultValue).toInt(&ok);
                 if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
-                    CONSOLE_PRINT(error, Console::eERROR);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
+                    *m_value = m_defaultValue;
+                }
+            }
+            else if constexpr (std::is_same<TType, qint64>::value)
+            {
+                bool ok = false;
+                *m_value = settings.value(m_name, m_defaultValue).toLongLong(&ok);
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
+                {
+                    QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
                     *m_value = m_defaultValue;
                 }
             }
@@ -100,7 +129,7 @@ private:
                 if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
-                    CONSOLE_PRINT(error, Console::eERROR);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
                     *m_value = m_defaultValue;
                 }
             }
@@ -119,7 +148,7 @@ private:
                 if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
-                    CONSOLE_PRINT(error, Console::eERROR);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
                     *m_value = m_defaultValue;
                 }
             }
@@ -130,7 +159,7 @@ private:
                 if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
-                    CONSOLE_PRINT(error, Console::eERROR);
+                    CONSOLE_PRINT(error, GameConsole::eERROR);
                     *m_value = m_defaultValue;
                 }
             }
@@ -188,6 +217,10 @@ private:
         virtual void readValue(QSettings & settings) override
         {
             settings.beginGroup(m_group);
+            if (!settings.contains(m_name))
+            {
+                CONSOLE_PRINT("Key " + QString(m_name) + " in group " + m_group + " not found using default value", GameConsole::eDEBUG);
+            }
             const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
             QString description = settings.value(m_name, m_defaultValue).toString();
             if (description == DEFAULT_AUDIODEVICE)
@@ -205,7 +238,7 @@ private:
                         break;
                     }
                 }
-                if (m_audioOutput.value<QAudioDevice>().isNull())
+                if (m_pInstance->m_audioOutput.value<QAudioDevice>().isNull())
                 {
                     *m_value = QVariant::fromValue(defaultDeviceInfo);
                 }
@@ -248,19 +281,34 @@ public:
 
     ~Settings() = default;
     static Settings* getInstance();
-    static void shutdown();
-
-    static void loadSettings();
+    void setup();
+    static void loadSettings();    
     static void saveSettings();
     static void resetSettings();
 
-    static QString getLastSaveGame();
     static void setLastSaveGame(const QString &LastSaveGame);
 
-    static const QString &getUpdateStep();
     static void setUpdateStep(const QString &newUpdateStep);
 
+
+    static void setAiSlave(bool newAiSlave);
+
+    static void setPipeUuid(const QString & newPipeUuid);
+
+
 public slots:
+
+    static quint8 getScreen();
+    static void setScreen(quint8 newScreen);
+
+    static QString getLastSaveGame();
+    static QString getUpdateStep();
+    static bool getAiSlave();
+    static QString getPipeUuid();
+
+    static void setSpawnAiProcess(bool newSpawnAiProcess);
+    static bool getSpawnAiProcess();
+
     static bool getAutomaticUpdates();
     static void setAutomaticUpdates(bool newAutomaticUpdates);
 
@@ -273,16 +321,16 @@ public slots:
     static quint16 getServerPort();
     static void setServerPort(const quint16 &ServerPort);
 
-    static const QString &getServerPassword();
+    static QString getServerPassword();
     static void setServerPassword(const QString &newServerPassword);
 
-    static const QString &getMailServerSendAddress();
+    static QString getMailServerSendAddress();
     static void setMailServerSendAddress(const QString &newMailServerSendAddress);
 
     static qint32 getMailServerAuthMethod();
     static void setMailServerAuthMethod(qint32 newMailServerAuthMethod);
 
-    static const QString &getMailServerAddress();
+    static QString getMailServerAddress();
     static void setMailServerAddress(const QString &newMailServerAddress);
 
     static quint16 getMailServerPort();
@@ -300,6 +348,9 @@ public slots:
     static const std::chrono::seconds &getSlaveDespawnTime();
     static void setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
 
+    static const std::chrono::seconds &getSuspendedDespawnTime();
+    static void setSuspendedDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
+
     static QString getDefaultBannlist();
     static void setDefaultBannlist(const QString &newDefaultBannlist);
 
@@ -315,16 +366,16 @@ public slots:
     static bool getCaptureAnimation();
     static void setCaptureAnimation(bool newCaptureAnimation);
 
-    static const QString &getSlaveListenAdress();
+    static QString getSlaveListenAdress();
     static void setSlaveListenAdress(const QString &newSlaveListenAdress);
 
     static qint32 getPauseAfterAction();
     static void setPauseAfterAction(qint32 newPauseAfterAction);
 
-    static const QString &getServerListenAdress();
+    static QString getServerListenAdress();
     static void setServerListenAdress(const QString &newServerListenAdress);
 
-    static const QString &getServerSecondaryListenAdress();
+    static QString getServerSecondaryListenAdress();
     static void setServerSecondaryListenAdress(const QString &newServerSecondaryListenAdress);
 
     static quint16 getSlaveServerPort();
@@ -557,93 +608,93 @@ public slots:
     static void setX(const qint32 &x);
     inline static qint32 getX()
     {
-        return m_x;
+        return m_pInstance->m_x;
     }
     static void setY(const qint32 &y);
     inline static qint32 getY()
     {
-        return m_y;
+        return m_pInstance->m_y;
     }
     inline static qint32 getWidth()
     {
-        return m_width;
+        return m_pInstance->m_width;
     }
     inline static qint32 getHeight()
     {
-        return m_height;
+        return m_pInstance->m_height;
     }
 
     inline static bool getBorderless()
     {
-        return m_borderless;
+        return m_pInstance->m_borderless;
     }
 
     inline static bool getFullscreen()
     {
-        return m_fullscreen;
+        return m_pInstance->m_fullscreen;
     }
 
     static inline Qt::Key getKeyConsole()
     {
-        return m_key_console;
+        return m_pInstance->m_key_console;
     }
 
     static inline void setTotalVolume(qint32 value)
     {
-        m_TotalVolume = value;
+        m_pInstance->m_TotalVolume = value;
     }
     static inline qint32 getTotalVolume()
     {
-        return m_TotalVolume;
+        return m_pInstance->m_TotalVolume;
     }
 
     static inline void setMusicVolume(qint32 value)
     {
-        m_MusicVolume = value;
+        m_pInstance->m_MusicVolume = value;
     }
     static inline qint32 getMusicVolume()
     {
-        return m_MusicVolume;
+        return m_pInstance->m_MusicVolume;
     }
 
     static inline void setSoundVolume(qint32 value)
     {
-        m_SoundVolume = value;
+        m_pInstance->m_SoundVolume = value;
     }
     static inline qint32 getSoundVolume()
     {
-        return m_SoundVolume;
+        return m_pInstance->m_SoundVolume;
     }
 
     static inline quint16 getGamePort()
     {
-        return m_GamePort;
+        return m_pInstance->m_GamePort;
     }
     static inline void setGamePort(quint16 value)
     {
-        m_GamePort = value;
+        m_pInstance->m_GamePort = value;
     }
     static void setServer(bool Server);
     static inline bool getServer()
     {
-        return m_Server;
+        return m_pInstance->m_Server;
     }
     static inline QStringList getMods()
     {
-        return m_activeMods;
+        return m_pInstance->m_activeMods;
     }
     static void addMod(QString mod)
     {
-        if (!m_activeMods.contains(mod))
+        if (!m_pInstance->m_activeMods.contains(mod))
         {
-            m_activeMods.append(mod);
+            m_pInstance->m_activeMods.append(mod);
         }
     }
     static void removeMod(QString mod)
     {
-        if (m_activeMods.contains(mod))
+        if (m_pInstance->m_activeMods.contains(mod))
         {
-            m_activeMods.removeOne(mod);
+            m_pInstance->m_activeMods.removeOne(mod);
         }
     }
     static float getMouseSensitivity();
@@ -731,6 +782,9 @@ public slots:
 
     static Qt::Key getKey_MapZoomIn();
     static void setKey_MapZoomIn(const Qt::Key &key_MapZoomIn);
+
+    static Qt::Key getKey_Escape();
+    static void setKey_Escape(const Qt::Key &key_Escape);
 
     static void getModInfos(QString mod, QString & name, QString & description, QString & version,
                             QStringList & compatibleMods, QStringList & incompatibleMods,
@@ -823,170 +877,180 @@ private:
     explicit Settings();
 
 private:
-    static QVector<ValueBase*> m_SettingValues;
+    QVector<ValueBase*> m_SettingValues;
 
     // setting variables
-    static qint32 m_x;
-    static qint32 m_y;
-    static qint32 m_width;
-    static qint32 m_height;
-    static float m_brightness;
-    static float m_gamma;
-    static bool m_smallScreenDevice;
-    static bool m_touchScreen;
-    static qint32 m_touchPointSensitivity;
-    static bool m_gamepadEnabled;
-    static float m_gamepadSensitivity;
-    static qint32 m_framesPerSecond;
-    static bool m_useHighDpi;
-    static bool m_automaticUpdates;
+    qint32 m_x{0};
+    qint32 m_y{0};
+    qint32 m_width{1024};
+    qint32 m_height{800};
+    quint8 m_screen{0};
+    float m_brightness{0.0f};
+    float m_gamma{1.0f};
+    bool m_smallScreenDevice{false};
+    bool m_touchScreen{false};
+    qint32 m_touchPointSensitivity{15};
+    bool m_gamepadEnabled{false};
+    float m_gamepadSensitivity{1.0f};
+    qint32 m_framesPerSecond{60};
+    bool m_useHighDpi{true};
+    bool m_automaticUpdates{true};
 
-    static bool m_borderless;
-    static bool m_fullscreen;
+    bool m_borderless{true};
+    bool m_fullscreen{false};
 
-    static Qt::Key m_key_escape;
-    static Qt::Key m_key_console;
-    static Qt::Key m_key_screenshot;
-    static Qt::Key m_key_mapshot;
-    static Qt::Key m_key_up;
-    static Qt::Key m_key_down;
-    static Qt::Key m_key_right;
-    static Qt::Key m_key_left;
-    static Qt::Key m_key_confirm;
-    static Qt::Key m_key_cancel;
-    static Qt::Key m_key_next;
-    static Qt::Key m_key_previous;
-    static Qt::Key m_key_quicksave1;
-    static Qt::Key m_key_quicksave2;
-    static Qt::Key m_key_quickload1;
-    static Qt::Key m_key_quickload2;
-    static Qt::Key m_key_information;
-    static Qt::Key m_key_moveMapUp;
-    static Qt::Key m_key_moveMapDown;
-    static Qt::Key m_key_moveMapRight;
-    static Qt::Key m_key_moveMapLeft;
-    static Qt::Key m_key_MapZoomOut;
-    static Qt::Key m_key_MapZoomIn;
-    static Qt::Key m_key_ShowAttackFields;
-    static Qt::Key m_key_ShowIndirectAttackFields;
-    static Qt::Key m_key_up2;
-    static Qt::Key m_key_down2;
-    static Qt::Key m_key_right2;
-    static Qt::Key m_key_left2;
-    static Qt::Key m_key_confirm2;
-    static Qt::Key m_key_cancel2;
-    static Qt::Key m_key_next2;
-    static Qt::Key m_key_previous2;
-    static Qt::Key m_key_information2;
-    static Qt::Key m_key_moveMapUp2;
-    static Qt::Key m_key_moveMapDown2;
-    static Qt::Key m_key_moveMapRight2;
-    static Qt::Key m_key_moveMapLeft2;
-    static Qt::Key m_key_MapZoomOut2;
-    static Qt::Key m_key_MapZoomIn2;
-    static Qt::Key m_key_ShowAttackFields2;
-    static Qt::Key m_key_ShowIndirectAttackFields2;
+    Qt::Key m_key_escape{Qt::Key_Escape};
+    Qt::Key m_key_console{Qt::Key_F1};
+    Qt::Key m_key_screenshot{Qt::Key_F5};
+    Qt::Key m_key_mapshot{Qt::Key_F6};
+    Qt::Key m_key_up{Qt::Key_W};
+    Qt::Key m_key_down{Qt::Key_S};
+    Qt::Key m_key_right{Qt::Key_D};
+    Qt::Key m_key_left{Qt::Key_A};
+    Qt::Key m_key_confirm{Qt::Key_Space};
+    Qt::Key m_key_cancel{Qt::Key_B};
+    Qt::Key m_key_next{Qt::Key_E};
+    Qt::Key m_key_previous{Qt::Key_Q};
+    Qt::Key m_key_quicksave1{Qt::Key_F9};
+    Qt::Key m_key_quicksave2{Qt::Key_F11};
+    Qt::Key m_key_quickload1{Qt::Key_F10};
+    Qt::Key m_key_quickload2{Qt::Key_F12};
+    Qt::Key m_key_information{Qt::Key_I};
+    Qt::Key m_key_moveMapUp{Qt::Key_Down};
+    Qt::Key m_key_moveMapDown{Qt::Key_Up};
+    Qt::Key m_key_moveMapRight{Qt::Key_Left};
+    Qt::Key m_key_moveMapLeft{Qt::Key_Right};
+    Qt::Key m_key_MapZoomOut{Qt::Key_Minus};
+    Qt::Key m_key_MapZoomIn{Qt::Key_Plus};
+    Qt::Key m_key_ShowAttackFields{Qt::Key_2};
+    Qt::Key m_key_ShowIndirectAttackFields{Qt::Key_1};
+    Qt::Key m_key_up2{Qt::Key(0)};
+    Qt::Key m_key_down2{Qt::Key(0)};
+    Qt::Key m_key_right2{Qt::Key(0)};
+    Qt::Key m_key_left2{Qt::Key(0)};
+    Qt::Key m_key_confirm2{Qt::Key_Return};
+    Qt::Key m_key_cancel2{Qt::Key_Backspace};
+    Qt::Key m_key_next2{Qt::Key_Tab};
+    Qt::Key m_key_previous2{Qt::Key(0)};
+    Qt::Key m_key_information2{Qt::Key(0)};
+    Qt::Key m_key_moveMapUp2{Qt::Key(0)};
+    Qt::Key m_key_moveMapDown2{Qt::Key(0)};
+    Qt::Key m_key_moveMapRight2{Qt::Key(0)};
+    Qt::Key m_key_moveMapLeft2{Qt::Key(0)};
+    Qt::Key m_key_MapZoomOut2{Qt::Key(0)};
+    Qt::Key m_key_MapZoomIn2{Qt::Key(0)};
+    Qt::Key m_key_ShowAttackFields2{Qt::Key(0)};
+    Qt::Key m_key_ShowIndirectAttackFields2{Qt::Key(0)};
 
-    static Qt::Key m_key_EditorPlaceTerrain;
-    static Qt::Key m_key_EditorPlaceBuilding;
-    static Qt::Key m_key_EditorPlaceUnit;
-    static Qt::Key m_key_EditorNextTeam;
-    static Qt::Key m_key_EditorPreviousTeam;
-    static Qt::Key m_key_EditorSelectionUp;
-    static Qt::Key m_key_EditorSelectionDown;
-    static Qt::Key m_key_EditorSelectionRight;
-    static Qt::Key m_key_EditorSelectionLeft;
+    Qt::Key m_key_EditorPlaceTerrain{Qt::Key_1};
+    Qt::Key m_key_EditorPlaceBuilding{Qt::Key_2};
+    Qt::Key m_key_EditorPlaceUnit{Qt::Key_3};
+    Qt::Key m_key_EditorNextTeam{Qt::Key_Tab};
+    Qt::Key m_key_EditorPreviousTeam{Qt::Key_Asterisk};
+    Qt::Key m_key_EditorSelectionUp;
+    Qt::Key m_key_EditorSelectionDown;
+    Qt::Key m_key_EditorSelectionRight{Qt::Key_T};
+    Qt::Key m_key_EditorSelectionLeft{Qt::Key_R};
 
 
-    static QString m_language;
+    QString m_language{"en"};
     // Sound
-    static qint32 m_TotalVolume;
-    static qint32 m_MusicVolume;
-    static qint32 m_SoundVolume;
-    static QVariant m_audioOutput;
-    static bool m_muted;
+    qint32 m_TotalVolume{100};
+    qint32 m_MusicVolume{80};
+    qint32 m_SoundVolume{100};
+    QVariant m_audioOutput;
+    bool m_muted{false};
     // Network
-    static quint16 m_GamePort;
-    static QString m_Username;
-    static QString m_slaveServerName;
-    static QString m_serverPassword;
+    quint16 m_GamePort{9001};
+    QString m_Username;
+    QString m_slaveServerName;
+    QString m_serverPassword;
 
-    static bool m_Server;
-    static quint16 m_ServerPort;
-    static quint16 m_slaveServerPort;
-    static QString m_ServerAdress;
-    static QString m_secondaryServerAdress;
-    static QString m_serverListenAdress;
-    static QString m_serverSecondaryListenAdress;
-    static QString m_slaveListenAdress;
-    static QString m_slaveHostOptions;
-    static std::chrono::seconds m_slaveDespawnTime;
+    bool m_Server{false};
+    quint16 m_ServerPort{9002};
+    quint16 m_slaveServerPort{9003};
+    QString m_ServerAdress{"192.46.216.113"};
+    QString m_secondaryServerAdress{"2600:3c00::f03c:93ff:fe86:009e"};
+    QString m_serverListenAdress;
+    QString m_serverSecondaryListenAdress;
+    QString m_slaveListenAdress{"::1"};
+    QString m_slaveHostOptions{"::1&&10000&20000;::1&&50000&65535"};
+    std::chrono::seconds m_slaveDespawnTime{std::chrono::minutes(0)};
+    std::chrono::seconds m_suspendedDespawnTime{std::chrono::minutes(0)};
 
     // mailing
-    static QString m_mailServerAddress;
-    static quint16 m_mailServerPort;
-    static qint32 m_mailServerConnectionType;
-    static QString m_mailServerUsername;
-    static QString m_mailServerPassword;
-    static QString m_mailServerSendAddress;
-    static qint32 m_mailServerAuthMethod;
+    QString m_mailServerAddress;
+    quint16 m_mailServerPort{0};
+    qint32 m_mailServerConnectionType{2};
+    QString m_mailServerUsername;
+    QString m_mailServerPassword;
+    QString m_mailServerSendAddress;
+    qint32 m_mailServerAuthMethod{1};
 
     // auto saving
-    static std::chrono::seconds m_autoSavingCylceTime;
-    static qint32 m_autoSavingCycle;
+    std::chrono::seconds m_autoSavingCylceTime{std::chrono::minutes(0)};
+    qint32 m_autoSavingCycle{0};
 
 
     // ingame options
-    static bool m_overworldAnimations;
-    static GameEnums::BattleAnimationMode m_battleAnimationsMode;
-    static GameEnums::BattleAnimationType m_battleAnimationType;
-    static quint32 m_animationSpeed;
-    static quint32 m_walkAnimationSpeed;
-    static quint32 m_battleAnimationSpeed;
-    static quint32 m_dialogAnimationSpeed;
-    static quint32 m_captureAnimationSpeed;
-    static bool m_useCoMinis;
-    static bool m_dialogAnimation;
-    static bool m_captureAnimation;
-    static bool m_day2dayScreen;
-    static bool m_movementAnimations;
-    static quint32 multiTurnCounter;
-    static QString m_LastSaveGame;
-    static QString m_defaultRuleset;
-    static QString m_defaultBannlist;
-    static bool m_ShowCursor;
-    static bool m_AutoEndTurn;
-    static qint32 m_MenuItemCount;
-    static qint32 m_MenuItemRowCount;
-    static bool m_StaticMarkedFields;
-    static float m_mouseSensitivity;
-    static bool m_record;
-    static qint32 m_showCoCount;
-    static bool m_showIngameCoordinates;
-    static GameEnums::COInfoPosition m_coInfoPosition;
-    static bool m_autoScrolling;
-    static bool m_autoCamera;
-    static GameEnums::AutoFocusing m_autoFocusing;
-    static bool m_centerOnMarkedField;
-    static bool m_syncAnimations;
-    static bool m_simpleDeselect;
-    static bool m_showDetailedBattleForcast;
-    static bool m_autoMoveCursor;
-    static float m_supplyWarning;
-    static qint32 m_pauseAfterAction;
+    bool m_overworldAnimations{true};
+    GameEnums::BattleAnimationMode m_battleAnimationsMode{GameEnums::BattleAnimationMode_All};
+    GameEnums::BattleAnimationType m_battleAnimationType{GameEnums::BattleAnimationType_Detail};
+    quint32 m_animationSpeed{1};
+    quint32 m_walkAnimationSpeed{20};
+    quint32 m_battleAnimationSpeed{1};
+    quint32 m_dialogAnimationSpeed{20};
+    quint32 m_captureAnimationSpeed{1};
+    bool m_useCoMinis{true};
+    bool m_dialogAnimation{true};
+    bool m_captureAnimation{true};
+    bool m_day2dayScreen{true};
+    bool m_movementAnimations{true};
+    quint32 multiTurnCounter{4};
+    QString m_LastSaveGame;
+    QString m_defaultRuleset;
+    QString m_defaultBannlist;
+    bool m_ShowCursor{true};
+    bool m_AutoEndTurn{false};
+    qint32 m_MenuItemCount{13};
+    qint32 m_MenuItemRowCount{2};
+    bool m_StaticMarkedFields{false};
+    float m_mouseSensitivity{-0.75f};
+    bool m_record{true};
+    qint32 m_showCoCount{0};
+    bool m_showIngameCoordinates{true};
+    GameEnums::COInfoPosition m_coInfoPosition{GameEnums::COInfoPosition_Flipping};
+    bool m_autoScrolling{true};
+    bool m_autoCamera{true};
+    GameEnums::AutoFocusing m_autoFocusing{GameEnums::AutoFocusing_LastPos};
+    bool m_centerOnMarkedField{false};
+    bool m_syncAnimations{false};
+    bool m_simpleDeselect{false};
+    bool m_showDetailedBattleForcast{true};
+    bool m_autoMoveCursor{false};
+    float m_supplyWarning{0.33f};
+    qint32 m_pauseAfterAction{0};
 
     // internal members
     static spSettings m_pInstance;
-    static const QString m_settingFile;
-    static QStringList m_activeMods;
-    static QStringList m_activeModVersions;
-    static QString m_userPath;
-    static QTranslator m_Translator;
-    static QString m_updateStep;
+#ifdef USEAPPCONFIGPATH
+    QString m_settingFile = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + "/Commander_Wars.ini";
+#else
+    QString m_settingFile = "Commander_Wars.ini";
+#endif
+    QStringList m_activeMods;
+    QStringList m_activeModVersions;
+    QString m_userPath;
+    QVector<std::shared_ptr<QTranslator>> m_translators;
+    QString m_updateStep;
+    QString m_pipeUuid;
+    bool m_spawnAiProcess{DEFAULTAIPIPE};
+    bool m_aiSlave{false};
 
     // logging
-    static bool m_LogActions;
-    static Console::eLogLevels m_defaultLogLevel;
+    bool m_LogActions{false};
+    GameConsole::eLogLevels m_defaultLogLevel{static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL)};
+    quint64 m_defaultLogModuls{GameConsole::eGeneral | GameConsole::eJavaScript};
 };
 
 Q_DECLARE_INTERFACE(Settings, "Settings");

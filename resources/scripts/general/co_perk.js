@@ -312,6 +312,16 @@ var CO_PERK =
         // called after the action was performed
     },
 
+    getEnemyRepairCostModifier : function(co, unit, map)
+    {
+        return 0.0;  // percentage modifier of the unit cost e.g. 0.2 means 20% more expensive
+    },
+
+    getRepairCostModifier : function(co, unit, map)
+    {
+        return 0.0;  // percentage modifier of the unit cost e.g. 0.2 means 20% more expensive
+    },
+
     // Perk - Intel
     getDescription : function()
     {
@@ -328,5 +338,10 @@ var CO_PERK =
     getGroup : function()
     {
         return qsTr("General");
+    },
+
+    getCosts : function()
+    {
+        return 1;
     },
 }

@@ -1,8 +1,6 @@
 #include "gameinput/moveplannerinput.h"
 
-#include "coreengine/mainapp.h"
-
-#include "menue/movementplanner.h"
+#include "coreengine/interpreter.h"
 
 MoveplannerInput::MoveplannerInput(GameMap* pMap)
     : HumanPlayerInput(pMap)
@@ -11,8 +9,6 @@ MoveplannerInput::MoveplannerInput(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("MoveplannerInput");
 #endif
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

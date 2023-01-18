@@ -6,7 +6,6 @@
 #include <QObject>
 #include <QElapsedTimer>
 
-
 class TextInput : public Tooltip
 {
     Q_OBJECT

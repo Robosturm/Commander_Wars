@@ -72,7 +72,7 @@ QString TerrainManager::getTerrainGroupName(qint32 group)
     {
         return ret.toString();
     }
-    return "Unknown";
+    return tr("Unknown");
 }
 
 QStringList TerrainManager::getTerrainsSorted()

@@ -1,17 +1,16 @@
 #include "resource_management/gamemanager.h"
-#include "resource_management/cospritemanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "coreengine/mainapp.h"
 
 #include "game/gameanimation/gameanimationnextday.h"
 #include "game/co.h"
 #include "game/gamemap.h"
-#include "game/gameanimation/gameanimationfactory.h"
 
-#include "menue/basegamemenu.h"
-#include "menue/movementplanner.h"
+#include "menue/gamemenue.h"
 
 GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs)
     : GameAnimation(frameTime, pMap),
@@ -26,7 +25,6 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     {
         m_permanent = false;
     }
-    moveToThread(pApp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
     setSize(Settings::getWidth(), Settings::getHeight());
     oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("nextday");
@@ -116,7 +114,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     if (!m_permanent)
     {
         m_endTimer.setSingleShot(true);
-        m_endTimer.setInterval(uptimeMs / Settings::getAnimationSpeed());
+        m_endTimer.setInterval(static_cast<qint32>(static_cast<float>(uptimeMs) / Settings::getAnimationSpeed()));
         connect(&m_endTimer, &QTimer::timeout, this, [this]()
         {
             emitFinished();
@@ -143,25 +141,28 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     }
     else
     {
-        GameMenue* pMenu = dynamic_cast<GameMenue*>(BaseGamemenu::getInstance());
-        if (pMenu != nullptr)
+        if (m_pMap != nullptr)
         {
-            oxygine::spButton pButtonSaveAndExit = ObjectManager::createButton(tr("Save and Exit"), 220);
-            addChild(pButtonSaveAndExit);
-            pButtonSaveAndExit->setPosition(Settings::getWidth() / 2 - pButtonSaveAndExit->getScaledWidth() - 10, Settings::getHeight() - 50);
-            pButtonSaveAndExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+            GameMenue* pMenu = dynamic_cast<GameMenue*>(m_pMap->getMenu());
+            if (pMenu != nullptr)
             {
-                emit sigShowSaveAndExit();
-            });
-            connect(this, &GameAnimationNextDay::sigShowSaveAndExit, pMenu, &GameMenue::showSaveAndExitGame, Qt::QueuedConnection);
+                oxygine::spButton pButtonSaveAndExit = ObjectManager::createButton(tr("Save and Exit"), 220);
+                addChild(pButtonSaveAndExit);
+                pButtonSaveAndExit->setPosition(Settings::getWidth() / 2 - pButtonSaveAndExit->getScaledWidth() - 10, Settings::getHeight() - 50);
+                pButtonSaveAndExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+                {
+                    emit sigShowSaveAndExit();
+                });
+                connect(this, &GameAnimationNextDay::sigShowSaveAndExit, pMenu, &GameMenue::showSaveAndExitGame, Qt::QueuedConnection);
 
-            oxygine::spButton pButtonContinue = ObjectManager::createButton(tr("Continue"), 220);
-            addChild(pButtonContinue);
-            pButtonContinue->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 50);
-            pButtonContinue->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
-            {
-                emit sigRightClick();
-            });
+                oxygine::spButton pButtonContinue = ObjectManager::createButton(tr("Continue"), 220);
+                addChild(pButtonContinue);
+                pButtonContinue->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 50);
+                pButtonContinue->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+                {
+                    emit sigRightClick();
+                });
+            }
         }
     }
     connect(this, &GameAnimationNextDay::sigRightClick, this, &GameAnimationNextDay::rightClick, Qt::QueuedConnection);
@@ -188,13 +189,16 @@ void GameAnimationNextDay::stop()
 
 void GameAnimationNextDay::restart()
 {
-    BaseGamemenu* pMenu = BaseGamemenu::getInstance();
-    if (pMenu != nullptr)
+    if (m_pMap != nullptr)
     {
-        if (!m_permanent)
+        auto* pMenu = m_pMap->getMenu();
+        if (pMenu != nullptr)
         {
-            pMenu->addChild(spGameAnimationNextDay(this));
-            m_endTimer.start();
+            if (!m_permanent)
+            {
+                pMenu->addChild(spGameAnimationNextDay(this));
+                m_endTimer.start();
+            }
         }
     }
 }

@@ -5,14 +5,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
-        {
-            return false;
-        }
-        if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null)) &&
-            (ACTION_SUPPORTSINGLE_FREEREPAIR.getRepairFields(action, map).length > 0))
+        if (ACTION.isEmptyFieldAndHasNotMoved(action, unit, actionTargetField, targetField, map) &&
+            ACTION_SUPPORTSINGLE_FREEREPAIR.getRepairFields(action, map).length > 0)
         {
             return true;
         }
@@ -108,7 +102,7 @@ var Constructor = function()
         var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);
         var repairUnit = terrain.getUnit();
         var animation = GameAnimationFactory.createAnimation(map, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);
-        var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
+        var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, -2, 1);
         animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
         animation.addSprite("repair", map.getImageSize() / 2 + 4, 4, 400, 2);
 
@@ -118,6 +112,10 @@ var Constructor = function()
         ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationUnit = null;
         ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX = -1;
         ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY = -1;
+    };
+    this.getName = function()
+    {
+        return qsTr("Free repair");
     };
     this.getDescription = function()
     {

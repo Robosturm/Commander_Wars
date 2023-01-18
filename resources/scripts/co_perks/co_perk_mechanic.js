@@ -4,14 +4,14 @@ var Constructor = function()
     {
 		if (CO_PERK.isActive(co))
 		{
-			return 2;
+            return 1;
 		}
         return 0;
     };
 	// Perk - Intel
     this.getDescription = function()
     {
-        return qsTr("Increases the base repair by 2.");
+        return qsTr("Increases the base repair by 1.");
     };
     this.getIcon = function(map)
     {
@@ -19,7 +19,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return qsTr("Gear Head");
+        return qsTr("Mechanic");
+    };
+    this.getCosts = function()
+    {
+        return 1;
     };
 };
 

@@ -1,18 +1,12 @@
-#include "game/ui/playerinfo.h"
-
-#include "game/gamemap.h"
-
 #include "resource_management/gamemanager.h"
-
 #include "resource_management/cospritemanager.h"
-
 #include "resource_management/fontmanager.h"
 
+#include "game/gamemap.h"
 #include "game/player.h"
-
 #include "game/co.h"
-
 #include "game/ui/copowermeter.h"
+#include "game/ui/playerinfo.h"
 
 PlayerInfo::PlayerInfo(GameMap* pMap)
     : m_pMap(pMap)
@@ -21,8 +15,6 @@ PlayerInfo::PlayerInfo(GameMap* pMap)
     setObjectName("PlayerInfo");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    moveToThread(pApp->getWorkerthread());
     setScale(1.0f);
 }
 
@@ -258,8 +250,7 @@ void PlayerInfo::showTurnStartInfo(qint32 & yPos)
                 }
             }
 
-
-            oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16());
+            oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("nextDayInfo16"));
             oxygine::spTextField pText = oxygine::spTextField::create();
             pText->setStyle(style);
             QString number = QString::number(m_pMap->getCurrentDay() + 1);

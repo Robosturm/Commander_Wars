@@ -29,7 +29,7 @@ public slots:
     void resetUi();
     void loadXml(QString xmlFile);
     void setObjectEnabled(const QString id, bool value);
-    void showFileDialog(const QStringList & wildcards, const QString & startFolder, const QString & jsObject, const QString & jsCallback, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
+    void showFileDialog(const QStringList & wildcards, const QString & startFolder, bool isSaveDialog, const QString & jsObject, const QString & jsCallback, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
     void showFolderDialog(const QString & startFolder, const QString & jsObject, const QString & jsCallback);
     void showTextInputDialog(const QString & text, bool showCancel, const QString & startInput, const QString & jsObject, const QString & jsCallback);    
     QObject* getObject(const QString & id);

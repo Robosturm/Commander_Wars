@@ -5,9 +5,8 @@
 
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
-#include "coreengine/console.h"
+#include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
-#include "coreengine/globalutils.h"
 
 #include "spritingsupport/spritecreator.h"
 
@@ -84,12 +83,12 @@ void SpriteCreator::applyImagesTable(QString input, QString inTable, QString out
 {
     if (!QFile::exists(inTable) && inTable.endsWith(".png"))
     {
-        CONSOLE_PRINT("The color table is not an existing file. " + inTable, Console::eLogLevels::eERROR);
+        CONSOLE_PRINT("The color table is not an existing file. " + inTable, GameConsole::eLogLevels::eERROR);
         return;
     }
     if (!QFile::exists(outTable) && outTable.endsWith(".png"))
     {
-        CONSOLE_PRINT("The mask table is not an existing file. " + outTable, Console::eLogLevels::eERROR);
+        CONSOLE_PRINT("The mask table is not an existing file. " + outTable, GameConsole::eLogLevels::eERROR);
         return;
     }
     QImage inTableImg(inTable);
@@ -112,7 +111,7 @@ void SpriteCreator::applyImagesTable(QString input, QString inTable, QString out
     }
     else
     {
-        CONSOLE_PRINT("Input directory or file doesn't exists. " + input, Console::eERROR);
+        CONSOLE_PRINT("Input directory or file doesn't exists. " + input, GameConsole::eERROR);
     }
 }
 
@@ -175,13 +174,13 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
-        CONSOLE_PRINT("The color table is not an existing file. " + colorTable, Console::eLogLevels::eERROR);
+        CONSOLE_PRINT("The color table is not an existing file. " + colorTable, GameConsole::eLogLevels::eERROR);
         return;
     }
     QImage colorTableImg(colorTable);
     if (!QFile::exists(maskTable) && maskTable.endsWith(".png"))
     {
-        CONSOLE_PRINT("The mask table is not an existing file. " + maskTable, Console::eLogLevels::eERROR);
+        CONSOLE_PRINT("The mask table is not an existing file. " + maskTable, GameConsole::eLogLevels::eERROR);
         return;
     }
     QImage maskTableImg(maskTable);
@@ -191,7 +190,7 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
     }
     if (maskTableImg.width() < colorTableImg.width())
     {
-        CONSOLE_PRINT("The mask table is to small. " + maskTable, Console::eERROR);
+        CONSOLE_PRINT("The mask table is to small. " + maskTable, GameConsole::eERROR);
         return;
     }
     QFileInfo inputInfo(input);
@@ -212,7 +211,7 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
     }
     else
     {
-        CONSOLE_PRINT("Input directory or file doesn't exists. " + input, Console::eERROR);
+        CONSOLE_PRINT("Input directory or file doesn't exists. " + input, GameConsole::eERROR);
     }
 }
 
@@ -259,19 +258,19 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QString colorTable, 
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
-        CONSOLE_PRINT("The color table is not an existing file. " + colorTable, Console::eLogLevels::eERROR);
+        CONSOLE_PRINT("The color table is not an existing file. " + colorTable, GameConsole::eLogLevels::eERROR);
         return oxygine::spResAnim();
     }
     QImage colorTableImg(colorTable);
     if (!QFile::exists(newTable) && newTable.endsWith(".png"))
     {
-        CONSOLE_PRINT("The mask table is not an existing file. " + newTable, Console::eLogLevels::eERROR);
+        CONSOLE_PRINT("The mask table is not an existing file. " + newTable, GameConsole::eLogLevels::eERROR);
         return oxygine::spResAnim();
     }
     QImage maskTableImg(newTable);
     if (maskTableImg.width() < colorTableImg.width())
     {
-        CONSOLE_PRINT("The mask table is to small. " + newTable, Console::eERROR);
+        CONSOLE_PRINT("The mask table is to small. " + newTable, GameConsole::eERROR);
         return oxygine::spResAnim();
     }
     return createAnim(input, colorTableImg, maskTableImg, useColorBox, columns, rows, scaleFactor, addTransparentBorder);
