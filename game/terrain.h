@@ -379,7 +379,7 @@ public slots:
      * @brief loadBaseSprite loads the sprite for this terrain
      * @param spriteID
      */
-    void loadBaseSprite(const QString & spriteID, qint32 frameTime = 100, qint32 startFrame = -1, qint32 endFrame = -1, const QString & palette = "");
+    void loadBaseSprite(const QString & spriteID, qint32 frameTime = 100, qint32 startFrame = -1, qint32 endFrame = -1);
     /**
      * @brief getSurroundings returns a string containing the directions which fulfill the given rule
      * @param list the list as string split with ,
@@ -396,7 +396,7 @@ public slots:
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID
      */
-    void loadOverlaySprite(const QString & spriteID, qint32 startFrame = -1, qint32 endFrame = -1, const QString & palette = "");
+    void loadOverlaySprite(const QString & spriteID, qint32 startFrame = -1, qint32 endFrame = -1);
     /**
      * @brief getBaseTerrainID finds the base terrain id of the real base terrain recursivly
      * @return the base terrainID

@@ -226,7 +226,7 @@ private:
     }
 private:
     static spInterpreter m_pInstance;
-    QString m_runtimeData;
+    static QString m_runtimeData;
     qint32 m_inJsCall{0};
     QVector<oxygine::intrusive_ptr<oxygine::ref_counter>> m_jsObjects;
 };

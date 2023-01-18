@@ -16,6 +16,7 @@
 #include <QThread>
 
 spInterpreter Interpreter::m_pInstance{nullptr};
+QString Interpreter::m_runtimeData;
 
 Interpreter::Interpreter()
     : QQmlEngine()
