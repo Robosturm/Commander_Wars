@@ -135,7 +135,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     // reserve vector size for fun and speed :D
     m_Terrains.reserve(pTerrainManager->getCount());
     QStringList sortedTerrainIDs = pTerrainManager->getTerrainsSorted();
-    for (const auto& terrainId : sortedTerrainIDs)
+    for (const auto& terrainId : qAsConst(sortedTerrainIDs))
     {
         if (Terrain::getShowInEditor(terrainId))
         {
@@ -157,9 +157,9 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
 
     // load other sprites not shown in the starting screen
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-    for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
+    QStringList sortedBuildingIDs = pBuildingSpriteManager->getBuildingsSorted();
+    for (const auto & buildingId : qAsConst(sortedBuildingIDs))
     {
-        QString buildingId = pBuildingSpriteManager->getID(i);
         if (Building::getShowInEditor(buildingId))
         {
             spBuilding building = spBuilding::create(buildingId, m_pMap);
@@ -168,9 +168,6 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
             qint32 heigth = building->getBuildingHeigth();
             building->setScaleX(1.0f / static_cast<float>(width));
             building->setScaleY(1.0f / static_cast<float>(heigth));
-            m_Buildings.append(building);
-            qint32 index = m_Buildings.size() - 1;
-            m_Buildings[index]->updateBuildingSprites(false);
             spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "", m_pMap);
             pSprite->loadSprites();
             pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
@@ -184,6 +181,9 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
             {
                 pSprite->oxygine::Actor::setY(-GameMap::getImageSize() * (heigth - 1));
             }
+            m_Buildings.append(building);
+            qint32 index = m_Buildings.size() - 1;
+            m_Buildings[index]->updateBuildingSprites(false);
             m_Buildings[index]->addChild(pSprite);
             m_Buildings[index]->setVisible(false);
             m_PlacementActor->addChild(m_Buildings[index]);
@@ -622,6 +622,10 @@ void EditorSelection::updateBuildingView()
     {
         building->setVisible(true);
     }
+    for (auto & item : m_buildingActors)
+    {
+        item->setVisible(true);
+    }
     m_PlacementActor->setHeight(m_Buildings[m_Buildings.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->updateDragBounds();
@@ -659,6 +663,10 @@ void EditorSelection::hideSelection()
     {
         item->setVisible(false);
     }
+    for (auto & item : m_buildingActors)
+    {
+        item->setVisible(false);
+    }
     for (auto & item : m_Units)
     {
         item->setVisible(false);
@@ -678,10 +686,12 @@ void EditorSelection::initSelection()
 
 void EditorSelection::initBuildingSection()
 {
-    qint32 posY = m_startH;
+    qint32 posY = m_startH - GameMap::getImageSize();
     qint32 xCounter = 0;
+    qint32 currentIdentifier = std::numeric_limits<qint32>::min();
     for (qint32 i = 0; i < m_Buildings.size(); i++)
     {
+        createBuildingSectionLabel(i, currentIdentifier, xCounter, posY);
         qint32 posX = getPosX(xCounter);
         if (xCounter >= m_xCount)
         {
@@ -699,6 +709,30 @@ void EditorSelection::initBuildingSection()
             selectBuilding(i);
         });
         xCounter++;
+    }
+}
+
+void EditorSelection::createBuildingSectionLabel(qint32 item, qint32 & currentIdentifier, qint32 & xCounter, qint32 & posY)
+{
+    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+    qint32 newIdentifier = m_Buildings[item]->getBuildingGroup();
+    if (newIdentifier != currentIdentifier)
+    {
+        posY += GameMap::getImageSize();
+        currentIdentifier = newIdentifier;
+        xCounter = 0;
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+        style.multiline = false;
+
+        spLabel pTextfield = spLabel::create(m_labelWidth);
+        pTextfield->setStyle(style);
+        pTextfield->setPosition(getPosX(xCounter), posY);
+        pTextfield->setHtmlText(pBuildingSpriteManager->getBuildingGroupName(currentIdentifier));
+        pTextfield->setVisible(false);
+        m_PlacementActor->addChild(pTextfield);
+        m_buildingActors.append(pTextfield);
+        posY += GameMap::getImageSize() * m_yFactor;
     }
 }
 

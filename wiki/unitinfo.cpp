@@ -48,7 +48,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText((tr("Unit Information ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 0);
     addChild(pLabel);
-    y += 70;
+    y += pLabel->getTextRect().getHeight() + 10;
 
     pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
@@ -86,7 +86,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText(UnitSpriteManager::getUnitTypeText(pUnit->getUnitType()));
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
-    y += 40;
+    y += pLabel->getTextRect().getHeight() + 10;
 
     // fire range
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
@@ -105,7 +105,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         pLabel->setHtmlText((QString::number(pUnit->getBaseMinRange()) + " - " + QString::number(pUnit->getBaseMaxRange())));
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
-        y += 40;
+        y += pLabel->getTextRect().getHeight() + 10;
     }
 
     // movement
@@ -121,7 +121,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText((QString::number(pUnit->getBaseMovementPoints())));
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
-    y += 40;
+    y += pLabel->getTextRect().getHeight() + 10;
 
     // vision
     pLabel = oxygine::spTextField::create();
@@ -136,7 +136,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText((QString::number(pUnit->getBaseVision())));
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
-    y += 40;
+    y += pLabel->getTextRect().getHeight() + 10;
 
     // fuel
     pLabel = oxygine::spTextField::create();
@@ -158,7 +158,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     }
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
-    y += 40;
+    y += pLabel->getTextRect().getHeight() + 10;
 
     // ammo 1
     if (pUnit->getMaxAmmo1() > 0)
@@ -175,7 +175,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         pLabel->setHtmlText((QString::number(pUnit->getAmmo1()) + " / " + QString::number(pUnit->getMaxAmmo1())));
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
-        y += 40;
+        y += pLabel->getTextRect().getHeight() + 10;
     }
     // ammo 2
     if (pUnit->getMaxAmmo2() > 0)
@@ -192,7 +192,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         pLabel->setHtmlText((QString::number(pUnit->getAmmo2()) + " / " + QString::number(pUnit->getMaxAmmo2())));
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
-        y += 40;
+        y += pLabel->getTextRect().getHeight() + 10;
     }
 
     // cpsts
@@ -208,7 +208,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText((QString::number(pUnit->getUnitCosts())));
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
-    y += 40;
+    y += pLabel->getTextRect().getHeight() + 10;
 
     // loading place 2
     if (pUnit->getLoadingPlace() > 0)
@@ -225,16 +225,16 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         pLabel->setHtmlText((QString::number(pUnit->getLoadedUnitCount()) + " / " + QString::number(pUnit->getLoadingPlace())));
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
-        y += 40;
+        y += pLabel->getTextRect().getHeight() + 10;
         pLabel = oxygine::spTextField::create();
         pLabel->setStyle(headerStyle);
         pLabel->setHtmlText(tr("Loadable Units"));
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
         addChild(pLabel);
-        y += 80;
+        y += pLabel->getTextRect().getHeight() + 10;
         QStringList loadingUnits = pUnit->getTransportUnits();
         createLoadingTable(pUnit.get(), loadingUnits, y, width);
-        y += 40;
+        y += pLabel->getTextRect().getHeight() + 10;
 
         if (pUnit->getLoadedUnitCount() > 0)
         {
@@ -243,9 +243,9 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
             pLabel->setHtmlText(tr("Loaded Units"));
             pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
             addChild(pLabel);
-            y += 80;
+            y += pLabel->getTextRect().getHeight() + 10;
             createLoadedUnits(pUnit.get(), y, width);
-            y += 40;
+            y += pLabel->getTextRect().getHeight() + 10;
         }
     }
 
@@ -255,7 +255,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText(tr("Actions"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
-    y += 90;
+    y += pLabel->getTextRect().getHeight() + 10;
     createActionTable(pUnit.get(), y, width);
     y += 50;
 
@@ -264,7 +264,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText(tr("Transporters"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
-    y += 90;
+    y += pLabel->getTextRect().getHeight() + 10;
     createTransportTable(pUnit.get(), y, width);
     y += 50;
 
@@ -280,7 +280,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
     pLabel->setHtmlText((tr("Movement ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
-    y += 90;
+    y += pLabel->getTextRect().getHeight() + 10 + GameMap::getImageSize();
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
@@ -382,7 +382,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         pLabel->setHtmlText((tr("Weapon 1 ") + pWeaponManager->getName(pUnit->getWeapon1ID())));
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
         addChild(pLabel);
-        y += 90;
+        y += pLabel->getTextRect().getHeight() + 10;
         createWeaponTable(pUnit.get(), pUnit->getWeapon1ID(), y, width);
         y += 60;
     }
@@ -393,7 +393,7 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
         pLabel->setHtmlText((tr("Weapon 2 ") + pWeaponManager->getName(pUnit->getWeapon2ID())));
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
         addChild(pLabel);
-        y += 90;
+        y += pLabel->getTextRect().getHeight() + 10;
         createWeaponTable(pUnit.get(), pUnit->getWeapon2ID(), y, width);
         y += 60;
     }

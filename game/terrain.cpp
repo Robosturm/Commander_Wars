@@ -62,6 +62,16 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
             GameMap::getImageSize());
 }
 
+QString Terrain::getPalette() const
+{
+    return m_palette;
+}
+
+void Terrain::setPalette(const QString & newPalette)
+{
+    m_palette = newPalette;
+}
+
 QStringList Terrain::getCustomOverlays() const
 {
     return m_customOverlays;
@@ -488,20 +498,9 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         pSprite->setPriority(static_cast<qint32>(DrawPriority::Terrain));
 
-        QString function2 = "getPalette";
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        QString palette;
-        QJSValueList args({pInterpreter->newQObject(this),
-                           spriteID,
-                           pInterpreter->newQObject(m_pMap)});
-        QJSValue erg = pInterpreter->doFunction(m_terrainID, function2, args);
-        if (erg.isString())
+        if (!m_palette.isEmpty())
         {
-            palette = erg.toString();
-        }
-        if (!palette.isEmpty())
-        {
-            oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(palette, oxygine::error_policy::ep_ignore_error));
+            oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(m_palette, oxygine::error_policy::ep_ignore_error));
             if (pPaletteAnim.get() != nullptr)
             {
                 pSprite->setColorTable(pPaletteAnim, true);
@@ -836,20 +835,9 @@ void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qin
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainOverlay));
-    QString function2 = "getPalette";
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QString palette;
-    QJSValueList args({pInterpreter->newQObject(this),
-                       spriteID,
-                       pInterpreter->newQObject(m_pMap)});
-    QJSValue erg = pInterpreter->doFunction(m_terrainID, function2, args);
-    if (erg.isString())
+    if (!m_palette.isEmpty())
     {
-        palette = erg.toString();
-    }
-    if (!palette.isEmpty())
-    {
-        oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error));
+        oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(m_palette, oxygine::error_policy::ep_ignore_error));
         if (pPaletteAnim.get() != nullptr)
         {
             pSprite->setColorTable(pPaletteAnim, true);
@@ -1593,6 +1581,7 @@ void Terrain::serializeObject(QDataStream& pStream) const
             pStream << item;
         }
     }
+    pStream << m_palette;
 }
 
 void Terrain::deserializeObject(QDataStream& pStream)
@@ -1752,7 +1741,10 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
             }
         }
     }
-
+    if (version > 11)
+    {
+        pStream >> m_palette;
+    }
 }
 
 void Terrain::createBuildingDownStream()

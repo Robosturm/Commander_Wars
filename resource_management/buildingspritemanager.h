@@ -24,6 +24,25 @@ public slots:
     {
         return m_loadedRessources.size();
     }
+    QStringList getBuildingsSorted();
+    /**
+     * @brief getBuildingGroup
+     * @param id
+     * @return
+     */
+    qint32 getBuildingGroup(QString id);
+    /**
+     * @brief getTerrainGroup
+     * @param i
+     * @return
+     */
+    qint32 getBuildingGroup(qint32 i);
+    /**
+     * @brief getBuildingGroupName
+     * @param group
+     * @return
+     */
+    QString getBuildingGroupName(qint32 group);
 protected:
     friend RessourceManagement<BuildingSpriteManager>;
     BuildingSpriteManager();

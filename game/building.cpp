@@ -40,6 +40,19 @@ void Building::init()
     pInterpreter->doFunction(m_BuildingID, function, args);
 }
 
+qint32 Building::getBuildingGroup()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getBuildingGroup";
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    return 0;
+}
+
 bool Building::getShowInEditor(QString buildingId)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

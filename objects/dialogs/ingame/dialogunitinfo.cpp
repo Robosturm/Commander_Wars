@@ -77,7 +77,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     pText->setPosition(610 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
-    y += 40;
+    y += pText->getHeight() + 10;
     spQmlVectorUnit pUnits = spQmlVectorUnit(pPlayer->getUnits());
 
     GameMap* pMap = pPlayer->getMap();
@@ -162,7 +162,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
             emit sigMoveToUnit(posX, posY);
         });
         pPanel->addItem(pButton);
-        y += 40;
+        y += pText->getHeight() + 10;
     }
     pPanel->setContentWidth(950);
     pPanel->setContentHeigth(y + 40);

@@ -117,6 +117,11 @@ public:
 
 public slots:
     /**
+     * @brief getBuildingGroup
+     * @return
+     */
+    qint32 getBuildingGroup();
+    /**
      * @brief usesMapLayer
      * @return
      */

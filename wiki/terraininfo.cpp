@@ -84,7 +84,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     pLabel->setHtmlText((QString::number(pTerrain->getDefense(nullptr))));
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
-    y += 40;
+    y += pLabel->getTextRect().getHeight() + 10;
 
     if (pBuilding != nullptr)
     {
@@ -101,7 +101,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
         pLabel->setHtmlText((QString::number(pBuilding->getIncome())));
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
-        y += 40;
+        y += pLabel->getTextRect().getHeight() + 10;
 
         QStringList productionList = pBuilding->getConstructionList();
         if (productionList.size() > 0)
@@ -113,7 +113,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
                 pLabel->setHtmlText(tr("Builds"));
                 pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
                 addChild(pLabel);
-                y += 80;
+                y += pLabel->getTextRect().getHeight() + 10;
                 showUnitList(productionList, y, width);
             }
         }
@@ -126,7 +126,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
             pLabel->setHtmlText(tr("Supplies"));
             pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
             addChild(pLabel);
-            y += 80;
+            y += pLabel->getTextRect().getHeight() + 10;
             UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
             for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
             {
@@ -178,10 +178,10 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
         if (x + 250 > width && i < pMovementTableManager->getCount() - 1)
         {
             x = 0;
-            y += 40;
+            y += pLabel->getTextRect().getHeight() + 10;
         }
     }
-    y += 40;
+    y += pLabel->getTextRect().getHeight() + 10;
     setHeight(y);
     connect(this, &TerrainInfo::sigShowLink, this, &TerrainInfo::showLink, Qt::QueuedConnection);
 }

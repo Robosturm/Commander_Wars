@@ -406,7 +406,7 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
         emit sigDuplicateEvent(spScriptEvent(pPtrEvent));
     });
 
-    y += 40;
+    y += text->getHeight() + 10;
     m_EventPanel->setContentWidth(x + 140 * 3 + 10);
 }
 

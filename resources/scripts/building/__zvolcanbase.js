@@ -5,6 +5,10 @@ var Constructor = function()
         building.setHp(-1);
         building.setAlwaysVisble(true);
     };
+    this.getBuildingGroup = function()
+    {
+        return 6;
+    };
         
     this.getBaseIncome = function()
     {

@@ -1,6 +1,39 @@
 // this is the base class for terrain
 var BUILDING =
 {
+    // search type filter for overlay
+    getBuildingGroup : function()
+    {
+        return 0;
+    },
+    getBuildingGroupSort : function()
+    {
+        return [0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,];
+
+    },
+    buildingGroupNameMapping = [qsTr("Production"),     // 0
+                                qsTr("Income"),         // 1
+                                qsTr("Utility"),        // 2
+                                qsTr("Black Hole"),     // 3
+                                qsTr("Bolt Guard"),     // 4
+                                qsTr("Dark Matter"),    // 5
+                                qsTr("Other")],         // 6
+
+    getBuildingGroupName : function(item)
+    {
+        if (item >= 0 && item < buildingGroupNameMapping.length)
+        {
+            return buildingGroupNameMapping[item];
+        }
+        return qsTr("Unknown");
+    },
+
     // loader for stuff which needs C++ Support
     init : function (building, map)
     {
@@ -382,4 +415,9 @@ var BUILDING =
     {
         return "placeBuilding.wav";
     },
+
+    getBuildingsSorted : function()
+    {
+
+    }
 };

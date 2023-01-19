@@ -1,5 +1,9 @@
 var Constructor = function()
 {
+    this.getBuildingGroup = function()
+    {
+        return 1;
+    };
     
     this.loadSprites = function(building, neutral, map)
     {

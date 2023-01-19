@@ -141,6 +141,14 @@ private:
      */
     void initBuildingSection();
     /**
+     * @brief createBuildingSectionLabel
+     * @param item
+     * @param currentIdentifier
+     * @param xCounter
+     * @param posY
+     */
+    void createBuildingSectionLabel(qint32 item, qint32 & currentIdentifier, qint32 & xCounter, qint32 & posY);
+    /**
      * @brief initUnitSelection
      */
     void initUnitSelection();
@@ -195,6 +203,7 @@ private:
     QVector<spTerrain> m_Terrains;
     QVector<oxygine::spActor> m_terrainActors;
     QVector<spBuilding> m_Buildings;
+    QVector<oxygine::spActor> m_buildingActors;
     QVector<spUnit> m_Units;
     QVector<oxygine::spActor> m_unitActors;
 

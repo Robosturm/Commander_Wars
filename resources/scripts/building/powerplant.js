@@ -1,5 +1,9 @@
 var Constructor = function()
-{    
+{
+    this.getBuildingGroup = function()
+    {
+        return 2;
+    };
     this.loadSprites = function(building, neutral, map)
     {
         if (building.getOwnerID() >= 0 && !neutral)

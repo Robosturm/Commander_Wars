@@ -116,7 +116,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 11;
+        return 12;
     }
     /**
      * @brief isValid
@@ -129,7 +129,18 @@ public:
      */
     qint32 getMapTerrainDrawPriority();
 
+
 public slots:
+    /**
+     * @brief getPalette
+     * @return
+     */
+    QString getPalette() const;
+    /**
+     * @brief setPalette
+     * @param newPalette
+     */
+    void setPalette(const QString & newPalette);
     /**
      * @brief getFixedOverlaySprites
      * @return
@@ -574,6 +585,7 @@ private:
     explicit Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap);
 
 private:
+    QString m_palette;
     /**
      * @brief terrainName terrain name shown in the game
      */

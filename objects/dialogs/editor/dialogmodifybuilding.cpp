@@ -60,7 +60,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     m_pPanel->addItem(pLabel);
 
-    qint32 y = 30 + pLabel->getTextRect().getHeight();
+    qint32 y = pLabel->getY() + pLabel->getTextRect().getHeight() + 10;
     pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Player: "));
@@ -99,7 +99,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
         }
     });
     m_pPanel->addItem(pDropdownmenu);
-    y += 40;
+    y += pLabel->getHeight() + 10;
 
     pLabel = spLabel::create(190);
     pLabel->setStyle(style);
@@ -112,7 +112,6 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     connect(pTextbox.get(), &Textbox::sigTextChanged, m_pBuilding, &Building::setBuildingName, Qt::QueuedConnection);
     m_pPanel->addItem(pTextbox);
     m_pPanel->addItem(pLabel);
-    y += 40;
     connect(this, &DialogModifyBuilding::sigFinished, this, &DialogModifyBuilding::remove, Qt::QueuedConnection);
 }
 
