@@ -4413,13 +4413,8 @@
         <file>resources/images/terrain/river/riverend+E+3.png</file>
         <file>resources/images/terrain/river/riverend+E+4+land+S.png</file>
         <file>resources/images/terrain/river/riverend+E+4.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake+N+S+W.png</file>
         <file>resources/images/terrain/river/riverend+E_lake+N+S.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake+N+W.png</file>
         <file>resources/images/terrain/river/riverend+E_lake+N.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake+S+W.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake+S.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake+W.png</file>
         <file>resources/images/terrain/river/riverend+E_lake.png</file>
         <file>resources/images/terrain/river/riverend+N+1+land+N+W.png</file>
         <file>resources/images/terrain/river/riverend+N+1+land+N.png</file>
@@ -4435,14 +4430,6 @@
         <file>resources/images/terrain/river/riverend+N+3.png</file>
         <file>resources/images/terrain/river/riverend+N+4+land+W.png</file>
         <file>resources/images/terrain/river/riverend+N+4.png</file>
-        <file>resources/images/terrain/river/riverend+N_lake+E+S+W.png</file>
-        <file>resources/images/terrain/river/riverend+N_lake+E+S.png</file>
-        <file>resources/images/terrain/river/riverend+N_lake+E+W.png</file>
-        <file>resources/images/terrain/river/riverend+N_lake+E.png</file>
-        <file>resources/images/terrain/river/riverend+N_lake+S+W.png</file>
-        <file>resources/images/terrain/river/riverend+N_lake+S.png</file>
-        <file>resources/images/terrain/river/riverend+N_lake+W.png</file>
-        <file>resources/images/terrain/river/riverend+N_lake.png</file>
         <file>resources/images/terrain/river/riverend+S+1+land+W.png</file>
         <file>resources/images/terrain/river/riverend+S+1.png</file>
         <file>resources/images/terrain/river/riverend+S+2+land+E.png</file>
@@ -4457,14 +4444,6 @@
         <file>resources/images/terrain/river/riverend+S+4+land+SW.png</file>
         <file>resources/images/terrain/river/riverend+S+4+land+W.png</file>
         <file>resources/images/terrain/river/riverend+S+4.png</file>
-        <file>resources/images/terrain/river/riverend+S_lake+E+W.png</file>
-        <file>resources/images/terrain/river/riverend+S_lake+E.png</file>
-        <file>resources/images/terrain/river/riverend+S_lake+N+E+W.png</file>
-        <file>resources/images/terrain/river/riverend+S_lake+N+E.png</file>
-        <file>resources/images/terrain/river/riverend+S_lake+N+W.png</file>
-        <file>resources/images/terrain/river/riverend+S_lake+N.png</file>
-        <file>resources/images/terrain/river/riverend+S_lake+W.png</file>
-        <file>resources/images/terrain/river/riverend+S_lake.png</file>
         <file>resources/images/terrain/river/riverend+W+1+land+N+W.png</file>
         <file>resources/images/terrain/river/riverend+W+1+land+N.png</file>
         <file>resources/images/terrain/river/riverend+W+1+land+NW.png</file>
@@ -4479,14 +4458,6 @@
         <file>resources/images/terrain/river/riverend+W+4+land+SW.png</file>
         <file>resources/images/terrain/river/riverend+W+4+land+W.png</file>
         <file>resources/images/terrain/river/riverend+W+4.png</file>
-        <file>resources/images/terrain/river/riverend+W_lake+E+S.png</file>
-        <file>resources/images/terrain/river/riverend+W_lake+E.png</file>
-        <file>resources/images/terrain/river/riverend+W_lake+N+E+S.png</file>
-        <file>resources/images/terrain/river/riverend+W_lake+N+E.png</file>
-        <file>resources/images/terrain/river/riverend+W_lake+N+S.png</file>
-        <file>resources/images/terrain/river/riverend+W_lake+N.png</file>
-        <file>resources/images/terrain/river/riverend+W_lake+S.png</file>
-        <file>resources/images/terrain/river/riverend+W_lake.png</file>
         <file>resources/images/terrain/sea/sea+desert+E+S+W.png</file>
         <file>resources/images/terrain/sea/sea+desert+E+S.png</file>
         <file>resources/images/terrain/sea/sea+desert+E+W.png</file>
@@ -4928,5 +4899,34 @@
         <file>resources/images/terrain/snow/snow+S.png</file>
         <file>resources/images/terrain/snow/snow+W.png</file>
         <file>resources/images/terrain/snow/snow.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+N+S+W.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+N+W.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+S.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+S+W.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+W.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+E.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+E+S.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+E+S+W.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+E+W.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+S.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+S+W.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+W.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+E.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+E+W.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+N.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+N+E.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+N+E+W.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+N+W.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+W.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+E.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+E+S.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+N.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+N+E.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+N+E+S.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+N+S.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+S.png</file>
     </qresource>
 </RCC>
