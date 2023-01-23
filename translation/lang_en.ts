@@ -24309,7 +24309,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/frigate.js" line="99"/>
-        <source>&lt;r&gt;Naval Unit. Attacks naval units.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Naval Unit. Attacks naval and ground units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

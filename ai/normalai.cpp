@@ -871,7 +871,8 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
                 if (targets.size() > 0)
                 {
                     distanceModifier = 4;
-                    appendCaptureTransporterTargets(pUnit, pUnits, pEnemyBuildings, transporterTargets);
+                    appendCaptureTransporterTargets(pUnit, pUnits, pEnemyBuildings, transporterTargets, distanceModifier);
+                    distanceModifier = 5;
                     targets.insert(targets.cbegin(), transporterTargets.cbegin(), transporterTargets.cend());
                 }
                 if (pUnit->getAiMode() == GameEnums::GameAi_Normal)

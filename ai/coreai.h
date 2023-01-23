@@ -607,7 +607,7 @@ protected:
     void appendSupplyTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets);
     void appendTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets);
     void appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
-                                         spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets);
+                                         spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
     std::vector<Unit*> appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
                                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                             bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
