@@ -19,7 +19,7 @@ var VICTORYRULE =
     getRuleType : function()
     {
         // for now checkbox or spinbox
-        return "checkbox";
+        return ["checkbox"];
     },
     // defines the default value during map selection for this rule
     getDefaultRuleValue : function(itemNumber, map)

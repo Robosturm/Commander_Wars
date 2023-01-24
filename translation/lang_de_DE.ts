@@ -5942,7 +5942,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="777"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="798"/>
         <source>Victory rules</source>
         <translation type="unfinished"></translation>
     </message>
