@@ -44,8 +44,8 @@ COStyleMenu::COStyleMenu()
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 
     pApp->getAudioManager()->clearPlayList();

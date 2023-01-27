@@ -1,5 +1,6 @@
 #pragma once
 #include <QTransform>
+#include <QRect>
 
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
@@ -46,7 +47,7 @@ namespace oxygine
         void rehash(size_t& hash) const;
         void apply();
         void flush();
-        void render(const QTransform& tr, const QColor& c, const RectF& src, const RectF& dest);
+        void render(const QTransform& tr, const QColor& c, const QRectF& src, const QRect& dest);
         void setMatrixMode(bool set);
     private:
         void xapply();

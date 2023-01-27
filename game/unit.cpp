@@ -268,12 +268,12 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
             pSprite->setPriority(static_cast<short>(Priorities::Outline));
             pWaitSprite->setPriority(static_cast<short>(Priorities::OutlineWaiting));
         }
-        pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         addChild(pSprite);
         m_pUnitSprites.append(pSprite);
         pWaitSprite->setColor(QColor(100, 100, 100, 170));
-        pWaitSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+        pWaitSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pWaitSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         addChild(pWaitSprite);
         pWaitSprite->setVisible(false);
@@ -3048,7 +3048,7 @@ void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration,
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale((GameMap::getImageSize() / 2) / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize() * 0.5f) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPosition(x, y);
         pSprite->setPriority(static_cast<short>(Priorities::Icons));
 
@@ -3283,8 +3283,8 @@ void Unit::updateIconTweens()
         qint32 count = 0;
         for (qint32 i2 = 0; i2 < m_pIconSprites.size(); i2++)
         {
-            if ((m_pIconSprites[i2]->getPosition().x == x) &&
-                (m_pIconSprites[i2]->getPosition().y == y))
+            if ((m_pIconSprites[i2]->getPosition().x() == x) &&
+                (m_pIconSprites[i2]->getPosition().y() == y))
             {
                 count++;
             }
@@ -3295,8 +3295,8 @@ void Unit::updateIconTweens()
             qint32 step = 0;
             for (qint32 i2 = 0; i2 < m_pIconSprites.size(); i2++)
             {
-                if ((m_pIconSprites[i2]->getPosition().x == x) &&
-                    (m_pIconSprites[i2]->getPosition().y == y))
+                if ((m_pIconSprites[i2]->getPosition().x() == x) &&
+                    (m_pIconSprites[i2]->getPosition().y() == y))
                 {
                     qint32 visibileTime = 500;
                     float startTime = static_cast<float>(step) / static_cast<float>(count);
@@ -3311,8 +3311,8 @@ void Unit::updateIconTweens()
         {
             for (qint32 i2 = 0; i2 < m_pIconSprites.size(); i2++)
             {
-                if ((m_pIconSprites[i2]->getPosition().x == x) &&
-                    (m_pIconSprites[i2]->getPosition().y == y))
+                if ((m_pIconSprites[i2]->getPosition().x() == x) &&
+                    (m_pIconSprites[i2]->getPosition().y() == y))
                 {
                     m_pIconSprites[i2]->setVisible(true);
                 }

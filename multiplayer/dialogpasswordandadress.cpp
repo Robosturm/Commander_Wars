@@ -25,7 +25,7 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     oxygine::spTextField pText = oxygine::spTextField::create();
     pText->setHtmlText(text);
     pText->setStyle(style);
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - 80);
+    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, Settings::getHeight() / 2 - 80);
     pSpriteBox->addChild(pText);
 
     m_pTextbox = spTextbox::create(300);
@@ -36,7 +36,7 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     pText = oxygine::spTextField::create();
     pText->setHtmlText(tr("Password"));
     pText->setStyle(style);
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, Settings::getHeight() / 2);
+    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, Settings::getHeight() / 2);
     pSpriteBox->addChild(pText);
 
     m_pPasswordbox = spPasswordbox::create(300);

@@ -40,7 +40,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     setSize(width, heigth);
     m_Textfield->setWidth(m_Textbox->getScaledWidth() - 20);
     m_Textfield->setHeight(m_Textbox->getScaledHeight());
-    pClipActor->setSize(m_Textfield->getScaledSize().cast<oxygine::Point>());
+    pClipActor->setSize(m_Textfield->getScaledSize());
     pClipActor->setX(10);
     pClipActor->setY(5);
 
@@ -51,7 +51,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            qint32 x = pTouchEvent->localPosition.x - m_Textfield->getX();
+            qint32 x = pTouchEvent->localPosition.x() - m_Textfield->getX();
             m_focusPosition = getClickedLinePosition(x, getCurrentText(), m_Textfield->getStyle().font.font);
         }
         pEvent->stopPropagation();
@@ -97,7 +97,7 @@ void Textbox::update(const oxygine::UpdateState& us)
                 // calc text field position based on curmsgpos
                 qint32 xPos = 0;
                 auto textRect = m_Textfield->getTextRect();
-                qint32 fontWidth = textRect.getWidth() / drawText.size();
+                qint32 fontWidth = textRect.width() / drawText.size();
                 qint32 boxSize = (m_Textbox->getScaledWidth() - 40 - fontWidth);
                 xPos = -fontWidth * curmsgpos + boxSize / 2;
                 if (xPos > 0)
@@ -106,7 +106,7 @@ void Textbox::update(const oxygine::UpdateState& us)
                 }
                 else if ((drawText.size() - curmsgpos + 3) * fontWidth < boxSize)
                 {
-                    xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 3;
+                    xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().width() - fontWidth * 3;
                     if (xPos > 0)
                     {
                         xPos = 0;

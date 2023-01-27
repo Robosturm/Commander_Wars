@@ -52,9 +52,9 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Build List"));
-    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     pPanel->addItem(pLabel);
-    qint32 y = 10 + pLabel->getY() + pLabel->getTextRect().getHeight();
+    qint32 y = 10 + pLabel->getY() + pLabel->getTextRect().height();
     qint32 x = 10;
     
 
@@ -65,7 +65,7 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
         spLabel textField = spLabel::create(pPanel->getScaledWidth() - 40);
         textField->setStyle(headerStyle);
         textField->setHtmlText(group.name);
-        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
+        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().width() / 2, y);
         pPanel->addItem(textField);
         y += textField->getHeight() + 10;
         x = 10;

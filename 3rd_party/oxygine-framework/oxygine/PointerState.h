@@ -1,6 +1,7 @@
 #pragma once
+#include <QPoint>
+
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 namespace oxygine
 {
@@ -26,14 +27,14 @@ namespace oxygine
         {
             return m_index;
         }
-        const Point&  getPosition() const
+        const QPoint&  getPosition() const
         {
             return m_position;
         }
 
     private:
         friend class Input;
-        Point m_position;
+        QPoint m_position;
         qint32 m_pressed{0};
         pointer_index m_index{1};
     };

@@ -1,8 +1,7 @@
 #pragma once
+#include <QPoint>
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
-#include "3rd_party/oxygine-framework/oxygine/Input.h"
-#include "3rd_party/oxygine-framework/oxygine/core/closure.h"
 
 namespace oxygine
 {
@@ -77,6 +76,6 @@ namespace oxygine
             };
 
             SlidingEvent(SEvent ev) : Event(ev) {}
-            Vector2 speed;
+            QPoint speed;
     };
 }

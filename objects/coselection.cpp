@@ -393,10 +393,10 @@ void COSelection::hoveredCOChanged(QString coid)
         m_COName->setX(10);
 
         m_COBio->setHtmlText(coBio);
-        m_COBio->setHeight(m_COBio->getTextRect().getHeight() + 20);
+        m_COBio->setHeight(m_COBio->getTextRect().height() + 20);
 
         m_CODesc->setHtmlText(coDesc);
-        m_CODesc->setHeight(m_CODesc->getTextRect().getHeight() + 20);
+        m_CODesc->setHeight(m_CODesc->getTextRect().height() + 20);
         m_CODesc->setY(m_COBio->getY() + m_COBio->getScaledHeight() + 10);
 
         m_CoDescription->setContentHeigth(m_CODesc->getY() + m_CODesc->getScaledHeight() + 20);

@@ -6,7 +6,6 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 #include "3rd_party/oxygine-framework/oxygine/Property.h"
 #include <vector>
@@ -84,7 +83,6 @@ namespace oxygine
     class Actor: public EventDispatcher
     {
     public:
-        static constexpr float safetyArea = 10;
         explicit Actor();
         virtual ~Actor();
         using children = std::vector<spActor>;
@@ -110,7 +108,7 @@ namespace oxygine
         }
 #endif
 
-        const Point& getPosition() const
+        const QPoint& getPosition() const
         {
 #ifdef GRAPHICSUPPORT
             return m_pos;
@@ -121,7 +119,7 @@ namespace oxygine
         qint32 getX() const
         {
 #ifdef GRAPHICSUPPORT
-            return m_pos.x;
+            return m_pos.x();
 #else
             return 0.0f;
 #endif
@@ -129,12 +127,12 @@ namespace oxygine
         qint32 getY() const
         {
 #ifdef GRAPHICSUPPORT
-            return m_pos.y;
+            return m_pos.y();
 #else
             return 0.0f;
 #endif
         }
-        const Vector2& getScale() const
+        const QPointF& getScale() const
         {
 #ifdef GRAPHICSUPPORT
             return m_scale;
@@ -145,7 +143,7 @@ namespace oxygine
         float getScaleX() const
         {
 #ifdef GRAPHICSUPPORT
-            return m_scale.x;
+            return m_scale.x();
 #else
             return 0.0f;
 #endif
@@ -153,7 +151,7 @@ namespace oxygine
         float getScaleY() const
         {
 #ifdef GRAPHICSUPPORT
-            return m_scale.y;
+            return m_scale.y();
 #else
             return 0.0f;
 #endif
@@ -200,7 +198,7 @@ namespace oxygine
         {
             return m_parent;
         }
-        const Point& getSize() const
+        const QSize& getSize() const
         {
 #ifdef GRAPHICSUPPORT
             return m_size;
@@ -209,35 +207,35 @@ namespace oxygine
 #endif
         }
         /**Returns Size*Scale*/
-        Vector2 getScaledSize() const
+        QSize getScaledSize() const
         {
 #ifdef GRAPHICSUPPORT
-            return m_size.cast<Vector2>().mult(m_scale);
+            return QSize(getScaledWidth(), getScaledHeight());
 #else
             return Vector2();
 #endif
         }
         qint32 getWidth() const;
-        float getScaledWidth() const
+        qint32 getScaledWidth() const
         {
 #ifdef GRAPHICSUPPORT
-            return m_size.x * m_scale.x;
+            return m_size.width() * m_scale.x();
 #else
             return 0;
 #endif
         }
         qint32 getHeight() const;
-        float getScaledHeight() const
+        qint32 getScaledHeight() const
         {
 #ifdef GRAPHICSUPPORT
-            return m_size.y * m_scale.y;
+            return m_size.height() * m_scale.y();
 #else
             return 0;
 #endif
         }
         unsigned char getAlpha() const;
         const spClock& getClock() const;
-        virtual RectF getDestRect() const;
+        virtual QRect getDestRect() const;
 
 #ifdef GRAPHICSUPPORT
         /**return local actor transformation*/
@@ -247,7 +245,7 @@ namespace oxygine
         QTransform computeGlobalTransform(Actor* parent = nullptr) const;
 #endif
 
-        void setPosition(const Point& pos);
+        void setPosition(const QPoint& pos);
         void setPosition(qint32 x, qint32 y);
         void setX(qint32 x);
         void setY(qint32 y);
@@ -258,7 +256,7 @@ namespace oxygine
         /** set z order draw priority, from back (low value) to front (high value). Max value is 32000, Min value -32000*/
         void setPriority(qint32 zorder);
         void setScale(float scale);
-        void setScale(const Vector2& scale);
+        void setScale(const QPointF& scale);
         void setScale(float scaleX, float scaleY);
         void setScaleX(float sx);
         void setScaleY(float sy);
@@ -268,7 +266,7 @@ namespace oxygine
         void setRotationDegrees(float angle);
 
         /**Sets Size of Actor. Size doesn't scale contents of Actor. Size only affects event handling and rendering if you change Anchor*/
-        void setSize(const Point&);
+        void setSize(const QSize&);
         void setSize(qint32 w, qint32 h);
         virtual void setWidth(qint32 w);
         virtual void setHeight(qint32 h);
@@ -312,7 +310,7 @@ namespace oxygine
             }
 #endif
         }
-        virtual bool isOn(const Vector2& localPosition, float localScale = 1.0f);
+        virtual bool isOn(const QPoint& localPosition, float localScale = 1.0f);
         /**Returns true if actor is child or located deeper in current subtree*/
         bool isDescendant(const Actor* actor) const;
         void addChild(spActor actor);
@@ -359,16 +357,13 @@ namespace oxygine
         virtual void doRender(const RenderState&) {}
 
         //converts position in parent space to local space
-        Vector2 parent2local(const Vector2& pos) const;
+        QPoint parent2local(const QPoint& pos) const;
         //converts local position to parent space
-        Vector2 local2parent(const Vector2& pos = Vector2()) const;
-
+        QPoint local2parent(const QPoint& pos = QPoint()) const;
         //converts local position to Stage
-        Vector2 local2stage(const Vector2& pos = Vector2(), Actor* stage = nullptr) const;
-        Vector2 local2stage(float x, float y, Actor* stage = nullptr) const;
+        QPoint local2stage(const QPoint& pos = QPoint(), Actor* stage = nullptr) const;
         //converts global position (position in Stage space) to local space
-        Vector2 stage2local(const Vector2& pos = Vector2(), Actor* stage = nullptr) const;
-        Vector2 stage2local(float x, float y, Actor* stage = nullptr) const;
+        QPoint stage2local(const QPoint& pos = QPoint(), Actor* stage = nullptr) const;
 
         /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
         Stage* __getStage();
@@ -376,24 +371,24 @@ namespace oxygine
         void setNotPressed(MouseButton b);
 
         bool internalRender(RenderState& rs, const RenderState& parentRS);
-        virtual bool getBounds(RectF&) const;
-        static Vector2 convert_local2stage(spActor & child, const Vector2& pos, spActor root = spActor());
-        static Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-        static Vector2 convert_stage2local(spActor & child, const Vector2& pos, spActor root = spActor());
-        static Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-        static RectF getActorTransformedDestRect(Actor* actor, const QTransform& tr);
+        virtual bool getBounds(QRect&) const;
+        static QPoint convert_local2stage(spActor & child, const QPoint& pos, spActor root = spActor());
+        static QPoint convert_local2stage(const Actor* child, const QPoint& pos, const Actor* root = nullptr);
+        static QPoint convert_stage2local(spActor & child, const QPoint& pos, spActor root = spActor());
+        static QPoint convert_stage2local(const Actor* child, const QPoint& pos, const Actor* root = nullptr);
+        static QRect getActorTransformedDestRect(Actor* actor, const QTransform& tr);
         /*****************************************************************************************/
         // properties for tweens
         /*****************************************************************************************/
-        using TweenPosition = Property2Args<qint32, Point, const Point&, Actor, &Actor::getPosition, &Actor::setPosition>;
+        using TweenPosition = Property2Args<qint32, QPoint, const QPoint&, Actor, &Actor::getPosition, &Actor::setPosition>;
         using TweenX = Property<qint32, qint32, Actor, &Actor::getX, &Actor::setX>;
         using TweenY = Property<qint32, qint32, Actor, &Actor::getY, &Actor::setY>;
         using TweenWidth = Property<qint32, qint32, Actor, &Actor::getWidth, &Actor::setWidth>;
         using TweenHeight = Property<qint32, qint32, Actor, &Actor::getHeight, &Actor::setHeight>;
-        using TweenSize = Property2Args2<qint32, Point, const Point&, const Point&, Actor, &Actor::getSize, &Actor::setSize>;
+        using TweenSize = Property2Args2<qint32, QSize, const QSize&, const QSize&, Actor, &Actor::getSize, &Actor::setSize>;
         using TweenRotation = Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>;
         using TweenRotationDegrees = Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>;
-        using TweenScale = Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getScale, &Actor::setScale>;
+        using TweenScale = Property2Args1Arg<float, QPointF, const QPointF&, Actor, &Actor::getScale, &Actor::setScale>;
         using TweenScaleX = Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>;
         using TweenScaleY = Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>;
         using TweenAlpha = Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>;
@@ -407,8 +402,8 @@ namespace oxygine
         static void setParent(Actor* actor, Actor* parent);
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
-        void __setSize(const Point&);
-        virtual void sizeChanged(const Point& size);
+        void __setSize(const QSize&);
+        virtual void sizeChanged(const QSize& size);
         spTween __addTween(spTween tween, bool rel);
         bool prepareRender(RenderState& rs, const RenderState& parentRS);
         void markTranformDirty();
@@ -418,10 +413,10 @@ namespace oxygine
         virtual void doUpdate(const UpdateState& us);
         void dispatchToParent(Event* event);
         void insertActor(spActor & actor);
-        static Vector2 convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos);
-        static Vector2 convert_global2local(spActor & child, spActor & parent, const Vector2& pos);
-        static Vector2 convert_local2global_(const Actor* child, const Actor* parent, Vector2 pos);
-        static Vector2 convert_local2global(spActor & child, spActor & parent, const Vector2& pos);
+        static QPoint convert_global2local_(const Actor* child, const Actor* parent, QPoint pos);
+        static QPoint convert_global2local(spActor & child, spActor & parent, const QPoint& pos);
+        static QPoint convert_local2global_(const Actor* child, const Actor* parent, QPoint pos);
+        static QPoint convert_local2global(spActor & child, spActor & parent, const QPoint& pos);
     protected:
 #ifdef GRAPHICSUPPORT
         enum flags
@@ -461,10 +456,10 @@ namespace oxygine
     private:
 #ifdef GRAPHICSUPPORT
         unsigned char   m_alpha{255};
-        Point m_pos;
-        Vector2 m_scale{1.0f, 1.0f};
-        Point m_size;
-        Vector2 m_anchor;
+        QPoint m_pos;
+        QPointF m_scale{1.0f, 1.0f};
+        QSize m_size;
+        QPointF m_anchor;
         float  m_rotation{0};
         qint32 m_zOrder{0};
         qint32 m_onGlobalTouchUpEvent{-1};

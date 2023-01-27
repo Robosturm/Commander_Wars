@@ -57,9 +57,9 @@ namespace oxygine
             return m_atlas;
         }
         /**Returns size of frame*/
-        const Point& getSize() const;
-        float getWidth() const;
-        float getHeight() const;
+        const QSize& getSize() const;
+        qint32 getWidth() const;
+        qint32 getHeight() const;
         void setFrame(qint32 col, qint32 row, const AnimationFrame& frame);
         void setFrameRate(qint32 v)
         {

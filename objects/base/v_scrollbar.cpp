@@ -191,7 +191,7 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
         {
             Tooltip::hideTooltip();
             pTouchEvent->stopPropagation();
-            qint32 x = pTouchEvent->localPosition.x - m_slider->getScaledWidth() / 2;
+            qint32 x = pTouchEvent->localPosition.x() - m_slider->getScaledWidth() / 2;
             if (x < 20)
             {
                 x = 20;
@@ -202,7 +202,7 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
             }
             m_slider->setX(x);
             // calc scroll value :)
-            if (static_cast<float>(m_Width - m_slider->getScaledWidth() - 20 - 20) > 0)
+            if (m_Width - m_slider->getScaledWidth() - 20 - 20 > 0)
             {
                 m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(m_Width - m_slider->getScaledWidth() - 20 - 20);
             }

@@ -51,13 +51,13 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 40);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("CO banlist"));
-    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     if (pLabel->getX() < 20)
     {
         pLabel->setX(20);
     }
     pPanel->addItem(pLabel);
-    qint32 y = pLabel->getY() + pLabel->getTextRect().getHeight() + 10;
+    qint32 y = pLabel->getY() + pLabel->getTextRect().height() + 10;
     qint32 x = 10;
 
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -67,7 +67,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         spLabel textField = spLabel::create(pPanel->getScaledWidth() - 40);
         textField->setStyle(headerStyle);
         textField->setHtmlText(group.name);
-        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
+        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().width() / 2, y);
         pPanel->addItem(textField);
         y += textField->getHeight() + 10;
         x = 10;

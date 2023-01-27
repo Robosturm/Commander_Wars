@@ -25,7 +25,7 @@ void Passwordbox::update(const oxygine::UpdateState& us)
         {
             // calc text field position based on curmsgpos
             qint32 xPos = 0;
-            qint32 fontWidth = m_Textfield->getTextRect().getWidth() / drawText.size();
+            qint32 fontWidth = m_Textfield->getTextRect().width() / drawText.size();
             qint32 boxSize = (m_Textbox->getScaledWidth() - 40 - fontWidth);
             xPos = -fontWidth * curmsgpos + boxSize / 2;
             if (xPos > 0)
@@ -34,7 +34,7 @@ void Passwordbox::update(const oxygine::UpdateState& us)
             }
             else if ((drawText.size() - curmsgpos + 3) * fontWidth < boxSize)
             {
-                xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 3;
+                xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().width() - fontWidth * 3;
                 if (xPos > 0)
                 {
                     xPos = 0;

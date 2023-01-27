@@ -157,7 +157,7 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
             pSprite->setFixedSprite(true);
             pSprite->setTerrainSpriteName(id);
             pSprite->loadSprites();
-            pSprite->setScale(2);
+            pSprite->setScale(2.0f);
             pSprite->setPosition(x, y);
             pSprite->addClickListener([this, id](oxygine::Event*)
             {
@@ -223,7 +223,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
                 pSprite->setResAnim(pAnim);
                 pSprite->setSize(pAnim->getSize());
-                pSprite->setScale(GameMap::getImageSize() * scale / pAnim->getWidth());
+                pSprite->setScale(static_cast<float>(GameMap::getImageSize()) * scale / static_cast<float>(pAnim->getWidth()));
                 pRect->addChild(pSprite);
                 m_pPanel->addItem(pRect);
 

@@ -91,7 +91,7 @@ void Wikipage::loadText(QString text)
     pLabel->setWidth(m_pPanel->getContentWidth() - 80);
     pLabel->setPosition(10, m_y);
     m_pPanel->addItem(pLabel);
-    m_y += pLabel->getTextRect().getHeight() + 10;
+    m_y += pLabel->getTextRect().height() + 10;
 }
 
 void Wikipage::loadHeadline(QString text)
@@ -102,9 +102,9 @@ void Wikipage::loadHeadline(QString text)
     oxygine::spTextField pLabel = oxygine::spTextField::create();
     pLabel->setStyle(style);
     pLabel->setHtmlText(text);
-    pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth() / 2, m_y);
+    pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().width() / 2, m_y);
     m_pPanel->addItem(pLabel);
-    m_y += pLabel->getTextRect().getHeight() + 10;
+    m_y += pLabel->getTextRect().height() + 10;
 }
 
 QStringList & Wikipage::getPageStack()

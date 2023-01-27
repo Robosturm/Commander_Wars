@@ -40,7 +40,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     oxygine::spTextField pText = oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Conditions"));
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, 70);
+    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, 70);
     pSpriteBox->addChild(pText);
     QSize size(Settings::getWidth() - 40, Settings::getHeight() / 2 - 160);
     m_ConditionPanel = spPanel::create(true, size, size);
@@ -86,7 +86,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     pText = oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Events"));
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, Settings::getHeight() / 2);
+    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, Settings::getHeight() / 2);
     pSpriteBox->addChild(pText);
     m_EventPanel = spPanel::create(true, size, size);
     m_EventPanel->setPosition(30, Settings::getHeight() / 2 + 40);

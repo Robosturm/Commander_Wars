@@ -22,10 +22,10 @@ namespace oxygine
     {
     }
 
-    bool TextField::isOn(const Vector2& localPosition, float)
+    bool TextField::isOn(const QPoint& localPosition, float)
     {
 #ifdef GRAPHICSUPPORT
-        return getTextRect().pointIn(Point((int)localPosition.x, (int)localPosition.y));
+        return getTextRect().contains(localPosition);
 #else
         return false;
 #endif
@@ -94,7 +94,7 @@ namespace oxygine
 #endif
     }
 
-    void TextField::sizeChanged(const Point&)
+    void TextField::sizeChanged(const QSize&)
     {
         rebuildText();
     }
@@ -150,7 +150,7 @@ namespace oxygine
 #endif
     }
 
-    const Rect& TextField::getTextRect() const
+    const QRect& TextField::getTextRect() const
     {
 #ifdef GRAPHICSUPPORT
         return m_textRect;
@@ -159,10 +159,10 @@ namespace oxygine
 #endif
     }
 
-    bool TextField::getBounds(RectF& r) const
+    bool TextField::getBounds(QRect& r) const
     {
 #ifdef GRAPHICSUPPORT
-        r = getTextRect().cast<RectF>();
+        r = getTextRect();
 #endif
         return true;
     }
@@ -195,7 +195,7 @@ namespace oxygine
         }
         text::Aligner rd(m_style, getSize());
         rd.align(*m_root.get());
-        m_textRect = rd.getBounds().cast<Rect>();
+        m_textRect = rd.getBounds();
         if (lock)
         {
             m_Locked.unlock();

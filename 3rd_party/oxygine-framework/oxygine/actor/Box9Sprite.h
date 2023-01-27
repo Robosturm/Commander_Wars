@@ -44,7 +44,6 @@ namespace oxygine
         {
             return m_guideY[1];
         }
-        RectF getInnerArea();
         void setVerticalMode(StretchMode m);
         void setHorizontalMode(StretchMode m);
         /**
@@ -53,10 +52,10 @@ namespace oxygine
         void setGuides(float x1, float x2, float y1, float y2);
         void setVerticalGuides(float x1, float x2);
         void setHorizontalGuides(float y1, float y2);
-        virtual bool isOn(const Vector2& localPosition, float localScale) override;
-        virtual RectF getDestRect() const override;
+        virtual bool isOn(const QPoint& localPosition, float localScale) override;
+        virtual QRect getDestRect() const override;
     protected:
-        virtual void sizeChanged(const Point& size)  override;
+        virtual void sizeChanged(const QSize& size)  override;
         virtual void animFrameChanged(const AnimationFrame& f) override;
         virtual void changeAnimFrame(const AnimationFrame& f) override;
         virtual void doRender(const RenderState&) override;
@@ -75,7 +74,7 @@ namespace oxygine
         float m_guideY[2];
         std::vector<float> m_guidesX;
         std::vector<float> m_guidesY;
-        std::vector<float> m_pointsX;
-        std::vector<float> m_pointsY;
+        std::vector<qint32> m_pointsX;
+        std::vector<qint32> m_pointsY;
     };
 }

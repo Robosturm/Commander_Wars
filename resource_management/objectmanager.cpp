@@ -32,7 +32,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
     textField->setHtmlText(text);
     if (width < 0)
     {
-        width = textField->getTextRect().getWidth() + 10;
+        width = textField->getTextRect().width() + 10;
         if (!Settings::getSmallScreenDevice())
         {
             if (width < 180)
@@ -42,7 +42,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
         }
     }
     textField->setWidth(width - 10);
-    textField->setPosition(width / 2 - textField->getTextRect().getWidth() / 2, 2);
+    textField->setPosition(width / 2 - textField->getTextRect().width() / 2, 2);
     if (textField->getX() < 5)
     {
         textField->setX(5);

@@ -205,8 +205,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
                 {
                     pBack = oxygine::spSprite::create();
                     pBack->setResAnim(pAnim);
-                    pBack->setScaleX(Settings::getWidth() / pAnim->getWidth());
-                    pBack->setScaleY(Settings::getHeight() / pAnim->getHeight());
+                    pBack->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pAnim->getWidth()));
+                    pBack->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pAnim->getHeight()));
                     pBack->setSize(pAnim->getSize());
                 }
                 else

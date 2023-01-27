@@ -32,8 +32,8 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     pSprite->setResAnim(pAnim);
     if (pAnim != nullptr)
     {
-        pSprite->setScaleX((Settings::getWidth() + 8.0f) / pAnim->getWidth());
-        pSprite->setScaleY((Settings::getHeight() + 8.0f) / pAnim->getHeight());
+        pSprite->setScaleX(static_cast<float>(Settings::getWidth() + 8) / static_cast<float>(pAnim->getWidth()));
+        pSprite->setScaleY(static_cast<float>(Settings::getHeight() + 8) / static_cast<float>(pAnim->getHeight()));
     }
     pSprite->setPosition(-4.0f, -4.0f);
     QColor color = pPlayer->getColor();
@@ -60,11 +60,11 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
             m_CO->setResAnim(pAnim);
             if (Settings::getSmallScreenDevice())
             {
-                m_CO->setScale((Settings::getHeight() - 60) / pAnim->getHeight());
+                m_CO->setScale(static_cast<float>(Settings::getHeight() - 60) / static_cast<float>(pAnim->getHeight()));
             }
             else
             {
-                m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
+                m_CO->setScale(static_cast<float>(Settings::getHeight() - 300) / static_cast<float>(pAnim->getHeight()));
             }
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
             m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() - 20, Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2);
@@ -82,11 +82,11 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
             m_CO->setResAnim(pAnim);
             if (Settings::getSmallScreenDevice())
             {
-                m_CO->setScale((Settings::getHeight() - 60) / pAnim->getHeight());
+                m_CO->setScale(static_cast<float>(Settings::getHeight() - 60) / static_cast<float>(pAnim->getHeight()));
             }
             else
             {
-                m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
+                m_CO->setScale(static_cast<float>(Settings::getHeight() - 300) / static_cast<float>(pAnim->getHeight()));
             }
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
             m_CO->setPosition(20, Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2);
@@ -103,7 +103,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     {
         textField->setHtmlText((QString("Day ") + QString::number(m_pMap->getCurrentDay())));
     }
-    textField->setPosition(10, Settings::getHeight() / 2 - textField->getTextRect().getHeight() / 2);
+    textField->setPosition(10, Settings::getHeight() / 2 - textField->getTextRect().height() / 2);
     if (pCO != nullptr)
     {
         textField->setX(40 + m_CO->getScaledWidth());

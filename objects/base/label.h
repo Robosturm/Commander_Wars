@@ -39,7 +39,7 @@ public:
      * @param localScale
      * @return
      */
-    const oxygine::Rect& getTextRect()
+    const auto& getTextRect()
     {
         return m_textField->getTextRect();
     }

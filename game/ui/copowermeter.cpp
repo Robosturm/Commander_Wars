@@ -146,7 +146,7 @@ void CoPowermeter::drawPowerMeter()
                 pText->setY(0);
                 if (m_flippedX)
                 {
-                    pText->setX(-10 - pText->getTextRect().getWidth());
+                    pText->setX(-10 - pText->getTextRect().width());
                 }
                 else
                 {
@@ -176,7 +176,7 @@ void CoPowermeter::drawPowerMeter()
                 pText->setY(0);
                 if (m_flippedX)
                 {
-                    pText->setX(-10 - pText->getTextRect().getWidth());
+                    pText->setX(-10 - pText->getTextRect().width());
                 }
                 else
                 {
@@ -206,7 +206,7 @@ void CoPowermeter::drawPowerMeter()
                 pText->setY(- 4);
                 if (m_flippedX)
                 {
-                    pText->setX(-10 - pText->getTextRect().getWidth());
+                    pText->setX(-10 - pText->getTextRect().width());
                 }
                 else
                 {

@@ -82,10 +82,10 @@ void DialogModifyUnit::updateData()
     spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 80);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Edit unit"));
-    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     m_pPanel->addItem(pLabel);
 
-    qint32 y = 30 + pLabel->getTextRect().getHeight();
+    qint32 y = 30 + pLabel->getTextRect().height();
     pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Custom name: "));
@@ -285,7 +285,7 @@ void DialogModifyUnit::updateData()
         if (pAnim != nullptr)
         {
             pSprite->setResAnim(pAnim);
-            pSprite->setScale(pAnim->getWidth() / 30.0f);
+            pSprite->setScale(static_cast<float>(pAnim->getWidth()) / 30.0f);
             pSprite->setSize(pAnim->getSize());
         }
         return pSprite;

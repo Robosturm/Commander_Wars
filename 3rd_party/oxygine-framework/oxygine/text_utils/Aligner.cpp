@@ -5,12 +5,12 @@ namespace oxygine
 {
     namespace text
     {
-        Aligner::Aligner(const TextStyle& style, const Vector2& size)        
+        Aligner::Aligner(const TextStyle& style, const QSize& size)
 #ifdef GRAPHICSUPPORT
             : m_style(style),
               m_bounds(0, 0, 0, 0),
-              m_width(size.x),
-              m_height(size.y),
+              m_width(size.width()),
+              m_height(size.height()),
               m_x(0),
               m_y(0),
               m_metrics(style.font.font)
@@ -36,7 +36,7 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
             m_x = 0;
             m_y = m_metrics.ascent();
-            m_bounds = Rect(getXAlignment(0), 0, 0, 0);
+            m_bounds = QRect(getXAlignment(0), 0, 0, 0);
 #endif
         }
 
@@ -45,8 +45,8 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
             m_y += m_lineSkip;
             updateX();
-            m_bounds.setX(std::min(lastLineX, m_bounds.getX()));
-            m_bounds.setWidth(std::max(lastLineWidth, m_bounds.getWidth()));
+            m_bounds.moveLeft(std::min(lastLineX, m_bounds.x()));
+            m_bounds.setWidth(std::max(lastLineWidth, m_bounds.width()));
             m_x = 0;
 #endif
         }
@@ -87,7 +87,7 @@ namespace oxygine
         {
 #ifdef GRAPHICSUPPORT
             m_x += lastLineWidth;
-            m_bounds.setWidth(std::max(lastLineWidth, m_bounds.getWidth()));
+            m_bounds.setWidth(std::max(lastLineWidth, m_bounds.width()));
 #endif
         }
 

@@ -22,15 +22,15 @@ void GamemapImageSaver::saveMapAsImage(QString filename, BaseGamemenu& menu)
         QOpenGLFramebufferObject buffer(size);
         buffer.bind();
         QColor clearColor(0, 0, 255, 255);
-        oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
+        QRect viewport(0, 0, size.width(), size.height());
         auto viewProjection = oxygine::Stage::getViewProjectionMatrix(viewport);
         oxygine::spVideoDriver driver = oxygine::VideoDriver::instance;
         driver->setViewport(viewport);
         driver->clear(clearColor);
         oxygine::STDRenderer::instance->setViewProj(viewProjection);
-        oxygine::Stage::getStage()->setSize(viewport.getWidth(), viewport.getHeight());
+        oxygine::Stage::getStage()->setSize(viewport.width(), viewport.height());
         oxygine::RenderState rs;
-        oxygine::RectF clip(0.0f, 0.0f, viewport.getWidth(), viewport.getHeight());
+        QRect clip(0, 0, viewport.width(), viewport.height());
         rs.clip = &clip;
         auto orgPos = pMap->getPosition();
         pMap->setPosition(0, 0);

@@ -1351,17 +1351,17 @@ void GameMenue::autoScroll(QPoint cursorPosition)
             qint32 moveX = 0;
             qint32 moveY = 0;
             auto bottomRightUi = m_IngameInfoBar->getDetailedViewBox()->getScaledSize() * m_IngameInfoBar->getScaleX();
-            if ((cursorPosition.x() < m_IngameInfoBar->getX() - bottomRightUi.x &&
-                 (cursorPosition.x() > m_IngameInfoBar->getX() - bottomRightUi.x - 50) &&
-                 (m_pMap->getX() + m_pMap->getMapWidth() * m_pMap->getZoom() * GameMap::getImageSize() > m_IngameInfoBar->getX() - bottomRightUi.x - 50)) &&
-                cursorPosition.y() > Settings::getHeight() - bottomRightUi.y)
+            if ((cursorPosition.x() < m_IngameInfoBar->getX() - bottomRightUi.width() &&
+                 (cursorPosition.x() > m_IngameInfoBar->getX() - bottomRightUi.width() - 50) &&
+                 (m_pMap->getX() + m_pMap->getMapWidth() * m_pMap->getZoom() * GameMap::getImageSize() > m_IngameInfoBar->getX() - bottomRightUi.width() - 50)) &&
+                cursorPosition.y() > Settings::getHeight() - bottomRightUi.height())
             {
 
                 moveX = -GameMap::getImageSize() * m_pMap->getZoom();
             }
-            if ((cursorPosition.y() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.y) &&
-                (m_pMap->getY() + m_pMap->getMapHeight() * m_pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.y) &&
-                cursorPosition.x() > m_IngameInfoBar->getX() - bottomRightUi.x)
+            if ((cursorPosition.y() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.height()) &&
+                (m_pMap->getY() + m_pMap->getMapHeight() * m_pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.height()) &&
+                cursorPosition.x() > m_IngameInfoBar->getX() - bottomRightUi.width())
             {
                 moveY = -GameMap::getImageSize() * m_pMap->getZoom();
             }

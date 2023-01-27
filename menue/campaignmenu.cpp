@@ -43,8 +43,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/mapselection");
@@ -246,9 +246,9 @@ void CampaignMenu::playNextEvent(qint32 event)
     }
 }
 
-void CampaignMenu::focusOnPosition(oxygine::Vector2 position)
+void CampaignMenu::focusOnPosition(QPoint position)
 {
-    m_pMapBackground->setPosition(Settings::getWidth() / 2 - position.x, Settings::getHeight() / 2 - position.y);
+    m_pMapBackground->setPosition(Settings::getWidth() / 2 - position.x(), Settings::getHeight() / 2 - position.y());
     m_pSlidingActor->snap();
 }
 

@@ -37,8 +37,7 @@ namespace oxygine
             return;
         }
 
-        Point p(x, y);
-
+        QPoint p(x, y);
         TouchEvent me(type, true, p);
         me.index = ps->getIndex();
         me.mouseButton = button;
@@ -69,14 +68,14 @@ namespace oxygine
         {
             return;
         }
-        TouchEvent me(TouchEvent::MOVE, true, Point(x, y));
+        TouchEvent me(TouchEvent::MOVE, true, QPoint(x, y));
         me.index = ps->getIndex();
         me.pressure = pressure;
-        ps->m_position = Point(x, y);
+        ps->m_position = QPoint(x, y);
         stage->handleEvent(&me);
     }
 
-    void Input::sendPointerWheelEvent(spStage & stage, const Vector2& dir, PointerState* ps)
+    void Input::sendPointerWheelEvent(spStage & stage, const QPoint& dir, PointerState* ps)
     {
         TouchEvent te(TouchEvent::WHEEL_DIR, true, ps->getPosition());
         te.index = ps->getIndex();

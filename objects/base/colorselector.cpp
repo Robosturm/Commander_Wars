@@ -4,7 +4,6 @@
 
 #include "resource_management/objectmanager.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
 #include "objects/base/label.h"
@@ -97,8 +96,8 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             if (pTouchEvent != nullptr &&
                 m_trigger.elapsed() >= 50)
             {
-                qint32 red = pTouchEvent->localPosition.x / (pixelSize);
-                qint32 green = pTouchEvent->localPosition.y / (pixelSize);
+                qint32 red = pTouchEvent->localPosition.x() / (pixelSize);
+                qint32 green = pTouchEvent->localPosition.y() / (pixelSize);
                 emit sigSelecetedColorChanged(QColor(red, green, m_CurrentColor.blue()));
                 m_trigger.start();
             }
@@ -114,8 +113,8 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
-                qint32 red = pTouchEvent->localPosition.x / (pixelSize);
-                qint32 green = pTouchEvent->localPosition.y / (pixelSize);
+                qint32 red = pTouchEvent->localPosition.x() / (pixelSize);
+                qint32 green = pTouchEvent->localPosition.y() / (pixelSize);
                 emit sigSelecetedColorChanged(QColor(red, green, m_CurrentColor.blue()));
             }
             FocusableObject::looseFocus();
@@ -148,7 +147,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("colordialogcursor_1");
     m_Cursor1->setResAnim(pAnim);
     m_Cursor1->setPriority(5);
-    m_Cursor1->setScale(2);
+    m_Cursor1->setScale(2.0f);
     m_Cursor1->setPosition(m_CurrentColor.red() * pixelSize - pAnim->getWidth() * m_Cursor1->getScaleX() / 2, m_CurrentColor.green() * pixelSize - pAnim->getHeight()  * m_Cursor1->getScaleY() / 2);
     m_ColorDialog->addChild(m_Cursor1);
 
@@ -177,7 +176,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             if (pTouchEvent != nullptr &&
                 m_trigger.elapsed() >= 50)
             {
-                qint32 blue = pTouchEvent->localPosition.y / (pixelSize);
+                qint32 blue = pTouchEvent->localPosition.y() / (pixelSize);
                 emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), m_CurrentColor.green(), blue));
                 m_trigger.start();
             }
@@ -193,7 +192,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
-                qint32 blue = pTouchEvent->localPosition.y / (pixelSize);
+                qint32 blue = pTouchEvent->localPosition.y() / (pixelSize);
                 emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), m_CurrentColor.green(), blue));
             }
             FocusableObject::looseFocus();
@@ -203,7 +202,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     m_Cursor2 = oxygine::spSprite::create();
     pAnim = ObjectManager::getInstance()->getResAnim("colordialogcursor_2");
     m_Cursor2->setResAnim(pAnim);
-    m_Cursor2->setScale(3);
+    m_Cursor2->setScale(3.0f);
     m_Cursor2->setPriority(5);
     m_Cursor2->setPosition(x - pAnim->getWidth() * m_Cursor2->getScaleX() + 5, m_CurrentColor.blue() * pixelSize - pAnim->getHeight() / 2);
     m_ColorDialog->addChild(m_Cursor2);

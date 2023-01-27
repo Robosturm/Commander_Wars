@@ -2,7 +2,6 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "ShaderProgram.h"
 #include "texture.h"
@@ -101,20 +100,20 @@ namespace oxygine
         bool isReady() const;
         spTexture createTexture();
         void clear(const QColor& color);
-        void begin(const Rect& viewport, const QColor* color);
+        void begin(const QRect& viewport, const QColor* color);
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, qint32 primitives);
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, const quint16* indicesData, quint32 numIndices);
-        void getViewport(Rect& r) const;
-        bool getScissorRect(Rect&) const;
+        void getViewport(QRect& r) const;
+        bool getScissorRect(QRect&) const;
         spTexture getRenderTarget() const;
         ShaderProgram*  getShaderProgram() const
         {
             return m_pShaderProgram;
         }
         const VertexDeclaration* getVertexDeclaration() const;
-        void setScissorRect(const Rect*);
+        void setScissorRect(const QRect*);
         void setDefaultSettings();
-        void setViewport(const Rect& viewport);
+        void setViewport(const QRect& viewport);
         void setRenderTarget(spTexture &);
         void setShaderProgram(ShaderProgram*);
         void setTexture(qint32 sampler, spTexture &);
@@ -122,17 +121,15 @@ namespace oxygine
         void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest);
         void setUniform(const char* id, const Uniform4f* v, qint32 num);
         void setUniform(const char* id, const Uniform3f* v, qint32 num);
-        void setUniform(const char* id, const Vector2* v, qint32 num);
         void setUniform(const char* id, float v);
         void setUniformInt(const char* id, qint32 v);
         void setUniform(const char* id, const Uniform4f& v);
         void setUniform(const char* id, const Uniform3f& v);
-        void setUniform(const char* id, const Vector2& v);
         void setUniform(const char* id, const QMatrix4x4&  v);
     protected:
         quint32 getPT(VideoDriver::PRIMITIVE_TYPE pt);
         quint32 getBT(VideoDriver::BLEND_TYPE pt);
-        void _begin(const Rect& viewport, const QColor* clearColor);
+        void _begin(const QRect& viewport, const QColor* clearColor);
     protected:
         spTexture m_rt;
         VertexDeclaration m_VertexDeclaration;

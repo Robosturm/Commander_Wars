@@ -36,8 +36,8 @@ Shopmenu::Shopmenu()
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 
     pApp->getAudioManager()->clearPlayList();
@@ -66,8 +66,8 @@ Shopmenu::Shopmenu()
     oxygine::ResAnim* pHachi = pShopLoader->getResAnim("hachi_shop");
     sprite = oxygine::spSprite::create();
     sprite->setResAnim(pHachi);
-    sprite->setScaleX(Settings::getWidth() * (1.0f / 2.0f) / pHachi->getWidth());
-    sprite->setScaleY((Settings::getHeight() - 60) / pHachi->getWidth());
+    sprite->setScaleX(static_cast<float>(Settings::getWidth() * 0.5f) / static_cast<float>(pHachi->getWidth()));
+    sprite->setScaleY(static_cast<float>(Settings::getHeight() - 60) / static_cast<float>(pHachi->getWidth()));
     sprite->setX(Settings::getWidth() - sprite->getScaledWidth());
     addChild(sprite);
 

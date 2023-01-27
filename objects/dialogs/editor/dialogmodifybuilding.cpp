@@ -57,10 +57,10 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 80);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Building: ") + m_pBuilding->getName());
-    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     m_pPanel->addItem(pLabel);
 
-    qint32 y = pLabel->getY() + pLabel->getTextRect().getHeight() + 10;
+    qint32 y = pLabel->getY() + pLabel->getTextRect().height() + 10;
     pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Player: "));

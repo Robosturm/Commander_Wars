@@ -1,7 +1,6 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "texture.h"
 
 namespace oxygine
@@ -10,26 +9,24 @@ namespace oxygine
     {
     public:
         explicit AnimationFrame() = default;
-        explicit AnimationFrame(spTexture & t);
         ~AnimationFrame() = default;
         void init(ResAnim* rs, short column, short row, const spTexture& texture,
-                   const RectF& srcRect, const RectF& destRect, const Point& frame_size);
+                   const QRectF& srcRect, const QRect& destRect, const QSize& frame_size);
         /**ResAnim should be valid!*/
-        AnimationFrame getClipped(const RectF& rect) const;
         AnimationFrame getFlipped(bool vertical, bool horizontal) const;
 
         /**Returns size of frame in pixels*/
-        const Point&  getSize() const
+        const QSize&  getSize() const
         {
             return m_frameSize;
         }
-        float getWidth() const
+        qint32 getWidth() const
         {
-            return m_frameSize.x;
+            return m_frameSize.width();
         }
-        float getHeight() const
+        qint32 getHeight() const
         {
-            return m_frameSize.y;
+            return m_frameSize.height();
         }
         ResAnim* getResAnim() const
         {
@@ -43,11 +40,11 @@ namespace oxygine
         {
             return m_row;
         }
-        const RectF& getSrcRect() const
+        const QRectF& getSrcRect() const
         {
             return m_srcRect;
         }
-        const RectF& getDestRect() const
+        const QRect& getDestRect() const
         {
             return m_destRect;
         }
@@ -61,13 +58,13 @@ namespace oxygine
          * @param y
          * @return
          */
-        bool getHits(Point pos) const;
+        bool getHits(QPoint pos) const;
 
-        void setSrcRect(const RectF& r)
+        void setSrcRect(const QRectF& r)
         {
             m_srcRect = r;
         }
-        void setDestRect(const RectF& r)
+        void setDestRect(const QRect& r)
         {
             m_destRect = r;
         }
@@ -79,13 +76,13 @@ namespace oxygine
         {
             m_texture = tex;
         }
-        void setSize(const Point& size)
+        void setSize(const QSize& size)
         {
             m_frameSize = size;
         }
         void setSize(qint32 w, qint32 h)
         {
-            setSize(Point(w, h));
+            setSize(QSize(w, h));
         }
         void setRow(qint32 v)
         {
@@ -101,9 +98,9 @@ namespace oxygine
         void updateHittestdata();
     private:
         spTexture m_texture{nullptr};
-        RectF m_srcRect{0, 0, 1, 1};
-        RectF m_destRect{0, 0, 1, 1};
-        Point m_frameSize;
+        QRectF m_srcRect{0, 0, 1, 1};
+        QRect m_destRect{0, 0, 1, 1};
+        QSize m_frameSize;
         ResAnim*  m_resAnim{nullptr};
         short m_row{0};
         short m_column{0};

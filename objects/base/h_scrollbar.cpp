@@ -137,7 +137,7 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-           emit sigChangeScrollValue(-pTouchEvent->wheelDirection.y / m_ContentHeigth);
+           emit sigChangeScrollValue(-pTouchEvent->wheelDirection.y() / m_ContentHeigth);
            pTouchEvent->stopPropagation();
         }
     });
@@ -152,7 +152,7 @@ void H_Scrollbar::scroll(oxygine::Event* pEvent)
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            qint32 y = pTouchEvent->localPosition.y - m_slider->getScaledHeight() / 2;
+            qint32 y = pTouchEvent->localPosition.y() - m_slider->getScaledHeight() / 2;
             if (y < 20)
             {
                 y = 20;
@@ -163,7 +163,7 @@ void H_Scrollbar::scroll(oxygine::Event* pEvent)
             }
             m_slider->setY(y);
             // calc scroll value :)
-            if (static_cast<float>(getScaledHeight() - m_slider->getScaledHeight() - 20 - 20) > 0)
+            if (getScaledHeight() - m_slider->getScaledHeight() - 20 - 20 > 0)
             {
                 m_Scrollvalue = static_cast<float>(y - 20) / static_cast<float>(getHeight() - m_slider->getScaledHeight() - 20 - 20);
             }

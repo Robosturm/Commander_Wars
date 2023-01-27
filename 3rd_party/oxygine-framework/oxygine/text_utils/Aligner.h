@@ -1,6 +1,5 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
 #include <QFontMetrics>
 
@@ -12,7 +11,7 @@ namespace oxygine
         class Aligner final
         {
         public:
-            explicit Aligner(const TextStyle& style, const Vector2& size);
+            explicit Aligner(const TextStyle& style, const QSize& size);
             ~Aligner() = default;
 #ifdef GRAPHICSUPPORT
             const TextStyle& getStyle() const
@@ -64,7 +63,7 @@ namespace oxygine
             }
 
 #ifdef GRAPHICSUPPORT
-            inline const Rect &getBounds() const
+            inline const QRect &getBounds() const
             {
                 return m_bounds;
             }
@@ -98,7 +97,7 @@ namespace oxygine
         private:
 #ifdef GRAPHICSUPPORT
             TextStyle m_style;
-            Rect m_bounds;
+            QRect m_bounds;
             qint32 m_width;
             qint32 m_height;
             qint32 m_x;

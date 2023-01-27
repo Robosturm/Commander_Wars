@@ -287,9 +287,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     # closure
     3rd_party/oxygine-framework/oxygine/core/closure.h
     # math
-    3rd_party/oxygine-framework/oxygine/math/Rect.h
     3rd_party/oxygine-framework/oxygine/math/ScalarMath.h
-    3rd_party/oxygine-framework/oxygine/math/Vector2.h
 )
 
 if (GRAPHICSUPPORT)

@@ -3,6 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/math/ScalarMath.h"
 
 namespace oxygine
 {
@@ -79,7 +80,7 @@ namespace oxygine
         STDRenderer::getCurrent()->flush();
     }
 
-    void Material::render(const QTransform& tr, const QColor& c, const RectF& src, const RectF& dest)
+    void Material::render(const QTransform& tr, const QColor& c, const QRectF& src, const QRect& dest)
     {
         STDRenderer::getCurrent()->setTransform(tr);
         STDRenderer::getCurrent()->addQuad(c, src, dest);

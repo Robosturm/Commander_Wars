@@ -575,7 +575,7 @@ void GameRules::createWeatherSprites()
                         {
                             pSprite->setResAnim(pAnim);
                         }
-                        pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+                        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
                         pSprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
                         pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Weather));
                         m_WeatherSprites.push_back(pSprite);

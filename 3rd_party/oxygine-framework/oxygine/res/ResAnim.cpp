@@ -47,14 +47,14 @@ namespace oxygine
         qint32 frames_count = rows * columns;
         m_frames.resize(frames_count);
 
-        Vector2 frameSize(static_cast<float>(frame_width), static_cast<float>(frame_height));
+        QSize frameSize(static_cast<float>(frame_width), static_cast<float>(frame_height));
         for (qint32 y = 0; y < rows; ++y)
         {
             for (qint32 x = 0; x < columns; ++x)
             {
-                RectF srcRect(x * iw, y * ih, width, height);
-                RectF destRect(Vector2(0, 0), frameSize * scaleFactor);
-                m_frames[x + y * columns].init(this, x, y, texture, srcRect, destRect, destRect.size.cast<Point>());
+                QRectF srcRect(x * iw, y * ih, width, height);
+                QRect destRect(0, 0, frameSize.width() * scaleFactor, frameSize.height() * scaleFactor);
+                m_frames[x + y * columns].init(this, x, y, texture, srcRect, destRect, destRect.size());
             }
         }
         init(columns, scaleFactor);
@@ -159,22 +159,22 @@ namespace oxygine
         }
     }
 
-    const Point& ResAnim::getSize() const
+    const QSize& ResAnim::getSize() const
     {
         if (m_frames.empty())
         {
-            static Point dummy;
+            static QSize dummy;
             return dummy;
         }
         return m_frames[0].getSize();
     }
-    float   ResAnim::getWidth() const
+    qint32 ResAnim::getWidth() const
     {
-        return getSize().x;
+        return getSize().width();
     }
 
-    float   ResAnim::getHeight() const
+    qint32 ResAnim::getHeight() const
     {
-        return getSize().y;
+        return getSize().height();
     }
 }

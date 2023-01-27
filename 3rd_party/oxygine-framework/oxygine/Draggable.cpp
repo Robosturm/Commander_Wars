@@ -32,7 +32,7 @@ namespace oxygine
         actor->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
     }
 
-    void Draggable::startDrag(const Point& localCenter)
+    void Draggable::startDrag(const QPoint& localCenter)
     {
         m_startTm = Clock::getTimeMS();
         m_pressed = true;
@@ -41,15 +41,15 @@ namespace oxygine
         oxygine::Stage::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Draggable::onEvent));
     }
 
-    void Draggable::onMove(const Point& position)
+    void Draggable::onMove(const QPoint& position)
     {
         if (m_pressed && (m_dragEnabled || m_middleButton) &&
             m_dragClient != nullptr)
         {
-            Point localPos = m_dragClient->stage2local(position).cast<Point>();
-            Point dragOffset = localPos - m_dragPos;
-            Vector2 converted = convertPosUp(m_dragClient, m_dragClient->getParent(), dragOffset, true);
-            Vector2 np;
+            QPoint localPos = m_dragClient->stage2local(position);
+            QPoint dragOffset = localPos - m_dragPos;
+            QPoint converted = convertPosUp(m_dragClient, m_dragClient->getParent(), dragOffset, true);
+            QPoint np;
             bool _clientIsParent = true;
             if (!_clientIsParent)
             {
@@ -57,10 +57,10 @@ namespace oxygine
             }
             else
             {
-                np = m_dragClient->getPosition().cast<Vector2>() + converted;
+                np = m_dragClient->getPosition() + converted;
             }
             auto startPos = m_dragClient->getPosition();
-            m_dragClient->setPosition(np.cast<Point>());
+            m_dragClient->setPosition(np);
             snapClient2Bounds();
             if (startPos != m_dragClient->getPosition())
             {
@@ -118,7 +118,7 @@ namespace oxygine
         }
     }
 
-    void Draggable::setDragBounds(const RectF& r)
+    void Draggable::setDragBounds(const QRect& r)
     {
         m_bounds = r;
     }
@@ -145,21 +145,21 @@ namespace oxygine
     {
         if (m_dragClient != nullptr)
         {
-            Point np = m_dragClient->getPosition();
-            if (m_bounds.getWidth() != -1 && m_bounds.getHeight() != -1)
+            QPoint np = m_dragClient->getPosition();
+            if (m_bounds.width() != -1 && m_bounds.height() != -1)
             {
-                np.x = std::max(np.x, static_cast<qint32>(m_bounds.getX()));
-                np.y = std::max(np.y, static_cast<qint32>(m_bounds.getY()));
-                np.x = std::min(np.x, static_cast<qint32>(m_bounds.getRight()));
-                np.y = std::min(np.y, static_cast<qint32>(m_bounds.getBottom()));
+                np.setX(std::max(np.x(), static_cast<qint32>(m_bounds.x())));
+                np.setY(std::max(np.y(), static_cast<qint32>(m_bounds.y())));
+                np.setX(std::min(np.x(), static_cast<qint32>(m_bounds.right())));
+                np.setY(std::min(np.y(), static_cast<qint32>(m_bounds.bottom())));
             }
             m_dragClient->setPosition(np);
         }
     }
 
-    Point Draggable::convertPosUp(Actor* src, Actor* dest, const Point& pos, bool direction)
+    QPoint Draggable::convertPosUp(Actor* src, Actor* dest, const QPoint& pos, bool direction)
     {
-        QPoint locPos(pos.x, pos.y);
+        QPoint locPos(pos);
 #ifdef GRAPHICSUPPORT
         QTransform t;
         while (src != dest && src)
@@ -175,12 +175,12 @@ namespace oxygine
         }
         locPos = t.map(locPos);
 #endif
-        return Point(locPos.x(), locPos.y());
+        return locPos;
     }
 
-    Point Draggable::convertPosDown(Actor* src, Actor* dest, const Point& pos, bool direction)
+    QPoint Draggable::convertPosDown(Actor* src, Actor* dest, const QPoint& pos, bool direction)
     {
-        QPoint locPos(pos.x, pos.y);
+        QPoint locPos(pos);
 #ifdef GRAPHICSUPPORT
         QTransform t;
         t = src->getTransform();
@@ -197,7 +197,7 @@ namespace oxygine
         }
         locPos = t.map(locPos);
 #endif
-        return Point(locPos.x(), locPos.y());
+        return locPos;
     }
 
 }

@@ -1141,7 +1141,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
                 if (pAnim != nullptr)
                 {
                     pSprite->setResAnim(pAnim);
-                    pSprite->setScale(pAnim->getWidth() / 32.0f);
+                    pSprite->setScale(static_cast<float>(pAnim->getWidth()) / 32.0f);
                     pSprite->setSize(pAnim->getSize());
                 }
                 return pSprite;

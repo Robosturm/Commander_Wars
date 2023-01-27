@@ -30,7 +30,7 @@ namespace oxygine
         m_rad = rad;
     }
 
-    void SlidingActorNoClipRect::sizeChanged(const Point& size)
+    void SlidingActorNoClipRect::sizeChanged(const QSize& size)
     {
         updateDragBounds();
     }
@@ -48,7 +48,7 @@ namespace oxygine
 
     void SlidingActorNoClipRect::stop()
     {
-        m_speed = Vector2(0, 0);
+        m_speed = QPoint(0, 0);
     }
 
     void SlidingActorNoClipRect::setContent(spActor content)
@@ -75,7 +75,7 @@ namespace oxygine
         }
         m_holded = nullptr; //event->target;
         m_finger = 0;
-        m_speed = Vector2(0, 0);
+        m_speed = QPoint(0, 0);
 
         m_content = content;
         m_drag.init(m_content.get());
@@ -94,9 +94,9 @@ namespace oxygine
         {
             return;
         }
-        float w = std::max(0.0f, m_content->getWidth() * m_content->getScaleX() - getWidth());
-        float h = std::max(0.0f, m_content->getHeight() * m_content->getScaleY() - getHeight());
-        RectF bounds(-w, -h, w, h);
+        qint32 w = std::max(0.0f, m_content->getWidth() * m_content->getScaleX() - getWidth());
+        qint32 h = std::max(0.0f, m_content->getHeight() * m_content->getScaleY() - getHeight());
+        QRect bounds(-w, -h, w + 1, h + 1);
 
         m_drag.setDragBounds(bounds);
     }
@@ -118,7 +118,7 @@ namespace oxygine
 
         if (m_drag.isDragging())
         {
-            Vector2 pos = m_content->getPosition();
+            auto pos = m_content->getPosition();
             m_prev[m_current].pos = pos;
             m_prev[m_current].tm = ct;
             m_current = (m_current + 1) % NUM;
@@ -127,31 +127,31 @@ namespace oxygine
 
         if (m_sliding)
         {
-            const RectF& bounds = m_drag.getDragBounds();
+            const auto& bounds = m_drag.getDragBounds();
             while (m_lastIterTime + fdt <= ct)
             {
-                Point pos = m_content->getPosition();
-                Point newpos = pos + (m_speed * (static_cast<float>(fdt.count()) / 1000.0f)).cast<Point>();
-                if (newpos.x < bounds.getLeft())
+                auto pos = m_content->getPosition();
+                auto newpos = pos + (m_speed * (static_cast<float>(fdt.count()) / 1000.0f));
+                if (newpos.x() < bounds.left())
                 {
-                    newpos.x = bounds.getLeft();
-                    m_speed.x = 0;
+                    newpos.setX(bounds.left());
+                    m_speed.setX(0);
                 }
-                else if (newpos.x > bounds.getRight())
+                else if (newpos.x() > bounds.right())
                 {
-                    newpos.x = bounds.getRight();
-                    m_speed.x = 0;
+                    newpos.setX(bounds.right());
+                    m_speed.setX(0);
                 }
 
-                if (newpos.y < bounds.getTop())
+                if (newpos.y() < bounds.top())
                 {
-                    newpos.y = bounds.getTop();
-                    m_speed.y = 0;
+                    newpos.setY(bounds.top());
+                    m_speed.setY(0);
                 }
-                else if (newpos.y > bounds.getBottom())
+                else if (newpos.y() > bounds.bottom())
                 {
-                    newpos.y = bounds.getBottom();
-                    m_speed.y = 0;
+                    newpos.setY(bounds.bottom());
+                    m_speed.setY(0);
                 }
                 m_speed *= 0.97f;
                 m_content->setPosition(newpos);
@@ -165,7 +165,8 @@ namespace oxygine
             dispatchEvent(&sl);
             m_speed = sl.speed;
 
-            if (m_speed.sqlength() < 8)
+            if (m_speed.x() * m_speed.x() +
+                m_speed.y() * m_speed.y() < 8)
             {
                 m_sliding = false;
                 SlidingEvent ev(SlidingEvent::END);
@@ -222,7 +223,7 @@ namespace oxygine
                     if (m_drag.getDragEnabled() && te->index == m_finger && m_ignoreTouchUp == false)
                     {
                         m_finger = 0;
-                        Vector2 pos = m_content->getPosition();
+                        auto pos = m_content->getPosition();
 
                         m_holded = nullptr;
 
@@ -259,11 +260,12 @@ namespace oxygine
                         {
                             mid = last;
                         }
-                        Vector2 midpos = mid->pos;
-                        Vector2 dir = pos - midpos;
-                        if (dir.sqlength() < 10 * 10)
+                        auto midpos = mid->pos;
+                        auto dir = pos - midpos;
+                        if (dir.x() * dir.x() +
+                            dir.y() * dir.y() < 10 * 10)
                         {
-                            m_speed = Vector2(0, 0);
+                            m_speed = QPoint(0, 0);
                         }
                         else
                         {
@@ -273,11 +275,11 @@ namespace oxygine
                                 return;
                             }
 
-                            Vector2 dr = pos - old->pos;
+                            QPoint dr = pos - old->pos;
 
-                            Vector2 ns = (dr * 1000.0f) / v.count();
+                            QPoint ns = (dr * 1000.0f) / v.count();
 
-                            if (m_speed.x *ns.x + m_speed.y * ns.y < 0)
+                            if (m_speed.x() *ns.x() + m_speed.y() * ns.y() < 0)
                             {
                                 m_speed = ns;
                             }
@@ -306,8 +308,8 @@ namespace oxygine
                 {
                     if (te->index == m_finger)
                     {
-                        Vector2 offset = m_downPos - te->localPosition;
-                        float d = offset.x * offset.x + offset.y * offset.y;
+                        QPoint offset = m_downPos - te->localPosition;
+                        float d = offset.x() * offset.x() + offset.y() * offset.y();
                         if (m_holded && (d >= m_rad * m_rad))
                         {
                             spActor act = safeSpCast<Actor>(m_holded);
@@ -318,7 +320,7 @@ namespace oxygine
                                 {
                                     act->setNotPressed((MouseButton)i);
 
-                                    TouchEvent ev(TouchEvent::TOUCH_UP, true, Point(-100000, -100000));
+                                    TouchEvent ev(TouchEvent::TOUCH_UP, true, QPoint(-100000, -100000));
                                     ev.mouseButton = (MouseButton)i;
                                     ev.index = te->index;
                                     ev.bubbles = false;

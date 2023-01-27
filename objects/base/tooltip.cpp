@@ -174,7 +174,7 @@ void Tooltip::showTooltip()
             pText->setStyle(style);
             pText->setPosition(10, 10);
             pSpriteBox->addChild(pText);
-            pSpriteBox->setSize(pText->getTextRect().getSize() + oxygine::Point(30, 30));
+            pSpriteBox->setSize(pText->getTextRect().size() + QSize(30, 30));
 
             oxygine::Stage::getStage()->addChild(m_Tooltip);
             if (curPos.x() + 10 + pSpriteBox->getScaledWidth() + 5 > Settings::getWidth())

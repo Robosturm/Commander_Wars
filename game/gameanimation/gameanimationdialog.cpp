@@ -39,7 +39,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     m_TextMask = oxygine::spSprite::create();
     if (pAnim != nullptr)
     {
-        m_TextMask->setScaleX(Settings::getWidth() / pAnim->getWidth());
+        m_TextMask->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pAnim->getWidth()));
     }
     m_TextMask->setResAnim(pAnim);
     addChild(m_TextMask);
@@ -48,7 +48,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     m_TextBackground = oxygine::spSprite::create();
     if (pAnim != nullptr)
     {
-        m_TextBackground->setScaleX(Settings::getWidth() / pAnim->getWidth());
+        m_TextBackground->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pAnim->getWidth()));
     }
     m_TextBackground->setResAnim(pAnim);
     m_TextBackground->setPriority(1);
@@ -72,7 +72,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     addChild(pRect);
 
     m_COSprite = oxygine::spSprite::create();
-    m_COSprite->setScale(2);
+    m_COSprite->setScale(2.0f);
     m_COSprite->setY(6);
     m_COSprite->setPriority(1);
     addChild(m_COSprite);
@@ -133,14 +133,14 @@ void GameAnimationDialog::nextDialogStep()
         }
         else
         {
-            float textHeight = m_TextField->getTextRect().getHeight();
+            float textHeight = m_TextField->getTextRect().height();
             qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth + 1) * dialogHeigth;
             // loop till two lines of text will be shown
             while (m_writePosition < m_Text.size())
             {
                 m_writePosition += 1;
                 m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
-                textHeight = m_TextField->getTextRect().getHeight();
+                textHeight = m_TextField->getTextRect().height();
                 if (textHeight > nextHeight)
                 {
                     m_writePosition -= 1;
@@ -169,14 +169,14 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
     {
         m_writePosition += 1;
         // check for auto pause
-        float textHeight = m_TextField->getTextRect().getHeight();
+        float textHeight = m_TextField->getTextRect().height();
         qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth) * dialogHeigth;
         if (static_cast<qint32>(textHeight) % dialogHeigth != 0)
         {
             nextHeight += dialogHeigth;
         }
         m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
-        textHeight = m_TextField->getTextRect().getHeight();
+        textHeight = m_TextField->getTextRect().height();
         if (textHeight > nextHeight && m_autoFinishMs < 0)
         {
             m_writePosition -= 1;
@@ -208,7 +208,7 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
 void GameAnimationDialog::updateShownText()
 {
     m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
-    float textHeight = m_TextField->getTextRect().getHeight();
+    float textHeight = m_TextField->getTextRect().height();
     m_TextField->setHeight(textHeight);
     if (textHeight > dialogHeigth)
     {
@@ -339,8 +339,8 @@ void GameAnimationDialog::loadBackground(const QString & file)
         m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
         if (pAnim.get() != nullptr)
         {
-            m_BackgroundSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
-            m_BackgroundSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
+            m_BackgroundSprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pAnim->getWidth()));
+            m_BackgroundSprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pAnim->getHeight()));
         }
     }
     else

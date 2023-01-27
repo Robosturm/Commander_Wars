@@ -17,11 +17,6 @@ namespace oxygine
         window->glUniformMatrix4fv(p, 1, GL_FALSE, mat.constData());
     }
 
-    void VideoDriver::setUniform(const char* id, const Vector2& v)
-    {
-        setUniform(id, &v, 1);
-    }
-
     void VideoDriver::setUniform(const char* id, const Uniform3f& v)
     {
         setUniform(id, &v, 1);
@@ -107,25 +102,25 @@ namespace oxygine
         return &m_VertexDeclaration;
     }
 
-    void VideoDriver::getViewport(Rect& r) const
+    void VideoDriver::getViewport(QRect& r) const
     {
         GLint vp[4];
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glGetIntegerv(GL_VIEWPORT, vp);
         qreal ratio = window->devicePixelRatio();
-        r = Rect(vp[0] / ratio, vp[1] / ratio,
+        r = QRect(vp[0] / ratio, vp[1] / ratio,
                  vp[2] / ratio, vp[3] / ratio);
     }
 
-    void VideoDriver::setScissorRect(const Rect* rect)
+    void VideoDriver::setScissorRect(const QRect* rect)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         if (rect)
         {
             qreal ratio = window->devicePixelRatio();
             window->glEnable(GL_SCISSOR_TEST);
-            window->glScissor(rect->getX() * ratio, rect->getY() * ratio,
-                              rect->getWidth() * ratio, rect->getHeight() * ratio);
+            window->glScissor(rect->x() * ratio, rect->y() * ratio,
+                              rect->width() * ratio, rect->height() * ratio);
         }
         else
         {
@@ -133,7 +128,7 @@ namespace oxygine
         }
     }
 
-    bool VideoDriver::getScissorRect(Rect& r) const
+    bool VideoDriver::getScissorRect(QRect& r) const
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLboolean scrTest = window->glIsEnabled(GL_SCISSOR_TEST);
@@ -141,8 +136,8 @@ namespace oxygine
         GLint box[4];
         qreal ratio = window->devicePixelRatio();
         window->glGetIntegerv(GL_SCISSOR_BOX, box);
-        r = Rect(box[0] / ratio, box[1] / ratio,
-                 box[2] / ratio, box[3] / ratio);
+        r = QRect(box[0] / ratio, box[1] / ratio,
+                  box[2] / ratio, box[3] / ratio);
 
         return scrTest ? true : false;
     }
@@ -152,12 +147,12 @@ namespace oxygine
         m_rt = rt;
     }
 
-    void VideoDriver::_begin(const Rect& viewport, const QColor* clearColor)
+    void VideoDriver::_begin(const QRect& viewport, const QColor* clearColor)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         qreal ratio = window->devicePixelRatio();
-        window->glViewport(viewport.getX() * ratio, viewport.getY() * ratio,
-                           viewport.getWidth() * ratio, viewport.getHeight() * ratio);
+        window->glViewport(viewport.x() * ratio, viewport.y() * ratio,
+                           viewport.width() * ratio, viewport.height() * ratio);
         window->glDisable(GL_SCISSOR_TEST);
         if (clearColor)
         {
@@ -217,7 +212,7 @@ namespace oxygine
     {
     }
 
-    void VideoDriver::begin(const Rect& viewport, const QColor* clearColor)
+    void VideoDriver::begin(const QRect& viewport, const QColor* clearColor)
     {
         _begin(viewport, clearColor);
     }
@@ -229,12 +224,12 @@ namespace oxygine
         window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    void VideoDriver::setViewport(const Rect& viewport)
+    void VideoDriver::setViewport(const QRect& viewport)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         qreal ratio = window->devicePixelRatio();
-        window->glViewport(viewport.getX() * ratio, viewport.getY() * ratio,
-                           viewport.getWidth() * ratio, viewport.getHeight() * ratio);
+        window->glViewport(viewport.x() * ratio, viewport.y() * ratio,
+                           viewport.width() * ratio, viewport.height() * ratio);
     }
 
     void VideoDriver::setShaderProgram(ShaderProgram* prog_)
@@ -329,17 +324,6 @@ namespace oxygine
             return;
         }
         window->glUniform4fv(p, num, v->data);
-    }
-
-    void VideoDriver::setUniform(const char* id, const Vector2* v, qint32 num)
-    {
-        GameWindow* window = oxygine::GameWindow::getWindow();
-        GLint  p = window->glGetUniformLocation(m_programID, id);
-        if (p == -1)
-        {
-            return;
-        }
-        window->glUniform2fv(p, num, &v->x);
     }
 
     void VideoDriver::setUniform(const char* id, const Uniform3f* v, qint32 num)

@@ -268,7 +268,7 @@ void Multiplayermenu::showIPs()
     info->setSize(Settings::getWidth() - 80, 500);
     info->setPosition(10, 10);
     pPanel->addItem(info);
-    qint32 starty = 10 + info->getTextRect().getHeight();
+    qint32 starty = 10 + info->getTextRect().height();
     for (qint32 i = 0; i < items.size(); i++)
     {
         oxygine::spTextField text = oxygine::spTextField::create();

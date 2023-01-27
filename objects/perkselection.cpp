@@ -58,7 +58,7 @@ void PerkSelection::updatePerksView(CO* pCO)
         spLabel textField = spLabel::create(getWidth() - 40);
         textField->setStyle(largeStyle);
         textField->setHtmlText(group.name);
-        textField->setPosition(getWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
+        textField->setPosition(getWidth() / 2 - textField->getTextRect().width() / 2, y);
         addChild(textField);
         y += textField->getHeight() + 10;
         x = 0;
@@ -107,7 +107,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             pSprite->setResAnim(pAnim);
             if (pAnim != nullptr)
             {
-                pSprite->setScale((GameMap::getImageSize() * 2) / pAnim->getWidth());
+                pSprite->setScale(static_cast<float>(GameMap::getImageSize() * 2) / static_cast<float>(pAnim->getWidth()));
             }
             pSprite->setPosition(x + 45, y);
             addChild(pSprite);
@@ -115,7 +115,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             spLabel pLabel = spLabel::create(350);
             pLabel->setStyle(style);
             pLabel->setText(name + "\n" + tr("Cost: %0").arg(cost));
-            pLabel->setHeight(pLabel->getTextRect().getHeight());
+            pLabel->setHeight(pLabel->getTextRect().height());
             pLabel->setPosition(x + GameMap::getImageSize() * 2 + 50, y);
             addChild(pLabel);
 

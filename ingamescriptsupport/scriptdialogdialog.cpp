@@ -173,7 +173,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
         }
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setResAnim(pAnim);
-        pSprite->setScale(pAnim->getWidth() / 32.0f);
+        pSprite->setScale(static_cast<float>(pAnim->getWidth()) / 32.0f);
         pSprite->setSize(pAnim->getSize());
         return pSprite;
     };
@@ -298,8 +298,8 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
         m_backgroundAnims[index] = pAnim;
         Mainapp::getInstance()->loadResAnim(pAnim, image, 1, 1, 1, false);
         m_backgrounds[index]->setResAnim(pAnim.get());
-        m_backgrounds[index]->setScaleX(60.0f / pAnim->getWidth());
-        m_backgrounds[index]->setScaleY(30.0f / pAnim->getHeight());
+        m_backgrounds[index]->setScaleX(60.0f / static_cast<float>(pAnim->getWidth()));
+        m_backgrounds[index]->setScaleY(30.0f / static_cast<float>(pAnim->getHeight()));
     }
     else
     {

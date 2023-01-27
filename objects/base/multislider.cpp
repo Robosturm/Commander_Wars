@@ -28,10 +28,10 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
         {
             textWidth = startX;
         }
-        else if (m_Textfields[i]->getTextRect().getWidth() > textWidth)
+        else if (m_Textfields[i]->getTextRect().width() > textWidth)
         {
-            textWidth = m_Textfields[i]->getTextRect().getWidth();
-            sliderX = m_Textfields[i]->getTextRect().getWidth() + SLIDER_OFFSET_X;
+            textWidth = m_Textfields[i]->getTextRect().width();
+            sliderX = m_Textfields[i]->getTextRect().width() + SLIDER_OFFSET_X;
         }
         addChild(m_Textfields[i]);
     }

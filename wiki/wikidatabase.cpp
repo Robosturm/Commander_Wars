@@ -320,7 +320,7 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
     if (pAnim != nullptr)
     {
         pSprite->setResAnim(pAnim);
-        pSprite->setScale(size / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(size) / static_cast<float>(pAnim->getWidth()));
     }
     else
     {

@@ -1136,26 +1136,26 @@ void GameMap::moveMap(qint32 x, qint32 y)
 
 void GameMap::limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY)
 {
-    oxygine::RectF bounds = pMenu->getMapSliding()->getDragBounds();
-    if (newX < bounds.getLeft())
+    auto bounds = pMenu->getMapSliding()->getDragBounds();
+    if (newX < bounds.left())
     {
-        newX = bounds.getLeft();
+        newX = bounds.left();
     }
-    else if (newX > bounds.getRight())
+    else if (newX > bounds.right())
     {
-        newX = bounds.getRight();
+        newX = bounds.right();
     }
-    if (newY < bounds.getTop())
+    if (newY < bounds.top())
     {
-        newY = bounds.getTop();
+        newY = bounds.top();
     }
-    else if (newY > bounds.getBottom())
+    else if (newY > bounds.bottom())
     {
-        newY = bounds.getBottom();
+        newY = bounds.bottom();
     }
 }
 
-void GameMap::setZoom(float zoom)
+void GameMap::setZoom(qint32 zoom)
 {
     float curZoom = getScaleX();
     if (zoom > 0)

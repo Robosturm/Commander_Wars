@@ -494,7 +494,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         pSprite->setPriority(static_cast<qint32>(DrawPriority::Terrain));
 
@@ -535,7 +535,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
         pSprite->setResAnim(pAnim.get());
         if (pAnim.get() != nullptr)
         {
-            pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth() );
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         }
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         pSprite->setPriority(static_cast<qint32>(DrawPriority::Terrain));
@@ -827,7 +827,7 @@ void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qin
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
     }
     else
     {

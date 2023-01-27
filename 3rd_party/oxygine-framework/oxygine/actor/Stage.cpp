@@ -2,7 +2,6 @@
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 
@@ -24,26 +23,26 @@ namespace oxygine
     }
 
 
-    void Stage::init(const Point& displaySize, const Point& gameSize)
+    void Stage::init(const QSize& displaySize, const QSize& gameSize)
     {
-        float scaleFactor = displaySize.x / static_cast<float>(gameSize.x);
+        float scaleFactor = static_cast<float>(displaySize.width()) / static_cast<float>(gameSize.width());
         setScale(scaleFactor);
         setSize(gameSize);
     }
 
-    bool Stage::isOn(const Vector2&, float)
+    bool Stage::isOn(const QPoint&, float)
     {
         return true;
     }
 
 
-    RectF Stage::getDestRect() const
+    QRect Stage::getDestRect() const
     {
-        Vector2 s = getSize() + getPosition();
-        return RectF(-getPosition(), s);
+        return QRect(-getX(), -getY(),
+                     getX() + getWidth(), getY() + getHeight());
     }
 
-    void Stage::renderStage(const QColor* clearColor, const Rect& viewport, const QMatrix4x4 & viewProjection)
+    void Stage::renderStage(const QColor* clearColor, const QRect& viewport, const QMatrix4x4 & viewProjection)
     {
         spVideoDriver driver = VideoDriver::instance;
         driver->setViewport(viewport);
@@ -54,7 +53,7 @@ namespace oxygine
         }
         STDRenderer::instance->setViewProj(viewProjection);
         RenderState rs;
-        RectF clip(0.0f, 0.0f, viewport.getWidth(), viewport.getHeight());
+        QRect clip(0, 0, viewport.width(), viewport.height());
         rs.clip = &clip;
 
         Actor::render(rs);
@@ -62,21 +61,21 @@ namespace oxygine
         Material::null->apply();
     }
 
-    void Stage::renderStage(const QColor& clearColor, const Rect& viewport)
+    void Stage::renderStage(const QColor& clearColor, const QRect& viewport)
     {
         auto viewProjection = getViewProjectionMatrix(viewport);
         renderStage(&clearColor, viewport, viewProjection);
     }
 
-    QMatrix4x4 Stage::getViewProjectionMatrix(const Rect& viewport)
+    QMatrix4x4 Stage::getViewProjectionMatrix(const QRect& viewport)
     {
         //initialize projection and view matrix
         static constexpr float zNear = 0.2f;
         static constexpr float zFar = 10000.0f;
         static constexpr float m33 = 1 / (zFar - zNear);
         static constexpr float m34 = zNear / (zNear - zFar);
-        const float width = viewport.getWidth();
-        const float height = viewport.getHeight();
+        const float width = viewport.width();
+        const float height = viewport.height();
         QMatrix4x4 viewProjection(2.0f / width, 0, 0, -1,
                                   0, -2.0f / height, 0, 1,
                                   0, 0, m33, m34,

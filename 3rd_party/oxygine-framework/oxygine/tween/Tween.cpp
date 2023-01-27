@@ -3,7 +3,7 @@
 #include "coreengine/gameconsole.h"
 
 #include <limits.h>
-#include <qmath.h>
+#include <QtMath>
 
 namespace oxygine
 {

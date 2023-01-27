@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QTransform>
+#include <QRect>
 
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
@@ -69,7 +70,7 @@ namespace oxygine
         void setBaseShaderFlags(quint32 fl);
         /**Sets World transformation.*/
         void setTransform(const QTransform& world);
-        void addQuad(const QColor&, const RectF& srcRect, const RectF& destRect);
+        void addQuad(const QColor& clr, const QRectF& srcRect, const QRect& destRect);
 
         /**Completes started rendering and restores previous Frame Buffer.*/
         void end();
@@ -86,21 +87,18 @@ namespace oxygine
             return m_verticesData.empty();
         }
 
-        static inline void fillQuad(std::vector<VertexPCT2> & quad, const RectF& srcRect, const RectF& destRect, const QTransform& transform, quint32 rgba)
+        static inline void fillQuad(std::vector<VertexPCT2> & quad, const QRectF& srcRect, const QRect& destRect, const QTransform& transform, quint32 rgba)
         {
-            float u = srcRect.pos.x;
-            float v = srcRect.pos.y;
-            float du = srcRect.size.x;
-            float dv = srcRect.size.y;
+            float u = srcRect.x();
+            float v = srcRect.y();
+            float du = srcRect.width();
+            float dv = srcRect.height();
             VertexPCT2 vt;
             vt.color = rgba;
-            const Vector2& pos = destRect.pos;
-            const Vector2& size = destRect.size;
-
-            QPoint p1(pos.x, pos.y);
-            QPoint p2(pos.x, pos.y + size.y);
-            QPoint p3(pos.x + size.x, pos.y);
-            QPoint p4(pos.x + size.x, pos.y + size.y);
+            QPoint p1(destRect.topLeft());
+            QPoint p2(destRect.bottomLeft());
+            QPoint p3(destRect.topRight());
+            QPoint p4(destRect.bottomRight());
 
             p1 = transform.map(p1);
             p2 = transform.map(p2);

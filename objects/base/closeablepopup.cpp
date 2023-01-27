@@ -45,7 +45,7 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
 
     m_drag.init(this);
     m_drag.setDragEnabled(true);
-    m_drag.setDragBounds(oxygine::RectF(0, 0, Settings::getWidth() - width, Settings::getHeight() - heigth));
+    m_drag.setDragBounds(QRect(0, 0, Settings::getWidth() - width, Settings::getHeight() - heigth));
     QSize size(width - 10, heigth - pSprite->getScaledHeight());
     m_pPanel = spPanel::create(true, size, size);
     m_pPanel->setPosition(5, pSprite->getScaledHeight() - 5);

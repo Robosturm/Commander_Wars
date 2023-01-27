@@ -62,7 +62,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 40);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Victory info"));
-    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, y);
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, y);
     pPanel->addItem(pLabel);
     y += pLabel->getHeight() + 10;
     QString info = pMap->getGameScript()->getVictoryInfo();
@@ -73,7 +73,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     pTextfield->setWidth(Settings::getWidth() - 90);
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    y += 10 + pTextfield->getTextRect().getHeight();
+    y += 10 + pTextfield->getTextRect().height();
     for (qint32 i = 0; i < pRules->getVictoryRuleSize(); i++)
     {
         VictoryRule* pVictoryRule = pRules->getVictoryRule(i);
@@ -85,7 +85,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
         pTextfield->setHtmlText(info);
         pTextfield->setPosition(10, y);
         pPanel->addItem(pTextfield);
-        y += 50 + pTextfield->getTextRect().getHeight();
+        y += 50 + pTextfield->getTextRect().height();
 
         qint32 x = 10;
         qint32 stepWidth = 250;

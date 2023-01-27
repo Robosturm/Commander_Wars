@@ -273,12 +273,12 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
         qint32 heigth = getBuildingHeigth();
         if (width == 1 && heigth == 1)
         {
-            pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
             pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2 + pos.x(), -(pSprite->getScaledHeight() - GameMap::getImageSize()) + pos.y());
         }
         else
         {
-            pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize() * width) / static_cast<float>(pAnim->getWidth()));
             pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize() + pos.x(), -pSprite->getScaledHeight() + GameMap::getImageSize() + pos.y());
         }
         addChild(pSprite);
@@ -362,12 +362,12 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
         qint32 heigth = getBuildingHeigth();
         if (width == 1 && heigth == 1)
         {
-            pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
             pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         }
         else
         {
-            pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize() * width) / static_cast<float>(pAnim->getWidth()));
             pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize(), -pSprite->getScaledHeight() + GameMap::getImageSize());
         }
         addChild(pSprite);

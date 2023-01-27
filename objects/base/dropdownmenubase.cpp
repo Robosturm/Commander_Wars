@@ -132,7 +132,7 @@ qint32 DropDownmenuBase::getCurrentItem() const
     return m_currentItem;
 }
 
-const oxygine::Point& DropDownmenuBase::addDropDownItem(oxygine::spActor item, qint32 id)
+const QSize& DropDownmenuBase::addDropDownItem(oxygine::spActor item, qint32 id)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");

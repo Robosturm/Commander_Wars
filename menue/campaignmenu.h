@@ -51,7 +51,7 @@ private:
     void autosave();
     void createMapSelection(spCampaign & campaign);
     void createCampaignMapSelection(spCampaign & campaign);
-    void focusOnPosition(oxygine::Vector2 position);
+    void focusOnPosition(QPoint position);
 private:
     spMapSelectionView m_pMapSelectionView;
     CampaignMapData m_campaignData;

@@ -23,11 +23,11 @@ namespace oxygine
         {
             return m_dragClient;
         }
-        const RectF& getDragBounds() const
+        const QRect& getDragBounds() const
         {
             return m_bounds;
         }
-        const Point& getClientPos() const
+        const QPoint& getClientPos() const
         {
             return m_clientPos;
         }
@@ -44,7 +44,7 @@ namespace oxygine
             m_dragEnabled = en;
         }
         /**sets bounds position for dragged actor*/
-        void setDragBounds(const RectF& bounds);
+        void setDragBounds(const QRect& bounds);
         void setIgnoreTouchUp(bool ignore)
         {
             m_ignoreTouchUp = ignore;
@@ -56,17 +56,17 @@ namespace oxygine
     protected:
         Actor* getClient();
         void onEvent(Event* event);
-        void startDrag(const Point& localPos);
+        void startDrag(const QPoint& localPos);
 
         void onDrag(TouchEvent* es);
-        void onMove(const Point& position);
+        void onMove(const QPoint& position);
 
-        Point convertPosUp(Actor* src, Actor* dest, const Point& pos, bool direction);
-        Point convertPosDown(Actor* src, Actor* dest, const Point& pos, bool direction);
+        QPoint convertPosUp(Actor* src, Actor* dest, const QPoint& pos, bool direction);
+        QPoint convertPosDown(Actor* src, Actor* dest, const QPoint& pos, bool direction);
     protected:
-        RectF m_bounds{0, 0, -1, -1};
-        Point m_dragPos;
-        Point m_clientPos;
+        QRect m_bounds{0, 0, -1, -1};
+        QPoint m_dragPos;
+        QPoint m_clientPos;
         Actor* m_dragClient{nullptr};
         timeMS m_startTm{0};
         bool m_dragEnabled{true};

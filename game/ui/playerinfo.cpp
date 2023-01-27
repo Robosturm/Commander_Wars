@@ -15,7 +15,6 @@ PlayerInfo::PlayerInfo(GameMap* pMap)
     setObjectName("PlayerInfo");
 #endif
     Interpreter::setCppOwnerShip(this);
-    setScale(1.0f);
 }
 
 void PlayerInfo::updateData()
@@ -105,7 +104,7 @@ void PlayerInfo::updateData()
                 pSprite->setY(yPos);
                 if (pAnim != nullptr)
                 {
-                    pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
+                    pSprite->setScale(2.0f * static_cast<float>(pAnim->getWidth()) / 32.0f);
                 }
                 else
                 {
@@ -148,7 +147,7 @@ void PlayerInfo::updateData()
                     addChild(pCoPowermeter);
                     if (pAnim != nullptr)
                     {
-                        pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
+                        pSprite->setScale(2.0f * static_cast<float>(pAnim->getWidth()) / 32.0f);
                     }
                     else
                     {
@@ -180,7 +179,7 @@ void PlayerInfo::updateData()
                 Text->setY(yPos + 30);
                 if (m_flippedX)
                 {
-                    Text->setX(-Text->getTextRect().getWidth());
+                    Text->setX(-Text->getTextRect().width());
                 }
                 else
                 {
@@ -235,7 +234,7 @@ void PlayerInfo::showTurnStartInfo(qint32 & yPos)
                 {
                     pSprite->setResAnim(pAnim);
                     pSprite->setY(yPos + 2);
-                    pSprite->setScale(16 / pAnim->getWidth());
+                    pSprite->setScale(16.0f / static_cast<float>(pAnim->getWidth()));
                     if (m_flippedX)
                     {
                         x = -4 - pSprite->getScaledWidth();
@@ -258,7 +257,7 @@ void PlayerInfo::showTurnStartInfo(qint32 & yPos)
             pText->setY(yPos - 4);
             if (m_flippedX)
             {
-                pText->setX(x - pText->getTextRect().getWidth());
+                pText->setX(x - pText->getTextRect().width());
             }
             else
             {

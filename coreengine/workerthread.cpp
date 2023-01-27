@@ -5,7 +5,6 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/Input.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 #include "ai/aiprocesspipe.h"
 
@@ -178,7 +177,7 @@ void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint
 void WorkerThread::wheelEvent(qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::getInstance();
-    input->sendPointerWheelEvent(oxygine::Stage::getStage(), oxygine::Vector2(x, y), input->getPointerMouse());
+    input->sendPointerWheelEvent(oxygine::Stage::getStage(), QPoint(x, y), input->getPointerMouse());
 }
 
 void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)

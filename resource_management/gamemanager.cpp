@@ -111,7 +111,7 @@ oxygine::spSprite GameManager::getIconSprite(const QString & icon)
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     return pSprite;

@@ -71,8 +71,8 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 
     pApp->getAudioManager()->clearPlayList();
@@ -334,7 +334,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         pTextfield->setHtmlText((tr("Player: ") + QString::number(i + 1)));
         spCheckbox pCheckbox = spCheckbox::create();
         pCheckbox->setChecked(true);
-        pCheckbox->setPosition(15 + pTextfield->getTextRect().getWidth(), pTextfield->getY());
+        pCheckbox->setPosition(15 + pTextfield->getTextRect().width(), pTextfield->getY());
         connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, i](bool value)
         {
             m_VisiblePlayers[i] = value;
@@ -413,7 +413,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     {
                         oxygine::spSprite  pTextMask = oxygine::spSprite::create();
                         pTextMask->setWidth(sentenceWidth);
-                        pTextMask->setScaleX(pTextMask->getScaledWidth() / pAnim->getWidth());
+                        pTextMask->setScaleX(static_cast<float>(pTextMask->getScaledWidth()) / static_cast<float>(pAnim->getWidth()));
                         pTextMask->setResAnim(pAnim);
                         pTextMask->setPosition(5, 5 + y);
                         QColor color = pPlayer->getColor();
@@ -426,7 +426,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     if (pAnim != nullptr)
                     {
                         pWinLooseSprite->setWidth(sentenceWidth);
-                        pWinLooseSprite->setScaleX(pWinLooseSprite->getScaledWidth() / pAnim->getWidth());
+                        pWinLooseSprite->setScaleX(static_cast<float>(pWinLooseSprite->getScaledWidth()) / static_cast<float>(pAnim->getWidth()));
                         pWinLooseSprite->setResAnim(pAnim);
                         pWinLooseSprite->setPosition(5, 5 + y);
                         m_VictoryPanel->addItem(pWinLooseSprite);
@@ -774,7 +774,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
         }
         m_Textfield->setHtmlText(tr("Player Statistics"));
     }
-    m_Textfield->setX(Settings::getWidth() / 2.0f - m_Textfield->getTextRect().getWidth() / 2.0f);
+    m_Textfield->setX(Settings::getWidth() / 2.0f - m_Textfield->getTextRect().width() / 2.0f);
 
     
 }

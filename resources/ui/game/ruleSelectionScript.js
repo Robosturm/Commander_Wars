@@ -78,11 +78,11 @@ var RuleSelectionScript =
         }
         else if (input > 1)
         {
-            currentMenu.getMap().getGameRules().setFogMode(value - 1);
+            currentMenu.getMap().getGameRules().setFogMode(input - 1);
         }
         else
         {
-            currentMenu.getMap().getGameRules().setFogMode(value);
+            currentMenu.getMap().getGameRules().setFogMode(input);
         }
     },
     getDayScreen : function()

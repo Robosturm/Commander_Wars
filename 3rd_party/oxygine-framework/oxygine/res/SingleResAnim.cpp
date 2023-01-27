@@ -30,7 +30,6 @@ namespace oxygine
         m_texture->init(image);
         m_texture->setClamp2Edge(clamp2Edge);
         m_texture->setLinearFilter(linearFilter);
-        Point originalSize = Point(image.width(), image.height());
         ResAnim::init(m_texture, image.size(), columns, rows, scaleFactor, addTransparentBorder);
     }
 

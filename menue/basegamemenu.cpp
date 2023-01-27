@@ -114,8 +114,8 @@ void BaseGamemenu::changeBackground(QString background)
         m_backgroundSprite->setResAnim(pBackground);
         // background should be last to draw
         m_backgroundSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        m_backgroundSprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-        m_backgroundSprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+        m_backgroundSprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
+        m_backgroundSprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 }
 
@@ -134,7 +134,7 @@ void BaseGamemenu::loadHandling()
                 if (m_Focused)
                 {
                     pEvent->stopPropagation();
-                    emit sigMouseWheel(pTouchEvent->wheelDirection.y);
+                    emit sigMouseWheel(pTouchEvent->wheelDirection.y());
                 }
             }
         });
@@ -156,13 +156,12 @@ void BaseGamemenu::connectMapCursor()
             //pEvent->stopPropagation();
             if (m_Focused)
             {
-                qint32 curX = static_cast<qint32>(pTouchEvent->localPosition.x);
-                qint32 curY = static_cast<qint32>(pTouchEvent->localPosition.y);
-                pCursor->updatePosition(curX, curY);
+                pCursor->updatePosition(pTouchEvent->localPosition.x(),
+                                        pTouchEvent->localPosition.y());
             }
             else
             {
-                emit sigMouseMove(pTouchEvent->localPosition.x, pTouchEvent->localPosition.y);
+                emit sigMouseMove(pTouchEvent->localPosition.x(), pTouchEvent->localPosition.y());
             }
         }
     });

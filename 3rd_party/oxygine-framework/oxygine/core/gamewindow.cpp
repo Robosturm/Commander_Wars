@@ -8,6 +8,7 @@
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
+#include "3rd_party/oxygine-framework/oxygine/Input.h"
 
 
 #include <QMouseEvent>
@@ -139,8 +140,8 @@ namespace oxygine
             auto ratio = getActiveDpiFactor();
             auto width = Settings::getWidth();
             auto heigth = Settings::getHeight();
-            oxygine::Stage::getStage()->init (oxygine::Point(width / ratio, heigth / ratio),
-                                              oxygine::Point(width, heigth));
+            oxygine::Stage::getStage()->init (QSize(width / ratio, heigth / ratio),
+                                              QSize(width, heigth));
         }
     }
 

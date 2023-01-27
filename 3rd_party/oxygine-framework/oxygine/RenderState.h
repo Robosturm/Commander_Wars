@@ -1,7 +1,7 @@
 #pragma once
 #include <QTransform>
-
-#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include <QRect>
+#include <QColor>
 
 namespace oxygine
 {
@@ -21,6 +21,6 @@ namespace oxygine
 
         QTransform transform;
         unsigned char alpha{255};
-        const RectF* clip{nullptr};
+        QRect * clip{nullptr};
     };
 }

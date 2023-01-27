@@ -199,8 +199,8 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
             {
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
                 pSprite->setResAnim(pAnim);
-                pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
-                pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);
+                pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()) * 0.75f);
+                pSprite->setPosition(0, static_cast<float>(GameMap::getImageSize()) / 4.0f);
                 pActor->addChild(pSprite);
             }
         }

@@ -60,10 +60,6 @@ namespace oxygine
         {
 #ifdef GRAPHICSUPPORT
             painter.setTransform(rs.transform);
-
-//            painter.setPen(QPen(drawColor, -1, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
-//            painter.setBrush(drawColor);
-//            painter.drawPath(m_path);
             painter.fillPath(m_path, drawColor);
             drawChildren(rs, style, drawColor, painter);
 #endif
@@ -109,13 +105,16 @@ namespace oxygine
                 qint32 index = m_lines.size() - 1;
                 QString line = m_lines[index];
                 qint32 width = metrics.horizontalAdvance(line);
-                m_offsets[index].setX(rd.getXAlignment(width));
+                if (rd.getX() == 0)
+                {
+                    m_offsets[index].setX(rd.getXAlignment(width));
+                }
                 rd.nodeEnd(width);
                 m_path.clear();
                 for (qint32 i = 0; i < m_lines.size(); ++i)
                 {
-                    qint32 x = static_cast<qint32>(m_offsets[i].x() + rd.getStyle().font.offsetX);
-                    qint32 y = static_cast<qint32>(m_offsets[i].y() + rd.getStyle().font.offsetY);
+                    qint32 x = m_offsets[i].x() + rd.getStyle().font.offsetX;
+                    qint32 y = m_offsets[i].y() + rd.getStyle().font.offsetY;
                     m_path.addText(x, y, rd.getStyle().font.font, m_lines[i]);
                 }
             }

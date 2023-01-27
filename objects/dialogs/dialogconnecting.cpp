@@ -32,7 +32,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
     m_Text = oxygine::spTextField::create();
     m_Text->setHtmlText((text + ".  "));
     m_Text->setStyle(style);
-    m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - 40);
+    m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().width() / 2, Settings::getHeight() / 2 - 40);
     pSpriteBox->addChild(m_Text);
 
     if (showCancel)

@@ -38,8 +38,8 @@ CreditsMenue::CreditsMenue()
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/credits_options");
@@ -119,18 +119,18 @@ CreditsMenue::CreditsMenue()
         pTextfield = oxygine::spTextField::create();
         pTextfield->setStyle(headstyle);
         pTextfield->setHtmlText(m_Headlines[i]);
-        pTextfield->setPosition(x - pTextfield->getTextRect().getWidth() / 2, y);
+        pTextfield->setPosition(x - pTextfield->getTextRect().width() / 2, y);
         m_creditsActor->addChild(pTextfield);
-        y += pTextfield->getTextRect().getHeight() + 10;
+        y += pTextfield->getTextRect().height() + 10;
         for (qint32 i2 = 0; i2 < m_Authors[i].size(); i2++)
         {
             pTextfield = oxygine::spTextField::create();
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(m_Authors[i][i2]);
-            pTextfield->setPosition(x - pTextfield->getTextRect().getWidth() / 2.0f, y);
-            pTextfield->setHeight(pTextfield->getTextRect().getHeight());
+            pTextfield->setPosition(x - pTextfield->getTextRect().width() / 2.0f, y);
+            pTextfield->setHeight(pTextfield->getTextRect().height());
             m_creditsActor->addChild(pTextfield);
-            y += pTextfield->getTextRect().getHeight() + 5;
+            y += pTextfield->getTextRect().height() + 5;
         }
     }
     m_creditsHeigth = y;

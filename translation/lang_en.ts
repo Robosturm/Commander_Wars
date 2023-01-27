@@ -1917,17 +1917,17 @@
 <context>
     <name>ColorSelector</name>
     <message>
-        <location filename="../objects/base/colorselector.cpp" line="44"/>
+        <location filename="../objects/base/colorselector.cpp" line="43"/>
         <source>Red: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/colorselector.cpp" line="58"/>
+        <location filename="../objects/base/colorselector.cpp" line="57"/>
         <source>Green: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/colorselector.cpp" line="71"/>
+        <location filename="../objects/base/colorselector.cpp" line="70"/>
         <source>Blue: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6657,7 +6657,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/LAKE.js" line="148"/>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="144"/>
         <source>A calm inland body of water. Naval and air forces have good mobility while hovercraft can freely move on and off.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7493,7 +7493,7 @@ Host mods: </source>
 <context>
     <name>PlayerInfo</name>
     <message>
-        <location filename="../game/ui/playerinfo.cpp" line="257"/>
+        <location filename="../game/ui/playerinfo.cpp" line="256"/>
         <source>Next day </source>
         <translation type="unfinished"></translation>
     </message>
@@ -10683,77 +10683,77 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WorkerThread</name>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="89"/>
+        <location filename="../coreengine/workerthread.cpp" line="88"/>
         <source>Loading Buildings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="92"/>
+        <location filename="../coreengine/workerthread.cpp" line="91"/>
         <source>Loading COs...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="95"/>
+        <location filename="../coreengine/workerthread.cpp" line="94"/>
         <source>Loading Gamescripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="98"/>
+        <location filename="../coreengine/workerthread.cpp" line="97"/>
         <source>Loading Gamerules...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="101"/>
+        <location filename="../coreengine/workerthread.cpp" line="100"/>
         <source>Loading Movements...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="104"/>
+        <location filename="../coreengine/workerthread.cpp" line="103"/>
         <source>Loading Terrains...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="107"/>
+        <location filename="../coreengine/workerthread.cpp" line="106"/>
         <source>Loading Units...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="110"/>
+        <location filename="../coreengine/workerthread.cpp" line="109"/>
         <source>Loading Weapons...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="113"/>
+        <location filename="../coreengine/workerthread.cpp" line="112"/>
         <source>Loading Battleanimation scripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="116"/>
+        <location filename="../coreengine/workerthread.cpp" line="115"/>
         <source>Loading CO-Perks...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="119"/>
+        <location filename="../coreengine/workerthread.cpp" line="118"/>
         <source>Loading Wikiscripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="121"/>
+        <location filename="../coreengine/workerthread.cpp" line="120"/>
         <source>Loading Shop items...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="124"/>
+        <location filename="../coreengine/workerthread.cpp" line="123"/>
         <source>Loading Movement Planner addins...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="126"/>
+        <location filename="../coreengine/workerthread.cpp" line="125"/>
         <source>Loading Ui scripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="130"/>
+        <location filename="../coreengine/workerthread.cpp" line="129"/>
         <source>Loading Achievements...</source>
         <translation type="unfinished"></translation>
     </message>
