@@ -1,10 +1,11 @@
 #pragma once
+#include <QTransform>
+
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
-#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 
 namespace oxygine
 {
@@ -45,7 +46,7 @@ namespace oxygine
         void rehash(size_t& hash) const;
         void apply();
         void flush();
-        void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest);
+        void render(const QTransform& tr, const QColor& c, const RectF& src, const RectF& dest);
         void setMatrixMode(bool set);
     private:
         void xapply();

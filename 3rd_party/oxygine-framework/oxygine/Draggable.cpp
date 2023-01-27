@@ -2,7 +2,6 @@
 #include "3rd_party/oxygine-framework/oxygine/Draggable.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
-#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 
 namespace oxygine
@@ -160,9 +159,9 @@ namespace oxygine
 
     Point Draggable::convertPosUp(Actor* src, Actor* dest, const Point& pos, bool direction)
     {
-        Point locPos = pos;
+        QPoint locPos(pos.x, pos.y);
 #ifdef GRAPHICSUPPORT
-        AffineTransform t;
+        QTransform t;
         while (src != dest && src)
         {
             t = src->getTransform() * t;
@@ -170,19 +169,20 @@ namespace oxygine
         }
         if (direction)
         {
-            t.x = 0;
-            t.y = 0;
+            t.setMatrix(t.m11(), t.m12(), t.m13(),
+                        t.m21(), t.m22(), t.m23(),
+                        0, 0, t.m33());
         }
-        locPos = t.transform(locPos).cast<Point>();
+        locPos = t.map(locPos);
 #endif
-        return locPos;
+        return Point(locPos.x(), locPos.y());
     }
 
     Point Draggable::convertPosDown(Actor* src, Actor* dest, const Point& pos, bool direction)
     {
-        Point locPos = pos;
+        QPoint locPos(pos.x, pos.y);
 #ifdef GRAPHICSUPPORT
-        AffineTransform t;
+        QTransform t;
         t = src->getTransform();
         while (src != dest && src)
         {
@@ -191,12 +191,13 @@ namespace oxygine
         }
         if (direction)
         {
-            t.x = 0;
-            t.y = 0;
+            t.setMatrix(t.m11(), t.m12(), t.m13(),
+                        t.m21(), t.m22(), t.m23(),
+                        0, 0, t.m33());
         }
-        locPos = t.transform(locPos).cast<Point>();
+        locPos = t.map(locPos);
 #endif
-        return locPos;
+        return Point(locPos.x(), locPos.y());
     }
 
 }

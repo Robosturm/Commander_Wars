@@ -59,7 +59,7 @@ namespace oxygine
         void TextNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
 #ifdef GRAPHICSUPPORT
-            painter.setTransform(QTransform(rs.transform.a, rs.transform.b, rs.transform.c, rs.transform.d, rs.transform.x, rs.transform.y));
+            painter.setTransform(rs.transform);
 
 //            painter.setPen(QPen(drawColor, -1, Qt::SolidLine, style.font.borderCapStyle, style.font.borderJoin));
 //            painter.setBrush(drawColor);

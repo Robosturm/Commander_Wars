@@ -79,7 +79,7 @@ namespace oxygine
         STDRenderer::getCurrent()->flush();
     }
 
-    void Material::render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest)
+    void Material::render(const QTransform& tr, const QColor& c, const RectF& src, const RectF& dest)
     {
         STDRenderer::getCurrent()->setTransform(tr);
         STDRenderer::getCurrent()->addQuad(c, src, dest);

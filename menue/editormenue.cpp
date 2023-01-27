@@ -1411,20 +1411,23 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     bool placed = false;
     for (auto point : points)
     {
-        // nice we can place the terrain
-        if (canTerrainBePlaced(point.x(), point.y()))
+        if (m_pMap->onMap(point.x(), point.y()))
         {
-            spUnit pUnit;
-            m_pMap->getTerrain(point.x(), point.y())->setUnit(pUnit);
-            Interpreter* pInterpreter = Interpreter::getInstance();
-            QString function1 = "useTerrainAsBaseTerrain";
-            QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-            m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false);
-            placed = true;
-        }
-        else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())
-        {
-            placed = true;
+            // nice we can place the terrain
+            if (canTerrainBePlaced(point.x(), point.y()))
+            {
+                spUnit pUnit;
+                m_pMap->getTerrain(point.x(), point.y())->setUnit(pUnit);
+                Interpreter* pInterpreter = Interpreter::getInstance();
+                QString function1 = "useTerrainAsBaseTerrain";
+                QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
+                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false);
+                placed = true;
+            }
+            else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())
+            {
+                placed = true;
+            }
         }
     }
     if (placed)
@@ -1527,7 +1530,8 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         }
     }
     if (placed)
-    {    Interpreter* pInterpreter = Interpreter::getInstance();
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue sound = pInterpreter->doFunction(pCurrentBuilding->getBuildingID(), "getEditorPlacementSound");
         if (sound.isString() )
         {

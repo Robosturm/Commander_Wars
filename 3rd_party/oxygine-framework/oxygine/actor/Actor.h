@@ -1,13 +1,14 @@
 #pragma once
+#include <QTransform>
+#include <QMutex>
+
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
-#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 #include "3rd_party/oxygine-framework/oxygine/Property.h"
-#include <QMutex>
 #include <vector>
 
 namespace oxygine
@@ -240,13 +241,11 @@ namespace oxygine
 
 #ifdef GRAPHICSUPPORT
         /**return local actor transformation*/
-        const AffineTransform& getTransform() const;
-        const AffineTransform& getTransformInvert() const;
+        const QTransform& getTransform() const;
+        const QTransform& getTransformInvert() const;
         /**computes global actor transformation*/
-        AffineTransform computeGlobalTransform(Actor* parent = nullptr) const;
+        QTransform computeGlobalTransform(Actor* parent = nullptr) const;
 #endif
-        /**computes actor Bounds rectangle. Iterates children*/
-        RectF computeBounds(const AffineTransform& transform = AffineTransform()) const;
 
         void setPosition(const Point& pos);
         void setPosition(qint32 x, qint32 y);
@@ -255,7 +254,7 @@ namespace oxygine
         void setAnchor(float ax, float ay);
 
         /**Overwrites transformation matrix. position/scale/rotation would be ignored until you change them*/
-        void setTransform(const AffineTransform& tr);
+        void setTransform(const QTransform& tr);
         /** set z order draw priority, from back (low value) to front (high value). Max value is 32000, Min value -32000*/
         void setPriority(qint32 zorder);
         void setScale(float scale);
@@ -382,7 +381,7 @@ namespace oxygine
         static Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
         static Vector2 convert_stage2local(spActor & child, const Vector2& pos, spActor root = spActor());
         static Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-        static RectF getActorTransformedDestRect(Actor* actor, const AffineTransform& tr);
+        static RectF getActorTransformedDestRect(Actor* actor, const QTransform& tr);
         /*****************************************************************************************/
         // properties for tweens
         /*****************************************************************************************/
@@ -405,8 +404,6 @@ namespace oxygine
     protected:
         void added2stage(Stage*);
         void removedFromStage();
-        void calcBounds2(RectF& bounds, const AffineTransform& transform) const;
-        void calcChildrenBounds(RectF& bounds, const AffineTransform& transform) const;
         static void setParent(Actor* actor, Actor* parent);
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
@@ -439,8 +436,8 @@ namespace oxygine
             flag_last                   = flag_reserved
         };
         mutable quint32 m_flags{flag_visible | flag_fastTransform};
-        mutable AffineTransform m_transform;
-        mutable AffineTransform m_transformInvert;
+        mutable QTransform m_transform;
+        mutable QTransform m_transformInvert;
         tweens m_tweens;
         QMutex m_Locked;
 #else

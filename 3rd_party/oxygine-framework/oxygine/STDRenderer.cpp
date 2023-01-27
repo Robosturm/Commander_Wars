@@ -296,7 +296,7 @@ namespace oxygine
         };
     }
 
-    void STDRenderer::setTransform(const AffineTransform& tr)
+    void STDRenderer::setTransform(const QTransform& tr)
     {
         m_transform = tr;
     }

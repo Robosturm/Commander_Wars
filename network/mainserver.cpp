@@ -23,14 +23,27 @@
 const char* const DRIVER = "QSQLITE";
 
 const char* const SQL_TABLE_PLAYERS = "players";
-const char* const SQL_TABLE_PLAYERDATA = "playerData";
-const char* const SQL_TABLE_PLAYER_CO_DATA = "player_CO_Data";
-const char* const SQL_USERNAME = "username";
-const char* const SQL_PASSWORD = "password";
-const char* const SQL_MAILADRESS = "mailAdress";
-const char* const SQL_MMR = "mmr";
+const char* const SQL_USERNAME      = "username";
+const char* const SQL_PASSWORD      = "password";
+const char* const SQL_MAILADRESS    = "mailAdress";
 const char* const SQL_VALIDPASSWORD = "validPassword";
-const char* const SQL_LASTLOGIN = "lastLogin";
+const char* const SQL_LASTLOGIN     = "lastLogin";
+
+const char* const SQL_TABLE_PLAYERDATA  = "playerData";
+const char* const SQL_COID              = "coid";
+const char* const SQL_GAMESMADE         = "gamesMade";
+const char* const SQL_GAMESLOST         = "gamesLost";
+const char* const SQL_GAMESWON          = "gamesWon";
+const char* const SQL_GAMESDRAW         = "gamesDraw";
+
+
+const char* const SQL_TABLE_MATCH_DATA  = "matchData";
+const char* const SQL_MMR               = "mmr";
+const char* const SQL_MINGAMES          = "minGames";
+const char* const SQL_MAXGAMES          = "maxGames";
+const char* const SQL_RUNNINGGAMES      = "runningGames";
+
+
 
 
 spMainServer MainServer::m_pInstance{nullptr};
@@ -113,20 +126,7 @@ MainServer::MainServer()
 
     if (m_serverData != nullptr)
     {
-        QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
-                                            SQL_USERNAME + " TEXT PRIMARY KEY, " +
-                                            SQL_PASSWORD + " TEXT, " +
-                                            SQL_MAILADRESS + " TEXT, " +
-                                            SQL_MMR + " INTEGER, " +
-                                            SQL_VALIDPASSWORD + " INTEGER, " +
-                                            SQL_LASTLOGIN + " TEXT)");
-        if (sqlQueryFailed(query))
-        {
-            CONSOLE_PRINT("Unable to create player table " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
-        }
-    }
-    if (m_serverData != nullptr)
-    {
+        startDatabase();
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start();
         connect(&m_mailSender, &SmtpMailSender::sigMailResult, this, &MainServer::onMailSendResult, Qt::QueuedConnection);
@@ -152,6 +152,36 @@ MainServer::~MainServer()
         game->process->kill();
     }
     m_games.clear();
+}
+
+void MainServer::startDatabase()
+{
+    QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
+                                        SQL_USERNAME + " TEXT PRIMARY KEY, " +
+                                        SQL_PASSWORD + " TEXT, " +
+                                        SQL_MAILADRESS + " TEXT, " +
+                                        SQL_MMR + " INTEGER, " +
+                                        SQL_VALIDPASSWORD + " INTEGER, " +
+                                        SQL_LASTLOGIN + " TEXT)");
+    if (sqlQueryFailed(query))
+    {
+        CONSOLE_PRINT("Unable to create player table error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+    }
+    bool success = false;
+    query = getAllUsers(*m_serverData, success);
+    if (success)
+    {
+        if (query.first())
+        {
+            auto username = query.value(SQL_USERNAME);
+            createUserTable(username.toString());
+            while (query.next())
+            {
+                auto username = query.value(SQL_USERNAME);
+                createUserTable(username.toString());
+            }
+        }
+    }
 }
 
 bool MainServer::sqlQueryFailed(const QSqlQuery & query)
@@ -1022,6 +1052,7 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc, Netwo
                           "'" + dateTime + "'" +
                           ")";
         query = m_serverData->exec(command);
+        createUserTable(username);
         if (sqlQueryFailed(query))
         {
             result = GameEnums::LoginError_AccountExists;
@@ -1114,6 +1145,34 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
     if (result == GameEnums::LoginError_None)
     {
         sendGameDataToClient(socketId);
+    }
+}
+
+void MainServer::createUserTable(const QString & username)
+{
+    QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERDATA + username + " (" +
+                                        SQL_COID + " TEXT PRIMARY KEY, " +
+                                        SQL_GAMESMADE + " INTEGER, " +
+                                        SQL_GAMESLOST + " INTEGER, " +
+                                        SQL_GAMESWON + " INTEGER, " +
+                                        SQL_GAMESDRAW + " INTEGER)");
+    if (sqlQueryFailed(query))
+    {
+        CONSOLE_PRINT("Unable to create user table for user " + username + ". Error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+    }
+}
+
+void MainServer::createMatchData(const QString & match)
+{
+    QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_MATCH_DATA + match + " (" +
+                                        SQL_USERNAME + " TEXT PRIMARY KEY, " +
+                                        SQL_MMR + " INTEGER, " +
+                                        SQL_MINGAMES + " INTEGER, " +
+                                        SQL_MAXGAMES + " INTEGER, " +
+                                        SQL_RUNNINGGAMES + " INTEGER)");
+    if (sqlQueryFailed(query))
+    {
+        CONSOLE_PRINT("Unable to create match table for match " + match + ". Error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
     }
 }
 
@@ -1345,4 +1404,12 @@ QSqlQuery MainServer::getAccountInfo(QSqlDatabase & database, const QString & us
     success = !sqlQueryFailed(query);
     return query;
 }
+
+QSqlQuery MainServer::getAllUsers(QSqlDatabase & database, bool & success)
+{
+    QSqlQuery query = database.exec(QString("SELECT ") + SQL_USERNAME + " from " + SQL_TABLE_PLAYERS + ";");
+    success = !sqlQueryFailed(query);
+    return query;
+}
+
 

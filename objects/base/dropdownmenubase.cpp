@@ -89,7 +89,7 @@ void DropDownmenuBase::showDropDown()
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     auto transform = computeGlobalTransform();
-    if (transform.y > Settings::getHeight() / 2)
+    if (transform.m32() > Settings::getHeight() / 2)
     {
         if (m_Panel->getH_Scrollbar()->getVisible())
         {

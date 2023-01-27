@@ -1,6 +1,6 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
+#include <QTransform>
+
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
 namespace oxygine
@@ -19,7 +19,7 @@ namespace oxygine
             return color;
         }
 
-        AffineTransform transform;
+        QTransform transform;
         unsigned char alpha{255};
         const RectF* clip{nullptr};
     };

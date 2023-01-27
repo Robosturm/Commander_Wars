@@ -6,7 +6,7 @@ attribute vec4 color;
 attribute vec2 uv;
 void main()
 {
-	gl_Position = mat * vec4(position, 1.0); 
+        gl_Position = mat * vec4(position, 1);
 	result_color = color;
 	result_uv = uv;
 }

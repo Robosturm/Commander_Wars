@@ -1,7 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
-#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
@@ -64,49 +63,10 @@ namespace oxygine
         }
     }
 
-    void Actor::calcChildrenBounds(RectF& bounds, const AffineTransform& transform) const
-    {
 #ifdef GRAPHICSUPPORT
-        for (auto & child : m_children)
-        {
-            if (child->getVisible())
-            {
-                AffineTransform tr = child->getTransform() * transform;
-                child->calcBounds2(bounds, tr);
-            }
-        }
-#endif
-    }
-
-    void Actor::calcBounds2(RectF& bounds, const AffineTransform& transform) const
+    QTransform Actor::computeGlobalTransform(Actor* parent) const
     {
-#ifdef GRAPHICSUPPORT
-        calcChildrenBounds(bounds, transform);
-
-        RectF rect;
-        if (getBounds(rect))
-        {
-            bounds.unite(transform.transform(rect.getLeftTop()));
-            bounds.unite(transform.transform(rect.getRightTop()));
-            bounds.unite(transform.transform(rect.getRightBottom()));
-            bounds.unite(transform.transform(rect.getLeftBottom()));
-        }
-#endif
-    }
-
-    RectF Actor::computeBounds(const AffineTransform& transform) const
-    {
-        RectF bounds = RectF::invalidated();
-
-        calcBounds2(bounds, transform);
-
-        return bounds;
-    }
-
-#ifdef GRAPHICSUPPORT
-    AffineTransform Actor::computeGlobalTransform(Actor* parent) const
-    {
-        AffineTransform t;
+        QTransform t;
         const Actor* actor = this;
         while (actor && actor != parent)
         {
@@ -292,7 +252,7 @@ namespace oxygine
             originalLocalPos = me->localPosition;
             originalLocalScale = me->__localScale;
             me->localPosition = parent2local(originalLocalPos).cast<Point>();
-            me->__localScale *= m_transform.a;
+            me->__localScale *= m_transform.m11();
             if (me->__localScale == NAN)
             {
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::handleEvent locale scale is NAN");
@@ -376,7 +336,7 @@ namespace oxygine
 #endif
     }
 
-    void Actor::setTransform(const AffineTransform& tr)
+    void Actor::setTransform(const QTransform& tr)
     {
 #ifdef GRAPHICSUPPORT
         m_transform = tr;
@@ -537,19 +497,18 @@ namespace oxygine
     }
 
 #ifdef GRAPHICSUPPORT
-    const AffineTransform& Actor::getTransform() const
+    const QTransform& Actor::getTransform() const
     {
         updateTransform();
         return m_transform;
     }
 
-    const AffineTransform& Actor::getTransformInvert() const
+    const QTransform& Actor::getTransformInvert() const
     {
         if (m_flags & flag_transformInvertDirty)
         {
             m_flags &= ~flag_transformInvertDirty;
-            m_transformInvert = getTransform();
-            m_transformInvert.invert();
+            m_transformInvert = getTransform().inverted();
         }
 
         return m_transformInvert;
@@ -595,11 +554,11 @@ namespace oxygine
         {
             return;
         }
-        AffineTransform tr;
+        QTransform tr;
 
         if (m_flags & flag_fastTransform)
         {
-            tr = AffineTransform(1, 0, 0, 1, m_pos.x, m_pos.y);
+            tr = QTransform(1, 0, 0, 1, m_pos.x, m_pos.y);
         }
         else
         {
@@ -611,15 +570,14 @@ namespace oxygine
                 s = qSin(m_rotation);
             }
 
-            tr = AffineTransform(
+            tr = QTransform(
                      c * m_scale.x, s * m_scale.x,
                      -s * m_scale.y, c * m_scale.y,
                      m_pos.x, m_pos.y);
         }
-        Vector2 offset;
-        offset.x = -float(m_size.x * m_anchor.x);
-        offset.y = -float(m_size.y * m_anchor.y);
-        tr.translate(offset);
+        QPoint offset(-m_size.x * m_anchor.x,
+                      -m_size.y * m_anchor.y);
+        tr.translate(offset.x(), offset.y());
         m_transform = tr;
         m_flags &= ~flag_transformDirty;
 #endif
@@ -826,8 +784,9 @@ namespace oxygine
     Vector2 Actor::parent2local(const Vector2& global) const
     {
 #ifdef GRAPHICSUPPORT
-        const AffineTransform& t = getTransformInvert();
-        return t.transform(global);
+        const QTransform& t = getTransformInvert();
+        QPoint pos = t.map(QPoint(global.x, global.y));
+        return Vector2(pos.x(), pos.y());
 #else
         return Vector2();
 #endif
@@ -836,8 +795,9 @@ namespace oxygine
     Vector2 Actor::local2parent(const Vector2& local) const
     {
 #ifdef GRAPHICSUPPORT
-        const AffineTransform& t = getTransform();
-        return t.transform(local);
+        const QTransform& t = getTransform();
+        QPoint pos = t.map(QPoint(local.x, local.y));
+        return Vector2(pos.x(), pos.y());
 #else
         return Vector2();
 #endif
@@ -879,11 +839,11 @@ namespace oxygine
         rs.alpha = alpha;
 
 
-        const AffineTransform& tr = getTransform();
+        const QTransform& tr = getTransform();
         if (m_flags & flag_fastTransform)
         {
             rs.transform = parentRS.transform;
-            rs.transform.translate(Vector2(tr.x, tr.y));
+            rs.transform.translate(tr.m31(), tr.m32());
         }
         else
         {
@@ -1075,22 +1035,22 @@ namespace oxygine
         return convert_global2local_(actor, root, pos);
     }
 
-    RectF Actor::getActorTransformedDestRect(Actor* actor, const AffineTransform& tr)
+    RectF Actor::getActorTransformedDestRect(Actor* actor, const QTransform& tr)
     {
         RectF rect = actor->getDestRect();
-        Vector2 tl = rect.pos;
-        Vector2 br = rect.pos + rect.size;
+        QPoint tl(rect.pos.x, rect.pos.y);
+        QPoint br(rect.pos.x + rect.size.x, rect.pos.y + rect.size.y);
 
-        tl = tr.transform(tl);
-        br = tr.transform(br);
+        tl = tr.map(tl);
+        br = tr.map(br);
 
         Vector2 size = Vector2(
-                           qAbs(br.x - tl.x),
-                           qAbs(br.y - tl.y));
+                           qAbs(br.x() - tl.x()),
+                           qAbs(br.y() - tl.y()));
 
         Vector2 ntl;
-        ntl.x = std::min(tl.x, br.x);
-        ntl.y = std::min(tl.y, br.y);
+        ntl.x = std::min(tl.x(), br.x());
+        ntl.y = std::min(tl.y(), br.y());
 
         return RectF(ntl, size);
     }

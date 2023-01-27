@@ -1,6 +1,6 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 
+#include <QtGlobal>
 namespace oxygine
 {
     struct VertexPCT2
@@ -13,9 +13,9 @@ namespace oxygine
             Max,
             VERTEX_TEXCOORD_SIZE = 2,
         };
-        float x{0.0f};
-        float y{0.0f};
-        float z{0.0f};
+        qint32 x{0};
+        qint32 y{0};
+        qint32 z{0};
         quint32 color{0};
         float u{0.0f};
         float v{0.0f};

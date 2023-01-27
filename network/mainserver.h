@@ -133,6 +133,10 @@ private slots:
     void periodicTasks();
 private:
     /**
+     * @brief startDatabase
+     */
+    void startDatabase();
+    /**
      * @brief cleanUpSuspendedGames
      * @param games
      */
@@ -287,6 +291,16 @@ private:
      */
     void loginToAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
     /**
+     * @brief createUserTable
+     * @param username
+     */
+    void createUserTable(const QString & username);
+    /**
+     * @brief createMatchData
+     * @param match
+     */
+    void createMatchData(const QString & match);
+    /**
      * @brief checkPassword
      * @param database
      * @param username
@@ -325,6 +339,14 @@ private:
      * @param message
      */
     void sendMail(QString message);
+    /**
+     * @brief getAllUsers
+     * @param database
+     * @param username
+     * @param success
+     * @return
+     */
+    QSqlQuery getAllUsers(QSqlDatabase & database, bool & success);
 private:
     class InternNetworkGame;
     using spInternNetworkGame = oxygine::intrusive_ptr<InternNetworkGame>;
