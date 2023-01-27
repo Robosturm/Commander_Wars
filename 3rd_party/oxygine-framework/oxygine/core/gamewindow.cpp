@@ -311,7 +311,7 @@ namespace oxygine
         }
     }
 
-    bool GameWindow::sameTouchpoint(QPointF pos1, QPointF pos2) const
+    bool GameWindow::sameTouchpoint(const QPointF & pos1, const QPointF & pos2) const
     {
         return qAbs(pos1.x() - pos2.x()) + qAbs(pos1.y() - pos2.y()) <= Settings::getTouchPointSensitivity();
     }

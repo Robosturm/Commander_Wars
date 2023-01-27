@@ -46,7 +46,7 @@ namespace oxygine
 #endif
     }
 
-    bool AnimationFrame::getHits(QPoint pos) const
+    bool AnimationFrame::getHits(const QPoint & pos) const
     {
         if (m_data.size() <= 0)
         {

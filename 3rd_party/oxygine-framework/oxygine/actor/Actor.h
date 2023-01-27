@@ -413,9 +413,9 @@ namespace oxygine
         virtual void doUpdate(const UpdateState& us);
         void dispatchToParent(Event* event);
         void insertActor(spActor & actor);
-        static QPoint convert_global2local_(const Actor* child, const Actor* parent, QPoint pos);
+        static QPoint convert_global2local_(const Actor* child, const Actor* parent, const QPoint & pos);
         static QPoint convert_global2local(spActor & child, spActor & parent, const QPoint& pos);
-        static QPoint convert_local2global_(const Actor* child, const Actor* parent, QPoint pos);
+        static QPoint convert_local2global_(const Actor* child, const Actor* parent, const QPoint & pos);
         static QPoint convert_local2global(spActor & child, spActor & parent, const QPoint& pos);
     protected:
 #ifdef GRAPHICSUPPORT

@@ -58,7 +58,7 @@ namespace oxygine
          * @param y
          * @return
          */
-        bool getHits(QPoint pos) const;
+        bool getHits(const QPoint & pos) const;
 
         void setSrcRect(const QRectF& r)
         {

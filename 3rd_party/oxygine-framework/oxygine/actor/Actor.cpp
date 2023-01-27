@@ -944,7 +944,7 @@ namespace oxygine
 #endif
     }
 
-    QPoint Actor::convert_global2local_(const Actor* child, const Actor* parent, QPoint pos)
+    QPoint Actor::convert_global2local_(const Actor* child, const Actor* parent, const QPoint & pos)
     {
 #ifdef GRAPHICSUPPORT
         if (child->getParent() && child->getParent() != parent)
@@ -961,7 +961,7 @@ namespace oxygine
         return convert_global2local_(child.get(), parent.get(), pos);
     }
 
-    QPoint Actor::convert_local2global_(const Actor* child, const Actor* parent, QPoint pos)
+    QPoint Actor::convert_local2global_(const Actor* child, const Actor* parent, const QPoint & pos)
     {
 #ifdef GRAPHICSUPPORT
         while (child && child != parent)
