@@ -8,6 +8,7 @@
 
 namespace oxygine
 {
+    QRectF Sprite::m_dummyRectF;
 
     Sprite::~Sprite()
     {

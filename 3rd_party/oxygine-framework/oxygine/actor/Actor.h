@@ -137,7 +137,7 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
             return m_scale;
 #else
-            return m_dummyVector;
+            return m_dummyPointF;
 #endif
         }
         float getScaleX() const
@@ -203,7 +203,7 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
             return m_size;
 #else
-            return m_dummyPoint;
+            return m_dummySize;
 #endif
         }
         /**Returns Size*Scale*/
@@ -212,7 +212,7 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
             return QSize(getScaledWidth(), getScaledHeight());
 #else
-            return Vector2();
+            return m_dummySize;
 #endif
         }
         qint32 getWidth() const;
@@ -436,9 +436,9 @@ namespace oxygine
         tweens m_tweens;
         QMutex m_Locked;
 #else
-        static Point m_dummyPoint;
-        static Vector2 m_dummyVector;
-        static RectF m_dummyRectF;
+        static QPoint m_dummyPoint;
+        static QSize m_dummySize;
+        static QPointF m_dummyPointF;
 #endif
         Stage* m_stage;
         spClock m_clock;

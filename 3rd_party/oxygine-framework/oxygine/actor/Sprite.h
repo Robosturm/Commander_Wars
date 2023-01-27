@@ -124,6 +124,8 @@ namespace oxygine
         AnimationFrame m_frame;
         oxygine::spResAnim m_colorTable;
         bool m_invertFlipX{false};
+#else
+        static QRectF m_dummyRectF;
 #endif
     };
 }

@@ -83,16 +83,14 @@ namespace oxygine
     {
         m_srcRect = QRectF(m_srcRect.right(), m_srcRect.y(),
                           -m_srcRect.width(), m_srcRect.height());
-        m_destRect = QRect(m_frameSize.width() - m_destRect.right(), m_destRect.y(),
-                           m_destRect.width(), m_destRect.height());
+        m_destRect.moveLeft(m_frameSize.width() - m_destRect.right());
     }
 
     void AnimationFrame::flipY()
     {
         m_srcRect = QRectF(m_srcRect.x(), m_srcRect.bottom(),
                           m_srcRect.width(), -m_srcRect.height());
-        m_destRect  = QRect(m_destRect.x(), m_frameSize.height() - m_destRect.bottom(),
-                            m_destRect.width(), m_destRect.height());
+        m_destRect.moveTop(m_frameSize.height() - m_destRect.bottom());
     }
 
 }

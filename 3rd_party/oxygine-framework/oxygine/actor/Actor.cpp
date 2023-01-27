@@ -10,9 +10,9 @@
 namespace oxygine
 {
 #ifndef GRAPHICSUPPORT
-    Point Actor::m_dummyPoint;
-    Vector2 Actor::m_dummyVector;
-    RectF Actor::m_dummyRectF;
+    QPoint Actor::m_dummyPoint;
+    QSize Actor::m_dummySize;
+    QPointF Actor::m_dummyPointF;
 #endif
 
     Actor::Actor()
@@ -785,7 +785,7 @@ namespace oxygine
         const QTransform& t = getTransformInvert();
         return t.map(global);
 #else
-        return Vector2();
+        return QPoint();
 #endif
     }
 
@@ -795,7 +795,7 @@ namespace oxygine
         const QTransform& t = getTransform();
         return t.map(local);
 #else
-        return Vector2();
+        return QPoint();
 #endif
     }
 

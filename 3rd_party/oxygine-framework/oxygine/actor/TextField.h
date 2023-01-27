@@ -74,7 +74,7 @@ namespace oxygine
         bool m_htmlText = false;
 #else
         static TextStyle m_dummyTextStyle;
-        static Rect m_dummyRect;
+        static QRect m_dummyRect;
         static QString m_dummyText;
         static QColor m_dummyColor;
 #endif
