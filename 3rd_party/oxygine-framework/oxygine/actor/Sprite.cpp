@@ -8,7 +8,9 @@
 
 namespace oxygine
 {
+#ifndef GRAPHICSUPPORT
     QRectF Sprite::m_dummyRectF;
+#endif
 
     Sprite::~Sprite()
     {
@@ -40,10 +42,10 @@ namespace oxygine
         changeAnimFrame(f);
     }
 
-    bool Sprite::isOn(const QPoint& localPosition, float localScale)
+    bool Sprite::isOn(const QPoint& localPosition)
     {
 #ifdef GRAPHICSUPPORT
-        if (!Actor::isOn(localPosition, localScale))
+        if (!Actor::isOn(localPosition))
         {
             return false;
         }

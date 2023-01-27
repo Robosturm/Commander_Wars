@@ -12,7 +12,7 @@ namespace oxygine
         explicit ColorRectSprite();
         ~ColorRectSprite() = default;
         virtual void doRender(const RenderState&) override;
-        virtual bool isOn(const QPoint& localPosition, float localScale) override;
+        virtual bool isOn(const QPoint& localPosition) override;
     protected:
         virtual void sizeChanged(const QSize& size) override;
     };

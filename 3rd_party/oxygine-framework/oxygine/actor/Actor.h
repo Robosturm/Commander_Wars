@@ -310,7 +310,7 @@ namespace oxygine
             }
 #endif
         }
-        virtual bool isOn(const QPoint& localPosition, float localScale = 1.0f);
+        virtual bool isOn(const QPoint& localPosition);
         /**Returns true if actor is child or located deeper in current subtree*/
         bool isDescendant(const Actor* actor) const;
         void addChild(spActor actor);
@@ -413,9 +413,9 @@ namespace oxygine
         virtual void doUpdate(const UpdateState& us);
         void dispatchToParent(Event* event);
         void insertActor(spActor & actor);
-        static QPoint convert_global2local_(const Actor* child, const Actor* parent, const QPoint & pos);
+        static QPoint convert_global2local_(const Actor* child, const Actor* parent, QPoint pos);
         static QPoint convert_global2local(spActor & child, spActor & parent, const QPoint& pos);
-        static QPoint convert_local2global_(const Actor* child, const Actor* parent, const QPoint & pos);
+        static QPoint convert_local2global_(const Actor* child, const Actor* parent, QPoint pos);
         static QPoint convert_local2global(spActor & child, spActor & parent, const QPoint& pos);
     protected:
 #ifdef GRAPHICSUPPORT

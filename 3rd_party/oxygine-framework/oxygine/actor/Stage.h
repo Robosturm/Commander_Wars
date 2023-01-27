@@ -44,7 +44,7 @@ namespace oxygine
         }
     protected:
         void onDeactivate(Event*);
-        virtual bool isOn(const QPoint& localPosition, float localScale) override;
+        virtual bool isOn(const QPoint& localPosition) override;
 
     protected:
         static spStage instance;

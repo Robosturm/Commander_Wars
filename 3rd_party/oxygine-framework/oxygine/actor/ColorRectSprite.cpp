@@ -26,8 +26,8 @@ namespace oxygine
         Actor::sizeChanged(size);
     }
 
-    bool ColorRectSprite::isOn(const QPoint& localPosition, float localScale)
+    bool ColorRectSprite::isOn(const QPoint& localPosition)
     {
-        return Actor::isOn(localPosition, localScale);
+        return Actor::isOn(localPosition);
     }
 }

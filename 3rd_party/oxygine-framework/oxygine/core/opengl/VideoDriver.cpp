@@ -301,9 +301,6 @@ namespace oxygine
 #endif
     }
 
-    // GL_BLEND
-    // texture?
-
     void VideoDriver::setUniformInt(const char* id, qint32 v)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();

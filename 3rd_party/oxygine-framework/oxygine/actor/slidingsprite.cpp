@@ -76,7 +76,7 @@ namespace oxygine
     {
         if (m_speedX != 0.0f)
         {
-            float speed = -m_speedX;
+            auto speed = -m_speedX;
             if (m_flippedX)
             {
                 speed = m_speedX;

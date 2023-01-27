@@ -77,7 +77,7 @@ namespace oxygine
         void setRow(qint32 row);
         void setColumn(qint32 column);
         void setColumnRow(qint32 column, qint32 row);
-        virtual bool isOn(const QPoint& localPosition, float localScale) override;
+        virtual bool isOn(const QPoint& localPosition) override;
         bool isFlippedX() const
         {
 #ifdef GRAPHICSUPPORT

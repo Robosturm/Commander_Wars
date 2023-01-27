@@ -243,7 +243,7 @@ namespace oxygine
         }
 
         QPoint originalLocalPos;
-        float originalLocalScale;
+        float originalLocalScale = 1.0f;
 
         if (touchEvent)
         {
@@ -272,7 +272,7 @@ namespace oxygine
             TouchEvent* me = safeCast<TouchEvent*>(event);
             if (!event->target)
             {
-                if (isOn(me->localPosition, me->__localScale))
+                if (isOn(me->localPosition))
                 {
                     event->phase = Event::phase_target;
                     event->target = this;
@@ -581,7 +581,7 @@ namespace oxygine
 #endif
     }
 
-    bool Actor::isOn(const QPoint& localPosition, float)
+    bool Actor::isOn(const QPoint& localPosition)
     {
         if (getDestRect().contains(localPosition))
         {
@@ -944,7 +944,7 @@ namespace oxygine
 #endif
     }
 
-    QPoint Actor::convert_global2local_(const Actor* child, const Actor* parent, const QPoint & pos)
+    QPoint Actor::convert_global2local_(const Actor* child, const Actor* parent, QPoint pos)
     {
 #ifdef GRAPHICSUPPORT
         if (child->getParent() && child->getParent() != parent)
@@ -961,7 +961,7 @@ namespace oxygine
         return convert_global2local_(child.get(), parent.get(), pos);
     }
 
-    QPoint Actor::convert_local2global_(const Actor* child, const Actor* parent, const QPoint & pos)
+    QPoint Actor::convert_local2global_(const Actor* child, const Actor* parent, QPoint pos)
     {
 #ifdef GRAPHICSUPPORT
         while (child && child != parent)

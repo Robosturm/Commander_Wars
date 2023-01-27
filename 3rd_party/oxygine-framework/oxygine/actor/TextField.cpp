@@ -22,7 +22,7 @@ namespace oxygine
     {
     }
 
-    bool TextField::isOn(const QPoint& localPosition, float)
+    bool TextField::isOn(const QPoint& localPosition)
     {
 #ifdef GRAPHICSUPPORT
         return getTextRect().contains(localPosition);

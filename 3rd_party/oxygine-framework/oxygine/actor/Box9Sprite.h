@@ -52,7 +52,7 @@ namespace oxygine
         void setGuides(float x1, float x2, float y1, float y2);
         void setVerticalGuides(float x1, float x2);
         void setHorizontalGuides(float y1, float y2);
-        virtual bool isOn(const QPoint& localPosition, float localScale) override;
+        virtual bool isOn(const QPoint& localPosition) override;
         virtual QRect getDestRect() const override;
     protected:
         virtual void sizeChanged(const QSize& size)  override;

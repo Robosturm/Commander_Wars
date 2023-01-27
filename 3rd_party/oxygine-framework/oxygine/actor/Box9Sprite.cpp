@@ -123,9 +123,9 @@ namespace oxygine
         Sprite::animFrameChanged(f);
     }
 
-    bool Box9Sprite::isOn(const QPoint& localPosition, float localScale)
+    bool Box9Sprite::isOn(const QPoint& localPosition)
     {
-        return Actor::isOn(localPosition, localScale);
+        return Actor::isOn(localPosition);
     }
 
     void Box9Sprite::prepare()

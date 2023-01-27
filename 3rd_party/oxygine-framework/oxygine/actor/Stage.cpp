@@ -30,7 +30,7 @@ namespace oxygine
         setSize(gameSize);
     }
 
-    bool Stage::isOn(const QPoint&, float)
+    bool Stage::isOn(const QPoint&)
     {
         return true;
     }

@@ -55,7 +55,7 @@ namespace oxygine
         */
         void setHtmlText(const QString & str);
 
-        virtual bool isOn(const QPoint & localPosition, float) override;
+        virtual bool isOn(const QPoint & localPosition) override;
         virtual void doRender(const RenderState&) override;
         text::Node* getRootNode();
 
