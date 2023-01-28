@@ -15,7 +15,11 @@ namespace oxygine
         virtual ~VStyleActor() = default;
         const QColor& getColor() const
         {
+#ifdef GRAPHICSUPPORT
             return m_color;
+#else
+        return m_dummyColor;
+#endif
         }
         const QColor& getAddColor() const
         {
