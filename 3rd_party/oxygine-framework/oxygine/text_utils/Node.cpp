@@ -60,6 +60,9 @@ namespace oxygine
         {
 #ifdef GRAPHICSUPPORT
             painter.setTransform(rs.transform);
+            // painter.setPen(QPen(drawColor, 0, Qt::SolidLine, style.font->borderCapStyle, style.font->borderJoin));
+            // painter.setBrush(drawColor);
+            // painter.drawPath(m_path);
             painter.fillPath(m_path, drawColor);
             drawChildren(rs, style, drawColor, painter);
 #endif

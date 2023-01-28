@@ -123,9 +123,9 @@ namespace oxygine
                 QRect clipRect(scissorRect.x(), size.height() - scissorRect.y() - scissorRect.height(), scissorRect.width(), scissorRect.height());
                 painter.setClipRect(clipRect);
             }
-            painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing, tf->getFont()->antialiasing);
+            painter.setRenderHints(QPainter::Antialiasing, tf->getFont()->antialiasing);
             root->draw(rs, tf->getStyle(), tf->getStyle().color, painter);
-            painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing, false);
+            painter.setRenderHints(QPainter::Antialiasing, false);
             painter.end();
             //---------------------------------------------------------
         }

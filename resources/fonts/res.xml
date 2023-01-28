@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
 <fonts>
-    <font file="segoeuiBold.ttf" type="main16" pixelSize="16" offsetX="0" offsetY="0" bold="true" antialiasing="false" />
-    <font file="segoeuiBold.ttf" type="main24" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="false" />
-    <font file="segoeuiBold.ttf" type="damageTable20" pixelSize="20" offsetX="0" offsetY="0" bold="true" antialiasing="false" />
-    <font file="segoeuiBold.ttf" type="mainBlack24" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="main32" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="false" />
-    <font file="segoeuiBold.ttf" type="main48" pixelSize="48" offsetX="0" offsetY="0" bold="true" antialiasing="false" />
-    <font file="segoeuiBold.ttf" type="mainBlack48" pixelSize="48" offsetX="0" offsetY="0" bold="true" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="main72" pixelSize="72" offsetX="0" offsetY="0" bold="true" antialiasing="false" />
-    <font file="segoeuiBold.ttf" type="mainBlack72" pixelSize="72" offsetX="0" offsetY="0" bold="true" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="logo16" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="false" />
-    <font file="segoeuiBold.ttf" type="menu32" pixelSize="28" offsetX="0" offsetY="-4" bold="true" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="powerFont48" pixelSize="44" offsetX="0" offsetY="0" bold="true" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="powerFont72" pixelSize="64" offsetX="0" offsetY="0" bold="true" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="fundsInfo24" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="nextDayInfo16" pixelSize="16" offsetX="0" offsetY="0" bold="true" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="animationFont24" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="dialog48" pixelSize="32" offsetX="0" offsetY="0" bold="true" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="infoBar16" pixelSize="16" offsetX="0" offsetY="0" bold="true" antialiasing="false" />
-    <font file="segoeuiBold.ttf" type="console16" pixelSize="16" offsetX="0" offsetY="0" bold="false" antialiasing="false" mainColor="#FF7F27" />
-    <font file="segoeuiBold.ttf" type="attackFont32" pixelSize="30" offsetX="0" offsetY="0" antialiasing="false" mainColor="#000000" />
-    <font file="segoeuiBold.ttf" type="attackFont24" pixelSize="20" offsetX="0" offsetY="0" bold="true" antialiasing="false" />
-    <font file="segoeuiBold.ttf" type="battleHpFont16" pixelSize="16" offsetX="0" offsetY="0" bold="true" antialiasing="false" />
+    <font file="segoeuiBold.ttf" type="main16" pixelSize="16" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
+    <font file="segoeuiBold.ttf" type="main24" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
+    <font file="segoeuiBold.ttf" type="damageTable20" pixelSize="20" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
+    <font file="segoeuiBold.ttf" type="mainBlack24" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="main32" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
+    <font file="segoeuiBold.ttf" type="main48" pixelSize="48" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
+    <font file="segoeuiBold.ttf" type="mainBlack48" pixelSize="48" offsetX="0" offsetY="0" bold="true" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="main72" pixelSize="72" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
+    <font file="segoeuiBold.ttf" type="mainBlack72" pixelSize="72" offsetX="0" offsetY="0" bold="true" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="logo16" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
+    <font file="segoeuiBold.ttf" type="menu32" pixelSize="28" offsetX="0" offsetY="-4" bold="true" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="powerFont48" pixelSize="44" offsetX="0" offsetY="0" bold="true" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="powerFont72" pixelSize="64" offsetX="0" offsetY="0" bold="true" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="fundsInfo24" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="nextDayInfo16" pixelSize="16" offsetX="0" offsetY="0" bold="true" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="animationFont24" pixelSize="24" offsetX="0" offsetY="0" bold="true" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="dialog48" pixelSize="32" offsetX="0" offsetY="0" bold="true" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="infoBar16" pixelSize="16" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
+    <font file="segoeuiBold.ttf" type="console16" pixelSize="16" offsetX="0" offsetY="0" bold="false" antialiasing="true" mainColor="#FF7F27" />
+    <font file="segoeuiBold.ttf" type="attackFont32" pixelSize="30" offsetX="0" offsetY="0" antialiasing="true" mainColor="#000000" />
+    <font file="segoeuiBold.ttf" type="attackFont24" pixelSize="20" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
+    <font file="segoeuiBold.ttf" type="battleHpFont16" pixelSize="16" offsetX="0" offsetY="0" bold="true" antialiasing="true" />
 </fonts>
