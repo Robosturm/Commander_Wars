@@ -1,4 +1,4 @@
-#include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/VisualStyleActor.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
@@ -21,42 +21,10 @@ namespace oxygine
 #endif
     }
 
-    void VisualStyle::setColor(const QColor& color)
-    {
-#ifdef GRAPHICSUPPORT
-        m_color = color;
-#endif
-    }
-
-    void VisualStyle::setBlendMode(VideoDriver::blend_mode mode)
-    {
-#ifdef GRAPHICSUPPORT
-        m_blend = mode;
-#endif
-    }
-
-    const QColor& VStyleActor::getColor() const
-    {
-#ifdef GRAPHICSUPPORT
-        return m_vstyle.getColor();
-#else
-        return m_dummyColor;
-#endif
-    }
-
-    const QColor& VStyleActor::getAddColor() const
-    {
-#ifdef GRAPHICSUPPORT
-        return m_mat->m_addColor;
-#else
-        return m_dummyColor;
-#endif
-    }
-
     void VStyleActor::setColor(const QColor& color)
     {
 #ifdef GRAPHICSUPPORT
-        m_vstyle.setColor(color);
+        m_color = color;
 #endif
     }
 
@@ -99,36 +67,11 @@ namespace oxygine
         setAddColor(QColor(r, g, b, a));
     }
 
-    void VStyleActor::setBlendMode(VideoDriver::blend_mode mode)
-    {
-#ifdef GRAPHICSUPPORT
-        if (getBlendMode() == mode)
-        {
-            return;
-        }
-        QMutexLocker lock(&m_Locked);
-        m_vstyle.setBlendMode(mode);
-        m_mat = m_mat->clone();
-        m_mat->m_blend = mode;
-        m_mat = MaterialCache::mc().cache(*m_mat.get());
-        matChanged();
-#endif
-    }
-
     void VStyleActor::setMaterial(spMaterial & mat)
     {
 #ifdef GRAPHICSUPPORT
         m_mat = mat;
         matChanged();
-#endif
-    }
-
-    QColor VStyleActor::getDisableColor() const
-    {
-#ifdef GRAPHICSUPPORT
-        return m_disableColor;
-#else
-        return m_dummyColor;
 #endif
     }
 

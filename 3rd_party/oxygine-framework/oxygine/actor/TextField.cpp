@@ -55,7 +55,7 @@ namespace oxygine
 #endif
     }
 
-    const Font & TextField::getFont() const
+    const Font * const TextField::getFont() const
     {
 #ifdef GRAPHICSUPPORT
         return m_style.font;
@@ -67,7 +67,7 @@ namespace oxygine
     void TextField::setFont(Font & font)
     {
 #ifdef GRAPHICSUPPORT
-        m_style.font = font;
+        m_style.font = &font;
         rebuildText();
 #endif
     }

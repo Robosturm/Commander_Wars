@@ -141,67 +141,60 @@ namespace oxygine
     void Actor::dispatchEvent(Event* event)
     {
 #ifdef GRAPHICSUPPORT
-        if (!m_onScreen)
+        if (event->type == TouchEvent::MOVE)
         {
-            dispatchToParent(event);
-        }
-        else
-        {
-            if (event->type == TouchEvent::MOVE)
+            TouchEvent* te = safeCast<TouchEvent*>(event);
+            if (m_overred == 0)
             {
-                TouchEvent* te = safeCast<TouchEvent*>(event);
+                m_overred = te->index;
                 if (m_overred == 0)
                 {
-                    m_overred = te->index;
-                    if (m_overred == 0)
-                    {
-                        oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::dispatchEvent hover state is 0");
-                    }
-                    TouchEvent over = *te;
-                    over.type = TouchEvent::OVER;
-                    over.bubbles = false;
-                    dispatchEvent(&over);
-                    m_onGlobalTouchMoveEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::dispatchEvent hover state is 0");
                 }
+                TouchEvent over = *te;
+                over.type = TouchEvent::OVER;
+                over.bubbles = false;
+                dispatchEvent(&over);
+                m_onGlobalTouchMoveEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
             }
+        }
 
-            if (event->type == TouchEvent::TOUCH_DOWN)
+        if (event->type == TouchEvent::TOUCH_DOWN)
+        {
+            TouchEvent* te = safeCast<TouchEvent*>(event);
+            if (!m_pressedButton[te->mouseButton])
             {
-                TouchEvent* te = safeCast<TouchEvent*>(event);
-                if (!m_pressedButton[te->mouseButton])
+                if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
                 {
-                    if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
-                    {
-                        m_onGlobalTouchUpEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
-                    }
-                    m_pressedButton[te->mouseButton] = te->index;
+                    m_onGlobalTouchUpEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
                 }
+                m_pressedButton[te->mouseButton] = te->index;
             }
+        }
 
-            TouchEvent click(0);
+        TouchEvent click(0);
 
-            if (event->type == TouchEvent::TOUCH_UP)
+        if (event->type == TouchEvent::TOUCH_UP)
+        {
+            TouchEvent* te = safeCast<TouchEvent*>(event);
+            if (m_pressedButton[te->mouseButton] == te->index && !te->__clickDispatched)
             {
-                TouchEvent* te = safeCast<TouchEvent*>(event);
-                if (m_pressedButton[te->mouseButton] == te->index && !te->__clickDispatched)
-                {
-                    te->__clickDispatched = true;
-                    click = *te;
-                    click.type = TouchEvent::CLICK;
-                    click.bubbles = true;
-                    setNotPressed(te->mouseButton);
-                }
+                te->__clickDispatched = true;
+                click = *te;
+                click.type = TouchEvent::CLICK;
+                click.bubbles = true;
+                setNotPressed(te->mouseButton);
             }
+        }
 
 
-            EventDispatcher::dispatchEvent(event);
-            dispatchToParent(event);
+        EventDispatcher::dispatchEvent(event);
+        dispatchToParent(event);
 
-            if (click.type)
-            {
-                //send click event at the end after TOUCH_UP event
-                dispatchEvent(&click);
-            }
+        if (click.type)
+        {
+            //send click event at the end after TOUCH_UP event
+            dispatchEvent(&click);
         }
 #endif
     }

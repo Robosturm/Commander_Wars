@@ -6,27 +6,6 @@
 
 namespace oxygine
 {
-    class VisualStyle
-    {
-    public:
-        explicit VisualStyle() = default;
-        virtual ~VisualStyle() = default;
-        const QColor& getColor() const
-        {
-            return m_color;
-        }
-        VideoDriver::blend_mode getBlendMode() const
-        {
-            return m_blend;
-        }
-        void setColor(const QColor& color);
-        void setBlendMode(VideoDriver::blend_mode mode);
-
-    protected:
-        QColor m_color{Qt::white};
-        VideoDriver::blend_mode m_blend{VideoDriver::blend_alpha};
-    };
-
     class VStyleActor;
     using spVStyleActor = intrusive_ptr<VStyleActor>;
     class VStyleActor : public Actor
@@ -34,17 +13,18 @@ namespace oxygine
     public:
         explicit VStyleActor();
         virtual ~VStyleActor() = default;
-
-        VideoDriver::blend_mode getBlendMode() const
+        const QColor& getColor() const
         {
-#ifdef GRAPHICSUPPORT
-            return m_vstyle.getBlendMode();
-#else
-            return VideoDriver::blend_mode::blend_disabled;
-#endif
+            return m_color;
         }
-        const QColor& getColor() const;
-        const QColor& getAddColor() const;
+        const QColor& getAddColor() const
+        {
+    #ifdef GRAPHICSUPPORT
+            return m_mat->m_addColor;
+    #else
+            return m_dummyColor;
+    #endif
+        }
 
         void setColor(const QColor& color);
         void setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
@@ -54,7 +34,14 @@ namespace oxygine
         virtual void setEnabled(bool value) override;
         using TweenColor = Property<QColor, const QColor&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor>;
         using TweenAddColor = Property<QColor, const QColor&, VStyleActor, &VStyleActor::getAddColor, &VStyleActor::setAddColor>;
-        QColor getDisableColor() const;
+        QColor getDisableColor() const
+        {
+    #ifdef GRAPHICSUPPORT
+            return m_disableColor;
+    #else
+            return m_dummyColor;
+    #endif
+        }
         void setDisableColor(const QColor &value);
 
 #ifdef GRAPHICSUPPORT
@@ -70,7 +57,7 @@ namespace oxygine
         void changeAddColor(const QColor& color);
     protected:
 #ifdef GRAPHICSUPPORT
-        VisualStyle m_vstyle;
+        QColor m_color{Qt::white};
         QColor m_disableColor{75, 75, 75, 0};
         spMaterial m_mat;
 #else

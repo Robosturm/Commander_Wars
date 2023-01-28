@@ -76,7 +76,7 @@ bool MultilineTextbox::getNewFocusPosition(oxygine::text::Node* pNode, qint32 x,
         auto & lines = pTextNode->getLines();
         auto & positions = pTextNode->getPositions();
         qint32 lineCount = lines.size();
-        const QFont & font = m_textfield->getStyle().font.font;
+        const QFont & font = m_textfield->getStyle().font->font;
         qint32 contentY = m_pPanel->getContentY();
         QFontMetrics metrics(font);
         qint32 descent = metrics.descent();

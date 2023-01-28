@@ -77,7 +77,7 @@ void Label::setStyle(const oxygine::TextStyle& st)
 #ifdef GRAPHICSUPPORT
     m_textField->setStyle(st);
     m_clipRect->setPosition(m_clipRect->getPosition() + QPoint(0, -m_clipOffset));
-    m_clipOffset = st.font.offsetY;
+    m_clipOffset = st.font->offsetY;
     m_clipRect->setPosition(m_clipRect->getPosition() + QPoint(0, m_clipOffset));
     qint32 height = getTextRect().height();
     m_clipRect->setHeight(height);

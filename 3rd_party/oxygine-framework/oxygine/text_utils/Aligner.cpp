@@ -13,7 +13,7 @@ namespace oxygine
               m_height(size.height()),
               m_x(0),
               m_y(0),
-              m_metrics(style.font.font)
+              m_metrics(style.font->font)
 #endif
         {            
 #ifdef GRAPHICSUPPORT

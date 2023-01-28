@@ -67,15 +67,15 @@ namespace oxygine
 
     class SlidingEvent: public Event
     {
-        public:
-            enum SEvent
-            {
-                BEGIN = sysEventID('S', 'B', 'G'),
-                SLIDING = sysEventID('S', 'S', 'L'),
-                END = sysEventID('S', 'E', 'N')
-            };
+    public:
+        enum SEvent
+        {
+            BEGIN = sysEventID('S', 'B', 'G'),
+            SLIDING = sysEventID('S', 'S', 'L'),
+            END = sysEventID('S', 'E', 'N')
+        };
 
-            SlidingEvent(SEvent ev) : Event(ev) {}
-            QPoint speed;
+        SlidingEvent(SEvent ev) : Event(ev) {}
+        QPoint speed;
     };
 }

@@ -238,8 +238,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/MaterialCache.cpp 3rd_party/oxygine-framework/oxygine/MaterialCache.h
     3rd_party/oxygine-framework/oxygine/PointerState.cpp 3rd_party/oxygine-framework/oxygine/PointerState.h
     3rd_party/oxygine-framework/oxygine/RenderDelegate.cpp 3rd_party/oxygine-framework/oxygine/RenderDelegate.h
-    3rd_party/oxygine-framework/oxygine/STDRenderer.cpp 3rd_party/oxygine-framework/oxygine/STDRenderer.h
-    3rd_party/oxygine-framework/oxygine/VisualStyle.cpp 3rd_party/oxygine-framework/oxygine/VisualStyle.h
+    3rd_party/oxygine-framework/oxygine/STDRenderer.cpp 3rd_party/oxygine-framework/oxygine/STDRenderer.h    
     3rd_party/oxygine-framework/oxygine/RenderState.h
     3rd_party/oxygine-framework/oxygine/oxygine-forwards.h
     3rd_party/oxygine-framework/oxygine/TextStyle.h
@@ -262,6 +261,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/actor/Stage.cpp 3rd_party/oxygine-framework/oxygine/actor/Stage.h
     3rd_party/oxygine-framework/oxygine/actor/TextField.cpp 3rd_party/oxygine-framework/oxygine/actor/TextField.h
     3rd_party/oxygine-framework/oxygine/actor/slidingsprite.cpp 3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h
+    3rd_party/oxygine-framework/oxygine/actor/VisualStyleActor.cpp 3rd_party/oxygine-framework/oxygine/actor/VisualStyleActor.h
     # tween
     3rd_party/oxygine-framework/oxygine/tween/Tween.cpp 3rd_party/oxygine-framework/oxygine/tween/Tween.h
     3rd_party/oxygine-framework/oxygine/tween/TweenAnim.cpp 3rd_party/oxygine-framework/oxygine/tween/TweenAnim.h

@@ -113,9 +113,9 @@ namespace oxygine
                 m_path.clear();
                 for (qint32 i = 0; i < m_lines.size(); ++i)
                 {
-                    qint32 x = m_offsets[i].x() + rd.getStyle().font.offsetX;
-                    qint32 y = m_offsets[i].y() + rd.getStyle().font.offsetY;
-                    m_path.addText(x, y, rd.getStyle().font.font, m_lines[i]);
+                    qint32 x = m_offsets[i].x() + rd.getStyle().font->offsetX;
+                    qint32 y = m_offsets[i].y() + rd.getStyle().font->offsetY;
+                    m_path.addText(x, y, rd.getStyle().font->font, m_lines[i]);
                 }
             }
 #endif
@@ -165,11 +165,6 @@ namespace oxygine
 
         void DivNode::resize(Aligner& rd)
         {
-            if (m_options == 0xff)
-            {
-                resizeChildren(rd);
-                return;
-            }
             resizeChildren(rd);
         }
 
@@ -180,7 +175,6 @@ namespace oxygine
 
         DivNode::DivNode(QDomElement& reader)
         {
-            m_options = std::numeric_limits<quint32>::max();
             if (reader.hasAttribute("c"))
             {
                 QString colorText(reader.attributeNode("c").value());
@@ -198,10 +192,6 @@ namespace oxygine
                     colorText.push_front("#");
                 }
                 m_color = QColor(colorText);
-            }
-            else if (reader.hasAttribute("opt"))
-            {
-                m_options = reader.attributeNode("opt").value().toUInt();
             }
         }
     }

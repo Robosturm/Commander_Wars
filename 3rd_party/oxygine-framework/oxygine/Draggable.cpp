@@ -96,8 +96,7 @@ namespace oxygine
             }
             case TouchEvent::TOUCH_UP:
             {
-                if (!m_ignoreTouchUp &&
-                    m_dragClient != nullptr)
+                if (m_dragClient != nullptr)
                 {
                     m_middleButton = false;
                     m_pressed = false;

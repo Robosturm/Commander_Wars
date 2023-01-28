@@ -45,10 +45,6 @@ namespace oxygine
         }
         /**sets bounds position for dragged actor*/
         void setDragBounds(const QRect& bounds);
-        void setIgnoreTouchUp(bool ignore)
-        {
-            m_ignoreTouchUp = ignore;
-        }
         void snapClient2Bounds();
         bool getNoLockForMiddleButton() const;
         void setNoLockForMiddleButton(bool newNoLockForMiddleButton);
@@ -73,6 +69,5 @@ namespace oxygine
         bool m_noLockForMiddleButton{false};
         bool m_middleButton{false};
         bool m_pressed{false};
-        bool m_ignoreTouchUp{false};
     };
 }

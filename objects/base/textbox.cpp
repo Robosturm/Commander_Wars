@@ -52,7 +52,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
         if (pTouchEvent != nullptr)
         {
             qint32 x = pTouchEvent->localPosition.x() - m_Textfield->getX();
-            m_focusPosition = getClickedLinePosition(x, getCurrentText(), m_Textfield->getStyle().font.font);
+            m_focusPosition = getClickedLinePosition(x, getCurrentText(), m_Textfield->getStyle().font->font);
         }
         pEvent->stopPropagation();
         if (FocusableObject::getFocusedObject() == this)

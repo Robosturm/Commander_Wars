@@ -27,7 +27,7 @@ namespace oxygine
         const QRect& getTextRect() const;
         /**Returns current text*/
         const QString & getText() const;
-        const Font & getFont() const;
+        const Font * const getFont() const;
 
         TextStyle::HorizontalAlign getHAlign() const;
         bool getMultiline() const;

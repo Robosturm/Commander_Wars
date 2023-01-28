@@ -62,6 +62,7 @@ FontManager::FontManager()
                                         auto & font = m_fonts[type];
                                         font.font = QFont(fonts[0]);
                                         font.font.setPixelSize(element.attribute("pixelSize").toInt());
+                                        font.name = type;
                                         font.offsetX = element.attribute("offsetX").toInt();
                                         font.offsetY = element.attribute("offsetY").toInt();
                                         if (element.hasAttribute("borderCapStyle"))
