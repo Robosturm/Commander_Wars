@@ -73,6 +73,7 @@ namespace oxygine
         QRect m_textRect{0, 0, 0, 0};
         bool m_htmlText = false;
 #else
+        static Font m_dummyFont;
         static TextStyle m_dummyTextStyle;
         static QRect m_dummyRect;
         static QString m_dummyText;

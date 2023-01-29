@@ -10,10 +10,11 @@
 namespace oxygine
 {
 #ifndef GRAPHICSUPPORT
-        QColor TextField::m_dummyColor;
-        TextStyle TextField::m_dummyTextStyle = TextStyle(oxygine::Font());
+        Font TextField::m_dummyFont;
+        TextStyle TextField::m_dummyTextStyle = TextStyle(m_dummyFont);
         QRect TextField::m_dummyRect;
         QString TextField::m_dummyText{""};
+        QColor TextField::m_dummyColor;
 #endif
     TextField::TextField()
 #ifdef GRAPHICSUPPORT
