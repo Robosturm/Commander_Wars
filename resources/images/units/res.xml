@@ -65,7 +65,7 @@
         <image file="black_bomb+walk+mask.png" cols = "3" rows = "4"   />
         <!-- battlecruiser -->
         <image file="battlecruiser+mask.png" cols = "4"  />
-        <image file="battlecruiser+walk+mask.png" cols = "2"  rows = "4"  />
+        <image file="battlecruiser+walk+mask.png" cols = "3"  rows = "4"  />
         <!-- battleship -->
         <image file="battleship+mask.png" cols = "4"  />
         <image file="battleship+walk+mask.png" cols = "2" rows = "4"   />
