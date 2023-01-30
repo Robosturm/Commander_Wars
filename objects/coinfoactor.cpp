@@ -560,7 +560,7 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
         pCO->getCustomUnitZoneBoost(index, info);
     }
     WikiDatabase* pDatabase = WikiDatabase::getInstance();
-    m_UnitDataActors[i]->addChild(pDatabase->getIcon(pCO->getMap(), info.getIconId(), GameMap::defaultImageSize * 2));
+    m_UnitDataActors[i]->addChild(pDatabase->getIcon(pCO->getMap(), info.getIconId(), GameMap::defaultImageSize));
     QString wikiLink = info.getLink();
     m_UnitDataActors[i]->addClickListener([this, wikiLink](oxygine::Event*)
     {
