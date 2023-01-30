@@ -375,13 +375,13 @@
         <!-- heavy_tank -->
         <image file="heavy_tank/heavy_tank+ac+fire+mask.png" />
         <image file="heavy_tank/heavy_tank+bd+fire+mask.png" />
-        <image file="heavy_tank/heavy_tank+bh+fire+mask.png" cols = "4" />
-        <image file="heavy_tank/heavy_tank+bm+fire+mask.png" cols = "4" />
+        <image file="heavy_tank/heavy_tank+bh+fire+mask.png" cols = "5" />
+        <image file="heavy_tank/heavy_tank+bm+fire+mask.png" cols = "5" />
         <image file="heavy_tank/heavy_tank+dm+fire+mask.png" />
-        <image file="heavy_tank/heavy_tank+ge+fire+mask.png" cols = "4" />
+        <image file="heavy_tank/heavy_tank+ge+fire+mask.png" cols = "5" />
         <image file="heavy_tank/heavy_tank+gs+fire+mask.png" cols = "4" />
-        <image file="heavy_tank/heavy_tank+os+fire+mask.png" cols = "4" />
-        <image file="heavy_tank/heavy_tank+yc+fire+mask.png" cols = "4" />
+        <image file="heavy_tank/heavy_tank+os+fire+mask.png" cols = "5" />
+        <image file="heavy_tank/heavy_tank+yc+fire+mask.png" cols = "5" />
         <image file="heavy_tank/heavy_tank+ma+fire+mask.png" />
         <image file="heavy_tank/heavy_tank+ti+fire+mask.png" />
         <image file="heavy_tank/heavy_tank+pf+fire+mask.png" />
