@@ -980,6 +980,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+QString GameRules::getMatchType() const
+{
+    return m_matchType;
+}
+
+void GameRules::setMatchType(const QString & newMatchType)
+{
+    m_matchType = newMatchType;
+}
+
 qint32 GameRules::getMaxPerkCount() const
 {
     return m_maxPerkCount;
@@ -1371,6 +1381,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_hpDefenseReduction;
     pStream << m_multiplayerObserver;
     pStream << m_maxPerkCount;
+    pStream << m_matchType;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1668,6 +1679,10 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 23)
     {
         pStream >> m_maxPerkCount;
+    }
+    if (version > 24)
+    {
+        pStream >> m_matchType;
     }
     CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }

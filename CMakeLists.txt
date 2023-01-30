@@ -559,6 +559,7 @@ set(${PROJECT_NAME}_SRCS
     network/NetworkInterface.h
     network/networkgamedata.cpp network/networkgamedata.h
     network/mainserver.cpp network/mainserver.h
+    network/automatchmaker.h network/automatchmaker.cpp
     network/networkgame.cpp network/networkgame.h
     network/rsacypherhandler.h network/rsacypherhandler.cpp
     network/JsonKeys.h

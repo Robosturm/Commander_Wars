@@ -261,6 +261,10 @@ namespace NetworkCommands
      * @brief SLAVEINFODESPAWNING
      */
     const char* const SLAVEINFODESPAWNING = "SLAVEINFODESPAWNING";
+    /**
+     * @brief SLAVEINFODESPAWNING
+     */
+    const char* const SLAVEMULTIPLAYERGAMERESULT = "SLAVEMULTIPLAYERGAMERESULT";
 
     /**
      * @brief DESPAWNSLAVE

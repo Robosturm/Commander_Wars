@@ -63,7 +63,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 24;
+        return 25;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -90,9 +90,20 @@ public:
      */
     QVector<quint64> &getObserverList();
 
+
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief getMatchType
+     * @return
+     */
+    QString getMatchType() const;
+    /**
+     * @brief setMatchType
+     * @param newMatchType
+     */
+    void setMatchType(const QString & newMatchType);
     /**
      * @brief reset
      */
@@ -684,6 +695,7 @@ private:
     bool m_cosmeticModsAllowed{false};
     qint32 m_multiplayerObserver{0};
     QVector<quint64> m_observerList;
+    QString m_matchType;
 };
 
 Q_DECLARE_INTERFACE(GameRules, "GameRules");

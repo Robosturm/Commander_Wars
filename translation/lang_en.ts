@@ -10473,37 +10473,37 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="237"/>
-        <location filename="../menue/victorymenue.cpp" line="687"/>
+        <location filename="../menue/victorymenue.cpp" line="723"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="246"/>
-        <location filename="../menue/victorymenue.cpp" line="692"/>
+        <location filename="../menue/victorymenue.cpp" line="728"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="255"/>
-        <location filename="../menue/victorymenue.cpp" line="697"/>
+        <location filename="../menue/victorymenue.cpp" line="733"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="264"/>
-        <location filename="../menue/victorymenue.cpp" line="702"/>
+        <location filename="../menue/victorymenue.cpp" line="738"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="273"/>
-        <location filename="../menue/victorymenue.cpp" line="707"/>
+        <location filename="../menue/victorymenue.cpp" line="743"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="282"/>
-        <location filename="../menue/victorymenue.cpp" line="775"/>
+        <location filename="../menue/victorymenue.cpp" line="811"/>
         <source>Player Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10538,17 +10538,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="607"/>
+        <location filename="../menue/victorymenue.cpp" line="643"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="610"/>
+        <location filename="../menue/victorymenue.cpp" line="646"/>
         <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="763"/>
+        <location filename="../menue/victorymenue.cpp" line="799"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11092,7 +11092,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="199"/>
-        <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
+        <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

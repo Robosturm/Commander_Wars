@@ -35,7 +35,7 @@ const char* const SQL_GAMESMADE         = "gamesMade";
 const char* const SQL_GAMESLOST         = "gamesLost";
 const char* const SQL_GAMESWON          = "gamesWon";
 const char* const SQL_GAMESDRAW         = "gamesDraw";
-
+const char* const SQL_METADATA          = "metaData";
 
 const char* const SQL_TABLE_MATCH_DATA  = "matchData";
 const char* const SQL_MMR               = "mmr";
@@ -320,6 +320,10 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         {
             onSlaveInfoDespawning(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SLAVEMULTIPLAYERGAMERESULT)
+        {
+            onSlaveInfoGameResult(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in MainServer::receivedSlaveData " + messageType + " received", GameConsole::eDEBUG);
@@ -380,6 +384,29 @@ bool MainServer::informClientsAboutRelaunch(QVector<SuspendedSlaveInfo> & games,
     return false;
 }
 
+void MainServer::onSlaveInfoGameResult(quint64 socketID, const QJsonObject & objData)
+{
+    auto matchType = objData.value(JsonKeys::JSONKEY_MATCHTYPE).toString();
+    updatePlayerMatchData(objData);
+    if (!matchType.isEmpty())
+    {
+        if (m_autoMatchMakers.contains(matchType))
+        {
+            m_autoMatchMakers[matchType]->onNewMatchResultData(objData);
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown match type result received, maybe the auto match script got deleted while games were runnig: " + matchType, GameConsole::eERROR);
+        }
+    }
+    despawnSlave(socketID);
+}
+
+void MainServer::updatePlayerMatchData(const QJsonObject & objData)
+{
+
+}
+
 void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData)
 {
     bool runningGame = objData.value(JsonKeys::JSONKEY_RUNNINGGAME).toBool();
@@ -403,12 +430,17 @@ void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & obj
         setUuidForGame(slaveInfo.game);
         m_runningLobbies.append(slaveInfo);
     }
+    despawnSlave(socketID);
+}
+
+void MainServer::despawnSlave(quint64 socketID)
+{
     QString command = NetworkCommands::DESPAWNSLAVE;
-    QJsonObject data;
-    data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    QJsonDocument doc(data);
-    CONSOLE_PRINT("Sending command " + command + " to slave to socket " + QString::number(socketID), GameConsole::eDEBUG);
-    emit m_pSlaveServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+     QJsonObject data;
+     data.insert(JsonKeys::JSONKEY_COMMAND, command);
+     QJsonDocument doc(data);
+     CONSOLE_PRINT("Sending command " + command + " to slave to socket " + QString::number(socketID), GameConsole::eDEBUG);
+     emit m_pSlaveServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::setUuidForGame(NetworkGameData & game)
@@ -1155,7 +1187,8 @@ void MainServer::createUserTable(const QString & username)
                                         SQL_GAMESMADE + " INTEGER, " +
                                         SQL_GAMESLOST + " INTEGER, " +
                                         SQL_GAMESWON + " INTEGER, " +
-                                        SQL_GAMESDRAW + " INTEGER)");
+                                        SQL_GAMESDRAW + " INTEGER," +
+                                        SQL_METADATA + "TEXT)");
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create user table for user " + username + ". Error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
@@ -1169,7 +1202,8 @@ void MainServer::createMatchData(const QString & match)
                                         SQL_MMR + " INTEGER, " +
                                         SQL_MINGAMES + " INTEGER, " +
                                         SQL_MAXGAMES + " INTEGER, " +
-                                        SQL_RUNNINGGAMES + " INTEGER)");
+                                        SQL_RUNNINGGAMES + " INTEGER," +
+                                        SQL_METADATA + "TEXT)");
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create match table for match " + match + ". Error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);

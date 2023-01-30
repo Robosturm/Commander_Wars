@@ -113,6 +113,10 @@ protected slots:
     void recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 protected:
     /**
+     * @brief multiplayerGameFinished
+     */
+    void multiplayerGameFinished();
+    /**
      * @brief closeSlave
      */
     void closeSlave();

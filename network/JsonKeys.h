@@ -37,4 +37,8 @@ namespace JsonKeys
     const char* const JSONKEY_ACCOUNT_ERROR = "accountError";
     const char* const JSONKEY_USERNAMES = "usernames";
     const char* const JSONKEY_DISCONNECTREASON = "disconnectReason";
+    const char* const JSONKEY_WINNERINFO = "winnerInfo";
+    const char* const JSONKEY_PLAYER = "player";
+    const char* const JSONKEY_GAMERESULT = "gameResult";
+    const char* const JSONKEY_MATCHTYPE = "matchType";
 }

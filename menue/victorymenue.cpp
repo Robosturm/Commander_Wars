@@ -520,9 +520,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     }
     else if (Mainapp::getSlave())
     {
-        CONSOLE_PRINT("Killing self on slave", GameConsole::eDEBUG);
-        connect(&m_despawnSlaveTimer, &QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
-        m_despawnSlaveTimer.start(20000);
+        multiplayerGameFinished();
     }
     else
     {
@@ -535,6 +533,44 @@ void VictoryMenue::quitOnAiPipe()
     CONSOLE_PRINT("Killing vicotry menu on ai slave", GameConsole::eDEBUG);
     m_pMap->detach();
     oxygine::Actor::detach();
+}
+
+void VictoryMenue::multiplayerGameFinished()
+{
+    QJsonObject data;
+    QString command = NetworkCommands::SLAVEMULTIPLAYERGAMERESULT;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_MATCHTYPE, m_pMap->getGameRules()->getMatchType());
+    QJsonArray winnerInfo;
+    qint32 winnerTeam = m_pMap->getWinnerTeam();
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    {
+        if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Human)
+        {
+            GameEnums::GameResult result = GameEnums::GameResult_Draw;
+            if (winnerTeam >= 0)
+            {
+                if (m_pMap->getPlayer(i)->getTeam() == winnerTeam)
+                {
+                    result = GameEnums::GameResult_Won;
+                }
+                else
+                {
+                    result = GameEnums::GameResult_Lost;
+                }
+            }
+            QJsonObject object;
+            object.insert(JsonKeys::JSONKEY_PLAYER, m_pMap->getPlayer(i)->getPlayerNameId());
+            object.insert(JsonKeys::JSONKEY_GAMERESULT, result);
+            winnerInfo.append(object);
+        }
+    }
+    QJsonDocument doc(data);
+    CONSOLE_PRINT("Sending command " + command + "", GameConsole::eDEBUG);
+    emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    CONSOLE_PRINT("Killing self on slave", GameConsole::eDEBUG);
+    connect(&m_despawnSlaveTimer, &QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
+    m_despawnSlaveTimer.start(20000);
 }
 
 void VictoryMenue::despawnSlave()

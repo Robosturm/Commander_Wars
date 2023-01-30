@@ -10,6 +10,7 @@
 #include "network/networkgamedata.h"
 #include "network/networkgame.h"
 #include "network/smtpmailsender.h"
+#include "network/automatchmaker.h"
 
 #include "multiplayer/networkcommands.h"
 
@@ -133,6 +134,16 @@ private slots:
     void periodicTasks();
 private:
     /**
+     * @brief despawnSlave
+     * @param socketID
+     */
+    void despawnSlave(quint64 socketID);
+    /**
+     * @brief updatePlayerMatchData
+     * @param objData
+     */
+    void updatePlayerMatchData(const QJsonObject & objData);
+    /**
      * @brief startDatabase
      */
     void startDatabase();
@@ -211,6 +222,12 @@ private:
      * @param objData
      */
     void onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onSlaveInfoGameResult
+     * @param socketID
+     * @param objData
+     */
+    void onSlaveInfoGameResult(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief onSlaveRelaunched
      * @param socketID
@@ -404,6 +421,10 @@ private:
      * @brief m_runningLobbies
      */
     QVector<SuspendedSlaveInfo> m_runningLobbies;
+    /**
+     * @brief m_autoMatchMakers
+     */
+    QMap<QString, spAutoMatchMaker> m_autoMatchMakers;
     /**
      * @brief m_lastUsedAddressIndex last used index in the m_slaveAddressOptions
      */
