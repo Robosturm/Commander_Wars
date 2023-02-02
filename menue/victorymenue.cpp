@@ -1,5 +1,6 @@
 #include <QtMath>
 #include <QJsonObject>
+#include <QJsonArray>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -565,6 +566,7 @@ void VictoryMenue::multiplayerGameFinished()
             winnerInfo.append(object);
         }
     }
+    data.insert(JsonKeys::JSONKEY_GAMERESULTARRAY, winnerInfo);
     QJsonDocument doc(data);
     CONSOLE_PRINT("Sending command " + command + "", GameConsole::eDEBUG);
     emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);

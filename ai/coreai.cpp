@@ -2152,23 +2152,26 @@ bool CoreAI::onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint3
     return m_IslandMaps[islandIdx]->sameIsland(x, y, x1, y1);
 }
 
-qint32 CoreAI::getIsland(Unit* pUnit) const
+qint32 CoreAI::getIsland(Unit* pUnit)
 {
+    auto movementType = pUnit->getMovementType();
     for (auto & island : m_IslandMaps)
     {
-        if (island->getMovementType() == pUnit->getMovementType())
+        if (island->getMovementType() == movementType)
         {
             return island->getIsland(pUnit->Unit::getX(), pUnit->Unit::getY());
         }
     }
-    return -1;
+    m_IslandMaps.push_back(spIslandMap::create(m_pMap, pUnit->getUnitID(), m_pPlayer, movementType));
+    return m_IslandMaps.size() - 1;
 }
 
 qint32 CoreAI::getIslandSize(Unit* pUnit, qint32 x, qint32 y) const
 {
+    auto movementType = pUnit->getMovementType();
     for (auto & island : m_IslandMaps)
     {
-        if (island->getMovementType() == pUnit->getMovementType())
+        if (island->getMovementType() == movementType)
         {
             return island->getIslandSize(island->getIsland(x, y));
         }
@@ -2176,16 +2179,18 @@ qint32 CoreAI::getIslandSize(Unit* pUnit, qint32 x, qint32 y) const
     return 0;
 }
 
-qint32 CoreAI::getIslandIndex(Unit* pUnit) const
+qint32 CoreAI::getIslandIndex(Unit* pUnit)
 {
+    auto movementType = pUnit->getMovementType();
     for (qint32 i = 0; i < m_IslandMaps.size(); i++)
     {
-        if (m_IslandMaps[i]->getMovementType() == pUnit->getMovementType())
+        if (m_IslandMaps[i]->getMovementType() == movementType)
         {
             return i;
         }
     }
-    return -1;
+    m_IslandMaps.push_back(spIslandMap::create(m_pMap, pUnit->getUnitID(), m_pPlayer, movementType));
+    return m_IslandMaps.size() - 1;
 }
 
 void CoreAI::finishTurn()

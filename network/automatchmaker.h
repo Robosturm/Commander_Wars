@@ -28,4 +28,6 @@ private:
     MainServer & m_mainServer;
 };
 
+Q_DECLARE_INTERFACE(AutoMatchMaker, "AutoMatchMaker");
+
 #endif // AUTOMATCHMAKER_H

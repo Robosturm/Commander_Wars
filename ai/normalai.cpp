@@ -796,7 +796,7 @@ bool NormalAi::getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefill
     return ret;
 }
 
-void NormalAi::appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets) const
+void NormalAi::appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets)
 {
     if (isRefuelUnit(actions))
     {
@@ -1522,7 +1522,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(MoveUnitData & unitData, 
 
 qint32 NormalAi::getMoveTargetField(MoveUnitData & unitData, UnitPathFindingSystem& turnPfs,
                                     std::vector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
-                                    qint32 movePoints) const
+                                    qint32 movePoints)
 {
     const float minDamage = unitData.unitCosts * m_minMovementDamage;
     float bestMinDamge = minDamage;
@@ -1562,7 +1562,7 @@ qint32 NormalAi::getMoveTargetField(MoveUnitData & unitData, UnitPathFindingSyst
 
 qint32 NormalAi::getBestAttackTarget(MoveUnitData & unitData, std::vector<CoreAI::DamageData>& ret,
                                      std::vector<QVector3D>& moveTargetFields,
-                                     spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const
+                                     spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {    
     qint32 target = -1;
     qint32 currentDamage = std::numeric_limits<qint32>::min();
@@ -1755,7 +1755,7 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife) const
 float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPosition,
                                        Unit* pEnemyUnit, float enemyTakenDamage,
                                        spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
-                                       bool ignoreOutOfVisionRange) const
+                                       bool ignoreOutOfVisionRange)
 {
     AI_CONSOLE_PRINT("NormalAi calculateCounterDamage", GameConsole::eDEBUG);
     QCoreApplication::processEvents();

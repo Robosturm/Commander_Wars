@@ -11,7 +11,7 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
-IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
+IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QString movementType)
       : m_pOwner(pOwner),
         m_pMap(pMap)
 {
@@ -32,7 +32,10 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
         }
         spUnit pUnit = spUnit::create(unitID, pOwner, false, pMap);
         pUnit->setIgnoreUnitCollision(true);
-        m_MovementType = pUnit->getMovementType();
+        if (movementType.isEmpty())
+        {
+            m_MovementType = pUnit->getMovementType();
+        }
         qint32 currentIsland = 0;
 
         for (qint32 x = 0; x < width; x++)

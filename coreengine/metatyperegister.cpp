@@ -30,6 +30,8 @@
 #include "ui_reader/createdgui.h"
 
 #include "network/networkgame.h"
+#include "network/mainserver.h"
+#include "network/automatchmaker.h"
 
 #include "game/terrain.h"
 #include "game/player.h"
@@ -207,5 +209,7 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<BaseGamemenu>("BaseGamemenu", 1);
     qmlRegisterInterface<Basemenu>("Basemenu", 1);
-    qmlRegisterInterface<CustomDialog>("CustomDialog", 1);    
+    qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
+    qmlRegisterInterface<MainServer>("MainServer", 1);
+    qmlRegisterInterface<AutoMatchMaker>("AutoMatchMaker", 1);
 }

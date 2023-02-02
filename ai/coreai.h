@@ -458,7 +458,7 @@ public slots:
      * @param pUnit1
      * @return
      */
-    qint32 getIsland(Unit* pUnit) const;
+    qint32 getIsland(Unit* pUnit);
     /**
      * @brief getIslandSize
      * @param pUnit
@@ -472,7 +472,7 @@ public slots:
      * @param pUnit1
      * @return
      */
-    qint32 getIslandIndex(Unit* pUnit) const;
+    qint32 getIslandIndex(Unit* pUnit);
     /**
      * @brief isUnloadTerrain
      * @param pUnit

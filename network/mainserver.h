@@ -455,4 +455,6 @@ private:
     QThread m_mailSenderThread;
 };
 
+Q_DECLARE_INTERFACE(MainServer, "MainServer");
+
 #endif // MAINSERVER_H
