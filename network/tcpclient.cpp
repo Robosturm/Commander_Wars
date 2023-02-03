@@ -61,6 +61,8 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
     m_pTXTask = spTxTask::create(m_pSocket.get(), 0, this, false);
     connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
     CONSOLE_PRINT("Client is running and connecting to \"" + address + "\" and port " + QString::number(port), GameConsole::eLogLevels::eDEBUG);
+    m_connectedAdress = address;
+    m_connectedPort = port;
 }
 
 void TCPClient::disconnectTCP()
@@ -72,6 +74,8 @@ void TCPClient::disconnectTCP()
         m_pSocket->connectToHost(m_secondaryAdress, m_port);
         m_testedSecondaryAddress = true;
         CONSOLE_PRINT("Client is running and connecting to \"" + m_secondaryAdress + "\" and port " + QString::number(m_port), GameConsole::eLogLevels::eDEBUG);
+        m_connectedAdress = m_secondaryAdress;
+        m_connectedPort = m_port;
     }
     else
     {

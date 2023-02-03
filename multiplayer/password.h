@@ -13,6 +13,7 @@ class Password final : public QObject, public FileSerializable
 public:
     explicit Password();
     explicit Password(QString password);
+    explicit Password(const Password & password);
     ~Password() = default;
     /**
      * @brief serialize stores the object

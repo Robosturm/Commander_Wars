@@ -1,5 +1,6 @@
 #include <QFile>
 #include <QDir>
+#include <QCryptographicHash>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -11,7 +12,6 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/pathfindingsystem.h"
 #include "coreengine/gameconsole.h"
-#include "coreengine/sha256hash.h"
 
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/objectmanager.h"
@@ -266,13 +266,13 @@ void EditorMenue::createTempFile(bool cleanUp)
     if (previous.exists())
     {
         file.open(QIODevice::ReadOnly);
-        Sha256Hash myHash;
+        QCryptographicHash myHash(QCryptographicHash::Sha512);
         myHash.addData(file.readAll());
         QByteArray hash = myHash.result();
         file.close();
 
         previous.open(QIODevice::ReadOnly);
-        Sha256Hash myHash1;
+        QCryptographicHash myHash1(QCryptographicHash::Sha512);
         myHash1.addData(previous.readAll());
         QByteArray hash1 = myHash1.result();
         previous.close();

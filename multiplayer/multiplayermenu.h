@@ -30,8 +30,9 @@ public:
         Observer,
     };
 
-    explicit Multiplayermenu(QString address, QString secondaryAddress, quint16 port, QString password, NetworkMode host);
-    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode host);    
+    explicit Multiplayermenu(const QString & address, const QString & secondaryAddress, quint16 port, const QString & password, NetworkMode networkMode);
+    explicit Multiplayermenu(const QString & address, quint16 port, const Password * password, NetworkMode networkMode);
+    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, const QString & password, NetworkMode networkMode);
     ~Multiplayermenu() = default;
 
     /**
@@ -316,6 +317,10 @@ private:
      * @brief showInformingServer
      */
     void showInformingServer();
+    /**
+     * @brief initClientConnection
+     */
+    void initClientConnection(const QString & address, const QString & secondaryAddress, quint16 port);
 private:
     NetworkMode m_networkMode{NetworkMode::Client};
     spNetworkInterface m_pNetworkInterface;

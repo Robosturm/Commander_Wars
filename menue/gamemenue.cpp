@@ -11,6 +11,9 @@
 #include "menue/victorymenue.h"
 #include "menue/movementplanner.h"
 
+#include "multiplayer/networkcommands.h"
+#include "multiplayer/multiplayermenu.h"
+
 #include "coreengine/gameconsole.h"
 #include "coreengine/audiomanager.h"
 #include "coreengine/globalutils.h"
@@ -43,8 +46,6 @@
 #include "objects/unitstatisticview.h"
 
 #include "ingamescriptsupport/genericbox.h"
-
-#include "multiplayer/networkcommands.h"
 
 #include "network/tcpserver.h"
 #include "network/JsonKeys.h"
@@ -307,6 +308,10 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             sendRequestJoinReason(socketID);
         }
+        else if (messageType == NetworkCommands::RESYNCINFO)
+        {
+            onResyncGame(stream);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -528,6 +533,81 @@ void GameMenue::sendVerifyGameData(quint64 socketID)
     }
     Filesupport::writeByteArray(stream, hostHash);
     emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+}
+
+void GameMenue::doResyncGame()
+{
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        if (m_pNetworkInterface->getIsServer())
+        {
+            QString command = QString(NetworkCommands::RESYNCINFO);
+            CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+            QByteArray data;
+            QDataStream stream(&data, QIODevice::WriteOnly);
+            stream << command;
+            Filesupport::writeByteArray(stream, m_pMap->getMapHash());
+            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+        }
+        else
+        {
+            setGameStarted(false);
+            showResyncGameMessage();
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Forcing resync as client isn't possible ignoring request.", GameConsole::eWARNING);
+    }
+}
+
+void GameMenue::onResyncGame(QDataStream & stream)
+{
+    if (m_pNetworkInterface.get() != nullptr &&
+        !m_pNetworkInterface->getIsServer())
+    {
+        QByteArray mapHash = Filesupport::readByteArray(stream);
+        if (mapHash != m_pMap->getMapHash())
+        {
+            showResyncGameMessage();
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("Resync as server isn't possible ignoring request.", GameConsole::eWARNING);
+    }
+}
+
+void GameMenue::showResyncGameMessage()
+{
+    spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("The game is out of sync and can't be continued. The game has been stopped. You can save the game and restart or try to resync with the server.\nNote: This may be caused by a defective mod."), true, tr("Resync"), tr("Ok"));
+    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &GameMenue::resyncGame, Qt::QueuedConnection);
+    addChild(pDialogMessageBox);
+}
+
+void GameMenue::resyncGame()
+{
+    if (m_pNetworkInterface.get() != nullptr &&
+        !m_pNetworkInterface->getIsServer())
+    {
+        auto connectedAdress = m_pNetworkInterface->getConnectedAdress();
+        auto connectedPort = m_pNetworkInterface->getConnectedPort();
+        auto networkMode = Multiplayermenu::NetworkMode::Client;
+        const Password & password = m_pMap->getGameRules()->getPassword();
+        if (m_pNetworkInterface->getIsObserver())
+        {
+            networkMode = Multiplayermenu::NetworkMode::Observer;
+        }
+
+        CONSOLE_PRINT("Leaving Game menue to resync to game", GameConsole::eDEBUG);
+        spMultiplayermenu pMenu = spMultiplayermenu::create(connectedAdress, connectedPort, &password, networkMode);
+        oxygine::Stage::getStage()->addChild(pMenu);
+        oxygine::Actor::detach();
+    }
+    else
+    {
+        CONSOLE_PRINT("Resync as server isn't possible ignoring request.", GameConsole::eWARNING);
+    }
 }
 
 Player* GameMenue::getCurrentViewPlayer()

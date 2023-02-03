@@ -1,4 +1,5 @@
 #include <QFile>
+#include <QCryptographicHash>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
@@ -1404,6 +1405,16 @@ void GameMap::updateMapFlags() const
             }
         }
     }
+}
+
+QByteArray GameMap::getMapHash()
+{
+    QCryptographicHash myHash(QCryptographicHash::Sha512);
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    serializeObject(stream);
+    myHash.addData(data);
+    return myHash.result();
 }
 
 void GameMap::setSavegame(bool newSavegame)

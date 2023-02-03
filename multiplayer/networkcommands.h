@@ -25,7 +25,10 @@ namespace NetworkCommands
         UsernameAlreadyInGame,
         Max,
     };
-
+    /**
+     * @brief RESYNCINFO
+     */
+    const char* const RESYNCINFO = "RESYNCINFO";
     /**
      * @brief MAPINFO map info of from the host
      */

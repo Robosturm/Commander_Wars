@@ -329,6 +329,18 @@ public slots:
      * @brief loadSaveGame
      */
     void loadSaveGame(const QString savefile);
+    /**
+     * @brief resyncGame
+     */
+    void resyncGame();
+    /**
+     * @brief showResyncGameMessage
+     */
+    void showResyncGameMessage();
+    /**
+     * @brief doResyncGame
+     */
+    void doResyncGame();
 protected slots:
     /**
      * @brief keyInput
@@ -450,6 +462,7 @@ protected:
      * @brief sendGameStartedToServer
      */
     void sendGameStartedToServer();
+    void onResyncGame(QDataStream & stream);
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;

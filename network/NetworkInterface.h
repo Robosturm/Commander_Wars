@@ -134,6 +134,16 @@ public:
         m_active = isActive;
     }
 
+    QString getConnectedAdress() const
+    {
+        return m_connectedAdress;
+    }
+
+    quint16 getConnectedPort() const
+    {
+        return m_connectedPort;
+    }
+
 signals:
     void sigDisconnectTCP();
     /**
@@ -304,6 +314,9 @@ protected:
     bool m_isConnected{false};
     bool m_isObserver{false};
     bool m_active{true};
+    QString m_connectedAdress;
+    quint16 m_connectedPort{0};
+
 };
 
 #endif // NETWORKINTERFACE_H

@@ -8,8 +8,8 @@
 const char* const Filesupport::LIST_FILENAME_ENDING = ".bl";
 
 QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & folders)
-{
-    Sha256Hash myHash;
+{    
+    QCryptographicHash myHash(QCryptographicHash::Sha512);
     QStringList fullList;
 
     QString userPath = Settings::getUserPath();
@@ -30,7 +30,7 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     return myHash.result();
 }
 
-void Filesupport::addHash(Sha256Hash & hash, const QString & folder, const QStringList & filter)
+void Filesupport::addHash(QCryptographicHash & hash, const QString & folder, const QStringList & filter)
 {
     QDir dir(folder);
     auto list = dir.entryInfoList(filter, QDir::Files);

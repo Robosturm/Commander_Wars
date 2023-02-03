@@ -1,5 +1,6 @@
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QCryptographicHash>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -12,7 +13,6 @@
 #include "coreengine/settings.h"
 #include "coreengine/filesupport.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/sha256hash.h"
 
 #include "menue/gamemenue.h"
 #include "menue/mainwindow.h"
@@ -37,7 +37,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-Multiplayermenu::Multiplayermenu(QString address, QString secondaryAddress, quint16 port, QString password, NetworkMode networkMode)
+Multiplayermenu::Multiplayermenu(const QString & address, const QString & secondaryAddress, quint16 port, const QString & password, NetworkMode networkMode)
     : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
@@ -46,12 +46,7 @@ Multiplayermenu::Multiplayermenu(QString address, QString secondaryAddress, quin
     init();
     if (m_networkMode != NetworkMode::Host)
     {
-        m_pNetworkInterface = spTCPClient::create(nullptr);
-        m_pNetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
-        m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
-        initClientAndWaitForConnection();
-        emit m_pNetworkInterface->sig_connect(address, port, secondaryAddress);
+        initClientConnection(address, secondaryAddress, port);
     }
     else
     {
@@ -68,7 +63,17 @@ Multiplayermenu::Multiplayermenu(QString address, QString secondaryAddress, quin
     }
 }
 
-Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, NetworkMode networkMode)
+Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Password * password, NetworkMode networkMode)
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
+      m_networkMode(networkMode),
+      m_local(true),
+      m_password(*password)
+{
+    init();
+    initClientConnection(address, "", port);
+}
+
+Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, const QString & password, NetworkMode networkMode)
     : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
       m_networkMode(networkMode),
       m_local(false),
@@ -85,6 +90,16 @@ Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, QString p
         dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
         m_pPlayerSelection->setIsServerGame(true);
     }
+}
+
+void Multiplayermenu::initClientConnection(const QString & address, const QString & secondaryAddress, quint16 port)
+{
+    m_pNetworkInterface = spTCPClient::create(nullptr);
+    m_pNetworkInterface->setIsObserver(m_networkMode == NetworkMode::Observer);
+    m_pNetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
+    m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
+    initClientAndWaitForConnection();
+    emit m_pNetworkInterface->sig_connect(address, port, secondaryAddress);
 }
 
 void Multiplayermenu::initClientAndWaitForConnection()
@@ -674,7 +689,7 @@ void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socke
 
 void Multiplayermenu::sendMapInfoUpdate(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
 {
-    Sha256Hash myHash;
+    QCryptographicHash myHash(QCryptographicHash::Sha512);
     QString file = m_pMapSelectionView->getCurrentFile().filePath();
     QString fileName = m_pMapSelectionView->getCurrentFile().fileName();
     QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
@@ -724,7 +739,7 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID, const QJsonObject & ob
         {
             // create hash for script file
             QFile scriptData(scriptFile);
-            Sha256Hash myScriptHash;
+            QCryptographicHash myScriptHash(QCryptographicHash::Sha512);
             scriptData.open(QIODevice::ReadOnly);
             while (!scriptData.atEnd())
             {
@@ -1629,7 +1644,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             {
                 scriptFile.setFileName(Settings::getUserPath() + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
-                Sha256Hash myHash;
+                QCryptographicHash myHash(QCryptographicHash::Sha512);
                 while (!scriptFile.atEnd())
                 {
                     myHash.addData(scriptFile.readLine().trimmed());
@@ -1642,7 +1657,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             {
                 scriptFile.setFileName(oxygine::Resource::RCC_PREFIX_PATH + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
-                Sha256Hash myHash;
+                QCryptographicHash myHash(QCryptographicHash::Sha512);
                 while (!scriptFile.atEnd())
                 {
                     myHash.addData(scriptFile.readLine().trimmed());
@@ -1672,7 +1687,7 @@ bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, b
         QString file = dirIter.fileInfo().canonicalFilePath();
         QFile mapFile(file);
         mapFile.open(QIODevice::ReadOnly);
-        Sha256Hash myHash;
+        QCryptographicHash myHash(QCryptographicHash::Sha512);
         myHash.addData(&mapFile);
         mapFile.close();
         QByteArray myHashArray = myHash.result();

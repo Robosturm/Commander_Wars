@@ -285,7 +285,11 @@ public:
      * @param newSavegame
      */
     void setSavegame(bool newSavegame);
-
+    /**
+     * @brief getMapHash
+     * @return
+     */
+    QByteArray getMapHash();
 signals:
     void signalExitGame();
     void sigSaveGame();

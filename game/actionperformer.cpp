@@ -5,7 +5,6 @@
 #include "menue/gamemenue.h"
 
 #include "objects/dialogs/dialogconnecting.h"
-#include "objects/dialogs/dialogmessagebox.h"
 
 ActionPerformer::ActionPerformer(GameMap* pMap, GameMenue* pMenu)
     : m_pMenu(pMenu),
@@ -39,6 +38,7 @@ void ActionPerformer::performAction(spGameAction pGameAction)
     }
     CONSOLE_PRINT("Action running", GameConsole::eDEBUG);
     m_actionRunning = true;
+    bool autosave = true;
     m_pMenu->setSaveAllowed(false);
     if (m_multiplayerSyncData.m_waitingForSyncFinished && m_pMenu != nullptr)
     {
@@ -60,15 +60,25 @@ void ActionPerformer::performAction(spGameAction pGameAction)
         }
         Player* pCurrentPlayer = m_pMap->getCurrentPlayer();
         auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
+        auto mapHash = m_pMap->getMapHash();
+        bool syncMatch = m_syncCounter + 1 != pGameAction->getSyncCounter();
         if (multiplayer &&
             m_pMenu != nullptr &&
             baseGameInput != nullptr &&
             baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi &&
-            m_syncCounter + 1 != pGameAction->getSyncCounter())
+            syncMatch &&
+            pGameAction->getMapHash() == mapHash)
         {
-            m_pMenu->setGameStarted(false);
-            spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("The game is out of sync and can't be continued. The game has been stopped. You can save the game and restart."));
-            m_pMenu->addChild(pDialogMessageBox);
+            if (syncMatch)
+            {
+                CONSOLE_PRINT("Forcing resync cause map hash is different from action map hash", GameConsole::eDEBUG);
+            }
+            else
+            {
+                CONSOLE_PRINT("Forcing resync cause action sync counter doesn't match map sync counter", GameConsole::eDEBUG);
+            }
+            autosave = false;
+            m_pMenu->doResyncGame();
         }
         else
         {            
@@ -101,6 +111,7 @@ void ActionPerformer::performAction(spGameAction pGameAction)
                 CONSOLE_PRINT("Sending action to other players", GameConsole::eDEBUG);
                 m_syncCounter++;
                 pGameAction->setSyncCounter(m_syncCounter);
+                pGameAction->setMapHash(mapHash);
                 pGameAction->setRoundTimerTime(m_pMap->getGameRules()->getRoundTimer()->remainingTime());
                 QByteArray data;
                 QDataStream stream(&data, QIODevice::WriteOnly);
@@ -138,7 +149,8 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             skipAnimations(false);
         }
         if (pCurrentPlayer != m_pMap->getCurrentPlayer() &&
-            m_pMenu != nullptr)
+            m_pMenu != nullptr &&
+            autosave)
         {
             auto* baseGameInput = m_pMap->getCurrentPlayer()->getBaseGameInput();
             if (baseGameInput != nullptr &&

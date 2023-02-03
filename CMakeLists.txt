@@ -544,7 +544,6 @@ set(${PROJECT_NAME}_SRCS
     coreengine/scriptvariablefile.cpp coreengine/scriptvariablefile.h
     coreengine/metatyperegister.cpp coreengine/metatyperegister.h
     coreengine/GamepadShared.cpp coreengine/Gamepad.h
-    coreengine/sha256hash.cpp coreengine/sha256hash.h
     coreengine/commandlineparser.cpp coreengine/commandlineparser.h
     coreengine/JsCallback.h
 
