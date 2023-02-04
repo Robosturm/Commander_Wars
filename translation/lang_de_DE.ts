@@ -2480,7 +2480,7 @@
 <context>
     <name>DialogConnecting</name>
     <message>
-        <location filename="../objects/dialogs/dialogconnecting.cpp" line="40"/>
+        <location filename="../objects/dialogs/dialogconnecting.cpp" line="41"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6417,99 +6417,99 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1017"/>
+        <location filename="../menue/gamemenue.cpp" line="1036"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1039"/>
+        <location filename="../menue/gamemenue.cpp" line="1058"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1250"/>
-        <location filename="../menue/gamemenue.cpp" line="1834"/>
-        <location filename="../menue/gamemenue.cpp" line="1871"/>
+        <location filename="../menue/gamemenue.cpp" line="1269"/>
+        <location filename="../menue/gamemenue.cpp" line="1853"/>
+        <location filename="../menue/gamemenue.cpp" line="1890"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1258"/>
+        <location filename="../menue/gamemenue.cpp" line="1277"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1293"/>
+        <location filename="../menue/gamemenue.cpp" line="1312"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1694"/>
+        <location filename="../menue/gamemenue.cpp" line="1713"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1695"/>
+        <location filename="../menue/gamemenue.cpp" line="1714"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1696"/>
+        <location filename="../menue/gamemenue.cpp" line="1715"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1697"/>
+        <location filename="../menue/gamemenue.cpp" line="1716"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1698"/>
+        <location filename="../menue/gamemenue.cpp" line="1717"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1699"/>
+        <location filename="../menue/gamemenue.cpp" line="1718"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1700"/>
+        <location filename="../menue/gamemenue.cpp" line="1719"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1701"/>
+        <location filename="../menue/gamemenue.cpp" line="1720"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1725"/>
+        <location filename="../menue/gamemenue.cpp" line="1744"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1735"/>
+        <location filename="../menue/gamemenue.cpp" line="1754"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2197"/>
+        <location filename="../menue/gamemenue.cpp" line="2216"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2228"/>
+        <location filename="../menue/gamemenue.cpp" line="2247"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2254"/>
+        <location filename="../menue/gamemenue.cpp" line="2273"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2431"/>
+        <location filename="../menue/gamemenue.cpp" line="2450"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7057,155 +7057,155 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2021"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2020"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="127"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="126"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="137"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="136"/>
         <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="291"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="290"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="513"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="512"/>
         <source>Server doesn&apos;t have the given mods installed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="281"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="280"/>
         <source>Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="282"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="281"/>
         <source> may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="520"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="519"/>
         <source>Server doesn&apos;t have any more slots for players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="305"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="304"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="147"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="146"/>
         <source>Ready + Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="258"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="257"/>
         <source>Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?
 Note: You won&apos;t be able to change any rules when reentering the lobby later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="262"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="261"/>
         <source>Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="588"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="587"/>
         <source>Connection failed. Reason: Invalid username password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="589"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="588"/>
         <source>Connection failed. Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="590"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="589"/>
         <source>Connection failed. Reason: No more players available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="591"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="590"/>
         <source>Connection failed. Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="592"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="591"/>
         <source>Connection failed. Reason: Invalid username.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="593"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="592"/>
         <source>Connection failed. Reason: Password outdated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="594"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="593"/>
         <source>Connection failed. Reason: Server failed to access database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="595"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="594"/>
         <source>Connection failed. Reason: Player with same username already connected to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="909"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1056"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="908"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1055"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1289"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1288"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1293"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1292"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1308"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1307"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1312"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1311"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1412"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1411"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1423"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1422"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1820"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1819"/>
         <source>Informing server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1892"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1891"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2017"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2016"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

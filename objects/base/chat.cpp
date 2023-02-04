@@ -64,7 +64,7 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
 
     if (m_pInterface.get() != nullptr)
     {
-        connect(m_pInterface.get(), &NetworkInterface::recieveData, this, &Chat::dataRecieved, Qt::QueuedConnection);
+        connect(m_pInterface.get(), &NetworkInterface::recieveData, this, &Chat::dataRecieved, NetworkCommands::UNIQUE_DATA_CONNECTION);
     }
 }
 

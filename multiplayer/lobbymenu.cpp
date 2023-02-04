@@ -40,7 +40,7 @@ LobbyMenu::LobbyMenu()
     {
         m_pTCPClient = spTCPClient::create(nullptr);
         m_pTCPClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, Qt::QueuedConnection);
+        connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         connect(m_pTCPClient.get(), &TCPClient::sigConnected, this, &LobbyMenu::connected, Qt::QueuedConnection);
         emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort(), Settings::getSecondaryServerAdress());
     }

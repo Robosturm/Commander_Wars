@@ -89,12 +89,12 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
             }
         }
         connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &GameMenue::disconnected, Qt::QueuedConnection);
-        connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &GameMenue::recieveData, Qt::QueuedConnection);
+        connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &GameMenue::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         if (Mainapp::getSlave())
         {
             CONSOLE_PRINT("GameMenue is listening to master server data", GameConsole::eDEBUG);
             spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-            connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &GameMenue::recieveServerData, Qt::QueuedConnection);
+            connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &GameMenue::recieveServerData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         }
         if (m_pNetworkInterface->getIsServer())
         {
@@ -118,8 +118,8 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
                 if (pNetworkInterface->getIsObserver() || rejoin)
                 {
                     CONSOLE_PRINT("Closing connection dialog on sync finished signal", GameConsole::eDEBUG);
-                    connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
                     connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+                    connect(this, &GameMenue::sigSyncFinished, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
                     connect(this, &GameMenue::sigSyncFinished, this, &GameMenue::startGame, Qt::QueuedConnection);
                 }
                 else
@@ -682,7 +682,7 @@ void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
 void GameMenue::startGameSync(quint64 socketID)
 {
     auto & multiplayerSyncData = m_actionPerformer.getSyncData();
-    multiplayerSyncData.m_connectingSockets.append(socketID);
+    multiplayerSyncData.m_connectingSocketInfos.append(socketID);
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
     {
         Player* pPlayer = m_pMap->getPlayer(i);
@@ -782,9 +782,13 @@ void GameMenue::syncPointReached()
         m_pMap->serializeObject(sendStream);
         sendStream << m_actionPerformer.getSyncCounter();
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
-        for (auto & socketId : multiplayerSyncData.m_connectingSockets)
+        for (auto & socketInfo : multiplayerSyncData.m_connectingSocketInfos)
         {
-            emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+            if (!socketInfo.m_syncSend)
+            {
+                socketInfo.m_syncSend = true;
+                emit m_pNetworkInterface->sig_sendData(socketInfo.m_socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+            }
         }
     }
 }
@@ -858,6 +862,7 @@ void GameMenue::checkSendPlayerRequestControlInfo()
 
 void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint64 socketId)
 {
+    CONSOLE_PRINT("GameMenue::sendPlayerRequestControlInfo " + playerNameId, GameConsole::eDEBUG);
     QVector<qint32> playerAis;
     QVector<GameEnums::AiTypes> aiTypes;
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -907,12 +912,27 @@ void GameMenue::removePlayerFromSyncWaitList(quint64 socketID)
 {
     if (m_pNetworkInterface->getIsServer())
     {
-        auto & multiplayerSyncData = m_actionPerformer.getSyncData();
-        multiplayerSyncData.m_connectingSockets.removeAll(socketID);
+        removeSyncSocket(socketID);
         continueAfterSyncGame();
     }
 }
 
+void GameMenue::removeSyncSocket(quint64 socketID)
+{
+    auto & multiplayerSyncData = m_actionPerformer.getSyncData();
+    qint32 i = 0;
+    while (i < multiplayerSyncData.m_connectingSocketInfos.size())
+    {
+        if (multiplayerSyncData.m_connectingSocketInfos[i].m_socketId == socketID)
+        {
+            multiplayerSyncData.m_connectingSocketInfos.removeAt(i);
+        }
+        else
+        {
+            ++i;
+        }
+    }
+}
 void GameMenue::playerJoinedFinished()
 {    
     emit sigSyncFinished();
@@ -923,7 +943,7 @@ void GameMenue::continueAfterSyncGame()
 {
     auto & multiplayerSyncData = m_actionPerformer.getSyncData();
     if (m_pNetworkInterface.get() != nullptr &&
-        multiplayerSyncData.m_connectingSockets.size() <= 0 &&
+        multiplayerSyncData.m_connectingSocketInfos.size() <= 0 &&
         multiplayerSyncData.m_waitingForSyncFinished)
     {
         Mainapp* pApp = Mainapp::getInstance();
@@ -980,8 +1000,7 @@ void GameMenue::disconnected(quint64 socketID)
     {
         CONSOLE_PRINT("Handling player GameMenue::disconnect()", GameConsole::eDEBUG);
         bool showDisconnect = !m_pNetworkInterface->getIsServer();
-        auto & multiplayerSyncData = m_actionPerformer.getSyncData();
-        multiplayerSyncData.m_connectingSockets.removeAll(socketID);
+        removeSyncSocket(socketID);
         auto & observer = m_pMap->getGameRules()->getObserverList();
         bool observerDisconnect = observer.contains(socketID);
         if (observerDisconnect)

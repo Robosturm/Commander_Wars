@@ -52,7 +52,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     {
         CONSOLE_PRINT("VictoryMenue is listening to master server data", GameConsole::eDEBUG);
         spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &VictoryMenue::recieveServerData, Qt::QueuedConnection);
+        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &VictoryMenue::recieveServerData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     }
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

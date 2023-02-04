@@ -10,12 +10,22 @@ class ActionPerformer final : public QObject
 {
     Q_OBJECT
 public:
+    struct ConnectingInfo
+    {
+        ConnectingInfo(quint64 socketId)
+            : m_socketId(socketId)
+        {
+        }
+        quint64 m_socketId;
+        bool m_syncSend{false};
+    };
+
     struct SyncData
     {
         bool m_waitingForSyncFinished{false};
         spGameAction m_postSyncAction{nullptr};
         QVector<bool> m_lockedPlayers;
-        QVector<quint64> m_connectingSockets;
+        QVector<ConnectingInfo> m_connectingSocketInfos;
     };
 
     explicit ActionPerformer(GameMap* pMap, GameMenue* pMenu = nullptr);

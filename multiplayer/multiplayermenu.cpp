@@ -119,8 +119,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
         m_pButtonStart->setVisible(false);
     }
     // quit on host connection lost
-    connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
-    connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
+    connectNetworkSlots();
 
     connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     // wait 10 minutes till timeout
@@ -1863,7 +1862,7 @@ void Multiplayermenu::connectNetworkSlots()
     CONSOLE_PRINT("Multiplayermenu::connectNetworkSlots", GameConsole::eDEBUG);
     disconnectNetworkSlots();
     connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined, Qt::QueuedConnection);
-    connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
+    connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
 }
 

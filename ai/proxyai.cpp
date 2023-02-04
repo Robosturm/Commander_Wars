@@ -37,7 +37,7 @@ void ProxyAi::init(GameMenue* pMenu)
 
 void ProxyAi::connectInterface(NetworkInterface* pNetworkInterface)
 {
-    connect(pNetworkInterface, &NetworkInterface::recieveData, this, &ProxyAi::recieveData, Qt::QueuedConnection);
+    connect(pNetworkInterface, &NetworkInterface::recieveData, this, &ProxyAi::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
 }
 
 void ProxyAi::serializeObject(QDataStream& stream) const

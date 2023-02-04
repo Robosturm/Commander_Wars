@@ -57,7 +57,7 @@ void AiProcessPipe::startPipe()
     if (m_pActiveConnection != nullptr)
     {
         connect(m_pActiveConnection, &NetworkInterface::sigConnected, this, &AiProcessPipe::onConnected, Qt::QueuedConnection);
-        connect(m_pActiveConnection, &NetworkInterface::recieveData, this, &AiProcessPipe::recieveData, Qt::QueuedConnection);
+        connect(m_pActiveConnection, &NetworkInterface::recieveData, this, &AiProcessPipe::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         m_pActiveConnection->connectTCP(pipeName, 0, "");
     }
 }

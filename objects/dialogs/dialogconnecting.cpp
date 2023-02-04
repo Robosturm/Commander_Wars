@@ -11,6 +11,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
       m_Timer(this),
       m_TimerConnectionTimeout(this)
 {
+    CONSOLE_PRINT("Creating DialogConnecting", GameConsole::eDEBUG);
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogConnecting");
 #endif
@@ -59,11 +60,13 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
 
 void DialogConnecting::cancel()
 {
+    CONSOLE_PRINT("Canceling DialogConnecting", GameConsole::eDEBUG);
     detach();
 }
 
 void DialogConnecting::connected()
 {
+    CONSOLE_PRINT("Connected in DialogConnecting", GameConsole::eDEBUG);
     emit sigConnected();
     detach();
 }

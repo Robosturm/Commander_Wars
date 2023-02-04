@@ -1,7 +1,11 @@
 #pragma once
 
+#include <QObject>
+
 namespace NetworkCommands
 {
+    static const Qt::ConnectionType UNIQUE_DATA_CONNECTION = static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::UniqueConnection);
+
     enum class PublicKeyActions
     {
         SendInitialMapUpdate,

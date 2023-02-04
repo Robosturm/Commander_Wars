@@ -111,11 +111,11 @@ MainServer::MainServer()
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(javascriptName, pInterpreter->newQObject(this));
     // connect signals for tcp server events
-    connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
+    connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
     connect(m_pGameServer.get(), &TCPServer::sigDisconnected, this, &MainServer::disconnected, Qt::QueuedConnection);
     // connect signals for tcp slave events
-    connect(m_pSlaveServer.get(), &TCPServer::recieveData, this, &MainServer::receivedSlaveData, Qt::QueuedConnection);
+    connect(m_pSlaveServer.get(), &TCPServer::recieveData, this, &MainServer::receivedSlaveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     // internal updates
     connect(this, &MainServer::sigStartRemoteGame, this, &MainServer::slotStartRemoteGame, Qt::QueuedConnection);
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);

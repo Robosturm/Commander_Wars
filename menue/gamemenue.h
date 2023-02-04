@@ -428,6 +428,11 @@ protected slots:
      */
     void removePlayerFromSyncWaitList(quint64 socketID);
     /**
+     * @brief removeSyncSocket
+     * @param socketID
+     */
+    void removeSyncSocket(quint64 socketID);
+    /**
      * @brief playerJoinedFinished
      */
     void playerJoinedFinished();

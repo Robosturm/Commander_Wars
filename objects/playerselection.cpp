@@ -57,7 +57,7 @@ void PlayerSelection::attachNetworkInterface(spNetworkInterface pNetworkInterfac
     if (m_pNetworkInterface.get() != nullptr)
     {
         connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &PlayerSelection::disconnected, Qt::QueuedConnection);
-        connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &PlayerSelection::recieveData, Qt::QueuedConnection);
+        connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &PlayerSelection::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     }
 }
 
