@@ -112,6 +112,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
             }
             else
             {
+                CONSOLE_PRINT("GameMenue waiting for all players to connect before starting the game", GameConsole::eDEBUG);
                 spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Waiting for Players"), 1000 * 60 * 5);
                 addChild(pDialogConnecting);
                 connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
@@ -130,6 +131,11 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
                 }
             }
         }
+        else
+        {
+            CONSOLE_PRINT("GameMenue starting game directly forced by creation flag", GameConsole::eDEBUG);
+            startGame();
+        }
         m_pChat = spChat::create(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat, this);
         m_pChat->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);
@@ -140,11 +146,11 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     {
         CONSOLE_PRINT("GameMenue starting game directly cause it's a single player game.", GameConsole::eDEBUG);
         startGame();
-        if (m_pNetworkInterface.get() != nullptr &&
-            Mainapp::getSlave())
-        {
-            startDespawnTimer();
-        }
+    }
+    if (m_pNetworkInterface.get() != nullptr &&
+        Mainapp::getSlave())
+    {
+        startDespawnTimer();
     }
     if (Settings::getAutoSavingCycle() > 0)
     {
