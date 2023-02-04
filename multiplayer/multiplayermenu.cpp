@@ -886,7 +886,7 @@ void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 sock
                 }
             }
             qint64 syncCounter = 0;
-            stream >> syncCounter;
+            stream >> syncCounter;            
             startRejoinedGame(syncCounter);
         }
         else
@@ -953,7 +953,7 @@ void Multiplayermenu::startRejoinedGame(qint64 syncCounter)
 {
     // start game
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    CONSOLE_PRINT("Leaving Map Selection Menue and rejoining game", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Leaving Map Selection Menue and rejoining game with sync counter " + QString::number(syncCounter), GameConsole::eDEBUG);
     auto window = spGameMenue::create(pMap, true, m_pNetworkInterface, true);
     window->getActionPerformer().setSyncCounter(syncCounter);
     oxygine::Stage::getStage()->addChild(window);

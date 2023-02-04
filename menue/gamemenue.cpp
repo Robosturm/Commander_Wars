@@ -780,8 +780,9 @@ void GameMenue::syncPointReached()
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << command;
         m_pMap->serializeObject(sendStream);
-        sendStream << m_actionPerformer.getSyncCounter();
-        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+        auto syncCounter = m_actionPerformer.getSyncCounter();
+        sendStream << syncCounter;
+        CONSOLE_PRINT("Sending command " + command + " with sync counter " + QString::number(syncCounter), GameConsole::eDEBUG);
         for (auto & socketInfo : multiplayerSyncData.m_connectingSocketInfos)
         {
             if (!socketInfo.m_syncSend)

@@ -90,6 +90,7 @@ void ActionPerformer::performAction(spGameAction pGameAction)
                 baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi)
             {
                 m_syncCounter = pGameAction->getSyncCounter();
+                CONSOLE_PRINT("Updated sync counter to " + QString::number(m_syncCounter), GameConsole::eDEBUG);
             }
             m_pStoredAction = nullptr;
             m_pMap->getGameRules()->pauseRoundTime();
@@ -108,8 +109,8 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             // send action to other players if needed
             if (requiresForwarding(pGameAction))
             {
-                CONSOLE_PRINT("Sending action to other players", GameConsole::eDEBUG);
                 m_syncCounter++;
+                CONSOLE_PRINT("Sending action to other players with sync counter " + QString::number(m_syncCounter), GameConsole::eDEBUG);
                 pGameAction->setSyncCounter(m_syncCounter);
                 pGameAction->setMapHash(mapHash);
                 pGameAction->setRoundTimerTime(m_pMap->getGameRules()->getRoundTimer()->remainingTime());
