@@ -36,6 +36,20 @@ var Constructor = function()
                      ["pf", "pf"],
                      ["ti", "ti"],];
 
+    this.animationData = [["os", [1]],
+                          ["bm", [1]],
+                          ["ge", [1]],
+                          ["yc", [1]],
+                          ["bh", [1]],
+                          ["bg", [1]],
+                          ["ma", [2]],
+                          ["ac", [2]],
+                          ["bd", [2]],
+                          ["dm", [2]],
+                          ["gs", [2]],
+                          ["pf", [2]],
+                          ["ti", [2]],];
+
     this.loadSprites = function(unit)
     {
         // none neutral player
@@ -60,7 +74,8 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, MECH.armyData);
-        animation.loadSpriteV2("mech+" + armyName + "+walk+mask", GameEnums.Recoloring_Matrix, 1);
+        var data = Global.getDataFromTable(armyName, MECH.animationData);
+        animation.loadSpriteV2("mech+" + armyName + "+walk+mask", GameEnums.Recoloring_Matrix, data[0]);
         animation.setSound("moveboots.wav", -2);
         return animation;
     };

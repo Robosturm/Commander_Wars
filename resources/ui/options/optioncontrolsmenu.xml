@@ -567,7 +567,14 @@
                 <onEvent>settings.setKey_mapshot(input)</onEvent>
             </SelectKey>
             </Label>
-                <SelectKey>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Key Quit:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for quiting a running match.")</tooltip>

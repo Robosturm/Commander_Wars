@@ -4663,87 +4663,92 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="581"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="573"/>
+        <source>Key Quit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="588"/>
         <source>Key Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="589"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="596"/>
         <source>Key Place Terrain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="596"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="603"/>
         <source>Key to select Place Terrain in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="604"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="611"/>
         <source>Key Place Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="611"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="618"/>
         <source>Key to select Place Unit in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="619"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="626"/>
         <source>Key Place Building:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="626"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="633"/>
         <source>Key to select Place Building in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="634"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="641"/>
         <source>Key Next Team:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="641"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="648"/>
         <source>Key to select the next player in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="649"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="656"/>
         <source>Key Previous Team:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="656"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="663"/>
         <source>Key to select the previous player in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="664"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="671"/>
         <source>Key Next Item:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="671"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="678"/>
         <source>Key to select the next editor item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="679"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="686"/>
         <source>Key Previous Item:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="686"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="693"/>
         <source>Key to select the previous editor item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="694"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="701"/>
         <source>Quit game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="573"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="580"/>
         <source>Key for quiting a running match.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24537,12 +24542,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>infantry</name>
     <message>
-        <location filename="../resources/scripts/units/infantry.js" line="69"/>
+        <location filename="../resources/scripts/units/infantry.js" line="84"/>
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/infantry.js" line="78"/>
+        <location filename="../resources/scripts/units/infantry.js" line="93"/>
         <source>&lt;r&gt;Cheapest unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt;bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt;when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24610,12 +24615,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>mech</name>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="69"/>
+        <location filename="../resources/scripts/units/mech.js" line="84"/>
         <source>Mech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="78"/>
+        <location filename="../resources/scripts/units/mech.js" line="93"/>
         <source>&lt;r&gt;Attack power high. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
