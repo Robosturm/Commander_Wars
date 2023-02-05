@@ -238,7 +238,7 @@ var Constructor = function()
             {
                 yOffset = 45;
             }
-            sprite.loadSprite("flak_hit",  false, 5, Qt.point(xOffset, yOffset),
+            sprite.loadSprite("flak_hit",  false, count, Qt.point(xOffset, yOffset),
                               1, 1.0, 0, 0);
             BATTLEANIMATION.playMgImpactSound(sprite, unit, defender, weapon, count);
         }

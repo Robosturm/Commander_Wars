@@ -213,6 +213,10 @@ void Unit::removeShineTween()
         }
     }
     m_ShineTweens.clear();
+    for (auto & pUunit : m_TransportUnits)
+    {
+        pUunit->removeShineTween();
+    }
 }
 
 void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)

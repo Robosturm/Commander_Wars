@@ -10351,7 +10351,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Unit</name>
     <message>
-        <location filename="../game/unit.cpp" line="499"/>
+        <location filename="../game/unit.cpp" line="503"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
