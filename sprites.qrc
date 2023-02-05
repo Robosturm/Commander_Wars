@@ -4170,18 +4170,15 @@
         <file>resources/images/terrain/river/riverend+E+2+land+E.png</file>
         <file>resources/images/terrain/river/riverend+E+2+land+N+E.png</file>
         <file>resources/images/terrain/river/riverend+E+2+land+N.png</file>
-        <file>resources/images/terrain/river/riverend+e+2+land+NE.png</file>
+        <file>resources/images/terrain/river/riverend+E+2+land+NE.png</file>
         <file>resources/images/terrain/river/riverend+E+2.png</file>
         <file>resources/images/terrain/river/riverend+E+3+land+E+S.png</file>
         <file>resources/images/terrain/river/riverend+E+3+land+E.png</file>
         <file>resources/images/terrain/river/riverend+E+3+land+S.png</file>
-        <file>resources/images/terrain/river/riverend+e+3+land+SE.png</file>
+        <file>resources/images/terrain/river/riverend+E+3+land+SE.png</file>
         <file>resources/images/terrain/river/riverend+E+3.png</file>
         <file>resources/images/terrain/river/riverend+E+4+land+S.png</file>
         <file>resources/images/terrain/river/riverend+E+4.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake+N+S.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake+N.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake.png</file>
         <file>resources/images/terrain/river/riverend+N+1+land+N+W.png</file>
         <file>resources/images/terrain/river/riverend+N+1+land+N.png</file>
         <file>resources/images/terrain/river/riverend+N+1+land+NW.png</file>
@@ -4928,5 +4925,8 @@
         <file>resources/images/units/sniper/sniper+yc+mask.png</file>
         <file>resources/images/units/sniper/sniper+yc+walk+mask.png</file>
         <file>resources/images/co_perks/mechanic.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+N.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+N+S.png</file>
     </qresource>
 </RCC>

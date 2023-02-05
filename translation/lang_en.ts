@@ -4663,11 +4663,6 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="573"/>
-        <source>Key Quit:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="588"/>
         <source>Key Editor</source>
         <translation type="unfinished"></translation>
@@ -4743,7 +4738,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="701"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="573"/>
         <source>Quit game:</source>
         <translation type="unfinished"></translation>
     </message>

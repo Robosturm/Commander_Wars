@@ -753,7 +753,7 @@
             <onEvent>currentMenu.getMap().getGameRules().setTeamFacingUnits(input);</onEvent>
             <enabled>currentMenu.getRuleChangeEabled()</enabled>
         </Checkbox>
-        <loop count="gameRuleManager.getGameRuleCount()">
+        <loop count="currentMenu.getMap().getGameRules().getGameRuleSize()">
             <loop count="RuleSelectionScript.getGameRuleElementCount(loopIdx)">
                 <Label>
                     <x>RuleSelectionScript.getGameRuleX(loopIdx)</x>
@@ -799,7 +799,7 @@
         <font>"main"</font>
         <fontSize>48</fontSize>
     </Label>
-    <loop count="gameRuleManager.getVictoryRuleCount()">
+    <loop count="currentMenu.getMap().getGameRules().getVictoryRuleSize()">
         <loop count="RuleSelectionScript.getVictoryRuleElementCount(loopIdx)">
             <Label>
                 <x>RuleSelectionScript.getVictoryRuleX(loopIdx)</x>

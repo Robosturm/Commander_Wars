@@ -420,10 +420,27 @@ public slots:
     void addVictoryRule(const QString & rule);
     void removeVictoryRule(const QString & rule);
     VictoryRule* getVictoryRule(const QString & rule);
+    qint32 getVictoryRuleSize()
+    {
+        return m_VictoryRules.size();
+    }
+    VictoryRule* getVictoryRule(qint32 index)
+    {
+        return m_VictoryRules[index].get();
+    }
 
     void addGameRule(const QString & rule);
     GameRule* getGameRule(const QString & rule);
-    void removeGameRule(const QString & rule);
+    void removeGameRule(const QString & rule);    
+    qint32 getGameRuleSize()
+    {
+        return m_GameRules.size();
+    }
+    GameRule* getGameRule(qint32 index)
+    {
+        return m_GameRules[index].get();
+    }
+
     /**
      * @brief addWeather
      * @param weatherId
@@ -570,27 +587,6 @@ public slots:
      * @param pUnit
      */
     void showHideStealthUnit(Player* pPlayer, Unit* pUnit);
-    /**
-     * @brief getVictoryRuleSize
-     * @return
-     */
-    inline qint32 getVictoryRuleSize()
-    {
-        return m_VictoryRules.size();
-    }
-    inline VictoryRule* getVictoryRule(qint32 index)
-    {
-        return m_VictoryRules[index].get();
-    }
-
-    inline qint32 getGameRuleSize()
-    {
-        return m_GameRules.size();
-    }
-    inline GameRule* getGameRule(qint32 index)
-    {
-        return m_GameRules[index].get();
-    }
     /**
      * @brief setRoundTimeMs
      * @param timeMs

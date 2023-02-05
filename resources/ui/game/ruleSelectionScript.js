@@ -97,11 +97,11 @@ var RuleSelectionScript =
     getVictoryRuleElementCount : function(loopIdx)
     {
         RuleSelectionScript.currentVictoryRuleIndex = loopIdx;
-        return currentMenu.getMap().getGameRules().getVictoryRule(gameRuleManager.getVictoryRuleID(loopIdx)).getRuleType().length;
+        return currentMenu.getMap().getGameRules().getVictoryRule(loopIdx).getRuleType().length;
     },
     getVictoryRuleElementType : function(loopIdx)
     {
-        return currentMenu.getMap().getGameRules().getVictoryRule(gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex)).getRuleType()[loopIdx];
+        return currentMenu.getMap().getGameRules().getVictoryRule(RuleSelectionScript.currentVictoryRuleIndex).getRuleType()[loopIdx];
     },
     getIsVictoryRuleCheckboxType : function(loopIdx)
     {
@@ -113,27 +113,27 @@ var RuleSelectionScript =
     },
     getVictoryRulename : function(loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getVictoryRule(gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex));
+        let rule = currentMenu.getMap().getGameRules().getVictoryRule(RuleSelectionScript.currentVictoryRuleIndex);
         return rule.getRuleName(loopIdx);
     },
     getVictoryRuleDescription : function(loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getVictoryRule(gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex));
+        let rule = currentMenu.getMap().getGameRules().getVictoryRule(RuleSelectionScript.currentVictoryRuleIndex);
         return rule.getRuleDescription(loopIdx);
     },
     getVictoryRuleValue : function(loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getVictoryRule(gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex));
+        let rule = currentMenu.getMap().getGameRules().getVictoryRule(RuleSelectionScript.currentVictoryRuleIndex);
         return rule.getRuleValue(loopIdx);
     },
     getVictoryRuleInfiniteValue : function(loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getVictoryRule(gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex));
+        let rule = currentMenu.getMap().getGameRules().getVictoryRule(RuleSelectionScript.currentVictoryRuleIndex);
         return rule.getInfiniteValue(loopIdx);
     },
     setVictoryRuleValue : function(input, loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getVictoryRule(gameRuleManager.getVictoryRuleID(RuleSelectionScript.currentVictoryRuleIndex));
+        let rule = currentMenu.getMap().getGameRules().getVictoryRule(RuleSelectionScript.currentVictoryRuleIndex);
         return rule.setRuleValue(input, loopIdx);
     },
     getVictoryRuleX : function(loopIdx)
@@ -164,11 +164,11 @@ var RuleSelectionScript =
     getGameRuleElementCount : function(loopIdx)
     {
         RuleSelectionScript.currentGameRuleIndex = loopIdx;
-        return currentMenu.getMap().getGameRules().getGameRule(gameRuleManager.getGameRuleID(loopIdx)).getRuleType().length;
+        return currentMenu.getMap().getGameRules().getGameRule(loopIdx).getRuleType().length;
     },
     getGameRuleElementType : function(loopIdx)
     {
-        return currentMenu.getMap().getGameRules().getGameRule(gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)).getRuleType()[loopIdx];
+        return currentMenu.getMap().getGameRules().getGameRule(RuleSelectionScript.currentGameRuleIndex).getRuleType()[loopIdx];
     },
     getIsGameRuleCheckboxType : function(loopIdx)
     {
@@ -180,27 +180,27 @@ var RuleSelectionScript =
     },
     getGameRulename : function(loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getGameRule(gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex));
+        let rule = currentMenu.getMap().getGameRules().getGameRule(RuleSelectionScript.currentGameRuleIndex);
         return rule.getRuleName(loopIdx);
     },
     getGameRuleDescription : function(loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getGameRule(gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex));
+        let rule = currentMenu.getMap().getGameRules().getGameRule(RuleSelectionScript.currentGameRuleIndex);
         return rule.getRuleDescription(loopIdx);
     },
     getGameRuleValue : function(loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getGameRule(gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex));
+        let rule = currentMenu.getMap().getGameRules().getGameRule(RuleSelectionScript.currentGameRuleIndex);
         return rule.getRuleValue(loopIdx);
     },
     getGameRuleInfiniteValue : function(loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getGameRule(gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex));
+        let rule = currentMenu.getMap().getGameRules().getGameRule(RuleSelectionScript.currentGameRuleIndex);
         return rule.getInfiniteValue(loopIdx);
     },
     setGameRuleValue : function(input, loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getGameRule(gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex));
+        let rule = currentMenu.getMap().getGameRules().getGameRule(RuleSelectionScript.currentGameRuleIndex);
         return rule.setRuleValue(input, loopIdx);
     },
     getGameRuleX : function(loopIdx)
