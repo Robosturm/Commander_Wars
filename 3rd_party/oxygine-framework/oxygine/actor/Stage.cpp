@@ -52,9 +52,8 @@ namespace oxygine
             driver->clear(*clearColor);
         }
         STDRenderer::instance->setViewProj(viewProjection);
-        RenderState rs;
-        QRect clip(0, 0, viewport.width(), viewport.height());
-        rs.clip = &clip;
+        RenderState rs;        
+        rs.clip = QRect(0, 0, viewport.width(), viewport.height());
 
         Actor::render(rs);
         STDRenderer::getCurrent()->flush();

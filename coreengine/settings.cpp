@@ -47,6 +47,16 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
+float Settings::getIngameMenuScaling()
+{
+    return Settings::getInstance()->m_ingameMenuScaling;
+}
+
+void Settings::setIngameMenuScaling(float newIngameMenuScaling)
+{
+    Settings::getInstance()->m_ingameMenuScaling = newIngameMenuScaling;
+}
+
 quint8 Settings::getScreen()
 {
     return Settings::getInstance()->m_screen;
@@ -1112,6 +1122,7 @@ void Settings::setup()
         new Value<bool>{"Resolution", "recordgames", &m_record, false, false, true},
         new Value<bool>{"Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true},
         new Value<bool>{"Resolution", "UseHighDpi", &m_useHighDpi, false, false, true},
+        new Value<float>{"Resolution", "IngameMenuScaling", &m_ingameMenuScaling, 1.0f, 0.5f, 10.0f},
 
         // general
         new Value<QString>{"General", "language", &m_language, "en", "", ""},

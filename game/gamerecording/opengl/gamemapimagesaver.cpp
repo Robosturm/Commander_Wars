@@ -30,8 +30,7 @@ void GamemapImageSaver::saveMapAsImage(QString filename, BaseGamemenu& menu)
         oxygine::STDRenderer::instance->setViewProj(viewProjection);
         oxygine::Stage::getStage()->setSize(viewport.width(), viewport.height());
         oxygine::RenderState rs;
-        QRect clip(0, 0, viewport.width(), viewport.height());
-        rs.clip = &clip;
+        rs.clip = QRect(0, 0, viewport.width(), viewport.height());
         auto orgPos = pMap->getPosition();
         pMap->setPosition(0, 0);
         menu.getCursor()->setVisible(false);

@@ -29,7 +29,7 @@ jobs:
             qtPath: 'mingw_64'
             installerCommands1: 'choco install openssl'
             installerCommands2: ''
-            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF'
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF'
           - buildTarget: ubuntu-desktop
             os: ubuntu-latest
             COMPILER_VERSION: ''

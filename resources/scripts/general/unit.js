@@ -232,7 +232,15 @@ var UNIT =
     {
         if (attacker.getBaseMaxRange() === 1)
         {
-            return true;
+            var attackerType = attacker.getUnitType();
+            attackerType = UNIT.unitTypeToGround(attackerType);
+            var defenderType = defender.getUnitType();
+            defenderType = UNIT.unitTypeToGround(defenderType);
+            if (attackerType === defenderType ||
+                defenderType !== GameEnums.UnitType_Naval)
+            {
+                return true;
+            }
         }
         if (defender.getCloaked() && !defender.getHidden())
         {

@@ -21,6 +21,6 @@ namespace oxygine
 
         QTransform transform;
         unsigned char alpha{255};
-        QRect * clip{nullptr};
+        QRect clip;
     };
 }

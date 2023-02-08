@@ -24,7 +24,7 @@ public:
         Real,
     };
 
-    explicit SpinBox(qint32 width, qint32 min = 0, qint32 max = 100, Mode mode = Mode::Int);
+    explicit SpinBox(qint32 width, qreal min = 0, qreal max = 100, Mode mode = Mode::Int);
     ~SpinBox() = default;
     /**
      * @brief getCurrentValue

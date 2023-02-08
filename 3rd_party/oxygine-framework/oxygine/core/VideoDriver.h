@@ -104,14 +104,14 @@ namespace oxygine
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, qint32 primitives);
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, const quint16* indicesData, quint32 numIndices);
         void getViewport(QRect& r) const;
-        bool getScissorRect(QRect&) const;
+        QRect getScissorRect(bool & active) const;
         spTexture getRenderTarget() const;
         ShaderProgram*  getShaderProgram() const
         {
             return m_pShaderProgram;
         }
         const VertexDeclaration* getVertexDeclaration() const;
-        void setScissorRect(const QRect*);
+        void setScissorRect(const QRect* rect);
         void setDefaultSettings();
         void setViewport(const QRect& viewport);
         void setRenderTarget(spTexture &);

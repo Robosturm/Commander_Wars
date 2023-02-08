@@ -94,7 +94,7 @@ CO_AMY.getCostModifier = function(co, id, baseCost, posX, posY, map)
         {
             if (Global[id].getMovementType() === "MOVE_HOVERCRAFT")
             {
-                return -baseCost * 0.3;
+                return -baseCost * CO_AMY.powerCostReduction;
             }
         }
     }

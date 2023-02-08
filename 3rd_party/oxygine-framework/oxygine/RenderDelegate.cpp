@@ -38,30 +38,23 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         STDRenderer* renderer = STDRenderer::getCurrent();
         VideoDriver* driver = renderer->getDriver();
+        GameWindow* window = oxygine::GameWindow::getWindow();
 
         RenderState rs = parentRS;
-        auto clippedRect = *parentRS.clip;
-        rs.clip = &clippedRect;
 
-        QRect scissorRect(0, 0, 0, 0);
-        bool scissorEnabled = driver->getScissorRect(scissorRect);
+        bool scissorEnabled = false;
+        const QRect scissorRect = driver->getScissorRect(scissorEnabled);
         bool vis = true;
         if (actor->getClipping())
         {
             renderer->flush();
-            QRect ss_rect = Actor::getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
+            const QRect ss_rect = Actor::getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
 
-            clippedRect = clippedRect.intersected(ss_rect);
-            if (!clippedRect.isEmpty())
+            rs.clip = rs.clip.intersected(ss_rect);
+            if (!rs.clip.isEmpty())
             {
-                QRect gl_rect = clippedRect;
-                if (!driver->getRenderTarget()->getHandle())
-                {
-                    GameWindow* window = oxygine::GameWindow::getWindow();
-                    QSize size = window->size();
-                    gl_rect.moveTop(size.height() - gl_rect.bottom());
-                }
-
+                QSize size = window->size();
+                QRect gl_rect(rs.clip.x(), size.height() - rs.clip.y() - rs.clip.height(), rs.clip.width(), rs.clip.height());
                 driver->setScissorRect(&gl_rect);
             }
             else
@@ -107,8 +100,8 @@ namespace oxygine
 
         STDRenderer* renderer = STDRenderer::getCurrent();
         VideoDriver* driver = renderer->getDriver();
-        QRect scissorRect(0, 0, 0, 0);
-        bool scissorEnabled = driver->getScissorRect(scissorRect);
+        bool scissorEnabled = false;
+        const QRect scissorRect = driver->getScissorRect(scissorEnabled);
 
         spMaterial cur = Material::current;
         Material::null->apply();

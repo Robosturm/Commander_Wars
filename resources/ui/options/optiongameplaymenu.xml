@@ -13,7 +13,28 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Gameplay")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
-            </Label>            
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Menu scaling:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the scaling for the action ingame menu.")</tooltip>
+                <startValue>settings.getIngameMenuScaling()</startValue>
+                <infinite>-1</infinite>
+                <spinSpeed>0.5</spinSpeed>
+                <mode>"Float"</mode>
+                <min>0.5</min>
+                <max>10</max>
+                <onEvent>settings.setIngameMenuScaling(input)</onEvent>
+            </Spinbox>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>

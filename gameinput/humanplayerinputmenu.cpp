@@ -27,6 +27,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
     setObjectName("HumanPlayerInputMenu");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setScale(Settings::getIngameMenuScaling());
     connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &HumanPlayerInputMenu::keyInput, Qt::QueuedConnection);
     qint32 width = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMenuFont32());
