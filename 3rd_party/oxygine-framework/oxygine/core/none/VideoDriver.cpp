@@ -55,9 +55,10 @@ namespace oxygine
     {
     }
 
-    bool VideoDriver::getScissorRect(QRect& r) const
+    QRect VideoDriver::getScissorRect(bool & r) const
     {
-        return false;
+        r = false;
+        return QRect();
     }
 
     void VideoDriver::setRenderTarget(spTexture & rt)
