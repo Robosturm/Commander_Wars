@@ -216,6 +216,8 @@ void OptionMenue::changeHighDpi(bool value)
 
 void OptionMenue::loadModPanels()
 {
+    m_ModBoxes.clear();
+    m_ModCheckboxes.clear();
     m_ModSelector = oxygine::spActor::create();
     m_ModSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_ModSelector->setPosition(10, 10);

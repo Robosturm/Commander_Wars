@@ -7233,32 +7233,32 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="264"/>
+        <location filename="../menue/optionmenue.cpp" line="266"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="267"/>
+        <location filename="../menue/optionmenue.cpp" line="269"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="269"/>
+        <location filename="../menue/optionmenue.cpp" line="271"/>
         <source>Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="362"/>
+        <location filename="../menue/optionmenue.cpp" line="364"/>
         <source>Filters mods by given tags.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="452"/>
+        <location filename="../menue/optionmenue.cpp" line="454"/>
         <source>The mod author designated this mod as &apos;Cosmetic&apos; and may be used during multiplayer matches based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="261"/>
+        <location filename="../menue/optionmenue.cpp" line="263"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7268,56 +7268,56 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="265"/>
+        <location filename="../menue/optionmenue.cpp" line="267"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="266"/>
+        <location filename="../menue/optionmenue.cpp" line="268"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="278"/>
+        <location filename="../menue/optionmenue.cpp" line="280"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="360"/>
+        <location filename="../menue/optionmenue.cpp" line="362"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="454"/>
+        <location filename="../menue/optionmenue.cpp" line="456"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="459"/>
+        <location filename="../menue/optionmenue.cpp" line="461"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="464"/>
+        <location filename="../menue/optionmenue.cpp" line="466"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="469"/>
+        <location filename="../menue/optionmenue.cpp" line="471"/>
         <source>Tags:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="474"/>
+        <location filename="../menue/optionmenue.cpp" line="476"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="626"/>
+        <location filename="../menue/optionmenue.cpp" line="628"/>
         <source>This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu.</source>
         <translation type="unfinished"></translation>
     </message>

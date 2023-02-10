@@ -827,16 +827,15 @@ void VictoryMenue::exitMenue()
     spCampaign campaign = m_pMap->getSpCampaign();
     if (campaign.get() != nullptr && campaign->getCampaignFinished() == false && !m_isReplay)
     {
-        m_pMap->detach();
         bool multiplayer = m_pNetworkInterface.get() != nullptr;
         oxygine::Stage::getStage()->addChild(spCampaignMenu::create(campaign, multiplayer, true));
     }
     else
     {
-        m_pMap->detach();
         auto window = spMainwindow::create("ui/menu/mainmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
     }
+    m_pMap->detach();
     oxygine::Actor::detach();
 }
 
