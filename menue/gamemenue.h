@@ -106,7 +106,10 @@ public:
      * @return
      */
     bool getIsMultiplayer(const spGameAction & pGameAction) const;
-
+    /**
+     * @brief startAiPipeGame
+     */
+    void startAiPipeGame();
 signals:
     void sigGameStarted();
     void sigSyncFinished();
@@ -480,6 +483,7 @@ protected:
     oxygine::spButton m_ChatButton{nullptr};
     oxygine::spTween m_chatButtonShineTween{nullptr};
     bool m_gameStarted{false};
+    bool m_aiPipeStart{false};
     oxygine::spTextField m_CurrentRoundTime;
     bool m_SaveGame{false};
 

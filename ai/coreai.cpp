@@ -99,19 +99,11 @@ void CoreAI::init(GameMenue* pMenu)
 {
     if (!m_initDone)
     {
+        CONSOLE_PRINT("CoreAI::init", GameConsole::eDEBUG);
         m_initDone = true;
         m_pMenu = pMenu;
-        if (Settings::getAiSlave())
-        {
-            // connect to ai pipe
-            connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-            connect(this, &CoreAI::performAction, &Mainapp::getAiProcessPipe(), &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
-        }
-        else if (!Settings::getSpawnAiProcess())
-        {
-            connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-            connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
-        }
+        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+        connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
         if (m_pMap != nullptr)
         {
             qint32 heigth = m_pMap->getMapHeight();

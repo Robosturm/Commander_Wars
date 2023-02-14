@@ -251,6 +251,7 @@ void AiProcessPipe::onStartGame(QDataStream & stream)
     m_pMenu = pMenu.get();
     m_pipeState = PipeState::Ingame;
     QString command = QString(GAMESTARTED);
+    connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
     CONSOLE_PRINT("AI-Pipe sending command " + command +  " current player=" + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), GameConsole::eDEBUG);
     QByteArray data;
     QDataStream outStream(&data, QIODevice::WriteOnly);

@@ -1321,6 +1321,11 @@ bool GameMap::canBePlaced(const QString & terrainID, qint32 x, qint32 y)
 
 void GameMap::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
+{
     CONSOLE_PRINT("GameMap::serializeObject", GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -1342,7 +1347,7 @@ void GameMap::serializeObject(QDataStream& pStream) const
         {
             currentPlayerIdx = i;
         }
-        m_players[i]->serializeObject(pStream);
+        m_players[i]->serializeObject(pStream, forHash);
     }
     pStream << currentPlayerIdx;
     pStream << m_currentDay;
@@ -1412,7 +1417,7 @@ QByteArray GameMap::getMapHash()
     QCryptographicHash myHash(QCryptographicHash::Sha512);
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
-    serializeObject(stream);
+    serializeObject(stream, true);
     myHash.addData(data);
     return myHash.result();
 }

@@ -2114,6 +2114,11 @@ void Player::setMenu(GameMenue *newMenu)
 
 void Player::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void Player::serializeObject(QDataStream& pStream, bool forHash) const
+{
     CONSOLE_PRINT("storing player with control type " + QString::number(m_controlType), GameConsole::eDEBUG);
     pStream << getVersion();
     quint32 color = m_Color.rgb();
@@ -2136,7 +2141,14 @@ void Player::serializeObject(QDataStream& pStream) const
     }
     pStream << m_team;
     pStream << m_isDefeated;
-    BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get(), m_controlType);
+    if (forHash)
+    {
+        BaseGameInputIF::serializeInterface(pStream, nullptr, GameEnums::AiTypes::AiTypes_Closed);
+    }
+    else
+    {
+        BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get(), m_controlType);
+    }
     qint32 width = m_FogVisionFields.size();
     qint32 heigth = 0;
     if (width > 0)

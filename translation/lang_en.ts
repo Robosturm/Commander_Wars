@@ -1243,7 +1243,7 @@
 <context>
     <name>ActionPerformer</name>
     <message>
-        <location filename="../game/actionperformer.cpp" line="46"/>
+        <location filename="../game/actionperformer.cpp" line="47"/>
         <source>Waiting for Players/Observers to join...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6206,7 +6206,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
         <location filename="../game/gamemap.cpp" line="558"/>
         <location filename="../game/gamemap.cpp" line="681"/>
-        <location filename="../game/gamemap.cpp" line="1532"/>
+        <location filename="../game/gamemap.cpp" line="1537"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6343,7 +6343,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="558"/>
-        <location filename="../game/gamemap.cpp" line="1532"/>
+        <location filename="../game/gamemap.cpp" line="1537"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6358,27 +6358,27 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1499"/>
+        <location filename="../game/gamemap.cpp" line="1504"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1560"/>
+        <location filename="../game/gamemap.cpp" line="1565"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1570"/>
+        <location filename="../game/gamemap.cpp" line="1575"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1578"/>
+        <location filename="../game/gamemap.cpp" line="1583"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1590"/>
+        <location filename="../game/gamemap.cpp" line="1595"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6504,22 +6504,22 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2223"/>
+        <location filename="../menue/gamemenue.cpp" line="2234"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2254"/>
+        <location filename="../menue/gamemenue.cpp" line="2265"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2280"/>
+        <location filename="../menue/gamemenue.cpp" line="2291"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2457"/>
+        <location filename="../menue/gamemenue.cpp" line="2468"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>

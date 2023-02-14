@@ -1,6 +1,7 @@
 #include "game/actionperformer.h"
 #include "game/gameanimation/gameanimationfactory.h"
 #include "ai/coreai.h"
+#include "ai/dummyai.h"
 
 #include "menue/gamemenue.h"
 
@@ -36,7 +37,7 @@ void ActionPerformer::performAction(spGameAction pGameAction)
         CONSOLE_PRINT("Ignoring action request cause an action is currently performed", GameConsole::eWARNING);
         return;
     }
-    CONSOLE_PRINT("Action running", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Running action", GameConsole::eDEBUG);
     m_actionRunning = true;
     bool autosave = true;
     m_pMenu->setSaveAllowed(false);
@@ -50,48 +51,65 @@ void ActionPerformer::performAction(spGameAction pGameAction)
     }
     else if (pGameAction.get() != nullptr)
     {
+        Player* pCurrentPlayer = m_pMap->getCurrentPlayer();
+        auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
+        bool proxyAi = baseGameInput != nullptr && (baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi || dynamic_cast<DummyAi*>(baseGameInput) != nullptr);
         CONSOLE_PRINT("GameMenue::performAction " + pGameAction->getActionID() + " at X: " + QString::number(pGameAction->getTarget().x())
-                      + " at Y: " + QString::number(pGameAction->getTarget().y()), GameConsole::eDEBUG);
+                      + " at Y: " + QString::number(pGameAction->getTarget().y()) +
+                      " is proxy ai " + QString::number(proxyAi), GameConsole::eDEBUG);
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = false;
         if (m_pMenu != nullptr)
         {
             multiplayer = m_pMenu->getIsMultiplayer(pGameAction);
         }
-        Player* pCurrentPlayer = m_pMap->getCurrentPlayer();
-        auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
         auto mapHash = m_pMap->getMapHash();
-        bool syncMatch = m_syncCounter + 1 != pGameAction->getSyncCounter();
-        if (multiplayer &&
-            m_pMenu != nullptr &&
-            baseGameInput != nullptr &&
-            baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi &&
-            syncMatch &&
-            pGameAction->getMapHash() == mapHash)
+        bool asyncMatch = proxyAi ? m_syncCounter + 1 != pGameAction->getSyncCounter() : false;
+        bool invalidHash = proxyAi ? pGameAction->getMapHash() != mapHash : false;
+        if (asyncMatch || invalidHash)
         {
-            if (syncMatch)
+            if (multiplayer &&
+                m_pMenu != nullptr &&
+                baseGameInput != nullptr &&
+                baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi)
             {
-                CONSOLE_PRINT("Forcing resync cause map hash is different from action map hash", GameConsole::eDEBUG);
+                if (asyncMatch)
+                {
+                    CONSOLE_PRINT("Forcing resync cause map hash is different from action map hash", GameConsole::eDEBUG);
+                }
+                else
+                {
+                    CONSOLE_PRINT("Forcing resync cause action sync counter doesn't match map sync counter", GameConsole::eDEBUG);
+                }
+                autosave = false;
+                m_pMenu->doResyncGame();
             }
             else
             {
-                CONSOLE_PRINT("Forcing resync cause action sync counter doesn't match map sync counter", GameConsole::eDEBUG);
+                if (asyncMatch)
+                {
+                    CONSOLE_PRINT("Async game state detected sync counter is out of sync", GameConsole::eERROR);
+                }
+                else
+                {
+                    CONSOLE_PRINT("Async game state detected map state is not correct", GameConsole::eERROR);
+                }
             }
-            autosave = false;
-            m_pMenu->doResyncGame();
         }
         else
         {            
             // perform action
             GlobalUtils::seed(pGameAction->getSeed());
             GlobalUtils::setUseSeed(true);
-            if (multiplayer &&
-                baseGameInput != nullptr &&
-                baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi)
+            if (proxyAi)
             {
                 m_syncCounter = pGameAction->getSyncCounter();
-                CONSOLE_PRINT("Updated sync counter to " + QString::number(m_syncCounter), GameConsole::eDEBUG);
             }
+            else
+            {
+                ++m_syncCounter;
+            }
+            CONSOLE_PRINT("Updated sync counter to " + QString::number(m_syncCounter), GameConsole::eDEBUG);
             m_pStoredAction = nullptr;
             m_pMap->getGameRules()->pauseRoundTime();
             if (!pGameAction->getIsLocal() &&
@@ -101,19 +119,17 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             {
                 pGameAction = doMultiTurnMovement(pGameAction);
             }
-
             GlobalUtils::seed(pGameAction->getSeed());
             GlobalUtils::setUseSeed(true);
             Unit * pMoveUnit = pGameAction->getTargetUnit();
             doTrapping(pGameAction);
             // send action to other players if needed
+            pGameAction->setSyncCounter(m_syncCounter);
+            pGameAction->setMapHash(mapHash);
+            pGameAction->setRoundTimerTime(m_pMap->getGameRules()->getRoundTimer()->remainingTime());
             if (requiresForwarding(pGameAction))
             {
-                m_syncCounter++;
                 CONSOLE_PRINT("Sending action to other players with sync counter " + QString::number(m_syncCounter), GameConsole::eDEBUG);
-                pGameAction->setSyncCounter(m_syncCounter);
-                pGameAction->setMapHash(mapHash);
-                pGameAction->setRoundTimerTime(m_pMap->getGameRules()->getRoundTimer()->remainingTime());
                 QByteArray data;
                 QDataStream stream(&data, QIODevice::WriteOnly);
                 stream << m_pMap->getCurrentPlayer()->getPlayerID();
@@ -124,8 +140,7 @@ void ActionPerformer::performAction(spGameAction pGameAction)
             {
                 m_pMap->getGameRules()->getRoundTimer()->setInterval(pGameAction->getRoundTimerTime());
             }
-            if (!pGameAction->getIsLocal() &&
-                Settings::getSpawnAiProcess())
+            if (!pGameAction->getIsLocal())
             {
                 emit sigAiProcesseSendAction(pGameAction);
             }
@@ -399,6 +414,7 @@ void ActionPerformer::actionPerformed()
                     else
                     {
                         CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
+                        m_pMenu->startAiPipeGame();
                         quint32 delay = Settings::getPauseAfterAction();
                         if (delay == 0)
                         {

@@ -2071,6 +2071,9 @@ void GameMenue::startGame()
         {
             pAction->setSeed(GlobalUtils::getSeed());
         }
+        m_actionPerformer.setSyncCounter(-1);
+        pAction->setSyncCounter(0);
+        pAction->setMapHash(m_pMap->getMapHash());
         m_actionPerformer.performAction(pAction);
     }
     else
@@ -2100,9 +2103,17 @@ void GameMenue::startGame()
     {
         connect(GameConsole::getInstance(), &GameConsole::sigExecuteCommand, this, &GameMenue::executeCommand, Qt::QueuedConnection);
     }
-    Mainapp::getAiProcessPipe().onGameStarted(this);
     sendGameStartedToServer();
     CONSOLE_PRINT("Game started", GameConsole::eDEBUG);
+}
+
+void GameMenue::startAiPipeGame()
+{
+    if (!m_aiPipeStart)
+    {
+        m_aiPipeStart = true;
+        Mainapp::getAiProcessPipe().onGameStarted(this);
+    }
 }
 
 void GameMenue::sendGameStartedToServer()
