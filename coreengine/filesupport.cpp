@@ -8,7 +8,7 @@
 const char* const Filesupport::LIST_FILENAME_ENDING = ".bl";
 
 QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & folders)
-{    
+{
     QCryptographicHash myHash(QCryptographicHash::Sha512);
     QStringList fullList;
 

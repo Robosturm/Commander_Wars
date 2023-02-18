@@ -163,7 +163,7 @@ void ReplayMenu::showExitGame()
     addChild(pExit);
 }
 
-Player* ReplayMenu::getCurrentViewPlayer()
+Player* ReplayMenu::getCurrentViewPlayer() const
 {
     return m_Viewplayer.get();
 }

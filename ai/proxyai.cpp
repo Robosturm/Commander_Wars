@@ -16,7 +16,7 @@ ProxyAi::ProxyAi(GameMap* pMap)
     setObjectName("ProxyAi");
 #endif
     Interpreter::setCppOwnerShip(this);
-    AI_CONSOLE_PRINT("Creating proxy ai", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating proxy ai", GameConsole::eDEBUG);
 }
 
 void ProxyAi::readIni(QString)

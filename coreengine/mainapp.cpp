@@ -203,6 +203,14 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         m_pMainThread->setObjectName("Mainthread");
 #endif
     }
+#ifdef GRAPHICSUPPORT
+    if (m_noUi)
+    {
+        GameConsole::setModuleMode(GameConsole::eResources, false);
+    }
+#else
+    GameConsole::setModuleMode(GameConsole::eResources, false);
+#endif
     GameConsole::print("Loading startup phase: " + QString::number(step), GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     m_startUpStep = step;

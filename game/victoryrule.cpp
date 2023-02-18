@@ -72,6 +72,7 @@ QString VictoryRule::getRuleName(qint32 itemNumber)
 
 void VictoryRule::setRuleValue(qint32 value, qint32 itemNumber)
 {
+    CONSOLE_PRINT("VictoryRule::setRuleValue for " + m_RuleID, GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "setRuleValue";
     QJSValueList args({pInterpreter->newQObject(this),
@@ -186,7 +187,7 @@ void VictoryRule::deserializeObject(QDataStream& pStream)
 
 void VictoryRule::checkDefeat()
 {
-    
+    CONSOLE_PRINT("VictoryRule::checkDefeat for " + m_RuleID, GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {

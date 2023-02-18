@@ -40,7 +40,7 @@ spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, 
         }
         else
         {
-            CONSOLE_PRINT("Unable to load Terrain " + terrainID, GameConsole::eERROR);
+            CONSOLE_PRINT_MODULE("Unable to load Terrain " + terrainID, GameConsole::eERROR, GameConsole::eResources);
         }
     }
     return pTerrain;
@@ -60,6 +60,11 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
     setPriority(getMapTerrainDrawPriority());
     setSize(GameMap::getImageSize(),
             GameMap::getImageSize());
+}
+
+ScriptVariables* Terrain::getAnimationVariables()
+{
+    return &m_AnimationVariables;
 }
 
 QString Terrain::getPalette() const
@@ -298,12 +303,12 @@ void Terrain::syncAnimation(oxygine::timeMS syncTime)
 #endif
 }
 
-Unit* Terrain::getUnit()
+Unit* Terrain::getUnit() const
 {
     return m_Unit.get();
 }
 
-Building* Terrain::getBuilding()
+Building* Terrain::getBuilding() const
 {
     return m_Building.get();
 }
@@ -543,7 +548,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
     }
     else
     {
-        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load terrain sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -831,7 +836,7 @@ void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qin
     }
     else
     {
-        CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load overlay sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainOverlay));
@@ -1514,11 +1519,17 @@ void Terrain::removeTerrainOverlay(const QString & id)
 
 void Terrain::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void Terrain::serializeObject(QDataStream& pStream, bool forHash) const
+{
     pStream << getVersion();
-
-    pStream << m_terrainSpriteName;
-    pStream << m_FixedSprite;
-
+    if (!forHash)
+    {
+        pStream << m_terrainSpriteName;
+        pStream << m_FixedSprite;
+    }
     pStream << m_terrainID;
     if (m_pBaseTerrain.get() == nullptr)
     {
@@ -1527,7 +1538,7 @@ void Terrain::serializeObject(QDataStream& pStream) const
     else
     {
         pStream << true;
-        m_pBaseTerrain->serializeObject(pStream);
+        m_pBaseTerrain->serializeObject(pStream, forHash);
     }
     if (m_Building.get() == nullptr)
     {
@@ -1538,7 +1549,7 @@ void Terrain::serializeObject(QDataStream& pStream) const
         if (m_Building->getTerrain() == this)
         {
             pStream << true;
-            m_Building->serializeObject(pStream);
+            m_Building->serializeObject(pStream, forHash);
         }
         else
         {
@@ -1552,36 +1563,41 @@ void Terrain::serializeObject(QDataStream& pStream) const
     else
     {
         pStream << true;
-        m_Unit->serializeObject(pStream);
+        m_Unit->serializeObject(pStream, forHash);
     }
     pStream << m_hp;
-
-    pStream << m_terrainName;
-    pStream << m_customName;
-    pStream << m_terrainDescription;
+    if (!forHash)
+    {
+        pStream << m_terrainName;
+        pStream << m_customName;
+        pStream << m_terrainDescription;
+    }
     m_Variables.serializeObject(pStream);
-
-    pStream << static_cast<qint32>(m_terrainOverlay.size());
-    for (auto & item : m_terrainOverlay)
+    if (!forHash)
     {
-        pStream << item.duration;
-        pStream << item.resAnim;
-        pStream << item.scale;
-        pStream << static_cast<qint32>(item.offset.x());
-        pStream << static_cast<qint32>(item.offset.y());
-        quint32 color = item.color.rgba();
-        pStream << color;
-    }
-    pStream << m_fixedOverlaySprites;
-    if (m_fixedOverlaySprites)
-    {
-        pStream << static_cast<qint32>(m_customOverlays.size());
-        for (auto & item : m_customOverlays)
+        pStream << static_cast<qint32>(m_terrainOverlay.size());
+        for (auto & item : m_terrainOverlay)
         {
-            pStream << item;
+            pStream << item.duration;
+            pStream << item.resAnim;
+            pStream << item.scale;
+            pStream << static_cast<qint32>(item.offset.x());
+            pStream << static_cast<qint32>(item.offset.y());
+            quint32 color = item.color.rgba();
+            pStream << color;
         }
+        pStream << m_fixedOverlaySprites;
+        if (m_fixedOverlaySprites)
+        {
+            pStream << static_cast<qint32>(m_customOverlays.size());
+            for (auto & item : m_customOverlays)
+            {
+                pStream << item;
+            }
+        }
+        pStream << m_palette;
+        m_AnimationVariables.serializeObject(pStream);
     }
-    pStream << m_palette;
 }
 
 void Terrain::deserializeObject(QDataStream& pStream)
@@ -1744,6 +1760,10 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     if (version > 11)
     {
         pStream >> m_palette;
+    }
+    if (version > 12)
+    {
+        m_AnimationVariables.deserializeObject(pStream);
     }
 }
 

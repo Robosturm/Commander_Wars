@@ -99,6 +99,7 @@ public:
      * @param pStream
      */
     virtual void serializeObject(QDataStream& pStream) const override;
+    void serializeObject(QDataStream& pStream, bool forHash) const;
     /**
      * @brief deserialize restores the object
      * @param pStream
@@ -116,7 +117,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 12;
+        return 13;
     }
     /**
      * @brief isValid
@@ -128,7 +129,6 @@ public:
      * @return
      */
     qint32 getMapTerrainDrawPriority();
-
 
 public slots:
     /**
@@ -248,6 +248,11 @@ public slots:
     {
         return &m_Variables;
     }
+    /**
+     * @brief getAnimationVariables
+     * @return
+     */
+    ScriptVariables* getAnimationVariables();
     /**
      * @brief getOffensiveBonus
      * @param pAttacker
@@ -371,12 +376,12 @@ public slots:
      * @brief getUnit the unit on this terrain
      * @return
      */
-    Unit* getUnit();
+    Unit* getUnit() const;
     /**
      * @brief getBuilding the building on this terrain
      * @return
      */
-    Building* getBuilding();
+    Building* getBuilding() const;
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
      */
@@ -656,6 +661,7 @@ private:
     qint32 m_hp{-1};
     qint32 m_VisionHigh{0};
     ScriptVariables m_Variables;
+    ScriptVariables m_AnimationVariables;
     bool m_hasStartOfTurn{false};
     bool m_hasFlowDirection{false};
 

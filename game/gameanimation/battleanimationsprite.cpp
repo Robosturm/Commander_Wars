@@ -14,7 +14,6 @@
 #include "resource_management/cospritemanager.h"
 
 #include "game/player.h"
-#include "game/co.h"
 
 #include "game/gameanimation/battleanimationsprite.h"
 #include "game/gameanimation/battleanimation.h"
@@ -30,7 +29,7 @@ const char* const BattleAnimationSprite::standingFiredAnimation = "loadStandingF
 const char* const BattleAnimationSprite::dyingAnimation = "loadDyingAnimation";
 const char* const BattleAnimationSprite::stopAnimation = "loadStopAnimation";
 
-BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp, bool playSound)
+BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp, bool playSound)
     : m_pUnit(pUnit),
       m_pTerrain(pTerrain),
       m_hpRounded(hp),
@@ -87,7 +86,7 @@ void BattleAnimationSprite::flipActorsX(bool flippedX)
 
 void BattleAnimationSprite::loadAnimation(QString animationType)
 {
-    loadAnimation(animationType, m_pUnit.get());
+    loadAnimation(animationType, m_pUnit);
 }
 
 void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Unit* pDefender, qint32 attackerWeapon, bool clearSprite, bool start)
@@ -213,7 +212,7 @@ QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getPositionOffset";
     QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(m_pUnit.get()),
+                       pInterpreter->newQObject(m_pUnit),
                        pInterpreter->newQObject(m_pTerrain),
                        unitIdx,
                        pInterpreter->newQObject(m_pMap)});
@@ -586,7 +585,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
     }
     else
     {
-        CONSOLE_PRINT("Unable to load battle sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load battle sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -730,7 +729,7 @@ void BattleAnimationSprite::loadCoMini(QString spriteID, GameEnums::Recoloring m
     }
     else
     {
-        CONSOLE_PRINT("Unable to load battle sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load battle sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 

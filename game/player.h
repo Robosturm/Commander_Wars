@@ -65,7 +65,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 17;
+        return 18;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -584,7 +584,7 @@ public slots:
      * @param y
      * @return
      */
-    virtual GameEnums::VisionType getFieldVisibleType(qint32 x, qint32 y);
+    virtual GameEnums::VisionType getFieldVisibleType(qint32 x, qint32 y) const;
     /**
      * @brief getFieldDirectVisible
      * @param x

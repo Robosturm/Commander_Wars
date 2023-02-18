@@ -39,7 +39,7 @@ public:
 signals:
     void sigStartPipe();
     void sigPipeReady();
-    void sigPerformAction(spGameAction pAction);
+    void sigPerformAction(spGameAction pAction, bool fromAiPipe);
 public slots:
     void sendActionToMaster(spGameAction pAction);
     void sendActionToSlave(spGameAction pAction);

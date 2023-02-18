@@ -14,6 +14,7 @@ PlayerInfo::PlayerInfo(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("PlayerInfo");
 #endif
+    CONSOLE_PRINT("Creating PlayerInfo", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 }
 

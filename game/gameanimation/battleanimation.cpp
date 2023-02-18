@@ -50,13 +50,13 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     createHealthbar(pAtkUnit, atkStartHp, pDefUnit, defStartHp);
 
     // load attacker sprite
-    m_pAttackerAnimation = spBattleAnimationSprite::create(pMap, spUnit(pAtkUnit), pAtkTerrain, BattleAnimationSprite::standingAnimation,
+    m_pAttackerAnimation = spBattleAnimationSprite::create(pMap, pAtkUnit, pAtkTerrain, BattleAnimationSprite::standingAnimation,
                                                            GlobalUtils::roundUp(atkStartHp));
     m_pAttackerAnimation->setDyingStartHp(atkStartHp);
     m_pAttackerAnimation->setDyingEndHp(atkEndHp);
     m_pAttackerAnimation->setFireHp(atkStartHp);
     // load defender sprite
-    m_pDefenderAnimation = spBattleAnimationSprite::create(pMap, spUnit(pDefUnit), pDefTerrain, BattleAnimationSprite::standingAnimation,
+    m_pDefenderAnimation = spBattleAnimationSprite::create(pMap, pDefUnit, pDefTerrain, BattleAnimationSprite::standingAnimation,
                                                            GlobalUtils::roundUp(defStartHp));
     m_pDefenderAnimation->setDyingStartHp(defStartHp);
     m_pDefenderAnimation->setDyingEndHp(defEndHp);

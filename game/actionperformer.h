@@ -64,7 +64,7 @@ public slots:
      * @brief performAction performs the given action and deletes it afterwards.
      * @param pGameAction
      */
-    void performAction(spGameAction pGameAction);
+    void performAction(spGameAction pGameAction, bool fromAiPipe = false);
     /**
      * @brief isTrap
      * @param pAction
@@ -125,5 +125,6 @@ private:
     SyncData m_multiplayerSyncData;
     QTimer m_delayedActionPerformedTimer{this};
     bool m_exit{false};
+    QByteArray m_mapHash;
 };
 

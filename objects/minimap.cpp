@@ -44,7 +44,7 @@ void Minimap::setMenu(GameMenue* pMenu)
     m_pGamemenu = pMenu;
 }
 
-void Minimap::updateMinimap(GameMap* pMap, bool useVision)
+void Minimap::updateMinimap(const GameMap* pMap, bool useVision)
 {
     Mainapp::getInstance()->pauseRendering();
      // load minimap

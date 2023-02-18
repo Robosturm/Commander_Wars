@@ -91,7 +91,7 @@ void BaseGamemenu::registerAtInterpreter(QString name)
     m_jsName = name;
 }
 
-Player* BaseGamemenu::getCurrentViewPlayer()
+Player* BaseGamemenu::getCurrentViewPlayer() const
 {
     return nullptr;
 }
@@ -124,6 +124,7 @@ void BaseGamemenu::loadHandling()
     m_pMap->setMenu(this);
     if (!m_handlingLoaded)
     {
+        CONSOLE_PRINT("BaseGamemenu::loadHandling", GameConsole::eDEBUG);
         m_handlingLoaded = true;
         Mainapp* pApp = Mainapp::getInstance();
         addEventListener(oxygine::TouchEvent::WHEEL_DIR, [this](oxygine::Event *pEvent )->void

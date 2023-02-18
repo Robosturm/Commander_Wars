@@ -197,7 +197,7 @@ void GameAnimation::addSpriteAnimTable(QString spriteID, float offsetX, float of
     }
     else
     {
-        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -226,7 +226,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
         }
         else
         {
-            CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
+            CONSOLE_PRINT_MODULE("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
             return;
         }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();

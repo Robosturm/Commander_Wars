@@ -11,7 +11,6 @@
 
 #include "menue/gamemenue.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
@@ -92,7 +91,7 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     {
         m_flareInfo.unfogRange = erg.toNumber();
     }
-    AI_CONSOLE_PRINT("Creating core ai", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating core ai", GameConsole::eDEBUG);
 }
 
 void CoreAI::init(GameMenue* pMenu)
@@ -298,7 +297,7 @@ void CoreAI::nextAction()
             m_pPlayer == m_pMap->getCurrentPlayer() &&
             m_pMenu->getGameStarted())
         {
-            AI_CONSOLE_PRINT("CoreAI::nextAction for player " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), GameConsole::eDEBUG);
+            CONSOLE_PRINT("CoreAI::nextAction for player " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) + " for ai " + m_aiName, GameConsole::eDEBUG);
             if (!processPredefinedAi())
             {
                 AI_CONSOLE_PRINT("Processing ai specific behaviour", GameConsole::eDEBUG);

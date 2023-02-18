@@ -60,7 +60,7 @@ public:
      * @brief getCurrentViewPlayer
      * @return
      */
-    virtual Player* getCurrentViewPlayer() override;
+    virtual Player* getCurrentViewPlayer() const override;
     /**
      * @brief getSyncCounter
      * @return
@@ -483,7 +483,6 @@ protected:
     oxygine::spButton m_ChatButton{nullptr};
     oxygine::spTween m_chatButtonShineTween{nullptr};
     bool m_gameStarted{false};
-    bool m_aiPipeStart{false};
     oxygine::spTextField m_CurrentRoundTime;
     bool m_SaveGame{false};
 

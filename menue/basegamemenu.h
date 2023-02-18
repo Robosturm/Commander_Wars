@@ -38,7 +38,7 @@ public:
      * @brief getCurrentViewPlayer
      * @return
      */
-    virtual Player* getCurrentViewPlayer();
+    virtual Player* getCurrentViewPlayer() const;
     void registerAtInterpreter(QString name = "game");
 signals:
     void sigMouseWheel(qint32 direction);

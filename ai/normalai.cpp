@@ -28,7 +28,7 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
 #ifdef GRAPHICSUPPORT
     setObjectName("NormalAi");
 #endif
-    AI_CONSOLE_PRINT("Creating normal ai", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating normal ai", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &NormalAi::process, Qt::QueuedConnection);

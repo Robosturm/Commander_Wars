@@ -25,13 +25,26 @@ GameRules::GameRules(GameMap* pMap)
     reset();
 }
 
+void GameRules::resetArrays()
+{
+    m_WeatherChances.clear();
+    m_Weathers.clear();
+    m_WeatherDays.clear();
+    m_WeatherSprites.clear();
+    m_VictoryRules.clear();
+    m_COBannlist.clear();
+    m_allowedPerks.clear();
+    m_allowedActions.clear();
+    m_observerList.clear();
+    m_GameRules.clear();
+    m_FogSprites.clear();
+}
+
 void GameRules::reset()
 {
     CONSOLE_PRINT("GameRules::reset", GameConsole::eDEBUG);
-    m_WeatherChances.clear();
-    m_Weathers.clear();
-    m_VictoryRules.clear();
-    m_COBannlist.clear();
+    resetArrays();
+
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     if (getWeatherCount() != pGameRuleManager->getWeatherCount())
     {
@@ -1295,7 +1308,12 @@ void GameRules::setAiAttackTerrain(bool AiAttackTerrain)
 
 void GameRules::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing game rules", GameConsole::eDEBUG);
+    serializeObject(pStream, false);
+}
+
+void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
+{
+    CONSOLE_PRINT("storing game rules with victory rules: " + QString::number(m_VictoryRules.count()) + " current weather " + QString::number(m_CurrentWeather), GameConsole::eDEBUG);
     pStream << getVersion();
     pStream << static_cast<qint32>(m_VictoryRules.size());
     for (auto & rule : m_VictoryRules)
@@ -1318,15 +1336,17 @@ void GameRules::serializeObject(QDataStream& pStream) const
         m_Weathers[i]->serializeObject(pStream);
         pStream << m_WeatherChances[i];
     }
-
-    CONSOLE_PRINT("Saving weather prediction for days " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
-    pStream << static_cast<qint32>(m_WeatherDays.size());
-    for (qint32 i = 0; i < m_WeatherDays.size(); ++i)
+    if (!forHash)
     {
-        pStream << static_cast<qint32>(m_WeatherDays[i].size());
-        for (qint32 i2 = 0; i2 < m_WeatherDays[i].size(); ++i2)
+        CONSOLE_PRINT("Saving weather prediction for days " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
+        pStream << static_cast<qint32>(m_WeatherDays.size());
+        for (qint32 i = 0; i < m_WeatherDays.size(); ++i)
         {
-            pStream << m_WeatherDays[i][i2];
+            pStream << static_cast<qint32>(m_WeatherDays[i].size());
+            for (qint32 i2 = 0; i2 < m_WeatherDays[i].size(); ++i2)
+            {
+                pStream << m_WeatherDays[i][i2];
+            }
         }
     }
     pStream << m_CurrentWeather;
@@ -1336,8 +1356,11 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_NoPower;
     pStream << m_UnitLimit;
     pStream << static_cast<qint32>(m_FogMode);
-    pStream << roundTime;
-    pStream << m_RoundTimer.interval();
+    if (!forHash)
+    {
+        pStream << roundTime;
+        pStream << m_RoundTimer.interval();
+    }
     pStream << m_AiAttackTerrain;
     pStream << m_COBannlistEdited;
     pStream << static_cast<qint32>(m_COBannlist.size());
@@ -1365,8 +1388,11 @@ void GameRules::serializeObject(QDataStream& pStream) const
     {
         m_GameRules[i]->serializeObject(pStream);
     }
-    pStream << m_description;
-    m_password.serializeObject(pStream);
+    if (!forHash)
+    {
+        pStream << m_description;
+        m_password.serializeObject(pStream);
+    }
     pStream << m_singleCo;
     pStream << m_cosmeticModsAllowed;
     pStream << m_terrainDefense;
@@ -1379,9 +1405,12 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_powerUsageReduction;
     pStream << m_powerLoose;
     pStream << m_hpDefenseReduction;
-    pStream << m_multiplayerObserver;
-    pStream << m_maxPerkCount;
-    pStream << m_matchType;
+    if (!forHash)
+    {
+        pStream << m_multiplayerObserver;
+        pStream << m_maxPerkCount;
+        pStream << m_matchType;
+    }
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1392,8 +1421,9 @@ void GameRules::deserializeObject(QDataStream& pStream)
 void GameRules::deserializer(QDataStream& pStream, bool)
 {
     CONSOLE_PRINT("reading game rules", GameConsole::eDEBUG);
+    resetArrays();
+
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
-    m_VictoryRules.clear();
     qint32 version = 0;
     pStream >> version;
     qint32 size = 0;
@@ -1450,7 +1480,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         }
     }
     qint32 weatherDuration = 0;
-    m_WeatherDays.clear();
     if (version > 4)
     {
         qint32 size = 0;
@@ -1535,7 +1564,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         m_RoundTimer.setInterval(intervall);
     }
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    m_COBannlist.clear();
     if (version > 3)
     {
         pStream >> m_AiAttackTerrain;
@@ -1627,7 +1655,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         m_allowedPerks = COPerkManager::getInstance()->getLoadedRessources();
         m_allowedActions = GameManager::getInstance()->getDefaultActionbBannlist();
     }
-    m_GameRules.clear();
     if (version > 14)
     {
         pStream >> size;

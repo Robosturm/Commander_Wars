@@ -30,6 +30,7 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("IngameInfoBar");
 #endif
+    CONSOLE_PRINT("Creating IngameInfoBar", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
     qint32 width = 300;
@@ -132,7 +133,7 @@ void IngameInfoBar::updatePlayerInfo()
                 y += pName->getScaledHeight();
 
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
-                CO* pCO = pPlayer->getCO(0);
+                const CO* pCO = pPlayer->getCO(0);
                 oxygine::ResAnim* pAnim = nullptr;
                 if (pCO != nullptr)
                 {
@@ -270,7 +271,7 @@ void IngameInfoBar::updatePlayerInfo()
                 m_pGameInfoBox->addChild(pTextfield);
                 y += yAdvance;
 
-                Player* pViewPlayer = m_pMenu->getCurrentViewPlayer();
+                const Player* pViewPlayer = m_pMenu->getCurrentViewPlayer();
                 if (pViewPlayer != nullptr)
                 {
                     pTextfield = spLabel::create(width);
@@ -391,7 +392,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         m_pCursorInfoBox->removeChildren();
         if (m_pMenu != nullptr)
         {
-            Player* pPlayer = m_pMenu->getCurrentViewPlayer();
+            const Player* pPlayer = m_pMenu->getCurrentViewPlayer();
             if (pPlayer != nullptr)
             {
                 GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
@@ -456,14 +457,14 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     static constexpr qint32 yOffset = 4;
     bool hpHidden = false;
     Terrain* pTerrain = m_pMap->getTerrain(x, y);
-    spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
-    spUnit pUnit = spUnit(pTerrain->getUnit());
+    Building* pBuilding = pTerrain->getBuilding();
+    Unit* pUnit = pTerrain->getUnit();
     Player* pPlayer = m_pMenu->getCurrentViewPlayer();
-    if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
+    if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
     {
         pUnit = nullptr;
     }
-    if (pUnit.get() != nullptr)
+    if (pUnit != nullptr)
     {
         hpHidden = pUnit->getHpHidden(m_pMenu->getCurrentViewPlayer());
     }
@@ -475,14 +476,14 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     oxygine::ResAnim* pAnimFore = nullptr;
     oxygine::ResAnim* pAnimBack = nullptr;
     float speed = 0;
-    if (pUnit.get() != nullptr)
+    if (pUnit != nullptr)
     {
         pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase(), oxygine::ep_ignore_error);
         pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
         pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
         speed = pUnit->getTerrainAnimationMoveSpeed();
     }
-    else if (pBuilding.get() != nullptr)
+    else if (pBuilding != nullptr)
     {
         pAnimBase = pGameManager->getResAnim(pBuilding->getTerrainAnimationBase(), oxygine::ep_ignore_error);
         pAnimFore = pGameManager->getResAnim(pBuilding->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
@@ -530,7 +531,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         m_pDetailedViewBox->addChild(pWeatherOverlay);
     }
 
-    if (pUnit.get() != nullptr)
+    if (pUnit != nullptr)
     {
         qint32 hp = -1;
         if (hpHidden)
@@ -543,7 +544,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         m_pDetailedViewBox->addChild(pBattleAnimationSprite);
     }
     qint32 terrainDefense = 0;
-    if (pUnit.get() != nullptr)
+    if (pUnit != nullptr)
     {
         terrainDefense = pUnit->getTerrainDefense();
     }
@@ -587,13 +588,13 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
     Terrain* pTerrain = m_pMap->getTerrain(x, y);
-    spUnit pUnit = spUnit(pTerrain->getUnit());
+    Unit* pUnit = pTerrain->getUnit();
     Player* pPlayer = m_pMenu->getCurrentViewPlayer();
-    if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
+    if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
     {
         pUnit = nullptr;
     }
-    if (pUnit.get() != nullptr &&
+    if (pUnit != nullptr &&
         pAnim != nullptr)
     {
         created = true;
@@ -836,9 +837,9 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
     {
         Terrain* pTerrain = m_pMap->getTerrain(x, y);
         spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
-        spUnit pUnit = spUnit(pTerrain->getUnit());
+        Unit* pUnit = pTerrain->getUnit();
         Player* pPlayer = m_pMenu->getCurrentViewPlayer();
-        if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
+        if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
         {
             pUnit = nullptr;
         }
@@ -904,7 +905,7 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
         {
             constexpr qint32 maxCapturepoints = 20;
             qint32 resistance = maxCapturepoints;
-            if (pUnit.get() != nullptr)
+            if (pUnit != nullptr)
             {
                 resistance = maxCapturepoints - pUnit->getCapturePoints();
             }
@@ -998,7 +999,7 @@ void IngameInfoBar::syncMinimapPosition()
     }
 }
 
-GameMap *IngameInfoBar::getMap() const
+const GameMap *IngameInfoBar::getMap() const
 {
     return m_pMap;
 }

@@ -69,7 +69,7 @@ void GameAnimationCapture::addBuildingSprite(const QString & spriteID, Player* s
     }
     else
     {
-        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load building sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -280,7 +280,7 @@ void GameAnimationCapture::addSoldierSprite(const QString & spriteID, Player*  p
     }
     else
     {
-        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -297,6 +297,6 @@ void GameAnimationCapture::addBackgroundSprite(const QString & spriteID)
     }
     else
     {
-        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }

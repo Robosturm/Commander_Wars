@@ -304,7 +304,7 @@ signals:
     void sigShowGameInfo(qint32 player);
     void sigShowAttackLog(qint32 player);
     void sigShowUnitInfo(qint32 player);
-    void sigQueueAction(spGameAction pAction);
+    void sigQueueAction(spGameAction pAction, bool fromAiPipe = false);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
     void sigShowXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
@@ -609,7 +609,7 @@ public slots:
      * @brief getCenteredPosition
      * @return
      */
-    QPoint getCenteredPosition();
+    QPoint getCenteredPosition() const;
     /**
      * @brief zoom zooms into or out of the map :)
      * @param zoom
@@ -681,12 +681,12 @@ public slots:
      * @brief getCurrentPlayer the current player
      * @return
      */
-    Player* getCurrentPlayer();
+    Player* getCurrentPlayer() const;
     /**
      * @brief getCurrentViewPlayer
      * @return
      */
-    Player* getCurrentViewPlayer();
+    Player* getCurrentViewPlayer() const;
     /**
      * @brief setCurrentPlayer changes the current player to this one
      * @param player
@@ -795,7 +795,7 @@ public slots:
     QString getMapName() const;
     void setMapName(const QString &value);
 
-    inline GameRules* getGameRules()
+    inline GameRules* getGameRules() const
     {
         return m_Rules.get();
     }

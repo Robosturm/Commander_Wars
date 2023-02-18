@@ -242,7 +242,7 @@ void GameAnimationWalk::loadSpriteV2(const QString & spriteID, GameEnums::Recolo
     }
     else
     {
-        CONSOLE_PRINT("Unable to load unit walk sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load unit walk sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
         emitFinished();
     }
 }

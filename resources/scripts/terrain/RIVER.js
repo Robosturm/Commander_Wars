@@ -139,7 +139,7 @@ var Constructor = function()
         }
         else
         {
-            var variables = terrain.getVariables();
+            var variables = terrain.getAnimationVariables();
             var variable = variables.getVariable("BACKGROUND_ID");
             var rand = 0;
             if (variable === null)

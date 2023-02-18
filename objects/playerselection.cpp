@@ -1799,6 +1799,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                 m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType));
                 m_pMap->getPlayer(player)->setPlayerNameId(name);
                 m_pMap->getPlayer(player)->setControlType(originalAiType);
+                m_pMap->getPlayer(player)->setSocketId(socketId);
 
                 bool humanFound = false;
                 for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)

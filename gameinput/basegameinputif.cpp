@@ -46,6 +46,7 @@ void BaseGameInputIF::setEnableNeutralTerrainAttack(bool value)
 
 void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* input, GameEnums::AiTypes aiType)
 {
+    CONSOLE_PRINT("Serializing ai " + QString::number(aiType), GameConsole::eDEBUG);
     if (input == nullptr)
     {
         if (aiType == GameEnums::AiTypes_Open ||
@@ -61,7 +62,6 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
     else
     {
         auto type = input->getAiType();
-        CONSOLE_PRINT("Serializing ai " + QString::number(type), GameConsole::eDEBUG);
         pStream << static_cast<qint32>(type);
         input->serializeObject(pStream);
     }

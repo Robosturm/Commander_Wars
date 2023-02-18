@@ -2003,6 +2003,11 @@ void CO::getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info)
 
 void CO::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void CO::serializeObject(QDataStream& pStream, bool forHash) const
+{
     CONSOLE_PRINT("storing co", GameConsole::eDEBUG);
     pStream << getVersion();
     pStream << m_coID;
@@ -2017,7 +2022,10 @@ void CO::serializeObject(QDataStream& pStream) const
     {
         pStream << perk;
     }
-    writeCoStyleToStream(pStream);
+    if (!forHash)
+    {
+        writeCoStyleToStream(pStream);
+    }
     pStream << m_coRangeEnabled;
 }
 

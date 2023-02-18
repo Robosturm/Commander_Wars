@@ -41,9 +41,8 @@ ReplayRecorder::~ReplayRecorder()
 }
 
 void ReplayRecorder::startRecording()
-{
-    
-    if (Settings::getRecord() && m_pMap != nullptr)
+{    
+    if (Settings::getRecord() && m_pMap != nullptr && !Settings::getAiSlave())
     {
         CONSOLE_PRINT("Starting recording", GameConsole::eDEBUG);
         // compress script enviroment

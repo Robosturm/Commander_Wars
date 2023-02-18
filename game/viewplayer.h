@@ -39,7 +39,7 @@ public slots:
      * @param y
      * @return
      */
-    virtual GameEnums::VisionType getFieldVisibleType(qint32 x, qint32 y) override;
+    virtual GameEnums::VisionType getFieldVisibleType(qint32 x, qint32 y) const override;
     /**
      * @brief getFieldDirectVisible
      * @param x

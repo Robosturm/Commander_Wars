@@ -100,12 +100,12 @@ FontManager::FontManager()
                                     }
                                     else
                                     {
-                                        CONSOLE_PRINT("Unable to load font file: " + folder + "/" + file, GameConsole::eERROR);
+                                        CONSOLE_PRINT_MODULE("Unable to load font file: " + folder + "/" + file, GameConsole::eERROR, GameConsole::eResources);
                                     }
                                 }
                                 else
                                 {
-                                    CONSOLE_PRINT("Unable to load font file: " + folder + "/" + file, GameConsole::eERROR);
+                                    CONSOLE_PRINT_MODULE("Unable to load font file: " + folder + "/" + file, GameConsole::eERROR, GameConsole::eResources);
                                 }
                             }
                         }

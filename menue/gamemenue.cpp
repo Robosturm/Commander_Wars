@@ -69,7 +69,15 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
 #endif
-    CONSOLE_PRINT("Creating game menu singleton", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating game menu", GameConsole::eDEBUG);
+    if (!GlobalUtils::getUseSeed())
+    {
+        quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+        CONSOLE_PRINT("Creating seed " + QString::number(seed) + " and starting the ai pipe", GameConsole::eDEBUG);
+        GlobalUtils::seed(seed);
+        GlobalUtils::setUseSeed(true);
+        startAiPipeGame();
+    }
     Interpreter::setCppOwnerShip(this);
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
@@ -168,6 +176,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
 #endif
+    CONSOLE_PRINT("Creating game menu", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     loadHandling();
     loadGameMenue();
@@ -186,7 +195,7 @@ GameMenue::GameMenue(spGameMap pMap, bool clearPlayerlist)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMenue");
 #endif
-    CONSOLE_PRINT("Creating game menu singleton", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating game menu", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -386,6 +395,9 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             m_chatButtonShineTween = oxygine::createTween(oxygine::VStyleActor::TweenAddColor(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
             m_ChatButton->addTween(m_chatButtonShineTween);
         }
+    }
+    else if (service == NetworkInterface::NetworkSerives::Game)
+    {
     }
     else
     {
@@ -616,7 +628,7 @@ void GameMenue::resyncGame()
     }
 }
 
-Player* GameMenue::getCurrentViewPlayer()
+Player* GameMenue::getCurrentViewPlayer() const
 {    
     spPlayer pCurrentPlayer = spPlayer(m_pMap->getCurrentPlayer());
     if (pCurrentPlayer.get() != nullptr)
@@ -1160,12 +1172,14 @@ bool GameMenue::isNetworkGame()
 
 void GameMenue::loadGameMenue()
 {
+    CONSOLE_PRINT("GameMenue::loadGameMenue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     if (m_pNetworkInterface.get() != nullptr)
     {
         m_Multiplayer = true;
     }
-    
+
+    CONSOLE_PRINT("initializing player inputs", GameConsole::eDEBUG);
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         auto* input = m_pMap->getPlayer(i)->getBaseGameInput();
@@ -1244,7 +1258,8 @@ void GameMenue::connectMap()
 }
 
 void GameMenue::loadUIButtons()
-{    
+{
+    CONSOLE_PRINT("GameMenue::loadUIButtons", GameConsole::eDEBUG);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     m_pButtonBox = oxygine::spBox9Sprite::create();
@@ -2090,7 +2105,9 @@ void GameMenue::startGame()
         if ((m_pNetworkInterface.get() == nullptr ||
              m_pNetworkInterface->getIsServer()) &&
             !m_gameStarted ||
-            (pInput != nullptr && pInput->getAiType() != GameEnums::AiTypes_ProxyAi && pInput->getAiType() != GameEnums::AiTypes_DummyAi))
+            (pInput != nullptr &&
+             pInput->getAiType() != GameEnums::AiTypes_ProxyAi &&
+             pInput->getAiType() != GameEnums::AiTypes_DummyAi))
         {
             CONSOLE_PRINT("GameMenue::startGame emitting sigActionPerformed()", GameConsole::eDEBUG);
             emit m_actionPerformer.sigActionPerformed();
@@ -2109,11 +2126,7 @@ void GameMenue::startGame()
 
 void GameMenue::startAiPipeGame()
 {
-    if (!m_aiPipeStart)
-    {
-        m_aiPipeStart = true;
-        Mainapp::getAiProcessPipe().onGameStarted(this);
-    }
+    Mainapp::getAiProcessPipe().onGameStarted(this);
 }
 
 void GameMenue::sendGameStartedToServer()
@@ -2284,8 +2297,8 @@ void GameMenue::surrenderGame()
 
 void GameMenue::showNicknameUnit(qint32 x, qint32 y)
 {    
-    spUnit pUnit = spUnit(m_pMap->getTerrain(x, y)->getUnit());
-    if (pUnit.get() != nullptr)
+    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+    if (pUnit != nullptr)
     {
         CONSOLE_PRINT("showNicknameUnit()", GameConsole::eDEBUG);
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Nickname for the Unit:"), true, pUnit->getName());

@@ -77,7 +77,7 @@ HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
         loadIni("heavy/" + m_aiName.toLower() + ".ini");
     }
     loadNeuralNetworks(aiType);
-    AI_CONSOLE_PRINT("Creating heavy ai", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating heavy ai", GameConsole::eDEBUG);
 }
 
 void HeavyAi::loadNeuralNetworks(GameEnums::AiTypes aiType)

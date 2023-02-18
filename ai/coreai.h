@@ -223,7 +223,7 @@ signals:
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
      * @param pAction
      */
-    void performAction(spGameAction pAction);
+    void performAction(spGameAction pAction, bool fromAiPipe = false);
 public slots:
     /**
      * @brief getProductionSystem

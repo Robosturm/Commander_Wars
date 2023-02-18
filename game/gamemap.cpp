@@ -63,7 +63,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
     setObjectName("GameMap");
 #endif
     loadMapData();
-    GameMap::deserializeObject(stream);
+    deserializer(stream, false);
     m_loaded = true;
 }
 
@@ -164,6 +164,7 @@ qint32 GameMap::getUniqueIdCounter()
     {
         m_headerInfo.m_uniqueIdCounter++;
     }
+    CONSOLE_PRINT("Getting new unique id counter " + QString::number(m_headerInfo.m_uniqueIdCounter), GameConsole::eDEBUG);
     return m_headerInfo.m_uniqueIdCounter;
 }
 
@@ -498,7 +499,7 @@ Player* GameMap::getPlayer(qint32 player)
     }
 }
 
-Player* GameMap::getCurrentPlayer()
+Player* GameMap::getCurrentPlayer() const
 {
     return m_CurrentPlayer.get();
 }
@@ -1104,7 +1105,7 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
     }
 }
 
-QPoint GameMap::getCenteredPosition()
+QPoint GameMap::getCenteredPosition() const
 {
     qint32 x = 0;
     qint32 y = 0;
@@ -1326,20 +1327,26 @@ void GameMap::serializeObject(QDataStream& pStream) const
 
 void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
 {
-    CONSOLE_PRINT("GameMap::serializeObject", GameConsole::eDEBUG);
+    CONSOLE_PRINT("GameMap::serializeObject with unique id counter " + QString::number(m_headerInfo.m_uniqueIdCounter) + " at day " + QString::number(m_currentDay), GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     // store header
     pStream << getVersion();
-    pStream << m_headerInfo.m_mapName;
-    pStream << m_headerInfo.m_mapAuthor;
-    pStream << m_headerInfo.m_mapDescription;
+    if (!forHash)
+    {
+        pStream << m_headerInfo.m_mapName;
+        pStream << m_headerInfo.m_mapAuthor;
+        pStream << m_headerInfo.m_mapDescription;
+    }
     pStream << width;
     pStream << heigth;
     pStream << m_headerInfo.m_uniqueIdCounter;
     pStream << getPlayerCount();
-    updateMapFlags();
-    pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
+    if (!forHash)
+    {
+        updateMapFlags();
+        pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
+    }
     qint32 currentPlayerIdx = 0;
     for (qint32 i = 0; i < m_players.size(); i++)
     {
@@ -1349,6 +1356,7 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
         }
         m_players[i]->serializeObject(pStream, forHash);
     }
+    CONSOLE_PRINT("Storing currentPlayerIdx " + QString::number(currentPlayerIdx), GameConsole::eDEBUG);
     pStream << currentPlayerIdx;
     pStream << m_currentDay;
     // store map
@@ -1357,26 +1365,32 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
         for (qint32 x = 0; x < width; x++)
         {
             // serialize
-            m_fields[y][x]->serializeObject(pStream);
+            m_fields[y][x]->serializeObject(pStream, forHash);
         }
     }
-    m_Rules->serializeObject(pStream);
-    m_Recorder->serializeObject(pStream);
+    m_Rules->serializeObject(pStream, forHash);
+    if (!forHash)
+    {
+        m_Recorder->serializeObject(pStream);
+    }
     m_GameScript->serializeObject(pStream);
-    if (m_Campaign.get() != nullptr)
+    if (!forHash)
     {
-        pStream << true;
-        m_Campaign->serializeObject(pStream);
+        if (m_Campaign.get() != nullptr)
+        {
+            pStream << true;
+            m_Campaign->serializeObject(pStream);
+        }
+        else
+        {
+            pStream << false;
+        }
+        pStream << m_mapPath;
+        pStream << m_mapMusic;
+        pStream << m_startLoopMs;
+        pStream << m_endLoopMs;
+        pStream << m_isHumanMatch;
     }
-    else
-    {
-        pStream << false;
-    }
-    pStream << m_mapPath;
-    pStream << m_mapMusic;
-    pStream << m_startLoopMs;
-    pStream << m_endLoopMs;
-    pStream << m_isHumanMatch;
 }
 
 void GameMap::updateMapFlags() const
@@ -1414,10 +1428,13 @@ void GameMap::updateMapFlags() const
 
 QByteArray GameMap::getMapHash()
 {
+    CONSOLE_PRINT("GameMap::getMapHash", GameConsole::eDEBUG);
     QCryptographicHash myHash(QCryptographicHash::Sha512);
     QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-    serializeObject(stream, true);
+    {
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        serializeObject(stream, true);
+    }
     myHash.addData(data);
     return myHash.result();
 }
@@ -1623,6 +1640,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         pLoadingScreen->hide();
     }
+    CONSOLE_PRINT("GameMap loaded", GameConsole::eDEBUG);
 }
 
 void GameMap::deserializeObject(QDataStream& pStream)
@@ -1984,7 +2002,7 @@ void GameMap::refillTransportedUnits(Unit* pUnit)
     }
 }
 
-Player* GameMap::getCurrentViewPlayer()
+Player* GameMap::getCurrentViewPlayer() const
 {
     if (m_pMenu != nullptr)
     {

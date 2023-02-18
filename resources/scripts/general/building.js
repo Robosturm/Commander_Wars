@@ -326,7 +326,7 @@ var BUILDING =
 
     getTerrainAnimationBackground : function(unit, terrain, defender, map)
     {
-        var variables = terrain.getVariables();
+        var variables = terrain.getAnimationVariables();
         var variable = variables.getVariable("BACKGROUND_ID");
         var armyVariable = variables.getVariable("ARMYBACKGROUND_ID");
         var rand = 0;

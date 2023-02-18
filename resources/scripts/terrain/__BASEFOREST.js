@@ -246,7 +246,7 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
-        var variables = terrain.getVariables();
+        var variables = terrain.getAnimationVariables();
         var variable = variables.getVariable("BACKGROUND_ID");
         var rand = 0;
         if (variable === null)

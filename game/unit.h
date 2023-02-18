@@ -71,6 +71,7 @@ public:
      * @param pStream
      */
     virtual void serializeObject(QDataStream& pStream) const override;
+    void serializeObject(QDataStream& pStream, bool forHash) const;
     /**
      * @brief deserialize restores the object
      * @param pStream

@@ -290,7 +290,7 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
     }
     else
     {
-        CONSOLE_PRINT("Unable to load unit sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load unit sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -3578,6 +3578,11 @@ bool Unit::getShowInEditor(QString unitId)
 
 void Unit::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void Unit::serializeObject(QDataStream& pStream, bool forHash) const
+{
     pStream << getVersion();
     pStream << m_UnitID;
     pStream << m_hp;
@@ -3597,15 +3602,20 @@ void Unit::serializeObject(QDataStream& pStream) const
     pStream << m_Hidden;
     m_Variables.serializeObject(pStream);
     pStream << m_IgnoreUnitCollision;
-    pStream << static_cast<qint32>(m_AiMode);
-    pStream << m_UniqueID;
-    pStream << static_cast<quint8>(m_ModdingFlags);
-
-    qint32 size = m_MultiTurnPath.size();
-    pStream << size;
-    for (qint32 i = 0; i < size; i++)
+    if (!forHash)
     {
-        pStream << m_MultiTurnPath[i];
+        pStream << static_cast<qint32>(m_AiMode);
+        pStream << m_UniqueID;
+    }
+    qint32 size = m_MultiTurnPath.size();
+    if (!forHash)
+    {
+        pStream << static_cast<quint8>(m_ModdingFlags);
+        pStream << size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            pStream << m_MultiTurnPath[i];
+        }
     }
     size = m_OffensiveBonus.size();
     pStream << size;
@@ -3644,23 +3654,26 @@ void Unit::serializeObject(QDataStream& pStream) const
         pStream << m_cloaked[i];
     }
     pStream << m_VisionHigh;
-    pStream << m_customName;
-    size = m_AiMovePath.size();
-    pStream << size;
-    for (qint32 i = 0; i < size; i++)
+    if (!forHash)
     {
-        pStream << m_AiMovePath[i];
-    }
-    size = m_IconDurations.size();
-    pStream << size;
-    for (qint32 i = 0; i < size; i++)
-    {
-        const IconDuration & iconInfo = m_IconDurations[i];
-        pStream << iconInfo.icon;
-        pStream << iconInfo.x;
-        pStream << iconInfo.y;
-        pStream << iconInfo.duration;
-        pStream << iconInfo.player;
+        pStream << m_customName;
+        size = m_AiMovePath.size();
+        pStream << size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            pStream << m_AiMovePath[i];
+        }
+        size = m_IconDurations.size();
+        pStream << size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            const IconDuration & iconInfo = m_IconDurations[i];
+            pStream << iconInfo.icon;
+            pStream << iconInfo.x;
+            pStream << iconInfo.y;
+            pStream << iconInfo.duration;
+            pStream << iconInfo.player;
+        }
     }
 
     pStream << m_weapon1ID;
@@ -3673,15 +3686,18 @@ void Unit::serializeObject(QDataStream& pStream) const
     pStream << m_maxFuel;
     pStream << m_baseMovementPoints;
     pStream << m_MovementType;
-    size = m_customRangeInfo.size();
-    pStream << size;
-    for (qint32 i = 0; i < size; i++)
+    if (!forHash)
     {
-        pStream << m_customRangeInfo[i].id;
-        pStream << m_customRangeInfo[i].range;
-        pStream << m_customRangeInfo[i].color.rgba();
+        size = m_customRangeInfo.size();
+        pStream << size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            pStream << m_customRangeInfo[i].id;
+            pStream << m_customRangeInfo[i].range;
+            pStream << m_customRangeInfo[i].color.rgba();
+        }
+        pStream << m_cursorInfoRange;
     }
-    pStream << m_cursorInfoRange;
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -3691,7 +3707,6 @@ void Unit::deserializeObject(QDataStream& pStream)
 
 void Unit::deserializer(QDataStream& pStream, bool fast)
 {
-
     bool savegame = false;
     if (m_pMap != nullptr)
     {

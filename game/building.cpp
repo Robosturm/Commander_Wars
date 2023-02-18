@@ -287,7 +287,7 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
     }
     else
     {
-        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load building sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -375,7 +375,7 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
     }
     else
     {
-        CONSOLE_PRINT("Unable to load weather overlay sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load weather overlay sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -1250,6 +1250,11 @@ bool Building::isEnemyBuilding(Player* pPlayer)
 
 void Building::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void Building::serializeObject(QDataStream& pStream, bool forHash) const
+{
     pStream << getVersion();
     pStream << m_BuildingID;
     if (m_pOwner == nullptr)
@@ -1263,7 +1268,10 @@ void Building::serializeObject(QDataStream& pStream) const
     pStream << m_Hp;
     pStream << m_fireCount;
     m_Variables.serializeObject(pStream);
-    pStream << m_BuildingName;
+    if (!forHash)
+    {
+        pStream << m_BuildingName;
+    }
 }
 
 void Building::deserializeObject(QDataStream& pStream)
