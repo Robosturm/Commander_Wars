@@ -376,7 +376,7 @@ public slots:
      * @param unitID
      * @return
      */
-    bool isPlayersUnitInArea(const QRect& area, QList<qint32> & playerIDs);
+    bool isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs);
     /**
      * @brief getUnit
      * @param uniqueID

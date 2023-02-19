@@ -328,7 +328,7 @@ bool GameMap::isPlayerUnitInArea(const QRect& area, qint32 playerID)
     });
 }
 
-bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> & playerIDs)
+bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs)
 {
     return isInArea(area, [=](Unit* pUnit)
     {
