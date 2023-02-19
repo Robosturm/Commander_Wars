@@ -20,7 +20,6 @@ public:
     };
     explicit RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enabled = true);
     ~RuleSelection() = default;
-    void confirmRuleSelectionSetup();
     Mode getMode() const;
 
 signals:

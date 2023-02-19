@@ -5947,7 +5947,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="798"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="802"/>
         <source>Victory rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6504,22 +6504,22 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2247"/>
+        <location filename="../menue/gamemenue.cpp" line="2248"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2278"/>
+        <location filename="../menue/gamemenue.cpp" line="2279"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2304"/>
+        <location filename="../menue/gamemenue.cpp" line="2305"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2481"/>
+        <location filename="../menue/gamemenue.cpp" line="2482"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6969,14 +6969,14 @@ Note: This may be caused by a defective mod.</source>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="104"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="472"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="471"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="115"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="483"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="531"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="482"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="530"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6991,17 +6991,17 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
         <source>Do you want to make the saved ruleset the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7859,7 +7859,7 @@ Host mods: </source>
 <context>
     <name>RuleSelection</name>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="280"/>
+        <location filename="../objects/ruleselection.cpp" line="187"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>

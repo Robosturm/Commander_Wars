@@ -72,7 +72,7 @@ QString VictoryRule::getRuleName(qint32 itemNumber)
 
 void VictoryRule::setRuleValue(qint32 value, qint32 itemNumber)
 {
-    CONSOLE_PRINT("VictoryRule::setRuleValue for " + m_RuleID, GameConsole::eDEBUG);
+    CONSOLE_PRINT("VictoryRule::setRuleValue for " + m_RuleID + " for item " + QString::number(itemNumber) + " and value " + QString::number(value), GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "setRuleValue";
     QJSValueList args({pInterpreter->newQObject(this),

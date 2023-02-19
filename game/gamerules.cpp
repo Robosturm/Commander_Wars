@@ -77,6 +77,96 @@ void GameRules::reset()
     m_allowedActions = GameManager::getInstance()->getLoadedRessources();
 }
 
+void GameRules::onGameStart()
+{
+    CONSOLE_PRINT("On Game start rule selection enabling/disabling rules for the map.", GameConsole::eDEBUG);
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+
+    for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
+    {
+        QString ruleID = pGameRuleManager->getVictoryRuleID(i);
+        VictoryRule* pRule = getVictoryRule(ruleID);
+        if (pRule != nullptr)
+        {
+            QStringList inputTypes = pRule->getRuleType();
+            if (inputTypes[0] == VictoryRule::checkbox)
+            {
+                qint32 ruleValue = pRule->getRuleValue(0);
+                if (ruleValue == 0)
+                {
+                    CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, GameConsole::eDEBUG);
+                    removeVictoryRule(ruleID);
+                }
+                else
+                {
+                    CONSOLE_PRINT("Rule is enabled: " + ruleID, GameConsole::eDEBUG);
+                }
+            }
+            else if (inputTypes[0] == VictoryRule::spinbox)
+            {
+                qint32 ruleValue = pRule->getRuleValue(0);
+                qint32 infiniteValue = pRule->getInfiniteValue(0);
+                if (ruleValue <= infiniteValue)
+                {
+                    CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, GameConsole::eDEBUG);
+                    removeVictoryRule(ruleID);
+                }
+                else
+                {
+                    CONSOLE_PRINT("Rule is enabled: " + ruleID, GameConsole::eDEBUG);
+                }
+            }
+            else
+            {
+                CONSOLE_PRINT("Removing rule cause it's in unsupported format: " + ruleID, GameConsole::eERROR);
+                removeVictoryRule(ruleID);
+            }
+        }
+    }
+
+    for (qint32 i = 0; i < pGameRuleManager->getGameRuleCount(); i++)
+    {
+        QString ruleID = pGameRuleManager->getGameRuleID(i);
+        GameRule* pRule =getGameRule(ruleID);
+        if (pRule != nullptr)
+        {
+            QStringList inputTypes = pRule->getRuleType();
+            if (inputTypes[0] == VictoryRule::checkbox)
+            {
+                qint32 ruleValue = pRule->getRuleValue(0);
+                if (ruleValue == 0)
+                {
+                    CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, GameConsole::eDEBUG);
+                    removeGameRule(ruleID);
+                }
+                else
+                {
+                    CONSOLE_PRINT("Rule is enabled: " + ruleID, GameConsole::eDEBUG);
+                }
+            }
+            else if (inputTypes[0] == VictoryRule::spinbox)
+            {
+                qint32 ruleValue = pRule->getRuleValue(0);
+                qint32 infiniteValue = pRule->getInfiniteValue(0);
+                if (ruleValue <= infiniteValue)
+                {
+                    CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, GameConsole::eDEBUG);
+                    removeGameRule(ruleID);
+                }
+                else
+                {
+                    CONSOLE_PRINT("Rule is enabled: " + ruleID, GameConsole::eDEBUG);
+                }
+            }
+            else
+            {
+                CONSOLE_PRINT("Removing rule cause it's in unsupported format: " + ruleID, GameConsole::eERROR);
+                removeGameRule(ruleID);
+            }
+        }
+    }
+}
+
 void GameRules::addGameRule(const QString & rule)
 {
     bool found = false;
@@ -123,6 +213,18 @@ void GameRules::addGameRule(spGameRule rule)
     }
 }
 
+bool GameRules::hasGameRule(const QString & rule)
+{
+    for (qint32 i = 0; i < m_VictoryRules.size(); i++)
+    {
+        if (m_GameRules[i]->getRuleID() == rule)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void GameRules::removeGameRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_GameRules.size(); i++)
@@ -133,6 +235,18 @@ void GameRules::removeGameRule(const QString & rule)
             break;
         }
     }
+}
+
+bool GameRules::hasVictoryRule(const QString & rule)
+{
+    for (qint32 i = 0; i < m_VictoryRules.size(); i++)
+    {
+        if (m_VictoryRules[i]->getRuleID() == rule)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void GameRules::addVictoryRule(const QString & rule)

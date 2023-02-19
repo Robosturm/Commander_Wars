@@ -72,7 +72,10 @@ public:
         return 25;
     }
     void addVictoryRule(spVictoryRule rule);
-
+    /**
+     * @brief addGameRule
+     * @param rule
+     */
     void addGameRule(spGameRule rule);
     /**
      * @brief createWeatherSprites
@@ -95,7 +98,10 @@ public:
      * @return
      */
     QVector<quint64> &getObserverList();
-
+    /**
+     * @brief onGameStart
+     */
+    void onGameStart();
 
 signals:
     void sigVictory(qint32 team);
@@ -424,13 +430,20 @@ public slots:
     void checkVictory();
     qint32 getVictoryTeam();
     void addVictoryRule(const QString & rule);
+    bool hasVictoryRule(const QString & rule);
     void removeVictoryRule(const QString & rule);
+    /**
+     * @brief hasGameRule
+     * @param rule
+     * @return
+     */
+    bool hasGameRule(const QString & rule);
     VictoryRule* getVictoryRule(const QString & rule);
     qint32 getVictoryRuleSize()
     {
         return m_VictoryRules.size();
     }
-    VictoryRule* getVictoryRule(qint32 index)
+    VictoryRule* getVictoryRuleAtIndex(qint32 index)
     {
         return m_VictoryRules[index].get();
     }
@@ -442,7 +455,7 @@ public slots:
     {
         return m_GameRules.size();
     }
-    GameRule* getGameRule(qint32 index)
+    GameRule* getGameRuleAtIndex(qint32 index)
     {
         return m_GameRules[index].get();
     }

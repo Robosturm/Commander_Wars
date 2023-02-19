@@ -2036,6 +2036,7 @@ void GameMenue::startGame()
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationFactory::clearAllAnimations();
     qint32 count = m_pMap->getPlayerCount();
+    m_pMap->getGameRules()->onGameStart();
     registerAtInterpreter();
     for (qint32 i = 0; i < count; ++i)
     {

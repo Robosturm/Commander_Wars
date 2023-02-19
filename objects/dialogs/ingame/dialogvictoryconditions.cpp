@@ -76,7 +76,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     y += 10 + pTextfield->getTextRect().height();
     for (qint32 i = 0; i < pRules->getVictoryRuleSize(); i++)
     {
-        VictoryRule* pVictoryRule = pRules->getVictoryRule(i);
+        VictoryRule* pVictoryRule = pRules->getVictoryRuleAtIndex(i);
         info = pVictoryRule->getRuleDescription();
 
         pTextfield = oxygine::spTextField::create();
