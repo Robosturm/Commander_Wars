@@ -83,8 +83,11 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     pAnim = pObjectManager->getResAnim("h_scrollbar");
     m_slider->setResAnim(pAnim);
 
-    qint32 sliderHeight = 50;
-    sliderHeight = ((heigth - m_slider->getScaledHeight() - 20 - 20) * heigth) / contentHeigth;
+    qint32 sliderHeight = 0;
+    if (contentHeigth > 0)
+    {
+        sliderHeight = ((heigth - m_slider->getScaledHeight() - 20 - 20) * heigth) / contentHeigth;
+    }
     if (sliderHeight < 11)
     {
         sliderHeight = 11;
