@@ -46,6 +46,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Entering Victory Menue", GameConsole::eDEBUG);
+    GlobalUtils::setUseSeed(false);
     m_pMap->setMenu(nullptr); // remove outdated link
 
     if (Mainapp::getSlave())

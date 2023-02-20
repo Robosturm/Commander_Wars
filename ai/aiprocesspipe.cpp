@@ -208,7 +208,7 @@ void AiProcessPipe::sendActionToMaster(spGameAction pAction)
     if (m_pipeState == PipeState::Ingame)
     {
         QString command = QString(NEWACTIONFORMASTER);
-        CONSOLE_PRINT("AI-Pipe sending command " + command + " action=" + pAction->getActionID(), GameConsole::eDEBUG);
+        CONSOLE_PRINT("AI-Pipe sending command " + command + " action=" + pAction->getActionID() + " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
         stream << command;
@@ -237,10 +237,13 @@ void AiProcessPipe::onNewAction(QDataStream & stream)
             !m_pMenu->getActionRunning())
         {
             spGameAction pAction = m_ActionBuffer.front();
-            m_ActionBuffer.pop_front();
-            CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
-                          " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
-            emit sigPerformAction(pAction, true);
+            if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
+            {
+                m_ActionBuffer.pop_front();
+                CONSOLE_PRINT("AI-Pipe emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
+                              " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
+                emit sigPerformAction(pAction, true);
+            }
         }
     }
 }
@@ -314,10 +317,13 @@ void AiProcessPipe::nextAction()
             if (m_ActionBuffer.size() > 0)
             {
                 spGameAction pAction = m_ActionBuffer.front();
-                m_ActionBuffer.pop_front();
-                CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
-                              " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
-                emit sigPerformAction(pAction, true);
+                if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
+                {
+                    m_ActionBuffer.pop_front();
+                    CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
+                                  " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
+                    emit sigPerformAction(pAction, true);
+                }
             }
         }
     }
