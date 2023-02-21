@@ -98,12 +98,6 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
                                      " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
                     emit performAction(pAction);
                 }
-                else
-                {
-                    CONSOLE_PRINT("Skipping emit action " + pAction->getActionID() + " cause sync counter doesn't match action counter=" +
-                                  QString::number(pAction->getSyncCounter()) + " menu counter=" + QString::number(m_pMenu->getSyncCounter() + 1), GameConsole::eDEBUG);
-                    m_pMenu->doResyncGame();
-                }
             }
         }
     }
@@ -126,12 +120,6 @@ void ProxyAi::nextAction()
                                  " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
                                  " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
                 emit performAction(pAction);
-            }
-            else
-            {
-                CONSOLE_PRINT("Skipping emit action " + pAction->getActionID() + " cause sync counter doesn't match action counter=" +
-                              QString::number(pAction->getSyncCounter()) + " menu counter=" + QString::number(m_pMenu->getSyncCounter() + 1), GameConsole::eDEBUG);
-                m_pMenu->doResyncGame();
             }
         }
     }
