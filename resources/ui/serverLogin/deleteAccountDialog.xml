@@ -89,7 +89,7 @@
                 <width>150</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Abort")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Aborts the account deletion on the server.")</tooltip>
-                <onEvent>DeleteAccountDialog.exit();</onEvent>
+                <onEvent>deleteAccount.exit();</onEvent>
             </Button>
             <Button>
                 <Id>AccountButton</Id>
