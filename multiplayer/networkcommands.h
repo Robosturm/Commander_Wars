@@ -261,6 +261,14 @@ namespace NetworkCommands
      */
     const char* const SERVERREQUESTGAMES = "SERVERREQUESTGAMES";
     /**
+     * @brief SERVERREQUESTVERSION
+     */
+    const char* const SERVERREQUESTVERSION = "SERVERREQUESTVERSION";
+    /**
+     * @brief SERVERVERSION
+     */
+    const char* const SERVERVERSION = "SERVERVERSION";
+    /**
      * @brief SERVERRELAUNCHSLAVE
      */
     const char* const SERVERRELAUNCHSLAVE = "SERVERRELAUNCHSLAVE";

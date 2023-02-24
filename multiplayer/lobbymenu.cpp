@@ -436,7 +436,11 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
         CONSOLE_PRINT("LobbyMenu Command received: " + messageType, GameConsole::eDEBUG);
-        if (messageType == NetworkCommands::SERVERGAMEDATA)
+        if (messageType == NetworkCommands::SERVERVERSION)
+        {
+            checkVersionAndShowInfo(objData);
+        }
+        else if (messageType == NetworkCommands::SERVERGAMEDATA)
         {
             if (m_loggedIn && m_mode == GameViewMode::OpenGames)
             {
@@ -582,13 +586,33 @@ void LobbyMenu::selectGame()
 
 void LobbyMenu::connected(quint64 socket)
 {
-    CONSOLE_PRINT("LobbyMenu::connected " + QString::number(socket), GameConsole::eDEBUG);
-    QString password = Settings::getServerPassword();
-    spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
-    addChild(pDialog);
-    if (!password.isEmpty())
+    QString command = QString(NetworkCommands::SERVERREQUESTVERSION);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::checkVersionAndShowInfo(const QJsonObject & objData)
+{
+    QString version = objData.value(JsonKeys::JSONKEY_VERSION).toString();
+    if (version == Mainapp::getGameVersion())
     {
-        loginToServerAccount(password);
+        CONSOLE_PRINT("LobbyMenu::connected", GameConsole::eDEBUG);
+        QString password = Settings::getServerPassword();
+        spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
+        addChild(pDialog);
+        if (!password.isEmpty())
+        {
+            loginToServerAccount(password);
+        }
+    }
+    else
+    {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = spDialogMessageBox::create(tr("Server has a different version of the game. Server ") + version);
+        addChild(pDialogMessageBox);
     }
 }
 

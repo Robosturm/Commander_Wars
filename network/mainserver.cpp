@@ -269,6 +269,10 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             onRequestGameData(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SERVERREQUESTVERSION)
+        {
+            onRequestServerVersion(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in MainServer::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -509,6 +513,18 @@ void MainServer::onSlaveGameStarted(quint64 socketID, const QJsonObject & objDat
     {
         CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), GameConsole::eDEBUG);
     }
+}
+
+void MainServer::onRequestServerVersion(quint64 socketId, const QJsonObject & objData)
+{
+    QString command = QString(NetworkCommands::SERVERVERSION);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_VERSION, Mainapp::getGameVersion());
+    // send server data to all connected clients
+    QJsonDocument doc(data);
+    emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objData)

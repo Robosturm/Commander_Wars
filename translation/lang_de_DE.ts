@@ -6754,13 +6754,18 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="460"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="464"/>
         <source>Failed to launch game on server cause no more game slots are available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="467"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="471"/>
         <source>Host game is no longer available or is currently relaunched.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/lobbymenu.cpp" line="614"/>
+        <source>Server has a different version of the game. Server </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

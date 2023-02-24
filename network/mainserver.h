@@ -240,6 +240,12 @@ private:
      */
     void onSlaveRelaunched(quint64 socketID, const QJsonObject & objData);
     /**
+     * @brief onRequestServerVersion
+     * @param socketID
+     * @param objData
+     */
+    void onRequestServerVersion(quint64 socketID, const QJsonObject & objData);
+    /**
      * @brief informClientsAboutRelaunch
      * @param games
      * @param slaveName

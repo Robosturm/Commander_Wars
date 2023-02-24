@@ -79,6 +79,7 @@ protected slots:
 private:
     void updateGameData(const QJsonObject & objData);
     void joinSlaveGame(const QJsonObject & objData);
+    void checkVersionAndShowInfo(const QJsonObject & objData);
     void onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
