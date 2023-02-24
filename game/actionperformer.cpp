@@ -107,7 +107,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
             {
                 m_syncCounter = pGameAction->getSyncCounter();
             }
-            else
+            else if (!pGameAction->getIsLocal())
             {
                 ++m_syncCounter;
             }
