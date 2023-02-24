@@ -12,7 +12,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         // move unit to target position
-        unit.moveUnitAction(action);
+        Global[unit.getUnitID()].moveUnit(unit, action, map);
         // disable unit commandments for this turn
         unit.setHasMoved(true);
         animation.setEndOfAnimationCall("ACTION_TRAP", "performPostAnimation");

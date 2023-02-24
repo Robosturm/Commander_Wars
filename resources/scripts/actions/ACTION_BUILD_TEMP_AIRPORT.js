@@ -33,7 +33,7 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         // move unit to target position
-        unit.moveUnitAction(action);
+        Global[unit.getUnitID()].moveUnit(unit, action, map);
         // capture the building
         var capturePoints = unit.getCapturePoints();
         var building = action.getMovementBuilding();

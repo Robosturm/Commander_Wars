@@ -89,7 +89,7 @@ var Constructor = function()
         animation.setEndOfAnimationCall("ACTION_SUPPORTSINGLE_SUPPLY", "performPostAnimation");
         unit.setAmmo2(unit.getAmmo2() - 1);
         // move unit to target position
-        unit.moveUnitAction(action);
+        Global[unit.getUnitID()].moveUnit(unit, action, map);
         // disable unit commandments for this turn
         action.startReading();
         // read action data

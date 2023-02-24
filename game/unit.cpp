@@ -2813,7 +2813,6 @@ void Unit::moveUnitAction(GameAction* pAction)
 
 void Unit::moveUnit(QVector<QPoint> & movePath)
 {
-    createMoveVision(movePath);
     if (movePath.size() > 1)
     {
         moveUnitToField(movePath[0].x(), movePath[0].y());

@@ -17,6 +17,13 @@ var UNIT =
         return -1;
     },
 
+    moveUnit : function(unit, action, map)
+    {
+        unit.moveUnitAction(action);
+        // the following line create dor like vision
+        unit.createMoveVisionAction(action);
+    },
+
     init : function(unit, map)
     {
         unit.setAmmo1(0);

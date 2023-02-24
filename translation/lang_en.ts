@@ -588,12 +588,12 @@
     <name>ACTION_LOAD</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="61"/>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="94"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="93"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="98"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="97"/>
         <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26319,27 +26319,27 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>unit</name>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="272"/>
+        <location filename="../resources/scripts/general/unit.js" line="279"/>
         <source>Air</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="274"/>
+        <location filename="../resources/scripts/general/unit.js" line="281"/>
         <source>Naval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="276"/>
+        <location filename="../resources/scripts/general/unit.js" line="283"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="278"/>
+        <location filename="../resources/scripts/general/unit.js" line="285"/>
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="280"/>
+        <location filename="../resources/scripts/general/unit.js" line="287"/>
         <source>Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>
