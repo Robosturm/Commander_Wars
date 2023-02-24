@@ -25,6 +25,7 @@ public slots:
     void wheelEvent(qint32 x, qint32 y);
     void mouseMoveEvent(qint32 x, qint32 y);
     void onQuit();
+    void executeServerScript();
 private:
     bool m_started{false};
 };

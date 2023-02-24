@@ -65,7 +65,12 @@ public:
 signals:
     void sigRemoveGame(NetworkGame* pGame);
     void sigStartRemoteGame(QString initScript, QString id);
+    void sigExecuteServerScript();
 public slots:
+    /**
+     * @brief exit
+     */
+    void exit();
     /**
      * @brief recieveData we received data from
      * @param socketID

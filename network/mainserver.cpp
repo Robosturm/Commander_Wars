@@ -16,6 +16,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/commandlineparser.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/workerthread.h"
 #include "multiplayer/password.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
@@ -110,6 +111,8 @@ MainServer::MainServer()
     QString javascriptName = "mainServer";
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(javascriptName, pInterpreter->newQObject(this));
+    Mainapp* pApp = Mainapp::getInstance();
+    connect(this, &MainServer::sigExecuteServerScript, pApp->getWorker(), &WorkerThread::executeServerScript, NetworkCommands::UNIQUE_DATA_CONNECTION);
     // connect signals for tcp server events
     connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
@@ -331,6 +334,12 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
     }
 }
 
+void MainServer::exit()
+{
+    CONSOLE_PRINT("Closing server", GameConsole::eDEBUG);
+    QCoreApplication::exit(0);
+}
+
 void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData)
 {
     QString slaveName = objData.value(JsonKeys::JSONKEY_SLAVENAME).toString();
@@ -340,6 +349,10 @@ void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData
         const auto & game = iter.value();
         // send data
         QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
+        CONSOLE_PRINT("onSlaveRelaunched sending command " + command +
+                      " with address " + game->game->getData().getSlaveAddress() +
+                      " secondary address " + game->game->getData().getSlaveSecondaryAddress() +
+                      " and port " + QString::number(game->game->getData().getSlavePort()), GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_ADDRESS, game->game->getData().getSlaveAddress());
@@ -905,20 +918,7 @@ void MainServer::cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> & games)
 
 void MainServer::executeScript()
 {
-    const char* const SCRIPTFILE = "serverScript.js";
-    CONSOLE_PRINT("MainServer::executeScript checking for script " + QString(SCRIPTFILE), GameConsole::eDEBUG);
-    if (QFile::exists(SCRIPTFILE))
-    {
-        CONSOLE_PRINT("Loading server script", GameConsole::eDEBUG);
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        if (pInterpreter->openScript(SCRIPTFILE, false))
-        {
-            CONSOLE_PRINT("Executing server script", GameConsole::eDEBUG);
-            QJSValueList args({pInterpreter->newQObject(this)});
-            pInterpreter->doFunction("serverScript", args);
-        }
-        QFile::remove(SCRIPTFILE);
-    }
+    emit sigExecuteServerScript();
 }
 
 void MainServer::sendGameDataToClient(qint64 socketId)
@@ -954,7 +954,7 @@ void MainServer::sendGameDataToClient(qint64 socketId)
 
 void MainServer::closeGame(NetworkGame* pGame)
 {
-    CONSOLE_PRINT("Despawning games", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Despawning  game", GameConsole::eDEBUG);
     QString slaveName = pGame->getServerName();
     auto iter = m_games.find(slaveName);
     if (iter != m_games.end())
@@ -964,6 +964,9 @@ void MainServer::closeGame(NetworkGame* pGame)
         freeAddress.address = game->game->getData().getSlaveAddress();
         freeAddress.secondaryAddress = game->game->getData().getSlaveSecondaryAddress();
         freeAddress.port = game->game->getData().getSlavePort();
+        CONSOLE_PRINT("Freeing address " + game->game->getData().getSlaveAddress() +
+                      " secondary address " + game->game->getData().getSlaveSecondaryAddress() +
+                      " and port " + QString::number(game->game->getData().getSlavePort()), GameConsole::eDEBUG);
         m_freeAddresses.append(freeAddress);
         game->process->kill();
         game->game = nullptr;
@@ -975,6 +978,9 @@ void MainServer::closeGame(NetworkGame* pGame)
 bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress)
 {
     bool success = false;
+    address = "";
+    secondaryAddress = "";
+    port = 0;
     if (m_freeAddresses.size() > 0)
     {
         auto & newAddress = m_freeAddresses.constLast();
@@ -1008,6 +1014,9 @@ bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port, QStr
             }
         }
     }
+    CONSOLE_PRINT("getNextFreeSlaveAddress using address " + address +
+                  " secondary address " + secondaryAddress +
+                  " and port " + QString::number(port), GameConsole::eDEBUG);
     return success;
 }
 

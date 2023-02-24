@@ -226,3 +226,20 @@ void WorkerThread::startSlaveGame()
     pLoadingScreen->hide();
     Mainapp::getInstance()->getParser().startSlaveGame();
 }
+
+void WorkerThread::executeServerScript()
+{
+    const char* const SCRIPTFILE = "serverScript.js";
+    CONSOLE_PRINT("MainServer::executeScript checking for script " + QString(SCRIPTFILE), GameConsole::eDEBUG);
+    if (QFile::exists(SCRIPTFILE))
+    {
+        CONSOLE_PRINT("Loading server script", GameConsole::eDEBUG);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        if (pInterpreter->openScript(SCRIPTFILE, false))
+        {
+            QFile::remove(SCRIPTFILE);
+            CONSOLE_PRINT("Executing server script", GameConsole::eDEBUG);
+            pInterpreter->doFunction("serverScript");
+        }
+    }
+}
