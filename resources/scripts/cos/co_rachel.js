@@ -100,6 +100,7 @@ var Constructor = function()
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
         animation.setSound("missle_explosion.wav", 1);
         animation.setEndOfAnimationCall("CO_RACHEL", "postAnimationThrowRocket" + index.toString());
+        animation.setStartOfAnimationCall("CO_RACHEL", "preAnimationThrowRocket" + index.toString());
         animation2.queueAnimation(animation);
         CO_RACHEL.postAnimationThrowRocketTarget[index] = rocketTarget;
         CO_RACHEL.postAnimationThrowRocketDamage[index] = damage;
@@ -107,6 +108,22 @@ var Constructor = function()
     };
     this.postAnimationThrowRocketTarget = [null, null, null];
     this.postAnimationThrowRocketDamage = [0, 0, 0];
+
+    this.preAnimationThrowRocket0 = function(animation, map)
+    {
+        map.centerMap(CO_RACHEL.postAnimationThrowRocketTarget[0].x,
+                      CO_RACHEL.postAnimationThrowRocketTarget[0].y);
+    };
+    this.preAnimationThrowRocket1 = function(animation, map)
+    {
+        map.centerMap(CO_RACHEL.postAnimationThrowRocketTarget[1].x,
+                      CO_RACHEL.postAnimationThrowRocketTarget[1].y);
+    };
+    this.preAnimationThrowRocket2 = function(animation, map)
+    {
+        map.centerMap(CO_RACHEL.postAnimationThrowRocketTarget[2].x,
+                      CO_RACHEL.postAnimationThrowRocketTarget[2].y);
+    };
 
     this.postAnimationThrowRocket0 = function(animation, map)
     {

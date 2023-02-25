@@ -69,10 +69,14 @@ var Constructor = function()
         animation2.addSound("meteorImpact.wav");
         powerNameAnimation.queueAnimation(animation2);
         animation.setEndOfAnimationCall("CO_STURM", "postAnimationThrowMeteor");
+        animation.setStartOfAnimationCall("CO_STURM", "preAnimationThrowMeteor");
         CO_STURM.postAnimationThrowMeteorTarget = meteorTarget;
         CO_STURM.postAnimationThrowMeteorDamage = damage;
     };
-
+    this.preAnimationThrowMeteor = function(animation, map)
+    {
+        map.centerMap(CO_STURM.postAnimationThrowMeteorTarget.x, CO_STURM.postAnimationThrowMeteorTarget.y);
+    };
     this.postAnimationThrowMeteorTarget = null;
     this.postAnimationThrowMeteorDamage = 0;
     this.postAnimationThrowMeteor = function(animation, map)

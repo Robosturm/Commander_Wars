@@ -22760,34 +22760,34 @@ Enemy counterattacks deal less damage. Units gain firepower and defense.</source
 <context>
     <name>co_sturm</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="181"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="185"/>
         <source>The original commander of the Black Hole army. A mysterious invader from another world. Mastermind of the Cosmo and Macro wars. Enigma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="189"/>
         <source>Plotting invasions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="193"/>
         <source>Peace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="197"/>
         <source>His troops are not affected by terrain only snow can stop him.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="201"/>
         <source>
 Global Effect: 
 His troops are not affected by terrain except snow.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="202"/>
         <source>
 
 CO Zone Effect: 
@@ -22795,82 +22795,82 @@ Units have increased firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="206"/>
         <source>A small Meteor fall from space and deal 4 HP of damage to all affected units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="210"/>
         <source>Meteor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="214"/>
         <source>Pulls a giant meteor from space, which deals 8 HP of damage to all affected units. Firepower and defense is increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="218"/>
         <source>Meteor Strike</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="222"/>
         <source>Prepare to embrace darkness!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="223"/>
         <source>You will tremble before my power!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="224"/>
         <source>Fear is all you have left...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="225"/>
         <source>You shall not survive!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="226"/>
         <source>Burning earth!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="227"/>
         <source>Such power... I regret crushing it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="231"/>
         <source>Who would have thought you could oppose me?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="232"/>
         <source>My name is Sturm. Hear it and tremble.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="233"/>
         <source>This is but a taste of my power!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="237"/>
         <source>Gwaaaaaaaaaahhhh! I underestimated the strength of these worms!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="238"/>
         <source>NOOOOOOOOOOOOOOOOOOO!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="242"/>
         <source>Sturm</source>
         <translation type="unfinished"></translation>
     </message>
