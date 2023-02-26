@@ -122,6 +122,10 @@ signals:
     void sigLoadSaveGame(const QString savefile);
 public slots:
     /**
+     * @brief sendOpenPlayerCount
+     */
+    void sendOpenPlayerCount();
+    /**
      * @brief updatePlayerinfo
      */
     void updatePlayerinfo();

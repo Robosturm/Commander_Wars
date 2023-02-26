@@ -953,9 +953,36 @@ void GameMenue::removeSyncSocket(quint64 socketID)
     }
 }
 void GameMenue::playerJoinedFinished()
-{    
+{
+    sendOpenPlayerCount();
     emit sigSyncFinished();
     continueAfterSyncGame();
+}
+
+void GameMenue::sendOpenPlayerCount()
+{
+    if (Mainapp::getSlaveClient().get() != nullptr)
+    {
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            quint64 playerSocketID = pPlayer->getSocketId();
+            qint32 openPlayerCount = 0;
+            if (playerSocketID != 0 &&
+                !pPlayer->getIsDefeated())
+            {
+                ++openPlayerCount;
+            }
+            QString command = QString(NetworkCommands::SERVEROPENPLAYERCOUNT);
+            CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+            QJsonObject data;
+            data.insert(JsonKeys::JSONKEY_COMMAND, command);
+            data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+            data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, openPlayerCount);
+            QJsonDocument doc(data);
+            emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        }
+    }
 }
 
 void GameMenue::continueAfterSyncGame()

@@ -174,9 +174,14 @@ void Multiplayermenu::despawnSlave()
             spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
             QString command = NetworkCommands::SLAVEINFODESPAWNING;
             spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+            qint32 openPlayerCount = 0;
+            if (m_pPlayerSelection.get() != nullptr)
+            {
+                openPlayerCount = m_pPlayerSelection->getOpenPlayerCount();
+            }
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
-            data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, 0);
+            data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, openPlayerCount);
             data.insert(JsonKeys::JSONKEY_MAXPLAYERS, pMap->getPlayerCount());
             data.insert(JsonKeys::JSONKEY_MAPNAME, pMap->getMapName());
             data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, "");
@@ -343,6 +348,10 @@ void Multiplayermenu::playerJoined(quint64 socketID)
        (m_local || Mainapp::getSlave()))
     {
         acceptNewConnection(socketID);
+        if (m_pPlayerSelection.get() != nullptr)
+        {
+            m_pPlayerSelection->sendOpenPlayerCount();
+        }
     }
 }
 
@@ -1745,6 +1754,10 @@ void Multiplayermenu::disconnected(quint64 socket)
     CONSOLE_PRINT("Multiplayermenu::disconnected", GameConsole::eDEBUG);
     if (Mainapp::getSlave())
     {
+        if (m_pPlayerSelection.get() != nullptr)
+        {
+            m_pPlayerSelection->sendOpenPlayerCount();
+        }
         if (m_pNetworkInterface->getConnectedSockets().size() == 0)
         {
             startDespawnTimer();

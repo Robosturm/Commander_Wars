@@ -1414,6 +1414,19 @@ void PlayerSelection::playerAccessDenied()
     }
 }
 
+qint32 PlayerSelection::getOpenPlayerCount()
+{
+    qint32 openPlayerCount = 0;
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    {
+        if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Open)
+        {
+            openPlayerCount++;
+        }
+    }
+    return openPlayerCount;
+}
+
 void PlayerSelection::sendOpenPlayerCount()
 {
     if (Mainapp::getSlaveClient().get() != nullptr)
@@ -1423,15 +1436,7 @@ void PlayerSelection::sendOpenPlayerCount()
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
-        qint32 openPlayerCount = 0;
-        for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
-        {
-            if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Open)
-            {
-                openPlayerCount++;
-            }
-        }
-        data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, openPlayerCount);
+        data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, getOpenPlayerCount());
         QJsonDocument doc(data);
         emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
