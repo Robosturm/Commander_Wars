@@ -51,14 +51,6 @@ var Constructor = function()
         // array of sprites that can be selected as fix sprites for this terrain
         return ["river+0+land+N+E+S+W",
                 "river+1+land+N+E+S+W",
-                "river+0+land+E+S+W",
-                "river+1+land+E+S+W",
-                "river+0+land+N+E+S",
-                "river+1+land+N+E+S",
-                "river+0+land+N+E+W",
-                "river+1+land+N+E+W",
-                "river+0+land+N+S+W",
-                "river+1+land+N+S+W",
                 "river+S+W+land+N+W",
                 "river+S+W+land+N+W+SE",
                 "river+E+S+land+N+E",
@@ -189,11 +181,7 @@ var Constructor = function()
     {
         var flow = flowData.getFlowString(index);
         var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2,LAKE,SEA,REAF", false, true, GameEnums.Directions_Direct, false);
-        if (surroundingsDirect === "+N+E+S+W" ||
-            surroundingsDirect === "+E+S+W" ||
-            surroundingsDirect === "+N+S+W" ||
-            surroundingsDirect === "+N+E+W" ||
-            surroundingsDirect === "+N+E+S")
+        if (surroundingsDirect === "+N+E+S+W")
         {
             var random = globals.randInt(0, 1);
             terrain.loadBaseSprite("river+" + random.toString() + "+land" + surroundingsDirect);
