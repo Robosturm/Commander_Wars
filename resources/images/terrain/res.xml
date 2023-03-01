@@ -548,31 +548,36 @@
         <image file="creeper/creeper+SW.png" />
         <image file="creeper/creeper+NW.png" />
         
-        <!-- river endings -->
+        <!-- river -->
         <image file="river/river+0+land+N+E+S+W+mask.png" cols = "8" />
         <image file="river/river+1+land+N+E+S+W+mask.png" cols = "8" />
         <image file="river/river+land+E+S+W+mask.png" cols = "8" />
         <image file="river/river+land+N+E+S+mask.png" cols = "8" />
         <image file="river/river+land+N+E+W+mask.png" cols = "8" />
         <image file="river/river+land+N+S+W+mask.png" cols = "8" />
-        <!-- river corners -->
         <image file="river/river+S+W+land+N+W+mask.png" cols = "8" />
         <image file="river/river+S+W+land+N+W+SE+mask.png" cols = "8" />
         <image file="river/river+E+S+land+N+E+mask.png" cols = "8" />
-        <image file="river/river+E+S+land+N+E+SW+mask.png" cols = "8" />
-        <image file="river/river+N+E+land+N+W+mask.png" cols = "8" />
-        <image file="river/river+N+E+land+N+W+SE+mask.png" cols = "8" />
-        <image file="river/river+E+S+land+S+W+mask.png" cols = "8" />
-        <image file="river/river+E+S+land+S+W+NE+mask.png" cols = "8" />
-        <image file="river/river+N+E+land+E+S+mask.png" cols = "8" />
-        <image file="river/river+N+E+land+E+S+NW+mask.png" cols = "8" />
-        <image file="river/river+N+W+land+S+W+mask.png" cols = "8" />
         <image file="river/river+N+W+land+S+W+NE+mask.png" cols = "8" />
-        <image file="river/river+N+W+land+N+E+mask.png" cols = "8" />
-        <image file="river/river+N+W+land+N+E+SW+mask.png" cols = "8" />
-        <image file="river/river+S+W+land+E+S+mask.png" cols = "8" />
-        <image file="river/river+S+W+land+E+S+NW+mask.png" cols = "8" />
-        <!-- direct flow tiles -->
+        <image file="river/river+E+land+N+S+W+mask.png" cols = "8" />
+        <image file="river/river+E+land+N+W+mask.png" cols = "8" />
+        <image file="river/river+E+land+N+W+SE+mask.png" cols = "8" />
+        <image file="river/river+E+land+S+W+mask.png" cols = "8" />
+        <image file="river/river+E+land+S+W+NE+mask.png" cols = "8" />
+        <image file="river/river+E+S+land+W+NE+mask.png" cols = "8" />
+        <image file="river/river+land+E+S+W+mask.png" cols = "8" />
+        <image file="river/river+N+land+E+NW+SW+mask.png" cols = "8" />
+        <image file="river/river+N+land+E+S+mask.png" cols = "8" />
+        <image file="river/river+N+land+E+S+NW+mask.png" cols = "8" />
+        <image file="river/river+N+land+E+S+W+mask.png" cols = "8" />
+        <image file="river/river+N+land+S+W+mask.png" cols = "8" />
+        <image file="river/river+N+W+land+E+NW+SW+mask.png" cols = "8" />
+        <image file="river/river+S+land+E+NW+SW+mask.png" cols = "8" />
+        <image file="river/river+S+land+N+E+SW+mask.png" cols = "8" />
+        <image file="river/river+S+land+N+E+W+mask.png" cols = "8" />
+        <image file="river/river+S+W+land+E+NW+SW+mask.png" cols = "8" />
+        <image file="river/river+W+land+E+S+mask.png" cols = "8" />
+
         <image file="river/river+S+land+E+W+mask.png" cols = "8" />
         <image file="river/river+N+land+E+W+mask.png" cols = "8" />
         <image file="river/river+E+land+N+S+mask.png" cols = "8" />
