@@ -1095,20 +1095,20 @@
         <image file="teleporttile/teleporttile+W.png" />
 
         <!-- biomes -->
-        <image file="biome_palettes/clear.png" />
-        <image file="biome_palettes/clear+aw2.png" />
-        <image file="biome_palettes/clear+awds.png" />
-        <image file="biome_palettes/clear+dor.png" />
-        <image file="biome_palettes/desert.png" />
-        <image file="biome_palettes/desert+awds.png" />
-        <image file="biome_palettes/desert+dor.png" />
-        <image file="biome_palettes/rain+aw2.png" />
-        <image file="biome_palettes/snow.png" />
-        <image file="biome_palettes/snow+aw2.png" />
-        <image file="biome_palettes/snow+awds.png" />
-        <image file="biome_palettes/snow+dor.png" />
-        <image file="biome_palettes/waste.png" />
-        <image file="biome_palettes/waste+awds.png" />
-        <image file="biome_palettes/waste+dor.png" />
+        <image file="biome_palettes/palette_clear.png" />
+        <image file="biome_palettes/palette_clear+aw2.png" />
+        <image file="biome_palettes/palette_clear+awds.png" />
+        <image file="biome_palettes/palette_clear+dor.png" />
+        <image file="biome_palettes/palette_desert.png" />
+        <image file="biome_palettes/palette_desert+awds.png" />
+        <image file="biome_palettes/palette_desert+dor.png" />
+        <image file="biome_palettes/palette_rain+aw2.png" />
+        <image file="biome_palettes/palette_snow.png" />
+        <image file="biome_palettes/palette_snow+aw2.png" />
+        <image file="biome_palettes/palette_snow+awds.png" />
+        <image file="biome_palettes/palette_snow+dor.png" />
+        <image file="biome_palettes/palette_waste.png" />
+        <image file="biome_palettes/palette_waste+awds.png" />
+        <image file="biome_palettes/palette_waste+dor.png" />
     </atlas>
 </resources>
