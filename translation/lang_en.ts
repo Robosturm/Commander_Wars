@@ -7617,12 +7617,12 @@ Host mods: </source>
 <context>
     <name>RIVER</name>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="15"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="16"/>
         <source>River</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="46"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="47"/>
         <source>Most infantry and Hovercraft units are the only ground unit that can cross rivers.</source>
         <translation type="unfinished"></translation>
     </message>

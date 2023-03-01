@@ -4085,9 +4085,6 @@
         <file>resources/images/terrain/reaf/reaf+S.png</file>
         <file>resources/images/terrain/reaf/reaf+W.png</file>
         <file>resources/images/terrain/reaf/reaf.png</file>
-        <file>resources/images/terrain/river/river+S+W+land+E+NW+SW.png</file>
-        <file>resources/images/terrain/river/riverend+E+2+land+NE.png</file>
-        <file>resources/images/terrain/river/riverend+E+3+land+SE.png</file>
         <file>resources/images/terrain/sea/sea+desert+E+S+W.png</file>
         <file>resources/images/terrain/sea/sea+desert+E+S.png</file>
         <file>resources/images/terrain/sea/sea+desert+E+W.png</file>
@@ -4905,7 +4902,6 @@
         <file>resources/images/terrain/river/riverend+N+3+mask.png</file>
         <file>resources/images/terrain/river/riverend+N+4+land+W+mask.png</file>
         <file>resources/images/terrain/river/riverend+N+4+mask.png</file>
-        <file>resources/images/terrain/river/riverend+S+1+land+W+mak.png</file>
         <file>resources/images/terrain/river/riverend+S+1+mask.png</file>
         <file>resources/images/terrain/river/riverend+S+2+land+E+mask.png</file>
         <file>resources/images/terrain/river/riverend+S+2+mask.png</file>
@@ -4933,5 +4929,27 @@
         <file>resources/images/terrain/river/riverend+W+4+land+SW+mask.png</file>
         <file>resources/images/terrain/river/riverend+W+4+land+W+mask.png</file>
         <file>resources/images/terrain/river/riverend+W+4+mask.png</file>
+        <file>resources/images/terrain/biome_palettes/clear.png</file>
+        <file>resources/images/terrain/biome_palettes/clear+aw2.png</file>
+        <file>resources/images/terrain/biome_palettes/clear+awds.png</file>
+        <file>resources/images/terrain/biome_palettes/clear+dor.png</file>
+        <file>resources/images/terrain/biome_palettes/desert.png</file>
+        <file>resources/images/terrain/biome_palettes/desert+awds.png</file>
+        <file>resources/images/terrain/biome_palettes/desert+dor.png</file>
+        <file>resources/images/terrain/biome_palettes/guide.png</file>
+        <file>resources/images/terrain/biome_palettes/guidefull.png</file>
+        <file>resources/images/terrain/biome_palettes/rain+aw2.png</file>
+        <file>resources/images/terrain/biome_palettes/snow.png</file>
+        <file>resources/images/terrain/biome_palettes/snow+aw2.png</file>
+        <file>resources/images/terrain/biome_palettes/snow+awds.png</file>
+        <file>resources/images/terrain/biome_palettes/snow+dor.png</file>
+        <file>resources/images/terrain/biome_palettes/waste.png</file>
+        <file>resources/images/terrain/biome_palettes/waste+awds.png</file>
+        <file>resources/images/terrain/biome_palettes/waste+dor.png</file>
+        <file>resources/images/terrain/river/river+S+W+land+E+NW+SW+mask.png</file>
+        <file>resources/images/terrain/river/river+W+land+E+S+NW+mask.png</file>
+        <file>resources/images/terrain/river/riverend+E+2+land+NE+mask.png</file>
+        <file>resources/images/terrain/river/riverend+E+3+land+SE+mask.png</file>
+        <file>resources/images/terrain/river/riverend+S+1+land+W+mask.png</file>
     </qresource>
 </RCC>

@@ -287,6 +287,10 @@
         <image file="river/riverend+W+4+land+SW+mask.png" cols = "8" />
         <image file="river/riverend+S+4+land+SW+mask.png" cols = "8" />
 
+        <image file="river/riverend+E_lake+mask.png" cols = "8" />
+        <image file="river/riverend+E_lake+N+mask.png" cols = "8" />
+        <image file="river/riverend+E_lake+N+S+mask.png" cols = "8" />
+
         <image file="fire.png" cols = "6" />
 
         <image file="reaf/reaf+0+N+E+S+W.png" cols = "8" />
@@ -565,7 +569,6 @@
         <image file="river/river+E+land+S+W+mask.png" cols = "8" />
         <image file="river/river+E+land+S+W+NE+mask.png" cols = "8" />
         <image file="river/river+E+S+land+W+NE+mask.png" cols = "8" />
-        <image file="river/river+land+E+S+W+mask.png" cols = "8" />
         <image file="river/river+N+land+E+NW+SW+mask.png" cols = "8" />
         <image file="river/river+N+land+E+S+mask.png" cols = "8" />
         <image file="river/river+N+land+E+S+NW+mask.png" cols = "8" />
@@ -577,7 +580,6 @@
         <image file="river/river+S+land+N+E+W+mask.png" cols = "8" />
         <image file="river/river+S+W+land+E+NW+SW+mask.png" cols = "8" />
         <image file="river/river+W+land+E+S+mask.png" cols = "8" />
-
         <image file="river/river+S+land+E+W+mask.png" cols = "8" />
         <image file="river/river+N+land+E+W+mask.png" cols = "8" />
         <image file="river/river+E+land+N+S+mask.png" cols = "8" />
@@ -598,7 +600,6 @@
         <image file="river/river+N+land+W+NE+SE+mask.png" cols = "8" />
         <image file="river/river+E+S+land+N+SE+SW+mask.png" cols = "8" />
         <image file="river/river+E+S+land+N+SW+mask.png" cols = "8" />
-        <image file="river/river+E+S+land+W+NE+mask.png" cols = "8" />
         <image file="river/river+E+S+land+W+NE+SE+mask.png" cols = "8" />
         <image file="river/river+E+W+land+S+NE+NW+mask.png" cols = "8" />
         <image file="river/river+N+E+land+S+NE+NW+mask.png" cols = "8" />
@@ -628,6 +629,10 @@
         <image file="river/river+W+land+N+mask.png" cols = "8" />
         <image file="river/river+W+land+S+mask.png" cols = "8" />
         <image file="river/river+W+land+S+NE+NW+mask.png" cols = "8" />
+        <image file="river/river+W+land+E+S+NW+mask.png" cols = "8" />
+        <image file="river/river+W+land+N+E+mask.png" cols = "8" />
+        <image file="river/river+W+land+N+E+S+mask.png" cols = "8" />
+        <image file="river/river+W+land+N+E+SW+mask.png" cols = "8" />
 
         <!-- plasma -->
         <image file="plasma/plasma.png" cols = "3" />
@@ -1089,5 +1094,21 @@
         <image file="teleporttile/teleporttile+S+W.png" />
         <image file="teleporttile/teleporttile+W.png" />
 
+        <!-- biomes -->
+        <image file="biome_palettes/clear.png" />
+        <image file="biome_palettes/clear+aw2.png" />
+        <image file="biome_palettes/clear+awds.png" />
+        <image file="biome_palettes/clear+dor.png" />
+        <image file="biome_palettes/desert.png" />
+        <image file="biome_palettes/desert+awds.png" />
+        <image file="biome_palettes/desert+dor.png" />
+        <image file="biome_palettes/rain+aw2.png" />
+        <image file="biome_palettes/snow.png" />
+        <image file="biome_palettes/snow+aw2.png" />
+        <image file="biome_palettes/snow+awds.png" />
+        <image file="biome_palettes/snow+dor.png" />
+        <image file="biome_palettes/waste.png" />
+        <image file="biome_palettes/waste+awds.png" />
+        <image file="biome_palettes/waste+dor.png" />
     </atlas>
 </resources>
