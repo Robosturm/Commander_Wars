@@ -6386,140 +6386,140 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="124"/>
+        <location filename="../menue/gamemenue.cpp" line="123"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="435"/>
+        <location filename="../menue/gamemenue.cpp" line="434"/>
         <source>Connection failed.Reason: Invalid login data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="436"/>
+        <location filename="../menue/gamemenue.cpp" line="435"/>
         <source>Connection failed.Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="437"/>
+        <location filename="../menue/gamemenue.cpp" line="436"/>
         <source>Connection failed.Reason: No valid player available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="438"/>
+        <location filename="../menue/gamemenue.cpp" line="437"/>
         <source>Connection failed.Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="601"/>
+        <location filename="../menue/gamemenue.cpp" line="600"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart or try to resync with the server.
 Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="601"/>
+        <location filename="../menue/gamemenue.cpp" line="600"/>
         <source>Resync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="601"/>
+        <location filename="../menue/gamemenue.cpp" line="600"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1055"/>
+        <location filename="../menue/gamemenue.cpp" line="1095"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1077"/>
+        <location filename="../menue/gamemenue.cpp" line="1117"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1291"/>
-        <location filename="../menue/gamemenue.cpp" line="1875"/>
-        <location filename="../menue/gamemenue.cpp" line="1912"/>
+        <location filename="../menue/gamemenue.cpp" line="1340"/>
+        <location filename="../menue/gamemenue.cpp" line="1924"/>
+        <location filename="../menue/gamemenue.cpp" line="1961"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1299"/>
+        <location filename="../menue/gamemenue.cpp" line="1348"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1334"/>
+        <location filename="../menue/gamemenue.cpp" line="1383"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1735"/>
+        <location filename="../menue/gamemenue.cpp" line="1784"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1736"/>
+        <location filename="../menue/gamemenue.cpp" line="1785"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1737"/>
+        <location filename="../menue/gamemenue.cpp" line="1786"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1738"/>
+        <location filename="../menue/gamemenue.cpp" line="1787"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1739"/>
+        <location filename="../menue/gamemenue.cpp" line="1788"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1740"/>
+        <location filename="../menue/gamemenue.cpp" line="1789"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1741"/>
+        <location filename="../menue/gamemenue.cpp" line="1790"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1742"/>
+        <location filename="../menue/gamemenue.cpp" line="1791"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1766"/>
+        <location filename="../menue/gamemenue.cpp" line="1815"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1776"/>
+        <location filename="../menue/gamemenue.cpp" line="1825"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2248"/>
+        <location filename="../menue/gamemenue.cpp" line="2297"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2279"/>
+        <location filename="../menue/gamemenue.cpp" line="2328"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2305"/>
+        <location filename="../menue/gamemenue.cpp" line="2354"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2482"/>
+        <location filename="../menue/gamemenue.cpp" line="2531"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6686,110 +6686,110 @@ Note: This may be caused by a defective mod.</source>
 <context>
     <name>LobbyMenu</name>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="64"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="65"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="73"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="74"/>
         <source>Direct Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="83"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="84"/>
         <source>Server Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="94"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="95"/>
         <source>Join Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="105"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="106"/>
         <source>Observe Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="115"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="116"/>
         <source>Join Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="125"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="126"/>
         <source>Observe Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="135"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="244"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="136"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="245"/>
         <source>Show my games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="145"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="146"/>
         <source>Refresh games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="238"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="239"/>
         <source>Show open games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="290"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="389"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="291"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="390"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="341"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="342"/>
         <source>Contacting server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="357"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="371"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="358"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="372"/>
         <source>Enter Host address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="464"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="465"/>
         <source>Failed to launch game on server cause no more game slots are available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="471"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="472"/>
         <source>Host game is no longer available or is currently relaunched.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="614"/>
-        <source>Server has a different version of the game. Server </source>
+        <location filename="../multiplayer/lobbymenu.cpp" line="624"/>
+        <source>Connection refused. Server has a different version of the game. Server </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7072,7 +7072,7 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2020"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2035"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7087,32 +7087,32 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="290"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="297"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="512"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="523"/>
         <source>Server doesn&apos;t have the given mods installed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="280"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="287"/>
         <source>Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="281"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="288"/>
         <source> may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="519"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="530"/>
         <source>Server doesn&apos;t have any more slots for players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="304"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="311"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7122,105 +7122,105 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="257"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="264"/>
         <source>Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?
 Note: You won&apos;t be able to change any rules when reentering the lobby later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="261"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="268"/>
         <source>Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="587"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="598"/>
         <source>Connection failed. Reason: Invalid username password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="588"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="599"/>
         <source>Connection failed. Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="589"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="600"/>
         <source>Connection failed. Reason: No more players available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="590"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="601"/>
         <source>Connection failed. Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="591"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="602"/>
         <source>Connection failed. Reason: Invalid username.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="592"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="603"/>
         <source>Connection failed. Reason: Password outdated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="593"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="604"/>
         <source>Connection failed. Reason: Server failed to access database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="594"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="605"/>
         <source>Connection failed. Reason: Player with same username already connected to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="908"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1055"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="919"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1066"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1288"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1299"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1292"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1303"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1307"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1318"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1311"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1322"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1411"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1422"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1422"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1433"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1819"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1834"/>
         <source>Informing server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1891"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1906"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2016"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2031"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7527,51 +7527,51 @@ Host mods: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1253"/>
+        <location filename="../objects/playerselection.cpp" line="1252"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1287"/>
+        <location filename="../objects/playerselection.cpp" line="1286"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1410"/>
+        <location filename="../objects/playerselection.cpp" line="1409"/>
         <source>Connection failed.Reason: No more players available or user is already in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
-        <location filename="../objects/playerselection.cpp" line="1262"/>
-        <location filename="../objects/playerselection.cpp" line="1276"/>
+        <location filename="../objects/playerselection.cpp" line="1240"/>
+        <location filename="../objects/playerselection.cpp" line="1261"/>
+        <location filename="../objects/playerselection.cpp" line="1275"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
+        <location filename="../objects/playerselection.cpp" line="1240"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
+        <location filename="../objects/playerselection.cpp" line="1240"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
+        <location filename="../objects/playerselection.cpp" line="1240"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
+        <location filename="../objects/playerselection.cpp" line="1240"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1265"/>
-        <location filename="../objects/playerselection.cpp" line="1272"/>
-        <location filename="../objects/playerselection.cpp" line="1276"/>
+        <location filename="../objects/playerselection.cpp" line="1264"/>
+        <location filename="../objects/playerselection.cpp" line="1271"/>
+        <location filename="../objects/playerselection.cpp" line="1275"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21217,34 +21217,34 @@ Direct Units have increased firepower.</source>
 <context>
     <name>co_rachel</name>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="234"/>
         <source>Brings a breath of fresh air to her troops. Strives to follow in the footsteps of her older sister, Nell. Led the Allied Nations during the Omega war. Rocket Girl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="238"/>
         <source>Hard Work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="242"/>
         <source>Excuses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="246"/>
         <source>Her troops are quite hardworking, and they increase repairs by one on properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="250"/>
         <source>
 Global Effect: 
 Units have increased repairs by one on properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="251"/>
         <source>
 
 CO Zone Effect: 
@@ -21252,82 +21252,82 @@ Units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="255"/>
         <source>Has a chance to strike with more damage than expected. Lucky!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="259"/>
         <source>Lucky Lass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="263"/>
         <source>Launches three missiles from Orange Star HQ in Omega Land.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="267"/>
         <source>Covering Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="271"/>
         <source>I will protect this land to the end!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="272"/>
         <source>This time, I&apos;m serious!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="273"/>
         <source>You don&apos;t have a chance!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="274"/>
         <source>I&apos;m going to send you packing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="275"/>
         <source>Don&apos;t pick a fight with me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="276"/>
         <source>Finally, some real competition!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="280"/>
         <source>Another one down... Who&apos;s next?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="281"/>
         <source>I never give up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="282"/>
         <source>Don&apos;t take me lightly just because I&apos;m cute!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="286"/>
         <source>You beat me! Hmmm... Not bad!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="287"/>
         <source>You&apos;ve got to be kidding me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="291"/>
         <source>Rachel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23224,27 +23224,27 @@ Units have increased firepower and defense.</source>
 <context>
     <name>co_von_bolt</name>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="173"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="178"/>
         <source>Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Mastermind of the Omega war. Immortal Evil</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="177"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="182"/>
         <source>Long life</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="181"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="186"/>
         <source>Young &apos;uns!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="190"/>
         <source>All units have superior firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="194"/>
         <source>
 Special Unit:
 Crystal Tanks
@@ -23254,7 +23254,7 @@ No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="190"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="195"/>
         <source>
 
 CO Zone Effect: 
@@ -23262,82 +23262,82 @@ Units have increased firepower and increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="203"/>
         <source>Shockwave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="194"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="199"/>
         <source>Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="207"/>
         <source>Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="211"/>
         <source>Deus Ex Machina</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="215"/>
         <source>No matter how powerful...hhh...you are, you&apos;re...hhh...still a worm on a hook...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="216"/>
         <source>Well...hhh...let me have a taste...hhh...of your soul.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="217"/>
         <source>Hheh heh heh... Stop panicking... it&apos;s...hhh...almost over...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="218"/>
         <source>Hheh heh heh. The darkness rises...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="219"/>
         <source>The sweet scent of destruction...hhh...it makes me...hhh...feel young!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="220"/>
         <source>Hold still...hhh...I&apos;m going to...hhhhh...suck the marrow from your bones.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="224"/>
         <source>Predator...prey...hhh... I hunt them all...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="225"/>
         <source>Hehh hhh hhh... Pathetic.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="226"/>
         <source>Even death...hhh...fears me...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="230"/>
         <source>What? Why are you Youth so strong?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="231"/>
         <source>Nooo...I want to live forever.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="235"/>
         <source>Von Bolt</source>
         <translation type="unfinished"></translation>
     </message>

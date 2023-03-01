@@ -2120,7 +2120,7 @@ void Player::serializeObject(QDataStream& pStream) const
 
 void Player::serializeObject(QDataStream& pStream, bool forHash) const
 {
-    CONSOLE_PRINT("storing player with control type " + QString::number(m_controlType), GameConsole::eDEBUG);
+    CONSOLE_PRINT("storing player with control type " + QString::number(m_controlType) + " and name " + m_playerNameId, GameConsole::eDEBUG);
     pStream << getVersion();
     if (!forHash)
     {

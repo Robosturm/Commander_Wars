@@ -44,6 +44,7 @@ class MainServer final : public QObject, public oxygine::ref_counter
     {
         bool relaunched{false};
         bool runningGame{false};
+        QString currentPlayer;
         QVector<quint64> pendingSockets;
         QString savefile;
         NetworkGameData game;

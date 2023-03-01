@@ -18,6 +18,7 @@
 #include "menue/mainwindow.h"
 
 #include "resource_management/backgroundmanager.h"
+#include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
 #include "objects/base/chat.h"
@@ -549,18 +550,27 @@ void LobbyMenu::updateGamesView()
             currentItem = itemCount;
             m_currentGame = game;
         }
+        QColor textColor = FontManager::getFontColor();
+        if (game.getRunningGame())
+        {
+            if (Settings::getUsername() == game.getCurrentPlayer() ||
+                game.getCurrentPlayer().isEmpty())
+            {
+                textColor = QColor(0, 255, 0);
+            }
+        }
         ComplexTableView::Item item;
         item.pData = &game;
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getMapName(), widths[0])));
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spXofYTableItem::create(game.getPlayers(), game.getMaxPlayers(), widths[1])));
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getDescription(), widths[2])));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getMapName(), widths[0], textColor)));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spXofYTableItem::create(game.getPlayers(), game.getMaxPlayers(), widths[1], textColor)));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getDescription(), widths[2], textColor)));
         QStringList mods = game.getMods();
         QString modString;
         for (const auto & mod : mods)
         {
             modString.append(Settings::getModName(mod) + "; ");
         }
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(modString, widths[3])));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(modString, widths[3], textColor)));
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spLockTableItem::create(game.getLocked(), widths[4])));
         items.append(item);
         ++itemCount;
@@ -608,11 +618,12 @@ void LobbyMenu::checkVersionAndShowInfo(const QJsonObject & objData)
             loginToServerAccount(password);
         }
     }
-    else
+    else        
     {
         spDialogMessageBox pDialogMessageBox;
-        pDialogMessageBox = spDialogMessageBox::create(tr("Server has a different version of the game. Server ") + version);
+        pDialogMessageBox = spDialogMessageBox::create(tr("Connection refused. Server has a different version of the game. Server ") + version);
         addChild(pDialogMessageBox);
+        m_pTCPClient = nullptr;
     }
 }
 

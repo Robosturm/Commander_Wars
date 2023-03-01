@@ -179,17 +179,19 @@ void Multiplayermenu::despawnSlave()
             {
                 openPlayerCount = m_pPlayerSelection->getOpenPlayerCount();
             }
+            qint32 playerCount = pMap->getPlayerCount();
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
-            data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, openPlayerCount);
-            data.insert(JsonKeys::JSONKEY_MAXPLAYERS, pMap->getPlayerCount());
+            data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, playerCount - openPlayerCount);
+            data.insert(JsonKeys::JSONKEY_MAXPLAYERS, playerCount);
             data.insert(JsonKeys::JSONKEY_MAPNAME, pMap->getMapName());
-            data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, "");
+            data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, pMap->getGameRules()->getDescription());
             data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
             data.insert(JsonKeys::JSONKEY_HASPASSWORD, pMap->getGameRules()->getPassword().getIsSet());
             data.insert(JsonKeys::JSONKEY_UUID, 0);
             data.insert(JsonKeys::JSONKEY_SAVEFILE, saveFile);
             data.insert(JsonKeys::JSONKEY_RUNNINGGAME, false);
+            data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, "");
             auto activeMods = Settings::getActiveMods();
             QJsonObject mods;
             for (qint32 i = 0; i < activeMods.size(); ++i)
@@ -214,7 +216,7 @@ void Multiplayermenu::despawnSlave()
             }
             data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
             QJsonDocument doc(data);
-            CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
         else
@@ -835,13 +837,13 @@ void Multiplayermenu::relaunchRunningLobby(quint64 socketID, const QString & sav
     if (file.open(QIODevice::ReadOnly))
     {
         QDataStream stream(&file);
+        m_pPlayerSelection->setIsServerGame(true);
+        m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
         m_pMapSelectionView->deserializeObject(stream);
         m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
-        m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
-        m_pPlayerSelection->setIsServerGame(true);
-        loadMultiplayerMap(true);
         m_pPlayerSelection->deserializeObject(stream);
         m_pMapSelectionView->getCurrentMap()->setSavegame(m_pPlayerSelection->getSaveGame());
+        loadMultiplayerMap(true);
         createChat();
         m_slaveGameReady = true;
         sendSlaveRelaunched(socketID);

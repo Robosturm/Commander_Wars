@@ -16,7 +16,14 @@ ProxyAi::ProxyAi(GameMap* pMap)
     setObjectName("ProxyAi");
 #endif
     Interpreter::setCppOwnerShip(this);
-    CONSOLE_PRINT("Creating proxy ai", GameConsole::eDEBUG);
+    if (m_pPlayer == nullptr)
+    {
+        CONSOLE_PRINT("Creating proxy ai for player", GameConsole::eDEBUG);
+    }
+    else
+    {
+        CONSOLE_PRINT("Creating proxy ai for player " + QString::number(m_pPlayer->getPlayerID()) + " with name " + m_pPlayer->getPlayerNameId(), GameConsole::eDEBUG);
+    }
 }
 
 void ProxyAi::readIni(QString)
@@ -28,6 +35,14 @@ void ProxyAi::init(GameMenue* pMenu)
 {
     if (!m_initDone)
     {
+        if (m_pPlayer == nullptr)
+        {
+            CONSOLE_PRINT("Proxy ai init for player", GameConsole::eDEBUG);
+        }
+        else
+        {
+            CONSOLE_PRINT("Proxy ai init for player " + QString::number(m_pPlayer->getPlayerID()) + " with name " + m_pPlayer->getPlayerNameId(), GameConsole::eDEBUG);
+        }
         m_initDone = true;
         m_pMenu = pMenu;
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
@@ -37,6 +52,7 @@ void ProxyAi::init(GameMenue* pMenu)
 
 void ProxyAi::connectInterface(NetworkInterface* pNetworkInterface)
 {
+    CONSOLE_PRINT("Proxy ai connectInterface for player " + QString::number(m_pPlayer->getPlayerID()) + " with name " + m_pPlayer->getPlayerNameId(), GameConsole::eDEBUG);
     connect(pNetworkInterface, &NetworkInterface::recieveData, this, &ProxyAi::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
 }
 

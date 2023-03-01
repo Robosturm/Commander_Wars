@@ -251,7 +251,7 @@ protected:
      * @param player
      * @param eAiType
      */
-    void remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType = false);
+    void remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType = false, bool inSetup = false);
     /**
      * @brief createPlayerChangedData
      * @param data
@@ -261,7 +261,7 @@ protected:
      * @param player
      * @param clientRequest
      */
-    void createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest);
+    void createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest, bool inSetup = false);
     /**
      * @brief getDefaultColorCount
      * @return

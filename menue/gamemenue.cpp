@@ -85,15 +85,14 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     loadUIButtons();
     if (m_pNetworkInterface.get() != nullptr)
     {
-        
+        CONSOLE_PRINT("GameMenue initializing proxy ai's", GameConsole::eDEBUG);
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = m_pMap->getPlayer(i);
-            auto* baseGameInput = pPlayer->getBaseGameInput();
-            if (baseGameInput != nullptr &&
-                baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi)
+            auto* baseGameInput =  dynamic_cast<ProxyAi*>(pPlayer->getBaseGameInput());
+            if (baseGameInput != nullptr)
             {
-                dynamic_cast<ProxyAi*>(baseGameInput)->connectInterface(m_pNetworkInterface.get());
+               baseGameInput->connectInterface(m_pNetworkInterface.get());
             }
         }
         connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &GameMenue::disconnected, Qt::QueuedConnection);
@@ -637,7 +636,7 @@ Player* GameMenue::getCurrentViewPlayer() const
         for (qint32 i = currentPlayerID; i >= 0; i--)
         {
             if (m_pMap->getPlayer(i)->getBaseGameInput() != nullptr &&
-                m_pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
+                m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Human &&
                 !m_pMap->getPlayer(i)->getIsDefeated())
             {
                 return m_pMap->getPlayer(i);
@@ -925,6 +924,7 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
         m_slaveDespawnTimer.stop();
     }
     emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+    sendOpenPlayerCount();
 }
 
 void GameMenue::removePlayerFromSyncWaitList(quint64 socketID)
@@ -952,6 +952,7 @@ void GameMenue::removeSyncSocket(quint64 socketID)
         }
     }
 }
+
 void GameMenue::playerJoinedFinished()
 {
     sendOpenPlayerCount();
@@ -963,25 +964,36 @@ void GameMenue::sendOpenPlayerCount()
 {
     if (Mainapp::getSlaveClient().get() != nullptr)
     {
+        qint32 openPlayerCount = 0;
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = m_pMap->getPlayer(i);
             quint64 playerSocketID = pPlayer->getSocketId();
-            qint32 openPlayerCount = 0;
-            if (playerSocketID != 0 &&
+            if (playerSocketID == 0 &&
                 !pPlayer->getIsDefeated())
             {
                 ++openPlayerCount;
             }
-            QString command = QString(NetworkCommands::SERVEROPENPLAYERCOUNT);
-            CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
-            QJsonObject data;
-            data.insert(JsonKeys::JSONKEY_COMMAND, command);
-            data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
-            data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, openPlayerCount);
-            QJsonDocument doc(data);
-            emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
+        QString command = QString(NetworkCommands::SERVEROPENPLAYERCOUNT);
+        auto currentControlType = m_pMap->getCurrentPlayer()->getControlType();
+        auto playerId = m_pMap->getCurrentPlayer()->getPlayerNameId();
+        CONSOLE_PRINT("GameMenue sending command " + command + " current player " + playerId + " with control type=" + QString::number(currentControlType), GameConsole::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+        data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, openPlayerCount);
+        if (currentControlType == GameEnums::AiTypes_Human)
+        {
+            data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, playerId);
+        }
+        else
+        {
+            data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, "");
+        }
+        data.insert(JsonKeys::JSONKEY_RUNNINGGAME, true);
+        QJsonDocument doc(data);
+        emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -1009,6 +1021,7 @@ void GameMenue::continueAfterSyncGame()
             m_actionPerformer.performAction(multiplayerSyncData.m_postSyncAction);
             multiplayerSyncData.m_postSyncAction = nullptr;
         }
+        sendOpenPlayerCount();
     }
 }
 
@@ -1106,6 +1119,7 @@ void GameMenue::disconnected(quint64 socketID)
                 }
             }
         }
+        sendOpenPlayerCount();
         continueAfterSyncGame();
     }
 }
@@ -1141,12 +1155,20 @@ void GameMenue::despawnSlave()
             data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, 0);
             data.insert(JsonKeys::JSONKEY_MAXPLAYERS, m_pMap->getPlayerCount());
             data.insert(JsonKeys::JSONKEY_MAPNAME, m_pMap->getMapName());
-            data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, "");
+            data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, m_pMap->getGameRules()->getDescription());
             data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
             data.insert(JsonKeys::JSONKEY_HASPASSWORD, m_pMap->getGameRules()->getPassword().getIsSet());
             data.insert(JsonKeys::JSONKEY_UUID, 0);
             data.insert(JsonKeys::JSONKEY_SAVEFILE, saveFile);
             data.insert(JsonKeys::JSONKEY_RUNNINGGAME, true);
+            if (m_pMap->getCurrentPlayer()->getControlType() == GameEnums::AiTypes_Human)
+            {
+                data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, m_pMap->getCurrentPlayer()->getPlayerNameId());
+            }
+            else
+            {
+                data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, "");
+            }
             auto activeMods = Settings::getActiveMods();
             QJsonObject mods;
             for (qint32 i = 0; i < activeMods.size(); ++i)

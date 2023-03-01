@@ -1080,7 +1080,6 @@ void PlayerSelection::slotCOsRandom(qint32 mode)
     }
 }
 
-
 void PlayerSelection::slotCOsDelete(qint32 mode)
 {
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -1421,7 +1420,7 @@ qint32 PlayerSelection::getOpenPlayerCount()
     {
         if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Open)
         {
-            openPlayerCount++;
+            ++openPlayerCount;
         }
     }
     return openPlayerCount;
@@ -1580,7 +1579,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
                          pPlayer->getControlType() > GameEnums::AiTypes::AiTypes_Human)
                 {
                     CONSOLE_PRINT("Slave player " + QString::number(i) + " ai " + pPlayer->getPlayerNameId() + " control type " + QString::number(pPlayer->getControlType()) + " transferred control to socket " + QString::number(socketID), GameConsole::eDEBUG);
-                    remoteChangePlayerOwner(socketID, pPlayer->getPlayerNameId(), i, pPlayer->getControlType(), true);
+                    remoteChangePlayerOwner(socketID, pPlayer->getPlayerNameId(), i, pPlayer->getControlType(), true, true);
                 }
             }
         }
@@ -1620,10 +1619,11 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
         {
             CONSOLE_PRINT("Finished rejoin for username " + username + " to lobby game.", GameConsole::eDEBUG);
         }
+        sendOpenPlayerCount();
     }
 }
 
-void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType)
+void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType, bool inSetup)
 {
     // valid request
     // change data locally and send remote update
@@ -1680,7 +1680,7 @@ void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & 
     }
     CONSOLE_PRINT("Player change " + QString::number(player) + " changing remote to ai-type " + QString::number(aiType), GameConsole::eDEBUG);
     QByteArray sendDataRequester;
-    createPlayerChangedData(sendDataRequester, socketID, username, aiType, player, true);
+    createPlayerChangedData(sendDataRequester, socketID, username, aiType, player, true, inSetup);
     // create data block for other clients
     if (eAiType == GameEnums::AiTypes_Open)
     {
@@ -1691,7 +1691,7 @@ void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & 
         aiType = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
     }
     QByteArray sendDataOtherClients;
-    createPlayerChangedData(sendDataOtherClients, socketID, username, aiType, player, false);
+    createPlayerChangedData(sendDataOtherClients, socketID, username, aiType, player, false, inSetup);
     // send player update
     emit m_pNetworkInterface->sig_sendData(socketID, sendDataRequester, NetworkInterface::NetworkSerives::Multiplayer, false);
     emit m_pNetworkInterface.get()->sigForwardData(socketID, sendDataOtherClients, NetworkInterface::NetworkSerives::Multiplayer);
@@ -1749,17 +1749,19 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
         qint32 aiType;
         qint32 player;
         bool clientRequest = false;
+        bool setup = false;
         stream >> clientRequest;
         stream >> socket;
         stream >> name;
         stream >> player;
-        stream >> aiType;
-        CONSOLE_PRINT("Remote change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType), GameConsole::eDEBUG);
+        stream >> aiType;        
+        stream >> setup;
+        CONSOLE_PRINT("Remote change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " in setup " + QString::number(setup), GameConsole::eDEBUG);
         if (socket != m_pNetworkInterface->getSocketID() ||
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
             GameEnums::AiTypes originalAiType = static_cast<GameEnums::AiTypes>(aiType);
-            if (player <m_playerSockets.size() && m_pMap != nullptr)
+            if (player < m_playerSockets.size() && m_pMap != nullptr)
             {
                 if (aiType != GameEnums::AiTypes::AiTypes_Open &&
                     aiType != GameEnums::AiTypes::AiTypes_Closed)
@@ -1817,7 +1819,8 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                 }
                 updatePlayerData(player);
                 if (!humanFound &&
-                    !m_pNetworkInterface->getIsObserver())
+                    !m_pNetworkInterface->getIsObserver() &&
+                    !setup)
                 {
                     CONSOLE_PRINT("Disconnecting cause controlling no player and isn't an observer", GameConsole::eDEBUG);
                     emit sigDisconnect();
@@ -1843,6 +1846,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
         {
             CONSOLE_PRINT("Update ignored", GameConsole::eDEBUG);
         }
+        sendOpenPlayerCount();
     }
     else
     {
@@ -1850,7 +1854,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
     }
 }
 
-void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest)
+void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest, bool inSetup)
 {
     QString command = QString(NetworkCommands::PLAYERCHANGED);
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
@@ -1861,6 +1865,7 @@ void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketI
     sendStream << name;
     sendStream << player;
     sendStream << aiType;
+    sendStream << inSetup;
     m_pMap->getPlayer(player)->serializeObject(sendStream);
 }
 

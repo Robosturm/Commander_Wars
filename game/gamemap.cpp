@@ -2412,6 +2412,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         {
             pMenu->updatePlayerinfo();
             pMenu->updateMinimap();
+            pMenu->sendOpenPlayerCount();
         }
         playMusic();
         if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
@@ -2557,6 +2558,22 @@ void GameMap::initPlayersAndSelectCOs()
 void GameMap::initPlayers()
 {
     m_CurrentPlayer = m_players[m_players.size() - 1];
+    if (Mainapp::getSlave())
+    {
+        // fix slave ai's
+        for (qint32 i = 0; i < getPlayerCount(); ++i)
+        {
+            Player* pPlayer = getPlayer(i);
+            BaseGameInputIF* pInput = pPlayer->getBaseGameInput();
+            if (pInput != nullptr &&
+                pInput->getAiType() != GameEnums::AiTypes_ProxyAi &&
+                pInput->getAiType() != GameEnums::AiTypes_Closed &&
+                pInput->getAiType() != GameEnums::AiTypes_Open)
+            {
+                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes_ProxyAi));
+            }
+        }
+    }
 }
 
 void GameMap::showGrid(bool show)

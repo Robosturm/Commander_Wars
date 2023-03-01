@@ -596,6 +596,14 @@ void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData
         auto & internGame = iter.value();
         auto & data = internGame->game->getData();
         data.setPlayers(data.getMaxPlayers() - openPlayerCount);
+        if (objData.contains(JsonKeys::JSONKEY_CURRENTPLAYER))
+        {
+            data.setCurrentPlayer(objData.value(JsonKeys::JSONKEY_CURRENTPLAYER).toString());
+        }
+        if (objData.contains(JsonKeys::JSONKEY_RUNNINGGAME))
+        {
+            data.setRunningGame(objData.value(JsonKeys::JSONKEY_RUNNINGGAME).toBool());
+        }
         m_updateGameData = true;
     }
     else
