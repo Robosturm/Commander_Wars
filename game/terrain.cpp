@@ -23,27 +23,32 @@ spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, 
     {
         pTerrain->createBaseTerrain(currentTerrainID);
     }
+    pTerrain->initTerrain();
+    return pTerrain;
+}
+
+void Terrain::initTerrain()
+{
     // check if the js-script was loaded already
     // otherwise do load it
-    bool terrainExists = true;
-    if (terrainID != "")
+    if (m_terrainID != "")
     {
+        bool terrainExists = true;
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValue obj = pInterpreter->getGlobal(terrainID);
+        QJSValue obj = pInterpreter->getGlobal(m_terrainID);
         if (!obj.isObject())
         {
             terrainExists = false;
         }
         if (terrainExists)
         {
-            pTerrain->init();
+            init();
         }
         else
         {
-            CONSOLE_PRINT_MODULE("Unable to load Terrain " + terrainID, GameConsole::eERROR, GameConsole::eResources);
+            CONSOLE_PRINT_MODULE("Unable to load Terrain " + m_terrainID, GameConsole::eERROR, GameConsole::eResources);
         }
     }
-    return pTerrain;
 }
 
 Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
@@ -60,6 +65,7 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
     setPriority(getMapTerrainDrawPriority());
     setSize(GameMap::getImageSize(),
             GameMap::getImageSize());
+    initTerrain();
 }
 
 ScriptVariables* Terrain::getAnimationVariables()
@@ -75,6 +81,31 @@ QString Terrain::getPalette() const
 void Terrain::setPalette(const QString & newPalette)
 {
     m_palette = newPalette;
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    oxygine::spResAnim nullAnim;
+    if (m_pTerrainSprite.get() != nullptr)
+    {
+        m_pTerrainSprite->setColorTable(nullAnim, false);
+    }
+    for (qint32 i = 0; i < m_pOverlaySprites.size(); ++i)
+    {
+        m_pOverlaySprites[i]->setColorTable(nullAnim, false);
+    }
+    if (!m_palette.isEmpty())
+    {
+        oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(m_palette, oxygine::error_policy::ep_ignore_error));
+        if (pPaletteAnim.get() != nullptr)
+        {
+            if (m_pTerrainSprite.get() != nullptr)
+            {
+                m_pTerrainSprite->setColorTable(pPaletteAnim, true);
+            }
+            for (qint32 i = 0; i < m_pOverlaySprites.size(); ++i)
+            {
+                m_pOverlaySprites[i]->setColorTable(pPaletteAnim, true);
+            }
+        }
+    }
 }
 
 QStringList Terrain::getCustomOverlays() const
@@ -380,7 +411,7 @@ QString Terrain::getDescription()
         // load sprite of the base terrain
         QString function = "getDescription";
         QJSValueList args({pInterpreter->newQObject(this),
-                          pInterpreter->newQObject(m_pMap)});
+                           pInterpreter->newQObject(m_pMap)});
         QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args);
         if (ret.isString())
         {
@@ -397,10 +428,13 @@ void Terrain::setBaseTerrain(spTerrain terrain)
         m_pBaseTerrain->detach();
         m_pBaseTerrain = nullptr;
     }
-    m_pBaseTerrain = terrain;
-    m_pBaseTerrain->setPriority(static_cast<qint32>(DrawPriority::Terrain));
-    m_pBaseTerrain->setPosition(0, 0);
-    addChild(m_pBaseTerrain);
+    if (terrain.get() != nullptr)
+    {
+        m_pBaseTerrain = terrain;
+        m_pBaseTerrain->setPriority(static_cast<qint32>(DrawPriority::Terrain));
+        m_pBaseTerrain->setPosition(0, 0);
+        addChild(m_pBaseTerrain);
+    }
 }
 
 void Terrain::unloadSprites()
@@ -411,14 +445,11 @@ void Terrain::unloadSprites()
         m_pTerrainSprite->detach();
         m_pTerrainSprite = nullptr;
     }
-    if (m_pOverlaySprites.size() > 0)
+    for (qint32 i = 0; i < m_pOverlaySprites.size(); i++)
     {
-        for (qint32 i = 0; i < m_pOverlaySprites.size(); i++)
-        {
-            m_pOverlaySprites[i]->detach();
-        }
-        m_pOverlaySprites.clear();
+        m_pOverlaySprites[i]->detach();
     }
+    m_pOverlaySprites.clear();
 }
 
 void Terrain::loadBaseTerrainSprites()
@@ -502,7 +533,6 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
         pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         pSprite->setPriority(static_cast<qint32>(DrawPriority::Terrain));
-
         if (!m_palette.isEmpty())
         {
             oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(m_palette, oxygine::error_policy::ep_ignore_error));
@@ -557,9 +587,9 @@ bool Terrain::customSpriteExists() const
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(m_terrainSpriteName, oxygine::error_policy::ep_ignore_error);
     return pAnim != nullptr ||
-           QFile::exists(m_terrainSpriteName) ||
-           QFile::exists(Settings::getUserPath() + m_terrainSpriteName) ||
-           QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
+                    QFile::exists(m_terrainSpriteName) ||
+                    QFile::exists(Settings::getUserPath() + m_terrainSpriteName) ||
+                    QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
 }
 
 void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs)
@@ -860,7 +890,7 @@ qint32 Terrain::getBaseDefense()
     if (m_Building.get() == nullptr)
     {
         QJSValueList args({pInterpreter->newQObject(this),
-                          pInterpreter->newQObject(m_pMap)});
+                           pInterpreter->newQObject(m_pMap)});
         QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
         if (ret.isNumber())
         {
@@ -885,7 +915,7 @@ QString Terrain::getMinimapIcon()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMiniMapIcon";
     QJSValueList args({pInterpreter->newQObject(this),
-                      pInterpreter->newQObject(m_pMap)});
+                       pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
     if (ret.isString())
     {
@@ -1308,8 +1338,8 @@ bool Terrain::getVisionHide(Player* pPlayer)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionHide";
     QJSValueList args({pInterpreter->newQObject(this),
-                      pInterpreter->newQObject(pPlayer),
-                      pInterpreter->newQObject(m_pMap)});
+                       pInterpreter->newQObject(pPlayer),
+                       pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
     
     if (ret.isBool() && m_pMap != nullptr)
@@ -1392,7 +1422,7 @@ void Terrain::startOfTurn()
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "startOfTurn";
         QJSValueList args({pInterpreter->newQObject(this),
-                          pInterpreter->newQObject(m_pMap)});
+                           pInterpreter->newQObject(m_pMap)});
         pInterpreter->doFunction(m_terrainID, function1, args);
     }
     for (auto & item : m_terrainOverlay)
@@ -1631,7 +1661,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     bool hasBaseTerrain = false;
     pStream >> hasBaseTerrain;
     if (hasBaseTerrain)
-    {        
+    {
         m_pBaseTerrain = createTerrain("", m_x, m_y, "", m_pMap);
         m_pBaseTerrain->deserializer(pStream, fast);
         if (!fast)

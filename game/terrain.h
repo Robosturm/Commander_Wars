@@ -588,7 +588,7 @@ private:
 
     friend class oxygine::intrusive_ptr<Terrain>;
     explicit Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap);
-
+    void initTerrain();
 private:
     QString m_palette;
     /**
@@ -610,7 +610,7 @@ private:
     /**
      * @brief m_pTerrainSprite actor holding our sprite data
      */
-    oxygine::spSprite m_pTerrainSprite{nullptr};
+    oxygine::spSprite m_pTerrainSprite;
     /**
      * @brief m_pOverlaySprites
      */

@@ -429,6 +429,47 @@ var TERRAIN =
                "WASTE_FOREST,WASTE_MOUNTAIN";
     },
 
+    paletteTable : [[qsTr("None"), ""],
+                    [qsTr("Clear"), "palette_clear"],
+                    [qsTr("Clear Advance Wars 2"), "palette_clear+aw2"],
+                    [qsTr("Clear Advance Wars DS"), "palette_clear+awds"],
+                    [qsTr("Clear Advance Wars 4"), "palette_clear+dor"],
+                    [qsTr("Desert"), "palette_desert"],
+                    [qsTr("Desert Advance Wars DS"), "palette_desert+awds"],
+                    [qsTr("Desert Advance Wars 4"), "palette_desert+dor"],
+                    [qsTr("Rain Advance Wars 2"), "palette_rain+aw2"],
+                    [qsTr("Snow"), "palette_snow"],
+                    [qsTr("Snow Advance Wars 2"), "palette_snow+aw2"],
+                    [qsTr("Snow Advance Wars DS"), "palette_snow+awds"],
+                    [qsTr("Snow Advance Wars 4"), "palette_snow+dor"],
+                    [qsTr("Waste Advance Wars"), "palette_waste"],
+                    [qsTr("Waste Advance Wars DS"), "palette_waste+awds"],
+                    [qsTr("Waste Advance Wars 4"), "palette_waste+dor"],],
+    getPaletteTables : function()
+    {
+        return TERRAIN.paletteTable.length;
+    },
+    getPaletteNames : function(index)
+    {
+        return TERRAIN.paletteTable[index][0];
+    },
+    getPaletteId : function(index)
+    {
+        return TERRAIN.paletteTable[index][1];
+    },
+    getPaletteName : function(id)
+    {
+        var length = TERRAIN.paletteTable.length;
+        for (var i = 0; i < length; ++i)
+        {
+            if (TERRAIN.paletteTable[i][1] === id)
+            {
+                return TERRAIN.paletteTable[i][0];
+            }
+        }
+        return TERRAIN.paletteTable[0][0];
+    },
+
     getShowInEditor : function()
     {
         return true;

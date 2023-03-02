@@ -391,7 +391,7 @@ var Constructor = function()
             var animName = "riverend" + flowString + "+" + i2.toString() + landname + "+mask";
             if (terrain.existsResAnim(animName))
             {
-                terrain.loadBaseSprite(animName);
+                terrain.loadOverlaySprite(animName);
             }
         }
     };

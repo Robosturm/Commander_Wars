@@ -2544,72 +2544,82 @@
 <context>
     <name>DialogModifyTerrain</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="35"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="37"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="144"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="170"/>
         <source>Base image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="72"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="85"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="58"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="71"/>
         <source>Edit terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="65"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="78"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="76"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="89"/>
         <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="88"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="101"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="91"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="104"/>
         <source>Custom Description of the Terrain. Empty description equals the default description.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="180"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="114"/>
+        <source>Palette:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="118"/>
+        <source>Changes the palette used by the terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="207"/>
         <source>Terrain Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="184"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="211"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="205"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="275"/>
         <source>Overlays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="102"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="131"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="110"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="139"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="270"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="349"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10330,27 +10340,27 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="78"/>
+        <location filename="../wiki/terraininfo.cpp" line="79"/>
         <source>Defense:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="95"/>
+        <location filename="../wiki/terraininfo.cpp" line="96"/>
         <source>Income:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="113"/>
+        <location filename="../wiki/terraininfo.cpp" line="114"/>
         <source>Builds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="126"/>
+        <location filename="../wiki/terraininfo.cpp" line="127"/>
         <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="146"/>
+        <location filename="../wiki/terraininfo.cpp" line="147"/>
         <source>Movement Costs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26249,11 +26259,13 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="24"/>
+        <location filename="../resources/scripts/general/terrain.js" line="437"/>
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="25"/>
+        <location filename="../resources/scripts/general/terrain.js" line="441"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26266,6 +26278,76 @@ Fullscreen  - Animations are upscaled based on the resolution
         <location filename="../resources/scripts/general/terrain.js" line="34"/>
         <location filename="../resources/scripts/general/terrain.js" line="73"/>
         <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="432"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="433"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="434"/>
+        <source>Clear Advance Wars 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="435"/>
+        <source>Clear Advance Wars DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="436"/>
+        <source>Clear Advance Wars 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="438"/>
+        <source>Desert Advance Wars DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="439"/>
+        <source>Desert Advance Wars 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="440"/>
+        <source>Rain Advance Wars 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="442"/>
+        <source>Snow Advance Wars 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="443"/>
+        <source>Snow Advance Wars DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="444"/>
+        <source>Snow Advance Wars 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="445"/>
+        <source>Waste Advance Wars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="446"/>
+        <source>Waste Advance Wars DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="447"/>
+        <source>Waste Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

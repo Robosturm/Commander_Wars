@@ -49,6 +49,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     y += pLabel->getTextRect().height() + 10 + GameMap::getImageSize();
 
     spTerrain pIconTerrain = Terrain::createTerrain(pTerrain->getTerrainID(), -1, -1, "", pTerrain->getMap());
+    pIconTerrain->setPalette(pTerrain->getPalette());
     pIconTerrain->loadSprites();
     Building* pTerrainBuildiong = pTerrain->getBuilding();
     if (pTerrainBuildiong != nullptr)

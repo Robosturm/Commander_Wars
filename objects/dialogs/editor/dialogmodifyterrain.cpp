@@ -5,10 +5,11 @@
 #include "resource_management/terrainmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "dialogmodifyterrain.h"
+#include "coreengine/interpreter.h"
 
 #include "game/gamemap.h"
 
+#include "objects/dialogs/editor/dialogmodifyterrain.h"
 #include "objects/dialogs/filedialog.h"
 #include "objects/base/label.h"
 #include "objects/base/checkbox.h"
@@ -21,6 +22,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     setObjectName("DialogModifyTerrain");
 #endif
     Interpreter::setCppOwnerShip(this);
+
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -45,7 +47,18 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
                                      QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
+    load();
+    connect(this, &DialogModifyTerrain::sigFinished, this, &DialogModifyTerrain::remove, Qt::QueuedConnection);
+    connect(this, &DialogModifyTerrain::sigChangePalette, this, &DialogModifyTerrain::changePalette, Qt::QueuedConnection);
+    connect(this, &DialogModifyTerrain::sigTerrainClicked, this, &DialogModifyTerrain::terrainClicked, Qt::QueuedConnection);
+    connect(this, &DialogModifyTerrain::sigShowLoadDialog, this, &DialogModifyTerrain::showLoadDialog, Qt::QueuedConnection);
+}
 
+void DialogModifyTerrain::load()
+{
+    Mainapp::getInstance()->pauseRendering();
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    m_pPanel->clearContent();
     qint32 y = 20;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -75,10 +88,10 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     spTextbox pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getScaledWidth());
     pTextbox->setTooltipText(tr("Custom Name of the Terrain. Empty name equals the default name."));
     pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
-    pTextbox->setCurrentText(pTerrain->getTerrainName());
-    connect(pTextbox.get(), &Textbox::sigTextChanged, pTerrain, [pTerrain](QString value)
+    pTextbox->setCurrentText(m_pTerrain->getTerrainName());
+    connect(pTextbox.get(), &Textbox::sigTextChanged, m_pTerrain, [this](QString value)
     {
-        pTerrain->setTerrainName(value, !value.isEmpty());
+        m_pTerrain->setTerrainName(value, !value.isEmpty());
     }, Qt::QueuedConnection);
     m_pPanel->addItem(pTextbox);
     y += pLabel->getHeight() + 10;
@@ -90,14 +103,30 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getScaledWidth());
     pTextbox->setTooltipText(tr("Custom Description of the Terrain. Empty description equals the default description."));
     pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
-    pTextbox->setCurrentText(pTerrain->getTerrainDescription());
-    connect(pTextbox.get(), &Textbox::sigTextChanged, pTerrain, &Terrain::setTerrainDescription, Qt::QueuedConnection);
+    pTextbox->setCurrentText(m_pTerrain->getTerrainDescription());
+    connect(pTextbox.get(), &Textbox::sigTextChanged, m_pTerrain, &Terrain::setTerrainDescription, Qt::QueuedConnection);
     m_pPanel->addItem(pTextbox);
     m_pPanel->addItem(pLabel);
     y += pLabel->getHeight() + 10;
 
-    loadBaseImageview(y, pTerrain);
-    loadOverlayview(y, pTerrain);
+    pLabel = spLabel::create(190);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Palette:"));
+    pLabel->setPosition(10, y);
+    m_pPanel->addItem(pLabel);
+    spDropDownmenu pDropDownmenu = spDropDownmenu::create(400, getPaletteNames());
+    pDropDownmenu->setTooltipText(tr("Changes the palette used by the terrain."));
+    pDropDownmenu->setPosition(200 + 20 + pLabel->getX(), y);
+    pDropDownmenu->setCurrentItemText(getPaletteName(m_pTerrain->getPalette()));
+    connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, m_pTerrain, [this](qint32 item)
+    {
+        emit sigChangePalette(getPaletteId(item));
+    }, Qt::QueuedConnection);
+    m_pPanel->addItem(pDropDownmenu);
+    y += pLabel->getHeight() + 10;
+
+    loadBaseImageview(y, m_pTerrain);
+    loadOverlayview(y, m_pTerrain);
 
     oxygine::spButton pButtonDefault = pObjectManager->createButton(tr("Default"), 150);
     pButtonDefault->setPosition(10, y);
@@ -115,19 +144,16 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
          emit sigShowLoadDialog();
     });
 
-    connect(this, &DialogModifyTerrain::sigTerrainClicked, this, &DialogModifyTerrain::terrainClicked, Qt::QueuedConnection);
-    connect(this, &DialogModifyTerrain::sigShowLoadDialog, this, &DialogModifyTerrain::showLoadDialog, Qt::QueuedConnection);
-
     m_pPanel->setContentHeigth(y + 60);
-    if (pTerrain->getFixedSprite())
+    if (m_pTerrain->getFixedSprite())
     {
-        m_pTextbox->setCurrentText(pTerrain->getTerrainSpriteName());
+        m_pTextbox->setCurrentText(m_pTerrain->getTerrainSpriteName());
     }
     else
     {
         m_pTextbox->setCurrentText("");
     }
-    connect(this, &DialogModifyTerrain::sigFinished, this, &DialogModifyTerrain::remove, Qt::QueuedConnection);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
@@ -156,6 +182,7 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
             spTerrain pSprite = Terrain::createTerrain(pTerrain->getBaseTerrainID(), -2, -2, "", m_pMap);
             pSprite->setFixedSprite(true);
             pSprite->setTerrainSpriteName(id);
+            pSprite->setPalette(pTerrain->getPalette());
             pSprite->loadSprites();
             pSprite->setScale(2.0f);
             pSprite->setPosition(x, y);
@@ -187,6 +214,49 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
     y += pTextfield->getHeight() + 20;
 }
 
+void DialogModifyTerrain::changePalette(const QString & newPalette)
+{
+    m_pTerrain->setPalette(newPalette);
+    load();
+}
+
+QStringList DialogModifyTerrain::getPaletteNames() const
+{
+    QStringList names;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getPaletteTables";
+    QString function2 = "getPaletteNames";
+    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1);
+    qint32 count = ret.toInt();
+    for (qint32 i = 0; i < count; ++i)
+    {
+        QJSValueList args({QJSValue(i)});
+        ret = pInterpreter->doFunction("TERRAIN", function2, args);
+        names.append(ret.toString());
+    }
+    return names;
+}
+
+QString DialogModifyTerrain::getPaletteId(qint32 index) const
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getPaletteId";
+    QJSValueList args({QJSValue(index)});
+    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
+    QString id = ret.toString();
+    return id;
+}
+
+QString DialogModifyTerrain::getPaletteName(QString id) const
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getPaletteName";
+    QJSValueList args({id});
+    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
+    QString name = ret.toString();
+    return name;
+}
+
 void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
 {
     QStringList overlayTerrainStyles = pTerrain->getOverlayTerrainSprites();
@@ -206,6 +276,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         y += pLabel->getHeight() + 10;
+        QString palette = pTerrain->getPalette();
 
         TerrainManager* pTerrainManager = TerrainManager::getInstance();
         for (qint32 i = 0; i < overlayTerrainStyles.size(); i++)
@@ -221,6 +292,14 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
                 pRect->setColor(QColor(100, 100, 100, 100));
 
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
+                if (!palette.isEmpty())
+                {
+                    oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(palette, oxygine::error_policy::ep_ignore_error));
+                    if (pPaletteAnim.get() != nullptr)
+                    {
+                        pSprite->setColorTable(pPaletteAnim, true);
+                    }
+                }
                 pSprite->setResAnim(pAnim);
                 pSprite->setSize(pAnim->getSize());
                 pSprite->setScale(static_cast<float>(GameMap::getImageSize()) * scale / static_cast<float>(pAnim->getWidth()));
