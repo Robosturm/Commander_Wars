@@ -142,6 +142,11 @@ public slots:
      */
     void setPalette(const QString & newPalette);
     /**
+     * @brief setTerrainPalette
+     * @param newPalette
+     */
+    void setTerrainPalette(const QString & newPalette);
+    /**
      * @brief getFixedOverlaySprites
      * @return
      */

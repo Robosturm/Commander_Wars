@@ -78,21 +78,22 @@ QString Terrain::getPalette() const
     return m_palette;
 }
 
+void Terrain::setTerrainPalette(const QString & newPalette)
+{
+    if (m_pBaseTerrain.get() != nullptr)
+    {
+        m_pBaseTerrain->setPalette(newPalette);
+    }
+    setPalette(newPalette);
+}
+
+
 void Terrain::setPalette(const QString & newPalette)
 {
     m_palette = newPalette;
-    TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    oxygine::spResAnim nullAnim;
-    if (m_pTerrainSprite.get() != nullptr)
-    {
-        m_pTerrainSprite->setColorTable(nullAnim, false);
-    }
-    for (qint32 i = 0; i < m_pOverlaySprites.size(); ++i)
-    {
-        m_pOverlaySprites[i]->setColorTable(nullAnim, false);
-    }
     if (!m_palette.isEmpty())
     {
+        TerrainManager* pTerrainManager = TerrainManager::getInstance();
         oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(m_palette, oxygine::error_policy::ep_ignore_error));
         if (pPaletteAnim.get() != nullptr)
         {
@@ -104,6 +105,18 @@ void Terrain::setPalette(const QString & newPalette)
             {
                 m_pOverlaySprites[i]->setColorTable(pPaletteAnim, true);
             }
+        }
+    }
+    else
+    {
+        oxygine::spResAnim nullAnim;
+        for (qint32 i = 0; i < m_pOverlaySprites.size(); ++i)
+        {
+            m_pOverlaySprites[i]->setColorTable(nullAnim, false);
+        }
+        if (m_pTerrainSprite.get() != nullptr)
+        {
+            m_pTerrainSprite->setColorTable(nullAnim, false);
         }
     }
 }
