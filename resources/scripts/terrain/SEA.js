@@ -70,17 +70,17 @@ var Constructor = function()
         var surroundingsSnow = terrain.getSurroundings("SNOW", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsSnow !== "")
         {
-            terrain.loadOverlaySprite("sea+snow" + surroundingsSnow);
+            terrain.loadOverlaySprite("sea+snow" + surroundingsSnow + "+mask");
         }
         var surroundingsWaste = terrain.getSurroundings("WASTE", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsWaste !== "")
         {
-            terrain.loadOverlaySprite("sea+waste" + surroundingsWaste);
+            terrain.loadOverlaySprite("sea+waste" + surroundingsWaste + "+mask");
         }
         var surroundingsDesert = terrain.getSurroundings("DESERT", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsDesert !== "")
         {
-            terrain.loadOverlaySprite("sea+desert" + surroundingsDesert);
+            terrain.loadOverlaySprite("sea+desert" + surroundingsDesert + "+mask");
         }
         var surroundingsRiver = terrain.getSurroundings("RIVER", true, false, GameEnums.Directions_Direct, false, false, 1, true);
         if (surroundingsRiver !== "")
@@ -164,55 +164,70 @@ var Constructor = function()
 
     this.getOverlayTerrainSprites = function(map)
     {
-        return ["sea+snow+E",
-                "sea+snow+E+S",
-                "sea+snow+E+S+W",
-                "sea+snow+E+W",
-                "sea+snow+N",
-                "sea+snow+N+E",
-                "sea+snow+N+E+S",
-                "sea+snow+N+E+S+W",
-                "sea+snow+N+E+W",
-                "sea+snow+N+S",
-                "sea+snow+N+S+W",
-                "sea+snow+N+W",
-                "sea+snow+S",
-                "sea+snow+S+W",
-                "sea+snow+W",
-                "sea+desert+E",
-                "sea+desert+E+S",
-                "sea+desert+E+S+W",
-                "sea+desert+E+W",
-                "sea+desert+N",
-                "sea+desert+N+E",
-                "sea+desert+N+E+S",
-                "sea+desert+N+E+S+W",
-                "sea+desert+N+E+W",
-                "sea+desert+N+S",
-                "sea+desert+N+S+W",
-                "sea+desert+N+W",
-                "sea+desert+S",
-                "sea+desert+S+W",
-                "sea+desert+W",
-                "sea+waste+E",
-                "sea+waste+E+S",
-                "sea+waste+E+S+W",
-                "sea+waste+E+W",
-                "sea+waste+N",
-                "sea+waste+N+E",
-                "sea+waste+N+E+S",
-                "sea+waste+N+E+S+W",
-                "sea+waste+N+E+W",
-                "sea+waste+N+S",
-                "sea+waste+N+S+W",
-                "sea+waste+N+W",
-                "sea+waste+S",
-                "sea+waste+S+W",
-                "sea+waste+W",
-                "beach+land+NE+overlay",
-                "beach+land+NW+overlay",
-                "beach+land+SE+overlay",
-                "beach+land+SW+overlay",];
+        return ["sea+snow+E+mask",
+                "sea+snow+E+S+mask",
+                "sea+snow+E+S+W+mask",
+                "sea+snow+E+W+mask",
+                "sea+snow+N+mask",
+                "sea+snow+N+E+mask",
+                "sea+snow+N+E+S+mask",
+                "sea+snow+N+E+S+W+mask",
+                "sea+snow+N+E+W+mask",
+                "sea+snow+N+S+mask",
+                "sea+snow+N+S+W+mask",
+                "sea+snow+N+W+mask",
+                "sea+snow+S+mask",
+                "sea+snow+S+W+mask",
+                "sea+snow+W+mask",
+                "sea+desert+E+mask",
+                "sea+desert+E+S+mask",
+                "sea+desert+E+S+W+mask",
+                "sea+desert+E+W+mask",
+                "sea+desert+N+mask",
+                "sea+desert+N+E+mask",
+                "sea+desert+N+E+S+mask",
+                "sea+desert+N+E+S+W+mask",
+                "sea+desert+N+E+W+mask",
+                "sea+desert+N+S+mask",
+                "sea+desert+N+S+W+mask",
+                "sea+desert+N+W+mask",
+                "sea+desert+S+mask",
+                "sea+desert+S+W+mask",
+                "sea+desert+W+mask",
+                "sea+waste+E+mask",
+                "sea+waste+E+S+mask",
+                "sea+waste+E+S+W+mask",
+                "sea+waste+E+W+mask",
+                "sea+waste+N+mask",
+                "sea+waste+N+E+mask",
+                "sea+waste+N+E+S+mask",
+                "sea+waste+N+E+S+W+mask",
+                "sea+waste+N+E+W+mask",
+                "sea+waste+N+S+mask",
+                "sea+waste+N+S+W+mask",
+                "sea+waste+N+W+mask",
+                "sea+waste+S+mask",
+                "sea+waste+S+W+mask",
+                "sea+waste+W+mask",
+                "sea+clear+E+mask",
+                "sea+clear+E+S+mask",
+                "sea+clear+E+S+W+mask",
+                "sea+clear+E+W+mask",
+                "sea+clear+N+mask",
+                "sea+clear+N+E+mask",
+                "sea+clear+N+E+S+mask",
+                "sea+clear+N+E+S+W+mask",
+                "sea+clear+N+E+W+mask",
+                "sea+clear+N+S+mask",
+                "sea+clear+N+S+W+mask",
+                "sea+clear+N+W+mask",
+                "sea+clear+S+mask",
+                "sea+clear+S+W+mask",
+                "sea+clear+W+mask",
+                "beach+land+NE+overlay+mask",
+                "beach+land+NW+overlay+mask",
+                "beach+land+SE+overlay+mask",
+                "beach+land+SW+overlay+mask",];
     };
     this.getEditorPlacementSound = function()
     {

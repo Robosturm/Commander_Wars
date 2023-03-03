@@ -204,10 +204,13 @@ namespace oxygine
                 matChanged();
             }
         }
-        else
+        else if (m_mat->m_table.get() != nullptr)
         {
+            m_mat = m_mat->clone();
             m_mat->m_table = nullptr;
-            m_mat->setMatrixMode(false);
+            m_mat->setMatrixMode(matrix);
+            m_mat = MaterialCache::mc().cache(*m_mat.get());
+            matChanged();
         }
 #endif
     }

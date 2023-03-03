@@ -93,10 +93,10 @@
         <image file="sea/sea+NW+mask.png" cols = "8" />
         <image file="sea/sea+SE+mask.png" cols = "8" />
         <image file="sea/sea+SW+mask.png" cols = "8" />
-        <image file="sea/sea+overlay+NE+mask.png" cols = "8" />
-        <image file="sea/sea+overlay+NW+mask.png" cols = "8" />
-        <image file="sea/sea+overlay+SE+mask.png" cols = "8" />
-        <image file="sea/sea+overlay+SW+mask.png" cols = "8" />
+        <image file="sea/sea+NE+overlay+mask.png" cols = "8" />
+        <image file="sea/sea+NW+overlay+mask.png" cols = "8" />
+        <image file="sea/sea+SE+overlay+mask.png" cols = "8" />
+        <image file="sea/sea+SW+overlay+mask.png" cols = "8" />
         <image file="sea/sea+E+W+bridge+mask.png" cols = "8" />
         <image file="sea/sea+W+bridge+mask.png" cols = "8" />
         <image file="sea/sea+E+bridge+mask.png" cols = "8" />

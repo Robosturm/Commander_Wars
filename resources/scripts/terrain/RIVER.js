@@ -260,7 +260,7 @@ var Constructor = function()
                     else
                     {
                         var fallbackAnim = terrain.getFittingResAnim("river+", landEnding);
-                        if (fallbackAnim !== "")
+                        if (fallbackAnim !== "" && surroundingsDirect !== "")
                         {
                             terrain.loadBaseSprite(fallbackAnim);
                         }

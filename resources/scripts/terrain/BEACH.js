@@ -156,7 +156,7 @@ var Constructor = function()
             let surroundingsSE = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_SouthEast, false);
             if (surroundingsSE !== "")
             {
-                terrain.loadOverlaySprite("sea+overlay" + surroundingsSE);
+                terrain.loadOverlaySprite("sea" + surroundingsSE + "+overlay+mask");
             }
         }
         // load overlay north east
@@ -165,7 +165,7 @@ var Constructor = function()
             let surroundingsNE = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_NorthEast, false);
             if (surroundingsNE !== "")
             {
-                terrain.loadOverlaySprite("sea+overlay" + surroundingsNE);
+                terrain.loadOverlaySprite("sea" + surroundingsNE + "+overlay+mask");
             }
         }
         // load overlay south west
@@ -174,7 +174,7 @@ var Constructor = function()
             let surroundingsSW = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_SouthWest, false);
             if (surroundingsSW !== "")
             {
-                terrain.loadOverlaySprite("sea+overlay" + surroundingsSW);
+                terrain.loadOverlaySprite("sea" + surroundingsSW + "+overlay+mask");
             }
         }
         // load overlay north west
@@ -183,7 +183,7 @@ var Constructor = function()
             let surroundingsNW = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_NorthWest, false);
             if (surroundingsNW !== "")
             {
-                terrain.loadOverlaySprite("sea+overlay" + surroundingsNW);
+                terrain.loadOverlaySprite("sea" + surroundingsNW + "+overlay+mask");
             }
         }
 
@@ -384,10 +384,10 @@ var Constructor = function()
                 "sea+waste+S",
                 "sea+waste+S+W",
                 "sea+waste+W",
-                "sea+overlay+NE",
-                "sea+overlay+NW",
-                "sea+overlay+SE",
-                "sea+overlay+SW",
+                "sea+NE+overlay",
+                "sea+NW+overlay",
+                "sea+SE+overlay",
+                "sea+SW+overlay",
                 "beach+overlay+E",
                 "beach+overlay+N",
                 "beach+overlay+W",
