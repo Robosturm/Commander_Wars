@@ -36,9 +36,6 @@ private:
     void loadBaseImageview(qint32 & y, Terrain* pTerrain);
     void loadOverlayview(qint32 & y, Terrain* pTerrain);
     void load();
-    QStringList getPaletteNames() const;
-    QString getPaletteId(qint32 index) const;
-    QString getPaletteName(QString id) const;
 private:
     Terrain* m_pTerrain{nullptr};
     spPanel m_pPanel;

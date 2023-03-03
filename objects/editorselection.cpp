@@ -3,6 +3,7 @@
 #include "objects/editorselection.h"
 #include "objects/base/moveinbutton.h"
 #include "objects/base/label.h"
+#include "objects/base/dropdownmenu.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/terrainmanager.h"
@@ -154,6 +155,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     connect(this, &EditorSelection::sigUpdateTerrainView, this, &EditorSelection::updateTerrainView, Qt::QueuedConnection);
     connect(this, &EditorSelection::sigUpdateBuildingView, this, &EditorSelection::updateBuildingView, Qt::QueuedConnection);
     connect(this, &EditorSelection::sigChangeScrollValue, this, &EditorSelection::changeScrollValue, Qt::QueuedConnection);
+    connect(this, &EditorSelection::sigPaletteChanged, this, &EditorSelection::onPaletteChanged, Qt::QueuedConnection);
 
     // load other sprites not shown in the starting screen
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -598,6 +600,11 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
     return pSprite;
 }
 
+QString EditorSelection::getActivePalette() const
+{
+    return m_activePalette;
+}
+
 void EditorSelection::updateTerrainView()
 {    
     hideSelection();
@@ -738,7 +745,17 @@ void EditorSelection::createBuildingSectionLabel(qint32 item, qint32 & currentId
 
 void EditorSelection::initTerrainSection()
 {
-    qint32 posY = m_startH - GameMap::getImageSize();
+    spDropDownmenu pDropDownmenu = spDropDownmenu::create(m_labelWidth, Terrain::getPaletteNames());
+    pDropDownmenu->setTooltipText(tr("Changes the palette used by the terrain."));
+    pDropDownmenu->setPosition(getPosX(0), m_startH);
+    pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_activePalette));
+    connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
+    {
+        emit sigPaletteChanged(Terrain::getPaletteId(item));
+    }, Qt::QueuedConnection);
+    m_PlacementActor->addChild(pDropDownmenu);
+    m_terrainActors.append(pDropDownmenu);
+    qint32 posY = m_startH - GameMap::getImageSize() + 10 + pDropDownmenu->getHeight();
     qint32 xCounter = 0;
     qint32 currentIdentifier = std::numeric_limits<qint32>::min();
     for (qint32 i = 0; i < m_Terrains.size(); i++)
@@ -752,6 +769,7 @@ void EditorSelection::initTerrainSection()
             posX = m_frameSize;
         }
         m_Terrains[i]->setPosition(posX, posY);
+        m_Terrains[i]->setTerrainPalette(m_activePalette);
         m_Terrains[i]->setVisible(false);
         m_Terrains[i]->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
@@ -782,6 +800,15 @@ void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIde
         m_PlacementActor->addChild(pTextfield);
         m_terrainActors.append(pTextfield);
         posY += GameMap::getImageSize() * m_yFactor;
+    }
+}
+
+void EditorSelection::onPaletteChanged(const QString & newPalette)
+{
+    m_activePalette = newPalette;
+    for (qint32 i = 0; i < m_Terrains.size(); i++)
+    {
+        m_Terrains[i]->setTerrainPalette(newPalette);
     }
 }
 

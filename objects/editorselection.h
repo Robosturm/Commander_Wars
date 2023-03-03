@@ -91,7 +91,13 @@ signals:
    void sigUpdateBuildingView();
    void sigUpdateUnitView();
    void sigChangeScrollValue(qint32 dir);
+   void sigPaletteChanged(const QString & newPalette);
 public slots:
+   /**
+    * @brief getActivePalette
+    * @return
+    */
+   QString getActivePalette() const;
     void selectTerrain(QString terrainID);
     void selectBuilding(QString buildingID);
     void selectUnit(QString unitID);
@@ -103,6 +109,8 @@ public slots:
     void updateUnitView();
 
     void changeScrollValue(qint32 dir);
+
+    void onPaletteChanged(const QString & newPalette);
 private:
     /**
      * @brief selectBuilding
@@ -221,6 +229,8 @@ private:
     oxygine::spSprite m_pSpriteUnitMode;
 
     qint32 m_selectedItem{0};
+
+    QString m_activePalette{""};
     /**
      * @brief current selected player
      */
@@ -228,6 +238,7 @@ private:
     qint32 m_playerStartIndex{0};
     QVector<spBuilding> m_Players;
     GameMap* m_pMap{nullptr};
+    Q_PROPERTY(QString activePalette READ getActivePalette CONSTANT)
 };
 
 #endif // EDITORSELECTION_H

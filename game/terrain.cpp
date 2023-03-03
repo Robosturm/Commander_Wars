@@ -1560,6 +1560,43 @@ void Terrain::removeTerrainOverlay(const QString & id)
     }
 }
 
+QStringList Terrain::getPaletteNames()
+{
+    QStringList names;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getPaletteTables";
+    QString function2 = "getPaletteNames";
+    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1);
+    qint32 count = ret.toInt();
+    for (qint32 i = 0; i < count; ++i)
+    {
+        QJSValueList args({QJSValue(i)});
+        ret = pInterpreter->doFunction("TERRAIN", function2, args);
+        names.append(ret.toString());
+    }
+    return names;
+}
+
+QString Terrain::getPaletteId(qint32 index)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getPaletteId";
+    QJSValueList args({QJSValue(index)});
+    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
+    QString id = ret.toString();
+    return id;
+}
+
+QString Terrain::getPaletteName(const QString & id)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getPaletteName";
+    QJSValueList args({id});
+    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
+    QString name = ret.toString();
+    return name;
+}
+
 void Terrain::serializeObject(QDataStream& pStream) const
 {
     serializeObject(pStream, false);

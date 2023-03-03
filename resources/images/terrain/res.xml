@@ -93,59 +93,74 @@
         <image file="sea/sea+NW+mask.png" cols = "8" />
         <image file="sea/sea+SE+mask.png" cols = "8" />
         <image file="sea/sea+SW+mask.png" cols = "8" />
-        <image file="sea/sea+overlay+NE.png" cols = "8" />
-        <image file="sea/sea+overlay+NW.png" cols = "8" />
-        <image file="sea/sea+overlay+SE.png" cols = "8" />
-        <image file="sea/sea+overlay+SW.png" cols = "8" />
+        <image file="sea/sea+overlay+NE+mask.png" cols = "8" />
+        <image file="sea/sea+overlay+NW+mask.png" cols = "8" />
+        <image file="sea/sea+overlay+SE+mask.png" cols = "8" />
+        <image file="sea/sea+overlay+SW+mask.png" cols = "8" />
         <image file="sea/sea+E+W+bridge+mask.png" cols = "8" />
         <image file="sea/sea+W+bridge+mask.png" cols = "8" />
         <image file="sea/sea+E+bridge+mask.png" cols = "8" />
         <!-- sea overlay for other terrain types -->
-        <image file="sea/sea+snow+E.png" />
-        <image file="sea/sea+snow+E+S.png" />
-        <image file="sea/sea+snow+E+S+W.png" />
-        <image file="sea/sea+snow+E+W.png" />
-        <image file="sea/sea+snow+N.png" />
-        <image file="sea/sea+snow+N+E.png" />
-        <image file="sea/sea+snow+N+E+S.png" />
-        <image file="sea/sea+snow+N+E+S+W.png" />
-        <image file="sea/sea+snow+N+E+W.png" />
-        <image file="sea/sea+snow+N+S.png" />
-        <image file="sea/sea+snow+N+S+W.png" />
-        <image file="sea/sea+snow+N+W.png" />
-        <image file="sea/sea+snow+S.png" />
-        <image file="sea/sea+snow+S+W.png" />
-        <image file="sea/sea+snow+W.png" />
-        <image file="sea/sea+desert+E.png" />
-        <image file="sea/sea+desert+E+S.png" />
-        <image file="sea/sea+desert+E+S+W.png" />
-        <image file="sea/sea+desert+E+W.png" />
-        <image file="sea/sea+desert+N.png" />
-        <image file="sea/sea+desert+N+E.png" />
-        <image file="sea/sea+desert+N+E+S.png" />
-        <image file="sea/sea+desert+N+E+S+W.png" />
-        <image file="sea/sea+desert+N+E+W.png" />
-        <image file="sea/sea+desert+N+S.png" />
-        <image file="sea/sea+desert+N+S+W.png" />
-        <image file="sea/sea+desert+N+W.png" />
-        <image file="sea/sea+desert+S.png" />
-        <image file="sea/sea+desert+S+W.png" />
-        <image file="sea/sea+desert+W.png" />
-        <image file="sea/sea+waste+E.png" />
-        <image file="sea/sea+waste+E+S.png"  />
-        <image file="sea/sea+waste+E+S+W.png" />
-        <image file="sea/sea+waste+E+W.png" />
-        <image file="sea/sea+waste+N.png" />
-        <image file="sea/sea+waste+N+E.png" />
-        <image file="sea/sea+waste+N+E+S.png" />
-        <image file="sea/sea+waste+N+E+S+W.png" />
-        <image file="sea/sea+waste+N+E+W.png" />
-        <image file="sea/sea+waste+N+S.png" />
-        <image file="sea/sea+waste+N+S+W.png" />
-        <image file="sea/sea+waste+N+W.png" />
-        <image file="sea/sea+waste+S.png" />
-        <image file="sea/sea+waste+S+W.png" />
-        <image file="sea/sea+waste+W.png" />
+        <image file="sea/sea+snow+E+mask.png" />
+        <image file="sea/sea+snow+E+S+mask.png" />
+        <image file="sea/sea+snow+E+S+W+mask.png" />
+        <image file="sea/sea+snow+E+W+mask.png" />
+        <image file="sea/sea+snow+N+mask.png" />
+        <image file="sea/sea+snow+N+E+mask.png" />
+        <image file="sea/sea+snow+N+E+S+mask.png" />
+        <image file="sea/sea+snow+N+E+S+W+mask.png" />
+        <image file="sea/sea+snow+N+E+W+mask.png" />
+        <image file="sea/sea+snow+N+S+mask.png" />
+        <image file="sea/sea+snow+N+S+W+mask.png" />
+        <image file="sea/sea+snow+N+W+mask.png" />
+        <image file="sea/sea+snow+S+mask.png" />
+        <image file="sea/sea+snow+S+W+mask.png" />
+        <image file="sea/sea+snow+W+mask.png" />
+        <image file="sea/sea+desert+E+mask.png" />
+        <image file="sea/sea+desert+E+S+mask.png" />
+        <image file="sea/sea+desert+E+S+W+mask.png" />
+        <image file="sea/sea+desert+E+W+mask.png" />
+        <image file="sea/sea+desert+N+mask.png" />
+        <image file="sea/sea+desert+N+E+mask.png" />
+        <image file="sea/sea+desert+N+E+S+mask.png" />
+        <image file="sea/sea+desert+N+E+S+W+mask.png" />
+        <image file="sea/sea+desert+N+E+W+mask.png" />
+        <image file="sea/sea+desert+N+S+mask.png" />
+        <image file="sea/sea+desert+N+S+W+mask.png" />
+        <image file="sea/sea+desert+N+W+mask.png" />
+        <image file="sea/sea+desert+S+mask.png" />
+        <image file="sea/sea+desert+S+W+mask.png" />
+        <image file="sea/sea+desert+W+mask.png" />
+        <image file="sea/sea+waste+E+mask.png" />
+        <image file="sea/sea+waste+E+S+mask.png"  />
+        <image file="sea/sea+waste+E+S+W+mask.png" />
+        <image file="sea/sea+waste+E+W+mask.png" />
+        <image file="sea/sea+waste+N+mask.png" />
+        <image file="sea/sea+waste+N+E+mask.png" />
+        <image file="sea/sea+waste+N+E+S+mask.png" />
+        <image file="sea/sea+waste+N+E+S+W+mask.png" />
+        <image file="sea/sea+waste+N+E+W+mask.png" />
+        <image file="sea/sea+waste+N+S+mask.png" />
+        <image file="sea/sea+waste+N+S+W+mask.png" />
+        <image file="sea/sea+waste+N+W+mask.png" />
+        <image file="sea/sea+waste+S+mask.png" />
+        <image file="sea/sea+waste+S+W+mask.png" />
+        <image file="sea/sea+waste+W+mask.png" />
+        <image file="sea/sea+clear+E+mask.png" />
+        <image file="sea/sea+clear+E+S+mask.png"  />
+        <image file="sea/sea+clear+E+S+W+mask.png" />
+        <image file="sea/sea+clear+E+W+mask.png" />
+        <image file="sea/sea+clear+N+mask.png" />
+        <image file="sea/sea+clear+N+E+mask.png" />
+        <image file="sea/sea+clear+N+E+S+mask.png" />
+        <image file="sea/sea+clear+N+E+S+W+mask.png" />
+        <image file="sea/sea+clear+N+E+W+mask.png" />
+        <image file="sea/sea+clear+N+S+mask.png" />
+        <image file="sea/sea+clear+N+S+W+mask.png" />
+        <image file="sea/sea+clear+N+W+mask.png" />
+        <image file="sea/sea+clear+S+mask.png" />
+        <image file="sea/sea+clear+S+W+mask.png" />
+        <image file="sea/sea+clear+W+mask.png" />
         
         <image file="rough_sea+N+E+S+W+mask.png" cols = "4" />
         
@@ -410,10 +425,6 @@
         <image file="beach/beach+S+mask.png" cols = "8" />
         <image file="beach/beach+S+W+mask.png" cols = "8" />
         <image file="beach/beach+W+mask.png" cols = "8" />
-        <image file="beach/beach+NW.png" cols = "8" />
-        <image file="beach/beach+NE.png" cols = "8" />
-        <image file="beach/beach+SW.png" cols = "8" />
-        <image file="beach/beach+SE.png" cols = "8" />
         <image file="beach/beach+N+S+mask.png" cols = "8" />
         <image file="beach/beach+E+W+mask.png" cols = "8" />
         <image file="beach/beach+overlay+W+mask.png" cols = "8" />

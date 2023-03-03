@@ -1318,6 +1318,7 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
         {
             Terrain* pTerrain = m_pMap->getTerrain(x, y);
             if (pTerrain->getTerrainID() != terrainID ||
+                pTerrain->getPalette() != m_EditorSelection->getActivePalette() ||
                 pTerrain->getBuilding() != nullptr ||
                 m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Small)
             {
@@ -1421,7 +1422,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
                 Interpreter* pInterpreter = Interpreter::getInstance();
                 QString function1 = "useTerrainAsBaseTerrain";
                 QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false);
+                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false, true, m_EditorSelection->getActivePalette(), true);
                 placed = true;
             }
             else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())

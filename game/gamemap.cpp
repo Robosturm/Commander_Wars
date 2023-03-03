@@ -1200,12 +1200,13 @@ void GameMap::zoomChanged()
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
-void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit)
+void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit, const QString & palette, bool changePalette)
 {
     if (onMap(x, y))
     {
         spTerrain pTerrainOld = m_fields[y][x];
-        if (pTerrainOld->getTerrainID() != terrainID)
+        if (pTerrainOld->getTerrainID() != terrainID ||
+            (changePalette && pTerrainOld->getPalette() != palette))
         {
             pTerrainOld->removeBuilding();
             spUnit pUnit = spUnit(pTerrainOld->getUnit());
@@ -1223,6 +1224,10 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
                 m_fields[y][x] = pTerrain;
                 m_rowSprites[y]->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
+                if (changePalette)
+                {
+                    pTerrain->setPalette(palette);
+                }
             }
             else
             {
@@ -1230,6 +1235,10 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
                 m_fields[y][x] = pTerrain;
                 m_rowSprites[y]->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
+                if (changePalette)
+                {
+                    pTerrain->setTerrainPalette(palette);
+                }
             }
             if (!removeUnit)
             {
@@ -1254,9 +1263,9 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
     }
 }
 
-void GameMap::replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement)
+void GameMap::replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement, const QString & palette, bool changePalette)
 {
-    replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain);
+    replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain, true, palette, changePalette);
     if (checkPlacement)
     {
         updateTerrain(x, y);

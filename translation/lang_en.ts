@@ -2604,7 +2604,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="275"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="238"/>
         <source>Overlays</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2619,7 +2619,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="349"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="312"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3609,6 +3609,14 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="737"/>
         <source>Do you want to exit the map editor?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditorSelection</name>
+    <message>
+        <location filename="../objects/editorselection.cpp" line="749"/>
+        <source>Changes the palette used by the terrain.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6216,7 +6224,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
         <location filename="../game/gamemap.cpp" line="559"/>
         <location filename="../game/gamemap.cpp" line="682"/>
-        <location filename="../game/gamemap.cpp" line="1554"/>
+        <location filename="../game/gamemap.cpp" line="1563"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6353,7 +6361,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="559"/>
-        <location filename="../game/gamemap.cpp" line="1554"/>
+        <location filename="../game/gamemap.cpp" line="1563"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6368,27 +6376,27 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1521"/>
+        <location filename="../game/gamemap.cpp" line="1530"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1582"/>
+        <location filename="../game/gamemap.cpp" line="1591"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1592"/>
+        <location filename="../game/gamemap.cpp" line="1601"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1600"/>
+        <location filename="../game/gamemap.cpp" line="1609"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1612"/>
+        <location filename="../game/gamemap.cpp" line="1621"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26259,18 +26267,19 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="24"/>
-        <location filename="../resources/scripts/general/terrain.js" line="437"/>
+        <location filename="../resources/scripts/general/terrain.js" line="434"/>
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="25"/>
-        <location filename="../resources/scripts/general/terrain.js" line="441"/>
+        <location filename="../resources/scripts/general/terrain.js" line="435"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="26"/>
+        <location filename="../resources/scripts/general/terrain.js" line="436"/>
         <source>Waste</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26291,63 +26300,58 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="434"/>
-        <source>Clear Advance Wars 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/general/terrain.js" line="435"/>
-        <source>Clear Advance Wars DS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/general/terrain.js" line="436"/>
-        <source>Clear Advance Wars 4</source>
+        <location filename="../resources/scripts/general/terrain.js" line="437"/>
+        <source>Clear AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="438"/>
-        <source>Desert Advance Wars DS</source>
+        <source>Rain AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="439"/>
-        <source>Desert Advance Wars 4</source>
+        <source>Snow AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="440"/>
-        <source>Rain Advance Wars 2</source>
+        <source>Clear AW DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="441"/>
+        <source>Desert AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="442"/>
-        <source>Snow Advance Wars 2</source>
+        <source>Snow AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="443"/>
-        <source>Snow Advance Wars DS</source>
+        <source>Waste AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="444"/>
-        <source>Snow Advance Wars 4</source>
+        <source>Clear AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="445"/>
-        <source>Waste Advance Wars</source>
+        <source>Desert AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="446"/>
-        <source>Waste Advance Wars DS</source>
+        <source>Snow AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="447"/>
-        <source>Waste Advance Wars 4</source>
+        <source>Waste AW 4</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

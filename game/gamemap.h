@@ -651,7 +651,7 @@ public slots:
      * @param x
      * @param y
      */
-    void replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true);
+    void replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true, const QString & palette = "", bool changePalette = false);
     /**
      * @brief replaceTerrainOnly
      * @param terrainID
@@ -659,7 +659,7 @@ public slots:
      * @param y
      * @param useTerrainAsBaseTerrain
      */
-    void replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true);
+    void replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true, const QString & palette = "", bool changePalette = false);
     /**
      * @brief replaceBuilding
      * @param buildingID

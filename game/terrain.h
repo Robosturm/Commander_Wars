@@ -569,7 +569,24 @@ public slots:
      * @param curY
      * @return
      */
-    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);    
+    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);
+    /**
+     * @brief getPaletteNames
+     * @return
+     */
+    static QStringList getPaletteNames();
+    /**
+     * @brief getPaletteId
+     * @param index
+     * @return
+     */
+    static QString getPaletteId(qint32 index);
+    /**
+     * @brief getPaletteName
+     * @param id
+     * @return
+     */
+    static QString getPaletteName(const QString & id);
 protected:
     /**
      * @brief createBuildingDownStream

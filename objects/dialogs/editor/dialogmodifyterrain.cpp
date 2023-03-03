@@ -114,13 +114,13 @@ void DialogModifyTerrain::load()
     pLabel->setHtmlText(tr("Palette:"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    spDropDownmenu pDropDownmenu = spDropDownmenu::create(400, getPaletteNames());
+    spDropDownmenu pDropDownmenu = spDropDownmenu::create(400, Terrain::getPaletteNames());
     pDropDownmenu->setTooltipText(tr("Changes the palette used by the terrain."));
     pDropDownmenu->setPosition(200 + 20 + pLabel->getX(), y);
-    pDropDownmenu->setCurrentItemText(getPaletteName(m_pTerrain->getPalette()));
+    pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_pTerrain->getPalette()));
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, m_pTerrain, [this](qint32 item)
     {
-        emit sigChangePalette(getPaletteId(item));
+        emit sigChangePalette(Terrain::getPaletteId(item));
     }, Qt::QueuedConnection);
     m_pPanel->addItem(pDropDownmenu);
     y += pLabel->getHeight() + 10;
@@ -218,43 +218,6 @@ void DialogModifyTerrain::changePalette(const QString & newPalette)
 {
     m_pTerrain->setPalette(newPalette);
     load();
-}
-
-QStringList DialogModifyTerrain::getPaletteNames() const
-{
-    QStringList names;
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getPaletteTables";
-    QString function2 = "getPaletteNames";
-    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1);
-    qint32 count = ret.toInt();
-    for (qint32 i = 0; i < count; ++i)
-    {
-        QJSValueList args({QJSValue(i)});
-        ret = pInterpreter->doFunction("TERRAIN", function2, args);
-        names.append(ret.toString());
-    }
-    return names;
-}
-
-QString DialogModifyTerrain::getPaletteId(qint32 index) const
-{
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getPaletteId";
-    QJSValueList args({QJSValue(index)});
-    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
-    QString id = ret.toString();
-    return id;
-}
-
-QString DialogModifyTerrain::getPaletteName(QString id) const
-{
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getPaletteName";
-    QJSValueList args({id});
-    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
-    QString name = ret.toString();
-    return name;
 }
 
 void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
