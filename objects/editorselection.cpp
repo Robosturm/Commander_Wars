@@ -214,7 +214,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
             }
             else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get(), sea.get(), unit.get()) > 0)
             {
-                pAnim = pTerrainManager->getResAnim("SEA");
+                pAnim = pTerrainManager->getResAnim("SEA+mask");
                 pSprite->setResAnim(pAnim);
             }
             else

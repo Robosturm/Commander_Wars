@@ -1251,12 +1251,12 @@
 <context>
     <name>BEACH</name>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="16"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="17"/>
         <source>Beach</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="258"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="259"/>
         <source>Beachs over great landing places for landing ground troops.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3628,12 +3628,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>FOG</name>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="14"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="15"/>
         <source>Fog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="102"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="103"/>
         <source>&lt;r&gt;This heavy fog provides ideal hiding places&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; for naval units in Fog of War.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6683,12 +6683,12 @@ Note: This may be caused by a defective mod.</source>
 <context>
     <name>LAKE</name>
     <message>
-        <location filename="../resources/scripts/terrain/LAKE.js" line="15"/>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="16"/>
         <source>Lake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/LAKE.js" line="144"/>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="145"/>
         <source>A calm inland body of water. Naval and air forces have good mobility while hovercraft can freely move on and off.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7082,7 +7082,7 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2035"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2036"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7183,54 +7183,54 @@ Note: You won&apos;t be able to change any rules when reentering the lobby later
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="919"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1066"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="920"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1067"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1299"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1300"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1303"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1304"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1318"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1319"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1322"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1323"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1422"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1423"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1433"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1434"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1834"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1835"/>
         <source>Informing server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1906"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1907"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2031"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2032"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7614,7 +7614,7 @@ Host mods: </source>
 <context>
     <name>REAF</name>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="15"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="16"/>
         <source>Reaf</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7640,12 +7640,12 @@ Host mods: </source>
 <context>
     <name>ROUGH_SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="15"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="16"/>
         <source>Rough Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="84"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="85"/>
         <source>Movement of naval units is impeded but air units are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7902,12 +7902,12 @@ Host mods: </source>
 <context>
     <name>SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="15"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="16"/>
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="109"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="110"/>
         <source>Calm sea. Naval and air forces have good mobility.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -7,6 +7,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
+        terrain.setPalette("palette_clear");
         terrain.setVisionHigh(1);
         terrain.setTerrainName(REAF.getName());
     };
@@ -29,14 +30,14 @@ var Constructor = function()
     {
         var surroundingsPlainsDiagonal = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Diagnonal, false);
         var surroundingsPlainsDirect = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
-        var fullName = "reaf" + surroundingsPlainsDiagonal + surroundingsPlainsDirect;
+        var fullName = "reaf" + surroundingsPlainsDiagonal + surroundingsPlainsDirect + "+mask";
         if (terrain.existsResAnim(fullName))
         {
             terrain.loadBaseSprite(fullName);
         }
         else if (surroundingsPlainsDirect !== "")
         {
-            terrain.loadBaseSprite("reaf" + surroundingsPlainsDirect);
+            terrain.loadBaseSprite("reaf" + surroundingsPlainsDirect + "+mask");
         }
         else if (surroundingsPlainsDiagonal !== "")
         {
@@ -45,54 +46,53 @@ var Constructor = function()
                 surroundingsPlainsDiagonal.includes("+SW") ||
                 surroundingsPlainsDiagonal === "+SE")
             {
-                terrain.loadBaseSprite("reaf+E+S");
+                terrain.loadBaseSprite("reaf+E+S+mask");
             }
             else if (surroundingsPlainsDiagonal.includes("+SE") &&
                      surroundingsPlainsDiagonal.includes("+SW") &&
                      surroundingsPlainsDiagonal.includes("+NW") ||
                      surroundingsPlainsDiagonal === "+SW")
             {
-                terrain.loadBaseSprite("reaf+S+W");
+                terrain.loadBaseSprite("reaf+S+W+mask");
             }
             else if (surroundingsPlainsDiagonal.includes("+SW") &&
                      surroundingsPlainsDiagonal.includes("+NW") &&
                      surroundingsPlainsDiagonal.includes("+NE") ||
                      surroundingsPlainsDiagonal === "+NW")
             {
-                terrain.loadBaseSprite("reaf+N+W");
+                terrain.loadBaseSprite("reaf+N+W+mask");
             }
             else if (surroundingsPlainsDiagonal.includes("+NW") &&
                      surroundingsPlainsDiagonal.includes("+NE") &&
                      surroundingsPlainsDiagonal.includes("+SE") ||
                      surroundingsPlainsDiagonal === "+NE")
             {
-                terrain.loadBaseSprite("reaf+N+E");
+                terrain.loadBaseSprite("reaf+N+E+mask");
             }
             else if (surroundingsPlainsDiagonal.includes("+SE") &&
                 surroundingsPlainsDiagonal.includes("+SW"))
             {
-                terrain.loadBaseSprite("reaf+S");
+                terrain.loadBaseSprite("reaf+S+mask");
             }
             else if (surroundingsPlainsDiagonal.includes("+NE") &&
                      surroundingsPlainsDiagonal.includes("+NW"))
             {
-                terrain.loadBaseSprite("reaf+N");
+                terrain.loadBaseSprite("reaf+N+mask");
             }
             else if (surroundingsPlainsDiagonal.includes("+NE") &&
                      surroundingsPlainsDiagonal.includes("+SE"))
             {
-                terrain.loadBaseSprite("reaf+E");
+                terrain.loadBaseSprite("reaf+E+mask");
             }
             else if (surroundingsPlainsDiagonal.includes("+NW") &&
                      surroundingsPlainsDiagonal.includes("+SW"))
             {
-                terrain.loadBaseSprite("reaf+W");
+                terrain.loadBaseSprite("reaf+W+mask");
             }
         }
         else
         {
-            var random = globals.randInt(0, 3);
-            terrain.loadBaseSprite("reaf+" + random.toString() + "+N+E+S+W");
+            terrain.loadBaseSprite("reaf+N+E+S+W+mask");
         }
     };
     this.loadOverlaySprite = function(terrain, map)
@@ -197,34 +197,34 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return ["reaf+0+N+E+S+W",
-                "reaf+1+N+E+S+W",
-                "reaf+2+N+E+S+W",
-                "reaf+3+N+E+S+W",
-                "reaf+E.png",
-                "reaf+N.png",
-                "reaf+S.png",
-                "reaf+W.png",
-                "reaf+E+S",
-                "reaf+N+E",
-                "reaf+N+W",
-                "reaf+S+W",
-                "reaf+E+S+W",
-                "reaf+E+W",
-                "reaf+N+E+S",
-                "reaf+N+E+W",
-                "reaf+N+S+W",
-                "reaf+N+S",
-                "reaf+NE+NW+S",
-                "reaf+NE+NW",
-                "reaf+NE+S+W",
-                "reaf+NE+S",
-                "reaf+NE+W",
-                "reaf+NE",
-                "reaf+NW+E",
-                "reaf+NW+S+E",
-                "reaf+NW+S",
-                "reaf+NW",];
+        return ["reaf+0+N+E+S+W+mask",
+                "reaf+1+N+E+S+W+mask",
+                "reaf+2+N+E+S+W+mask",
+                "reaf+3+N+E+S+W+mask",
+                "reaf+E+mask",
+                "reaf+N+mask",
+                "reaf+S+mask",
+                "reaf+W+mask",
+                "reaf+E+S+mask",
+                "reaf+N+E+mask",
+                "reaf+N+W+mask",
+                "reaf+S+W+mask",
+                "reaf+E+S+W+mask",
+                "reaf+E+W+mask",
+                "reaf+N+E+S+mask",
+                "reaf+N+E+W+mask",
+                "reaf+N+S+W+mask",
+                "reaf+N+S+mask",
+                "reaf+NE+NW+S+mask",
+                "reaf+NE+NW+mask",
+                "reaf+NE+S+W+mask",
+                "reaf+NE+S+mask",
+                "reaf+NE+W+mask",
+                "reaf+NE+mask",
+                "reaf+NW+E+mask",
+                "reaf+NW+S+E+mask",
+                "reaf+NW+S+mask",
+                "reaf+NW+mask",];
     };
     this.getEditorPlacementSound = function()
     {

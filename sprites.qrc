@@ -507,7 +507,6 @@
         <file>resources/images/shop/shop_perk.png</file>
         <file>resources/images/terrain/fire.png</file>
         <file>resources/images/terrain/res.xml</file>
-        <file>resources/images/terrain/rough_sea+N+E+S+W.png</file>
         <file>resources/images/units/res.xml</file>
         <file>resources/images/units/icons/1.png</file>
         <file>resources/images/units/icons/2.png</file>
@@ -3630,103 +3629,6 @@
         <file>resources/images/animations/silo+launch.png</file>
         <file>resources/ui/game/ruleSelection.xml</file>
         <file>resources/ui/game/ruleSelectionScript.js</file>
-        <file>resources/images/terrain/beach/beach+E+land+N+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+E+land+N+S.png</file>
-        <file>resources/images/terrain/beach/beach+E+land+N+W.png</file>
-        <file>resources/images/terrain/beach/beach+E+land+N.png</file>
-        <file>resources/images/terrain/beach/beach+E+land+NE.png</file>
-        <file>resources/images/terrain/beach/beach+E+land+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+E+land+S.png</file>
-        <file>resources/images/terrain/beach/beach+E+land+SE.png</file>
-        <file>resources/images/terrain/beach/beach+E+S+land+N+W.png</file>
-        <file>resources/images/terrain/beach/beach+E+S+land+SE.png</file>
-        <file>resources/images/terrain/beach/beach+E+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+E+S.png</file>
-        <file>resources/images/terrain/beach/beach+E+W+land+N+S.png</file>
-        <file>resources/images/terrain/beach/beach+E+W+land+N.png</file>
-        <file>resources/images/terrain/beach/beach+E+W+land+S.png</file>
-        <file>resources/images/terrain/beach/beach+E+W.png</file>
-        <file>resources/images/terrain/beach/beach+E.png</file>
-        <file>resources/images/terrain/beach/beach+land+E+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+land+E+S.png</file>
-        <file>resources/images/terrain/beach/beach+land+E+W.png</file>
-        <file>resources/images/terrain/beach/beach+land+E.png</file>
-        <file>resources/images/terrain/beach/beach+land+N+E+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+land+N+E+S.png</file>
-        <file>resources/images/terrain/beach/beach+land+N+E+W.png</file>
-        <file>resources/images/terrain/beach/beach+land+N+E.png</file>
-        <file>resources/images/terrain/beach/beach+land+N+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+land+N+S.png</file>
-        <file>resources/images/terrain/beach/beach+land+N+W.png</file>
-        <file>resources/images/terrain/beach/beach+land+N.png</file>
-        <file>resources/images/terrain/beach/beach+land+NE+overlay.png</file>
-        <file>resources/images/terrain/beach/beach+land+NE.png</file>
-        <file>resources/images/terrain/beach/beach+land+NW+overlay.png</file>
-        <file>resources/images/terrain/beach/beach+land+NW.png</file>
-        <file>resources/images/terrain/beach/beach+land+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+land+S.png</file>
-        <file>resources/images/terrain/beach/beach+land+SE+overlay.png</file>
-        <file>resources/images/terrain/beach/beach+land+SE.png</file>
-        <file>resources/images/terrain/beach/beach+land+SW+overlay.png</file>
-        <file>resources/images/terrain/beach/beach+land+SW.png</file>
-        <file>resources/images/terrain/beach/beach+land+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+E+land+NE.png</file>
-        <file>resources/images/terrain/beach/beach+N+E+land+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+E+S+W+sea+NE.png</file>
-        <file>resources/images/terrain/beach/beach+N+E+S+W+sea+NW.png</file>
-        <file>resources/images/terrain/beach/beach+N+E+S+W+sea+SE.png</file>
-        <file>resources/images/terrain/beach/beach+N+E+S+W+sea+SW.png</file>
-        <file>resources/images/terrain/beach/beach+N+E+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+E+S.png</file>
-        <file>resources/images/terrain/beach/beach+N+E+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+E.png</file>
-        <file>resources/images/terrain/beach/beach+N+land+E+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+land+E+S.png</file>
-        <file>resources/images/terrain/beach/beach+N+land+E+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+land+E.png</file>
-        <file>resources/images/terrain/beach/beach+N+land+NE.png</file>
-        <file>resources/images/terrain/beach/beach+N+land+NW.png</file>
-        <file>resources/images/terrain/beach/beach+N+land+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+land+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+S+land+E+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+S+land+E.png</file>
-        <file>resources/images/terrain/beach/beach+N+S+land+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+N+S.png</file>
-        <file>resources/images/terrain/beach/beach+N+W+land+E+S.png</file>
-        <file>resources/images/terrain/beach/beach+N+W+land+NW.png</file>
-        <file>resources/images/terrain/beach/beach+N+W.png</file>
-        <file>resources/images/terrain/beach/beach+N.png</file>
-        <file>resources/images/terrain/beach/beach+NE.png</file>
-        <file>resources/images/terrain/beach/beach+NW.png</file>
-        <file>resources/images/terrain/beach/beach+overlay+E.png</file>
-        <file>resources/images/terrain/beach/beach+overlay+N.png</file>
-        <file>resources/images/terrain/beach/beach+overlay+S.png</file>
-        <file>resources/images/terrain/beach/beach+overlay+W.png</file>
-        <file>resources/images/terrain/beach/beach+S+land+E+W.png</file>
-        <file>resources/images/terrain/beach/beach+S+land+E.png</file>
-        <file>resources/images/terrain/beach/beach+S+land+N+E+W.png</file>
-        <file>resources/images/terrain/beach/beach+S+land+N+E.png</file>
-        <file>resources/images/terrain/beach/beach+S+land+N+W.png</file>
-        <file>resources/images/terrain/beach/beach+S+land+SE.png</file>
-        <file>resources/images/terrain/beach/beach+S+land+SW.png</file>
-        <file>resources/images/terrain/beach/beach+S+land+W.png</file>
-        <file>resources/images/terrain/beach/beach+S+W+land+N+E.png</file>
-        <file>resources/images/terrain/beach/beach+S+W+land+SW.png</file>
-        <file>resources/images/terrain/beach/beach+S+W.png</file>
-        <file>resources/images/terrain/beach/beach+S.png</file>
-        <file>resources/images/terrain/beach/beach+SE.png</file>
-        <file>resources/images/terrain/beach/beach+SW.png</file>
-        <file>resources/images/terrain/beach/beach+W+land+E+S.png</file>
-        <file>resources/images/terrain/beach/beach+W+land+N+E+S.png</file>
-        <file>resources/images/terrain/beach/beach+W+land+N+E.png</file>
-        <file>resources/images/terrain/beach/beach+W+land+N+S.png</file>
-        <file>resources/images/terrain/beach/beach+W+land+N.png</file>
-        <file>resources/images/terrain/beach/beach+W+land+NW.png</file>
-        <file>resources/images/terrain/beach/beach+W+land+S.png</file>
-        <file>resources/images/terrain/beach/beach+W+land+SW.png</file>
-        <file>resources/images/terrain/beach/beach+W.png</file>
-        <file>resources/images/terrain/beach/beach.png</file>
         <file>resources/images/terrain/bridge/bridge+style0+E+S+W.png</file>
         <file>resources/images/terrain/bridge/bridge+style0+E+S.png</file>
         <file>resources/images/terrain/bridge/bridge+style0+E+W.png</file>
@@ -3931,23 +3833,6 @@
         <file>resources/images/terrain/lake/lake+desert+N+S+W.png</file>
         <file>resources/images/terrain/lake/lake+desert+N+W.png</file>
         <file>resources/images/terrain/lake/lake+desert+S+W.png</file>
-        <file>resources/images/terrain/lake/lake+E+S+W.png</file>
-        <file>resources/images/terrain/lake/lake+E+S.png</file>
-        <file>resources/images/terrain/lake/lake+E+W.png</file>
-        <file>resources/images/terrain/lake/lake+E.png</file>
-        <file>resources/images/terrain/lake/lake+N+E+S+W.png</file>
-        <file>resources/images/terrain/lake/lake+N+E+S.png</file>
-        <file>resources/images/terrain/lake/lake+N+E+W.png</file>
-        <file>resources/images/terrain/lake/lake+N+E.png</file>
-        <file>resources/images/terrain/lake/lake+N+S+W.png</file>
-        <file>resources/images/terrain/lake/lake+N+S.png</file>
-        <file>resources/images/terrain/lake/lake+N+W.png</file>
-        <file>resources/images/terrain/lake/lake+N.png</file>
-        <file>resources/images/terrain/lake/lake+NE.png</file>
-        <file>resources/images/terrain/lake/lake+NW.png</file>
-        <file>resources/images/terrain/lake/lake+S+W.png</file>
-        <file>resources/images/terrain/lake/lake+S.png</file>
-        <file>resources/images/terrain/lake/lake+SE.png</file>
         <file>resources/images/terrain/lake/lake+snow+E+S+W.png</file>
         <file>resources/images/terrain/lake/lake+snow+E+S.png</file>
         <file>resources/images/terrain/lake/lake+snow+N+E+S+W.png</file>
@@ -3957,8 +3842,6 @@
         <file>resources/images/terrain/lake/lake+snow+N+S+W.png</file>
         <file>resources/images/terrain/lake/lake+snow+N+W.png</file>
         <file>resources/images/terrain/lake/lake+snow+S+W.png</file>
-        <file>resources/images/terrain/lake/lake+SW.png</file>
-        <file>resources/images/terrain/lake/lake+W.png</file>
         <file>resources/images/terrain/lake/lake+waste+E+S+W.png</file>
         <file>resources/images/terrain/lake/lake+waste+E+S.png</file>
         <file>resources/images/terrain/lake/lake+waste+N+E+S+W.png</file>
@@ -3968,7 +3851,6 @@
         <file>resources/images/terrain/lake/lake+waste+N+S+W.png</file>
         <file>resources/images/terrain/lake/lake+waste+N+W.png</file>
         <file>resources/images/terrain/lake/lake+waste+S+W.png</file>
-        <file>resources/images/terrain/lake/lake.png</file>
         <file>resources/images/terrain/meteor/meteor+E+S+W.png</file>
         <file>resources/images/terrain/meteor/meteor+E+S.png</file>
         <file>resources/images/terrain/meteor/meteor+E+W.png</file>
@@ -4052,39 +3934,6 @@
         <file>resources/images/terrain/plasma/plasma+S.png</file>
         <file>resources/images/terrain/plasma/plasma+W.png</file>
         <file>resources/images/terrain/plasma/plasma.png</file>
-        <file>resources/images/terrain/reaf/reaf+0+N+E+S+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+1+N+E+S+W .png</file>
-        <file>resources/images/terrain/reaf/reaf+1+N+E+S+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+2+N+E+S+W .png</file>
-        <file>resources/images/terrain/reaf/reaf+2+N+E+S+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+3+N+E+S+W .png</file>
-        <file>resources/images/terrain/reaf/reaf+3+N+E+S+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+E+S+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+E+S.png</file>
-        <file>resources/images/terrain/reaf/reaf+E+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+E.png</file>
-        <file>resources/images/terrain/reaf/reaf+N+E+S+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+N+E+S.png</file>
-        <file>resources/images/terrain/reaf/reaf+N+E+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+N+E.png</file>
-        <file>resources/images/terrain/reaf/reaf+N+S+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+N+S.png</file>
-        <file>resources/images/terrain/reaf/reaf+N+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+N.png</file>
-        <file>resources/images/terrain/reaf/reaf+NE+NW+S.png</file>
-        <file>resources/images/terrain/reaf/reaf+NE+NW.png</file>
-        <file>resources/images/terrain/reaf/reaf+NE+S+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+NE+S.png</file>
-        <file>resources/images/terrain/reaf/reaf+NE+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+NE.png</file>
-        <file>resources/images/terrain/reaf/reaf+NW+E.png</file>
-        <file>resources/images/terrain/reaf/reaf+NW+S+E.png</file>
-        <file>resources/images/terrain/reaf/reaf+NW+S.png</file>
-        <file>resources/images/terrain/reaf/reaf+NW.png</file>
-        <file>resources/images/terrain/reaf/reaf+S+W.png</file>
-        <file>resources/images/terrain/reaf/reaf+S.png</file>
-        <file>resources/images/terrain/reaf/reaf+W.png</file>
-        <file>resources/images/terrain/reaf/reaf.png</file>
         <file>resources/images/terrain/sea/sea+desert+E+S+W.png</file>
         <file>resources/images/terrain/sea/sea+desert+E+S.png</file>
         <file>resources/images/terrain/sea/sea+desert+E+W.png</file>
@@ -4100,52 +3949,10 @@
         <file>resources/images/terrain/sea/sea+desert+S+W.png</file>
         <file>resources/images/terrain/sea/sea+desert+S.png</file>
         <file>resources/images/terrain/sea/sea+desert+W.png</file>
-        <file>resources/images/terrain/sea/sea+E+bridge.png</file>
-        <file>resources/images/terrain/sea/sea+E+NW.png</file>
-        <file>resources/images/terrain/sea/sea+E+S+NW.png</file>
-        <file>resources/images/terrain/sea/sea+E+S+W.png</file>
-        <file>resources/images/terrain/sea/sea+E+S.png</file>
-        <file>resources/images/terrain/sea/sea+E+SW+NW.png</file>
-        <file>resources/images/terrain/sea/sea+E+SW.png</file>
-        <file>resources/images/terrain/sea/sea+E+W+bridge.png</file>
-        <file>resources/images/terrain/sea/sea+E+W.png</file>
-        <file>resources/images/terrain/sea/sea+E.png</file>
-        <file>resources/images/terrain/sea/sea+N+E+S+W.png</file>
-        <file>resources/images/terrain/sea/sea+N+E+S.png</file>
-        <file>resources/images/terrain/sea/sea+N+E+SW.png</file>
-        <file>resources/images/terrain/sea/sea+N+E+W.png</file>
-        <file>resources/images/terrain/sea/sea+N+E.png</file>
-        <file>resources/images/terrain/sea/sea+N+S+W.png</file>
-        <file>resources/images/terrain/sea/sea+N+S.png</file>
-        <file>resources/images/terrain/sea/sea+N+SE+SW.png</file>
-        <file>resources/images/terrain/sea/sea+N+SE.png</file>
-        <file>resources/images/terrain/sea/sea+N+SW.png</file>
-        <file>resources/images/terrain/sea/sea+N+W+SE.png</file>
-        <file>resources/images/terrain/sea/sea+N+W.png</file>
-        <file>resources/images/terrain/sea/sea+N.png</file>
-        <file>resources/images/terrain/sea/sea+NE+NW.png</file>
-        <file>resources/images/terrain/sea/sea+NE+SE+NW.png</file>
-        <file>resources/images/terrain/sea/sea+NE+SE+SW+NW.png</file>
-        <file>resources/images/terrain/sea/sea+NE+SE+SW.png</file>
-        <file>resources/images/terrain/sea/sea+NE+SE.png</file>
-        <file>resources/images/terrain/sea/sea+NE+SW+NW.png</file>
-        <file>resources/images/terrain/sea/sea+NE+SW.png</file>
-        <file>resources/images/terrain/sea/sea+NE.png</file>
-        <file>resources/images/terrain/sea/sea+NW.png</file>
         <file>resources/images/terrain/sea/sea+overlay+NE.png</file>
         <file>resources/images/terrain/sea/sea+overlay+NW.png</file>
         <file>resources/images/terrain/sea/sea+overlay+SE.png</file>
         <file>resources/images/terrain/sea/sea+overlay+SW.png</file>
-        <file>resources/images/terrain/sea/sea+S+NE+NW.png</file>
-        <file>resources/images/terrain/sea/sea+S+NE.png</file>
-        <file>resources/images/terrain/sea/sea+S+NW.png</file>
-        <file>resources/images/terrain/sea/sea+S+W+NE.png</file>
-        <file>resources/images/terrain/sea/sea+S+W.png</file>
-        <file>resources/images/terrain/sea/sea+S.png</file>
-        <file>resources/images/terrain/sea/sea+SE+NW.png</file>
-        <file>resources/images/terrain/sea/sea+SE+SW+NW.png</file>
-        <file>resources/images/terrain/sea/sea+SE+SW.png</file>
-        <file>resources/images/terrain/sea/sea+SE.png</file>
         <file>resources/images/terrain/sea/sea+snow+E+S+W.png</file>
         <file>resources/images/terrain/sea/sea+snow+E+S.png</file>
         <file>resources/images/terrain/sea/sea+snow+E+W.png</file>
@@ -4161,13 +3968,6 @@
         <file>resources/images/terrain/sea/sea+snow+S+W.png</file>
         <file>resources/images/terrain/sea/sea+snow+S.png</file>
         <file>resources/images/terrain/sea/sea+snow+W.png</file>
-        <file>resources/images/terrain/sea/sea+SW+NW.png</file>
-        <file>resources/images/terrain/sea/sea+SW.png</file>
-        <file>resources/images/terrain/sea/sea+W+bridge.png</file>
-        <file>resources/images/terrain/sea/sea+W+NE+SE.png</file>
-        <file>resources/images/terrain/sea/sea+W+NE.png</file>
-        <file>resources/images/terrain/sea/sea+W+SE.png</file>
-        <file>resources/images/terrain/sea/sea+W.png</file>
         <file>resources/images/terrain/sea/sea+waste+E+S+W.png</file>
         <file>resources/images/terrain/sea/sea+waste+E+S.png</file>
         <file>resources/images/terrain/sea/sea+waste+E+W.png</file>
@@ -4183,7 +3983,6 @@
         <file>resources/images/terrain/sea/sea+waste+S+W.png</file>
         <file>resources/images/terrain/sea/sea+waste+S.png</file>
         <file>resources/images/terrain/sea/sea+waste+W.png</file>
-        <file>resources/images/terrain/sea/sea.png</file>
         <file>resources/images/terrain/waste_path/waste_path+style0+E+S+shadow.png</file>
         <file>resources/images/terrain/waste_path/waste_path+style0+E+S+W+shadow.png</file>
         <file>resources/images/terrain/waste_path/waste_path+style0+E+S+W.png</file>
@@ -4249,14 +4048,6 @@
         <file>resources/images/terrain/desert_try_river/desert_try_river+S.png</file>
         <file>resources/images/terrain/desert_try_river/desert_try_river+W.png</file>
         <file>resources/images/terrain/desert_try_river/desert_try_river.png</file>
-        <file>resources/images/terrain/fog/fog+E+W.png</file>
-        <file>resources/images/terrain/fog/fog+E.png</file>
-        <file>resources/images/terrain/fog/fog+NE.png</file>
-        <file>resources/images/terrain/fog/fog+NW.png</file>
-        <file>resources/images/terrain/fog/fog+SE.png</file>
-        <file>resources/images/terrain/fog/fog+SW.png</file>
-        <file>resources/images/terrain/fog/fog+W.png</file>
-        <file>resources/images/terrain/fog/fog.png</file>
         <file>resources/images/terrain/pipeline/destroyedweld+E+W.png</file>
         <file>resources/images/terrain/pipeline/destroyedweld+N+S.png</file>
         <file>resources/images/terrain/pipeline/weld+E+W.png</file>
@@ -4526,35 +4317,6 @@
         <file>resources/images/terrain/snow/snow+S.png</file>
         <file>resources/images/terrain/snow/snow+W.png</file>
         <file>resources/images/terrain/snow/snow.png</file>
-        <file>resources/images/terrain/lake/riverend+E_lake+N+S+W.png</file>
-        <file>resources/images/terrain/lake/riverend+E_lake+N+W.png</file>
-        <file>resources/images/terrain/lake/riverend+E_lake+S.png</file>
-        <file>resources/images/terrain/lake/riverend+E_lake+S+W.png</file>
-        <file>resources/images/terrain/lake/riverend+E_lake+W.png</file>
-        <file>resources/images/terrain/lake/riverend+N_lake.png</file>
-        <file>resources/images/terrain/lake/riverend+N_lake+E.png</file>
-        <file>resources/images/terrain/lake/riverend+N_lake+E+S.png</file>
-        <file>resources/images/terrain/lake/riverend+N_lake+E+S+W.png</file>
-        <file>resources/images/terrain/lake/riverend+N_lake+E+W.png</file>
-        <file>resources/images/terrain/lake/riverend+N_lake+S.png</file>
-        <file>resources/images/terrain/lake/riverend+N_lake+S+W.png</file>
-        <file>resources/images/terrain/lake/riverend+N_lake+W.png</file>
-        <file>resources/images/terrain/lake/riverend+S_lake.png</file>
-        <file>resources/images/terrain/lake/riverend+S_lake+E.png</file>
-        <file>resources/images/terrain/lake/riverend+S_lake+E+W.png</file>
-        <file>resources/images/terrain/lake/riverend+S_lake+N.png</file>
-        <file>resources/images/terrain/lake/riverend+S_lake+N+E.png</file>
-        <file>resources/images/terrain/lake/riverend+S_lake+N+E+W.png</file>
-        <file>resources/images/terrain/lake/riverend+S_lake+N+W.png</file>
-        <file>resources/images/terrain/lake/riverend+S_lake+W.png</file>
-        <file>resources/images/terrain/lake/riverend+W_lake.png</file>
-        <file>resources/images/terrain/lake/riverend+W_lake+E.png</file>
-        <file>resources/images/terrain/lake/riverend+W_lake+E+S.png</file>
-        <file>resources/images/terrain/lake/riverend+W_lake+N.png</file>
-        <file>resources/images/terrain/lake/riverend+W_lake+N+E.png</file>
-        <file>resources/images/terrain/lake/riverend+W_lake+N+E+S.png</file>
-        <file>resources/images/terrain/lake/riverend+W_lake+N+S.png</file>
-        <file>resources/images/terrain/lake/riverend+W_lake+S.png</file>
         <file>resources/images/units/air/black_bomb+mask.png</file>
         <file>resources/images/units/air/black_bomb+walk+mask.png</file>
         <file>resources/images/units/air/bomber+mask.png</file>
@@ -4789,9 +4551,6 @@
         <file>resources/images/units/sniper/sniper+yc+mask.png</file>
         <file>resources/images/units/sniper/sniper+yc+walk+mask.png</file>
         <file>resources/images/co_perks/mechanic.png</file>
-        <file>resources/images/terrain/lake/riverend+E_lake.png</file>
-        <file>resources/images/terrain/lake/riverend+E_lake+N.png</file>
-        <file>resources/images/terrain/lake/riverend+E_lake+N+S.png</file>
         <file>resources/images/terrain/river/river+0+land+N+E+S+W+mask.png</file>
         <file>resources/images/terrain/river/river+1+land+N+E+S+W+mask.png</file>
         <file>resources/images/terrain/river/river+E+land+N+mask.png</file>
@@ -4870,9 +4629,6 @@
         <file>resources/images/terrain/river/river+W+land+S+NE+NW+mask.png</file>
         <file>resources/images/terrain/river/river+W+land+S+NW+mask.png</file>
         <file>resources/images/terrain/river/river+W+mask.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake+mask.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake+N+mask.png</file>
-        <file>resources/images/terrain/river/riverend+E_lake+N+S+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+1+land+N+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+1+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+2+land+E+mask.png</file>
@@ -4950,5 +4706,234 @@
         <file>resources/images/terrain/biome_palettes/palette_waste+awds.png</file>
         <file>resources/images/terrain/biome_palettes/palette_waste+dor.png</file>
         <file>resources/images/terrain/river/river+W+land+E+S+NW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+land+N+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+land+N+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+land+N+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+land+N+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+land+NE+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+land+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+land+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+land+SE+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+S+land+N+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+S+land+SE+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+W+land+N+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+W+land+N+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+W+land+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+E+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+E+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+E+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+E+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+N+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+N+E+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+N+E+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+N+E+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+N+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+N+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+N+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+N+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+NE+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+NE+overlay+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+NW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+NW+overlay+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+SE+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+SW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+SW+overlay+mask.png</file>
+        <file>resources/images/terrain/beach/beach+land+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+E+land+NE+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+E+land+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+E+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+E+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+E+S+W+sea+NE+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+E+S+W+sea+NW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+E+S+W+sea+SE+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+E+S+W+sea+SW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+E+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+land+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+land+E+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+land+E+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+land+E+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+land+NE+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+land+NW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+land+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+land+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+S+land+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+S+land+E+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+S+land+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+W+land+E+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+W+land+NW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+N+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+overlay+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+overlay+N+mask.png</file>
+        <file>resources/images/terrain/beach/beach+overlay+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+overlay+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+land+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+land+E+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+land+N+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+land+N+E+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+land+N+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+land+SE+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+land+SW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+land+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+W+land+N+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+W+land+SW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+S+W+mask.png</file>
+        <file>resources/images/terrain/beach/beach+W+land+E+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+W+land+N+E+mask.png</file>
+        <file>resources/images/terrain/beach/beach+W+land+N+E+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+W+land+N+mask.png</file>
+        <file>resources/images/terrain/beach/beach+W+land+N+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+W+land+NW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+W+land+S+mask.png</file>
+        <file>resources/images/terrain/beach/beach+W+land+SW+mask.png</file>
+        <file>resources/images/terrain/beach/beach+W+mask.png</file>
+        <file>resources/images/terrain/fog/fog+E+mask.png</file>
+        <file>resources/images/terrain/fog/fog+E+W+mask.png</file>
+        <file>resources/images/terrain/fog/fog+mask.png</file>
+        <file>resources/images/terrain/fog/fog+NE+mask.png</file>
+        <file>resources/images/terrain/fog/fog+NW+mask.png</file>
+        <file>resources/images/terrain/fog/fog+SE+mask.png</file>
+        <file>resources/images/terrain/fog/fog+SW+mask.png</file>
+        <file>resources/images/terrain/fog/fog+W+mask.png</file>
+        <file>resources/images/terrain/lake/lake+E+mask.png</file>
+        <file>resources/images/terrain/lake/lake+E+S+mask.png</file>
+        <file>resources/images/terrain/lake/lake+E+S+W+mask.png</file>
+        <file>resources/images/terrain/lake/lake+E+W+mask.png</file>
+        <file>resources/images/terrain/lake/lake+mask.png</file>
+        <file>resources/images/terrain/lake/lake+N+E+mask.png</file>
+        <file>resources/images/terrain/lake/lake+N+E+S+mask.png</file>
+        <file>resources/images/terrain/lake/lake+N+E+S+W+mask.png</file>
+        <file>resources/images/terrain/lake/lake+N+E+W+mask.png</file>
+        <file>resources/images/terrain/lake/lake+N+S+mask.png</file>
+        <file>resources/images/terrain/lake/lake+N+S+W+mask.png</file>
+        <file>resources/images/terrain/lake/lake+N+W+mask.png</file>
+        <file>resources/images/terrain/lake/lake+NE+mask.png</file>
+        <file>resources/images/terrain/lake/lake+NW+mask.png</file>
+        <file>resources/images/terrain/lake/lake+S+mask.png</file>
+        <file>resources/images/terrain/lake/lake+S+W+mask.png</file>
+        <file>resources/images/terrain/lake/lake+SE+mask.png</file>
+        <file>resources/images/terrain/lake/lake+SW+mask.png</file>
+        <file>resources/images/terrain/lake/lake+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+N+S+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+N+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+S+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+E+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+E+S+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+E+S+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+E+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+S+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+S+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+N_lake+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+E+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+E+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+N+E+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+N+E+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+N+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+N+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+S_lake+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+E+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+E+S+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+N+E+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+N+E+S+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+N+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+N+S+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+W_lake+S+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+E+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+E+S+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+E+S+W+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+E+W+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+N+E+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+N+E+S+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+N+E+S+W+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+N+E+W+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+N+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+N+S+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+N+S+W+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+N+W+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+NE+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+NE+NW+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+NE+NW+S+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+NE+S+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+NE+S+W+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+NE+W+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+NW+E+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+NW+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+NW+S+E+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+NW+S+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+S+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+S+W+mask.png</file>
+        <file>resources/images/terrain/reaf/reaf+W+mask.png</file>
+        <file>resources/images/terrain/sea/sea+E+bridge+mask.png</file>
+        <file>resources/images/terrain/sea/sea+E+mask.png</file>
+        <file>resources/images/terrain/sea/sea+E+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+E+S+mask.png</file>
+        <file>resources/images/terrain/sea/sea+E+S+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+E+S+W+mask.png</file>
+        <file>resources/images/terrain/sea/sea+E+SW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+E+SW+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+E+W+bridge+mask.png</file>
+        <file>resources/images/terrain/sea/sea+E+W+mask.png</file>
+        <file>resources/images/terrain/sea/sea+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+E+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+E+S+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+E+S+W+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+E+SW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+E+W+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+S+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+SE+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+SE+SW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+SW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+W+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+W+SE+mask.png</file>
+        <file>resources/images/terrain/sea/sea+NE+mask.png</file>
+        <file>resources/images/terrain/sea/sea+NE+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+NE+SE+mask.png</file>
+        <file>resources/images/terrain/sea/sea+NE+SE+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+NE+SE+SW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+NE+SE+SW+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+NE+SW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+NE+SW+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+S+mask.png</file>
+        <file>resources/images/terrain/sea/sea+S+NE+mask.png</file>
+        <file>resources/images/terrain/sea/sea+S+NE+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+S+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+S+W+mask.png</file>
+        <file>resources/images/terrain/sea/sea+S+W+NE+mask.png</file>
+        <file>resources/images/terrain/sea/sea+SE+mask.png</file>
+        <file>resources/images/terrain/sea/sea+SE+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+SE+SW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+SE+SW+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+SW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+SW+NW+mask.png</file>
+        <file>resources/images/terrain/sea/sea+W+bridge+mask.png</file>
+        <file>resources/images/terrain/sea/sea+W+mask.png</file>
+        <file>resources/images/terrain/sea/sea+W+NE+mask.png</file>
+        <file>resources/images/terrain/sea/sea+W+NE+SE+mask.png</file>
+        <file>resources/images/terrain/sea/sea+W+SE+mask.png</file>
+        <file>resources/images/terrain/rough_sea+N+E+S+W+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+N+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+N+S+mask.png</file>
+        <file>resources/images/terrain/sea/sea+N+S+W+mask.png</file>
+        <file>resources/images/terrain/lake/lake+N+mask.png</file>
+        <file>resources/images/terrain/lake/riverend+E_lake+S+W+mask.png</file>
     </qresource>
 </RCC>

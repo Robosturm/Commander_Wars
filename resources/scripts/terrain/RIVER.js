@@ -7,7 +7,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
-        terrain.setPalette("palette_snow");
+        terrain.setPalette("palette_clear");
         terrain.setTerrainName(RIVER.getName());
         terrain.setHasFlowDirection(true);
     };

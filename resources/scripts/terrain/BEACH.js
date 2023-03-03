@@ -8,6 +8,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
+        terrain.setPalette("palette_clear");
         terrain.setTerrainName(BEACH.getName());
     };
 
@@ -65,7 +66,7 @@ var Constructor = function()
             {
                 surroundingsBeach = surroundingsBeach.replace("+E", "");
             }
-            terrain.loadBaseSprite("beach" + surroundingsBeach + "+land" + surroundingsLand);
+            terrain.loadBaseSprite("beach" + surroundingsBeach + "+land" + surroundingsLand + "+mask");
         }
         else
         {
@@ -96,11 +97,11 @@ var Constructor = function()
                 {
                     surroundingsBeach = surroundingsBeach.replace("+W", "");
                 }
-                terrain.loadBaseSprite("beach" + surroundingsBeach);
+                terrain.loadBaseSprite("beach" + surroundingsBeach + "+mask");
             }
             else
             {
-                terrain.loadBaseSprite("beach");
+                terrain.loadBaseSprite("beach+mask");
             }
         }
     };
@@ -266,75 +267,75 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return ["beach+E+land+N",
-                "beach+E+land+N+S",
-                "beach+E+land+N+S+W",
-                "beach+E+land+N+W",
-                "beach+E+land+S",
-                "beach+E+land+S+W",
-                "beach+E+S+land+N+W",
-                "beach+E+W+land+N",
-                "beach+E+W+land+N+S",
-                "beach+E+W+land+S",
-                "beach+land+E",
-                "beach+land+E+S",
-                "beach+land+E+S+W",
-                "beach+land+E+W",
-                "beach+land+N",
-                "beach+land+N+E",
-                "beach+land+N+E+S",
-                "beach+land+N+E+S+W",
-                "beach+land+N+E+W",
-                "beach+land+N+S",
-                "beach+land+N+S+W",
-                "beach+land+N+W",
-                "beach+land+S",
-                "beach+land+S+W",
-                "beach+land+W",
-                "beach+N+E+land+S+W",
-                "beach+N+land+E",
-                "beach+N+land+E+S+W",
-                "beach+N+land+E+W",
-                "beach+N+land+E+S",
-                "beach+N+land+S+W",
-                "beach+N+land+W",
-                "beach+N+S+land+E",
-                "beach+N+S+land+E+W",
-                "beach+N+S+land+W",
-                "beach+N+W+land+E+S",
-                "beach+S+land+E",
-                "beach+S+land+W",
-                "beach+S+land+E+W",
-                "beach+S+land+N+E",
-                "beach+S+land+N+E+W",
-                "beach+S+land+N+W",
-                "beach+W+land+E+S",
-                "beach+W+land+N",
-                "beach+W+land+N+E",
-                "beach+S+W+land+N+E",
-                "beach+W+land+N+E+S",
-                "beach+W+land+N+S",
-                "beach+W+land+S",
-                "beach",
-                "beach+E",
-                "beach+E+S",
-                "beach+E+S+W",
-                "beach+N",
-                "beach+N+E",
-                "beach+N+E+S",
-                "beach+N+E+S+W",
-                "beach+N+E+S+W+sea+NE",
-                "beach+N+E+S+W+sea+NW",
-                "beach+N+E+S+W+sea+SE",
-                "beach+N+E+S+W+sea+SW",
-                "beach+N+E+W",
-                "beach+N+S+W",
-                "beach+N+W",
-                "beach+S",
-                "beach+S+W",
-                "beach+W",
-                "beach+N+S",
-                "beach+E+W",];
+        return ["beach+E+land+N+mask",
+                "beach+E+land+N+S+mask",
+                "beach+E+land+N+S+W+mask",
+                "beach+E+land+N+W+mask",
+                "beach+E+land+S+mask",
+                "beach+E+land+S+W+mask",
+                "beach+E+S+land+N+W+mask",
+                "beach+E+W+land+N+mask",
+                "beach+E+W+land+N+S+mask",
+                "beach+E+W+land+S+mask",
+                "beach+land+E+mask",
+                "beach+land+E+S+mask",
+                "beach+land+E+S+W+mask",
+                "beach+land+E+W+mask",
+                "beach+land+N+mask",
+                "beach+land+N+E+mask",
+                "beach+land+N+E+S+mask",
+                "beach+land+N+E+S+W+mask",
+                "beach+land+N+E+W+mask",
+                "beach+land+N+S+mask",
+                "beach+land+N+S+W+mask",
+                "beach+land+N+W+mask",
+                "beach+land+S+mask",
+                "beach+land+S+W+mask",
+                "beach+land+W+mask",
+                "beach+N+E+land+S+W+mask",
+                "beach+N+land+E+mask",
+                "beach+N+land+E+S+W+mask",
+                "beach+N+land+E+W+mask",
+                "beach+N+land+E+S+mask",
+                "beach+N+land+S+W+mask",
+                "beach+N+land+W+mask",
+                "beach+N+S+land+E+mask",
+                "beach+N+S+land+E+W+mask",
+                "beach+N+S+land+W+mask",
+                "beach+N+W+land+E+S+mask",
+                "beach+S+land+E+mask",
+                "beach+S+land+W+mask",
+                "beach+S+land+E+W+mask",
+                "beach+S+land+N+E+mask",
+                "beach+S+land+N+E+W+mask",
+                "beach+S+land+N+W+mask",
+                "beach+W+land+E+S+mask",
+                "beach+W+land+N+mask",
+                "beach+W+land+N+E+mask",
+                "beach+S+W+land+N+E+mask",
+                "beach+W+land+N+E+S+mask",
+                "beach+W+land+N+S+mask",
+                "beach+W+land+S+mask",
+                "beach+mask",
+                "beach+E+mask",
+                "beach+E+S+mask",
+                "beach+E+S+W+mask",
+                "beach+N+mask",
+                "beach+N+E+mask",
+                "beach+N+E+S+mask",
+                "beach+N+E+S+W+mask",
+                "beach+N+E+S+W+sea+NE+mask",
+                "beach+N+E+S+W+sea+NW+mask",
+                "beach+N+E+S+W+sea+SE+mask",
+                "beach+N+E+S+W+sea+SW+mask",
+                "beach+N+E+W+mask",
+                "beach+N+S+W+mask",
+                "beach+N+W+mask",
+                "beach+S+mask",
+                "beach+S+W+mask",
+                "beach+W+mask",
+                "beach+N+S+mask",
+                "beach+E+W+mask",];
     };
     this.getOverlayTerrainSprites = function(map)
     {

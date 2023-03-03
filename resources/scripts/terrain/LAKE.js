@@ -7,6 +7,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
+        terrain.setPalette("palette_clear");
         terrain.setTerrainName(LAKE.getName());
     };
 
@@ -16,7 +17,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
-        terrain.loadBaseSprite("lake");
+        terrain.loadBaseSprite("lake+mask");
     };
     this.loadOverlaySprite = function(terrain, map)
     {        
@@ -30,36 +31,36 @@ var Constructor = function()
         // load overlay north
         if ((surroundingsRiver.includes("+N") || surroundingsRiver2.includes("+N")))
         {
-            if (terrain.existsResAnim("riverend+N_lake" + surroundingsSea))
+            if (terrain.existsResAnim("riverend+N_lake" + surroundingsSea + "+mask"))
             {
-                terrain.loadOverlaySprite("riverend+N_lake" + surroundingsSea);
+                terrain.loadOverlaySprite("riverend+N_lake" + surroundingsSea + "+mask");
                 placedSea = true;
             }
         }
         // load overlay east
         if ((surroundingsRiver.includes("+E") || surroundingsRiver2.includes("+E")))
         {
-            if (terrain.existsResAnim("riverend+E_lake" + surroundingsSea))
+            if (terrain.existsResAnim("riverend+E_lake" + surroundingsSea + "+mask"))
             {
-                terrain.loadOverlaySprite("riverend+E_lake" + surroundingsSea);
+                terrain.loadOverlaySprite("riverend+E_lake" + surroundingsSea + "+mask");
                 placedSea = true;
             }
         }
         // load overlay south
         if ((surroundingsRiver.includes("+S") || surroundingsRiver2.includes("+S")))
         {
-            if (terrain.existsResAnim("riverend+S_lake" + surroundingsSea))
+            if (terrain.existsResAnim("riverend+S_lake" + surroundingsSea + "+mask"))
             {
-                terrain.loadOverlaySprite("riverend+S_lake" + surroundingsSea);
+                terrain.loadOverlaySprite("riverend+S_lake" + surroundingsSea + "+mask");
                 placedSea = true;
             }
         }
         // load overlay west
         if ((surroundingsRiver.includes("+W") || surroundingsRiver2.includes("+W")))
         {
-            if (terrain.existsResAnim("riverend+W_lake" + surroundingsSea))
+            if (terrain.existsResAnim("riverend+W_lake" + surroundingsSea + "+mask"))
             {
-                terrain.loadOverlaySprite("riverend+W_lake" + surroundingsSea);
+                terrain.loadOverlaySprite("riverend+W_lake" + surroundingsSea + "+mask");
                 placedSea = true;
             }
         }
@@ -67,7 +68,7 @@ var Constructor = function()
         {
             if (surroundings !== "")
             {
-                terrain.loadOverlaySprite("lake" + surroundings);
+                terrain.loadOverlaySprite("lake" + surroundings + "+mask");
             }
             // load overlay south east
             if (!surroundings.includes("+S") && !surroundings.includes("+E"))
@@ -75,7 +76,7 @@ var Constructor = function()
                 var surroundingsSE = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_SouthEast, false);
                 if (surroundingsSE !== "")
                 {
-                    terrain.loadOverlaySprite("lake" + surroundingsSE);
+                    terrain.loadOverlaySprite("lake" + surroundingsSE + "+mask");
                 }
             }
             // load overlay north east
@@ -84,7 +85,7 @@ var Constructor = function()
                 var surroundingsNE = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_NorthEast, false);
                 if (surroundingsNE !== "")
                 {
-                    terrain.loadOverlaySprite("lake" + surroundingsNE);
+                    terrain.loadOverlaySprite("lake" + surroundingsNE + "+mask");
                 }
             }
             // load overlay south west
@@ -93,7 +94,7 @@ var Constructor = function()
                 var surroundingsSW = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_SouthWest, false);
                 if (surroundingsSW !== "")
                 {
-                    terrain.loadOverlaySprite("lake" + surroundingsSW);
+                    terrain.loadOverlaySprite("lake" + surroundingsSW + "+mask");
                 }
             }
             // load overlay north west
@@ -102,7 +103,7 @@ var Constructor = function()
                 var surroundingsNW = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_NorthWest, false);
                 if (surroundingsNW !== "")
                 {
-                    terrain.loadOverlaySprite("lake" + surroundingsNW);
+                    terrain.loadOverlaySprite("lake" + surroundingsNW + "+mask");
                 }
             }
         }
@@ -150,85 +151,85 @@ var Constructor = function()
     };
     this.getOverlayTerrainSprites = function(map)
     {
-        return ["lake+NE",
-                "lake+NW",
-                "lake+SE",
-                "lake+SW",
-                "lake+E",
-                "lake+E+S",
-                "lake+E+S+W",
-                "lake+E+W",
-                "lake+N",
-                "lake+N+E",
-                "lake+N+E+S",
-                "lake+N+E+S+W",
-                "lake+N+E+W",
-                "lake+N+S",
-                "lake+N+S+W",
-                "lake+N+W",
-                "lake+S",
-                "lake+S+W",
-                "lake+W",
-                "lake+snow+E+S",
-                "lake+snow+E+S+W",
-                "lake+snow+N+E",
-                "lake+snow+N+E+S",
-                "lake+snow+N+E+S+W",
-                "lake+snow+N+E+W",
-                "lake+snow+N+S+W",
-                "lake+snow+N+W",
-                "lake+snow+S+W",
-                "lake+desert+E+S",
-                "lake+desert+E+S+W",
-                "lake+desert+N+E",
-                "lake+desert+N+E+S",
-                "lake+desert+N+E+S+W",
-                "lake+desert+N+E+W",
-                "lake+desert+N+S+W",
-                "lake+desert+N+W",
-                "lake+desert+S+W",
-                "lake+waste+E+S",
-                "lake+waste+E+S+W",
-                "lake+waste+N+E",
-                "lake+waste+N+E+S",
-                "lake+waste+N+E+S+W",
-                "lake+waste+N+E+W",
-                "lake+waste+N+S+W",
-                "lake+waste+N+W",
-                "lake+waste+S+W",
+        return ["lake+NE+mask",
+                "lake+NW+mask",
+                "lake+SE+mask",
+                "lake+SW+mask",
+                "lake+E+mask",
+                "lake+E+S+mask",
+                "lake+E+S+W+mask",
+                "lake+E+W+mask",
+                "lake+N+mask",
+                "lake+N+E+mask",
+                "lake+N+E+S+mask",
+                "lake+N+E+S+W+mask",
+                "lake+N+E+W+mask",
+                "lake+N+S+mask",
+                "lake+N+S+W+mask",
+                "lake+N+W+mask",
+                "lake+S+mask",
+                "lake+S+W+mask",
+                "lake+W+mask",
+                "lake+snow+E+S+mask",
+                "lake+snow+E+S+W+mask",
+                "lake+snow+N+E+mask",
+                "lake+snow+N+E+S+mask",
+                "lake+snow+N+E+S+W+mask",
+                "lake+snow+N+E+W+mask",
+                "lake+snow+N+S+W+mask",
+                "lake+snow+N+W+mask",
+                "lake+snow+S+W+mask",
+                "lake+desert+E+S+mask",
+                "lake+desert+E+S+W+mask",
+                "lake+desert+N+E+mask",
+                "lake+desert+N+E+S+mask",
+                "lake+desert+N+E+S+W+mask",
+                "lake+desert+N+E+W+mask",
+                "lake+desert+N+S+W+mask",
+                "lake+desert+N+W+mask",
+                "lake+desert+S+W+mask",
+                "lake+waste+E+S+mask",
+                "lake+waste+E+S+W+mask",
+                "lake+waste+N+E+mask",
+                "lake+waste+N+E+S+mask",
+                "lake+waste+N+E+S+W+mask",
+                "lake+waste+N+E+W+mask",
+                "lake+waste+N+S+W+mask",
+                "lake+waste+N+W+mask",
+                "lake+waste+S+W+mask",
 
-                "riverend+W_lake",
-                "riverend+W_lake+E",
-                "riverend+W_lake+N",
-                "riverend+W_lake+N+E",
-                "riverend+W_lake+N+E+S",
-                "riverend+W_lake+N+S",
-                "riverend+W_lake+E+S",
-                "riverend+W_lake+S",
-                "riverend+S_lake",
-                "riverend+S_lake+E",
-                "riverend+S_lake+E+W",
-                "riverend+S_lake+N",
-                "riverend+S_lake+N+E",
-                "riverend+S_lake+N+E+W",
-                "riverend+S_lake+N+W",
-                "riverend+S_lake+W",
-                "riverend+N_lake",
-                "riverend+N_lake+E",
-                "riverend+N_lake+E+S",
-                "riverend+N_lake+E+S+W",
-                "riverend+N_lake+E+W",
-                "riverend+N_lake+S",
-                "riverend+N_lake+S+W",
-                "riverend+N_lake+W",
-                "riverend+E_lake",
-                "riverend+E_lake+N",
-                "riverend+E_lake+N+S",
-                "riverend+E_lake+N+S+W",
-                "riverend+E_lake+N+W",
-                "riverend+E_lake+S",
-                "riverend+E_lake+S+W",
-                "riverend+E_lake+W",];
+                "riverend+W_lake+mask",
+                "riverend+W_lake+E+mask",
+                "riverend+W_lake+N+mask",
+                "riverend+W_lake+N+E+mask",
+                "riverend+W_lake+N+E+S+mask",
+                "riverend+W_lake+N+S+mask",
+                "riverend+W_lake+E+S+mask",
+                "riverend+W_lake+S+mask",
+                "riverend+S_lake+mask",
+                "riverend+S_lake+E+mask",
+                "riverend+S_lake+E+W+mask",
+                "riverend+S_lake+N+mask",
+                "riverend+S_lake+N+E+mask",
+                "riverend+S_lake+N+E+W+mask",
+                "riverend+S_lake+N+W+mask",
+                "riverend+S_lake+W+mask",
+                "riverend+N_lake+mask",
+                "riverend+N_lake+E+mask",
+                "riverend+N_lake+E+S+mask",
+                "riverend+N_lake+E+S+W+mask",
+                "riverend+N_lake+E+W+mask",
+                "riverend+N_lake+S+mask",
+                "riverend+N_lake+S+W+mask",
+                "riverend+N_lake+W+mask",
+                "riverend+E_lake+mask",
+                "riverend+E_lake+N+mask",
+                "riverend+E_lake+N+S+mask",
+                "riverend+E_lake+N+S+W+mask",
+                "riverend+E_lake+N+W+mask",
+                "riverend+E_lake+S+mask",
+                "riverend+E_lake+S+W+mask",
+                "riverend+E_lake+W+mask",];
     };
     this.getEditorPlacementSound = function()
     {
