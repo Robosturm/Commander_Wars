@@ -2558,6 +2558,11 @@ void GameMap::initPlayersAndSelectCOs()
 void GameMap::initPlayers()
 {
     m_CurrentPlayer = m_players[m_players.size() - 1];
+    initProxyAis();
+}
+
+void GameMap::initProxyAis()
+{
     if (Mainapp::getSlave())
     {
         // fix slave ai's

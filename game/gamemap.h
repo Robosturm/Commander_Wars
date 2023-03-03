@@ -206,6 +206,10 @@ public:
      */
     void initPlayers();
     /**
+     * @brief initProxyAis
+     */
+    void initProxyAis();
+    /**
      * @brief isUnitInArea
      * @param pUnit
      * @param area

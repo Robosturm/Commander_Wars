@@ -824,6 +824,7 @@ void Multiplayermenu::relaunchRunningGame(quint64 socketID, const QString & save
 {
     CONSOLE_PRINT("Relaunching running game on slave with savefile " + savefile, GameConsole::eDEBUG);
     spGameMap pMap = spGameMap::create(savefile, false, false, true);
+    pMap->initProxyAis();
     spGameMenue pMenu = spGameMenue::create(pMap, true, m_pNetworkInterface, false, true);
     oxygine::Stage::getStage()->addChild(pMenu);
     sendSlaveRelaunched(socketID);
