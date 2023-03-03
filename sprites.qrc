@@ -4860,7 +4860,6 @@
         <file>resources/images/terrain/river/river+S+W+land+N+W+mask.png</file>
         <file>resources/images/terrain/river/river+S+W+land+N+W+SE+mask.png</file>
         <file>resources/images/terrain/river/river+W+land+E+S+mask.png</file>
-        <file>resources/images/terrain/river/river+W+land+E+S+NW+Mask.png</file>
         <file>resources/images/terrain/river/river+W+land+N+E+mask.png</file>
         <file>resources/images/terrain/river/river+W+land+N+E+S+mask.png</file>
         <file>resources/images/terrain/river/river+W+land+N+E+SW+mask.png</file>
@@ -4930,7 +4929,6 @@
         <file>resources/images/terrain/river/riverend+W+4+land+W+mask.png</file>
         <file>resources/images/terrain/river/riverend+W+4+mask.png</file>
         <file>resources/images/terrain/river/river+S+W+land+E+NW+SW+mask.png</file>
-        <file>resources/images/terrain/river/river+W+land+E+S+NW+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+2+land+NE+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+3+land+SE+mask.png</file>
         <file>resources/images/terrain/river/riverend+S+1+land+W+mask.png</file>
@@ -4951,5 +4949,6 @@
         <file>resources/images/terrain/biome_palettes/palette_waste.png</file>
         <file>resources/images/terrain/biome_palettes/palette_waste+awds.png</file>
         <file>resources/images/terrain/biome_palettes/palette_waste+dor.png</file>
+        <file>resources/images/terrain/river/river+W+land+E+S+NW+mask.png</file>
     </qresource>
 </RCC>
