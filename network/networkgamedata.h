@@ -64,6 +64,12 @@ public:
     qint64 getUuid() const;
     void setUuid(qint64 newUuid);
 
+    bool getRunningGame() const;
+    void setRunningGame(bool newRunningGame);
+
+    QString getCurrentPlayer() const;
+    void setCurrentPlayer(const QString & newCurrentPlayer);
+
 private:
     qint32 m_players{0};
     qint32 m_maxPlayers{0};
@@ -72,8 +78,10 @@ private:
     QString m_description;
     QString m_mapName;
     QString m_slaveName;
+    QString m_currentPlayer;
     bool m_locked{false};
     bool m_launched{false};
+    bool m_runningGame{false};
     QString m_slaveAddress;
     QString m_slaveSecondaryAddress;
     quint16 m_slavePort{0};

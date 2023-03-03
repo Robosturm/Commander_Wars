@@ -75,7 +75,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 3;
+        return 4;
     }
     /**
      * @brief getSyncCounter
@@ -122,6 +122,16 @@ public:
      * @param fuelCost
      */
     void setMovepath(const std::vector<QPoint> & points, qint32 fuelCost);
+    /**
+     * @brief getMapHash
+     * @return
+     */
+    QByteArray getMapHash() const;
+    /**
+     * @brief setMapHash
+     * @param newMapHash
+     */
+    void setMapHash(const QByteArray & newMapHash);
 
 public slots:
     /**
@@ -420,6 +430,7 @@ private:
     qint64 m_roundTimerTime{0};
     qint32 m_player{-1};
     GameMap* m_pMap{nullptr};
+    QByteArray m_mapHash;
 };
 
 Q_DECLARE_INTERFACE(GameAction, "GameAction");

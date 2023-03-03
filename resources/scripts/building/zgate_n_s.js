@@ -1,5 +1,9 @@
 var Constructor = function()
 {
+    this.getBuildingGroup = function()
+    {
+        return 6;
+    };
     this.init = function (building)
     {
         building.setHp(100);
@@ -48,7 +52,7 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
-        var variables = terrain.getVariables();
+        var variables = terrain.getAnimationVariables();
         var variable = variables.getVariable("FOREGROUND_ID");
         var rand = 0;
         if (variable === null)

@@ -99,7 +99,7 @@ void Topbar::addGroup(QString text)
     textField->setStyle(style);
     textField->setHtmlText(text);
 
-    oxygine::spButton pButton = pObjectManager->createButton(text, textField->getTextRect().getWidth() + 20);
+    oxygine::spButton pButton = pObjectManager->createButton(text, textField->getTextRect().width() + 20);
     m_pSpriteBox->addChild(pButton);
     qint32 x = 22;
     for (qint32 i = 0; i < m_Buttons.size(); i++)

@@ -448,7 +448,7 @@ var Constructor = function()
         return terrainSpriteManager.getTerrainCount() +
                buildingSpriteManager.getBuildingCount();
     };
-    this.getCustomUnitGlobalBoost = function(co, index, info)
+    this.getCustomUnitGlobalBoost = function(co, index, info, map)
     {
         var terrains = terrainSpriteManager.getTerrainsSorted();
         var buildings = buildingSpriteManager.getLoadedBuildings();
@@ -523,7 +523,7 @@ var Constructor = function()
         return terrainSpriteManager.getTerrainCount() +
                buildingSpriteManager.getBuildingCount();
     };
-    this.getCustomUnitZoneBoost = function(co, index, info)
+    this.getCustomUnitZoneBoost = function(co, index, info, map)
     {
         var terrains = terrainSpriteManager.getTerrainsSorted();
         var buildings = buildingSpriteManager.getLoadedBuildings();

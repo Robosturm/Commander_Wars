@@ -18,6 +18,7 @@
 #include "menue/mainwindow.h"
 
 #include "resource_management/backgroundmanager.h"
+#include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
 #include "objects/base/chat.h"
@@ -40,7 +41,7 @@ LobbyMenu::LobbyMenu()
     {
         m_pTCPClient = spTCPClient::create(nullptr);
         m_pTCPClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, Qt::QueuedConnection);
+        connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         connect(m_pTCPClient.get(), &TCPClient::sigConnected, this, &LobbyMenu::connected, Qt::QueuedConnection);
         emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort(), Settings::getSecondaryServerAdress());
     }
@@ -54,8 +55,8 @@ LobbyMenu::LobbyMenu()
     sprite->setPosition(-1, -1);
     // background should be last to draw
     sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
+    sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
 
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/multiplayer");
@@ -436,7 +437,11 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QJsonObject objData = doc.object();
         QString messageType = objData.value(JsonKeys::JSONKEY_COMMAND).toString();
         CONSOLE_PRINT("LobbyMenu Command received: " + messageType, GameConsole::eDEBUG);
-        if (messageType == NetworkCommands::SERVERGAMEDATA)
+        if (messageType == NetworkCommands::SERVERVERSION)
+        {
+            checkVersionAndShowInfo(objData);
+        }
+        else if (messageType == NetworkCommands::SERVERGAMEDATA)
         {
             if (m_loggedIn && m_mode == GameViewMode::OpenGames)
             {
@@ -545,18 +550,27 @@ void LobbyMenu::updateGamesView()
             currentItem = itemCount;
             m_currentGame = game;
         }
+        QColor textColor = FontManager::getFontColor();
+        if (game.getRunningGame())
+        {
+            if (Settings::getUsername() == game.getCurrentPlayer() ||
+                game.getCurrentPlayer().isEmpty())
+            {
+                textColor = QColor(0, 255, 0);
+            }
+        }
         ComplexTableView::Item item;
         item.pData = &game;
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getMapName(), widths[0])));
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spXofYTableItem::create(game.getPlayers(), game.getMaxPlayers(), widths[1])));
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getDescription(), widths[2])));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getMapName(), widths[0], textColor)));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spXofYTableItem::create(game.getPlayers(), game.getMaxPlayers(), widths[1], textColor)));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getDescription(), widths[2], textColor)));
         QStringList mods = game.getMods();
         QString modString;
         for (const auto & mod : mods)
         {
             modString.append(Settings::getModName(mod) + "; ");
         }
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(modString, widths[3])));
+        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(modString, widths[3], textColor)));
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spLockTableItem::create(game.getLocked(), widths[4])));
         items.append(item);
         ++itemCount;
@@ -582,13 +596,34 @@ void LobbyMenu::selectGame()
 
 void LobbyMenu::connected(quint64 socket)
 {
-    CONSOLE_PRINT("LobbyMenu::connected " + QString::number(socket), GameConsole::eDEBUG);
-    QString password = Settings::getServerPassword();
-    spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
-    addChild(pDialog);
-    if (!password.isEmpty())
+    QString command = QString(NetworkCommands::SERVERREQUESTVERSION);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QJsonDocument doc(data);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::checkVersionAndShowInfo(const QJsonObject & objData)
+{
+    QString version = objData.value(JsonKeys::JSONKEY_VERSION).toString();
+    if (version == Mainapp::getGameVersion())
     {
-        loginToServerAccount(password);
+        CONSOLE_PRINT("LobbyMenu::connected", GameConsole::eDEBUG);
+        QString password = Settings::getServerPassword();
+        spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
+        addChild(pDialog);
+        if (!password.isEmpty())
+        {
+            loginToServerAccount(password);
+        }
+    }
+    else        
+    {
+        spDialogMessageBox pDialogMessageBox;
+        pDialogMessageBox = spDialogMessageBox::create(tr("Connection refused. Server has a different version of the game. Server ") + version);
+        addChild(pDialogMessageBox);
+        m_pTCPClient = nullptr;
     }
 }
 

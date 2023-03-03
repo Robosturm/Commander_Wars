@@ -7,6 +7,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
+        terrain.setPalette("palette_clear");
         terrain.setTerrainName(RIVER.getName());
         terrain.setHasFlowDirection(true);
     };
@@ -35,7 +36,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, map)
     {        
-        terrain.loadBaseSprite("river+0+land+N+E+S+W");
+        terrain.loadBaseSprite("river+0+land+N+E+S+W+mask");
     };
     this.getMiniMapIcon = function()
     {
@@ -49,81 +50,89 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return ["river+0+land+N+E+S+W",
-                "river+1+land+N+E+S+W",
-                "river+0+land+E+S+W",
-                "river+1+land+E+S+W",
-                "river+0+land+N+E+S",
-                "river+1+land+N+E+S",
-                "river+0+land+N+E+W",
-                "river+1+land+N+E+W",
-                "river+0+land+N+S+W",
-                "river+1+land+N+S+W",
-                "river+S+W+land+N+W",
-                "river+S+W+land+N+W+SE",
-                "river+E+S+land+N+E",
-                "river+E+S+land+N+E+SW",
-                "river+N+E+land+N+W",
-                "river+N+E+land+N+W+SE",
-                "river+E+S+land+S+W",
-                "river+E+S+land+S+W+NE",
-                "river+N+E+land+E+S",
-                "river+N+E+land+E+S+NW",
-                "river+N+W+land+S+W",
-                "river+N+W+land+S+W+NE",
-                "river+N+W+land+N+E",
-                "river+N+W+land+N+E+SW",
-                "river+S+W+land+E+S",
-                "river+S+W+land+E+S+NW",
-                "river+S+land+E+W",
-                "river+N+land+E+W",
-                "river+E+land+N+S",
-                "river+W+land+N+S",
-                "river+S+land+E+W+bridge",
-                "river+E+land+N+SE",
-                "river+E+land+S+NE",
-                "river+E+land+S+NE+NW",
-                "river+W+land+S+NW",
-                "river+W+land+N+SW",
-                "river+E+land+S",
-                "river+E+land+N",
-                "river+E",
-                "river+W",
-                "river+N",
-                "river+S",
-                "river+N+land+W+NE+SE",
-                "river+E+S+land+N+SE+SW",
-                "river+E+S+land+N+SW",
-                "river+E+S+land+W+NE",
-                "river+E+S+land+W+NE+SE",
-                "river+E+W+land+S+NE+NW",
-                "river+N+E+land+S+NE+NW",
-                "river+N+E+land+S+NW",
-                "river+N+E+land+W+NE+SE",
-                "river+N+E+land+W+SE",
-                "river+N+land+E",
-                "river+N+land+E+NW",
-                "river+N+land+E+SW+NW",
-                "river+N+land+W+NE",
-                "river+N+W+land+E+SW",
-                "river+N+W+land+E+SW+NW",
-                "river+N+W+land+S+NE",
-                "river+N+W+land+S+NE+NW",
-                "river+S+land+E",
-                "river+S+land+E+SW",
-                "river+S+land+E+SW+NW",
-                "river+S+land+N+SE+SW",
-                "river+S+land+NE+SE+SW+NW",
-                "river+S+land+W",
-                "river+S+land+W+NE+SE",
-                "river+S+land+W+SE",
-                "river+S+W+land+E+NW",
-                "river+S+W+land+E+SW+NW",
-                "river+S+W+land+N+SE",
-                "river+S+W+land+N+SE+SW",
-                "river+W+land+N",
-                "river+W+land+S",
-                "river+W+land+S+NE+NW",];
+        return ["river+0+land+N+E+S+W+mask",
+                "river+1+land+N+E+S+W+mask",
+                "river+land+E+S+W+mask",
+                "river+land+N+E+S+mask",
+                "river+land+N+E+W+mask",
+                "river+land+N+S+W+mask",
+                "river+S+W+land+N+W+mask",
+                "river+S+W+land+N+W+SE+mask",
+                "river+E+S+land+N+E+mask",
+                "river+N+W+land+S+W+NE+mask",
+                "river+E+land+N+S+W+mask",
+                "river+E+land+N+W+mask",
+                "river+E+land+N+W+SE+mask",
+                "river+E+land+S+W+mask",
+                "river+E+land+S+W+NE+mask",
+                "river+E+S+land+W+NE+mask",
+                "river+land+E+S+W+mask",
+                "river+N+land+E+NW+SW+mask",
+                "river+N+land+E+S+mask",
+                "river+N+land+E+S+NW+mask",
+                "river+N+land+E+S+W+mask",
+                "river+N+land+S+W+mask",
+                "river+N+W+land+E+NW+SW+mask",
+                "river+S+land+E+NW+SW+mask",
+                "river+S+land+N+E+SW+mask",
+                "river+S+land+N+E+W+mask",
+                "river+S+W+land+E+NW+SW+mask",
+                "river+W+land+E+S+mask",
+                "river+S+land+E+W+mask",
+                "river+N+land+E+W+mask",
+                "river+E+land+N+S+mask",
+                "river+W+land+N+S+mask",
+                "river+S+land+E+W+bridge+mask",
+                "river+E+land+N+SE+mask",
+                "river+E+land+S+NE+mask",
+                "river+E+land+S+NE+NW+mask",
+                "river+W+land+S+NW+mask",
+                "river+W+land+N+SW+mask",
+                "river+E+land+S+mask",
+                "river+E+land+N+mask",
+                "river+E+mask",
+                "river+W+mask",
+                "river+N+mask",
+                "river+S+mask",
+                "river+N+land+W+mask",
+                "river+N+land+W+NE+SE+mask",
+                "river+E+S+land+N+SE+SW+mask",
+                "river+E+S+land+N+SW+mask",
+                "river+E+S+land+W+NE+mask",
+                "river+E+S+land+W+NE+SE+mask",
+                "river+E+W+land+S+NE+NW+mask",
+                "river+N+E+land+S+NE+NW+mask",
+                "river+N+E+land+S+NW+mask",
+                "river+N+E+land+W+NE+SE+mask",
+                "river+N+E+land+W+SE+mask",
+                "river+N+land+E+mask",
+                "river+N+land+E+NW+mask",
+                "river+N+land+E+SW+NW+mask",
+                "river+N+land+W+NE+mask",
+                "river+N+W+land+E+SW+mask",
+                "river+N+W+land+E+SW+NW+mask",
+                "river+N+W+land+S+NE+mask",
+                "river+N+W+land+S+NE+NW+mask",
+                "river+S+land+E+mask",
+                "river+S+land+E+SW+mask",
+                "river+S+land+E+SW+NW+mask",
+                "river+S+land+N+SE+SW+mask",
+                "river+S+land+NE+SE+SW+NW+mask",
+                "river+S+land+W+mask",
+                "river+S+land+W+NE+SE+mask",
+                "river+S+land+W+SE+mask",
+                "river+S+W+land+E+NW+mask",
+                "river+S+W+land+E+SW+NW+mask",
+                "river+S+W+land+N+SE+mask",
+                "river+S+W+land+N+SE+SW+mask",
+                "river+W+land+N+mask",
+                "river+W+land+S+mask",
+                "river+W+land+S+NE+NW+mask",
+                "river+S+W+land+N+SE+SW+mask",
+                "river+W+land+E+S+NW+mask",
+                "river+W+land+N+E+mask",
+                "river+W+land+N+E+S+mask",
+                "river+W+land+N+E+SW+mask",];
     };
     this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
@@ -139,7 +148,7 @@ var Constructor = function()
         }
         else
         {
-            var variables = terrain.getVariables();
+            var variables = terrain.getAnimationVariables();
             var variable = variables.getVariable("BACKGROUND_ID");
             var rand = 0;
             if (variable === null)
@@ -189,14 +198,10 @@ var Constructor = function()
     {
         var flow = flowData.getFlowString(index);
         var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2,LAKE,SEA,REAF", false, true, GameEnums.Directions_Direct, false);
-        if (surroundingsDirect === "+N+E+S+W" ||
-            surroundingsDirect === "+E+S+W" ||
-            surroundingsDirect === "+N+S+W" ||
-            surroundingsDirect === "+N+E+W" ||
-            surroundingsDirect === "+N+E+S")
+        if (surroundingsDirect === "+N+E+S+W")
         {
             var random = globals.randInt(0, 1);
-            terrain.loadBaseSprite("river+" + random.toString() + "+land" + surroundingsDirect);
+            terrain.loadBaseSprite("river+" + random.toString() + "+land" + surroundingsDirect + "+mask");
         }
         else
         {
@@ -221,7 +226,7 @@ var Constructor = function()
             if (surroundingsDirect !== "" ||
                 surroundingsDiagonal !== "")
             {
-                landEnding = "+land" + surroundingsDirect + surroundingsDiagonal;
+                landEnding = "+land" + surroundingsDirect + surroundingsDiagonal + "+mask";
             }
             var animName = "river" + flow + landEnding;
             if (terrain.existsResAnim(animName))
@@ -262,7 +267,7 @@ var Constructor = function()
                         else
                         {
                             // fallback so at least a river is shown
-                            terrain.loadBaseSprite("river+S+land+NE+SE+SW+NW");
+                            terrain.loadBaseSprite("river+S+land+NE+SE+SW+NW+mask");
                         }
                     }
                 }
@@ -383,10 +388,10 @@ var Constructor = function()
                     break;
                 }
             }
-            var animName = "riverend" + flowString + "+" + i2.toString() + landname;
+            var animName = "riverend" + flowString + "+" + i2.toString() + landname + "+mask";
             if (terrain.existsResAnim(animName))
             {
-                terrain.loadBaseSprite(animName);
+                terrain.loadOverlaySprite(animName);
             }
         }
     };

@@ -50,14 +50,14 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Action List"));
-    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     pPanel->addItem(pLabel);
 
     GameManager* pGameManager = GameManager::getInstance();
 
     QStringList actionList = pGameManager->getLoadedRessources();
 
-    qint32 y = pLabel->getY() + pLabel->getTextRect().getHeight() + 10;
+    qint32 y = pLabel->getY() + pLabel->getTextRect().height() + 10;
     qint32 x = 10;
     
     m_CurrentActionList = m_pMap->getGameRules()->getAllowedActions();
@@ -112,9 +112,9 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
             pPanel->addItem(pTooltip);
 
             x += 400;
-            if (x + 400 > pPanel->getContentWidth())
+            if (x + 400 > pPanel->getContentWidth() - 60)
             {
-                y += 50;
+                y += pLabel->getHeight() + 20;
                 x = 10;
             }
         }

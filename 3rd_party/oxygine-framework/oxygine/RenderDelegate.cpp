@@ -38,36 +38,23 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         STDRenderer* renderer = STDRenderer::getCurrent();
         VideoDriver* driver = renderer->getDriver();
+        GameWindow* window = oxygine::GameWindow::getWindow();
 
         RenderState rs = parentRS;
 
-        const RectF* parentClippedRect = parentRS.clip;
-        RectF clippedRect = *parentClippedRect;
-        rs.clip = &clippedRect;
-
-        Rect scissorRect(0, 0, 0, 0);
-        bool scissorEnabled = driver->getScissorRect(scissorRect);
+        bool scissorEnabled = false;
+        const QRect scissorRect = driver->getScissorRect(scissorEnabled);
         bool vis = true;
         if (actor->getClipping())
         {
             renderer->flush();
-            RectF ss_rect = Actor::getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
+            const QRect ss_rect = Actor::getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
 
-            clippedRect.clip(ss_rect);
-            if (!clippedRect.isEmpty())
+            rs.clip = rs.clip.intersected(ss_rect);
+            if (!rs.clip.isEmpty())
             {
-                Rect gl_rect = Rect(static_cast<qint32>(clippedRect.pos.x + 0.01f),
-                                    static_cast<qint32>(clippedRect.pos.y + 0.01f),
-                                    static_cast<qint32>(clippedRect.size.x + 0.01f),
-                                    static_cast<qint32>(clippedRect.size.y + 0.01f));
-
-                if (!driver->getRenderTarget()->getHandle())
-                {
-                    GameWindow* window = oxygine::GameWindow::getWindow();
-                    QSize size = window->size();
-                    gl_rect.pos.y = size.height() - gl_rect.getBottom();
-                }
-
+                QSize size = window->size();
+                QRect gl_rect(rs.clip.x(), size.height() - rs.clip.y() - rs.clip.height(), rs.clip.width(), rs.clip.height());
                 driver->setScissorRect(&gl_rect);
             }
             else
@@ -113,31 +100,35 @@ namespace oxygine
 
         STDRenderer* renderer = STDRenderer::getCurrent();
         VideoDriver* driver = renderer->getDriver();
-        Rect scissorRect(0, 0, 0, 0);
-        bool scissorEnabled = driver->getScissorRect(scissorRect);
+        bool scissorEnabled = false;
+        const QRect scissorRect = driver->getScissorRect(scissorEnabled);
 
         spMaterial cur = Material::current;
         Material::null->apply();
-
-        //---------------------------------------------------------
-        // qt painter usage
-        GameWindow* window = oxygine::GameWindow::getWindow();
-        QPainter painter(window);
-        if (scissorEnabled)
         {
-            QSize size = window->size();
-            QRect clipRect(scissorRect.getX(), size.height() - scissorRect.getY() - scissorRect.getHeight(), scissorRect.getWidth(), scissorRect.getHeight());
-            painter.setClipRect(clipRect);
+            //---------------------------------------------------------
+            // qt painter usage
+            GameWindow* window = oxygine::GameWindow::getWindow();
+            QPainter painter(window);
+            if (scissorEnabled)
+            {
+                QSize size = window->size();
+                QRect clipRect(scissorRect.x(), size.height() - scissorRect.y() - scissorRect.height(), scissorRect.width(), scissorRect.height());
+                painter.setClipRect(clipRect);
+            }
+            painter.setRenderHints(QPainter::Antialiasing, tf->getFont()->antialiasing);
+            root->draw(rs, tf->getStyle(), tf->getStyle().color, painter);
+            painter.setRenderHints(QPainter::Antialiasing, false);
+            painter.end();
+            //---------------------------------------------------------
         }
-        painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing, tf->getFont().antialiasing);
-        root->draw(rs, tf->getStyle(), tf->getStyle().color, painter);
-        painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing, false);
-        painter.end();
-        //---------------------------------------------------------
-
         rsCache().restoreAfterPainterUse();
         cur->apply();
-        driver->setScissorRect(scissorEnabled ? &scissorRect : nullptr);
+
+        if (scissorEnabled)
+        {
+            driver->setScissorRect(&scissorRect);
+        }
 #endif
     }
 

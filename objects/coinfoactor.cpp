@@ -33,11 +33,11 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     oxygine::spTextField pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("CO Information"));
-    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, 10);
     addChild(pLabel);
 
     m_pCurrentCoFaction = oxygine::spSprite::create();
-    m_pCurrentCoFaction->setPosition(width * 0.5f - 36 * 0.5f, pLabel->getY() + pLabel->getTextRect().getHeight() + 5);
+    m_pCurrentCoFaction->setPosition(width * 0.5f - 36 * 0.5f, pLabel->getY() + pLabel->getTextRect().height() + 5);
     m_pCurrentCoFaction->setScale(2.0f);
     addChild(m_pCurrentCoFaction);
 
@@ -50,9 +50,9 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     addChild(m_COName);
 
     m_pCurrentCO = oxygine::spSprite::create();
-    m_pCurrentCO->setScale((Settings::getHeight() - 200) / 352.0f);
+    m_pCurrentCO->setScale(static_cast<float>(Settings::getHeight() - 200) / 352.0f);
     m_pCurrentCO->setSize(208, 352);
-    m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), m_COName->getY() + m_COName->getTextRect().getHeight() + 10);
+    m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), m_COName->getY() + m_COName->getTextRect().height() + 10);
     addChild(m_pCurrentCO);
 
 
@@ -60,7 +60,7 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_COBio = oxygine::spTextField::create();
     m_COBio->setStyle(style);
     m_COBio->setWidth(m_pCurrentCO->getX() - 50);
-    m_COBio->setPosition(10, m_COName->getY() + m_COName->getTextRect().getHeight() + 10);
+    m_COBio->setPosition(10, m_COName->getY() + m_COName->getTextRect().height() + 10);
     addChild(m_COBio);
 
     m_HitSprite = oxygine::spBox9Sprite::create();
@@ -73,9 +73,9 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     oxygine::spTextField pTextField = oxygine::spTextField::create();
     pTextField->setPosition(14, 1);
     pTextField->setStyle(blackStyle);
-    pTextField->setScale(1 / m_HitSprite->getScaleX());
+    pTextField->setScale(1.0f / m_HitSprite->getScaleX());
     pTextField->setHtmlText(tr("Hit"));
-    m_HitSprite->setWidth(pTextField->getTextRect().getWidth() / m_HitSprite->getScaleX() + 21);
+    m_HitSprite->setWidth(pTextField->getTextRect().width() / m_HitSprite->getScaleX() + 21);
     m_HitSprite->addChild(pTextField);
     addChild(m_HitSprite);
     m_HitText = oxygine::spTextField::create();
@@ -91,9 +91,9 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     pTextField = oxygine::spTextField::create();
     pTextField->setPosition(14, 1);
     pTextField->setStyle(blackStyle);
-    pTextField->setScale(1 / m_MissSprite->getScaleX());
+    pTextField->setScale(1.0f / m_MissSprite->getScaleX());
     pTextField->setHtmlText(tr("Miss"));
-    m_MissSprite->setWidth(pTextField->getTextRect().getWidth() / m_MissSprite->getScaleX()  + 21);
+    m_MissSprite->setWidth(pTextField->getTextRect().width() / m_MissSprite->getScaleX()  + 21);
     m_MissSprite->addChild(pTextField);
     addChild(m_MissSprite);
     m_MissText = oxygine::spTextField::create();
@@ -229,7 +229,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         m_pCurrentCoFaction->setResAnim(pResAnim);
         if (pResAnim != nullptr)
         {
-            m_pCurrentCoFaction->setScale(36 / pResAnim->getWidth());
+            m_pCurrentCoFaction->setScale(36.0f / static_cast<float>(pResAnim->getWidth()));
         }
     }
     m_COName->setHtmlText(coName);
@@ -247,8 +247,8 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         coSuperpower = pCO->getSuperPowerName();
     }
     m_COBio->setHtmlText(coBio);
-    m_COBio->setHeight(m_COBio->getTextRect().getHeight());
-    m_HitSprite->setY(m_COBio->getY() + m_COBio->getTextRect().getHeight() + 10);
+    m_COBio->setHeight(m_COBio->getTextRect().height());
+    m_HitSprite->setY(m_COBio->getY() + m_COBio->getTextRect().height() + 10);
     m_HitText->setHtmlText(coHits);
     m_HitText->setY(m_HitSprite->getY() + 5);
     m_MissSprite->setY(m_HitSprite->getY() + 50);
@@ -256,12 +256,12 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_MissText->setY(m_MissSprite->getY() + 5);
     m_InfoSprite->setY(m_MissSprite->getY() + 50);
     m_InfoText->setHtmlText((coDesc + "\n\n" + tr("CO-Zone-Range: ") + QString::number(corange)));
-    m_InfoText->setHeight(m_InfoText->getTextRect().getHeight());
+    m_InfoText->setHeight(m_InfoText->getTextRect().height());
     m_InfoText->setY(m_InfoSprite->getY() + 50);
 
     m_pCoPowermeter->setCO(pCO.get());
     m_pCoPowermeter->drawPowerMeter();
-    m_pCoPowermeter->setY(m_InfoText->getY() + m_InfoText->getTextRect().getHeight() + 20);
+    m_pCoPowermeter->setY(m_InfoText->getY() + m_InfoText->getTextRect().height() + 20);
     m_pCoPowermeter->setX(20);
 
     if (pCO.get() != nullptr)
@@ -288,25 +288,25 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_PowerDesc->setY(m_Powername->getY() + 40);
     m_Powername->setHtmlText(coPower);
     m_PowerDesc->setHtmlText(coPowerDesc);
-    m_PowerDesc->setHeight(m_PowerDesc->getTextRect().getHeight());
+    m_PowerDesc->setHeight(m_PowerDesc->getTextRect().height());
 
-    m_SuperPowerSprite->setY(m_PowerDesc->getY() + m_PowerDesc->getTextRect().getHeight() + 20);
+    m_SuperPowerSprite->setY(m_PowerDesc->getY() + m_PowerDesc->getTextRect().height() + 20);
     m_SuperPowername->setY(m_SuperPowerSprite->getY());
     m_SuperPowerDesc->setY(m_SuperPowername->getY() + 40);
     m_SuperPowername->setHtmlText(coSuperpower);
     m_SuperPowerDesc->setHtmlText(coSuperpowerDesc);
-    m_SuperPowerDesc->setHeight(m_SuperPowerDesc->getTextRect().getHeight());
+    m_SuperPowerDesc->setHeight(m_SuperPowerDesc->getTextRect().height());
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    qint32 y = m_SuperPowerDesc->getY() + m_SuperPowerDesc->getTextRect().getHeight() + 20;
+    qint32 y = m_SuperPowerDesc->getY() + m_SuperPowerDesc->getTextRect().height() + 20;
     if (pCO.get() != nullptr)
     {
         m_SynergyText->setY(y);
         m_synergySprite->setY(y);
-        y += m_SynergyText->getTextRect().getHeight() + 10;
+        y += m_SynergyText->getTextRect().height() + 10;
 
         // show co synergys
         for (qint32 i = 0; i < m_SynergyCONames.size(); i++)
@@ -357,7 +357,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
                     }
                     addChild(pActor);
                     m_SynergyStarActors.append(pActor);
-                    y += pText->getTextRect().getHeight() + 10;
+                    y += pText->getTextRect().height() + 10;
                 }
             }
         }
@@ -366,11 +366,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     {
         m_synergySprite->setY(y);
         m_SynergyText->setY(y);
-        y += m_SynergyText->getTextRect().getHeight() + 10;
+        y += m_SynergyText->getTextRect().height() + 10;
     }
 
     m_PerkText->setPosition(10, y);
-    y += m_PerkText->getTextRect().getHeight() + 10;
+    y += m_PerkText->getTextRect().height() + 10;
     showPerks(pCO, y);
     y += 50;
 
@@ -560,7 +560,7 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
         pCO->getCustomUnitZoneBoost(index, info);
     }
     WikiDatabase* pDatabase = WikiDatabase::getInstance();
-    m_UnitDataActors[i]->addChild(pDatabase->getIcon(pCO->getMap(), info.getIconId(), GameMap::defaultImageSize * 2));
+    m_UnitDataActors[i]->addChild(pDatabase->getIcon(pCO->getMap(), info.getIconId(), GameMap::defaultImageSize));
     QString wikiLink = info.getLink();
     m_UnitDataActors[i]->addClickListener([this, wikiLink](oxygine::Event*)
     {
@@ -638,7 +638,7 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
             pSprite->setResAnim(pAnim);
             if (pAnim != nullptr)
             {
-                pSprite->setScale((GameMap::getImageSize() * 2) / pAnim->getWidth());
+                pSprite->setScale(static_cast<float>(GameMap::getImageSize() * 2) / static_cast<float>(pAnim->getWidth()));
             }
             pSprite->setPosition(0, 0);
             perkActor->addChild(pSprite);

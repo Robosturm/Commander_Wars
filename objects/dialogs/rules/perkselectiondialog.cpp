@@ -124,11 +124,11 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
     spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Perk List"));
-    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     m_pPanel->addItem(pLabel);
 
     m_pPerkSelection = spPerkSelection::create(firstCO, Settings::getWidth() - 80, m_pMap->getGameRules()->getMaxPerkCost(), m_pMap->getGameRules()->getMaxPerkCount(), banning, hiddenList, m_pMap);
-    m_pPerkSelection->setY(pLabel->getY() + pLabel->getTextRect().getHeight() + 10);
+    m_pPerkSelection->setY(pLabel->getY() + pLabel->getTextRect().height() + 10);
     m_pPanel->addItem(m_pPerkSelection);
     m_pPanel->setContentHeigth(m_pPerkSelection->getScaledHeight() + m_pPerkSelection->getY() + 40);
     m_pPanel->setContentWidth(m_pPerkSelection->getScaledWidth());

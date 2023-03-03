@@ -1,7 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
-#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
@@ -11,9 +10,9 @@
 namespace oxygine
 {
 #ifndef GRAPHICSUPPORT
-    Point Actor::m_dummyPoint;
-    Vector2 Actor::m_dummyVector;
-    RectF Actor::m_dummyRectF;
+    QPoint Actor::m_dummyPoint;
+    QSize Actor::m_dummySize;
+    QPointF Actor::m_dummyPointF;
 #endif
 
     Actor::Actor()
@@ -64,49 +63,10 @@ namespace oxygine
         }
     }
 
-    void Actor::calcChildrenBounds(RectF& bounds, const AffineTransform& transform) const
-    {
 #ifdef GRAPHICSUPPORT
-        for (auto & child : m_children)
-        {
-            if (child->getVisible())
-            {
-                AffineTransform tr = child->getTransform() * transform;
-                child->calcBounds2(bounds, tr);
-            }
-        }
-#endif
-    }
-
-    void Actor::calcBounds2(RectF& bounds, const AffineTransform& transform) const
+    QTransform Actor::computeGlobalTransform(Actor* parent) const
     {
-#ifdef GRAPHICSUPPORT
-        calcChildrenBounds(bounds, transform);
-
-        RectF rect;
-        if (getBounds(rect))
-        {
-            bounds.unite(transform.transform(rect.getLeftTop()));
-            bounds.unite(transform.transform(rect.getRightTop()));
-            bounds.unite(transform.transform(rect.getRightBottom()));
-            bounds.unite(transform.transform(rect.getLeftBottom()));
-        }
-#endif
-    }
-
-    RectF Actor::computeBounds(const AffineTransform& transform) const
-    {
-        RectF bounds = RectF::invalidated();
-
-        calcBounds2(bounds, transform);
-
-        return bounds;
-    }
-
-#ifdef GRAPHICSUPPORT
-    AffineTransform Actor::computeGlobalTransform(Actor* parent) const
-    {
-        AffineTransform t;
+        QTransform t;
         const Actor* actor = this;
         while (actor && actor != parent)
         {
@@ -120,7 +80,7 @@ namespace oxygine
     void Actor::setAnchor(float ax, float ay)
     {
 #ifdef GRAPHICSUPPORT
-        m_anchor = Vector2(ax, ay);
+        m_anchor = QPointF(ax, ay);
         markTranformDirty();
 #endif
     }
@@ -151,7 +111,7 @@ namespace oxygine
 
         TouchEvent up = *te;
         up.bubbles = false;
-        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get()).cast<Point>();
+        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get());
         dispatchEvent(&up);
     }
 
@@ -170,7 +130,7 @@ namespace oxygine
         TouchEvent up = *te;
         up.type = TouchEvent::OUTX;
         up.bubbles = false;
-        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get()).cast<Point>();
+        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get());
         dispatchEvent(&up);
         oxygine::Stage::getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
         m_overred = 0;
@@ -181,67 +141,60 @@ namespace oxygine
     void Actor::dispatchEvent(Event* event)
     {
 #ifdef GRAPHICSUPPORT
-        if (!m_onScreen)
+        if (event->type == TouchEvent::MOVE)
         {
-            dispatchToParent(event);
-        }
-        else
-        {
-            if (event->type == TouchEvent::MOVE)
+            TouchEvent* te = safeCast<TouchEvent*>(event);
+            if (m_overred == 0)
             {
-                TouchEvent* te = safeCast<TouchEvent*>(event);
+                m_overred = te->index;
                 if (m_overred == 0)
                 {
-                    m_overred = te->index;
-                    if (m_overred == 0)
-                    {
-                        oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::dispatchEvent hover state is 0");
-                    }
-                    TouchEvent over = *te;
-                    over.type = TouchEvent::OVER;
-                    over.bubbles = false;
-                    dispatchEvent(&over);
-                    m_onGlobalTouchMoveEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::dispatchEvent hover state is 0");
                 }
+                TouchEvent over = *te;
+                over.type = TouchEvent::OVER;
+                over.bubbles = false;
+                dispatchEvent(&over);
+                m_onGlobalTouchMoveEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
             }
+        }
 
-            if (event->type == TouchEvent::TOUCH_DOWN)
+        if (event->type == TouchEvent::TOUCH_DOWN)
+        {
+            TouchEvent* te = safeCast<TouchEvent*>(event);
+            if (!m_pressedButton[te->mouseButton])
             {
-                TouchEvent* te = safeCast<TouchEvent*>(event);
-                if (!m_pressedButton[te->mouseButton])
+                if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
                 {
-                    if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
-                    {
-                        m_onGlobalTouchUpEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
-                    }
-                    m_pressedButton[te->mouseButton] = te->index;
+                    m_onGlobalTouchUpEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
                 }
+                m_pressedButton[te->mouseButton] = te->index;
             }
+        }
 
-            TouchEvent click(0);
+        TouchEvent click(0);
 
-            if (event->type == TouchEvent::TOUCH_UP)
+        if (event->type == TouchEvent::TOUCH_UP)
+        {
+            TouchEvent* te = safeCast<TouchEvent*>(event);
+            if (m_pressedButton[te->mouseButton] == te->index && !te->__clickDispatched)
             {
-                TouchEvent* te = safeCast<TouchEvent*>(event);
-                if (m_pressedButton[te->mouseButton] == te->index && !te->__clickDispatched)
-                {
-                    te->__clickDispatched = true;
-                    click = *te;
-                    click.type = TouchEvent::CLICK;
-                    click.bubbles = true;
-                    setNotPressed(te->mouseButton);
-                }
+                te->__clickDispatched = true;
+                click = *te;
+                click.type = TouchEvent::CLICK;
+                click.bubbles = true;
+                setNotPressed(te->mouseButton);
             }
+        }
 
 
-            EventDispatcher::dispatchEvent(event);
-            dispatchToParent(event);
+        EventDispatcher::dispatchEvent(event);
+        dispatchToParent(event);
 
-            if (click.type)
-            {
-                //send click event at the end after TOUCH_UP event
-                dispatchEvent(&click);
-            }
+        if (click.type)
+        {
+            //send click event at the end after TOUCH_UP event
+            dispatchEvent(&click);
         }
 #endif
     }
@@ -255,7 +208,7 @@ namespace oxygine
                 if (TouchEvent::isTouchEvent(event->type))
                 {
                     TouchEvent* me = safeCast<TouchEvent*>(event);
-                    me->localPosition = local2parent(me->localPosition).cast<Point>();
+                    me->localPosition = local2parent(me->localPosition);
                 }
 
                 event->phase = Event::phase_bubbling;
@@ -282,8 +235,8 @@ namespace oxygine
 #endif
         }
 
-        Vector2 originalLocalPos;
-        float originalLocalScale;
+        QPoint originalLocalPos;
+        float originalLocalScale = 1.0f;
 
         if (touchEvent)
         {
@@ -291,8 +244,8 @@ namespace oxygine
             TouchEvent* me = safeCast<TouchEvent*>(event);
             originalLocalPos = me->localPosition;
             originalLocalScale = me->__localScale;
-            me->localPosition = parent2local(originalLocalPos).cast<Point>();
-            me->__localScale *= m_transform.a;
+            me->localPosition = parent2local(originalLocalPos);
+            me->__localScale *= m_transform.m11();
             if (me->__localScale == NAN)
             {
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::handleEvent locale scale is NAN");
@@ -312,7 +265,7 @@ namespace oxygine
             TouchEvent* me = safeCast<TouchEvent*>(event);
             if (!event->target)
             {
-                if (isOn(me->localPosition, me->__localScale))
+                if (isOn(me->localPosition))
                 {
                     event->phase = Event::phase_target;
                     event->target = this;
@@ -322,7 +275,7 @@ namespace oxygine
                 }
             }
 
-            me->localPosition = originalLocalPos.cast<Point>();
+            me->localPosition = originalLocalPos;
             me->__localScale = originalLocalScale;
         }
     }
@@ -334,32 +287,31 @@ namespace oxygine
 #endif
     }
 
-    void Actor::setPosition(const Point& pos)
+    void Actor::setPosition(const QPoint& pos)
     {
 #ifdef GRAPHICSUPPORT
         if (m_pos == pos)
         {
             return;
         }
-        m_pos.x = pos.x;
-        m_pos.y = pos.y;
+        m_pos = pos;
         markTranformDirty();
 #endif
     }
 
     void Actor::setPosition(qint32 x, qint32 y)
     {
-        setPosition(Point(x, y));
+        setPosition(QPoint(x, y));
     }
 
     void Actor::setX(qint32 x)
     {
 #ifdef GRAPHICSUPPORT
-        if (m_pos.x == x)
+        if (m_pos.x() == x)
         {
             return;
         }
-        m_pos.x = x;
+        m_pos.setX(x);
         markTranformDirty();
 #endif
     }
@@ -367,16 +319,16 @@ namespace oxygine
     void Actor::setY(qint32 y)
     {
 #ifdef GRAPHICSUPPORT
-        if (m_pos.y == y)
+        if (m_pos.y() == y)
         {
             return;
         }
-        m_pos.y = y;
+        m_pos.setY(y);
         markTranformDirty();
 #endif
     }
 
-    void Actor::setTransform(const AffineTransform& tr)
+    void Actor::setTransform(const QTransform& tr)
     {
 #ifdef GRAPHICSUPPORT
         m_transform = tr;
@@ -416,10 +368,10 @@ namespace oxygine
 
     void Actor::setScale(float scale)
     {
-        setScale(Vector2(scale, scale));
+        setScale(QPointF(scale, scale));
     }
 
-    void Actor::setScale(const Vector2& scale)
+    void Actor::setScale(const QPointF& scale)
     {
 #ifdef GRAPHICSUPPORT
         if (m_scale == scale)
@@ -434,17 +386,17 @@ namespace oxygine
 
     void Actor::setScale(float scaleX, float scaleY)
     {
-        setScale(Vector2(scaleX, scaleY));
+        setScale(QPointF(scaleX, scaleY));
     }
 
     void Actor::setScaleX(float sx)
     {
 #ifdef GRAPHICSUPPORT
-        if (m_scale.x == sx)
+        if (m_scale.x() == sx)
         {
             return;
         }
-        m_scale.x = sx;
+        m_scale.setX(sx);
         markTranformDirty();
         m_flags &= ~flag_fastTransform;
 #endif
@@ -453,11 +405,11 @@ namespace oxygine
     void Actor::setScaleY(float sy)
     {
 #ifdef GRAPHICSUPPORT
-        if (m_scale.y == sy)
+        if (m_scale.y() == sy)
         {
             return;
         }
-        m_scale.y = sy;
+        m_scale.setY(sy);
         markTranformDirty();
         m_flags &= ~flag_fastTransform;
 #endif
@@ -482,24 +434,23 @@ namespace oxygine
         setRotation(rad);
     }
 
-    void Actor::sizeChanged(const Point&)
+    void Actor::sizeChanged(const QSize&)
     {
     }
 
-    void Actor::__setSize(const Point& size)
+    void Actor::__setSize(const QSize& size)
     {
 #ifdef GRAPHICSUPPORT
         if (m_size == size)
         {
             return;
         }
-        m_size.x = size.x;
-        m_size.y = size.y;
+        m_size = size;
         markTranformDirty();
 #endif
     }
 
-    void Actor::setSize(const Point& size)
+    void Actor::setSize(const QSize& size)
     {
         __setSize(size);
         sizeChanged(size);
@@ -507,20 +458,20 @@ namespace oxygine
 
     void Actor::setSize(qint32 w, qint32 h)
     {
-        setSize(Point(w, h));
+        setSize(QSize(w, h));
     }
 
     void Actor::setWidth(qint32 w)
     {
 #ifdef GRAPHICSUPPORT
-        setSize(Point(w, m_size.y));
+        setSize(QSize(w, m_size.height()));
 #endif
     }
 
     void Actor::setHeight(qint32 h)
     {
 #ifdef GRAPHICSUPPORT
-        setSize(Point(m_size.x, h));
+        setSize(QSize(m_size.width(), h));
 #endif
     }
 
@@ -537,19 +488,18 @@ namespace oxygine
     }
 
 #ifdef GRAPHICSUPPORT
-    const AffineTransform& Actor::getTransform() const
+    const QTransform& Actor::getTransform() const
     {
         updateTransform();
         return m_transform;
     }
 
-    const AffineTransform& Actor::getTransformInvert() const
+    const QTransform& Actor::getTransformInvert() const
     {
         if (m_flags & flag_transformInvertDirty)
         {
             m_flags &= ~flag_transformInvertDirty;
-            m_transformInvert = getTransform();
-            m_transformInvert.invert();
+            m_transformInvert = getTransform().inverted();
         }
 
         return m_transformInvert;
@@ -559,7 +509,7 @@ namespace oxygine
     qint32 Actor::getWidth() const
     {
 #ifdef GRAPHICSUPPORT
-        return m_size.x;
+        return m_size.width();
 #else
         return 0.0f;
 #endif
@@ -568,7 +518,7 @@ namespace oxygine
     qint32 Actor::getHeight() const
     {
 #ifdef GRAPHICSUPPORT
-        return m_size.y;
+        return m_size.height();
 #else
         return 0.0f;
 #endif
@@ -595,11 +545,11 @@ namespace oxygine
         {
             return;
         }
-        AffineTransform tr;
+        QTransform tr;
 
         if (m_flags & flag_fastTransform)
         {
-            tr = AffineTransform(1, 0, 0, 1, m_pos.x, m_pos.y);
+            tr = QTransform(1, 0, 0, 1, m_pos.x(), m_pos.y());
         }
         else
         {
@@ -611,23 +561,22 @@ namespace oxygine
                 s = qSin(m_rotation);
             }
 
-            tr = AffineTransform(
-                     c * m_scale.x, s * m_scale.x,
-                     -s * m_scale.y, c * m_scale.y,
-                     m_pos.x, m_pos.y);
+            tr = QTransform(
+                     c * m_scale.x(), s * m_scale.x(),
+                     -s * m_scale.y(), c * m_scale.y(),
+                     m_pos.x(), m_pos.y());
         }
-        Vector2 offset;
-        offset.x = -float(m_size.x * m_anchor.x);
-        offset.y = -float(m_size.y * m_anchor.y);
-        tr.translate(offset);
+        QPoint offset(-m_size.width() * m_anchor.x(),
+                      -m_size.height() * m_anchor.y());
+        tr.translate(offset.x(), offset.y());
         m_transform = tr;
         m_flags &= ~flag_transformDirty;
 #endif
     }
 
-    bool Actor::isOn(const Vector2& localPosition, float)
+    bool Actor::isOn(const QPoint& localPosition)
     {
-        if (getDestRect().pointIn(localPosition))
+        if (getDestRect().contains(localPosition))
         {
              return true;
         }
@@ -823,44 +772,34 @@ namespace oxygine
 
     }
 
-    Vector2 Actor::parent2local(const Vector2& global) const
+    QPoint Actor::parent2local(const QPoint& global) const
     {
 #ifdef GRAPHICSUPPORT
-        const AffineTransform& t = getTransformInvert();
-        return t.transform(global);
+        const QTransform& t = getTransformInvert();
+        return t.map(global);
 #else
-        return Vector2();
+        return QPoint();
 #endif
     }
 
-    Vector2 Actor::local2parent(const Vector2& local) const
+    QPoint Actor::local2parent(const QPoint& local) const
     {
 #ifdef GRAPHICSUPPORT
-        const AffineTransform& t = getTransform();
-        return t.transform(local);
+        const QTransform& t = getTransform();
+        return t.map(local);
 #else
-        return Vector2();
+        return QPoint();
 #endif
     }
 
-    Vector2 Actor::local2stage(const Vector2& pos, Actor* stage) const
+    QPoint Actor::local2stage(const QPoint& pos, Actor* stage) const
     {
         return convert_local2stage(this, pos, stage);
     }
 
-    Vector2 Actor::local2stage(float x, float y, Actor* stage) const
-    {
-        return convert_local2stage(this, Vector2(x, y), stage);
-    }
-
-    Vector2 Actor::stage2local(const Vector2& pos, Actor* stage) const
+    QPoint Actor::stage2local(const QPoint& pos, Actor* stage) const
     {
         return convert_stage2local(this, pos, stage);
-    }
-
-    Vector2 Actor::stage2local(float x, float y, Actor* stage) const
-    {
-        return convert_stage2local(this, Vector2(x, y), stage);
     }
 
     bool Actor::prepareRender(RenderState& rs, const RenderState& parentRS)
@@ -879,11 +818,11 @@ namespace oxygine
         rs.alpha = alpha;
 
 
-        const AffineTransform& tr = getTransform();
+        const QTransform& tr = getTransform();
         if (m_flags & flag_fastTransform)
         {
             rs.transform = parentRS.transform;
-            rs.transform.translate(Vector2(tr.x, tr.y));
+            rs.transform.translate(tr.m31(), tr.m32());
         }
         else
         {
@@ -905,7 +844,7 @@ namespace oxygine
         return true;
     }
 
-    bool Actor::getBounds(RectF& bounds) const
+    bool Actor::getBounds(QRect& bounds) const
     {
 #ifdef GRAPHICSUPPORT
         if (m_flags & flag_actorHasBounds)
@@ -925,9 +864,9 @@ namespace oxygine
 #endif
     }
 
-    RectF Actor::getDestRect() const
+    QRect Actor::getDestRect() const
     {
-        return RectF(Point(0.0f, 0.0f), getSize());
+        return QRect(0, 0, getWidth() + 1, getHeight() + 1);
     }
 
     spTween Actor::__addTween(spTween tween, bool)
@@ -998,7 +937,7 @@ namespace oxygine
 #endif
     }
 
-    Vector2 Actor::convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos)
+    QPoint Actor::convert_global2local_(const Actor* child, const Actor* parent, QPoint pos)
     {
 #ifdef GRAPHICSUPPORT
         if (child->getParent() && child->getParent() != parent)
@@ -1010,12 +949,12 @@ namespace oxygine
         return pos;
     }
 
-    Vector2 Actor::convert_global2local(spActor & child, spActor & parent, const Vector2& pos)
+    QPoint Actor::convert_global2local(spActor & child, spActor & parent, const QPoint& pos)
     {
         return convert_global2local_(child.get(), parent.get(), pos);
     }
 
-    Vector2 Actor::convert_local2global_(const Actor* child, const Actor* parent, Vector2 pos)
+    QPoint Actor::convert_local2global_(const Actor* child, const Actor* parent, QPoint pos)
     {
 #ifdef GRAPHICSUPPORT
         while (child && child != parent)
@@ -1027,7 +966,7 @@ namespace oxygine
         return pos;
     }
 
-    Vector2 Actor::convert_local2global(spActor & child, spActor & parent, const Vector2& pos)
+    QPoint Actor::convert_local2global(spActor & child, spActor & parent, const QPoint& pos)
     {
         return convert_local2global_(child.get(), parent.get(), pos);
     }
@@ -1039,7 +978,7 @@ namespace oxygine
     }
 #endif
 
-    Vector2 Actor::convert_local2stage(spActor & actor, const Vector2& pos, spActor root)
+    QPoint Actor::convert_local2stage(spActor & actor, const QPoint& pos, spActor root)
     {
         if (!root)
         {
@@ -1048,7 +987,7 @@ namespace oxygine
         return convert_local2global(actor, root, pos);
     }
 
-    Vector2 Actor::convert_local2stage(const Actor* actor, const Vector2& pos, const Actor* root)
+    QPoint Actor::convert_local2stage(const Actor* actor, const QPoint& pos, const Actor* root)
     {
         if (!root)
         {
@@ -1057,7 +996,7 @@ namespace oxygine
         return convert_local2global_(actor, root, pos);
     }
 
-    Vector2 Actor::convert_stage2local(spActor & actor, const Vector2& pos, spActor root)
+    QPoint Actor::convert_stage2local(spActor & actor, const QPoint& pos, spActor root)
     {
         if (!root)
         {
@@ -1066,7 +1005,7 @@ namespace oxygine
         return convert_global2local(actor, root, pos);
     }
 
-    Vector2 Actor::convert_stage2local(const Actor* actor, const Vector2& pos, const Actor* root)
+    QPoint Actor::convert_stage2local(const Actor* actor, const QPoint& pos, const Actor* root)
     {
         if (!root)
         {
@@ -1075,23 +1014,20 @@ namespace oxygine
         return convert_global2local_(actor, root, pos);
     }
 
-    RectF Actor::getActorTransformedDestRect(Actor* actor, const AffineTransform& tr)
+    QRect Actor::getActorTransformedDestRect(Actor* actor, const QTransform& tr)
     {
-        RectF rect = actor->getDestRect();
-        Vector2 tl = rect.pos;
-        Vector2 br = rect.pos + rect.size;
+        QRect rect = actor->getDestRect();
+        QPoint tl(rect.x(), rect.y());
+        QPoint br(rect.x() + rect.width(), rect.y() + rect.height());
 
-        tl = tr.transform(tl);
-        br = tr.transform(br);
+        tl = tr.map(tl);
+        br = tr.map(br);
+        QSize size(qAbs(br.x() - tl.x()),
+                   qAbs(br.y() - tl.y()));
 
-        Vector2 size = Vector2(
-                           qAbs(br.x - tl.x),
-                           qAbs(br.y - tl.y));
+        QPoint ntl(std::min(tl.x(), br.x()),
+                   std::min(tl.y(), br.y()));
 
-        Vector2 ntl;
-        ntl.x = std::min(tl.x, br.x);
-        ntl.y = std::min(tl.y, br.y);
-
-        return RectF(ntl, size);
+        return QRect(ntl, size);
     }
 }

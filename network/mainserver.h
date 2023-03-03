@@ -10,6 +10,7 @@
 #include "network/networkgamedata.h"
 #include "network/networkgame.h"
 #include "network/smtpmailsender.h"
+#include "network/automatchmaker.h"
 
 #include "multiplayer/networkcommands.h"
 
@@ -43,6 +44,7 @@ class MainServer final : public QObject, public oxygine::ref_counter
     {
         bool relaunched{false};
         bool runningGame{false};
+        QString currentPlayer;
         QVector<quint64> pendingSockets;
         QString savefile;
         NetworkGameData game;
@@ -64,7 +66,12 @@ public:
 signals:
     void sigRemoveGame(NetworkGame* pGame);
     void sigStartRemoteGame(QString initScript, QString id);
+    void sigExecuteServerScript();
 public slots:
+    /**
+     * @brief exit
+     */
+    void exit();
     /**
      * @brief recieveData we received data from
      * @param socketID
@@ -132,6 +139,20 @@ private slots:
      */
     void periodicTasks();
 private:
+    /**
+     * @brief despawnSlave
+     * @param socketID
+     */
+    void despawnSlave(quint64 socketID);
+    /**
+     * @brief updatePlayerMatchData
+     * @param objData
+     */
+    void updatePlayerMatchData(const QJsonObject & objData);
+    /**
+     * @brief startDatabase
+     */
+    void startDatabase();
     /**
      * @brief cleanUpSuspendedGames
      * @param games
@@ -208,11 +229,23 @@ private:
      */
     void onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData);
     /**
+     * @brief onSlaveInfoGameResult
+     * @param socketID
+     * @param objData
+     */
+    void onSlaveInfoGameResult(quint64 socketID, const QJsonObject & objData);
+    /**
      * @brief onSlaveRelaunched
      * @param socketID
      * @param objData
      */
     void onSlaveRelaunched(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onRequestServerVersion
+     * @param socketID
+     * @param objData
+     */
+    void onRequestServerVersion(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief informClientsAboutRelaunch
      * @param games
@@ -287,6 +320,16 @@ private:
      */
     void loginToAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action);
     /**
+     * @brief createUserTable
+     * @param username
+     */
+    void createUserTable(const QString & username);
+    /**
+     * @brief createMatchData
+     * @param match
+     */
+    void createMatchData(const QString & match);
+    /**
      * @brief checkPassword
      * @param database
      * @param username
@@ -325,6 +368,14 @@ private:
      * @param message
      */
     void sendMail(QString message);
+    /**
+     * @brief getAllUsers
+     * @param database
+     * @param username
+     * @param success
+     * @return
+     */
+    QSqlQuery getAllUsers(QSqlDatabase & database, bool & success);
 private:
     class InternNetworkGame;
     using spInternNetworkGame = oxygine::intrusive_ptr<InternNetworkGame>;
@@ -383,6 +434,10 @@ private:
      */
     QVector<SuspendedSlaveInfo> m_runningLobbies;
     /**
+     * @brief m_autoMatchMakers
+     */
+    QMap<QString, spAutoMatchMaker> m_autoMatchMakers;
+    /**
      * @brief m_lastUsedAddressIndex last used index in the m_slaveAddressOptions
      */
     qint32 m_lastUsedAddressIndex{0};
@@ -411,5 +466,7 @@ private:
      */
     QThread m_mailSenderThread;
 };
+
+Q_DECLARE_INTERFACE(MainServer, "MainServer");
 
 #endif // MAINSERVER_H

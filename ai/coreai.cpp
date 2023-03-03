@@ -11,7 +11,6 @@
 
 #include "menue/gamemenue.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 
@@ -92,26 +91,18 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
     {
         m_flareInfo.unfogRange = erg.toNumber();
     }
-    AI_CONSOLE_PRINT("Creating core ai", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating core ai", GameConsole::eDEBUG);
 }
 
 void CoreAI::init(GameMenue* pMenu)
 {
     if (!m_initDone)
     {
+        CONSOLE_PRINT("CoreAI::init", GameConsole::eDEBUG);
         m_initDone = true;
         m_pMenu = pMenu;
-        if (Settings::getAiSlave())
-        {
-            // connect to ai pipe
-            connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-            connect(this, &CoreAI::performAction, &Mainapp::getAiProcessPipe(), &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
-        }
-        else if (!Settings::getSpawnAiProcess())
-        {
-            connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-            connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
-        }
+        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
+        connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
         if (m_pMap != nullptr)
         {
             qint32 heigth = m_pMap->getMapHeight();
@@ -306,7 +297,7 @@ void CoreAI::nextAction()
             m_pPlayer == m_pMap->getCurrentPlayer() &&
             m_pMenu->getGameStarted())
         {
-            AI_CONSOLE_PRINT("CoreAI::nextAction for player " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), GameConsole::eDEBUG);
+            CONSOLE_PRINT("CoreAI::nextAction for player " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) + " for ai " + m_aiName, GameConsole::eDEBUG);
             if (!processPredefinedAi())
             {
                 AI_CONSOLE_PRINT("Processing ai specific behaviour", GameConsole::eDEBUG);
@@ -1441,7 +1432,7 @@ void CoreAI::appendTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std
     }
 }
 
-void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets)
+void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier)
 {
     if (pUnit == nullptr)
     {
@@ -1484,7 +1475,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
                     }
                     if (goodTransporter)
                     {
-                        targets.push_back(QVector3D(pTransporterUnit->Unit::getX(), pTransporterUnit->Unit::getY(), GlobalUtils::roundUp(m_minSameIslandDistance)));
+                        targets.push_back(QVector3D(pTransporterUnit->Unit::getX(), pTransporterUnit->Unit::getY(), GlobalUtils::roundUp(distanceModifier)));
                     }
                 }
             }
@@ -2152,23 +2143,26 @@ bool CoreAI::onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint3
     return m_IslandMaps[islandIdx]->sameIsland(x, y, x1, y1);
 }
 
-qint32 CoreAI::getIsland(Unit* pUnit) const
+qint32 CoreAI::getIsland(Unit* pUnit)
 {
+    auto movementType = pUnit->getMovementType();
     for (auto & island : m_IslandMaps)
     {
-        if (island->getMovementType() == pUnit->getMovementType())
+        if (island->getMovementType() == movementType)
         {
             return island->getIsland(pUnit->Unit::getX(), pUnit->Unit::getY());
         }
     }
-    return -1;
+    m_IslandMaps.push_back(spIslandMap::create(m_pMap, pUnit->getUnitID(), m_pPlayer, movementType));
+    return m_IslandMaps.size() - 1;
 }
 
 qint32 CoreAI::getIslandSize(Unit* pUnit, qint32 x, qint32 y) const
 {
+    auto movementType = pUnit->getMovementType();
     for (auto & island : m_IslandMaps)
     {
-        if (island->getMovementType() == pUnit->getMovementType())
+        if (island->getMovementType() == movementType)
         {
             return island->getIslandSize(island->getIsland(x, y));
         }
@@ -2176,16 +2170,18 @@ qint32 CoreAI::getIslandSize(Unit* pUnit, qint32 x, qint32 y) const
     return 0;
 }
 
-qint32 CoreAI::getIslandIndex(Unit* pUnit) const
+qint32 CoreAI::getIslandIndex(Unit* pUnit)
 {
+    auto movementType = pUnit->getMovementType();
     for (qint32 i = 0; i < m_IslandMaps.size(); i++)
     {
-        if (m_IslandMaps[i]->getMovementType() == pUnit->getMovementType())
+        if (m_IslandMaps[i]->getMovementType() == movementType)
         {
             return i;
         }
     }
-    return -1;
+    m_IslandMaps.push_back(spIslandMap::create(m_pMap, pUnit->getUnitID(), m_pPlayer, movementType));
+    return m_IslandMaps.size() - 1;
 }
 
 void CoreAI::finishTurn()

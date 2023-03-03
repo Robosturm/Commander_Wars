@@ -64,7 +64,7 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
 
     if (m_pInterface.get() != nullptr)
     {
-        connect(m_pInterface.get(), &NetworkInterface::recieveData, this, &Chat::dataRecieved, Qt::QueuedConnection);
+        connect(m_pInterface.get(), &NetworkInterface::recieveData, this, &Chat::dataRecieved, NetworkCommands::UNIQUE_DATA_CONNECTION);
     }
 }
 
@@ -160,9 +160,9 @@ void Chat::addMessage(QJsonObject data, bool local)
         }
         else
         {
-            m_Panel->setContentHeigth(m_Chat->getTextRect().getHeight() + 40);
+            m_Panel->setContentHeigth(m_Chat->getTextRect().height() + 40);
         }
-        if (m_Chat->getTextRect().getHeight() > 100)
+        if (m_Chat->getTextRect().height() > 100)
         {
             m_Panel->getH_Scrollbar()->changeScrollValue(1.0f);
         }
@@ -174,7 +174,7 @@ void Chat::addMessage(QJsonObject data, bool local)
         drawText += "> " + message + "\n";
     }
     m_Chat->setHtmlText(drawText);
-    m_Chat->setHeight(m_Chat->getTextRect().getHeight() + 20);
+    m_Chat->setHeight(m_Chat->getTextRect().height() + 20);
 }
 
 void Chat::sendData(QString message)

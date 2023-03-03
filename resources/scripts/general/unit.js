@@ -17,6 +17,13 @@ var UNIT =
         return -1;
     },
 
+    moveUnit : function(unit, action, map)
+    {
+        unit.moveUnitAction(action);
+        // the following line create dor like vision
+        unit.createMoveVisionAction(action);
+    },
+
     init : function(unit, map)
     {
         unit.setAmmo1(0);
@@ -232,7 +239,15 @@ var UNIT =
     {
         if (attacker.getBaseMaxRange() === 1)
         {
-            return true;
+            var attackerType = attacker.getUnitType();
+            attackerType = UNIT.unitTypeToGround(attackerType);
+            var defenderType = defender.getUnitType();
+            defenderType = UNIT.unitTypeToGround(defenderType);
+            if (attackerType === defenderType ||
+                defenderType !== GameEnums.UnitType_Naval)
+            {
+                return true;
+            }
         }
         if (defender.getCloaked() && !defender.getHidden())
         {

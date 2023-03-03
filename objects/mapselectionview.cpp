@@ -283,7 +283,7 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
                 m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
                 m_MapTags->setHtmlText(m_pCurrentMap->getMapTagsText());
             }
-            m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
+            m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().height() + 10);
             m_pVictoryInfo->setVisible(true);
             m_MapTags->setY(m_pVictoryInfo->getY() + 55 * Userdata::MAX_VICTORY_INFO_PER_MAP);
 
@@ -341,17 +341,17 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
         m_CurrentLoadedCampaign = nullptr;
         m_currentMapFile = info;
     }
-    qint32 maxWidth = m_MapDescription->getX() + m_MapDescription->getTextRect().getWidth();
-    if (maxWidth < m_MapAuthor->getX() + m_MapAuthor->getTextRect().getWidth())
+    qint32 maxWidth = m_MapDescription->getX() + m_MapDescription->getTextRect().width();
+    if (maxWidth < m_MapAuthor->getX() + m_MapAuthor->getTextRect().width())
     {
-        maxWidth = m_MapAuthor->getX() + m_MapAuthor->getTextRect().getWidth();
+        maxWidth = m_MapAuthor->getX() + m_MapAuthor->getTextRect().width();
     }
-    if (maxWidth < m_MapName->getX() + m_MapName->getTextRect().getWidth())
+    if (maxWidth < m_MapName->getX() + m_MapName->getTextRect().width())
     {
-        maxWidth = m_MapName->getX() + m_MapName->getTextRect().getWidth();
+        maxWidth = m_MapName->getX() + m_MapName->getTextRect().width();
     }
     m_MapInfo->setContentWidth(maxWidth + 30);
-    m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30 + Userdata::MAX_VICTORY_INFO_PER_MAP * 55 + m_MapTags->getTextRect().getHeight());
+    m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().height() + 30 + Userdata::MAX_VICTORY_INFO_PER_MAP * 55 + m_MapTags->getTextRect().height());
 }
 
 void MapSelectionView::loadMapVictoryInfo()
@@ -473,7 +473,7 @@ void MapSelectionView::updateMapData()
     m_MapPlayerCount->setHtmlText(QString::number(m_pCurrentMap->getPlayerCount()));
     m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
     m_MapTags->setHtmlText(m_pCurrentMap->getMapTagsText());
-    m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
+    m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().height() + 10);
     m_MapTags->setY(m_pVictoryInfo->getY() + 55 * Userdata::MAX_VICTORY_INFO_PER_MAP);
 }
 

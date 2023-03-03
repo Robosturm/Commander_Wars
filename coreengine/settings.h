@@ -296,7 +296,10 @@ public:
     static void setPipeUuid(const QString & newPipeUuid);
 
 
+
 public slots:
+    static float getIngameMenuScaling();
+    static void setIngameMenuScaling(float newIngameMenuScaling);
 
     static quint8 getScreen();
     static void setScreen(quint8 newScreen);
@@ -894,6 +897,7 @@ private:
     float m_gamepadSensitivity{1.0f};
     qint32 m_framesPerSecond{60};
     bool m_useHighDpi{true};
+    float m_ingameMenuScaling{1.0f};
     bool m_automaticUpdates{true};
 
     bool m_borderless{true};
@@ -1029,6 +1033,7 @@ private:
     bool m_showDetailedBattleForcast{true};
     bool m_autoMoveCursor{false};
     float m_supplyWarning{0.33f};
+
     qint32 m_pauseAfterAction{0};
 
     // internal members

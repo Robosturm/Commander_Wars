@@ -99,6 +99,7 @@ public:
      * @param pStream
      */
     virtual void serializeObject(QDataStream& pStream) const override;
+    void serializeObject(QDataStream& pStream, bool forHash) const;
     /**
      * @brief deserialize restores the object
      * @param pStream
@@ -116,7 +117,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 11;
+        return 13;
     }
     /**
      * @brief isValid
@@ -130,6 +131,21 @@ public:
     qint32 getMapTerrainDrawPriority();
 
 public slots:
+    /**
+     * @brief getPalette
+     * @return
+     */
+    QString getPalette() const;
+    /**
+     * @brief setPalette
+     * @param newPalette
+     */
+    void setPalette(const QString & newPalette);
+    /**
+     * @brief setTerrainPalette
+     * @param newPalette
+     */
+    void setTerrainPalette(const QString & newPalette);
     /**
      * @brief getFixedOverlaySprites
      * @return
@@ -237,6 +253,11 @@ public slots:
     {
         return &m_Variables;
     }
+    /**
+     * @brief getAnimationVariables
+     * @return
+     */
+    ScriptVariables* getAnimationVariables();
     /**
      * @brief getOffensiveBonus
      * @param pAttacker
@@ -360,12 +381,12 @@ public slots:
      * @brief getUnit the unit on this terrain
      * @return
      */
-    Unit* getUnit();
+    Unit* getUnit() const;
     /**
      * @brief getBuilding the building on this terrain
      * @return
      */
-    Building* getBuilding();
+    Building* getBuilding() const;
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
      */
@@ -548,7 +569,24 @@ public slots:
      * @param curY
      * @return
      */
-    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);    
+    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);
+    /**
+     * @brief getPaletteNames
+     * @return
+     */
+    static QStringList getPaletteNames();
+    /**
+     * @brief getPaletteId
+     * @param index
+     * @return
+     */
+    static QString getPaletteId(qint32 index);
+    /**
+     * @brief getPaletteName
+     * @param id
+     * @return
+     */
+    static QString getPaletteName(const QString & id);
 protected:
     /**
      * @brief createBuildingDownStream
@@ -572,8 +610,9 @@ private:
 
     friend class oxygine::intrusive_ptr<Terrain>;
     explicit Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap);
-
+    void initTerrain();
 private:
+    QString m_palette;
     /**
      * @brief terrainName terrain name shown in the game
      */
@@ -593,7 +632,7 @@ private:
     /**
      * @brief m_pTerrainSprite actor holding our sprite data
      */
-    oxygine::spSprite m_pTerrainSprite{nullptr};
+    oxygine::spSprite m_pTerrainSprite;
     /**
      * @brief m_pOverlaySprites
      */
@@ -644,6 +683,7 @@ private:
     qint32 m_hp{-1};
     qint32 m_VisionHigh{0};
     ScriptVariables m_Variables;
+    ScriptVariables m_AnimationVariables;
     bool m_hasStartOfTurn{false};
     bool m_hasFlowDirection{false};
 

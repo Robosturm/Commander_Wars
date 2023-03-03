@@ -29,12 +29,12 @@ namespace oxygine
         }
     }
 
-    float SlidingSprite::getSpeedX() const
+    qint32 SlidingSprite::getSpeedX() const
     {
         return m_speedX;
     }
 
-    void SlidingSprite::setSpeedX(float speed)
+    void SlidingSprite::setSpeedX(qint32 speed)
     {
         if (!m_locked)
         {
@@ -42,12 +42,12 @@ namespace oxygine
         }
     }
 
-    float SlidingSprite::getSpeedY() const
+    qint32 SlidingSprite::getSpeedY() const
     {
         return m_speedY;
     }
 
-    void SlidingSprite::setSpeedY(float speed)
+    void SlidingSprite::setSpeedY(qint32 speed)
     {
         if (!m_locked)
         {
@@ -76,7 +76,7 @@ namespace oxygine
     {
         if (m_speedX != 0.0f)
         {
-            float speed = -m_speedX;
+            auto speed = -m_speedX;
             if (m_flippedX)
             {
                 speed = m_speedX;

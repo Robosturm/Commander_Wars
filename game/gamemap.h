@@ -133,6 +133,12 @@ public:
      */
     virtual void serializeObject(QDataStream& pStream) const override;
     /**
+     * @brief serializeObject
+     * @param pStream
+     * @param forHash
+     */
+    void serializeObject(QDataStream& pStream, bool forHash) const;
+    /**
      * @brief deserialize restores the object
      * @param pStream
      */
@@ -199,6 +205,10 @@ public:
      * @brief initPlayers
      */
     void initPlayers();
+    /**
+     * @brief initProxyAis
+     */
+    void initProxyAis();
     /**
      * @brief isUnitInArea
      * @param pUnit
@@ -285,7 +295,11 @@ public:
      * @param newSavegame
      */
     void setSavegame(bool newSavegame);
-
+    /**
+     * @brief getMapHash
+     * @return
+     */
+    QByteArray getMapHash();
 signals:
     void signalExitGame();
     void sigSaveGame();
@@ -294,7 +308,7 @@ signals:
     void sigShowGameInfo(qint32 player);
     void sigShowAttackLog(qint32 player);
     void sigShowUnitInfo(qint32 player);
-    void sigQueueAction(spGameAction pAction);
+    void sigQueueAction(spGameAction pAction, bool fromAiPipe = false);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
     void sigShowXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
@@ -366,7 +380,7 @@ public slots:
      * @param unitID
      * @return
      */
-    bool isPlayersUnitInArea(const QRect& area, QList<qint32> & playerIDs);
+    bool isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs);
     /**
      * @brief getUnit
      * @param uniqueID
@@ -599,12 +613,12 @@ public slots:
      * @brief getCenteredPosition
      * @return
      */
-    QPoint getCenteredPosition();
+    QPoint getCenteredPosition() const;
     /**
      * @brief zoom zooms into or out of the map :)
      * @param zoom
      */
-    void setZoom(float zoom);
+    void setZoom(qint32 zoom);
     inline float getZoom() const
     {
         return getScaleX();
@@ -637,7 +651,7 @@ public slots:
      * @param x
      * @param y
      */
-    void replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true);
+    void replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true, const QString & palette = "", bool changePalette = false);
     /**
      * @brief replaceTerrainOnly
      * @param terrainID
@@ -645,7 +659,7 @@ public slots:
      * @param y
      * @param useTerrainAsBaseTerrain
      */
-    void replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true);
+    void replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true, const QString & palette = "", bool changePalette = false);
     /**
      * @brief replaceBuilding
      * @param buildingID
@@ -671,12 +685,12 @@ public slots:
      * @brief getCurrentPlayer the current player
      * @return
      */
-    Player* getCurrentPlayer();
+    Player* getCurrentPlayer() const;
     /**
      * @brief getCurrentViewPlayer
      * @return
      */
-    Player* getCurrentViewPlayer();
+    Player* getCurrentViewPlayer() const;
     /**
      * @brief setCurrentPlayer changes the current player to this one
      * @param player
@@ -785,7 +799,7 @@ public slots:
     QString getMapName() const;
     void setMapName(const QString &value);
 
-    inline GameRules* getGameRules()
+    inline GameRules* getGameRules() const
     {
         return m_Rules.get();
     }

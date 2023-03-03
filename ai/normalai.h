@@ -195,7 +195,7 @@ protected:
      * @param pUnits
      * @param targets
      */
-    void appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets) const;
+    void appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets);
     /**
      * @brief moveUnit
      * @param pAction
@@ -257,7 +257,7 @@ protected:
      */
     qint32 getMoveTargetField(MoveUnitData & unitData, UnitPathFindingSystem& turnPfs,
                               std::vector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
-                              qint32 movePoints) const;
+                              qint32 movePoints);
     /**
      * @brief moveToSafety
      * @param pUnit
@@ -311,7 +311,7 @@ protected:
      */
     qint32 getBestAttackTarget(MoveUnitData & unitData, std::vector<CoreAI::DamageData>& ret,
                                std::vector<QVector3D>& moveTargetFields,
-                               spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const;
+                               spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief calcVirtualDamage
      */
@@ -333,7 +333,7 @@ protected:
     float calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPosition,
                                  Unit* pEnemyUnit, float enemyTakenDamage,
                                  spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
-                                 bool ignoreOutOfVisionRange = false) const;
+                                 bool ignoreOutOfVisionRange = false);
     /**
      * @brief calculateCounteBuildingDamage
      * @param pUnit

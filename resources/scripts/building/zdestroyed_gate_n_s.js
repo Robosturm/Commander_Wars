@@ -1,5 +1,9 @@
 var Constructor = function()
 {
+    this.getBuildingGroup = function()
+    {
+        return 6;
+    };
     this.init = function (building)
     {
     };

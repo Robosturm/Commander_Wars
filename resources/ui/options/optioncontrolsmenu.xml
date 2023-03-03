@@ -566,8 +566,15 @@
                 <startValue>settings.getKey_mapshot()</startValue>
                 <onEvent>settings.setKey_mapshot(input)</onEvent>
             </SelectKey>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Quit game:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
             </Label>
-                <SelectKey>
+            <SelectKey>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Key for quiting a running match.")</tooltip>
@@ -687,13 +694,6 @@
                 <startValue>settings.getKey_EditorSelectionLeft()</startValue>
                 <onEvent>settings.setKey_EditorSelectionLeft(input)</onEvent>
             </SelectKey>
-            <Label>
-                <x>10</x>
-                <y>lastY + lastHeight + 10</y>
-                <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Quit game:")</text>
-                <font>"main"</font>
-                <fontSize>24</fontSize>
         </childs>
     </Panel>
 </ui>

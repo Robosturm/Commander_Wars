@@ -5,7 +5,10 @@ var Constructor = function()
         building.setHp(-1);
         building.setAlwaysVisble(true);
     };
-
+    this.getBuildingGroup = function()
+    {
+        return 3;
+    };
     this.getDefense = function(building)
     {
         return 0;

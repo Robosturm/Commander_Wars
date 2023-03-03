@@ -78,7 +78,6 @@ var Constructor = function ()
         ACTION_LOAD.postAnimationUnit.createMoveVisionFromAction(action);
         var animation = Global[ACTION_LOAD.postAnimationUnit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_LOAD", "performPostAnimation");
-
     };
     this.performPostAnimation = function(postAnimation, map)
     {

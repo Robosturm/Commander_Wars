@@ -8,6 +8,7 @@
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
+#include "3rd_party/oxygine-framework/oxygine/Input.h"
 
 
 #include <QMouseEvent>
@@ -139,8 +140,8 @@ namespace oxygine
             auto ratio = getActiveDpiFactor();
             auto width = Settings::getWidth();
             auto heigth = Settings::getHeight();
-            oxygine::Stage::getStage()->init (oxygine::Point(width / ratio, heigth / ratio),
-                                              oxygine::Point(width, heigth));
+            oxygine::Stage::getStage()->init (QSize(width / ratio, heigth / ratio),
+                                              QSize(width, heigth));
         }
     }
 
@@ -310,7 +311,7 @@ namespace oxygine
         }
     }
 
-    bool GameWindow::sameTouchpoint(QPointF pos1, QPointF pos2) const
+    bool GameWindow::sameTouchpoint(const QPointF & pos1, const QPointF & pos2) const
     {
         return qAbs(pos1.x() - pos2.x()) + qAbs(pos1.y() - pos2.y()) <= Settings::getTouchPointSensitivity();
     }

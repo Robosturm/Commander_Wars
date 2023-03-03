@@ -142,7 +142,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
         style.multiline = false;
         textField->setStyle(style);
         textField->setHtmlText(tr("Predefined Styles"));
-        textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),
+        textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().width(),
                                Settings::getHeight()  - 10 - m_pOkButton->getScaledHeight());
         m_pSpriteBox->addChild(textField);
     }
@@ -372,7 +372,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+nrm", oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        float scale = (m_pCOPanel->getScaledHeight() - 150) / pAnim->getHeight();
+        float scale = static_cast<float>(m_pCOPanel->getScaledHeight() - 150) / static_cast<float>(pAnim->getHeight());
         pBox->setSize(scale * pAnim->getWidth() + 70, scale * pAnim->getHeight() + 40);
         pBox->setPosition(m_boxWidth, 10);
         m_boxWidth += pBox->getScaledWidth() + 10;

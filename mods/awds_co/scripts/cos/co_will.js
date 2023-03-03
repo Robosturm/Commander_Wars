@@ -48,8 +48,8 @@ CO_WILL.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
-        var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
-                         (attacker.getUnitType() === GameEnums.UnitType_Naval);
+        var seaAirUnit = (unit.getUnitType() === GameEnums.UnitType_Air) ||
+                         (unit.getUnitType() === GameEnums.UnitType_Naval);
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:

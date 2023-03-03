@@ -62,6 +62,7 @@ FontManager::FontManager()
                                         auto & font = m_fonts[type];
                                         font.font = QFont(fonts[0]);
                                         font.font.setPixelSize(element.attribute("pixelSize").toInt());
+                                        font.name = type;
                                         font.offsetX = element.attribute("offsetX").toInt();
                                         font.offsetY = element.attribute("offsetY").toInt();
                                         if (element.hasAttribute("borderCapStyle"))
@@ -99,12 +100,12 @@ FontManager::FontManager()
                                     }
                                     else
                                     {
-                                        CONSOLE_PRINT("Unable to load font file: " + folder + "/" + file, GameConsole::eERROR);
+                                        CONSOLE_PRINT_MODULE("Unable to load font file: " + folder + "/" + file, GameConsole::eERROR, GameConsole::eResources);
                                     }
                                 }
                                 else
                                 {
-                                    CONSOLE_PRINT("Unable to load font file: " + folder + "/" + file, GameConsole::eERROR);
+                                    CONSOLE_PRINT_MODULE("Unable to load font file: " + folder + "/" + file, GameConsole::eERROR, GameConsole::eResources);
                                 }
                             }
                         }

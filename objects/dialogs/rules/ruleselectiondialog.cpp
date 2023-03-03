@@ -131,8 +131,7 @@ void RuleSelectionDialog::saveRules(QString filename)
 }
 
 void RuleSelectionDialog::pressedOk()
-{    
-    m_pRuleSelection->confirmRuleSelectionSetup();
+{
     emit sigRulesChanged();
     detach();    
 }

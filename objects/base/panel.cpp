@@ -61,8 +61,8 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            emit m_HScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / getContentHeigth());
-            emit m_VScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.x / getContentWidth());
+            emit m_HScrollbar->sigChangeScrollValue(static_cast<float>(-pTouchEvent->wheelDirection.y()) / static_cast<float>(getContentHeigth()));
+            emit m_VScrollbar->sigChangeScrollValue(static_cast<float>(-pTouchEvent->wheelDirection.x()) / static_cast<float>(getContentWidth()));
             if (m_stopMouseWheel)
             {
                 pTouchEvent->stopPropagation();
@@ -82,15 +82,15 @@ void Panel::scrolledY(float value)
 {    
     if (m_HScrollbar->getVisible() && getVisible())
     {
-        oxygine::RectF bounds = m_SlidingActor->getDragBounds();
+        auto bounds = m_SlidingActor->getDragBounds();
         qint32 newY = -(m_ContentRect->getScaledHeight() - m_SlidingActor->getScaledHeight()) * value;
-        if (newY < bounds.getTop())
+        if (newY < bounds.top())
         {
-            newY = bounds.getTop();
+            newY = bounds.top();
         }
-        else if (newY > bounds.getBottom())
+        else if (newY > bounds.bottom())
         {
-            newY = bounds.getBottom();
+            newY = bounds.bottom();
         }
         m_ContentRect->setY(newY);
     }
@@ -104,15 +104,15 @@ void Panel::scrolledX(float value)
 {
     if (m_VScrollbar->getVisible() && getVisible())
     {
-        oxygine::RectF bounds = m_SlidingActor->getDragBounds();
+        auto bounds = m_SlidingActor->getDragBounds();
         qint32 newX = -(m_ContentRect->getScaledWidth() - m_SlidingActor->getScaledWidth()) * value;
-        if (newX < bounds.getLeft())
+        if (newX < bounds.left())
         {
-            newX = bounds.getLeft();
+            newX = bounds.left();
         }
-        else if (newX > bounds.getRight())
+        else if (newX > bounds.right())
         {
-            newX = bounds.getRight();
+            newX = bounds.right();
         }
         m_ContentRect->setX(newX);
     }
@@ -126,7 +126,7 @@ void Panel::doUpdate(const oxygine::UpdateState& us)
 {
     if (m_VScrollbar->getVisible())
     {
-        float value = m_ContentRect->getX() / -(m_ContentRect->getScaledWidth() - m_SlidingActor->getScaledWidth());
+        float value = static_cast<float>(m_ContentRect->getX()) / -static_cast<float>(m_ContentRect->getScaledWidth() - m_SlidingActor->getScaledWidth());
         m_VScrollbar->setScrollvalue(value);
     }
     else
@@ -135,7 +135,7 @@ void Panel::doUpdate(const oxygine::UpdateState& us)
     }
     if (m_HScrollbar->getVisible())
     {
-        float value = m_ContentRect->getY() / -(m_ContentRect->getScaledHeight() - m_SlidingActor->getScaledHeight());
+        float value = static_cast<float>(m_ContentRect->getY()) / -static_cast<float>(m_ContentRect->getScaledHeight() - m_SlidingActor->getScaledHeight());
         m_HScrollbar->setScrollvalue(value);
     }
     else

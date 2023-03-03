@@ -10,10 +10,11 @@
 namespace oxygine
 {
 #ifndef GRAPHICSUPPORT
-        QColor TextField::m_dummyColor;
-        TextStyle TextField::m_dummyTextStyle = TextStyle(oxygine::Font());
-        Rect TextField::m_dummyRect;
+        Font TextField::m_dummyFont;
+        TextStyle TextField::m_dummyTextStyle = TextStyle(m_dummyFont);
+        QRect TextField::m_dummyRect;
         QString TextField::m_dummyText{""};
+        QColor TextField::m_dummyColor;
 #endif
     TextField::TextField()
 #ifdef GRAPHICSUPPORT
@@ -22,10 +23,10 @@ namespace oxygine
     {
     }
 
-    bool TextField::isOn(const Vector2& localPosition, float)
+    bool TextField::isOn(const QPoint& localPosition)
     {
 #ifdef GRAPHICSUPPORT
-        return getTextRect().pointIn(Point((int)localPosition.x, (int)localPosition.y));
+        return getTextRect().contains(localPosition);
 #else
         return false;
 #endif
@@ -55,7 +56,7 @@ namespace oxygine
 #endif
     }
 
-    const Font & TextField::getFont() const
+    const Font * const TextField::getFont() const
     {
 #ifdef GRAPHICSUPPORT
         return m_style.font;
@@ -67,7 +68,7 @@ namespace oxygine
     void TextField::setFont(Font & font)
     {
 #ifdef GRAPHICSUPPORT
-        m_style.font = font;
+        m_style.font = &font;
         rebuildText();
 #endif
     }
@@ -94,7 +95,7 @@ namespace oxygine
 #endif
     }
 
-    void TextField::sizeChanged(const Point&)
+    void TextField::sizeChanged(const QSize&)
     {
         rebuildText();
     }
@@ -150,7 +151,7 @@ namespace oxygine
 #endif
     }
 
-    const Rect& TextField::getTextRect() const
+    const QRect& TextField::getTextRect() const
     {
 #ifdef GRAPHICSUPPORT
         return m_textRect;
@@ -159,10 +160,10 @@ namespace oxygine
 #endif
     }
 
-    bool TextField::getBounds(RectF& r) const
+    bool TextField::getBounds(QRect& r) const
     {
 #ifdef GRAPHICSUPPORT
-        r = getTextRect().cast<RectF>();
+        r = getTextRect();
 #endif
         return true;
     }
@@ -195,7 +196,7 @@ namespace oxygine
         }
         text::Aligner rd(m_style, getSize());
         rd.align(*m_root.get());
-        m_textRect = rd.getBounds().cast<Rect>();
+        m_textRect = rd.getBounds();
         if (lock)
         {
             m_Locked.unlock();

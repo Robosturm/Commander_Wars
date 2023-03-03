@@ -98,7 +98,7 @@ qint32 GameAnimation::getFontWidth(const QString & font, const QString & text) c
     oxygine::TextField testField;
     testField.setStyle(headline);
     testField.setHtmlText(text);
-    return testField.getTextRect().getWidth();;
+    return testField.getTextRect().width();;
 }
 
 void GameAnimation::setRotation(float angle)
@@ -197,7 +197,7 @@ void GameAnimation::addSpriteAnimTable(QString spriteID, float offsetX, float of
     }
     else
     {
-        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -226,7 +226,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
         }
         else
         {
-            CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG);
+            CONSOLE_PRINT_MODULE("Unable to load animation sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
             return;
         }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
@@ -377,11 +377,11 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
     pTextfield->setHtmlText(text);
     pTextfield->setPosition(offsetX, offsetY);
     pTextfield->setPriority(priority);
-    pTextfield->setWidth(pTextfield->getTextRect().getWidth());
+    pTextfield->setWidth(pTextfield->getTextRect().width());
     pTextfield->setHeight(40);
     pTextfield->setScale(scale);
     addChild(pTextfield);
-    return pTextfield->getTextRect().getWidth();
+    return pTextfield->getTextRect().width();
 }
 
 bool GameAnimation::onFinished(bool skipping)
@@ -473,7 +473,7 @@ void GameAnimation::addTweenScale(float endScale, qint32 duration, QEasingCurve:
 
 void GameAnimation::addTweenPosition(QPoint point, qint32 duration, QEasingCurve::Type easeType)
 {
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(point.x(), point.y())), oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
+    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(point), oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
     addTween(tween1);
 }
 
@@ -521,7 +521,7 @@ void GameAnimation::addTweenScaleToLastQueue(float endScale, qint32 duration, QE
 
 void GameAnimation::addTweenPositionToLastQueue(QPoint point, qint32 duration, QEasingCurve::Type easeType)
 {
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(point.x(), point.y())), oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
+    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(point), oxygine::timeMS(static_cast<qint64>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
     m_lastCreatedTweenQueue->add(tween1);
 }
 

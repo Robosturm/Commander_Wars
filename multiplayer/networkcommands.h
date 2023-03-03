@@ -1,7 +1,11 @@
 #pragma once
 
+#include <QObject>
+
 namespace NetworkCommands
 {
+    static const Qt::ConnectionType UNIQUE_DATA_CONNECTION = static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::UniqueConnection);
+
     enum class PublicKeyActions
     {
         SendInitialMapUpdate,
@@ -25,7 +29,10 @@ namespace NetworkCommands
         UsernameAlreadyInGame,
         Max,
     };
-
+    /**
+     * @brief RESYNCINFO
+     */
+    const char* const RESYNCINFO = "RESYNCINFO";
     /**
      * @brief MAPINFO map info of from the host
      */
@@ -254,6 +261,14 @@ namespace NetworkCommands
      */
     const char* const SERVERREQUESTGAMES = "SERVERREQUESTGAMES";
     /**
+     * @brief SERVERREQUESTVERSION
+     */
+    const char* const SERVERREQUESTVERSION = "SERVERREQUESTVERSION";
+    /**
+     * @brief SERVERVERSION
+     */
+    const char* const SERVERVERSION = "SERVERVERSION";
+    /**
      * @brief SERVERRELAUNCHSLAVE
      */
     const char* const SERVERRELAUNCHSLAVE = "SERVERRELAUNCHSLAVE";
@@ -261,6 +276,10 @@ namespace NetworkCommands
      * @brief SLAVEINFODESPAWNING
      */
     const char* const SLAVEINFODESPAWNING = "SLAVEINFODESPAWNING";
+    /**
+     * @brief SLAVEINFODESPAWNING
+     */
+    const char* const SLAVEMULTIPLAYERGAMERESULT = "SLAVEMULTIPLAYERGAMERESULT";
 
     /**
      * @brief DESPAWNSLAVE

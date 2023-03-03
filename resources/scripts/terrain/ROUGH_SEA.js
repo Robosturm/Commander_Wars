@@ -7,6 +7,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
+        terrain.setPalette("palette_clear");
         terrain.setVisionHigh(1);
         terrain.setTerrainName(ROUGH_SEA.getName());
     };
@@ -27,7 +28,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, map)
     {
-        terrain.loadBaseSprite("rough_sea+N+E+S+W");
+        terrain.loadBaseSprite("rough_sea+N+E+S+W+mask");
     };
     this.getDefense = function()
     {

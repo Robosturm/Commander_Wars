@@ -61,12 +61,17 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
 
+        animation2.setStartOfAnimationCall("CO_VON_BOLT", "preAnimationLaserray");
         animation2.setEndOfAnimationCall("CO_VON_BOLT", "postAnimationLaserray");
         CO_VON_BOLT.postAnimationLaserrayTarget = meteorTarget;
         CO_VON_BOLT.postAnimationLaserrayDamage = damage;
         CO_VON_BOLT.postAnimationLaserrayRange = range;
     };
 
+    this.preAnimationLaserray = function(animation, map)
+    {
+        map.centerMap(CO_VON_BOLT.postAnimationLaserrayTarget.x, CO_VON_BOLT.postAnimationLaserrayTarget.y);
+    };
     this.postAnimationLaserrayTarget = null;
     this.postAnimationLaserrayDamage = 0;
     this.postAnimationLaserrayRange = 0;

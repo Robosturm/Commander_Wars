@@ -38,10 +38,10 @@ public:
      * @brief getCurrentViewPlayer
      * @return
      */
-    virtual Player* getCurrentViewPlayer();
+    virtual Player* getCurrentViewPlayer() const;
     void registerAtInterpreter(QString name = "game");
 signals:
-    void sigMouseWheel(float direction);
+    void sigMouseWheel(qint32 direction);
     void sigRightClick(qint32 x, qint32 y);
     void sigRightClickDown(qint32 x, qint32 y);
     void sigRightClickUp(qint32 x, qint32 y);

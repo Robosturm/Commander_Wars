@@ -171,11 +171,12 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                     QString error;
                     qint32 line;
                     qint32 column;
+                    bool success = false;
                     bool loaded = document.setContent(&file, &error, &line, &column);
                     if (loaded)
                     {
-                        oxygine::spActor root = oxygine::spActor::create();
-                        bool success = true;
+                        success = true;
+                        oxygine::spActor root = oxygine::spActor::create();                        
                         auto rootElement = document.documentElement();
                         auto node = rootElement.firstChild();
                         while (!node.isNull())
@@ -212,6 +213,10 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                     {
                         CONSOLE_PRINT("Unable to load: " + uiFile, GameConsole::eERROR);
                         CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), GameConsole::eERROR);
+                    }
+                    if (success)
+                    {
+                        break;
                     }
                 }
                 else
@@ -1141,7 +1146,7 @@ bool UiFactory::createDropDownMenuSprite(oxygine::spActor parent, QDomElement el
                 if (pAnim != nullptr)
                 {
                     pSprite->setResAnim(pAnim);
-                    pSprite->setScale(pAnim->getWidth() / 32.0f);
+                    pSprite->setScale(static_cast<float>(pAnim->getWidth()) / 32.0f);
                     pSprite->setSize(pAnim->getSize());
                 }
                 return pSprite;

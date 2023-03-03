@@ -24,15 +24,15 @@ namespace oxygine
 #endif
         }
         /**Returns text bounds*/
-        const Rect& getTextRect() const;
+        const QRect& getTextRect() const;
         /**Returns current text*/
         const QString & getText() const;
-        const Font & getFont() const;
+        const Font * const getFont() const;
 
         TextStyle::HorizontalAlign getHAlign() const;
         bool getMultiline() const;
 
-        virtual bool getBounds(RectF&) const override;
+        virtual bool getBounds(QRect&) const override;
         /**Overwrites TextStyle Horizontal align*/
         void setHAlign(TextStyle::HorizontalAlign align);
         /**Overwrites TextStyle multiline*/
@@ -55,13 +55,13 @@ namespace oxygine
         */
         void setHtmlText(const QString & str);
 
-        virtual bool isOn(const Vector2& localPosition, float) override;
+        virtual bool isOn(const QPoint & localPosition) override;
         virtual void doRender(const RenderState&) override;
         text::Node* getRootNode();
 
         using TweenColor = Property<QColor, const QColor&, TextField, &TextField::getStyleColor, &TextField::setStyleColor>;
     protected:
-        virtual void sizeChanged(const Point& size) override;
+        virtual void sizeChanged(const QSize& size) override;
         void rebuildText(bool lock = true);
 
     protected:
@@ -70,11 +70,12 @@ namespace oxygine
         TextStyle m_style;
 
         text::spNode m_root;
-        Rect m_textRect{0, 0, 0, 0};
+        QRect m_textRect{0, 0, 0, 0};
         bool m_htmlText = false;
 #else
+        static Font m_dummyFont;
         static TextStyle m_dummyTextStyle;
-        static Rect m_dummyRect;
+        static QRect m_dummyRect;
         static QString m_dummyText;
         static QColor m_dummyColor;
 #endif

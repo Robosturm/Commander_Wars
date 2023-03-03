@@ -344,6 +344,14 @@ public:
     };
     Q_ENUM(LoginError)
 
+    enum GameResult
+    {
+        GameResult_Draw,
+        GameResult_Lost,
+        GameResult_Won
+    };
+    Q_ENUM(GameResult)
+
     static void registerEnums();
 private:
     GameEnums() = default;

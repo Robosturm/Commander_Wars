@@ -48,21 +48,16 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-
-    oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont32());
-    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    headerStyle.multiline = false;
-
     spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 40);
     pLabel->setStyle(headerStyle);
-    pLabel->setHtmlText(tr("CO bann list"));
-    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setHtmlText(tr("CO banlist"));
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     if (pLabel->getX() < 20)
     {
         pLabel->setX(20);
     }
     pPanel->addItem(pLabel);
-    qint32 y = pLabel->getY() + pLabel->getTextRect().getHeight() + 10;
+    qint32 y = pLabel->getY() + pLabel->getTextRect().height() + 10;
     qint32 x = 10;
 
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -70,11 +65,11 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     for (const auto & group : coGroups)
     {
         spLabel textField = spLabel::create(pPanel->getScaledWidth() - 40);
-        textField->setStyle(largeStyle);
+        textField->setStyle(headerStyle);
         textField->setHtmlText(group.name);
-        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
+        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().width() / 2, y);
         pPanel->addItem(textField);
-        y += 45;
+        y += textField->getHeight() + 10;
         x = 10;
         for (qint32 i = 0; i < group.cos.size(); ++i)
         {
@@ -120,11 +115,11 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
             if (x + 350 > pPanel->getContentWidth() &&
                 i < group.cos.size() - 1)
             {
-                y += 40;
+                y += pLabel->getHeight() + 10;
                 x = 10;
             }
         }
-        y += 50;
+        y += textField->getHeight() + 10;
     }
     pPanel->setContentHeigth(y + 50);
 

@@ -85,9 +85,9 @@ void DropDownmenuColor::addDropDownColor(QColor color, qint32 id)
     colorField2->setColor(color.red(), color.green(), color.blue(), 255);
     colorField1->addChild(colorField2);
     auto size = addDropDownItem(colorField1, id);
-    colorField1->setSize(size.x - 14, size.y - 14);
+    colorField1->setSize(size.width() - 14, size.height() - 14);
     colorField1->setPosition(7, 7);
-    colorField2->setSize(size.x - 20, size.y - 20);
+    colorField2->setSize(size.width() - 20, size.height() - 20);
     colorField2->setPosition(3, 3);
 }
 

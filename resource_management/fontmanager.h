@@ -27,7 +27,7 @@ public:
      * @brief getMainFont16
      * @return
      */
-    inline static const oxygine::Font & getMainFont16()
+    inline static oxygine::Font & getMainFont16()
     {
         return m_pInstance->m_fonts[MAINFONT + QString::number(16)];
     }
@@ -35,7 +35,7 @@ public:
      * @brief getMainFont24
      * @return
      */
-    inline static const oxygine::Font & getMainFont24()
+    inline static oxygine::Font & getMainFont24()
     {
         return m_pInstance->m_fonts[MAINFONT + QString::number(24)];
     }
@@ -43,7 +43,7 @@ public:
      * @brief getMainFont32
      * @return
      */
-    inline static const oxygine::Font & getMainFont32()
+    inline static oxygine::Font & getMainFont32()
     {
         return m_pInstance->m_fonts[MAINFONT + QString::number(32)];
     }
@@ -51,7 +51,7 @@ public:
      * @brief getMainFont32
      * @return
      */
-    inline static const oxygine::Font & getMenuFont32()
+    inline static oxygine::Font & getMenuFont32()
     {
         return m_pInstance->m_fonts[MENUFONT + QString::number(32)];
     }
@@ -59,7 +59,7 @@ public:
      * @brief getMainFont48
      * @return
      */
-    inline static const oxygine::Font & getMainFont48()
+    inline static oxygine::Font & getMainFont48()
     {
         return m_pInstance->m_fonts[MAINFONT + QString::number(48)];
     }
@@ -67,7 +67,7 @@ public:
      * @brief getMainFont72
      * @return
      */
-    inline static const oxygine::Font & getMainFont72()
+    inline static oxygine::Font & getMainFont72()
     {
         return m_pInstance->m_fonts[MAINFONT + QString::number(72)];
     }
@@ -75,7 +75,7 @@ public:
      * @brief getLogoFont
      * @return
      */
-    inline static const oxygine::Font & getLogoFont()
+    inline static oxygine::Font & getLogoFont()
     {
         return m_pInstance->m_fonts[LOGOFONT + QString::number(16)];
     }
@@ -85,7 +85,7 @@ public:
      * @param size
      * @return
      */
-    static const oxygine::Font & getFont(QString fontType, qint32 size)
+    static oxygine::Font & getFont(QString fontType, qint32 size)
     {
         QString key = fontType + QString::number(size);
         if (m_pInstance->m_fonts.contains(key))
@@ -103,7 +103,7 @@ public:
      * @param fontType
      * @return
      */
-    static const oxygine::Font & getFont(QString fontType)
+    static oxygine::Font & getFont(QString fontType)
     {
         QString key = fontType;
         if (m_pInstance->m_fonts.contains(key))

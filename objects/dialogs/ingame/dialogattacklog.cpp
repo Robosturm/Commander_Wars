@@ -110,12 +110,12 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         if (log->day != currentDay)
         {
             currentDay = log->day;
-            oxygine::spTextField pText = oxygine::spTextField::create();
+            spLabel pText = spLabel::create(pPanel->getContentWidth() - 70);
             pText->setHtmlText(tr("Day ") + QString::number(currentDay));
             pText->setStyle(style);
             pText->setPosition(10, y);
             pPanel->addItem(pText);
-            y += 40;
+            y += pText->getHeight() + 10;
         }
 
         Terrain* pTerrain = m_pMap->getTerrain(log->attackerX, log->attackerY);
@@ -199,8 +199,8 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
             {
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
                 pSprite->setResAnim(pAnim);
-                pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
-                pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);
+                pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()) * 0.75f);
+                pSprite->setPosition(0, static_cast<float>(GameMap::getImageSize()) / 4.0f);
                 pActor->addChild(pSprite);
             }
         }
@@ -259,7 +259,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
             emit sigShowAttack(posAtkX, posAtkY, playerAtk, posDefX, posDefY, playerDef);
         });
         pPanel->addItem(pButton);
-        y += 40;
+        y += pText->getHeight() + 10;
     }
     pPanel->setContentWidth(1000);
     pPanel->setContentHeigth(y + 40);

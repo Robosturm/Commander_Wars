@@ -54,7 +54,7 @@ void VictoryRulePopup::updateInfo()
         pTextfield->setHtmlText(pVictoryRule->getRuleName());
         pTextfield->setPosition(10, y);
         addItem(pTextfield);
-        y += 30 + pTextfield->getTextRect().getHeight();
+        y += 30 + pTextfield->getTextRect().height();
 
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

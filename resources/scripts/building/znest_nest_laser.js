@@ -1,5 +1,9 @@
 var Constructor = function()
 {    
+    this.getBuildingGroup = function()
+    {
+        return 5;
+    };
     this.init = function (building)
     {
         building.setHp(100);

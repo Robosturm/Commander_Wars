@@ -68,7 +68,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     connect(m_GeneratorFile.get(), &Textbox::sigTextChanged, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);
     connect(this, &DialogRandomMap::sigShowGeneratorSelection, this, &DialogRandomMap::showGeneratorSelection, Qt::QueuedConnection);
     m_pPanel->addItem(m_Generator);
-    y += 40;
+    y += text->getHeight() + 10;
 
     // Label
     text = spLabel::create(LABEL_WIDTH - 10);
@@ -81,7 +81,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_MapName->setPosition(text->getX() + LABEL_WIDTH, text->getY());
     m_MapName->setCurrentText("");
     m_pPanel->addItem(m_MapName);
-    y += 40;
+    y += text->getHeight() + 10;
 
     // Label
     text = spLabel::create(LABEL_WIDTH - 10);
@@ -94,7 +94,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_MapAuthor->setPosition(text->getX() + LABEL_WIDTH, text->getY());
     m_MapAuthor->setCurrentText(Settings::getUsername());
     m_pPanel->addItem(m_MapAuthor);
-    y += 40;
+    y += text->getHeight() + 10;
 
     // Label
     text = spLabel::create(LABEL_WIDTH - 10);
@@ -107,7 +107,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_MapDescription->setPosition(text->getX() + LABEL_WIDTH, text->getY());
     m_MapDescription->setCurrentText("");
     m_pPanel->addItem(m_MapDescription);
-    y += 40;
+    y += text->getHeight() + 10;
 
     // Label
     text = spLabel::create(LABEL_WIDTH - 10);
@@ -120,9 +120,9 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_MapWidth->setPosition(text->getX() + LABEL_WIDTH, text->getY());
     m_MapWidth->setCurrentValue(20);
     m_pPanel->addItem(m_MapWidth);
+    y += text->getHeight() + 10;
 
     // Label
-    y += 40;
     text = spLabel::create(LABEL_WIDTH - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Heigth:"));
@@ -133,9 +133,9 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_MapHeigth->setPosition(text->getX() + LABEL_WIDTH, text->getY());
     m_MapHeigth->setCurrentValue(20);
     m_pPanel->addItem(m_MapHeigth);
+    y += text->getHeight() + 10;
 
     // Label
-    y += 40;
     text = spLabel::create(LABEL_WIDTH - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Player:"));
@@ -147,9 +147,9 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_MapPlayerCount->setCurrentValue(4);
     connect(m_MapPlayerCount.get(), &SpinBox::sigValueChanged, this, &DialogRandomMap::playerChanged, Qt::QueuedConnection);
     m_pPanel->addItem(m_MapPlayerCount);
+    y += text->getHeight() + 10;
 
     // Label
-    y += 40;
     text = spLabel::create(LABEL_WIDTH - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Mirrored Map:"));
@@ -160,9 +160,9 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_mirrored->setChecked(false);
     m_mirrored->setPosition(text->getX() + LABEL_WIDTH, text->getY());
     m_pPanel->addItem(m_mirrored);
+    y += text->getHeight() + 10;
 
     // Label
-    y += 40;
     text = spLabel::create(LABEL_WIDTH - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Seed:"));
@@ -173,9 +173,9 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_Seed->setPosition(text->getX() + LABEL_WIDTH, text->getY());
     m_Seed->setCurrentValue(GlobalUtils::randInt(0, std::numeric_limits<qint32>::max() - 1));
     m_pPanel->addItem(m_Seed);
+    y += text->getHeight() + 10;
 
-    // Label
-    y += 40;
+    // Label;
     text = spLabel::create(LABEL_WIDTH - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Create Road:"));
@@ -188,7 +188,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_pPanel->addItem(m_CreateRoad);
 
     // Label
-    y += 40;
+    y += text->getHeight() + 10;
     text = spLabel::create(LABEL_WIDTH - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Base Size:"));
@@ -201,7 +201,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_pPanel->addItem(m_BaseSize);
 
     // Label
-    y += 50;
+    y += text->getHeight() + 10;
     m_TerrainChanceLabel = spLabel::create(Settings::getWidth() - LABEL_WIDTH);
     m_TerrainChanceLabel->setStyle(headerStyle);
     m_TerrainChanceLabel->setHtmlText(tr("Terrain Distribution"));
@@ -233,7 +233,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_unitCount->setPosition(m_unitCountLabel->getX() + LABEL_WIDTH, m_unitCountLabel->getY());
     m_unitCount->setCurrentValue(0);
     m_pPanel->addItem(m_unitCount);
-    y += 40;
+    y += m_unitCountLabel->getHeight() + 10;
 
     // Label
     m_unitsNearHqLabel = spLabel::create(LABEL_WIDTH - 10);
@@ -247,7 +247,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_unitsNearHq->setPosition(text->getX() + LABEL_WIDTH, text->getY());
     m_unitsNearHq->setCurrentValue(100);
     m_pPanel->addItem(m_unitsNearHq);
-    y += 40;
+    y += m_unitsNearHqLabel->getHeight() + 10;
     // Label
     m_unitDistributionLabel = spLabel::create(LABEL_WIDTH - 10);
     m_unitDistributionLabel->setStyle(style);
@@ -260,19 +260,19 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_unitDistributionSelection->setPosition(text->getX() + LABEL_WIDTH, text->getY());
     m_unitDistributionSelection->setCurrentItem(1);
     m_pPanel->addItem(m_unitDistributionSelection);
-    y += 40;
+    y += m_unitDistributionLabel->getHeight() + 10;
     m_UnitDistributionLabel = spLabel::create(Settings::getWidth() - LABEL_WIDTH);
     m_UnitDistributionLabel->setStyle(headerStyle);
     m_UnitDistributionLabel->setHtmlText(tr("Unit distribution"));
     m_UnitDistributionLabel->setPosition(LABEL_X, y);
     m_pPanel->addItem(m_UnitDistributionLabel);
-    y += 10 + m_UnitDistributionLabel->getHeight();
+    y += m_UnitDistributionLabel->getHeight() + 10;
     m_UnitChanceLabel = spLabel::create(Settings::getWidth() - LABEL_WIDTH);
     m_UnitChanceLabel->setStyle(headerStyle);
     m_UnitChanceLabel->setHtmlText(tr("Unit spawn chance"));
     m_UnitChanceLabel->setPosition(LABEL_X, y);
     m_pPanel->addItem(m_UnitChanceLabel);
-    y += 40;
+    y += m_UnitChanceLabel->getHeight() + 10;
 
     m_pPanel->setContentHeigth(y + 40);
     // ok button

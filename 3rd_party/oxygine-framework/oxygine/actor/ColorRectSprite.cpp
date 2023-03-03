@@ -21,13 +21,13 @@ namespace oxygine
         RenderDelegate::instance->doRender(this, rs);
     }
 
-    void ColorRectSprite::sizeChanged(const Point& size)
+    void ColorRectSprite::sizeChanged(const QSize& size)
     {
         Actor::sizeChanged(size);
     }
 
-    bool ColorRectSprite::isOn(const Vector2& localPosition, float localScale)
+    bool ColorRectSprite::isOn(const QPoint& localPosition)
     {
-        return Actor::isOn(localPosition, localScale);
+        return Actor::isOn(localPosition);
     }
 }

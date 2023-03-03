@@ -196,7 +196,7 @@ var Constructor = function()
         }
         else
         {
-            return qsTr("<r>In Fog of War conditions, the woods provide ground unit</r><div c='#00ff00'>hiding places.</div>");
+            return qsTr("<r>In Fog of War conditions, the woods provide ground unit </r><div c='#00ff00'>hiding places.</div>");
         }
     };
     this.getSprites = function(spriteId)
@@ -246,7 +246,7 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
-        var variables = terrain.getVariables();
+        var variables = terrain.getAnimationVariables();
         var variable = variables.getVariable("BACKGROUND_ID");
         var rand = 0;
         if (variable === null)

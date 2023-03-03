@@ -89,7 +89,7 @@ void DropDownmenuBase::showDropDown()
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     auto transform = computeGlobalTransform();
-    if (transform.y > Settings::getHeight() / 2)
+    if (transform.m32() > Settings::getHeight() / 2)
     {
         if (m_Panel->getH_Scrollbar()->getVisible())
         {
@@ -132,7 +132,7 @@ qint32 DropDownmenuBase::getCurrentItem() const
     return m_currentItem;
 }
 
-const oxygine::Point& DropDownmenuBase::addDropDownItem(oxygine::spActor item, qint32 id)
+const QSize& DropDownmenuBase::addDropDownItem(oxygine::spActor item, qint32 id)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");

@@ -1,7 +1,6 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/Draggable.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
@@ -20,7 +19,7 @@ namespace oxygine
         {
             return m_content;
         }
-        const RectF& getDragBounds() const
+        const QRect& getDragBounds() const
         {
             return m_drag.getDragBounds();
         }
@@ -39,7 +38,7 @@ namespace oxygine
     protected:
         void destroy();
         virtual void handleEvent(Event* event) override;
-        virtual void sizeChanged(const Point& size) override;
+        virtual void sizeChanged(const QSize& size) override;
         virtual void doUpdate(const UpdateState& us) override;
         void _newEvent(Event* event);
 
@@ -47,15 +46,15 @@ namespace oxygine
         bool m_sliding{false};
         float m_rad{15.0f};
         bool m_ignoreTouchUp{false};
-        Vector2 m_downPos;
-        Vector2 m_speed;
+        QPoint m_downPos;
+        QPoint m_speed;
         Draggable m_drag;
         spActor m_content;
         spClipRectActor m_clip;
         spEventDispatcher m_holded;
         struct  iter
         {
-            Vector2 pos;
+            QPoint pos;
             timeMS tm;
         };
         enum {NUM = 11};

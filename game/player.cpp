@@ -1,5 +1,6 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/audiomanager.h"
+#include "coreengine/filesupport.h"
 
 #include "gameinput/basegameinputif.h"
 #include "gameinput/humanplayerinput.h"
@@ -1338,7 +1339,7 @@ bool Player::getFieldVisible(qint32 x, qint32 y)
     return false;
 }
 
-GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
+GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y) const
 {
     
     switch (m_pMap->getGameRules()->getFogMode())
@@ -1716,8 +1717,8 @@ void Player::updateVisualCORange()
     {
         if (pCO.get() != nullptr)
         {
-            spUnit pCoUnit = spUnit(pCO->getCOUnit());
-            if (pCoUnit.get() != nullptr)
+            Unit* pCoUnit = pCO->getCOUnit();
+            if (pCoUnit != nullptr)
             {
                 if (pCO->getPowerMode() == GameEnums::PowerMode_Off)
                 {
@@ -2114,14 +2115,24 @@ void Player::setMenu(GameMenue *newMenu)
 
 void Player::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("storing player with control type " + QString::number(m_controlType), GameConsole::eDEBUG);
-    pStream << getVersion();
-    quint32 color = m_Color.rgb();
-    pStream << color;
+    serializeObject(pStream, false);
+}
 
+void Player::serializeObject(QDataStream& pStream, bool forHash) const
+{
+    CONSOLE_PRINT("storing player with control type " + QString::number(m_controlType) + " and name " + m_playerNameId, GameConsole::eDEBUG);
+    pStream << getVersion();
+    if (!forHash)
+    {
+        quint32 color = m_Color.rgb();
+        pStream << color;
+    }
     pStream << m_funds;
     pStream << m_fundsModifier;
-    pStream << m_playerArmy;
+    if (!forHash)
+    {
+        pStream << m_playerArmy;
+    }
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() == nullptr)
@@ -2131,35 +2142,41 @@ void Player::serializeObject(QDataStream& pStream) const
         else
         {
             pStream << true;
-            pCO->serializeObject(pStream);
+            pCO->serializeObject(pStream, forHash);
         }
     }
     pStream << m_team;
     pStream << m_isDefeated;
-    BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get(), m_controlType);
-    qint32 width = m_FogVisionFields.size();
-    qint32 heigth = 0;
-    if (width > 0)
+    if (!forHash)
     {
-        heigth = m_FogVisionFields[0].size();
-    }
-    pStream << width;
-    pStream << heigth;
-    for (qint32 x = 0; x < width; x++)
-    {
-        for (qint32 y = 0; y < heigth; y++)
+        BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get(), m_controlType);
+        qint32 width = m_FogVisionFields.size();
+        qint32 heigth = 0;
+        if (width > 0)
         {
-            pStream << static_cast<qint32>(m_FogVisionFields[x][y].m_visionType);
-            pStream << m_FogVisionFields[x][y].m_duration;
-            pStream << m_FogVisionFields[x][y].m_directView;
+            heigth = m_FogVisionFields[0].size();
+        }
+        pStream << width;
+        pStream << heigth;
+        for (qint32 x = 0; x < width; x++)
+        {
+            for (qint32 y = 0; y < heigth; y++)
+            {
+                pStream << static_cast<qint32>(m_FogVisionFields[x][y].m_visionType);
+                pStream << m_FogVisionFields[x][y].m_duration;
+                pStream << m_FogVisionFields[x][y].m_directView;
+            }
         }
     }
-    pStream << m_BuildList;
+    Filesupport::writeVectorList(pStream, m_BuildList);
     pStream << m_BuildlistChanged;
     m_Variables.serializeObject(pStream);
-    pStream << m_playerArmySelected;
-    pStream << m_playerNameId;
-    pStream << static_cast<qint32>(m_controlType);
+    if (!forHash)
+    {
+        pStream << m_playerArmySelected;
+        pStream << m_playerNameId;
+        pStream << static_cast<qint32>(m_controlType);
+    }
 }
 
 void Player::deserializeObject(QDataStream& pStream)
@@ -2279,7 +2296,11 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
     }
     m_BuildList.clear();
-    if (version > 6)
+    if (version > 17)
+    {
+        m_BuildList = Filesupport::readVectorList<QString, QList>(pStream);
+    }
+    else if (version > 6)
     {
         pStream >> m_BuildList;
     }

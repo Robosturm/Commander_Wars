@@ -2,8 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
-#include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/VisualStyleActor.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/TweenAnim.h"
 
@@ -24,7 +23,7 @@ namespace oxygine
             return m_frame;
         }
 #endif
-        RectF getDestRect() const override;
+        QRect getDestRect() const override;
 
         bool getManageResAnim() const
         {
@@ -34,7 +33,7 @@ namespace oxygine
             return true;
 #endif
         }
-        const RectF& getSrcRect() const
+        const QRectF& getSrcRect() const
         {
 #ifdef GRAPHICSUPPORT
             return m_frame.getSrcRect();
@@ -66,14 +65,6 @@ namespace oxygine
             return 0;
 #endif
         }
-        const Vector2& getLocalScale() const
-        {
-#ifdef GRAPHICSUPPORT
-            return m_localScale;
-#else
-            return m_dummyVector;
-#endif
-        }
 
         /**load/unload atlas automatically or not*/
         void setManageResAnim(bool manage);
@@ -86,8 +77,7 @@ namespace oxygine
         void setRow(qint32 row);
         void setColumn(qint32 column);
         void setColumnRow(qint32 column, qint32 row);
-        void setLocalScale(const Vector2& s);
-        virtual bool isOn(const Vector2& localPosition, float localScale) override;
+        virtual bool isOn(const QPoint& localPosition) override;
         bool isFlippedX() const
         {
 #ifdef GRAPHICSUPPORT
@@ -128,14 +118,14 @@ namespace oxygine
 #endif
         virtual void changeAnimFrame(const AnimationFrame& f);
         virtual void animFrameChanged(const AnimationFrame& f);
-        virtual void sizeChanged(const Point& size) override;
 
     protected:
 #ifdef GRAPHICSUPPORT
-        Vector2 m_localScale{1.0f, 1.0f};
         AnimationFrame m_frame;
         oxygine::spResAnim m_colorTable;
         bool m_invertFlipX{false};
+#else
+        static QRectF m_dummyRectF;
 #endif
     };
 }

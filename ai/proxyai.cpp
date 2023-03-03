@@ -16,7 +16,14 @@ ProxyAi::ProxyAi(GameMap* pMap)
     setObjectName("ProxyAi");
 #endif
     Interpreter::setCppOwnerShip(this);
-    AI_CONSOLE_PRINT("Creating proxy ai", GameConsole::eDEBUG);
+    if (m_pPlayer == nullptr)
+    {
+        CONSOLE_PRINT("Creating proxy ai for player", GameConsole::eDEBUG);
+    }
+    else
+    {
+        CONSOLE_PRINT("Creating proxy ai for player " + QString::number(m_pPlayer->getPlayerID()) + " with name " + m_pPlayer->getPlayerNameId(), GameConsole::eDEBUG);
+    }
 }
 
 void ProxyAi::readIni(QString)
@@ -28,6 +35,14 @@ void ProxyAi::init(GameMenue* pMenu)
 {
     if (!m_initDone)
     {
+        if (m_pPlayer == nullptr)
+        {
+            CONSOLE_PRINT("Proxy ai init for player", GameConsole::eDEBUG);
+        }
+        else
+        {
+            CONSOLE_PRINT("Proxy ai init for player " + QString::number(m_pPlayer->getPlayerID()) + " with name " + m_pPlayer->getPlayerNameId(), GameConsole::eDEBUG);
+        }
         m_initDone = true;
         m_pMenu = pMenu;
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
@@ -37,7 +52,8 @@ void ProxyAi::init(GameMenue* pMenu)
 
 void ProxyAi::connectInterface(NetworkInterface* pNetworkInterface)
 {
-    connect(pNetworkInterface, &NetworkInterface::recieveData, this, &ProxyAi::recieveData, Qt::QueuedConnection);
+    CONSOLE_PRINT("Proxy ai connectInterface for player " + QString::number(m_pPlayer->getPlayerID()) + " with name " + m_pPlayer->getPlayerNameId(), GameConsole::eDEBUG);
+    connect(pNetworkInterface, &NetworkInterface::recieveData, this, &ProxyAi::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
 }
 
 void ProxyAi::serializeObject(QDataStream& stream) const
@@ -90,19 +106,13 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
                 m_pPlayer == m_pMap->getCurrentPlayer())
             {
                 spGameAction pAction = m_ActionBuffer.front();
+                m_ActionBuffer.pop_front();
                 if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
                 {
-                    m_ActionBuffer.pop_front();
                     AI_CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for player " + QString::number(m_pPlayer->getPlayerID()) +
                                      " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
                                      " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
                     emit performAction(pAction);
-                }
-                else
-                {
-                    AI_CONSOLE_PRINT("Skipping emit action " + pAction->getActionID() + " cause sync counter doesn't match "
-                                     "action counter=" + QString::number(pAction->getSyncCounter()) +
-                                     " menu counter=" + QString::number(m_pMenu->getSyncCounter() + 1), GameConsole::eDEBUG);
                 }
             }
         }
@@ -119,19 +129,13 @@ void ProxyAi::nextAction()
         if (m_ActionBuffer.size() > 0)
         {
             spGameAction pAction = m_ActionBuffer.front();
+            m_ActionBuffer.pop_front();
             if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
             {
-                m_ActionBuffer.pop_front();
                 AI_CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for player " + QString::number(m_pPlayer->getPlayerID()) +
                                  " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
                                  " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
                 emit performAction(pAction);
-            }
-            else
-            {
-                AI_CONSOLE_PRINT("Skipping emit action " + pAction->getActionID() + " cause sync counter doesn't match "
-                                 "action counter=" + QString::number(pAction->getSyncCounter()) +
-                                 " menu counter=" + QString::number(m_pMenu->getSyncCounter() + 1), GameConsole::eDEBUG);
             }
         }
     }

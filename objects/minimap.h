@@ -25,7 +25,7 @@ public:
 signals:
     void clicked(qint32 x, qint32 y, bool updateMinimapPosition);
 public slots:
-    void updateMinimap(GameMap*, bool useVision = false);
+    void updateMinimap(const GameMap* pMap, bool useVision = false);
 private:
     struct MinimapFieldInfo
     {

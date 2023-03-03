@@ -236,6 +236,10 @@ void GameEnums::registerEnums()
     value.setProperty("QEasingCurve_InOutElastic", QEasingCurve::SineCurve);
     value.setProperty("QEasingCurve_OutInElastic", QEasingCurve::CosineCurve);
 
+    value.setProperty("GameResult_Draw", GameResult_Draw);
+    value.setProperty("GameResult_Lost", GameResult_Lost);
+    value.setProperty("GameResult_Won", GameResult_Won);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

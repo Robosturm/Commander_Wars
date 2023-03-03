@@ -8,6 +8,9 @@
 
 namespace oxygine
 {
+#ifndef GRAPHICSUPPORT
+    QRectF Sprite::m_dummyRectF;
+#endif
 
     Sprite::~Sprite()
     {
@@ -39,10 +42,10 @@ namespace oxygine
         changeAnimFrame(f);
     }
 
-    bool Sprite::isOn(const Vector2& localPosition, float localScale)
+    bool Sprite::isOn(const QPoint& localPosition)
     {
 #ifdef GRAPHICSUPPORT
-        if (!Actor::isOn(localPosition, localScale))
+        if (!Actor::isOn(localPosition))
         {
             return false;
         }
@@ -51,9 +54,8 @@ namespace oxygine
         {
             return false;
         }
-        Vector2 pos = localPosition * pAnim->getAppliedScale();
-        pos = pos.div(m_localScale * pAnim->getScaleFactor());
-        Point lp = pos.cast<Point>();
+        QPointF pos = localPosition * pAnim->getAppliedScale() / pAnim->getScaleFactor();
+        QPoint lp = pos.toPoint();
         return m_frame.getHits(lp);
 #else
         return false;
@@ -180,14 +182,6 @@ namespace oxygine
         setAnimFrame(rs, column, row);
     }
 
-    void Sprite::setLocalScale(const Vector2& s)
-    {
-#ifdef GRAPHICSUPPORT
-        m_localScale = s;
-        __setSize(m_frame.getSize().cast<Vector2>().mult(m_localScale).cast<Point>());
-#endif
-    }
-
     void Sprite::setResAnim(const ResAnim* resanim, qint32 col, qint32 row)
     {
         setAnimFrame(resanim, col, row);
@@ -267,7 +261,7 @@ namespace oxygine
         {
             m_frame = frame;
         }
-        __setSize(m_frame.getSize().cast<Vector2>().mult(m_localScale).cast<Point>());
+        __setSize(m_frame.getSize());
 
 
         const spTexture& texture = m_frame.getTexture();
@@ -296,31 +290,6 @@ namespace oxygine
     {
     }
 
-    void Sprite::sizeChanged(const Point& size)
-    {
-#ifdef GRAPHICSUPPORT
-        Actor::sizeChanged(size);
-        const auto& sz = m_frame.getSize();
-        if (sz.x != 0)
-        {
-            m_localScale.x = static_cast<float>(size.x) / sz.x;
-        }
-        else
-        {
-            m_localScale.x = 1.0f;
-        }
-
-        if (sz.y != 0)
-        {
-            m_localScale.y = static_cast<float>(size.y) / sz.y;
-        }
-        else
-        {
-            m_localScale.y = 1.0f;
-        }
-#endif
-    }
-
     bool Sprite::getInvertFlipX() const
     {
 #ifdef GRAPHICSUPPORT
@@ -337,19 +306,16 @@ namespace oxygine
 #endif
     }
 
-    RectF Sprite::getDestRect() const
+    QRect Sprite::getDestRect() const
     {
 #ifdef GRAPHICSUPPORT
         if (!m_frame.getTexture())
         {
             return Actor::getDestRect();
         }
-        RectF r = m_frame.getDestRect();
-        r.pos = r.pos.mult(m_localScale);
-        r.size = r.size.mult(m_localScale);
-        return r;
+        return m_frame.getDestRect().adjusted(0, 0, 1, 1);
 #else
-        return RectF();
+        return QRect();
 #endif
     }
 

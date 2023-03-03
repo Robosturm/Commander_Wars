@@ -44,11 +44,12 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     oxygine::spTextField pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText((tr("Terrain Information ") + name));
-    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 0);
+    pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, 0);
     addChild(pLabel);
-    y += pLabel->getTextRect().getHeight() + 10 + GameMap::getImageSize();
+    y += pLabel->getTextRect().height() + 10 + GameMap::getImageSize();
 
     spTerrain pIconTerrain = Terrain::createTerrain(pTerrain->getTerrainID(), -1, -1, "", pTerrain->getMap());
+    pIconTerrain->setPalette(pTerrain->getPalette());
     pIconTerrain->loadSprites();
     Building* pTerrainBuildiong = pTerrain->getBuilding();
     if (pTerrainBuildiong != nullptr)
@@ -68,7 +69,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     pLabel->setHtmlText(description);
     pLabel->setPosition(0, y);
     addChild(pLabel);
-    y += 20 + pLabel->getTextRect().getHeight();
+    y += 20 + pLabel->getTextRect().height();
 
     qint32 xOffset = 200;
     // Income
@@ -84,7 +85,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     pLabel->setHtmlText((QString::number(pTerrain->getDefense(nullptr))));
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
-    y += 40;
+    y += pLabel->getTextRect().height() + 10;
 
     if (pBuilding != nullptr)
     {
@@ -101,7 +102,7 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
         pLabel->setHtmlText((QString::number(pBuilding->getIncome())));
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
-        y += 40;
+        y += pLabel->getTextRect().height() + 10;
 
         QStringList productionList = pBuilding->getConstructionList();
         if (productionList.size() > 0)
@@ -111,9 +112,9 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
             if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
             {
                 pLabel->setHtmlText(tr("Builds"));
-                pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
+                pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, y);
                 addChild(pLabel);
-                y += 80;
+                y += pLabel->getTextRect().height() + 10;
                 showUnitList(productionList, y, width);
             }
         }
@@ -124,9 +125,9 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
             pLabel = oxygine::spTextField::create();
             pLabel->setStyle(headerStyle);
             pLabel->setHtmlText(tr("Supplies"));
-            pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
+            pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, y);
             addChild(pLabel);
-            y += 80;
+            y += pLabel->getTextRect().height() + 10;
             UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
             for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
             {
@@ -144,9 +145,9 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
     pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Movement Costs"));
-    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
+    pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, y);
     addChild(pLabel);
-    y += 10 + pLabel->getTextRect().getHeight();
+    y += 10 + pLabel->getTextRect().height();
 
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     qint32 x = 0;
@@ -178,10 +179,10 @@ TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
         if (x + 250 > width && i < pMovementTableManager->getCount() - 1)
         {
             x = 0;
-            y += 40;
+            y += pLabel->getTextRect().height() + 10;
         }
     }
-    y += 40;
+    y += pLabel->getTextRect().height() + 10;
     setHeight(y);
     connect(this, &TerrainInfo::sigShowLink, this, &TerrainInfo::showLink, Qt::QueuedConnection);
 }

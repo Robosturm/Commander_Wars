@@ -1,6 +1,7 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
+
 #include "3rd_party/oxygine-framework/oxygine/Event.h"
+#include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
 namespace oxygine
 {
@@ -20,7 +21,7 @@ namespace oxygine
             __LAST      //system
         };
 
-        TouchEvent(eventType type, bool Bubbles = true, const Point& locPosition = Point(0, 0))
+        TouchEvent(eventType type, bool Bubbles = true, const QPoint& locPosition = QPoint(0, 0))
             : Event(type, Bubbles),
               localPosition(locPosition),
               position(locPosition),
@@ -34,9 +35,9 @@ namespace oxygine
         }
 
         /**position in local space for Event::currentTarget Actor*/
-        Point localPosition;
+        QPoint localPosition;
         /**position in local space for Event::target actor*/
-        Point position;
+        QPoint position;
 
         MouseButton mouseButton;
         float pressure;
@@ -48,7 +49,7 @@ namespace oxygine
         static bool isTouchEvent(qint32 eventID) { return eventID > __FIRST && eventID < __LAST; }
 
         bool __clickDispatched;
-        Vector2 wheelDirection;//actual only for WHEEL_DIR event
+        QPoint wheelDirection;//actual only for WHEEL_DIR event
 
         float __localScale;
     };

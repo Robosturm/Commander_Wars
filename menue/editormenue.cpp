@@ -1,5 +1,6 @@
 #include <QFile>
 #include <QDir>
+#include <QCryptographicHash>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -11,7 +12,6 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/pathfindingsystem.h"
 #include "coreengine/gameconsole.h"
-#include "coreengine/sha256hash.h"
 
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/objectmanager.h"
@@ -266,13 +266,13 @@ void EditorMenue::createTempFile(bool cleanUp)
     if (previous.exists())
     {
         file.open(QIODevice::ReadOnly);
-        Sha256Hash myHash;
+        QCryptographicHash myHash(QCryptographicHash::Sha512);
         myHash.addData(file.readAll());
         QByteArray hash = myHash.result();
         file.close();
 
         previous.open(QIODevice::ReadOnly);
-        Sha256Hash myHash1;
+        QCryptographicHash myHash1(QCryptographicHash::Sha512);
         myHash1.addData(previous.readAll());
         QByteArray hash1 = myHash1.result();
         previous.close();
@@ -483,13 +483,13 @@ void EditorMenue::showResizeMap()
     pText->setHtmlText(tr("Left: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox leftBox = spSpinBox::create(150, -m_pMap->getMapWidth() + 1, 9999);
+    spSpinBox leftBox = spSpinBox::create(150, -m_pMap->getMapWidth() + 1, 999999);
     leftBox->setTooltipText(tr("Change of the map size on the left map border."));
     leftBox->setPosition(width, y);
     leftBox->setInfinityValue(-m_pMap->getMapWidth());
     leftBox->setCurrentValue(0);
     pBox->addItem(leftBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -502,7 +502,7 @@ void EditorMenue::showResizeMap()
     topBox->setInfinityValue(-m_pMap->getMapHeight());
     topBox->setCurrentValue(0);
     pBox->addItem(topBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -515,7 +515,7 @@ void EditorMenue::showResizeMap()
     rightBox->setInfinityValue(-m_pMap->getMapWidth());
     rightBox->setCurrentValue(0);
     pBox->addItem(rightBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     pText = spLabel::create(width - 10);
     pText->setStyle(style);
@@ -528,7 +528,7 @@ void EditorMenue::showResizeMap()
     bottomBox->setInfinityValue(-m_pMap->getMapHeight());
     bottomBox->setCurrentValue(0);
     pBox->addItem(bottomBox);
-    y += 40;
+    y += pText->getHeight() + 10;
 
     addChild(pBox);
     auto* pLeftBox = leftBox.get();
@@ -1318,6 +1318,7 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
         {
             Terrain* pTerrain = m_pMap->getTerrain(x, y);
             if (pTerrain->getTerrainID() != terrainID ||
+                pTerrain->getPalette() != m_EditorSelection->getActivePalette() ||
                 pTerrain->getBuilding() != nullptr ||
                 m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Small)
             {
@@ -1411,20 +1412,23 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     bool placed = false;
     for (auto point : points)
     {
-        // nice we can place the terrain
-        if (canTerrainBePlaced(point.x(), point.y()))
+        if (m_pMap->onMap(point.x(), point.y()))
         {
-            spUnit pUnit;
-            m_pMap->getTerrain(point.x(), point.y())->setUnit(pUnit);
-            Interpreter* pInterpreter = Interpreter::getInstance();
-            QString function1 = "useTerrainAsBaseTerrain";
-            QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-            m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false);
-            placed = true;
-        }
-        else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())
-        {
-            placed = true;
+            // nice we can place the terrain
+            if (canTerrainBePlaced(point.x(), point.y()))
+            {
+                spUnit pUnit;
+                m_pMap->getTerrain(point.x(), point.y())->setUnit(pUnit);
+                Interpreter* pInterpreter = Interpreter::getInstance();
+                QString function1 = "useTerrainAsBaseTerrain";
+                QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
+                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false, true, m_EditorSelection->getActivePalette(), true);
+                placed = true;
+            }
+            else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())
+            {
+                placed = true;
+            }
         }
     }
     if (placed)
@@ -1527,7 +1531,8 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         }
     }
     if (placed)
-    {    Interpreter* pInterpreter = Interpreter::getInstance();
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue sound = pInterpreter->doFunction(pCurrentBuilding->getBuildingID(), "getEditorPlacementSound");
         if (sound.isString() )
         {

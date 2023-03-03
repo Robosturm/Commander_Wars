@@ -60,7 +60,7 @@ public:
      * @brief getCurrentViewPlayer
      * @return
      */
-    virtual Player* getCurrentViewPlayer() override;
+    virtual Player* getCurrentViewPlayer() const override;
     /**
      * @brief getSyncCounter
      * @return
@@ -106,7 +106,10 @@ public:
      * @return
      */
     bool getIsMultiplayer(const spGameAction & pGameAction) const;
-
+    /**
+     * @brief startAiPipeGame
+     */
+    void startAiPipeGame();
 signals:
     void sigGameStarted();
     void sigSyncFinished();
@@ -118,6 +121,10 @@ signals:
     void sigVictory(qint32 team);
     void sigLoadSaveGame(const QString savefile);
 public slots:
+    /**
+     * @brief sendOpenPlayerCount
+     */
+    void sendOpenPlayerCount();
     /**
      * @brief updatePlayerinfo
      */
@@ -329,6 +336,18 @@ public slots:
      * @brief loadSaveGame
      */
     void loadSaveGame(const QString savefile);
+    /**
+     * @brief resyncGame
+     */
+    void resyncGame();
+    /**
+     * @brief showResyncGameMessage
+     */
+    void showResyncGameMessage();
+    /**
+     * @brief doResyncGame
+     */
+    void doResyncGame();
 protected slots:
     /**
      * @brief keyInput
@@ -416,6 +435,11 @@ protected slots:
      */
     void removePlayerFromSyncWaitList(quint64 socketID);
     /**
+     * @brief removeSyncSocket
+     * @param socketID
+     */
+    void removeSyncSocket(quint64 socketID);
+    /**
      * @brief playerJoinedFinished
      */
     void playerJoinedFinished();
@@ -450,6 +474,7 @@ protected:
      * @brief sendGameStartedToServer
      */
     void sendGameStartedToServer();
+    void onResyncGame(QDataStream & stream);
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;

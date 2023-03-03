@@ -27,6 +27,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
     setObjectName("HumanPlayerInputMenu");
 #endif
     Interpreter::setCppOwnerShip(this);
+    setScale(Settings::getIngameMenuScaling());
     connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &HumanPlayerInputMenu::keyInput, Qt::QueuedConnection);
     qint32 width = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMenuFont32());
@@ -36,7 +37,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
     {
         testText->setStyle(style);
         testText->setHtmlText(texts[i]);
-        qint32 newWidth = testText->getTextRect().getWidth() * static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize);
+        qint32 newWidth = testText->getTextRect().width() * static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize);
         if (newWidth > width )
         {
             width = newWidth;
@@ -66,7 +67,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
             m_Cursor->setResAnim(pAnim);
         }
         m_Cursor->setPosition(width - m_Cursor->getScaledWidth() / 2, y + GameMap::getImageSize() / 2 - m_Cursor->getScaledHeight() / 2);
-        m_Cursor->setScale(GameMap::getImageSize() / pAnim->getWidth());
+        m_Cursor->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         qint32 x = 0;
         qint32 xCount = 0;
         m_maxXCount = Settings::getMenuItemRowCount();
@@ -178,7 +179,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
                 oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
                 if (pTouchEvent != nullptr)
                 {
-                    emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));
+                    emit pScrollbar->sigChangeScrollValue(static_cast<float>(-pTouchEvent->wheelDirection.y()) / static_cast<float>(pScrollbar->getContentHeigth()));
                 }
             });
         }
@@ -223,9 +224,9 @@ void HumanPlayerInputMenu::addTouchMoveEvents()
             if (m_moveScrolling)
             {
                 oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
-                oxygine::Vector2 newPos = te->localPosition;
-                float speed = -(newPos.y - m_lastScrollPoint.y);
-                if (speed != 0.0f)
+                QPoint newPos = te->localPosition;
+                qint32 speed = -(newPos.y() - m_lastScrollPoint.y());
+                if (speed != 0)
                 {
                     emit m_scrollbar->sigChangeScrollValue(speed / static_cast<float>(pScrollbar->getContentHeigth()));
                     m_lastScrollPoint = newPos;
@@ -590,8 +591,8 @@ void HumanPlayerInputMenu::moveMouseToItem(qint32 x, qint32 y)
     if (pApp->hasCursor() && Settings::getAutoMoveCursor())
     {
 #ifdef GRAPHICSUPPORT
-        oxygine::Vector2 pos = local2stage();
-        QPoint curPos = pApp->mapPosToGlobal(QPoint(pos.x + m_itemWidth / 2 + m_itemWidth * x, pos.y + m_startY + m_itemHeigth / 2 + m_itemHeigth * y));
+        QPoint pos = local2stage();
+        QPoint curPos = pApp->mapPosToGlobal(QPoint(pos.x() + m_itemWidth / 2 + m_itemWidth * x, pos.y() + m_startY + m_itemHeigth / 2 + m_itemHeigth * y));
         pApp->cursor().setPos(curPos);
 #endif
     }

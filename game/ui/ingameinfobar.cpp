@@ -30,6 +30,7 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("IngameInfoBar");
 #endif
+    CONSOLE_PRINT("Creating IngameInfoBar", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
     qint32 width = 300;
@@ -45,7 +46,7 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
     if (Settings::getHeight() - cursorInfoHeigth - gameInfoHeigth < 50)
     {
         pMiniMapBox->setHeight(100);
-        setScale(Settings::getHeight() / static_cast<float>(100 + cursorInfoHeigth + gameInfoHeigth));
+        setScale(static_cast<float>(Settings::getHeight()) / static_cast<float>(100.0f + cursorInfoHeigth + gameInfoHeigth));
     }
     setSize(width, Settings::getHeight());
 
@@ -89,11 +90,11 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
     m_pDetailedViewBox->setResAnim(pAnim);
     if (getScaleX() < 0.75f)
     {
-        m_pDetailedViewBox->setScale(1 / getScaleX() * 0.5f);
+        m_pDetailedViewBox->setScale(1.0f / getScaleX() * 0.5f);
     }
     else if (getScaleX() < 1.0f)
     {
-        m_pDetailedViewBox->setScale(1 / getScaleX());
+        m_pDetailedViewBox->setScale(1.0f / getScaleX());
     }
     m_pDetailedViewBox->setSize(130, 199);
     m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(),
@@ -132,7 +133,7 @@ void IngameInfoBar::updatePlayerInfo()
                 y += pName->getScaledHeight();
 
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
-                CO* pCO = pPlayer->getCO(0);
+                const CO* pCO = pPlayer->getCO(0);
                 oxygine::ResAnim* pAnim = nullptr;
                 if (pCO != nullptr)
                 {
@@ -144,7 +145,7 @@ void IngameInfoBar::updatePlayerInfo()
                 }
                 if (pAnim != nullptr)
                 {
-                    pSprite->setScale(87 / pAnim->getHeight());
+                    pSprite->setScale(87.0f / static_cast<float>(pAnim->getHeight()));
                 }
                 pSprite->setResAnim(pAnim);
                 pSprite->setPosition(12, y);
@@ -163,7 +164,7 @@ void IngameInfoBar::updatePlayerInfo()
                 pSprite->setPosition(103, y);
                 if (pAnim != nullptr)
                 {
-                    pSprite->setScale(87 / pAnim->getHeight());
+                    pSprite->setScale(87.0f / static_cast<float>(pAnim->getHeight()));
                 }
                 m_pGameInfoBox->addChild(pSprite);
 
@@ -173,7 +174,7 @@ void IngameInfoBar::updatePlayerInfo()
                 {
                     pSprite->setResAnim(pAnim);
                     pSprite->setPosition(202, y);
-                    pSprite->setScale(85 / pAnim->getWidth());
+                    pSprite->setScale(85.0f / static_cast<float>(pAnim->getWidth()));
                 }
                 m_pGameInfoBox->addChild(pSprite);
 
@@ -213,7 +214,7 @@ void IngameInfoBar::updatePlayerInfo()
                         {
                             pSprite->setResAnim(pAnim);
                             pSprite->setPosition(202, y);
-                            pSprite->setScale(37 / pAnim->getWidth());
+                            pSprite->setScale(37.0f / static_cast<float>(pAnim->getWidth()));
                         }
                     }
                     m_pGameInfoBox->addChild(pSprite);
@@ -234,7 +235,7 @@ void IngameInfoBar::updatePlayerInfo()
                         {
                             pSprite->setResAnim(pAnim);
                             pSprite->setPosition(247, y);
-                            pSprite->setScale(37 / pAnim->getWidth());
+                            pSprite->setScale(37.0f / static_cast<float>(pAnim->getWidth()));
                         }
                     }
                     m_pGameInfoBox->addChild(pSprite);
@@ -270,7 +271,7 @@ void IngameInfoBar::updatePlayerInfo()
                 m_pGameInfoBox->addChild(pTextfield);
                 y += yAdvance;
 
-                Player* pViewPlayer = m_pMenu->getCurrentViewPlayer();
+                const Player* pViewPlayer = m_pMenu->getCurrentViewPlayer();
                 if (pViewPlayer != nullptr)
                 {
                     pTextfield = spLabel::create(width);
@@ -391,7 +392,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         m_pCursorInfoBox->removeChildren();
         if (m_pMenu != nullptr)
         {
-            Player* pPlayer = m_pMenu->getCurrentViewPlayer();
+            const Player* pPlayer = m_pMenu->getCurrentViewPlayer();
             if (pPlayer != nullptr)
             {
                 GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
@@ -456,14 +457,14 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     static constexpr qint32 yOffset = 4;
     bool hpHidden = false;
     Terrain* pTerrain = m_pMap->getTerrain(x, y);
-    spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
-    spUnit pUnit = spUnit(pTerrain->getUnit());
+    Building* pBuilding = pTerrain->getBuilding();
+    Unit* pUnit = pTerrain->getUnit();
     Player* pPlayer = m_pMenu->getCurrentViewPlayer();
-    if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
+    if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
     {
         pUnit = nullptr;
     }
-    if (pUnit.get() != nullptr)
+    if (pUnit != nullptr)
     {
         hpHidden = pUnit->getHpHidden(m_pMenu->getCurrentViewPlayer());
     }
@@ -475,14 +476,14 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     oxygine::ResAnim* pAnimFore = nullptr;
     oxygine::ResAnim* pAnimBack = nullptr;
     float speed = 0;
-    if (pUnit.get() != nullptr)
+    if (pUnit != nullptr)
     {
         pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase(), oxygine::ep_ignore_error);
         pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
         pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
         speed = pUnit->getTerrainAnimationMoveSpeed();
     }
-    else if (pBuilding.get() != nullptr)
+    else if (pBuilding != nullptr)
     {
         pAnimBase = pGameManager->getResAnim(pBuilding->getTerrainAnimationBase(), oxygine::ep_ignore_error);
         pAnimFore = pGameManager->getResAnim(pBuilding->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
@@ -530,7 +531,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         m_pDetailedViewBox->addChild(pWeatherOverlay);
     }
 
-    if (pUnit.get() != nullptr)
+    if (pUnit != nullptr)
     {
         qint32 hp = -1;
         if (hpHidden)
@@ -543,7 +544,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         m_pDetailedViewBox->addChild(pBattleAnimationSprite);
     }
     qint32 terrainDefense = 0;
-    if (pUnit.get() != nullptr)
+    if (pUnit != nullptr)
     {
         terrainDefense = pUnit->getTerrainDefense();
     }
@@ -587,13 +588,13 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
     Terrain* pTerrain = m_pMap->getTerrain(x, y);
-    spUnit pUnit = spUnit(pTerrain->getUnit());
+    Unit* pUnit = pTerrain->getUnit();
     Player* pPlayer = m_pMenu->getCurrentViewPlayer();
-    if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
+    if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
     {
         pUnit = nullptr;
     }
-    if (pUnit.get() != nullptr &&
+    if (pUnit != nullptr &&
         pAnim != nullptr)
     {
         created = true;
@@ -717,7 +718,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         pTextfield->setStyle(smallStyle);
         pTextfield->setHtmlText(tr("Player ") + QString::number(pUnit->getOwner()->getPlayerID() + 1));
         m_pCursorInfoBox->addChild(pTextfield);
-        posY += yAdvance + pTextfield->getTextRect().getHeight();
+        posY += yAdvance + pTextfield->getTextRect().height();
 
         if (!pUnit->getWeapon1ID().isEmpty())
         {
@@ -731,7 +732,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             pTextfield->setStyle(smallStyle);
             pTextfield->setHtmlText(WeaponManager::getInstance()->getName(pUnit->getWeapon1ID()));
             m_pCursorInfoBox->addChild(pTextfield);
-            posY += yAdvance + pTextfield->getTextRect().getHeight();
+            posY += yAdvance + pTextfield->getTextRect().height();
         }
         if (!pUnit->getWeapon2ID().isEmpty())
         {
@@ -745,7 +746,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             pTextfield->setStyle(smallStyle);
             pTextfield->setHtmlText(WeaponManager::getInstance()->getName(pUnit->getWeapon2ID()));
             m_pCursorInfoBox->addChild(pTextfield);
-            posY += yAdvance + pTextfield->getTextRect().getHeight();
+            posY += yAdvance + pTextfield->getTextRect().height();
         }
 
         pTextfield = spLabel::create(spriteWidth - 5);
@@ -758,7 +759,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         pTextfield->setStyle(smallStyle);
         pTextfield->setHtmlText(MovementTableManager::getInstance()->getName(pUnit->getMovementType()));
         m_pCursorInfoBox->addChild(pTextfield);
-        posY += yAdvance + pTextfield->getTextRect().getHeight();
+        posY += yAdvance + pTextfield->getTextRect().height();
 
         pTextfield = spLabel::create(spriteWidth - 5);
         pTextfield->setPosition(posX, posY);
@@ -770,7 +771,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         pTextfield->setStyle(smallStyle);
         pTextfield->setHtmlText(QString::number(pUnit->getMovementpoints(QPoint(x, y))));
         m_pCursorInfoBox->addChild(pTextfield);
-        posY += yAdvance + pTextfield->getTextRect().getHeight();
+        posY += yAdvance + pTextfield->getTextRect().height();
 
         pTextfield = spLabel::create(spriteWidth - 5);
         pTextfield->setPosition(posX, posY);
@@ -782,7 +783,7 @@ bool IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         pTextfield->setStyle(smallStyle);
         pTextfield->setHtmlText(QString::number(pUnit->getVision(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()))));
         m_pCursorInfoBox->addChild(pTextfield);
-        posY += yAdvance + pTextfield->getTextRect().getHeight();
+        posY += yAdvance + pTextfield->getTextRect().height();
 
         qint32 loadingPlace = pUnit->getLoadingPlace();
         qint32 loadingCount = pUnit->getLoadedUnitCount();
@@ -836,9 +837,9 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
     {
         Terrain* pTerrain = m_pMap->getTerrain(x, y);
         spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
-        spUnit pUnit = spUnit(pTerrain->getUnit());
+        Unit* pUnit = pTerrain->getUnit();
         Player* pPlayer = m_pMenu->getCurrentViewPlayer();
-        if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
+        if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
         {
             pUnit = nullptr;
         }
@@ -904,7 +905,7 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
         {
             constexpr qint32 maxCapturepoints = 20;
             qint32 resistance = maxCapturepoints;
-            if (pUnit.get() != nullptr)
+            if (pUnit != nullptr)
             {
                 resistance = maxCapturepoints - pUnit->getCapturePoints();
             }
@@ -974,31 +975,31 @@ void IngameInfoBar::syncMinimapPosition()
     if (m_pMap != nullptr)
     {
         QPoint centeredPos = m_pMap->getCenteredPosition();
-        oxygine::RectF bounds = m_pMinimapSlider->getDragBounds();
-        oxygine::Vector2 size = m_pMinimapSlider->getSize();
-        qint32 newX = size.x / 2 - centeredPos.x() * Minimap::IMAGE_SIZE * m_pMinimap->getScaleX();
-        qint32 newY = size.y / 2 - centeredPos.y() * Minimap::IMAGE_SIZE * m_pMinimap->getScaleY();
-        if (newX < bounds.getLeft())
+        auto bounds = m_pMinimapSlider->getDragBounds();
+        auto size = m_pMinimapSlider->getSize();
+        qint32 newX = size.width() / 2 - centeredPos.x() * Minimap::IMAGE_SIZE * m_pMinimap->getScaleX();
+        qint32 newY = size.height() / 2 - centeredPos.y() * Minimap::IMAGE_SIZE * m_pMinimap->getScaleY();
+        if (newX < bounds.left())
         {
-            newX = bounds.getLeft();
+            newX = bounds.left();
         }
-        else if (newX > bounds.getRight())
+        else if (newX > bounds.right())
         {
-            newX = bounds.getRight();
+            newX = bounds.right();
         }
-        if (newY < bounds.getTop())
+        if (newY < bounds.top())
         {
-            newY = bounds.getTop();
+            newY = bounds.top();
         }
-        else if (newY > bounds.getBottom())
+        else if (newY > bounds.bottom())
         {
-            newY = bounds.getBottom();
+            newY = bounds.bottom();
         }
         m_pMinimapSlider->getContent()->setPosition(newX, newY);
     }
 }
 
-GameMap *IngameInfoBar::getMap() const
+const GameMap *IngameInfoBar::getMap() const
 {
     return m_pMap;
 }

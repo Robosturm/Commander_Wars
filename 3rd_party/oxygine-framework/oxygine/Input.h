@@ -29,7 +29,7 @@ namespace oxygine
         PointerState* getPointerMouse();
         void sendPointerButtonEvent(spStage & stage, MouseButton button, qint32 x, qint32 y, float pressure, qint32 type, PointerState* ps);
         void sendPointerMotionEvent(spStage & stage, qint32 x, qint32 y, float pressure, PointerState* ps);
-        void sendPointerWheelEvent(spStage & stage, const Vector2& dir, PointerState* ps);
+        void sendPointerWheelEvent(spStage & stage, const QPoint& dir, PointerState* ps);
     private:
         explicit Input();
     private:

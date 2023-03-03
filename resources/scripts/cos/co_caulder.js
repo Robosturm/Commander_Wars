@@ -206,7 +206,7 @@ var Constructor = function()
             {
                 var animations = [];
                 var counter = 0;
-                UNIT.repairUnit(counit, 5, map);
+                UNIT.repairUnit(counit, CO_CAULDER.coHealing, map);
                 var fields = globals.getCircle(1, coRange);
                 var x = counit.getX();
                 var y = counit.getY();

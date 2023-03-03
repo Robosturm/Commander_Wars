@@ -588,12 +588,12 @@
     <name>ACTION_LOAD</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="61"/>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="94"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="93"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="98"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="97"/>
         <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1243,25 +1243,20 @@
 <context>
     <name>ActionPerformer</name>
     <message>
-        <location filename="../game/actionperformer.cpp" line="46"/>
+        <location filename="../game/actionperformer.cpp" line="52"/>
         <source>Waiting for Players/Observers to join...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/actionperformer.cpp" line="70"/>
-        <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BEACH</name>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="16"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="17"/>
         <source>Beach</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="258"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="259"/>
         <source>Beachs over great landing places for landing ground troops.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1308,88 +1303,96 @@
 <context>
     <name>BuildListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="127"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="123"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="138"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="134"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="147"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="143"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="169"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="165"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="58"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="54"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="158"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="154"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="298"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="294"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="308"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="304"/>
         <source>Do you want to delete the build bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="325"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="321"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="326"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="322"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="327"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="323"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="328"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="324"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="329"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="325"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="347"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="343"/>
         <source>Do you want to overwrite the build bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="364"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="360"/>
         <source>Do you want to make the saved build list the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="364"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="360"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="364"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="360"/>
         <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BuildingSpriteManager</name>
+    <message>
+        <location filename="../resource_management/buildingspritemanager.cpp" line="62"/>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1404,72 +1407,72 @@
 <context>
     <name>COBannListDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="132"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="127"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="143"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="138"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="152"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="147"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="174"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="169"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="277"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="272"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="58"/>
-        <source>CO bann list</source>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="53"/>
+        <source>CO banlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="163"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="158"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="269"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="264"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="276"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="271"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="278"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="273"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="279"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="274"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="280"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="275"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="299"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="294"/>
         <source>Do you want to delete the co bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="318"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="313"/>
         <source>Do you want to overwrite the co bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1909,17 +1912,17 @@
 <context>
     <name>ColorSelector</name>
     <message>
-        <location filename="../objects/base/colorselector.cpp" line="44"/>
+        <location filename="../objects/base/colorselector.cpp" line="43"/>
         <source>Red: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/colorselector.cpp" line="58"/>
+        <location filename="../objects/base/colorselector.cpp" line="57"/>
         <source>Green: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/colorselector.cpp" line="71"/>
+        <location filename="../objects/base/colorselector.cpp" line="70"/>
         <source>Blue: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2477,7 +2480,7 @@
 <context>
     <name>DialogConnecting</name>
     <message>
-        <location filename="../objects/dialogs/dialogconnecting.cpp" line="40"/>
+        <location filename="../objects/dialogs/dialogconnecting.cpp" line="41"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2541,72 +2544,82 @@
 <context>
     <name>DialogModifyTerrain</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="35"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="37"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="144"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="170"/>
         <source>Base image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="72"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="85"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="58"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="71"/>
         <source>Edit terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="65"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="78"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="76"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="89"/>
         <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="88"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="101"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="91"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="104"/>
         <source>Custom Description of the Terrain. Empty description equals the default description.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="180"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="114"/>
+        <source>Palette:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="118"/>
+        <source>Changes the palette used by the terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="207"/>
         <source>Terrain Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="184"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="211"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="205"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="238"/>
         <source>Overlays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="102"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="131"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="110"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="139"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="270"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="312"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3600,6 +3613,14 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
 </context>
 <context>
+    <name>EditorSelection</name>
+    <message>
+        <location filename="../objects/editorselection.cpp" line="749"/>
+        <source>Changes the palette used by the terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FIRE</name>
     <message>
         <location filename="../resources/scripts/terrain/FIRE.js" line="14"/>
@@ -3615,12 +3636,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>FOG</name>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="14"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="15"/>
         <source>Fog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="102"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="103"/>
         <source>&lt;r&gt;This heavy fog provides ideal hiding places&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; for naval units in Fog of War.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3995,364 +4016,374 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="21"/>
+        <source>Menu scaling:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="29"/>
+        <source>Selects the scaling for the action ingame menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="42"/>
         <source>Overworld Animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="28"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="49"/>
         <source>If active walk, capture, power animations, etc. will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="36"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="57"/>
         <source>Battle Animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="44"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="65"/>
         <source>Select which in-game animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="53"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="74"/>
         <source>Battle Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="70"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="91"/>
         <source>Dialogs:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="78"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="99"/>
         <source>Selects if dialogs are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="87"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="108"/>
         <source>Capture animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="95"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="116"/>
         <source>Selects if capture animations are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="104"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="125"/>
         <source>Day 2 Day animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="112"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="133"/>
         <source>Selects if the day to day screen gets skipped or not. Note: On fog of war maps the screen is still shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="121"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="142"/>
         <source>Movement animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="129"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="150"/>
         <source>Selects if movement animations get shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="138"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="159"/>
         <source>Animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="146"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="167"/>
         <source>Selects the speed at which basic animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="157"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="178"/>
         <source>Walk animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="165"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="186"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="176"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="197"/>
         <source>Battle animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="184"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="205"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="195"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="216"/>
         <source>Capture animation speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="203"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="224"/>
         <source>Selects the speed at which capture animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="214"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="235"/>
         <source>Dialog animation Speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="222"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="243"/>
         <source>Selects the speed at which dialog animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="233"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="254"/>
         <source>Multi Turn Plantime:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="241"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="262"/>
         <source>Selects the amount of turns you can preplan with a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="252"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="273"/>
         <source>Auto end turn:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="259"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="280"/>
         <source>If enabled the game will automatically end your turn if you can&apos;t give any orders anymore.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="267"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="288"/>
         <source>Detailed battle info:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="274"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="295"/>
         <source>If enabled the game will show a detailed battle forecast info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="283"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="304"/>
         <source>Auto saving time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="291"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="312"/>
         <source>Selects the time between auto saves in hours:minutes:seconds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="299"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="320"/>
         <source>Auto saving cycle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="307"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="328"/>
         <source>Selects the number of auto saves that are kept during games. A value of 0 disables this feature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="318"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="339"/>
         <source>Record games:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="325"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="346"/>
         <source>If checked: games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="333"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="354"/>
         <source>Menu heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="341"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="362"/>
         <source>Amount of items per row for in-game menus before a new row is added.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="352"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="373"/>
         <source>Menu width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="360"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="381"/>
         <source>Amount of columns for in-game menus before a scrollable menu is shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="371"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="392"/>
         <source>Shown players:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="379"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="400"/>
         <source>Selects the amount of players shown in-game on the sidebar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="390"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="411"/>
         <source>Supply warning:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="398"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="419"/>
         <source>Selects when the supply warnings for ammo and fuel appear.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="409"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="430"/>
         <source>Action delay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="417"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="438"/>
         <source>The delay after an action before an ai or replay action gets triggered.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="428"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="449"/>
         <source>Show pc cursor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="435"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="456"/>
         <source>If active the Computer&apos;s cursor is hidden during a game, giving you a more Gameboy like feeling.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="443"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="464"/>
         <source>Warp pc cursor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="450"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="471"/>
         <source>If active the Computer&apos;s cursor is moved to the first entry when opening menus or similar actions. Only disable this feature if you intend to play using a mouse only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="458"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="479"/>
         <source>Animated marked fields:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="465"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="486"/>
         <source>If active the currently selectable fields get animated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="473"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="494"/>
         <source>CO info position:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="481"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="502"/>
         <source>Flipping&apos; positions the info opposite the side of the screen where the cursor is located.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="490"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="511"/>
         <source>Auto scrolling:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="497"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="518"/>
         <source>If active: the map is scrolled automatically when the cursor is at the edge of the screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="506"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="527"/>
         <source>Show coordinates:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="513"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="534"/>
         <source>If active: map coordinates are shown during a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="521"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="542"/>
         <source>Auto camera:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="528"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="549"/>
         <source>If active: the screen will center on every unit performing an action, except when not visible within Fog of War.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="536"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="557"/>
         <source>Camera center mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="544"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="565"/>
         <source>Select where the screen starts during your player phase. This setting only applies while auto focusing is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="553"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="574"/>
         <source>Center camera on fields:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="560"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="581"/>
         <source>Selects if the camera centers on marked fields for an action or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="568"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="589"/>
         <source>Synchronize animations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="575"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="596"/>
         <source>If checked: units and building animations on the map are synchronized. Note: changing this doesn&apos;t have an immediate effect in-game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="583"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="604"/>
         <source>Simple cancel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="590"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="611"/>
         <source>If active units and actions can be canceled by a long-press. This is only recommended for devices without a keyboard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="599"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="620"/>
         <source>Default rules:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="608"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="629"/>
         <source>The relative path from the exe to the default ruleset.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="616"/>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="640"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="637"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="661"/>
         <location filename="../resources/ui/game/ruleSelection.xml" line="671"/>
         <location filename="../resources/ui/game/ruleSelection.xml" line="672"/>
         <source>Select file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="623"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="644"/>
         <source>Default bannlist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="632"/>
+        <location filename="../resources/ui/options/optiongameplaymenu.xml" line="653"/>
         <source>The relative path from the exe to the default bannlist.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4660,87 +4691,87 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="581"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="588"/>
         <source>Key Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="589"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="596"/>
         <source>Key Place Terrain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="596"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="603"/>
         <source>Key to select Place Terrain in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="604"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="611"/>
         <source>Key Place Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="611"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="618"/>
         <source>Key to select Place Unit in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="619"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="626"/>
         <source>Key Place Building:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="626"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="633"/>
         <source>Key to select Place Building in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="634"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="641"/>
         <source>Key Next Team:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="641"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="648"/>
         <source>Key to select the next player in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="649"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="656"/>
         <source>Key Previous Team:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="656"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="663"/>
         <source>Key to select the previous player in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="664"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="671"/>
         <source>Key Next Item:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="671"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="678"/>
         <source>Key to select the next editor item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="679"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="686"/>
         <source>Key Previous Item:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="686"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="693"/>
         <source>Key to select the previous editor item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="694"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="573"/>
         <source>Quit game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="573"/>
+        <location filename="../resources/ui/options/optioncontrolsmenu.xml" line="580"/>
         <source>Key for quiting a running match.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5934,7 +5965,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="777"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="802"/>
         <source>Victory rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6191,9 +6222,9 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="70"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
-        <location filename="../game/gamemap.cpp" line="557"/>
-        <location filename="../game/gamemap.cpp" line="680"/>
-        <location filename="../game/gamemap.cpp" line="1521"/>
+        <location filename="../game/gamemap.cpp" line="559"/>
+        <location filename="../game/gamemap.cpp" line="682"/>
+        <location filename="../game/gamemap.cpp" line="1563"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6208,164 +6239,164 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="396"/>
+        <location filename="../game/gamemap.cpp" line="398"/>
         <source>Tags
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="399"/>
+        <location filename="../game/gamemap.cpp" line="401"/>
         <source>Bases
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="403"/>
+        <location filename="../game/gamemap.cpp" line="405"/>
         <source>Airports
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="407"/>
+        <location filename="../game/gamemap.cpp" line="409"/>
         <source>Harbours
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="411"/>
+        <location filename="../game/gamemap.cpp" line="413"/>
         <source>Towers
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="415"/>
+        <location filename="../game/gamemap.cpp" line="417"/>
         <source>Teleport
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="419"/>
+        <location filename="../game/gamemap.cpp" line="421"/>
         <source>Mixed bases
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="423"/>
+        <location filename="../game/gamemap.cpp" line="425"/>
         <source>Predeployed
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="427"/>
+        <location filename="../game/gamemap.cpp" line="429"/>
         <source>Symetric
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="431"/>
+        <location filename="../game/gamemap.cpp" line="433"/>
         <source>PvP
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="435"/>
+        <location filename="../game/gamemap.cpp" line="437"/>
         <source>FTA
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="439"/>
+        <location filename="../game/gamemap.cpp" line="441"/>
         <source>Vs AI
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="443"/>
+        <location filename="../game/gamemap.cpp" line="445"/>
         <source>Team play
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="447"/>
+        <location filename="../game/gamemap.cpp" line="449"/>
         <source>Historical
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="451"/>
+        <location filename="../game/gamemap.cpp" line="453"/>
         <source>Low funds
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="455"/>
+        <location filename="../game/gamemap.cpp" line="457"/>
         <source>High funds
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="459"/>
+        <location filename="../game/gamemap.cpp" line="461"/>
         <source>Naval
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="463"/>
+        <location filename="../game/gamemap.cpp" line="465"/>
         <source>Ground
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="467"/>
+        <location filename="../game/gamemap.cpp" line="469"/>
         <source>Air
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="471"/>
+        <location filename="../game/gamemap.cpp" line="473"/>
         <source>Scripted
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="557"/>
-        <location filename="../game/gamemap.cpp" line="1521"/>
+        <location filename="../game/gamemap.cpp" line="559"/>
+        <location filename="../game/gamemap.cpp" line="1563"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="653"/>
+        <location filename="../game/gamemap.cpp" line="655"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="680"/>
+        <location filename="../game/gamemap.cpp" line="682"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1488"/>
+        <location filename="../game/gamemap.cpp" line="1530"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1549"/>
+        <location filename="../game/gamemap.cpp" line="1591"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1559"/>
+        <location filename="../game/gamemap.cpp" line="1601"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1567"/>
+        <location filename="../game/gamemap.cpp" line="1609"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1579"/>
+        <location filename="../game/gamemap.cpp" line="1621"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6373,124 +6404,140 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="114"/>
+        <location filename="../menue/gamemenue.cpp" line="123"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="412"/>
+        <location filename="../menue/gamemenue.cpp" line="434"/>
         <source>Connection failed.Reason: Invalid login data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="413"/>
+        <location filename="../menue/gamemenue.cpp" line="435"/>
         <source>Connection failed.Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="414"/>
+        <location filename="../menue/gamemenue.cpp" line="436"/>
         <source>Connection failed.Reason: No valid player available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="415"/>
+        <location filename="../menue/gamemenue.cpp" line="437"/>
         <source>Connection failed.Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="937"/>
+        <location filename="../menue/gamemenue.cpp" line="600"/>
+        <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart or try to resync with the server.
+Note: This may be caused by a defective mod.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="600"/>
+        <source>Resync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="600"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="1095"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="959"/>
+        <location filename="../menue/gamemenue.cpp" line="1117"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1170"/>
-        <location filename="../menue/gamemenue.cpp" line="1754"/>
-        <location filename="../menue/gamemenue.cpp" line="1791"/>
+        <location filename="../menue/gamemenue.cpp" line="1340"/>
+        <location filename="../menue/gamemenue.cpp" line="1924"/>
+        <location filename="../menue/gamemenue.cpp" line="1961"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1178"/>
+        <location filename="../menue/gamemenue.cpp" line="1348"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1213"/>
+        <location filename="../menue/gamemenue.cpp" line="1383"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1614"/>
+        <location filename="../menue/gamemenue.cpp" line="1784"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1615"/>
+        <location filename="../menue/gamemenue.cpp" line="1785"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1616"/>
+        <location filename="../menue/gamemenue.cpp" line="1786"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1617"/>
+        <location filename="../menue/gamemenue.cpp" line="1787"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1618"/>
+        <location filename="../menue/gamemenue.cpp" line="1788"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1619"/>
+        <location filename="../menue/gamemenue.cpp" line="1789"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1620"/>
+        <location filename="../menue/gamemenue.cpp" line="1790"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1621"/>
+        <location filename="../menue/gamemenue.cpp" line="1791"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1645"/>
+        <location filename="../menue/gamemenue.cpp" line="1815"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1655"/>
+        <location filename="../menue/gamemenue.cpp" line="1825"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2117"/>
+        <location filename="../menue/gamemenue.cpp" line="2297"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2148"/>
+        <location filename="../menue/gamemenue.cpp" line="2328"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2174"/>
+        <location filename="../menue/gamemenue.cpp" line="2354"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2351"/>
+        <location filename="../menue/gamemenue.cpp" line="2531"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6519,124 +6566,124 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="260"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="261"/>
         <source>Day:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="278"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="279"/>
         <source>Buildings:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="287"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="310"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="332"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="288"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="311"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="333"/>
         <source>?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="300"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="301"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="323"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="324"/>
         <source>Funds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="346"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="347"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="359"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="360"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="637"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="643"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="647"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="898"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="638"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="644"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="648"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="899"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="659"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="660"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="665"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="666"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="678"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="679"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="684"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="685"/>
         <source>Ammo 1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="696"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="697"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="701"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="702"/>
         <source>Ammo 2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="713"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="937"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="714"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="938"/>
         <source>Owner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="718"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="932"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="719"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="933"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="727"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="728"/>
         <source>Weapon 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="741"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="742"/>
         <source>Weapon 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="754"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="755"/>
         <source>Move:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="766"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="767"/>
         <source>Movepoints:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="778"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="779"/>
         <source>Vision:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="915"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="916"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="928"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="929"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6644,12 +6691,12 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>LAKE</name>
     <message>
-        <location filename="../resources/scripts/terrain/LAKE.js" line="15"/>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="16"/>
         <source>Lake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/LAKE.js" line="148"/>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="145"/>
         <source>A calm inland body of water. Naval and air forces have good mobility while hovercraft can freely move on and off.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6657,105 +6704,110 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>LobbyMenu</name>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="64"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="65"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="73"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="74"/>
         <source>Direct Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="83"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="84"/>
         <source>Server Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="94"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="95"/>
         <source>Join Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="105"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="106"/>
         <source>Observe Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="115"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="116"/>
         <source>Join Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="125"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="126"/>
         <source>Observe Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="135"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="244"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="136"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="245"/>
         <source>Show my games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="145"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="146"/>
         <source>Refresh games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="238"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="239"/>
         <source>Show open games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="290"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="389"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="291"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="390"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="341"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="342"/>
         <source>Contacting server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="357"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="371"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="358"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="372"/>
         <source>Enter Host address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="460"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="465"/>
         <source>Failed to launch game on server cause no more game slots are available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="467"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="472"/>
         <source>Host game is no longer available or is currently relaunched.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="624"/>
+        <source>Connection refused. Server has a different version of the game. Server </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6776,102 +6828,102 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="265"/>
+        <location filename="../coreengine/mainapp.cpp" line="273"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="272"/>
+        <location filename="../coreengine/mainapp.cpp" line="280"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="279"/>
+        <location filename="../coreengine/mainapp.cpp" line="287"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="286"/>
+        <location filename="../coreengine/mainapp.cpp" line="294"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="227"/>
+        <location filename="../coreengine/mainapp.cpp" line="235"/>
         <source>Checking for new version...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="256"/>
+        <location filename="../coreengine/mainapp.cpp" line="264"/>
         <source>Loading Building Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="295"/>
+        <location filename="../coreengine/mainapp.cpp" line="303"/>
         <source>Loading Terrain Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="302"/>
+        <location filename="../coreengine/mainapp.cpp" line="310"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="309"/>
+        <location filename="../coreengine/mainapp.cpp" line="317"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="316"/>
+        <location filename="../coreengine/mainapp.cpp" line="324"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="323"/>
+        <location filename="../coreengine/mainapp.cpp" line="331"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="330"/>
+        <location filename="../coreengine/mainapp.cpp" line="338"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="337"/>
+        <location filename="../coreengine/mainapp.cpp" line="345"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="344"/>
+        <location filename="../coreengine/mainapp.cpp" line="352"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="351"/>
+        <location filename="../coreengine/mainapp.cpp" line="359"/>
         <source>Loading Movement planner addin Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="358"/>
+        <location filename="../coreengine/mainapp.cpp" line="366"/>
         <source>Loading Ui Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="365"/>
+        <location filename="../coreengine/mainapp.cpp" line="373"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="375"/>
+        <location filename="../coreengine/mainapp.cpp" line="383"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="724"/>
+        <location filename="../coreengine/mainapp.cpp" line="732"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="730"/>
+        <location filename="../coreengine/mainapp.cpp" line="738"/>
         <source>Please use the details or the crashlog to report a bug at 
 &lt;a href=&apos;https://github.com/Robosturm/Commander_Wars/issues&apos;&gt;https://github.com/Robosturm/Commander_Wars/issues&lt;/a&gt;
  The game will be terminated sadly. :(</source>
@@ -6940,14 +6992,14 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="104"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="472"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="471"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="115"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="483"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="531"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="482"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="530"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6962,17 +7014,17 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
         <source>Do you want to make the saved ruleset the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7036,157 +7088,157 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="85"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="100"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2006"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2036"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="112"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="126"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="122"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="136"/>
         <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="276"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="297"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="498"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="523"/>
         <source>Server doesn&apos;t have the given mods installed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="266"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="287"/>
         <source>Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="267"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="288"/>
         <source> may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="505"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="530"/>
         <source>Server doesn&apos;t have any more slots for players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="290"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="311"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="132"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="146"/>
         <source>Ready + Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="243"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="264"/>
         <source>Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?
 Note: You won&apos;t be able to change any rules when reentering the lobby later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="247"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="268"/>
         <source>Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="573"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="598"/>
         <source>Connection failed. Reason: Invalid username password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="574"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="599"/>
         <source>Connection failed. Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="575"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="600"/>
         <source>Connection failed. Reason: No more players available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="576"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="601"/>
         <source>Connection failed. Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="577"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="602"/>
         <source>Connection failed. Reason: Invalid username.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="578"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="603"/>
         <source>Connection failed. Reason: Password outdated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="579"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="604"/>
         <source>Connection failed. Reason: Server failed to access database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="580"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="605"/>
         <source>Connection failed. Reason: Player with same username already connected to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="894"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1041"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="920"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1067"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1274"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1300"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1278"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1304"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1293"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1319"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1297"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1323"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1397"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1423"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1408"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1434"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1805"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1835"/>
         <source>Informing server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1877"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1907"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2002"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2032"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7204,32 +7256,32 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="264"/>
+        <location filename="../menue/optionmenue.cpp" line="266"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="267"/>
+        <location filename="../menue/optionmenue.cpp" line="269"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="269"/>
+        <location filename="../menue/optionmenue.cpp" line="271"/>
         <source>Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="362"/>
+        <location filename="../menue/optionmenue.cpp" line="364"/>
         <source>Filters mods by given tags.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="452"/>
+        <location filename="../menue/optionmenue.cpp" line="454"/>
         <source>The mod author designated this mod as &apos;Cosmetic&apos; and may be used during multiplayer matches based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="261"/>
+        <location filename="../menue/optionmenue.cpp" line="263"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7239,56 +7291,56 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="265"/>
+        <location filename="../menue/optionmenue.cpp" line="267"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="266"/>
+        <location filename="../menue/optionmenue.cpp" line="268"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="278"/>
+        <location filename="../menue/optionmenue.cpp" line="280"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="360"/>
+        <location filename="../menue/optionmenue.cpp" line="362"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="454"/>
+        <location filename="../menue/optionmenue.cpp" line="456"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="459"/>
+        <location filename="../menue/optionmenue.cpp" line="461"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="464"/>
+        <location filename="../menue/optionmenue.cpp" line="466"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="469"/>
+        <location filename="../menue/optionmenue.cpp" line="471"/>
         <source>Tags:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="474"/>
+        <location filename="../menue/optionmenue.cpp" line="476"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="626"/>
+        <location filename="../menue/optionmenue.cpp" line="628"/>
         <source>This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7493,51 +7545,51 @@ Host mods: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1253"/>
+        <location filename="../objects/playerselection.cpp" line="1252"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1287"/>
+        <location filename="../objects/playerselection.cpp" line="1286"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1410"/>
+        <location filename="../objects/playerselection.cpp" line="1409"/>
         <source>Connection failed.Reason: No more players available or user is already in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
-        <location filename="../objects/playerselection.cpp" line="1262"/>
-        <location filename="../objects/playerselection.cpp" line="1276"/>
+        <location filename="../objects/playerselection.cpp" line="1240"/>
+        <location filename="../objects/playerselection.cpp" line="1261"/>
+        <location filename="../objects/playerselection.cpp" line="1275"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
+        <location filename="../objects/playerselection.cpp" line="1240"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
+        <location filename="../objects/playerselection.cpp" line="1240"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
+        <location filename="../objects/playerselection.cpp" line="1240"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1241"/>
+        <location filename="../objects/playerselection.cpp" line="1240"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1265"/>
-        <location filename="../objects/playerselection.cpp" line="1272"/>
-        <location filename="../objects/playerselection.cpp" line="1276"/>
+        <location filename="../objects/playerselection.cpp" line="1264"/>
+        <location filename="../objects/playerselection.cpp" line="1271"/>
+        <location filename="../objects/playerselection.cpp" line="1275"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7570,7 +7622,7 @@ Host mods: </source>
 <context>
     <name>REAF</name>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="15"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="16"/>
         <source>Reaf</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7583,12 +7635,12 @@ Host mods: </source>
 <context>
     <name>RIVER</name>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="15"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="16"/>
         <source>River</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="46"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="47"/>
         <source>Most infantry and Hovercraft units are the only ground unit that can cross rivers.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7596,12 +7648,12 @@ Host mods: </source>
 <context>
     <name>ROUGH_SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="15"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="16"/>
         <source>Rough Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="84"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="85"/>
         <source>Movement of naval units is impeded but air units are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7830,7 +7882,7 @@ Host mods: </source>
 <context>
     <name>RuleSelection</name>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="280"/>
+        <location filename="../objects/ruleselection.cpp" line="187"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7858,12 +7910,12 @@ Host mods: </source>
 <context>
     <name>SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="15"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="16"/>
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="109"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="110"/>
         <source>Calm sea. Naval and air forces have good mobility.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9734,7 +9786,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="1906"/>
+        <location filename="../coreengine/settings.cpp" line="1917"/>
         <source>Default device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10296,27 +10348,27 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="78"/>
+        <location filename="../wiki/terraininfo.cpp" line="79"/>
         <source>Defense:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="95"/>
+        <location filename="../wiki/terraininfo.cpp" line="96"/>
         <source>Income:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="113"/>
+        <location filename="../wiki/terraininfo.cpp" line="114"/>
         <source>Builds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="126"/>
+        <location filename="../wiki/terraininfo.cpp" line="127"/>
         <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="146"/>
+        <location filename="../wiki/terraininfo.cpp" line="147"/>
         <source>Movement Costs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10332,7 +10384,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Unit</name>
     <message>
-        <location filename="../game/unit.cpp" line="499"/>
+        <location filename="../game/unit.cpp" line="503"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10459,88 +10511,88 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>VictoryMenue</name>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="144"/>
+        <location filename="../menue/victorymenue.cpp" line="146"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="237"/>
-        <location filename="../menue/victorymenue.cpp" line="687"/>
+        <location filename="../menue/victorymenue.cpp" line="239"/>
+        <location filename="../menue/victorymenue.cpp" line="726"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="246"/>
-        <location filename="../menue/victorymenue.cpp" line="692"/>
+        <location filename="../menue/victorymenue.cpp" line="248"/>
+        <location filename="../menue/victorymenue.cpp" line="731"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="255"/>
-        <location filename="../menue/victorymenue.cpp" line="697"/>
+        <location filename="../menue/victorymenue.cpp" line="257"/>
+        <location filename="../menue/victorymenue.cpp" line="736"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="264"/>
-        <location filename="../menue/victorymenue.cpp" line="702"/>
+        <location filename="../menue/victorymenue.cpp" line="266"/>
+        <location filename="../menue/victorymenue.cpp" line="741"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="273"/>
-        <location filename="../menue/victorymenue.cpp" line="707"/>
+        <location filename="../menue/victorymenue.cpp" line="275"/>
+        <location filename="../menue/victorymenue.cpp" line="746"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="282"/>
-        <location filename="../menue/victorymenue.cpp" line="775"/>
+        <location filename="../menue/victorymenue.cpp" line="284"/>
+        <location filename="../menue/victorymenue.cpp" line="814"/>
         <source>Player Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="293"/>
+        <location filename="../menue/victorymenue.cpp" line="295"/>
         <source>Ranking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="334"/>
+        <location filename="../menue/victorymenue.cpp" line="336"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="365"/>
+        <location filename="../menue/victorymenue.cpp" line="367"/>
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="370"/>
+        <location filename="../menue/victorymenue.cpp" line="372"/>
         <source>Force</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="375"/>
+        <location filename="../menue/victorymenue.cpp" line="377"/>
         <source>Tech.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="380"/>
+        <location filename="../menue/victorymenue.cpp" line="382"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="607"/>
+        <location filename="../menue/victorymenue.cpp" line="646"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="610"/>
+        <location filename="../menue/victorymenue.cpp" line="649"/>
         <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="763"/>
+        <location filename="../menue/victorymenue.cpp" line="802"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10675,77 +10727,77 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WorkerThread</name>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="89"/>
+        <location filename="../coreengine/workerthread.cpp" line="88"/>
         <source>Loading Buildings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="92"/>
+        <location filename="../coreengine/workerthread.cpp" line="91"/>
         <source>Loading COs...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="95"/>
+        <location filename="../coreengine/workerthread.cpp" line="94"/>
         <source>Loading Gamescripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="98"/>
+        <location filename="../coreengine/workerthread.cpp" line="97"/>
         <source>Loading Gamerules...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="101"/>
+        <location filename="../coreengine/workerthread.cpp" line="100"/>
         <source>Loading Movements...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="104"/>
+        <location filename="../coreengine/workerthread.cpp" line="103"/>
         <source>Loading Terrains...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="107"/>
+        <location filename="../coreengine/workerthread.cpp" line="106"/>
         <source>Loading Units...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="110"/>
+        <location filename="../coreengine/workerthread.cpp" line="109"/>
         <source>Loading Weapons...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="113"/>
+        <location filename="../coreengine/workerthread.cpp" line="112"/>
         <source>Loading Battleanimation scripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="116"/>
+        <location filename="../coreengine/workerthread.cpp" line="115"/>
         <source>Loading CO-Perks...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="119"/>
+        <location filename="../coreengine/workerthread.cpp" line="118"/>
         <source>Loading Wikiscripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="121"/>
+        <location filename="../coreengine/workerthread.cpp" line="120"/>
         <source>Loading Shop items...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="124"/>
+        <location filename="../coreengine/workerthread.cpp" line="123"/>
         <source>Loading Movement Planner addins...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="126"/>
+        <location filename="../coreengine/workerthread.cpp" line="125"/>
         <source>Loading Ui scripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="130"/>
+        <location filename="../coreengine/workerthread.cpp" line="129"/>
         <source>Loading Achievements...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11084,7 +11136,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="199"/>
-        <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
+        <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11329,7 +11381,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__zblackhole_factorybase</name>
     <message>
-        <location filename="../resources/scripts/building/__zblackhole_factorybase.js" line="73"/>
+        <location filename="../resources/scripts/building/__zblackhole_factorybase.js" line="76"/>
         <source>Black Hole Factory that can build 3 units each turn which can immediately move.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11337,7 +11389,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__zvolcanbase</name>
     <message>
-        <location filename="../resources/scripts/building/__zvolcanbase.js" line="125"/>
+        <location filename="../resources/scripts/building/__zvolcanbase.js" line="129"/>
         <source>Volcan that fires fireballs each day dealing 5 HP of damage at all units they hit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12482,12 +12534,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>airport</name>
     <message>
-        <location filename="../resources/scripts/building/airport.js" line="25"/>
+        <location filename="../resources/scripts/building/airport.js" line="29"/>
         <source>Airport</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/airport.js" line="52"/>
+        <location filename="../resources/scripts/building/airport.js" line="56"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air&lt;/div&gt;&lt;r&gt; units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12495,12 +12547,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>amphibiousfactory</name>
     <message>
-        <location filename="../resources/scripts/building/amphibiousfactory.js" line="20"/>
+        <location filename="../resources/scripts/building/amphibiousfactory.js" line="24"/>
         <source>Amphibious factory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/amphibiousfactory.js" line="46"/>
+        <location filename="../resources/scripts/building/amphibiousfactory.js" line="50"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hovercraft &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12687,17 +12739,57 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>building</name>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="224"/>
+        <location filename="../resources/scripts/general/building.js" line="20"/>
+        <source>Production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="21"/>
+        <source>Income</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="22"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="23"/>
+        <source>Black Hole</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="24"/>
+        <source>Bolt Guard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="25"/>
+        <source>Dark Matter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="26"/>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="34"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="257"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="228"/>
+        <location filename="../resources/scripts/general/building.js" line="261"/>
         <source>DAMAGE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="232"/>
+        <location filename="../resources/scripts/general/building.js" line="265"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21143,34 +21235,34 @@ Direct Units have increased firepower.</source>
 <context>
     <name>co_rachel</name>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="234"/>
         <source>Brings a breath of fresh air to her troops. Strives to follow in the footsteps of her older sister, Nell. Led the Allied Nations during the Omega war. Rocket Girl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="238"/>
         <source>Hard Work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="242"/>
         <source>Excuses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="246"/>
         <source>Her troops are quite hardworking, and they increase repairs by one on properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="250"/>
         <source>
 Global Effect: 
 Units have increased repairs by one on properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="251"/>
         <source>
 
 CO Zone Effect: 
@@ -21178,82 +21270,82 @@ Units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="255"/>
         <source>Has a chance to strike with more damage than expected. Lucky!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="259"/>
         <source>Lucky Lass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="263"/>
         <source>Launches three missiles from Orange Star HQ in Omega Land.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="267"/>
         <source>Covering Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="271"/>
         <source>I will protect this land to the end!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="272"/>
         <source>This time, I&apos;m serious!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="273"/>
         <source>You don&apos;t have a chance!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="274"/>
         <source>I&apos;m going to send you packing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="275"/>
         <source>Don&apos;t pick a fight with me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="276"/>
         <source>Finally, some real competition!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="280"/>
         <source>Another one down... Who&apos;s next?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="281"/>
         <source>I never give up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="282"/>
         <source>Don&apos;t take me lightly just because I&apos;m cute!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="286"/>
         <source>You beat me! Hmmm... Not bad!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="287"/>
         <source>You&apos;ve got to be kidding me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="291"/>
         <source>Rachel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22686,34 +22778,34 @@ Enemy counterattacks deal less damage. Units gain firepower and defense.</source
 <context>
     <name>co_sturm</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="181"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="185"/>
         <source>The original commander of the Black Hole army. A mysterious invader from another world. Mastermind of the Cosmo and Macro wars. Enigma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="189"/>
         <source>Plotting invasions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="193"/>
         <source>Peace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="197"/>
         <source>His troops are not affected by terrain only snow can stop him.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="201"/>
         <source>
 Global Effect: 
 His troops are not affected by terrain except snow.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="202"/>
         <source>
 
 CO Zone Effect: 
@@ -22721,82 +22813,82 @@ Units have increased firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="206"/>
         <source>A small Meteor fall from space and deal 4 HP of damage to all affected units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="210"/>
         <source>Meteor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="214"/>
         <source>Pulls a giant meteor from space, which deals 8 HP of damage to all affected units. Firepower and defense is increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="218"/>
         <source>Meteor Strike</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="222"/>
         <source>Prepare to embrace darkness!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="223"/>
         <source>You will tremble before my power!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="224"/>
         <source>Fear is all you have left...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="225"/>
         <source>You shall not survive!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="226"/>
         <source>Burning earth!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="227"/>
         <source>Such power... I regret crushing it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="231"/>
         <source>Who would have thought you could oppose me?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="232"/>
         <source>My name is Sturm. Hear it and tremble.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="233"/>
         <source>This is but a taste of my power!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="237"/>
         <source>Gwaaaaaaaaaahhhh! I underestimated the strength of these worms!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="238"/>
         <source>NOOOOOOOOOOOOOOOOOOO!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="242"/>
         <source>Sturm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23150,27 +23242,27 @@ Units have increased firepower and defense.</source>
 <context>
     <name>co_von_bolt</name>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="173"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="178"/>
         <source>Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Mastermind of the Omega war. Immortal Evil</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="177"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="182"/>
         <source>Long life</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="181"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="186"/>
         <source>Young &apos;uns!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="190"/>
         <source>All units have superior firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="194"/>
         <source>
 Special Unit:
 Crystal Tanks
@@ -23180,7 +23272,7 @@ No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="190"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="195"/>
         <source>
 
 CO Zone Effect: 
@@ -23188,82 +23280,82 @@ Units have increased firepower and increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="203"/>
         <source>Shockwave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="194"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="199"/>
         <source>Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="207"/>
         <source>Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="211"/>
         <source>Deus Ex Machina</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="215"/>
         <source>No matter how powerful...hhh...you are, you&apos;re...hhh...still a worm on a hook...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="216"/>
         <source>Well...hhh...let me have a taste...hhh...of your soul.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="217"/>
         <source>Hheh heh heh... Stop panicking... it&apos;s...hhh...almost over...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="218"/>
         <source>Hheh heh heh. The darkness rises...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="219"/>
         <source>The sweet scent of destruction...hhh...it makes me...hhh...feel young!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="220"/>
         <source>Hold still...hhh...I&apos;m going to...hhhhh...suck the marrow from your bones.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="224"/>
         <source>Predator...prey...hhh... I hunt them all...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="225"/>
         <source>Hehh hhh hhh... Pathetic.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="226"/>
         <source>Even death...hhh...fears me...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="230"/>
         <source>What? Why are you Youth so strong?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="231"/>
         <source>Nooo...I want to live forever.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="235"/>
         <source>Von Bolt</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24136,12 +24228,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>depot</name>
     <message>
-        <location filename="../resources/scripts/building/depot.js" line="40"/>
+        <location filename="../resources/scripts/building/depot.js" line="44"/>
         <source>Depot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/depot.js" line="45"/>
+        <location filename="../resources/scripts/building/depot.js" line="49"/>
         <source>&lt;r&gt;A civilian cargo depot that provides adequate cover and &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply&lt;/div&gt;&lt;r&gt; half their supplies each turn.&lt;/r&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24175,12 +24267,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>factory</name>
     <message>
-        <location filename="../resources/scripts/building/factory.js" line="21"/>
+        <location filename="../resources/scripts/building/factory.js" line="24"/>
         <source>Base</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/factory.js" line="54"/>
+        <location filename="../resources/scripts/building/factory.js" line="57"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24261,7 +24353,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/frigate.js" line="99"/>
-        <source>&lt;r&gt;Naval Unit. Attacks naval units.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Naval Unit. Attacks naval and ground units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24307,12 +24399,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>harbour</name>
     <message>
-        <location filename="../resources/scripts/building/harbour.js" line="25"/>
+        <location filename="../resources/scripts/building/harbour.js" line="29"/>
         <source>Harbour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/harbour.js" line="51"/>
+        <location filename="../resources/scripts/building/harbour.js" line="55"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24465,12 +24557,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>hq</name>
     <message>
-        <location filename="../resources/scripts/building/hq.js" line="37"/>
+        <location filename="../resources/scripts/building/hq.js" line="40"/>
         <source>HQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/hq.js" line="102"/>
+        <location filename="../resources/scripts/building/hq.js" line="105"/>
         <source>&lt;div c=&apos;#00ff00&apos;&gt;Battle ends &lt;/div&gt;&lt;r&gt;when an army&apos;s last HQ is captured. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24478,12 +24570,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>infantry</name>
     <message>
-        <location filename="../resources/scripts/units/infantry.js" line="69"/>
+        <location filename="../resources/scripts/units/infantry.js" line="84"/>
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/infantry.js" line="78"/>
+        <location filename="../resources/scripts/units/infantry.js" line="93"/>
         <source>&lt;r&gt;Cheapest unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt;bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt;when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24504,12 +24596,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>labor</name>
     <message>
-        <location filename="../resources/scripts/building/labor.js" line="25"/>
+        <location filename="../resources/scripts/building/labor.js" line="29"/>
         <source>Labor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/labor.js" line="36"/>
+        <location filename="../resources/scripts/building/labor.js" line="40"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;oozium&lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24551,12 +24643,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>mech</name>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="69"/>
+        <location filename="../resources/scripts/units/mech.js" line="84"/>
         <source>Mech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="78"/>
+        <location filename="../resources/scripts/units/mech.js" line="93"/>
         <source>&lt;r&gt;Attack power high. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24595,12 +24687,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>mine</name>
     <message>
-        <location filename="../resources/scripts/building/mine.js" line="25"/>
+        <location filename="../resources/scripts/building/mine.js" line="29"/>
         <source>Mine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/mine.js" line="30"/>
+        <location filename="../resources/scripts/building/mine.js" line="34"/>
         <source>Ore mine. Once captured produces a lot of funds, but can&apos;t repair units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25215,12 +25307,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>oilrig</name>
     <message>
-        <location filename="../resources/scripts/building/oilrig.js" line="34"/>
+        <location filename="../resources/scripts/building/oilrig.js" line="38"/>
         <source>Oil Rig</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/oilrig.js" line="39"/>
+        <location filename="../resources/scripts/building/oilrig.js" line="43"/>
         <source>Oil rig. Once captured produces a lot of funds, but can&apos;t repair units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25401,12 +25493,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>pipestation</name>
     <message>
-        <location filename="../resources/scripts/building/pipestation.js" line="31"/>
+        <location filename="../resources/scripts/building/pipestation.js" line="35"/>
         <source>Pipestation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/pipestation.js" line="35"/>
+        <location filename="../resources/scripts/building/pipestation.js" line="39"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;pipe &lt;/div&gt;&lt;r&gt;units. Produces also more funds.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25427,12 +25519,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>powerplant</name>
     <message>
-        <location filename="../resources/scripts/building/powerplant.js" line="31"/>
+        <location filename="../resources/scripts/building/powerplant.js" line="35"/>
         <source>Power plant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/powerplant.js" line="40"/>
+        <location filename="../resources/scripts/building/powerplant.js" line="44"/>
         <source>A power plant that when captured increases how fast the powermeter charges by %0%.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25440,12 +25532,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>radar</name>
     <message>
-        <location filename="../resources/scripts/building/radar.js" line="31"/>
+        <location filename="../resources/scripts/building/radar.js" line="35"/>
         <source>Radar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/radar.js" line="36"/>
+        <location filename="../resources/scripts/building/radar.js" line="40"/>
         <source>&lt;r&gt;In Fog of War, Radars make a &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;5 square &lt;/div&gt;&lt;r&gt;area around them visible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26060,12 +26152,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>silo</name>
     <message>
-        <location filename="../resources/scripts/building/silo.js" line="25"/>
+        <location filename="../resources/scripts/building/silo.js" line="29"/>
         <source>Silo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/silo.js" line="30"/>
+        <location filename="../resources/scripts/building/silo.js" line="34"/>
         <source>Empty missile silo which provides some defence.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26073,12 +26165,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>silo_rocket</name>
     <message>
-        <location filename="../resources/scripts/building/silo_rocket.js" line="25"/>
+        <location filename="../resources/scripts/building/silo_rocket.js" line="29"/>
         <source>Silo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/silo_rocket.js" line="30"/>
+        <location filename="../resources/scripts/building/silo_rocket.js" line="34"/>
         <source>&lt;r&gt;Missile can be launched once, by Infantry unit. Damage across &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;13 square &lt;/div&gt;&lt;r&gt;area.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26138,12 +26230,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>temporary_airport</name>
     <message>
-        <location filename="../resources/scripts/building/temporary_airport.js" line="27"/>
+        <location filename="../resources/scripts/building/temporary_airport.js" line="31"/>
         <source>Temporary Airport</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/temporary_airport.js" line="61"/>
+        <location filename="../resources/scripts/building/temporary_airport.js" line="65"/>
         <source>&lt;r&gt;Airport made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26151,12 +26243,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>temporary_harbour</name>
     <message>
-        <location filename="../resources/scripts/building/temporary_harbour.js" line="26"/>
+        <location filename="../resources/scripts/building/temporary_harbour.js" line="30"/>
         <source>Temporary Harbour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/temporary_harbour.js" line="58"/>
+        <location filename="../resources/scripts/building/temporary_harbour.js" line="62"/>
         <source>&lt;r&gt;Harbour made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26175,16 +26267,19 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="24"/>
+        <location filename="../resources/scripts/general/terrain.js" line="434"/>
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="25"/>
+        <location filename="../resources/scripts/general/terrain.js" line="435"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="26"/>
+        <location filename="../resources/scripts/general/terrain.js" line="436"/>
         <source>Waste</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26192,6 +26287,71 @@ Fullscreen  - Animations are upscaled based on the resolution
         <location filename="../resources/scripts/general/terrain.js" line="34"/>
         <location filename="../resources/scripts/general/terrain.js" line="73"/>
         <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="432"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="433"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="437"/>
+        <source>Clear AW 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="438"/>
+        <source>Rain AW 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="439"/>
+        <source>Snow AW 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="440"/>
+        <source>Clear AW DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="441"/>
+        <source>Desert AW DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="442"/>
+        <source>Snow AW DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="443"/>
+        <source>Waste AW DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="444"/>
+        <source>Clear AW 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="445"/>
+        <source>Desert AW 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="446"/>
+        <source>Snow AW 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="447"/>
+        <source>Waste AW 4</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -26211,12 +26371,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>tower</name>
     <message>
-        <location filename="../resources/scripts/building/tower.js" line="38"/>
+        <location filename="../resources/scripts/building/tower.js" line="42"/>
         <source>Tower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/tower.js" line="43"/>
+        <location filename="../resources/scripts/building/tower.js" line="47"/>
         <source>&lt;r&gt;Once captured the Tower boosts your &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;attack by %0% and defence by %1%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26224,12 +26384,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>town</name>
     <message>
-        <location filename="../resources/scripts/building/town.js" line="30"/>
+        <location filename="../resources/scripts/building/town.js" line="34"/>
         <source>Town</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/town.js" line="35"/>
+        <location filename="../resources/scripts/building/town.js" line="39"/>
         <source>&lt;r&gt;Populated city. Once captured &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26250,27 +26410,27 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>unit</name>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="264"/>
+        <location filename="../resources/scripts/general/unit.js" line="279"/>
         <source>Air</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="266"/>
+        <location filename="../resources/scripts/general/unit.js" line="281"/>
         <source>Naval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="268"/>
+        <location filename="../resources/scripts/general/unit.js" line="283"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="270"/>
+        <location filename="../resources/scripts/general/unit.js" line="285"/>
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="272"/>
+        <location filename="../resources/scripts/general/unit.js" line="287"/>
         <source>Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27167,12 +27327,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblack_building_destroyed</name>
     <message>
-        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="43"/>
+        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="47"/>
         <source>Ruins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="48"/>
+        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="52"/>
         <source>Destroyed Black Hole Building.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27180,12 +27340,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_cannon_E</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="26"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="30"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="99"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="103"/>
         <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27193,12 +27353,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_cannon_N</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="31"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="35"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="100"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="104"/>
         <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27206,12 +27366,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_cannon_S</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="30"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="34"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="99"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="103"/>
         <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27219,12 +27379,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_cannon_W</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="30"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="34"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="99"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="103"/>
         <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27264,12 +27424,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zcrystall</name>
     <message>
-        <location filename="../resources/scripts/building/zcrystall.js" line="38"/>
+        <location filename="../resources/scripts/building/zcrystall.js" line="42"/>
         <source>Crystal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zcrystall.js" line="70"/>
+        <location filename="../resources/scripts/building/zcrystall.js" line="74"/>
         <source>Black Hole Crystal that can heal all own units for 2 HP in a 13 square area.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27277,12 +27437,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdeathray_E</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_E.js" line="38"/>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="42"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_E.js" line="128"/>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="132"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27290,12 +27450,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdeathray_N</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_N.js" line="38"/>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="42"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_N.js" line="128"/>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="132"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27303,12 +27463,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdeathray_S</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_S.js" line="38"/>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="42"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_S.js" line="124"/>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="128"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27316,12 +27476,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdeathray_W</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_W.js" line="38"/>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="42"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_W.js" line="127"/>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="131"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27329,12 +27489,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdesertweld_e_w</name>
     <message>
-        <location filename="../resources/scripts/building/zdesertweld_e_w.js" line="24"/>
+        <location filename="../resources/scripts/building/zdesertweld_e_w.js" line="28"/>
         <source>Desert Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdesertweld_e_w.js" line="48"/>
+        <location filename="../resources/scripts/building/zdesertweld_e_w.js" line="52"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27342,12 +27502,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdesertweld_n_s</name>
     <message>
-        <location filename="../resources/scripts/building/zdesertweld_n_s.js" line="24"/>
+        <location filename="../resources/scripts/building/zdesertweld_n_s.js" line="28"/>
         <source>Desert Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdesertweld_n_s.js" line="48"/>
+        <location filename="../resources/scripts/building/zdesertweld_n_s.js" line="52"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27355,12 +27515,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdestroyed_gate_e_w</name>
     <message>
-        <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="19"/>
+        <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="23"/>
         <source>Destroyed gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="27"/>
+        <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="31"/>
         <source>A destroyed gate through which all players can pass.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27368,12 +27528,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdestroyed_gate_n_s</name>
     <message>
-        <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="20"/>
+        <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="24"/>
         <source>Destroyed gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="28"/>
+        <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="32"/>
         <source>A destroyed gate through which all players can pass.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27381,12 +27541,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zfortress</name>
     <message>
-        <location filename="../resources/scripts/building/zfortress.js" line="32"/>
+        <location filename="../resources/scripts/building/zfortress.js" line="36"/>
         <source>Fortress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zfortress.js" line="54"/>
+        <location filename="../resources/scripts/building/zfortress.js" line="58"/>
         <source>Black Hole Fortress that defends a position has no other effects.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27394,12 +27554,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zgate_e_w</name>
     <message>
-        <location filename="../resources/scripts/building/zgate_e_w.js" line="21"/>
+        <location filename="../resources/scripts/building/zgate_e_w.js" line="25"/>
         <source>Gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zgate_e_w.js" line="46"/>
+        <location filename="../resources/scripts/building/zgate_e_w.js" line="50"/>
         <source>A gate through a wall can be crossed by all allied players. Can be destroyed by other players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27407,12 +27567,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zgate_n_s</name>
     <message>
-        <location filename="../resources/scripts/building/zgate_n_s.js" line="22"/>
+        <location filename="../resources/scripts/building/zgate_n_s.js" line="26"/>
         <source>Gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zgate_n_s.js" line="47"/>
+        <location filename="../resources/scripts/building/zgate_n_s.js" line="51"/>
         <source>A gate through a wall can be crossed by all allied players. Can be destroyed by other players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27420,12 +27580,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zlaser</name>
     <message>
-        <location filename="../resources/scripts/building/zlaser.js" line="38"/>
+        <location filename="../resources/scripts/building/zlaser.js" line="42"/>
         <source>Laser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zlaser.js" line="73"/>
+        <location filename="../resources/scripts/building/zlaser.js" line="77"/>
         <source>Black Hole Laser that can deal 5 HP of damage to all units in 4 rays from the laser.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27433,12 +27593,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zminicannon_E</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_E.js" line="34"/>
+        <location filename="../resources/scripts/building/zminicannon_E.js" line="38"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_E.js" line="70"/>
+        <location filename="../resources/scripts/building/zminicannon_E.js" line="74"/>
         <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27446,12 +27606,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zminicannon_N</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_N.js" line="38"/>
+        <location filename="../resources/scripts/building/zminicannon_N.js" line="42"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_N.js" line="69"/>
+        <location filename="../resources/scripts/building/zminicannon_N.js" line="73"/>
         <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27459,12 +27619,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zminicannon_S</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_S.js" line="38"/>
+        <location filename="../resources/scripts/building/zminicannon_S.js" line="42"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_S.js" line="69"/>
+        <location filename="../resources/scripts/building/zminicannon_S.js" line="73"/>
         <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27472,12 +27632,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zminicannon_W</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_W.js" line="38"/>
+        <location filename="../resources/scripts/building/zminicannon_W.js" line="42"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_W.js" line="69"/>
+        <location filename="../resources/scripts/building/zminicannon_W.js" line="73"/>
         <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27485,12 +27645,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zmonolith</name>
     <message>
-        <location filename="../resources/scripts/building/zmonolith.js" line="34"/>
+        <location filename="../resources/scripts/building/zmonolith.js" line="38"/>
         <source>Black Obelisk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zmonolith.js" line="97"/>
+        <location filename="../resources/scripts/building/zmonolith.js" line="101"/>
         <source>Black Hole Monolith that can heal all own units for 2 HP in a 3 square area.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27498,12 +27658,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_center</name>
     <message>
-        <location filename="../resources/scripts/building/znest_center.js" line="25"/>
+        <location filename="../resources/scripts/building/znest_center.js" line="29"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_center.js" line="29"/>
+        <location filename="../resources/scripts/building/znest_center.js" line="33"/>
         <source>Nest of Dark Matter.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27511,12 +27671,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_center_laser_left</name>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_left.js" line="26"/>
+        <location filename="../resources/scripts/building/znest_center_laser_left.js" line="30"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_left.js" line="30"/>
+        <location filename="../resources/scripts/building/znest_center_laser_left.js" line="34"/>
         <source>Nest of Dark Matter. Currently only a visual.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27524,12 +27684,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_center_laser_left_destroyed</name>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_left_destroyed.js" line="26"/>
+        <location filename="../resources/scripts/building/znest_center_laser_left_destroyed.js" line="30"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_left_destroyed.js" line="30"/>
+        <location filename="../resources/scripts/building/znest_center_laser_left_destroyed.js" line="34"/>
         <source>Destroyed nest laser.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27537,12 +27697,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_center_laser_middle</name>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_middle.js" line="26"/>
+        <location filename="../resources/scripts/building/znest_center_laser_middle.js" line="30"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_middle.js" line="30"/>
+        <location filename="../resources/scripts/building/znest_center_laser_middle.js" line="34"/>
         <source>Nest of Dark Matter. Currently only a visual.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27550,12 +27710,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_center_laser_middle_destroyed</name>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_middle_destroyed.js" line="26"/>
+        <location filename="../resources/scripts/building/znest_center_laser_middle_destroyed.js" line="30"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_middle_destroyed.js" line="30"/>
+        <location filename="../resources/scripts/building/znest_center_laser_middle_destroyed.js" line="34"/>
         <source>Destroyed nest laser.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27563,12 +27723,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_center_laser_right</name>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_right.js" line="26"/>
+        <location filename="../resources/scripts/building/znest_center_laser_right.js" line="30"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_right.js" line="30"/>
+        <location filename="../resources/scripts/building/znest_center_laser_right.js" line="34"/>
         <source>Nest of Dark Matter. Currently only a visual.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27576,12 +27736,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_center_laser_right_destroyed</name>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_right_destroyed.js" line="26"/>
+        <location filename="../resources/scripts/building/znest_center_laser_right_destroyed.js" line="30"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_center_laser_right_destroyed.js" line="30"/>
+        <location filename="../resources/scripts/building/znest_center_laser_right_destroyed.js" line="34"/>
         <source>Destroyed nest laser.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27589,12 +27749,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_factory</name>
     <message>
-        <location filename="../resources/scripts/building/znest_factory.js" line="25"/>
+        <location filename="../resources/scripts/building/znest_factory.js" line="29"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_factory.js" line="29"/>
+        <location filename="../resources/scripts/building/znest_factory.js" line="33"/>
         <source>Nest factory door, which is able to produce a none naval unit each turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27602,12 +27762,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_left_mortar</name>
     <message>
-        <location filename="../resources/scripts/building/znest_left_mortar.js" line="25"/>
+        <location filename="../resources/scripts/building/znest_left_mortar.js" line="29"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_left_mortar.js" line="29"/>
+        <location filename="../resources/scripts/building/znest_left_mortar.js" line="33"/>
         <source>Nest of Dark Matter. Currently only a visual.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27615,12 +27775,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_nest_laser</name>
     <message>
-        <location filename="../resources/scripts/building/znest_nest_laser.js" line="50"/>
+        <location filename="../resources/scripts/building/znest_nest_laser.js" line="54"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_nest_laser.js" line="54"/>
+        <location filename="../resources/scripts/building/znest_nest_laser.js" line="58"/>
         <source>Nest of Dark Matter. Currently only a visual.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27628,12 +27788,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_nest_laser_destroyed</name>
     <message>
-        <location filename="../resources/scripts/building/znest_nest_laser_destroyed.js" line="26"/>
+        <location filename="../resources/scripts/building/znest_nest_laser_destroyed.js" line="30"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_nest_laser_destroyed.js" line="30"/>
+        <location filename="../resources/scripts/building/znest_nest_laser_destroyed.js" line="34"/>
         <source>Destroyed nest laser.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27641,12 +27801,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>znest_right_mortar</name>
     <message>
-        <location filename="../resources/scripts/building/znest_right_mortar.js" line="25"/>
+        <location filename="../resources/scripts/building/znest_right_mortar.js" line="29"/>
         <source>Nest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/znest_right_mortar.js" line="29"/>
+        <location filename="../resources/scripts/building/znest_right_mortar.js" line="33"/>
         <source>Nest of Dark Matter.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27654,12 +27814,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zomega_base</name>
     <message>
-        <location filename="../resources/scripts/building/zomega_base.js" line="32"/>
+        <location filename="../resources/scripts/building/zomega_base.js" line="36"/>
         <source>Omega Base</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zomega_base.js" line="54"/>
+        <location filename="../resources/scripts/building/zomega_base.js" line="58"/>
         <source>Black Hole Omega Base meant to launch a giant Rocket on the Earth to destroy it.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27667,12 +27827,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zsnowweld_e_w</name>
     <message>
-        <location filename="../resources/scripts/building/zsnowweld_e_w.js" line="24"/>
+        <location filename="../resources/scripts/building/zsnowweld_e_w.js" line="28"/>
         <source>Snowy Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zsnowweld_e_w.js" line="44"/>
+        <location filename="../resources/scripts/building/zsnowweld_e_w.js" line="48"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27680,12 +27840,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zsnowweld_n_s</name>
     <message>
-        <location filename="../resources/scripts/building/zsnowweld_n_s.js" line="24"/>
+        <location filename="../resources/scripts/building/zsnowweld_n_s.js" line="28"/>
         <source>Snowy Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zsnowweld_n_s.js" line="44"/>
+        <location filename="../resources/scripts/building/zsnowweld_n_s.js" line="48"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27693,12 +27853,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>ztalon_gun</name>
     <message>
-        <location filename="../resources/scripts/building/ztalon_gun.js" line="41"/>
+        <location filename="../resources/scripts/building/ztalon_gun.js" line="45"/>
         <source>Talon Gun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/ztalon_gun.js" line="90"/>
+        <location filename="../resources/scripts/building/ztalon_gun.js" line="94"/>
         <source>Talon Gun of Dark Matter fires at all enemie units each turn dealing 5HP of damage in a 3 square area.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27706,12 +27866,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>ztalon_gun_destroyed</name>
     <message>
-        <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="42"/>
+        <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="46"/>
         <source>Ruins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="46"/>
+        <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="50"/>
         <source>Destroyed Talon Gun of Dark Matter.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27751,12 +27911,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zwasteweld_e_w</name>
     <message>
-        <location filename="../resources/scripts/building/zwasteweld_e_w.js" line="24"/>
+        <location filename="../resources/scripts/building/zwasteweld_e_w.js" line="28"/>
         <source>Waste Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zwasteweld_e_w.js" line="44"/>
+        <location filename="../resources/scripts/building/zwasteweld_e_w.js" line="48"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27764,12 +27924,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zwasteweld_n_s</name>
     <message>
-        <location filename="../resources/scripts/building/zwasteweld_n_s.js" line="21"/>
+        <location filename="../resources/scripts/building/zwasteweld_n_s.js" line="25"/>
         <source>Waste Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zwasteweld_n_s.js" line="45"/>
+        <location filename="../resources/scripts/building/zwasteweld_n_s.js" line="49"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27777,12 +27937,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zweld_e_w</name>
     <message>
-        <location filename="../resources/scripts/building/zweld_e_w.js" line="24"/>
+        <location filename="../resources/scripts/building/zweld_e_w.js" line="28"/>
         <source>Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zweld_e_w.js" line="44"/>
+        <location filename="../resources/scripts/building/zweld_e_w.js" line="48"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27790,12 +27950,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zweld_n_s</name>
     <message>
-        <location filename="../resources/scripts/building/zweld_n_s.js" line="21"/>
+        <location filename="../resources/scripts/building/zweld_n_s.js" line="25"/>
         <source>Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zweld_n_s.js" line="45"/>
+        <location filename="../resources/scripts/building/zweld_n_s.js" line="49"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -19,28 +19,6 @@ namespace oxygine
         m_guideY[1] = 0.0f;
     }
 
-    oxygine::RectF Box9Sprite::getInnerArea()
-    {
-#ifdef GRAPHICSUPPORT
-        if (!m_prepared)
-        {
-            prepare();
-        }
-        RectF rect;
-        rect.pos = Vector2(m_guideX[0], m_guideY[0]);
-        
-        Vector2 rb;
-        rb.x = getWidth() - (m_frame.getWidth() - m_guideX[1]);
-        rb.y = getHeight() - (m_frame.getHeight() - m_guideY[1]);
-
-        rect.setSize(rb - rect.pos);
-
-        return rect;
-#else
-        return oxygine::RectF();
-#endif
-    }
-
     void Box9Sprite::setVerticalMode(StretchMode m)
     {
         m_vertMode = m;
@@ -78,7 +56,7 @@ namespace oxygine
 
     void Box9Sprite::changeAnimFrame(const AnimationFrame& f)
     {
-        Point size = getSize();
+        QSize size = getSize();
         Sprite::changeAnimFrame(f);
         if (!isNormalSprite())
         {
@@ -145,9 +123,9 @@ namespace oxygine
         Sprite::animFrameChanged(f);
     }
 
-    bool Box9Sprite::isOn(const Vector2& localPosition, float localScale)
+    bool Box9Sprite::isOn(const QPoint& localPosition)
     {
-        return Actor::isOn(localPosition, localScale);
+        return Actor::isOn(localPosition);
     }
 
     void Box9Sprite::prepare()
@@ -158,32 +136,31 @@ namespace oxygine
         m_pointsX.clear();
         m_pointsY.clear();
 
-        float fFrameWidth = m_frame.getWidth();
-        float fFrameHeight = m_frame.getHeight();
-
-        float fActorWidth = getSize().x;
-        float fActorHeight = getSize().y;
+        auto frameWidth = m_frame.getWidth();
+        auto frameHeight = m_frame.getHeight();
+        auto actorWidth = getSize().width();
+        auto actorHeight = getSize().height();
 
         if (m_guideX[1] == 0.0f)
         {
-            m_guideX[1] = fFrameWidth;
+            m_guideX[1] = frameWidth;
         }
         if (m_guideY[1] == 0.0f)
         {
-            m_guideY[1] = fFrameHeight;
+            m_guideY[1] = frameHeight;
         }
 
-        RectF srcFrameRect = m_frame.getSrcRect();
+        auto srcFrameRect = m_frame.getSrcRect();
 
-        m_guidesX[0] = srcFrameRect.getLeft(); // these guides contains floats from 0.0 to 1.0, compared to original guides which contain floats in px
-        m_guidesX[1] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), m_guideX[0] / fFrameWidth);
-        m_guidesX[2] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), m_guideX[1] / fFrameWidth);
-        m_guidesX[3] = srcFrameRect.getRight();
+        m_guidesX[0] = srcFrameRect.left(); // these guides contains floats from 0.0 to 1.0, compared to original guides which contain floats in px
+        m_guidesX[1] = lerp<float>(srcFrameRect.left(), srcFrameRect.right(), m_guideX[0] / static_cast<float>(frameWidth));
+        m_guidesX[2] = lerp<float>(srcFrameRect.left(), srcFrameRect.right(), m_guideX[1] / static_cast<float>(frameWidth));
+        m_guidesX[3] = srcFrameRect.right();
 
-        m_guidesY[0] = srcFrameRect.getTop();
-        m_guidesY[1] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), m_guideY[0] / fFrameHeight);
-        m_guidesY[2] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), m_guideY[1] / fFrameHeight);
-        m_guidesY[3] = srcFrameRect.getBottom();
+        m_guidesY[0] = srcFrameRect.top();
+        m_guidesY[1] = lerp<float>(srcFrameRect.top(), srcFrameRect.bottom(), m_guideY[0] / static_cast<float>(frameHeight));
+        m_guidesY[2] = lerp<float>(srcFrameRect.top(), srcFrameRect.bottom(), m_guideY[1] / static_cast<float>(frameHeight));
+        m_guidesY[3] = srcFrameRect.bottom();
 
         // filling X axis
         m_pointsX.push_back(0.0f);
@@ -191,13 +168,13 @@ namespace oxygine
 
         if (m_horzMode == STRETCHING)
         {
-            m_pointsX.push_back(fActorWidth - (fFrameWidth - m_guideX[1]));
-            m_pointsX.push_back(fActorWidth);
+            m_pointsX.push_back(actorWidth - (frameWidth - m_guideX[1]));
+            m_pointsX.push_back(actorWidth);
         }
         else if (m_horzMode == TILING || m_horzMode == TILING_FULL)
         {
             float curX = m_guideX[0];
-            float rightB = fActorWidth - (fFrameWidth - m_guideX[1]); // right bound (in px)
+            float rightB = actorWidth - (frameWidth - m_guideX[1]); // right bound (in px)
             float centerPart = m_guideX[1] - m_guideX[0]; // length of the center piece (in px)
 
             // now we add a center piece every time until we reach right bound
@@ -214,11 +191,11 @@ namespace oxygine
                     if (m_horzMode == TILING_FULL)
                     {
                         m_pointsX.push_back(rightB);
-                        m_pointsX.push_back(fActorWidth);
+                        m_pointsX.push_back(actorWidth);
                     }
                     else
                     {
-                        m_pointsX.push_back(curX - centerPart + (fFrameWidth - m_guideX[1]));
+                        m_pointsX.push_back(curX - centerPart + (frameWidth - m_guideX[1]));
                     }
                     break;
                 }
@@ -231,13 +208,13 @@ namespace oxygine
 
         if (m_vertMode == STRETCHING)
         {
-            m_pointsY.push_back(fActorHeight - (fFrameHeight - m_guideY[1]));
-            m_pointsY.push_back(fActorHeight);
+            m_pointsY.push_back(actorHeight - (frameHeight - m_guideY[1]));
+            m_pointsY.push_back(actorHeight);
         }
         else if (m_vertMode == TILING || m_vertMode == TILING_FULL)
         {
             float curY = m_guideY[0];
-            float bottomB = fActorHeight - (fFrameHeight - m_guideY[1]); // bottom bound (in px)
+            float bottomB = actorHeight - (frameHeight - m_guideY[1]); // bottom bound (in px)
             float centerPart = m_guideY[1] - m_guideY[0]; // length of the center piece (in px)
 
             // now we add a center piece every time until we reach right bound
@@ -254,11 +231,11 @@ namespace oxygine
                     if (m_vertMode == TILING_FULL)
                     {
                         m_pointsY.push_back(bottomB);
-                        m_pointsY.push_back(fActorHeight);
+                        m_pointsY.push_back(actorHeight);
                     }
                     else
                     {
-                        m_pointsY.push_back(curY - centerPart + (fFrameHeight - m_guideY[1]));
+                        m_pointsY.push_back(curY - centerPart + (frameHeight - m_guideY[1]));
                     }
                     break;
                 }
@@ -268,7 +245,7 @@ namespace oxygine
         m_prepared = true;
     }
 
-    void Box9Sprite::sizeChanged(const Point&)
+    void Box9Sprite::sizeChanged(const QSize&)
     {
         m_prepared = false;
     }
@@ -335,11 +312,10 @@ namespace oxygine
                             {
                                 ygi = 1;
                             }
-                            RectF srcRect(m_guidesX[xgi], m_guidesY[ygi], m_guidesX[xgi + 1] - m_guidesX[xgi], m_guidesY[ygi + 1] - m_guidesY[ygi]);
-                            RectF destRect(m_pointsX[xc], m_pointsY[yc], m_pointsX[xc + 1] - m_pointsX[xc], m_pointsY[yc + 1] - m_pointsY[yc]);
+                            QRectF srcRect(m_guidesX[xgi], m_guidesY[ygi], m_guidesX[xgi + 1] - m_guidesX[xgi], m_guidesY[ygi + 1] - m_guidesY[ygi]);
+                            QRect destRect(m_pointsX[xc], m_pointsY[yc], m_pointsX[xc + 1] - m_pointsX[xc] + 1, m_pointsY[yc + 1] - m_pointsY[yc] + 1);
 
                             renderer->addQuad(color, srcRect, destRect);
-
                         }
                     }
                 }
@@ -348,7 +324,7 @@ namespace oxygine
 #endif
     }
 
-    RectF Box9Sprite::getDestRect() const
+    QRect Box9Sprite::getDestRect() const
     {
         if (isNormalSprite())
         {

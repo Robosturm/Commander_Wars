@@ -26,7 +26,7 @@ public:
      * @brief getCurrentViewPlayer
      * @return
      */
-    virtual Player* getCurrentViewPlayer() override;
+    virtual Player* getCurrentViewPlayer() const override;
     /**
      * @brief getValid
      * @return

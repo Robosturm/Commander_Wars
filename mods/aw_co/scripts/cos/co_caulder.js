@@ -69,7 +69,7 @@ CO_CAULDER.startOfTurn = function(co, map)
             for (var i = 0; i < units.size(); i++)
             {
                 var unit = units.at(i);
-                UNIT.repairUnit(unit, 1, map);
+                UNIT.repairUnit(unit, CO_CAULDER.coHealing, map);
                 var delay = globals.randInt(135, 265);
                 if (animations.length < 5)
                 {

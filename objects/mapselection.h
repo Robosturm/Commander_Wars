@@ -83,7 +83,7 @@ private:
     oxygine::spActor m_ItemContainer;
     bool m_moveScrolling{false};
     bool m_wasMoveScrolling{false};
-    oxygine::Vector2 m_lastScrollPoint;
+    QPoint m_lastScrollPoint;
     MapFilter m_mapFilter;
     QVector<qint32> m_mapMapping;
 };

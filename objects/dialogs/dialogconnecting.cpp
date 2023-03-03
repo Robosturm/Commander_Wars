@@ -11,6 +11,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
       m_Timer(this),
       m_TimerConnectionTimeout(this)
 {
+    CONSOLE_PRINT("Creating DialogConnecting", GameConsole::eDEBUG);
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogConnecting");
 #endif
@@ -32,7 +33,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
     m_Text = oxygine::spTextField::create();
     m_Text->setHtmlText((text + ".  "));
     m_Text->setStyle(style);
-    m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - 40);
+    m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().width() / 2, Settings::getHeight() / 2 - 40);
     pSpriteBox->addChild(m_Text);
 
     if (showCancel)
@@ -59,11 +60,13 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
 
 void DialogConnecting::cancel()
 {
+    CONSOLE_PRINT("Canceling DialogConnecting", GameConsole::eDEBUG);
     detach();
 }
 
 void DialogConnecting::connected()
 {
+    CONSOLE_PRINT("Connected in DialogConnecting", GameConsole::eDEBUG);
     emit sigConnected();
     detach();
 }

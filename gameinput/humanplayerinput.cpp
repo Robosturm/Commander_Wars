@@ -955,7 +955,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
     if (m_pMenu != nullptr)
     {        
         auto mapPos = m_pMenu->getMapSlidingActor()->getPosition();
-        m_lastMapView = QPoint(mapPos.x, mapPos.y);
+        m_lastMapView = mapPos;
         if (x != m_lastCursorPosition.x() ||
             y != m_lastCursorPosition.y())
         {
@@ -1361,7 +1361,7 @@ void HumanPlayerInput::createArrow(std::vector<QPoint>& points)
         if (pAnim != nullptr)
         {
             pSprite->setResAnim(pAnim);
-            pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
             pSprite->setPosition(points[i].x() * GameMap::getImageSize() -(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2,  points[i].y() * GameMap::getImageSize() -(pSprite->getScaledHeight() - GameMap::getImageSize()));
             m_pMap->getMoveArrowLayer()->addChild(pSprite);
             m_Arrows.push_back(pSprite);

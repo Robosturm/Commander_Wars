@@ -47,6 +47,12 @@ public:
      */
     virtual void serializeObject(QDataStream& pStream) const override;
     /**
+     * @brief serializeObject
+     * @param pStream
+     * @param forHash
+     */
+    void serializeObject(QDataStream& pStream, bool forHash) const;
+    /**
      * @brief deserialize restores the object
      * @param pStream
      */
@@ -63,10 +69,13 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 24;
+        return 25;
     }
     void addVictoryRule(spVictoryRule rule);
-
+    /**
+     * @brief addGameRule
+     * @param rule
+     */
     void addGameRule(spGameRule rule);
     /**
      * @brief createWeatherSprites
@@ -89,10 +98,24 @@ public:
      * @return
      */
     QVector<quint64> &getObserverList();
+    /**
+     * @brief onGameStart
+     */
+    void onGameStart();
 
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief getMatchType
+     * @return
+     */
+    QString getMatchType() const;
+    /**
+     * @brief setMatchType
+     * @param newMatchType
+     */
+    void setMatchType(const QString & newMatchType);
     /**
      * @brief reset
      */
@@ -407,12 +430,36 @@ public slots:
     void checkVictory();
     qint32 getVictoryTeam();
     void addVictoryRule(const QString & rule);
+    bool hasVictoryRule(const QString & rule);
     void removeVictoryRule(const QString & rule);
+    /**
+     * @brief hasGameRule
+     * @param rule
+     * @return
+     */
+    bool hasGameRule(const QString & rule);
     VictoryRule* getVictoryRule(const QString & rule);
+    qint32 getVictoryRuleSize()
+    {
+        return m_VictoryRules.size();
+    }
+    VictoryRule* getVictoryRuleAtIndex(qint32 index)
+    {
+        return m_VictoryRules[index].get();
+    }
 
     void addGameRule(const QString & rule);
     GameRule* getGameRule(const QString & rule);
-    void removeGameRule(const QString & rule);
+    void removeGameRule(const QString & rule);    
+    qint32 getGameRuleSize()
+    {
+        return m_GameRules.size();
+    }
+    GameRule* getGameRuleAtIndex(qint32 index)
+    {
+        return m_GameRules[index].get();
+    }
+
     /**
      * @brief addWeather
      * @param weatherId
@@ -560,27 +607,6 @@ public slots:
      */
     void showHideStealthUnit(Player* pPlayer, Unit* pUnit);
     /**
-     * @brief getVictoryRuleSize
-     * @return
-     */
-    inline qint32 getVictoryRuleSize()
-    {
-        return m_VictoryRules.size();
-    }
-    inline VictoryRule* getVictoryRule(qint32 index)
-    {
-        return m_VictoryRules[index].get();
-    }
-
-    inline qint32 getGameRuleSize()
-    {
-        return m_GameRules.size();
-    }
-    inline GameRule* getGameRule(qint32 index)
-    {
-        return m_GameRules[index].get();
-    }
-    /**
      * @brief setRoundTimeMs
      * @param timeMs
      */
@@ -621,6 +647,12 @@ public slots:
      * @param coUnits
      */
     void setCoUnits(bool coUnits);
+private:
+    /**
+     * @brief resetArrays
+     */
+    void resetArrays();
+
 private:
     QVector<spGameRule> m_GameRules;
     // victory conditions
@@ -684,6 +716,7 @@ private:
     bool m_cosmeticModsAllowed{false};
     qint32 m_multiplayerObserver{0};
     QVector<quint64> m_observerList;
+    QString m_matchType;
 };
 
 Q_DECLARE_INTERFACE(GameRules, "GameRules");

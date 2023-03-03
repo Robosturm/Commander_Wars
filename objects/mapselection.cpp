@@ -212,7 +212,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            emit changeSelection(static_cast<qint32>(-pTouchEvent->wheelDirection.y / 100) + m_currentStartIndex);
+            emit changeSelection(static_cast<qint32>(-pTouchEvent->wheelDirection.y() / 100) + m_currentStartIndex);
             pTouchEvent->stopPropagation();
         }
     });
@@ -251,9 +251,9 @@ void MapSelection::createItemContainer(qint32 y, qint32 width, qint32 height)
         {
             event->stopPropagation();
             oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
-            oxygine::Vector2 newPos = te->localPosition;
+            auto newPos = te->localPosition;
             constexpr qint32 MIN_MOVE = 5;
-            qint32 speed = -(newPos.y - m_lastScrollPoint.y) / MIN_MOVE;
+            qint32 speed = -(newPos.y() - m_lastScrollPoint.y()) / MIN_MOVE;
             if (speed != 0)
             {
                 m_wasMoveScrolling = true;

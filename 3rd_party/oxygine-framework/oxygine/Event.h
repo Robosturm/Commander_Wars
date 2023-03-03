@@ -1,8 +1,7 @@
 #pragma once
+#include <QPoint>
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
-#include "3rd_party/oxygine-framework/oxygine/Input.h"
-#include "3rd_party/oxygine-framework/oxygine/core/closure.h"
 
 namespace oxygine
 {
@@ -68,15 +67,15 @@ namespace oxygine
 
     class SlidingEvent: public Event
     {
-        public:
-            enum SEvent
-            {
-                BEGIN = sysEventID('S', 'B', 'G'),
-                SLIDING = sysEventID('S', 'S', 'L'),
-                END = sysEventID('S', 'E', 'N')
-            };
+    public:
+        enum SEvent
+        {
+            BEGIN = sysEventID('S', 'B', 'G'),
+            SLIDING = sysEventID('S', 'S', 'L'),
+            END = sysEventID('S', 'E', 'N')
+        };
 
-            SlidingEvent(SEvent ev) : Event(ev) {}
-            Vector2 speed;
+        SlidingEvent(SEvent ev) : Event(ev) {}
+        QPoint speed;
     };
 }

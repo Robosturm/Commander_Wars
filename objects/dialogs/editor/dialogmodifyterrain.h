@@ -24,15 +24,18 @@ signals:
     void sigTerrainClicked(QString id);
     void sigShowLoadDialog();
     void sigOverlayChanged(QString id, bool selected);
+    void sigChangePalette(const QString & newPalette);
 public slots:
     void terrainClicked(QString id);
     void showLoadDialog();
     void loadCustomSprite(QString id);
     void remove();
     void overlayChanged(QString id, bool selected);
+    void changePalette(const QString & newPalette);
 private:
     void loadBaseImageview(qint32 & y, Terrain* pTerrain);
     void loadOverlayview(qint32 & y, Terrain* pTerrain);
+    void load();
 private:
     Terrain* m_pTerrain{nullptr};
     spPanel m_pPanel;

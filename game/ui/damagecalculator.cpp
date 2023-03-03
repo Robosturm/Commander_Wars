@@ -121,7 +121,7 @@ void DamageCalculator::loadCoData(qint32 & x, qint32 & y, CosData & cosData,
         if (pAnim != nullptr)
         {
             pSprite->setResAnim(pAnim);
-            pSprite->setScale(pAnim->getWidth() / 32.0f);
+            pSprite->setScale(static_cast<float>(pAnim->getWidth()) / 32.0f);
             pSprite->setSize(pAnim->getSize());
         }
         return pSprite;
@@ -223,7 +223,7 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
         if (pAnim != nullptr)
         {
             pSprite->setResAnim(pAnim);
-            pSprite->setScale(pAnim->getWidth() / 30.0f);
+            pSprite->setScale(static_cast<float>(pAnim->getWidth()) / 30.0f);
             pSprite->setSize(pAnim->getSize());
         }
         return pSprite;

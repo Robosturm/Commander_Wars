@@ -28,7 +28,7 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
 #ifdef GRAPHICSUPPORT
     setObjectName("NormalAi");
 #endif
-    AI_CONSOLE_PRINT("Creating normal ai", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating normal ai", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &NormalAi::process, Qt::QueuedConnection);
@@ -796,7 +796,7 @@ bool NormalAi::getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefill
     return ret;
 }
 
-void NormalAi::appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets) const
+void NormalAi::appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets)
 {
     if (isRefuelUnit(actions))
     {
@@ -871,7 +871,8 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
                 if (targets.size() > 0)
                 {
                     distanceModifier = 4;
-                    appendCaptureTransporterTargets(pUnit, pUnits, pEnemyBuildings, transporterTargets);
+                    appendCaptureTransporterTargets(pUnit, pUnits, pEnemyBuildings, transporterTargets, distanceModifier);
+                    distanceModifier = 5;
                     targets.insert(targets.cbegin(), transporterTargets.cbegin(), transporterTargets.cend());
                 }
                 if (pUnit->getAiMode() == GameEnums::GameAi_Normal)
@@ -1521,7 +1522,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(MoveUnitData & unitData, 
 
 qint32 NormalAi::getMoveTargetField(MoveUnitData & unitData, UnitPathFindingSystem& turnPfs,
                                     std::vector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
-                                    qint32 movePoints) const
+                                    qint32 movePoints)
 {
     const float minDamage = unitData.unitCosts * m_minMovementDamage;
     float bestMinDamge = minDamage;
@@ -1561,7 +1562,7 @@ qint32 NormalAi::getMoveTargetField(MoveUnitData & unitData, UnitPathFindingSyst
 
 qint32 NormalAi::getBestAttackTarget(MoveUnitData & unitData, std::vector<CoreAI::DamageData>& ret,
                                      std::vector<QVector3D>& moveTargetFields,
-                                     spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const
+                                     spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {    
     qint32 target = -1;
     qint32 currentDamage = std::numeric_limits<qint32>::min();
@@ -1754,7 +1755,7 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife) const
 float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPosition,
                                        Unit* pEnemyUnit, float enemyTakenDamage,
                                        spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
-                                       bool ignoreOutOfVisionRange) const
+                                       bool ignoreOutOfVisionRange)
 {
     AI_CONSOLE_PRINT("NormalAi calculateCounterDamage", GameConsole::eDEBUG);
     QCoreApplication::processEvents();

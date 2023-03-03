@@ -13,6 +13,13 @@ Password::Password(QString password)
     setPassword(password);
 }
 
+Password::Password(const Password & password)
+    : m_passwordHash(password.m_passwordHash),
+      m_password(password.m_password),
+      m_isSet(password.m_isSet)
+{
+}
+
 void Password::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();

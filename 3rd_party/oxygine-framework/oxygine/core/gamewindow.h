@@ -138,7 +138,7 @@ namespace oxygine
         virtual void updateData() override;
 
         void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
-        bool sameTouchpoint(QPointF pos1, QPointF pos2) const;
+        bool sameTouchpoint(const QPointF & pos1, const QPointF & pos2) const;
 
     protected:
         QBasicTimer m_Timer;

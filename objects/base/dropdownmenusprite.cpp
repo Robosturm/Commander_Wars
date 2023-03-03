@@ -35,8 +35,8 @@ void DropDownmenuSprite::setCurrentItem(qint32 index)
         oxygine::spActor pSprite = m_Creator(m_ItemTexts[index]);
         if (m_autoScale)
         {
-            pSprite->setScaleX((m_Box->getScaledWidth() - 13 - 65) / pSprite->getScaledWidth());
-            pSprite->setScaleY((m_Box->getScaledHeight() - 12) / pSprite->getScaledHeight());
+            pSprite->setScaleX(static_cast<float>(m_Box->getScaledWidth() - 13 - 65) / static_cast<float>(pSprite->getScaledWidth()));
+            pSprite->setScaleY(static_cast<float>(m_Box->getScaledHeight() - 12) / static_cast<float>(pSprite->getScaledHeight()));
         }
         m_pClipActor->addChild(pSprite);
         
@@ -69,14 +69,14 @@ void DropDownmenuSprite::addDropDownText(QString spriteID, qint32 id, qint32 dro
     {
         if (dropDownWidth > 0)
         {
-            pSprite->setScaleX((dropDownWidth) / pSprite->getScaledWidth());
+            pSprite->setScaleX(static_cast<float>(dropDownWidth) / static_cast<float>(pSprite->getScaledWidth()));
         }
         else
         {
-            pSprite->setScaleX((size.x - 13.0f) / pSprite->getScaledWidth());
+            pSprite->setScaleX(static_cast<float>(size.width() - 13.0f) / static_cast<float>(pSprite->getScaledWidth()));
         }
         float spriteHeigth = pSprite->getScaledHeight();
-        pSprite->setScaleY((size.y - 12.0f) / spriteHeigth);
+        pSprite->setScaleY(static_cast<float>(size.height() - 12.0f) / spriteHeigth);
     }
 }
 

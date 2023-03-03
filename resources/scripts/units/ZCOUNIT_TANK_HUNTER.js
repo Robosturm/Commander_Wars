@@ -68,8 +68,16 @@ var Constructor = function()
     {
         if (weapon === 0 && gotAttacked === false && unit.getUnitID() === "ZCOUNIT_TANK_HUNTER" && damage >= 0)
         {
+            var fuelDrain = 35;
             var fuel = otherUnit.getFuel();
-            otherUnit.setFuel(fuel - 35);
+            if (fuel > fuelDrain)
+            {
+                otherUnit.setFuel(fuel - 35);
+            }
+            else
+            {
+                otherUnit.setFuel(0);
+            }
         }
     };
     this.getCOSpecificUnit = function(building)

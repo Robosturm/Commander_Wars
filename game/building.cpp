@@ -40,6 +40,19 @@ void Building::init()
     pInterpreter->doFunction(m_BuildingID, function, args);
 }
 
+qint32 Building::getBuildingGroup()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getBuildingGroup";
+    QJSValueList args({pInterpreter->newQObject(m_pMap)});
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    return 0;
+}
+
 bool Building::getShowInEditor(QString buildingId)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -260,12 +273,12 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
         qint32 heigth = getBuildingHeigth();
         if (width == 1 && heigth == 1)
         {
-            pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
             pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2 + pos.x(), -(pSprite->getScaledHeight() - GameMap::getImageSize()) + pos.y());
         }
         else
         {
-            pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize() * width) / static_cast<float>(pAnim->getWidth()));
             pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize() + pos.x(), -pSprite->getScaledHeight() + GameMap::getImageSize() + pos.y());
         }
         addChild(pSprite);
@@ -274,7 +287,7 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
     }
     else
     {
-        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load building sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -349,12 +362,12 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
         qint32 heigth = getBuildingHeigth();
         if (width == 1 && heigth == 1)
         {
-            pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
             pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         }
         else
         {
-            pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize() * width) / static_cast<float>(pAnim->getWidth()));
             pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize(), -pSprite->getScaledHeight() + GameMap::getImageSize());
         }
         addChild(pSprite);
@@ -362,7 +375,7 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
     }
     else
     {
-        CONSOLE_PRINT("Unable to load weather overlay sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load weather overlay sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -1237,6 +1250,11 @@ bool Building::isEnemyBuilding(Player* pPlayer)
 
 void Building::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void Building::serializeObject(QDataStream& pStream, bool forHash) const
+{
     pStream << getVersion();
     pStream << m_BuildingID;
     if (m_pOwner == nullptr)
@@ -1250,7 +1268,10 @@ void Building::serializeObject(QDataStream& pStream) const
     pStream << m_Hp;
     pStream << m_fireCount;
     m_Variables.serializeObject(pStream);
-    pStream << m_BuildingName;
+    if (!forHash)
+    {
+        pStream << m_BuildingName;
+    }
 }
 
 void Building::deserializeObject(QDataStream& pStream)

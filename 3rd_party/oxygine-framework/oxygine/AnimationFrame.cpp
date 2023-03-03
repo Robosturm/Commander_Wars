@@ -4,7 +4,8 @@
 namespace oxygine
 {
     constexpr qint32 BITS_PER_BYTE = 8;
-    void AnimationFrame::init(ResAnim* rs, short col, short row, const spTexture& texture, const RectF& srcRect, const RectF& destRect, const Point& frame_size)
+    void AnimationFrame::init(ResAnim* rs, short col, short row, const spTexture& texture,
+                              const QRectF& srcRect, const QRect& destRect, const QSize& frame_size)
     {
         m_column = col;
         m_row = row;
@@ -21,10 +22,10 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
         constexpr qint32 alpha = 0;
         const QImage & image = m_texture->getImage();
-        m_width = m_srcRect.getWidth() * image.width();
-        m_height = m_srcRect.getHeight() * image.height();
-        qint32 startX = m_srcRect.getX() * image.width();
-        qint32 startY = m_srcRect.getY() * image.height();
+        m_width = m_srcRect.width() * image.width();
+        m_height = m_srcRect.height() * image.height();
+        qint32 startX = m_srcRect.x() * image.width();
+        qint32 startY = m_srcRect.y() * image.height();
         qint32 size = m_width * m_height / BITS_PER_BYTE + 1;
         m_data.resize(size, false);
         for (qint32 x = 0; x < m_width; ++x)
@@ -45,45 +46,16 @@ namespace oxygine
 #endif
     }
 
-    AnimationFrame AnimationFrame::getClipped(const RectF& rect) const
-    {
-        AnimationFrame f = *this;
-        float w = (float)m_texture->getWidth();
-        float h = (float)m_texture->getHeight();
-
-        f.m_destRect.clip(rect);
-        if (f.m_destRect.isEmpty())
-        {
-            f.m_destRect = RectF(0, 0, 0, 0);
-        }
-
-        RectF srcRect = m_srcRect * Vector2(w, h);
-
-        float sc = 1.0f;
-        if (m_resAnim)
-        {
-            sc = m_resAnim->getScaleFactor();
-        }
-
-        f.m_srcRect.pos = srcRect.pos - (m_destRect.pos - f.m_destRect.pos) * sc;
-        f.m_srcRect.size = srcRect.size - (m_destRect.size - f.m_destRect.size) * sc;
-        f.m_srcRect = f.m_srcRect / Vector2(w, h);
-
-        f.m_frameSize = rect.size.cast<Point>();
-
-        return f;
-    }
-
-    bool AnimationFrame::getHits(Point pos) const
+    bool AnimationFrame::getHits(const QPoint & pos) const
     {
         if (m_data.size() <= 0)
         {
             return true;
         }
-        Rect r(0, 0, m_width, m_height);
-        if (r.pointIn(pos))
+        QRect r(0, 0, m_width, m_height);
+        if (r.contains(pos))
         {
-            qint32 arrPos = pos.x + pos.y * m_width;
+            qint32 arrPos = pos.x() + pos.y() * m_width;
             qint32 shift = arrPos % BITS_PER_BYTE;
             quint8 bit =  1 << shift;
             arrPos /= BITS_PER_BYTE;
@@ -109,25 +81,16 @@ namespace oxygine
 
     void AnimationFrame::flipX()
     {
-        m_srcRect.setX(m_srcRect.getRight());
-        m_srcRect.setWidth(-m_srcRect.getWidth());
-        m_destRect.pos.x = m_frameSize.x - m_destRect.getRight();
+        m_srcRect = QRectF(m_srcRect.right(), m_srcRect.y(),
+                          -m_srcRect.width(), m_srcRect.height());
+        m_destRect.moveLeft(m_frameSize.width() - m_destRect.right());
     }
 
     void AnimationFrame::flipY()
     {
-        m_srcRect.setY(m_srcRect.getBottom());
-        m_srcRect.setHeight(-m_srcRect.getHeight());
-        m_destRect.pos.y = m_frameSize.y - m_destRect.getBottom();
+        m_srcRect = QRectF(m_srcRect.x(), m_srcRect.bottom(),
+                          m_srcRect.width(), -m_srcRect.height());
+        m_destRect.moveTop(m_frameSize.height() - m_destRect.bottom());
     }
 
-    AnimationFrame::AnimationFrame(spTexture & t)
-    {
-        m_row = m_column = 0;
-        m_resAnim = 0;
-        m_texture = t;
-        m_srcRect = RectF(0, 0, 1, 1);
-        m_destRect = RectF(0, 0, (float)t->getWidth(), (float)t->getHeight());
-        m_frameSize = Point(t->getWidth(), t->getHeight());
-    }
 }

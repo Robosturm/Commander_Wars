@@ -1,4 +1,5 @@
 #include <QFile>
+#include <QCryptographicHash>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
@@ -62,7 +63,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
     setObjectName("GameMap");
 #endif
     loadMapData();
-    GameMap::deserializeObject(stream);
+    deserializer(stream, false);
     m_loaded = true;
 }
 
@@ -163,6 +164,7 @@ qint32 GameMap::getUniqueIdCounter()
     {
         m_headerInfo.m_uniqueIdCounter++;
     }
+    CONSOLE_PRINT("Getting new unique id counter " + QString::number(m_headerInfo.m_uniqueIdCounter), GameConsole::eDEBUG);
     return m_headerInfo.m_uniqueIdCounter;
 }
 
@@ -326,7 +328,7 @@ bool GameMap::isPlayerUnitInArea(const QRect& area, qint32 playerID)
     });
 }
 
-bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> & playerIDs)
+bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs)
 {
     return isInArea(area, [=](Unit* pUnit)
     {
@@ -497,7 +499,7 @@ Player* GameMap::getPlayer(qint32 player)
     }
 }
 
-Player* GameMap::getCurrentPlayer()
+Player* GameMap::getCurrentPlayer() const
 {
     return m_CurrentPlayer.get();
 }
@@ -1103,7 +1105,7 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
     }
 }
 
-QPoint GameMap::getCenteredPosition()
+QPoint GameMap::getCenteredPosition() const
 {
     qint32 x = 0;
     qint32 y = 0;
@@ -1136,26 +1138,26 @@ void GameMap::moveMap(qint32 x, qint32 y)
 
 void GameMap::limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY)
 {
-    oxygine::RectF bounds = pMenu->getMapSliding()->getDragBounds();
-    if (newX < bounds.getLeft())
+    auto bounds = pMenu->getMapSliding()->getDragBounds();
+    if (newX < bounds.left())
     {
-        newX = bounds.getLeft();
+        newX = bounds.left();
     }
-    else if (newX > bounds.getRight())
+    else if (newX > bounds.right())
     {
-        newX = bounds.getRight();
+        newX = bounds.right();
     }
-    if (newY < bounds.getTop())
+    if (newY < bounds.top())
     {
-        newY = bounds.getTop();
+        newY = bounds.top();
     }
-    else if (newY > bounds.getBottom())
+    else if (newY > bounds.bottom())
     {
-        newY = bounds.getBottom();
+        newY = bounds.bottom();
     }
 }
 
-void GameMap::setZoom(float zoom)
+void GameMap::setZoom(qint32 zoom)
 {
     float curZoom = getScaleX();
     if (zoom > 0)
@@ -1198,12 +1200,13 @@ void GameMap::zoomChanged()
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
-void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit)
+void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit, const QString & palette, bool changePalette)
 {
     if (onMap(x, y))
     {
         spTerrain pTerrainOld = m_fields[y][x];
-        if (pTerrainOld->getTerrainID() != terrainID)
+        if (pTerrainOld->getTerrainID() != terrainID ||
+            (changePalette && pTerrainOld->getPalette() != palette))
         {
             pTerrainOld->removeBuilding();
             spUnit pUnit = spUnit(pTerrainOld->getUnit());
@@ -1221,6 +1224,10 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
                 m_fields[y][x] = pTerrain;
                 m_rowSprites[y]->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
+                if (changePalette)
+                {
+                    pTerrain->setPalette(palette);
+                }
             }
             else
             {
@@ -1228,6 +1235,10 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
                 m_fields[y][x] = pTerrain;
                 m_rowSprites[y]->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
+                if (changePalette)
+                {
+                    pTerrain->setTerrainPalette(palette);
+                }
             }
             if (!removeUnit)
             {
@@ -1252,9 +1263,9 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
     }
 }
 
-void GameMap::replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement)
+void GameMap::replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement, const QString & palette, bool changePalette)
 {
-    replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain);
+    replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain, true, palette, changePalette);
     if (checkPlacement)
     {
         updateTerrain(x, y);
@@ -1320,20 +1331,31 @@ bool GameMap::canBePlaced(const QString & terrainID, qint32 x, qint32 y)
 
 void GameMap::serializeObject(QDataStream& pStream) const
 {
-    CONSOLE_PRINT("GameMap::serializeObject", GameConsole::eDEBUG);
+    serializeObject(pStream, false);
+}
+
+void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
+{
+    CONSOLE_PRINT("GameMap::serializeObject with unique id counter " + QString::number(m_headerInfo.m_uniqueIdCounter) + " at day " + QString::number(m_currentDay), GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     // store header
     pStream << getVersion();
-    pStream << m_headerInfo.m_mapName;
-    pStream << m_headerInfo.m_mapAuthor;
-    pStream << m_headerInfo.m_mapDescription;
+    if (!forHash)
+    {
+        pStream << m_headerInfo.m_mapName;
+        pStream << m_headerInfo.m_mapAuthor;
+        pStream << m_headerInfo.m_mapDescription;
+    }
     pStream << width;
     pStream << heigth;
     pStream << m_headerInfo.m_uniqueIdCounter;
     pStream << getPlayerCount();
-    updateMapFlags();
-    pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
+    if (!forHash)
+    {
+        updateMapFlags();
+        pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
+    }
     qint32 currentPlayerIdx = 0;
     for (qint32 i = 0; i < m_players.size(); i++)
     {
@@ -1341,8 +1363,9 @@ void GameMap::serializeObject(QDataStream& pStream) const
         {
             currentPlayerIdx = i;
         }
-        m_players[i]->serializeObject(pStream);
+        m_players[i]->serializeObject(pStream, forHash);
     }
+    CONSOLE_PRINT("Storing currentPlayerIdx " + QString::number(currentPlayerIdx), GameConsole::eDEBUG);
     pStream << currentPlayerIdx;
     pStream << m_currentDay;
     // store map
@@ -1351,26 +1374,32 @@ void GameMap::serializeObject(QDataStream& pStream) const
         for (qint32 x = 0; x < width; x++)
         {
             // serialize
-            m_fields[y][x]->serializeObject(pStream);
+            m_fields[y][x]->serializeObject(pStream, forHash);
         }
     }
-    m_Rules->serializeObject(pStream);
-    m_Recorder->serializeObject(pStream);
+    m_Rules->serializeObject(pStream, forHash);
+    if (!forHash)
+    {
+        m_Recorder->serializeObject(pStream);
+    }
     m_GameScript->serializeObject(pStream);
-    if (m_Campaign.get() != nullptr)
+    if (!forHash)
     {
-        pStream << true;
-        m_Campaign->serializeObject(pStream);
+        if (m_Campaign.get() != nullptr)
+        {
+            pStream << true;
+            m_Campaign->serializeObject(pStream);
+        }
+        else
+        {
+            pStream << false;
+        }
+        pStream << m_mapPath;
+        pStream << m_mapMusic;
+        pStream << m_startLoopMs;
+        pStream << m_endLoopMs;
+        pStream << m_isHumanMatch;
     }
-    else
-    {
-        pStream << false;
-    }
-    pStream << m_mapPath;
-    pStream << m_mapMusic;
-    pStream << m_startLoopMs;
-    pStream << m_endLoopMs;
-    pStream << m_isHumanMatch;
 }
 
 void GameMap::updateMapFlags() const
@@ -1404,6 +1433,19 @@ void GameMap::updateMapFlags() const
             }
         }
     }
+}
+
+QByteArray GameMap::getMapHash()
+{
+    CONSOLE_PRINT("GameMap::getMapHash", GameConsole::eDEBUG);
+    QCryptographicHash myHash(QCryptographicHash::Sha512);
+    QByteArray data;
+    {
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        serializeObject(stream, true);
+    }
+    myHash.addData(data);
+    return myHash.result();
 }
 
 void GameMap::setSavegame(bool newSavegame)
@@ -1607,6 +1649,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         pLoadingScreen->hide();
     }
+    CONSOLE_PRINT("GameMap loaded", GameConsole::eDEBUG);
 }
 
 void GameMap::deserializeObject(QDataStream& pStream)
@@ -1968,7 +2011,7 @@ void GameMap::refillTransportedUnits(Unit* pUnit)
     }
 }
 
-Player* GameMap::getCurrentViewPlayer()
+Player* GameMap::getCurrentViewPlayer() const
 {
     if (m_pMenu != nullptr)
     {
@@ -2378,6 +2421,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         {
             pMenu->updatePlayerinfo();
             pMenu->updateMinimap();
+            pMenu->sendOpenPlayerCount();
         }
         playMusic();
         if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
@@ -2523,6 +2567,27 @@ void GameMap::initPlayersAndSelectCOs()
 void GameMap::initPlayers()
 {
     m_CurrentPlayer = m_players[m_players.size() - 1];
+    initProxyAis();
+}
+
+void GameMap::initProxyAis()
+{
+    if (Mainapp::getSlave())
+    {
+        // fix slave ai's
+        for (qint32 i = 0; i < getPlayerCount(); ++i)
+        {
+            Player* pPlayer = getPlayer(i);
+            BaseGameInputIF* pInput = pPlayer->getBaseGameInput();
+            if (pInput != nullptr &&
+                pInput->getAiType() != GameEnums::AiTypes_ProxyAi &&
+                pInput->getAiType() != GameEnums::AiTypes_Closed &&
+                pInput->getAiType() != GameEnums::AiTypes_Open)
+            {
+                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(this, GameEnums::AiTypes_ProxyAi));
+            }
+        }
+    }
 }
 
 void GameMap::showGrid(bool show)

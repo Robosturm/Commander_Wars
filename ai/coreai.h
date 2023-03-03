@@ -223,7 +223,7 @@ signals:
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
      * @param pAction
      */
-    void performAction(spGameAction pAction);
+    void performAction(spGameAction pAction, bool fromAiPipe = false);
 public slots:
     /**
      * @brief getProductionSystem
@@ -458,7 +458,7 @@ public slots:
      * @param pUnit1
      * @return
      */
-    qint32 getIsland(Unit* pUnit) const;
+    qint32 getIsland(Unit* pUnit);
     /**
      * @brief getIslandSize
      * @param pUnit
@@ -472,7 +472,7 @@ public slots:
      * @param pUnit1
      * @return
      */
-    qint32 getIslandIndex(Unit* pUnit) const;
+    qint32 getIslandIndex(Unit* pUnit);
     /**
      * @brief isUnloadTerrain
      * @param pUnit
@@ -607,7 +607,7 @@ protected:
     void appendSupplyTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets);
     void appendTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std::vector<QVector3D>& targets);
     void appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
-                                         spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets);
+                                         spQmlVectorBuilding & pEnemyBuildings, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
     std::vector<Unit*> appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
                                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                             bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,

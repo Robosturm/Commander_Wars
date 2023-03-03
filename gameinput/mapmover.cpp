@@ -53,8 +53,8 @@ void MapMover::autoScroll()
         {
             auto position = sliding->getPosition() + slidingActor->getPosition() + pMap->getPosition();
             auto* pCursor = m_pOwner->getCursor();
-            curPos.setX(position.x + pCursor->getMapPointX() * pMap->getImageSize() * pMap->getZoom() + pMap->getImageSize() * pMap->getZoom() / 2);
-            curPos.setY(position.y + pCursor->getMapPointY() * pMap->getImageSize() * pMap->getZoom() + pMap->getImageSize() * pMap->getZoom() / 2);
+            curPos.setX(position.x() + pCursor->getMapPointX() * pMap->getImageSize() * pMap->getZoom() + pMap->getImageSize() * pMap->getZoom() / 2);
+            curPos.setY(position.y() + pCursor->getMapPointY() * pMap->getImageSize() * pMap->getZoom() + pMap->getImageSize() * pMap->getZoom() / 2);
             posValid = true;
         }
     }

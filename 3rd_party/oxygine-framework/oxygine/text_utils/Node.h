@@ -100,7 +100,6 @@ namespace oxygine
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
         private:
             QColor m_color;
-            quint32 m_options;
         };
 
         class BrNode final: public Node

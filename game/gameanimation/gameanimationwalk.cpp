@@ -143,7 +143,7 @@ void GameAnimationWalk::loadSpriteV2(const QString & spriteID, GameEnums::Recolo
                 x = m_movePath[i].x() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::getImageSize()) / 2.0f);
                 y = m_movePath[i].y() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::getImageSize()) / 2.0f);
 
-                oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Point(x, y)), oxygine::timeMS(m_frameTime * pAnim->getRows()), 1);
+                oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(QPoint(x, y)), oxygine::timeMS(m_frameTime * pAnim->getRows()), 1);
                 // toggle visibility of the unit
                 if (i - 1 >= 0)
                 {
@@ -242,7 +242,7 @@ void GameAnimationWalk::loadSpriteV2(const QString & spriteID, GameEnums::Recolo
     }
     else
     {
-        CONSOLE_PRINT("Unable to load unit walk sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load unit walk sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
         emitFinished();
     }
 }

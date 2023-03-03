@@ -5,7 +5,6 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/Input.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 #include "ai/aiprocesspipe.h"
 
@@ -178,7 +177,7 @@ void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint
 void WorkerThread::wheelEvent(qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::getInstance();
-    input->sendPointerWheelEvent(oxygine::Stage::getStage(), oxygine::Vector2(x, y), input->getPointerMouse());
+    input->sendPointerWheelEvent(oxygine::Stage::getStage(), QPoint(x, y), input->getPointerMouse());
 }
 
 void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
@@ -226,4 +225,21 @@ void WorkerThread::startSlaveGame()
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     Mainapp::getInstance()->getParser().startSlaveGame();
+}
+
+void WorkerThread::executeServerScript()
+{
+    const char* const SCRIPTFILE = "serverScript.js";
+    CONSOLE_PRINT("MainServer::executeScript checking for script " + QString(SCRIPTFILE), GameConsole::eDEBUG);
+    if (QFile::exists(SCRIPTFILE))
+    {
+        CONSOLE_PRINT("Loading server script", GameConsole::eDEBUG);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        if (pInterpreter->openScript(SCRIPTFILE, false))
+        {
+            QFile::remove(SCRIPTFILE);
+            CONSOLE_PRINT("Executing server script", GameConsole::eDEBUG);
+            pInterpreter->doFunction("serverScript");
+        }
+    }
 }

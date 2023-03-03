@@ -31,12 +31,12 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
     m_Text->setSize(Settings::getWidth() / 2, Settings::getHeight());
     m_Text->setHtmlText(text);
     m_Text->setStyle(style);
-    m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - m_Text->getTextRect().getHeight());
+    m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().width() / 2, Settings::getHeight() / 2 - m_Text->getTextRect().height());
     pSpriteBox->addChild(m_Text);
 
     m_OkButton = pObjectManager->createButton(confirmText, 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
-                            m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
+                            m_Text->getY() + m_Text->getTextRect().height() + 20);
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -47,14 +47,14 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
     {
         m_CancelButton = pObjectManager->createButton(cancelText, 150);
         m_CancelButton->setPosition(Settings::getWidth() / 2 + 10,
-                                m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
+                                m_Text->getY() + m_Text->getTextRect().height() + 20);
         pSpriteBox->addChild(m_CancelButton);
         m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
             emit sigCancel();
         });
         m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() - 10,
-                                m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
+                                m_Text->getY() + m_Text->getTextRect().height() + 20);
     }
 
     connect(this, &DialogMessageBox::sigOk, this, &DialogMessageBox::remove, Qt::QueuedConnection);

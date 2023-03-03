@@ -213,6 +213,10 @@ void Unit::removeShineTween()
         }
     }
     m_ShineTweens.clear();
+    for (auto & pUunit : m_TransportUnits)
+    {
+        pUunit->removeShineTween();
+    }
 }
 
 void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)
@@ -268,12 +272,12 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
             pSprite->setPriority(static_cast<short>(Priorities::Outline));
             pWaitSprite->setPriority(static_cast<short>(Priorities::OutlineWaiting));
         }
-        pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         addChild(pSprite);
         m_pUnitSprites.append(pSprite);
         pWaitSprite->setColor(QColor(100, 100, 100, 170));
-        pWaitSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+        pWaitSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pWaitSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         addChild(pWaitSprite);
         pWaitSprite->setVisible(false);
@@ -286,7 +290,7 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
     }
     else
     {
-        CONSOLE_PRINT("Unable to load unit sprite: " + spriteID, GameConsole::eDEBUG);
+        CONSOLE_PRINT_MODULE("Unable to load unit sprite: " + spriteID, GameConsole::eDEBUG, GameConsole::eResources);
     }
 }
 
@@ -2809,7 +2813,6 @@ void Unit::moveUnitAction(GameAction* pAction)
 
 void Unit::moveUnit(QVector<QPoint> & movePath)
 {
-    createMoveVision(movePath);
     if (movePath.size() > 1)
     {
         moveUnitToField(movePath[0].x(), movePath[0].y());
@@ -3048,7 +3051,7 @@ void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration,
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale((GameMap::getImageSize() / 2) / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize() * 0.5f) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPosition(x, y);
         pSprite->setPriority(static_cast<short>(Priorities::Icons));
 
@@ -3283,8 +3286,8 @@ void Unit::updateIconTweens()
         qint32 count = 0;
         for (qint32 i2 = 0; i2 < m_pIconSprites.size(); i2++)
         {
-            if ((m_pIconSprites[i2]->getPosition().x == x) &&
-                (m_pIconSprites[i2]->getPosition().y == y))
+            if ((m_pIconSprites[i2]->getPosition().x() == x) &&
+                (m_pIconSprites[i2]->getPosition().y() == y))
             {
                 count++;
             }
@@ -3295,8 +3298,8 @@ void Unit::updateIconTweens()
             qint32 step = 0;
             for (qint32 i2 = 0; i2 < m_pIconSprites.size(); i2++)
             {
-                if ((m_pIconSprites[i2]->getPosition().x == x) &&
-                    (m_pIconSprites[i2]->getPosition().y == y))
+                if ((m_pIconSprites[i2]->getPosition().x() == x) &&
+                    (m_pIconSprites[i2]->getPosition().y() == y))
                 {
                     qint32 visibileTime = 500;
                     float startTime = static_cast<float>(step) / static_cast<float>(count);
@@ -3311,8 +3314,8 @@ void Unit::updateIconTweens()
         {
             for (qint32 i2 = 0; i2 < m_pIconSprites.size(); i2++)
             {
-                if ((m_pIconSprites[i2]->getPosition().x == x) &&
-                    (m_pIconSprites[i2]->getPosition().y == y))
+                if ((m_pIconSprites[i2]->getPosition().x() == x) &&
+                    (m_pIconSprites[i2]->getPosition().y() == y))
                 {
                     m_pIconSprites[i2]->setVisible(true);
                 }
@@ -3574,6 +3577,11 @@ bool Unit::getShowInEditor(QString unitId)
 
 void Unit::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void Unit::serializeObject(QDataStream& pStream, bool forHash) const
+{
     pStream << getVersion();
     pStream << m_UnitID;
     pStream << m_hp;
@@ -3593,15 +3601,20 @@ void Unit::serializeObject(QDataStream& pStream) const
     pStream << m_Hidden;
     m_Variables.serializeObject(pStream);
     pStream << m_IgnoreUnitCollision;
-    pStream << static_cast<qint32>(m_AiMode);
-    pStream << m_UniqueID;
-    pStream << static_cast<quint8>(m_ModdingFlags);
-
-    qint32 size = m_MultiTurnPath.size();
-    pStream << size;
-    for (qint32 i = 0; i < size; i++)
+    if (!forHash)
     {
-        pStream << m_MultiTurnPath[i];
+        pStream << static_cast<qint32>(m_AiMode);
+        pStream << m_UniqueID;
+    }
+    qint32 size = m_MultiTurnPath.size();
+    if (!forHash)
+    {
+        pStream << static_cast<quint8>(m_ModdingFlags);
+        pStream << size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            pStream << m_MultiTurnPath[i];
+        }
     }
     size = m_OffensiveBonus.size();
     pStream << size;
@@ -3640,23 +3653,26 @@ void Unit::serializeObject(QDataStream& pStream) const
         pStream << m_cloaked[i];
     }
     pStream << m_VisionHigh;
-    pStream << m_customName;
-    size = m_AiMovePath.size();
-    pStream << size;
-    for (qint32 i = 0; i < size; i++)
+    if (!forHash)
     {
-        pStream << m_AiMovePath[i];
-    }
-    size = m_IconDurations.size();
-    pStream << size;
-    for (qint32 i = 0; i < size; i++)
-    {
-        const IconDuration & iconInfo = m_IconDurations[i];
-        pStream << iconInfo.icon;
-        pStream << iconInfo.x;
-        pStream << iconInfo.y;
-        pStream << iconInfo.duration;
-        pStream << iconInfo.player;
+        pStream << m_customName;
+        size = m_AiMovePath.size();
+        pStream << size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            pStream << m_AiMovePath[i];
+        }
+        size = m_IconDurations.size();
+        pStream << size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            const IconDuration & iconInfo = m_IconDurations[i];
+            pStream << iconInfo.icon;
+            pStream << iconInfo.x;
+            pStream << iconInfo.y;
+            pStream << iconInfo.duration;
+            pStream << iconInfo.player;
+        }
     }
 
     pStream << m_weapon1ID;
@@ -3669,15 +3685,18 @@ void Unit::serializeObject(QDataStream& pStream) const
     pStream << m_maxFuel;
     pStream << m_baseMovementPoints;
     pStream << m_MovementType;
-    size = m_customRangeInfo.size();
-    pStream << size;
-    for (qint32 i = 0; i < size; i++)
+    if (!forHash)
     {
-        pStream << m_customRangeInfo[i].id;
-        pStream << m_customRangeInfo[i].range;
-        pStream << m_customRangeInfo[i].color.rgba();
+        size = m_customRangeInfo.size();
+        pStream << size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            pStream << m_customRangeInfo[i].id;
+            pStream << m_customRangeInfo[i].range;
+            pStream << m_customRangeInfo[i].color.rgba();
+        }
+        pStream << m_cursorInfoRange;
     }
-    pStream << m_cursorInfoRange;
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -3687,7 +3706,6 @@ void Unit::deserializeObject(QDataStream& pStream)
 
 void Unit::deserializer(QDataStream& pStream, bool fast)
 {
-
     bool savegame = false;
     if (m_pMap != nullptr)
     {

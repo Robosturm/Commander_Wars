@@ -7,6 +7,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
+        terrain.setPalette("palette_clear");
         terrain.setTerrainName(SEA.getName());
     };
 
@@ -18,9 +19,9 @@ var Constructor = function()
     {
         var surroundingsPlains = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
         var surroundingsBride = terrain.getSurroundings("BRIDGE1,BRIDGE2", false, false, GameEnums.Directions_North, false, true);
-        if (surroundingsBride !== "" && terrain.existsResAnim("sea" + surroundingsPlains + "+bridge"))
+        if (surroundingsBride !== "" && terrain.existsResAnim("sea" + surroundingsPlains + "+bridge+mask"))
         {
-            surroundingsPlains += "+bridge";
+            surroundingsPlains += "+bridge+mask";
         }
         else
         {
@@ -62,7 +63,7 @@ var Constructor = function()
                 }
             }
         }
-        terrain.loadBaseSprite("sea" + surroundingsPlains);
+        terrain.loadBaseSprite("sea" + surroundingsPlains + "+mask");
     };
     this.loadOverlaySprite = function(terrain, map)
     {
@@ -112,53 +113,53 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return ["sea",
-                "sea+N",
-                "sea+E",
-                "sea+S",
-                "sea+W",
-                "sea+E+SW+NW",
-                "sea+E+SW",
-                "sea+E+NW",
-                "sea+N+SE+SW",
-                "sea+N+SE",
-                "sea+N+SW",
-                "sea+W+NE+SE",
-                "sea+W+NE",
-                "sea+W+SE",
-                "sea+S+NE+NW",
-                "sea+S+NE",
-                "sea+S+NW",
-                "sea+N+E",
-                "sea+E+S",
-                "sea+E+W",
-                "sea+N+S",
-                "sea+N+W",
-                "sea+S+W",
-                "sea+N+W+SE",
-                "sea+E+S+NW",
-                "sea+S+W+NE",
-                "sea+N+E+SW",
-                "sea+E+S+W",
-                "sea+N+E+S",
-                "sea+N+E+W",
-                "sea+N+S+W",
-                "sea+N+E+S+W",
-                "sea+NE+SE+SW+NW",
-                "sea+NE+SW+NW",
-                "sea+NE+SE+SW",
-                "sea+SE+SW+NW",
-                "sea+NE+SE+NW",
-                "sea+NE+NW",
-                "sea+NE+SE",
-                "sea+NE+SW",
-                "sea+SE+NW",
-                "sea+SW+NW",
-                "sea+SE+SW",
-                "sea+NE",
-                "sea+NW",
-                "sea+SE",
-                "sea+SW",];
+        return ["sea+mask",
+                "sea+N+mask",
+                "sea+E+mask",
+                "sea+S+mask",
+                "sea+W+mask",
+                "sea+E+SW+NW+mask",
+                "sea+E+SW+mask",
+                "sea+E+NW+mask",
+                "sea+N+SE+SW+mask",
+                "sea+N+SE+mask",
+                "sea+N+SW+mask",
+                "sea+W+NE+SE+mask",
+                "sea+W+NE+mask",
+                "sea+W+SE+mask",
+                "sea+S+NE+NW+mask",
+                "sea+S+NE+mask",
+                "sea+S+NW+mask",
+                "sea+N+E+mask",
+                "sea+E+S+mask",
+                "sea+E+W+mask",
+                "sea+N+S+mask",
+                "sea+N+W+mask",
+                "sea+S+W+mask",
+                "sea+N+W+SE+mask",
+                "sea+E+S+NW+mask",
+                "sea+S+W+NE+mask",
+                "sea+N+E+SW+mask",
+                "sea+E+S+W+mask",
+                "sea+N+E+S+mask",
+                "sea+N+E+W+mask",
+                "sea+N+S+W+mask",
+                "sea+N+E+S+W+mask",
+                "sea+NE+SE+SW+NW+mask",
+                "sea+NE+SW+NW+mask",
+                "sea+NE+SE+SW+mask",
+                "sea+SE+SW+NW+mask",
+                "sea+NE+SE+NW+mask",
+                "sea+NE+NW+mask",
+                "sea+NE+SE+mask",
+                "sea+NE+SW+mask",
+                "sea+SE+NW+mask",
+                "sea+SW+NW+mask",
+                "sea+SE+SW+mask",
+                "sea+NE+mask",
+                "sea+NW+mask",
+                "sea+SE+mask",
+                "sea+SW+mask",];
     };
 
     this.getOverlayTerrainSprites = function(map)

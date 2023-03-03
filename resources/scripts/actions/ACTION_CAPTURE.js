@@ -66,7 +66,7 @@ var Constructor = function()
         var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_CAPTURE", "performPostAnimation");
         // move unit to target position
-        unit.moveUnitAction(action);
+        Global[unit.getUnitID()].moveUnit(unit, action, map);
         ACTION_CAPTURE.postAnimationUnit = unit;
         ACTION_CAPTURE.postAnimationBuilding = action.getMovementBuilding();
         ACTION_CAPTURE.postAnimationTarget = action.getActionTarget();

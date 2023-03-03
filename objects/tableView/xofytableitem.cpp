@@ -3,7 +3,7 @@
 
 #include "coreengine/interpreter.h"
 
-XofYTableItem::XofYTableItem(qint32 currentValue, qint32 maxValue, qint32 itemWidth, QObject *parent)
+XofYTableItem::XofYTableItem(qint32 currentValue, qint32 maxValue, qint32 itemWidth, QColor textColor, QObject *parent)
     : BaseTableItem{parent},
       m_currentValue(currentValue),
       m_maxValue(maxValue)
@@ -13,6 +13,9 @@ XofYTableItem::XofYTableItem(qint32 currentValue, qint32 maxValue, qint32 itemWi
     setObjectName("XofYTableItem");
 #endif
     spLabel pTextfield = spLabel::create(itemWidth);
+    auto style = pTextfield->getStyle();
+    style.color = textColor;
+    pTextfield->setStyle(style);
     QString text = QString::number(m_currentValue) + " / " + QString::number(m_maxValue);
     pTextfield->setText(text);
     pTextfield->setTooltipText(text);

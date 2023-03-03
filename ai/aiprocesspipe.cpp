@@ -5,6 +5,8 @@
 
 #include "coreengine/settings.h"
 #include "coreengine/gameconsole.h"
+#include "coreengine/mainapp.h"
+#include "coreengine/filesupport.h"
 
 #include "game/gameaction.h"
 #include "game/gamemap.h"
@@ -57,7 +59,7 @@ void AiProcessPipe::startPipe()
     if (m_pActiveConnection != nullptr)
     {
         connect(m_pActiveConnection, &NetworkInterface::sigConnected, this, &AiProcessPipe::onConnected, Qt::QueuedConnection);
-        connect(m_pActiveConnection, &NetworkInterface::recieveData, this, &AiProcessPipe::recieveData, Qt::QueuedConnection);
+        connect(m_pActiveConnection, &NetworkInterface::recieveData, this, &AiProcessPipe::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         m_pActiveConnection->connectTCP(pipeName, 0, "");
     }
 }
@@ -84,6 +86,7 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
             QCoreApplication::processEvents();
             QThread::msleep(10);
         }
+        m_ActionBuffer.clear();
         CONSOLE_PRINT("AI-Pipe preparing the game", GameConsole::eDEBUG);
         m_pipeState = PipeState::PreparingGame;
         m_pMenu = pMenu;
@@ -93,11 +96,14 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
         QString command = QString(STARTGAME);
         CONSOLE_PRINT("AI-Pipe sending command " + command, GameConsole::eDEBUG);
+        auto seed = GlobalUtils::getSeed();
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
         stream << command;
-        stream << true;
+        stream << seed;
         m_pMap->serializeObject(stream);
+        auto mapHash = m_pMap->getMapHash();
+        Filesupport::writeByteArray(stream, mapHash);
         emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
         CONSOLE_PRINT("AI-Pipe waiting for ingame", GameConsole::eDEBUG);
         while (m_pipeState != PipeState::Ingame)
@@ -202,7 +208,7 @@ void AiProcessPipe::sendActionToMaster(spGameAction pAction)
     if (m_pipeState == PipeState::Ingame)
     {
         QString command = QString(NEWACTIONFORMASTER);
-        CONSOLE_PRINT("AI-Pipe sending command " + command + " action=" + pAction->getActionID(), GameConsole::eDEBUG);
+        CONSOLE_PRINT("AI-Pipe sending command " + command + " action=" + pAction->getActionID() + " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
         stream << command;
@@ -221,20 +227,23 @@ void AiProcessPipe::onNewActionForMaster(QDataStream & stream)
 
 void AiProcessPipe::onNewAction(QDataStream & stream)
 {
+    QMutexLocker locker(&m_ActionMutex);
+    spGameAction pAction = spGameAction::create(m_pMap);
+    pAction->deserializeObject(stream);
+    m_ActionBuffer.append(pAction);
     if (m_pipeState == PipeState::Ingame)
     {
-        QMutexLocker locker(&m_ActionMutex);
-        spGameAction pAction = spGameAction::create(m_pMap);
-        pAction->deserializeObject(stream);
-        m_ActionBuffer.append(pAction);
         if (m_pMenu.get() != nullptr &&
             !m_pMenu->getActionRunning())
         {
             spGameAction pAction = m_ActionBuffer.front();
-            m_ActionBuffer.pop_front();
-            CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
-                             " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
-            emit sigPerformAction(pAction);
+            if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
+            {
+                m_ActionBuffer.pop_front();
+                CONSOLE_PRINT("AI-Pipe emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
+                              " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
+                emit sigPerformAction(pAction, true);
+            }
         }
     }
 }
@@ -242,22 +251,35 @@ void AiProcessPipe::onNewAction(QDataStream & stream)
 void AiProcessPipe::onStartGame(QDataStream & stream)
 {
     CONSOLE_PRINT("AI-Pipe launching game on slave", GameConsole::eDEBUG);
-    bool savegame = false;
-    stream >> savegame;
-    spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, savegame);
-    spGameMenue pMenu = spGameMenue::create(pMap, savegame, spNetworkInterface());
-    oxygine::Stage::getStage()->addChild(pMenu);
-    m_pMap = pMap.get();
-    m_pMenu = pMenu.get();
-    m_pipeState = PipeState::Ingame;
-    QString command = QString(GAMESTARTED);
-    CONSOLE_PRINT("AI-Pipe sending command " + command +  " current player=" + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), GameConsole::eDEBUG);
-    QByteArray data;
-    QDataStream outStream(&data, QIODevice::WriteOnly);
-    outStream << command;
-    emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
-    connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
-    connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
+    m_ActionBuffer.clear();
+    quint32 seed = 0;
+    stream >> seed;
+    CONSOLE_PRINT("Using seed " + QString::number(seed), GameConsole::eDEBUG);
+    GlobalUtils::seed(seed);
+    GlobalUtils::setUseSeed(true);
+    spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, false);
+    QByteArray mapHash = Filesupport::readByteArray(stream);
+    if (mapHash == pMap->getMapHash())
+    {
+        spGameMenue pMenu = spGameMenue::create(pMap, false, spNetworkInterface());
+        oxygine::Stage::getStage()->addChild(pMenu);
+        m_pMap = pMap.get();
+        m_pMenu = pMenu.get();
+        m_pipeState = PipeState::Ingame;
+        QString command = QString(GAMESTARTED);
+        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
+        CONSOLE_PRINT("AI-Pipe sending command " + command +  " current player=" + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), GameConsole::eDEBUG);
+        QByteArray data;
+        QDataStream outStream(&data, QIODevice::WriteOnly);
+        outStream << command;
+        emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
+        connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
+    }
+    else
+    {
+        CONSOLE_PRINT("AI-Pipe damaged map state received", GameConsole::eERROR);
+    }
 }
 
 void AiProcessPipe::quitGame()
@@ -295,10 +317,13 @@ void AiProcessPipe::nextAction()
             if (m_ActionBuffer.size() > 0)
             {
                 spGameAction pAction = m_ActionBuffer.front();
-                m_ActionBuffer.pop_front();
-                CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
-                                 " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
-                emit sigPerformAction(pAction);
+                if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
+                {
+                    m_ActionBuffer.pop_front();
+                    CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
+                                  " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
+                    emit sigPerformAction(pAction, true);
+                }
             }
         }
     }

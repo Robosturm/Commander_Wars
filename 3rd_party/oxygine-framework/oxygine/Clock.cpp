@@ -2,48 +2,18 @@
 
 namespace oxygine
 {
-    float Clock::getMultiplier() const
-    {
-        return m_multiplier;
-    }
-
-    qint32 Clock::getFixedStep() const
-    {
-        return m_fixedStep;
-    }
-
-    qint32 Clock::getLastDT() const
-    {
-        return m_lastDT;
-    }
-
-    timeMS  Clock::getLastUpdateTime() const
-    {
-        return m_lastUpdateTime;
-    }
-
-    void Clock::setMultiplier(float m)
-    {
-        m_multiplier = m;
-    }
-
-    void Clock::setFixedStep(float step)
-    {
-        m_fixedStep = step;
-    }
-
     void Clock::pause()
     {
-        m_counter += 1;
+        m_pauseCounter += 1;
     }
 
     void Clock::resume()
     {
-        m_counter -= 1;
+        m_pauseCounter -= 1;
     }
     void Clock::resetPause()
     {
-        m_counter = 0;
+        m_pauseCounter = 0;
     }
 
     void Clock::update(timeMS globalTime)
@@ -58,7 +28,7 @@ namespace oxygine
         {
             m_lastUpdateTime = time;
         }
-        double dt = (time - m_lastUpdateTime).count() * m_multiplier;
+        double dt = (time - m_lastUpdateTime).count();
         if (dt < 1 && dt > 0)
         {
             dt = 1;
@@ -71,7 +41,7 @@ namespace oxygine
         {
             dt = 1;
         }
-        if (m_counter > 0)
+        if (m_pauseCounter > 0)
         {
             dt = 0;
         }
@@ -83,32 +53,21 @@ namespace oxygine
 
     timeMS Clock::doTick()
     {
-        if (m_counter > 0)
+        if (m_pauseCounter > 0)
         {
             return timeMS(0);
         }
-        if (m_srcTime + m_fixedStep > m_destTime)
+        if (m_srcTime > m_destTime)
         {
             return timeMS(0);
         }
-        if (m_fixedStep == 0)
-        {
-            timeMS dt = timeMS(static_cast<qint64>(m_destTime - m_srcTime));
-            m_srcTime = m_destTime;
-            return dt;
-        }
-
-        m_srcTime += m_fixedStep;
-        return timeMS(static_cast<qint64>(m_fixedStep));
+        timeMS dt = timeMS(static_cast<qint64>(m_destTime - m_srcTime));
+        m_srcTime = m_destTime;
+        return dt;
     }
 
     timeMS Clock::getTime() const
     {
         return timeMS(static_cast<qint64>(m_srcTime));
-    }
-
-    qint32 Clock::getPauseCounter() const
-    {
-        return m_counter;
     }
 }

@@ -1,6 +1,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/filesupport.h"
 
 #include "game/gameaction.h"
 #include "game/gamemap.h"
@@ -126,6 +127,16 @@ void GameAction::printAction()
     auto bytes = m_buffer.data();
     QString data = GlobalUtils::getByteArrayString(bytes);
     CONSOLE_PRINT("Data " + data, GameConsole::eINFO);
+}
+
+QByteArray GameAction::getMapHash() const
+{
+    return m_mapHash;
+}
+
+void GameAction::setMapHash(const QByteArray & newMapHash)
+{
+    m_mapHash = newMapHash;
 }
 
 GameMap *GameAction::getMap() const
@@ -527,6 +538,7 @@ void GameAction::serializeObject(QDataStream& stream) const
     }
     stream << m_syncCounter;
     stream << m_roundTimerTime;
+    Filesupport::writeByteArray(stream, m_mapHash);
 }
 
 void GameAction::deserializeObject(QDataStream& stream)
@@ -574,6 +586,10 @@ void GameAction::deserializeObject(QDataStream& stream)
     if (version > 2)
     {
         stream >> m_roundTimerTime;
+    }
+    if (version > 3)
+    {
+        m_mapHash = Filesupport::readByteArray(stream);
     }
 }
 

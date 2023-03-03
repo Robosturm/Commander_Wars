@@ -30,7 +30,7 @@ public:
     static const char* const scriptName;
     explicit Campaign(QString file);
     explicit Campaign();
-    ~Campaign();
+    ~Campaign() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

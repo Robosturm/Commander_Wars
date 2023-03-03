@@ -82,10 +82,10 @@ void DialogModifyUnit::updateData()
     spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 80);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Edit unit"));
-    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     m_pPanel->addItem(pLabel);
 
-    qint32 y = 30 + pLabel->getTextRect().getHeight();
+    qint32 y = 30 + pLabel->getTextRect().height();
     pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Custom name: "));
@@ -95,12 +95,12 @@ void DialogModifyUnit::updateData()
     pTexbox->setPosition(sliderOffset - 160, y);
     pTexbox->setCurrentText(m_pUnit->getName());
     pTexbox->setTooltipText(tr("Selects the custom name of the unit shown instead of the actual unit name. An empty name will display the default name for that unit."));
-    connect(pTexbox.get(), &Textbox::sigTextChanged, [this](QString value)
+    connect(pTexbox.get(), &Textbox::sigTextChanged, this, [this](QString value)
     {
         m_pUnit->setCustomName(value);
     });
     m_pPanel->addItem(pTexbox);
-    y += 40;
+    y += pLabel->getHeight() + 10;
 
     pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
@@ -111,12 +111,12 @@ void DialogModifyUnit::updateData()
     pSlider->setTooltipText(tr("Selects the HP of the current unit. This is immediately applied."));
     pSlider->setPosition(sliderOffset - 160, y);
     pSlider->setCurrentValue(m_pUnit->getHpRounded());
-    connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
+    connect(pSlider.get(), &Slider::sliderValueChanged, this, [this](qint32 value)
     {
         m_pUnit->setHp(value);
     });
     m_pPanel->addItem(pSlider);
-    y += 40;
+    y += pLabel->getHeight() + 10;
     if (m_pUnit->getMaxFuel() > 0)
     {
         pLabel = spLabel::create(sliderOffset - 140);
@@ -128,7 +128,7 @@ void DialogModifyUnit::updateData()
         pSlider->setTooltipText(tr("Selects the Fuel of the current unit. This is immediately applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getFuel());
-        connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
+        connect(pSlider.get(), &Slider::sliderValueChanged, this, [this](qint32 value)
         {
             m_pUnit->setFuel(value);
             if (value == m_pUnit->getMaxFuel())
@@ -141,7 +141,7 @@ void DialogModifyUnit::updateData()
             }
         });
         m_pPanel->addItem(pSlider);
-        y += 40;
+        y += pLabel->getHeight() + 10;
     }
     if (m_pUnit->getMaxAmmo1() > 0)
     {
@@ -154,7 +154,7 @@ void DialogModifyUnit::updateData()
         pSlider->setTooltipText(tr("Selects the Ammo 1 of the current unit. This is immediately applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo1());
-        connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
+        connect(pSlider.get(), &Slider::sliderValueChanged, this, [this](qint32 value)
         {
             m_pUnit->setAmmo1(value);
             if (value == m_pUnit->getMaxAmmo1())
@@ -167,7 +167,7 @@ void DialogModifyUnit::updateData()
             }
         });
         m_pPanel->addItem(pSlider);
-        y += 40;
+        y += pLabel->getHeight() + 10;
     }
     if (m_pUnit->getMaxAmmo2() > 0)
     {
@@ -180,7 +180,7 @@ void DialogModifyUnit::updateData()
         pSlider->setTooltipText(tr("Selects the Ammo 2 of the current unit. This is immediately applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo2());
-        connect(pSlider.get(), &Slider::sliderValueChanged, [this](qint32 value)
+        connect(pSlider.get(), &Slider::sliderValueChanged, this, [this](qint32 value)
         {
             m_pUnit->setAmmo2(value);
             if (value == m_pUnit->getMaxAmmo2())
@@ -193,7 +193,7 @@ void DialogModifyUnit::updateData()
             }
         });
         m_pPanel->addItem(pSlider);
-        y += 40;
+        y += pLabel->getHeight() + 10;
     }
 
     pLabel = spLabel::create(sliderOffset - 140);
@@ -217,7 +217,7 @@ void DialogModifyUnit::updateData()
 
     });
     m_pPanel->addItem(pDropdownmenu);
-    y += 40;
+    y += pLabel->getHeight() + 10;
 
     pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
@@ -245,13 +245,13 @@ void DialogModifyUnit::updateData()
                                      "This is immediately applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getAiMode()));
-    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [this](qint32 value)
+    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 value)
     {
         m_pUnit->setAiMode(static_cast<GameEnums::GameAi>(value));
         emit sigUpdateData();
     });
     m_pPanel->addItem(pDropdownmenu);
-    y += 40;
+    y += pLabel->getHeight() + 10;
     addLoadLoopPoints(y, sliderOffset);
 
     pLabel = spLabel::create(sliderOffset - 140);
@@ -285,7 +285,7 @@ void DialogModifyUnit::updateData()
         if (pAnim != nullptr)
         {
             pSprite->setResAnim(pAnim);
-            pSprite->setScale(pAnim->getWidth() / 30.0f);
+            pSprite->setScale(static_cast<float>(pAnim->getWidth()) / 30.0f);
             pSprite->setSize(pAnim->getSize());
         }
         return pSprite;
@@ -295,12 +295,12 @@ void DialogModifyUnit::updateData()
     pDropdownmenuSprite->setPosition(sliderOffset - 160, y);
     pDropdownmenuSprite->setCurrentItem(static_cast<qint32>(m_pUnit->getUnitRank() - GameEnums::UnitRank_CO1));
     qint32 size = rankItems.size();
-    connect(pDropdownmenuSprite.get(), &DropDownmenuSprite::sigItemChanged, [this, size](qint32 value)
+    connect(pDropdownmenuSprite.get(), &DropDownmenuSprite::sigItemChanged, this, [this, size](qint32 value)
     {
         m_pUnit->setUnitRank(value + GameEnums::UnitRank_CO1, true);
     });
     m_pPanel->addItem(pDropdownmenuSprite);
-    y += 40;
+    y += pLabel->getHeight() + 10;
 
     for (qint32 i = 0; i < m_pUnit->getLoadedUnitCount(); i++)
     {
@@ -370,7 +370,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
         emit sigLoadUnit(pPtrDropdownmenu->getCurrentItemText(), index);
     });
     m_pPanel->addItem(pDropdownmenu);
-    y += 40;
+    y += pLabel->getHeight() + 10;
 }
 
 void DialogModifyUnit::loadUnit(QString unitID, qint32 index)
@@ -411,7 +411,7 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
             pSpinbox->setTooltipText("X-Coordinate for the move path.");
             pSpinbox->setPosition(sliderOffset - 160, y);
             m_pPanel->addItem(pSpinbox);
-            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [this, i](qreal value)
+            connect(pSpinbox.get(), &SpinBox::sigValueChanged, this, [this, i](qreal value)
             {
                 auto points = m_pUnit->getAiMovePath();
                 points[i].setX(value);
@@ -421,14 +421,14 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
             pSpinbox->setCurrentValue(points[i].y());
             pSpinbox->setTooltipText("Y-Coordinate for the move path.");
             pSpinbox->setPosition(sliderOffset + 50, y);
-            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [this, i](qreal value)
+            connect(pSpinbox.get(), &SpinBox::sigValueChanged, this, [this, i](qreal value)
             {
                 auto points = m_pUnit->getAiMovePath();
                 points[i].setY(value);
                 m_pUnit->setAiMovePathPoint(i, points[i]);
             });
             m_pPanel->addItem(pSpinbox);
-            y += 40;
+            y += pLabel->getHeight() + 10;
         }
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::spButton pButton = pObjectManager->createButton(tr("Add Point"), 150);
@@ -447,7 +447,7 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
             m_pUnit->removeLastAiMovePathPoint();
             emit sigUpdateData();
         });
-        y += 50;
+        y += pLabel->getHeight() + 20;
     }
     else
     {

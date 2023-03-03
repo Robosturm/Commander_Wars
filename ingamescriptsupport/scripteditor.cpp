@@ -40,7 +40,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     oxygine::spTextField pText = oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Conditions"));
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, 70);
+    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, 70);
     pSpriteBox->addChild(pText);
     QSize size(Settings::getWidth() - 40, Settings::getHeight() / 2 - 160);
     m_ConditionPanel = spPanel::create(true, size, size);
@@ -86,7 +86,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     pText = oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Events"));
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, Settings::getHeight() / 2);
+    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, Settings::getHeight() / 2);
     pSpriteBox->addChild(pText);
     m_EventPanel = spPanel::create(true, size, size);
     m_EventPanel->setPosition(30, Settings::getHeight() / 2 + 40);
@@ -325,8 +325,8 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         condition = condition->getSubCondition();
         if (condition.get() != nullptr)
         {
-            boxY += 40;
-            pSpritebox->setHeight(pSpritebox->getScaledHeight() + 40);
+            boxY += text->getHeight() + 10;
+            pSpritebox->setHeight(pSpritebox->getScaledHeight() + text->getHeight() + 10);
         }
     }
 
@@ -406,7 +406,7 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
         emit sigDuplicateEvent(spScriptEvent(pPtrEvent));
     });
 
-    y += 40;
+    y += text->getHeight() + 10;
     m_EventPanel->setContentWidth(x + 140 * 3 + 10);
 }
 

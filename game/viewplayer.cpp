@@ -52,7 +52,7 @@ bool Viewplayer::getFieldVisible(qint32 x, qint32 y)
     return false;
 }
 
-GameEnums::VisionType Viewplayer::getFieldVisibleType(qint32 x, qint32 y)
+GameEnums::VisionType Viewplayer::getFieldVisibleType(qint32 x, qint32 y) const
 {
     
     switch (m_ViewType)

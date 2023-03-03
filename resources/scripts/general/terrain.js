@@ -107,7 +107,7 @@ var TERRAIN =
 
     getTerrainAnimationForeground : function(unit, terrain, defender, map)
     {
-        var variables = terrain.getVariables();
+        var variables = terrain.getAnimationVariables();
         var variable = variables.getVariable("FOREGROUND_ID");
         var rand = 0;
         if (variable === null)
@@ -143,7 +143,7 @@ var TERRAIN =
                 upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORYWASTE" ||
                 upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORYSNOW"))
             {
-                var variables = terrain.getVariables();
+                var variables = terrain.getAnimationVariables();
                 var variable = variables.getVariable("FOREGROUND_ID");
                 var rand = 0;
                 if (variable === null)
@@ -429,16 +429,53 @@ var TERRAIN =
                "WASTE_FOREST,WASTE_MOUNTAIN";
     },
 
+    paletteTable : [[qsTr("None"), ""],
+                    [qsTr("Clear"), "palette_clear"],
+                    [qsTr("Desert"), "palette_desert"],
+                    [qsTr("Snow"), "palette_snow"],
+                    [qsTr("Waste"), "palette_waste"],
+                    [qsTr("Clear AW 2"), "palette_clear+aw2"],
+                    [qsTr("Rain AW 2"), "palette_rain+aw2"],
+                    [qsTr("Snow AW 2"), "palette_snow+aw2"],
+                    [qsTr("Clear AW DS"), "palette_clear+awds"],
+                    [qsTr("Desert AW DS"), "palette_desert+awds"],
+                    [qsTr("Snow AW DS"), "palette_snow+awds"],
+                    [qsTr("Waste AW DS"), "palette_waste+awds"],
+                    [qsTr("Clear AW 4"), "palette_clear+dor"],
+                    [qsTr("Desert AW 4"), "palette_desert+dor"],
+                    [qsTr("Snow AW 4"), "palette_snow+dor"],
+                    [qsTr("Waste AW 4"), "palette_waste+dor"],],
+    getPaletteTables : function()
+    {
+        return TERRAIN.paletteTable.length;
+    },
+    getPaletteNames : function(index)
+    {
+        return TERRAIN.paletteTable[index][0];
+    },
+    getPaletteId : function(index)
+    {
+        return TERRAIN.paletteTable[index][1];
+    },
+    getPaletteName : function(id)
+    {
+        var length = TERRAIN.paletteTable.length;
+        for (var i = 0; i < length; ++i)
+        {
+            if (TERRAIN.paletteTable[i][1] === id)
+            {
+                return TERRAIN.paletteTable[i][0];
+            }
+        }
+        return TERRAIN.paletteTable[0][0];
+    },
+
     getShowInEditor : function()
     {
         return true;
     },
 
     getEditorPlacementSound : function()
-    {
-        return "";
-    },
-    getPalette : function(terrain, sprite, map)
     {
         return "";
     },

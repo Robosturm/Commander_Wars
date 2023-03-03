@@ -8,7 +8,7 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
-SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
+SpinBox::SpinBox(qint32 width, qreal min, qreal max, Mode mode)
     : m_MinValue(min),
       m_MaxValue(max),
       m_Mode(mode)
@@ -39,7 +39,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     setSize(width, 40);
     m_Textfield->setWidth(m_Textbox->getScaledWidth() - 20);
     m_Textfield->setHeight(m_Textbox->getScaledHeight());
-    pClipActor->setSize(m_Textfield->getScaledSize().cast<oxygine::Point>());
+    pClipActor->setSize(m_Textfield->getScaledSize());
     pClipActor->setX(10);
     pClipActor->setY(5);
     addChild(m_Textbox);
@@ -170,7 +170,7 @@ void SpinBox::update(const oxygine::UpdateState& us)
         {
             // calc text field position based on curmsgpos
             qint32 xPos = 0;
-            qint32 fontWidth = m_Textfield->getTextRect().getWidth() / drawText.size();
+            qint32 fontWidth = m_Textfield->getTextRect().width() / drawText.size();
             qint32 boxSize = (m_Textbox->getScaledWidth() - 5 - fontWidth);
             xPos = -fontWidth * curmsgpos + boxSize / 2;
             if (xPos > 0)
@@ -179,7 +179,7 @@ void SpinBox::update(const oxygine::UpdateState& us)
             }
             else if ((drawText.size() - curmsgpos + 1) * fontWidth < boxSize)
             {
-                xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 1;
+                xPos = m_Textbox->getScaledWidth() - m_Textfield->getTextRect().width() - fontWidth * 1;
                 if (xPos > 0)
                 {
                     xPos = 0;

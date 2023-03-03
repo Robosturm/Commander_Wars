@@ -12,10 +12,10 @@ namespace oxygine
         explicit SlidingSprite();
         virtual ~SlidingSprite() = default;
         void setResAnim(ResAnim* pAnim);
-        float getSpeedX() const;
-        void setSpeedX(float speed);
-        float getSpeedY() const;
-        void setSpeedY(float speed);
+        qint32 getSpeedX() const;
+        void setSpeedX(qint32 speed);
+        qint32 getSpeedY() const;
+        void setSpeedY(qint32 speed);
 
         bool getFlippedX() const;
         void setFlippedX(bool flipped);
@@ -25,8 +25,8 @@ namespace oxygine
 
     private:
         oxygine::spSprite m_sprites[4];
-        float m_speedX{1};
-        float m_speedY{0};
+        qint32 m_speedX{1};
+        qint32 m_speedY{0};
         bool m_flippedX{false};
         bool m_locked{false};
     };

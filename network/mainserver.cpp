@@ -16,6 +16,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/commandlineparser.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/workerthread.h"
 #include "multiplayer/password.h"
 
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
@@ -23,14 +24,27 @@
 const char* const DRIVER = "QSQLITE";
 
 const char* const SQL_TABLE_PLAYERS = "players";
-const char* const SQL_TABLE_PLAYERDATA = "playerData";
-const char* const SQL_TABLE_PLAYER_CO_DATA = "player_CO_Data";
-const char* const SQL_USERNAME = "username";
-const char* const SQL_PASSWORD = "password";
-const char* const SQL_MAILADRESS = "mailAdress";
-const char* const SQL_MMR = "mmr";
+const char* const SQL_USERNAME      = "username";
+const char* const SQL_PASSWORD      = "password";
+const char* const SQL_MAILADRESS    = "mailAdress";
 const char* const SQL_VALIDPASSWORD = "validPassword";
-const char* const SQL_LASTLOGIN = "lastLogin";
+const char* const SQL_LASTLOGIN     = "lastLogin";
+
+const char* const SQL_TABLE_PLAYERDATA  = "playerData";
+const char* const SQL_COID              = "coid";
+const char* const SQL_GAMESMADE         = "gamesMade";
+const char* const SQL_GAMESLOST         = "gamesLost";
+const char* const SQL_GAMESWON          = "gamesWon";
+const char* const SQL_GAMESDRAW         = "gamesDraw";
+const char* const SQL_METADATA          = "metaData";
+
+const char* const SQL_TABLE_MATCH_DATA  = "matchData";
+const char* const SQL_MMR               = "mmr";
+const char* const SQL_MINGAMES          = "minGames";
+const char* const SQL_MAXGAMES          = "maxGames";
+const char* const SQL_RUNNINGGAMES      = "runningGames";
+
+
 
 
 spMainServer MainServer::m_pInstance{nullptr};
@@ -97,12 +111,14 @@ MainServer::MainServer()
     QString javascriptName = "mainServer";
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(javascriptName, pInterpreter->newQObject(this));
+    Mainapp* pApp = Mainapp::getInstance();
+    connect(this, &MainServer::sigExecuteServerScript, pApp->getWorker(), &WorkerThread::executeServerScript, NetworkCommands::UNIQUE_DATA_CONNECTION);
     // connect signals for tcp server events
-    connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
+    connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
     connect(m_pGameServer.get(), &TCPServer::sigDisconnected, this, &MainServer::disconnected, Qt::QueuedConnection);
     // connect signals for tcp slave events
-    connect(m_pSlaveServer.get(), &TCPServer::recieveData, this, &MainServer::receivedSlaveData, Qt::QueuedConnection);
+    connect(m_pSlaveServer.get(), &TCPServer::recieveData, this, &MainServer::receivedSlaveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     // internal updates
     connect(this, &MainServer::sigStartRemoteGame, this, &MainServer::slotStartRemoteGame, Qt::QueuedConnection);
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
@@ -113,20 +129,7 @@ MainServer::MainServer()
 
     if (m_serverData != nullptr)
     {
-        QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
-                                            SQL_USERNAME + " TEXT PRIMARY KEY, " +
-                                            SQL_PASSWORD + " TEXT, " +
-                                            SQL_MAILADRESS + " TEXT, " +
-                                            SQL_MMR + " INTEGER, " +
-                                            SQL_VALIDPASSWORD + " INTEGER, " +
-                                            SQL_LASTLOGIN + " TEXT)");
-        if (sqlQueryFailed(query))
-        {
-            CONSOLE_PRINT("Unable to create player table " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
-        }
-    }
-    if (m_serverData != nullptr)
-    {
+        startDatabase();
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start();
         connect(&m_mailSender, &SmtpMailSender::sigMailResult, this, &MainServer::onMailSendResult, Qt::QueuedConnection);
@@ -152,6 +155,36 @@ MainServer::~MainServer()
         game->process->kill();
     }
     m_games.clear();
+}
+
+void MainServer::startDatabase()
+{
+    QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERS + " (" +
+                                        SQL_USERNAME + " TEXT PRIMARY KEY, " +
+                                        SQL_PASSWORD + " TEXT, " +
+                                        SQL_MAILADRESS + " TEXT, " +
+                                        SQL_MMR + " INTEGER, " +
+                                        SQL_VALIDPASSWORD + " INTEGER, " +
+                                        SQL_LASTLOGIN + " TEXT)");
+    if (sqlQueryFailed(query))
+    {
+        CONSOLE_PRINT("Unable to create player table error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+    }
+    bool success = false;
+    query = getAllUsers(*m_serverData, success);
+    if (success)
+    {
+        if (query.first())
+        {
+            auto username = query.value(SQL_USERNAME);
+            createUserTable(username.toString());
+            while (query.next())
+            {
+                auto username = query.value(SQL_USERNAME);
+                createUserTable(username.toString());
+            }
+        }
+    }
 }
 
 bool MainServer::sqlQueryFailed(const QSqlQuery & query)
@@ -236,6 +269,10 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             onRequestGameData(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SERVERREQUESTVERSION)
+        {
+            onRequestServerVersion(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in MainServer::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -290,11 +327,21 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         {
             onSlaveInfoDespawning(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SLAVEMULTIPLAYERGAMERESULT)
+        {
+            onSlaveInfoGameResult(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in MainServer::receivedSlaveData " + messageType + " received", GameConsole::eDEBUG);
         }
     }
+}
+
+void MainServer::exit()
+{
+    CONSOLE_PRINT("Closing server", GameConsole::eDEBUG);
+    QCoreApplication::exit(0);
 }
 
 void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData)
@@ -306,6 +353,10 @@ void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData
         const auto & game = iter.value();
         // send data
         QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
+        CONSOLE_PRINT("onSlaveRelaunched sending command " + command +
+                      " with address " + game->game->getData().getSlaveAddress() +
+                      " secondary address " + game->game->getData().getSlaveSecondaryAddress() +
+                      " and port " + QString::number(game->game->getData().getSlavePort()), GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_ADDRESS, game->game->getData().getSlaveAddress());
@@ -350,6 +401,29 @@ bool MainServer::informClientsAboutRelaunch(QVector<SuspendedSlaveInfo> & games,
     return false;
 }
 
+void MainServer::onSlaveInfoGameResult(quint64 socketID, const QJsonObject & objData)
+{
+    auto matchType = objData.value(JsonKeys::JSONKEY_MATCHTYPE).toString();
+    updatePlayerMatchData(objData);
+    if (!matchType.isEmpty())
+    {
+        if (m_autoMatchMakers.contains(matchType))
+        {
+            m_autoMatchMakers[matchType]->onNewMatchResultData(objData);
+        }
+        else
+        {
+            CONSOLE_PRINT("Unknown match type result received, maybe the auto match script got deleted while games were runnig: " + matchType, GameConsole::eERROR);
+        }
+    }
+    despawnSlave(socketID);
+}
+
+void MainServer::updatePlayerMatchData(const QJsonObject & objData)
+{
+
+}
+
 void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData)
 {
     bool runningGame = objData.value(JsonKeys::JSONKEY_RUNNINGGAME).toBool();
@@ -373,12 +447,17 @@ void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & obj
         setUuidForGame(slaveInfo.game);
         m_runningLobbies.append(slaveInfo);
     }
+    despawnSlave(socketID);
+}
+
+void MainServer::despawnSlave(quint64 socketID)
+{
     QString command = NetworkCommands::DESPAWNSLAVE;
-    QJsonObject data;
-    data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    QJsonDocument doc(data);
-    CONSOLE_PRINT("Sending command " + command + " to slave to socket " + QString::number(socketID), GameConsole::eDEBUG);
-    emit m_pSlaveServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+     QJsonObject data;
+     data.insert(JsonKeys::JSONKEY_COMMAND, command);
+     QJsonDocument doc(data);
+     CONSOLE_PRINT("Sending command " + command + " to slave to socket " + QString::number(socketID), GameConsole::eDEBUG);
+     emit m_pSlaveServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::setUuidForGame(NetworkGameData & game)
@@ -434,6 +513,18 @@ void MainServer::onSlaveGameStarted(quint64 socketID, const QJsonObject & objDat
     {
         CONSOLE_PRINT("Unable to find slave game: " + slaveName + " running games: " + QString::number(m_games.size()), GameConsole::eDEBUG);
     }
+}
+
+void MainServer::onRequestServerVersion(quint64 socketId, const QJsonObject & objData)
+{
+    QString command = QString(NetworkCommands::SERVERVERSION);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_VERSION, Mainapp::getGameVersion());
+    // send server data to all connected clients
+    QJsonDocument doc(data);
+    emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objData)
@@ -505,6 +596,14 @@ void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData
         auto & internGame = iter.value();
         auto & data = internGame->game->getData();
         data.setPlayers(data.getMaxPlayers() - openPlayerCount);
+        if (objData.contains(JsonKeys::JSONKEY_CURRENTPLAYER))
+        {
+            data.setCurrentPlayer(objData.value(JsonKeys::JSONKEY_CURRENTPLAYER).toString());
+        }
+        if (objData.contains(JsonKeys::JSONKEY_RUNNINGGAME))
+        {
+            data.setRunningGame(objData.value(JsonKeys::JSONKEY_RUNNINGGAME).toBool());
+        }
         m_updateGameData = true;
     }
     else
@@ -843,20 +942,7 @@ void MainServer::cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> & games)
 
 void MainServer::executeScript()
 {
-    const char* const SCRIPTFILE = "serverScript.js";
-    CONSOLE_PRINT("MainServer::executeScript checking for script " + QString(SCRIPTFILE), GameConsole::eDEBUG);
-    if (QFile::exists(SCRIPTFILE))
-    {
-        CONSOLE_PRINT("Loading server script", GameConsole::eDEBUG);
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        if (pInterpreter->openScript(SCRIPTFILE, false))
-        {
-            CONSOLE_PRINT("Executing server script", GameConsole::eDEBUG);
-            QJSValueList args({pInterpreter->newQObject(this)});
-            pInterpreter->doFunction("serverScript", args);
-        }
-        QFile::remove(SCRIPTFILE);
-    }
+    emit sigExecuteServerScript();
 }
 
 void MainServer::sendGameDataToClient(qint64 socketId)
@@ -892,7 +978,7 @@ void MainServer::sendGameDataToClient(qint64 socketId)
 
 void MainServer::closeGame(NetworkGame* pGame)
 {
-    CONSOLE_PRINT("Despawning games", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Despawning  game", GameConsole::eDEBUG);
     QString slaveName = pGame->getServerName();
     auto iter = m_games.find(slaveName);
     if (iter != m_games.end())
@@ -902,6 +988,9 @@ void MainServer::closeGame(NetworkGame* pGame)
         freeAddress.address = game->game->getData().getSlaveAddress();
         freeAddress.secondaryAddress = game->game->getData().getSlaveSecondaryAddress();
         freeAddress.port = game->game->getData().getSlavePort();
+        CONSOLE_PRINT("Freeing address " + game->game->getData().getSlaveAddress() +
+                      " secondary address " + game->game->getData().getSlaveSecondaryAddress() +
+                      " and port " + QString::number(game->game->getData().getSlavePort()), GameConsole::eDEBUG);
         m_freeAddresses.append(freeAddress);
         game->process->kill();
         game->game = nullptr;
@@ -913,6 +1002,9 @@ void MainServer::closeGame(NetworkGame* pGame)
 bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress)
 {
     bool success = false;
+    address = "";
+    secondaryAddress = "";
+    port = 0;
     if (m_freeAddresses.size() > 0)
     {
         auto & newAddress = m_freeAddresses.constLast();
@@ -946,6 +1038,9 @@ bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port, QStr
             }
         }
     }
+    CONSOLE_PRINT("getNextFreeSlaveAddress using address " + address +
+                  " secondary address " + secondaryAddress +
+                  " and port " + QString::number(port), GameConsole::eDEBUG);
     return success;
 }
 
@@ -1022,6 +1117,7 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc, Netwo
                           "'" + dateTime + "'" +
                           ")";
         query = m_serverData->exec(command);
+        createUserTable(username);
         if (sqlQueryFailed(query))
         {
             result = GameEnums::LoginError_AccountExists;
@@ -1114,6 +1210,36 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
     if (result == GameEnums::LoginError_None)
     {
         sendGameDataToClient(socketId);
+    }
+}
+
+void MainServer::createUserTable(const QString & username)
+{
+    QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_PLAYERDATA + username + " (" +
+                                        SQL_COID + " TEXT PRIMARY KEY, " +
+                                        SQL_GAMESMADE + " INTEGER, " +
+                                        SQL_GAMESLOST + " INTEGER, " +
+                                        SQL_GAMESWON + " INTEGER, " +
+                                        SQL_GAMESDRAW + " INTEGER," +
+                                        SQL_METADATA + "TEXT)");
+    if (sqlQueryFailed(query))
+    {
+        CONSOLE_PRINT("Unable to create user table for user " + username + ". Error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
+    }
+}
+
+void MainServer::createMatchData(const QString & match)
+{
+    QSqlQuery query = m_serverData->exec(QString("CREATE TABLE if not exists ") + SQL_TABLE_MATCH_DATA + match + " (" +
+                                        SQL_USERNAME + " TEXT PRIMARY KEY, " +
+                                        SQL_MMR + " INTEGER, " +
+                                        SQL_MINGAMES + " INTEGER, " +
+                                        SQL_MAXGAMES + " INTEGER, " +
+                                        SQL_RUNNINGGAMES + " INTEGER," +
+                                        SQL_METADATA + "TEXT)");
+    if (sqlQueryFailed(query))
+    {
+        CONSOLE_PRINT("Unable to create match table for match " + match + ". Error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
     }
 }
 
@@ -1345,4 +1471,12 @@ QSqlQuery MainServer::getAccountInfo(QSqlDatabase & database, const QString & us
     success = !sqlQueryFailed(query);
     return query;
 }
+
+QSqlQuery MainServer::getAllUsers(QSqlDatabase & database, bool & success)
+{
+    QSqlQuery query = database.exec(QString("SELECT ") + SQL_USERNAME + " from " + SQL_TABLE_PLAYERS + ";");
+    success = !sqlQueryFailed(query);
+    return query;
+}
+
 

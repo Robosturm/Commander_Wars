@@ -30,18 +30,6 @@ Campaign::Campaign()
     Interpreter::setCppOwnerShip(this);
 }
 
-Campaign::~Campaign()
-{
-    if (!m_script.isEmpty())
-    {
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        if (pInterpreter != nullptr)
-        {
-            pInterpreter->deleteObject(scriptName);
-        }
-    }
-}
-
 void Campaign::init()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

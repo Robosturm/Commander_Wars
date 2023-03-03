@@ -31,7 +31,7 @@ public:
     void setMap(GameMap *newMap);
 
 public slots:
-    GameMap *getMap() const;
+    const GameMap *getMap() const;
     void updateMinimap();
     void updatePlayerInfo();
     void updateCursorInfo(qint32 x, qint32 y);

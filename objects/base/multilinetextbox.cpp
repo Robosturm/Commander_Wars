@@ -39,7 +39,7 @@ MultilineTextbox::MultilineTextbox(qint32 width, qint32 heigth)
             QMutexLocker locker(m_textfield->getLocked());
             oxygine::text::Node* root = m_textfield->getRootNode();
             m_focusPosition = 0;
-            calculateNewFocusPosition(root, pTouchEvent->localPosition.x, pTouchEvent->localPosition.y);
+            calculateNewFocusPosition(root, pTouchEvent->localPosition.x(), pTouchEvent->localPosition.y());
         }
         pEvent->stopPropagation();
         if (FocusableObject::getFocusedObject() == this)
@@ -76,7 +76,7 @@ bool MultilineTextbox::getNewFocusPosition(oxygine::text::Node* pNode, qint32 x,
         auto & lines = pTextNode->getLines();
         auto & positions = pTextNode->getPositions();
         qint32 lineCount = lines.size();
-        const QFont & font = m_textfield->getStyle().font.font;
+        const QFont & font = m_textfield->getStyle().font->font;
         qint32 contentY = m_pPanel->getContentY();
         QFontMetrics metrics(font);
         qint32 descent = metrics.descent();
@@ -124,8 +124,7 @@ void MultilineTextbox::update(const oxygine::UpdateState& us)
         if (drawText.size() > 0)
         {
             // calc text field position based on curmsgpos
-            auto textRect = m_textfield->getTextRect();
-            m_pPanel->setContentHeigth(textRect.getHeight() + 40);
+            m_pPanel->setContentHeigth(m_textfield->getTextRect().height() + 40);
         }
     }
     oxygine::Actor::update(us);

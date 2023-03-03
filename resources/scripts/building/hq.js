@@ -1,6 +1,9 @@
 var Constructor = function()
 {
-
+    this.getBuildingGroup = function()
+    {
+        return 1;
+    };
     this.buildingData = [["ac", "ac"],
                          ["bd", "bd"],
                          ["bh", "bh"],

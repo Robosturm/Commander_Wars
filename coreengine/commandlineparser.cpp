@@ -403,7 +403,7 @@ void CommandLineParser::startSlaveGame() const
         // connect to server
         spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
         connect(pSlaveMasterConnection.get(), &TCPClient::sigConnected, pMenu.get(), &Multiplayermenu::onSlaveConnectedToMaster, Qt::QueuedConnection);
-        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, pMenu.get(), &Multiplayermenu::recieveServerData, Qt::QueuedConnection);
+        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, pMenu.get(), &Multiplayermenu::recieveServerData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         emit pSlaveMasterConnection->sig_connect(masterAddress, masterPort, "");
     }
     else

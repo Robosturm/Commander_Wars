@@ -196,14 +196,14 @@ endif()
 ###################################################################################
 add_definitions(
     -DVERSION_MAJOR=0
-    -DVERSION_MINOR=28
-    -DVERSION_REVISION=1
+    -DVERSION_MINOR=29
+    -DVERSION_REVISION=3
     -DVERSION_SUFFIX="main"
     -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     )
 
-set(COW_ANDROID_VERSION_NAME "0.28.1-main")
-set(COW_ANDROID_VERSION_CODE "29")
+set(COW_ANDROID_VERSION_NAME "0.29.3-main")
+set(COW_ANDROID_VERSION_CODE "33")
 
 ###################################################################################
 # Set up some compiler and linking options
@@ -238,8 +238,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/MaterialCache.cpp 3rd_party/oxygine-framework/oxygine/MaterialCache.h
     3rd_party/oxygine-framework/oxygine/PointerState.cpp 3rd_party/oxygine-framework/oxygine/PointerState.h
     3rd_party/oxygine-framework/oxygine/RenderDelegate.cpp 3rd_party/oxygine-framework/oxygine/RenderDelegate.h
-    3rd_party/oxygine-framework/oxygine/STDRenderer.cpp 3rd_party/oxygine-framework/oxygine/STDRenderer.h
-    3rd_party/oxygine-framework/oxygine/VisualStyle.cpp 3rd_party/oxygine-framework/oxygine/VisualStyle.h
+    3rd_party/oxygine-framework/oxygine/STDRenderer.cpp 3rd_party/oxygine-framework/oxygine/STDRenderer.h    
     3rd_party/oxygine-framework/oxygine/RenderState.h
     3rd_party/oxygine-framework/oxygine/oxygine-forwards.h
     3rd_party/oxygine-framework/oxygine/TextStyle.h
@@ -262,6 +261,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/actor/Stage.cpp 3rd_party/oxygine-framework/oxygine/actor/Stage.h
     3rd_party/oxygine-framework/oxygine/actor/TextField.cpp 3rd_party/oxygine-framework/oxygine/actor/TextField.h
     3rd_party/oxygine-framework/oxygine/actor/slidingsprite.cpp 3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h
+    3rd_party/oxygine-framework/oxygine/actor/VisualStyleActor.cpp 3rd_party/oxygine-framework/oxygine/actor/VisualStyleActor.h
     # tween
     3rd_party/oxygine-framework/oxygine/tween/Tween.cpp 3rd_party/oxygine-framework/oxygine/tween/Tween.h
     3rd_party/oxygine-framework/oxygine/tween/TweenAnim.cpp 3rd_party/oxygine-framework/oxygine/tween/TweenAnim.h
@@ -287,10 +287,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     # closure
     3rd_party/oxygine-framework/oxygine/core/closure.h
     # math
-    3rd_party/oxygine-framework/oxygine/math/AffineTransform.h
-    3rd_party/oxygine-framework/oxygine/math/Rect.h
     3rd_party/oxygine-framework/oxygine/math/ScalarMath.h
-    3rd_party/oxygine-framework/oxygine/math/Vector2.h
 )
 
 if (GRAPHICSUPPORT)
@@ -547,7 +544,6 @@ set(${PROJECT_NAME}_SRCS
     coreengine/scriptvariablefile.cpp coreengine/scriptvariablefile.h
     coreengine/metatyperegister.cpp coreengine/metatyperegister.h
     coreengine/GamepadShared.cpp coreengine/Gamepad.h
-    coreengine/sha256hash.cpp coreengine/sha256hash.h
     coreengine/commandlineparser.cpp coreengine/commandlineparser.h
     coreengine/JsCallback.h
 
@@ -562,6 +558,7 @@ set(${PROJECT_NAME}_SRCS
     network/NetworkInterface.h
     network/networkgamedata.cpp network/networkgamedata.h
     network/mainserver.cpp network/mainserver.h
+    network/automatchmaker.h network/automatchmaker.cpp
     network/networkgame.cpp network/networkgame.h
     network/rsacypherhandler.h network/rsacypherhandler.cpp
     network/JsonKeys.h

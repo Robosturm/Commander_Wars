@@ -8,11 +8,6 @@ namespace oxygine
     {
     }
 
-    void VideoDriver::setUniform(const char* id, const Vector2& v)
-    {
-        setUniform(id, &v, 1);
-    }
-
     void VideoDriver::setUniform(const char* id, const Uniform3f& v)
     {
         setUniform(id, &v, 1);
@@ -52,17 +47,18 @@ namespace oxygine
         return &m_VertexDeclaration;
     }
 
-    void VideoDriver::getViewport(Rect& r) const
+    void VideoDriver::getViewport(QRect& r) const
     {
     }
 
-    void VideoDriver::setScissorRect(const Rect* rect)
+    void VideoDriver::setScissorRect(const QRect* rect)
     {
     }
 
-    bool VideoDriver::getScissorRect(Rect& r) const
+    QRect VideoDriver::getScissorRect(bool & r) const
     {
-        return false;
+        r = false;
+        return QRect();
     }
 
     void VideoDriver::setRenderTarget(spTexture & rt)
@@ -70,7 +66,7 @@ namespace oxygine
         m_rt = rt;
     }
 
-    void VideoDriver::_begin(const Rect& viewport, const QColor* clearColor)
+    void VideoDriver::_begin(const QRect& viewport, const QColor* clearColor)
     {
     }
 
@@ -101,7 +97,7 @@ namespace oxygine
     {
     }
 
-    void VideoDriver::begin(const Rect& viewport, const QColor* clearColor)
+    void VideoDriver::begin(const QRect& viewport, const QColor* clearColor)
     {
         _begin(viewport, clearColor);
     }
@@ -110,7 +106,7 @@ namespace oxygine
     {
     }
 
-    void VideoDriver::setViewport(const Rect& viewport)
+    void VideoDriver::setViewport(const QRect& viewport)
     {
     }
 
@@ -142,10 +138,6 @@ namespace oxygine
     }
 
     void VideoDriver::setUniform(const char* id, const Uniform4f* v, qint32 num)
-    {
-    }
-
-    void VideoDriver::setUniform(const char* id, const Vector2* v, qint32 num)
     {
     }
 

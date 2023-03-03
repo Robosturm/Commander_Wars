@@ -1,5 +1,4 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 
 #include <QColor>
 #include <QFont>
@@ -10,6 +9,7 @@ namespace oxygine
     {
 #ifdef GRAPHICSUPPORT
         QFont font;
+        QString name;
         QColor mainColor{Qt::black};
         Qt::PenCapStyle borderCapStyle{Qt::RoundCap};
         Qt::PenJoinStyle borderJoin{Qt::RoundJoin};
@@ -29,14 +29,14 @@ namespace oxygine
             HALIGN_RIGHT
         };
 
-        explicit TextStyle(const Font & rs)
-            : font(rs)
+        explicit TextStyle(Font & rs)
+            : font(&rs)
 #ifdef GRAPHICSUPPORT
             , color(rs.mainColor)
 #endif
         {
         }
-        Font font;
+        Font * font;
         HorizontalAlign hAlign{HALIGN_DEFAULT};
         bool multiline{false};
         QColor color{Qt::white};

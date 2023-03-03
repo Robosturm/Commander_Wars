@@ -6,6 +6,7 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
+        terrain.setPalette("palette_clear");
         terrain.setVisionHigh(1);
         terrain.setTerrainName(FOG.getName());
     };
@@ -36,7 +37,7 @@ var Constructor = function()
     {
         var surroundings = terrain.getSurroundings("FOG", false, false, GameEnums.Directions_East, false);
         surroundings += terrain.getSurroundings("FOG", false, false, GameEnums.Directions_West, false);
-		terrain.loadBaseSprite("fog" + surroundings);
+        terrain.loadBaseSprite("fog" + surroundings + "+mask");
     };
     this.loadOverlaySprite = function(terrain, map)
     {
@@ -48,7 +49,7 @@ var Constructor = function()
             var surroundingsSE = terrain.getSurroundings("FOG", false, false, GameEnums.Directions_SouthEast, false);
             if (surroundingsSE !== "")
             {
-                terrain.loadOverlaySprite("fog+SE");
+                terrain.loadOverlaySprite("fog+SE+mask");
             }
         }
         // Load overlay north east, strict.
@@ -57,7 +58,7 @@ var Constructor = function()
             var surroundingsNE = terrain.getSurroundings("FOG", false, false, GameEnums.Directions_NorthEast, false);
             if (surroundingsNE !== "")
             {
-                terrain.loadOverlaySprite("fog+NE");
+                terrain.loadOverlaySprite("fog+NE+mask");
             }
         }
         // Load overlay south west, strict.
@@ -66,7 +67,7 @@ var Constructor = function()
             var surroundingsSW = terrain.getSurroundings("FOG", false, false, GameEnums.Directions_SouthWest, false);
             if (surroundingsSW !== "")
             {
-                terrain.loadOverlaySprite("fog+SW");
+                terrain.loadOverlaySprite("fog+SW+mask");
             }
         }
         // Load overlay northwest, strict.
@@ -75,7 +76,7 @@ var Constructor = function()
             var surroundingsNW = terrain.getSurroundings("FOG", false, false, GameEnums.Directions_NorthWest, false);
             if (surroundingsNW !== "")
             {
-                terrain.loadOverlaySprite("fog+NW");
+                terrain.loadOverlaySprite("fog+NW+mask");
             }
         }
 	};
@@ -119,6 +120,10 @@ var Constructor = function()
     this.getEditorPlacementSound = function()
     {
         return "placeReaf.wav";
+    };
+    this.useTerrainAsBaseTerrain = function()
+    {
+        return true;
     };
 };
 Constructor.prototype = TERRAIN;

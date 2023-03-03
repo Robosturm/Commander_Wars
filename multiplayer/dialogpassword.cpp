@@ -24,7 +24,7 @@ DialogPassword::DialogPassword(QString text, bool showCancel, QString startInput
     oxygine::spTextField pText = oxygine::spTextField::create();
     pText->setHtmlText(text);
     pText->setStyle(style);
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - 40);
+    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, Settings::getHeight() / 2 - 40);
     pSpriteBox->addChild(pText);
 
     m_pTextbox = spPasswordbox::create(300);

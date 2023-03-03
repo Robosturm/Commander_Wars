@@ -3,6 +3,7 @@
 #include "objects/editorselection.h"
 #include "objects/base/moveinbutton.h"
 #include "objects/base/label.h"
+#include "objects/base/dropdownmenu.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/terrainmanager.h"
@@ -64,7 +65,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     m_CurrentSelector = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+selector");
     m_CurrentSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    m_CurrentSelector->setScale(GameMap::getImageSize() / pAnim->getWidth());
+    m_CurrentSelector->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
     if (pAnim->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime * 2), -1);
@@ -118,7 +119,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-           emit sigChangeScrollValue(pTouchEvent->wheelDirection.y);
+           emit sigChangeScrollValue(pTouchEvent->wheelDirection.y());
            pTouchEvent->stopPropagation();
         }
     });
@@ -135,7 +136,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     // reserve vector size for fun and speed :D
     m_Terrains.reserve(pTerrainManager->getCount());
     QStringList sortedTerrainIDs = pTerrainManager->getTerrainsSorted();
-    for (const auto& terrainId : sortedTerrainIDs)
+    for (const auto& terrainId : qAsConst(sortedTerrainIDs))
     {
         if (Terrain::getShowInEditor(terrainId))
         {
@@ -154,12 +155,13 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     connect(this, &EditorSelection::sigUpdateTerrainView, this, &EditorSelection::updateTerrainView, Qt::QueuedConnection);
     connect(this, &EditorSelection::sigUpdateBuildingView, this, &EditorSelection::updateBuildingView, Qt::QueuedConnection);
     connect(this, &EditorSelection::sigChangeScrollValue, this, &EditorSelection::changeScrollValue, Qt::QueuedConnection);
+    connect(this, &EditorSelection::sigPaletteChanged, this, &EditorSelection::onPaletteChanged, Qt::QueuedConnection);
 
     // load other sprites not shown in the starting screen
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-    for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
+    QStringList sortedBuildingIDs = pBuildingSpriteManager->getBuildingsSorted();
+    for (const auto & buildingId : qAsConst(sortedBuildingIDs))
     {
-        QString buildingId = pBuildingSpriteManager->getID(i);
         if (Building::getShowInEditor(buildingId))
         {
             spBuilding building = spBuilding::create(buildingId, m_pMap);
@@ -168,14 +170,11 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
             qint32 heigth = building->getBuildingHeigth();
             building->setScaleX(1.0f / static_cast<float>(width));
             building->setScaleY(1.0f / static_cast<float>(heigth));
-            m_Buildings.append(building);
-            qint32 index = m_Buildings.size() - 1;
-            m_Buildings[index]->updateBuildingSprites(false);
             spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "", m_pMap);
             pSprite->loadSprites();
             pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
-            pSprite->setScaleX(1 / building->getScaleX());
-            pSprite->setScaleY(1 / building->getScaleY());
+            pSprite->setScaleX(1.0f / building->getScaleX());
+            pSprite->setScaleY(1.0f / building->getScaleY());
             if (width > 1)
             {
                 pSprite->oxygine::Actor::setX(-GameMap::getImageSize() * (width - 1));
@@ -184,6 +183,9 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
             {
                 pSprite->oxygine::Actor::setY(-GameMap::getImageSize() * (heigth - 1));
             }
+            m_Buildings.append(building);
+            qint32 index = m_Buildings.size() - 1;
+            m_Buildings[index]->updateBuildingSprites(false);
             m_Buildings[index]->addChild(pSprite);
             m_Buildings[index]->setVisible(false);
             m_PlacementActor->addChild(m_Buildings[index]);
@@ -214,7 +216,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
             }
             else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get(), sea.get(), unit.get()) > 0)
             {
-                pAnim = pTerrainManager->getResAnim("SEA");
+                pAnim = pTerrainManager->getResAnim("SEA+mask");
                 pSprite->setResAnim(pAnim);
             }
             else
@@ -223,7 +225,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
                 pSprite->setResAnim(pAnim);
             }
             pSprite->setPriority(-100);
-            pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
             unit->addChild(pSprite);
             unit->setVisible(false);
             m_PlacementActor->addChild(unit);
@@ -299,7 +301,7 @@ void EditorSelection::createBoxPlacementSize()
         emit sigSelectionChanged();
     });
     // scale marker to correct size if needed
-    m_CurrentSelectorSize->setScale(pAnim->getWidth() / pAnimMarker->getWidth());
+    m_CurrentSelectorSize->setScale(static_cast<float>(pAnim->getWidth()) / static_cast<float>(pAnimMarker->getWidth()));
 
     oxygine::spSprite pSpriteSmall = oxygine::spSprite::create();
     pAnim = pObjectManager->getResAnim("editor+small");
@@ -555,7 +557,7 @@ void EditorSelection::createBoxSelectionMode()
         emit sigUpdateTerrainView();
     });
     // scale marker to correct size if needed
-    m_CurrentSelectorMode->setScale(pAnim->getWidth() / pAnimMarker->getWidth());
+    m_CurrentSelectorMode->setScale(static_cast<float>(pAnim->getWidth()) / static_cast<float>(pAnimMarker->getWidth()));
 
     m_pSpriteBuildingMode = oxygine::spSprite::create();
     pAnim = pObjectManager->getResAnim("editor+building");
@@ -598,6 +600,11 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
     return pSprite;
 }
 
+QString EditorSelection::getActivePalette() const
+{
+    return m_activePalette;
+}
+
 void EditorSelection::updateTerrainView()
 {    
     hideSelection();
@@ -621,6 +628,10 @@ void EditorSelection::updateBuildingView()
     for (auto & building : m_Buildings)
     {
         building->setVisible(true);
+    }
+    for (auto & item : m_buildingActors)
+    {
+        item->setVisible(true);
     }
     m_PlacementActor->setHeight(m_Buildings[m_Buildings.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
@@ -659,6 +670,10 @@ void EditorSelection::hideSelection()
     {
         item->setVisible(false);
     }
+    for (auto & item : m_buildingActors)
+    {
+        item->setVisible(false);
+    }
     for (auto & item : m_Units)
     {
         item->setVisible(false);
@@ -678,10 +693,12 @@ void EditorSelection::initSelection()
 
 void EditorSelection::initBuildingSection()
 {
-    qint32 posY = m_startH;
+    qint32 posY = m_startH - GameMap::getImageSize();
     qint32 xCounter = 0;
+    qint32 currentIdentifier = std::numeric_limits<qint32>::min();
     for (qint32 i = 0; i < m_Buildings.size(); i++)
     {
+        createBuildingSectionLabel(i, currentIdentifier, xCounter, posY);
         qint32 posX = getPosX(xCounter);
         if (xCounter >= m_xCount)
         {
@@ -702,9 +719,43 @@ void EditorSelection::initBuildingSection()
     }
 }
 
+void EditorSelection::createBuildingSectionLabel(qint32 item, qint32 & currentIdentifier, qint32 & xCounter, qint32 & posY)
+{
+    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+    qint32 newIdentifier = m_Buildings[item]->getBuildingGroup();
+    if (newIdentifier != currentIdentifier)
+    {
+        posY += GameMap::getImageSize();
+        currentIdentifier = newIdentifier;
+        xCounter = 0;
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+        style.multiline = false;
+
+        spLabel pTextfield = spLabel::create(m_labelWidth);
+        pTextfield->setStyle(style);
+        pTextfield->setPosition(getPosX(xCounter), posY);
+        pTextfield->setHtmlText(pBuildingSpriteManager->getBuildingGroupName(currentIdentifier));
+        pTextfield->setVisible(false);
+        m_PlacementActor->addChild(pTextfield);
+        m_buildingActors.append(pTextfield);
+        posY += GameMap::getImageSize() * m_yFactor;
+    }
+}
+
 void EditorSelection::initTerrainSection()
 {
-    qint32 posY = m_startH - GameMap::getImageSize();
+    spDropDownmenu pDropDownmenu = spDropDownmenu::create(m_labelWidth, Terrain::getPaletteNames());
+    pDropDownmenu->setTooltipText(tr("Changes the palette used by the terrain."));
+    pDropDownmenu->setPosition(getPosX(0), m_startH);
+    pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_activePalette));
+    connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
+    {
+        emit sigPaletteChanged(Terrain::getPaletteId(item));
+    }, Qt::QueuedConnection);
+    m_PlacementActor->addChild(pDropDownmenu);
+    m_terrainActors.append(pDropDownmenu);
+    qint32 posY = m_startH - GameMap::getImageSize() + 10 + pDropDownmenu->getHeight();
     qint32 xCounter = 0;
     qint32 currentIdentifier = std::numeric_limits<qint32>::min();
     for (qint32 i = 0; i < m_Terrains.size(); i++)
@@ -718,6 +769,7 @@ void EditorSelection::initTerrainSection()
             posX = m_frameSize;
         }
         m_Terrains[i]->setPosition(posX, posY);
+        m_Terrains[i]->setTerrainPalette(m_activePalette);
         m_Terrains[i]->setVisible(false);
         m_Terrains[i]->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
@@ -748,6 +800,15 @@ void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIde
         m_PlacementActor->addChild(pTextfield);
         m_terrainActors.append(pTextfield);
         posY += GameMap::getImageSize() * m_yFactor;
+    }
+}
+
+void EditorSelection::onPaletteChanged(const QString & newPalette)
+{
+    m_activePalette = newPalette;
+    for (qint32 i = 0; i < m_Terrains.size(); i++)
+    {
+        m_Terrains[i]->setTerrainPalette(newPalette);
     }
 }
 
@@ -811,7 +872,7 @@ void EditorSelection::selectBuilding(qint32 building)
     qint32 heigth = m_Buildings[building]->getBuildingHeigth();
     qint32 x = GameMap::getImageSize() * (width - 1) / (width);
     qint32 y = GameMap::getImageSize() * (heigth - 1) / (heigth);
-    m_CurrentSelector->setPosition(m_Buildings[building]->oxygine::Actor::getPosition() - oxygine::Point(x, y));
+    m_CurrentSelector->setPosition(m_Buildings[building]->oxygine::Actor::getPosition() - QPoint(x, y));
     emit sigSelectionChanged();
 }
 

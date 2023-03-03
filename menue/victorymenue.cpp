@@ -1,5 +1,6 @@
 #include <QtMath>
 #include <QJsonObject>
+#include <QJsonArray>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
@@ -45,13 +46,14 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Entering Victory Menue", GameConsole::eDEBUG);
+    GlobalUtils::setUseSeed(false);
     m_pMap->setMenu(nullptr); // remove outdated link
 
     if (Mainapp::getSlave())
     {
         CONSOLE_PRINT("VictoryMenue is listening to master server data", GameConsole::eDEBUG);
         spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &VictoryMenue::recieveServerData, Qt::QueuedConnection);
+        connect(pSlaveMasterConnection.get(), &TCPClient::recieveData, this, &VictoryMenue::recieveServerData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     }
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -71,8 +73,8 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 
     pApp->getAudioManager()->clearPlayList();
@@ -334,7 +336,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         pTextfield->setHtmlText((tr("Player: ") + QString::number(i + 1)));
         spCheckbox pCheckbox = spCheckbox::create();
         pCheckbox->setChecked(true);
-        pCheckbox->setPosition(15 + pTextfield->getTextRect().getWidth(), pTextfield->getY());
+        pCheckbox->setPosition(15 + pTextfield->getTextRect().width(), pTextfield->getY());
         connect(pCheckbox.get(), &Checkbox::checkChanged, this, [this, i](bool value)
         {
             m_VisiblePlayers[i] = value;
@@ -413,7 +415,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     {
                         oxygine::spSprite  pTextMask = oxygine::spSprite::create();
                         pTextMask->setWidth(sentenceWidth);
-                        pTextMask->setScaleX(pTextMask->getScaledWidth() / pAnim->getWidth());
+                        pTextMask->setScaleX(static_cast<float>(pTextMask->getScaledWidth()) / static_cast<float>(pAnim->getWidth()));
                         pTextMask->setResAnim(pAnim);
                         pTextMask->setPosition(5, 5 + y);
                         QColor color = pPlayer->getColor();
@@ -426,7 +428,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     if (pAnim != nullptr)
                     {
                         pWinLooseSprite->setWidth(sentenceWidth);
-                        pWinLooseSprite->setScaleX(pWinLooseSprite->getScaledWidth() / pAnim->getWidth());
+                        pWinLooseSprite->setScaleX(static_cast<float>(pWinLooseSprite->getScaledWidth()) / static_cast<float>(pAnim->getWidth()));
                         pWinLooseSprite->setResAnim(pAnim);
                         pWinLooseSprite->setPosition(5, 5 + y);
                         m_VictoryPanel->addItem(pWinLooseSprite);
@@ -520,9 +522,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     }
     else if (Mainapp::getSlave())
     {
-        CONSOLE_PRINT("Killing self on slave", GameConsole::eDEBUG);
-        connect(&m_despawnSlaveTimer, &QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
-        m_despawnSlaveTimer.start(20000);
+        multiplayerGameFinished();
     }
     else
     {
@@ -535,6 +535,45 @@ void VictoryMenue::quitOnAiPipe()
     CONSOLE_PRINT("Killing vicotry menu on ai slave", GameConsole::eDEBUG);
     m_pMap->detach();
     oxygine::Actor::detach();
+}
+
+void VictoryMenue::multiplayerGameFinished()
+{
+    QJsonObject data;
+    QString command = NetworkCommands::SLAVEMULTIPLAYERGAMERESULT;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    data.insert(JsonKeys::JSONKEY_MATCHTYPE, m_pMap->getGameRules()->getMatchType());
+    QJsonArray winnerInfo;
+    qint32 winnerTeam = m_pMap->getWinnerTeam();
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    {
+        if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Human)
+        {
+            GameEnums::GameResult result = GameEnums::GameResult_Draw;
+            if (winnerTeam >= 0)
+            {
+                if (m_pMap->getPlayer(i)->getTeam() == winnerTeam)
+                {
+                    result = GameEnums::GameResult_Won;
+                }
+                else
+                {
+                    result = GameEnums::GameResult_Lost;
+                }
+            }
+            QJsonObject object;
+            object.insert(JsonKeys::JSONKEY_PLAYER, m_pMap->getPlayer(i)->getPlayerNameId());
+            object.insert(JsonKeys::JSONKEY_GAMERESULT, result);
+            winnerInfo.append(object);
+        }
+    }
+    data.insert(JsonKeys::JSONKEY_GAMERESULTARRAY, winnerInfo);
+    QJsonDocument doc(data);
+    CONSOLE_PRINT("Sending command " + command + "", GameConsole::eDEBUG);
+    emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    CONSOLE_PRINT("Killing self on slave", GameConsole::eDEBUG);
+    connect(&m_despawnSlaveTimer, &QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
+    m_despawnSlaveTimer.start(20000);
 }
 
 void VictoryMenue::despawnSlave()
@@ -774,7 +813,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
         }
         m_Textfield->setHtmlText(tr("Player Statistics"));
     }
-    m_Textfield->setX(Settings::getWidth() / 2.0f - m_Textfield->getTextRect().getWidth() / 2.0f);
+    m_Textfield->setX(Settings::getWidth() / 2.0f - m_Textfield->getTextRect().width() / 2.0f);
 
     
 }
@@ -789,16 +828,15 @@ void VictoryMenue::exitMenue()
     spCampaign campaign = m_pMap->getSpCampaign();
     if (campaign.get() != nullptr && campaign->getCampaignFinished() == false && !m_isReplay)
     {
-        m_pMap->detach();
         bool multiplayer = m_pNetworkInterface.get() != nullptr;
         oxygine::Stage::getStage()->addChild(spCampaignMenu::create(campaign, multiplayer, true));
     }
     else
     {
-        m_pMap->detach();
         auto window = spMainwindow::create("ui/menu/mainmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
     }
+    m_pMap->detach();
     oxygine::Actor::detach();
 }
 

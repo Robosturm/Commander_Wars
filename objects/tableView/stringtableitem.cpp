@@ -3,7 +3,7 @@
 
 #include "coreengine/interpreter.h"
 
-StringTableItem::StringTableItem(const QString& value, qint32 itemWidth, QObject *parent)
+StringTableItem::StringTableItem(const QString& value, qint32 itemWidth, QColor textColor, QObject *parent)
     : BaseTableItem{parent},
       m_value(value)
 {
@@ -13,6 +13,9 @@ StringTableItem::StringTableItem(const QString& value, qint32 itemWidth, QObject
 #endif
 
     spLabel pTextfield = spLabel::create(itemWidth);
+    auto style = pTextfield->getStyle();
+    style.color = textColor;
+    pTextfield->setStyle(style);
     pTextfield->setText(m_value);
     pTextfield->setTooltipText(m_value);
     addChild(pTextfield);

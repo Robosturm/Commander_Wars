@@ -41,7 +41,7 @@ public:
         return 1;
     }
     void showPlayerSelection(bool relaunchedLobby = false);
-    void attachNetworkInterface(spNetworkInterface pNetworkInterface);    
+    void attachNetworkInterface(spNetworkInterface pNetworkInterface);
     void attachCampaign(spCampaign campaign);
 
     /**
@@ -64,12 +64,22 @@ public:
      */
     void setSaveGame(bool value);
     void setMap(GameMap *newPMap);
-signals:
     /**
-     * @brief sigDisconnect emitted when we need to leave the game cause we don't own a player
+     * @brief sendOpenPlayerCount
      */
+    void sendOpenPlayerCount();
+signals :
+    /**
+         * @brief sigDisconnect emitted when we need to leave the game cause we
+         * don't own a player
+         */
     void sigDisconnect();
 public slots:
+    /**
+         * @brief getOpenPlayerCount
+         * @return
+         */
+    qint32 getOpenPlayerCount();
     /**
      * @brief hasLockedPlayersInCaseOfDisconnect
      * @return
@@ -241,13 +251,17 @@ protected:
      * @param player
      * @param eAiType
      */
-    void remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType = false);
+    void remoteChangePlayerOwner(quint64 socketID, const QString & username, qint32 player, GameEnums::AiTypes eAiType, bool forceAiType = false, bool inSetup = false);
     /**
-     * @brief sendOpenPlayerCount
+     * @brief createPlayerChangedData
+     * @param data
+     * @param socketId
+     * @param name
+     * @param aiType
+     * @param player
+     * @param clientRequest
      */
-    void sendOpenPlayerCount();
-
-    void createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest);
+    void createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest, bool inSetup = false);
     /**
      * @brief getDefaultColorCount
      * @return

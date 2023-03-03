@@ -49,16 +49,12 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont32());
-    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    headerStyle.multiline = false;
-
     spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Build List"));
-    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     pPanel->addItem(pLabel);
-    qint32 y = 40 + pLabel->getTextRect().getHeight();
+    qint32 y = 10 + pLabel->getY() + pLabel->getTextRect().height();
     qint32 x = 10;
     
 
@@ -67,11 +63,11 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
     for (const auto & group : unitGroups)
     {
         spLabel textField = spLabel::create(pPanel->getScaledWidth() - 40);
-        textField->setStyle(largeStyle);
+        textField->setStyle(headerStyle);
         textField->setHtmlText(group.name);
-        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
+        textField->setPosition(pPanel->getScaledWidth() / 2 - textField->getTextRect().width() / 2, y);
         pPanel->addItem(textField);
-        y += 45;
+        y += textField->getHeight() + 10;
         x = 10;
         for (qint32 i = 0; i < group.units.size(); ++i)
         {
@@ -113,11 +109,11 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
             if (x + 350 > pPanel->getContentWidth() &&
                 i < group.units.size() - 1)
             {
-                y += 40;
+                y += pLabel->getHeight() + 10;
                 x = 10;
             }
         }
-        y += 50;
+        y += textField->getHeight() + 10;
     }
     pPanel->setContentHeigth(y + 50);
     connect(this, &BuildListDialog::canceled, this, &BuildListDialog::remove, Qt::QueuedConnection);

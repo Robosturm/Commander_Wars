@@ -89,7 +89,7 @@ public slots:
     static void setModuleMode(quint64 newActiveModule, bool enable);
     /**
      * @brief getActiveModules
-     * @return
+     * @return,
      */
     static bool isActiveModule(quint64 module);
     /**

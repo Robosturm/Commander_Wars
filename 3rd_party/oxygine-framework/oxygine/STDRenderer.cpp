@@ -2,7 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include "3rd_party/oxygine-framework/oxygine/math/ScalarMath.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -296,12 +296,12 @@ namespace oxygine
         };
     }
 
-    void STDRenderer::setTransform(const AffineTransform& tr)
+    void STDRenderer::setTransform(const QTransform& tr)
     {
         m_transform = tr;
     }
 
-    void STDRenderer::addQuad(const QColor& clr, const RectF& srcRect, const RectF& destRect)
+    void STDRenderer::addQuad(const QColor& clr, const QRectF& srcRect, const QRect& destRect)
     {
         QColor color = clr;
         static std::vector<VertexPCT2> quad =

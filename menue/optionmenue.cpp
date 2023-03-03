@@ -93,8 +93,8 @@ OptionMenue::OptionMenue(const QString & xmlFile)
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 
     pApp->getAudioManager()->clearPlayList();
@@ -216,6 +216,8 @@ void OptionMenue::changeHighDpi(bool value)
 
 void OptionMenue::loadModPanels()
 {
+    m_ModBoxes.clear();
+    m_ModCheckboxes.clear();
     m_ModSelector = oxygine::spActor::create();
     m_ModSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_ModSelector->setPosition(10, 10);
@@ -271,7 +273,7 @@ void OptionMenue::showMods()
     connect(m_pModSelection.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::selectMods, Qt::QueuedConnection);
     m_ModSelector->addChild(m_pModSelection);
     updateModSelection();
-    y += 50;
+    y += pLabel->getHeight() + 10;
     pLabel = spLabel::create(260, true);
     style.multiline = false;
     pLabel->setStyle(style);
@@ -472,9 +474,9 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
         modInfo += tag + "\n";
     }
     m_ModDescriptionText->setHtmlText(description + cosmeticInfo + modInfo + "\n\n" + tr("Version: ") + version);
-    m_ModDescriptionText->setHeight(m_ModDescriptionText->getTextRect().getHeight());
+    m_ModDescriptionText->setHeight(m_ModDescriptionText->getTextRect().height());
     m_ModDescriptionText->setY(y);
-    m_pModDescription->setContentHeigth(y + m_ModDescriptionText->getTextRect().getHeight() + 40);
+    m_pModDescription->setContentHeigth(y + m_ModDescriptionText->getTextRect().height() + 40);
 }
 
 void OptionMenue::selectMods(qint32 item)

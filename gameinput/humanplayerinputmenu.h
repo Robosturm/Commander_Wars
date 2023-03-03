@@ -64,7 +64,7 @@ private:
     qint32 m_startItem{0};
 
     bool m_moveScrolling{false};
-    oxygine::Vector2 m_lastScrollPoint;
+    QPoint m_lastScrollPoint;
     GameMap* m_pMap{nullptr};    
     GameMenue* m_pMenu{nullptr};
 };

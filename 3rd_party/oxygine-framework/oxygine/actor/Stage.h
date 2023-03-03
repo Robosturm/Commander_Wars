@@ -17,7 +17,7 @@ namespace oxygine
             LOST_CONTEXT = sysEventID('S', 'L', 'C'),
         };
 
-        static QMatrix4x4 getViewProjectionMatrix(const Rect& viewport);
+        static QMatrix4x4 getViewProjectionMatrix(const QRect& viewport);
         explicit Stage();
         ~Stage() = default;
 
@@ -25,15 +25,15 @@ namespace oxygine
         @param is real display size of device.
         @param is your "virtual" preferred size. You could change it to any size you need
         */
-        void init(const Point& displaySize, const Point& gameSize);
+        void init(const QSize& displaySize, const QSize& gameSize);
         /**Render all actors*/
-        void renderStage(const QColor* clearColor, const Rect& viewport, const QMatrix4x4 & viewProjection);
+        void renderStage(const QColor* clearColor, const QRect& viewport, const QMatrix4x4 & viewProjection);
         /**Render all actors, simplified version*/
-        void renderStage(const QColor& clearColor, const Rect& viewport);
+        void renderStage(const QColor& clearColor, const QRect& viewport);
         /**Updates each children*/
         void updateStage();
         void cleanup();
-        virtual RectF getDestRect() const override;
+        virtual QRect getDestRect() const override;
         static spStage& getStage()
         {
             return Stage::instance;
@@ -44,7 +44,7 @@ namespace oxygine
         }
     protected:
         void onDeactivate(Event*);
-        virtual bool isOn(const Vector2& localPosition, float localScale) override;
+        virtual bool isOn(const QPoint& localPosition) override;
 
     protected:
         static spStage instance;
