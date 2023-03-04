@@ -44,7 +44,7 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
         spLabel pTextfield = spLabel::create(m_widths[i] - 10);
         pTextfield->setPosition(x + 5, 13);
         pTextfield->setStyle(style);
-        pTextfield->setHtmlText(header[i]);        
+        pTextfield->setHtmlText(header[i]);
         addChild(pTextfield);
         m_Labels.append(pTextfield);
         x += widths[i];

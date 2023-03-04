@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <3rd_party/oxygine-framework/oxygine/core/ref_counter.h>
+#include "game/GameEnums.h"
 
 class MainServer;
 class AutoMatchMaker;
@@ -18,11 +19,13 @@ public:
      * @param objData
      */
     void onNewMatchResultData(const QJsonObject & objData);
+    void updateInGameInfo(const QJsonObject & objData);
+    void createNewGames();
 signals:
 
 public slots:
     QString getMatchName() const;
-
+    void updateMmr(const QString & player1, const QString & player2, qint32 maxEloChange, GameEnums::GameResult gameResultForPlayer1);
 private:
     QString m_matchName;
     MainServer & m_mainServer;
