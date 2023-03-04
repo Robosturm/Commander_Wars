@@ -15,7 +15,7 @@ class TableView final : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QStringList & header, bool selectable = false);
+    explicit TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QVector<QStringList> & tooltips, const QStringList & header, bool selectable = false);
     ~TableView() = default;
 signals:
     void sigItemClicked();
@@ -24,7 +24,7 @@ public slots:
     qint32 getCurrentItem() const;
     const QStringList & getItem(qint32 i) const;
 private:
-    void addRow(qint32 i, qint32 i2, qint32 x, bool selectable);
+    void addRow(qint32 i, qint32 i2, qint32 x, bool selectable, const QVector<QStringList> & tooltips);
 private:
     QStringList m_Header;
     QVector<QStringList> m_data;

@@ -3163,7 +3163,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="124"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="126"/>
         <source>Keep Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6456,8 +6456,8 @@ Note: This may be caused by a defective mod.</source>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1340"/>
-        <location filename="../menue/gamemenue.cpp" line="1924"/>
-        <location filename="../menue/gamemenue.cpp" line="1961"/>
+        <location filename="../menue/gamemenue.cpp" line="1935"/>
+        <location filename="../menue/gamemenue.cpp" line="1972"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6512,32 +6512,32 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1815"/>
+        <location filename="../menue/gamemenue.cpp" line="1817"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1825"/>
+        <location filename="../menue/gamemenue.cpp" line="1835"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2297"/>
+        <location filename="../menue/gamemenue.cpp" line="2308"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2328"/>
+        <location filename="../menue/gamemenue.cpp" line="2339"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2354"/>
+        <location filename="../menue/gamemenue.cpp" line="2365"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2531"/>
+        <location filename="../menue/gamemenue.cpp" line="2542"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>

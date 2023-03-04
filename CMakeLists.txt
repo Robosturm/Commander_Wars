@@ -198,11 +198,11 @@ add_definitions(
     -DVERSION_MAJOR=0
     -DVERSION_MINOR=29
     -DVERSION_REVISION=3
-    -DVERSION_SUFFIX="main"
+    -DVERSION_SUFFIX="dev"
     -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     )
 
-set(COW_ANDROID_VERSION_NAME "0.29.3-main")
+set(COW_ANDROID_VERSION_NAME "0.29.3-dev")
 set(COW_ANDROID_VERSION_CODE "33")
 
 ###################################################################################

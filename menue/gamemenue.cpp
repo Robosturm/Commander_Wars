@@ -1790,6 +1790,7 @@ void GameMenue::showGameInfo(qint32 player)
                           tr("Funds"),
                           tr("Bases")};
     QVector<QStringList> data;
+    QVector<QStringList> tooltipData;
     
     qint32 totalBuildings = m_pMap->getBuildingCount("");
     Player* pViewPlayer = m_pMap->getPlayer(player);
@@ -1798,12 +1799,13 @@ void GameMenue::showGameInfo(qint32 player)
         m_Focused = false;
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            QString funds = QString::number(m_pMap->getPlayer(i)->getFunds());
-            QString armyValue = QString::number(m_pMap->getPlayer(i)->calcArmyValue());
-            QString income = QString::number(m_pMap->getPlayer(i)->calcIncome());
-            qint32 buildingCount = m_pMap->getPlayer(i)->getBuildingCount();
+            auto* pPlayer = m_pMap->getPlayer(i);
+            QString funds = QString::number(pPlayer->getFunds());
+            QString armyValue = QString::number(pPlayer->calcArmyValue());
+            QString income = QString::number(pPlayer->calcIncome());
+            qint32 buildingCount =pPlayer->getBuildingCount();
             QString buildings = QString::number(buildingCount);
-            if (pViewPlayer->getTeam() != m_pMap->getPlayer(i)->getTeam() &&
+            if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
                 m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
                 m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
             {
@@ -1820,9 +1822,18 @@ void GameMenue::showGameInfo(qint32 player)
                          income,
                          funds,
                          buildings});
+            tooltipData.append({pPlayer->getPlayerNameId(),
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                ""});
             totalBuildings -= buildingCount;
         }
         data.append({tr("Neutral"), "", "", "", "", "", "", QString::number(totalBuildings)});
+        tooltipData.append({"", "", "", "", "", "", "", ""});
 
         spGenericBox pGenericBox = spGenericBox::create();
         QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
@@ -1839,7 +1850,7 @@ void GameMenue::showGameInfo(qint32 player)
         {
             widths.append(width);
         }
-        spTableView pTableView = spTableView::create(widths, data, header, false);
+        spTableView pTableView = spTableView::create(widths, data, tooltipData, header, false);
         pTableView->setPosition(20, 20);
         pPanel->addItem(pTableView);
         pPanel->setContentHeigth(pTableView->getScaledHeight() + 40);

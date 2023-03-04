@@ -4,7 +4,7 @@
 
 #include "resource_management/fontmanager.h"
 
-TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QStringList & header, bool selectable)
+TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QVector<QStringList> & tooltips, const QStringList & header, bool selectable)
     : m_Header(header),
       m_data(data),
       m_widths(widths)
@@ -44,7 +44,7 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
         spLabel pTextfield = spLabel::create(m_widths[i] - 10);
         pTextfield->setPosition(x + 5, 13);
         pTextfield->setStyle(style);
-        pTextfield->setHtmlText(header[i]);
+        pTextfield->setHtmlText(header[i]);        
         addChild(pTextfield);
         m_Labels.append(pTextfield);
         x += widths[i];
@@ -89,14 +89,14 @@ TableView::TableView(const QVector<qint32> & widths, const QVector<QStringList> 
 
         for (qint32 i2 = 0; i2 < data[i].size(); i2++)
         {
-            addRow(i, i2, x, selectable);
+            addRow(i, i2, x, selectable, tooltips);
             x += widths[i2];
         }
         x = 0;
     }
 }
 
-void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable)
+void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable, const QVector<QStringList> & tooltips)
 {
     QColor color(255, 127, 39);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -122,6 +122,10 @@ void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable)
     spLabel pTextfield = spLabel::create(m_widths[i2] - 10);
     pTextfield->setStyle(style);
     pTextfield->setText(m_data[i][i2]);
+    if (!tooltips[i][i2].isEmpty())
+    {
+        pTextfield->setTooltipText(tooltips[i][i2]);
+    }
     pTextfield->setPosition(x + 5, 13 + (i + 1) * 40);
     addChild(pTextfield);
     if (selectable)

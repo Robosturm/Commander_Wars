@@ -105,13 +105,15 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
                 spBuilding building = spBuilding::create("HQ", pMap);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
+                building->setTooltipText(pPlayer->getPlayerNameId());
                 pPanel->addItem(building);
 
-                pTextfield = oxygine::spTextField::create();
-                pTextfield->setStyle(style);
-                pTextfield->setHtmlText(info);
-                pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);
-                pPanel->addItem(pTextfield);
+                spLabel pLabel = spLabel::create(stepWidth - GameMap::getImageSize() - 10);
+                pLabel->setStyle(style);
+                pLabel->setHtmlText(info);
+                pLabel->setTooltipText(pPlayer->getPlayerNameId());
+                pLabel->setPosition(x + GameMap::getImageSize() + 5, y - 15);
+                pPanel->addItem(pLabel);
                 x += stepWidth;
                 if (x + stepWidth > Settings::getWidth() - 90 && i2 < pMap->getPlayerCount() - 1)
                 {
