@@ -4951,5 +4951,17 @@
         <file>resources/images/terrain/sea/sea+waste+S+mask.png</file>
         <file>resources/images/terrain/sea/sea+waste+S+W+mask.png</file>
         <file>resources/images/terrain/sea/sea+waste+W+mask.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_clear+aw1.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_snow+aw1.png</file>
+        <file>resources/images/terrain/lake/lake+clear+E+S+W.png</file>
+        <file>resources/images/terrain/lake/lake+clear+E+S.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+E+S+W.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+E+S.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+E+W.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+E.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+S+W.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+W.png</file>
+        <file>resources/images/terrain/lake/lake+clear+S+W.png</file>
+        <file>resources/images/terrain/sea/sea+SW+overlay+mask.png</file>
     </qresource>
 </RCC>

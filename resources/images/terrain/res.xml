@@ -211,6 +211,16 @@
         <image file="lake/lake+waste+N+S+W.png" />
         <image file="lake/lake+waste+N+W.png" />
         <image file="lake/lake+waste+S+W.png" />
+        <image file="lake/lake+clear+E+S.png"  />
+        <image file="lake/lake+clear+E+S+W.png" />
+        <image file="lake/lake+clear+N+E.png" />
+        <image file="lake/lake+clear+N+E+S.png" />
+        <image file="lake/lake+clear+N+E+S+W.png" />
+        <image file="lake/lake+clear+N+E+W.png" />
+        <image file="lake/lake+clear+N+S+W.png" />
+        <image file="lake/lake+clear+N+W.png" />
+        <image file="lake/lake+clear+S+W.png" />
+
         <image file="lake/riverend+W_lake+mask.png" cols = "8" />
         <image file="lake/riverend+W_lake+E+mask.png" cols = "8" />
         <image file="lake/riverend+W_lake+N+mask.png" cols = "8" />
@@ -1100,6 +1110,7 @@
 
         <!-- biomes -->
         <image file="biome_palettes/palette_clear.png" />
+        <image file="biome_palettes/palette_clear+aw1.png" />
         <image file="biome_palettes/palette_clear+aw2.png" />
         <image file="biome_palettes/palette_clear+awds.png" />
         <image file="biome_palettes/palette_clear+dor.png" />
@@ -1108,6 +1119,7 @@
         <image file="biome_palettes/palette_desert+dor.png" />
         <image file="biome_palettes/palette_rain+aw2.png" />
         <image file="biome_palettes/palette_snow.png" />
+        <image file="biome_palettes/palette_snow+aw1.png" />
         <image file="biome_palettes/palette_snow+aw2.png" />
         <image file="biome_palettes/palette_snow+awds.png" />
         <image file="biome_palettes/palette_snow+dor.png" />

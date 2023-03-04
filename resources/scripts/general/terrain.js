@@ -434,6 +434,8 @@ var TERRAIN =
                     [qsTr("Desert"), "palette_desert"],
                     [qsTr("Snow"), "palette_snow"],
                     [qsTr("Waste"), "palette_waste"],
+                    [qsTr("Clear AW 1"), "palette_clear+aw1"],
+                    [qsTr("Snow AW 1"), "palette_snow+aw1"],
                     [qsTr("Clear AW 2"), "palette_clear+aw2"],
                     [qsTr("Rain AW 2"), "palette_rain+aw2"],
                     [qsTr("Snow AW 2"), "palette_snow+aw2"],
