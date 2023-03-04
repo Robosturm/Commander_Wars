@@ -4,9 +4,13 @@ var Constructor = function()
     {
         return 2;
     };
-    // loader for stuff which needs C++ Support
+    this.getDefaultPalette = function()
+    {
+        return "palette_desert";
+    };
     this.init = function (terrain)
     {
+        terrain.setPalette(DESERT.getDefaultPalette());
         terrain.setTerrainName(DESERT.getName());
     };
 

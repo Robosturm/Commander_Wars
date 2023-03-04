@@ -141,6 +141,8 @@ public slots:
      * @param newPalette
      */
     void setPalette(const QString & newPalette);
+
+    QString getDefaultPalette();
     /**
      * @brief setTerrainPalette
      * @param newPalette
@@ -580,13 +582,19 @@ public slots:
      * @param index
      * @return
      */
-    static QString getPaletteId(qint32 index);
+    static QString getPaletteId(qint32 index, const QString & terrainId);
     /**
      * @brief getPaletteName
      * @param id
      * @return
      */
     static QString getPaletteName(const QString & id);
+    /**
+     * @brief getPaletteNameFromIndex
+     * @param id
+     * @return
+     */
+    static QString getPaletteNameFromIndex(qint32 id);
 protected:
     /**
      * @brief createBuildingDownStream
@@ -611,6 +619,7 @@ private:
     friend class oxygine::intrusive_ptr<Terrain>;
     explicit Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap);
     void initTerrain();
+    static qint32 getTerrainGroup(const QString & terrainId, GameMap* pMap);
 private:
     QString m_palette;
     /**

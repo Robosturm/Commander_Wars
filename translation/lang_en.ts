@@ -1251,12 +1251,12 @@
 <context>
     <name>BEACH</name>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="17"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="20"/>
         <source>Beach</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="259"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="262"/>
         <source>Beachs over great landing places for landing ground troops.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2225,12 +2225,12 @@
 <context>
     <name>DESERT</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT.js" line="15"/>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="19"/>
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT.js" line="101"/>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="105"/>
         <source>Ground units move easily on this terrain, but it reduces the firepower of units by 20%.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2549,7 +2549,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="170"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="178"/>
         <source>Base image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2594,32 +2594,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="207"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="215"/>
         <source>Terrain Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="211"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="219"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="238"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="246"/>
         <source>Overlays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="131"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="139"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="139"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="147"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="312"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="320"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3623,12 +3623,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>FIRE</name>
     <message>
-        <location filename="../resources/scripts/terrain/FIRE.js" line="14"/>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="18"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FIRE.js" line="73"/>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="77"/>
         <source>&lt;r&gt;In Fog of War, fire make a &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;5 square &lt;/div&gt;&lt;r&gt;area around them visible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3636,12 +3636,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>FOG</name>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="15"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="19"/>
         <source>Fog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="103"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="107"/>
         <source>&lt;r&gt;This heavy fog provides ideal hiding places&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; for naval units in Fog of War.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6691,12 +6691,12 @@ Note: This may be caused by a defective mod.</source>
 <context>
     <name>LAKE</name>
     <message>
-        <location filename="../resources/scripts/terrain/LAKE.js" line="16"/>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="19"/>
         <source>Lake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/LAKE.js" line="145"/>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="148"/>
         <source>A calm inland body of water. Naval and air forces have good mobility while hovercraft can freely move on and off.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7348,12 +7348,12 @@ Host mods: </source>
 <context>
     <name>PLAINS_DESTROYED</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="14"/>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="18"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="49"/>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="53"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7361,12 +7361,12 @@ Host mods: </source>
 <context>
     <name>PLAINS_PLASMA</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="14"/>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="18"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="50"/>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="54"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7622,12 +7622,12 @@ Host mods: </source>
 <context>
     <name>REAF</name>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="16"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="19"/>
         <source>Reaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="194"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="197"/>
         <source>&lt;r&gt;This spiky reaf provides ideal &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places&lt;/div&gt;&lt;r&gt; for naval units in Fog of War.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7635,12 +7635,12 @@ Host mods: </source>
 <context>
     <name>RIVER</name>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="16"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="19"/>
         <source>River</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="47"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="50"/>
         <source>Most infantry and Hovercraft units are the only ground unit that can cross rivers.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7648,12 +7648,12 @@ Host mods: </source>
 <context>
     <name>ROUGH_SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="16"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="19"/>
         <source>Rough Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="85"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="88"/>
         <source>Movement of naval units is impeded but air units are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7910,12 +7910,12 @@ Host mods: </source>
 <context>
     <name>SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="16"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="19"/>
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="110"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="113"/>
         <source>Calm sea. Naval and air forces have good mobility.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7923,12 +7923,12 @@ Host mods: </source>
 <context>
     <name>SNOW</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW.js" line="14"/>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="18"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW.js" line="68"/>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="72"/>
         <source>Snowy terrain rough to cross.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10613,12 +10613,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WASTE</name>
     <message>
-        <location filename="../resources/scripts/terrain/WASTE.js" line="14"/>
+        <location filename="../resources/scripts/terrain/WASTE.js" line="18"/>
         <source>Waste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WASTE.js" line="113"/>
+        <location filename="../resources/scripts/terrain/WASTE.js" line="117"/>
         <source>&lt;r&gt;Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25506,12 +25506,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>plains</name>
     <message>
-        <location filename="../resources/scripts/terrain/plains.js" line="14"/>
+        <location filename="../resources/scripts/terrain/plains.js" line="18"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/plains.js" line="61"/>
+        <location filename="../resources/scripts/terrain/plains.js" line="65"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26256,111 +26256,106 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>terrain</name>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="22"/>
+        <location filename="../resources/scripts/general/terrain.js" line="23"/>
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="23"/>
-        <source>Normal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/general/terrain.js" line="24"/>
-        <location filename="../resources/scripts/general/terrain.js" line="434"/>
-        <source>Desert</source>
+        <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="25"/>
         <location filename="../resources/scripts/general/terrain.js" line="435"/>
-        <source>Snow</source>
+        <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="26"/>
         <location filename="../resources/scripts/general/terrain.js" line="436"/>
+        <source>Snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="27"/>
+        <location filename="../resources/scripts/general/terrain.js" line="437"/>
         <source>Waste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="34"/>
-        <location filename="../resources/scripts/general/terrain.js" line="73"/>
+        <location filename="../resources/scripts/general/terrain.js" line="35"/>
+        <location filename="../resources/scripts/general/terrain.js" line="74"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="432"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/general/terrain.js" line="433"/>
-        <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/general/terrain.js" line="437"/>
-        <source>Clear AW 1</source>
+        <location filename="../resources/scripts/general/terrain.js" line="434"/>
+        <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="438"/>
-        <source>Snow AW 1</source>
+        <source>Clear AW 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="439"/>
-        <source>Clear AW 2</source>
+        <source>Snow AW 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="440"/>
-        <source>Rain AW 2</source>
+        <source>Clear AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="441"/>
-        <source>Snow AW 2</source>
+        <source>Rain AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="442"/>
-        <source>Clear AW DS</source>
+        <source>Snow AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="443"/>
-        <source>Desert AW DS</source>
+        <source>Clear AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="444"/>
-        <source>Snow AW DS</source>
+        <source>Desert AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="445"/>
-        <source>Waste AW DS</source>
+        <source>Snow AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="446"/>
-        <source>Clear AW 4</source>
+        <source>Waste AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="447"/>
-        <source>Desert AW 4</source>
+        <source>Clear AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="448"/>
-        <source>Snow AW 4</source>
+        <source>Desert AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="449"/>
+        <source>Snow AW 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="450"/>
         <source>Waste AW 4</source>
         <translation type="unfinished"></translation>
     </message>

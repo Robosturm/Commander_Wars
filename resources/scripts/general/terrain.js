@@ -17,7 +17,8 @@ var TERRAIN =
         return [1,
                 0,
                 2,
-                3,];
+                3,
+                4];
     },
     terrainGroupNameMapping = [qsTr("Sea"),
                                qsTr("Normal"),
@@ -429,24 +430,29 @@ var TERRAIN =
                "WASTE_FOREST,WASTE_MOUNTAIN";
     },
 
-    paletteTable : [[qsTr("None"), ""],
-                    [qsTr("Clear"), "palette_clear"],
-                    [qsTr("Desert"), "palette_desert"],
-                    [qsTr("Snow"), "palette_snow"],
-                    [qsTr("Waste"), "palette_waste"],
-                    [qsTr("Clear AW 1"), "palette_clear+aw1"],
-                    [qsTr("Snow AW 1"), "palette_snow+aw1"],
-                    [qsTr("Clear AW 2"), "palette_clear+aw2"],
-                    [qsTr("Rain AW 2"), "palette_rain+aw2"],
-                    [qsTr("Snow AW 2"), "palette_snow+aw2"],
-                    [qsTr("Clear AW DS"), "palette_clear+awds"],
-                    [qsTr("Desert AW DS"), "palette_desert+awds"],
-                    [qsTr("Snow AW DS"), "palette_snow+awds"],
-                    [qsTr("Waste AW DS"), "palette_waste+awds"],
-                    [qsTr("Clear AW 4"), "palette_clear+dor"],
-                    [qsTr("Desert AW 4"), "palette_desert+dor"],
-                    [qsTr("Snow AW 4"), "palette_snow+dor"],
-                    [qsTr("Waste AW 4"), "palette_waste+dor"],],
+    //               palette name           normal tiles            sea tiles               desert tiles            snow tiles              waste tiles
+    paletteTable : [[qsTr("Default"),       "",                     "",                     "",                     "",                     "",],
+                    [qsTr("Desert"),        "palette_desert",       "palette_desert",       "palette_desert",       "palette_snow",         "palette_waste"],
+                    [qsTr("Snow"),          "palette_snow",         "palette_snow",         "palette_desert",       "palette_snow",         "palette_waste"],
+                    [qsTr("Waste"),         "palette_waste",        "palette_waste",        "palette_desert",       "palette_snow",         "palette_waste"],
+                    [qsTr("Clear AW 1"),    "palette_clear+aw1",    "palette_clear+aw1",    "palette_desert",       "palette_snow+aw1",     "palette_waste"],
+                    [qsTr("Snow AW 1"),     "palette_snow+aw1",     "palette_snow+aw1",     "palette_desert",       "palette_snow+aw1",     "palette_waste"],
+                    [qsTr("Clear AW 2"),    "palette_clear+aw2",    "palette_clear+aw2",    "palette_desert",       "palette_snow+aw2",     "palette_waste"],
+                    [qsTr("Rain AW 2"),     "palette_rain+aw2",     "palette_rain+aw2",     "palette_desert",       "palette_snow+aw2",     "palette_waste"],
+                    [qsTr("Snow AW 2"),     "palette_snow+aw2",     "palette_snow+aw2",     "palette_desert",       "palette_snow+aw2",     "palette_waste"],
+                    [qsTr("Clear AW DS"),   "palette_clear+awds",   "palette_clear+awds",   "palette_desert+awds",  "palette_snow+awds",    "palette_waste+awds"],
+                    [qsTr("Desert AW DS"),  "palette_desert+awds",  "palette_desert+awds",  "palette_desert+awds",  "palette_snow+awds",    "palette_waste+awds"],
+                    [qsTr("Snow AW DS"),    "palette_snow+awds",    "palette_snow+awds",    "palette_desert+awds",  "palette_snow+awds",    "palette_waste+awds"],
+                    [qsTr("Waste AW DS"),   "palette_waste+awds",   "palette_waste+awds",   "palette_desert+awds",  "palette_snow+awds",    "palette_waste+awds"],
+                    [qsTr("Clear AW 4"),    "palette_clear+dor",    "palette_clear+dor",    "palette_desert+dor",   "palette_snow+dor",     "palette_waste+dor"],
+                    [qsTr("Desert AW 4"),   "palette_desert+dor",   "palette_desert+dor",   "palette_desert+dor",   "palette_snow+dor",     "palette_waste+dor"],
+                    [qsTr("Snow AW 4"),     "palette_snow+dor",     "palette_snow+dor",     "palette_desert+dor",   "palette_snow+dor",     "palette_waste+dor"],
+                    [qsTr("Waste AW 4"),    "palette_waste+dor",    "palette_waste+dor",    "palette_desert+dor",   "palette_snow+dor",     "palette_waste+dor"],],
+    getDefaultPalette : function(terrain, map)
+    {
+        return "";
+    },
+
     getPaletteTables : function()
     {
         return TERRAIN.paletteTable.length;
@@ -455,9 +461,9 @@ var TERRAIN =
     {
         return TERRAIN.paletteTable[index][0];
     },
-    getPaletteId : function(index)
+    getPaletteId : function(index, group)
     {
-        return TERRAIN.paletteTable[index][1];
+        return TERRAIN.paletteTable[index][1 + group];
     },
     getPaletteName : function(id)
     {
@@ -470,6 +476,10 @@ var TERRAIN =
             }
         }
         return TERRAIN.paletteTable[0][0];
+    },
+    getPaletteNameFromIndex : function(index)
+    {
+        return TERRAIN.paletteTable[index][0];
     },
 
     getShowInEditor : function()

@@ -91,6 +91,10 @@ void Terrain::setTerrainPalette(const QString & newPalette)
 void Terrain::setPalette(const QString & newPalette)
 {
     m_palette = newPalette;
+    if (m_palette.isEmpty())
+    {
+        m_palette = getDefaultPalette();
+    }
     if (!m_palette.isEmpty())
     {
         TerrainManager* pTerrainManager = TerrainManager::getInstance();
@@ -119,6 +123,17 @@ void Terrain::setPalette(const QString & newPalette)
             m_pTerrainSprite->setColorTable(nullAnim, false);
         }
     }
+}
+
+QString Terrain::getDefaultPalette()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getDefaultPalette";
+    QJSValueList args({pInterpreter->newQObject(this),
+                       pInterpreter->newQObject(m_pMap)});
+    qint32 ergValue = 0;
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args);
+    return erg.toString();
 }
 
 QStringList Terrain::getCustomOverlays() const
@@ -379,10 +394,16 @@ void Terrain::createBaseTerrain(const QString & currentTerrainID)
 
 qint32 Terrain::getTerrainGroup()
 {
+    return getTerrainGroup(m_terrainID, m_pMap);
+}
+
+
+qint32 Terrain::getTerrainGroup(const QString & terrainId, GameMap* pMap)
+{
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainGroup";
-    QJSValueList args({pInterpreter->newQObject(m_pMap)});
-    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
+    QJSValueList args({pInterpreter->newQObject(pMap)});
+    QJSValue ret = pInterpreter->doFunction(terrainId, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -1577,11 +1598,12 @@ QStringList Terrain::getPaletteNames()
     return names;
 }
 
-QString Terrain::getPaletteId(qint32 index)
+QString Terrain::getPaletteId(qint32 index, const QString & terrainId)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getPaletteId";
-    QJSValueList args({QJSValue(index)});
+    QJSValueList args({QJSValue(index),
+                       QJSValue(getTerrainGroup(terrainId, nullptr))});
     QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
     QString id = ret.toString();
     return id;
@@ -1592,6 +1614,16 @@ QString Terrain::getPaletteName(const QString & id)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getPaletteName";
     QJSValueList args({id});
+    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
+    QString name = ret.toString();
+    return name;
+}
+
+QString Terrain::getPaletteNameFromIndex(qint32 id)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getPaletteNameFromIndex";
+    QJSValueList args({QJSValue(id)});
     QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
     QString name = ret.toString();
     return name;

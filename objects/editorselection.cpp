@@ -600,7 +600,7 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
     return pSprite;
 }
 
-QString EditorSelection::getActivePalette() const
+qint32 EditorSelection::getActivePalette() const
 {
     return m_activePalette;
 }
@@ -748,10 +748,10 @@ void EditorSelection::initTerrainSection()
     spDropDownmenu pDropDownmenu = spDropDownmenu::create(m_labelWidth, Terrain::getPaletteNames());
     pDropDownmenu->setTooltipText(tr("Changes the palette used by the terrain."));
     pDropDownmenu->setPosition(getPosX(0), m_startH);
-    pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_activePalette));
+    pDropDownmenu->setCurrentItemText(Terrain::getPaletteNameFromIndex(m_activePalette));
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
     {
-        emit sigPaletteChanged(Terrain::getPaletteId(item));
+        emit sigPaletteChanged(item);
     }, Qt::QueuedConnection);
     m_PlacementActor->addChild(pDropDownmenu);
     m_terrainActors.append(pDropDownmenu);
@@ -769,7 +769,7 @@ void EditorSelection::initTerrainSection()
             posX = m_frameSize;
         }
         m_Terrains[i]->setPosition(posX, posY);
-        m_Terrains[i]->setTerrainPalette(m_activePalette);
+        m_Terrains[i]->setTerrainPalette(Terrain::getPaletteId(m_activePalette, m_Terrains[i]->getTerrainID()));
         m_Terrains[i]->setVisible(false);
         m_Terrains[i]->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
@@ -803,12 +803,12 @@ void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIde
     }
 }
 
-void EditorSelection::onPaletteChanged(const QString & newPalette)
+void EditorSelection::onPaletteChanged(qint32 newPalette)
 {
     m_activePalette = newPalette;
     for (qint32 i = 0; i < m_Terrains.size(); i++)
     {
-        m_Terrains[i]->setTerrainPalette(newPalette);
+        m_Terrains[i]->setTerrainPalette(Terrain::getPaletteId(newPalette, m_Terrains[i]->getTerrainID()));
     }
 }
 

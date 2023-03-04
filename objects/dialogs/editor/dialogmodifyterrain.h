@@ -42,6 +42,7 @@ private:
     spTextbox m_pTextbox;
     oxygine::spButton m_OkButton;
     GameMap* m_pMap{nullptr};
+    qint32 m_selectedPalette{-1};
 
 };
 
