@@ -58,6 +58,7 @@ const char* const GameConsole::functions[] =
     "memoryUsage",
     "printObjectDetails",
     "resetMapsGameRules",
+    "updateTerrainPaletteMasks",
     ""
 };
 const char* const GameConsole::compileTime = __TIME__;
@@ -191,6 +192,11 @@ void GameConsole::applyImagesTable(QString input, QString inTable, QString outTa
 void GameConsole::extendMaskImages(QString folder, QString filter)
 {
     SpriteCreator::extendMaskImages(folder, filter);
+}
+
+void GameConsole::updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize)
+{
+    SpriteCreator::updateTerrainPaletteMasks(folder, filter, originalPaletteSize, newPaletteSize);
 }
 
 void GameConsole::dotask(QString message)

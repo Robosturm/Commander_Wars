@@ -187,6 +187,14 @@ public slots:
      */
     void extendMaskImages(QString folder, QString filter);
     /**
+     * @brief updateTerrainPaletteMasks
+     * @param folder
+     * @param filter
+     * @param originalPaletteSize
+     * @param newPaletteSize
+     */
+    void updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize);
+    /**
      * @brief help shows the helps messages between given indexes or all as default
      * @param start
      * @param end

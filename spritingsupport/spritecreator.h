@@ -12,6 +12,22 @@ class SpriteCreator : public QObject
     static const qint32 colorBoxSize;
 public:
     /**
+     * @brief updateTerrainPaletteMasks
+     * @param folder
+     * @param filter
+     * @param originalPaletteSize
+     * @param newPaletteSize
+     */
+    static void updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize);
+    /**
+     * @brief updateTerrainPaletteMask
+     * @param folder
+     * @param filter
+     * @param originalPaletteSize
+     * @param newPaletteSize
+     */
+    static void updateTerrainPaletteMask(const QString& file, qint32 originalPaletteSize, qint32 newPaletteSize);
+    /**
      * @brief createSprites
      * @param input
      * @param colorTable

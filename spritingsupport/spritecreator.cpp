@@ -4,13 +4,64 @@
 #include <QDirIterator>
 
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
-
 #include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
 
 #include "spritingsupport/spritecreator.h"
 
 const qint32 SpriteCreator::colorBoxSize = 43;
+
+void SpriteCreator::updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize)
+{
+    if (originalPaletteSize > 0 && newPaletteSize > 0)
+    {
+        CONSOLE_PRINT("Starting updateTerrainPaletteMasks", GameConsole::eLogLevels::eDEBUG);
+        QStringList filters;
+        filters << filter;
+        QDirIterator dirIter(folder, filters, QDir::Files, QDirIterator::IteratorFlag::Subdirectories);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            QString file = dirIter.fileInfo().canonicalFilePath();
+            updateTerrainPaletteMask(file, originalPaletteSize, newPaletteSize);
+
+        }
+        CONSOLE_PRINT("End updateTerrainPaletteMasks", GameConsole::eLogLevels::eDEBUG);
+    }
+}
+
+void SpriteCreator::updateTerrainPaletteMask(const QString& file, qint32 originalPaletteSize, qint32 newPaletteSize)
+{
+    CONSOLE_PRINT("updateTerrainPaletteMask for file " + file, GameConsole::eLogLevels::eDEBUG);
+    constexpr qint32 MAX_STEPS = 256;
+    constexpr qint32 PIXEL_STEP = 3;
+    qint32 orgStepSize = MAX_STEPS / originalPaletteSize;
+    qint32 newStepSize = MAX_STEPS / newPaletteSize;
+    QImage img(file);
+    for (qint32 x = 0; x < img.width(); ++x)
+    {
+        for (qint32 y = 0; y < img.height(); ++y)
+        {
+            QColor org = img.pixelColor(x, y);
+            if (org.alpha() > 0)
+            {
+                qint32 pixelX = org.red() / orgStepSize;
+                qint32 pixelY = org.green() / orgStepSize;
+                if (pixelX % PIXEL_STEP == 0)
+                {
+                    pixelX += 1;
+                }
+                else if ((pixelX - 2) % PIXEL_STEP)
+                {
+                    pixelX -= 1;
+                }
+                QColor color(pixelX * newStepSize, pixelY * newStepSize, 0, 255);
+                img.setPixelColor(x, y, color);
+            }
+        }
+    }
+    img.save(file);
+}
 
 void SpriteCreator::createColorTableSprites(const QString& folder, const QString& filter, qint32 startIndex, qint32 maxColors)
 {
@@ -24,6 +75,7 @@ void SpriteCreator::createColorTableSprites(const QString& folder, const QString
         createColorTableSprite(file, startIndex, maxColors);
     }
 }
+
 void SpriteCreator::createColorTableSprite(const QString& file, qint32 startIndex, qint32 maxColors)
 {
     QImage org(file);
