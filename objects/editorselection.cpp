@@ -207,26 +207,23 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
             spUnit unit = spUnit::create(unitId, m_Players.at(1)->getOwner(), false, m_pMap);
             unit->setTooltipText(unit->getName());
             m_Units.append(unit);
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            spTerrain pTerrain;
             QString movementType = unit->getMovementType();
             if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get(), plains.get(), unit.get()) > 0)
             {
-                pAnim = pTerrainManager->getResAnim("plains+0");
-                pSprite->setResAnim(pAnim);
+                pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", nullptr);
             }
             else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get(), sea.get(), unit.get()) > 0)
             {
-                pAnim = pTerrainManager->getResAnim("SEA+mask");
-                pSprite->setResAnim(pAnim);
+                pTerrain = Terrain::createTerrain("SEA", -1, -1, "", nullptr);
             }
             else
             {
-                pAnim = pTerrainManager->getResAnim("plains+0");
-                pSprite->setResAnim(pAnim);
+                pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", nullptr);
             }
-            pSprite->setPriority(-100);
-            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
-            unit->addChild(pSprite);
+            pTerrain->loadSprites();
+            pTerrain->setPriority(-100);
+            unit->addChild(pTerrain);
             unit->setVisible(false);
             m_PlacementActor->addChild(unit);
         }
@@ -424,16 +421,13 @@ void EditorSelection::createPlayerSelection()
     });
     pButtonRight->setPosition(m_BoxSelectedPlayer->getScaledWidth() - 30, 10);
     m_BoxSelectedPlayer->addChild(pButtonRight);
-    TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = -1; i < m_pMap->getPlayerCount(); i++)
     {
         spBuilding pBuilding = spBuilding::create("HQ", m_pMap);
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        oxygine::ResAnim* pAnim = pTerrainManager->getResAnim("plains+0");
-        pSprite->setResAnim(pAnim);
-        pSprite->setPriority(-100);
-        pSprite->setWidth(GameMap::getImageSize());
-        pBuilding->addChild(pSprite);
+        spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", nullptr);
+        pTerrain->loadSprites();
+        pTerrain->setPriority(-100);
+        pBuilding->addChild(pTerrain);
         m_Players.append(pBuilding);
         if (i >= 0)
         {

@@ -4,8 +4,11 @@ var Constructor = function()
     {
         return 3;
     };
+    this.getDefaultPalette = function()
+    {
+        return "palette_snow";
+    };
     this.baseTerrainId = "SNOW";
-
     this.loadBaseSprite = function(terrain, map)
     {
         __BASERUIN.loadBase(terrain, "snow_ruin", map);

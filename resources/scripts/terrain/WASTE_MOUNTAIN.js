@@ -4,6 +4,10 @@ var Constructor = function()
     {
         return 4;
     };
+    this.getDefaultPalette = function()
+    {
+        return "palette_waste";
+    };
     this.baseTerrainId = "WASTE";
     this.loadBaseSprite = function(terrain, map)
     {

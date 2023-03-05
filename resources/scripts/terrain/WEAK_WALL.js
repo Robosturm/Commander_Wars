@@ -4,9 +4,13 @@ var Constructor = function()
     {
         return 1;
     };
-    // loader for stuff which needs C++ Support
+    this.getDefaultPalette = function()
+    {
+        return "palette_clear";
+    };
     this.init = function (terrain)
     {
+        terrain.setPalette(WEAK_WALL.getDefaultPalette());
         terrain.setVisionHigh(2);
         terrain.setTerrainName(WEAK_WALL.getName());
         terrain.setHp(100);

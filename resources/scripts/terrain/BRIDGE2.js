@@ -1,5 +1,9 @@
 var Constructor = function()
 {
+    this.getDefaultPalette = function()
+    {
+        return "palette_desert";
+    };
     this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
         __BASEBRIDGE.loadSprite(terrain, "bridge_river", map)
