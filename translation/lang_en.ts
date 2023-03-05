@@ -26267,19 +26267,19 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="25"/>
-        <location filename="../resources/scripts/general/terrain.js" line="435"/>
+        <location filename="../resources/scripts/general/terrain.js" line="444"/>
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="26"/>
-        <location filename="../resources/scripts/general/terrain.js" line="436"/>
+        <location filename="../resources/scripts/general/terrain.js" line="445"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="27"/>
-        <location filename="../resources/scripts/general/terrain.js" line="437"/>
+        <location filename="../resources/scripts/general/terrain.js" line="446"/>
         <source>Waste</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26290,72 +26290,72 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="434"/>
+        <location filename="../resources/scripts/general/terrain.js" line="443"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="438"/>
+        <location filename="../resources/scripts/general/terrain.js" line="447"/>
         <source>Clear AW 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="439"/>
+        <location filename="../resources/scripts/general/terrain.js" line="448"/>
         <source>Snow AW 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="440"/>
+        <location filename="../resources/scripts/general/terrain.js" line="449"/>
         <source>Clear AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="441"/>
+        <location filename="../resources/scripts/general/terrain.js" line="450"/>
         <source>Rain AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="442"/>
+        <location filename="../resources/scripts/general/terrain.js" line="451"/>
         <source>Snow AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="443"/>
+        <location filename="../resources/scripts/general/terrain.js" line="452"/>
         <source>Clear AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="444"/>
+        <location filename="../resources/scripts/general/terrain.js" line="453"/>
         <source>Desert AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="445"/>
+        <location filename="../resources/scripts/general/terrain.js" line="454"/>
         <source>Snow AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="446"/>
+        <location filename="../resources/scripts/general/terrain.js" line="455"/>
         <source>Waste AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="447"/>
+        <location filename="../resources/scripts/general/terrain.js" line="456"/>
         <source>Clear AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="448"/>
+        <location filename="../resources/scripts/general/terrain.js" line="457"/>
         <source>Desert AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="449"/>
+        <location filename="../resources/scripts/general/terrain.js" line="458"/>
         <source>Snow AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="450"/>
+        <location filename="../resources/scripts/general/terrain.js" line="459"/>
         <source>Waste AW 4</source>
         <translation type="unfinished"></translation>
     </message>
