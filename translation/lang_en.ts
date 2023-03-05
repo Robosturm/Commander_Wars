@@ -11110,42 +11110,42 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__BASEFOREST</name>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="20"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="23"/>
         <source>Waste Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="24"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="27"/>
         <source>Snowy Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="28"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="31"/>
         <source>Desert Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="32"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="35"/>
         <source>Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="188"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="191"/>
         <source>&lt;r&gt;In Fog of War conditions, the snowy woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="192"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="195"/>
         <source>&lt;r&gt;In Fog of War conditions, the snowy woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; It&apos;s hard for ground units to cross this terrain.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="196"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="199"/>
         <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit hiding places.&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; It reduces the firepower of units by 20%&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="200"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="203"/>
         <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>

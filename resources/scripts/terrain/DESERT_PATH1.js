@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getDefaultPalette = function()
     {
-        return "palette_desert";
+        return "palette_desert+awds";
     };
     this.baseTerrainId = "DESERT";
     this.loadBaseSprite = function(terrain, map)
