@@ -87,6 +87,14 @@ void Terrain::setTerrainPalette(const QString & newPalette)
     setPalette(newPalette);
 }
 
+void Terrain::setTerrainPaletteGroup(qint32 newPaletteGroup)
+{
+    if (m_pBaseTerrain.get() != nullptr)
+    {
+        m_pBaseTerrain->setTerrainPaletteGroup(newPaletteGroup);
+    }
+    m_palette = getPaletteId(newPaletteGroup, m_terrainID);
+}
 
 void Terrain::setPalette(const QString & newPalette)
 {
@@ -626,13 +634,14 @@ bool Terrain::customSpriteExists() const
                     QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
 }
 
-void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs)
+void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs, bool applyRulesPalette)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "updateFlowSprites";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(pPfs),
-                       pInterpreter->newQObject(m_pMap)});
+                       pInterpreter->newQObject(m_pMap),
+                       applyRulesPalette});
     pInterpreter->doFunction(m_terrainID, function1, args);
 }
 

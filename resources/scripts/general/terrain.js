@@ -413,7 +413,7 @@ var TERRAIN =
         return [];
     },
     // gets called with a terrain pfs in order to create the flow sprites
-    updateFlowSprites : function(terrain, pPfs, map)
+    updateFlowSprites : function(terrain, pPfs, map, applyRulesPalette)
     {
     },
     isLoadingTile :  function(terrain, map)
@@ -460,6 +460,18 @@ var TERRAIN =
     getDefaultPalette : function(terrain, map)
     {
         return "";
+    },
+
+
+    getPaletteNamesArray : function(index)
+    {
+        var names = [];
+        var length = TERRAIN.paletteTable.length;
+        for (var i = 0; i < length; ++i)
+        {
+            names.push(TERRAIN.paletteTable[i][0]);
+        }
+        return names;
     },
 
     getPaletteTables : function()

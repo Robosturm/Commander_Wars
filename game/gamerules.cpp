@@ -40,6 +40,16 @@ void GameRules::resetArrays()
     m_FogSprites.clear();
 }
 
+qint32 GameRules::getMapPalette() const
+{
+    return m_mapPalette;
+}
+
+void GameRules::setMapPalette(qint32 newMapPalette)
+{
+    m_mapPalette = newMapPalette;
+}
+
 void GameRules::reset()
 {
     CONSOLE_PRINT("GameRules::reset", GameConsole::eDEBUG);
@@ -1524,6 +1534,7 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
         pStream << m_multiplayerObserver;
         pStream << m_maxPerkCount;
         pStream << m_matchType;
+        pStream << m_mapPalette;
     }
 }
 
@@ -1824,6 +1835,10 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 24)
     {
         pStream >> m_matchType;
+    }
+    if (version > 25)
+    {
+        pStream >> m_mapPalette;
     }
     CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }

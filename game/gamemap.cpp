@@ -534,7 +534,7 @@ void GameMap::onWeatherChanged(Weather* pWeather)
     }
 }
 
-void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool showLoadingScreen)
+void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool showLoadingScreen, bool applyRulesPalette)
 {
     CONSOLE_PRINT("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
@@ -560,7 +560,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             }
             for (qint32 x = 0; x < width; x++)
             {
-                updateTileSprites(x, y, flowPoints, editor);
+                updateTileSprites(x, y, flowPoints, editor, applyRulesPalette);
             }
         }
     }
@@ -573,12 +573,12 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             {
                 if (onMap(x, y))
                 {
-                    updateTileSprites(x, y, flowPoints, editor);
+                    updateTileSprites(x, y, flowPoints, editor, applyRulesPalette);
                 }
             }
         }
     }
-    updateFlowTiles(flowPoints);
+    updateFlowTiles(flowPoints, applyRulesPalette);
     syncTerrainAnimations(showLoadingScreen);
     finishUpdateSprites(showLoadingScreen);
 }
@@ -610,7 +610,7 @@ void GameMap::updateSpritesOfTiles(const QVector<QPoint> & points, bool editor, 
     finishUpdateSprites(showLoadingScreen);
 }
 
-void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor)
+void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor, bool applyRulesPalette)
 {
     if (m_fields[y][x]->getHasFlowDirection() &&
         !m_fields[y][x]->getFixedSprite())
@@ -619,6 +619,10 @@ void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints
     }
     else
     {
+        if (applyRulesPalette)
+        {
+            m_fields[y][x]->setTerrainPaletteGroup(m_Rules->getMapPalette());
+        }
         m_fields[y][x]->loadSprites();
     }
     if (m_fields[y][x]->getUnit() != nullptr)
@@ -631,14 +635,14 @@ void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints
     }
 }
 
-void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints)
+void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints, bool applyRulesPalette)
 {
     while (flowPoints.size() > 0)
     {
         QPoint pos = flowPoints[0];
         spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
         pPfs->explore();
-        m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get());
+        m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get(), applyRulesPalette);
         auto points = pPfs->getAllNodePointsFast();
         for (const auto & point : qAsConst(points))
         {

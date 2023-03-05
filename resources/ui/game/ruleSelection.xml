@@ -500,14 +500,34 @@
             <onEvent>RuleSelectionScript.setDayToDayScreen(input);</onEvent>
             <enabled>currentMenu.getRuleChangeEabled()</enabled>
         </DropDownMenu>
-        <Label>
-            <x>5</x>
-            <y>lastY + lastHeight + 10</y>
-            <width>settings.getWidth() - 100</width>
-            <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
-            <font>"main"</font>
-            <fontSize>48</fontSize>
-        </Label>
+    </if>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>settings.getWidth() - 100</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
+        <font>"main"</font>
+        <fontSize>48</fontSize>
+    </Label>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>300</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Map palette:")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+    <DropDownMenu>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <width>400</width>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Selects the palette used for the map.")</tooltip>
+        <startValue>currentMenu.getMap().getGameRules().getMapPalette()</startValue>
+        <items>TERRAIN.getPaletteNamesArray()</items>
+        <onEvent>currentMenu.getMap().getGameRules().setMapPalette(input);</onEvent>
+        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+    </DropDownMenu>
+    <if condition="currentMenu.getShowAdvanced()">
         <Label>
             <x>5</x>
             <y>lastY + lastHeight + 10</y>

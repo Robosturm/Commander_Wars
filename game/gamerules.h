@@ -69,7 +69,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 25;
+        return 26;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -106,6 +106,16 @@ public:
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief getMapPalette
+     * @return
+     */
+    qint32 getMapPalette() const;
+    /**
+     * @brief setMapPalette
+     * @param newMapPalette
+     */
+    void setMapPalette(qint32 newMapPalette);
     /**
      * @brief getMatchType
      * @return
@@ -709,6 +719,7 @@ private:
     float m_powerUsageReduction{0.2f};
     float m_powerLoose{0.0f};
     GameMap* m_pMap{nullptr};
+    qint32 m_mapPalette{0};
 
     // multiplayer rule section
     Password m_password;

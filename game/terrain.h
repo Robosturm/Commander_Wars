@@ -149,6 +149,11 @@ public slots:
      */
     void setTerrainPalette(const QString & newPalette);
     /**
+     * @brief setTerrainPaletteGroup
+     * @param newPaletteGroup
+     */
+    void setTerrainPaletteGroup(qint32 newPaletteGroup);
+    /**
      * @brief getFixedOverlaySprites
      * @return
      */
@@ -557,7 +562,7 @@ public slots:
      * @brief updateFlowSprites
      * @param pPfs
      */
-    void updateFlowSprites(TerrainFindingSystem* pPfs);
+    void updateFlowSprites(TerrainFindingSystem* pPfs, bool applyRulesPalette = false);
     /**
      * @brief getFlowTiles
      * @return

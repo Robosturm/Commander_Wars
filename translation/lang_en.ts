@@ -4372,8 +4372,8 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="637"/>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="661"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="671"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="672"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="691"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="692"/>
         <source>Select file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5365,13 +5365,13 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/mapEditDialog.xml" line="70"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="653"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="673"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapEditDialog.xml" line="79"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="662"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="682"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5846,7 +5846,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="507"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="508"/>
         <location filename="../resources/ui/game/playerSelection.xml" line="50"/>
         <location filename="../resources/ui/game/playerSelection.xml" line="136"/>
         <location filename="../resources/ui/game/playerSelection.xml" line="200"/>
@@ -5854,118 +5854,128 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="515"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="516"/>
+        <source>Map palette:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="524"/>
+        <source>Selects the palette used for the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="535"/>
         <source>CO banlist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="532"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="552"/>
         <source>Perk banlist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="549"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="569"/>
         <source>Action banlist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="566"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="586"/>
         <source>Terrain defense:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="574"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="594"/>
         <source>The defense each terrain star grants a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="587"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="607"/>
         <source>HP defense impact:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="594"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="614"/>
         <source>If checked: the impact of terrain defense stars is reduced the less hp a unit has.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="603"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="623"/>
         <source>Ship bridges:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="610"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="630"/>
         <source>If checked: ships and boats can move through ship bridges placed on sea tiles, like in Advance Wars 4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="619"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="639"/>
         <source>Transporter refresh:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="626"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="646"/>
         <source>If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="635"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="655"/>
         <source>Round time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="643"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="663"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="681"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="701"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="689"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="709"/>
         <source>Unique CO&apos;s:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="696"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="716"/>
         <source>If checked: CO&apos;s that are randomly selected are unique.
  Note: If not enough CO&apos;s are available this may select no CO for a player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="705"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="725"/>
         <source>AI attack terrain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="712"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="732"/>
         <source>If checked the ai attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="721"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="741"/>
         <source>Unit sell value:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="729"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="749"/>
         <source>The amount of funds you are refunded for selling a unit. Selling is only possible if the &apos;Sell&apos; action is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="744"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="764"/>
         <source>Team facing:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="751"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="771"/>
         <source>If checked units of the same team face the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="802"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="822"/>
         <source>Victory rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6097,12 +6107,12 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="523"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="524"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="540"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="541"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="557"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="558"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="543"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="544"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="560"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="561"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="577"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="578"/>
         <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="91"/>
         <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="93"/>
         <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="110"/>
@@ -6223,8 +6233,8 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <location filename="../mapsupport/importawbyweb_text.cpp" line="70"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
         <location filename="../game/gamemap.cpp" line="559"/>
-        <location filename="../game/gamemap.cpp" line="682"/>
-        <location filename="../game/gamemap.cpp" line="1563"/>
+        <location filename="../game/gamemap.cpp" line="686"/>
+        <location filename="../game/gamemap.cpp" line="1567"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6361,42 +6371,42 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="559"/>
-        <location filename="../game/gamemap.cpp" line="1563"/>
+        <location filename="../game/gamemap.cpp" line="1567"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="655"/>
+        <location filename="../game/gamemap.cpp" line="659"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="682"/>
+        <location filename="../game/gamemap.cpp" line="686"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1530"/>
+        <location filename="../game/gamemap.cpp" line="1534"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1591"/>
+        <location filename="../game/gamemap.cpp" line="1595"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1601"/>
+        <location filename="../game/gamemap.cpp" line="1605"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1609"/>
+        <location filename="../game/gamemap.cpp" line="1613"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1621"/>
+        <location filename="../game/gamemap.cpp" line="1625"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
