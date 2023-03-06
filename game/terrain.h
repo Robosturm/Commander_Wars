@@ -53,7 +53,7 @@ public:
     {
         BuildingLayer = 2,
     };
-    static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap);
+    static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap, const QString & currentTerrainPalette = "");
     ~Terrain();
 
     void init();
@@ -397,12 +397,12 @@ public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
      */
-    void createBaseTerrain(const QString & currentTerrainID);
+    void createBaseTerrain(const QString & currentTerrainID, const QString & currentTerrainPalette = "");
     /**
      * @brief loadBaseTerrain loads a base terrain with the given id
      * @param terrainID
      */
-    void loadBaseTerrain(const QString & terrainID);
+    void loadBaseTerrain(const QString & terrainID, const QString & currentTerrainPalette = "");
     /**
      * @brief loadBaseSprite loads the sprite for this terrain
      * @param spriteID

@@ -20,11 +20,15 @@ var Constructor = function()
         return qsTr("Beach");
     };
 
-    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map, currentPalette)
     {
         if (currentTerrainID === "LAKE")
         {
-            terrain.loadBaseTerrain("LAKE");
+            terrain.loadBaseTerrain("LAKE", currentPalette);
+        }
+        else if (currentTerrainID === "SEA")
+        {
+            terrain.loadBaseTerrain("SEA", currentPalette);
         }
         else
         {

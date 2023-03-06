@@ -15,13 +15,13 @@
 #include "game/player.h"
 #include "game/co.h"
 
-spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap)
+spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap, const QString & currentTerrainPalette)
 {
     spTerrain pTerrain = spTerrain::create(terrainID, x, y, pMap);
     pTerrain->setSize(GameMap::getImageSize(), GameMap::getImageSize());
     if (terrainID != "")
     {
-        pTerrain->createBaseTerrain(currentTerrainID);
+        pTerrain->createBaseTerrain(currentTerrainID, currentTerrainPalette);
     }
     pTerrain->initTerrain();
     return pTerrain;
@@ -407,18 +407,19 @@ spBuilding Terrain::getSpBuilding()
     return m_Building;
 }
 
-void Terrain::createBaseTerrain(const QString & currentTerrainID)
+void Terrain::createBaseTerrain(const QString & currentTerrainID, const QString & currentTerrainPalette)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
                        currentTerrainID,
-                       pInterpreter->newQObject(m_pMap)});
+                       pInterpreter->newQObject(m_pMap),
+                       currentTerrainPalette});
     // load sprite of the base terrain
     QString function = "loadBaseTerrain";
     pInterpreter->doFunction(m_terrainID, function, args);
     if (m_pBaseTerrain.get() != nullptr)
     {
-        m_pBaseTerrain->createBaseTerrain(currentTerrainID);
+        m_pBaseTerrain->createBaseTerrain(currentTerrainID, currentTerrainPalette);
     }
 }
 
@@ -562,9 +563,13 @@ void Terrain::loadSprites()
     }
 }
 
-void Terrain::loadBaseTerrain(const QString & terrainID)
+void Terrain::loadBaseTerrain(const QString & terrainID, const QString & currentTerrainPalette)
 {
     m_pBaseTerrain = spTerrain::create(terrainID, m_x, m_y, m_pMap);
+    if (!currentTerrainPalette.isEmpty())
+    {
+        m_pBaseTerrain->setPalette(currentTerrainPalette);
+    }
     m_pBaseTerrain->setPriority(static_cast<qint32>(DrawPriority::Terrain));
     m_pBaseTerrain->setPosition(0, 0);
     addChild(m_pBaseTerrain);

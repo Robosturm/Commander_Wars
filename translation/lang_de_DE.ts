@@ -1256,7 +1256,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="262"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="266"/>
         <source>Beachs over great landing places for landing ground troops.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1610,7 +1610,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/CREEPER.js" line="111"/>
+        <location filename="../resources/scripts/terrain/CREEPER.js" line="115"/>
         <source>A virus infested tile which deals 1HP of damage to each unit standing on it at the beginning of each day.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2243,7 +2243,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="64"/>
+        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="68"/>
         <source>Once a river. Now an empty riverbed that can be crossed by most units doesn&apos;t provide cover. It reduces the firepower of units by 20%.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3628,7 +3628,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FIRE.js" line="77"/>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="81"/>
         <source>&lt;r&gt;In Fog of War, fire make a &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;5 square &lt;/div&gt;&lt;r&gt;area around them visible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3641,7 +3641,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="107"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="111"/>
         <source>&lt;r&gt;This heavy fog provides ideal hiding places&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; for naval units in Fog of War.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6830,7 +6830,7 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="162"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="166"/>
         <source>&lt;r&gt;Meteor pieces which can be attacked and destroyed &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;to eliminate plasma.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7363,7 +7363,7 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="53"/>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="57"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7376,7 +7376,7 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="54"/>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="58"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7389,7 +7389,7 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="59"/>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="63"/>
         <source>&lt;r&gt;Electric charge us impassable but disappears if &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; meteor pieces&lt;/div&gt;&lt;r&gt; are destroyed.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7637,7 +7637,7 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="197"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="201"/>
         <source>&lt;r&gt;This spiky reaf provides ideal &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places&lt;/div&gt;&lt;r&gt; for naval units in Fog of War.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7650,7 +7650,7 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="50"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="54"/>
         <source>Most infantry and Hovercraft units are the only ground unit that can cross rivers.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7663,7 +7663,7 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="88"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="92"/>
         <source>Movement of naval units is impeded but air units are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9872,7 +9872,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="67"/>
+        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="71"/>
         <source>A mysterious tile that costs 0MP to move over.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10615,7 +10615,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WALL.js" line="55"/>
+        <location filename="../resources/scripts/terrain/WALL.js" line="59"/>
         <source>Dark Matter Walls can&apos;t be crossed by most units. They can be destroyed at gates and weak wall parts.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10641,7 +10641,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="99"/>
+        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="103"/>
         <source>Dark Matter Walls can&apos;t be crossed by most units. The wall can be destroyed here to produce a path through the wall.</source>
         <translation type="unfinished"></translation>
     </message>

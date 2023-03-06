@@ -26,11 +26,15 @@ var Constructor = function()
     {
         return true;
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map, currentPalette)
     {
         if (currentTerrainID === "LAKE")
         {
-            terrain.loadBaseTerrain("LAKE");
+            terrain.loadBaseTerrain("LAKE", currentPalette);
+        }
+        else if (currentTerrainID === "SEA")
+        {
+            terrain.loadBaseTerrain("SEA", currentPalette);
         }
         else
         {

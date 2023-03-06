@@ -1215,7 +1215,7 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
             pTerrainOld->removeBuilding();
             spUnit pUnit = spUnit(pTerrainOld->getUnit());
 
-            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID(), this);
+            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID(), this, pTerrainOld->getPalette());
 
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";

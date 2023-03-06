@@ -57,7 +57,7 @@ var TERRAIN =
 
     // called for loading a sub image terrain
     // this has only a visual effect
-    loadBaseTerrain : function(terrain, currentTerrainID, map)
+    loadBaseTerrain : function(terrain, currentTerrainID, map, currentPalette)
     {
     },
     

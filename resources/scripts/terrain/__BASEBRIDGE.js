@@ -29,19 +29,19 @@ var Constructor = function()
             return false;
         }
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map, currentPalette)
     {
         if (currentTerrainID === "SEA")
         {
-            terrain.loadBaseTerrain("SEA");
+            terrain.loadBaseTerrain("SEA", currentPalette);
         }
         else if (currentTerrainID === "DESERT_TRY_RIVER")
         {
-            terrain.loadBaseTerrain("DESERT_TRY_RIVER");
+            terrain.loadBaseTerrain("DESERT_TRY_RIVER", currentPalette);
         }
         else if (currentTerrainID === "LAKE")
         {
-            terrain.loadBaseTerrain("LAKE");
+            terrain.loadBaseTerrain("LAKE", currentPalette);
         }
         else
         {
