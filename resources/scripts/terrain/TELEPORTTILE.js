@@ -4,7 +4,10 @@ var Constructor = function()
     {
         return 1;
     };
-    // loader for stuff which needs C++ Support
+    this.getDefaultPalette = function()
+    {
+        return "palette_clear";
+    };
     this.init = function (terrain)
     {
         terrain.setTerrainName(TELEPORTTILE.getName());

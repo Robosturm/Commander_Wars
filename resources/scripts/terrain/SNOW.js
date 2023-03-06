@@ -34,19 +34,19 @@ var Constructor = function()
         var surroundingsPlains = terrain.getSurroundings("PLAINS", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsPlains.includes("+N"))
         {
-            terrain.loadOverlaySprite("plains+N");
+            terrain.loadOverlaySprite("plains+N", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_North, "PLAINS"));
         }
         if (surroundingsPlains.includes("+E"))
         {
-            terrain.loadOverlaySprite("plains+E");
+            terrain.loadOverlaySprite("plains+E", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_East, "PLAINS"));
         }
         if (surroundingsPlains.includes("+S"))
         {
-            terrain.loadOverlaySprite("plains+S");
+            terrain.loadOverlaySprite("plains+S", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_South, "PLAINS"));
         }
         if (surroundingsPlains.includes("+W"))
         {
-            terrain.loadOverlaySprite("plains+W");
+            terrain.loadOverlaySprite("plains+W", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_West, "PLAINS"));
         }
         var x = terrain.getX();
         var y = terrain.getY();

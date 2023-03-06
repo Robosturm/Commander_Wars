@@ -332,7 +332,7 @@ void DialogModifyTerrain::overlayChanged(QString id, bool selected)
 {
     if (selected)
     {
-        m_pTerrain->addCustomOverlay(id);
+        m_pTerrain->addCustomOverlay(id, Terrain::getPaletteId(m_selectedPalette, m_pTerrain->getTerrainID()));
     }
     else
     {

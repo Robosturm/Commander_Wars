@@ -149,19 +149,41 @@ QStringList Terrain::getCustomOverlays() const
     return m_customOverlays;
 }
 
-void Terrain::setCustomOverlays(const QStringList &newCustomOverlays)
+void Terrain::setCustomOverlays(const QStringList &newCustomOverlays, const QStringList & newPalettes)
 {
     m_customOverlays = newCustomOverlays;
+    m_customOverlayPalettes = newPalettes;
+    while (m_customOverlayPalettes.size() < m_customOverlays.size())
+    {
+        m_customOverlayPalettes.append("");
+    }
+    while (m_customOverlayPalettes.size() > m_customOverlays.size())
+    {
+        m_customOverlayPalettes.removeLast();
+    }
 }
 
-void Terrain::addCustomOverlay(const QString &customOverlay)
+void Terrain::addCustomOverlay(const QString &customOverlay, const QString & palette)
 {
     m_customOverlays.append(customOverlay);
+    m_customOverlayPalettes.append(palette);
 }
 
 void Terrain::removeCustomOverlay(const QString &customOverlay)
 {
-    m_customOverlays.removeAll(customOverlay);
+    qint32 i = 0;
+    while (i < m_customOverlays.size())
+    {
+        if (m_customOverlays[i] == customOverlay)
+        {
+            m_customOverlays.removeAt(i);
+            m_customOverlayPalettes.removeAt(i);
+        }
+        else
+        {
+            ++i;
+        }
+    }
 }
 
 bool Terrain::getFixedOverlaySprites() const
@@ -524,9 +546,9 @@ void Terrain::loadSprites()
     {
         if (m_fixedOverlaySprites)
         {
-            for (auto & overlay : m_customOverlays)
+            for (qint32 i = 0; i < m_customOverlays.size(); ++i)
             {
-                loadOverlaySprite(overlay);
+                loadOverlaySprite(m_customOverlays[i], -1, -1, m_customOverlayPalettes[i], true);
             }
         }
         else
@@ -881,7 +903,7 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
     return ret;
 }
 
-void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qint32 endFrame)
+void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qint32 endFrame, const QString & palette, bool customOverlay)
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -913,9 +935,14 @@ void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qin
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainOverlay));
-    if (!m_palette.isEmpty())
+    QString paletteToUse = palette;
+    if (!customOverlay && palette.isEmpty())
     {
-        oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(m_palette, oxygine::error_policy::ep_ignore_error));
+        paletteToUse = m_palette;
+    }
+    if (!paletteToUse.isEmpty())
+    {
+        oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(paletteToUse, oxygine::error_policy::ep_ignore_error));
         if (pPaletteAnim.get() != nullptr)
         {
             pSprite->setColorTable(pPaletteAnim, true);
@@ -1638,6 +1665,58 @@ QString Terrain::getPaletteNameFromIndex(qint32 id)
     return name;
 }
 
+QString Terrain::getNeighbourPalette(GameEnums::Directions direction, const QString & baseTerrainId)
+{
+    if (direction == GameEnums::Directions_North &&
+        m_pMap->onMap(m_x, m_y - 1))
+    {
+        return m_pMap->getTerrain(m_x, m_y - 1)->getBaseTerrain(baseTerrainId)->getPalette();
+    }
+    else if (direction == GameEnums::Directions_South &&
+                 m_pMap->onMap(m_x, m_y + 1))
+    {
+        return m_pMap->getTerrain(m_x, m_y + 1)->getBaseTerrain(baseTerrainId)->getPalette();
+    }
+    else if (direction == GameEnums::Directions_West &&
+                 m_pMap->onMap(m_x - 1, m_y))
+    {
+        return m_pMap->getTerrain(m_x - 1, m_y)->getBaseTerrain(baseTerrainId)->getPalette();
+    }
+    else if (direction == GameEnums::Directions_East &&
+                 m_pMap->onMap(m_x + 1, m_y))
+    {
+        return m_pMap->getTerrain(m_x + 1, m_y)->getBaseTerrain(baseTerrainId)->getPalette();
+    }
+    else
+    {
+        return getDefaultPalette();
+    }
+}
+
+QString Terrain::getNeighbourDirectionsPalette(QString direction, const QString & baseTerrainId)
+{
+    if (direction.contains("+N"))
+    {
+        return getNeighbourPalette(GameEnums::Directions_North, baseTerrainId);
+    }
+    else if (direction.contains("+S"))
+    {
+        return getNeighbourPalette(GameEnums::Directions_South, baseTerrainId);
+    }
+    else if (direction.contains("+W"))
+    {
+        return getNeighbourPalette(GameEnums::Directions_West, baseTerrainId);
+    }
+    else if (direction.contains("+E"))
+    {
+        return getNeighbourPalette(GameEnums::Directions_East, baseTerrainId);
+    }
+    else
+    {
+        return getDefaultPalette();
+    }
+}
+
 void Terrain::serializeObject(QDataStream& pStream) const
 {
     serializeObject(pStream, false);
@@ -1711,9 +1790,10 @@ void Terrain::serializeObject(QDataStream& pStream, bool forHash) const
         if (m_fixedOverlaySprites)
         {
             pStream << static_cast<qint32>(m_customOverlays.size());
-            for (auto & item : m_customOverlays)
+            for (qint32 i = 0; i < m_customOverlays.size(); ++i)
             {
-                pStream << item;
+                pStream << m_customOverlays[i];
+                pStream << m_customOverlayPalettes[i];
             }
         }
         pStream << m_palette;
@@ -1875,6 +1955,15 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
                 QString item;
                 pStream >> item;
                 m_customOverlays.append(item);
+                if (version > 13)
+                {
+                    pStream >> item;
+                    m_customOverlayPalettes.append(item);
+                }
+                else
+                {
+                    m_customOverlayPalettes.append("");
+                }
             }
         }
     }

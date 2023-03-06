@@ -9867,12 +9867,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>TELEPORTTILE</name>
     <message>
-        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="15"/>
+        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="18"/>
         <source>Teleport Tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="64"/>
+        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="67"/>
         <source>A mysterious tile that costs 0MP to move over.</source>
         <translation type="unfinished"></translation>
     </message>

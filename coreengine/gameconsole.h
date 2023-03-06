@@ -193,7 +193,7 @@ public slots:
      * @param originalPaletteSize
      * @param newPaletteSize
      */
-    void updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize);
+    void updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize, qint32 xOffset = 0, qint32 yOffset = 0);
     /**
      * @brief help shows the helps messages between given indexes or all as default
      * @param start

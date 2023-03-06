@@ -18,7 +18,7 @@ public:
      * @param originalPaletteSize
      * @param newPaletteSize
      */
-    static void updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize);
+    static void updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize, qint32 xOffset, qint32 yOffset);
     /**
      * @brief updateTerrainPaletteMask
      * @param folder
@@ -26,7 +26,7 @@ public:
      * @param originalPaletteSize
      * @param newPaletteSize
      */
-    static void updateTerrainPaletteMask(const QString& file, qint32 originalPaletteSize, qint32 newPaletteSize);
+    static void updateTerrainPaletteMask(const QString& file, qint32 originalPaletteSize, qint32 newPaletteSize, qint32 xOffset, qint32 yOffset);
     /**
      * @brief createSprites
      * @param input
