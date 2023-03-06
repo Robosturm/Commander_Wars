@@ -29,8 +29,6 @@ spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, 
 
 void Terrain::initTerrain()
 {
-    // check if the js-script was loaded already
-    // otherwise do load it
     if (m_terrainID != "")
     {
         bool terrainExists = true;
@@ -65,7 +63,6 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
     setPriority(getMapTerrainDrawPriority());
     setSize(GameMap::getImageSize(),
             GameMap::getImageSize());
-    initTerrain();
 }
 
 ScriptVariables* Terrain::getAnimationVariables()
@@ -327,10 +324,6 @@ void Terrain::init()
     if (m_pBaseTerrain.get() != nullptr)
     {
         m_pBaseTerrain->init();
-    }
-    else
-    {
-        createBaseTerrain(GameMap::PLAINS);
     }
     QString function = "init";
     QJSValueList args({pInterpreter->newQObject(this),
