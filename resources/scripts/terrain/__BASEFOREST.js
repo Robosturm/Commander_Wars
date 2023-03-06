@@ -1,8 +1,12 @@
 var Constructor = function()
 {
-    // loader for stuff which needs C++ Support
+    this.getDefaultPalette = function()
+    {
+        return "palette_clear";
+    };
     this.init = function (terrain)
     {
+        terrain.setPalette(Global[terrain.getTerrainID()].getDefaultPalette());
         terrain.setVisionHigh(1);
         terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
     };

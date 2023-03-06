@@ -4,9 +4,13 @@ var Constructor = function()
     {
         return 0;
     };
+    this.getDefaultPalette = function()
+    {
+        return "palette_clear";
+    };
     this.init = function (terrain)
     {
-        terrain.setPalette("palette_clear");
+        terrain.setPalette(FOG.getDefaultPalette());
         terrain.setVisionHigh(1);
         terrain.setTerrainName(FOG.getName());
     };

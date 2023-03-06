@@ -554,7 +554,7 @@ public slots:
      * @param xInput around given coordinates -1 whole map
      * @param yInput around given coordinates -1 whole map
      */
-    void updateSprites(qint32 xInput = -1, qint32 yInput = -1, bool editor = false, bool showLoadingScreen = false);
+    void updateSprites(qint32 xInput = -1, qint32 yInput = -1, bool editor = false, bool showLoadingScreen = false, bool applyRulesPalette = false);
     /**
      * @brief updateSpritesOfTiles
      * @param points
@@ -569,12 +569,12 @@ public slots:
      * @param flowPoints
      * @param editor
      */
-    void updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor = false);
+    void updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor = false, bool applyRulesPalette = false);
     /**
      * @brief updateFlowTiles
      * @param flowPoints
      */
-    void updateFlowTiles(QVector<QPoint> & flowPoints);
+    void updateFlowTiles(QVector<QPoint> & flowPoints, bool applyRulesPalette = false);
     /**
      * @brief syncTerrainAnimations
      * @param showLoadingScreen

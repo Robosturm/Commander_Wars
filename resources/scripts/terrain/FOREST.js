@@ -4,6 +4,10 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getDefaultPalette = function()
+    {
+        return "palette_clear+awds";
+    };
     this.baseTerrainId = "PLAINS";
     this.loadBaseSprite = function(terrain, map, map)
     {

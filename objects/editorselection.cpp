@@ -207,26 +207,23 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
             spUnit unit = spUnit::create(unitId, m_Players.at(1)->getOwner(), false, m_pMap);
             unit->setTooltipText(unit->getName());
             m_Units.append(unit);
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            spTerrain pTerrain;
             QString movementType = unit->getMovementType();
             if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get(), plains.get(), unit.get()) > 0)
             {
-                pAnim = pTerrainManager->getResAnim("plains+0");
-                pSprite->setResAnim(pAnim);
+                pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", nullptr);
             }
             else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get(), sea.get(), unit.get()) > 0)
             {
-                pAnim = pTerrainManager->getResAnim("SEA+mask");
-                pSprite->setResAnim(pAnim);
+                pTerrain = Terrain::createTerrain("SEA", -1, -1, "", nullptr);
             }
             else
             {
-                pAnim = pTerrainManager->getResAnim("plains+0");
-                pSprite->setResAnim(pAnim);
+                pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", nullptr);
             }
-            pSprite->setPriority(-100);
-            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
-            unit->addChild(pSprite);
+            pTerrain->loadSprites();
+            pTerrain->setPriority(-100);
+            unit->addChild(pTerrain);
             unit->setVisible(false);
             m_PlacementActor->addChild(unit);
         }
@@ -424,16 +421,13 @@ void EditorSelection::createPlayerSelection()
     });
     pButtonRight->setPosition(m_BoxSelectedPlayer->getScaledWidth() - 30, 10);
     m_BoxSelectedPlayer->addChild(pButtonRight);
-    TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = -1; i < m_pMap->getPlayerCount(); i++)
     {
         spBuilding pBuilding = spBuilding::create("HQ", m_pMap);
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        oxygine::ResAnim* pAnim = pTerrainManager->getResAnim("plains+0");
-        pSprite->setResAnim(pAnim);
-        pSprite->setPriority(-100);
-        pSprite->setWidth(GameMap::getImageSize());
-        pBuilding->addChild(pSprite);
+        spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", nullptr);
+        pTerrain->loadSprites();
+        pTerrain->setPriority(-100);
+        pBuilding->addChild(pTerrain);
         m_Players.append(pBuilding);
         if (i >= 0)
         {
@@ -600,7 +594,7 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
     return pSprite;
 }
 
-QString EditorSelection::getActivePalette() const
+qint32 EditorSelection::getActivePalette() const
 {
     return m_activePalette;
 }
@@ -748,10 +742,10 @@ void EditorSelection::initTerrainSection()
     spDropDownmenu pDropDownmenu = spDropDownmenu::create(m_labelWidth, Terrain::getPaletteNames());
     pDropDownmenu->setTooltipText(tr("Changes the palette used by the terrain."));
     pDropDownmenu->setPosition(getPosX(0), m_startH);
-    pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_activePalette));
+    pDropDownmenu->setCurrentItemText(Terrain::getPaletteNameFromIndex(m_activePalette));
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
     {
-        emit sigPaletteChanged(Terrain::getPaletteId(item));
+        emit sigPaletteChanged(item);
     }, Qt::QueuedConnection);
     m_PlacementActor->addChild(pDropDownmenu);
     m_terrainActors.append(pDropDownmenu);
@@ -769,7 +763,7 @@ void EditorSelection::initTerrainSection()
             posX = m_frameSize;
         }
         m_Terrains[i]->setPosition(posX, posY);
-        m_Terrains[i]->setTerrainPalette(m_activePalette);
+        m_Terrains[i]->setTerrainPalette(Terrain::getPaletteId(m_activePalette, m_Terrains[i]->getTerrainID()));
         m_Terrains[i]->setVisible(false);
         m_Terrains[i]->addEventListener(oxygine::TouchEvent::CLICK, [this, i](oxygine::Event*)
         {
@@ -803,12 +797,12 @@ void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIde
     }
 }
 
-void EditorSelection::onPaletteChanged(const QString & newPalette)
+void EditorSelection::onPaletteChanged(qint32 newPalette)
 {
     m_activePalette = newPalette;
     for (qint32 i = 0; i < m_Terrains.size(); i++)
     {
-        m_Terrains[i]->setTerrainPalette(newPalette);
+        m_Terrains[i]->setTerrainPalette(Terrain::getPaletteId(newPalette, m_Terrains[i]->getTerrainID()));
     }
 }
 

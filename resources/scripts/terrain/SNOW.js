@@ -4,9 +4,13 @@ var Constructor = function()
     {
         return 3;
     };
-    // loader for stuff which needs C++ Support
+    this.getDefaultPalette = function()
+    {
+        return "palette_snow";
+    };
     this.init = function (terrain)
     {
+        terrain.setPalette(SNOW.getDefaultPalette());
         terrain.setTerrainName(SNOW.getName());
     };
     this.getName = function()
@@ -19,7 +23,8 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, map)
     {
-		terrain.loadBaseSprite("snow");
+        var random = globals.randInt(0, 7);
+        terrain.loadBaseSprite("snow+" + random.toString());
     };
     this.getMiniMapIcon = function()
     {
@@ -30,19 +35,19 @@ var Constructor = function()
         var surroundingsPlains = terrain.getSurroundings("PLAINS", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsPlains.includes("+N"))
         {
-            terrain.loadOverlaySprite("plains+N");
+            terrain.loadOverlaySprite("plains+N", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_North, "PLAINS"));
         }
         if (surroundingsPlains.includes("+E"))
         {
-            terrain.loadOverlaySprite("plains+E");
+            terrain.loadOverlaySprite("plains+E", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_East, "PLAINS"));
         }
         if (surroundingsPlains.includes("+S"))
         {
-            terrain.loadOverlaySprite("plains+S");
+            terrain.loadOverlaySprite("plains+S", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_South, "PLAINS"));
         }
         if (surroundingsPlains.includes("+W"))
         {
-            terrain.loadOverlaySprite("plains+W");
+            terrain.loadOverlaySprite("plains+W", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_West, "PLAINS"));
         }
         var x = terrain.getX();
         var y = terrain.getY();
@@ -88,6 +93,18 @@ var Constructor = function()
     {
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         return TERRAIN.getTerrainBackgroundId(id, "snow");
+    };
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["snow+0",
+                "snow+1",
+                "snow+2",
+                "snow+3",
+                "snow+4",
+                "snow+5",
+                "snow+6",
+                "snow+7",];
     };
     this.getOverlayTerrainSprites = function(map)
     {

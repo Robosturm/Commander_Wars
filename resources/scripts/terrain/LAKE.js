@@ -4,10 +4,13 @@ var Constructor = function()
     {
         return 0;
     };
-    // loader for stuff which needs C++ Support
+    this.getDefaultPalette = function()
+    {
+        return "palette_clear";
+    };
     this.init = function (terrain)
     {
-        terrain.setPalette("palette_clear");
+        terrain.setPalette(LAKE.getDefaultPalette());
         terrain.setTerrainName(LAKE.getName());
     };
 
@@ -111,17 +114,17 @@ var Constructor = function()
         var surroundingsSnow = terrain.getSurroundings("SNOW", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsSnow !== "")
         {
-            terrain.loadOverlaySprite("lake+snow" + surroundingsSnow);
+            terrain.loadOverlaySprite("lake+snow" + surroundingsSnow, -1, -1, terrain.getNeighbourDirectionsPalette(surroundingsSnow, "SNOW"));
         }
         var surroundingsWaste = terrain.getSurroundings("WASTE", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsWaste !== "")
         {
-            terrain.loadOverlaySprite("lake+waste" + surroundingsWaste);
+            terrain.loadOverlaySprite("lake+waste" + surroundingsWaste, -1, -1, terrain.getNeighbourDirectionsPalette(surroundingsWaste, "WASTE"));
         }
         var surroundingsDesert = terrain.getSurroundings("DESERT", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsDesert !== "")
         {
-            terrain.loadOverlaySprite("lake+desert" + surroundingsDesert);
+            terrain.loadOverlaySprite("lake+desert" + surroundingsDesert, -1, -1, terrain.getNeighbourDirectionsPalette(surroundingsDesert, "DESERT"));
         }
     };
     this.getMiniMapIcon = function()
@@ -197,7 +200,15 @@ var Constructor = function()
                 "lake+waste+N+S+W+mask",
                 "lake+waste+N+W+mask",
                 "lake+waste+S+W+mask",
-
+                "lake+clear+E+S+mask",
+                "lake+clear+E+S+W+mask",
+                "lake+clear+N+E+mask",
+                "lake+clear+N+E+S+mask",
+                "lake+clear+N+E+S+W+mask",
+                "lake+clear+N+E+W+mask",
+                "lake+clear+N+S+W+mask",
+                "lake+clear+N+W+mask",
+                "lake+clear+S+W+mask",
                 "riverend+W_lake+mask",
                 "riverend+W_lake+E+mask",
                 "riverend+W_lake+N+mask",

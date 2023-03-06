@@ -4,10 +4,13 @@ var Constructor = function()
     {
         return 1;
     };
-    // loader for stuff which needs C++ Support
+    this.getDefaultPalette = function()
+    {
+        return "palette_clear";
+    };
     this.init = function (terrain)
     {
-        terrain.setPalette("palette_clear");
+        terrain.setPalette(RIVER.getDefaultPalette());
         terrain.setTerrainName(RIVER.getName());
         terrain.setHasFlowDirection(true);
     };
@@ -168,7 +171,7 @@ var Constructor = function()
     {
         return ["RIVER", "BRIDGE", "BRIDGE1", "BRIDGE2"];
     };
-    this.updateFlowSprites = function(terrain, pPfs, map)
+    this.updateFlowSprites = function(terrain, pPfs, map, applyRulesPalette)
     {
         var flowData = pPfs.getFlowData();        
         var length = flowData.size()
@@ -176,6 +179,10 @@ var Constructor = function()
         {
             var pos = flowData.getPosition(i);
             var currentTerrain = map.getTerrain(pos.x, pos.y);
+            if (applyRulesPalette)
+            {
+                currentTerrain.setTerrainPaletteGroup(map.getGameRules().getMapPalette());
+            }
             if (currentTerrain.getID() === "RIVER")
             {
                 if (!currentTerrain.getFixedSprite())

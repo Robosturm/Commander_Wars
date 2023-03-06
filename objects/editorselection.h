@@ -27,9 +27,9 @@ public:
     ENUM_CLASS EditorMode
     {
         All = -1,
-        Terrain = 0,
-        Building,
-        Unit,
+                Terrain = 0,
+                Building,
+                Unit,
     };
     /**
      * @brief The PlacementSize enum describes how terrain is placed
@@ -37,11 +37,11 @@ public:
     ENUM_CLASS PlacementSize
     {
         None = 0,
-        Small,
-        Medium,
-        BigSquare,
-        Big,
-        Fill
+                Small,
+                Medium,
+                BigSquare,
+                Big,
+                Fill
     };
 
     explicit EditorSelection(qint32 width, bool smallScreen, GameMap* pMap);
@@ -84,20 +84,20 @@ public:
     void KeyInput(Qt::Key cur);
 
 signals:
-   void sigUpdateSelectedPlayer();
-   void sigSelectionChanged();
-   void sigChangeSelectedPlayer(qint32 player);
-   void sigUpdateTerrainView();
-   void sigUpdateBuildingView();
-   void sigUpdateUnitView();
-   void sigChangeScrollValue(qint32 dir);
-   void sigPaletteChanged(const QString & newPalette);
+    void sigUpdateSelectedPlayer();
+    void sigSelectionChanged();
+    void sigChangeSelectedPlayer(qint32 player);
+    void sigUpdateTerrainView();
+    void sigUpdateBuildingView();
+    void sigUpdateUnitView();
+    void sigChangeScrollValue(qint32 dir);
+    void sigPaletteChanged(qint32 newPalette);
 public slots:
-   /**
+    /**
     * @brief getActivePalette
     * @return
     */
-   QString getActivePalette() const;
+    qint32 getActivePalette() const;
     void selectTerrain(QString terrainID);
     void selectBuilding(QString buildingID);
     void selectUnit(QString unitID);
@@ -110,7 +110,7 @@ public slots:
 
     void changeScrollValue(qint32 dir);
 
-    void onPaletteChanged(const QString & newPalette);
+    void onPaletteChanged(qint32 newPalette);
 private:
     /**
      * @brief selectBuilding
@@ -230,7 +230,7 @@ private:
 
     qint32 m_selectedItem{0};
 
-    QString m_activePalette{""};
+    qint32 m_activePalette{0};
     /**
      * @brief current selected player
      */
@@ -238,7 +238,6 @@ private:
     qint32 m_playerStartIndex{0};
     QVector<spBuilding> m_Players;
     GameMap* m_pMap{nullptr};
-    Q_PROPERTY(QString activePalette READ getActivePalette CONSTANT)
 };
 
 #endif // EDITORSELECTION_H

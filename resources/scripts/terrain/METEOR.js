@@ -4,9 +4,13 @@ var Constructor = function()
     {
         return 1;
     };
-    // loader for stuff which needs C++ Support
+    this.getDefaultPalette = function()
+    {
+        return "palette_clear";
+    };
     this.init = function (terrain)
     {
+        terrain.setPalette(METEOR.getDefaultPalette());
         terrain.setVisionHigh(1);
         terrain.setTerrainName(METEOR.getName());
         terrain.setHp(100);

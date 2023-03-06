@@ -4951,5 +4951,28 @@
         <file>resources/images/terrain/sea/sea+waste+S+mask.png</file>
         <file>resources/images/terrain/sea/sea+waste+S+W+mask.png</file>
         <file>resources/images/terrain/sea/sea+waste+W+mask.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_clear+aw1.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_snow+aw1.png</file>
+        <file>resources/images/terrain/lake/lake+clear+E+S+W.png</file>
+        <file>resources/images/terrain/lake/lake+clear+E+S.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+E+S+W.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+E+S.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+E+W.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+E.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+S+W.png</file>
+        <file>resources/images/terrain/lake/lake+clear+N+W.png</file>
+        <file>resources/images/terrain/lake/lake+clear+S+W.png</file>
+        <file>resources/images/terrain/sea/sea+SW+overlay+mask.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_clear+wg.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_desert+wg.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_snow+wg.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_waste+wg.png</file>
+        <file>resources/images/terrain/snow/snow+1.png</file>
+        <file>resources/images/terrain/snow/snow+2.png</file>
+        <file>resources/images/terrain/snow/snow+3.png</file>
+        <file>resources/images/terrain/snow/snow+4.png</file>
+        <file>resources/images/terrain/snow/snow+5.png</file>
+        <file>resources/images/terrain/snow/snow+6.png</file>
+        <file>resources/images/terrain/snow/snow+7.png</file>
     </qresource>
 </RCC>

@@ -1318,7 +1318,7 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
         {
             Terrain* pTerrain = m_pMap->getTerrain(x, y);
             if (pTerrain->getTerrainID() != terrainID ||
-                pTerrain->getPalette() != m_EditorSelection->getActivePalette() ||
+                pTerrain->getPalette() != Terrain::getPaletteId(m_EditorSelection->getActivePalette(), pTerrain->getTerrainID()) ||
                 pTerrain->getBuilding() != nullptr ||
                 m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Small)
             {
@@ -1410,6 +1410,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     }
     pApp->pauseRendering();
     bool placed = false;
+    const QString palette = Terrain::getPaletteId(m_EditorSelection->getActivePalette(), terrainID);
     for (auto point : points)
     {
         if (m_pMap->onMap(point.x(), point.y()))
@@ -1422,7 +1423,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
                 Interpreter* pInterpreter = Interpreter::getInstance();
                 QString function1 = "useTerrainAsBaseTerrain";
                 QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false, true, m_EditorSelection->getActivePalette(), true);
+                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false, true, palette, true);
                 placed = true;
             }
             else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())

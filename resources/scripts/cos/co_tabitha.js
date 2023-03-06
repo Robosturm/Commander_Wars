@@ -43,7 +43,6 @@ var Constructor = function()
 
         CO_TABITHA.throwMeteor(co, 8, powerNameAnimation, map);
     };
-
     this.throwMeteor = function(co, damage, powerNameAnimation, map)
     {
         // let a meteor fall :D
@@ -52,12 +51,17 @@ var Constructor = function()
         var animation = GameAnimationFactory.createAnimation(map, rocketTarget.x - 2, rocketTarget.y - 2 - 1);
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
         animation.setSound("missle_explosion.wav", 1);
+        animation.setStartOfAnimationCall("CO_TABITHA", "preAnimationThrowMeteor");
         animation.setEndOfAnimationCall("CO_TABITHA", "postAnimationThrowMeteor");        
         powerNameAnimation.queueAnimation(animation);
         CO_TABITHA.postAnimationThrowMeteorTarget = rocketTarget;
         CO_TABITHA.postAnimationThrowMeteorDamage = damage;
     };
 
+    this.preAnimationThrowMeteor = function(animation, map)
+    {
+        map.centerMap(CO_TABITHA.postAnimationThrowMeteorTarget.x, CO_TABITHA.postAnimationThrowMeteorTarget.y);
+    };
     this.postAnimationThrowMeteorTarget = null;
     this.postAnimationThrowMeteorDamage = 0;
     this.postAnimationThrowMeteor = function(animation, map)

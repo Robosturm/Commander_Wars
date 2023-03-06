@@ -4,9 +4,13 @@ var Constructor = function()
     {
         return 1;
     };
-    // loader for stuff which needs C++ Support
+    this.getDefaultPalette = function()
+    {
+        return "palette_clear";
+    };
     this.init = function (terrain)
     {
+        terrain.setPalette(Global[terrain.getTerrainID()].getDefaultPalette());
         terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
     };
     this.canBePlacedBaseId = function(x, y, map, baseId)

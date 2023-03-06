@@ -194,9 +194,9 @@ void GameConsole::extendMaskImages(QString folder, QString filter)
     SpriteCreator::extendMaskImages(folder, filter);
 }
 
-void GameConsole::updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize)
+void GameConsole::updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize, qint32 xOffset, qint32 yOffset)
 {
-    SpriteCreator::updateTerrainPaletteMasks(folder, filter, originalPaletteSize, newPaletteSize);
+    SpriteCreator::updateTerrainPaletteMasks(folder, filter, originalPaletteSize, newPaletteSize, xOffset, yOffset);
 }
 
 void GameConsole::dotask(QString message)

@@ -4,10 +4,13 @@ var Constructor = function()
     {
         return 0;
     };
-    // loader for stuff which needs C++ Support
+    this.getDefaultPalette = function()
+    {
+        return "palette_clear";
+    };
     this.init = function (terrain)
     {
-        terrain.setPalette("palette_clear");
+        terrain.setPalette(SEA.getDefaultPalette());
         terrain.setTerrainName(SEA.getName());
     };
 
@@ -70,17 +73,17 @@ var Constructor = function()
         var surroundingsSnow = terrain.getSurroundings("SNOW", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsSnow !== "")
         {
-            terrain.loadOverlaySprite("sea+snow" + surroundingsSnow + "+mask");
+            terrain.loadOverlaySprite("sea+snow" + surroundingsSnow + "+mask", -1, -1, terrain.getNeighbourDirectionsPalette(surroundingsSnow, "SNOW"));
         }
         var surroundingsWaste = terrain.getSurroundings("WASTE", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsWaste !== "")
         {
-            terrain.loadOverlaySprite("sea+waste" + surroundingsWaste + "+mask");
+            terrain.loadOverlaySprite("sea+waste" + surroundingsWaste + "+mask", -1, -1, terrain.getNeighbourDirectionsPalette(surroundingsWaste, "WASTE"));
         }
         var surroundingsDesert = terrain.getSurroundings("DESERT", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsDesert !== "")
         {
-            terrain.loadOverlaySprite("sea+desert" + surroundingsDesert + "+mask");
+            terrain.loadOverlaySprite("sea+desert" + surroundingsDesert + "+mask", -1, -1, terrain.getNeighbourDirectionsPalette(surroundingsDesert, "DESERT"));
         }
         var surroundingsRiver = terrain.getSurroundings("RIVER", true, false, GameEnums.Directions_Direct, false, false, 1, true);
         if (surroundingsRiver !== "")

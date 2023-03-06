@@ -2122,7 +2122,7 @@ void Multiplayermenu::countdown()
             {
                 pMap->getGameScript()->gameStart();
             }
-            pMap->updateSprites(-1, -1, false, true);
+            pMap->updateSprites(-1, -1, false, true, true);
             // start game
             CONSOLE_PRINT("Leaving Map Selection Menue after countdown", GameConsole::eDEBUG);
             auto window = spGameMenue::create(pMap, m_saveGame, m_pNetworkInterface, false);

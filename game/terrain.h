@@ -117,7 +117,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 13;
+        return 14;
     }
     /**
      * @brief isValid
@@ -141,11 +141,18 @@ public slots:
      * @param newPalette
      */
     void setPalette(const QString & newPalette);
+
+    QString getDefaultPalette();
     /**
      * @brief setTerrainPalette
      * @param newPalette
      */
     void setTerrainPalette(const QString & newPalette);
+    /**
+     * @brief setTerrainPaletteGroup
+     * @param newPaletteGroup
+     */
+    void setTerrainPaletteGroup(qint32 newPaletteGroup);
     /**
      * @brief getFixedOverlaySprites
      * @return
@@ -165,12 +172,12 @@ public slots:
      * @brief setCustomOverlays
      * @param newCustomOverlays
      */
-    void setCustomOverlays(const QStringList &newCustomOverlays);
+    void setCustomOverlays(const QStringList &newCustomOverlays, const QStringList & newPalettes = QStringList());
     /**
      * @brief addCustomOverlay
      * @param newCustomOverlay
      */
-    void addCustomOverlay(const QString &customOverlay);
+    void addCustomOverlay(const QString &customOverlay, const QString & palette = "");
     /**
      * @brief removeCustomOverlay
      * @param customOverlay
@@ -417,7 +424,7 @@ public slots:
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID
      */
-    void loadOverlaySprite(const QString & spriteID, qint32 startFrame = -1, qint32 endFrame = -1);
+    void loadOverlaySprite(const QString & spriteID, qint32 startFrame = -1, qint32 endFrame = -1, const QString & palette = "", bool customOverlay = false);
     /**
      * @brief getBaseTerrainID finds the base terrain id of the real base terrain recursivly
      * @return the base terrainID
@@ -466,7 +473,7 @@ public slots:
         }
         else
         {
-            return nullptr;
+            return this;
         }
     }
     /**
@@ -555,7 +562,7 @@ public slots:
      * @brief updateFlowSprites
      * @param pPfs
      */
-    void updateFlowSprites(TerrainFindingSystem* pPfs);
+    void updateFlowSprites(TerrainFindingSystem* pPfs, bool applyRulesPalette = false);
     /**
      * @brief getFlowTiles
      * @return
@@ -580,13 +587,32 @@ public slots:
      * @param index
      * @return
      */
-    static QString getPaletteId(qint32 index);
+    static QString getPaletteId(qint32 index, const QString & terrainId);
     /**
      * @brief getPaletteName
      * @param id
      * @return
      */
     static QString getPaletteName(const QString & id);
+    /**
+     * @brief getPaletteNameFromIndex
+     * @param id
+     * @return
+     */
+    static QString getPaletteNameFromIndex(qint32 id);
+    /**
+     * @brief getNeighbourPalette
+     * @param direction
+     * @return
+     */
+    QString getNeighbourPalette(GameEnums::Directions direction, const QString & baseTerrainId = "");
+    /**
+     * @brief getNeighbourPalette
+     * @param direction
+     * @param baseTerrainId
+     * @return
+     */
+    QString getNeighbourDirectionsPalette(QString direction, const QString & baseTerrainId = "");
 protected:
     /**
      * @brief createBuildingDownStream
@@ -611,6 +637,7 @@ private:
     friend class oxygine::intrusive_ptr<Terrain>;
     explicit Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap);
     void initTerrain();
+    static qint32 getTerrainGroup(const QString & terrainId, GameMap* pMap);
 private:
     QString m_palette;
     /**
@@ -636,11 +663,15 @@ private:
     /**
      * @brief m_pOverlaySprites
      */
-    QVector<oxygine::spSprite> m_pOverlaySprites;
+    QVector<oxygine::spSprite> m_pOverlaySprites;    
     /**
      * @brief m_customOverlays
      */
     QStringList m_customOverlays;
+    /**
+     * @brief m_overlayPalettes
+     */
+    QStringList m_customOverlayPalettes;
     /**
      * @brief m_fixedOverlaySprites
      */

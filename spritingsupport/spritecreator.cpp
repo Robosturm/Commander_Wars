@@ -11,7 +11,7 @@
 
 const qint32 SpriteCreator::colorBoxSize = 43;
 
-void SpriteCreator::updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize)
+void SpriteCreator::updateTerrainPaletteMasks(const QString& folder, const QString& filter, qint32 originalPaletteSize, qint32 newPaletteSize, qint32 xOffset, qint32 yOffset)
 {
     if (originalPaletteSize > 0 && newPaletteSize > 0)
     {
@@ -23,14 +23,14 @@ void SpriteCreator::updateTerrainPaletteMasks(const QString& folder, const QStri
         {
             dirIter.next();
             QString file = dirIter.fileInfo().canonicalFilePath();
-            updateTerrainPaletteMask(file, originalPaletteSize, newPaletteSize);
+            updateTerrainPaletteMask(file, originalPaletteSize, newPaletteSize, xOffset, yOffset);
 
         }
         CONSOLE_PRINT("End updateTerrainPaletteMasks", GameConsole::eLogLevels::eDEBUG);
     }
 }
 
-void SpriteCreator::updateTerrainPaletteMask(const QString& file, qint32 originalPaletteSize, qint32 newPaletteSize)
+void SpriteCreator::updateTerrainPaletteMask(const QString& file, qint32 originalPaletteSize, qint32 newPaletteSize, qint32 xOffset, qint32 yOffset)
 {
     CONSOLE_PRINT("updateTerrainPaletteMask for file " + file, GameConsole::eLogLevels::eDEBUG);
     constexpr qint32 MAX_STEPS = 256;
@@ -55,7 +55,7 @@ void SpriteCreator::updateTerrainPaletteMask(const QString& file, qint32 origina
                 {
                     pixelX -= 1;
                 }
-                QColor color(pixelX * newStepSize, pixelY * newStepSize, 0, 255);
+                QColor color(pixelX * newStepSize + xOffset * newStepSize, pixelY * newStepSize + yOffset * newStepSize, 0, 255);
                 img.setPixelColor(x, y, color);
             }
         }

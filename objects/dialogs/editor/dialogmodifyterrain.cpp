@@ -117,10 +117,18 @@ void DialogModifyTerrain::load()
     spDropDownmenu pDropDownmenu = spDropDownmenu::create(400, Terrain::getPaletteNames());
     pDropDownmenu->setTooltipText(tr("Changes the palette used by the terrain."));
     pDropDownmenu->setPosition(200 + 20 + pLabel->getX(), y);
-    pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_pTerrain->getPalette()));
+    if (m_selectedPalette >=  0)
+    {
+        pDropDownmenu->setCurrentItem(m_selectedPalette);
+    }
+    else
+    {
+        pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_pTerrain->getPalette()));
+    }
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, m_pTerrain, [this](qint32 item)
     {
-        emit sigChangePalette(Terrain::getPaletteId(item));
+        m_selectedPalette = item;
+        emit sigChangePalette(Terrain::getPaletteId(item, m_pTerrain->getTerrainID()));
     }, Qt::QueuedConnection);
     m_pPanel->addItem(pDropDownmenu);
     y += pLabel->getHeight() + 10;
@@ -324,7 +332,7 @@ void DialogModifyTerrain::overlayChanged(QString id, bool selected)
 {
     if (selected)
     {
-        m_pTerrain->addCustomOverlay(id);
+        m_pTerrain->addCustomOverlay(id, Terrain::getPaletteId(m_selectedPalette, m_pTerrain->getTerrainID()));
     }
     else
     {
