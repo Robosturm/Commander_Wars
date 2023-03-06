@@ -766,6 +766,13 @@
         
         <!-- Snowy Stuff praise Olaf -->
         <image file="snow/snow.png" />
+        <image file="snow/snow+1.png" />
+        <image file="snow/snow+2.png" />
+        <image file="snow/snow+3.png" />
+        <image file="snow/snow+4.png" />
+        <image file="snow/snow+5.png" />
+        <image file="snow/snow+6.png" />
+        <image file="snow/snow+7.png" />
         <image file="snow/snow+W.png" />
         <image file="snow/snow+S.png" />
         <image file="snow/snow+E.png" />
