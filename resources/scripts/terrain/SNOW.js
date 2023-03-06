@@ -23,7 +23,8 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, map)
     {
-		terrain.loadBaseSprite("snow");
+        var random = globals.randInt(0, 7);
+        terrain.loadBaseSprite("snow+" + random.toString());
     };
     this.getMiniMapIcon = function()
     {
@@ -92,6 +93,18 @@ var Constructor = function()
     {
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         return TERRAIN.getTerrainBackgroundId(id, "snow");
+    };
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["snow+0",
+                "snow+1",
+                "snow+2",
+                "snow+3",
+                "snow+4",
+                "snow+5",
+                "snow+6",
+                "snow+7",];
     };
     this.getOverlayTerrainSprites = function(map)
     {

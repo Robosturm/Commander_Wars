@@ -7938,7 +7938,7 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW.js" line="72"/>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="73"/>
         <source>Snowy terrain rough to cross.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26367,6 +26367,11 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="459"/>
         <source>Waste AW 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="460"/>
+        <source>Wargroove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

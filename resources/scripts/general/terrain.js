@@ -456,7 +456,8 @@ var TERRAIN =
                     [qsTr("Clear AW 4"),    "palette_clear+dor",    "palette_clear+dor",    "palette_desert+dor",   "palette_snow+dor",     "palette_waste+dor"],
                     [qsTr("Desert AW 4"),   "palette_desert+dor",   "palette_desert+dor",   "palette_desert",       "palette_snow+dor",     "palette_waste+dor"],
                     [qsTr("Snow AW 4"),     "palette_snow+dor",     "palette_snow+dor",     "palette_desert+dor",   "palette_snow",         "palette_waste+dor"],
-                    [qsTr("Waste AW 4"),    "palette_waste+dor",    "palette_waste+dor",    "palette_desert+dor",   "palette_snow+dor",     "palette_waste"],],
+                    [qsTr("Waste AW 4"),    "palette_waste+dor",    "palette_waste+dor",    "palette_desert+dor",   "palette_snow+dor",     "palette_waste"],
+                    [qsTr("Wargroove"),     "palette_clear+wg",     "palette_clear+wg",     "palette_desert+wg",    "palette_snow+wg",      "palette_waste+wg"],],
     getDefaultPalette : function(terrain, map)
     {
         return "";
