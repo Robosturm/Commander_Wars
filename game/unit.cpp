@@ -3992,9 +3992,30 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             }
         }
     }
-    setAmmo1(bufAmmo1);
-    setAmmo2(bufAmmo2);
-    setFuel(bufFuel);
+    if (bufAmmo1 < 0 && !savegame)
+    {
+        setAmmo1(getMaxAmmo1());
+    }
+    else
+    {
+        setAmmo1(bufAmmo1);
+    }
+    if (bufAmmo2 < 0 && !savegame)
+    {
+        setAmmo2(getMaxAmmo2());
+    }
+    else
+    {
+        setAmmo2(bufAmmo2);
+    }
+    if (bufFuel < 0 && !savegame)
+    {
+        setFuel(getMaxFuel());
+    }
+    else
+    {
+        setFuel(bufFuel);
+    }
     if (version > 19)
     {
         qint32 size;
