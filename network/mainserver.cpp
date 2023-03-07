@@ -23,29 +23,26 @@
 
 const char* const DRIVER = "QSQLITE";
 
-const char* const SQL_TABLE_PLAYERS = "players";
-const char* const SQL_USERNAME      = "username";
-const char* const SQL_PASSWORD      = "password";
-const char* const SQL_MAILADRESS    = "mailAdress";
-const char* const SQL_VALIDPASSWORD = "validPassword";
-const char* const SQL_LASTLOGIN     = "lastLogin";
+const char* const MainServer::SQL_TABLE_PLAYERS = "players";
+const char* const MainServer::SQL_USERNAME      = "username";
+const char* const MainServer::SQL_PASSWORD      = "password";
+const char* const MainServer::SQL_MAILADRESS    = "mailAdress";
+const char* const MainServer::SQL_VALIDPASSWORD = "validPassword";
+const char* const MainServer::SQL_LASTLOGIN     = "lastLogin";
 
-const char* const SQL_TABLE_PLAYERDATA  = "playerData";
-const char* const SQL_COID              = "coid";
-const char* const SQL_GAMESMADE         = "gamesMade";
-const char* const SQL_GAMESLOST         = "gamesLost";
-const char* const SQL_GAMESWON          = "gamesWon";
-const char* const SQL_GAMESDRAW         = "gamesDraw";
-const char* const SQL_METADATA          = "metaData";
+const char* const MainServer::SQL_TABLE_PLAYERDATA  = "playerData";
+const char* const MainServer::SQL_COID              = "coid";
+const char* const MainServer::SQL_GAMESMADE         = "gamesMade";
+const char* const MainServer::SQL_GAMESLOST         = "gamesLost";
+const char* const MainServer::SQL_GAMESWON          = "gamesWon";
+const char* const MainServer::SQL_GAMESDRAW         = "gamesDraw";
+const char* const MainServer::SQL_METADATA          = "metaData";
 
-const char* const SQL_TABLE_MATCH_DATA  = "matchData";
-const char* const SQL_MMR               = "mmr";
-const char* const SQL_MINGAMES          = "minGames";
-const char* const SQL_MAXGAMES          = "maxGames";
-const char* const SQL_RUNNINGGAMES      = "runningGames";
-
-
-
+const char* const MainServer::SQL_TABLE_MATCH_DATA  = "matchData";
+const char* const MainServer::SQL_MMR               = "mmr";
+const char* const MainServer::SQL_MINGAMES          = "minGames";
+const char* const MainServer::SQL_MAXGAMES          = "maxGames";
+const char* const MainServer::SQL_RUNNINGGAMES      = "runningGames";
 
 spMainServer MainServer::m_pInstance{nullptr};
 QSqlDatabase* MainServer::m_serverData{nullptr};
@@ -1400,6 +1397,11 @@ QString MainServer::createRandomPassword() const
         password += static_cast<char>(GlobalUtils::randInt('A', 'Z'));
     }
     return password;
+}
+
+QSqlDatabase & MainServer::getDatabase()
+{
+    return *m_serverData;
 }
 
 void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)

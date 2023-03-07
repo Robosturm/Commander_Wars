@@ -52,6 +52,25 @@ class MainServer final : public QObject, public oxygine::ref_counter
     };
 
 public:
+    static const char* const SQL_TABLE_PLAYERS;
+    static const char* const SQL_USERNAME;
+    static const char* const SQL_PASSWORD;
+    static const char* const SQL_MAILADRESS;
+    static const char* const SQL_VALIDPASSWORD;
+    static const char* const SQL_LASTLOGIN;
+    static const char* const SQL_TABLE_PLAYERDATA;
+    static const char* const SQL_COID;
+    static const char* const SQL_GAMESMADE;
+    static const char* const SQL_GAMESLOST;
+    static const char* const SQL_GAMESWON;
+    static const char* const SQL_GAMESDRAW;
+    static const char* const SQL_METADATA;
+    static const char* const SQL_TABLE_MATCH_DATA;
+    static const char* const SQL_MMR;
+    static const char* const SQL_MINGAMES;
+    static const char* const SQL_MAXGAMES;
+    static const char* const SQL_RUNNINGGAMES;
+
     static MainServer* getInstance();
     static bool exists();
     static void initDatabase();
@@ -63,6 +82,17 @@ public:
     {
         return m_pGameServer.get();
     }
+    /**
+     * @brief getDatabase
+     * @return
+     */
+    QSqlDatabase & getDatabase();
+    /**
+     * @brief sqlQueryFailed
+     * @param query
+     * @return
+     */
+    static bool sqlQueryFailed(const QSqlQuery & query);
 signals:
     void sigRemoveGame(NetworkGame* pGame);
     void sigStartRemoteGame(QString initScript, QString id);
@@ -357,12 +387,6 @@ private:
      * @return
      */
     static QSqlQuery getAccountInfo(QSqlDatabase & database, const QString & username, bool & success);
-    /**
-     * @brief sqlQueryFailed
-     * @param query
-     * @return
-     */
-    static bool sqlQueryFailed(const QSqlQuery & query);
     /**
      * @brief sendMail
      * @param message

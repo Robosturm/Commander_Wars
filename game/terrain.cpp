@@ -90,7 +90,15 @@ void Terrain::setTerrainPaletteGroup(qint32 newPaletteGroup)
     {
         m_pBaseTerrain->setTerrainPaletteGroup(newPaletteGroup);
     }
-    m_palette = getPaletteId(newPaletteGroup, m_terrainID);
+    QString palette = getPaletteId(newPaletteGroup, m_terrainID);
+    if (palette.isEmpty())
+    {
+        m_palette = getDefaultPalette();
+    }
+    else
+    {
+        m_palette = palette;
+    }
 }
 
 void Terrain::setPalette(const QString & newPalette)

@@ -1892,14 +1892,16 @@ void Multiplayermenu::disconnectNetworkSlots()
 
 void Multiplayermenu::startGameOnServer()
 {
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     QString command = QString(NetworkCommands::LAUNCHGAMEONSERVER);
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << command;
-    Filesupport::writeVectorList(sendStream, Settings::getMods());
-
-    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    QStringList myVersions = Settings::getActiveModVersions();
+    QStringList myMods = Settings::getMods();
+    Settings::filterCosmeticMods(myMods, myVersions, pMap->getGameRules()->getCosmeticModsAllowed());
+    Filesupport::writeVectorList(sendStream, myMods);
     pMap->serializeObject(sendStream);
     sendStream << m_saveGame;
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);

@@ -7100,7 +7100,7 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2036"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2038"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7243,12 +7243,12 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1907"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1909"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2032"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2034"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
