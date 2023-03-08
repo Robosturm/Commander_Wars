@@ -700,210 +700,213 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
 {
     QStringList searchList = list.split(",");
     QString ret = "";
-    for (qint32 i = 0; i < 8; i++)
+    if (m_pMap != nullptr && m_pMap->onMap(m_x, m_y))
     {
-        qint32 curX = m_x;
-        qint32 curY = m_y;
-        // get our x, y coordinates
-        GameMap::getField(curX, curY, static_cast<GameEnums::Directions>(i));
-        bool found = false;
-        QString addString = "";
-        // load compare value
-        GameEnums::Directions compareValue = GameEnums::Directions_None;
-        if (searchType == GameEnums::Directions_All)
+        for (qint32 i = 0; i < 8; i++)
         {
-            compareValue = static_cast<GameEnums::Directions>(i);
-        }
-        else if (searchType == GameEnums::Directions_Direct)
-        {
-            switch (i)
+            qint32 curX = m_x;
+            qint32 curY = m_y;
+            // get our x, y coordinates
+            GameMap::getField(curX, curY, static_cast<GameEnums::Directions>(i));
+            bool found = false;
+            QString addString = "";
+            // load compare value
+            GameEnums::Directions compareValue = GameEnums::Directions_None;
+            if (searchType == GameEnums::Directions_All)
             {
-                case GameEnums::Directions_North:
-                case GameEnums::Directions_East:
-                case GameEnums::Directions_West:
-                case GameEnums::Directions_South:
-                {
-                    compareValue = static_cast<GameEnums::Directions>(i);
-                    break;
-                }
-                default:
-                {
-                    // do nothing
-                    compareValue = GameEnums::Directions_None;
-                    break;
-                }
+                compareValue = static_cast<GameEnums::Directions>(i);
             }
-        }
-        else if (searchType == GameEnums::Directions_Diagnonal)
-        {
-            switch (i)
+            else if (searchType == GameEnums::Directions_Direct)
             {
-                case GameEnums::Directions_NorthEast:
-                case GameEnums::Directions_NorthWest:
-                case GameEnums::Directions_SouthWest:
-                case GameEnums::Directions_SouthEast:
+                switch (i)
                 {
-                    compareValue = static_cast<GameEnums::Directions>(i);
-                    break;
-                }
-                default:
-                {
-                    compareValue = GameEnums::Directions_None;
-                    // do nothing
-                    break;
+                    case GameEnums::Directions_North:
+                    case GameEnums::Directions_East:
+                    case GameEnums::Directions_West:
+                    case GameEnums::Directions_South:
+                    {
+                        compareValue = static_cast<GameEnums::Directions>(i);
+                        break;
+                    }
+                    default:
+                    {
+                        // do nothing
+                        compareValue = GameEnums::Directions_None;
+                        break;
+                    }
                 }
             }
-        }
-        else if (searchType == i)
-        {
-            compareValue = static_cast<GameEnums::Directions>(i);
-        }
-        else
-        {
-            // you asshole reached unreachable code :D
-        }
-        // check for compare value to find string
-        if (compareValue == GameEnums::Directions_North)
-        {
-            if (inverted)
+            else if (searchType == GameEnums::Directions_Diagnonal)
             {
-                addString = "+S";
-            }
-            else
-            {
-                addString = "+N";
-            }
-        }
-        else if (compareValue == GameEnums::Directions_East)
-        {
-            if (inverted)
-            {
-                addString = "+W";
-            }
-            else
-            {
-                addString = "+E";
-            }
-        }
-        else if (compareValue == GameEnums::Directions_South)
-        {
-            if (inverted)
-            {
-                addString = "+N";
-            }
-            else
-            {
-                addString = "+S";
-            }
-        }
-        else if (compareValue == GameEnums::Directions_West)
-        {
-            if (inverted)
-            {
-                addString = "+E";
-            }
-            else
-            {
-                addString = "+W";
-            }
-        }
-        else if (compareValue == GameEnums::Directions_NorthEast)
-        {
-            if (inverted)
-            {
-                addString = "+SW";
-            }
-            else
-            {
-                addString = "+NE";
-            }
-        }
-        else if (compareValue == GameEnums::Directions_SouthEast)
-        {
-            if (inverted)
-            {
-                addString = "+NW";
-            }
-            else
-            {
-                addString = "+SE";
-            }
-        }
-        else if (compareValue == GameEnums::Directions_SouthWest)
-        {
-            if (inverted)
-            {
-                addString = "+NE";
-            }
-            else
-            {
-                addString = "+SW";
-            }
-        }
-        else if (compareValue == GameEnums::Directions_NorthWest)
-        {
-            if (inverted)
-            {
-                addString = "+SE";
-            }
-            else
-            {
-                addString = "+NW";
-            }
-        }
-        else
-        {
-            // do nothing
-        }
-        if (m_pMap != nullptr && m_pMap->onMap(curX, curY))
-        {
-            QString terrainID = "";
-            QString neighbourID = "";
-            Terrain* pTerrain = m_pMap->getTerrain(curX, curY);
-            terrainID = pTerrain->getTerrainID();
-            if (useBuildingID && pTerrain->getBuilding() != nullptr)
-            {
-                terrainID = pTerrain->getID();
-            }
-            if (useBaseTerrainID)
-            {
-                if (recursionCount > 0)
+                switch (i)
                 {
-                    neighbourID = pTerrain->getBaseTerrainIDOfLevel(recursionCount);
+                    case GameEnums::Directions_NorthEast:
+                    case GameEnums::Directions_NorthWest:
+                    case GameEnums::Directions_SouthWest:
+                    case GameEnums::Directions_SouthEast:
+                    {
+                        compareValue = static_cast<GameEnums::Directions>(i);
+                        break;
+                    }
+                    default:
+                    {
+                        compareValue = GameEnums::Directions_None;
+                        // do nothing
+                        break;
+                    }
+                }
+            }
+            else if (searchType == i)
+            {
+                compareValue = static_cast<GameEnums::Directions>(i);
+            }
+            else
+            {
+                // you asshole reached unreachable code :D
+            }
+            // check for compare value to find string
+            if (compareValue == GameEnums::Directions_North)
+            {
+                if (inverted)
+                {
+                    addString = "+S";
                 }
                 else
                 {
-                    neighbourID = pTerrain->getBaseTerrainID();
+                    addString = "+N";
                 }
             }
-            if (blacklist)
+            else if (compareValue == GameEnums::Directions_East)
             {
-                if (!searchList.contains(terrainID) &&
-                    !searchList.contains(neighbourID))
+                if (inverted)
                 {
-                    found = true;
+                    addString = "+W";
+                }
+                else
+                {
+                    addString = "+E";
+                }
+            }
+            else if (compareValue == GameEnums::Directions_South)
+            {
+                if (inverted)
+                {
+                    addString = "+N";
+                }
+                else
+                {
+                    addString = "+S";
+                }
+            }
+            else if (compareValue == GameEnums::Directions_West)
+            {
+                if (inverted)
+                {
+                    addString = "+E";
+                }
+                else
+                {
+                    addString = "+W";
+                }
+            }
+            else if (compareValue == GameEnums::Directions_NorthEast)
+            {
+                if (inverted)
+                {
+                    addString = "+SW";
+                }
+                else
+                {
+                    addString = "+NE";
+                }
+            }
+            else if (compareValue == GameEnums::Directions_SouthEast)
+            {
+                if (inverted)
+                {
+                    addString = "+NW";
+                }
+                else
+                {
+                    addString = "+SE";
+                }
+            }
+            else if (compareValue == GameEnums::Directions_SouthWest)
+            {
+                if (inverted)
+                {
+                    addString = "+NE";
+                }
+                else
+                {
+                    addString = "+SW";
+                }
+            }
+            else if (compareValue == GameEnums::Directions_NorthWest)
+            {
+                if (inverted)
+                {
+                    addString = "+SE";
+                }
+                else
+                {
+                    addString = "+NW";
                 }
             }
             else
             {
-                if (searchList.contains(terrainID) ||
-                    searchList.contains(neighbourID))
+                // do nothing
+            }
+            if (m_pMap != nullptr && m_pMap->onMap(curX, curY))
+            {
+                QString terrainID = "";
+                QString neighbourID = "";
+                Terrain* pTerrain = m_pMap->getTerrain(curX, curY);
+                terrainID = pTerrain->getTerrainID();
+                if (useBuildingID && pTerrain->getBuilding() != nullptr)
                 {
-                    found = true;
+                    terrainID = pTerrain->getID();
+                }
+                if (useBaseTerrainID)
+                {
+                    if (recursionCount > 0)
+                    {
+                        neighbourID = pTerrain->getBaseTerrainIDOfLevel(recursionCount);
+                    }
+                    else
+                    {
+                        neighbourID = pTerrain->getBaseTerrainID();
+                    }
+                }
+                if (blacklist)
+                {
+                    if (!searchList.contains(terrainID) &&
+                        !searchList.contains(neighbourID))
+                    {
+                        found = true;
+                    }
+                }
+                else
+                {
+                    if (searchList.contains(terrainID) ||
+                        searchList.contains(neighbourID))
+                    {
+                        found = true;
+                    }
                 }
             }
-        }
-        else if (useMapBorder)
-        {
-            found = true;
-        }
-        else
-        {
-            found = false;
-        }
-        if (found)
-        {
-            ret += addString;
+            else if (useMapBorder)
+            {
+                found = true;
+            }
+            else
+            {
+                found = false;
+            }
+            if (found)
+            {
+                ret += addString;
+            }
         }
     }
     return ret;
