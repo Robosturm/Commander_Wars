@@ -124,8 +124,8 @@ void DialogModifyTerrain::load()
     else
     {
         pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_pTerrain->getPalette()));
+        m_selectedPalette = 0;
     }
-    m_selectedPalette = 0;
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, m_pTerrain, [this](qint32 item)
     {
         m_selectedPalette = item;
@@ -306,7 +306,7 @@ void DialogModifyTerrain::remove()
 }
 
 void DialogModifyTerrain::terrainClicked(QString id)
-{    
+{
     m_pTerrain->setFixedSprite(!id.isEmpty());
     m_pTerrain->setTerrainSpriteName(id);
     m_pTerrain->loadSprites();

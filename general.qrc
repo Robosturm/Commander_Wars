@@ -2078,5 +2078,6 @@
         <file>resources/scripts/co_perks/co_perk_plain_fighter.js</file>
         <file>mods/awds_unit/scripts/general/unit.js</file>
         <file>mods/awdc_unit/scripts/general/unit.js</file>
+        <file>mods/awds_unit/scripts/units/ZCOUNIT_MISSILE_SUB.js</file>
     </qresource>
 </RCC>
