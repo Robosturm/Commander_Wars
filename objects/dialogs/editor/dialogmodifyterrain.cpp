@@ -332,7 +332,12 @@ void DialogModifyTerrain::overlayChanged(QString id, bool selected)
 {
     if (selected)
     {
-        m_pTerrain->addCustomOverlay(id, Terrain::getPaletteId(m_selectedPalette, m_pTerrain->getTerrainID()));
+        QString palette = Terrain::getPaletteId(m_selectedPalette, m_pTerrain->getTerrainID());
+        if (palette.isEmpty())
+        {
+            palette = m_pTerrain->getDefaultPalette();
+        }
+        m_pTerrain->addCustomOverlay(id, palette);
     }
     else
     {
