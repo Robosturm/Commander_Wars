@@ -154,6 +154,10 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     {
         Settings::setAiSlave(true);
     }
+    if (m_parser.isSet(m_server))
+    {
+        Settings::setServer(m_parser.value(m_server) == "1");
+    }
     if (m_parser.isSet(m_update))
     {
         QString value = m_parser.value(m_update);
@@ -242,7 +246,7 @@ void CommandLineParser::parseArgsPhaseTwo()
     if (m_parser.isSet(m_server))
     {
         Settings::setServer(m_parser.value(m_server) == "1");
-    }    
+    }
     if (m_parser.isSet(m_serverSlaveHostOptions))
     {
         Settings::setSlaveHostOptions(m_parser.value(m_serverSlaveHostOptions));

@@ -1263,6 +1263,16 @@ void Settings::setup()
         new Value<GameConsole::eLogLevels>{"Logging", "LogLevel", &m_defaultLogLevel, static_cast<GameConsole::eLogLevels>(DEBUG_LEVEL), GameConsole::eLogLevels::eOFF, GameConsole::eLogLevels::eFATAL},
         new Value<quint64>{"Logging", "LogModules", &m_defaultLogModuls, GameConsole::eGeneral | GameConsole::eJavaScript, 0, std::numeric_limits<quint64>::max()},
     };
+    QSettings settings(Settings::getInstance()->m_settingFile, QSettings::IniFormat);
+    for (auto* setting : Settings::getInstance()->m_SettingValues)
+    {
+        if (QString(setting->getGroup()) == QString("Network") &&
+            QString(setting->getName()) == QString("Server"))
+        {
+            setting->readValue(settings);
+            break;
+        }
+    }
 }
 
 void Settings::loadSettings()
@@ -1270,7 +1280,7 @@ void Settings::loadSettings()
     CONSOLE_PRINT("Settings::loadSettings()", GameConsole::eDEBUG);
     bool ok = false;
     QSettings settings(Settings::getInstance()->m_settingFile, QSettings::IniFormat);
-    for (auto setting : Settings::getInstance()->m_SettingValues)
+    for (auto* setting : Settings::getInstance()->m_SettingValues)
     {
         setting->readValue(settings);
     }
