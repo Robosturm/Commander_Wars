@@ -125,6 +125,7 @@ void DialogModifyTerrain::load()
     {
         pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_pTerrain->getPalette()));
     }
+    m_selectedPalette = 0;
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, m_pTerrain, [this](qint32 item)
     {
         m_selectedPalette = item;

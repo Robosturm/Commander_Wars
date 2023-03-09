@@ -2549,7 +2549,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="178"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="179"/>
         <source>Base image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2594,32 +2594,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="215"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="216"/>
         <source>Terrain Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="219"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="220"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="246"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="247"/>
         <source>Overlays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="139"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="140"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="147"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="148"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="320"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="321"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
