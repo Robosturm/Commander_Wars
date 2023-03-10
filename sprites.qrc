@@ -4974,5 +4974,6 @@
         <file>resources/images/terrain/snow/snow+5.png</file>
         <file>resources/images/terrain/snow/snow+6.png</file>
         <file>resources/images/terrain/snow/snow+7.png</file>
+        <file>resources/images/terrain/snow/snow+0.png</file>
     </qresource>
 </RCC>
