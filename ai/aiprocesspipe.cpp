@@ -44,7 +44,6 @@ AiProcessPipe::~AiProcessPipe()
 void AiProcessPipe::startPipe()
 {
     QString pipeName = PIPENAME + Settings::getPipeUuid();
-    CONSOLE_PRINT("Starting AI-Pipe with name " + pipeName, GameConsole::eDEBUG);
     if (Settings::getAiSlave())
     {
         m_animationSkipper.startSeeking();
@@ -58,6 +57,7 @@ void AiProcessPipe::startPipe()
     }
     if (m_pActiveConnection != nullptr)
     {
+        CONSOLE_PRINT("Starting AI-Pipe with name " + pipeName, GameConsole::eDEBUG);
         connect(m_pActiveConnection, &NetworkInterface::sigConnected, this, &AiProcessPipe::onConnected, Qt::QueuedConnection);
         connect(m_pActiveConnection, &NetworkInterface::recieveData, this, &AiProcessPipe::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         m_pActiveConnection->connectTCP(pipeName, 0, "");

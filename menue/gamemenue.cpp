@@ -1131,6 +1131,7 @@ void GameMenue::startDespawnTimer()
         CONSOLE_PRINT("GameMenue::startDespawnTimer", GameConsole::eDEBUG);
         m_slaveDespawnElapseTimer.start();
         m_slaveDespawnTimer.setSingleShot(false);
+        m_despawning = false;
         constexpr qint32 MS_PER_SECOND = 1000;
         m_slaveDespawnTimer.start(MS_PER_SECOND);
     }
@@ -1144,8 +1145,14 @@ void GameMenue::despawnSlave()
     CONSOLE_PRINT("GameMenue::despawnSlave elapsed seconds " + QString::number(elapsed * multiplier) + " target time " + QString::number(ms.count() * multiplier), GameConsole::eDEBUG);
     if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
     {
-        if (m_saveAllowed)
+        if (m_despawning)
         {
+            CONSOLE_PRINT("Killing slave cause server didn't respond", GameConsole::eERROR);
+            QCoreApplication::exit(-10);
+        }
+        else if (m_saveAllowed)
+        {
+            m_despawning = true;
             QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".msav";
             saveMap(saveFile);
             spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();

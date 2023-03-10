@@ -167,8 +167,14 @@ void Multiplayermenu::despawnSlave()
     CONSOLE_PRINT("Multiplayermenu::despawnSlave elapsed seconds " + QString::number(elapsed * multiplier) + " target time " + QString::number(ms.count() * multiplier), GameConsole::eDEBUG);
     if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
     {
-        if (m_pPlayerSelection->hasLockedPlayersInCaseOfDisconnect())
+        if (m_despawning)
         {
+            CONSOLE_PRINT("Killing slave cause server didn't respond", GameConsole::eERROR);
+            QCoreApplication::exit(-10);
+        }
+        else if (m_pPlayerSelection->hasLockedPlayersInCaseOfDisconnect())
+        {
+            m_despawning = true;
             QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".lsav";
             saveLobbyState(saveFile);
             spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
@@ -1787,6 +1793,7 @@ void Multiplayermenu::startDespawnTimer()
         CONSOLE_PRINT("Multiplayermenu::startDespawnTimer", GameConsole::eDEBUG);
         m_slaveDespawnElapseTimer.start();
         m_slaveDespawnTimer.setSingleShot(false);
+        m_despawning = true;
         constexpr qint32 MS_PER_SECOND = 1000;
         m_slaveDespawnTimer.start(MS_PER_SECOND);
     }

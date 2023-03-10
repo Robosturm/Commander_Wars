@@ -338,6 +338,7 @@ private:
     spDialogConnecting m_pDialogConnecting;
     QElapsedTimer m_slaveDespawnElapseTimer;
     QTimer m_slaveDespawnTimer{this};
+    bool m_despawning{false};
 };
 
 #endif // MULTIPLAYERMENU_H

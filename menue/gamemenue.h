@@ -496,6 +496,7 @@ protected:
     spNetworkInterface m_pNetworkInterface;
     bool m_Multiplayer{false};
     QElapsedTimer m_slaveDespawnElapseTimer;
+    bool m_despawning{false};
     QTimer m_slaveDespawnTimer{this};
     QTimer m_UpdateTimer{this};
     QTimer m_exitDelayedTimer{this};

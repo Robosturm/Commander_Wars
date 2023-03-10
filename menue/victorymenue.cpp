@@ -579,7 +579,7 @@ void VictoryMenue::multiplayerGameFinished()
 void VictoryMenue::despawnSlave()
 {
     // despawn slave process on finish
-    CONSOLE_PRINT("Closing slave cause the game is finished.", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Closing slave cause the game is finished and server didn't respond.", GameConsole::eERROR);
     qint32 ret = m_pMap->getWinnerTeam() + 1;
     QString object = "Init";
     QString func = "onMasterValue";
