@@ -4,7 +4,6 @@
 
 #include "menue/replaymenu.h"
 #include "menue/victorymenue.h"
-#include "menue/movementplanner.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 
@@ -136,9 +135,10 @@ void ReplayMenu::nextReplayAction()
         }
         m_progressBar->setScrollvalue(progress);
         if (pAction.get() != nullptr)
-        {
+        {            
             --m_replayCounter;
             CONSOLE_PRINT("Performing next replay action", GameConsole::eDEBUG);
+            pAction->setSyncCounter(getActionPerformer().getSyncCounter() + 1);
             getActionPerformer().performAction(pAction);
         }
         else
