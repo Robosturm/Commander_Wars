@@ -5,7 +5,7 @@ CO_HACHI.init = function(co, map)
 };
 CO_HACHI.activateSuperpower = function(co, powerMode, map)
 {
-	CO_HACHI.activatePower(co, powerMode, map);
+	CO_HACHI.activatePower(co, map);
 };
 CO_HACHI.getSuperPowerDescription = function()
 {

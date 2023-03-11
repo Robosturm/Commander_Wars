@@ -8,7 +8,7 @@ CO_AMY.init = function(co, map)
 };
 CO_AMY.activateSuperpower = function(co, powerMode, map)
 {
-    CO_AMY.activatePower(co, powerMode, map);
+    CO_AMY.activatePower(co, map);
 };
 CO_AMY.getSuperPowerDescription = function()
 {

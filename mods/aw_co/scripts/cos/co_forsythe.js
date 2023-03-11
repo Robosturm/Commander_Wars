@@ -5,7 +5,7 @@ CO_FORSYTHE.init = function(co, map)
 };
 CO_FORSYTHE.activateSuperpower = function(co, powerMode, map)
 {
-    CO_FORSYTHE.activatePower(co, powerMode, map);
+    CO_FORSYTHE.activatePower(co, map);
 };
 CO_FORSYTHE.getSuperPowerDescription = function()
 {

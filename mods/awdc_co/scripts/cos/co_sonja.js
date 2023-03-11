@@ -5,7 +5,7 @@ CO_SONJA.init = function(co, map)
 };
 CO_SONJA.activateSuperpower = function(co, powerMode, map)
 {
-	CO_SONJA.activatePower(co, powerMode, map);
+	CO_SONJA.activatePower(co, map);
 };
 CO_SONJA.getSuperPowerDescription = function()
 {

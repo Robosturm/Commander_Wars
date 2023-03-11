@@ -5,7 +5,7 @@ CO_KINDLE.init = function(co, map)
 };
 CO_KINDLE.activateSuperpower = function(co, powerMode, map)
 {
-    CO_KINDLE.activatePower(co, powerMode, map);
+    CO_KINDLE.activatePower(co, map);
 };
 CO_KINDLE.getSuperPowerDescription = function()
 {

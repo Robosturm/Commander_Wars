@@ -5,7 +5,7 @@ CO_SENSEI.init = function(co, map)
 };
 CO_SENSEI.activateSuperpower = function(co, powerMode, map)
 {
-	CO_SENSEI.activatePower(co, powerMode, map);
+	CO_SENSEI.activatePower(co, map);
 };
 CO_SENSEI.getSuperPowerDescription = function()
 {

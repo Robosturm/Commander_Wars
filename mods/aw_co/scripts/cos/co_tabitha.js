@@ -5,7 +5,7 @@ CO_TABITHA.init = function(co, map)
 };
 CO_TABITHA.activateSuperpower = function(co, powerMode, map)
 {
-    CO_TABITHA.activatePower(co, powerMode, map);
+    CO_TABITHA.activatePower(co, map);
 };
 CO_TABITHA.getSuperPowerDescription = function()
 {

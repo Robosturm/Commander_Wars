@@ -7,7 +7,7 @@ CO_BRENNER.init = function(co, map)
 };
 CO_BRENNER.activateSuperpower = function(co, powerMode, map)
 {
-    CO_BRENNER.activatePower(co, powerMode, map);
+    CO_BRENNER.activatePower(co, map);
 };
 CO_BRENNER.getSuperPowerDescription = function()
 {

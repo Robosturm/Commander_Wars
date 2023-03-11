@@ -1755,18 +1755,34 @@ void GameMenue::showUnitStatistics(qint32 player)
 
 void GameMenue::showPlayerUnitStatistics(Player* pPlayer)
 {
-    m_Focused = false;
-    CONSOLE_PRINT("showUnitStatistics()", GameConsole::eDEBUG);
-    spGenericBox pBox = spGenericBox::create();
-    spUnitStatisticView view = spUnitStatisticView::create(m_pMap->getGameRecorder()->getPlayerDataRecords()[pPlayer->getPlayerID()],
-                                                           Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer, m_pMap.get());
-    view->setPosition(30, 30);
-    pBox->addItem(view);
-    connect(pBox.get(), &GenericBox::sigFinished, this, [this]()
+    if (pPlayer != nullptr)
     {
-        m_Focused = true;
-    });
-    addChild(pBox);
+        qint32 playerId = pPlayer->getPlayerID();
+        const auto & records = m_pMap->getGameRecorder()->getPlayerDataRecords();
+        if (playerId < records.size() && playerId >= 0)
+        {
+            m_Focused = false;
+            CONSOLE_PRINT("showUnitStatistics()", GameConsole::eDEBUG);
+            spGenericBox pBox = spGenericBox::create();
+            spUnitStatisticView view = spUnitStatisticView::create(records[playerId],
+                                                                   Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer, m_pMap.get());
+            view->setPosition(30, 30);
+            pBox->addItem(view);
+            connect(pBox.get(), &GenericBox::sigFinished, this, [this]()
+            {
+                m_Focused = true;
+            });
+            addChild(pBox);
+        }
+        else
+        {
+            CONSOLE_PRINT("showPlayerUnitStatistics Player id " + QString::number(playerId) + " is outside player record range.", GameConsole::eERROR);
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("showPlayerUnitStatistics player is a nullptr", GameConsole::eERROR);
+    }
 }
 
 void GameMenue::showXmlFileDialog(const QString & xmlFile, bool saveSettings)

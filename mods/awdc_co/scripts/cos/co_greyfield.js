@@ -5,7 +5,7 @@ CO_GREYFIELD.init = function(co, map)
 };
 CO_GREYFIELD.activateSuperpower = function(co, powerMode, map)
 {
-	CO_GREYFIELD.activatePower(co, powerMode, map);
+	CO_GREYFIELD.activatePower(co, map);
 };
 CO_GREYFIELD.getSuperPowerDescription = function()
 {

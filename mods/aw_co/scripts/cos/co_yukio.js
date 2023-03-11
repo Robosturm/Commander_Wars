@@ -5,7 +5,7 @@ CO_YUKIO.init = function(co, map)
 };
 CO_YUKIO.activateSuperpower = function(co, powerMode, map)
 {
-    CO_YUKIO.activatePower(co, powerMode, map);
+    CO_YUKIO.activatePower(co, map);
 };
 CO_YUKIO.getSuperPowerDescription = function()
 {

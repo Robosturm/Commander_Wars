@@ -5,7 +5,7 @@ CO_HAWKE.init = function(co, map)
 };
 CO_HAWKE.activateSuperpower = function(co, powerMode, map)
 {
-	CO_HAWKE.activatePower(co, powerMode, map);
+	CO_HAWKE.activatePower(co, map);
 };
 CO_HAWKE.getSuperPowerDescription = function()
 {

@@ -5,7 +5,7 @@ CO_AIRA.init = function(co, map)
 };
 CO_AIRA.activateSuperpower = function(co, powerMode, map)
 {
-    CO_AIRA.activatePower(co, powerMode, map);
+    CO_AIRA.activatePower(co, map);
 };
 CO_AIRA.getSuperPowerDescription = function()
 {

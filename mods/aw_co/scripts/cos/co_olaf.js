@@ -5,7 +5,7 @@ CO_OLAF.init = function(co, map)
 };
 CO_OLAF.activateSuperpower = function(co, powerMode, map)
 {
-    CO_OLAF.activatePower(co, powerMode, map);
+    CO_OLAF.activatePower(co, map);
 };
 CO_OLAF.getSuperPowerDescription = function()
 {
