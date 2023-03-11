@@ -6244,7 +6244,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="1054"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="1055"/>
         <source>Loading Sprites</source>
         <translation type="unfinished"></translation>
     </message>
