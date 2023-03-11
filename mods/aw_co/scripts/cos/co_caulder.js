@@ -93,7 +93,7 @@ CO_CAULDER.startOfTurn = function(co, map)
                         counter = 0;
                     }
                 }
-                if (!viewplayer.getFieldVisible(unitX, unitY))
+                if (!viewplayer.getFieldVisible(unit.getX(), unit.getY()))
                 {
                     animation.setVisible(false);
                 }
