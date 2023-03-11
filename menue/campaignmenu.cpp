@@ -487,7 +487,6 @@ void CampaignMenu::slotButtonNext()
         {
             pMap->initPlayersAndSelectCOs();
             pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
-            pMap->getGameScript()->gameStart();
             pMap->updateSprites();
             // start game
             CONSOLE_PRINT("Leaving Campaign Menue", GameConsole::eDEBUG);

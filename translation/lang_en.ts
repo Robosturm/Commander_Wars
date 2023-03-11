@@ -1831,7 +1831,7 @@
     </message>
     <message>
         <location filename="../menue/campaignmenu.cpp" line="73"/>
-        <location filename="../menue/campaignmenu.cpp" line="516"/>
+        <location filename="../menue/campaignmenu.cpp" line="515"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6532,22 +6532,22 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2315"/>
+        <location filename="../menue/gamemenue.cpp" line="2316"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2346"/>
+        <location filename="../menue/gamemenue.cpp" line="2347"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2372"/>
+        <location filename="../menue/gamemenue.cpp" line="2373"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2549"/>
+        <location filename="../menue/gamemenue.cpp" line="2550"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
