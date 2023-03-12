@@ -55,6 +55,8 @@ ReplayMenu::ReplayMenu(QString filename)
         m_HumanInput->init(this);
         m_gameStarted = true;
         CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
+        m_onEnterTimer.stop();
+        m_onEnterTimer.start(10);
     }
 }
 
