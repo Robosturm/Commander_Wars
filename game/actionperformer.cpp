@@ -189,7 +189,12 @@ bool ActionPerformer::requiresForwarding(const spGameAction & pGameAction) const
            m_pMenu->getIsMultiplayer(pGameAction) &&
            baseGameInput != nullptr &&
            baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi &&
-           !pGameAction->getIsLocal();
+                                         !pGameAction->getIsLocal();
+}
+
+void ActionPerformer::setActionRunning(bool newActionRunning)
+{
+    m_actionRunning = newActionRunning;
 }
 
 bool ActionPerformer::getExit() const

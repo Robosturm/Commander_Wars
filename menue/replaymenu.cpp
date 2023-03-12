@@ -141,6 +141,7 @@ void ReplayMenu::nextReplayAction()
             --m_replayCounter;
             CONSOLE_PRINT("Performing next replay action", GameConsole::eDEBUG);
             pAction->setSyncCounter(getActionPerformer().getSyncCounter() + 1);
+            getActionPerformer().setActionRunning(false);
             getActionPerformer().performAction(pAction);
         }
         else
@@ -332,7 +333,7 @@ void ReplayMenu::startSeeking()
     m_replayCounter = 0;
 
     m_storedSeekingAnimationSettings.startSeeking();
-    if (GameAnimationFactory::getAnimationCount() > 0)
+    while (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
     }
