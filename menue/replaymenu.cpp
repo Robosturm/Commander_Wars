@@ -55,20 +55,6 @@ ReplayMenu::ReplayMenu(QString filename)
         m_HumanInput->init(this);
         m_gameStarted = true;
         CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
-        m_onEnterTimer.stop();
-        m_onEnterTimer.start(10);
-    }
-}
-
-void ReplayMenu::onEnter()
-{
-    if (m_pMap.get() != nullptr &&
-        m_pMap->getGameScript() != nullptr)
-    {
-        m_pMap->getGameScript()->onGameLoaded(this);
-    }
-    if (m_valid)
-    {
         emit getActionPerformer().sigActionPerformed();
     }
 }
@@ -76,6 +62,10 @@ void ReplayMenu::onEnter()
 ReplayMenu::~ReplayMenu()
 {
     m_storedAnimationSettings.restoreAnimationSettings();
+}
+
+void ReplayMenu::onEnter()
+{
 }
 
 void ReplayMenu::showRecordInvalid()
@@ -103,6 +93,7 @@ void ReplayMenu::exitReplay()
     CONSOLE_PRINT("Restoring interpreter after record replay", GameConsole::eDEBUG);
     Interpreter::reloadInterpreter(Interpreter::getInstance()->getRuntimeData());
     CONSOLE_PRINT("Leaving Replay Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface, true);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();

@@ -468,6 +468,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 !m_local)
             {
                 initClientGame(socketID, stream);
+                m_onEnterTimer.stop();
                 oxygine::Actor::detach();
             }
         }
@@ -829,6 +830,7 @@ void Multiplayermenu::onServerRelaunchSlave(quint64 socketID, const QJsonObject 
 void Multiplayermenu::relaunchRunningGame(quint64 socketID, const QString & savefile)
 {
     CONSOLE_PRINT("Relaunching running game on slave with savefile " + savefile, GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     spGameMap pMap = spGameMap::create(savefile, false, false, true);
     pMap->initProxyAis();
     spGameMenue pMenu = spGameMenue::create(pMap, true, m_pNetworkInterface, false, true);
@@ -972,6 +974,7 @@ void Multiplayermenu::startRejoinedGame(qint64 syncCounter)
     // start game
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     CONSOLE_PRINT("Leaving Map Selection Menue and rejoining game with sync counter " + QString::number(syncCounter), GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     auto window = spGameMenue::create(pMap, true, m_pNetworkInterface, true);
     window->getActionPerformer().setSyncCounter(syncCounter);
     oxygine::Stage::getStage()->addChild(window);
@@ -1745,6 +1748,7 @@ void Multiplayermenu::showPlayerSelection(bool relaunchedLobby)
 void Multiplayermenu::exitMenu()
 {
     CONSOLE_PRINT("Leaving Map Selection Menue and going back to main menu", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     spMainwindow window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -1753,6 +1757,7 @@ void Multiplayermenu::exitMenu()
 void Multiplayermenu::exitMenuToLobby()
 {
     CONSOLE_PRINT("Leaving Map Selection Menue and going back to lobby menu", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     disconnectNetwork();
     oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
     oxygine::Actor::detach();
@@ -1780,6 +1785,7 @@ void Multiplayermenu::disconnected(quint64 socket)
     {
         emit sigServerResponded();
         CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
+        m_onEnterTimer.stop();
         disconnectNetwork();
         oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
@@ -2134,6 +2140,7 @@ void Multiplayermenu::countdown()
             pMap->updateSprites(-1, -1, false, true, true);
             // start game
             CONSOLE_PRINT("Leaving Map Selection Menue after countdown", GameConsole::eDEBUG);
+            m_onEnterTimer.stop();
             auto window = spGameMenue::create(pMap, m_saveGame, m_pNetworkInterface, false);
             oxygine::Stage::getStage()->addChild(window);
             QThread::msleep(200);

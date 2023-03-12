@@ -113,6 +113,7 @@ void MovementPlanner::onShowPlanner()
 
 void MovementPlanner::onExitPlanner()
 {
+    m_onEnterTimer.stop();
     if (m_input.get() != nullptr)
     {
         m_input->cleanUpInput();

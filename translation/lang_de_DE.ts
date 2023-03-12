@@ -1831,7 +1831,7 @@
     </message>
     <message>
         <location filename="../menue/campaignmenu.cpp" line="73"/>
-        <location filename="../menue/campaignmenu.cpp" line="515"/>
+        <location filename="../menue/campaignmenu.cpp" line="516"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6419,135 +6419,135 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="434"/>
+        <location filename="../menue/gamemenue.cpp" line="429"/>
         <source>Connection failed.Reason: Invalid login data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="435"/>
+        <location filename="../menue/gamemenue.cpp" line="430"/>
         <source>Connection failed.Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="436"/>
+        <location filename="../menue/gamemenue.cpp" line="431"/>
         <source>Connection failed.Reason: No valid player available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="437"/>
+        <location filename="../menue/gamemenue.cpp" line="432"/>
         <source>Connection failed.Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="600"/>
+        <location filename="../menue/gamemenue.cpp" line="595"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart or try to resync with the server.
 Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="600"/>
+        <location filename="../menue/gamemenue.cpp" line="595"/>
         <source>Resync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="600"/>
+        <location filename="../menue/gamemenue.cpp" line="595"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1095"/>
+        <location filename="../menue/gamemenue.cpp" line="1090"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1117"/>
+        <location filename="../menue/gamemenue.cpp" line="1112"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1347"/>
-        <location filename="../menue/gamemenue.cpp" line="1958"/>
-        <location filename="../menue/gamemenue.cpp" line="1995"/>
+        <location filename="../menue/gamemenue.cpp" line="1342"/>
+        <location filename="../menue/gamemenue.cpp" line="1954"/>
+        <location filename="../menue/gamemenue.cpp" line="1991"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1355"/>
+        <location filename="../menue/gamemenue.cpp" line="1350"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1390"/>
+        <location filename="../menue/gamemenue.cpp" line="1385"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1807"/>
+        <location filename="../menue/gamemenue.cpp" line="1803"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1808"/>
+        <location filename="../menue/gamemenue.cpp" line="1804"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1809"/>
+        <location filename="../menue/gamemenue.cpp" line="1805"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1810"/>
+        <location filename="../menue/gamemenue.cpp" line="1806"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1811"/>
+        <location filename="../menue/gamemenue.cpp" line="1807"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1812"/>
+        <location filename="../menue/gamemenue.cpp" line="1808"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1813"/>
+        <location filename="../menue/gamemenue.cpp" line="1809"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1814"/>
+        <location filename="../menue/gamemenue.cpp" line="1810"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1840"/>
+        <location filename="../menue/gamemenue.cpp" line="1836"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1858"/>
+        <location filename="../menue/gamemenue.cpp" line="1854"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2332"/>
+        <location filename="../menue/gamemenue.cpp" line="2333"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2363"/>
+        <location filename="../menue/gamemenue.cpp" line="2364"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2389"/>
+        <location filename="../menue/gamemenue.cpp" line="2390"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2566"/>
+        <location filename="../menue/gamemenue.cpp" line="2567"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6765,34 +6765,34 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="291"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="390"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="294"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="396"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="342"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="345"/>
         <source>Contacting server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="358"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="372"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="362"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="377"/>
         <source>Enter Host address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="465"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="472"/>
         <source>Failed to launch game on server cause no more game slots are available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="472"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="479"/>
         <source>Host game is no longer available or is currently relaunched.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="624"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="632"/>
         <source>Connection refused. Server has a different version of the game. Server </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6965,7 +6965,7 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="416"/>
+        <location filename="../menue/mainwindow.cpp" line="417"/>
         <source>Do you want to enable all current items in the shop?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7002,14 +7002,14 @@ Note: This may be caused by a defective mod.</source>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="104"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="472"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="476"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="115"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="483"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="531"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="487"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="535"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7024,17 +7024,17 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
         <source>Do you want to make the saved ruleset the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7090,7 +7090,7 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/movementplanner.cpp" line="150"/>
+        <location filename="../menue/movementplanner.cpp" line="151"/>
         <source>Updating map</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7100,7 +7100,7 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2045"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2051"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7120,7 +7120,7 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="529"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="530"/>
         <source>Server doesn&apos;t have the given mods installed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7135,7 +7135,7 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="536"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="537"/>
         <source>Server doesn&apos;t have any more slots for players.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7161,94 +7161,94 @@ Note: You won&apos;t be able to change any rules when reentering the lobby later
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="604"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="605"/>
         <source>Connection failed. Reason: Invalid username password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="605"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="606"/>
         <source>Connection failed. Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="606"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="607"/>
         <source>Connection failed. Reason: No more players available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="607"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="608"/>
         <source>Connection failed. Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="608"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="609"/>
         <source>Connection failed. Reason: Invalid username.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="609"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="610"/>
         <source>Connection failed. Reason: Password outdated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="610"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="611"/>
         <source>Connection failed. Reason: Server failed to access database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="611"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="612"/>
         <source>Connection failed. Reason: Player with same username already connected to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="926"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1073"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="928"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1076"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1306"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1309"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1310"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1313"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1325"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1328"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1329"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1332"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1429"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1432"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1440"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1443"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1842"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1848"/>
         <source>Informing server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1916"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1922"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2041"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2047"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7266,32 +7266,32 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="266"/>
+        <location filename="../menue/optionmenue.cpp" line="268"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="269"/>
+        <location filename="../menue/optionmenue.cpp" line="271"/>
         <source>Advance Wars 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="271"/>
+        <location filename="../menue/optionmenue.cpp" line="273"/>
         <source>Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="364"/>
+        <location filename="../menue/optionmenue.cpp" line="366"/>
         <source>Filters mods by given tags.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="454"/>
+        <location filename="../menue/optionmenue.cpp" line="456"/>
         <source>The mod author designated this mod as &apos;Cosmetic&apos; and may be used during multiplayer matches based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="263"/>
+        <location filename="../menue/optionmenue.cpp" line="265"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7301,56 +7301,56 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="267"/>
+        <location filename="../menue/optionmenue.cpp" line="269"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="268"/>
+        <location filename="../menue/optionmenue.cpp" line="270"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="280"/>
+        <location filename="../menue/optionmenue.cpp" line="282"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="362"/>
+        <location filename="../menue/optionmenue.cpp" line="364"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="456"/>
+        <location filename="../menue/optionmenue.cpp" line="458"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="461"/>
+        <location filename="../menue/optionmenue.cpp" line="463"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="466"/>
+        <location filename="../menue/optionmenue.cpp" line="468"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="471"/>
+        <location filename="../menue/optionmenue.cpp" line="473"/>
         <source>Tags:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="476"/>
+        <location filename="../menue/optionmenue.cpp" line="478"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="628"/>
+        <location filename="../menue/optionmenue.cpp" line="630"/>
         <source>This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7671,220 +7671,220 @@ Host mods: </source>
 <context>
     <name>ReplayMenu</name>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="150"/>
+        <location filename="../menue/replaymenu.cpp" line="141"/>
         <source>Do you want to exit the current replay?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="184"/>
+        <location filename="../menue/replaymenu.cpp" line="175"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="304"/>
-        <location filename="../menue/replaymenu.cpp" line="343"/>
+        <location filename="../menue/replaymenu.cpp" line="295"/>
+        <location filename="../menue/replaymenu.cpp" line="334"/>
         <source>Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="487"/>
+        <location filename="../menue/replaymenu.cpp" line="478"/>
         <source>Current Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="488"/>
+        <location filename="../menue/replaymenu.cpp" line="479"/>
         <source>All Teams</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="489"/>
+        <location filename="../menue/replaymenu.cpp" line="480"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="503"/>
+        <location filename="../menue/replaymenu.cpp" line="494"/>
         <source>Team </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="508"/>
+        <location filename="../menue/replaymenu.cpp" line="499"/>
         <source>Teamview:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="528"/>
+        <location filename="../menue/replaymenu.cpp" line="519"/>
         <source>Gameplay Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="535"/>
+        <location filename="../menue/replaymenu.cpp" line="526"/>
         <source>Overworld Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="539"/>
+        <location filename="../menue/replaymenu.cpp" line="530"/>
         <source>If active: walk, capture power animations, and so on will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="555"/>
+        <location filename="../menue/replaymenu.cpp" line="546"/>
         <source>Select which in-game animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="570"/>
+        <location filename="../menue/replaymenu.cpp" line="561"/>
         <source>Selects which battle animations are played during combat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="654"/>
+        <location filename="../menue/replaymenu.cpp" line="645"/>
         <source>Selects the speed at which animations are played. Note: This does not include capture or battle animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="548"/>
-        <location filename="../menue/replaymenu.cpp" line="565"/>
+        <location filename="../menue/replaymenu.cpp" line="539"/>
+        <location filename="../menue/replaymenu.cpp" line="556"/>
         <source>Battle Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="90"/>
+        <location filename="../menue/replaymenu.cpp" line="80"/>
         <source>The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="551"/>
+        <location filename="../menue/replaymenu.cpp" line="542"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="551"/>
+        <location filename="../menue/replaymenu.cpp" line="542"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="551"/>
+        <location filename="../menue/replaymenu.cpp" line="542"/>
         <source>Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="551"/>
+        <location filename="../menue/replaymenu.cpp" line="542"/>
         <source>Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="551"/>
+        <location filename="../menue/replaymenu.cpp" line="542"/>
         <source>Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="568"/>
+        <location filename="../menue/replaymenu.cpp" line="559"/>
         <source>Detailed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="568"/>
+        <location filename="../menue/replaymenu.cpp" line="559"/>
         <source>Overworld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="582"/>
+        <location filename="../menue/replaymenu.cpp" line="573"/>
         <source>Dialogs: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="585"/>
-        <location filename="../menue/replaymenu.cpp" line="602"/>
-        <location filename="../menue/replaymenu.cpp" line="619"/>
-        <location filename="../menue/replaymenu.cpp" line="636"/>
+        <location filename="../menue/replaymenu.cpp" line="576"/>
+        <location filename="../menue/replaymenu.cpp" line="593"/>
+        <location filename="../menue/replaymenu.cpp" line="610"/>
+        <location filename="../menue/replaymenu.cpp" line="627"/>
         <source>off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="585"/>
-        <location filename="../menue/replaymenu.cpp" line="602"/>
-        <location filename="../menue/replaymenu.cpp" line="619"/>
-        <location filename="../menue/replaymenu.cpp" line="636"/>
+        <location filename="../menue/replaymenu.cpp" line="576"/>
+        <location filename="../menue/replaymenu.cpp" line="593"/>
+        <location filename="../menue/replaymenu.cpp" line="610"/>
+        <location filename="../menue/replaymenu.cpp" line="627"/>
         <source>on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="587"/>
+        <location filename="../menue/replaymenu.cpp" line="578"/>
         <source>Selects if capture animations are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="599"/>
+        <location filename="../menue/replaymenu.cpp" line="590"/>
         <source>Capture: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="604"/>
+        <location filename="../menue/replaymenu.cpp" line="595"/>
         <source>Selects if the dialogs are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="616"/>
+        <location filename="../menue/replaymenu.cpp" line="607"/>
         <source>Day 2 Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="621"/>
+        <location filename="../menue/replaymenu.cpp" line="612"/>
         <source>Selects if the day to day screen gets skipped or not. Note on fog of war maps the screen is still shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="633"/>
+        <location filename="../menue/replaymenu.cpp" line="624"/>
         <source>Movement: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="638"/>
+        <location filename="../menue/replaymenu.cpp" line="629"/>
         <source>Selects if movement animations get shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="650"/>
+        <location filename="../menue/replaymenu.cpp" line="641"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="666"/>
+        <location filename="../menue/replaymenu.cpp" line="657"/>
         <source>Walk Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="670"/>
+        <location filename="../menue/replaymenu.cpp" line="661"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="682"/>
+        <location filename="../menue/replaymenu.cpp" line="673"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="686"/>
+        <location filename="../menue/replaymenu.cpp" line="677"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="698"/>
+        <location filename="../menue/replaymenu.cpp" line="689"/>
         <source>Capture Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="702"/>
+        <location filename="../menue/replaymenu.cpp" line="693"/>
         <source>Selects the speed at which capture animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="714"/>
+        <location filename="../menue/replaymenu.cpp" line="705"/>
         <source>Dialog Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="718"/>
+        <location filename="../menue/replaymenu.cpp" line="709"/>
         <source>Selects the speed at which dialog animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9859,7 +9859,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="167"/>
+        <location filename="../menue/shopmenu.cpp" line="168"/>
         <source>Check any items you&apos;d like to buy from the shop, then click &apos;Buy&apos; to confirm your purchase.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10527,37 +10527,37 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="239"/>
-        <location filename="../menue/victorymenue.cpp" line="726"/>
+        <location filename="../menue/victorymenue.cpp" line="727"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="248"/>
-        <location filename="../menue/victorymenue.cpp" line="731"/>
+        <location filename="../menue/victorymenue.cpp" line="732"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="257"/>
-        <location filename="../menue/victorymenue.cpp" line="736"/>
+        <location filename="../menue/victorymenue.cpp" line="737"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="266"/>
-        <location filename="../menue/victorymenue.cpp" line="741"/>
+        <location filename="../menue/victorymenue.cpp" line="742"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="275"/>
-        <location filename="../menue/victorymenue.cpp" line="746"/>
+        <location filename="../menue/victorymenue.cpp" line="747"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="284"/>
-        <location filename="../menue/victorymenue.cpp" line="814"/>
+        <location filename="../menue/victorymenue.cpp" line="815"/>
         <source>Player Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10592,17 +10592,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="646"/>
+        <location filename="../menue/victorymenue.cpp" line="647"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="649"/>
+        <location filename="../menue/victorymenue.cpp" line="650"/>
         <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="802"/>
+        <location filename="../menue/victorymenue.cpp" line="803"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>

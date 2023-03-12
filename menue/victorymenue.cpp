@@ -533,6 +533,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 void VictoryMenue::quitOnAiPipe()
 {
     CONSOLE_PRINT("Killing vicotry menu on ai slave", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     m_pMap->detach();
     oxygine::Actor::detach();
 }
@@ -821,6 +822,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 void VictoryMenue::exitMenue()
 {
     CONSOLE_PRINT("Leaving Victory Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     if (m_pNetworkInterface.get() != nullptr)
     {
         m_pNetworkInterface = nullptr;

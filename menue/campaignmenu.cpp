@@ -426,6 +426,7 @@ void CampaignMenu::exitMenue()
 {
     QStringList filter = {".jsm"};
     CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     auto mapSelectionView = spMapSelectionView::create(filter);
     auto window = spMapSelectionMapsMenue::create(mapSelectionView);
     oxygine::Stage::getStage()->addChild(window);

@@ -211,11 +211,6 @@ IngameInfoBar* GameMenue::getGameInfoBar()
 
 void GameMenue::onEnter()
 {
-    if (m_pMap.get() != nullptr &&
-        m_pMap->getGameScript() != nullptr)
-    {
-        m_pMap->getGameScript()->onGameLoaded(this);
-    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "gameMenu";
@@ -615,8 +610,8 @@ void GameMenue::resyncGame()
         {
             networkMode = Multiplayermenu::NetworkMode::Observer;
         }
-
         CONSOLE_PRINT("Leaving Game menue to resync to game", GameConsole::eDEBUG);
+        m_onEnterTimer.stop();
         spMultiplayermenu pMenu = spMultiplayermenu::create(connectedAdress, connectedPort, &password, networkMode);
         oxygine::Stage::getStage()->addChild(pMenu);
         oxygine::Actor::detach();
@@ -1706,6 +1701,7 @@ void GameMenue::victory(qint32 team)
         }
         AchievementManager::getInstance()->onVictory(team, humanWin, m_pMap.get());
         CONSOLE_PRINT("Leaving Game Menue", GameConsole::eDEBUG);
+        m_onEnterTimer.stop();
         auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface);
         oxygine::Stage::getStage()->addChild(window);
         oxygine::Actor::detach();
@@ -2116,6 +2112,11 @@ void GameMenue::exitGame()
 void GameMenue::startGame()
 {
     CONSOLE_PRINT("GameMenue::startGame", GameConsole::eDEBUG);
+    if (m_pMap.get() != nullptr &&
+        m_pMap->getGameScript() != nullptr)
+    {
+        m_pMap->getGameScript()->onGameLoaded(this);
+    }
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationFactory::clearAllAnimations();
     qint32 count = m_pMap->getPlayerCount();
@@ -2583,6 +2584,7 @@ void GameMenue::loadSaveGame(const QString savefile)
         pApp->getAudioManager()->clearPlayList();
         pMenue->startGame();
         CONSOLE_PRINT("Leaving Game Menue", GameConsole::eDEBUG);
+        m_onEnterTimer.stop();
         oxygine::Actor::detach();
     }
     else

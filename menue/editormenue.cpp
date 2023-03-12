@@ -2114,6 +2114,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
 void EditorMenue::exitEditor()
 {    
     CONSOLE_PRINT("Leaving Editor Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();

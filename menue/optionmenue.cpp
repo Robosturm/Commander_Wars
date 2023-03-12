@@ -162,6 +162,7 @@ void OptionMenue::exitMenue()
     else
     {
         CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
+        m_onEnterTimer.stop();
         auto window = spMainwindow::create("ui/menu/mainoptionmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
         oxygine::Actor::detach();
@@ -171,6 +172,7 @@ void OptionMenue::exitMenue()
 void OptionMenue::reloadSettings()
 {    
     CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     spOptionMenue newMenu = spOptionMenue::create(m_xmlFile);
     // carry over restart flag
     newMenu->m_restartNeeded = m_restartNeeded;
