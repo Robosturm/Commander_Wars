@@ -94,11 +94,8 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 autosave = false;
                 m_pMenu->doResyncGame();
             }
-            else
-            {
-            }
         }
-        else
+        if ((!asyncMatch && !invalidHash) || !multiplayer)
         {            
             // perform action
             GlobalUtils::seed(pGameAction->getSeed());
