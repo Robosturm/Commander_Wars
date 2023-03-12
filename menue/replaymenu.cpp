@@ -62,16 +62,6 @@ ReplayMenu::ReplayMenu(QString filename)
 
 void ReplayMenu::onEnter()
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QString object = "Init";
-    QString func = "replayMenu";
-    if (pInterpreter->exists(object, func))
-    {
-        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
-        QJSValueList args({pInterpreter->newQObject(this)});
-        pInterpreter->doFunction(object, func, args);
-    }
-    
     if (m_pMap.get() != nullptr &&
         m_pMap->getGameScript() != nullptr)
     {

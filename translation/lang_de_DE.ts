@@ -7671,220 +7671,220 @@ Host mods: </source>
 <context>
     <name>ReplayMenu</name>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="160"/>
+        <location filename="../menue/replaymenu.cpp" line="150"/>
         <source>Do you want to exit the current replay?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="194"/>
+        <location filename="../menue/replaymenu.cpp" line="184"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="314"/>
-        <location filename="../menue/replaymenu.cpp" line="353"/>
+        <location filename="../menue/replaymenu.cpp" line="304"/>
+        <location filename="../menue/replaymenu.cpp" line="343"/>
         <source>Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="497"/>
+        <location filename="../menue/replaymenu.cpp" line="487"/>
         <source>Current Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="498"/>
+        <location filename="../menue/replaymenu.cpp" line="488"/>
         <source>All Teams</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="499"/>
+        <location filename="../menue/replaymenu.cpp" line="489"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="513"/>
+        <location filename="../menue/replaymenu.cpp" line="503"/>
         <source>Team </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="518"/>
+        <location filename="../menue/replaymenu.cpp" line="508"/>
         <source>Teamview:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="538"/>
+        <location filename="../menue/replaymenu.cpp" line="528"/>
         <source>Gameplay Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="545"/>
+        <location filename="../menue/replaymenu.cpp" line="535"/>
         <source>Overworld Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="549"/>
+        <location filename="../menue/replaymenu.cpp" line="539"/>
         <source>If active: walk, capture power animations, and so on will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="565"/>
+        <location filename="../menue/replaymenu.cpp" line="555"/>
         <source>Select which in-game animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="580"/>
+        <location filename="../menue/replaymenu.cpp" line="570"/>
         <source>Selects which battle animations are played during combat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="664"/>
+        <location filename="../menue/replaymenu.cpp" line="654"/>
         <source>Selects the speed at which animations are played. Note: This does not include capture or battle animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="558"/>
-        <location filename="../menue/replaymenu.cpp" line="575"/>
+        <location filename="../menue/replaymenu.cpp" line="548"/>
+        <location filename="../menue/replaymenu.cpp" line="565"/>
         <source>Battle Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="100"/>
+        <location filename="../menue/replaymenu.cpp" line="90"/>
         <source>The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="561"/>
+        <location filename="../menue/replaymenu.cpp" line="551"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="561"/>
+        <location filename="../menue/replaymenu.cpp" line="551"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="561"/>
+        <location filename="../menue/replaymenu.cpp" line="551"/>
         <source>Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="561"/>
+        <location filename="../menue/replaymenu.cpp" line="551"/>
         <source>Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="561"/>
+        <location filename="../menue/replaymenu.cpp" line="551"/>
         <source>Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="578"/>
+        <location filename="../menue/replaymenu.cpp" line="568"/>
         <source>Detailed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="578"/>
+        <location filename="../menue/replaymenu.cpp" line="568"/>
         <source>Overworld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="592"/>
+        <location filename="../menue/replaymenu.cpp" line="582"/>
         <source>Dialogs: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="595"/>
-        <location filename="../menue/replaymenu.cpp" line="612"/>
-        <location filename="../menue/replaymenu.cpp" line="629"/>
-        <location filename="../menue/replaymenu.cpp" line="646"/>
+        <location filename="../menue/replaymenu.cpp" line="585"/>
+        <location filename="../menue/replaymenu.cpp" line="602"/>
+        <location filename="../menue/replaymenu.cpp" line="619"/>
+        <location filename="../menue/replaymenu.cpp" line="636"/>
         <source>off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="595"/>
-        <location filename="../menue/replaymenu.cpp" line="612"/>
-        <location filename="../menue/replaymenu.cpp" line="629"/>
-        <location filename="../menue/replaymenu.cpp" line="646"/>
+        <location filename="../menue/replaymenu.cpp" line="585"/>
+        <location filename="../menue/replaymenu.cpp" line="602"/>
+        <location filename="../menue/replaymenu.cpp" line="619"/>
+        <location filename="../menue/replaymenu.cpp" line="636"/>
         <source>on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="597"/>
+        <location filename="../menue/replaymenu.cpp" line="587"/>
         <source>Selects if capture animations are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="609"/>
+        <location filename="../menue/replaymenu.cpp" line="599"/>
         <source>Capture: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="614"/>
+        <location filename="../menue/replaymenu.cpp" line="604"/>
         <source>Selects if the dialogs are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="626"/>
+        <location filename="../menue/replaymenu.cpp" line="616"/>
         <source>Day 2 Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="631"/>
+        <location filename="../menue/replaymenu.cpp" line="621"/>
         <source>Selects if the day to day screen gets skipped or not. Note on fog of war maps the screen is still shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="643"/>
+        <location filename="../menue/replaymenu.cpp" line="633"/>
         <source>Movement: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="648"/>
+        <location filename="../menue/replaymenu.cpp" line="638"/>
         <source>Selects if movement animations get shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="660"/>
+        <location filename="../menue/replaymenu.cpp" line="650"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="676"/>
+        <location filename="../menue/replaymenu.cpp" line="666"/>
         <source>Walk Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="680"/>
+        <location filename="../menue/replaymenu.cpp" line="670"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="692"/>
+        <location filename="../menue/replaymenu.cpp" line="682"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="696"/>
+        <location filename="../menue/replaymenu.cpp" line="686"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="708"/>
+        <location filename="../menue/replaymenu.cpp" line="698"/>
         <source>Capture Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="712"/>
+        <location filename="../menue/replaymenu.cpp" line="702"/>
         <source>Selects the speed at which capture animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="724"/>
+        <location filename="../menue/replaymenu.cpp" line="714"/>
         <source>Dialog Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="728"/>
+        <location filename="../menue/replaymenu.cpp" line="718"/>
         <source>Selects the speed at which dialog animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
