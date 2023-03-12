@@ -1,8 +1,6 @@
 #include <QDataStream>
 #include <QFile>
 
-#include "coreengine/gameconsole.h"
-
 #include "game/gamemap.h"
 #include "game/player.h"
 #include "game/co.h"

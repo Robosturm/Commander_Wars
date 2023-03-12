@@ -50,6 +50,14 @@ void LocalClient::disconnectTCP()
 {
     if (m_pSocket != nullptr)
     {
+        if (m_pRXTask.get() != nullptr)
+        {
+            m_pRXTask->close();
+        }
+        if (m_pTXTask.get() != nullptr)
+        {
+            m_pTXTask->close();
+        }
         m_pRXTask = nullptr;
         m_pTXTask = nullptr;
         m_pSocket->disconnect();

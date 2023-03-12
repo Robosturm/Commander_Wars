@@ -397,7 +397,8 @@ void MapSelectionMapsMenue::startGame()
     pMap->initPlayersAndSelectCOs();
     pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
     pMap->getGameScript()->gameStart();
-    pMap->updateSprites(-1, -1, false, false, true);
+    bool applyRulesPalette = pMap->getGameRules()->getMapPalette() > 0;
+    pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
     // start game
     CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
     auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);

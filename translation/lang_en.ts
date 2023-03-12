@@ -7002,14 +7002,14 @@ Note: This may be caused by a defective mod.</source>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="104"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="471"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="472"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="115"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="482"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="530"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="483"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="531"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7024,17 +7024,17 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
         <source>Do you want to make the saved ruleset the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="516"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="517"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
