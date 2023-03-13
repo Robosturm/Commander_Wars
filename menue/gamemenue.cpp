@@ -1197,7 +1197,7 @@ void GameMenue::despawnSlave()
             QJsonDocument doc(data);
             CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
             emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-            m_slaveDespawnTimer.stop();
+            m_slaveDespawnElapseTimer.start();
         }
         else
         {

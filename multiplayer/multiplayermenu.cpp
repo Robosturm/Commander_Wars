@@ -230,9 +230,8 @@ void Multiplayermenu::despawnSlave()
             CONSOLE_PRINT("Killing slave cause no locked players are found.", GameConsole::eDEBUG);
             QCoreApplication::exit(-10);
         }
-        CONSOLE_PRINT("Stopping despawn timer", GameConsole::eDEBUG);
-        m_slaveDespawnTimer.stop();
-
+        CONSOLE_PRINT("Restarting despawn timer", GameConsole::eDEBUG);
+        m_slaveDespawnElapseTimer.start();
     }
 }
 
@@ -1799,7 +1798,7 @@ void Multiplayermenu::startDespawnTimer()
         CONSOLE_PRINT("Multiplayermenu::startDespawnTimer", GameConsole::eDEBUG);
         m_slaveDespawnElapseTimer.start();
         m_slaveDespawnTimer.setSingleShot(false);
-        m_despawning = true;
+        m_despawning = false;
         constexpr qint32 MS_PER_SECOND = 1000;
         m_slaveDespawnTimer.start(MS_PER_SECOND);
     }
