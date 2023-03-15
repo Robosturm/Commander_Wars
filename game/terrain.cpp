@@ -1971,7 +1971,14 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
                 }
                 else
                 {
-                    m_customOverlayPalettes.append("");
+                    if (!fast)
+                    {
+                        m_customOverlayPalettes.append(getDefaultPalette());
+                    }
+                    else
+                    {
+                        m_customOverlayPalettes.append("");
+                    }
                 }
             }
         }
@@ -1979,6 +1986,10 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     if (version > 11)
     {
         pStream >> m_palette;
+        if (m_palette.isEmpty() && !fast)
+        {
+            m_palette = getDefaultPalette();
+        }
     }
     if (version > 12)
     {
