@@ -1,3 +1,6 @@
+
+CO_ZANDRA.sandstormBonus = 30;
+
 CO_ZANDRA.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -30,7 +33,7 @@ CO_ZANDRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                 {
                     // apply sandstorm buff :)
-                    return 30;
+                    return CO_ZANDRA.sandstormBonus;
                 }
                 else
                 {
@@ -38,10 +41,10 @@ CO_ZANDRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 }
             default:
                 if (map.getGameRules().getCurrentWeather() !== null &&
-                        map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                    map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                 {
                     // apply sandstorm buff :)
-                    return 20;
+                    return CO_ZANDRA.sandstormBonus;
                 }
                 return 0;
             }
@@ -75,7 +78,7 @@ CO_ZANDRA.getFirerangeModifier = function(co, unit, posX, posY, map)
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                 case GameEnums.PowerMode_Power:
-                    return 1;
+                    return CO_ZANDRA.sandstormRangeBonus;
                 default:
                     return 0;
                 }

@@ -23832,27 +23832,27 @@ Units have increased firepower.</source>
 <context>
     <name>co_yukio</name>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="270"/>
         <source>Dark founder of the Dark Matter Cooperation. He&apos;s the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn&apos;t care if people die.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="274"/>
         <source>Astronomic gains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="278"/>
         <source>Any losses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="282"/>
         <source>As the leader of dark matter his troops have special armor and armor piercing weapons.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="284"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="286"/>
         <source>
 Special Unit:
 Logistic Truck
@@ -23860,97 +23860,97 @@ Logistic Truck
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="287"/>
         <source>
 Global Effect: 
 None.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="286"/>
-        <source>
-
-CO Zone Effect: 
-Damage against his troops is reduced. Troops deal true damage if the base damage is at least %0%.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="292"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="294"/>
         <source>A small army spawns and fights for Yukio.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="298"/>
         <source>Invasion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="300"/>
-        <source>An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing 3 Hp to half of the enemy troops is launched.</source>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="288"/>
+        <source>
+
+CO Zone Effect: 
+Damage against his troops is reduced by %0%. Troops deal %1% true damage if the base damage is at least %2%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="304"/>
-        <source>Ground-Air-Invasion</source>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="302"/>
+        <source>An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing %0 Hp to half of the enemy troops is launched.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="308"/>
-        <source>I show you, what true power means.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="309"/>
-        <source>I&apos;m the evil that destroys you.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="310"/>
-        <source>Your weapons are the rubbish of my factories.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="311"/>
-        <source>The victory is mine!  Alea iacta est!</source>
+        <source>Ground-Air-Invasion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="312"/>
-        <source>My troops are behind you.</source>
+        <source>I show you, what true power means.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="313"/>
-        <source>I&apos;ll become the ruler of the world.</source>
+        <source>I&apos;m the evil that destroys you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="314"/>
+        <source>Your weapons are the rubbish of my factories.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="315"/>
+        <source>The victory is mine!  Alea iacta est!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="316"/>
+        <source>My troops are behind you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="317"/>
+        <source>I&apos;ll become the ruler of the world.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="321"/>
         <source>Investment...Profits...great. Continue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="322"/>
         <source>War is just another tool to make profit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="323"/>
         <source>Give me all your money and your lifes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="323"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="327"/>
         <source>Even with this loss I made profit...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="324"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="328"/>
         <source>I lost but I got your money to build a new army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="328"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="332"/>
         <source>Yukio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23958,117 +23958,117 @@ Damage against his troops is reduced. Troops deal true damage if the base damage
 <context>
     <name>co_zandra</name>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="215"/>
         <source>A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="219"/>
         <source>Coconuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="223"/>
         <source>Seafood</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="227"/>
         <source>Zandra&apos;s units are unaffected by sandstorms and are fighting better during them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="227"/>
-        <source>
-Global Effect: 
-Units are unaffected by sandstorms and have increased firepower during sandstorm.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="228"/>
-        <source>
-
-CO Zone Effect: 
-Units have increased firepower during sandstorm.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="232"/>
-        <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by 1 and increasing her firepower.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="244"/>
         <source>Sand Shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="240"/>
-        <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by 1 and increasing her firepower. Also deals two hp damage to enemies.</source>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="231"/>
+        <source>
+Global Effect: 
+Units are unaffected by sandstorms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="244"/>
-        <source>Desert Gale</source>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="232"/>
+        <source>
+
+CO Zone Effect: 
+Units get %0% firepower during sandstorm.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="238"/>
+        <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="248"/>
-        <source>It&apos;s high time that you felt the wrath of the desert winds.</source>
+        <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 hp damage to enemies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="249"/>
-        <source>I feel the power coming in, on the far winds.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="250"/>
-        <source>You&apos;ll regret challenging me.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="251"/>
-        <source>Come, father of the four winds!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="252"/>
-        <source>Your eyes will fill with sand, as you scan this wasted land...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="253"/>
-        <source>Troops, attack now, before the winds halt their blessing!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="257"/>
-        <source>Everyone, hurry back to the village. Our job here is done.</source>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="254"/>
+        <source>Desert Gale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="258"/>
-        <source>These sacred lands will be protected for as long as I stand.</source>
+        <source>It&apos;s high time that you felt the wrath of the desert winds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="259"/>
-        <source>Thank you, Uncle, for giving me the strength I needed.</source>
+        <source>I feel the power coming in, on the far winds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="260"/>
+        <source>You&apos;ll regret challenging me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="261"/>
+        <source>Come, father of the four winds!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="262"/>
+        <source>Your eyes will fill with sand, as you scan this wasted land...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="263"/>
-        <source>I only lost because of the Snow around here.</source>
+        <source>Troops, attack now, before the winds halt their blessing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="264"/>
-        <source>What? I can&apos;t lose. We have a Global Heating.</source>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="267"/>
+        <source>Everyone, hurry back to the village. Our job here is done.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="268"/>
+        <source>These sacred lands will be protected for as long as I stand.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="269"/>
+        <source>Thank you, Uncle, for giving me the strength I needed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="273"/>
+        <source>I only lost because of the Snow around here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="274"/>
+        <source>What? I can&apos;t lose. We have a Global Heating.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="278"/>
         <source>Zandra</source>
         <translation type="unfinished"></translation>
     </message>

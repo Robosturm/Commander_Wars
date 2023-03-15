@@ -1,3 +1,6 @@
+CO_XAVIER.firepowerBonus = 0;
+CO_XAVIER.luckDamage = 40;
+
 CO_XAVIER.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -57,9 +60,9 @@ CO_XAVIER.getBonusLuck = function(co, unit, posX, posY, map)
         case GameEnums.PowerMode_Power:
             if (hpRounded <= 5)
             {
-                return 20 + hpRounded / 2;
+                return CO_XAVIER.luckDamage + hpRounded / 2;
             }
-            return 20;
+            return CO_XAVIER.luckDamage;
         default:
             if (hpRounded <= 5)
             {
@@ -82,9 +85,9 @@ CO_XAVIER.getBonusMisfortune = function(co, unit, posX, posY, map)
         case GameEnums.PowerMode_Power:
             if (hpRounded <= 5)
             {
-                return -20 + -hpRounded;
+                return -CO_XAVIER.luckDamage + -hpRounded;
             }
-            return -20;
+            return -CO_XAVIER.luckDamage;
         default:
             if (hpRounded <= 5)
             {
