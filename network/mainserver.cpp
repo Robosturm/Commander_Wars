@@ -1552,12 +1552,27 @@ void MainServer::deserializeObject(QDataStream& stream)
     }
 }
 
-void MainServer::SuspendedSlaveInfo::deserializeObject(QDataStream& stream)
-{
-
-}
-
 void MainServer::SuspendedSlaveInfo::serializeObject(QDataStream& stream) const
 {
+    stream << getVersion();
+    stream << relaunched;
+    stream << runningGame;
+    stream << savefile;
+    auto obj = game.toJson();
+    QJsonDocument doc(obj);
+    Filesupport::writeByteArray(stream, doc.toJson());
+}
 
+void MainServer::SuspendedSlaveInfo::deserializeObject(QDataStream& stream)
+{
+    qint32 version = 0;
+    stream >> version;
+    stream >> relaunched;
+    stream >> runningGame;
+    stream >> savefile;
+    QByteArray data;
+    data = Filesupport::readByteArray(stream);
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    QJsonObject objData = doc.object();
+    game.fromJson(objData);
 }
