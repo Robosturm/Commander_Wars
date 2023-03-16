@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(Global[terrain.getTerrainID()].getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(Global[terrain.getTerrainID()].getDefaultPalette());
+        }
         terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
     };
     this.canBePlacedBaseId = function(x, y, map, baseId)

@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(WEAK_WALL.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(WEAK_WALL.getDefaultPalette());
+        }
         terrain.setVisionHigh(2);
         terrain.setTerrainName(WEAK_WALL.getName());
         terrain.setHp(100);

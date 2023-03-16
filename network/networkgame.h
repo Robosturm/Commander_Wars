@@ -78,7 +78,7 @@ public:
     void onSlaveRelaunched();
     bool getRunningGame() const;
     void setRunningGame(bool newRunningGame);
-
+    void forceDespawn(spTCPServer & pGameServer);
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);
@@ -104,7 +104,6 @@ public slots:
     void closeTimerExpired();
 private:
     QByteArray m_dataBuffer;
-    spNetworkInterface m_hostingClient;
     quint64 m_hostingSocket;
     QString m_serverName;
     bool m_slaveRunning{false};

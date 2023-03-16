@@ -1423,7 +1423,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
                 Interpreter* pInterpreter = Interpreter::getInstance();
                 QString function1 = "useTerrainAsBaseTerrain";
                 QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false, true, palette, true);
+                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false, true, palette, true, false);
                 placed = true;
             }
             else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())

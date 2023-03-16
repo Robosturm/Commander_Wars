@@ -225,3 +225,17 @@ void NetworkGame::setHostingSocket(quint64 newHostingSocket)
 {
     m_hostingSocket = newHostingSocket;
 }
+
+void NetworkGame::forceDespawn(spTCPServer & pGameServer)
+{
+    auto pClient = pGameServer->getClient(m_hostingSocket);
+    if (pClient.get() != nullptr)
+    {
+        QString command = QString(NetworkCommands::SLAVEFORCEDESPAWN);
+        CONSOLE_PRINT("slaveRunning sending command " + command, GameConsole::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonDocument doc(data);
+        emit pClient->sig_sendData(m_hostingSocket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+}

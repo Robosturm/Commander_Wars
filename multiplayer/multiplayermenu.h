@@ -116,6 +116,11 @@ public slots:
      * @brief despawnSlave
      */
     void despawnSlave();
+    /**
+     * @brief doDespawnSlave
+     * @return
+     */
+    bool doDespawnSlave();
 
 protected slots:
     /**

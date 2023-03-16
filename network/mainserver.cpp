@@ -999,45 +999,52 @@ void MainServer::closeGame(NetworkGame* pGame)
 bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress)
 {
     bool success = false;
-    address = "";
-    secondaryAddress = "";
-    port = 0;
-    if (m_freeAddresses.size() > 0)
+    if (!m_despawning)
     {
-        auto & newAddress = m_freeAddresses.constLast();
-        address = newAddress.address;
-        secondaryAddress = newAddress.secondaryAddress;
-        port = newAddress.port;
-        m_freeAddresses.removeLast();
-        success = true;
-    }
-    else
-    {
-        if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
+        address = "";
+        secondaryAddress = "";
+        port = 0;
+        if (m_freeAddresses.size() > 0)
         {
-            auto & options = m_slaveAddressOptions[m_lastUsedAddressIndex];
-            if (m_lastUsedPort < options.maxPort)
+            auto & newAddress = m_freeAddresses.constLast();
+            address = newAddress.address;
+            secondaryAddress = newAddress.secondaryAddress;
+            port = newAddress.port;
+            m_freeAddresses.removeLast();
+            success = true;
+        }
+        else
+        {
+            if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
             {
-                address = options.address;
-                secondaryAddress = options.secondaryAddress;
-                ++m_lastUsedPort;
-                port = m_lastUsedPort;
-                success = true;
-            }
-            else
-            {
-                m_lastUsedAddressIndex++;
-                if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
+                auto & options = m_slaveAddressOptions[m_lastUsedAddressIndex];
+                if (m_lastUsedPort < options.maxPort)
                 {
-                    m_lastUsedPort = m_slaveAddressOptions[m_lastUsedAddressIndex].minPort - 1;
-                    success = getNextFreeSlaveAddress(address, port, secondaryAddress);
+                    address = options.address;
+                    secondaryAddress = options.secondaryAddress;
+                    ++m_lastUsedPort;
+                    port = m_lastUsedPort;
+                    success = true;
+                }
+                else
+                {
+                    m_lastUsedAddressIndex++;
+                    if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
+                    {
+                        m_lastUsedPort = m_slaveAddressOptions[m_lastUsedAddressIndex].minPort - 1;
+                        success = getNextFreeSlaveAddress(address, port, secondaryAddress);
+                    }
                 }
             }
         }
+        CONSOLE_PRINT("getNextFreeSlaveAddress using address " + address +
+                      " secondary address " + secondaryAddress +
+                      " and port " + QString::number(port), GameConsole::eDEBUG);
     }
-    CONSOLE_PRINT("getNextFreeSlaveAddress using address " + address +
-                  " secondary address " + secondaryAddress +
-                  " and port " + QString::number(port), GameConsole::eDEBUG);
+    else
+    {
+        CONSOLE_PRINT("Denied spawning of slave game cause server is despawning", GameConsole::eDEBUG);
+    }
     return success;
 }
 
@@ -1481,4 +1488,76 @@ QSqlQuery MainServer::getAllUsers(QSqlDatabase & database, bool & success)
     return query;
 }
 
+void MainServer::despawnServer(const QString & savefile)
+{
+    m_despawning = true;
+    m_despawningSavefile = savefile;
+    despawnRunningSlaves();
+    doDespawnServer();
+}
 
+void MainServer::despawnRunningSlaves()
+{
+    for (auto & game : m_games)
+    {
+        game->game->forceDespawn(m_pGameServer);
+    }
+}
+
+void MainServer::doDespawnServer()
+{
+    if (m_despawning &&
+        m_games.size() > 0)
+    {
+        QFile file(m_despawningSavefile);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        serializeObject(stream);
+    }
+}
+
+void MainServer::serializeObject(QDataStream& stream) const
+{
+    stream << getVersion();
+    stream << static_cast<qint32>(m_runningSlaves.size());
+    for (auto & runningSlave : m_runningSlaves)
+    {
+        runningSlave.serializeObject(stream);
+    }
+    stream << static_cast<qint32>(m_runningLobbies.size());
+    for (auto & runningLobbies : m_runningLobbies)
+    {
+        runningLobbies.serializeObject(stream);
+    }
+}
+
+void MainServer::deserializeObject(QDataStream& stream)
+{
+    qint32 version = 0;
+    stream >> version;
+    qint32 size = 0;
+    stream >> size;
+    for (qint32 i = 0; i < size; ++i)
+    {
+        SuspendedSlaveInfo slaveInfo;
+        slaveInfo.deserializeObject(stream);
+        m_runningSlaves.append(slaveInfo);
+    }
+    stream >> size;
+    for (qint32 i = 0; i < size; ++i)
+    {
+        SuspendedSlaveInfo slaveInfo;
+        slaveInfo.deserializeObject(stream);
+        m_runningLobbies.append(slaveInfo);
+    }
+}
+
+void MainServer::SuspendedSlaveInfo::deserializeObject(QDataStream& stream)
+{
+
+}
+
+void MainServer::SuspendedSlaveInfo::serializeObject(QDataStream& stream) const
+{
+
+}

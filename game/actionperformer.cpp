@@ -380,7 +380,13 @@ void ActionPerformer::actionPerformed()
         }
         if (GameAnimationFactory::getAnimationCount() == 0)
         {
-            if (m_exit)
+            if (m_pMenu != nullptr &&
+                m_pMenu->getIndespawningMode())
+            {
+                m_pMenu->setSaveAllowed(true);
+                m_pMenu->doDespawnSlave();
+            }
+            else if (m_exit)
             {
                 CONSOLE_PRINT("ActionPerformer state is exiting game. Emitting exit", GameConsole::eDEBUG);
                 emit m_pMenu->sigVictory(-1);

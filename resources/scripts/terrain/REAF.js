@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(REAF.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(REAF.getDefaultPalette());
+        }
         terrain.setVisionHigh(1);
         terrain.setTerrainName(REAF.getName());
     };

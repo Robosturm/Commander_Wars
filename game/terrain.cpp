@@ -75,9 +75,10 @@ QString Terrain::getPalette() const
     return m_palette;
 }
 
-void Terrain::setTerrainPalette(const QString & newPalette)
+void Terrain::setTerrainPalette(const QString & newPalette, bool includeBaseTerrain)
 {
-    if (m_pBaseTerrain.get() != nullptr)
+    if (includeBaseTerrain &&
+        m_pBaseTerrain.get() != nullptr)
     {
         m_pBaseTerrain->setPalette(newPalette);
     }

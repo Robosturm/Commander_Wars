@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(RIVER.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(RIVER.getDefaultPalette());
+        }
         terrain.setTerrainName(RIVER.getName());
         terrain.setHasFlowDirection(true);
     };

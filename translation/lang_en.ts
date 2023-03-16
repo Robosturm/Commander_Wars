@@ -1251,12 +1251,12 @@
 <context>
     <name>BEACH</name>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="20"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="23"/>
         <source>Beach</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="266"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="269"/>
         <source>Beachs over great landing places for landing ground troops.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1605,12 +1605,12 @@
 <context>
     <name>CREEPER</name>
     <message>
-        <location filename="../resources/scripts/terrain/CREEPER.js" line="19"/>
+        <location filename="../resources/scripts/terrain/CREEPER.js" line="22"/>
         <source>Creeper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/CREEPER.js" line="115"/>
+        <location filename="../resources/scripts/terrain/CREEPER.js" line="118"/>
         <source>A virus infested tile which deals 1HP of damage to each unit standing on it at the beginning of each day.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2225,12 +2225,12 @@
 <context>
     <name>DESERT</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT.js" line="19"/>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="22"/>
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT.js" line="105"/>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="108"/>
         <source>Ground units move easily on this terrain, but it reduces the firepower of units by 20%.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2238,12 +2238,12 @@
 <context>
     <name>DESERT_TRY_RIVER</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="18"/>
+        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="21"/>
         <source>Dry River</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="68"/>
+        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="71"/>
         <source>Once a river. Now an empty riverbed that can be crossed by most units doesn&apos;t provide cover. It reduces the firepower of units by 20%.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3623,12 +3623,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>FIRE</name>
     <message>
-        <location filename="../resources/scripts/terrain/FIRE.js" line="18"/>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="21"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FIRE.js" line="81"/>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="84"/>
         <source>&lt;r&gt;In Fog of War, fire make a &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;5 square &lt;/div&gt;&lt;r&gt;area around them visible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3636,12 +3636,12 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>FOG</name>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="19"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="22"/>
         <source>Fog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="111"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="114"/>
         <source>&lt;r&gt;This heavy fog provides ideal hiding places&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; for naval units in Fog of War.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6419,135 +6419,135 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="429"/>
+        <location filename="../menue/gamemenue.cpp" line="433"/>
         <source>Connection failed.Reason: Invalid login data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="430"/>
+        <location filename="../menue/gamemenue.cpp" line="434"/>
         <source>Connection failed.Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="431"/>
+        <location filename="../menue/gamemenue.cpp" line="435"/>
         <source>Connection failed.Reason: No valid player available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="432"/>
+        <location filename="../menue/gamemenue.cpp" line="436"/>
         <source>Connection failed.Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="595"/>
+        <location filename="../menue/gamemenue.cpp" line="604"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart or try to resync with the server.
 Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="595"/>
+        <location filename="../menue/gamemenue.cpp" line="604"/>
         <source>Resync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="595"/>
+        <location filename="../menue/gamemenue.cpp" line="604"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1090"/>
+        <location filename="../menue/gamemenue.cpp" line="1099"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1112"/>
+        <location filename="../menue/gamemenue.cpp" line="1121"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1342"/>
-        <location filename="../menue/gamemenue.cpp" line="1954"/>
-        <location filename="../menue/gamemenue.cpp" line="1991"/>
+        <location filename="../menue/gamemenue.cpp" line="1363"/>
+        <location filename="../menue/gamemenue.cpp" line="1975"/>
+        <location filename="../menue/gamemenue.cpp" line="2012"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1350"/>
+        <location filename="../menue/gamemenue.cpp" line="1371"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1385"/>
+        <location filename="../menue/gamemenue.cpp" line="1406"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1803"/>
+        <location filename="../menue/gamemenue.cpp" line="1824"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1804"/>
+        <location filename="../menue/gamemenue.cpp" line="1825"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1805"/>
+        <location filename="../menue/gamemenue.cpp" line="1826"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1806"/>
+        <location filename="../menue/gamemenue.cpp" line="1827"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1807"/>
+        <location filename="../menue/gamemenue.cpp" line="1828"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1808"/>
+        <location filename="../menue/gamemenue.cpp" line="1829"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1809"/>
+        <location filename="../menue/gamemenue.cpp" line="1830"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1810"/>
+        <location filename="../menue/gamemenue.cpp" line="1831"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1836"/>
+        <location filename="../menue/gamemenue.cpp" line="1857"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1854"/>
+        <location filename="../menue/gamemenue.cpp" line="1875"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2333"/>
+        <location filename="../menue/gamemenue.cpp" line="2354"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2364"/>
+        <location filename="../menue/gamemenue.cpp" line="2385"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2390"/>
+        <location filename="../menue/gamemenue.cpp" line="2411"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2567"/>
+        <location filename="../menue/gamemenue.cpp" line="2588"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6701,12 +6701,12 @@ Note: This may be caused by a defective mod.</source>
 <context>
     <name>LAKE</name>
     <message>
-        <location filename="../resources/scripts/terrain/LAKE.js" line="19"/>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="22"/>
         <source>Lake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/LAKE.js" line="148"/>
+        <location filename="../resources/scripts/terrain/LAKE.js" line="151"/>
         <source>A calm inland body of water. Naval and air forces have good mobility while hovercraft can freely move on and off.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6825,12 +6825,12 @@ Note: This may be caused by a defective mod.</source>
 <context>
     <name>METEOR</name>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="20"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="23"/>
         <source>Meteor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="166"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="169"/>
         <source>&lt;r&gt;Meteor pieces which can be attacked and destroyed &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;to eliminate plasma.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7100,7 +7100,7 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2050"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2062"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7115,32 +7115,32 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="302"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="310"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="529"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="541"/>
         <source>Server doesn&apos;t have the given mods installed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="292"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="300"/>
         <source>Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="293"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="301"/>
         <source> may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="536"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="548"/>
         <source>Server doesn&apos;t have any more slots for players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="316"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="324"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7150,105 +7150,105 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="269"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="277"/>
         <source>Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?
 Note: You won&apos;t be able to change any rules when reentering the lobby later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="273"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="281"/>
         <source>Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="604"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="616"/>
         <source>Connection failed. Reason: Invalid username password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="605"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="617"/>
         <source>Connection failed. Reason: No more observers available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="606"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="618"/>
         <source>Connection failed. Reason: No more players available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="607"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="619"/>
         <source>Connection failed. Reason: Invalid connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="608"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="620"/>
         <source>Connection failed. Reason: Invalid username.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="609"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="621"/>
         <source>Connection failed. Reason: Password outdated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="610"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="622"/>
         <source>Connection failed. Reason: Server failed to access database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="611"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="623"/>
         <source>Connection failed. Reason: Player with same username already connected to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="927"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1075"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="939"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1087"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1308"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1320"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1312"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1324"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1327"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1339"/>
         <source>Host has  different mods. Leaving the game again.
 Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1331"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1343"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1431"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1443"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1442"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1454"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1847"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1859"/>
         <source>Informing server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1921"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1933"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2046"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2058"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7358,12 +7358,12 @@ Host mods: </source>
 <context>
     <name>PLAINS_DESTROYED</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="18"/>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="21"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="57"/>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="60"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7371,12 +7371,12 @@ Host mods: </source>
 <context>
     <name>PLAINS_PLASMA</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="18"/>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="21"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="58"/>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="61"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7384,12 +7384,12 @@ Host mods: </source>
 <context>
     <name>PLASMA</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="19"/>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="22"/>
         <source>Plasma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="63"/>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="66"/>
         <source>&lt;r&gt;Electric charge us impassable but disappears if &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; meteor pieces&lt;/div&gt;&lt;r&gt; are destroyed.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7632,12 +7632,12 @@ Host mods: </source>
 <context>
     <name>REAF</name>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="19"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="22"/>
         <source>Reaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="201"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="204"/>
         <source>&lt;r&gt;This spiky reaf provides ideal &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places&lt;/div&gt;&lt;r&gt; for naval units in Fog of War.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7645,12 +7645,12 @@ Host mods: </source>
 <context>
     <name>RIVER</name>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="19"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="22"/>
         <source>River</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="54"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="57"/>
         <source>Most infantry and Hovercraft units are the only ground unit that can cross rivers.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7658,12 +7658,12 @@ Host mods: </source>
 <context>
     <name>ROUGH_SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="19"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="22"/>
         <source>Rough Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="92"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="95"/>
         <source>Movement of naval units is impeded but air units are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7920,12 +7920,12 @@ Host mods: </source>
 <context>
     <name>SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="19"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="22"/>
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="113"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="116"/>
         <source>Calm sea. Naval and air forces have good mobility.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7933,12 +7933,12 @@ Host mods: </source>
 <context>
     <name>SNOW</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW.js" line="18"/>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="21"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW.js" line="73"/>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="76"/>
         <source>Snowy terrain rough to cross.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10623,12 +10623,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WASTE</name>
     <message>
-        <location filename="../resources/scripts/terrain/WASTE.js" line="18"/>
+        <location filename="../resources/scripts/terrain/WASTE.js" line="21"/>
         <source>Waste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WASTE.js" line="117"/>
+        <location filename="../resources/scripts/terrain/WASTE.js" line="120"/>
         <source>&lt;r&gt;Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10636,12 +10636,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WEAK_WALL</name>
     <message>
-        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="20"/>
+        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="23"/>
         <source>Weak Wall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="103"/>
+        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="106"/>
         <source>Dark Matter Walls can&apos;t be crossed by most units. The wall can be destroyed here to produce a path through the wall.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11067,42 +11067,42 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__BASEDESTROYED_WELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="20"/>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="23"/>
         <source>Waste Destroyed Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="24"/>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="27"/>
         <source>Snowy Destroyed Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="28"/>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="31"/>
         <source>Desert Destroyed Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="32"/>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="35"/>
         <source>Destroyed Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="200"/>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="203"/>
         <source>&lt;r&gt;Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="204"/>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="207"/>
         <source>Snowy terrain reduces rough to cross.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="208"/>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="211"/>
         <source>Ground units move easily on this terrain, but it reduces the firepower of units by 20%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="212"/>
+        <location filename="../resources/scripts/terrain/__BASEDESTROYED_WELD.js" line="215"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11110,42 +11110,42 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__BASEFOREST</name>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="23"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="26"/>
         <source>Waste Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="27"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="30"/>
         <source>Snowy Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="31"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="34"/>
         <source>Desert Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="35"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="38"/>
         <source>Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="191"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="194"/>
         <source>&lt;r&gt;In Fog of War conditions, the snowy woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="195"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="198"/>
         <source>&lt;r&gt;In Fog of War conditions, the snowy woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; It&apos;s hard for ground units to cross this terrain.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="199"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="202"/>
         <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit hiding places.&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; It reduces the firepower of units by 20%&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="203"/>
+        <location filename="../resources/scripts/terrain/__BASEFOREST.js" line="206"/>
         <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11153,42 +11153,42 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__BASEMOUNTAIN</name>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="20"/>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="23"/>
         <source>Waste Rock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="24"/>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="27"/>
         <source>Snowy Mountain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="28"/>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="31"/>
         <source>Rock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="32"/>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="35"/>
         <source>Mountain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="165"/>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="168"/>
         <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +4.&lt;/div&gt;&lt;r&gt; Extremely high movement costs for infantry units. Waste terrain with reduced defense but clear view. In Fog of War, other unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="169"/>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="172"/>
         <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;&lt;r&gt; Extremely high movement costs for infantry units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="173"/>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="176"/>
         <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;&lt;r&gt; It reduces the firepower of units by 20%.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="177"/>
+        <location filename="../resources/scripts/terrain/__BASEMOUNTAIN.js" line="180"/>
         <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11196,38 +11196,38 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__BASEPIPELINE</name>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="20"/>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="23"/>
         <source>Waste Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="24"/>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="27"/>
         <source>Snowy Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="28"/>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="31"/>
         <source>Desert Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="32"/>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="35"/>
         <source>Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="170"/>
-        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="182"/>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="173"/>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="185"/>
         <source>Black Hole Pipeline which can&apos;t be crossed by most units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="174"/>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="177"/>
         <source>Black Hole Pipeline which can&apos;t be crossed by most units and is also hard to cross for those who can.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="178"/>
+        <location filename="../resources/scripts/terrain/__BASEPIPELINE.js" line="181"/>
         <source>Black Hole Pipeline which can&apos;t be crossed by most units. It reduces the firepower of units by 20%.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11235,42 +11235,42 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__BASERUIN</name>
     <message>
-        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="20"/>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="23"/>
         <source>Waste Ruin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="24"/>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="27"/>
         <source>Snowy Ruin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="28"/>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="31"/>
         <source>Desert Ruin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="32"/>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="35"/>
         <source>Ruin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="150"/>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="153"/>
         <source>&lt;r&gt;In Fog of War conditions, the ruins provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; Snowy terrain rough to cross. Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="154"/>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="157"/>
         <source>&lt;r&gt;In Fog of War conditions, the ruins provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; Snowy terrain rough to cross.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="158"/>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="161"/>
         <source>&lt;r&gt;In Fog of War conditions, the ruins provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; It reduces the firepower of units by 20%.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="162"/>
+        <location filename="../resources/scripts/terrain/__BASERUIN.js" line="165"/>
         <source>&lt;r&gt;In Fog of War conditions, the ruins provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11278,34 +11278,34 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__BASESTREET</name>
     <message>
-        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="19"/>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="22"/>
         <source>Waste Street</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="23"/>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="26"/>
         <source>Snowy Street</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="27"/>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="30"/>
         <source>Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="31"/>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="34"/>
         <source>Street</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="137"/>
-        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="141"/>
-        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="149"/>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="140"/>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="144"/>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="152"/>
         <source>Well-surfaced roads provides optimum mobility but little cover.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="145"/>
+        <location filename="../resources/scripts/terrain/__BASESTREET.js" line="148"/>
         <source>Kinda well-surfaced path through the desert provides optimum mobility but little cover. It reduces the firepower of units by 20%</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11313,42 +11313,42 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__BASEWASTELAND</name>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="20"/>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="23"/>
         <source>Waste Wasteland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="24"/>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="27"/>
         <source>Snowy Wasteland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="28"/>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="31"/>
         <source>Desert Wasteland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="32"/>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="35"/>
         <source>Wasteland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="146"/>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="149"/>
         <source>&lt;r&gt;Waste terrain with reduced defense but clear view. In Fog of War, unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +1.&lt;/div&gt;&lt;r&gt; Mobility is impaired on this rough terrain.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="150"/>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="153"/>
         <source>Mobility is impaired on this rough terrain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="154"/>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="157"/>
         <source>Infantry and Mech units aside, mobility is impaired on rough terrain. It reduces the firepower of units by 20%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="158"/>
+        <location filename="../resources/scripts/terrain/__BASEWASTELAND.js" line="161"/>
         <source>Infantry and Mech units aside, mobility is impaired on rough terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11356,34 +11356,34 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>__BASEWELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="20"/>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="23"/>
         <source>Waste Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="24"/>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="27"/>
         <source>Snowy Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="28"/>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="31"/>
         <source>Desert Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="32"/>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="35"/>
         <source>Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="206"/>
-        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="210"/>
-        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="218"/>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="209"/>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="213"/>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="221"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="214"/>
+        <location filename="../resources/scripts/terrain/__BASEWELD.js" line="217"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firepower of units by 20%.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23714,117 +23714,117 @@ Direct Ground Units have 30% increased firepower.</source>
 <context>
     <name>co_xavier</name>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="265"/>
         <source>Fulfills his duties without second thought or consideration of the after-effects of his actions. Wears a pair of fake claws.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="269"/>
         <source>Uncertainty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="273"/>
         <source>Definitives</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="277"/>
         <source>When Xavier&apos;s units drop to %0 HP or less, they are able to strike for maximum luck damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="283"/>
         <source>
 Global Effect: 
 Units with %0 HP or less deal maximum luck damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="281"/>
-        <source>
-
-CO Zone Effect: 
-Units have increased firepower.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="287"/>
-        <source>Attacks inflict more damage than expected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="296"/>
         <source>Phasing Charge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="295"/>
-        <source>Units gain firepower for each own unit nearby the attacked unit.</source>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="284"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower by %1%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="299"/>
-        <source>Reality Minus</source>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="290"/>
+        <source>Increases luck damage to %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="303"/>
-        <source>You know, the laws of physics are made to be broken. Observe.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="304"/>
-        <source>You might say I&apos;m a rather.. twisted individual.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="305"/>
-        <source>Reality is only trivial. Watch and learn.</source>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="300"/>
+        <source>Units gain %0% firepower for each own unit nearby the attacked unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_xavier.js" line="306"/>
-        <source>Allow me to reprimand, for your atrocious command.</source>
+        <source>Reality Minus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="307"/>
-        <source>I&apos;m sure you&apos;ll get quite a scare out of this!</source>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="310"/>
+        <source>You know, the laws of physics are made to be broken. Observe.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="308"/>
-        <source>Are you sure of the truth in what you see?</source>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="311"/>
+        <source>You might say I&apos;m a rather.. twisted individual.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_xavier.js" line="312"/>
-        <source>... I must return to my work now.</source>
+        <source>Reality is only trivial. Watch and learn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_xavier.js" line="313"/>
-        <source>See, this is reality. You never stood a chance.</source>
+        <source>Allow me to reprimand, for your atrocious command.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_xavier.js" line="314"/>
-        <source>You are intellectually inferior to me. Simple as that.</source>
+        <source>I&apos;m sure you&apos;ll get quite a scare out of this!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="318"/>
-        <source>That&apos;s not my reality.</source>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="315"/>
+        <source>Are you sure of the truth in what you see?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_xavier.js" line="319"/>
+        <source>... I must return to my work now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="320"/>
+        <source>See, this is reality. You never stood a chance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="321"/>
+        <source>You are intellectually inferior to me. Simple as that.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="325"/>
+        <source>That&apos;s not my reality.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="326"/>
         <source>You were supposed to be intellectually inferior to me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="323"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="330"/>
         <source>Xavier</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25516,12 +25516,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>plains</name>
     <message>
-        <location filename="../resources/scripts/terrain/plains.js" line="18"/>
+        <location filename="../resources/scripts/terrain/plains.js" line="21"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/plains.js" line="65"/>
+        <location filename="../resources/scripts/terrain/plains.js" line="68"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>

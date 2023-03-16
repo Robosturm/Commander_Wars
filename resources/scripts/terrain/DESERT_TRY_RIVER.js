@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(DESERT_TRY_RIVER.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(DESERT_TRY_RIVER.getDefaultPalette());
+        }
         terrain.setTerrainName(DESERT_TRY_RIVER.getName());
     };
     this.getName = function()

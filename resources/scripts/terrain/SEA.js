@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(SEA.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(SEA.getDefaultPalette());
+        }
         terrain.setTerrainName(SEA.getName());
     };
 

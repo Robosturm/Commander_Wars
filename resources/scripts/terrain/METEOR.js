@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(METEOR.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(METEOR.getDefaultPalette());
+        }
         terrain.setVisionHigh(1);
         terrain.setTerrainName(METEOR.getName());
         terrain.setHp(100);

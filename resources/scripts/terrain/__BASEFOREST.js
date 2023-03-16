@@ -6,7 +6,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(Global[terrain.getTerrainID()].getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(Global[terrain.getTerrainID()].getDefaultPalette());
+        }
         terrain.setVisionHigh(1);
         terrain.setTerrainName(Global[terrain.getTerrainID()].getName(terrain));
     };

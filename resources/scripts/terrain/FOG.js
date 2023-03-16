@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(FOG.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(FOG.getDefaultPalette());
+        }
         terrain.setVisionHigh(1);
         terrain.setTerrainName(FOG.getName());
     };

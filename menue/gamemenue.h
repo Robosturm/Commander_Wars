@@ -110,6 +110,13 @@ public:
      * @brief startAiPipeGame
      */
     void startAiPipeGame();
+    bool getIndespawningMode() const;
+    /**
+     * @brief doDespawnSlave
+     * @return
+     */
+    bool doDespawnSlave();
+
 signals:
     void sigGameStarted();
     void sigSyncFinished();
@@ -497,6 +504,7 @@ protected:
     bool m_Multiplayer{false};
     QElapsedTimer m_slaveDespawnElapseTimer;
     bool m_despawning{false};
+    bool m_indespawningMode{false};
     QTimer m_slaveDespawnTimer{this};
     QTimer m_UpdateTimer{this};
     QTimer m_exitDelayedTimer{this};

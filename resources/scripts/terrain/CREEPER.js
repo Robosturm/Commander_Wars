@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(CREEPER.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(CREEPER.getDefaultPalette());
+        }
         terrain.setTerrainName(CREEPER.getName());
         terrain.setHasStartOfTurn(true);
     };

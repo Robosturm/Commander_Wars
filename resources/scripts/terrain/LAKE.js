@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(LAKE.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(LAKE.getDefaultPalette());
+        }
         terrain.setTerrainName(LAKE.getName());
     };
 

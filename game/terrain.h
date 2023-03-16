@@ -147,7 +147,7 @@ public slots:
      * @brief setTerrainPalette
      * @param newPalette
      */
-    void setTerrainPalette(const QString & newPalette);
+    void setTerrainPalette(const QString & newPalette, bool includeBaseTerrain = true);
     /**
      * @brief setTerrainPaletteGroup
      * @param newPaletteGroup

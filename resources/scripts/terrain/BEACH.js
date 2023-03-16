@@ -11,7 +11,10 @@ var Constructor = function()
 
     this.init = function (terrain)
     {
-        terrain.setPalette(BEACH.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(BEACH.getDefaultPalette());
+        }
         terrain.setTerrainName(BEACH.getName());
     };
 

@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(PLAINS_DESTROYED.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(PLAINS_DESTROYED.getDefaultPalette());
+        }
         terrain.setTerrainName(PLAINS_DESTROYED.getName());
     };
     this.getName = function()
