@@ -2079,5 +2079,8 @@
         <file>mods/awds_unit/scripts/general/unit.js</file>
         <file>mods/awdc_unit/scripts/general/unit.js</file>
         <file>mods/awds_unit/scripts/units/ZCOUNIT_MISSILE_SUB.js</file>
+        <file>maps/advance_wars_dual_strike_campaign/Pincer Strike.map</file>
+        <file>maps/advance_wars_dual_strike_campaign/Snow Hunters.map</file>
+        <file>maps/advance_wars_dual_strike_campaign/Verdant Hills.map</file>
     </qresource>
 </RCC>
