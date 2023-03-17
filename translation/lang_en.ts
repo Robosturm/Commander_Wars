@@ -1399,7 +1399,7 @@
 <context>
     <name>CO</name>
     <message>
-        <location filename="../game/co.cpp" line="392"/>
+        <location filename="../game/co.cpp" line="394"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10394,7 +10394,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Unit</name>
     <message>
-        <location filename="../game/unit.cpp" line="503"/>
+        <location filename="../game/unit.cpp" line="505"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
