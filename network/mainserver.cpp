@@ -920,7 +920,7 @@ void MainServer::playerJoined(qint64 socketId)
 
 void MainServer::periodicTasks()
 {
-    CONSOLE_PRINT("MainServer::periodicTasks", GameConsole::eDEBUG);
+    // CONSOLE_PRINT("MainServer::periodicTasks", GameConsole::eDEBUG);
     cleanUpSuspendedGames(m_runningSlaves);
     cleanUpSuspendedGames(m_runningLobbies);
     executeScript();
