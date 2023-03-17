@@ -74,6 +74,7 @@ var Constructor = function()
         map.getGameRules().addVictoryRule("VICTORYRULE_TURNLIMIT");
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone
         turnLimit.setRuleValue(7, 0);
+        map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
     };
     this.actionDone = function(action, map)
     {

@@ -640,7 +640,7 @@ Player* GameMenue::getCurrentViewPlayer() const
         for (qint32 i = currentPlayerID; i >= 0; i--)
         {
             if (m_pMap->getPlayer(i)->getBaseGameInput() != nullptr &&
-                m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Human &&
+                m_pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
                 !m_pMap->getPlayer(i)->getIsDefeated())
             {
                 return m_pMap->getPlayer(i);
