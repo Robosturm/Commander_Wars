@@ -237,6 +237,10 @@ private:
      */
     void startDatabase();
     /**
+     * @brief restoreServer
+     */
+    void restoreServer();
+    /**
      * @brief cleanUpSuspendedGames
      * @param games
      */

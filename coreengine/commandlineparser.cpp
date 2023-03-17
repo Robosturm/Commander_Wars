@@ -42,6 +42,7 @@ const char* const CommandLineParser::ARG_SERVERSLAVELISTENADDRESS       = "serve
 const char* const CommandLineParser::ARG_SERVERSLAVELISTENPORT          = "serverSlaveListenPort";
 const char* const CommandLineParser::ARG_SERVERSLAVEDESPAWNTIME         = "serverSlaveDespawnTime";
 const char* const CommandLineParser::ARG_SERVERSLAVESUSPENDEDTIME       = "serverSuspendedDespawnTime";
+const char* const CommandLineParser::ARG_SERVERSAVEFILE                 = "serverSaveFile";
 
 const char* const CommandLineParser::ARG_MAILSERVERADDRESS = "mailServerAddress";
 const char* const CommandLineParser::ARG_MAILSERVERPORT = "mailServerPort";
@@ -84,7 +85,8 @@ CommandLineParser::CommandLineParser()
       m_mailServerUsername(ARG_MAILSERVERUSERNAME, tr("Username on the mail server for the server for sending mails to accounts."), tr("username"), ""),
       m_mailServerPassword(ARG_MAILSERVERPASSWORD, tr("Password on the mail server for the server for sending mails to accounts. Must be set cause the password is never stored in the game."), tr("password"), ""),
       m_mailServerSendAddress(ARG_MAILSERVERSENDADDRESS, tr("E-Mail address used on the mail server for the server for sending mails to accounts."), tr("address"), ""),
-      m_mailServerAuthMethod(ARG_MAILSERVERAUTHMETHOD, tr("Mail server authentication type (Plain, Login) for the server for sending mails to accounts."), tr("method"), "")
+      m_mailServerAuthMethod(ARG_MAILSERVERAUTHMETHOD, tr("Mail server authentication type (Plain, Login) for the server for sending mails to accounts."), tr("method"), ""),
+      m_serverSaveFile(ARG_SERVERSAVEFILE, tr("Path to the server game save file"), tr("path"), "")
 {
     m_parser.setApplicationDescription("Commander Wars game");
     m_parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
@@ -123,6 +125,7 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_mailServerPassword);
     m_parser.addOption(m_mailServerSendAddress);
     m_parser.addOption(m_mailServerAuthMethod);
+    m_parser.addOption(m_serverSaveFile);
 }
 
 void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
@@ -176,6 +179,16 @@ bool CommandLineParser::getUserPath(QString & path)
     {
         return false;
     }
+}
+
+QString CommandLineParser::getServerSaveFile()
+{
+    QString savefile;
+    if (m_parser.isSet(m_serverSaveFile))
+    {
+        savefile = m_parser.value(m_serverSaveFile);
+    }
+    return savefile;
 }
 
 void CommandLineParser::parseArgsPhaseTwo()

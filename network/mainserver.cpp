@@ -130,6 +130,7 @@ MainServer::MainServer()
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start();
         connect(&m_mailSender, &SmtpMailSender::sigMailResult, this, &MainServer::onMailSendResult, Qt::QueuedConnection);
+        restoreServer();
         CONSOLE_PRINT("Starting tcp server and listening to new clients.", GameConsole::eDEBUG);
         emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort(), Settings::getServerSecondaryListenAdress());
         emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort(), "");
@@ -181,6 +182,18 @@ void MainServer::startDatabase()
                 createUserTable(username.toString());
             }
         }
+    }
+}
+
+void MainServer::restoreServer()
+{
+    auto savefile = Mainapp::getInstance()->getParser().getServerSaveFile();
+    if (QFile::exists(savefile))
+    {
+        QFile file(savefile);
+        QDataStream stream(&file);
+        file.open(QIODevice::ReadOnly);
+        deserializeObject(stream);
     }
 }
 
@@ -535,22 +548,14 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
     qint32 i = 0;
     for (const auto & game : qAsConst(m_games))
     {
-        if (game->game.get() != nullptr &&
-            game->game->getSlaveRunning())
+        if (game->game.get() != nullptr)
         {
             auto & data = game->game->getData();
             if (data.getPlayerNames().contains(username))
             {
-                if (data.getLaunched())
-                {
-                    QJsonObject obj = game->game->getData().toJson();
-                    games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-                    ++i;
-                }
-                else
-                {
-                    CONSOLE_PRINT("Found game which isn't started for username " + username, GameConsole::eDEBUG);
-                }
+                QJsonObject obj = game->game->getData().toJson();
+                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                ++i;
             }
         }
     }
@@ -600,6 +605,10 @@ void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData
         if (objData.contains(JsonKeys::JSONKEY_RUNNINGGAME))
         {
             data.setRunningGame(objData.value(JsonKeys::JSONKEY_RUNNINGGAME).toBool());
+        }
+        if (objData.contains(JsonKeys::JSONKEY_USERNAMES))
+        {
+            internGame->game->updatePlayers(objData);
         }
         m_updateGameData = true;
     }

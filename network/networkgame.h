@@ -70,6 +70,11 @@ public:
      */
     void slaveGameStarted(const QJsonObject & objData);
     /**
+     * @brief updatePlayers
+     * @param objData
+     */
+    void updatePlayers(const QJsonObject & objData);
+    /**
      * @brief startCloseTimer
      */
     void startCloseTimer();

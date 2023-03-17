@@ -68,6 +68,10 @@ public:
      * @brief sendOpenPlayerCount
      */
     void sendOpenPlayerCount();
+    /**
+     * @brief getUserNames
+     */
+    QJsonArray getUserNames();
 signals :
     /**
          * @brief sigDisconnect emitted when we need to leave the game cause we

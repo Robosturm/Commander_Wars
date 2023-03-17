@@ -220,28 +220,14 @@ bool Multiplayermenu::doDespawnSlave()
             mods.insert(JsonKeys::JSONKEY_MOD + QString::number(i), activeMods[i]);
         }
         data.insert(JsonKeys::JSONKEY_USEDMODS, mods);
-        QJsonArray usernames;
-        qint32 count = pMap->getPlayerCount();
-        for (qint32 i = 0; i < count; ++i)
-        {
-            Player* pPlayer = pMap->getPlayer(i);
-            if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
-            {
-                CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
-                usernames.append(pPlayer->getPlayerNameId());
-            }
-            else
-            {
-                CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
-            }
-        }
-        data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
+        data.insert(JsonKeys::JSONKEY_USERNAMES, m_pPlayerSelection->getUserNames());
         QJsonDocument doc(data);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
     return m_despawning;
 }
+
 
 void Multiplayermenu::saveLobbyState(const QString & filename)
 {
@@ -1636,7 +1622,8 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     {
         pMap->getGameScript()->gameStart();
     }
-    pMap->updateSprites();
+    bool applyRulesPalette = pMap->getGameRules()->getMapPalette() > 0;
+    pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
     // start game
     m_pNetworkInterface->setIsServer(false);
     CONSOLE_PRINT("Leaving Map Selection Menue and init client game", GameConsole::eDEBUG);
@@ -2148,7 +2135,8 @@ void Multiplayermenu::countdown()
             {
                 pMap->getGameScript()->gameStart();
             }
-            pMap->updateSprites(-1, -1, false, true, true);
+            bool applyRulesPalette = pMap->getGameRules()->getMapPalette() > 0;
+            pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
             // start game
             CONSOLE_PRINT("Leaving Map Selection Menue after countdown", GameConsole::eDEBUG);
             m_onEnterTimer.stop();

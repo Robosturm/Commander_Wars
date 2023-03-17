@@ -35,6 +35,7 @@ public:
     static const char* const ARG_SERVERSLAVELISTENPORT;
     static const char* const ARG_SERVERSLAVEDESPAWNTIME;
     static const char* const ARG_SERVERSLAVESUSPENDEDTIME;
+    static const char* const ARG_SERVERSAVEFILE;
 
     static const char* const ARG_MAILSERVERADDRESS;
     static const char* const ARG_MAILSERVERPORT;
@@ -51,6 +52,7 @@ public:
 
     void startSlaveGame() const;
     bool getUserPath(QString & path);
+    QString getServerSaveFile();
 
 private:
     void disableUi();
@@ -88,6 +90,7 @@ private:
     QCommandLineOption m_mailServerPassword;
     QCommandLineOption m_mailServerSendAddress;
     QCommandLineOption m_mailServerAuthMethod;
+    QCommandLineOption m_serverSaveFile;
 
     QCommandLineParser m_parser;
 };
