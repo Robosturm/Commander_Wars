@@ -212,6 +212,7 @@
         <!-- frigate -->
         <image file="frigate/frigate.png" cols = "4" />
         <image file="frigate/frigate+mask.png" cols = "4" />
+        <image file="frigate/frigate+fire+mask.png" cols = "4" />
         <!-- gunboat -->
         <image file="gunboat/gunboat.png" cols = "4" />
         <image file="gunboat/gunboat+mask.png" cols = "4" />
