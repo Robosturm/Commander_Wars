@@ -291,7 +291,7 @@ var Constructor = function()
     this.loadTerrainSeaOverlay = function(terrain, flowString)
     {
         var surroundingsLandDirect = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2,LAKE,SEA,REAF,BEACH,FOG,ROUGH_SEA", false, true, GameEnums.Directions_Direct);
-        var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2LAKE,SEA,REAF,BEACH,FOG,ROUGH_SEA", false, true, GameEnums.Directions_Diagnonal);
+        var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2,LAKE,SEA,REAF,BEACH,FOG,ROUGH_SEA", false, true, GameEnums.Directions_Diagnonal);
         if (flowString === "+S")
         {
             surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NW", "");
