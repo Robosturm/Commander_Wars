@@ -102,7 +102,6 @@ GameConsole* GameConsole::getInstance()
     {
         m_pConsole = spConsole::create();
         qInstallMessageHandler(GameConsole::messageOutput);
-        CONSOLE_PRINT("Console created", GameConsole::eDEBUG);
     }
     return m_pConsole.get();
 }
@@ -1582,7 +1581,15 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
     QMutexLocker lock(&messageOutputMutex);
     if (!file.isOpen())
     {
-        file.setFileName((Settings::getUserPath() + "console" + Settings::getUpdateStep()+ ".log"));
+        QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
+        if (Settings::getServer())
+        {
+            file.setFileName((Settings::getUserPath() + "console-" + date + ".log"));
+        }
+        else
+        {
+            file.setFileName((Settings::getUserPath() + "console" + Settings::getUpdateStep()+ ".log"));
+        }
         if (Settings::getAiSlave())
         {
             file.setFileName(Settings::getUserPath() + "consoleAiSlave.log");
@@ -1591,7 +1598,6 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
         Mainapp* pApp = Mainapp::getInstance();
         if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
-            QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
             QString slaveName = Settings::getSlaveServerName();
             file.setFileName(Settings::getUserPath() + slaveName + "-" + date + ".log");
             file.open(QIODevice::WriteOnly);

@@ -1,3 +1,7 @@
+CO_XAVIER.superpowerBonus = 60;
+CO_XAVIER.firepowerBonus = 0;
+CO_XAVIER.luckDamage = 40;
+
 CO_XAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
@@ -24,7 +28,7 @@ CO_XAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 count++;
             }
-            return 10 + 60 * count;
+            return 10 + CO_XAVIER.superpowerBonus * count;
         case GameEnums.PowerMode_Power:
             return 10;
         default:
@@ -63,9 +67,9 @@ CO_XAVIER.getBonusLuck = function(co, unit, posX, posY, map)
         case GameEnums.PowerMode_Power:
             if (hpRounded <= 5)
             {
-                return 20 + hpRounded / 2;
+                return CO_XAVIER.luckDamage + hpRounded / 2;
             }
-            return 20;
+            return CO_XAVIER.luckDamage;
         default:
             if (hpRounded <= 5)
             {
@@ -93,9 +97,9 @@ CO_XAVIER.getBonusMisfortune = function(co, unit, posX, posY, map)
         case GameEnums.PowerMode_Power:
             if (hpRounded <= 5)
             {
-                return -20 + -hpRounded;
+                return -CO_XAVIER.luckDamage + -hpRounded;
             }
-            return -20;
+            return -CO_XAVIER.luckDamage;
         default:
             if (hpRounded <= 5)
             {

@@ -5,7 +5,7 @@ CO_YUKIO.init = function(co, map)
 };
 CO_YUKIO.activateSuperpower = function(co, powerMode, map)
 {
-    CO_YUKIO.activatePower(co, powerMode, map);
+    CO_YUKIO.activatePower(co, map);
 };
 CO_YUKIO.getSuperPowerDescription = function()
 {
@@ -48,15 +48,10 @@ CO_YUKIO.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attack
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
         case GameEnums.PowerMode_Power:
-            if (damage >= CO_YUKIO.mintrueDamage)
-            {
-                return 15
-            }
-            break;
         default:
             if (damage >= CO_YUKIO.mintrueDamage)
             {
-                return 15
+                return CO_YUKIO.trueDamageBonus;
             }
             break;
         }
@@ -75,9 +70,9 @@ CO_YUKIO.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, a
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
         case GameEnums.PowerMode_Power:
-            return 15;
+            return CO_YUKIO.trueDefenseBonus;
         default:
-            return 10;
+            return CO_YUKIO.trueDefenseBonus;
         }
     }
     return 0;

@@ -10,6 +10,8 @@
 
 #include "game/gamemap.h"
 
+static constexpr double DOUBLE_EPSILON = 0.5;
+static constexpr float FLOAT_EPSILON = 0.5f;
 QScopedPointer<GlobalUtils> GlobalUtils::m_pInstace;
 
 void GlobalUtils::setup()
@@ -516,4 +518,24 @@ QVector<qint32> GlobalUtils::calcWidths(const QVector<qint32> & maxWidths, const
         }
     }
     return ret;
+}
+
+float GlobalUtils::roundTo(float value, float precision)
+{
+    return qFloor(value * precision) / precision;
+}
+
+double GlobalUtils::roundTo(double value, double precision)
+{
+    return qFloor(value * precision) / precision;
+}
+
+qint32 GlobalUtils::roundToInt(float value, float precision)
+{
+    return qFloor(value * precision);
+}
+
+qint32 GlobalUtils::roundToInt(double value, float precision)
+{
+    return qFloor(value * precision);
 }

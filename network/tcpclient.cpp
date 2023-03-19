@@ -30,7 +30,7 @@ TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, QTcpS
 
 TCPClient::~TCPClient()
 {
-    CONSOLE_PRINT("Client gets closed", GameConsole::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client gets closed", GameConsole::eLogLevels::eDEBUG);    
     disconnect();
     if (!m_onServer)
     {
@@ -67,7 +67,7 @@ void TCPClient::connectTCP(QString address, quint16 port, QString secondaryAdres
 
 void TCPClient::disconnectTCP()
 {
-    if (!m_testedSecondaryAddress && !m_secondaryAdress.isEmpty())
+    if (!m_testedSecondaryAddress && !m_secondaryAdress.isEmpty() && !m_isConnected)
     {
         CONSOLE_PRINT("Unable to connect to primary address testing secondary", GameConsole::eDEBUG);
         m_pSocket->close();
@@ -82,6 +82,14 @@ void TCPClient::disconnectTCP()
         CONSOLE_PRINT("TCP Client " + QString::number(m_socketID) + " disconnected.", GameConsole::eLogLevels::eDEBUG);
         if (m_pSocket != nullptr)
         {
+            if (m_pRXTask.get() != nullptr)
+            {
+                m_pRXTask->close();
+            }
+            if (m_pTXTask.get() != nullptr)
+            {
+                m_pTXTask->close();
+            }
             m_pRXTask = nullptr;
             m_pTXTask = nullptr;
             m_pSocket->disconnect();

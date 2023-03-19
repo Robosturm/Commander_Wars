@@ -14,26 +14,36 @@ TxTask::TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, b
 {
 }
 
+void TxTask::close()
+{
+    m_pSocket = nullptr;
+    m_pIF = nullptr;
+}
+
 void TxTask::send(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData)
 {
-    bool open = m_pSocket->isOpen();
-    if (open &&
-        (m_SocketID == socketID ||
-         socketID == 0 ||
-         m_sendAll))
+    if (m_pSocket != nullptr &&
+        m_pIF != nullptr)
     {
-        QByteArray block;
-        QDataStream out(&block, QIODevice::WriteOnly);
-        // write default-buffersize
-        out << static_cast<qint32>(service);
-        out << socketID;
-        out << forwardData;
-        //write Object
-        out << data;
-        // send data this function should be blocking.
-        if (m_pSocket->write(block) != block.size())
+        bool open = m_pSocket->isOpen();
+        if (open &&
+            (m_SocketID == socketID ||
+             socketID == 0 ||
+             m_sendAll))
         {
-            CONSOLE_PRINT("Error during writing data via TCP.", GameConsole::eERROR);
+            QByteArray block;
+            QDataStream out(&block, QIODevice::WriteOnly);
+            // write default-buffersize
+            out << static_cast<qint32>(service);
+            out << socketID;
+            out << forwardData;
+            //write Object
+            out << data;
+            // send data this function should be blocking.
+            if (m_pSocket->write(block) != block.size())
+            {
+                CONSOLE_PRINT("Error during writing data via TCP.", GameConsole::eERROR);
+            }
         }
     }
 }

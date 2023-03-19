@@ -70,6 +70,7 @@ var Constructor = function()
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
         map.getGameRules().addVictoryRule("VICTORYRULE_TURNLIMIT");
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone
+        map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
         turnLimit.setRuleValue(9, 0);
 
         var geList = campaignScript.getGEBuildList();

@@ -268,7 +268,8 @@ void GameMap::importAW4Map(QString file, EditorMenue* pMenu)
                     }
                     case 11:
                     {
-                        replaceTerrain("BRIDGE", x, y);
+                        replaceTerrain("SEA", x, y, false, false, false);
+                        replaceTerrain("BRIDGE1", x, y, true, false, false);
                         break;
                     }
                     case 12:

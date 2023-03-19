@@ -5,7 +5,7 @@ CO_JAVIER.init = function(co, map)
 };
 CO_JAVIER.activateSuperpower = function(co, powerMode, map)
 {
-    CO_JAVIER.activatePower(co, powerMode, map);
+    CO_JAVIER.activatePower(co, map);
 };
 CO_JAVIER.getSuperPowerDescription = function()
 {

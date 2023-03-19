@@ -30,17 +30,32 @@ private:
     Q_OBJECT
     struct ValueBase
     {
+        ValueBase(const char* const group, const char* const name)
+            : m_group(group),
+              m_name(name)
+        {
+        }
         virtual void readValue(QSettings & settings) = 0;
         virtual void saveValue(QSettings & settings) = 0;
         virtual void resetValue() = 0;
+        const char* const getGroup() const
+        {
+            return m_group;
+        }
+        const char* const getName() const
+        {
+            return m_name;
+        }
+    protected:
+        const char* const m_group;
+        const char* const m_name;
     };
 
     template<typename TType>
     struct Value : public ValueBase
     {
         Value(const char* const group, const char* const name, TType* value, TType defaultValue, TType minValue, TType maxValue, bool excludeFromReset = false)
-            : m_group{group},
-              m_name{name},
+            : ValueBase(group, name),
               m_defaultValue{defaultValue},
               m_value{value},
               m_minValue{minValue},
@@ -196,8 +211,6 @@ private:
             }
         }
     private:
-        const char* const m_group;
-        const char* const m_name;
         TType m_defaultValue;
         TType m_minValue;
         TType m_maxValue;
@@ -208,8 +221,7 @@ private:
     struct AudioDeviceValue : public ValueBase
     {
         AudioDeviceValue(const char* const group, const char* const name, QVariant* value, QString defaultValue)
-            : m_group{group},
-              m_name{name},
+            : ValueBase(group, name),
               m_value{value},
               m_defaultValue{defaultValue}
         {
@@ -265,8 +277,6 @@ private:
             *m_value = QVariant(Settings::DEFAULT_AUDIODEVICE);
         }
     private:
-        const char* const m_group;
-        const char* const m_name;
         QVariant* m_value;
         QString m_defaultValue;
     };

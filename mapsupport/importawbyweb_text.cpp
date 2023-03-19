@@ -146,7 +146,8 @@ void GameMap::importAWByWebMap(QString file, EditorMenue* pMenu)
                     case 26:
                     case 27:
                     {
-                        replaceTerrain("BRIDGE", x, y, false, false, false);
+                        replaceTerrain("SEA", x, y, false, false, false);
+                        replaceTerrain("BRIDGE1", x, y, true, false, false);
                         break;
                     }
                     case 28:

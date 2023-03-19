@@ -94,11 +94,8 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 autosave = false;
                 m_pMenu->doResyncGame();
             }
-            else
-            {
-            }
         }
-        else
+        if ((!asyncMatch && !invalidHash) || !multiplayer)
         {            
             // perform action
             GlobalUtils::seed(pGameAction->getSeed());
@@ -192,7 +189,12 @@ bool ActionPerformer::requiresForwarding(const spGameAction & pGameAction) const
            m_pMenu->getIsMultiplayer(pGameAction) &&
            baseGameInput != nullptr &&
            baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi &&
-           !pGameAction->getIsLocal();
+                                         !pGameAction->getIsLocal();
+}
+
+void ActionPerformer::setActionRunning(bool newActionRunning)
+{
+    m_actionRunning = newActionRunning;
 }
 
 bool ActionPerformer::getExit() const
@@ -378,7 +380,13 @@ void ActionPerformer::actionPerformed()
         }
         if (GameAnimationFactory::getAnimationCount() == 0)
         {
-            if (m_exit)
+            if (m_pMenu != nullptr &&
+                m_pMenu->getIndespawningMode())
+            {
+                m_pMenu->setSaveAllowed(true);
+                m_pMenu->doDespawnSlave();
+            }
+            else if (m_exit)
             {
                 CONSOLE_PRINT("ActionPerformer state is exiting game. Emitting exit", GameConsole::eDEBUG);
                 emit m_pMenu->sigVictory(-1);
@@ -457,6 +465,7 @@ void ActionPerformer::actionPerformed()
         {
             m_pMenu->doSaveMap();
         }
+        m_pMenu->sendOnlineInfo();
     }
 }
 

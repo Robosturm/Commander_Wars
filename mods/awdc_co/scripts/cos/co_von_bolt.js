@@ -5,7 +5,7 @@ CO_VON_BOLT.init = function(co, map)
 };
 CO_VON_BOLT.activateSuperpower = function(co, powerMode, map)
 {
-	CO_VON_BOLT.activatePower(co, powerMode, map);
+	CO_VON_BOLT.activatePower(co, map);
 };
 CO_VON_BOLT.getSuperPowerDescription = function()
 {

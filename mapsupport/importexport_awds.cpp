@@ -1,8 +1,6 @@
 #include <QDataStream>
 #include <QFile>
 
-#include "coreengine/gameconsole.h"
-
 #include "game/gamemap.h"
 #include "game/player.h"
 #include "game/co.h"
@@ -109,7 +107,8 @@ void GameMap::importAWDSMap(QString file, EditorMenue* pMenu)
                     }
                     case 2: // Bridge
                     {
-                        replaceTerrain("BRIDGE", x, y);
+                        replaceTerrain("SEA", x, y, false, false, false);
+                        replaceTerrain("BRIDGE1", x, y, true, false, false);
                         break;
                     }
                     case 3: // River
@@ -193,7 +192,8 @@ void GameMap::importAWDSMap(QString file, EditorMenue* pMenu)
                     {
                         if (terrainChar2 == 0)
                         {
-                            replaceTerrain("BRIDGE", x, y);
+                            replaceTerrain("SEA", x, y, false, false, false);
+                            replaceTerrain("BRIDGE1", x, y, true, false, false);
                         }
                         else
                         {
@@ -2616,7 +2616,9 @@ void GameMap::exportAWDSMap(QString file)
                         stream << static_cast<uchar>(1);
                         stream << static_cast<uchar>(0);
                     }
-                    else if (pTerrain->getTerrainID() == "BRIDGE")
+                    else if (pTerrain->getTerrainID() == "BRIDGE1" ||
+                             pTerrain->getTerrainID() == "BRIDGE" ||
+                             pTerrain->getTerrainID() == "BRIDGE2")
                     {
                         // North South bridge
                         stream << static_cast<uchar>(2);

@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(ROUGH_SEA.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(ROUGH_SEA.getDefaultPalette());
+        }
         terrain.setVisionHigh(1);
         terrain.setTerrainName(ROUGH_SEA.getName());
     };
@@ -18,11 +21,15 @@ var Constructor = function()
     {
         return qsTr("Rough Sea");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map, currentPalette)
     {
         if (currentTerrainID === "LAKE")
         {
-            terrain.loadBaseTerrain("LAKE");
+            terrain.loadBaseTerrain("LAKE", currentPalette);
+        }
+        else if (currentTerrainID === "SEA")
+        {
+            terrain.loadBaseTerrain("SEA", currentPalette);
         }
         else
         {

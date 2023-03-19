@@ -5,7 +5,7 @@ CO_SABAKI.init = function(co, map)
 };
 CO_SABAKI.activateSuperpower = function(co, powerMode, map)
 {
-    CO_SABAKI.activatePower(co, powerMode, map);
+    CO_SABAKI.activatePower(co, map);
 };
 CO_SABAKI.getSuperPowerDescription = function()
 {

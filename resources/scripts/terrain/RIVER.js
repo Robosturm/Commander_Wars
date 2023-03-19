@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(RIVER.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(RIVER.getDefaultPalette());
+        }
         terrain.setTerrainName(RIVER.getName());
         terrain.setHasFlowDirection(true);
     };
@@ -18,19 +21,23 @@ var Constructor = function()
     {
         return qsTr("River");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map, currentPalette)
     {
         if (currentTerrainID === "SNOW")
         {
-            terrain.loadBaseTerrain("SNOW");
+            terrain.loadBaseTerrain("SNOW", currentPalette);
         }
         else if (currentTerrainID === "DESERT")
         {
-            terrain.loadBaseTerrain("DESERT");
+            terrain.loadBaseTerrain("DESERT", currentPalette);
         }
         else if (currentTerrainID === "WASTE")
         {
-            terrain.loadBaseTerrain("WASTE");
+            terrain.loadBaseTerrain("WASTE", currentPalette);
+        }
+        else if (currentTerrainID === "PLAINS")
+        {
+            terrain.loadBaseTerrain("PLAINS", currentPalette);
         }
         else
         {
@@ -284,7 +291,7 @@ var Constructor = function()
     this.loadTerrainSeaOverlay = function(terrain, flowString)
     {
         var surroundingsLandDirect = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2,LAKE,SEA,REAF,BEACH,FOG,ROUGH_SEA", false, true, GameEnums.Directions_Direct);
-        var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2LAKE,SEA,REAF,BEACH,FOG,ROUGH_SEA", false, true, GameEnums.Directions_Diagnonal);
+        var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,BRIDGE2,LAKE,SEA,REAF,BEACH,FOG,ROUGH_SEA", false, true, GameEnums.Directions_Diagnonal);
         if (flowString === "+S")
         {
             surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NW", "");

@@ -116,6 +116,11 @@ public slots:
      * @brief despawnSlave
      */
     void despawnSlave();
+    /**
+     * @brief doDespawnSlave
+     * @return
+     */
+    bool doDespawnSlave();
 
 protected slots:
     /**
@@ -338,6 +343,7 @@ private:
     spDialogConnecting m_pDialogConnecting;
     QElapsedTimer m_slaveDespawnElapseTimer;
     QTimer m_slaveDespawnTimer{this};
+    bool m_despawning{false};
 };
 
 #endif // MULTIPLAYERMENU_H

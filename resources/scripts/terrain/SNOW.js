@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(SNOW.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(SNOW.getDefaultPalette());
+        }
         terrain.setTerrainName(SNOW.getName());
     };
     this.getName = function()

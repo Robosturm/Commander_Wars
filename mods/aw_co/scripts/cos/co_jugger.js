@@ -5,7 +5,7 @@ CO_JUGGER.init = function(co, map)
 };
 CO_JUGGER.activateSuperpower = function(co, powerMode, map)
 {
-    CO_JUGGER.activatePower(co, powerMode, map);
+    CO_JUGGER.activatePower(co, map);
 };
 CO_JUGGER.getSuperPowerDescription = function()
 {

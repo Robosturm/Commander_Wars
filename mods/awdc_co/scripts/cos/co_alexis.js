@@ -5,7 +5,7 @@ CO_ALEXIS.init = function(co, map)
 };
 CO_ALEXIS.activateSuperpower = function(co, powerMode, map)
 {
-    CO_ALEXIS.activatePower(co, powerMode, map);
+    CO_ALEXIS.activatePower(co, map);
 };
 CO_ALEXIS.getSuperPowerDescription = function()
 {

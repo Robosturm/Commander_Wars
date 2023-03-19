@@ -13,4 +13,8 @@ BLACK_BOAT.init = function(unit)
     unit.setMaxRange(1);
     unit.setVision(1);
 };
+BLACK_BOAT.getMovementType = function()
+{
+    return "MOVE_BOAT";
+};
 BLACK_BOAT.actionList = ["ACTION_SUPPORTSINGLE_REPAIR", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];

@@ -369,6 +369,7 @@ void Mainwindow::replayGame(QString filename)
 void Mainwindow::leaveMenue()
 {    
     CONSOLE_PRINT("Leaving Main Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     oxygine::Actor::detach();
 }
 

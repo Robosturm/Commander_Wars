@@ -1,7 +1,4 @@
-WEAPON_MEGATANK_MG.getEnviromentDamage = function(enviromentId)
-{
-    WEAPON_MEGATANK_MG.damageTable[idx][1] = 1;
-};
+
 var idx = 0;
 idx = getIndexOf1(WEAPON_MEGATANK_MG.damageTable, "INFANTRY");
 WEAPON_MEGATANK_MG.damageTable[idx][1] = 105;

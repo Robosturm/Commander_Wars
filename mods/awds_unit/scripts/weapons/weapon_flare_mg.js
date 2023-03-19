@@ -1,7 +1,3 @@
-WEAPON_FLARE_MG.getEnviromentDamage = function(enviromentId)
-{
-    WEAPON_FLARE_MG.damageTable[idx][1] = 1;
-};
 var idx = 0;
 idx = getIndexOf1(WEAPON_FLARE_MG.damageTable, "INFANTRY");
 WEAPON_FLARE_MG.damageTable[idx][1] = 80;

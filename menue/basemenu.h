@@ -21,7 +21,6 @@ protected slots:
     virtual void onEnter() = 0;
 protected:
     bool m_Focused{true};
-private:
     QTimer m_onEnterTimer;
 };
 

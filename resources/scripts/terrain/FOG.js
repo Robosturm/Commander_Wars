@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(FOG.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(FOG.getDefaultPalette());
+        }
         terrain.setVisionHigh(1);
         terrain.setTerrainName(FOG.getName());
     };
@@ -26,11 +29,15 @@ var Constructor = function()
     {
         return true;
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map, currentPalette)
     {
         if (currentTerrainID === "LAKE")
         {
-            terrain.loadBaseTerrain("LAKE");
+            terrain.loadBaseTerrain("LAKE", currentPalette);
+        }
+        else if (currentTerrainID === "SEA")
+        {
+            terrain.loadBaseTerrain("SEA", currentPalette);
         }
         else
         {

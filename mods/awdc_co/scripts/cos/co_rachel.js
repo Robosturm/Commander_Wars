@@ -5,7 +5,7 @@ CO_RACHEL.init = function(co, map)
 };
 CO_RACHEL.activateSuperpower = function(co, powerMode, map)
 {
-	CO_RACHEL.activatePower(co, powerMode, map);
+	CO_RACHEL.activatePower(co, map);
 };
 CO_RACHEL.getSuperPowerDescription = function()
 {

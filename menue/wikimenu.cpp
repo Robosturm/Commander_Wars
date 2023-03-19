@@ -70,6 +70,7 @@ void Wikimenu::onEnter()
 void Wikimenu::exitMenue()
 {
     CONSOLE_PRINT("Leaving Wiki Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
