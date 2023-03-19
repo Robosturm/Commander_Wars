@@ -139,7 +139,14 @@ public:
      */
     void setControlType(const GameEnums::AiTypes &newControlType);
 
+    void setIsOnline(bool newIsOnline);
+
 public slots:
+    /**
+     * @brief getOnline
+     * @return
+     */
+    bool getIsOnline() const;
     /**
      * @brief getCoGroupModifier
      * @param unitIds
@@ -758,6 +765,7 @@ private:
      */
     QString m_uniqueIdentifier;
     QString m_playerNameId;
+    bool m_isOnline;
     static oxygine::spResAnim m_neutralTableAnim;
     static QImage m_neutralTableImage;
 };

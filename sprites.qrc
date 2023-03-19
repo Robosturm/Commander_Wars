@@ -4980,5 +4980,7 @@
         <file>resources/images/terrain/biome_palettes/palette_snow+sfw.png</file>
         <file>resources/images/terrain/biome_palettes/palette_waste+sfw.png</file>
         <file>resources/images/battleanimations/frigate/frigate+fire+mask.png</file>
+        <file>resources/images/game/offline.png</file>
+        <file>resources/images/game/online.png</file>
     </qresource>
 </RCC>

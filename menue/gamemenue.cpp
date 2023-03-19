@@ -373,6 +373,10 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             sendUsername(socketID, objData);
         }
+        else if (messageType == NetworkCommands::ONLINEINFO)
+        {
+            receivedOnlineInfo(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -450,6 +454,37 @@ void GameMenue::sendUsername(quint64 socketID, const QJsonObject & objData)
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     QJsonDocument doc(data);
     emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void GameMenue::sendOnlineInfo()
+{
+    if (m_pNetworkInterface.get() != nullptr &&
+        m_pNetworkInterface->getIsServer())
+    {
+        QString command = QString(NetworkCommands::ONLINEINFO);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonArray onlineInfo;
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+        {
+            onlineInfo.append(m_pMap->getPlayer(i)->getSocketId() != 0);
+        }
+        data.insert(JsonKeys::JSONKEY_ONLINEINFO, onlineInfo);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+}
+
+void GameMenue::receivedOnlineInfo(quint64 socketID, const QJsonObject & objData)
+{
+    CONSOLE_PRINT("receivedOnlineInfo", GameConsole::eDEBUG);
+    QJsonArray onlineInfo = objData.value(JsonKeys::JSONKEY_ONLINEINFO).toArray();
+    for (qint32 i = 0; i < onlineInfo.size(); ++i)
+    {
+        m_pMap->getPlayer(i)->setIsOnline(onlineInfo[i].toBool());
+    }
+    updatePlayerinfo();
 }
 
 void GameMenue::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -929,6 +964,7 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
     }
     emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     sendOpenPlayerCount();
+    sendOnlineInfo();
 }
 
 void GameMenue::removePlayerFromSyncWaitList(quint64 socketID)
@@ -960,6 +996,7 @@ void GameMenue::removeSyncSocket(quint64 socketID)
 void GameMenue::playerJoinedFinished()
 {
     sendOpenPlayerCount();
+    sendOnlineInfo();
     emit sigSyncFinished();
     continueAfterSyncGame();
 }
@@ -1026,6 +1063,7 @@ void GameMenue::continueAfterSyncGame()
             multiplayerSyncData.m_postSyncAction = nullptr;
         }
         sendOpenPlayerCount();
+        sendOnlineInfo();
     }
 }
 
@@ -1124,6 +1162,7 @@ void GameMenue::disconnected(quint64 socketID)
             }
         }
         sendOpenPlayerCount();
+        sendOnlineInfo();
         continueAfterSyncGame();
     }
 }

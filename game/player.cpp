@@ -2098,6 +2098,16 @@ qint32 Player::calculatePlayerStrength(Unit* pUnit) const
     return ret;
 }
 
+bool Player::getIsOnline() const
+{
+    return m_isOnline;
+}
+
+void Player::setIsOnline(bool newIsOnline)
+{
+    m_isOnline = newIsOnline;
+}
+
 GameEnums::AiTypes Player::getControlType() const
 {
     return m_controlType;

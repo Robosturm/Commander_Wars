@@ -465,6 +465,10 @@
         <image file="victory_screen/d_rang.png" />
         <image file="victory_screen/graph.png" />        
         
+        <!-- multiplayer -->
+        <image file="offline.png" />
+        <image file="online.png" />        
+        
         <!-- co selection -->
         <image file="os.png"/>
         <image file="bm.png"/>

@@ -288,4 +288,8 @@ namespace NetworkCommands
      * @brief SLAVEFORCEDESPAWN
      */
     const char* const SLAVEFORCEDESPAWN = "SLAVEFORCEDESPAWN";
+    /**
+     * @brief ONLINEINFO
+     */
+    const char* const ONLINEINFO = "ONLINEINFO";
 }

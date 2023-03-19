@@ -264,6 +264,14 @@ public slots:
      */
     void sendUsername(quint64 socketID, const QJsonObject & objData);
     /**
+     * @brief sendOnlineInfo
+     */
+    void sendOnlineInfo();
+    /**
+     * @brief receivedOnlineInfo
+     */
+    void receivedOnlineInfo(quint64 socketID, const QJsonObject & objData);
+    /**
      * @brief sendLoginData
      * @param socketID
      * @param objData

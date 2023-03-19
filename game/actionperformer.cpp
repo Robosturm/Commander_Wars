@@ -465,6 +465,7 @@ void ActionPerformer::actionPerformed()
         {
             m_pMenu->doSaveMap();
         }
+        m_pMenu->sendOnlineInfo();
     }
 }
 
