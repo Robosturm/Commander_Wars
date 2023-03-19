@@ -1138,6 +1138,11 @@
         <image file="biome_palettes/palette_snow+dor.png" />
         <image file="biome_palettes/palette_waste+dor.png" />
 
+        <image file="biome_palettes/palette_clear+sfw.png" />
+        <image file="biome_palettes/palette_desert+sfw.png" />
+        <image file="biome_palettes/palette_snow+sfw.png" />
+        <image file="biome_palettes/palette_waste+sfw.png" />
+
         <image file="biome_palettes/palette_clear+wg.png" />
         <image file="biome_palettes/palette_desert+wg.png" />
         <image file="biome_palettes/palette_snow+wg.png" />
