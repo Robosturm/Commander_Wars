@@ -26380,6 +26380,11 @@ Fullscreen  - Animations are upscaled based on the resolution
         <source>Wargroove</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="461"/>
+        <source>Famicon Wars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>torpedoboat</name>

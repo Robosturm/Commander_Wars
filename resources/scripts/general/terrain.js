@@ -457,7 +457,8 @@ var TERRAIN =
                     [qsTr("Desert AW 4"),   "palette_desert+dor",   "palette_desert+dor",   "palette_desert",       "palette_snow+dor",     "palette_waste+dor"],
                     [qsTr("Snow AW 4"),     "palette_snow+dor",     "palette_snow+dor",     "palette_desert+dor",   "palette_snow",         "palette_waste+dor"],
                     [qsTr("Waste AW 4"),    "palette_waste+dor",    "palette_waste+dor",    "palette_desert+dor",   "palette_snow+dor",     "palette_waste"],
-                    [qsTr("Wargroove"),     "palette_clear+wg",     "palette_clear+wg",     "palette_desert+wg",    "palette_snow+wg",      "palette_waste+wg"],],
+                    [qsTr("Wargroove"),     "palette_clear+wg",     "palette_clear+wg",     "palette_desert+wg",    "palette_snow+wg",      "palette_waste+wg"],
+                    [qsTr("Famicon Wars"),  "palette_clear+sfw",    "palette_clear+sfw",    "palette_desert+sfw",   "palette_snow+sfw",     "palette_waste+sfw"],],
     getDefaultPalette : function(terrain, map)
     {
         return "";

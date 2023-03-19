@@ -1142,5 +1142,10 @@
         <image file="biome_palettes/palette_desert+wg.png" />
         <image file="biome_palettes/palette_snow+wg.png" />
         <image file="biome_palettes/palette_waste+wg.png" />
+
+        <image file="biome_palettes/palette_clear+sfw.png" />
+        <image file="biome_palettes/palette_desert+sfw.png" />
+        <image file="biome_palettes/palette_snow+sfw.png" />
+        <image file="biome_palettes/palette_waste+sfw.png" />
     </atlas>
 </resources>

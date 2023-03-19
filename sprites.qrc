@@ -4975,5 +4975,10 @@
         <file>resources/images/terrain/snow/snow+7.png</file>
         <file>resources/images/terrain/snow/snow+0.png</file>
         <file>resources/images/co/bh/co_sturm+alt2+mini.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_clear+sfw.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_desert+sfw.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_snow+sfw.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_waste+sfw.png</file>
+        <file>resources/images/battleanimations/frigate/frigate+fire+mask.png</file>
     </qresource>
 </RCC>
