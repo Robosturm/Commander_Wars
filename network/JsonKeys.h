@@ -44,4 +44,6 @@ namespace JsonKeys
     const char* const JSONKEY_GAMERESULTARRAY = "gameResultArray";
     const char* const JSONKEY_MATCHTYPE = "matchType";
     const char* const JSONKEY_CURRENTPLAYER = "currentPlayer";
+    const char* const JSONKEY_MINMATCHGAMES = "minMatchGames";
+    const char* const JSONKEY_MAXMATCHGAMES = "maxMatchGames";
 }

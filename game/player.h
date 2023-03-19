@@ -126,22 +126,26 @@ public:
      */
     static const QImage &getNeutralTableImage();
 #endif
+    void setMenu(GameMenue *newMenu);
+
+    void setIsOnline(bool newIsOnline);
+
+public slots:
     /**
      * @brief setUniqueIdentifier
      * @param newUniqueIdentifier
      */
     void setUniqueIdentifier(const QString &newUniqueIdentifier);
+    /**
+     * @brief setPlayerNameId
+     * @param newDisplayName
+     */
     void setPlayerNameId(const QString &newDisplayName);
-    void setMenu(GameMenue *newMenu);
     /**
      * @brief setControlType
      * @param newControlType
      */
     void setControlType(const GameEnums::AiTypes &newControlType);
-
-    void setIsOnline(bool newIsOnline);
-
-public slots:
     /**
      * @brief getOnline
      * @return

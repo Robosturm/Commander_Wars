@@ -26,6 +26,8 @@
 #include "menue/basemenu.h"
 #include "menue/movementplanner.h"
 
+#include "multiplayer/multiplayermenu.h"
+
 #include "ui_reader/uifactory.h"
 #include "ui_reader/createdgui.h"
 
@@ -209,7 +211,9 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<BaseGamemenu>("BaseGamemenu", 1);
     qmlRegisterInterface<Basemenu>("Basemenu", 1);
+
     qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
     qmlRegisterInterface<MainServer>("MainServer", 1);
     qmlRegisterInterface<AutoMatchMaker>("AutoMatchMaker", 1);
+    qmlRegisterInterface<Multiplayermenu>("Multiplayermenu", 1);
 }

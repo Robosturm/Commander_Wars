@@ -43,6 +43,7 @@ const char* const MainServer::SQL_MMR               = "mmr";
 const char* const MainServer::SQL_MINGAMES          = "minGames";
 const char* const MainServer::SQL_MAXGAMES          = "maxGames";
 const char* const MainServer::SQL_RUNNINGGAMES      = "runningGames";
+const char* const MainServer::SQL_MATCHHISTORY      = "matchHistory";
 
 spMainServer MainServer::m_pInstance{nullptr};
 QSqlDatabase* MainServer::m_serverData{nullptr};
@@ -352,6 +353,15 @@ void MainServer::exit()
 {
     CONSOLE_PRINT("Closing server", GameConsole::eDEBUG);
     QCoreApplication::exit(0);
+}
+
+AutoMatchMaker* MainServer::getAutoMatchMaker(const QString & matchMaker)
+{
+    if (m_autoMatchMakers.contains(matchMaker))
+    {
+        return m_autoMatchMakers[matchMaker].get();
+    }
+    return nullptr;
 }
 
 void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData)
@@ -1249,7 +1259,8 @@ void MainServer::createMatchData(const QString & match)
                                         SQL_MINGAMES + " INTEGER, " +
                                         SQL_MAXGAMES + " INTEGER, " +
                                         SQL_RUNNINGGAMES + " INTEGER," +
-                                        SQL_METADATA + "TEXT)");
+                                        SQL_METADATA + " TEXT," +
+                                        SQL_MATCHHISTORY + " TEXT)");
     if (sqlQueryFailed(query))
     {
         CONSOLE_PRINT("Unable to create match table for match " + match + ". Error: " + m_serverData->lastError().nativeErrorCode(), GameConsole::eERROR);
@@ -1538,6 +1549,11 @@ void MainServer::serializeObject(QDataStream& stream) const
     {
         runningLobbies.serializeObject(stream);
     }
+    stream << static_cast<qint32>(m_autoMatchMakers.size());
+    for (auto & autoMatchMakers : m_autoMatchMakers)
+    {
+        autoMatchMakers->serializeObject(stream);
+    }
 }
 
 void MainServer::deserializeObject(QDataStream& stream)
@@ -1558,6 +1574,13 @@ void MainServer::deserializeObject(QDataStream& stream)
         SuspendedSlaveInfo slaveInfo;
         slaveInfo.deserializeObject(stream);
         m_runningLobbies.append(slaveInfo);
+    }
+    stream >> size;
+    for (qint32 i = 0; i < size; ++i)
+    {
+        spAutoMatchMaker matchMaker = spAutoMatchMaker::create("", this);
+        matchMaker->deserializeObject(stream);
+        m_autoMatchMakers.insert(matchMaker->getMatchName(), matchMaker);
     }
 }
 

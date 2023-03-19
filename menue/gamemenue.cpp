@@ -468,11 +468,15 @@ void GameMenue::sendOnlineInfo()
         QJsonArray onlineInfo;
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
         {
-            onlineInfo.append(m_pMap->getPlayer(i)->getSocketId() != 0);
+            auto* pPlayer = m_pMap->getPlayer(i);
+            bool isOnline = pPlayer->getSocketId() != 0;
+            pPlayer->setIsOnline(isOnline);
+            onlineInfo.append(isOnline);
         }
         data.insert(JsonKeys::JSONKEY_ONLINEINFO, onlineInfo);
         QJsonDocument doc(data);
         emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        updatePlayerinfo();
     }
 }
 
@@ -1122,6 +1126,8 @@ void GameMenue::disconnected(quint64 socketID)
                     if (socketID == playerSocketID &&
                         !pPlayer->getIsDefeated())
                     {
+                        pPlayer->setSocketId(0);
+                        pPlayer->setIsOnline(false);
                         showDisconnect = true;
                         break;
                     }
@@ -1147,6 +1153,7 @@ void GameMenue::disconnected(quint64 socketID)
                     if (socketID == playerSocketID)
                     {
                         pPlayer->setSocketId(0);
+                        pPlayer->setIsOnline(false);
                     }
                 }
                 if (Mainapp::getSlave())
