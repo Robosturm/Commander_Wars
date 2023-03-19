@@ -102,6 +102,7 @@ void PlayerInfo::updateData()
                 }
                 pSprite = oxygine::spSprite::create();
                 pSprite->setResAnim(pAnim);
+                pSprite->setWidth(pAnim->getWidth());
                 pSprite->setY(yPos);
                 if (pAnim != nullptr)
                 {
@@ -117,6 +118,28 @@ void PlayerInfo::updateData()
                     pSprite->setX(-pSprite->getScaledWidth());
                 }
                 addChild(pSprite);
+
+                // online info
+                qint32 coWidth = pSprite->getScaledWidth();
+                pSprite = oxygine::spSprite::create();
+                if (pPlayer->getIsOnline())
+                {
+                    pAnim = pGameManager->getResAnim("online");
+                }
+                else
+                {
+                    pAnim = pGameManager->getResAnim("offline");
+                }
+                pSprite->setResAnim(pAnim);
+                pSprite->setY(yPos + 8);
+                pSprite->setX(coWidth + 5);
+                pSprite->setFlippedX(m_flippedX);
+                if (m_flippedX)
+                {
+                    pSprite->setX(-pSprite->getScaledWidth() - 5 - coWidth);
+                }
+                addChild(pSprite);
+
                 if (pCO != nullptr)
                 {
                     spCoPowermeter pCoPowermeter = spCoPowermeter::create(m_pMap, pCO);

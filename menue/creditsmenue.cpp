@@ -169,6 +169,7 @@ void CreditsMenue::onEnter()
 void CreditsMenue::exitMenue()
 {    
     CONSOLE_PRINT("Leaving Credits Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     auto window = spMainwindow::create("ui/menu/mainoptionmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    

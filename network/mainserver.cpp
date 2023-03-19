@@ -23,29 +23,26 @@
 
 const char* const DRIVER = "QSQLITE";
 
-const char* const SQL_TABLE_PLAYERS = "players";
-const char* const SQL_USERNAME      = "username";
-const char* const SQL_PASSWORD      = "password";
-const char* const SQL_MAILADRESS    = "mailAdress";
-const char* const SQL_VALIDPASSWORD = "validPassword";
-const char* const SQL_LASTLOGIN     = "lastLogin";
+const char* const MainServer::SQL_TABLE_PLAYERS = "players";
+const char* const MainServer::SQL_USERNAME      = "username";
+const char* const MainServer::SQL_PASSWORD      = "password";
+const char* const MainServer::SQL_MAILADRESS    = "mailAdress";
+const char* const MainServer::SQL_VALIDPASSWORD = "validPassword";
+const char* const MainServer::SQL_LASTLOGIN     = "lastLogin";
 
-const char* const SQL_TABLE_PLAYERDATA  = "playerData";
-const char* const SQL_COID              = "coid";
-const char* const SQL_GAMESMADE         = "gamesMade";
-const char* const SQL_GAMESLOST         = "gamesLost";
-const char* const SQL_GAMESWON          = "gamesWon";
-const char* const SQL_GAMESDRAW         = "gamesDraw";
-const char* const SQL_METADATA          = "metaData";
+const char* const MainServer::SQL_TABLE_PLAYERDATA  = "playerData";
+const char* const MainServer::SQL_COID              = "coid";
+const char* const MainServer::SQL_GAMESMADE         = "gamesMade";
+const char* const MainServer::SQL_GAMESLOST         = "gamesLost";
+const char* const MainServer::SQL_GAMESWON          = "gamesWon";
+const char* const MainServer::SQL_GAMESDRAW         = "gamesDraw";
+const char* const MainServer::SQL_METADATA          = "metaData";
 
-const char* const SQL_TABLE_MATCH_DATA  = "matchData";
-const char* const SQL_MMR               = "mmr";
-const char* const SQL_MINGAMES          = "minGames";
-const char* const SQL_MAXGAMES          = "maxGames";
-const char* const SQL_RUNNINGGAMES      = "runningGames";
-
-
-
+const char* const MainServer::SQL_TABLE_MATCH_DATA  = "matchData";
+const char* const MainServer::SQL_MMR               = "mmr";
+const char* const MainServer::SQL_MINGAMES          = "minGames";
+const char* const MainServer::SQL_MAXGAMES          = "maxGames";
+const char* const MainServer::SQL_RUNNINGGAMES      = "runningGames";
 
 spMainServer MainServer::m_pInstance{nullptr};
 QSqlDatabase* MainServer::m_serverData{nullptr};
@@ -133,6 +130,7 @@ MainServer::MainServer()
         m_mailSender.moveToThread(&m_mailSenderThread);
         m_mailSenderThread.start();
         connect(&m_mailSender, &SmtpMailSender::sigMailResult, this, &MainServer::onMailSendResult, Qt::QueuedConnection);
+        restoreServer();
         CONSOLE_PRINT("Starting tcp server and listening to new clients.", GameConsole::eDEBUG);
         emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort(), Settings::getServerSecondaryListenAdress());
         emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort(), "");
@@ -184,6 +182,18 @@ void MainServer::startDatabase()
                 createUserTable(username.toString());
             }
         }
+    }
+}
+
+void MainServer::restoreServer()
+{
+    auto savefile = Mainapp::getInstance()->getParser().getServerSaveFile();
+    if (QFile::exists(savefile))
+    {
+        QFile file(savefile);
+        QDataStream stream(&file);
+        file.open(QIODevice::ReadOnly);
+        deserializeObject(stream);
     }
 }
 
@@ -538,22 +548,14 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
     qint32 i = 0;
     for (const auto & game : qAsConst(m_games))
     {
-        if (game->game.get() != nullptr &&
-            game->game->getSlaveRunning())
+        if (game->game.get() != nullptr)
         {
             auto & data = game->game->getData();
             if (data.getPlayerNames().contains(username))
             {
-                if (data.getLaunched())
-                {
-                    QJsonObject obj = game->game->getData().toJson();
-                    games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-                    ++i;
-                }
-                else
-                {
-                    CONSOLE_PRINT("Found game which isn't started for username " + username, GameConsole::eDEBUG);
-                }
+                QJsonObject obj = game->game->getData().toJson();
+                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                ++i;
             }
         }
     }
@@ -603,6 +605,10 @@ void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData
         if (objData.contains(JsonKeys::JSONKEY_RUNNINGGAME))
         {
             data.setRunningGame(objData.value(JsonKeys::JSONKEY_RUNNINGGAME).toBool());
+        }
+        if (objData.contains(JsonKeys::JSONKEY_USERNAMES))
+        {
+            internGame->game->updatePlayers(objData);
         }
         m_updateGameData = true;
     }
@@ -914,7 +920,7 @@ void MainServer::playerJoined(qint64 socketId)
 
 void MainServer::periodicTasks()
 {
-    CONSOLE_PRINT("MainServer::periodicTasks", GameConsole::eDEBUG);
+    // CONSOLE_PRINT("MainServer::periodicTasks", GameConsole::eDEBUG);
     cleanUpSuspendedGames(m_runningSlaves);
     cleanUpSuspendedGames(m_runningLobbies);
     executeScript();
@@ -1002,45 +1008,52 @@ void MainServer::closeGame(NetworkGame* pGame)
 bool MainServer::getNextFreeSlaveAddress(QString & address, quint16 & port, QString & secondaryAddress)
 {
     bool success = false;
-    address = "";
-    secondaryAddress = "";
-    port = 0;
-    if (m_freeAddresses.size() > 0)
+    if (!m_despawning)
     {
-        auto & newAddress = m_freeAddresses.constLast();
-        address = newAddress.address;
-        secondaryAddress = newAddress.secondaryAddress;
-        port = newAddress.port;
-        m_freeAddresses.removeLast();
-        success = true;
-    }
-    else
-    {
-        if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
+        address = "";
+        secondaryAddress = "";
+        port = 0;
+        if (m_freeAddresses.size() > 0)
         {
-            auto & options = m_slaveAddressOptions[m_lastUsedAddressIndex];
-            if (m_lastUsedPort < options.maxPort)
+            auto & newAddress = m_freeAddresses.constLast();
+            address = newAddress.address;
+            secondaryAddress = newAddress.secondaryAddress;
+            port = newAddress.port;
+            m_freeAddresses.removeLast();
+            success = true;
+        }
+        else
+        {
+            if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
             {
-                address = options.address;
-                secondaryAddress = options.secondaryAddress;
-                ++m_lastUsedPort;
-                port = m_lastUsedPort;
-                success = true;
-            }
-            else
-            {
-                m_lastUsedAddressIndex++;
-                if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
+                auto & options = m_slaveAddressOptions[m_lastUsedAddressIndex];
+                if (m_lastUsedPort < options.maxPort)
                 {
-                    m_lastUsedPort = m_slaveAddressOptions[m_lastUsedAddressIndex].minPort - 1;
-                    success = getNextFreeSlaveAddress(address, port, secondaryAddress);
+                    address = options.address;
+                    secondaryAddress = options.secondaryAddress;
+                    ++m_lastUsedPort;
+                    port = m_lastUsedPort;
+                    success = true;
+                }
+                else
+                {
+                    m_lastUsedAddressIndex++;
+                    if (m_lastUsedAddressIndex < m_slaveAddressOptions.size())
+                    {
+                        m_lastUsedPort = m_slaveAddressOptions[m_lastUsedAddressIndex].minPort - 1;
+                        success = getNextFreeSlaveAddress(address, port, secondaryAddress);
+                    }
                 }
             }
         }
+        CONSOLE_PRINT("getNextFreeSlaveAddress using address " + address +
+                      " secondary address " + secondaryAddress +
+                      " and port " + QString::number(port), GameConsole::eDEBUG);
     }
-    CONSOLE_PRINT("getNextFreeSlaveAddress using address " + address +
-                  " secondary address " + secondaryAddress +
-                  " and port " + QString::number(port), GameConsole::eDEBUG);
+    else
+    {
+        CONSOLE_PRINT("Denied spawning of slave game cause server is despawning", GameConsole::eDEBUG);
+    }
     return success;
 }
 
@@ -1402,6 +1415,11 @@ QString MainServer::createRandomPassword() const
     return password;
 }
 
+QSqlDatabase & MainServer::getDatabase()
+{
+    return *m_serverData;
+}
+
 void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
 {
     auto & cypher = Mainapp::getInstance()->getCypher();
@@ -1479,4 +1497,91 @@ QSqlQuery MainServer::getAllUsers(QSqlDatabase & database, bool & success)
     return query;
 }
 
+void MainServer::despawnServer(const QString & savefile)
+{
+    m_despawning = true;
+    m_despawningSavefile = savefile;
+    despawnRunningSlaves();
+    doDespawnServer();
+}
 
+void MainServer::despawnRunningSlaves()
+{
+    for (auto & game : m_games)
+    {
+        game->game->forceDespawn(m_pGameServer);
+    }
+}
+
+void MainServer::doDespawnServer()
+{
+    if (m_despawning &&
+        m_games.size() > 0)
+    {
+        QFile file(m_despawningSavefile);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        serializeObject(stream);
+    }
+}
+
+void MainServer::serializeObject(QDataStream& stream) const
+{
+    stream << getVersion();
+    stream << static_cast<qint32>(m_runningSlaves.size());
+    for (auto & runningSlave : m_runningSlaves)
+    {
+        runningSlave.serializeObject(stream);
+    }
+    stream << static_cast<qint32>(m_runningLobbies.size());
+    for (auto & runningLobbies : m_runningLobbies)
+    {
+        runningLobbies.serializeObject(stream);
+    }
+}
+
+void MainServer::deserializeObject(QDataStream& stream)
+{
+    qint32 version = 0;
+    stream >> version;
+    qint32 size = 0;
+    stream >> size;
+    for (qint32 i = 0; i < size; ++i)
+    {
+        SuspendedSlaveInfo slaveInfo;
+        slaveInfo.deserializeObject(stream);
+        m_runningSlaves.append(slaveInfo);
+    }
+    stream >> size;
+    for (qint32 i = 0; i < size; ++i)
+    {
+        SuspendedSlaveInfo slaveInfo;
+        slaveInfo.deserializeObject(stream);
+        m_runningLobbies.append(slaveInfo);
+    }
+}
+
+void MainServer::SuspendedSlaveInfo::serializeObject(QDataStream& stream) const
+{
+    stream << getVersion();
+    stream << relaunched;
+    stream << runningGame;
+    stream << savefile;
+    auto obj = game.toJson();
+    QJsonDocument doc(obj);
+    Filesupport::writeByteArray(stream, doc.toJson());
+}
+
+void MainServer::SuspendedSlaveInfo::deserializeObject(QDataStream& stream)
+{
+    qint32 version = 0;
+    stream >> version;
+    stream >> relaunched;
+    stream >> runningGame;
+    stream >> savefile;
+    QByteArray data;
+    data = Filesupport::readByteArray(stream);
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    QJsonObject objData = doc.object();
+    game.fromJson(objData);
+}

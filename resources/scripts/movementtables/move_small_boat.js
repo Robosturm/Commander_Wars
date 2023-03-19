@@ -11,7 +11,6 @@ var Constructor = function()
                                 ["FOG", 1],
                                 ["SEA", 1],
                                 ["LAKE", 1],
-                                ["DESERT_TRY_RIVER", 1],
                                 ["RIVER", 1],
                                 ["ROUGH_SEA", 2],
                                 ["REAF", 2],
@@ -26,7 +25,9 @@ var Constructor = function()
         }
         if (shipBridges &&
             terrain.getID() === "BRIDGE" &&
-            (terrain.getBaseTerrainID() === "SEA" || terrain.getBaseTerrainID() === "LAKE"))
+            (terrain.getBaseTerrainID() === "SEA" ||
+             terrain.getBaseTerrainID() === "LAKE" ||
+             terrain.getBaseTerrainID() === "RIVER"))
         {
             return 1;
         }

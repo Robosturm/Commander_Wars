@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(REAF.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(REAF.getDefaultPalette());
+        }
         terrain.setVisionHigh(1);
         terrain.setTerrainName(REAF.getName());
     };
@@ -18,11 +21,15 @@ var Constructor = function()
     {
         return qsTr("Reaf");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map, currentPalette)
     {
         if (currentTerrainID === "LAKE")
         {
-            terrain.loadBaseTerrain("LAKE");
+            terrain.loadBaseTerrain("LAKE", currentPalette);
+        }
+        else if (currentTerrainID === "SEA")
+        {
+            terrain.loadBaseTerrain("SEA", currentPalette);
         }
         else
         {

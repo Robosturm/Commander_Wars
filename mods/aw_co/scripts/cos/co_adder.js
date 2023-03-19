@@ -5,7 +5,7 @@ CO_ADDER.init = function(co, map)
 };
 CO_ADDER.activateSuperpower = function(co, powerMode, map)
 {
-    CO_ADDER.activatePower(co, powerMode, map);
+    CO_ADDER.activatePower(co, map);
 };
 CO_ADDER.getSuperPowerDescription = function()
 {

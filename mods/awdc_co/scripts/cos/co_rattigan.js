@@ -5,7 +5,7 @@ CO_RATTIGAN.init = function(co, map)
 };
 CO_RATTIGAN.activateSuperpower = function(co, powerMode, map)
 {
-	CO_RATTIGAN.activatePower(co, powerMode, map);
+	CO_RATTIGAN.activatePower(co, map);
 };
 CO_RATTIGAN.getSuperPowerDescription = function()
 {

@@ -211,11 +211,6 @@ IngameInfoBar* GameMenue::getGameInfoBar()
 
 void GameMenue::onEnter()
 {
-    if (m_pMap.get() != nullptr &&
-        m_pMap->getGameScript() != nullptr)
-    {
-        m_pMap->getGameScript()->onGameLoaded(this);
-    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "gameMenu";
@@ -378,6 +373,10 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             sendUsername(socketID, objData);
         }
+        else if (messageType == NetworkCommands::ONLINEINFO)
+        {
+            receivedOnlineInfo(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -416,6 +415,10 @@ void GameMenue::recieveServerData(quint64 socketID, QByteArray data, NetworkInte
         {
             closeSlave();
         }
+        else if (messageType == NetworkCommands::SLAVEFORCEDESPAWN)
+        {
+            doDespawnSlave();
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in GameMenue::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -451,6 +454,37 @@ void GameMenue::sendUsername(quint64 socketID, const QJsonObject & objData)
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     QJsonDocument doc(data);
     emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void GameMenue::sendOnlineInfo()
+{
+    if (m_pNetworkInterface.get() != nullptr &&
+        m_pNetworkInterface->getIsServer())
+    {
+        QString command = QString(NetworkCommands::ONLINEINFO);
+        CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        QJsonArray onlineInfo;
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+        {
+            onlineInfo.append(m_pMap->getPlayer(i)->getSocketId() != 0);
+        }
+        data.insert(JsonKeys::JSONKEY_ONLINEINFO, onlineInfo);
+        QJsonDocument doc(data);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+}
+
+void GameMenue::receivedOnlineInfo(quint64 socketID, const QJsonObject & objData)
+{
+    CONSOLE_PRINT("receivedOnlineInfo", GameConsole::eDEBUG);
+    QJsonArray onlineInfo = objData.value(JsonKeys::JSONKEY_ONLINEINFO).toArray();
+    for (qint32 i = 0; i < onlineInfo.size(); ++i)
+    {
+        m_pMap->getPlayer(i)->setIsOnline(onlineInfo[i].toBool());
+    }
+    updatePlayerinfo();
 }
 
 void GameMenue::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -595,6 +629,11 @@ void GameMenue::onResyncGame(QDataStream & stream)
     }
 }
 
+bool GameMenue::getIndespawningMode() const
+{
+    return m_indespawningMode;
+}
+
 void GameMenue::showResyncGameMessage()
 {
     spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("The game is out of sync and can't be continued. The game has been stopped. You can save the game and restart or try to resync with the server.\nNote: This may be caused by a defective mod."), true, tr("Resync"), tr("Ok"));
@@ -615,8 +654,8 @@ void GameMenue::resyncGame()
         {
             networkMode = Multiplayermenu::NetworkMode::Observer;
         }
-
         CONSOLE_PRINT("Leaving Game menue to resync to game", GameConsole::eDEBUG);
+        m_onEnterTimer.stop();
         spMultiplayermenu pMenu = spMultiplayermenu::create(connectedAdress, connectedPort, &password, networkMode);
         oxygine::Stage::getStage()->addChild(pMenu);
         oxygine::Actor::detach();
@@ -636,7 +675,7 @@ Player* GameMenue::getCurrentViewPlayer() const
         for (qint32 i = currentPlayerID; i >= 0; i--)
         {
             if (m_pMap->getPlayer(i)->getBaseGameInput() != nullptr &&
-                m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Human &&
+                m_pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
                 !m_pMap->getPlayer(i)->getIsDefeated())
             {
                 return m_pMap->getPlayer(i);
@@ -925,6 +964,7 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
     }
     emit m_pNetworkInterface->sig_sendData(socketId, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     sendOpenPlayerCount();
+    sendOnlineInfo();
 }
 
 void GameMenue::removePlayerFromSyncWaitList(quint64 socketID)
@@ -956,6 +996,7 @@ void GameMenue::removeSyncSocket(quint64 socketID)
 void GameMenue::playerJoinedFinished()
 {
     sendOpenPlayerCount();
+    sendOnlineInfo();
     emit sigSyncFinished();
     continueAfterSyncGame();
 }
@@ -1022,6 +1063,7 @@ void GameMenue::continueAfterSyncGame()
             multiplayerSyncData.m_postSyncAction = nullptr;
         }
         sendOpenPlayerCount();
+        sendOnlineInfo();
     }
 }
 
@@ -1120,6 +1162,7 @@ void GameMenue::disconnected(quint64 socketID)
             }
         }
         sendOpenPlayerCount();
+        sendOnlineInfo();
         continueAfterSyncGame();
     }
 }
@@ -1131,6 +1174,7 @@ void GameMenue::startDespawnTimer()
         CONSOLE_PRINT("GameMenue::startDespawnTimer", GameConsole::eDEBUG);
         m_slaveDespawnElapseTimer.start();
         m_slaveDespawnTimer.setSingleShot(false);
+        m_despawning = false;
         constexpr qint32 MS_PER_SECOND = 1000;
         m_slaveDespawnTimer.start(MS_PER_SECOND);
     }
@@ -1144,64 +1188,82 @@ void GameMenue::despawnSlave()
     CONSOLE_PRINT("GameMenue::despawnSlave elapsed seconds " + QString::number(elapsed * multiplier) + " target time " + QString::number(ms.count() * multiplier), GameConsole::eDEBUG);
     if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
     {
-        if (m_saveAllowed)
+        if (m_despawning)
         {
-            QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".msav";
-            saveMap(saveFile);
-            spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-            QString command = NetworkCommands::SLAVEINFODESPAWNING;
-            QJsonObject data;
-            data.insert(JsonKeys::JSONKEY_COMMAND, command);
-            data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, 0);
-            data.insert(JsonKeys::JSONKEY_MAXPLAYERS, m_pMap->getPlayerCount());
-            data.insert(JsonKeys::JSONKEY_MAPNAME, m_pMap->getMapName());
-            data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, m_pMap->getGameRules()->getDescription());
-            data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
-            data.insert(JsonKeys::JSONKEY_HASPASSWORD, m_pMap->getGameRules()->getPassword().getIsSet());
-            data.insert(JsonKeys::JSONKEY_UUID, 0);
-            data.insert(JsonKeys::JSONKEY_SAVEFILE, saveFile);
-            data.insert(JsonKeys::JSONKEY_RUNNINGGAME, true);
-            if (m_pMap->getCurrentPlayer()->getControlType() == GameEnums::AiTypes_Human)
-            {
-                data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, m_pMap->getCurrentPlayer()->getPlayerNameId());
-            }
-            else
-            {
-                data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, "");
-            }
-            auto activeMods = Settings::getActiveMods();
-            QJsonObject mods;
-            for (qint32 i = 0; i < activeMods.size(); ++i)
-            {
-                mods.insert(JsonKeys::JSONKEY_MOD + QString::number(i), activeMods[i]);
-            }
-            data.insert(JsonKeys::JSONKEY_USEDMODS, mods);
-            QJsonArray usernames;
-            qint32 count = m_pMap->getPlayerCount();
-            for (qint32 i = 0; i < count; ++i)
-            {
-                Player* pPlayer = m_pMap->getPlayer(i);
-                if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
-                {
-                    CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
-                    usernames.append(pPlayer->getPlayerNameId());
-                }
-                else
-                {
-                    CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
-                }
-            }
-            data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
-            QJsonDocument doc(data);
-            CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
-            emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-            m_slaveDespawnTimer.stop();
+            CONSOLE_PRINT("Killing slave cause server didn't respond", GameConsole::eERROR);
+            QCoreApplication::exit(-10);
+        }
+        else if (doDespawnSlave())
+        {
+            m_slaveDespawnElapseTimer.start();
         }
         else
         {
             GameAnimationFactory::skipAllAnimations();
         }
     }
+}
+
+bool GameMenue::doDespawnSlave()
+{
+    if (m_saveAllowed)
+    {
+        m_despawning = true;
+        QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".msav";
+        saveMap(saveFile);
+        spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+        QString command = NetworkCommands::SLAVEINFODESPAWNING;
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, command);
+        data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, 0);
+        data.insert(JsonKeys::JSONKEY_MAXPLAYERS, m_pMap->getPlayerCount());
+        data.insert(JsonKeys::JSONKEY_MAPNAME, m_pMap->getMapName());
+        data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, m_pMap->getGameRules()->getDescription());
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+        data.insert(JsonKeys::JSONKEY_HASPASSWORD, m_pMap->getGameRules()->getPassword().getIsSet());
+        data.insert(JsonKeys::JSONKEY_UUID, 0);
+        data.insert(JsonKeys::JSONKEY_SAVEFILE, saveFile);
+        data.insert(JsonKeys::JSONKEY_RUNNINGGAME, true);
+        if (m_pMap->getCurrentPlayer()->getControlType() == GameEnums::AiTypes_Human)
+        {
+            data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, m_pMap->getCurrentPlayer()->getPlayerNameId());
+        }
+        else
+        {
+            data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, "");
+        }
+        auto activeMods = Settings::getActiveMods();
+        QJsonObject mods;
+        for (qint32 i = 0; i < activeMods.size(); ++i)
+        {
+            mods.insert(JsonKeys::JSONKEY_MOD + QString::number(i), activeMods[i]);
+        }
+        data.insert(JsonKeys::JSONKEY_USEDMODS, mods);
+        QJsonArray usernames;
+        qint32 count = m_pMap->getPlayerCount();
+        for (qint32 i = 0; i < count; ++i)
+        {
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
+            {
+                CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+                usernames.append(pPlayer->getPlayerNameId());
+            }
+            else
+            {
+                CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+            }
+        }
+        data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
+        QJsonDocument doc(data);
+        CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
+        emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+    else
+    {
+        m_indespawningMode = true;
+    }
+    return m_despawning;
 }
 
 void GameMenue::closeSlave()
@@ -1699,6 +1761,7 @@ void GameMenue::victory(qint32 team)
         }
         AchievementManager::getInstance()->onVictory(team, humanWin, m_pMap.get());
         CONSOLE_PRINT("Leaving Game Menue", GameConsole::eDEBUG);
+        m_onEnterTimer.stop();
         auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface);
         oxygine::Stage::getStage()->addChild(window);
         oxygine::Actor::detach();
@@ -1748,18 +1811,34 @@ void GameMenue::showUnitStatistics(qint32 player)
 
 void GameMenue::showPlayerUnitStatistics(Player* pPlayer)
 {
-    m_Focused = false;
-    CONSOLE_PRINT("showUnitStatistics()", GameConsole::eDEBUG);
-    spGenericBox pBox = spGenericBox::create();
-    spUnitStatisticView view = spUnitStatisticView::create(m_pMap->getGameRecorder()->getPlayerDataRecords()[pPlayer->getPlayerID()],
-                                                           Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer, m_pMap.get());
-    view->setPosition(30, 30);
-    pBox->addItem(view);
-    connect(pBox.get(), &GenericBox::sigFinished, this, [this]()
+    if (pPlayer != nullptr)
     {
-        m_Focused = true;
-    });
-    addChild(pBox);
+        qint32 playerId = pPlayer->getPlayerID();
+        const auto & records = m_pMap->getGameRecorder()->getPlayerDataRecords();
+        if (playerId < records.size() && playerId >= 0)
+        {
+            m_Focused = false;
+            CONSOLE_PRINT("showUnitStatistics()", GameConsole::eDEBUG);
+            spGenericBox pBox = spGenericBox::create();
+            spUnitStatisticView view = spUnitStatisticView::create(records[playerId],
+                                                                   Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer, m_pMap.get());
+            view->setPosition(30, 30);
+            pBox->addItem(view);
+            connect(pBox.get(), &GenericBox::sigFinished, this, [this]()
+            {
+                m_Focused = true;
+            });
+            addChild(pBox);
+        }
+        else
+        {
+            CONSOLE_PRINT("showPlayerUnitStatistics Player id " + QString::number(playerId) + " is outside player record range.", GameConsole::eERROR);
+        }
+    }
+    else
+    {
+        CONSOLE_PRINT("showPlayerUnitStatistics player is a nullptr", GameConsole::eERROR);
+    }
 }
 
 void GameMenue::showXmlFileDialog(const QString & xmlFile, bool saveSettings)
@@ -2093,6 +2172,11 @@ void GameMenue::exitGame()
 void GameMenue::startGame()
 {
     CONSOLE_PRINT("GameMenue::startGame", GameConsole::eDEBUG);
+    if (m_pMap.get() != nullptr &&
+        m_pMap->getGameScript() != nullptr)
+    {
+        m_pMap->getGameScript()->onGameLoaded(this);
+    }
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationFactory::clearAllAnimations();
     qint32 count = m_pMap->getPlayerCount();
@@ -2121,6 +2205,7 @@ void GameMenue::startGame()
     if (!m_SaveGame)
     {
         CONSOLE_PRINT("Launching game from start", GameConsole::eDEBUG);
+        m_pMap->getGameScript()->gameStart();
         m_pMap->startGame();
         m_pMap->setCurrentPlayer(m_pMap->getPlayerCount() - 1);
         if (m_pNetworkInterface.get() == nullptr)
@@ -2559,6 +2644,7 @@ void GameMenue::loadSaveGame(const QString savefile)
         pApp->getAudioManager()->clearPlayList();
         pMenue->startGame();
         CONSOLE_PRINT("Leaving Game Menue", GameConsole::eDEBUG);
+        m_onEnterTimer.stop();
         oxygine::Actor::detach();
     }
     else

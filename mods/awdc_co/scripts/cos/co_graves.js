@@ -5,7 +5,7 @@ CO_GRAVES.init = function(co, map)
 };
 CO_GRAVES.activateSuperpower = function(co, powerMode, map)
 {
-	CO_GRAVES.activatePower(co, powerMode, map);
+	CO_GRAVES.activatePower(co, map);
 };
 CO_GRAVES.getSuperPowerDescription = function()
 {

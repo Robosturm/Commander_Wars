@@ -11,7 +11,10 @@ var Constructor = function()
 
     this.init = function (terrain)
     {
-        terrain.setPalette(BEACH.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(BEACH.getDefaultPalette());
+        }
         terrain.setTerrainName(BEACH.getName());
     };
 
@@ -20,11 +23,15 @@ var Constructor = function()
         return qsTr("Beach");
     };
 
-    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map, currentPalette)
     {
         if (currentTerrainID === "LAKE")
         {
-            terrain.loadBaseTerrain("LAKE");
+            terrain.loadBaseTerrain("LAKE", currentPalette);
+        }
+        else if (currentTerrainID === "SEA")
+        {
+            terrain.loadBaseTerrain("SEA", currentPalette);
         }
         else
         {
@@ -80,7 +87,7 @@ var Constructor = function()
                 (surroundingsLandDiagnonal === "+SE" && (surroundingsBeach === "+S" || surroundingsBeach === "+E" || surroundingsBeach === "+E+S" || surroundingsBeach === "")) ||
                 (surroundingsLandDiagnonal === "+SW" && (surroundingsBeach === "+S" || surroundingsBeach === "+W" || surroundingsBeach === "+S+W" || surroundingsBeach === "")))
             {
-                terrain.loadBaseSprite("beach" + surroundingsBeach + "+land" + surroundingsLandDiagnonal);
+                terrain.loadBaseSprite("beach" + surroundingsBeach + "+land" + surroundingsLandDiagnonal + "+mask");
             }
             else if (x >= 0 && y >= 0)
             {
@@ -214,19 +221,19 @@ var Constructor = function()
                         {
                             if (point.x > 0)
                             {
-                                terrain.loadOverlaySprite("beach+overlay+E");
+                                terrain.loadOverlaySprite("beach+overlay+E+mask");
                             }
                             else if (point.x < 0)
                             {
-                                terrain.loadOverlaySprite("beach+overlay+W");
+                                terrain.loadOverlaySprite("beach+overlay+W+mask");
                             }
                             else if (point.y > 0)
                             {
-                                terrain.loadOverlaySprite("beach+overlay+S");
+                                terrain.loadOverlaySprite("beach+overlay+S+mask");
                             }
                             else if (point.y < 0)
                             {
-                                terrain.loadOverlaySprite("beach+overlay+N");
+                                terrain.loadOverlaySprite("beach+overlay+N+mask");
                             }
                         }
                     }

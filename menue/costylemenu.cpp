@@ -120,6 +120,7 @@ void COStyleMenu::exitMenue()
 void COStyleMenu::reloadMenue()
 {
     CONSOLE_PRINT("Leaving CO Style Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     auto window = spCOStyleMenu::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();

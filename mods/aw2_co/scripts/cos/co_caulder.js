@@ -62,7 +62,7 @@ CO_CAULDER.startOfTurn = function(co, map)
                 {
                     delay *= i;
                 }
-                var animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
+                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                 animation.setSound("power0.wav", 1, delay);
                 if (animations.length < 5)
                 {
@@ -80,7 +80,7 @@ CO_CAULDER.startOfTurn = function(co, map)
                         counter = 0;
                     }
                 }
-                if (!viewplayer.getFieldVisible(unitX, unitY))
+                if (!viewplayer.getFieldVisible(unit.getX(), unit.getY()))
                 {
                     animation.setVisible(false);
                 }

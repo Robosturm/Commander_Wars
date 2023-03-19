@@ -33,6 +33,10 @@ var Constructor = function()
         }
     };
 
+    this.sandstormBonus = 55;
+    this.sandstormRangeBonus = 1;
+    this.sandstormDamage = 2;
+
     this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
@@ -57,7 +61,7 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         map.getGameRules().changeWeather("WEATHER_SANDSTORM", map.getPlayerCount() * 1);
         powerNameAnimation.queueAnimation(animation2);
-        CO_ZANDRA.zandraDamage(co, 2, animation2, map);
+        CO_ZANDRA.zandraDamage(co, CO_ZANDRA.sandstormDamage, animation2, map);
     };
 
     this.zandraDamage = function(co, value, animation2, map)
@@ -136,7 +140,7 @@ var Constructor = function()
                 if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                 {
                     // apply sandstorm buff :)
-                    return 55;
+                    return CO_ZANDRA.sandstormBonus;
                 }
                 return 10;
             default:
@@ -146,7 +150,7 @@ var Constructor = function()
                         map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                     {
                         // apply sandstorm buff :)
-                        return 70;
+                        return CO_ZANDRA.sandstormBonus;
                     }
                     return 10;
                 }
@@ -183,7 +187,7 @@ var Constructor = function()
                     case GameEnums.PowerMode_Tagpower:
                     case GameEnums.PowerMode_Superpower:
                     case GameEnums.PowerMode_Power:
-                        return 1;
+                        return CO_ZANDRA.sandstormRangeBonus;
                     default:
                         return 0;
                     }
@@ -224,12 +228,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms and have increased firepower during sandstorm.") +
-                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower during sandstorm.");
+        var text = qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms") +
+                   qsTr("\n\nCO Zone Effect: \nUnits get %0% firepower during sandstorm.");
+        text = replaceTextArgs(text, [CO_ZANDRA.sandstormBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by 1 and increasing her firepower.");
+        var text =  qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%.");
+        text = replaceTextArgs(text, [CO_ZANDRA.sandstormRangeBonus , CO_ZANDRA.sandstormBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -237,7 +245,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by 1 and increasing her firepower. Also deals two hp damage to enemies.");
+        var text =  qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 hp damage to enemies.");
+        text = replaceTextArgs(text, [CO_ZANDRA.sandstormRangeBonus , CO_ZANDRA.sandstormBonus, CO_ZANDRA.sandstormDamage]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

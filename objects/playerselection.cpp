@@ -1436,9 +1436,30 @@ void PlayerSelection::sendOpenPlayerCount()
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
         data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, getOpenPlayerCount());
+        data.insert(JsonKeys::JSONKEY_USERNAMES, getUserNames());
         QJsonDocument doc(data);
         emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
+}
+
+QJsonArray PlayerSelection::getUserNames()
+{
+    QJsonArray usernames;
+    qint32 count = m_pMap->getPlayerCount();
+    for (qint32 i = 0; i < count; ++i)
+    {
+        Player* pPlayer = m_pMap->getPlayer(i);
+        if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
+        {
+            CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+            usernames.append(pPlayer->getPlayerNameId());
+        }
+        else
+        {
+            CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+        }
+    }
+    return usernames;
 }
 
 bool PlayerSelection::getIsServerGame() const

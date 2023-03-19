@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(SEA.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(SEA.getDefaultPalette());
+        }
         terrain.setTerrainName(SEA.getName());
     };
 
@@ -24,7 +27,7 @@ var Constructor = function()
         var surroundingsBride = terrain.getSurroundings("BRIDGE1,BRIDGE2", false, false, GameEnums.Directions_North, false, true);
         if (surroundingsBride !== "" && terrain.existsResAnim("sea" + surroundingsPlains + "+bridge+mask"))
         {
-            surroundingsPlains += "+bridge+mask";
+            surroundingsPlains += "+bridge";
         }
         else
         {

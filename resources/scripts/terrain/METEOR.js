@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(METEOR.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(METEOR.getDefaultPalette());
+        }
         terrain.setVisionHigh(1);
         terrain.setTerrainName(METEOR.getName());
         terrain.setHp(100);
@@ -19,27 +22,31 @@ var Constructor = function()
     {
         return qsTr("Meteor");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map, currentPalette)
     {
         if (currentTerrainID === "SNOW")
         {
-            terrain.loadBaseTerrain("SNOW");
+            terrain.loadBaseTerrain("SNOW", currentPalette);
         }
         else if (currentTerrainID === "DESERT")
         {
-            terrain.loadBaseTerrain("DESERT");
+            terrain.loadBaseTerrain("DESERT", currentPalette);
         }
         else if (currentTerrainID === "WASTE")
         {
-            terrain.loadBaseTerrain("WASTE");
+            terrain.loadBaseTerrain("WASTE", currentPalette);
         }
         else if (currentTerrainID === "LAKE")
         {
-            terrain.loadBaseTerrain("LAKE");
+            terrain.loadBaseTerrain("LAKE", currentPalette);
         }
         else if (currentTerrainID === "SEA")
         {
-            terrain.loadBaseTerrain("SEA");
+            terrain.loadBaseTerrain("SEA", currentPalette);
+        }
+        else if (currentTerrainID === "PLAINS")
+        {
+            terrain.loadBaseTerrain("PLAINS", currentPalette);
         }
         else
         {

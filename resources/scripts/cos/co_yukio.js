@@ -22,6 +22,10 @@ var Constructor = function()
         CO_YUKIO.spawnUnits(co, 0.4, invasion, powerNameAnimation, map);
     };
 
+    this.mintrueDamage = 10;
+    this.trueDamageBonus = 15;
+    this.trueDefenseBonus = 15;
+    this.bombDamage = 3;
     this.activateSuperpower = function(co, powerMode, map)
     {
         var invsion = ["HEAVY_TANK", "FLAK", "LIGHT_TANK", "ARTILLERY", "LIGHT_TANK", "K_HELI", "K_HELI"];
@@ -30,7 +34,7 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_YUKIO.spawnUnits(co, 0.7, invsion, powerNameAnimation, map);
-        CO_YUKIO.yukioDamage(co, 3, powerNameAnimation, map);
+        CO_YUKIO.yukioDamage(co, CO_YUKIO.bombDamage, powerNameAnimation, map);
     };
 
 
@@ -171,7 +175,6 @@ var Constructor = function()
     {
         return "DM";
     };
-    this.mintrueDamage = 10;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
@@ -200,7 +203,6 @@ var Constructor = function()
         }
         return 0;
     };
-
     this.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                   defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
@@ -212,7 +214,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 if (damage >= CO_YUKIO.mintrueDamage)
                 {
-                    return 15
+                    return CO_YUKIO.trueDamageBonus;
                 }
                 break;
             default:
@@ -220,7 +222,7 @@ var Constructor = function()
                 {
                     if (damage >= CO_YUKIO.mintrueDamage)
                     {
-                        return 15
+                        return CO_YUKIO.trueDamageBonus;
                     }
                 }
                 break;
@@ -237,11 +239,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return 15;
+                return CO_YUKIO.trueDefenseBonus;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 10;
+                    return CO_YUKIO.trueDefenseBonus;
                 }
                 break;
         }
@@ -283,8 +285,8 @@ var Constructor = function()
     {
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
                    qsTr("\nGlobal Effect: \nNone.") +
-                   qsTr("\n\nCO Zone Effect: \nDamage against his troops is reduced. Troops deal true damage if the base damage is at least %0%.");
-        text = replaceTextArgs(text, [CO_YUKIO.mintrueDamage]);
+                   qsTr("\n\nCO Zone Effect: \nDamage against his troops is reduced by %0%. Troops deal %1% true damage if the base damage is at least %2%.");
+        text = replaceTextArgs(text, [CO_YUKIO.trueDefenseBonus, CO_YUKIO.trueDamageBonus, CO_YUKIO.mintrueDamage]);
         return text;
     };
     this.getPowerDescription = function(co)
@@ -297,7 +299,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing 3 Hp to half of the enemy troops is launched.");
+         var text =  qsTr("An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing %0 Hp to half of the enemy troops is launched.");
+        text = replaceTextArgs(text, [CO_YUKIO.bombDamage]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

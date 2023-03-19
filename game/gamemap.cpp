@@ -1204,7 +1204,7 @@ void GameMap::zoomChanged()
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
-void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit, const QString & palette, bool changePalette)
+void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit, const QString & palette, bool changePalette, bool includeBaseTerrain)
 {
     if (onMap(x, y))
     {
@@ -1215,7 +1215,7 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
             pTerrainOld->removeBuilding();
             spUnit pUnit = spUnit(pTerrainOld->getUnit());
 
-            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID(), this);
+            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID(), this, pTerrainOld->getPalette());
 
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
@@ -1241,7 +1241,7 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 if (changePalette)
                 {
-                    pTerrain->setTerrainPalette(palette);
+                    pTerrain->setTerrainPalette(palette, includeBaseTerrain);
                 }
             }
             if (!removeUnit)
@@ -1267,9 +1267,9 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
     }
 }
 
-void GameMap::replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement, const QString & palette, bool changePalette)
+void GameMap::replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement, const QString & palette, bool changePalette, bool includeBaseTerrain)
 {
-    replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain, true, palette, changePalette);
+    replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain, true, palette, changePalette, includeBaseTerrain);
     if (checkPlacement)
     {
         updateTerrain(x, y);

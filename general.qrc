@@ -16,7 +16,6 @@
         <file>maps/2_player/Bean Island.map</file>
         <file>maps/2_player/Bellow Islands.map</file>
         <file>maps/2_player/Black Patch War.map</file>
-        <file>maps/2_player/BlackPatchWar.map</file>
         <file>maps/2_player/Blade Isles.map</file>
         <file>maps/2_player/Boxed In.map</file>
         <file>maps/2_player/Burger Isle.map</file>
@@ -2078,5 +2077,9 @@
         <file>resources/scripts/co_perks/co_perk_plain_fighter.js</file>
         <file>mods/awds_unit/scripts/general/unit.js</file>
         <file>mods/awdc_unit/scripts/general/unit.js</file>
+        <file>mods/awds_unit/scripts/units/ZCOUNIT_MISSILE_SUB.js</file>
+        <file>maps/advance_wars_dual_strike_campaign/Pincer Strike.map</file>
+        <file>maps/advance_wars_dual_strike_campaign/Snow Hunters.map</file>
+        <file>maps/advance_wars_dual_strike_campaign/Verdant Hills.map</file>
     </qresource>
 </RCC>

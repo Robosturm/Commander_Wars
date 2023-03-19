@@ -5,7 +5,7 @@ CO_ZANDRA.init = function(co, map)
 };
 CO_ZANDRA.activateSuperpower = function(co, powerMode, map)
 {
-	CO_ZANDRA.activatePower(co, powerMode, map);
+	CO_ZANDRA.activatePower(co, map);
 };
 CO_ZANDRA.getSuperPowerDescription = function()
 {

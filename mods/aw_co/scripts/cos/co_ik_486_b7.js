@@ -5,7 +5,7 @@ CO_IK_486_B7.init = function(co, map)
 };
 CO_IK_486_B7.activateSuperpower = function(co, powerMode, map)
 {
-    CO_IK_486_B7.activatePower(co, powerMode, map);
+    CO_IK_486_B7.activatePower(co, map);
 };
 CO_IK_486_B7.getSuperPowerDescription = function()
 {

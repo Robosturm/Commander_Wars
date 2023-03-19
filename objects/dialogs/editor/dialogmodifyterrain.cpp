@@ -124,6 +124,7 @@ void DialogModifyTerrain::load()
     else
     {
         pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_pTerrain->getPalette()));
+        m_selectedPalette = 0;
     }
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, m_pTerrain, [this](qint32 item)
     {
@@ -305,7 +306,7 @@ void DialogModifyTerrain::remove()
 }
 
 void DialogModifyTerrain::terrainClicked(QString id)
-{    
+{
     m_pTerrain->setFixedSprite(!id.isEmpty());
     m_pTerrain->setTerrainSpriteName(id);
     m_pTerrain->loadSprites();
@@ -332,7 +333,12 @@ void DialogModifyTerrain::overlayChanged(QString id, bool selected)
 {
     if (selected)
     {
-        m_pTerrain->addCustomOverlay(id, Terrain::getPaletteId(m_selectedPalette, m_pTerrain->getTerrainID()));
+        QString palette = Terrain::getPaletteId(m_selectedPalette, m_pTerrain->getTerrainID());
+        if (palette.isEmpty())
+        {
+            palette = m_pTerrain->getDefaultPalette();
+        }
+        m_pTerrain->addCustomOverlay(id, palette);
     }
     else
     {

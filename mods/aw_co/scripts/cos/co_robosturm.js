@@ -5,7 +5,7 @@ CO_ROBOSTURM.init = function(co, map)
 };
 CO_ROBOSTURM.activateSuperpower = function(co, powerMode, map)
 {
-    CO_ROBOSTURM.activatePower(co, powerMode, map);
+    CO_ROBOSTURM.activatePower(co, map);
 };
 CO_ROBOSTURM.getSuperPowerDescription = function()
 {

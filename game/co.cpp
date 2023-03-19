@@ -19,6 +19,8 @@
 
 #include "spritingsupport/spritecreator.h"
 
+static constexpr double DOUBLE_PRECISION = 10000.0;
+
 CO::CO(QString coID, Player* owner, GameMap* pMap)
     : m_pOwner(owner),
       m_coID(coID),
@@ -196,7 +198,7 @@ void CO::setPowerFilled(const double &value)
         !m_pMap->getGameRules()->getNoPower())
     {
         float currentValue = m_powerFilled;
-        m_powerFilled = value;
+        m_powerFilled = GlobalUtils::roundTo(value, DOUBLE_PRECISION);
         if (!m_powerCharging)
         {
             limitPowerbar(currentValue);
@@ -2013,7 +2015,14 @@ void CO::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << m_coID;
     pStream << m_powerStars;
     pStream << m_superpowerStars;
-    pStream << m_powerFilled;
+    if (forHash)
+    {
+        pStream << GlobalUtils::roundToInt(m_powerFilled, DOUBLE_PRECISION);
+    }
+    else
+    {
+        pStream << m_powerFilled;
+    }
     pStream << static_cast<qint32>(m_PowerMode);
     m_Variables.serializeObject(pStream);
     pStream << m_powerUsed;

@@ -12,6 +12,8 @@
 #include "network/smtpmailsender.h"
 #include "network/automatchmaker.h"
 
+#include "coreengine/fileserializable.h"
+
 #include "multiplayer/networkcommands.h"
 
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
@@ -24,7 +26,7 @@ using spMainServer = oxygine::intrusive_ptr<MainServer>;
 /**
  * @brief The MainServer class handling the server and it's data.
  */
-class MainServer final : public QObject, public oxygine::ref_counter
+class MainServer final : public QObject, public oxygine::ref_counter, public FileSerializable
 {
     Q_OBJECT
     struct AddressInfo
@@ -40,7 +42,7 @@ class MainServer final : public QObject, public oxygine::ref_counter
         QString secondaryAddress;
         quint16 port;
     };
-    struct SuspendedSlaveInfo
+    struct SuspendedSlaveInfo : public FileSerializable
     {
         bool relaunched{false};
         bool runningGame{false};
@@ -49,9 +51,46 @@ class MainServer final : public QObject, public oxygine::ref_counter
         QString savefile;
         NetworkGameData game;
         QElapsedTimer despawnTime;
+        /**
+         * @brief serializeObject
+         * @param stream
+         */
+        virtual void serializeObject(QDataStream& stream) const override;
+        /**
+         * @brief deserialize restores the object
+         * @param pStream
+         */
+        virtual void deserializeObject(QDataStream& stream) override;
+        /**
+         * @brief getVersion version of the file
+         * @return
+         */
+        virtual qint32 getVersion() const override
+        {
+            return 1;
+        }
     };
 
 public:
+    static const char* const SQL_TABLE_PLAYERS;
+    static const char* const SQL_USERNAME;
+    static const char* const SQL_PASSWORD;
+    static const char* const SQL_MAILADRESS;
+    static const char* const SQL_VALIDPASSWORD;
+    static const char* const SQL_LASTLOGIN;
+    static const char* const SQL_TABLE_PLAYERDATA;
+    static const char* const SQL_COID;
+    static const char* const SQL_GAMESMADE;
+    static const char* const SQL_GAMESLOST;
+    static const char* const SQL_GAMESWON;
+    static const char* const SQL_GAMESDRAW;
+    static const char* const SQL_METADATA;
+    static const char* const SQL_TABLE_MATCH_DATA;
+    static const char* const SQL_MMR;
+    static const char* const SQL_MINGAMES;
+    static const char* const SQL_MAXGAMES;
+    static const char* const SQL_RUNNINGGAMES;
+
     static MainServer* getInstance();
     static bool exists();
     static void initDatabase();
@@ -62,6 +101,35 @@ public:
     inline TCPServer* getGameServer()
     {
         return m_pGameServer.get();
+    }
+    /**
+     * @brief getDatabase
+     * @return
+     */
+    QSqlDatabase & getDatabase();
+    /**
+     * @brief sqlQueryFailed
+     * @param query
+     * @return
+     */
+    static bool sqlQueryFailed(const QSqlQuery & query);
+    /**
+     * @brief serializeObject
+     * @param stream
+     */
+    virtual void serializeObject(QDataStream& stream) const override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& stream) override;
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() const override
+    {
+        return 1;
     }
 signals:
     void sigRemoveGame(NetworkGame* pGame);
@@ -110,6 +178,12 @@ public slots:
      * @return
      */
     QString createRandomPassword() const;
+    /**
+     * @brief despawnServer
+     * @param savefile
+     */
+    void despawnServer(const QString & savefile);
+
 private slots:
     /**
      * @brief startRemoteGame used for ai training and to move data from one thread context to this one
@@ -138,7 +212,16 @@ private slots:
      * @brief periodicTasks
      */
     void periodicTasks();
+    /**
+     * @brief doDespawnServer
+     */
+    void doDespawnServer();
+
 private:
+    /**
+     * @brief despawnRunningSlaves
+     */
+    void despawnRunningSlaves();
     /**
      * @brief despawnSlave
      * @param socketID
@@ -153,6 +236,10 @@ private:
      * @brief startDatabase
      */
     void startDatabase();
+    /**
+     * @brief restoreServer
+     */
+    void restoreServer();
     /**
      * @brief cleanUpSuspendedGames
      * @param games
@@ -358,12 +445,6 @@ private:
      */
     static QSqlQuery getAccountInfo(QSqlDatabase & database, const QString & username, bool & success);
     /**
-     * @brief sqlQueryFailed
-     * @param query
-     * @return
-     */
-    static bool sqlQueryFailed(const QSqlQuery & query);
-    /**
      * @brief sendMail
      * @param message
      */
@@ -465,6 +546,8 @@ private:
      * @brief m_mailSenderThread
      */
     QThread m_mailSenderThread;
+    bool m_despawning{false};
+    QString m_despawningSavefile;
 };
 
 Q_DECLARE_INTERFACE(MainServer, "MainServer");

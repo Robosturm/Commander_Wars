@@ -5,7 +5,7 @@ CO_GRIMM.init = function(co, map)
 };
 CO_GRIMM.activateSuperpower = function(co, powerMode, map)
 {
-    CO_GRIMM.activatePower(co, powerMode, map);
+    CO_GRIMM.activatePower(co, map);
 };
 CO_GRIMM.getSuperPowerDescription = function()
 {

@@ -5,7 +5,7 @@ CO_FLAK.init = function(co, map)
 };
 CO_FLAK.activateSuperpower = function(co, powerMode, map)
 {
-	CO_FLAK.activatePower(co, powerMode, map);
+	CO_FLAK.activatePower(co, map);
 };
 CO_FLAK.getSuperPowerDescription = function()
 {

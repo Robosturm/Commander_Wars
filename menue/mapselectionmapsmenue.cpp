@@ -204,6 +204,7 @@ void MapSelectionMapsMenue::buttonBack()
             else
             {
                 CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
+                m_onEnterTimer.stop();
                 if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                 {
                     oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
@@ -262,6 +263,7 @@ void MapSelectionMapsMenue::buttonNext()
                         m_pMapSelectionView->getCurrentLoadedCampaign().get() != nullptr)
                     {
                         CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
+                        m_onEnterTimer.stop();
                         if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                         {
                             oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentLoadedCampaign(), true));
@@ -294,6 +296,7 @@ void MapSelectionMapsMenue::buttonNext()
 void MapSelectionMapsMenue::exitMenu()
 {
     CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     spMainwindow window = spMainwindow::create("ui/menu/mainsinglemenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -397,9 +400,11 @@ void MapSelectionMapsMenue::startGame()
     pMap->initPlayersAndSelectCOs();
     pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
     pMap->getGameScript()->gameStart();
-    pMap->updateSprites(-1, -1, false, false, true);
+    bool applyRulesPalette = pMap->getGameRules()->getMapPalette() > 0;
+    pMap->updateSprites(-1, -1, false, false, applyRulesPalette);
     // start game
     CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();

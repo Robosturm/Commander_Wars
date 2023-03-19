@@ -22,7 +22,7 @@ public:
     ~TxTask() = default;
     quint64 getSocketID() const;
     void setSocketID(const quint64 &SocketID);
-
+    void close();
 public slots:
     /**
      * @brief send sends the Object via TCP

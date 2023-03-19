@@ -280,9 +280,16 @@ namespace NetworkCommands
      * @brief SLAVEINFODESPAWNING
      */
     const char* const SLAVEMULTIPLAYERGAMERESULT = "SLAVEMULTIPLAYERGAMERESULT";
-
     /**
      * @brief DESPAWNSLAVE
      */
     const char* const DESPAWNSLAVE = "DESPAWNSLAVE";
+    /**
+     * @brief SLAVEFORCEDESPAWN
+     */
+    const char* const SLAVEFORCEDESPAWN = "SLAVEFORCEDESPAWN";
+    /**
+     * @brief ONLINEINFO
+     */
+    const char* const ONLINEINFO = "ONLINEINFO";
 }

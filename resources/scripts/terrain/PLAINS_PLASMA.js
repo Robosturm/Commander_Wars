@@ -10,7 +10,10 @@ var Constructor = function()
     };
     this.init = function (terrain)
     {
-        terrain.setPalette(PLAINS_PLASMA.getDefaultPalette());
+        if (terrain.getPalette() === "")
+        {
+            terrain.setPalette(PLAINS_PLASMA.getDefaultPalette());
+        }
         terrain.setTerrainName(PLAINS_PLASMA.getName());
     };
     this.getName = function()
@@ -21,19 +24,23 @@ var Constructor = function()
     {
         return 1;
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map, currentPalette)
     {
         if (currentTerrainID === "SNOW")
         {
-            terrain.loadBaseTerrain("SNOW");
+            terrain.loadBaseTerrain("SNOW", currentPalette);
         }
         else if (currentTerrainID === "DESERT")
         {
-            terrain.loadBaseTerrain("DESERT");
+            terrain.loadBaseTerrain("DESERT", currentPalette);
         }
         else if (currentTerrainID === "WASTE")
         {
-            terrain.loadBaseTerrain("DESERT");
+            terrain.loadBaseTerrain("WASTE", currentPalette);
+        }
+        else if (currentTerrainID === "PLAINS")
+        {
+            terrain.loadBaseTerrain("PLAINS", currentPalette);
         }
         else
         {

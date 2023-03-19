@@ -1423,7 +1423,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
                 Interpreter* pInterpreter = Interpreter::getInstance();
                 QString function1 = "useTerrainAsBaseTerrain";
                 QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false, true, palette, true);
+                m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false, true, palette, true, false);
                 placed = true;
             }
             else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())
@@ -2114,6 +2114,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
 void EditorMenue::exitEditor()
 {    
     CONSOLE_PRINT("Leaving Editor Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     auto window = spMainwindow::create("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();

@@ -5,7 +5,7 @@ CO_SMITAN.init = function(co, map)
 };
 CO_SMITAN.activateSuperpower = function(co, powerMode, map)
 {
-	CO_SMITAN.activatePower(co, powerMode, map);
+	CO_SMITAN.activatePower(co, map);
 };
 CO_SMITAN.getSuperPowerDescription = function()
 {

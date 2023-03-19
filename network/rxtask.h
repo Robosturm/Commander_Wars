@@ -24,6 +24,7 @@ public:
     }
     quint64 getSocketID() const;
     void setSocketID(const quint64 &SocketID);
+    void close();
 public slots:
     void recieveData();
 private:

@@ -22,7 +22,7 @@ var Constructor = function()
     };
     this.getMovementType = function()
     {
-        return "MOVE_BOAT";
+        return "MOVE_SMALL_BOAT";
     };
     this.getBaseCost = function()
     {

@@ -110,6 +110,13 @@ public:
      * @brief startAiPipeGame
      */
     void startAiPipeGame();
+    bool getIndespawningMode() const;
+    /**
+     * @brief doDespawnSlave
+     * @return
+     */
+    bool doDespawnSlave();
+
 signals:
     void sigGameStarted();
     void sigSyncFinished();
@@ -256,6 +263,14 @@ public slots:
      * @param objData
      */
     void sendUsername(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief sendOnlineInfo
+     */
+    void sendOnlineInfo();
+    /**
+     * @brief receivedOnlineInfo
+     */
+    void receivedOnlineInfo(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief sendLoginData
      * @param socketID
@@ -496,6 +511,8 @@ protected:
     spNetworkInterface m_pNetworkInterface;
     bool m_Multiplayer{false};
     QElapsedTimer m_slaveDespawnElapseTimer;
+    bool m_despawning{false};
+    bool m_indespawningMode{false};
     QTimer m_slaveDespawnTimer{this};
     QTimer m_UpdateTimer{this};
     QTimer m_exitDelayedTimer{this};

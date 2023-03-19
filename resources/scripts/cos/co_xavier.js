@@ -2,8 +2,8 @@ var Constructor = function()
 {
     this.init = function(co, map)
     {
-        co.setPowerStars(4);
-        co.setSuperpowerStars(3);
+        co.setPowerStars(3);
+        co.setSuperpowerStars(4);
     };
 
     this.getCOStyles = function()
@@ -137,6 +137,11 @@ var Constructor = function()
     {
         return "GS";
     };
+    this.superpowerBonus = 60;
+    this.firepowerBonus = 20;
+    this.luckDamage = 40;
+    this.minLuckHp = 5;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
@@ -161,13 +166,13 @@ var Constructor = function()
                 {
                     count++;
                 }
-                return 10 + 60 * count;
+                return CO_XAVIER.firepowerBonus + CO_XAVIER.superpowerBonus * count;
             case GameEnums.PowerMode_Power:
-                return 10;
+                return CO_XAVIER.firepowerBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return CO_XAVIER.firepowerBonus;
                 }
                 break;
         }
@@ -190,14 +195,12 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) || co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 20;
+            return 10;
         }
         return 0;
     };
-    this.minLuckHp = 5;
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
          var hpRounded = unit.getHpRounded();
@@ -213,9 +216,9 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 if (hpRounded <= CO_XAVIER.minLuckHp)
                 {
-                    return 20 + hpRounded / 2;
+                    return CO_XAVIER.luckDamage + hpRounded / 2;
                 }
-                return 20;
+                return CO_XAVIER.luckDamage;
             default:
                 if (hpRounded <= CO_XAVIER.minLuckHp)
                 {
@@ -240,9 +243,9 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 if (hpRounded <= CO_XAVIER.minLuckHp)
                 {
-                    return -20 + -hpRounded;
+                    return -CO_XAVIER.luckDamage + -hpRounded;
                 }
-                return -20;
+                return -CO_XAVIER.luckDamage;
             default:
                 if (hpRounded <= CO_XAVIER.minLuckHp)
                 {
@@ -278,13 +281,15 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nGlobal Effect: \nUnits with %0 HP or less deal maximum luck damage.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits have increased firepower.");
-        text = replaceTextArgs(text, [CO_XAVIER.minLuckHp]);
+                   qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %1%.");
+        text = replaceTextArgs(text, [CO_XAVIER.minLuckHp, CO_XAVIER.firepowerBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Attacks inflict more damage than expected.");
+        var text =  qsTr("Increases luck damage to %0%.");
+        text = replaceTextArgs(text, [CO_XAVIER.luckDamage]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -292,7 +297,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Units gain firepower for each own unit nearby the attacked unit.");
+         var text =  qsTr("Units gain %0% firepower for each own unit nearby the attacked unit.");
+        text = replaceTextArgs(text, [CO_XAVIER.superpowerBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

@@ -196,14 +196,14 @@ endif()
 ###################################################################################
 add_definitions(
     -DVERSION_MAJOR=0
-    -DVERSION_MINOR=29
-    -DVERSION_REVISION=3
-    -DVERSION_SUFFIX="dev"
+    -DVERSION_MINOR=30
+    -DVERSION_REVISION=2
+    -DVERSION_SUFFIX="main"
     -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     )
 
-set(COW_ANDROID_VERSION_NAME "0.29.3-dev")
-set(COW_ANDROID_VERSION_CODE "33")
+set(COW_ANDROID_VERSION_NAME "0.30.2-main")
+set(COW_ANDROID_VERSION_CODE "35")
 
 ###################################################################################
 # Set up some compiler and linking options
@@ -1104,8 +1104,6 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION     "platforms"     OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_SQL_LIBS}        DESTINATION     "sqldrivers"    OPTIONAL)
     install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION     "/"             OPTIONAL)
-    # workaround for qt 6.4.x
-    install(FILES "C:/Windows/System32/mfplat.dll"               DESTINATION    "."             RENAME "mfplat.dll.dll")
 
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)

@@ -103,6 +103,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Naval;
     };
+    this.buildedUnit = function(unit, player, map)
+    {
+        unit.setHidden(true);
+    };
     this.getCOSpecificUnit = function(building)
     {
         return true;

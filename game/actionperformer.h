@@ -42,9 +42,14 @@ public:
      * @param counter
      */
     void setSyncCounter(qint64 counter);
-
+    /**
+     * @brief setActionRunning
+     * @param newActionRunning
+     */
+    void setActionRunning(bool newActionRunning);
     bool getExit() const;
     void setExit(bool newExit);
+
 
 signals:
     void sigActionPerformed();

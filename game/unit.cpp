@@ -22,6 +22,8 @@
 
 #include "menue/editormenue.h"
 
+static constexpr float FLOAT_PRECISION = 100.0f;
+
 Unit::Unit(GameMap* pMap)
     : m_pMap(pMap)
 {
@@ -846,7 +848,7 @@ qint32 Unit::getCoUnitValue()
 
 qint32 Unit::getUnitValue()
 {
-    return static_cast<qint32>(getCosts()  * m_hp / Unit::MAX_UNIT_HP);
+    return static_cast<qint32>(getCosts() * m_hp / Unit::MAX_UNIT_HP);
 }
 
 bool Unit::canBeRepaired(QPoint position)
@@ -2314,12 +2316,11 @@ qint32 Unit::getHpRounded() const
 
 void Unit::setHp(const float &value)
 {
-    m_hp = value;
+    m_hp = GlobalUtils::roundTo(value, FLOAT_PRECISION);
     if (m_hp > MAX_UNIT_HP)
     {
         m_hp = MAX_UNIT_HP;
     }
-
     if (m_pMap != nullptr)
     {
         updateIcons(m_pMap->getCurrentViewPlayer());
@@ -2328,7 +2329,7 @@ void Unit::setHp(const float &value)
 
 void Unit::setVirtualHpValue(const float &value)
 {
-    m_virtualHp = value;
+    m_virtualHp = GlobalUtils::roundTo(value, FLOAT_PRECISION);
 }
 
 
@@ -3364,7 +3365,7 @@ void Unit::modifyUnit(qint32 hpChange, qint32 ammo1Change, qint32 ammo2Change, q
     setHp(getHp() + hpChange);
     if (m_hp <= 0.0f)
     {
-        setHp(0.0001f);
+        setHp(1.0f / FLOAT_PRECISION);
     }
     setAmmo1(getAmmo1() + ammo1Change);
     setAmmo2(getAmmo2() + ammo2Change);
@@ -3584,7 +3585,14 @@ void Unit::serializeObject(QDataStream& pStream, bool forHash) const
 {
     pStream << getVersion();
     pStream << m_UnitID;
-    pStream << m_hp;
+    if (forHash)
+    {
+        pStream << GlobalUtils::roundToInt(m_hp, FLOAT_PRECISION);
+    }
+    else
+    {
+        pStream << m_hp;
+    }
     pStream << m_ammo1;
     pStream << m_ammo2;
     pStream << m_fuel;
@@ -3992,9 +4000,30 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             }
         }
     }
-    setAmmo1(bufAmmo1);
-    setAmmo2(bufAmmo2);
-    setFuel(bufFuel);
+    if (bufAmmo1 < 0 && !savegame)
+    {
+        setAmmo1(getMaxAmmo1());
+    }
+    else
+    {
+        setAmmo1(bufAmmo1);
+    }
+    if (bufAmmo2 < 0 && !savegame)
+    {
+        setAmmo2(getMaxAmmo2());
+    }
+    else
+    {
+        setAmmo2(bufAmmo2);
+    }
+    if (bufFuel < 0 && !savegame)
+    {
+        setFuel(getMaxFuel());
+    }
+    else
+    {
+        setFuel(bufFuel);
+    }
     if (version > 19)
     {
         qint32 size;

@@ -1,7 +1,3 @@
-WEAPON_HEAVY_HOVERCRAFT_MG.getEnviromentDamage = function(enviromentId)
-{
-    WEAPON_HEAVY_HOVERCRAFT_MG.damageTable[idx][1] = 1;
-};
 var idx = 0;
 idx = getIndexOf1(WEAPON_HEAVY_HOVERCRAFT_MG.damageTable, "INFANTRY");
 WEAPON_HEAVY_HOVERCRAFT_MG.damageTable[idx][1] = 105;

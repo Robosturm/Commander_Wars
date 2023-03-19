@@ -5,7 +5,7 @@ CO_KOAL.init = function(co, map)
 };
 CO_KOAL.activateSuperpower = function(co, powerMode, map)
 {
-	CO_KOAL.activatePower(co, powerMode, map);
+	CO_KOAL.activatePower(co, map);
 };
 CO_KOAL.getSuperPowerDescription = function()
 {

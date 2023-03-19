@@ -4,7 +4,6 @@
 
 #include "menue/replaymenu.h"
 #include "menue/victorymenue.h"
-#include "menue/movementplanner.h"
 
 #include "game/gameanimation/gameanimationfactory.h"
 
@@ -56,28 +55,6 @@ ReplayMenu::ReplayMenu(QString filename)
         m_HumanInput->init(this);
         m_gameStarted = true;
         CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
-    }
-}
-
-void ReplayMenu::onEnter()
-{
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QString object = "Init";
-    QString func = "replayMenu";
-    if (pInterpreter->exists(object, func))
-    {
-        CONSOLE_PRINT("Executing:" + object + "." + func, GameConsole::eDEBUG);
-        QJSValueList args({pInterpreter->newQObject(this)});
-        pInterpreter->doFunction(object, func, args);
-    }
-    
-    if (m_pMap.get() != nullptr &&
-        m_pMap->getGameScript() != nullptr)
-    {
-        m_pMap->getGameScript()->onGameLoaded(this);
-    }
-    if (m_valid)
-    {
         emit getActionPerformer().sigActionPerformed();
     }
 }
@@ -85,6 +62,10 @@ void ReplayMenu::onEnter()
 ReplayMenu::~ReplayMenu()
 {
     m_storedAnimationSettings.restoreAnimationSettings();
+}
+
+void ReplayMenu::onEnter()
+{
 }
 
 void ReplayMenu::showRecordInvalid()
@@ -112,6 +93,7 @@ void ReplayMenu::exitReplay()
     CONSOLE_PRINT("Restoring interpreter after record replay", GameConsole::eDEBUG);
     Interpreter::reloadInterpreter(Interpreter::getInstance()->getRuntimeData());
     CONSOLE_PRINT("Leaving Replay Menue", GameConsole::eDEBUG);
+    m_onEnterTimer.stop();
     auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface, true);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
@@ -136,9 +118,11 @@ void ReplayMenu::nextReplayAction()
         }
         m_progressBar->setScrollvalue(progress);
         if (pAction.get() != nullptr)
-        {
+        {            
             --m_replayCounter;
             CONSOLE_PRINT("Performing next replay action", GameConsole::eDEBUG);
+            pAction->setSyncCounter(getActionPerformer().getSyncCounter() + 1);
+            getActionPerformer().setActionRunning(false);
             getActionPerformer().performAction(pAction);
         }
         else
@@ -330,7 +314,7 @@ void ReplayMenu::startSeeking()
     m_replayCounter = 0;
 
     m_storedSeekingAnimationSettings.startSeeking();
-    if (GameAnimationFactory::getAnimationCount() > 0)
+    while (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
     }

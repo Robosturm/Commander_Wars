@@ -89,10 +89,10 @@ void TCPServer::disconnectClient(quint64 socketID)
     {
         CONSOLE_PRINT("Client " + QString::number(socketID) + " disconnected.", GameConsole::eLogLevels::eDEBUG);
         auto client = iter.value();
-        emit client->sigDisconnected(client->getSocketID());
         client->disconnectTCP();
-        m_pClients.remove(socketID);
+        emit client->sigDisconnected(client->getSocketID());
         emit sigDisconnected(socketID);
+        m_pClients.remove(socketID);
     }
 }
 

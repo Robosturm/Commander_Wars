@@ -5,7 +5,7 @@ CO_MEIYO.init = function(co, map)
 };
 CO_MEIYO.activateSuperpower = function(co, powerMode, map)
 {
-	CO_MEIYO.activatePower(co, powerMode, map);
+	CO_MEIYO.activatePower(co, map);
 };
 CO_MEIYO.getSuperPowerDescription = function()
 {

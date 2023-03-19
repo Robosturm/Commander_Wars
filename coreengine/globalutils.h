@@ -58,6 +58,11 @@ public slots:
     static qint32 roundUp(float value);
     static qint32 roundUpInt(qint32 numToRound, qint32 multiple);
     static qint32 roundDown(float value);
+    static float roundTo(float value, float precision);
+    static double roundTo(double value, double precision);
+    static qint32 roundToInt(float value, float precision);
+    static qint32 roundToInt(double value, float precision);
+
     static bool isEven(qint32 value);
     /**
      * @brief getCircle

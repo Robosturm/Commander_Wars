@@ -4267,7 +4267,6 @@
         <file>resources/images/terrain/snow/snow+N.png</file>
         <file>resources/images/terrain/snow/snow+S.png</file>
         <file>resources/images/terrain/snow/snow+W.png</file>
-        <file>resources/images/terrain/snow/snow.png</file>
         <file>resources/images/units/air/black_bomb+mask.png</file>
         <file>resources/images/units/air/black_bomb+walk+mask.png</file>
         <file>resources/images/units/air/bomber+mask.png</file>
@@ -4974,5 +4973,14 @@
         <file>resources/images/terrain/snow/snow+5.png</file>
         <file>resources/images/terrain/snow/snow+6.png</file>
         <file>resources/images/terrain/snow/snow+7.png</file>
+        <file>resources/images/terrain/snow/snow+0.png</file>
+        <file>resources/images/co/bh/co_sturm+alt2+mini.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_clear+sfw.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_desert+sfw.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_snow+sfw.png</file>
+        <file>resources/images/terrain/biome_palettes/palette_waste+sfw.png</file>
+        <file>resources/images/battleanimations/frigate/frigate+fire+mask.png</file>
+        <file>resources/images/game/offline.png</file>
+        <file>resources/images/game/online.png</file>
     </qresource>
 </RCC>
