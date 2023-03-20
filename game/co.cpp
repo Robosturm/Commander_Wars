@@ -19,7 +19,7 @@
 
 #include "spritingsupport/spritecreator.h"
 
-static constexpr double DOUBLE_PRECISION = 10000.0;
+static constexpr double DOUBLE_PRECISION = 100000000.0;
 
 CO::CO(QString coID, Player* owner, GameMap* pMap)
     : m_pOwner(owner),
