@@ -457,14 +457,8 @@ var TERRAIN =
                     [qsTr("Desert AW 4"),   "palette_desert+dor",   "palette_desert+dor",   "palette_desert",       "palette_snow+dor",     "palette_waste+dor"],
                     [qsTr("Snow AW 4"),     "palette_snow+dor",     "palette_snow+dor",     "palette_desert+dor",   "palette_snow",         "palette_waste+dor"],
                     [qsTr("Waste AW 4"),    "palette_waste+dor",    "palette_waste+dor",    "palette_desert+dor",   "palette_snow+dor",     "palette_waste"],
-                    [qsTr("Clear SFW"),    "palette_clear+sfw",    "palette_clear+sfw",    "palette_desert+sfw",   "palette_snow+sfw",     "palette_waste+sfw"],
-                    [qsTr("Desert SFW"),   "palette_desert+sfw",   "palette_desert+sfw",   "palette_desert+wg",       "palette_snow+sfw",     "palette_waste+sfw"],
-                    [qsTr("Snow SFW"),     "palette_snow+sfw",     "palette_snow+sfw",     "palette_desert+sfw",   "palette_snow+wg",         "palette_waste+sfw"],
-                    [qsTr("Waste SFW"),    "palette_waste+sfw",    "palette_waste+sfw",    "palette_desert+sfw",   "palette_snow+sfw",     "palette_waste+wg"],
-                    [qsTr("Wargroove Clear"),     "palette_clear+wg",     "palette_clear+wg",     "palette_desert+wg",    "palette_snow+wg",      "palette_waste+wg"],
-                    [qsTr("Wargroove Desert"),     "palette_desert+wg",     "palette_desert+wg",     "palette_desert+sfw",    "palette_snow+wg",      "palette_waste+wg"],
-                    [qsTr("Wargroove Snow"),     "palette_snow+wg",     "palette_snow+wg",     "palette_desert+wg",    "palette_snow+sfw",      "palette_waste+wg"],
-                    [qsTr("Wargroove Waste"),     "palette_waste+wg",     "palette_waste+wg",     "palette_desert+wg",    "palette_snow+wg",      "palette_waste+sfw"],],
+                    [qsTr("SFW"),    "palette_clear+sfw",    "palette_clear+sfw",    "palette_desert+sfw",   "palette_snow+sfw",     "palette_waste+sfw"],
+                    [qsTr("Wargroove"),     "palette_clear+wg",     "palette_clear+wg",     "palette_desert+wg",    "palette_snow+wg",      "palette_waste+wg"],],
     getDefaultPalette : function(terrain, map)
     {
         return "";
