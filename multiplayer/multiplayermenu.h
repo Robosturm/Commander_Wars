@@ -59,6 +59,11 @@ public:
      */
     virtual void showRuleSelection() override;
     virtual void showPlayerSelection(bool relaunchedLobby = false) override;
+    /**
+     * @brief doSaveLobbyState
+     * @param filename
+     */
+    QJsonDocument doSaveLobbyState(const QString & saveFile, const QString & command);
 signals:
     void sigConnected();
     void sigHostGameLaunched();
@@ -345,5 +350,7 @@ private:
     QTimer m_slaveDespawnTimer{this};
     bool m_despawning{false};
 };
+
+Q_DECLARE_INTERFACE(Multiplayermenu, "Multiplayermenu");
 
 #endif // MULTIPLAYERMENU_H

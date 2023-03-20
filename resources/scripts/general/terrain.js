@@ -465,7 +465,7 @@ var TERRAIN =
     },
 
 
-    getPaletteNamesArray : function(index)
+    getPaletteNamesArray : function()
     {
         var names = [];
         var length = TERRAIN.paletteTable.length;
@@ -482,11 +482,25 @@ var TERRAIN =
     },
     getPaletteNames : function(index)
     {
-        return TERRAIN.paletteTable[index][0];
+        if (index < TERRAIN.paletteTable.length)
+        {
+            return TERRAIN.paletteTable[index][0];
+        }
+        else
+        {
+            return TERRAIN.paletteTable[0][0];
+        }
     },
     getPaletteId : function(index, group)
     {
-        return TERRAIN.paletteTable[index][1 + group];
+        if (index < TERRAIN.paletteTable.length)
+        {
+            return TERRAIN.paletteTable[index][1 + group];
+        }
+        else
+        {
+            return TERRAIN.paletteTable[0][1 + group];
+        }
     },
     getPaletteName : function(id)
     {
@@ -502,6 +516,13 @@ var TERRAIN =
     },
     getPaletteNameFromIndex : function(index)
     {
-        return TERRAIN.paletteTable[index][0];
+        if (index < TERRAIN.paletteTable.length)
+        {
+            return TERRAIN.paletteTable[index][0];
+        }
+        else
+        {
+            return TERRAIN.paletteTable[0][0];
+        }
     },
 };

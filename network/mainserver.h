@@ -90,6 +90,7 @@ public:
     static const char* const SQL_MINGAMES;
     static const char* const SQL_MAXGAMES;
     static const char* const SQL_RUNNINGGAMES;
+    static const char* const SQL_MATCHHISTORY;
 
     static MainServer* getInstance();
     static bool exists();
@@ -129,13 +130,25 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 1;
+        return 2;
     }
+    /**
+     * @brief onSlaveInfoDespawning
+     * @param socketID
+     * @param objData
+     */
+    void onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData);
 signals:
     void sigRemoveGame(NetworkGame* pGame);
     void sigStartRemoteGame(QString initScript, QString id);
     void sigExecuteServerScript();
 public slots:
+    /**
+     * @brief getAutoMatchMaker
+     * @param matchMaker
+     * @return
+     */
+    AutoMatchMaker* getAutoMatchMaker(const QString & matchMaker);
     /**
      * @brief exit
      */
@@ -309,12 +322,6 @@ private:
      * @param stream
      */
     void onSlaveReady(quint64 socketID, const QJsonObject & objData);
-    /**
-     * @brief onSlaveInfoDespawning
-     * @param socketID
-     * @param objData
-     */
-    void onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief onSlaveInfoGameResult
      * @param socketID
