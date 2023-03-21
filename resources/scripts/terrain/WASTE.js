@@ -26,15 +26,8 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, map)
     {
-		var random = globals.randInt(0, 140);
-        if (random >= 8)
-        {
-            terrain.loadBaseSprite("waste+0");
-        }
-        else
-        {
-            terrain.loadBaseSprite("waste+" + random.toString());
-        }
+        var random = globals.randInt(0, 21);
+        terrain.loadBaseSprite("waste+" + random.toString());
     };
     this.getBonusVision = function(unit, terrain)
     {
@@ -145,7 +138,21 @@ var Constructor = function()
                 "waste+4",
                 "waste+5",
                 "waste+6",
-                "waste+7"];
+                "waste+7",
+                "waste+8",
+                "waste+9",
+                "waste+10",
+                "waste+11",
+                "waste+12",
+                "waste+13",
+                "waste+14",
+                "waste+15",
+                "waste+16",
+                "waste+17",
+                "waste+18",
+                "waste+19",
+                "waste+20",
+                "waste+21"];
     };
     this.getOverlayTerrainSprites = function(map)
     {

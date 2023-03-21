@@ -27,15 +27,8 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
-        var random = globals.randInt(0, 140);
-        if (random >= 8)
-        {
-            terrain.loadBaseSprite("desert+0");
-        }
-        else
-        {
-            terrain.loadBaseSprite("desert+" + random.toString());
-        }
+        var random = globals.randInt(0, 21);
+        terrain.loadBaseSprite("desert+" + random.toString());
     };
     this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,
                                            defender, defPosX, defPosY, isDefender, action, luckMode)
@@ -118,7 +111,21 @@ var Constructor = function()
                 "desert+4",
                 "desert+5",
                 "desert+6",
-                "desert+7"];
+                "desert+7",
+                "desert+8",
+                "desert+9",
+                "desert+10",
+                "desert+11",
+                "desert+12",
+                "desert+13",
+                "desert+14",
+                "desert+15",
+                "desert+16",
+                "desert+17",
+                "desert+18",
+                "desert+19",
+                "desert+20",
+                "desert+21"];
     };
 
     this.getOverlayTerrainSprites = function(map)
