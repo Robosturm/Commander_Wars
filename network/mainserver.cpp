@@ -620,6 +620,10 @@ void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData
         {
             internGame->game->updatePlayers(objData);
         }
+        if (objData.contains(JsonKeys::JSONKEY_ONLINEINFO))
+        {
+            internGame->game->updateOnlineInfo(objData);
+        }
         m_updateGameData = true;
     }
     else

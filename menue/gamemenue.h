@@ -490,6 +490,8 @@ protected:
      */
     void sendGameStartedToServer();
     void onResyncGame(QDataStream & stream);
+    QJsonArray getOnlineInfo();
+
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;

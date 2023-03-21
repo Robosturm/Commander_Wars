@@ -72,6 +72,11 @@ public:
      * @brief getUserNames
      */
     QJsonArray getUserNames();
+    /**
+     * @brief PlayerSelection::getOnlineInfo
+     * @return
+     */
+    QJsonArray getOnlineInfo();
 signals :
     /**
          * @brief sigDisconnect emitted when we need to leave the game cause we

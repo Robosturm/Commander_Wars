@@ -3,6 +3,8 @@
 #include "game/gamerecording/gamemapimagesaver.h"
 #include "game/gamemap.h"
 
+#include "objects/minimap.h"
+
 #include "menue/basegamemenu.h"
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
@@ -41,6 +43,39 @@ void GamemapImageSaver::saveMapAsImage(QString filename, BaseGamemenu& menu)
         menu.getCursor()->setVisible(true);
         auto img = buffer.toImage();
         img.save(filename);
+        buffer.release();
+        oxygine::Stage::getStage()->setSize(oldSize);
+    }
+}
+
+void GamemapImageSaver::saveMapAsImage(Minimap* pMinimap, QImage & img)
+{
+    if (pMinimap != nullptr)
+    {
+        auto oldSize = oxygine::Stage::getStage()->getSize();
+        QSize size(pMinimap->getWidth(), pMinimap->getHeight());
+        QOpenGLFramebufferObject buffer(size);
+        buffer.bind();
+        QColor clearColor(0, 0, 255, 255);
+        QRect viewport(0, 0, size.width(), size.height());
+        auto viewProjection = oxygine::Stage::getViewProjectionMatrix(viewport);
+        oxygine::spVideoDriver driver = oxygine::VideoDriver::instance;
+        driver->setViewport(viewport);
+        driver->clear(clearColor);
+        oxygine::STDRenderer::instance->setViewProj(viewProjection);
+        oxygine::Stage::getStage()->setSize(viewport.width(), viewport.height());
+        oxygine::RenderState rs;
+        rs.clip = QRect(0, 0, viewport.width(), viewport.height());
+        auto orgScale = pMinimap->getScale();
+        auto orgPos = pMinimap->getPosition();
+        pMinimap->setPosition(0, 0);
+        pMinimap->setScale(1.0f);
+        pMinimap->render(rs);
+        oxygine::STDRenderer::getCurrent()->flush();
+        oxygine::Material::null->apply();
+        pMinimap->setPosition(orgPos);
+        pMinimap->setScale(orgScale);
+        img = buffer.toImage();
         buffer.release();
         oxygine::Stage::getStage()->setSize(oldSize);
     }

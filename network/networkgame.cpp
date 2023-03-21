@@ -115,6 +115,18 @@ void NetworkGame::updatePlayers(const QJsonObject & objData)
     m_data.setPlayerNames(playerNames);
 }
 
+void NetworkGame::updateOnlineInfo(const QJsonObject & objData)
+{
+    QVector<bool> onlineInfos;
+    QJsonArray jsonOnlineInfos = objData.value(JsonKeys::JSONKEY_ONLINEINFO).toArray();
+    for (const auto & data : jsonOnlineInfos)
+    {
+        onlineInfos.append(data.toBool());
+    }
+    m_data.setOnlineData(onlineInfos);
+}
+
+
 const QString & NetworkGame::getId() const
 {
     return m_id;

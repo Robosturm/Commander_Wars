@@ -32,6 +32,7 @@ class TCPClient;
 using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
 class AiProcessPipe;
 using spAiProcessPipe = oxygine::intrusive_ptr<AiProcessPipe>;
+class Minimap;
 
 class Mainapp final : public oxygine::GameWindow
 {
@@ -280,6 +281,12 @@ public slots:
      */
     void createLineEdit();
     void doMapshot(BaseGamemenu* pMenu);
+    /**
+     * @brief saveMapAsImage
+     * @param pMinimap
+     * @param img
+     */
+    void saveMapAsImage(Minimap* pMinimap, QImage & img);
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -301,6 +308,7 @@ signals:
     void sigNextStartUpStep(Mainapp::StartupPhase step);
     void sigCreateLineEdit();
     void sigDoMapshot(BaseGamemenu* pMenu);
+    void sigSaveMapAsImage(Minimap* pMinimap, QImage & img);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;

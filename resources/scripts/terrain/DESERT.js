@@ -27,8 +27,15 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
-        var random = globals.randInt(0, 21);
-        terrain.loadBaseSprite("desert+" + random.toString());
+        var random = globals.randInt(0, 33);
+        if (random < 12)
+        {
+            terrain.loadBaseSprite("plains+" + random.toString());
+        }
+        else
+        {
+            terrain.loadBaseSprite("plains+" + (random - 12).toString());
+        }
     };
     this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,
                                            defender, defPosX, defPosY, isDefender, action, luckMode)

@@ -75,6 +75,11 @@ public:
      */
     void updatePlayers(const QJsonObject & objData);
     /**
+     * @brief updateOnlineInfo
+     * @param objData
+     */
+    void updateOnlineInfo(const QJsonObject & objData);
+    /**
      * @brief startCloseTimer
      */
     void startCloseTimer();
