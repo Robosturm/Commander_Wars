@@ -68,7 +68,6 @@ void Minimap::updateMinimap(const GameMap* pMap, bool useVision)
         }
         if (pPlayer != nullptr)
         {
-            Mainapp::getInstance()->pauseRendering();
             GameManager* pGameManager = GameManager::getInstance();
             for (qint32 x = 0; x < width; x++)
             {
@@ -246,7 +245,6 @@ void Minimap::updateMinimap(const GameMap* pMap, bool useVision)
                 }
             }
         }
-        Mainapp::getInstance()->continueRendering();
     }
     else
     {

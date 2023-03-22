@@ -1437,9 +1437,23 @@ void PlayerSelection::sendOpenPlayerCount()
         data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
         data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, getOpenPlayerCount());
         data.insert(JsonKeys::JSONKEY_USERNAMES, getUserNames());
+        data.insert(JsonKeys::JSONKEY_ONLINEINFO, getOnlineInfo());
         QJsonDocument doc(data);
         emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
+}
+
+QJsonArray PlayerSelection::getOnlineInfo()
+{
+    QJsonArray onlineInfo;
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    {
+        auto* pPlayer = m_pMap->getPlayer(i);
+        bool isOnline = pPlayer->getSocketId() != 0;
+        pPlayer->setIsOnline(isOnline);
+        onlineInfo.append(isOnline);
+    }
+    return onlineInfo;
 }
 
 QJsonArray PlayerSelection::getUserNames()

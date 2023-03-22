@@ -4982,5 +4982,48 @@
         <file>resources/images/battleanimations/frigate/frigate+fire+mask.png</file>
         <file>resources/images/game/offline.png</file>
         <file>resources/images/game/online.png</file>
+        <file>resources/images/terrain/desert/desert+10.png</file>
+        <file>resources/images/terrain/desert/desert+11.png</file>
+        <file>resources/images/terrain/desert/desert+12.png</file>
+        <file>resources/images/terrain/desert/desert+13.png</file>
+        <file>resources/images/terrain/desert/desert+14.png</file>
+        <file>resources/images/terrain/desert/desert+15.png</file>
+        <file>resources/images/terrain/desert/desert+16.png</file>
+        <file>resources/images/terrain/desert/desert+17.png</file>
+        <file>resources/images/terrain/desert/desert+18.png</file>
+        <file>resources/images/terrain/desert/desert+19.png</file>
+        <file>resources/images/terrain/desert/desert+20.png</file>
+        <file>resources/images/terrain/desert/desert+21.png</file>
+        <file>resources/images/terrain/desert/desert+8.png</file>
+        <file>resources/images/terrain/desert/desert+9.png</file>
+        <file>resources/images/terrain/plains/plains+21.png</file>
+        <file>resources/images/terrain/snow/snow+10.png</file>
+        <file>resources/images/terrain/snow/snow+11.png</file>
+        <file>resources/images/terrain/snow/snow+12.png</file>
+        <file>resources/images/terrain/snow/snow+13.png</file>
+        <file>resources/images/terrain/snow/snow+14.png</file>
+        <file>resources/images/terrain/snow/snow+15.png</file>
+        <file>resources/images/terrain/snow/snow+16.png</file>
+        <file>resources/images/terrain/snow/snow+17.png</file>
+        <file>resources/images/terrain/snow/snow+18.png</file>
+        <file>resources/images/terrain/snow/snow+19.png</file>
+        <file>resources/images/terrain/snow/snow+20.png</file>
+        <file>resources/images/terrain/snow/snow+21.png</file>
+        <file>resources/images/terrain/snow/snow+8.png</file>
+        <file>resources/images/terrain/snow/snow+9.png</file>
+        <file>resources/images/terrain/waste/waste+10.png</file>
+        <file>resources/images/terrain/waste/waste+11.png</file>
+        <file>resources/images/terrain/waste/waste+12.png</file>
+        <file>resources/images/terrain/waste/waste+13.png</file>
+        <file>resources/images/terrain/waste/waste+14.png</file>
+        <file>resources/images/terrain/waste/waste+15.png</file>
+        <file>resources/images/terrain/waste/waste+16.png</file>
+        <file>resources/images/terrain/waste/waste+17.png</file>
+        <file>resources/images/terrain/waste/waste+18.png</file>
+        <file>resources/images/terrain/waste/waste+19.png</file>
+        <file>resources/images/terrain/waste/waste+20.png</file>
+        <file>resources/images/terrain/waste/waste+21.png</file>
+        <file>resources/images/terrain/waste/waste+8.png</file>
+        <file>resources/images/terrain/waste/waste+9.png</file>
     </qresource>
 </RCC>

@@ -465,19 +465,24 @@ void GameMenue::sendOnlineInfo()
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        QJsonArray onlineInfo;
-        for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
-        {
-            auto* pPlayer = m_pMap->getPlayer(i);
-            bool isOnline = pPlayer->getSocketId() != 0;
-            pPlayer->setIsOnline(isOnline);
-            onlineInfo.append(isOnline);
-        }
-        data.insert(JsonKeys::JSONKEY_ONLINEINFO, onlineInfo);
+        data.insert(JsonKeys::JSONKEY_ONLINEINFO, getOnlineInfo());
         QJsonDocument doc(data);
         emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         updatePlayerinfo();
     }
+}
+
+QJsonArray GameMenue::getOnlineInfo()
+{
+    QJsonArray onlineInfo;
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    {
+        auto* pPlayer = m_pMap->getPlayer(i);
+        bool isOnline = pPlayer->getSocketId() != 0;
+        pPlayer->setIsOnline(isOnline);
+        onlineInfo.append(isOnline);
+    }
+    return onlineInfo;
 }
 
 void GameMenue::receivedOnlineInfo(quint64 socketID, const QJsonObject & objData)
@@ -1037,6 +1042,7 @@ void GameMenue::sendOpenPlayerCount()
             data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, "");
         }
         data.insert(JsonKeys::JSONKEY_RUNNINGGAME, true);
+        data.insert(JsonKeys::JSONKEY_ONLINEINFO, getOnlineInfo());
         QJsonDocument doc(data);
         emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }

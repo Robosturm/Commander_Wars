@@ -26,8 +26,15 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
-        var random = globals.randInt(0, 21);
-        terrain.loadBaseSprite("plains+" + random.toString());
+        var random = globals.randInt(0, 33);
+        if (random < 12)
+        {
+            terrain.loadBaseSprite("plains+" + random.toString());
+        }
+        else
+        {
+            terrain.loadBaseSprite("plains+" + (random - 12).toString());
+        }
     };
     this.loadOverlaySprite = function(terrain, map)
     {
@@ -83,7 +90,8 @@ var Constructor = function()
                 "plains+17",
                 "plains+18",
                 "plains+19",
-                "plains+20"];
+                "plains+20",
+                "plains+21"];
     };
 
     this.getOverlayTerrainSprites = function(map)

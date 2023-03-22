@@ -70,6 +70,12 @@ public:
     QString getCurrentPlayer() const;
     void setCurrentPlayer(const QString & newCurrentPlayer);
 
+    QVector<bool> getOnlineData() const;
+    void setOnlineData(const QVector<bool> & newOnlineData);
+
+    QByteArray getMinimapData() const;
+    void setMinimapData(const QByteArray & newMinimapData);
+
 private:
     qint32 m_players{0};
     qint32 m_maxPlayers{0};
@@ -86,6 +92,8 @@ private:
     QString m_slaveSecondaryAddress;
     quint16 m_slavePort{0};
     qint64 m_uuid{0};
+    QVector<bool> m_onlineData;
+    QByteArray m_minimapData;
 };
 
 #endif // NETWORKGAMEDATA_H

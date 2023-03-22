@@ -26,8 +26,15 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, map)
     {
-        var random = globals.randInt(0, 21);
-        terrain.loadBaseSprite("snow+" + random.toString());
+        var random = globals.randInt(0, 33);
+        if (random < 12)
+        {
+            terrain.loadBaseSprite("plains+" + random.toString());
+        }
+        else
+        {
+            terrain.loadBaseSprite("plains+" + (random - 12).toString());
+        }
     };
     this.getMiniMapIcon = function()
     {

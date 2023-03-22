@@ -32,6 +32,8 @@
 
 #include "game/gamerecording/gamemapimagesaver.h"
 
+#include "objects/minimap.h"
+
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/cospritemanager.h"
@@ -84,6 +86,7 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
     connect(this, &Mainapp::sigDoMapshot, this, &Mainapp::doMapshot, Qt::BlockingQueuedConnection);
+    QObject::connect(this, &Mainapp::sigSaveMapAsImage, this, &Mainapp::saveMapAsImage, Qt::BlockingQueuedConnection);
     CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
 }
 
@@ -933,6 +936,21 @@ void Mainapp::doMapshot(BaseGamemenu* pMenu)
                 break;
             }
             ++i;
+        }
+    }
+}
+
+void Mainapp::saveMapAsImage(Minimap* pMinimap, QImage & img)
+{
+    if (!m_shuttingDown && !m_noUi)
+    {
+        if (isMainThread())
+        {
+            saveMapAsImage(pMinimap, img);
+        }
+        else
+        {
+            emit sigSaveMapAsImage(pMinimap, img);
         }
     }
 }

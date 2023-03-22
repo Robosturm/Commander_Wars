@@ -57,11 +57,22 @@ QJsonObject NetworkGameData::toJson() const
         usernames.push_back(m_playerNames[i]);
     }
     obj.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
+    QJsonArray onlineData;
+    for (qint32 i = 0; i < m_onlineData.size(); ++i)
+    {
+        onlineData.push_back(m_playerNames[i]);
+    }
+    obj.insert(JsonKeys::JSONKEY_ONLINEINFO, onlineData);
+    obj.insert(JsonKeys::JSONKEY_MINIMAPDATA, QString::fromUtf8(m_minimapData));
     return obj;
 }
 
 void NetworkGameData::fromJson(const QJsonObject & obj)
 {
+    m_Mods.clear();
+    m_playerNames.clear();
+    m_onlineData.clear();
+
     m_players = obj.value(JsonKeys::JSONKEY_JOINEDPLAYERS).toInt();
     m_maxPlayers = obj.value(JsonKeys::JSONKEY_MAXPLAYERS).toInt();
     QJsonObject mods = obj.value(JsonKeys::JSONKEY_USEDMODS).toObject();
@@ -81,6 +92,12 @@ void NetworkGameData::fromJson(const QJsonObject & obj)
     {
         m_playerNames.append(username.toString());
     }
+    QJsonArray onlineData = obj.value(JsonKeys::JSONKEY_ONLINEINFO).toArray();
+    for (const auto & data : onlineData)
+    {
+        m_onlineData.append(data.toBool());
+    }
+    m_minimapData = obj.value(JsonKeys::JSONKEY_MINIMAPDATA).toString().toUtf8();
 }
 
 QString NetworkGameData::getMapName() const
@@ -201,6 +218,26 @@ QString NetworkGameData::getCurrentPlayer() const
 void NetworkGameData::setCurrentPlayer(const QString & newCurrentPlayer)
 {
     m_currentPlayer = newCurrentPlayer;
+}
+
+QVector<bool> NetworkGameData::getOnlineData() const
+{
+    return m_onlineData;
+}
+
+void NetworkGameData::setOnlineData(const QVector<bool> & newOnlineData)
+{
+    m_onlineData = newOnlineData;
+}
+
+QByteArray NetworkGameData::getMinimapData() const
+{
+    return m_minimapData;
+}
+
+void NetworkGameData::setMinimapData(const QByteArray & newMinimapData)
+{
+    m_minimapData = newMinimapData;
 }
 
 const QString &NetworkGameData::getSlaveSecondaryAddress() const
