@@ -1327,7 +1327,7 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, bool same
         {
             myMods += Settings::getModName(mod) + "\n";
         }
-        pDialogMessageBox = spDialogMessageBox::create(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods: " + myMods);
+        pDialogMessageBox = spDialogMessageBox::create(tr("Host has different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods: " + myMods);
     }
     else
     {

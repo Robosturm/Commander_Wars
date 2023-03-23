@@ -1176,7 +1176,7 @@ void GameMenue::disconnected(quint64 socketID)
         }
         sendOpenPlayerCount();
         sendOnlineInfo();
-        continueAfterSyncGame();
+        removePlayerFromSyncWaitList(socketID);
     }
 }
 
