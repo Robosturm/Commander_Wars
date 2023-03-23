@@ -60,7 +60,7 @@ QJsonObject NetworkGameData::toJson() const
     QJsonArray onlineData;
     for (qint32 i = 0; i < m_onlineData.size(); ++i)
     {
-        onlineData.push_back(m_playerNames[i]);
+        onlineData.push_back(m_onlineData[i]);
     }
     obj.insert(JsonKeys::JSONKEY_ONLINEINFO, onlineData);
     obj.insert(JsonKeys::JSONKEY_MINIMAPDATA, QString::fromUtf8(m_minimapData));

@@ -237,6 +237,19 @@ bool Terrain::getHasFlowDirection() const
     return m_hasFlowDirection;
 }
 
+bool Terrain::getTileHasFlowDirection() const
+{
+    if (m_hasFlowDirection)
+    {
+        return m_hasFlowDirection;
+    }
+    else if (m_pBaseTerrain.get() != nullptr)
+    {
+        return m_pBaseTerrain->getHasFlowDirection();
+    }
+    return false;
+}
+
 void Terrain::setHasFlowDirection(bool newHasFlowDirection)
 {
     m_hasFlowDirection = newHasFlowDirection;

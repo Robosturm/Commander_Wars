@@ -1469,6 +1469,7 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     hideMapSelection();
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
+    QByteArray minimapData = Filesupport::readByteArray(stream);
     spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
     stream >> m_saveGame;    
     CONSOLE_PRINT("Is save game" + QString::number(m_saveGame), GameConsole::eDEBUG);
@@ -1908,6 +1909,7 @@ void Multiplayermenu::disconnectNetworkSlots()
 
 void Multiplayermenu::startGameOnServer()
 {
+    Mainapp* pApp = Mainapp::getInstance();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     QString command = QString(NetworkCommands::LAUNCHGAMEONSERVER);
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
@@ -1918,6 +1920,14 @@ void Multiplayermenu::startGameOnServer()
     QStringList myMods = Settings::getMods();
     Settings::filterCosmeticMods(myMods, myVersions, pMap->getGameRules()->getCosmeticModsAllowed());
     Filesupport::writeVectorList(sendStream, myMods);
+    QImage img;
+    pApp->saveMapAsImage(m_pMapSelectionView->getMinimap(), img);
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    img.save(&buffer, "PNG"); // writes image into ba in PNG format
+    Filesupport::writeByteArray(sendStream, ba);
+
     pMap->serializeObject(sendStream);
     sendStream << m_saveGame;
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);

@@ -1264,12 +1264,12 @@
 <context>
     <name>BRIDGE</name>
     <message>
-        <location filename="../resources/scripts/terrain/BRIDGE.js" line="26"/>
+        <location filename="../resources/scripts/terrain/BRIDGE.js" line="29"/>
         <source>Ship bridge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BRIDGE.js" line="30"/>
+        <location filename="../resources/scripts/terrain/BRIDGE.js" line="33"/>
         <source>Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6239,8 +6239,8 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <location filename="../mapsupport/importawbyweb_text.cpp" line="70"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
         <location filename="../game/gamemap.cpp" line="559"/>
-        <location filename="../game/gamemap.cpp" line="686"/>
-        <location filename="../game/gamemap.cpp" line="1567"/>
+        <location filename="../game/gamemap.cpp" line="699"/>
+        <location filename="../game/gamemap.cpp" line="1580"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6377,42 +6377,42 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="559"/>
-        <location filename="../game/gamemap.cpp" line="1567"/>
+        <location filename="../game/gamemap.cpp" line="1580"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="659"/>
+        <location filename="../game/gamemap.cpp" line="672"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="686"/>
+        <location filename="../game/gamemap.cpp" line="699"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1534"/>
+        <location filename="../game/gamemap.cpp" line="1547"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1595"/>
+        <location filename="../game/gamemap.cpp" line="1608"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1605"/>
+        <location filename="../game/gamemap.cpp" line="1618"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1613"/>
+        <location filename="../game/gamemap.cpp" line="1626"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1625"/>
+        <location filename="../game/gamemap.cpp" line="1638"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7106,7 +7106,7 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2054"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2064"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7244,17 +7244,17 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1851"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1852"/>
         <source>Informing server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1925"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1935"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2050"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2060"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

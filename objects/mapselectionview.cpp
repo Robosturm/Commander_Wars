@@ -431,6 +431,11 @@ void MapSelectionView::loadMapVictoryInfo()
     }
 }
 
+Minimap* MapSelectionView::getMinimap() const
+{
+    return m_pMinimap.get();
+}
+
 spGameMap MapSelectionView::getCurrentMap() const
 {
     return m_pCurrentMap;

@@ -215,6 +215,11 @@ public slots:
      */
     bool getHasFlowDirection() const;
     /**
+     * @brief getTileHasFlowDirection
+     * @return
+     */
+    bool getTileHasFlowDirection() const;
+    /**
      * @brief setHasFlowDirection
      * @param newHasFlowDirection
      */
@@ -476,6 +481,11 @@ public slots:
             return this;
         }
     }
+    Terrain* getNextBaseTerrain()
+    {
+        return m_pBaseTerrain.get();
+    }
+
     /**
      * @brief getID the overall id of this terrain either terrain id or building id
      * @return

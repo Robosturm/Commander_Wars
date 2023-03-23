@@ -1,5 +1,8 @@
 var Constructor = function()
 {
+
+    terrain.setHasFlowDirection(true);
+
     this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
         __BASEBRIDGE.loadSprite(terrain, "bridge+style1", map)

@@ -706,7 +706,8 @@ void MainServer::startRemoteGame(const QString & initScript, const QString & id)
 void MainServer::slotStartRemoteGame(QString initScript, QString id)
 {
     QByteArray sendData;
-    spawnSlave(initScript, Settings::getMods(), id, 0, sendData);
+    QByteArray minimapData;
+    spawnSlave(initScript, Settings::getMods(), id, 0, sendData, minimapData);
 }
 
 void MainServer::disconnected(qint64 socketId)
@@ -720,7 +721,8 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
     mods = Filesupport::readVectorList<QString, QList>(stream);
     if (validHostRequest(mods))
     {
-        spawnSlave(initScript, mods, id, socketID, data);
+        QByteArray minimapData = Filesupport::readByteArray(stream);
+        spawnSlave(initScript, mods, id, socketID, data, minimapData);
     }
     else
     {
@@ -819,7 +821,7 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo)
     }
 }
 
-void MainServer::spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data)
+void MainServer::spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data, QByteArray & minimapData)
 {
 
     QString slaveAddress;
@@ -874,6 +876,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         game->game->getData().setSlaveSecondaryAddress(slaveSecondaryAddress);
         game->game->getData().setSlavePort(slavePort);
         game->game->getData().setMods(mods);
+        game->game->getData().setMinimapData(minimapData);
         setUuidForGame(game->game->getData());
         connect(game->process.get(), &QProcess::finished, game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->process.get(), &QProcess::errorOccurred, game->game.get(), &NetworkGame::errorOccurred, Qt::QueuedConnection);

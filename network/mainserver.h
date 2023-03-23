@@ -310,7 +310,7 @@ private:
      * @param socketID
      * @param data
      */
-    void spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data);
+    void spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data, QByteArray & minimapData);
     /**
      * @brief spawnSlave
      * @param slaveInfo

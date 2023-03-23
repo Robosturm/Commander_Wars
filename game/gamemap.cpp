@@ -612,12 +612,12 @@ void GameMap::updateSpritesOfTiles(const QVector<QPoint> & points, bool editor, 
 
 void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor, bool applyRulesPalette)
 {
-    if (m_fields[y][x]->getHasFlowDirection() &&
+    if (m_fields[y][x]->getTileHasFlowDirection() &&
         !m_fields[y][x]->getFixedSprite())
     {
         flowPoints.append(QPoint(x, y));
     }
-    else
+    if (!m_fields[y][x]->getHasFlowDirection())
     {
         if (applyRulesPalette)
         {
@@ -640,13 +640,26 @@ void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints, bool applyRulesPalet
     while (flowPoints.size() > 0)
     {
         QPoint pos = flowPoints[0];
-        spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
-        pPfs->explore();
-        m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get(), applyRulesPalette);
-        auto points = pPfs->getAllNodePointsFast();
-        for (const auto & point : qAsConst(points))
+        Terrain* pTerrain = m_fields[pos.y()][pos.x()].get();
+        bool done = false;
+        while (!done)
         {
-            flowPoints.removeAll(point);
+            if (pTerrain->getHasFlowDirection())
+            {
+                spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, pTerrain->getFlowTiles(), pos.x(), pos.y());
+                pPfs->explore();
+                m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get(), applyRulesPalette);
+                auto points = pPfs->getAllNodePointsFast();
+                for (const auto & point : qAsConst(points))
+                {
+                    flowPoints.removeAll(point);
+                }
+                done = true;
+            }
+            else
+            {
+                pTerrain = pTerrain->getNextBaseTerrain();
+            }
         }
     }
 }

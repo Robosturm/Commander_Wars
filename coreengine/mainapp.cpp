@@ -86,7 +86,7 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
     connect(this, &Mainapp::sigDoMapshot, this, &Mainapp::doMapshot, Qt::BlockingQueuedConnection);
-    QObject::connect(this, &Mainapp::sigSaveMapAsImage, this, &Mainapp::saveMapAsImage, Qt::BlockingQueuedConnection);
+    connect(this, &Mainapp::sigSaveMapAsImage, this, &Mainapp::saveMapAsImage, Qt::BlockingQueuedConnection);
     CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
 }
 
@@ -946,7 +946,7 @@ void Mainapp::saveMapAsImage(Minimap* pMinimap, QImage & img)
     {
         if (isMainThread())
         {
-            saveMapAsImage(pMinimap, img);
+            GamemapImageSaver::saveMapAsImage(pMinimap, img);
         }
         else
         {
