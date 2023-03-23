@@ -520,22 +520,32 @@ QVector<qint32> GlobalUtils::calcWidths(const QVector<qint32> & maxWidths, const
     return ret;
 }
 
-float GlobalUtils::roundTo(float value, float precision)
+float GlobalUtils::roundFloor(float value, float precision)
 {
     return qFloor(value * precision) / precision;
 }
 
-double GlobalUtils::roundTo(double value, double precision)
+double GlobalUtils::roundFloor(double value, double precision)
 {
     return qFloor(value * precision) / precision;
 }
 
-qint32 GlobalUtils::roundToInt(float value, float precision)
+float GlobalUtils::roundCeil(float value, float precision)
+{
+    return qCeil(value * precision) / precision;
+}
+
+double GlobalUtils::roundCeil(double value, double precision)
+{
+    return qCeil(value * precision) / precision;
+}
+
+qint32 GlobalUtils::roundFloorToInt(float value, float precision)
 {
     return qFloor(value * precision);
 }
 
-qint32 GlobalUtils::roundToInt(double value, float precision)
+qint32 GlobalUtils::roundFloorToInt(double value, float precision)
 {
     return qFloor(value * precision);
 }

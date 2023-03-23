@@ -2316,7 +2316,7 @@ qint32 Unit::getHpRounded() const
 
 void Unit::setHp(const float &value)
 {
-    m_hp = GlobalUtils::roundTo(value, FLOAT_PRECISION);
+    m_hp = GlobalUtils::roundFloor(value, FLOAT_PRECISION);
     if (m_hp > MAX_UNIT_HP)
     {
         m_hp = MAX_UNIT_HP;
@@ -2329,7 +2329,7 @@ void Unit::setHp(const float &value)
 
 void Unit::setVirtualHpValue(const float &value)
 {
-    m_virtualHp = GlobalUtils::roundTo(value, FLOAT_PRECISION);
+    m_virtualHp = GlobalUtils::roundFloor(value, FLOAT_PRECISION);
 }
 
 
@@ -3587,7 +3587,7 @@ void Unit::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << m_UnitID;
     if (forHash)
     {
-        pStream << GlobalUtils::roundToInt(m_hp, FLOAT_PRECISION);
+        pStream << GlobalUtils::roundFloorToInt(m_hp, FLOAT_PRECISION);
     }
     else
     {

@@ -38,10 +38,11 @@ namespace oxygine
                 frame_width -= 2;
             }
         }
+        float pixelOffset = 1 / static_cast<float>(originalSize.width()) / 4.0f;
         float iw = 1.0f / static_cast<float>(columns);
         float ih = 1.0f / static_cast<float>(rows);
-        float width = static_cast<float>(frame_width) / static_cast<float>(originalSize.width());
-        float height = static_cast<float>(frame_height) / static_cast<float>(originalSize.height());
+        float width = static_cast<float>(frame_width) / static_cast<float>(originalSize.width()) - pixelOffset;
+        float height = static_cast<float>(frame_height) / static_cast<float>(originalSize.height()) - pixelOffset;
 
         m_frames.clear();
         qint32 frames_count = rows * columns;
@@ -52,7 +53,7 @@ namespace oxygine
         {
             for (qint32 x = 0; x < columns; ++x)
             {
-                QRectF srcRect(x * iw, y * ih, width, height);
+                QRectF srcRect(x * iw + pixelOffset, y * ih + pixelOffset, width, height);
                 QRect destRect(0, 0, frameSize.width() * scaleFactor, frameSize.height() * scaleFactor);
                 m_frames[x + y * columns].init(this, x, y, texture, srcRect, destRect, destRect.size());
             }

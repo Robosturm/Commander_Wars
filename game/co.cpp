@@ -198,7 +198,7 @@ void CO::setPowerFilled(const double &value)
         !m_pMap->getGameRules()->getNoPower())
     {
         float currentValue = m_powerFilled;
-        m_powerFilled = GlobalUtils::roundTo(value, DOUBLE_PRECISION);
+        m_powerFilled = GlobalUtils::roundFloor(value, DOUBLE_PRECISION);
         if (!m_powerCharging)
         {
             limitPowerbar(currentValue);
@@ -2017,7 +2017,7 @@ void CO::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << m_superpowerStars;
     if (forHash)
     {
-        pStream << GlobalUtils::roundToInt(m_powerFilled, DOUBLE_PRECISION);
+        pStream << GlobalUtils::roundFloorToInt(m_powerFilled, DOUBLE_PRECISION);
     }
     else
     {

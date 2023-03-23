@@ -95,10 +95,10 @@ namespace oxygine
             float dv = srcRect.height();
             VertexPCT2 vt;
             vt.color = rgba;
-            QPoint p1(destRect.topLeft());
-            QPoint p2(destRect.bottomLeft());
-            QPoint p3(destRect.topRight());
-            QPoint p4(destRect.bottomRight());
+            QPointF p1(destRect.topLeft());
+            QPointF p2(destRect.bottomLeft());
+            QPointF p3(destRect.topRight());
+            QPointF p4(destRect.bottomRight());
 
             p1 = transform.map(p1);
             p2 = transform.map(p2);
@@ -106,26 +106,26 @@ namespace oxygine
             p4 = transform.map(p4);
 
             vt.z = 0;
-            vt.x = p1.x();
-            vt.y = p1.y();
+            vt.x = qFloor(p1.x());
+            vt.y = qFloor(p1.y());
             vt.u = u;
             vt.v = v;
             quad[0] = vt;
 
-            vt.x = p2.x();
-            vt.y = p2.y();
+            vt.x = qFloor(p2.x());
+            vt.y = qCeil(p2.y());
             vt.u = u;
             vt.v = v + dv;
             quad[1] = vt;
 
-            vt.x = p3.x();
-            vt.y = p3.y();
+            vt.x = qCeil(p3.x());
+            vt.y = qFloor(p3.y());
             vt.u = u + du;
             vt.v = v;
             quad[2] = vt;
 
-            vt.x = p4.x();
-            vt.y = p4.y();
+            vt.x = qCeil(p4.x());
+            vt.y = qCeil(p4.y());
             vt.u = u + du;
             vt.v = v + dv;
             quad[3] = vt;
