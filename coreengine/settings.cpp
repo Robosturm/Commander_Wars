@@ -1202,7 +1202,7 @@ void Settings::setup()
         new Value<quint32>{"Game", "WalkAnimationSpeed", &m_walkAnimationSpeed, 20, 1, 100},
         new Value<quint32>{"Game", "DialogAnimationSpeed", &m_dialogAnimationSpeed, 1, 1, 100},
         new Value<quint32>{"Game", "CaptureAnimationSpeed", &m_captureAnimationSpeed, 1, 1, 100},
-        new Value<quint32>{"Game", "MultiTurnCounter", &multiTurnCounter, 4, 1, 10},
+        new Value<quint32>{"Game", "MultiTurnCounter", &multiTurnCounter, 1, 1, 10},
         new Value<qint32>{"Game", "MenuItemCount", &m_MenuItemCount, 13, 5, std::numeric_limits<qint32>::max()},
         new Value<qint32>{"Game", "MenuItemRowCount", &m_MenuItemRowCount, 2, 1, std::numeric_limits<qint32>::max()},
         new Value<float>{"Game", "SupplyWarning", &m_supplyWarning, 0.33f, 0.0f, 1.0f},
