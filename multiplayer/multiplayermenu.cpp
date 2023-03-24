@@ -1137,7 +1137,10 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
         bool differentHash = false;
         bool sameVersion = false;
         QStringList mods;
-        readHashInfo(stream, socketID, mods, sameMods, differentHash, sameVersion);
+        QStringList versions;
+        QStringList myMods;
+        QStringList myVersions;
+        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
         if (sameVersion && sameMods && !differentHash)
         {
             QString command = QString(NetworkCommands::GAMEDATAVERIFIED);
@@ -1149,15 +1152,15 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            handleVersionMissmatch(mods, sameMods, differentHash, sameVersion);
+            handleVersionMissmatch(mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
         }
     }
 }
 
-bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & versions, bool filter)
+bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & versions, QStringList & myMods, QStringList & myVersions, bool filter)
 {
-    QStringList myVersions = Settings::getActiveModVersions();
-    QStringList myMods = Settings::getMods();
+    myVersions = Settings::getActiveModVersions();
+    myMods = Settings::getMods();
     Settings::filterCosmeticMods(myMods, myVersions, filter);
     bool sameMods = true;
     if (myMods.size() != mods.size())
@@ -1201,7 +1204,7 @@ bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & ve
     return sameMods;
 }
 
-void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, bool & sameMods, bool & differentHash, bool & sameVersion)
+void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, bool & sameMods, bool & differentHash, bool & sameVersion)
 {
     QString version;
     stream >> version;
@@ -1209,7 +1212,6 @@ void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStri
     stream >> filter;
     qint32 size = 0;
     stream >> size;
-    QStringList versions;
     for (qint32 i = 0; i < size; i++)
     {
         QString mod;
@@ -1219,7 +1221,7 @@ void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStri
         stream >> version;
         versions.append(version);
     }
-    sameMods = checkMods(mods, versions, filter);
+    sameMods = checkMods(mods, versions, myMods, myVersions, filter);
     QByteArray hostRuntime = Filesupport::readByteArray(stream);
     QByteArray ownRuntime = Filesupport::getRuntimeHash(mods);
     if (GameConsole::eDEBUG >= GameConsole::getLogLevel())
@@ -1242,7 +1244,10 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         bool differentHash = false;
         bool sameVersion = false;
         QStringList mods;
-        readHashInfo(stream, socketID, mods, sameMods, differentHash, sameVersion);
+        QStringList versions;
+        QStringList myMods;
+        QStringList myVersions;
+        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
         if (sameVersion && sameMods && !differentHash)
         {
             stream >> m_saveGame;
@@ -1297,12 +1302,12 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            handleVersionMissmatch(mods, sameMods, differentHash, sameVersion);
+            handleVersionMissmatch(mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
         }
     }
 }
 
-void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, bool sameMods, bool differentHash, bool sameVersion)
+void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, bool sameMods, bool differentHash, bool sameVersion)
 {
     // quit game with wrong version
     spDialogMessageBox pDialogMessageBox;
@@ -1316,18 +1321,17 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, bool same
     }
     else if (!sameMods)
     {
-        QString hostMods;
-        for (auto & mod : mods)
+        QString hostModsInfo;
+        for (qint32 i = 0; i < mods.size(); ++i)
         {
-            hostMods += Settings::getModName(mod) + "\n";
+            hostModsInfo += Settings::getModName(mods[i]) + " " + versions[i] + "\n";
         }
-        QStringList myModsList = Settings::getMods();
-        QString myMods;
-        for (auto & mod : myModsList)
+        QString myModsInfo;
+        for (qint32 i = 0; i < myMods.size(); ++i)
         {
-            myMods += Settings::getModName(mod) + "\n";
+            myModsInfo += Settings::getModName(myMods[i]) + " " + myVersions[i]  + "\n";
         }
-        pDialogMessageBox = spDialogMessageBox::create(tr("Host has different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods: " + myMods);
+        pDialogMessageBox = spDialogMessageBox::create(tr("Host has different mods. Leaving the game again.\nHost mods:\n") + hostModsInfo + "\nYour Mods:\n" + myModsInfo);
     }
     else
     {
@@ -1469,7 +1473,7 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     hideMapSelection();
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
-    QByteArray minimapData = Filesupport::readByteArray(stream);
+    Filesupport::readByteArray(stream); // minimap data
     spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
     stream >> m_saveGame;    
     CONSOLE_PRINT("Is save game" + QString::number(m_saveGame), GameConsole::eDEBUG);

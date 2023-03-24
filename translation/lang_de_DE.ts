@@ -7106,7 +7106,7 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2064"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2068"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7213,48 +7213,49 @@ Note: You won&apos;t be able to change any rules when reentering the lobby later
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1311"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1316"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1315"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1320"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1330"/>
-        <source>Host has  different mods. Leaving the game again.
-Host mods: </source>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1334"/>
+        <source>Host has different mods. Leaving the game again.
+Host mods:
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1334"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1338"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1434"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1438"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1445"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1449"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1852"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1856"/>
         <source>Informing server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1935"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1939"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2060"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2064"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
