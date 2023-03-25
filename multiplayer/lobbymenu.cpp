@@ -9,6 +9,7 @@
 #include "multiplayer/dialogpassword.h"
 #include "multiplayer/dialogpasswordandadress.h"
 #include "multiplayer/multiplayermenu.h"
+#include "multiplayer/networkgamedataview.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
@@ -599,6 +600,12 @@ void LobbyMenu::selectGame()
     if (m_gamesview->getCurrentItem() >= 0)
     {
         m_currentGame = *m_gamesview->getDataItem<NetworkGameData>(m_gamesview->getCurrentItem());
+        if (m_lastSelectedItem == m_gamesview->getCurrentItem())
+        {
+            spNetworkGameDataView pView = spNetworkGameDataView::create(m_currentGame);
+            addChild(pView);
+        }
+        m_lastSelectedItem = m_gamesview->getCurrentItem();
     }
 }
 

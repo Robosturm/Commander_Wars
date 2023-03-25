@@ -331,6 +331,7 @@ private:
      * @brief initClientConnection
      */
     void initClientConnection(const QString & address, const QString & secondaryAddress, quint16 port);
+
 private:
     NetworkMode m_networkMode{NetworkMode::Client};
     spNetworkInterface m_pNetworkInterface;

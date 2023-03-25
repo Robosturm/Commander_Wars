@@ -87,7 +87,17 @@ private:
     void onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void handleAccountMessage(quint64 socketID, const QJsonObject & objData);
     void requestServerGames();
-    void requestUserUpdateGames();
+    void requestUserUpdateGames();    /**
+     * @brief getMinimapImage
+     * @param img
+     * @param data
+     */
+    void getMinimapImage(QImage & img, NetworkGameData & data);
+    /**
+     * @brief showNetworkGameData
+     * @param data
+     */
+    void showNetworkGameData(NetworkGameData & data);
 private:
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<NetworkGameData> m_games;
@@ -106,6 +116,7 @@ private:
     QString m_serverEmailAdress;
     bool m_serverRequestNewPassword;
     GameViewMode m_mode{GameViewMode::OpenGames};
+    qint32 m_lastSelectedItem{-1};
 };
 
 #endif // LOBBYMENU_H

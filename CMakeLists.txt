@@ -675,6 +675,7 @@ set(${PROJECT_NAME}_SRCS
     multiplayer/password.cpp multiplayer/password.h
     multiplayer/dialogpasswordandadress.cpp multiplayer/dialogpasswordandadress.h
     multiplayer/dialogpassword.cpp multiplayer/dialogpassword.h
+    multiplayer/networkgamedataview.h multiplayer/networkgamedataview.cpp
     multiplayer/networkcommands.h
 
     #campaign support

@@ -63,7 +63,7 @@ QJsonObject NetworkGameData::toJson() const
         onlineData.push_back(m_onlineData[i]);
     }
     obj.insert(JsonKeys::JSONKEY_ONLINEINFO, onlineData);
-    obj.insert(JsonKeys::JSONKEY_MINIMAPDATA, QString::fromUtf8(m_minimapData));
+    obj.insert(JsonKeys::JSONKEY_MINIMAPDATA, QString::fromLocal8Bit(m_minimapData));
     return obj;
 }
 
@@ -97,7 +97,7 @@ void NetworkGameData::fromJson(const QJsonObject & obj)
     {
         m_onlineData.append(data.toBool());
     }
-    m_minimapData = obj.value(JsonKeys::JSONKEY_MINIMAPDATA).toString().toUtf8();
+    m_minimapData = obj.value(JsonKeys::JSONKEY_MINIMAPDATA).toString().toLocal8Bit();
 }
 
 QString NetworkGameData::getMapName() const
@@ -230,7 +230,7 @@ void NetworkGameData::setOnlineData(const QVector<bool> & newOnlineData)
     m_onlineData = newOnlineData;
 }
 
-QByteArray NetworkGameData::getMinimapData() const
+QByteArray & NetworkGameData::getMinimapData()
 {
     return m_minimapData;
 }

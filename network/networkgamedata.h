@@ -73,7 +73,7 @@ public:
     QVector<bool> getOnlineData() const;
     void setOnlineData(const QVector<bool> & newOnlineData);
 
-    QByteArray getMinimapData() const;
+    QByteArray & getMinimapData();
     void setMinimapData(const QByteArray & newMinimapData);
 
 private:

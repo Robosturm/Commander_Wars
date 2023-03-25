@@ -789,6 +789,7 @@
                         <Checkbox>
                             <x>lastX + lastWidth + 10</x>
                             <y>lastY</y>
+                            <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
                             <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
                             <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
                             <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
