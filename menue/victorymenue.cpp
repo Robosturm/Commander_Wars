@@ -454,9 +454,13 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     }
                     m_VictoryPanel->addItem(pCOSprite);
 
+                    oxygine::TextStyle dialogStyle = oxygine::TextStyle(FontManager::getFont("dialog48"));
+                    dialogStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+                    dialogStyle.multiline = true;
+
                     spLabel winLooseText = spLabel::create(sentenceWidth - 110);
                     style.multiline = true;
-                    winLooseText->setStyle(style48);
+                    winLooseText->setStyle(dialogStyle);
                     winLooseText->setHeight(pWinLooseSprite->getScaledHeight());
                     winLooseText->setPosition(48 * scale + 10, 1 + y);
                     winLooseText->setHtmlText(sentence);
