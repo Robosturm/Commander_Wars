@@ -2202,7 +2202,7 @@
 <context>
     <name>CreatedGui</name>
     <message>
-        <location filename="../ui_reader/createdgui.h" line="32"/>
+        <location filename="../ui_reader/createdgui.h" line="39"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6191,6 +6191,21 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/ui/multiplayer/networkGameDataView.xml" line="13"/>
+        <source>Game Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/multiplayer/networkGameDataView.xml" line="21"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/multiplayer/networkGameDataView.xml" line="37"/>
+        <source>Players:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GAMERULE_REFILL_MATERIAL</name>
@@ -7263,13 +7278,9 @@ Host mods:
 <context>
     <name>NetworkGameDataView</name>
     <message>
-        <location filename="../multiplayer/networkgamedataview.cpp" line="44"/>
-        <source>Game info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../multiplayer/networkgamedataview.cpp" line="49"/>
-        <source>Ok</source>
+        <location filename="../multiplayer/networkgamedataview.cpp" line="108"/>
+        <location filename="../multiplayer/networkgamedataview.cpp" line="133"/>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10547,37 +10558,37 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="239"/>
-        <location filename="../menue/victorymenue.cpp" line="727"/>
+        <location filename="../menue/victorymenue.cpp" line="731"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="248"/>
-        <location filename="../menue/victorymenue.cpp" line="732"/>
+        <location filename="../menue/victorymenue.cpp" line="736"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="257"/>
-        <location filename="../menue/victorymenue.cpp" line="737"/>
+        <location filename="../menue/victorymenue.cpp" line="741"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="266"/>
-        <location filename="../menue/victorymenue.cpp" line="742"/>
+        <location filename="../menue/victorymenue.cpp" line="746"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="275"/>
-        <location filename="../menue/victorymenue.cpp" line="747"/>
+        <location filename="../menue/victorymenue.cpp" line="751"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="284"/>
-        <location filename="../menue/victorymenue.cpp" line="815"/>
+        <location filename="../menue/victorymenue.cpp" line="819"/>
         <source>Player Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10612,17 +10623,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="647"/>
+        <location filename="../menue/victorymenue.cpp" line="651"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="650"/>
+        <location filename="../menue/victorymenue.cpp" line="654"/>
         <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="803"/>
+        <location filename="../menue/victorymenue.cpp" line="807"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25331,6 +25342,19 @@ Units get %0% firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/neotank.js" line="53"/>
         <source>Reinforced Tank. Attack and defence capabilities superior to standard tank. Good mobility makes it useful on battlefield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>networkGameDataView</name>
+    <message>
+        <location filename="../resources/ui/multiplayer/networkGameDataView.js" line="5"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/multiplayer/networkGameDataView.js" line="9"/>
+        <source>Closes the game data view</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

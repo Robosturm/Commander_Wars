@@ -5025,5 +5025,7 @@
         <file>resources/images/terrain/waste/waste+21.png</file>
         <file>resources/images/terrain/waste/waste+8.png</file>
         <file>resources/images/terrain/waste/waste+9.png</file>
+        <file>resources/ui/multiplayer/networkGameDataView.xml</file>
+        <file>resources/ui/multiplayer/networkGameDataView.js</file>
     </qresource>
 </RCC>

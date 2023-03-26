@@ -27,6 +27,7 @@
 #include "menue/movementplanner.h"
 
 #include "multiplayer/multiplayermenu.h"
+#include "multiplayer/networkgamedataview.h"
 
 #include "ui_reader/uifactory.h"
 #include "ui_reader/createdgui.h"
@@ -216,4 +217,5 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<MainServer>("MainServer", 1);
     qmlRegisterInterface<AutoMatchMaker>("AutoMatchMaker", 1);
     qmlRegisterInterface<Multiplayermenu>("Multiplayermenu", 1);
+    qmlRegisterInterface<NetworkGameDataView>("NetworkGameDataView", 1);
 }
