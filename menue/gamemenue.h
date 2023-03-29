@@ -116,7 +116,6 @@ public:
      * @return
      */
     bool doDespawnSlave();
-
 signals:
     void sigGameStarted();
     void sigSyncFinished();
@@ -491,7 +490,11 @@ protected:
     void sendGameStartedToServer();
     void onResyncGame(QDataStream & stream);
     QJsonArray getOnlineInfo();
-
+    /**
+     * @brief getSaveSlaveMapName
+     * @return
+     */
+    QString getSaveSlaveMapName() const;
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;

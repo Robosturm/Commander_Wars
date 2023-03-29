@@ -648,7 +648,7 @@ void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints, bool applyRulesPalet
             {
                 spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, pTerrain->getFlowTiles(), pos.x(), pos.y());
                 pPfs->explore();
-                m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get(), applyRulesPalette);
+                pTerrain->updateFlowSprites(pPfs.get(), applyRulesPalette);
                 auto points = pPfs->getAllNodePointsFast();
                 for (const auto & point : qAsConst(points))
                 {
@@ -1416,6 +1416,8 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
         pStream << m_startLoopMs;
         pStream << m_endLoopMs;
         pStream << m_isHumanMatch;
+        pStream << m_recordFile;
+        pStream << m_replayActionCount;
     }
 }
 
@@ -1450,6 +1452,26 @@ void GameMap::updateMapFlags() const
             }
         }
     }
+}
+
+qint32 GameMap::getReplayActionCount() const
+{
+    return m_replayActionCount;
+}
+
+void GameMap::setReplayActionCount(qint32 newReplayActionCount)
+{
+    m_replayActionCount = newReplayActionCount;
+}
+
+QString GameMap::getRecordFile() const
+{
+    return m_recordFile;
+}
+
+void GameMap::setRecordFile(const QString & newRecordFile)
+{
+    m_recordFile = newRecordFile;
 }
 
 QByteArray GameMap::getMapHash()
@@ -1660,6 +1682,11 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         if (m_headerInfo.m_Version > 10)
         {
             pStream >> m_isHumanMatch;
+        }
+        if (m_headerInfo.m_Version > 12)
+        {
+            pStream >> m_recordFile;
+            pStream >> m_replayActionCount;
         }
     }
     if (showLoadingScreen)

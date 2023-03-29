@@ -16,18 +16,48 @@ using spGameAction = oxygine::intrusive_ptr<GameAction>;
 class ReplayRecorder final : public QObject
 {
     Q_OBJECT
+    enum class Type
+    {
+        Action,
+        Map,
+    };
+
+    struct HeaderInfo
+    {
+        HeaderInfo(Type type)
+            : m_type(type)
+        {
+        }
+        HeaderInfo(QDataStream & stream)
+        {
+            stream >> m_version;
+            qint32 type;
+            stream >> type;
+            m_type = static_cast<Type>(type);
+            stream >> m_nextSeekPos;
+        }
+        qint32 m_version{1};
+        Type m_type{Type::Action};
+        qint64 m_nextSeekPos{0};
+    };
+    static const qint32 VERSION = 1;
 public:
     explicit ReplayRecorder(GameMap* pMap);
     ~ReplayRecorder();
     /**
      * @brief startRecording
      */
-    void startRecording();
+    void startRecording(const QString & file = "");
     /**
      * @brief recordAction
      * @param pAction
      */
-    void recordAction(spGameAction pAction);
+    void recordAction(const spGameAction & action);
+    /**
+     * @brief continueRecording
+     * @param file
+     */
+    bool continueRecording(const QString & file);
     /**
      * @brief loadRecord
      * @param filename
@@ -77,7 +107,13 @@ public:
      * @return
      */
     void seekToDay(qint32 day);
+    qint32 getCount() const;
 
+private:
+    bool validRecord(QByteArray & envData);
+    void writeAction(const spGameAction & action);
+    void writeMapState();
+    ReplayRecorder::HeaderInfo seekToNextType(Type type, bool & success);
 private:
     QFile m_recordFile;
     QDataStream m_stream{&m_recordFile};
@@ -86,13 +122,10 @@ private:
     qint32 m_progress = 0;
     qint64 m_countPos = 0;
     qint64 m_mapPos = 0;
-    qint64 m_dailyMapPos = 0;
-    qint64 m_posOfDailyMapPos = 0;
+    qint64 m_streamStart = 0;
 
     bool m_recording {false};
     bool m_playing{false};
-    QBuffer m_dailyBuffer;
-    QDataStream m_dailyStream{&m_dailyBuffer};
     qint32 m_currentDay{0};
     GameMap* m_pMap{nullptr};
 };

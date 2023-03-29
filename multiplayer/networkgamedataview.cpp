@@ -32,8 +32,9 @@ NetworkGameDataView::NetworkGameDataView(NetworkGameData & data)
     QImage img;
     getMinimapImage(img, data);
     m_minimapImage = oxygine::spSingleResAnim::create();
-    Mainapp::getInstance()->loadResAnim(m_minimapImage, img, 1, 1, 1, false);
-
+    img.save("test0.png");
+    Mainapp::getInstance()->loadResAnim(m_minimapImage, img, 1, 1, 1, true);
+    img.save("test1.png");
     UiFactory::getInstance().createUi("ui/multiplayer/networkGameDataView.xml", this);
 }
 
@@ -50,7 +51,9 @@ oxygine::spActor NetworkGameDataView::loadCustomId(const QString & item, qint32 
         pSprite->setPosition(x, y);
         pSprite->setVisible(visible);
         pSprite->setEnabled(enabled);
-        pSprite->setSize(m_minimapImage->getSize());
+        pSprite->setSize(m_minimapImage->getSize() * scale);
+        scaledWidth = m_minimapImage->getWidth() * scale;
+        scaledHeight = m_minimapImage->getHeight() * scale;
         if (!onEvent.isEmpty())
         {
             pSprite->addClickListener([pFactoty, onEvent, id, loopIdx, pMenu](oxygine::Event*)

@@ -167,7 +167,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 12;
+        return 13;
     }
     /**
      * @brief clearMap
@@ -300,6 +300,12 @@ public:
      * @return
      */
     QByteArray getMapHash();
+    QString getRecordFile() const;
+    void setRecordFile(const QString & newRecordFile);
+
+    qint32 getReplayActionCount() const;
+    void setReplayActionCount(qint32 newReplayActionCount);
+
 signals:
     void signalExitGame();
     void sigSaveGame();
@@ -888,6 +894,8 @@ private:
     bool m_savegame{false};
     bool m_isHumanMatch{false};
     BaseGamemenu* m_pMenu{nullptr};
+    QString m_recordFile;
+    qint32 m_replayActionCount{0};
     static qint32 m_imagesize;
 };
 

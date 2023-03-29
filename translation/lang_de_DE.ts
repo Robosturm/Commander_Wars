@@ -1256,7 +1256,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="269"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="268"/>
         <source>Beachs over great landing places for landing ground troops.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1264,12 +1264,12 @@
 <context>
     <name>BRIDGE</name>
     <message>
-        <location filename="../resources/scripts/terrain/BRIDGE.js" line="29"/>
+        <location filename="../resources/scripts/terrain/BRIDGE.js" line="26"/>
         <source>Ship bridge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BRIDGE.js" line="33"/>
+        <location filename="../resources/scripts/terrain/BRIDGE.js" line="30"/>
         <source>Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4921,6 +4921,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/ui/multiplayer/networkGameDataView.xml" line="71"/>
         <location filename="../resources/ui/menu/mainoptionmenu.xml" line="53"/>
         <location filename="../resources/ui/menu/mainoptionmenu.xml" line="54"/>
         <source>Mods</source>
@@ -6255,7 +6256,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
         <location filename="../game/gamemap.cpp" line="559"/>
         <location filename="../game/gamemap.cpp" line="699"/>
-        <location filename="../game/gamemap.cpp" line="1580"/>
+        <location filename="../game/gamemap.cpp" line="1602"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6392,7 +6393,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="559"/>
-        <location filename="../game/gamemap.cpp" line="1580"/>
+        <location filename="../game/gamemap.cpp" line="1602"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6407,27 +6408,27 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1547"/>
+        <location filename="../game/gamemap.cpp" line="1569"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1608"/>
+        <location filename="../game/gamemap.cpp" line="1630"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1618"/>
+        <location filename="../game/gamemap.cpp" line="1640"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1626"/>
+        <location filename="../game/gamemap.cpp" line="1648"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1638"/>
+        <location filename="../game/gamemap.cpp" line="1660"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6486,89 +6487,89 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1415"/>
-        <location filename="../menue/gamemenue.cpp" line="2027"/>
-        <location filename="../menue/gamemenue.cpp" line="2064"/>
+        <location filename="../menue/gamemenue.cpp" line="1428"/>
+        <location filename="../menue/gamemenue.cpp" line="2040"/>
+        <location filename="../menue/gamemenue.cpp" line="2077"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1423"/>
+        <location filename="../menue/gamemenue.cpp" line="1436"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1458"/>
+        <location filename="../menue/gamemenue.cpp" line="1471"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1876"/>
+        <location filename="../menue/gamemenue.cpp" line="1889"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1877"/>
+        <location filename="../menue/gamemenue.cpp" line="1890"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1878"/>
+        <location filename="../menue/gamemenue.cpp" line="1891"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1879"/>
+        <location filename="../menue/gamemenue.cpp" line="1892"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1880"/>
+        <location filename="../menue/gamemenue.cpp" line="1893"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1881"/>
+        <location filename="../menue/gamemenue.cpp" line="1894"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1882"/>
+        <location filename="../menue/gamemenue.cpp" line="1895"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1883"/>
+        <location filename="../menue/gamemenue.cpp" line="1896"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1909"/>
+        <location filename="../menue/gamemenue.cpp" line="1922"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1927"/>
+        <location filename="../menue/gamemenue.cpp" line="1940"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2406"/>
+        <location filename="../menue/gamemenue.cpp" line="2422"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2437"/>
+        <location filename="../menue/gamemenue.cpp" line="2453"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2463"/>
+        <location filename="../menue/gamemenue.cpp" line="2479"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2640"/>
+        <location filename="../menue/gamemenue.cpp" line="2656"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7278,8 +7279,8 @@ Host mods:
 <context>
     <name>NetworkGameDataView</name>
     <message>
-        <location filename="../multiplayer/networkgamedataview.cpp" line="108"/>
-        <location filename="../multiplayer/networkgamedataview.cpp" line="133"/>
+        <location filename="../multiplayer/networkgamedataview.cpp" line="111"/>
+        <location filename="../multiplayer/networkgamedataview.cpp" line="136"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25355,6 +25356,16 @@ Units get %0% firepower during sandstorm.</source>
     <message>
         <location filename="../resources/ui/multiplayer/networkGameDataView.js" line="9"/>
         <source>Closes the game data view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/multiplayer/networkGameDataView.js" line="15"/>
+        <source>Online</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/multiplayer/networkGameDataView.js" line="19"/>
+        <source>Offline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

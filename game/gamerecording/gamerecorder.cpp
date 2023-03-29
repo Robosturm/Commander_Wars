@@ -3,8 +3,6 @@
 #include "game/gamemap.h"
 #include "game/player.h"
 
-#include "coreengine/mainapp.h"
-
 #include "resource_management/gamemanager.h"
 
 #include "coreengine/filesupport.h"

@@ -54,6 +54,10 @@ void GamemapImageSaver::saveMapAsImage(Minimap* pMinimap, QImage & img)
     {
         auto oldSize = oxygine::Stage::getStage()->getSize();
         QSize size(pMinimap->getWidth(), pMinimap->getHeight());
+        auto orgScale = pMinimap->getScale();
+        auto orgPos = pMinimap->getPosition();
+        pMinimap->setPosition(0, 0);
+        pMinimap->setScale(1.0f);
         QOpenGLFramebufferObject buffer(size);
         buffer.bind();
         QColor clearColor(0, 0, 255, 255);
@@ -66,17 +70,13 @@ void GamemapImageSaver::saveMapAsImage(Minimap* pMinimap, QImage & img)
         oxygine::Stage::getStage()->setSize(viewport.width(), viewport.height());
         oxygine::RenderState rs;
         rs.clip = QRect(0, 0, viewport.width(), viewport.height());
-        auto orgScale = pMinimap->getScale();
-        auto orgPos = pMinimap->getPosition();
-        pMinimap->setPosition(0, 0);
-        pMinimap->setScale(1.0f);
         pMinimap->render(rs);
         oxygine::STDRenderer::getCurrent()->flush();
         oxygine::Material::null->apply();
-        pMinimap->setPosition(orgPos);
-        pMinimap->setScale(orgScale);
         img = buffer.toImage();
         buffer.release();
+        pMinimap->setPosition(orgPos);
+        pMinimap->setScale(orgScale);
         oxygine::Stage::getStage()->setSize(oldSize);
     }
 }

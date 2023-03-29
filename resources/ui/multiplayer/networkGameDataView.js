@@ -8,4 +8,15 @@ var NetworkGameDataView =
     {
         return qsTr("Closes the game data view");
     },
+    getOnlineText : function(loopIdx)
+    {
+        if (currentMenu.getPlayerIsOnline(loopIdx))
+        {
+            return qsTr("Online");
+        }
+        else
+        {
+            return qsTr("Offline");
+        }
+    },
 }

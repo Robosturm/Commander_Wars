@@ -1217,12 +1217,25 @@ void GameMenue::despawnSlave()
     }
 }
 
+QString GameMenue::getSaveSlaveMapName() const
+{
+    QString name("savegames/");
+    name += m_pMap->getMapName() + "_";
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    {
+        name += m_pMap->getPlayer(i)->getPlayerNameId() + "_";
+    }
+    QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
+    name += date;
+    return name + ".msav";
+}
+
 bool GameMenue::doDespawnSlave()
 {
     if (m_saveAllowed)
     {
         m_despawning = true;
-        QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".msav";
+        QString saveFile = getSaveSlaveMapName();
         saveMap(saveFile);
         spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
         QString command = NetworkCommands::SLAVEINFODESPAWNING;
@@ -2132,7 +2145,7 @@ void GameMenue::doSaveMap()
                 QFile file(m_saveFile);
                 file.open(QIODevice::WriteOnly | QIODevice::Truncate);
                 QDataStream stream(&file);
-
+                m_pMap->setReplayActionCount(m_ReplayRecorder.getCount());
                 m_pMap->serializeObject(stream);
                 file.close();
                 Settings::setLastSaveGame(m_saveFile);
@@ -2259,7 +2272,10 @@ void GameMenue::startGame()
         m_pMap->getGameRules()->createFogVision();
         pApp->getAudioManager()->playRandom();
         updatePlayerinfo();
-        m_ReplayRecorder.startRecording();
+        if (!m_ReplayRecorder.continueRecording(m_pMap->getRecordFile()))
+        {
+            m_ReplayRecorder.startRecording();
+        }
         auto* pInput = m_pMap->getCurrentPlayer()->getBaseGameInput();
         if ((m_pNetworkInterface.get() == nullptr ||
              m_pNetworkInterface->getIsServer()) &&

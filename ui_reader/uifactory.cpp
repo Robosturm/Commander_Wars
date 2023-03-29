@@ -391,13 +391,22 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
         pLabel->setY(y);
         pLabel->setStyle(style);
         pLabel->setHtmlText(text);
+        const auto & textRect = pLabel->getTextRect();
         if (width > 0)
         {
             pLabel->setWidth(width);
         }
+        else
+        {
+            pLabel->setWidth(textRect.width());
+        }
         if (height > 0)
         {
             pLabel->setHeight(height);
+        }
+        else
+        {
+            pLabel->setHeight(textRect.height());
         }
         pLabel->setVisible(visible);
         pLabel->setEnabled(enabled);

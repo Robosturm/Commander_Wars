@@ -215,7 +215,6 @@ var Constructor = function()
                     {
                         let surroundingsBeach2 = terrain2.getSurroundings("BEACH,SEA,LAKE", true, false, GameEnums.Directions_Direct, false);
                         let seaBeach2 = surroundingsBeach2 === "+N+E+S+W";
-                        GameConsole.print("Beach1=" + seaBeach.toString() + " Beach2=" + seaBeach2.toString(), 1);
                         if ((seaBeach2 && !seaBeach) ||
                                 (!seaBeach2 && seaBeach))
                         {
