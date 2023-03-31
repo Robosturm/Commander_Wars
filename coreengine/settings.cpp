@@ -1086,7 +1086,6 @@ QString Settings::getActiveUserPath()
     defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
 #endif
     Mainapp::getInstance()->getParser().getUserPath(defaultPath);
-    defaultPath = "E:/Programmierung/Commander_Wars/install/dummy";
     defaultPath += "/";
     while (defaultPath.contains("//"))
     {
