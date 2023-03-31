@@ -223,7 +223,7 @@ namespace oxygine
         window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    void VideoDriver::setViewport(const QRect& viewport)
+    void VideoDriver::setViewport(const QRectF& viewport)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         qreal ratio = window->devicePixelRatio();

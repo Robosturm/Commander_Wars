@@ -29,7 +29,9 @@ void GamemapImageSaver::saveMapAsImage(QString filename, BaseGamemenu& menu)
         if (buffer.bind())
         {
             QColor clearColor(0, 0, 255, 255);
-            QRect viewport(0, 0, size.width(), size.height());
+            oxygine::GameWindow* window = oxygine::GameWindow::getWindow();
+            qreal ratio = window->devicePixelRatio();
+            QRectF viewport(0, 0, size.width() / ratio, size.height() / ratio);
             auto viewProjection = oxygine::Stage::getViewProjectionMatrix(viewport);
             oxygine::rsCache().reset();
             driver->setViewport(viewport);
@@ -37,8 +39,6 @@ void GamemapImageSaver::saveMapAsImage(QString filename, BaseGamemenu& menu)
             oxygine::STDRenderer::instance->setViewProj(viewProjection);
             oxygine::RenderState rs;
             rs.clip = QRect(0, 0, viewport.width(), viewport.height());
-            oxygine::GameWindow* window = oxygine::GameWindow::getWindow();
-            qreal ratio = window->devicePixelRatio();
             rs.transform.setMatrix(1 / ratio, 0, 0,
                                    0, 1 / ratio, 0,
                                    0, 0, 1);
@@ -72,16 +72,16 @@ void GamemapImageSaver::saveMapAsImage(Minimap* pMinimap, QImage & img)
         QOpenGLFramebufferObject buffer(size);
         if (buffer.bind())
         {
+            oxygine::GameWindow* window = oxygine::GameWindow::getWindow();
+            qreal ratio = window->devicePixelRatio();
             QColor clearColor(0, 0, 255, 255);
-            QRect viewport(0, 0, size.width(), size.height());
+            QRectF viewport(0, 0, size.width() / ratio, size.height() / ratio);
             auto viewProjection = oxygine::Stage::getViewProjectionMatrix(viewport);
             oxygine::rsCache().reset();
             driver->setViewport(viewport);
             driver->clear(clearColor);
             oxygine::STDRenderer::instance->setViewProj(viewProjection);
             oxygine::RenderState rs;
-            oxygine::GameWindow* window = oxygine::GameWindow::getWindow();
-            qreal ratio = window->devicePixelRatio();
             rs.transform.setMatrix(1 / ratio, 0, 0,
                                    0, 1 / ratio, 0,
                                    0, 0, 1);

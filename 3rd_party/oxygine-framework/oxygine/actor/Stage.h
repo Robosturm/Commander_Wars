@@ -17,7 +17,7 @@ namespace oxygine
             LOST_CONTEXT = sysEventID('S', 'L', 'C'),
         };
 
-        static QMatrix4x4 getViewProjectionMatrix(const QRect& viewport);
+        static QMatrix4x4 getViewProjectionMatrix(const QRectF& viewport);
         explicit Stage();
         ~Stage() = default;
 

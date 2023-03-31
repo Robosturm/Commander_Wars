@@ -66,7 +66,7 @@ namespace oxygine
         renderStage(&clearColor, viewport, viewProjection);
     }
 
-    QMatrix4x4 Stage::getViewProjectionMatrix(const QRect& viewport)
+    QMatrix4x4 Stage::getViewProjectionMatrix(const QRectF& viewport)
     {
         //initialize projection and view matrix
         const float width = viewport.width();
