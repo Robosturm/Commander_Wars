@@ -292,6 +292,7 @@ public:
     ~Settings() = default;
     static Settings* getInstance();
     void setup();
+    static QString getActiveUserPath();
     static void loadSettings();    
     static void saveSettings();
     static void resetSettings();

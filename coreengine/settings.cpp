@@ -1074,6 +1074,27 @@ void Settings::setRecord(bool record)
     Settings::getInstance()->m_record = record;
 }
 
+QString Settings::getActiveUserPath()
+{
+    bool smallScreenDevice = hasSmallScreen();
+    QString defaultPath = "";
+    if (smallScreenDevice)
+    {
+        defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
+    }
+#ifdef USEAPPCONFIGPATH
+    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
+#endif
+    Mainapp::getInstance()->getParser().getUserPath(defaultPath);
+    defaultPath = "E:/Programmierung/Commander_Wars/install/dummy";
+    defaultPath += "/";
+    while (defaultPath.contains("//"))
+    {
+        defaultPath = defaultPath.replace("//", "/");
+    }
+    return defaultPath;
+}
+
 void Settings::setup()
 {
     QSize size;
@@ -1082,21 +1103,14 @@ void Settings::setup()
     size = screens[Settings::getScreen()]->availableSize() * screens[Settings::getScreen()]->devicePixelRatio();
 #endif
     bool smallScreenDevice = hasSmallScreen();
-    QString defaultPath = "";
     qint32 defaultCoCount = 0;
     if (smallScreenDevice)
     {
-        defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
         defaultCoCount = 1;
     }
-#ifdef USEAPPCONFIGPATH
-    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
-#endif
-    Mainapp::getInstance()->getParser().getUserPath(defaultPath);
-    while (defaultPath.contains("//"))
-    {
-        defaultPath = defaultPath.replace("//", "/");
-    }
+    QString defaultPath = getActiveUserPath();
+    setUserPath(defaultPath);
+    Settings::getInstance()->m_settingFile = defaultPath + Settings::getInstance()->m_settingFile;
     auto devices = QInputDevice::devices();
     bool hasTouch = false;
     for (const auto & device: qAsConst(devices))
@@ -1284,11 +1298,6 @@ void Settings::loadSettings()
     {
         setting->readValue(settings);
     }
-    QString userPath;
-    if (Mainapp::getInstance()->getParser().getUserPath(userPath))
-    {
-        setUserPath(userPath);
-    }
     setFramesPerSecond(Settings::getInstance()->m_framesPerSecond);
     setActiveMods(Settings::getInstance()->m_activeMods);
     GameConsole::setLogLevel(Settings::getInstance()->m_defaultLogLevel);
@@ -1304,7 +1313,7 @@ void Settings::loadSettings()
         setPipeUuid(QUuid::createUuid().toString());
         saveSettings();
     }
-    Userdata::getInstance()->setUniqueIdentifier(getUsername());
+    setUsername(getUsername());
 }
 
 void Settings::resetSettings()
@@ -1753,7 +1762,15 @@ QString Settings::getUsername()
 
 void Settings::setUsername(const QString &Username)
 {
-    Settings::getInstance()->m_Username = Username;
+    if (Username.length() < 50)
+    {
+        Settings::getInstance()->m_Username = Username;
+    }
+    else
+    {
+        Settings::getInstance()->m_Username = "";
+
+    }
     Userdata::getInstance()->setUniqueIdentifier(getUsername());
 }
 

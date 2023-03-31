@@ -58,7 +58,7 @@ var MainMenu =
     },
     usernameChanged : function(currentMenu, username)
     {
-        if (username !== "")
+        if (username !== "" && username.length < 50)
         {
             if (username !== settings.getUsername())
             {

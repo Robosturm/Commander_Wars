@@ -1471,6 +1471,7 @@ QJsonArray PlayerSelection::getUserNames()
         else
         {
             CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+            usernames.append(pPlayer->getPlayerNameId());
         }
     }
     return usernames;

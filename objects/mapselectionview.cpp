@@ -287,10 +287,6 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
             m_pVictoryInfo->setVisible(true);
             m_MapTags->setY(m_pVictoryInfo->getY() + 55 * Userdata::MAX_VICTORY_INFO_PER_MAP);
 
-            QImage img;
-            Mainapp::getInstance()->saveMapAsImage(m_pMinimap.get(), img);
-            img.save("test.png");
-
             m_MapPlayerCount->setVisible(true);
             m_currentMapFile = info;
             loadMapVictoryInfo();

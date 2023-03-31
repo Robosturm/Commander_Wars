@@ -65,10 +65,10 @@ void GamemapImageSaver::saveMapAsImage(Minimap* pMinimap, QImage & img)
         auto orgScale = pMinimap->getScale();
         auto orgPos = pMinimap->getPosition();
         pMinimap->setPosition(0, 0);
-        pMinimap->setScale(1.0f);
+        pMinimap->setScale(2.0f);
 
         // render
-        QSize size(pMinimap->getWidth(), pMinimap->getHeight());
+        QSize size(pMinimap->getScaledWidth(), pMinimap->getScaledHeight());
         QOpenGLFramebufferObject buffer(size);
         if (buffer.bind())
         {

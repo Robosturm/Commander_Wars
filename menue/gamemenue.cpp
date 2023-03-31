@@ -1278,6 +1278,7 @@ bool GameMenue::doDespawnSlave()
             else
             {
                 CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+                usernames.append(pPlayer->getPlayerNameId());
             }
         }
         data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
@@ -2326,6 +2327,7 @@ void GameMenue::sendGameStartedToServer()
             else
             {
                 CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+                usernames.append(pPlayer->getPlayerNameId());
             }
         }
         data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);

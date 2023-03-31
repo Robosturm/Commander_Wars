@@ -106,7 +106,7 @@ namespace oxygine
     {
     }
 
-    void VideoDriver::setViewport(const QRect& viewport)
+    void VideoDriver::setViewport(const QRectF& viewport)
     {
     }
 
