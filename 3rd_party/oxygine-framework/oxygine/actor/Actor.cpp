@@ -866,7 +866,7 @@ namespace oxygine
 
     QRect Actor::getDestRect() const
     {
-        return QRect(0, 0, getWidth() + 1, getHeight() + 1);
+        return QRect(0, 0, getWidth(), getHeight());
     }
 
     spTween Actor::__addTween(spTween tween, bool)

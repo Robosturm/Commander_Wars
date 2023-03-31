@@ -230,7 +230,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
             return;
         }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
-        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, frames, 1, true);
+        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, frames, 1);
         m_resAnims.append(pAnim);
         loadSpriteAnim(pAnim.get(), offsetX, offsetY, color, sleepAfterFinish, scaleX, scaleY, delay, loops, easeType);
     }

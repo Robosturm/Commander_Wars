@@ -306,7 +306,7 @@ void SpriteCreator::createSprites(QString file, QImage& colorTable, const QImage
 }
 
 oxygine::spResAnim SpriteCreator::createAnim(QString input, QString colorTable, QString newTable, bool useColorBox,
-                                             qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder)
+                                             qint32 columns, qint32  rows, float scaleFactor)
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
@@ -325,11 +325,11 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QString colorTable, 
         CONSOLE_PRINT("The mask table is to small. " + newTable, GameConsole::eERROR);
         return oxygine::spResAnim();
     }
-    return createAnim(input, colorTableImg, maskTableImg, useColorBox, columns, rows, scaleFactor, addTransparentBorder);
+    return createAnim(input, colorTableImg, maskTableImg, useColorBox, columns, rows, scaleFactor);
 }
 
 oxygine::spResAnim SpriteCreator::createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg, bool useColorBox,
-                                             qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder)
+                                             qint32 columns, qint32  rows, float scaleFactor)
 {
     QFileInfo inputInfo(input);
     if (!inputInfo.exists())
@@ -342,7 +342,7 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QImage& colorTableIm
         QImage img = createSprite(input, colorTableImg, maskTableImg, useColorBox, false);
         oxygine::spSingleResAnim pRet = oxygine::spSingleResAnim::create();
         pRet->setResPath(input);
-        Mainapp::getInstance()->loadResAnim(pRet, img, columns, rows, scaleFactor, addTransparentBorder);
+        Mainapp::getInstance()->loadResAnim(pRet, img, columns, rows, scaleFactor);
         return pRet;
     }
     return oxygine::spResAnim();

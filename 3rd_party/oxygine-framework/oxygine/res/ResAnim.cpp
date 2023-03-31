@@ -16,7 +16,7 @@ namespace oxygine
     {
     }
 
-    void ResAnim::init(spTexture & texture, const QSize& originalSize, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void ResAnim::init(spTexture & texture, const QSize& originalSize, qint32 columns, qint32 rows, float scaleFactor)
     {
         m_scaleFactor = scaleFactor;
         if (!texture)
@@ -25,20 +25,7 @@ namespace oxygine
         }
         qint32 frame_width = originalSize.width() / columns;
         qint32 frame_height = originalSize.height() / rows;
-        if (rows > 1 || columns > 1)
-        {
-            if (addTransparentBorder)
-            {
-                frame_height -= 1;
-                frame_width -= 1;
-            }
-            else
-            {
-                frame_height -= 2;
-                frame_width -= 2;
-            }
-        }
-        float pixelOffset = 1 / static_cast<float>(originalSize.width()) / 4.0f;
+        float pixelOffset = 1 / static_cast<float>(originalSize.width()) * 0.5f;
         float iw = 1.0f / static_cast<float>(columns);
         float ih = 1.0f / static_cast<float>(rows);
         float width = static_cast<float>(frame_width) / static_cast<float>(originalSize.width()) - pixelOffset;
@@ -61,23 +48,22 @@ namespace oxygine
         init(columns, scaleFactor);
     }
 
-    void ResAnim::init(const QString & file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void ResAnim::init(const QString & file, qint32 columns, qint32 rows, float scaleFactor)
     {
         QImage img(file);
-        init(img, columns, rows, scaleFactor, addTransparentBorder);
+        init(img, columns, rows, scaleFactor);
     }
 
-    void ResAnim::init(QImage & img,  qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder,
+    void ResAnim::init(QImage & img,  qint32 columns, qint32 rows, float scaleFactor,
                        bool clamp2Edge, quint32 linearFilter)
     {
-        SpriteCreator::addFrameBorders(img, columns, rows, addTransparentBorder);
         SpriteCreator::convertToRgba(img);
         m_scaleFactor = scaleFactor;
         spTexture texture = VideoDriver::instance->createTexture();
         texture->init(img);
         texture->setClamp2Edge(clamp2Edge);
         texture->setLinearFilter(linearFilter);
-        init(texture, img.size(), columns, rows, scaleFactor, addTransparentBorder);
+        init(texture, img.size(), columns, rows, scaleFactor);
     }
 
     void ResAnim::init(qint32 columns, float scaleFactor, float appliedScale)

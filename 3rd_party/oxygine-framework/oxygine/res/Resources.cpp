@@ -99,7 +99,7 @@ namespace oxygine
         setName(file.fileName());
     }
 
-    bool Resources::loadXML(const QString & xmlFile, bool addTransparentBorder)
+    bool Resources::loadXML(const QString & xmlFile)
     {
 #ifdef GRAPHICSUPPORT
         m_name = xmlFile;
@@ -127,7 +127,6 @@ namespace oxygine
             while (true)
             {
                 CreateResourceContext context;
-                context.m_addTransparentBorder = addTransparentBorder;
                 context.m_walker = walker.next();
                 if (context.m_walker.empty())
                 {

@@ -47,7 +47,7 @@ namespace oxygine
         spVideoDriver driver = VideoDriver::instance;
         driver->setViewport(viewport);
 
-        if (clearColor)
+        if (clearColor != nullptr)
         {
             driver->clear(*clearColor);
         }
@@ -69,15 +69,11 @@ namespace oxygine
     QMatrix4x4 Stage::getViewProjectionMatrix(const QRect& viewport)
     {
         //initialize projection and view matrix
-        static constexpr float zNear = 0.2f;
-        static constexpr float zFar = 10000.0f;
-        static constexpr float m33 = 1 / (zFar - zNear);
-        static constexpr float m34 = zNear / (zNear - zFar);
         const float width = viewport.width();
         const float height = viewport.height();
         QMatrix4x4 viewProjection(2.0f / width, 0, 0, -1,
                                   0, -2.0f / height, 0, 1,
-                                  0, 0, m33, m34,
+                                  0, 0, 1, 0,
                                   0, 0, 0, 1);
         return viewProjection;
     }

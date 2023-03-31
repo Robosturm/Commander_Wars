@@ -115,7 +115,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
         path = oxygine::Resource::RCC_PREFIX_PATH + m_campaignData.getMapBackground();
     }
     QImage background(path);
-    pApp->loadResAnim(m_campaignBackground, background, 1, 1, 1.0f, false);
+    pApp->loadResAnim(m_campaignBackground, background, 1, 1, 1.0f);
     m_pMapBackground = oxygine::spSprite::create();
     m_pMapBackground->setResAnim(m_campaignBackground.get());
     m_pMapBackground->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)

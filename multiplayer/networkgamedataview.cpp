@@ -33,7 +33,7 @@ NetworkGameDataView::NetworkGameDataView(NetworkGameData & data)
     getMinimapImage(img, data);
     m_minimapImage = oxygine::spSingleResAnim::create();
     img.save("test0.png");
-    Mainapp::getInstance()->loadResAnim(m_minimapImage, img, 1, 1, 1, true);
+    Mainapp::getInstance()->loadResAnim(m_minimapImage, img, 1, 1, 1);
     img.save("test1.png");
     UiFactory::getInstance().createUi("ui/multiplayer/networkGameDataView.xml", this);
 }

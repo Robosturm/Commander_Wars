@@ -84,8 +84,9 @@ namespace oxygine
             return;
         }
         QColor color = rs.getFinalColor(sprite->getColor());
+        QRect destRect = sprite->getDestRect();
         sprite->getMaterial()->apply();
-        sprite->getMaterial()->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
+        sprite->getMaterial()->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), destRect);
 #endif
     }
 
@@ -136,8 +137,9 @@ namespace oxygine
     {
 #ifdef GRAPHICSUPPORT
         QColor color = rs.getFinalColor(sprite->getColor());
-        sprite->getMaterial()->apply();
-        sprite->getMaterial()->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
+        QRect destRect = sprite->getDestRect();
+        sprite->getMaterial()->apply();        
+        sprite->getMaterial()->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), destRect);
 #endif
     }
 }

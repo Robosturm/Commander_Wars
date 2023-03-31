@@ -444,19 +444,19 @@ void DialogCOStyle::updateSprites()
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm");
     float scale = pAnim->getScaleFactor();
-    m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
+    m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale);
     m_pCOSprites[m_CurrentIndex]->setResAnim(m_pResAnims[m_CurrentIndex].get());
 
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+mini");
     if (pAnim != nullptr)
     {
         scale = pAnim->getScaleFactor();
-        m_pMiniResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+mini.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
+        m_pMiniResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+mini.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale);
         m_pMiniCOSprites[m_CurrentIndex]->setResAnim(m_pMiniResAnims[m_CurrentIndex].get());
     }
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + m_Styles[m_CurrentIndex] + "+face");
     scale = pAnim->getScaleFactor();
-    m_pFaceResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+face.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
+    m_pFaceResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+face.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale);
     m_pFaceCOSprites[m_CurrentIndex]->setResAnim(m_pFaceResAnims[m_CurrentIndex].get());
 }
 

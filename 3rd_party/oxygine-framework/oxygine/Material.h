@@ -47,7 +47,7 @@ namespace oxygine
         void rehash(size_t& hash) const;
         void apply();
         void flush();
-        void render(const QTransform& tr, const QColor& c, const QRectF& src, const QRect& dest);
+        void render(const QTransform& tr, const QColor& c, const QRectF& src, QRect& dest);
         void setMatrixMode(bool set);
     private:
         void xapply();

@@ -70,7 +70,7 @@ namespace oxygine
         void setBaseShaderFlags(quint32 fl);
         /**Sets World transformation.*/
         void setTransform(const QTransform& world);
-        void addQuad(const QColor& clr, const QRectF& srcRect, const QRect& destRect);
+        void addQuad(const QColor& clr, const QRectF& srcRect, QRect& destRect);
 
         /**Completes started rendering and restores previous Frame Buffer.*/
         void end();
@@ -87,7 +87,7 @@ namespace oxygine
             return m_verticesData.empty();
         }
 
-        static inline void fillQuad(std::vector<VertexPCT2> & quad, const QRectF& srcRect, const QRect& destRect, const QTransform& transform, quint32 rgba)
+        static inline void fillQuad(std::vector<VertexPCT2> & quad, const QRectF& srcRect, QRect& destRect, const QTransform& transform, quint32 rgba)
         {
             float u = srcRect.x();
             float v = srcRect.y();
@@ -95,6 +95,7 @@ namespace oxygine
             float dv = srcRect.height();
             VertexPCT2 vt;
             vt.color = rgba;
+            destRect.adjust(0, 0, 1, 1);
             QPointF p1(destRect.topLeft());
             QPointF p2(destRect.bottomLeft());
             QPointF p3(destRect.topRight());
@@ -113,19 +114,19 @@ namespace oxygine
             quad[0] = vt;
 
             vt.x = p2.x();
-            vt.y = p2.y();
+            vt.y = qCeil(p2.y());
             vt.u = u;
             vt.v = v + dv;
             quad[1] = vt;
 
-            vt.x = p3.x();
+            vt.x = qCeil(p3.x());
             vt.y = p3.y();
             vt.u = u + du;
             vt.v = v;
             quad[2] = vt;
 
-            vt.x = p4.x();
-            vt.y = p4.y();
+            vt.x = qCeil(p4.x());
+            vt.y = qCeil(p4.y());
             vt.u = u + du;
             vt.v = v + dv;
             quad[3] = vt;

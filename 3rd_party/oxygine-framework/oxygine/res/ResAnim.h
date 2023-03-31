@@ -16,12 +16,12 @@ namespace oxygine
         explicit ResAnim(Resource* atlas = nullptr);
         virtual ~ResAnim() = default;
 
-        virtual void init(const QString & file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
-        virtual void init(QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder,
+        virtual void init(const QString & file, qint32 columns, qint32 rows, float scaleFactor);
+        virtual void init(QImage & image, qint32 columns, qint32 rows, float scaleFactor,
                           bool clamp2Edge = true, quint32 linearFilter = 0);
         void init(qint32 columns, float scaleFactor, float appliedScale = 1);
         /**creates animation frames from Texture*/
-        void init(spTexture & texture, const QSize& originalSize, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
+        void init(spTexture & texture, const QSize& originalSize, qint32 columns, qint32 rows, float scaleFactor);
 
         float getScaleFactor() const
         {

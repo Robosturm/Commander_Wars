@@ -649,7 +649,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
             img = QImage(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
         }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
-        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1, false);
+        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
         m_SpriteAnim = pAnim;
         pSprite->setResAnim(pAnim.get());
         if (pAnim.get() != nullptr)

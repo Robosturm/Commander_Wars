@@ -316,7 +316,7 @@ namespace oxygine
         {
             return Actor::getDestRect();
         }
-        return m_frame.getDestRect().adjusted(0, 0, 1, 1);
+        return m_frame.getDestRect();
 #else
         return QRect();
 #endif

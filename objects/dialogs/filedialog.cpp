@@ -287,7 +287,7 @@ void FileDialog::showFolder(QString folder)
             {
                 QImage img(infoList[i].filePath());
                 oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
-                Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1, false);
+                Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
                 m_ResAnims.append(pAnim);
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
                 pSprite->setResAnim(pAnim.get());

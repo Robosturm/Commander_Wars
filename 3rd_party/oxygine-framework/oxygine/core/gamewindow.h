@@ -28,7 +28,7 @@ namespace oxygine
         {
             m_quit = true;
         }
-        void loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder);
+        void loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32  rows, float scaleFactor);
         virtual bool isWorker() = 0;
         /**
          * @brief isWorkerRunning
@@ -81,7 +81,7 @@ namespace oxygine
         float getActiveDpiFactor() const;
         bool hasCursor() const;
     signals:
-        void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
+        void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor);
         void sigLoadRessources();
         void sigMousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
         void sigMouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
@@ -120,7 +120,7 @@ namespace oxygine
         virtual void launchGame() override;
 
     protected slots:
-        void loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
+        void loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor);
         virtual void loadRessources(){}
 
         void quitApp();

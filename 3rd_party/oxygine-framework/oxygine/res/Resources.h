@@ -30,7 +30,7 @@ namespace oxygine
         @param xml file paths
         @param options
         */
-        bool loadXML(const QString & xmlFile, bool addTransparentBorder);
+        bool loadXML(const QString & xmlFile);
 
         /**Adds Resource*/
         void add(spResource r);

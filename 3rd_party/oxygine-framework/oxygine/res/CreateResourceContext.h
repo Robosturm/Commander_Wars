@@ -54,7 +54,6 @@ namespace oxygine
         ~CreateResourceContext() = default;
         Resources* m_resources{nullptr};
         QString m_xml_name;
-        bool m_addTransparentBorder{false};
         XmlWalker m_walker{"", 1.0f, QDomElement()};
     };
 }

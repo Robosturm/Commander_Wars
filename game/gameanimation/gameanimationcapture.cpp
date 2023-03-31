@@ -58,8 +58,8 @@ void GameAnimationCapture::addBuildingSprite(const QString & spriteID, Player* s
             QImage captureImage(path);
             getRecoloredImage(startPlayer, capturedPlayer, mode,
                               preCaptureImage, captureImage);
-            pApp->loadResAnim(m_buildingResAnim, m_buildingImage, 1, 1, 1.0f, false);
-            pApp->loadResAnim(m_captureBuildingResAnim, m_captureBuildingImage, 1, 1, 1.0f, false);
+            pApp->loadResAnim(m_buildingResAnim, m_buildingImage, 1, 1, 1.0f);
+            pApp->loadResAnim(m_captureBuildingResAnim, m_captureBuildingImage, 1, 1, 1.0f);
             m_buildingSprites->setResAnim(m_buildingResAnim.get());
         }
         else

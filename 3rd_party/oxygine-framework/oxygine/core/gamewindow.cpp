@@ -84,7 +84,6 @@ namespace oxygine
         QCoreApplication::exit(exitCode);
     }
 
-
     float GameWindow::getActiveDpiFactor() const
     {
         auto ratio = devicePixelRatio();
@@ -158,26 +157,26 @@ namespace oxygine
         }
     }
 
-    void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
         if (!m_shuttingDown && !m_noUi)
         {
             if (isMainThread())
             {
-                loadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
+                loadSingleResAnim(pAnim, image, columns, rows, scaleFactor);
             }
             else
             {
-                emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
+                emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor);
             }
         }
     }
 
-    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
         if (pAnim.get() != nullptr && !m_noUi)
         {
-            pAnim->init(image, columns, rows, scaleFactor, addTransparentBorder);
+            pAnim->init(image, columns, rows, scaleFactor);
         }
     }
 

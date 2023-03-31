@@ -438,7 +438,7 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
         }
         m_modThumbnail->setVisible(true);
         m_modThumbnailAnim = oxygine::spSingleResAnim::create();
-        Mainapp::getInstance()->loadResAnim(m_modThumbnailAnim, img, 1, 1, 1.0f, false);
+        Mainapp::getInstance()->loadResAnim(m_modThumbnailAnim, img, 1, 1, 1.0f);
         m_modThumbnail->setResAnim(m_modThumbnailAnim.get());
         if (m_modThumbnailAnim->getWidth() > m_pModDescription->getContentWidth() - 60)
         {

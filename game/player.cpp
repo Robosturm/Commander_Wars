@@ -190,7 +190,7 @@ void Player::setColor(QColor color, qint32 table)
     }
 #ifdef GRAPHICSUPPORT
     m_ColorTableAnim = oxygine::spSingleResAnim::create();
-    Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
+    Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1);
 #endif
 }
 
@@ -541,7 +541,7 @@ oxygine::spResAnim Player::getNeutralTableAnim()
             if (QFile::exists(path + "neutral.png"))
             {
                 m_neutralTableImage = QImage(path + "neutral.png");
-                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim, m_neutralTableImage, 1, 1, 1, false);
+                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim, m_neutralTableImage, 1, 1, 1);
                 break;
             }
         }
@@ -2365,7 +2365,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
 #ifdef GRAPHICSUPPORT
             CONSOLE_PRINT("Loading colortable", GameConsole::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
-            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
+            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1);
 #endif
         }
     }
@@ -2380,7 +2380,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
 #ifdef GRAPHICSUPPORT
             CONSOLE_PRINT("Loading colortable", GameConsole::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
-            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
+            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1);
 #endif
         }
     }
