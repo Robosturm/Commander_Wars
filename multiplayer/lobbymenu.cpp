@@ -154,7 +154,7 @@ LobbyMenu::LobbyMenu()
     m_pButtonUpdateGamesMode->setEnabled(false);
     connect(this, &LobbyMenu::sigRequestUpdateGames, this, &LobbyMenu::requestUpdateGames, Qt::QueuedConnection);
 
-    qint32 height = m_pButtonHostOnServer->getY() - 220 - 10 - m_pButtonSwapLobbyMode->getScaledHeight();
+    qint32 height = m_pButtonHostOnServer->getY() - 270 - 10 - m_pButtonSwapLobbyMode->getScaledHeight();
     if (Settings::getSmallScreenDevice())
     {
         height = m_pButtonHostOnServer->getY() - 20 - m_pButtonSwapLobbyMode->getScaledHeight();
@@ -173,11 +173,61 @@ LobbyMenu::LobbyMenu()
     {
         pInterface = MainServer::getInstance()->getGameServer();
     }
+    qint32 y = m_gamesview->getY() + m_gamesview->getScaledHeight() + 10;
+    const qint32 infoWidth = 100;
+    m_matchViewInfo = spLabel::create(infoWidth * 2, true);
+    auto style = m_matchViewInfo->getStyle();
+    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    m_matchViewInfo->setStyle(style);
+    m_matchViewInfo->setPosition(Settings::getWidth() / 2 - infoWidth, y);
+    m_matchViewInfo->setText("-- / --");
+    addChild(m_matchViewInfo);
+    m_pNextStepButton = ObjectManager::createIconButton("next_unit", 36);
+    m_pNextStepButton->setEnabled(false);
+    m_pNextStepButton->setPosition(Settings::getWidth() / 2 + 10 + infoWidth, y);
+    m_pNextStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        emit sigShowNextStep();
+    });
+    addChild(m_pNextStepButton);
+    m_pEndStepButton = ObjectManager::createIconButton("toEnd", 36);
+    m_pEndStepButton->setEnabled(false);
+    m_pEndStepButton->setPosition(m_pNextStepButton->getX() + m_pNextStepButton->getScaledWidth() + 10, y);
+    m_pEndStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        emit sigShowEnd();
+    });
+    addChild(m_pEndStepButton);
 
-    height = m_pButtonHostOnServer->getY() - m_gamesview->getY() - m_gamesview->getScaledHeight() - 20;
+    m_pPreviousStepButton = ObjectManager::createIconButton("previous_unit", 36);
+    m_pPreviousStepButton->setEnabled(false);
+    m_pPreviousStepButton->setPosition(Settings::getWidth() / 2 - 10 - infoWidth - m_pPreviousStepButton->getScaledWidth(), y);
+    m_pPreviousStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        emit sigShowPreviousStep();
+    });
+    addChild(m_pPreviousStepButton);
+
+    m_pStartStepButton = ObjectManager::createIconButton("toStart", 36);
+    m_pStartStepButton->setEnabled(false);
+    m_pStartStepButton->setPosition(m_pPreviousStepButton->getX() - m_pPreviousStepButton->getScaledWidth() - 10, y);
+    m_pStartStepButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    {
+        emit sigShowStart();
+    });
+    addChild(m_pStartStepButton);
+
+
+    connect(this, &LobbyMenu::sigShowNextStep, this, &LobbyMenu::showNextStep, Qt::QueuedConnection);
+    connect(this, &LobbyMenu::sigShowPreviousStep, this, &LobbyMenu::showPreviousStep, Qt::QueuedConnection);
+    connect(this, &LobbyMenu::sigShowStart, this, &LobbyMenu::showStart, Qt::QueuedConnection);
+    connect(this, &LobbyMenu::sigShowEnd, this, &LobbyMenu::showEnd, Qt::QueuedConnection);
+    y += 50;
+
+    height = m_pButtonHostOnServer->getY() - m_gamesview->getY() - m_gamesview->getScaledHeight() - 70;
 
     spChat pChat = spChat::create(pInterface, QSize(Settings::getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat, nullptr);
-    pChat->setPosition(10, m_gamesview->getY() + m_gamesview->getScaledHeight() + 10);
+    pChat->setPosition(10, y);
     if (Settings::getSmallScreenDevice())
     {
         pChat->setVisible(false);
@@ -205,6 +255,8 @@ void LobbyMenu::requestServerGames()
     {
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTGAMES);
+        data.insert(JsonKeys::JSONKEY_MATCHSTARTINDEX, m_gameIndex);
+        data.insert(JsonKeys::JSONKEY_MATCHCOUNT, REQUEST_COUNT);
         QJsonDocument doc(data);
         emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
@@ -216,6 +268,8 @@ void LobbyMenu::requestUserUpdateGames()
     {
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTUSERGAMES);
+        data.insert(JsonKeys::JSONKEY_MATCHSTARTINDEX, m_gameIndex);
+        data.insert(JsonKeys::JSONKEY_MATCHCOUNT, REQUEST_COUNT);
         data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
         QJsonDocument doc(data);
         emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -229,6 +283,10 @@ void LobbyMenu::enableServerButtons(bool enable)
     m_pButtonHostOnServer->setEnabled(enable);
     m_pButtonSwapLobbyMode->setEnabled(enable);
     m_pButtonUpdateGamesMode->setEnabled(enable);
+    m_pEndStepButton->setEnabled(enable);
+    m_pNextStepButton->setEnabled(enable);
+    m_pPreviousStepButton->setEnabled(enable);
+    m_pStartStepButton->setEnabled(enable);
 }
 
 void LobbyMenu::changeLobbyMode()
@@ -523,12 +581,14 @@ void LobbyMenu::updateGameData(const QJsonObject & objData)
 {
     m_games.clear();
     QJsonObject games = objData.value(JsonKeys::JSONKEY_GAMES).toObject();
+    m_serverCurrentMatchCount = objData.value(JsonKeys::JSONKEY_MATCHCOUNT).toInt();
     for (const auto & game : games)
     {
         NetworkGameData gameData;
         gameData.fromJson(game.toObject());
         m_games.append(gameData);
     }
+    m_matchViewInfo->setText(QString::number(m_gameIndex + 1) + " / " + QString::number(m_gameIndex + 1 + games.size()));
     emit sigUpdateGamesView();
 }
 
@@ -646,6 +706,7 @@ void LobbyMenu::onLogin()
 {
     enableServerButtons(true);
     m_loggedIn = true;
+    requestServerGames();
 }
 
 void LobbyMenu::onEnter()
@@ -821,4 +882,39 @@ void LobbyMenu::changePasswordOnServerAccount(const QString & oldEmailAdress, co
     Mainapp* pApp = Mainapp::getInstance();
     auto & cypher = pApp->getCypher();
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::ChangePassword), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void LobbyMenu::showNextStep()
+{
+    m_gameIndex += REQUEST_COUNT;
+    if (m_gameIndex >= m_serverCurrentMatchCount)
+    {
+        showEnd();
+    }
+    else
+    {
+        requestUserUpdateGames();
+    }
+}
+
+void LobbyMenu::showPreviousStep()
+{
+    m_gameIndex -= REQUEST_COUNT;
+    if (m_gameIndex < 0)
+    {
+        m_gameIndex = 0;
+    }
+    requestUserUpdateGames();
+}
+
+void LobbyMenu::showStart()
+{
+    m_gameIndex = 0;
+    requestUserUpdateGames();
+}
+
+void LobbyMenu::showEnd()
+{
+    m_gameIndex = m_serverCurrentMatchCount - (m_serverCurrentMatchCount % REQUEST_COUNT);
+    requestUserUpdateGames();
 }

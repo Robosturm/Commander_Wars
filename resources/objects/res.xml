@@ -17,6 +17,8 @@
         <image file="next_player.png" />
         <image file="previous_unit.png" />
         <image file="next_unit.png" />
+        <image file="toStart.png" />
+        <image file="toEnd.png" />
         <image file="cancel.png" />
         <image file="info.png" />
         <image file="lock.png" />

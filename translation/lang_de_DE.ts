@@ -6772,7 +6772,7 @@ Note: This may be caused by a defective mod.</source>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="137"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="246"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="304"/>
         <source>Show my games</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6782,39 +6782,39 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="240"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="298"/>
         <source>Show open games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="295"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="397"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="353"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="455"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="346"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="404"/>
         <source>Contacting server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="363"/>
-        <location filename="../multiplayer/lobbymenu.cpp" line="378"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="421"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="436"/>
         <source>Enter Host address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="473"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="531"/>
         <source>Failed to launch game on server cause no more game slots are available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="480"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="538"/>
         <source>Host game is no longer available or is currently relaunched.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="639"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="699"/>
         <source>Connection refused. Server has a different version of the game. Server </source>
         <translation type="unfinished"></translation>
     </message>
@@ -9828,7 +9828,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="1944"/>
+        <location filename="../coreengine/settings.cpp" line="1946"/>
         <source>Default device</source>
         <translation type="unfinished"></translation>
     </message>

@@ -1086,7 +1086,10 @@ QString Settings::getActiveUserPath()
     defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
 #endif
     Mainapp::getInstance()->getParser().getUserPath(defaultPath);
-    defaultPath += "/";
+    if (!defaultPath.isEmpty())
+    {
+        defaultPath += "/";
+    }
     while (defaultPath.contains("//"))
     {
         defaultPath = defaultPath.replace("//", "/");

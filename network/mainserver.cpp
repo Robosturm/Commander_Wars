@@ -94,15 +94,12 @@ void MainServer::release()
 
 MainServer::MainServer()
     : QObject(),
-      m_updateTimer(this),
       m_periodicExecutionTimer(this),
       m_pGameServer(spTCPServer::create(this)),
       m_pSlaveServer(spTCPServer::create(this))
 {
     CONSOLE_PRINT("Game server launched", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
-    m_updateTimer.setSingleShot(true);
-    m_updateTimer.start(1000 * 60 * 3);
     m_periodicExecutionTimer.setSingleShot(false);
     m_periodicExecutionTimer.start(30 * 1000);
     // publish server to js environment for ai training
@@ -119,7 +116,6 @@ MainServer::MainServer()
     connect(m_pSlaveServer.get(), &TCPServer::recieveData, this, &MainServer::receivedSlaveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
     // internal updates
     connect(this, &MainServer::sigStartRemoteGame, this, &MainServer::slotStartRemoteGame, Qt::QueuedConnection);
-    connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
     connect(&m_periodicExecutionTimer, &QTimer::timeout, this, &MainServer::periodicTasks, Qt::QueuedConnection);
     parseSlaveAddressOptions();
 
@@ -367,10 +363,9 @@ AutoMatchMaker* MainServer::getAutoMatchMaker(const QString & matchMaker)
 void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData)
 {
     QString slaveName = objData.value(JsonKeys::JSONKEY_SLAVENAME).toString();
-    auto iter = m_games.find(slaveName);
-    if (iter != m_games.end())
+    auto * game = getInternGame(slaveName);
+    if (game != nullptr)
     {
-        const auto & game = iter.value();
         // send data
         QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
         CONSOLE_PRINT("onSlaveRelaunched sending command " + command +
@@ -490,13 +485,33 @@ void MainServer::setUuidForGame(NetworkGameData & game)
     }
 }
 
+MainServer::InternNetworkGame* MainServer::getInternGame(const QString & slaveName, qint32 * index)
+{
+    for (qint32 i = 0; i < m_games.size(); ++i)
+    {
+        auto & game = m_games[i];
+        if (game->slaveName == slaveName)
+        {
+            if (index != nullptr)
+            {
+                *index = i;
+            }
+            return game.get();
+        }
+    }
+    if (index != nullptr)
+    {
+        *index = -1;
+    }
+    return nullptr;
+}
+
 void MainServer::onSlaveReady(quint64 socketID, const QJsonObject & objData)
 {
     QString slaveName = objData.value(JsonKeys::JSONKEY_SLAVENAME).toString();
-    auto iter = m_games.find(slaveName);
-    if (iter != m_games.end())
+    auto * internGame =getInternGame(slaveName);
+    if (internGame != nullptr)
     {
-        auto & internGame = iter.value();
         internGame->game->onConnectToLocalServer(socketID, m_pSlaveServer);
     }
     else
@@ -508,10 +523,9 @@ void MainServer::onSlaveReady(quint64 socketID, const QJsonObject & objData)
 void MainServer::onGameRunningOnServer(quint64 socketID, const QJsonObject & objData)
 {
     QString slaveName = objData.value(JsonKeys::JSONKEY_SLAVENAME).toString();
-    auto iter = m_games.find(slaveName);
-    if (iter != m_games.end())
+    auto * internGame =getInternGame(slaveName);
+    if (internGame != nullptr)
     {
-        auto & internGame = iter.value();
         internGame->game->slaveRunning(objData, m_pGameServer);
     }
     else
@@ -523,10 +537,9 @@ void MainServer::onGameRunningOnServer(quint64 socketID, const QJsonObject & obj
 void MainServer::onSlaveGameStarted(quint64 socketID, const QJsonObject & objData)
 {
     QString slaveName = objData.value(JsonKeys::JSONKEY_SLAVENAME).toString();
-    auto iter = m_games.find(slaveName);
-    if (iter != m_games.end())
+    auto * internGame =getInternGame(slaveName);
+    if (internGame != nullptr)
     {
-        auto & internGame = iter.value();
         internGame->game->slaveGameStarted(objData);
     }
     else
@@ -556,8 +569,11 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     QJsonObject games;
     qint32 i = 0;
-    for (const auto & game : qAsConst(m_games))
+    qint32 start = objData.value(JsonKeys::JSONKEY_MATCHSTARTINDEX).toInt();
+    qint32 count = objData.value(JsonKeys::JSONKEY_MATCHCOUNT).toInt();
+    for (qint32 index = start; index < m_games.size() && i < count; ++index)
     {
+        auto & game = m_games[index];
         if (game->game.get() != nullptr)
         {
             auto & data = game->game->getData();
@@ -569,8 +585,9 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
             }
         }
     }
-    for (auto & game : qAsConst(m_runningSlaves))
+    for (qint32 index = start; index < m_runningSlaves.size() && i < count; ++index)
     {
+        auto & game = m_runningSlaves[index];
         if (game.game.getPlayerNames().contains(username))
         {
             QJsonObject obj = game.game.toJson();
@@ -578,8 +595,9 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
             ++i;
         }
     }
-    for (auto & game : qAsConst(m_runningLobbies))
+    for (qint32 index = start; index < m_runningLobbies.size() && i < count; ++index)
     {
+        auto & game = m_runningLobbies[index];
         if (game.game.getPlayerNames().contains(username))
         {
             QJsonObject obj = game.game.toJson();
@@ -588,6 +606,7 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
         }
     }
     data.insert(JsonKeys::JSONKEY_GAMES, games);
+    data.insert(JsonKeys::JSONKEY_MATCHCOUNT, m_runningLobbies.size() + m_runningSlaves.size() + m_games.size());
     // send server data to all connected clients
     QJsonDocument doc(data);
     emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -595,17 +614,47 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
 
 void MainServer::onRequestGameData(quint64 socketId, const QJsonObject & objData)
 {
-    sendGameDataToClient(socketId);
+    QString command = QString(NetworkCommands::SERVERGAMEDATA);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QJsonObject games;
+    qint32 i = 0;
+    qint32 start = objData.value(JsonKeys::JSONKEY_MATCHSTARTINDEX).toInt();
+    qint32 count = objData.value(JsonKeys::JSONKEY_MATCHCOUNT).toInt();
+    for (qint32 index = start; index < m_games.size() && i < count; ++index)
+    {
+        auto & game = m_games[index];
+        if (game->game.get() != nullptr &&
+            game->game->getSlaveRunning() &&
+            !game->game->getData().getLaunched())
+        {
+            QJsonObject obj = game->game->getData().toJson();
+            games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+            ++i;
+        }
+    }
+    for (qint32 index = start; index < m_runningLobbies.size() && i < count; ++index)
+    {
+        auto & game = m_runningLobbies[index];
+        QJsonObject obj = game.game.toJson();
+        games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+        ++i;
+    }
+    data.insert(JsonKeys::JSONKEY_GAMES, games);
+    data.insert(JsonKeys::JSONKEY_MATCHCOUNT, m_runningLobbies.size() + m_games.size());
+    // send server data to all connected clients
+    QJsonDocument doc(data);
+    emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData)
 {
     QString slaveName = objData.value(JsonKeys::JSONKEY_SLAVENAME).toString();
     qint32 openPlayerCount = objData.value(JsonKeys::JSONKEY_OPENPLAYERCOUNT).toInteger();
-    auto iter = m_games.find(slaveName);
-    if (iter != m_games.end())
+    auto * internGame =getInternGame(slaveName);
+    if (internGame != nullptr)
     {
-        auto & internGame = iter.value();
         auto & data = internGame->game->getData();
         data.setPlayers(data.getMaxPlayers() - openPlayerCount);
         if (objData.contains(JsonKeys::JSONKEY_CURRENTPLAYER))
@@ -624,7 +673,6 @@ void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData
         {
             internGame->game->updateOnlineInfo(objData);
         }
-        m_updateGameData = true;
     }
     else
     {
@@ -635,25 +683,24 @@ void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData
 void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
 {
     bool found = false;
-    QString slave = objData.value(JsonKeys::JSONKEY_SLAVENAME).toString();
-    CONSOLE_PRINT("Searching for game " + slave + " for socket " + QString::number(socketID) + " to join game.", GameConsole::eDEBUG);
-    auto iter = m_games.find(slave);
-    if (iter != m_games.end())
+    QString slaveName = objData.value(JsonKeys::JSONKEY_SLAVENAME).toString();
+    CONSOLE_PRINT("Searching for game " + slaveName + " for socket " + QString::number(socketID) + " to join game.", GameConsole::eDEBUG);
+    auto * internGame = getInternGame(slaveName);
+    if (internGame != nullptr)
     {
-        const auto & game = iter.value();
         // only send valid game data to clients
-        if (game->game.get() != nullptr &&
-            game->game->getServerName() == slave &&
-            game->game->getSlaveRunning())
+        if (internGame->game.get() != nullptr &&
+            internGame->game->getServerName() == slaveName &&
+            internGame->game->getSlaveRunning())
         {
             // send data
             QString command = QString(NetworkCommands::SLAVEADDRESSINFO);
             CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             QJsonObject data;
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
-            data.insert(JsonKeys::JSONKEY_ADDRESS, game->game->getData().getSlaveAddress());
-            data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, game->game->getData().getSlaveSecondaryAddress());
-            data.insert(JsonKeys::JSONKEY_PORT, static_cast<qint64>(game->game->getData().getSlavePort()));
+            data.insert(JsonKeys::JSONKEY_ADDRESS, internGame->game->getData().getSlaveAddress());
+            data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, internGame->game->getData().getSlaveSecondaryAddress());
+            data.insert(JsonKeys::JSONKEY_PORT, static_cast<qint64>(internGame->game->getData().getSlavePort()));
             QJsonDocument doc(data);
             emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
             found = true;
@@ -661,15 +708,15 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
     }
     if (!found)
     {
-        found = tryJoinSuspendedGame(socketID, slave, m_runningSlaves);
+        found = tryJoinSuspendedGame(socketID, slaveName, m_runningSlaves);
         if (!found)
         {
-            found = tryJoinSuspendedGame(socketID, slave, m_runningLobbies);
+            found = tryJoinSuspendedGame(socketID, slaveName, m_runningLobbies);
         }
     }
     if (!found)
     {
-        CONSOLE_PRINT("Failed to find game " + slave + " for socket " + QString::number(socketID) + " to join game. Forcing a disconnection.", GameConsole::eDEBUG);
+        CONSOLE_PRINT("Failed to find game " + slaveName + " for socket " + QString::number(socketID) + " to join game. Forcing a disconnection.", GameConsole::eDEBUG);
         QString command = QString(NetworkCommands::SERVERGAMENOLONGERAVAILABLE);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
@@ -799,12 +846,11 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo)
         // connect signals and spawn process
         connect(game->process.get(), &QProcess::finished, game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->process.get(), &QProcess::errorOccurred, game->game.get(), &NetworkGame::errorOccurred, Qt::QueuedConnection);
-        connect(game->game.get(), &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
         connect(game->game.get(), &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);
         CONSOLE_PRINT("Starting suspended slave process: " + program + " " +  args.join(" "), GameConsole::eDEBUG);
         game->process->start(program, args);
-
-        m_games.insert(slaveName, game);
+        game->slaveName = slaveName;
+        m_games.append(game);
         slaveInfo.game.setSlaveName(slaveName);
         slaveInfo.relaunched = true;
     }
@@ -880,12 +926,12 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         setUuidForGame(game->game->getData());
         connect(game->process.get(), &QProcess::finished, game->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(game->process.get(), &QProcess::errorOccurred, game->game.get(), &NetworkGame::errorOccurred, Qt::QueuedConnection);
-        connect(game->game.get(), &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
         connect(game->game.get(), &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);
         game->game->setId(id);
         CONSOLE_PRINT("Starting slave process: " + program + " " +  args.join(" "), GameConsole::eDEBUG);
         game->process->start(program, args);
-        m_games.insert(slaveName, game);
+        game->slaveName = slaveName;
+        m_games.append(game);
     }
     else
     {
@@ -912,21 +958,6 @@ bool MainServer::validHostRequest(QStringList mods)
         }
     }
     return true;
-}
-
-void MainServer::updateGameData()
-{
-    m_updateGameData = true;
-}
-
-void MainServer::sendGameDataUpdate()
-{
-    if (m_updateGameData)
-    {
-        m_updateGameData = false;
-        sendGameDataToClient(0);
-    }
-    m_updateTimer.start(5000);
 }
 
 void MainServer::playerJoined(qint64 socketId)
@@ -968,45 +999,14 @@ void MainServer::executeScript()
     emit sigExecuteServerScript();
 }
 
-void MainServer::sendGameDataToClient(qint64 socketId)
-{
-    QString command = QString(NetworkCommands::SERVERGAMEDATA);
-    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
-    QJsonObject data;
-    data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    QJsonObject games;
-    qint32 i = 0;
-    for (const auto & game : qAsConst(m_games))
-    {
-        if (game->game.get() != nullptr &&
-            game->game->getSlaveRunning() &&
-            !game->game->getData().getLaunched())
-        {
-            QJsonObject obj = game->game->getData().toJson();
-            games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-            ++i;
-        }
-    }
-    for (auto & game : qAsConst(m_runningLobbies))
-    {
-        QJsonObject obj = game.game.toJson();
-        games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-        ++i;
-    }
-    data.insert(JsonKeys::JSONKEY_GAMES, games);
-    // send server data to all connected clients
-    QJsonDocument doc(data);
-    emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-}
-
 void MainServer::closeGame(NetworkGame* pGame)
 {
     CONSOLE_PRINT("Despawning  game", GameConsole::eDEBUG);
     QString slaveName = pGame->getServerName();
-    auto iter = m_games.find(slaveName);
-    if (iter != m_games.end())
+    qint32 index = -1;
+    auto * game = getInternGame(slaveName, &index);
+    if (game != nullptr)
     {
-        const auto & game = iter.value();
         SlaveAddress freeAddress;
         freeAddress.address = game->game->getData().getSlaveAddress();
         freeAddress.secondaryAddress = game->game->getData().getSlaveSecondaryAddress();
@@ -1017,8 +1017,7 @@ void MainServer::closeGame(NetworkGame* pGame)
         m_freeAddresses.append(freeAddress);
         game->process->kill();
         game->game = nullptr;
-        m_games.remove(slaveName);
-        m_updateGameData = true;
+        m_games.removeAt(index);
     }
 }
 
@@ -1237,10 +1236,6 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
     outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
     emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
-    if (result == GameEnums::LoginError_None)
-    {
-        sendGameDataToClient(socketId);
-    }
 }
 
 void MainServer::createUserTable(const QString & username)
@@ -1473,7 +1468,6 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & do
                 {
                     // mark client as logged in
                     emit m_pGameServer->sigSetIsActive(socketId, true);
-                    sendGameDataToClient(socketId);
                 }
             }
         }
@@ -1482,14 +1476,14 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & do
     {
         result = GameEnums::LoginError_AccountDoesntExist;
     }
-        QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
-        CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), GameConsole::eDEBUG);
-        QJsonObject outData;
-        outData.insert(JsonKeys::JSONKEY_COMMAND, command);
-        outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
-        outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
-        QJsonDocument outDoc(outData);
-        emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
+    CONSOLE_PRINT("Sending command " + command + " with result " + QString::number(result), GameConsole::eDEBUG);
+    QJsonObject outData;
+    outData.insert(JsonKeys::JSONKEY_COMMAND, command);
+    outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
+    outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
+    QJsonDocument outDoc(outData);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 QSqlQuery MainServer::getAccountInfo(QSqlDatabase & database, const QString & username, bool & success)
