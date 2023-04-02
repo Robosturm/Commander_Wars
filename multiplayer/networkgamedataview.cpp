@@ -32,9 +32,7 @@ NetworkGameDataView::NetworkGameDataView(NetworkGameData & data)
     QImage img;
     getMinimapImage(img, data);
     m_minimapImage = oxygine::spSingleResAnim::create();
-    img.save("test0.png");
     Mainapp::getInstance()->loadResAnim(m_minimapImage, img, 1, 1, 1);
-    img.save("test1.png");
     UiFactory::getInstance().createUi("ui/multiplayer/networkGameDataView.xml", this);
 }
 
@@ -134,5 +132,14 @@ QString NetworkGameDataView::getModName(qint32 mod) const
         return Settings::getModName(info[mod]);
     }
     return tr("Unknown");
+}
 
+qint32 NetworkGameDataView::getObservers() const
+{
+    return m_data.getObservers();
+}
+
+qint32 NetworkGameDataView::getMaxObservers() const
+{
+    return m_data.getMaxObservers();
 }

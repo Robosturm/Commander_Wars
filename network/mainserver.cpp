@@ -272,6 +272,10 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             onRequestUsergames(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SERVERREQUESTOBSERVEGAMES)
+        {
+            onRequestObservegames(socketID, objData);
+        }
         else if (messageType == NetworkCommands::SERVERREQUESTGAMES)
         {
             onRequestGameData(socketID, objData);
@@ -571,7 +575,8 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
     qint32 i = 0;
     qint32 start = objData.value(JsonKeys::JSONKEY_MATCHSTARTINDEX).toInt();
     qint32 count = objData.value(JsonKeys::JSONKEY_MATCHCOUNT).toInt();
-    for (qint32 index = start; index < m_games.size() && i < count; ++index)
+    qint32 totalCount = 0;
+    for (qint32 index = start; index < m_games.size(); ++index)
     {
         auto & game = m_games[index];
         if (game->game.get() != nullptr)
@@ -579,37 +584,97 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
             auto & data = game->game->getData();
             if (data.getPlayerNames().contains(username))
             {
-                QJsonObject obj = game->game->getData().toJson();
-                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-                ++i;
+                if (i < count)
+                {
+                    QJsonObject obj = game->game->getData().toJson();
+                    games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                    ++i;
+                }
+                ++totalCount;
             }
         }
     }
-    for (qint32 index = start; index < m_runningSlaves.size() && i < count; ++index)
+    for (qint32 index = start; index < m_runningSlaves.size(); ++index)
     {
         auto & game = m_runningSlaves[index];
         if (game.game.getPlayerNames().contains(username))
         {
-            QJsonObject obj = game.game.toJson();
-            games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-            ++i;
+            if (i < count)
+            {
+                QJsonObject obj = game.game.toJson();
+                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                ++i;
+            }
+            ++totalCount;
         }
     }
-    for (qint32 index = start; index < m_runningLobbies.size() && i < count; ++index)
+    for (qint32 index = start; index < m_runningLobbies.size(); ++index)
     {
         auto & game = m_runningLobbies[index];
         if (game.game.getPlayerNames().contains(username))
         {
-            QJsonObject obj = game.game.toJson();
-            games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-            ++i;
+            if (i < count)
+            {
+                QJsonObject obj = game.game.toJson();
+                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                ++i;
+            }
+            ++totalCount;
         }
     }
     data.insert(JsonKeys::JSONKEY_GAMES, games);
-    data.insert(JsonKeys::JSONKEY_MATCHCOUNT, m_runningLobbies.size() + m_runningSlaves.size() + m_games.size());
+    data.insert(JsonKeys::JSONKEY_MATCHCOUNT, totalCount);
     // send server data to all connected clients
     QJsonDocument doc(data);
     emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+}
+
+void MainServer::onRequestObservegames(quint64 socketId, const QJsonObject & objData)
+{
+    QString command = QString(NetworkCommands::SERVERGAMEDATA);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    QJsonObject games;
+    qint32 i = 0;
+    qint32 start = objData.value(JsonKeys::JSONKEY_MATCHSTARTINDEX).toInt();
+    qint32 count = objData.value(JsonKeys::JSONKEY_MATCHCOUNT).toInt();
+    qint32 totalCount = 0;
+    for (qint32 index = start; index < m_games.size(); ++index)
+    {
+        auto & game = m_games[index];
+        if (game->game.get() != nullptr &&
+            game->game->getData().getObservers() < game->game->getData().getMaxObservers())
+        {
+            if (i < count)
+            {
+                QJsonObject obj = game->game->getData().toJson();
+                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                ++i;
+            }
+            ++totalCount;
+        }
+    }
+    for (qint32 index = start; index < m_runningLobbies.size(); ++index)
+    {
+        auto & game = m_runningLobbies[index];
+        if (game.game.getObservers() < game.game.getMaxObservers())
+        {
+            if (i < count)
+            {
+                QJsonObject obj = game.game.toJson();
+                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                ++i;
+            }
+            ++totalCount;
+        }
+    }
+    data.insert(JsonKeys::JSONKEY_GAMES, games);
+    data.insert(JsonKeys::JSONKEY_MATCHCOUNT, totalCount);
+    // send server data to all connected clients
+    QJsonDocument doc(data);
+    emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+
 }
 
 void MainServer::onRequestGameData(quint64 socketId, const QJsonObject & objData)
@@ -622,27 +687,36 @@ void MainServer::onRequestGameData(quint64 socketId, const QJsonObject & objData
     qint32 i = 0;
     qint32 start = objData.value(JsonKeys::JSONKEY_MATCHSTARTINDEX).toInt();
     qint32 count = objData.value(JsonKeys::JSONKEY_MATCHCOUNT).toInt();
-    for (qint32 index = start; index < m_games.size() && i < count; ++index)
+    qint32 totalCount = 0;
+    for (qint32 index = start; index < m_games.size(); ++index)
     {
         auto & game = m_games[index];
         if (game->game.get() != nullptr &&
             game->game->getSlaveRunning() &&
             !game->game->getData().getLaunched())
         {
-            QJsonObject obj = game->game->getData().toJson();
+            if (i < count)
+            {
+                QJsonObject obj = game->game->getData().toJson();
+                games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
+                ++i;
+            }
+            ++totalCount;
+        }
+    }
+    for (qint32 index = start; index < m_runningLobbies.size(); ++index)
+    {
+        if (i < count)
+        {
+            auto & game = m_runningLobbies[index];
+            QJsonObject obj = game.game.toJson();
             games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
             ++i;
         }
-    }
-    for (qint32 index = start; index < m_runningLobbies.size() && i < count; ++index)
-    {
-        auto & game = m_runningLobbies[index];
-        QJsonObject obj = game.game.toJson();
-        games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
-        ++i;
+        ++totalCount;
     }
     data.insert(JsonKeys::JSONKEY_GAMES, games);
-    data.insert(JsonKeys::JSONKEY_MATCHCOUNT, m_runningLobbies.size() + m_games.size());
+    data.insert(JsonKeys::JSONKEY_MATCHCOUNT, totalCount);
     // send server data to all connected clients
     QJsonDocument doc(data);
     emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -672,6 +746,14 @@ void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData
         if (objData.contains(JsonKeys::JSONKEY_ONLINEINFO))
         {
             internGame->game->updateOnlineInfo(objData);
+        }
+        if (objData.contains(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT))
+        {
+            data.setObservers(objData.value(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT).toInt());
+        }
+        if (objData.contains(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT))
+        {
+            data.setMaxObservers(objData.value(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT).toInt());
         }
     }
     else

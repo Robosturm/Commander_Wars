@@ -27,6 +27,7 @@ public:
     {
         OpenGames,
         OwnGames,
+        ObserveGames,
     };
 
     explicit LobbyMenu();
@@ -40,7 +41,6 @@ signals:
     void sigObserveGame();
     void sigObserveAdress();
     void sigUpdateGamesView();
-    void sigChangeLobbyMode();
     void sigRequestUpdateGames();
     void sigServerResponded();
 
@@ -77,8 +77,8 @@ public slots:
     void resetPasswordOnServerAccount(const QString & emailAdress);
     void changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress);
     void enableServerButtons(bool enable);
-    void changeLobbyMode();
     void requestUpdateGames();
+    void requestObserverUpdateGames();
     void showContactingServer();
     void cancelWaitingForServer();
     void showNextStep();
@@ -116,7 +116,9 @@ private:
     oxygine::spButton m_pButtonHostOnServer;
     oxygine::spButton m_pButtonGameObserve;    
     oxygine::spButton m_pButtonGameJoin;
-    oxygine::spButton m_pButtonSwapLobbyMode;
+    oxygine::spButton m_pButtonSwapOpenGamesMode;
+    oxygine::spButton m_pButtonSwapOwnGamesMode;
+    oxygine::spButton m_pButtonSwapObserveGamesMode;
     oxygine::spButton m_pButtonUpdateGamesMode;
     oxygine::spButton m_pEndStepButton;
     oxygine::spButton m_pNextStepButton;

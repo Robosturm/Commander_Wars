@@ -1043,6 +1043,8 @@ void GameMenue::sendOpenPlayerCount()
         }
         data.insert(JsonKeys::JSONKEY_RUNNINGGAME, true);
         data.insert(JsonKeys::JSONKEY_ONLINEINFO, getOnlineInfo());
+        data.insert(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT, m_pMap->getGameRules()->getObserverList().size());
+        data.insert(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT, m_pMap->getGameRules()->getMultiplayerObserver());
         QJsonDocument doc(data);
         emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }

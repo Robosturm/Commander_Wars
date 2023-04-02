@@ -353,6 +353,12 @@ private:
      */
     void onRequestUsergames(quint64 socketID, const QJsonObject & objData);
     /**
+     * @brief onRequestObservegames
+     * @param socketID
+     * @param objData
+     */
+    void onRequestObservegames(quint64 socketID, const QJsonObject & objData);
+    /**
      * @brief onRequestGameData
      * @param socketId
      * @param objData

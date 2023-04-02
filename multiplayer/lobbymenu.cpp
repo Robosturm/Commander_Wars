@@ -134,19 +134,39 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigObserveAdress, this, &LobbyMenu::observeAdress, Qt::QueuedConnection);
 
-    m_pButtonSwapLobbyMode = ObjectManager::createButton(tr("Show my games"));
-    addChild(m_pButtonSwapLobbyMode);
-    m_pButtonSwapLobbyMode->setPosition(Settings::getWidth() / 2 - m_pButtonSwapLobbyMode->getScaledWidth() - 5, 10);
-    m_pButtonSwapLobbyMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    m_pButtonSwapOwnGamesMode = ObjectManager::createButton(tr("My games"), 200);
+    addChild(m_pButtonSwapOwnGamesMode);
+    m_pButtonSwapOwnGamesMode->setPosition(Settings::getWidth() / 2 - m_pButtonSwapOwnGamesMode->getScaledWidth() * 2, 10);
+    m_pButtonSwapOwnGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
-        emit sigChangeLobbyMode();
+        m_mode = GameViewMode::OwnGames;
+        emit sigRequestUpdateGames();
     });
-    m_pButtonSwapLobbyMode->setEnabled(false);
-    connect(this, &LobbyMenu::sigChangeLobbyMode, this, &LobbyMenu::changeLobbyMode, Qt::QueuedConnection);
+    m_pButtonSwapOwnGamesMode->setEnabled(false);
 
-    m_pButtonUpdateGamesMode = ObjectManager::createButton(tr("Refresh games"));
+    m_pButtonSwapOpenGamesMode = ObjectManager::createButton(tr("Open games"), 200);
+    addChild(m_pButtonSwapOpenGamesMode);
+    m_pButtonSwapOpenGamesMode->setPosition(Settings::getWidth() / 2 - m_pButtonSwapOpenGamesMode->getScaledWidth(), 10);
+    m_pButtonSwapOpenGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    {
+        m_mode = GameViewMode::OpenGames;
+        emit sigRequestUpdateGames();
+    });
+    m_pButtonSwapOpenGamesMode->setEnabled(false);
+
+    m_pButtonSwapObserveGamesMode = ObjectManager::createButton(tr("Observable"), 200);
+    addChild(m_pButtonSwapObserveGamesMode);
+    m_pButtonSwapObserveGamesMode->setPosition(Settings::getWidth() / 2, 10);
+    m_pButtonSwapObserveGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    {
+        m_mode = GameViewMode::ObserveGames;
+        emit sigRequestUpdateGames();
+    });
+    m_pButtonSwapObserveGamesMode->setEnabled(false);
+
+    m_pButtonUpdateGamesMode = ObjectManager::createButton(tr("Refresh games"), 200);
     addChild(m_pButtonUpdateGamesMode);
-    m_pButtonUpdateGamesMode->setPosition(Settings::getWidth() / 2 + 5, 10);
+    m_pButtonUpdateGamesMode->setPosition(Settings::getWidth() / 2 + m_pButtonUpdateGamesMode->getScaledWidth(), 10);
     m_pButtonUpdateGamesMode->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigRequestUpdateGames();
@@ -154,10 +174,10 @@ LobbyMenu::LobbyMenu()
     m_pButtonUpdateGamesMode->setEnabled(false);
     connect(this, &LobbyMenu::sigRequestUpdateGames, this, &LobbyMenu::requestUpdateGames, Qt::QueuedConnection);
 
-    qint32 height = m_pButtonHostOnServer->getY() - 270 - 10 - m_pButtonSwapLobbyMode->getScaledHeight();
+    qint32 height = m_pButtonHostOnServer->getY() - 270 - 10 - m_pButtonSwapOpenGamesMode->getScaledHeight();
     if (Settings::getSmallScreenDevice())
     {
-        height = m_pButtonHostOnServer->getY() - 20 - m_pButtonSwapLobbyMode->getScaledHeight();
+        height = m_pButtonHostOnServer->getY() - 20 - m_pButtonSwapOpenGamesMode->getScaledHeight();
     }
 
     QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods"), tr("Locked")};
@@ -239,13 +259,23 @@ LobbyMenu::LobbyMenu()
 
 void LobbyMenu::requestUpdateGames()
 {
-    if (m_mode == GameViewMode::OpenGames)
+    switch (m_mode)
     {
-        requestServerGames();
-    }
-    else
-    {
-        requestUserUpdateGames();
+        case GameViewMode::OpenGames:
+        {
+            requestServerGames();
+            break;
+        }
+        case GameViewMode::OwnGames:
+        {
+            requestUserUpdateGames();
+            break;
+        }
+        case GameViewMode::ObserveGames:
+        {
+            requestObserverUpdateGames();
+            break;
+        }
     }
 }
 
@@ -276,35 +306,33 @@ void LobbyMenu::requestUserUpdateGames()
     }
 }
 
+void LobbyMenu::requestObserverUpdateGames()
+{
+    if (m_pTCPClient.get() != nullptr)
+    {
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTOBSERVEGAMES);
+        data.insert(JsonKeys::JSONKEY_MATCHSTARTINDEX, m_gameIndex);
+        data.insert(JsonKeys::JSONKEY_MATCHCOUNT, REQUEST_COUNT);
+        data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+        QJsonDocument doc(data);
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+}
+
 void LobbyMenu::enableServerButtons(bool enable)
 {
     m_pButtonGameObserve->setEnabled(enable);
     m_pButtonGameJoin->setEnabled(enable);
     m_pButtonHostOnServer->setEnabled(enable);
-    m_pButtonSwapLobbyMode->setEnabled(enable);
+    m_pButtonSwapOpenGamesMode->setEnabled(enable);
+    m_pButtonSwapOwnGamesMode->setEnabled(enable);
+    m_pButtonSwapObserveGamesMode->setEnabled(enable);
     m_pButtonUpdateGamesMode->setEnabled(enable);
     m_pEndStepButton->setEnabled(enable);
     m_pNextStepButton->setEnabled(enable);
     m_pPreviousStepButton->setEnabled(enable);
     m_pStartStepButton->setEnabled(enable);
-}
-
-void LobbyMenu::changeLobbyMode()
-{
-    QString newLabel;
-    if (m_mode == GameViewMode::OpenGames)
-    {
-        m_mode = GameViewMode::OwnGames;
-        newLabel = tr("Show open games");
-        requestUserUpdateGames();
-    }
-    else
-    {
-        m_mode = GameViewMode::OpenGames;
-        newLabel = tr("Show my games");
-        requestServerGames();
-    }
-    static_cast<Label*>(m_pButtonSwapLobbyMode->getFirstChild().get())->setText(newLabel);
 }
 
 void LobbyMenu::leaveServer()
@@ -509,7 +537,8 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else if (messageType == NetworkCommands::SERVERGAMEDATA)
         {
-            if (m_loggedIn && m_mode == GameViewMode::OpenGames)
+            if (m_loggedIn &&
+                (m_mode == GameViewMode::OpenGames || m_mode == GameViewMode::ObserveGames))
             {
                 updateGameData(objData);
             }
@@ -588,7 +617,7 @@ void LobbyMenu::updateGameData(const QJsonObject & objData)
         gameData.fromJson(game.toObject());
         m_games.append(gameData);
     }
-    m_matchViewInfo->setText(QString::number(m_gameIndex + 1) + " / " + QString::number(m_gameIndex + 1 + games.size()));
+    m_matchViewInfo->setText(QString::number(m_gameIndex) + " / " + QString::number(m_gameIndex + games.size()));
     emit sigUpdateGamesView();
 }
 

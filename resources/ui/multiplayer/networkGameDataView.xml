@@ -45,7 +45,7 @@
                 <text>currentMenu.getPlayers() + " / " + currentMenu.getMaxPlayers()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
-            </Label>            
+            </Label>
             <loop count="currentMenu.getPlayers()">
                 <Label>
                     <x>10</x>
@@ -82,6 +82,22 @@
                     <fontSize>24</fontSize>
                 </Label>
             </loop>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Observers:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <text>currentMenu.getObservers() + " / " + currentMenu.getMaxObservers()</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
             <Custom>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>

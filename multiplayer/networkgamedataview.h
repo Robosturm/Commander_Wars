@@ -31,6 +31,8 @@ public slots:
     bool getPlayerIsOnline(qint32 player);
     qint32 getModCount() const;
     QString getModName(qint32 mod) const;
+    qint32 getObservers() const;
+    qint32 getMaxObservers() const;
 private:
     void getMinimapImage(QImage & img, NetworkGameData & data);
 private:
