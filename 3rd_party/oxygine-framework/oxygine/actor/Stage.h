@@ -25,7 +25,7 @@ namespace oxygine
         @param is real display size of device.
         @param is your "virtual" preferred size. You could change it to any size you need
         */
-        void init(const QSize& displaySize, const QSize& gameSize);
+        void init(const QSize& gameSize, const qreal scaleFactor);
         /**Render all actors*/
         void renderStage(const QColor* clearColor, const QRect& viewport, const QMatrix4x4 & viewProjection);
         /**Render all actors, simplified version*/

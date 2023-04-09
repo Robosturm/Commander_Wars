@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/dialogs/dialogconnecting.h"
 
 #include "coreengine/interpreter.h"
@@ -20,7 +22,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -33,14 +35,14 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs, bool showCanc
     m_Text = oxygine::spTextField::create();
     m_Text->setHtmlText((text + ".  "));
     m_Text->setStyle(style);
-    m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().width() / 2, Settings::getHeight() / 2 - 40);
+    m_Text->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_Text->getTextRect().width() / 2, oxygine::Stage::getStage()->getHeight() / 2 - 40);
     pSpriteBox->addChild(m_Text);
 
     if (showCancel)
     {
         m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-        m_CancelButton->setPosition(Settings::getWidth() / 2 - m_CancelButton->getScaledWidth() / 2,
-                                    Settings::getHeight() / 2 + 10);
+        m_CancelButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_CancelButton->getScaledWidth() / 2,
+                                    oxygine::Stage::getStage()->getHeight() / 2 + 10);
         pSpriteBox->addChild(m_CancelButton);
         m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {

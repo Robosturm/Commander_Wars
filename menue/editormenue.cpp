@@ -51,13 +51,13 @@ EditorMenue::EditorMenue()
     setObjectName("EditorMenue");
 #endif
     Mainapp* pApp = Mainapp::getInstance();
-    qint32 selectionWidth = Settings::getWidth() / 4;
+    qint32 selectionWidth = oxygine::Stage::getStage()->getWidth() / 4;
     bool smallScreen = Settings::getSmallScreenDevice();
     Interpreter::setCppOwnerShip(this);
     registerAtInterpreter();
     if (smallScreen)
     {
-        selectionWidth = Settings::getWidth() * 3 / 4;
+        selectionWidth = oxygine::Stage::getStage()->getWidth() * 3 / 4;
     }
     if (selectionWidth < 255)
     {
@@ -66,12 +66,12 @@ EditorMenue::EditorMenue()
     if (smallScreen)
     {
         m_autoScrollBorder = QRect(50, 135, 50, 50);
-        initSlidingActor(50, 125, Settings::getWidth() - 100, Settings::getHeight() - 175);
+        initSlidingActor(50, 125, oxygine::Stage::getStage()->getWidth() - 100, oxygine::Stage::getStage()->getHeight() - 175);
     }
     else
     {
         m_autoScrollBorder = QRect(50, 135, selectionWidth, 50);
-        initSlidingActor(50, 125, Settings::getWidth() - selectionWidth - 100, Settings::getHeight() - 175);
+        initSlidingActor(50, 125, oxygine::Stage::getStage()->getWidth() - selectionWidth - 100, oxygine::Stage::getStage()->getHeight() - 175);
     }
     m_mapSlidingActor->addChild(m_pMap);
     m_mapSliding->setLocked(true);
@@ -81,7 +81,7 @@ EditorMenue::EditorMenue()
     m_EditorSelection = spEditorSelection::create(selectionWidth, smallScreen, m_pMap.get());
     addChild(m_EditorSelection);
 
-    m_Topbar = spTopbar::create(0, Settings::getWidth());
+    m_Topbar = spTopbar::create(0, oxygine::Stage::getStage()->getWidth());
 
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/mapeditor");
@@ -151,7 +151,7 @@ EditorMenue::EditorMenue()
         m_xyTextInfo->setPosition(8, 8);
         pButtonBox->addChild(m_xyTextInfo);
         pButtonBox->setSize(200, 50);
-        pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getScaledWidth()) - pButtonBox->getScaledWidth(), -4 + m_Topbar->getScaledHeight());
+        pButtonBox->setPosition((oxygine::Stage::getStage()->getWidth() - m_EditorSelection->getScaledWidth()) - pButtonBox->getScaledWidth(), -4 + m_Topbar->getScaledHeight());
         pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         addChild(pButtonBox);
     }

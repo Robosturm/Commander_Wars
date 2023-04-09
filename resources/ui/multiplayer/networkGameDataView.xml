@@ -3,13 +3,13 @@
     <Panel>
         <x>10</x>
         <y>10</y>
-        <width>settings.getWidth() - 20</width>
-        <height>settings.getHeight() - 80</height>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
         <childs>
             <Label>
                 <x>10</x>
                 <y>10</y>
-                <width>settings.getWidth() - 100</width>
+                <width>settings.getStageWidth() - 100</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Game Info")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -17,7 +17,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>settings.getWidth() - 100</width>
+                <width>settings.getStageWidth() - 100</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Description")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -25,7 +25,7 @@
             <TextField>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>settings.getWidth() - 100</width>
+                <width>settings.getStageWidth() - 100</width>
                 <text>currentMenu.getDescription()</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -67,7 +67,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>settings.getWidth() - 100</width>
+                <width>settings.getStageWidth() - 100</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Mods")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -76,7 +76,7 @@
                 <Label>
                     <x>10</x>
                     <y>lastY + lastHeight + 10</y>
-                    <width>settings.getWidth() - 100</width>
+                    <width>settings.getStageWidth() - 100</width>
                     <text>currentMenu.getModName(loopIdx)</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
@@ -107,8 +107,8 @@
         </childs>
     </Panel>
     <Button>
-        <x>settings.getWidth() / 2 - 75</x>
-        <y>settings.getHeight() - 60</y>
+        <x>settings.getStageWidth() / 2 - 75</x>
+        <y>settings.getStageHeight() - 60</y>
         <width>150</width>
         <text>NetworkGameDataView.getOk()</text>
         <tooltip>NetworkGameDataView.getOkTooltip()</tooltip>

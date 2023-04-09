@@ -23,11 +23,10 @@ namespace oxygine
     }
 
 
-    void Stage::init(const QSize& displaySize, const QSize& gameSize)
+    void Stage::init(const QSize& gameSize, const qreal scaleFactor)
     {
-        float scaleFactor = static_cast<float>(displaySize.width()) / static_cast<float>(gameSize.width());
         setScale(scaleFactor);
-        setSize(gameSize);
+        setSize(gameSize.width(), gameSize.height());
     }
 
     bool Stage::isOn(const QPoint&)

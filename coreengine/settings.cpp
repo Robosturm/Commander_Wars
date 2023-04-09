@@ -1,3 +1,6 @@
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include <QSettings>
 #include <QTranslator>
 #include <QLocale>
@@ -23,8 +26,6 @@
 #include "coreengine/Gamepad.h"
 #include "coreengine/interpreter.h"
 
-#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
-
 const char* const Settings::DEFAULT_AUDIODEVICE = "@@default@@";
 
 // this Object
@@ -45,6 +46,16 @@ Settings::Settings()
     setObjectName("Settings");
 #endif
     Interpreter::setCppOwnerShip(this);
+}
+
+float Settings::getGameScale()
+{
+    return Settings::getInstance()->m_gameScale;
+}
+
+void Settings::setGameScale(float newGameScale)
+{
+    Settings::getInstance()->m_gameScale = newGameScale;
 }
 
 float Settings::getIngameMenuScaling()
@@ -246,16 +257,6 @@ QString Settings::getDefaultBannlist()
 void Settings::setDefaultBannlist(const QString &newDefaultBannlist)
 {
     Settings::getInstance()->m_defaultBannlist = newDefaultBannlist;
-}
-
-bool Settings::getUseHighDpi()
-{
-    return Settings::getInstance()->m_useHighDpi;
-}
-
-void Settings::setUseHighDpi(bool newUseHighDpi)
-{
-    Settings::getInstance()->m_useHighDpi = newUseHighDpi;
 }
 
 bool Settings::getMovementAnimations()
@@ -1137,8 +1138,8 @@ void Settings::setup()
         new Value<quint8>{"Resolution", "screen", &m_screen, 0, 0, 255, true},
         new Value<bool>{"Resolution", "recordgames", &m_record, false, false, true},
         new Value<bool>{"Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true},
-        new Value<bool>{"Resolution", "UseHighDpi", &m_useHighDpi, false, false, true},
         new Value<float>{"Resolution", "IngameMenuScaling", &m_ingameMenuScaling, 1.0f, 0.5f, 10.0f},
+        new Value<float>{"Resolution", "GameScale", &m_gameScale, 1.0f, 0.125f, 16.0f},
 
         // general
         new Value<QString>{"General", "language", &m_language, "en", "", ""},
@@ -2013,11 +2014,6 @@ QSize Settings::getScreenSize()
     return screenSize.size();
 }
 
-float Settings::getDpiFactor()
-{
-    return Mainapp::getInstance()->getActiveDpiFactor();
-}
-
 qint32 Settings::getScreenMode()
 {
     return static_cast<qint32>(Mainapp::getInstance()->getScreenMode());
@@ -2032,6 +2028,16 @@ void Settings::changeBrightness(qint32 value)
 {
     setBrightness(value);
     Mainapp::getInstance()->setBrightness(value);
+}
+
+qint32 Settings::getStageWidth()
+{
+    return oxygine::Stage::getStage()->getWidth();
+}
+
+qint32 Settings::getStageHeight()
+{
+    return oxygine::Stage::getStage()->getHeight();
 }
 
 void Settings::changeGamma(float value)

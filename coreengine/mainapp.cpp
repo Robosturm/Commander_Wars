@@ -528,9 +528,9 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
             Settings::setFullscreen(false);
             Settings::setBorderless(true);
             setWidth(screenSize.width());
-            Settings::setWidth(screenSize.width() * getActiveDpiFactor());
+            Settings::setWidth(screenSize.width());
             setHeight(screenSize.height());
-            Settings::setHeight(screenSize.height() * getActiveDpiFactor());
+            Settings::setHeight(screenSize.height());
             show();
             break;
         }
@@ -541,14 +541,14 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
 #ifdef ANDROID
             showMaximized();
             // set window info
-            Settings::setWidth(width() * getActiveDpiFactor());
-            Settings::setHeight(height() * getActiveDpiFactor());
+            Settings::setWidth(width());
+            Settings::setHeight(height());
 #else
             QScreen* screen = screens[Settings::getScreen()];
             QRect screenSize = screen->geometry();
             // set window info
-            Settings::setWidth(screenSize.width() * getActiveDpiFactor());
-            Settings::setHeight(screenSize.height() * getActiveDpiFactor());
+            Settings::setWidth(screenSize.width());
+            Settings::setHeight(screenSize.height());
             setPosition(screenSize.x(), screenSize.y());
             setGeometry(screenSize);
             showFullScreen();
@@ -566,12 +566,12 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
             if (screenSize.width() < Settings::getWidth())
             {
                 setWidth(screenSize.width());
-                Settings::setWidth(screenSize.width() * getActiveDpiFactor());
+                Settings::setWidth(screenSize.width());
             }
             if (screenSize.height() < Settings::getHeight())
             {
                 setHeight(screenSize.height());
-                Settings::setHeight(screenSize.height() * getActiveDpiFactor());
+                Settings::setHeight(screenSize.height());
             }
             showNormal();
         }
@@ -589,10 +589,9 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
         return;
     }
     CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), GameConsole::eDEBUG);
-    auto ratio = getActiveDpiFactor();
-    resize(width / ratio, heigth / ratio);
-    setMinimumSize(QSize(width / ratio, heigth / ratio));
-    setMaximumSize(QSize(width / ratio, heigth / ratio));
+    resize(width, heigth);
+    setMinimumSize(QSize(width, heigth));
+    setMaximumSize(QSize(width, heigth));
 
     Settings::setWidth(width);
     Settings::setHeight(heigth);
@@ -605,12 +604,12 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
 
 QPoint Mainapp::mapPosFromGlobal(QPoint pos) const
 {
-    return mapFromGlobal(pos) * getActiveDpiFactor();
+    return mapFromGlobal(pos) * devicePixelRatio();
 }
 
 QPoint Mainapp::mapPosToGlobal(QPoint pos) const
 {
-    return mapToGlobal(pos / getActiveDpiFactor());
+    return mapToGlobal(pos / devicePixelRatio());
 }
 
 void Mainapp::changePosition(QPoint pos, bool invert)

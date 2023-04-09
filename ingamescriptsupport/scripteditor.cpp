@@ -1,5 +1,7 @@
 #include <QFile>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -25,7 +27,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -40,9 +42,9 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     oxygine::spTextField pText = oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Conditions"));
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, 70);
+    pText->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pText->getTextRect().width() / 2, 70);
     pSpriteBox->addChild(pText);
-    QSize size(Settings::getWidth() - 40, Settings::getHeight() / 2 - 160);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() / 2 - 160);
     m_ConditionPanel = spPanel::create(true, size, size);
     m_ConditionPanel->setPosition(30, 110);
     pSpriteBox->addChild(m_ConditionPanel);
@@ -62,11 +64,11 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
                          tr("Is selected co")};
     m_Conditions = spDropDownmenu::create(300, items);
     m_Conditions->setTooltipText(tr("Condition type you want to create. If another condition is selected both must be fulfilled to activate the event."));
-    m_Conditions->setPosition(30, Settings::getHeight() / 2 - 45);
+    m_Conditions->setPosition(30, oxygine::Stage::getStage()->getHeight() / 2 - 45);
     pSpriteBox->addChild(m_Conditions);
     // condition button
     oxygine::spButton pConditionButton = pObjectManager->createButton(tr("Add Condition"), 200);
-    pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getScaledWidth() + 10, Settings::getHeight() / 2 - 45);
+    pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getScaledWidth() + 10, oxygine::Stage::getStage()->getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionButton);
     pConditionButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -75,7 +77,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     connect(this, &ScriptEditor::sigAddCondition, this, &ScriptEditor::addCondition, Qt::QueuedConnection);
 
     oxygine::spButton pConditionDuplicate = pObjectManager->createButton(tr("Duplicate"), 200);
-    pConditionDuplicate->setPosition(pConditionButton->getX() + pConditionButton->getScaledWidth() + 10, Settings::getHeight() / 2 - 45);
+    pConditionDuplicate->setPosition(pConditionButton->getX() + pConditionButton->getScaledWidth() + 10, oxygine::Stage::getStage()->getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionDuplicate);
     pConditionDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -86,10 +88,10 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     pText = oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Events"));
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, Settings::getHeight() / 2);
+    pText->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pText->getTextRect().width() / 2, oxygine::Stage::getStage()->getHeight() / 2);
     pSpriteBox->addChild(pText);
     m_EventPanel = spPanel::create(true, size, size);
-    m_EventPanel->setPosition(30, Settings::getHeight() / 2 + 40);
+    m_EventPanel->setPosition(30, oxygine::Stage::getStage()->getHeight() / 2 + 40);
     pSpriteBox->addChild(m_EventPanel);
     items = {
         tr("Dialog"),
@@ -114,11 +116,11 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     };
     m_Events = spDropDownmenu::create(300, items);
     m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));
-    m_Events->setPosition(30, Settings::getHeight() - 115);
+    m_Events->setPosition(30, oxygine::Stage::getStage()->getHeight() - 115);
     pSpriteBox->addChild(m_Events);
     // condition button
     m_pEventButton = pObjectManager->createButton(tr("Add Event"), 200);
-    m_pEventButton->setPosition(m_Events->getX() + m_Events->getScaledWidth() + 10, Settings::getHeight() - 115);
+    m_pEventButton->setPosition(m_Events->getX() + m_Events->getScaledWidth() + 10, oxygine::Stage::getStage()->getHeight() - 115);
     pSpriteBox->addChild(m_pEventButton);
     m_pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -141,8 +143,8 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() - pOkButton->getScaledWidth() - 30,
-                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
+    pOkButton->setPosition(oxygine::Stage::getStage()->getWidth() - pOkButton->getScaledWidth() - 30,
+                           oxygine::Stage::getStage()->getHeight() - 10 - pOkButton->getScaledHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -150,15 +152,15 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     });
 
     oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save"), 150);
-    pSaveButton->setPosition(Settings::getWidth() / 2 - pSaveButton->getScaledWidth() / 2,
-                             Settings::getHeight() - 10 - pSaveButton->getScaledHeight());
+    pSaveButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pSaveButton->getScaledWidth() / 2,
+                             oxygine::Stage::getStage()->getHeight() - 10 - pSaveButton->getScaledHeight());
     pSpriteBox->addChild(pSaveButton);
     pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigSaveScript();
     });
     oxygine::spButton pLoadButton = pObjectManager->createButton(tr("Load"), 150);
-    pLoadButton->setPosition(30, Settings::getHeight() - 10 - pLoadButton->getScaledHeight());
+    pLoadButton->setPosition(30, oxygine::Stage::getStage()->getHeight() - 10 - pLoadButton->getScaledHeight());
     pSpriteBox->addChild(pLoadButton);
     pLoadButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

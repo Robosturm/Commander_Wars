@@ -38,7 +38,7 @@
 #include "resource_management/fontmanager.h"
 
 Multiplayermenu::Multiplayermenu(const QString & address, const QString & secondaryAddress, quint16 port, const QString & password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
       m_password(password)
@@ -57,14 +57,14 @@ Multiplayermenu::Multiplayermenu(const QString & address, const QString & second
             emit sigShowIPs();
         });
         m_pHostAdresse->setPosition(m_pButtonStart->getX() - m_pHostAdresse->getScaledWidth() - 10,
-                                    Settings::getHeight() - m_pHostAdresse->getScaledHeight() - 10);
+                                    oxygine::Stage::getStage()->getHeight() - m_pHostAdresse->getScaledHeight() - 10);
         m_pHostAdresse->setVisible(false);
         connect(this, &Multiplayermenu::sigShowIPs, this, &Multiplayermenu::showIPs, Qt::QueuedConnection);
     }
 }
 
 Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Password * password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
       m_password(*password)
@@ -74,7 +74,7 @@ Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Pa
 }
 
 Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, const QString & password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(false),
       m_password(password)
@@ -134,8 +134,8 @@ void Multiplayermenu::init()
     CONSOLE_PRINT("Entering Multiplayer Menue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
-    m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
-                                       Settings::getHeight() - 10 - m_pButtonLoadSavegame->getScaledHeight());
+    m_pButtonLoadSavegame->setPosition(oxygine::Stage::getStage()->getWidth() - m_pButtonLoadSavegame->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
+                                       oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonLoadSavegame->getScaledHeight());
     addChild(m_pButtonLoadSavegame);
     m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -144,8 +144,8 @@ void Multiplayermenu::init()
     connect(this, &Multiplayermenu::sigLoadSaveGame, this, &Multiplayermenu::showLoadSaveGameDialog, Qt::QueuedConnection);
 
     m_pReadyAndLeave = ObjectManager::createButton(tr("Ready + Exit"));
-    m_pReadyAndLeave->setPosition(Settings::getWidth() - m_pReadyAndLeave->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
-                                       Settings::getHeight() - 10 - m_pReadyAndLeave->getScaledHeight());
+    m_pReadyAndLeave->setPosition(oxygine::Stage::getStage()->getWidth() - m_pReadyAndLeave->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
+                                       oxygine::Stage::getStage()->getHeight() - 10 - m_pReadyAndLeave->getScaledHeight());
     addChild(m_pReadyAndLeave);
     m_pReadyAndLeave->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -280,7 +280,7 @@ void Multiplayermenu::showIPs()
 {
     spGenericBox pGenericBox = spGenericBox::create();
     QStringList items = NetworkInterface::getIPAdresses();
-    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() - 80);
     spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -290,7 +290,7 @@ void Multiplayermenu::showIPs()
     info->setStyle(style);
     info->setHtmlText((tr("Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses") +
                        tr(" may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work")));
-    info->setSize(Settings::getWidth() - 80, 500);
+    info->setSize(oxygine::Stage::getStage()->getWidth() - 80, 500);
     info->setPosition(10, 10);
     pPanel->addItem(info);
     qint32 starty = 10 + info->getTextRect().height();
@@ -1737,7 +1737,7 @@ void Multiplayermenu::showRuleSelection()
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    m_pRuleSelectionView = spRuleSelection::create(pMap.get(), Settings::getWidth() - 80, RuleSelection::Mode::Multiplayer);
+    m_pRuleSelectionView = spRuleSelection::create(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, RuleSelection::Mode::Multiplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &Multiplayermenu::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 40);
@@ -1953,7 +1953,7 @@ void Multiplayermenu::createChat()
     if (Settings::getSmallScreenDevice())
     {
         m_Chat = spChat::create(m_pNetworkInterface,
-                                QSize(Settings::getWidth() - 60, Settings::getHeight() - 90),
+                                QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 90),
                                 NetworkInterface::NetworkSerives::GameChat, nullptr);
         m_Chat->setPosition(-m_Chat->getScaledWidth() + 1, 10);
         auto moveButton = spMoveInButton::create(m_Chat.get(), m_Chat->getScaledWidth(), 1, -1, 1.0f);
@@ -1962,9 +1962,9 @@ void Multiplayermenu::createChat()
     else
     {
         m_Chat = spChat::create(m_pNetworkInterface,
-                                QSize(Settings::getWidth() - 20, 150),
+                                QSize(oxygine::Stage::getStage()->getWidth() - 20, 150),
                                 NetworkInterface::NetworkSerives::GameChat, nullptr);
-        m_Chat->setPosition(10, Settings::getHeight() - 210);
+        m_Chat->setPosition(10, oxygine::Stage::getStage()->getHeight() - 210);
     }
     addChild(m_Chat);    
 }

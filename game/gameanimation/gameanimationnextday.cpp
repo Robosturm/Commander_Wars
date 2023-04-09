@@ -1,8 +1,9 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
-
-#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "coreengine/mainapp.h"
 
@@ -26,14 +27,14 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
         m_permanent = false;
     }
     Interpreter::setCppOwnerShip(this);
-    setSize(Settings::getWidth(), Settings::getHeight());
+    setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("nextday");
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     if (pAnim != nullptr)
     {
-        pSprite->setScaleX(static_cast<float>(Settings::getWidth() + 8) / static_cast<float>(pAnim->getWidth()));
-        pSprite->setScaleY(static_cast<float>(Settings::getHeight() + 8) / static_cast<float>(pAnim->getHeight()));
+        pSprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth() + 8) / static_cast<float>(pAnim->getWidth()));
+        pSprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight() + 8) / static_cast<float>(pAnim->getHeight()));
     }
     pSprite->setPosition(-4.0f, -4.0f);
     QColor color = pPlayer->getColor();
@@ -60,14 +61,14 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
             m_CO->setResAnim(pAnim);
             if (Settings::getSmallScreenDevice())
             {
-                m_CO->setScale(static_cast<float>(Settings::getHeight() - 60) / static_cast<float>(pAnim->getHeight()));
+                m_CO->setScale(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 60) / static_cast<float>(pAnim->getHeight()));
             }
             else
             {
-                m_CO->setScale(static_cast<float>(Settings::getHeight() - 300) / static_cast<float>(pAnim->getHeight()));
+                m_CO->setScale(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 300) / static_cast<float>(pAnim->getHeight()));
             }
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
-            m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() - 20, Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2);
+            m_CO->setPosition(oxygine::Stage::getStage()->getWidth() - m_CO->getScaledWidth() - 20, oxygine::Stage::getStage()->getHeight() / 2 -  m_CO->getScaledHeight() / 2);
             addChild(m_CO);
         }
     }
@@ -82,14 +83,14 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
             m_CO->setResAnim(pAnim);
             if (Settings::getSmallScreenDevice())
             {
-                m_CO->setScale(static_cast<float>(Settings::getHeight() - 60) / static_cast<float>(pAnim->getHeight()));
+                m_CO->setScale(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 60) / static_cast<float>(pAnim->getHeight()));
             }
             else
             {
-                m_CO->setScale(static_cast<float>(Settings::getHeight() - 300) / static_cast<float>(pAnim->getHeight()));
+                m_CO->setScale(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 300) / static_cast<float>(pAnim->getHeight()));
             }
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
-            m_CO->setPosition(20, Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2);
+            m_CO->setPosition(20, oxygine::Stage::getStage()->getHeight() / 2 -  m_CO->getScaledHeight() / 2);
             addChild(m_CO);
         }
     }
@@ -103,7 +104,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     {
         textField->setHtmlText((QString("Day ") + QString::number(m_pMap->getCurrentDay())));
     }
-    textField->setPosition(10, Settings::getHeight() / 2 - textField->getTextRect().height() / 2);
+    textField->setPosition(10, oxygine::Stage::getStage()->getHeight() / 2 - textField->getTextRect().height() / 2);
     if (pCO != nullptr)
     {
         textField->setX(40 + m_CO->getScaledWidth());
@@ -148,7 +149,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
             {
                 oxygine::spButton pButtonSaveAndExit = ObjectManager::createButton(tr("Save and Exit"), 220);
                 addChild(pButtonSaveAndExit);
-                pButtonSaveAndExit->setPosition(Settings::getWidth() / 2 - pButtonSaveAndExit->getScaledWidth() - 10, Settings::getHeight() - 50);
+                pButtonSaveAndExit->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pButtonSaveAndExit->getScaledWidth() - 10, oxygine::Stage::getStage()->getHeight() - 50);
                 pButtonSaveAndExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
                 {
                     emit sigShowSaveAndExit();
@@ -157,7 +158,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
 
                 oxygine::spButton pButtonContinue = ObjectManager::createButton(tr("Continue"), 220);
                 addChild(pButtonContinue);
-                pButtonContinue->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 50);
+                pButtonContinue->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10, oxygine::Stage::getStage()->getHeight() - 50);
                 pButtonContinue->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
                 {
                     emit sigRightClick();

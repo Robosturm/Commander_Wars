@@ -127,11 +127,10 @@ var OptionMenu =
     getCurrentScreenItem : function()
     {
         var items = OptionMenu.getSupportedScreenSizes();
-        var dpiFactor = settings.getDpiFactor();
         var count = items.length;
-        var width = Math.round(settings.getWidth() / dpiFactor);
-        var height = Math.round(settings.getHeight() / dpiFactor);
-        var currentItem = 0;
+        var width = Math.round(settings.getStageWidth());
+        var height = Math.round(settings.getStageHeight());
+        var currentItem = -1;
         for (var i = 0; i < count; ++i)
         {
             var item = items[i];
@@ -142,8 +141,15 @@ var OptionMenu =
                 break;
             }
         }
-        var stringItems  = OptionMenu.getSupportedScreenSizeItems()
-        return stringItems[currentItem];
+        var stringItems  = OptionMenu.getSupportedScreenSizeItems();
+        if (currentItem >= 0)
+        {
+            return stringItems[currentItem];
+        }
+        else
+        {
+            return width.toString() + " x " + height.toString();
+        }
     },
     changeScreenSize : function(input)
     {
@@ -222,5 +228,37 @@ var OptionMenu =
         currentMenu.markRestartNeeded();
         currentMenu.reloadSettings();
     },
+    getGameScaleOptions : function()
+    {
+        var scales = [0.125,
+                      0.25,
+                      0.5,
+                      1,
+                      2,
+                      4,
+                      8,
+                      16]
+        return scales;
+    },
+    getGameScaleOptionItems : function()
+    {
+        var items = OptionMenu.getGameScaleOptions();
+        var count = items.length;
+        var stringItems = [];
+        for (var i = 0; i < count; ++i)
+        {
+            stringItems.push(items[i].toString());
+        }
+        return stringItems;
+    },
+    getCurrentGameScaleOptions : function()
+    {
+        return settings.getGameScale().toString();
+    },
+    setGameScaleOptions : function(input)
+    {
+        var items = OptionMenu.getGameScaleOptions();
+        currentMenu.changeGameScale(items[input]);
+    }
 };
 

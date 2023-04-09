@@ -25,7 +25,7 @@ namespace oxygine
         }
         qint32 frame_width = originalSize.width() / columns;
         qint32 frame_height = originalSize.height() / rows;
-        float pixelOffset = 1 / static_cast<float>(originalSize.width()) * 0.5f;
+        float pixelOffset = 1 / static_cast<float>(originalSize.width()) * 0.25f;
         float iw = 1.0f / static_cast<float>(columns);
         float ih = 1.0f / static_cast<float>(rows);
         float width = static_cast<float>(frame_width) / static_cast<float>(originalSize.width()) - pixelOffset;

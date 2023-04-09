@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/dialogs/rules/coselectiondialog.h"
 
 #include "coreengine/mainapp.h"
@@ -22,13 +24,13 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    m_COSelection = spCOSelection::create(QPoint(30, 30), QSize(Settings::getWidth() - 60, Settings::getHeight() - 100), coids);
+    m_COSelection = spCOSelection::create(QPoint(30, 30), QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 100), coids);
     m_COSelection->colorChanged(color);
     pSpriteBox->addChild(m_COSelection);
     selectedCOIDChanged(coid);
@@ -36,8 +38,8 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
     connect(m_COSelection.get(), &COSelection::coSelected, this, &COSelectionDialog::selectedCOIDChanged);
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() - m_OkButton->getScaledWidth() - 30,
+                            oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -47,7 +49,7 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_ExitButton->setPosition(30, oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -56,8 +58,8 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
 
     // show co info button
     m_ShowCOInfoButton = pObjectManager->createButton(tr("Show CO Info"), 250);
-    m_ShowCOInfoButton->setPosition(Settings::getWidth() / 2 - m_ShowCOInfoButton->getScaledWidth() / 2,
-                                    Settings::getHeight() - 30 - m_ShowCOInfoButton->getScaledHeight());
+    m_ShowCOInfoButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_ShowCOInfoButton->getScaledWidth() / 2,
+                                    oxygine::Stage::getStage()->getHeight() - 30 - m_ShowCOInfoButton->getScaledHeight());
     pSpriteBox->addChild(m_ShowCOInfoButton);
     m_ShowCOInfoButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

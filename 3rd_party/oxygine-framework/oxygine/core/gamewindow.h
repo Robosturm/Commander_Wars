@@ -78,7 +78,6 @@ namespace oxygine
         bool getShuttingDown() const;
         void setShuttingDown(bool newShuttingDown);
         void initStage();
-        float getActiveDpiFactor() const;
         bool hasCursor() const;
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor);

@@ -160,7 +160,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
             }
             case EditTypes::File:
             {
-                spTextbox pTextbox = spTextbox::create(Settings::getWidth() - 220 - width);
+                spTextbox pTextbox = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 220 - width);
                 pTextbox->setTooltipText(m_Items[i].tooltip);
                 pTextbox->setCurrentText(m_Items[i].item);
                 pTextbox->setPosition(width, y);

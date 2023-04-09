@@ -93,8 +93,8 @@ OptionMenue::OptionMenue(const QString & xmlFile)
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
+        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 
     pApp->getAudioManager()->clearPlayList();
@@ -103,8 +103,8 @@ OptionMenue::OptionMenue(const QString & xmlFile)
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"), 200);
     addChild(pButtonExit);
-    pButtonExit->setPosition(Settings::getWidth()  / 2.0f + 10,
-                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
+    pButtonExit->setPosition(oxygine::Stage::getStage()->getWidth()  / 2.0f + 10,
+                             oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -113,8 +113,8 @@ OptionMenue::OptionMenue(const QString & xmlFile)
 
     oxygine::spButton pButtonReset = ObjectManager::createButton(tr("Reset settings"), 200);
     addChild(pButtonReset);
-    pButtonReset->setPosition(Settings::getWidth() / 2.0f - pButtonReset->getScaledWidth() - 10,
-                             Settings::getHeight() - pButtonReset->getScaledHeight() - 10);
+    pButtonReset->setPosition(oxygine::Stage::getStage()->getWidth() / 2.0f - pButtonReset->getScaledWidth() - 10,
+                             oxygine::Stage::getStage()->getHeight() - pButtonReset->getScaledHeight() - 10);
     pButtonReset->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigShowResetBox();
@@ -193,29 +193,6 @@ void OptionMenue::changeScreenSize(QSize size)
     emit sigReloadSettings();
 }
 
-void OptionMenue::changeHighDpi(bool value)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    qint32 newWidth = 0;
-    qint32 newHeigth  = 0;
-    if (value)
-    {
-        newWidth = Settings::getWidth() / pApp->getActiveDpiFactor();
-        newHeigth = Settings::getHeight() / pApp->getActiveDpiFactor();
-        Settings::setUseHighDpi(value);
-    }
-    else
-    {
-        Settings::setUseHighDpi(value);
-        newWidth = Settings::getWidth() * pApp->getActiveDpiFactor();
-        newHeigth = Settings::getHeight() * pApp->getActiveDpiFactor();
-    }
-    Settings::setWidth(newWidth);
-    Settings::setHeight(newHeigth);
-    emit sigChangeScreenSize(newWidth, newHeigth);
-    emit sigReloadSettings();
-}
-
 void OptionMenue::loadModPanels()
 {
     m_ModBoxes.clear();
@@ -223,16 +200,16 @@ void OptionMenue::loadModPanels()
     m_ModSelector = oxygine::spActor::create();
     m_ModSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_ModSelector->setPosition(10, 10);
-    QSize size(Settings::getWidth() - 20,
-               Settings::getHeight() - 70);
-    size.setWidth(Settings::getWidth() - 60);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 20,
+               oxygine::Stage::getStage()->getHeight() - 70);
+    size.setWidth(oxygine::Stage::getStage()->getWidth() - 60);
     size.setHeight(size.height() - 50);
     m_pMods = spPanel::create(true,  size - QSize(0, 50), size);
     m_pMods->setPosition(10, 110);
     m_ModSelector->addChild(m_pMods);
     size.setHeight(size.height() + 70);
     m_pModDescription = spPanel::create(true,  size, size, "panel");
-    m_pModDescription->setPosition(Settings::getWidth() - 1, 25);
+    m_pModDescription->setPosition(oxygine::Stage::getStage()->getWidth() - 1, 25);
     auto moveInButton = spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth() + 10);
     m_pModDescription->addChild(moveInButton);
     connect(this, &OptionMenue::sigUpdateModFilter, this, &OptionMenue::updateModFilter, Qt::QueuedConnection);
@@ -318,7 +295,7 @@ void OptionMenue::showMods()
         modCheck->setPosition(10, 5);
         pBox->addChild(modCheck);
 
-        spLabel pTextfield = spLabel::create(Settings::getWidth() - 190);
+        spLabel pTextfield = spLabel::create(oxygine::Stage::getStage()->getWidth() - 190);
         pTextfield->setStyle(style);
         pTextfield->setHtmlText(name);
         pTextfield->setPosition(50, 5);
@@ -341,7 +318,7 @@ void OptionMenue::showMods()
             emit sigUpdateModCheckboxes();
         });
         pBox->setPosition(10, 10 + mods * 50);
-        pBox->setSize(Settings::getWidth() - 130, 50);
+        pBox->setSize(oxygine::Stage::getStage()->getWidth() - 130, 50);
 
         auto* pPtrBox = pBox.get();
         pBox->addClickListener([this, pPtrBox, name, description, version,
@@ -642,4 +619,11 @@ void OptionMenue::onReset()
 void OptionMenue::markRestartNeeded()
 {
     m_restartNeeded = true;
+}
+
+void OptionMenue::changeGameScale(qreal gameScale)
+{
+    Settings::setGameScale(gameScale);
+    Mainapp::getInstance()->initStage();
+    reloadSettings();
 }

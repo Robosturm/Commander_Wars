@@ -1,10 +1,11 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/interpreter.h"
-
-#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 GenericBox::GenericBox(bool cancel)
 {
@@ -16,7 +17,7 @@ GenericBox::GenericBox(bool cancel)
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     m_pSpriteBox->setResAnim(pAnim);
-    m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    m_pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(m_pSpriteBox);
     m_pSpriteBox->setPosition(0, 0);
     m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -25,7 +26,7 @@ GenericBox::GenericBox(bool cancel)
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 10 - pOkButton->getScaledHeight());
+    pOkButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pOkButton->getWidth() / 2, oxygine::Stage::getStage()->getHeight() - 10 - pOkButton->getScaledHeight());
     m_pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -33,10 +34,10 @@ GenericBox::GenericBox(bool cancel)
     });
     if (cancel)
     {
-        pOkButton->setX(Settings::getWidth() / 2 + 10);
+        pOkButton->setX(oxygine::Stage::getStage()->getWidth() / 2 + 10);
         oxygine::spButton pCancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-        pCancelButton->setPosition(Settings::getWidth() / 2 - pCancelButton->getScaledWidth() - 10,
-                                   Settings::getHeight() - 10 - pOkButton->getScaledHeight());
+        pCancelButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pCancelButton->getScaledWidth() - 10,
+                                   oxygine::Stage::getStage()->getHeight() - 10 - pOkButton->getScaledHeight());
         m_pSpriteBox->addChild(pCancelButton);
         pCancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {

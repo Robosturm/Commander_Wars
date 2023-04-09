@@ -205,14 +205,14 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
                 {
                     pBack = oxygine::spSprite::create();
                     pBack->setResAnim(pAnim);
-                    pBack->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pAnim->getWidth()));
-                    pBack->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pAnim->getHeight()));
+                    pBack->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pAnim->getWidth()));
+                    pBack->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pAnim->getHeight()));
                     pBack->setSize(pAnim->getSize());
                 }
                 else
                 {
                     oxygine::spColorRectSprite pRect = oxygine::spColorRectSprite::create();
-                    pRect->setSize(Settings::getWidth(), Settings::getHeight());
+                    pRect->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
                     pRect->setColor(pAtkUnit->getOwner()->getColor().darker(120));
                     pBack = pRect;
                 }
@@ -223,10 +223,10 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
                 pBack->setAlpha(128);
             }
             qint32 scaleFactor = 2.0f;
-            if (scaleFactor * (pRet->getScaledHeight() - 30) > Settings::getHeight())
+            if (scaleFactor * (pRet->getScaledHeight() - 30) > oxygine::Stage::getStage()->getHeight())
             {
                 scaleFactor = 1.0f;
-                while (scaleFactor * (pRet->getScaledHeight() - 30) > Settings::getHeight())
+                while (scaleFactor * (pRet->getScaledHeight() - 30) > oxygine::Stage::getStage()->getHeight())
                 {
                     scaleFactor /= 2;
                 }
@@ -234,8 +234,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
             if (battleViewMode == GameEnums::BattleAnimationType_Fullscreen ||
                 battleViewMode == GameEnums::BattleAnimationType_FullscreenTransparent)
             {
-                float scale = Settings::getHeight() / (pRet->getScaledHeight() - 30);
-                float widthScale = Settings::getWidth() / (pRet->getScaledWidth() - 30);
+                float scale = oxygine::Stage::getStage()->getHeight() / (pRet->getScaledHeight() - 30);
+                float widthScale = oxygine::Stage::getStage()->getWidth() / (pRet->getScaledWidth() - 30);
                 if (scale > widthScale)
                 {
                     scale = widthScale;
@@ -250,8 +250,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
                 scaleFactor = lastScale;
             }
             pRet->setScale(scaleFactor);
-            pRet->setPosition(static_cast<qint32>(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2),
-                              static_cast<qint32>(Settings::getHeight() / 2 - pRet->getScaledHeight() / 2));
+            pRet->setPosition(static_cast<qint32>(oxygine::Stage::getStage()->getWidth() / 2 - pRet->getScaledWidth() / 2),
+                              static_cast<qint32>(oxygine::Stage::getStage()->getHeight() / 2 - pRet->getScaledHeight() / 2));
             if (pMap != nullptr)
             {
                 auto* pMenu = pMap->getMenu();

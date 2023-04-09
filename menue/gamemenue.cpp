@@ -143,7 +143,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
             CONSOLE_PRINT("GameMenue starting game directly forced by creation flag", GameConsole::eDEBUG);
             startGame();
         }
-        m_pChat = spChat::create(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat, this);
+        m_pChat = spChat::create(pNetworkInterface, QSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight() - 100), NetworkInterface::NetworkSerives::GameChat, this);
         m_pChat->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);
         addChild(m_pChat);
@@ -1338,7 +1338,7 @@ void GameMenue::loadGameMenue()
     addChild(m_IngameInfoBar);
     if (Settings::getSmallScreenDevice())
     {
-        m_IngameInfoBar->setX(Settings::getWidth() - 1);
+        m_IngameInfoBar->setX(oxygine::Stage::getStage()->getWidth() - 1);
         auto moveButton = spMoveInButton::create(m_IngameInfoBar.get(), m_IngameInfoBar->getScaledWidth());
         connect(moveButton.get(), &MoveInButton::sigMoved, this, &GameMenue::doPlayerInfoFlipping, Qt::QueuedConnection);
         m_IngameInfoBar->addChild(moveButton);
@@ -1347,8 +1347,8 @@ void GameMenue::loadGameMenue()
     float scale = m_IngameInfoBar->getScaleX();
     m_autoScrollBorder = QRect(100, 140, m_IngameInfoBar->getScaledWidth(), 100);
     initSlidingActor(100, 165,
-                     Settings::getWidth() - m_IngameInfoBar->getScaledWidth() - m_IngameInfoBar->getDetailedViewBox()->getScaledWidth() * scale - 150,
-                     Settings::getHeight() - m_IngameInfoBar->getDetailedViewBox()->getScaledHeight() * scale - 175);
+                     oxygine::Stage::getStage()->getWidth() - m_IngameInfoBar->getScaledWidth() - m_IngameInfoBar->getDetailedViewBox()->getScaledWidth() * scale - 150,
+                     oxygine::Stage::getStage()->getHeight() - m_IngameInfoBar->getDetailedViewBox()->getScaledHeight() * scale - 175);
     m_mapSlidingActor->addChild(m_pMap);
     m_pMap->centerMap(m_pMap->getMapWidth() / 2, m_pMap->getMapHeight() / 2);
 
@@ -1424,8 +1424,8 @@ void GameMenue::loadUIButtons()
     }
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
-    m_pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - m_pButtonBox->getScaledWidth() / 2,
-                              Settings::getHeight() - m_pButtonBox->getScaledHeight() + 6);
+    m_pButtonBox->setPosition((oxygine::Stage::getStage()->getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - m_pButtonBox->getScaledWidth() / 2,
+                              oxygine::Stage::getStage()->getHeight() - m_pButtonBox->getScaledHeight() + 6);
     m_pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(m_pButtonBox);
     oxygine::spButton saveGame = pObjectManager->createButton(tr("Save"), 130);
@@ -1456,7 +1456,7 @@ void GameMenue::loadUIButtons()
     m_xyTextInfo->setPosition(8, 8);
     m_XYButtonBox->addChild(m_xyTextInfo);
     m_XYButtonBox->setSize(200, 50);
-    m_XYButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) - m_XYButtonBox->getScaledWidth(), 0);
+    m_XYButtonBox->setPosition((oxygine::Stage::getStage()->getWidth() - m_IngameInfoBar->getScaledWidth()) - m_XYButtonBox->getScaledWidth(), 0);
     m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates() && !Settings::getSmallScreenDevice());
     addChild(m_XYButtonBox);
     m_UpdateTimer.setInterval(500);
@@ -1468,7 +1468,7 @@ void GameMenue::loadUIButtons()
         oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
         pButtonBox->setResAnim(pAnim);
         pButtonBox->setSize(144, 50);
-        pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getScaledHeight());
+        pButtonBox->setPosition(0, oxygine::Stage::getStage()->getHeight() - pButtonBox->getScaledHeight());
         pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         addChild(pButtonBox);
         m_ChatButton = pObjectManager->createButton(tr("Show Chat"), 130);
@@ -1615,13 +1615,13 @@ void GameMenue::autoScroll(QPoint cursorPosition)
             if ((cursorPosition.x() < m_IngameInfoBar->getX() - bottomRightUi.width() &&
                  (cursorPosition.x() > m_IngameInfoBar->getX() - bottomRightUi.width() - 50) &&
                  (m_pMap->getX() + m_pMap->getMapWidth() * m_pMap->getZoom() * GameMap::getImageSize() > m_IngameInfoBar->getX() - bottomRightUi.width() - 50)) &&
-                cursorPosition.y() > Settings::getHeight() - bottomRightUi.height())
+                cursorPosition.y() > oxygine::Stage::getStage()->getHeight() - bottomRightUi.height())
             {
 
                 moveX = -GameMap::getImageSize() * m_pMap->getZoom();
             }
-            if ((cursorPosition.y() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.height()) &&
-                (m_pMap->getY() + m_pMap->getMapHeight() * m_pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.height()) &&
+            if ((cursorPosition.y() > oxygine::Stage::getStage()->getHeight() - m_autoScrollBorder.height() - bottomRightUi.height()) &&
+                (m_pMap->getY() + m_pMap->getMapHeight() * m_pMap->getZoom() * GameMap::getImageSize() > oxygine::Stage::getStage()->getHeight() - m_autoScrollBorder.height() - bottomRightUi.height()) &&
                 cursorPosition.x() > m_IngameInfoBar->getX() - bottomRightUi.width())
             {
                 moveY = -GameMap::getImageSize() * m_pMap->getZoom();
@@ -1632,7 +1632,7 @@ void GameMenue::autoScroll(QPoint cursorPosition)
             }
             else
             {
-                m_autoScrollBorder.setWidth(Settings::getWidth() - m_IngameInfoBar->getX());
+                m_autoScrollBorder.setWidth(oxygine::Stage::getStage()->getWidth() - m_IngameInfoBar->getX());
                 BaseGamemenu::autoScroll(cursorPosition);
             }
         }
@@ -1850,7 +1850,7 @@ void GameMenue::showPlayerUnitStatistics(Player* pPlayer)
             CONSOLE_PRINT("showUnitStatistics()", GameConsole::eDEBUG);
             spGenericBox pBox = spGenericBox::create();
             spUnitStatisticView view = spUnitStatisticView::create(records[playerId],
-                                                                   Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer, m_pMap.get());
+                                                                   oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 100, pPlayer, m_pMap.get());
             view->setPosition(30, 30);
             pBox->addItem(view);
             connect(pBox.get(), &GenericBox::sigFinished, this, [this]()
@@ -1944,8 +1944,8 @@ void GameMenue::showGameInfo(qint32 player)
         tooltipData.append({"", "", "", "", "", "", "", ""});
 
         spGenericBox pGenericBox = spGenericBox::create();
-        QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
-        qint32 width = (Settings::getWidth() - 20) / header.size();
+        QSize size(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() - 80);
+        qint32 width = (oxygine::Stage::getStage()->getWidth() - 20) / header.size();
         if (width < 150)
         {
             width = 150;
@@ -2437,7 +2437,7 @@ WikiView* GameMenue::showWiki()
     CONSOLE_PRINT("showWiki()", GameConsole::eDEBUG);
     m_Focused = false;
     spGenericBox pBox = spGenericBox::create(false);
-    spWikiView pView = spWikiView::create(Settings::getWidth() - 40, Settings::getHeight() - 60);
+    spWikiView pView = spWikiView::create(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() - 60);
     pView->setPosition(20, 20);
     pBox->addItem(pView);
     connect(pBox.get(), &GenericBox::sigFinished, this, [this]()
@@ -2508,8 +2508,8 @@ void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 void GameMenue::showDamageCalculator()
 {
     spDamageCalculator calculator = spDamageCalculator::create();
-    if (calculator->getScaledHeight() >= Settings::getHeight() ||
-        calculator->getScaledWidth() >= Settings::getWidth())
+    if (calculator->getScaledHeight() >= oxygine::Stage::getStage()->getHeight() ||
+        calculator->getScaledWidth() >= oxygine::Stage::getStage()->getWidth())
     {
         calculator->setScale(0.5f);
     }

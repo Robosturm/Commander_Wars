@@ -3,8 +3,8 @@
     <Panel>
         <x>10</x>
         <y>10</y>
-        <width>settings.getWidth() - 20</width>
-        <height>settings.getHeight() - 80</height>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
         <childs>
             <Label>
                 <x>40</x>
@@ -26,7 +26,7 @@
             <Textbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>settings.getWidth() - 310</width>
+                <width>settings.getStageWidth() - 310</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The name of the map.")</tooltip>
                 <startValue>mapEdit.getMapName()</startValue>
                 <onEvent>mapEdit.setMapName(input)</onEvent>
@@ -42,7 +42,7 @@
             <Textbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>settings.getWidth() - 310</width>
+                <width>settings.getStageWidth() - 310</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The author of the map.")</tooltip>
                 <startValue>mapEdit.getMapAuthor()</startValue>
                 <onEvent>mapEdit.setMapAuthor(input)</onEvent>
@@ -58,7 +58,7 @@
             <Textbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>settings.getWidth() - 310</width>
+                <width>settings.getStageWidth() - 310</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The description for the map.")</tooltip>
                 <startValue>mapEdit.getMapDescription()</startValue>
                 <onEvent>mapEdit.setMapDescription(input)</onEvent>
@@ -75,7 +75,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <Id>"ScriptTextbox"</Id>
-                <width>settings.getWidth() - 470</width>
+                <width>settings.getStageWidth() - 470</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The relative path from the exe to the script associated with this map.")</tooltip>
                 <startValue>mapEdit.getMapScript()</startValue>
                 <onEvent>mapEdit.setMapScript(input)</onEvent>
@@ -436,8 +436,8 @@
         </childs>
     </Panel>
     <Button>
-        <x>settings.getWidth() - 180</x>
-        <y>settings.getHeight() - 60</y>
+        <x>settings.getStageWidth() - 180</x>
+        <y>settings.getStageHeight() - 60</y>
         <width>150</width>
         <text>QT_TRANSLATE_NOOP("GAME","Ok")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Closes the map dialog")</tooltip>
@@ -445,7 +445,7 @@
     </Button>
     <Button>
         <x>30</x>
-        <y>settings.getHeight() - 60</y>
+        <y>settings.getStageHeight() - 60</y>
         <width>150</width>
         <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Cancel the map dialog")</tooltip>

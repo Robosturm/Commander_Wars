@@ -24,6 +24,6 @@ namespace oxygine
     protected:
         //settings from xml
         quint32 m_linearFilter{0};
-        bool m_clamp2edge{false};
+        bool m_clamp2edge{true};
     };
 }

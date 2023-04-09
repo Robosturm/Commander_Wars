@@ -1,7 +1,9 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+
 #include "objects/dialogs/editor/dialogviewmapstats.h"
 
 #include "ui_reader/uifactory.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
 
 #include "coreengine/interpreter.h"
 
@@ -21,7 +23,7 @@ DialogViewMapStats::DialogViewMapStats(GameMap* pMap)
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ui>
     <Box>
-        <x>settings.getWidth() / 2 - 176 / 2</x>
+        <x>settings.getStageWidth() / 2 - 176 / 2</x>
         <y>-45</y>
         <width>176</width>
         <height>46</height>

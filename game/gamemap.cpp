@@ -2,6 +2,7 @@
 #include <QCryptographicHash>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 
 #include "coreengine/mainapp.h"
@@ -121,10 +122,8 @@ void GameMap::loadMapData()
 {
     Interpreter::setCppOwnerShip(this);
     registerMapAtInterpreter();
-    if (Mainapp::getInstance()->devicePixelRatio() < 2.0f && !Settings::getUseHighDpi())
-    {
-        setZoom(1);
-    }
+    setZoom(1);
+
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
 
      m_markedFieldsLayer = oxygine::spActor::create();
@@ -1187,11 +1186,7 @@ void GameMap::setZoom(qint32 zoom)
     }
     // limit zoom
 
-    float minLimit = 1.0f / 4.0f;
-    if (Mainapp::getInstance()->devicePixelRatio() >= 2.0f && !Settings::getUseHighDpi())
-    {
-        minLimit = 1.0f / 8.0f;
-    }
+    float minLimit = 1.0f / 8.0f;
     if (curZoom > 16.0f)
     {
         curZoom = 16.0f;

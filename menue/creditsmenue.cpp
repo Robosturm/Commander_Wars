@@ -38,8 +38,8 @@ CreditsMenue::CreditsMenue()
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
+        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/credits_options");
@@ -48,7 +48,7 @@ CreditsMenue::CreditsMenue()
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
     pButtonExit->setPosition(10,
-                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
+                             oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -102,7 +102,7 @@ CreditsMenue::CreditsMenue()
     }
     m_creditsActor = oxygine::spActor::create();
     addChild(m_creditsActor);
-    m_creditsActor->setY(Settings::getHeight());
+    m_creditsActor->setY(oxygine::Stage::getStage()->getHeight());
     qint32 y = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -112,7 +112,7 @@ CreditsMenue::CreditsMenue()
     headstyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headstyle.multiline = false;
 
-    qint32 x = Settings::getWidth() / 2;
+    qint32 x = oxygine::Stage::getStage()->getWidth() / 2;
     oxygine::spTextField pTextfield;
     for (qint32 i = 0; i < m_Headlines.size(); i++)
     {
@@ -147,7 +147,7 @@ void CreditsMenue::doUpdate(const oxygine::UpdateState&)
         m_creditsActor->setY(m_creditsActor->getY() - 2);
         m_speedTimer.start();
     }
-    if (m_creditsActor->getY() - Settings::getHeight() / 2.0f + m_creditsHeigth < 0)
+    if (m_creditsActor->getY() - oxygine::Stage::getStage()->getHeight() / 2.0f + m_creditsHeigth < 0)
     {
         emit sigExitMenue();
     }

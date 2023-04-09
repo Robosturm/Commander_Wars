@@ -4,7 +4,6 @@
 #include "game/gamescript.h"
 #include "game/gamemap.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
 

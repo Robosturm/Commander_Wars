@@ -3,8 +3,8 @@
     <Panel>
         <x>0</x>
         <y>0</y>
-        <width>settings.getWidth()</width>
-        <height>settings.getHeight()</height>
+        <width>settings.getStageWidth()</width>
+        <height>settings.getStageHeight()</height>
         <childs>
             <Label>
                 <x>40</x>
@@ -136,7 +136,7 @@
                 </Spinbox>
             </loop>
             <Button>
-                <x>settings.getWidth() / 2 + 80</x>
+                <x>settings.getStageWidth() / 2 + 80</x>
                 <y>lastY + lastHeight + 10</y>
                 <width>150</width>
                 <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileApplyText()</text>
@@ -144,7 +144,7 @@
                 <onEvent>addIn.onMenuInputDone()</onEvent>
             </Button>
             <Button>
-                <x>settings.getWidth() / 2 - 80</x>
+                <x>settings.getStageWidth() / 2 - 80</x>
                 <y>lastY</y>
                 <width>150</width>
                 <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileStopText()</text>
@@ -152,7 +152,7 @@
                 <onEvent>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.stopAddIn(addIn)</onEvent>
             </Button>
             <Button>
-                <x>settings.getWidth() / 2 - 240</x>
+                <x>settings.getStageWidth() / 2 - 240</x>
                 <y>lastY</y>
                 <width>150</width>
                 <text>MOVEMENTPLANNERADDIN_SHOWMISSILETARGETS.getMissileCancelText()</text>

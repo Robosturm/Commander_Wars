@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QFontMetrics>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 
@@ -117,13 +118,13 @@ void GameConsole::init()
     oxygine::Actor::setPriority(static_cast<qint32>(Mainapp::ZOrder::Console));
     m_pBackgroundsprite = oxygine::spColorRectSprite::create();
     m_pBackgroundsprite->setPosition(0, 0);
-    m_pBackgroundsprite->setSize(Settings::getWidth(), Settings::getHeight());
+    m_pBackgroundsprite->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(m_pBackgroundsprite);
     m_pBackgroundsprite->setColor(QColor(0,0,0, 180));
 
     m_text = oxygine::spTextField::create();
     m_text->setPosition(1, 1);
-    m_text->setWidth(Settings::getWidth() - 2);
+    m_text->setWidth(oxygine::Stage::getStage()->getWidth() - 2);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("console16"));
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
@@ -132,7 +133,7 @@ void GameConsole::init()
 
     m_editTextfield = oxygine::spTextField::create();
     m_editTextfield->setPosition(1, 1);
-    m_editTextfield->setWidth(Settings::getWidth() - 2);
+    m_editTextfield->setWidth(oxygine::Stage::getStage()->getWidth() - 2);
     m_editTextfield->setStyle(style);
     addChild(m_editTextfield);
 
@@ -305,7 +306,7 @@ void GameConsole::update(const oxygine::UpdateState& us)
         QMutexLocker locker(&m_datalocker);
         if (m_outputChanged)
         {
-            qint32 screenheight = Settings::getHeight();
+            qint32 screenheight = oxygine::Stage::getStage()->getHeight();
             auto font = FontManager::getFont("console16");
             QFontMetrics metrics(font.font);
             qint32 lineHeight = metrics.height();
@@ -346,7 +347,7 @@ void GameConsole::toggleView()
     oxygine::Actor::setVisible(m_show);
     if (m_show)
     {
-        m_pBackgroundsprite->setSize(Settings::getWidth(), Settings::getHeight());
+        m_pBackgroundsprite->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
         emit sigFocused();
     }
     else

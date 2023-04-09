@@ -50,8 +50,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
+        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 
     pApp->getAudioManager()->clearPlayList();
@@ -63,7 +63,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &MapSelectionMapsMenue::mapSelectionItemClicked, Qt::QueuedConnection);
 
     m_pButtonBack = ObjectManager::createButton(tr("Back"));
-    m_pButtonBack->setPosition(10, Settings::getHeight() - 10 - m_pButtonBack->getScaledHeight());
+    m_pButtonBack->setPosition(10, oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonBack->getScaledHeight());
     addChild(m_pButtonBack);
     m_pButtonBack->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -72,8 +72,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
     connect(this, &MapSelectionMapsMenue::sigButtonBack, this, &MapSelectionMapsMenue::buttonBack, Qt::QueuedConnection);
 
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
-    m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getScaledWidth(),
-                               Settings::getHeight() - 10 - m_pButtonNext->getScaledHeight());
+    m_pButtonNext->setPosition(oxygine::Stage::getStage()->getWidth() - 10 - m_pButtonNext->getScaledWidth(),
+                               oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonNext->getScaledHeight());
     addChild(m_pButtonNext);
     m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -83,7 +83,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
 
     m_pRandomMap = ObjectManager::createButton(tr("Random Map"));
     m_pRandomMap->setPosition(m_pButtonBack->getX() + m_pButtonBack->getScaledWidth() + 20,
-                              Settings::getHeight() - 10 - m_pButtonNext->getScaledHeight());
+                              oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonNext->getScaledHeight());
     addChild(m_pRandomMap);
     m_pRandomMap->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -93,7 +93,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
 
     m_pMapFilter = ObjectManager::createButton(tr("Map filter"));
     m_pMapFilter->setPosition(m_pRandomMap->getX() + m_pRandomMap->getScaledWidth() + 20,
-                              Settings::getHeight() - 10 - m_pButtonNext->getScaledHeight());
+                              oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonNext->getScaledHeight());
     addChild(m_pMapFilter);
     m_pMapFilter->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -102,8 +102,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
     connect(this, &MapSelectionMapsMenue::sigMapFilter, this, &MapSelectionMapsMenue::showMapFilter, Qt::QueuedConnection);
 
     m_pButtonLoadRules = ObjectManager::createButton(tr("Load"));
-    m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 10,
-                                    Settings::getHeight() - 10 - m_pButtonNext->getScaledHeight());
+    m_pButtonLoadRules->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10,
+                                    oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonNext->getScaledHeight());
     addChild(m_pButtonLoadRules);
     m_pButtonLoadRules->setVisible(false);
     m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
@@ -113,8 +113,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
     connect(this, &MapSelectionMapsMenue::sigShowLoadRules, this, &MapSelectionMapsMenue::showLoadRules, Qt::QueuedConnection);
 
     m_pButtonSaveRules = ObjectManager::createButton(tr("Save"));
-    m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getScaledWidth() - 10,
-                                    Settings::getHeight() - 10 - m_pButtonNext->getScaledHeight());
+    m_pButtonSaveRules->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pButtonSaveRules->getScaledWidth() - 10,
+                                    oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonNext->getScaledHeight());
     addChild(m_pButtonSaveRules);
     m_pButtonSaveRules->setVisible(false);
     m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
@@ -125,7 +125,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
 
     m_pButtonSaveMap = ObjectManager::createButton(tr("Save Map"));
     m_pButtonSaveMap->setPosition(m_pButtonBack->getX() + m_pButtonBack->getScaledWidth() + 20,
-                                  Settings::getHeight() - 10 - m_pButtonNext->getScaledHeight());
+                                  oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonNext->getScaledHeight());
     addChild(m_pButtonSaveMap);
     m_pButtonSaveMap->setVisible(false);
     m_pButtonSaveMap->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
@@ -136,8 +136,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
 
 
     m_pButtonStart = ObjectManager::createButton(tr("Start Game"), 150);
-    m_pButtonStart->setPosition(Settings::getWidth() - 10 - m_pButtonStart->getScaledWidth(),
-                                Settings::getHeight() - 10 - m_pButtonStart->getScaledHeight());
+    m_pButtonStart->setPosition(oxygine::Stage::getStage()->getWidth() - 10 - m_pButtonStart->getScaledWidth(),
+                                oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonStart->getScaledHeight());
     addChild(m_pButtonStart);
     m_pButtonStart->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -148,13 +148,13 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
     qint32 yPos = 10;
     if (heigth <  0)
     {
-        heigth = Settings::getHeight() - 40 * 2;
+        heigth = oxygine::Stage::getStage()->getHeight() - 40 * 2;
     }
-    m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 20, heigth);
+    m_pPlayerSelection = spPlayerSelection::create(oxygine::Stage::getStage()->getWidth() - 20, heigth);
     m_pPlayerSelection->setPosition(10, yPos);
     addChild(m_pPlayerSelection);
 
-    QSize size(Settings::getWidth() - 20, Settings::getHeight() - 40 * 2);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 20, oxygine::Stage::getStage()->getHeight() - 40 * 2);
     m_pRuleSelection = spPanel::create(true,  size, size);
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
@@ -359,7 +359,7 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    m_pRuleSelectionView = spRuleSelection::create(pMap.get(), Settings::getWidth() - 80, RuleSelection::Mode::Singleplayer);
+    m_pRuleSelectionView = spRuleSelection::create(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, RuleSelection::Mode::Singleplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &MapSelectionMapsMenue::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 60);

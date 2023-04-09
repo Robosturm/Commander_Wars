@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "game/ui/damagecalculator.h"
 
 #include "resource_management/unitspritemanager.h"
@@ -10,8 +12,6 @@
 
 #include "ai/coreai.h"
 
-#include "coreengine/settings.h"
-
 static constexpr qint32 xAdvance = 5;
 static constexpr qint32 maxBuildingCount = 40;
 
@@ -21,8 +21,8 @@ DamageCalculator::DamageCalculator()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    setPosition(Settings::getWidth() / 2 - getScaledWidth() / 2,
-                Settings::getHeight() / 2 - getScaledHeight() / 2);
+    setPosition(oxygine::Stage::getStage()->getWidth() / 2 - getScaledWidth() / 2,
+                oxygine::Stage::getStage()->getHeight() / 2 - getScaledHeight() / 2);
     if (getX() < 0)
     {
         setX(20);

@@ -7,11 +7,11 @@ var MainMenu =
         var width = 170;
         if (col == 0)
         {
-            x = settings.getWidth() / 2.0 - width - 10;
+            x = settings.getStageWidth() / 2.0 - width - 10;
         }
         else
         {
-            x = settings.getWidth() / 2.0 + 10;
+            x = settings.getStageWidth() / 2.0 + 10;
         }
         return x;
     },
@@ -19,7 +19,7 @@ var MainMenu =
     {
         var buttonCount = 8;
         var buttonHeigth = 40;
-        return settings.getHeight() / 2.0 - buttonCount * buttonHeigth * 0.5 + buttonHeigth * (btnI + 1);
+        return settings.getStageHeight() / 2.0 - buttonCount * buttonHeigth * 0.5 + buttonHeigth * (btnI + 1);
     },
 
     loadPlayermenu : function(currentMenu)

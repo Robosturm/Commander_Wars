@@ -60,7 +60,7 @@ namespace oxygine
         }
         else
         {
-            m_clamp2edge = false;
+            m_clamp2edge = true;
         }
     }
 

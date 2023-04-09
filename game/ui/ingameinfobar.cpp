@@ -1,4 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "game/ui/ingameinfobar.h"
 
@@ -41,14 +42,14 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
     oxygine::spBox9Sprite pMiniMapBox = oxygine::spBox9Sprite::create();
     pMiniMapBox->setResAnim(pAnim);
 
-    pMiniMapBox->setSize(width, Settings::getHeight() - cursorInfoHeigth - gameInfoHeigth);
+    pMiniMapBox->setSize(width, oxygine::Stage::getStage()->getHeight() - cursorInfoHeigth - gameInfoHeigth);
     pMiniMapBox->setPosition(0, 0);
-    if (Settings::getHeight() - cursorInfoHeigth - gameInfoHeigth < 50)
+    if (oxygine::Stage::getStage()->getHeight() - cursorInfoHeigth - gameInfoHeigth < 50)
     {
         pMiniMapBox->setHeight(100);
-        setScale(static_cast<float>(Settings::getHeight()) / static_cast<float>(100.0f + cursorInfoHeigth + gameInfoHeigth));
+        setScale(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(100.0f + cursorInfoHeigth + gameInfoHeigth));
     }
-    setSize(width, Settings::getHeight());
+    setSize(width, oxygine::Stage::getStage()->getHeight());
 
 
     pMiniMapBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -100,7 +101,7 @@ IngameInfoBar::IngameInfoBar(GameMenue* pMenu, GameMap* pMap)
     m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(),
                                     m_pCursorInfoBox->getScaledHeight() - m_pDetailedViewBox->getScaledHeight());
 
-    setX(Settings::getWidth() - getScaledWidth());
+    setX(oxygine::Stage::getStage()->getWidth() - getScaledWidth());
     addChild(m_pCursorInfoBox);
 }
 

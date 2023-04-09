@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/dialogs/rules/ruleselectiondialog.h"
 
 #include "coreengine/mainapp.h"
@@ -19,7 +21,7 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -27,8 +29,8 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -39,7 +41,7 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
     if (enabled)
     {
         m_pButtonLoadRules = ObjectManager::createButton(tr("Load"));
-        m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 20 + m_OkButton->getScaledWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+        m_pButtonLoadRules->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 20 + m_OkButton->getScaledWidth() / 2, oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
         m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowLoadRules();
@@ -48,8 +50,8 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
         connect(this, &RuleSelectionDialog::sigShowLoadRules, this, &RuleSelectionDialog::showLoadRules, Qt::QueuedConnection);
 
         m_pButtonSaveRules = ObjectManager::createButton(tr("Save"));
-        m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getScaledWidth() - 20 - m_OkButton->getScaledWidth() / 2,
-                                        Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+        m_pButtonSaveRules->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pButtonSaveRules->getScaledWidth() - 20 - m_OkButton->getScaledWidth() / 2,
+                                        oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
         m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigShowSaveRules();
@@ -57,10 +59,10 @@ RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode
         pSpriteBox->addChild(m_pButtonSaveRules);
         connect(this, &RuleSelectionDialog::sigShowSaveRules, this, &RuleSelectionDialog::showSaveRules, Qt::QueuedConnection);
     }
-    m_pRuleSelection = spRuleSelection::create(m_pMap, Settings::getWidth() - 80, mode, enabled);
+    m_pRuleSelection = spRuleSelection::create(m_pMap, oxygine::Stage::getStage()->getWidth() - 80, mode, enabled);
     connect(m_pRuleSelection.get(), &RuleSelection::sigSizeChanged, this, &RuleSelectionDialog::ruleSelectionSizeChanged, Qt::QueuedConnection);
-    QSize size(Settings::getWidth() - 20,
-               Settings::getHeight() - 40 * 2 - m_OkButton->getScaledHeight());
+    QSize size(oxygine::Stage::getStage()->getWidth() - 20,
+               oxygine::Stage::getStage()->getHeight() - 40 * 2 - m_OkButton->getScaledHeight());
     m_pPanel = spPanel::create(true,  size, size);
     m_pPanel->setPosition(10, 20);
     m_pPanel->addItem(m_pRuleSelection);
@@ -109,7 +111,7 @@ void RuleSelectionDialog::loadRules(QString filename)
             file.close();
             auto mode = m_pRuleSelection->getMode();
             m_pRuleSelection->detach();
-            m_pRuleSelection = spRuleSelection::create(m_pMap, Settings::getWidth() - 80, mode);
+            m_pRuleSelection = spRuleSelection::create(m_pMap, oxygine::Stage::getStage()->getWidth() - 80, mode);
             m_pPanel->addItem(m_pRuleSelection);
             m_pPanel->setContentHeigth(m_pRuleSelection->getScaledHeight() + 40);
             m_pPanel->setContentWidth(m_pRuleSelection->getScaledWidth());

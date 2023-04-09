@@ -84,20 +84,6 @@ namespace oxygine
         QCoreApplication::exit(exitCode);
     }
 
-    float GameWindow::getActiveDpiFactor() const
-    {
-        auto ratio = devicePixelRatio();
-        if (Settings::getUseHighDpi())
-        {
-            ratio = 1.0f;
-        }
-        if (ratio < 1.0f)
-        {
-            ratio = 1.0f;
-        }
-        return ratio;
-    }
-
     bool GameWindow::isReady2Render()
     {
         if (!m_renderEnabled)
@@ -136,11 +122,10 @@ namespace oxygine
     {
         if (oxygine::Stage::getStage().get() != nullptr)
         {
-            auto ratio = getActiveDpiFactor();
+            auto ratio = Settings::getGameScale();
             auto width = Settings::getWidth();
             auto heigth = Settings::getHeight();
-            oxygine::Stage::getStage()->init (QSize(width / ratio, heigth / ratio),
-                                              QSize(width, heigth));
+            oxygine::Stage::getStage()->init(QSize(width / ratio, heigth / ratio), ratio);
         }
     }
 

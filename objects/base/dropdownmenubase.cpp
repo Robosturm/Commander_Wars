@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/base/dropdownmenubase.h"
 
 #include "coreengine/interpreter.h"
@@ -25,14 +27,14 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     m_pClipActor->setX(10);
     addChild(m_Box);
     qint32 maxItemCount = 2;
-    qint32 changedCount = Settings::getHeight() / 40 / 4;
+    qint32 changedCount = oxygine::Stage::getStage()->getHeight() / 40 / 4;
     if (changedCount > maxItemCount)
     {
         maxItemCount = changedCount;
     }
-    if (Settings::getHeight() / 4 < maxItemCount * 40)
+    if (oxygine::Stage::getStage()->getHeight() / 4 < maxItemCount * 40)
     {
-        maxItemCount = Settings::getHeight() / 4 / 40;
+        maxItemCount = oxygine::Stage::getStage()->getHeight() / 4 / 40;
     }
     qint32 scrollHeigth = maxItemCount * 40;
     if (itemcount < maxItemCount)
@@ -89,7 +91,7 @@ void DropDownmenuBase::showDropDown()
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     auto transform = computeGlobalTransform();
-    if (transform.m32() > Settings::getHeight() / 2)
+    if (transform.m32() > oxygine::Stage::getStage()->getHeight() / 2)
     {
         if (m_Panel->getH_Scrollbar()->getVisible())
         {

@@ -3,8 +3,8 @@
     <Panel>
         <x>10</x>
         <y>10</y>
-        <width>settings.getWidth() - 20</width>
-        <height>settings.getHeight() - 80</height>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
         <childs>
             <Label>
                 <x>40</x>
@@ -766,8 +766,8 @@
         </childs>
     </Panel>
     <Button>
-        <x>settings.getWidth() / 2 - 75</x>
-        <y>settings.getHeight() - 60</y>
+        <x>settings.getStageWidth() / 2 - 75</x>
+        <y>settings.getStageHeight() - 60</y>
         <width>150</width>
         <text>QT_TRANSLATE_NOOP("GAME","Ok")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Closes the map filter dialog")</tooltip>

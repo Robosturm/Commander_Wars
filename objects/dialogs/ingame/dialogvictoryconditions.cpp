@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/dialogs/ingame/dialogvictoryconditions.h"
 #include "objects/base/panel.h"
 #include "objects/base/label.h"
@@ -26,7 +28,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -34,8 +36,8 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -50,8 +52,8 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = true;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
-                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
+    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
+                                     QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
@@ -70,7 +72,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
     oxygine::spTextField pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(info);
-    pTextfield->setWidth(Settings::getWidth() - 90);
+    pTextfield->setWidth(oxygine::Stage::getStage()->getWidth() - 90);
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     y += 10 + pTextfield->getTextRect().height();
@@ -81,7 +83,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
 
         pTextfield = oxygine::spTextField::create();
         pTextfield->setStyle(style);
-        pTextfield->setWidth(Settings::getWidth() - 90);
+        pTextfield->setWidth(oxygine::Stage::getStage()->getWidth() - 90);
         pTextfield->setHtmlText(info);
         pTextfield->setPosition(10, y);
         pPanel->addItem(pTextfield);
@@ -115,7 +117,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
                 pLabel->setPosition(x + GameMap::getImageSize() + 5, y - 15);
                 pPanel->addItem(pLabel);
                 x += stepWidth;
-                if (x + stepWidth > Settings::getWidth() - 90 && i2 < pMap->getPlayerCount() - 1)
+                if (x + stepWidth > oxygine::Stage::getStage()->getWidth() - 90 && i2 < pMap->getPlayerCount() - 1)
                 {
                     x = 10;
                     y += 60;
@@ -150,7 +152,7 @@ void DialogVictoryConditions::showPopup(QString rule)
         if (pMenu != nullptr && !VictoryRulePopup::exists(rule))
         {
             spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
-            pPopup->setY(Settings::getHeight() - pPopup->getScaledHeight());
+            pPopup->setY(oxygine::Stage::getStage()->getHeight() - pPopup->getScaledHeight());
             pMenu->addChild(pPopup);
         }
     }
