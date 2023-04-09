@@ -604,12 +604,12 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
 
 QPoint Mainapp::mapPosFromGlobal(QPoint pos) const
 {
-    return mapFromGlobal(pos) * devicePixelRatio();
+    return mapFromGlobal(pos);
 }
 
 QPoint Mainapp::mapPosToGlobal(QPoint pos) const
 {
-    return mapToGlobal(pos / devicePixelRatio());
+    return mapToGlobal(pos);
 }
 
 void Mainapp::changePosition(QPoint pos, bool invert)
