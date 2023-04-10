@@ -229,7 +229,7 @@ var Constructor = function() { // scriptStart
                 if (unit !== null)
                 {
                     var hp = unit.getHpRounded();
-                    if (hp <= damage)
+                    if (hp + 0.1 <= damage)
                     {
                         // set hp to very very low
                         unit.setHp(0.1);

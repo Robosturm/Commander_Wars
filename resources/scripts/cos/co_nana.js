@@ -179,7 +179,7 @@ var Constructor = function()
                                         owner.isEnemyUnit(unit))
                                     {
                                         hp = unit.getHpRounded();
-                                        if (hp <= damage)
+                                        if (hp + 0.1 <= damage)
                                         {
                                             // set hp to very very low
                                             unit.setHp(0.1);
@@ -223,7 +223,7 @@ var Constructor = function()
                             if (owner !== unit.getOwner() || friendlyFire === true)
                             {
                                 hp = unit.getHpRounded();
-                                if (hp <= damage)
+                                if (hp + 0.1 <= damage)
                                 {
                                     // set hp to very very low
                                     unit.setHp(0.1);
