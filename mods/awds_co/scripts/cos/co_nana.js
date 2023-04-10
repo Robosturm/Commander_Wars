@@ -55,7 +55,7 @@ CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
                                     if (hp <= damage)
                                     {
                                         // set hp to very very low
-                                        unit.setHp(0.001);
+                                        unit.setHp(0.1);
                                     }
                                     else
                                     {
@@ -100,7 +100,7 @@ CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
                                 if (hp <= damage)
                                 {
                                     // set hp to very very low
-                                    unit.setHp(0.001);
+                                    unit.setHp(0.1);
                                 }
                                 else
                                 {
