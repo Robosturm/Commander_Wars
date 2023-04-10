@@ -62,7 +62,7 @@ CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
                                     owner.isEnemyUnit(unit))
                                 {
                                     hp = unit.getHpRounded();
-                                    if (hp + 0.1 <= damage)
+                                    if (hp - damage <= 0.1)
                                     {
                                         // set hp to very very low
                                         unit.setHp(0.1);
@@ -106,7 +106,7 @@ CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
                         if (owner !== unit.getOwner() || friendlyFire === true)
                         {
                             hp = unit.getHpRounded();
-                            if (hp + 0.1 <= damage)
+                            if (hp - damage <= 0.1)
                             {
                                 // set hp to very very low
                                 unit.setHp(0.1);
