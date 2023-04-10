@@ -147,12 +147,21 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
         if (version > 1)
         {
             quint32 value = 0;
+            qreal realValue = 0;
             pStream >> value;
             m_destroyedUnits.append(value);
             pStream >> value;
             m_lostUnits.append(value);
-            pStream >> value;
-            m_damageDealt.append(value);
+            if (version > 7)
+            {
+                pStream >> realValue;
+                m_damageDealt.append(realValue);
+            }
+            else
+            {
+                pStream >> value;
+                m_damageDealt.append(value);
+            }
             pStream >> value;
             m_attackNumbers.append(value);
             pStream >> value;
@@ -320,7 +329,7 @@ quint32 GameRecorder::getBuildedUnits(qint32 player)
     return 0;
 }
 
-void GameRecorder::attacked(qint32 player, float damage)
+void GameRecorder::attacked(qint32 player, qreal damage)
 {
     if (player >= 0 && player < m_attackNumbers.size())
     {

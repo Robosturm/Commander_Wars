@@ -1217,32 +1217,32 @@ void GameRules::setShipBridges(bool newShipBridges)
     m_shipBridges = newShipBridges;
 }
 
-float GameRules::getResellValue() const
+qreal GameRules::getResellValue() const
 {
     return m_resellValue;
 }
 
-void GameRules::setResellValue(float newResellValue)
+void GameRules::setResellValue(qreal newResellValue)
 {
     m_resellValue = newResellValue;
 }
 
-float GameRules::getPowerUsageReduction() const
+qreal GameRules::getPowerUsageReduction() const
 {
     return m_powerUsageReduction;
 }
 
-void GameRules::setPowerUsageReduction(float newPowerUsageReduction)
+void GameRules::setPowerUsageReduction(qreal newPowerUsageReduction)
 {
     m_powerUsageReduction = newPowerUsageReduction;
 }
 
-float GameRules::getPowerLoose() const
+qreal GameRules::getPowerLoose() const
 {
     return m_powerLoose;
 }
 
-void GameRules::setPowerLoose(float newPowerLoose)
+void GameRules::setPowerLoose(qreal newPowerLoose)
 {
     m_powerLoose = newPowerLoose;
 }
@@ -1307,12 +1307,12 @@ void GameRules::setPassword(const QString & password)
     m_password.setPassword(password);
 }
 
-float GameRules::getPowerGainSpeed() const
+qreal GameRules::getPowerGainSpeed() const
 {
     return m_powerGainSpeed;
 }
 
-void GameRules::setPowerGainSpeed(float powerGainSpeed)
+void GameRules::setPowerGainSpeed(qreal powerGainSpeed)
 {
     m_powerGainSpeed = powerGainSpeed;
 }
@@ -1773,7 +1773,16 @@ void GameRules::deserializer(QDataStream& pStream, bool)
             m_allowedPerks = Filesupport::readVectorList<QString, QList>(pStream);
             m_allowedActions = Filesupport::readVectorList<QString, QList>(pStream);
         }
-        pStream >> m_powerGainSpeed;
+        if (version > 26)
+        {
+            pStream >> m_powerGainSpeed;
+        }
+        else
+        {
+            float value = 0;
+            pStream >> value;
+            m_powerGainSpeed = value;
+        }
     }
     else
     {
@@ -1808,7 +1817,16 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     }
     if (version > 20)
     {
-        pStream >> m_resellValue;
+        if (version > 26)
+        {
+            pStream >> m_resellValue;
+        }
+        else
+        {
+            float value = 0;
+            pStream >> value;
+            m_resellValue = value;
+        }
         pStream >> m_transporterRefresh;
         pStream >> m_shipBridges;
         pStream >> m_enableDayToDayCoAbilities;
@@ -1818,7 +1836,20 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         pStream >> value;
         m_powerGainMode = static_cast<GameEnums::PowerGainMode>(value);
         pStream >> m_powerUsageReduction;
-        pStream >> m_powerLoose;
+
+        if (version > 26)
+        {
+            pStream >> m_powerUsageReduction;
+            pStream >> m_powerLoose;
+        }
+        else
+        {
+            float value = 0;
+            pStream >> value;
+            m_resellValue = value;
+            pStream >> value;
+            m_powerLoose = value;
+        }
     }
     if (version > 21)
     {

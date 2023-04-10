@@ -1690,8 +1690,8 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
                 }
                 if (newFundsDamage > minFundsDamage)
                 {
-                    supportDamage += newFundsDamage / static_cast<float>(pUsedUnits.size() + 1) * m_supportDamageBonus;
-                    hpDamage += newHpDamage / static_cast<float>(pUsedUnits.size() + 1) * m_supportDamageBonus;
+                    supportDamage += static_cast<float>(newFundsDamage) / static_cast<float>(pUsedUnits.size() + 1) * m_supportDamageBonus;
+                    hpDamage += static_cast<float>(newHpDamage) / static_cast<float>(pUsedUnits.size() + 1) * m_supportDamageBonus;
                 }
             }
         }
@@ -1709,7 +1709,7 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife) const
         qint32 restCapture = 20 - capturePoints;
         qint32 currentHp = pUnit->getHpRounded();
         qint32 newHp = GlobalUtils::roundUp(newLife);
-        qint32 remainingDays = GlobalUtils::roundUp(restCapture / static_cast<float>(currentHp));
+        qint32 remainingDays = GlobalUtils::roundUp(static_cast<float>(restCapture) / static_cast<float>(currentHp));
         if (remainingDays <= 1)
         {
             if (newHp <= 0)
@@ -1718,7 +1718,7 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife) const
             }
             else
             {
-                qint32 newRemainingDays = GlobalUtils::roundUp(restCapture / static_cast<float>(newHp));
+                qint32 newRemainingDays = GlobalUtils::roundUp(static_cast<float>(restCapture) / static_cast<float>(newHp));
                 if (remainingDays > newRemainingDays)
                 {
                     ret = 0.8f;
@@ -2412,7 +2412,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
                                     data[TurnOneDamageMalus] = unitData.turnOneDamage;
                                     if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
                                     {
-                                        data[BuildingEnemyRatio] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
+                                        data[BuildingEnemyRatio] = static_cast<float>(pBuildings->size()) / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
                                     }
                                     else
                                     {
@@ -2990,10 +2990,10 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
     }
     if (damage > 0)
     {
-        float value = (baseAttacksCount) / static_cast<float>(enemyUnitCount);
+        float value = static_cast<float>(baseAttacksCount) / static_cast<float>(enemyUnitCount);
         if (baseAttacksCount > m_minAttackCountBonus)
         {
-            damage *= (baseAttacksCount + m_minAttackCountBonus) / static_cast<float>(enemyUnitCount);
+            damage *= static_cast<float>(baseAttacksCount + m_minAttackCountBonus) / static_cast<float>(enemyUnitCount);
         }
         else
         {
@@ -3004,7 +3004,7 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
         {
             for (qint32 i = m_indirectUnitAttackCountMalus; i > 1; --i)
             {
-                float factor = 1 / static_cast<float>(i);
+                float factor = 1.0f / static_cast<float>(i);
                 if (value < factor)
                 {
                     notAttackableCount *= factor;
@@ -3159,7 +3159,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorU
         
         if (unitBuildData.smallTransporterCount > 0)
         {
-            score += qMin(m_smallTransporterBonus,  pUnits->size() / static_cast<float>(unitBuildData.smallTransporterCount + 1.0f) * 10.0f);
+            score += qMin(m_smallTransporterBonus,  static_cast<float>(pUnits->size()) / static_cast<float>(unitBuildData.smallTransporterCount + 1.0f) * 10.0f);
 
         }
         else
@@ -3174,7 +3174,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorU
     }
     if (unitBuildData.transportCount > 0 && unitBuildData.loadingCount > 0)
     {
-        score += (unitBuildData.loadingCount / static_cast<float>(unitBuildData.transportCount)) * m_ProducingTransportRatioBonus;
+        score += (static_cast<float>(unitBuildData.loadingCount) / static_cast<float>(unitBuildData.transportCount)) * m_ProducingTransportRatioBonus;
     }
     else
     {

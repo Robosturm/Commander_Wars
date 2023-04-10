@@ -25,7 +25,7 @@ public:
     static void setUseSeed(bool useSeed);
     static qint32 randIntBase(qint32 low, qint32 high);
     static float randFloatBase(float low, float high);
-    static double randDoubleBase(double low, double high);
+    static qreal randDoubleBase(qreal low, qreal high);
     static QFileInfoList getInfoList(const QString & folder, const QStringList & list = QStringList());
     static QUrl getUrlForFile(const QString & file);
     static QString getByteArrayString(const QByteArray & bytes);
@@ -49,21 +49,21 @@ public slots:
     static quint32 getSeed();
     static qint32 randInt(qint32 low, qint32 high);
     static float randFloat(float low, float high);
-    static double randDouble(double low, double high);
+    static qreal randDouble(qreal low, qreal high);
     /**
      * @brief roundUp rounds all numbers up. 9.1 -> 10
      * @param value
      * @return the rounded up integer value
      */
-    static qint32 roundUp(float value);
+    static qint32 roundUp(qreal value);
     static qint32 roundUpInt(qint32 numToRound, qint32 multiple);
-    static qint32 roundDown(float value);
+    static qint32 roundDown(qreal value);
     static float roundFloor(float value, float precision);
     static double roundFloor(double value, double precision);
     static float roundCeil(float value, float precision);
     static double roundCeil(double value, double precision);
     static qint32 roundFloorToInt(float value, float precision);
-    static qint32 roundFloorToInt(double value, float precision);
+    static qint32 roundFloorToInt(qreal value, qreal precision);
 
     static bool isEven(qint32 value);
     /**

@@ -124,7 +124,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 7;
+        return 8;
     }
     /**
      * @brief calculateRang
@@ -229,7 +229,7 @@ public slots:
      * @brief attacked
      * @param damage
      */
-    void attacked(qint32 player, float damage);
+    void attacked(qint32 player, qreal damage);
     /**
      * @brief getMapTime
      * @return
@@ -284,7 +284,7 @@ private:
     QVector<spAttackReport> m_Attackreports;
     QVector<quint32> m_destroyedUnits;
     QVector<quint32> m_lostUnits;
-    QVector<quint32> m_damageDealt;
+    QVector<qreal> m_damageDealt;
     QVector<quint32> m_attackNumbers;
     QVector<quint32> m_deployedUnits;
     qint32 m_mapTime{0};

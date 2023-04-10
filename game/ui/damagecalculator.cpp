@@ -527,8 +527,8 @@ QRectF DamageCalculator::calculatePostBattleDamage(spUnit pAttacker, spUnit pDef
                        true});
     pInterpreter->doFunction(CoreAI::ACTION_FIRE, "battle", args);
 
-    float counterDmg = (m_atkUnit.m_hp->getCurrentValue() - pAttacker->getHp()) * Unit::MAX_UNIT_HP;
-    float dmg = (m_defUnit.m_hp->getCurrentValue() - pDefender->getHp()) * Unit::MAX_UNIT_HP;
+    qreal counterDmg = (m_atkUnit.m_hp->getCurrentValue() - pAttacker->getHp()) * Unit::MAX_UNIT_HP;
+    qreal dmg = (m_defUnit.m_hp->getCurrentValue() - pDefender->getHp()) * Unit::MAX_UNIT_HP;
     ret = QRectF(dmg, info.y(), counterDmg, info.height());
     pAttacker->setHp(m_atkUnit.m_hp->getCurrentValue());
     m_map.getTerrain(attackerPos.x(), attackerPos.y())->setUnit(pAttacker);

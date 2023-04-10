@@ -26,8 +26,8 @@ class Unit final : public Tooltip, public FileSerializable
 {
     Q_OBJECT
 public:
-    static constexpr float MAX_UNIT_HP = 10.0f;
-    static constexpr float DAMAGE_100 = 100.0f;
+    static constexpr qreal MAX_UNIT_HP = 10.0f;
+    static constexpr qreal DAMAGE_100 = 100.0f;
 
     struct IconDuration
     {
@@ -89,7 +89,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 22;
+        return 23;
     }
 
 
@@ -213,17 +213,17 @@ public slots:
      * @brief setVirtualHpValue
      * @param value
      */
-    void setVirtualHpValue(const float &value);
+    void setVirtualHpValue(const qreal &value);
     /**
      * @brief getVirtualHp
      * @return
      */
-    float getVirtualHp() const;
+    qreal getVirtualHp() const;
     /**
      * @brief getVirtualHpValue
      * @return
      */
-    float getVirtualHpValue() const;
+    qreal getVirtualHpValue() const;
     /**
      * @brief transformUnit
      * @param unitID
@@ -304,7 +304,7 @@ public slots:
      * @param pUnit
      * @param gotAttacked
      */
-    void postBattleActions(float damage, Unit* pUnit, bool gotAttacked, qint32 weapon, GameAction* pAction);
+    void postBattleActions(qreal damage, Unit* pUnit, bool gotAttacked, qint32 weapon, GameAction* pAction);
     /**
      * @brief getDescription
      * @return
@@ -426,8 +426,8 @@ public slots:
      */
     qint32 getMovementCosts(qint32 x, qint32 y, qint32 curX = -1, qint32 curY = -1, bool trapChecking = false);
 
-    float getHp() const;
-    void setHp(const float &value);
+    qreal getHp() const;
+    void setHp(const qreal &value);
     qint32 getHpRounded() const;
 
     bool hasDirectWeapon();
@@ -527,7 +527,7 @@ public slots:
      * @param pEnemyUnit
      * @return
      */
-    float getBaseDamage(Unit* pEnemyUnit);
+    qreal getBaseDamage(Unit* pEnemyUnit);
     qint32 getUnitRank() const;
     void setUnitRank(const qint32 &UnitRank, bool force = false);
 
@@ -593,7 +593,7 @@ public slots:
      * @param weaponID
      * @return
      */
-    float getUnitDamage(const QString & weaponID);
+    qreal getUnitDamage(const QString & weaponID);
     /**
      * @brief getX
      * @return  x coordinates of this unit
@@ -624,7 +624,7 @@ public slots:
      * @brief refill fills up all ammo and fuel to max
      * @param noMaterial if true material will not be refilled.
      */
-    void refill(bool noMaterial = false, float fuelAmount = 1, float ammo1Amount = 1, float ammo2Amount = 1);
+    void refill(bool noMaterial = false, qreal fuelAmount = 1, qreal ammo1Amount = 1, qreal ammo2Amount = 1);
 
     /**
      * @brief setHasMoved  changes if the unit has been moved or not
@@ -817,7 +817,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    float getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
+    qreal getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
                               QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getTrueDamage
@@ -829,7 +829,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    float getTrueDamage(GameAction* pAction, float damage, QPoint position, qint32 attackerBaseHp,
+    qreal getTrueDamage(GameAction* pAction, qreal damage, QPoint position, qint32 attackerBaseHp,
                         Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief canCounterAttack
@@ -903,7 +903,7 @@ public slots:
      * @brief getRepairCostModifier
      * @return
      */
-    float getRepairCostModifier();
+    qreal getRepairCostModifier();
     /**
      * @brief setUnitVisible
      * @param value
@@ -972,7 +972,7 @@ public slots:
      * @brief getTerrainAnimationMoveSpeed
      * @return
      */
-    float getTerrainAnimationMoveSpeed();
+    qreal getTerrainAnimationMoveSpeed();
     /**
      * @brief isAttackableFromPosition
      * @param pDefender
@@ -1013,7 +1013,7 @@ public slots:
      * @param terrainID
      * @return
      */
-    float getEnvironmentDamage(QString terrainID);
+    qreal getEnvironmentDamage(QString terrainID);
     /**
      * @brief canMoveOver
      * @param x
@@ -1163,7 +1163,7 @@ private:
      */
     Terrain* m_pTerrain{nullptr};
     // basic data of this unit
-    float m_hp{Unit::MAX_UNIT_HP};
+    qreal m_hp{Unit::MAX_UNIT_HP};
     qint32 m_ammo1{-1};
     qint32 m_maxAmmo1{-1};
     QString m_weapon1ID;
@@ -1177,7 +1177,7 @@ private:
     QVector<spUnit> m_TransportUnits;
     qint32 m_capturePoints{0};
     qint32 m_UnitRank{GameEnums::UnitRank_None};
-    float m_virtualHp{0.0f};
+    qreal m_virtualHp{0.0f};
 
     QVector<QPoint> m_cloaked;
     bool m_Hidden{false};

@@ -480,7 +480,7 @@ bool CoreAI::processPredefinedAiDefensive(Unit* pUnit)
     std::vector<QVector3D> ret;
     std::vector<QVector3D> moveTargetFields;
     getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
-    float minDamage = -pUnit->getCoUnitValue() / 4.0f;
+    float minDamage = -static_cast<float>(pUnit->getCoUnitValue()) / 4.0f;
     if (minDamage > - 500.0f)
     {
         minDamage = -500.0f;

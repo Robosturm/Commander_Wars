@@ -76,9 +76,9 @@ void Player::setUniqueIdentifier(const QString &newUniqueIdentifier)
     m_uniqueIdentifier = newUniqueIdentifier;
 }
 
-float Player::getUnitBuildValue(const QString & unitID)
+qreal Player::getUnitBuildValue(const QString & unitID)
 {
-    float modifier = 0.0f;
+    qreal modifier = 0.0;
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)
@@ -928,7 +928,7 @@ void Player::postAction(GameAction* pAction)
     }
 }
 
-qint32 Player::calcIncome(float modifier) const
+qint32 Player::calcIncome(qreal modifier) const
 {
     qint32 ret = 0;
     
@@ -961,7 +961,7 @@ qint32 Player::calcArmyValue()
     return armyValue;
 }
 
-void Player::earnMoney(float modifier)
+void Player::earnMoney(qreal modifier)
 {
     setFunds(m_funds + calcIncome(modifier));
 }
@@ -999,7 +999,7 @@ qint32 Player::getCostModifier(const QString & id, qint32 baseCost, QPoint posit
     return costModifier;
 }
 
-void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction)
+void Player::postBattleActions(Unit* pAttacker, qreal atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction)
 {
     if (!m_isDefeated)
     {
@@ -1432,7 +1432,7 @@ qint32 Player::getCosts(const QString & id, QPoint position)
 
 void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack)
 {
-    float speed = m_pMap->getGameRules()->getPowerGainSpeed();
+    qreal speed = m_pMap->getGameRules()->getPowerGainSpeed();
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)
@@ -1511,9 +1511,9 @@ qint32 Player::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
     return modifier;
 }
 
-float Player::getEnemyRepairCostModifier(Unit* pUnit)
+qreal Player::getEnemyRepairCostModifier(Unit* pUnit)
 {
-    float modifier = 0;
+    qreal modifier = 0;
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)
@@ -1524,9 +1524,9 @@ float Player::getEnemyRepairCostModifier(Unit* pUnit)
     return modifier;
 }
 
-float Player::getRepairCostModifier(Unit* pUnit)
+qreal Player::getRepairCostModifier(Unit* pUnit)
 {
-    float modifier = 0;
+    qreal modifier = 0;
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)
@@ -1800,9 +1800,9 @@ qint32 Player::getCoCount() const
     return ret;
 }
 
-float Player::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
+qreal Player::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
 {
-    float ret = 1.0f;
+    qreal ret = 1.0;
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)
@@ -1813,7 +1813,7 @@ float Player::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* sy
     return ret;
 }
 
-QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
+QPoint Player::getRockettarget(qint32 radius, qint32 damage, qreal ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
 {
     
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
@@ -1873,7 +1873,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
     }
 }
 
-QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
+QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, qreal ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
 {    
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
     highestDamage = -1;
@@ -1951,7 +1951,7 @@ qint32 Player::getAverageCost()
     return m_averageCosts;
 }
 
-qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType, bool ignoreStealthed)
+qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, qreal ownUnitValue, GameEnums::RocketTarget targetType, bool ignoreStealthed)
 {
     qint32 averageCosts = getAverageCost();
     
@@ -1967,12 +1967,12 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
             Unit* pUnit = m_pMap->getTerrain(x2, y2)->getUnit();
             if (!pUnit->isStealthed(this) || ignoreStealthed)
             {
-                float modifier = 1.0f;
+                qreal modifier = 1.0f;
                 if (!isEnemyUnit(pUnit))
                 {
                     modifier = -ownUnitValue;
                 }
-                float damagePoints = damage;
+                qreal damagePoints = damage;
                 qint32 hpRounded = pUnit->getHpRounded();
                 if (hpRounded < damage)
                 {
@@ -2047,12 +2047,12 @@ qint32 Player::getPowerChargeBonus() const
     return bonus;
 }
 
-float Player::getFundsModifier() const
+qreal Player::getFundsModifier() const
 {
     return m_fundsModifier;
 }
 
-void Player::setFundsModifier(float value)
+void Player::setFundsModifier(qreal value)
 {
     m_fundsModifier = value;
 }
@@ -2210,7 +2210,16 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             pStream >> dummy;
         }
         pStream >> m_funds;
-        pStream >> m_fundsModifier;
+        if (version > 18)
+        {
+            pStream >> m_fundsModifier;
+        }
+        else
+        {
+            float fundsModifier = 0;
+            pStream >> fundsModifier;
+            m_fundsModifier = fundsModifier;
+        }
         pStream >> m_playerArmy;
         qint32 co = 0;
         for(auto & pCO : m_playerCOs)

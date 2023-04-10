@@ -471,7 +471,7 @@ public slots:
      * @param pUnit
      * @return
      */
-    float getDamage(Unit* pUnit);
+    qreal getDamage(Unit* pUnit);
     /**
      * @brief getBuildingTargets
      * @return

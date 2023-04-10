@@ -69,7 +69,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 26;
+        return 27;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -167,22 +167,22 @@ public slots:
      * @brief getPowerUsageReduction
      * @return
      */
-    float getPowerUsageReduction() const;
+    qreal getPowerUsageReduction() const;
     /**
      * @brief setPowerUsageReduction
      * @param newPowerUsageReduction
      */
-    void setPowerUsageReduction(float newPowerUsageReduction);
+    void setPowerUsageReduction(qreal newPowerUsageReduction);
     /**
      * @brief getPowerUsageReduction
      * @return
      */
-    float getPowerLoose() const;
+    qreal getPowerLoose() const;
     /**
      * @brief setPowerUsageReduction
      * @param newPowerUsageReduction
      */
-    void setPowerLoose(float newPowerLoose);
+    void setPowerLoose(qreal newPowerLoose);
     /**
      * @brief getPowerGainZone
      * @return
@@ -237,12 +237,12 @@ public slots:
      * @brief getResellValue
      * @return
      */
-    float getResellValue() const;
+    qreal getResellValue() const;
     /**
      * @brief setResellValue
      * @param newResellValue
      */
-    void setResellValue(float newResellValue);
+    void setResellValue(qreal newResellValue);
     /**
      * @brief getVictory
      * @return
@@ -307,12 +307,12 @@ public slots:
      * @brief getPowerGainSpeed
      * @return
      */
-    float getPowerGainSpeed() const;
+    qreal getPowerGainSpeed() const;
     /**
      * @brief setPowerGainSpeed
      * @param powerGainSpeed
      */
-    void setPowerGainSpeed(float powerGainSpeed);
+    void setPowerGainSpeed(qreal powerGainSpeed);
     /**
      * @brief getAllowedPerks
      * @return
@@ -706,18 +706,18 @@ private:
     bool m_actionBannlistEdited{false};
     bool m_singleCo{false};
     QStringList m_allowedActions;
-    float m_powerGainSpeed{1.0f};
+    qreal m_powerGainSpeed{1.0};
     quint8 m_terrainDefense{10};
     bool m_hpDefenseReduction{true};
     bool m_victory{false};
-    float m_resellValue{0.5f};
+    qreal m_resellValue{0.5};
     bool m_transporterRefresh{true};
     bool m_shipBridges{true};
     bool m_enableDayToDayCoAbilities{true};
     GameEnums::PowerGainZone m_powerGainZone{GameEnums::PowerGainZone_GlobalCoZoneBonus};
     GameEnums::PowerGainMode m_powerGainMode{GameEnums::PowerGainMode_Money};
-    float m_powerUsageReduction{0.2f};
-    float m_powerLoose{0.0f};
+    qreal m_powerUsageReduction{0.2};
+    qreal m_powerLoose{0.0};
     GameMap* m_pMap{nullptr};
     qint32 m_mapPalette{0};
 

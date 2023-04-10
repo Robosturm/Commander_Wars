@@ -14564,7 +14564,7 @@ Units gain even more firepower for each unit within vision range.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_conrad.js" line="298"/>
-        <source>You have a 0.001% chance of surviving this battle with me.</source>
+        <source>You have a 0.1% chance of surviving this battle with me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

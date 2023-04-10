@@ -52,14 +52,14 @@ bool CO::isValid()
     return COSpriteManager::getInstance()->exists(m_coID);
 }
 
-float CO::getUnitBuildValue(const QString & unitID)
+qreal CO::getUnitBuildValue(const QString & unitID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitBuildValue";
     QJSValueList args({pInterpreter->newQObject(this),
                        unitID,
                        pInterpreter->newQObject(m_pMap)});
-    float ergValue = 0.0f;
+    qreal ergValue = 0.0;
     QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
     if (erg.isNumber())
     {
@@ -118,7 +118,7 @@ void CO::setCOUnit(Unit* pUnit)
     m_pCOUnit = pUnit;
 }
 
-float CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
+qreal CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCoGroupModifier";
@@ -127,7 +127,7 @@ float CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system
                        pInterpreter->arraytoJSValue(unitIds),
                        pInterpreter->newQObject(m_pMap)});
     QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
-    float ret = 1.0f;
+    qreal ret = 1.0;
     if (erg.isNumber())
     {
         ret = erg.toNumber();
@@ -197,7 +197,7 @@ void CO::setPowerFilled(const double &value)
     if (m_pMap != nullptr &&
         !m_pMap->getGameRules()->getNoPower())
     {
-        float currentValue = m_powerFilled;
+        qreal currentValue = m_powerFilled;
         m_powerFilled = GlobalUtils::roundFloor(value, DOUBLE_PRECISION);
         if (!m_powerCharging)
         {
@@ -210,7 +210,7 @@ void CO::setPowerFilled(const double &value)
         m_pMenu->updatePlayerinfo();
     }
 }
-void CO::limitPowerbar(float previousValue)
+void CO::limitPowerbar(qreal previousValue)
 {
     if (m_powerFilled > m_powerStars + m_superpowerStars)
     {
@@ -688,14 +688,14 @@ qint32 CO::getEnemyBonusMisfortune(Unit* pUnit, QPoint position)
     return ergValue;
 }
 
-float CO::getEnemyRepairCostModifier(Unit* pUnit)
+qreal CO::getEnemyRepairCostModifier(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getEnemyRepairCostModifier";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(pUnit),
                        pInterpreter->newQObject(m_pMap)});
-    float ergValue = 0;
+    qreal ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -710,14 +710,14 @@ float CO::getEnemyRepairCostModifier(Unit* pUnit)
     return ergValue;
 }
 
-float CO::getRepairCostModifier(Unit* pUnit)
+qreal CO::getRepairCostModifier(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getRepairCostModifier";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(pUnit),
                        pInterpreter->newQObject(m_pMap)});
-    float ergValue = 0;
+    qreal ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1210,7 +1210,7 @@ qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint a
     return ergValue;
 }
 
-float CO::getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+qreal CO::getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
                              Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1228,7 +1228,7 @@ float CO::getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker,
                        luckMode,
                        pInterpreter->newQObject(pAction),
                        pInterpreter->newQObject(m_pMap)});
-    float ergValue = 0.0f;
+    qreal ergValue = 0.0;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1243,7 +1243,7 @@ float CO::getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker,
     return ergValue;
 }
 
-float CO::getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+qreal CO::getTrueDamage(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
                         Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1261,7 +1261,7 @@ float CO::getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoi
                           pInterpreter->newQObject(pAction),
                           luckMode,
                           pInterpreter->newQObject(m_pMap)});
-    float ergValue = 0.0f;
+    qreal ergValue = 0.0;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -1327,7 +1327,7 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
 {
     if (m_PowerMode == GameEnums::PowerMode_Off)
     {
-        float currentValue = m_powerFilled;
+        qreal currentValue = m_powerFilled;
         m_powerCharging = true;
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args({pInterpreter->newQObject(this),
@@ -1349,9 +1349,9 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
     }
 }
 
-float CO::getStarCost()
+qreal CO::getStarCost()
 {
-    float starCost = 1.0f;
+    qreal starCost = 1.0;
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(m_pMap)});
@@ -1596,10 +1596,10 @@ GameEnums::PowerMode CO::getAiUsePower(double powerSurplus, qint32 unitCount, qi
     }
 }
 
-float CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
+qreal CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    float value = 0;
+    qreal value = 0;
     valid = false;
     QString function1 = "getAiCoUnitBonus";
     if (pInterpreter->exists(m_coID, function1))
@@ -1625,10 +1625,10 @@ float CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
     return value;
 }
 
-float CO::getAiCoBuildRatioModifier()
+qreal CO::getAiCoBuildRatioModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    float value = 1.0f;
+    qreal value = 1.0;
     QString function1 = "getAiCoBuildRatioModifier";
     if (pInterpreter->exists(m_coID, function1))
     {
@@ -1903,7 +1903,7 @@ QString CO::getSuperPowerName()
     return ret;
 }
 
-void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction)
+void CO::postBattleActions(Unit* pAttacker, qreal atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "postBattleActions";
@@ -2058,9 +2058,9 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     }
     else
     {
-        float power = 0.0f;
+        float power = 0.0;
         pStream >> power;
-        m_powerFilled = static_cast<double>(power);
+        m_powerFilled = static_cast<qreal>(power);
     }
 
     qint32 value = 0;

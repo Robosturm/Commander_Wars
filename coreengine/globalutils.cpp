@@ -79,7 +79,7 @@ float GlobalUtils::randFloat(float low, float high)
     }
 }
 
-double GlobalUtils::randDouble(double low, double high)
+qreal GlobalUtils::randDouble(qreal low, qreal high)
 {
     if (high <= low)
     {
@@ -113,7 +113,7 @@ float GlobalUtils::randFloatBase(float low, float high)
     return QRandomGenerator::global()->bounded(high - low + 0.00001f) + low;
 }
 
-double GlobalUtils::randDoubleBase(double low, double high)
+qreal GlobalUtils::randDoubleBase(qreal low, qreal high)
 {
     if (high <= low)
     {
@@ -122,7 +122,7 @@ double GlobalUtils::randDoubleBase(double low, double high)
     return QRandomGenerator::global()->bounded(high - low + 0.00001) + low;
 }
 
-qint32 GlobalUtils::roundUp(float value)
+qint32 GlobalUtils::roundUp(qreal value)
 {
     qint32 roundDown = static_cast<qint32>(value);
     // little cheat
@@ -157,7 +157,7 @@ qint32 GlobalUtils::roundUpInt(qint32 numToRound, qint32 multiple)
     return numToRound + multiple - remainder;
 }
 
-qint32 GlobalUtils::roundDown(float value)
+qint32 GlobalUtils::roundDown(qreal value)
 {
     qint32 roundDown = static_cast<qint32>(value);
     return roundDown;
@@ -545,7 +545,7 @@ qint32 GlobalUtils::roundFloorToInt(float value, float precision)
     return qFloor(value * precision);
 }
 
-qint32 GlobalUtils::roundFloorToInt(double value, float precision)
+qint32 GlobalUtils::roundFloorToInt(qreal value, qreal precision)
 {
     return qFloor(value * precision);
 }

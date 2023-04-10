@@ -293,7 +293,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
         std::vector<QVector3D> ret;
         std::vector<QVector3D> moveTargetFields;
         CoreAI::getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
-        float minDamage = -pUnit->getCoUnitValue() / m_ownUnitDamageDivider;
+        qreal minDamage = -static_cast<qreal>(pUnit->getCoUnitValue()) / m_ownUnitDamageDivider;
         if (minDamage > m_minDamage)
         {
             minDamage = m_minDamage;
@@ -375,13 +375,13 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
             {
                 if ((pUnit->getMaxAmmo1() > 0 && !pUnit->hasAmmo1()) ||
                     (pUnit->getMaxAmmo2() > 0 && !pUnit->hasAmmo2()) ||
-                    (pUnit->getMaxFuel() > 0 && static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < m_fuelResupply))
+                    (pUnit->getMaxFuel() > 0 && static_cast<qreal>(pUnit->getFuel()) / static_cast<qreal>(pUnit->getMaxFuel()) < m_fuelResupply))
                 {
                     appendRepairTargets(pUnit, pBuildings, targets);
                 }
             }
             // force resupply when low on fuel
-            else if (static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < m_fuelResupply)
+            else if (static_cast<qreal>(pUnit->getFuel()) / static_cast<qreal>(pUnit->getMaxFuel()) < m_fuelResupply)
             {
                 targets.clear();
                 appendRepairTargets(pUnit, pBuildings, targets);
@@ -692,11 +692,11 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
             }
         }
         data.push_back(m_pPlayer->getFunds());
-        data.push_back(m_pPlayer->getFunds() / static_cast<float>(productionBuildings));
+        data.push_back(static_cast<float>(m_pPlayer->getFunds()) / static_cast<float>(productionBuildings));
         data.push_back(pUnits->size());
         if (indirectUnits > 0)
         {
-            data.push_back(directUnits / static_cast<float>(indirectUnits));
+            data.push_back(static_cast<float>(directUnits) / static_cast<float>(indirectUnits));
         }
         else
         {

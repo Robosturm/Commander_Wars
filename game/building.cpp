@@ -1022,7 +1022,7 @@ QPoint Building::getActionTargetOffset()
     return ret.toVariant().toPoint();
 }
 
-float Building::getDamage(Unit* pUnit)
+qreal Building::getDamage(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDamage";
@@ -1034,7 +1034,7 @@ float Building::getDamage(Unit* pUnit)
     {
         return ret.toNumber();
     }
-    return 0.0f;
+    return 0.0;
 }
 
 GameEnums::BuildingTarget Building::getBuildingTargets()
