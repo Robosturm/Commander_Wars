@@ -576,7 +576,7 @@ public slots:
     static std::chrono::seconds getAutoSavingCylceTime();
     static void setAutoSavingCylceTime(const std::chrono::seconds &value);
     static quint64 getAutoSavingCylceTimeRaw();
-    static void setAutoSavingCylceTimeRaw(quint64 &value);
+    static void setAutoSavingCylceTimeRaw(const quint32 &value);
 
     static qint32 getAutoSavingCycle();
     static void setAutoSavingCycle(const qint32 &value);

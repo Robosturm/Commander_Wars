@@ -1025,7 +1025,7 @@ quint64 Settings::getAutoSavingCylceTimeRaw()
     return std::chrono::duration_cast<std::chrono::milliseconds>(getAutoSavingCylceTime()).count();
 }
 
-void Settings::setAutoSavingCylceTimeRaw(quint64 &value)
+void Settings::setAutoSavingCylceTimeRaw(const quint32 &value)
 {
     setAutoSavingCylceTime(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::milliseconds(value)));
 }
