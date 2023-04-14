@@ -41,7 +41,7 @@ bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
                     if (pAction->canBePerformed())
                     {
                         addSelectedFieldData(pAction, flareTarget);
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                 }
@@ -81,7 +81,7 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
                     pAction->setMovepath(path, turnPfs.getCosts(path));
                     if (pAction->canBePerformed())
                     {
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                 }
@@ -153,7 +153,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                         addSelectedFieldData(pAction, target);
                         if (pAction->canBePerformed())
                         {
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                     }
@@ -170,7 +170,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                             pAction->setMovepath(path, turnPfs.getCosts(path));
                             if (pAction->canBePerformed())
                             {
-                                emit performAction(pAction);
+                                emit sigPerformAction(pAction);
                                 return true;
                             }
                         }
@@ -261,7 +261,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
                                 pAction->setMovepath(path, turnPfs.getCosts(path));
                                 if (pAction->canBePerformed())
                                 {
-                                    emit performAction(pAction);
+                                    emit sigPerformAction(pAction);
                                     return true;
                                 }
                             }
@@ -377,7 +377,7 @@ bool CoreAI::processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEn
         {
             if (pAction->canBePerformed())
             {
-                emit performAction(pAction);
+                emit sigPerformAction(pAction);
                 return true;
             }
         }
@@ -397,7 +397,7 @@ bool CoreAI::processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEn
         {
             if (pAction->canBePerformed())
             {
-                emit performAction(pAction);
+                emit sigPerformAction(pAction);
                 return true;
             }
         }
@@ -426,7 +426,7 @@ bool CoreAI::processPredefinedMapScripted(Unit* pUnit, spQmlVectorUnit & pEnemyU
         {
             if (pAction->canBePerformed())
             {
-                emit performAction(pAction);
+                emit sigPerformAction(pAction);
                 return true;
             }
         }
@@ -451,20 +451,20 @@ bool CoreAI::processPredefinedAiHold(Unit* pUnit)
                                                      static_cast<qint32>(target.y())));
         if (pAction->isFinalStep())
         {
-            emit performAction(pAction);
+            emit sigPerformAction(pAction);
             return true;
         }
         else
         {
             pAction->setActionID(ACTION_WAIT);
-            emit performAction(pAction);
+            emit sigPerformAction(pAction);
             return true;
         }
     }
     else
     {
         pAction->setActionID(ACTION_WAIT);
-        emit performAction(pAction);
+        emit sigPerformAction(pAction);
         return true;
     }
     return false;
@@ -501,20 +501,20 @@ bool CoreAI::processPredefinedAiDefensive(Unit* pUnit)
                                                      static_cast<qint32>(target.y())));
         if (pAction->isFinalStep())
         {
-            emit performAction(pAction);
+            emit sigPerformAction(pAction);
             return true;
         }
         else
         {
             pAction->setActionID(ACTION_WAIT);            
-            emit performAction(pAction);
+            emit sigPerformAction(pAction);
             return true;
         }
     }
     else
     {
         pAction->setActionID(ACTION_WAIT);
-        emit performAction(pAction);
+        emit sigPerformAction(pAction);
         return true;
     }    
     return false;
@@ -541,7 +541,7 @@ bool CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyU
         {
             std::vector<QPoint> path = pfs.getClosestReachableMovePath(targetFields);
             pAction->setMovepath(path, pfs.getCosts(path));
-            emit performAction(pAction);
+            emit sigPerformAction(pAction);
             return true;
         }
         else
@@ -585,7 +585,7 @@ bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, Unit
                                                      static_cast<qint32>(target.y())));
         if (pAction->isFinalStep())
         {
-            emit performAction(pAction);
+            emit sigPerformAction(pAction);
             performed = true;
         }
     }
@@ -634,7 +634,7 @@ bool CoreAI::processPredefinedAiPatrol(Unit* pUnit)
         {
             pAction->setMovepath(QVector<QPoint>(), 0);
         }
-        emit performAction(pAction);
+        emit sigPerformAction(pAction);
         return true;
     }
     else
@@ -673,12 +673,12 @@ bool CoreAI::processPredefinedAiTargetEnemyHq(Unit* pUnit, spQmlVectorBuilding &
 
             if (pAction->canBePerformed())
             {
-                emit performAction(pAction);
+                emit sigPerformAction(pAction);
             }
             else
             {
                 pAction->setActionID(ACTION_WAIT);
-                emit performAction(pAction);
+                emit sigPerformAction(pAction);
             }
             return true;
         }

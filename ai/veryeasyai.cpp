@@ -179,7 +179,7 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     if (pAction->canBePerformed())
                     {
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                 }
@@ -204,7 +204,7 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
                         }
                         if (pAction->canBePerformed())
                         {
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                     }
@@ -228,7 +228,7 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
                             {
                                 // select a target for the rocket and launch it
                                 CoreAI::addSelectedFieldData(pAction, rocketTarget);
-                                emit performAction(pAction);
+                                emit sigPerformAction(pAction);
                                 return true;
                             }
                         }
@@ -323,7 +323,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
 
             if (pAction->isFinalStep() && pAction->canBePerformed())
             {
-                emit performAction(pAction);
+                emit sigPerformAction(pAction);
                 return true;
             }
         }
@@ -563,7 +563,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
                 addMenuItemData(pAction, ACTION_WAIT, 0);
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }
@@ -574,7 +574,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
                 pAction->setActionID(ACTION_LOAD);
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }
@@ -590,7 +590,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
                     pAction->setActionID(action);
                     if (pAction->canBePerformed())
                     {
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                 }
@@ -600,7 +600,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
                 pAction->setActionID(ACTION_STEALTH);
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }
@@ -609,7 +609,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
                 pAction->setActionID(ACTION_UNSTEALTH);
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }
@@ -623,7 +623,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
                         spMarkedFieldData pData = pAction->getMarkedFieldStepData();
                         QPoint point = pData->getPoints()->at(GlobalUtils::randIntBase(0, pData->getPoints()->size() - 1));
                         CoreAI::addSelectedFieldData(pAction, point);
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                 }
@@ -631,7 +631,7 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
             pAction->setActionID(ACTION_WAIT);
             if (pAction->canBePerformed())
             {
-                emit performAction(pAction);
+                emit sigPerformAction(pAction);
                 return true;
             }
         }
@@ -749,7 +749,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
                                         {
                                             if (pAction->canBePerformed())
                                             {
-                                                emit performAction(pAction);
+                                                emit sigPerformAction(pAction);
                                                 return true;
                                             }
                                         }

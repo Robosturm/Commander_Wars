@@ -531,7 +531,7 @@ bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
                         if (pAction->canBePerformed())
                         {
                             CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
-                            emit m_owner->performAction(pAction);
+                            emit m_owner->sigPerformAction(pAction);
                             return true;
                         }
                     }

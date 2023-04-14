@@ -1384,7 +1384,7 @@ void GameMenue::connectMap()
     connect(m_pMap.get(), &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowUnitInfo, this, &GameMenue::showUnitInfo, Qt::QueuedConnection);
-    connect(m_pMap.get(), &GameMap::sigQueueAction, &m_actionPerformer, &ActionPerformer::performAction, Qt::QueuedConnection);
+    connect(m_pMap.get(), &GameMap::sigQueueAction, &m_actionPerformer, &ActionPerformer::performAction, Qt::DirectConnection);
     connect(m_pMap.get(), &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowXmlFileDialog, this, &GameMenue::showXmlFileDialog, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowWiki, this, &GameMenue::showWiki, Qt::QueuedConnection);

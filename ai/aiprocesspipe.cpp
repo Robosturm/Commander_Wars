@@ -92,7 +92,7 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         m_pMenu = pMenu;
         m_pMap = pMenu->getMap();
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToSlave, Qt::QueuedConnection);
-        connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
         QString command = QString(STARTGAME);
         CONSOLE_PRINT("AI-Pipe sending command " + command, GameConsole::eDEBUG);
@@ -273,7 +273,7 @@ void AiProcessPipe::onStartGame(QDataStream & stream)
         QDataStream outStream(&data, QIODevice::WriteOnly);
         outStream << command;
         emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
-        connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &AiProcessPipe::nextAction, Qt::QueuedConnection);
     }
     else

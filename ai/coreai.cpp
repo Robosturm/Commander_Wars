@@ -102,7 +102,7 @@ void CoreAI::init(GameMenue* pMenu)
         m_initDone = true;
         m_pMenu = pMenu;
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-        connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        connect(this, &CoreAI::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
         if (m_pMap != nullptr)
         {
             qint32 heigth = m_pMap->getMapHeight();
@@ -403,7 +403,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
                 }
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }
@@ -419,7 +419,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
                     pAction->setActionID(ACTION_ACTIVATE_TAGPOWER);
                     if (pAction->canBePerformed())
                     {
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                     else if (i == 1)
@@ -430,7 +430,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
                     {
                         pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_0);
                     }
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }
@@ -819,7 +819,7 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
                 pAction->setMovepath(path, turnPfs.getCosts(path));
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }
@@ -2220,7 +2220,7 @@ void CoreAI::finishTurn()
     {
         pAction->setActionID(ACTION_NEXT_PLAYER);
     }
-    emit performAction(pAction);
+    emit sigPerformAction(pAction);
 }
 
 bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
@@ -2242,7 +2242,7 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
                     {
                         if (pAction->isFinalStep())
                         {
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                         else
@@ -2351,7 +2351,7 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
                             {
                                 if (pAction->canBePerformed())
                                 {
-                                    emit performAction(pAction);
+                                    emit sigPerformAction(pAction);
                                     return true;
                                 }
                             }
@@ -2672,7 +2672,7 @@ bool CoreAI::buildCOUnit(spQmlVectorUnit & pUnits)
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }

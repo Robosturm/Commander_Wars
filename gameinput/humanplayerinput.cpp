@@ -54,7 +54,7 @@ void HumanPlayerInput::init(GameMenue* pMenu)
             connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
             connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
             connect(m_pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
-            connect(this, &HumanPlayerInput::performAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+            connect(this, &HumanPlayerInput::performAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
             connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
             m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
             m_FieldPoints.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);

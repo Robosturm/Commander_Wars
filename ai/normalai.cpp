@@ -395,7 +395,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                     if (pAction->canBePerformed())
                     {
                         ++unitData.nextAiStep;
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                 }
@@ -541,7 +541,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                         m_updatePoints.push_back(pAction->getActionTarget());
                         if (pAction->canBePerformed())
                         {
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                         else
@@ -550,7 +550,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                             pAction->setActionID(ACTION_MISSILE);
                             if (pAction->canBePerformed())
                             {
-                                emit performAction(pAction);
+                                emit sigPerformAction(pAction);
                                 return true;
                             }
                         }
@@ -593,7 +593,7 @@ bool NormalAi::joinCaptureBuildings(spQmlVectorUnit & pUnits)
                             pAction->setMovepath(path, unitData.pUnitPfs->getCosts(path));
                             m_updatePoints.push_back(pUnit->getPosition());
                             m_updatePoints.push_back(pAction->getActionTarget());
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                     }
@@ -646,7 +646,7 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
                         m_updatePoints.push_back(pUnit->getPosition());
                         m_updatePoints.push_back(pAction->getActionTarget());
                         m_updatePoints.push_back(QPoint(static_cast<qint32>(target.x), static_cast<qint32>(target.y)));
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                 }
@@ -724,7 +724,7 @@ bool NormalAi::refillUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
                         {
                             m_updatePoints.push_back(pUnit->getPosition());
                             m_updatePoints.push_back(pAction->getActionTarget());
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                     }
@@ -1181,7 +1181,7 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit 
     m_updatePoints.push_back(pAction->getActionTarget());
     if (pAction->canBePerformed())
     {
-        emit performAction(pAction);
+        emit sigPerformAction(pAction);
         return true;
     }
     return false;
@@ -1262,7 +1262,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
             {
                 m_updatePoints.push_back(pUnit->getPosition());
                 m_updatePoints.push_back(pAction->getActionTarget());
-                emit performAction(pAction);
+                emit sigPerformAction(pAction);
                 return true;
             }
         }
@@ -1275,7 +1275,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
             {
                 m_updatePoints.push_back(pUnit->getPosition());
                 m_updatePoints.push_back(pAction->getActionTarget());
-                emit performAction(pAction);
+                emit sigPerformAction(pAction);
                 return true;
             }
         }
@@ -1342,7 +1342,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                         m_updatePoints.push_back(pAction->getActionTarget());
                         m_updatePoints.push_back(QPoint(static_cast<qint32>(target.x()),
                                                         static_cast<qint32>(target.y())));
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                 }
@@ -1358,7 +1358,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                         pAction->setActionID(action);
                         if (pAction->canBePerformed())
                         {
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                     }
@@ -1368,7 +1368,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                     pAction->setActionID(ACTION_STEALTH);
                     if (pAction->canBePerformed())
                     {
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                 }
@@ -1380,7 +1380,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                         float counterDamage = calculateCounterDamage(*pUnitData, pAction->getActionTarget(), nullptr, 0, pBuildings, pEnemyBuildings, true);
                         if (counterDamage <= 0)
                         {
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                     }
@@ -1395,7 +1395,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                             spMarkedFieldData pData = pAction->getMarkedFieldStepData();
                             QPoint point = pData->getPoints()->at(GlobalUtils::randIntBase(0, pData->getPoints()->size() - 1));
                             CoreAI::addSelectedFieldData(pAction, point);
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                     }
@@ -1421,7 +1421,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                             m_updatePoints.push_back(pAction->getActionTarget());
                             m_updatePoints.push_back(QPoint(static_cast<qint32>(target.x()),
                                                             static_cast<qint32>(target.y())));
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                     }
@@ -1429,7 +1429,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, MoveUnitData* pUnitData, spQmlVe
                 pAction->setActionID(ACTION_WAIT);
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
                 else
@@ -1465,7 +1465,7 @@ bool NormalAi::suicide(spGameAction & pAction, Unit* pUnit, UnitPathFindingSyste
             m_updatePoints.push_back(pAction->getActionTarget());
             m_updatePoints.push_back(QPoint(static_cast<qint32>(target.x()),
                                             static_cast<qint32>(target.y())));
-            emit performAction(pAction);
+            emit sigPerformAction(pAction);
             return true;
         }
     }
@@ -2520,7 +2520,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
             if (pAction->canBePerformed())
             {
                 m_updatePoints.push_back(pAction->getActionTarget());
-                emit performAction(pAction);
+                emit sigPerformAction(pAction);
                 return true;
             }
         }
