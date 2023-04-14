@@ -129,15 +129,18 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
 bool ProxyAi::verifyActionStack()
 {
     bool valid = true;
-    if (m_pPlayer == m_pMap->getCurrentPlayer() &&
-        m_ActionBuffer.size() > 0 &&
-        m_pMenu->getActionRunning())
+    if (m_ActionBuffer.size() > 0)
     {
-        valid = m_ActionBuffer[0]->getSyncCounter() == m_pMenu->getSyncCounter() + 1;
-    }
-    for (qint32 i = 0; i < m_ActionBuffer.size() - 1 && valid; ++i)
-    {
-        valid = m_ActionBuffer[i]->getSyncCounter() + 1 == m_ActionBuffer[i + 1]->getSyncCounter();
+        if (m_pPlayer == m_pMap->getCurrentPlayer() &&
+            m_ActionBuffer.size() > 0 &&
+            m_pMenu->getActionRunning())
+        {
+            valid = m_ActionBuffer[0]->getSyncCounter() == m_pMenu->getSyncCounter() + 1;
+        }
+        for (qint32 i = 0; i < m_ActionBuffer.size() - 1 && valid; ++i)
+        {
+            valid = m_ActionBuffer[i]->getSyncCounter() + 1 == m_ActionBuffer[i + 1]->getSyncCounter();
+        }
     }
     return valid;
 }
