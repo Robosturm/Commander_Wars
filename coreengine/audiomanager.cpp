@@ -42,6 +42,8 @@ AudioManager::AudioManager(bool noAudio)
         connect(this, &AudioManager::sigLoadNextAudioFile, this, &AudioManager::loadNextAudioFile, Qt::QueuedConnection);
         connect(this, &AudioManager::sigInitAudio,         this, &AudioManager::initAudio, Qt::BlockingQueuedConnection);
         connect(this, &AudioManager::sigStopAudio,         this, &AudioManager::stopAudio, Qt::BlockingQueuedConnection);
+        connect(this, &AudioManager::sigCreateSoundCache,  this, &AudioManager::createSoundCache, Qt::BlockingQueuedConnection);
+
 #ifdef AUDIOSUPPORT
         connect(this, &AudioManager::sigDeleteSound,       this, &AudioManager::deleteSound, Qt::QueuedConnection);
         connect(this, &AudioManager::sigPlayDelayedSound,  this, &AudioManager::playDelayedSound, Qt::QueuedConnection);
@@ -132,33 +134,41 @@ void AudioManager::createSoundCache()
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        QStringList searchFolders;
-        searchFolders.append("resources/sounds/");
-        searchFolders.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/sounds/");
-        QStringList mods = Settings::getMods();
-        for (const auto & mod : qAsConst(mods))
+        if (Mainapp::getInstance()->isAudioThread())
         {
-            searchFolders.append(mod + "/sounds/");
-        }
-        for (qint32 i = searchFolders.size() - 1; i >= 0; --i)
-        {
-            QString folder = searchFolders[i];
-            if (QFile::exists(folder + "res.xml"))
+            QStringList searchFolders;
+            searchFolders.append("resources/sounds/");
+            searchFolders.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/sounds/");
+            QStringList mods = Settings::getMods();
+            for (const auto & mod : qAsConst(mods))
             {
-                readSoundCacheFromXml(folder);
+                searchFolders.append(mod + "/sounds/");
             }
-            QStringList filter;
-            filter << "*.wav";
-            QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
-            while (dirIter.hasNext())
+            for (qint32 i = searchFolders.size() - 1; i >= 0; --i)
             {
-                dirIter.next();
-                QString file = dirIter.fileName();
-                if (!m_soundCaches.contains(file))
+                QString folder = searchFolders[i];
+                if (QFile::exists(folder + "res.xml"))
                 {
-                    fillSoundCache(SoundData::DEFAULT_CACHE_SIZE, folder, file);
+                    readSoundCacheFromXml(folder);
+                }
+                QStringList filter;
+                filter << "*.wav";
+                QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
+                while (dirIter.hasNext())
+                {
+                    dirIter.next();
+                    QString file = dirIter.fileName();
+                    if (!m_soundCaches.contains(file))
+                    {
+                        fillSoundCache(SoundData::DEFAULT_CACHE_SIZE, folder, file);
+                    }
                 }
             }
+        }
+        else
+        {
+            emit sigCreateSoundCache();
+
         }
     }
 #endif

@@ -42,12 +42,9 @@ public:
     explicit AudioManager(bool noAudio);
     ~AudioManager() = default;
     qint32 getSoundsBuffered();
-    /**
-     * @brief createSoundCache
-     */
-    void createSoundCache();
 
 signals:
+    void sigCreateSoundCache();
     void sigInitAudio();
     void sigPlayMusic(qint32 File);
     void sigSetVolume(qint32 value);
@@ -68,6 +65,10 @@ signals:
     void sigPlayDelayedSound(AudioManager::SoundData* soundData, qint32 soundIndex, bool stopOldestSound, qint32 duration);
 #endif
 public slots:
+    /**
+     * @brief createSoundCache
+     */
+    void createSoundCache();
     /**
      * @brief initAudio
      */

@@ -30,7 +30,6 @@ void ProxyAi::readIni(QString)
 {
 }
 
-
 void ProxyAi::init(GameMenue* pMenu)
 {
     if (!m_initDone)
@@ -65,6 +64,7 @@ void ProxyAi::serializeObject(QDataStream& stream) const
         action->serializeObject(stream);
     }
 }
+
 void ProxyAi::deserializeObject(QDataStream& stream)
 {
     qint32 version;
