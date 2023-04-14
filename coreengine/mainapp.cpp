@@ -74,6 +74,10 @@ Mainapp::Mainapp()
     m_Networkthread.reset(new QThread());
     m_GameServerThread.reset(new QThread());
     m_aiSubProcess.reset(new QProcess());
+#ifdef AUDIOSUPPORT
+    m_audioThread.reset(new QThread());
+    m_audioThread->setObjectName("Audiothread");
+#endif
 #ifdef GRAPHICSUPPORT
     m_Workerthread->setObjectName("Workerthread");
     m_Networkthread->setObjectName("Networkthread");
@@ -226,10 +230,14 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
+#ifdef AUDIOSUPPORT
+            m_audioThread->start(QThread::Priority::NormalPriority);
             m_AudioManager.reset(new AudioManager(m_noAudio));
+            m_AudioManager->moveToThread(m_audioThread.get());
             m_AudioManager->initAudio();
             m_AudioManager->clearPlayList();
             m_AudioManager->loadFolder("resources/music/hauptmenue");
+#endif
             FontManager::getInstance();
             // load ressources by creating the singletons
             BackgroundManager::getInstance();
@@ -858,7 +866,19 @@ void Mainapp::onQuit()
         m_Workerthread->wait();
     }
     QCoreApplication::processEvents();
-    m_AudioManager.reset(nullptr);
+#ifdef AUDIOSUPPORT
+    if (!m_AudioManager.isNull())
+    {
+        m_AudioManager->stopAudio();
+        m_AudioManager->moveToThread(QThread::currentThread());
+        m_AudioManager.reset(nullptr);
+    }
+    if (m_audioThread->isRunning())
+    {
+        m_audioThread->quit();
+        m_audioThread->wait();
+    }
+#endif
     QCoreApplication::processEvents();
     if (m_Networkthread->isRunning())
     {

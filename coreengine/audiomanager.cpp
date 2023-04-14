@@ -40,7 +40,8 @@ AudioManager::AudioManager(bool noAudio)
         connect(this, &AudioManager::sigStopAllSounds,     this, &AudioManager::SlotStopAllSounds, Qt::QueuedConnection);
         connect(this, &AudioManager::sigChangeAudioDevice, this, &AudioManager::SlotChangeAudioDevice, Qt::QueuedConnection);
         connect(this, &AudioManager::sigLoadNextAudioFile, this, &AudioManager::loadNextAudioFile, Qt::QueuedConnection);
-
+        connect(this, &AudioManager::sigInitAudio,         this, &AudioManager::initAudio, Qt::BlockingQueuedConnection);
+        connect(this, &AudioManager::sigStopAudio,         this, &AudioManager::stopAudio, Qt::BlockingQueuedConnection);
 #ifdef AUDIOSUPPORT
         connect(this, &AudioManager::sigDeleteSound,       this, &AudioManager::deleteSound, Qt::QueuedConnection);
         connect(this, &AudioManager::sigPlayDelayedSound,  this, &AudioManager::playDelayedSound, Qt::QueuedConnection);
@@ -49,28 +50,41 @@ AudioManager::AudioManager(bool noAudio)
     }
 }
 
-AudioManager::~AudioManager()
+void AudioManager::stopAudio()
 {
 #ifdef AUDIOSUPPORT
-    if (m_player != nullptr)
+    if (Mainapp::getInstance()->isAudioThread())
     {
-        m_player->m_player.stop();
-    }
-    for (auto & cache : m_soundCaches)
-    {
-        for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
+        if (m_player != nullptr)
         {
-            if (cache->sound[i] != nullptr)
+            m_player->m_player.disconnect();
+            m_player->m_player.stop();
+        }
+        for (auto & cache : m_soundCaches)
+        {
+            for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
             {
-                cache->timer[i]->stop();
-                cache->sound[i]->stop();
-                cache->sound[i]->deleteLater();
-                cache->sound[i] = nullptr;
-                cache->timer[i].reset();
+                if (cache->sound[i] != nullptr)
+                {
+                    cache->timer[i]->disconnect();
+                    cache->timer[i]->stop();
+                    cache->sound[i]->disconnect();
+                    cache->sound[i]->stop();
+                    delete cache->sound[i];
+                    cache->sound[i] = nullptr;
+                    cache->timer[i].reset();
+                }
             }
         }
+        m_soundCaches.clear();
+        m_positionChangedTimer.disconnect();
+        m_positionChangedTimer.stop();
+        disconnect();
     }
-    m_soundCaches.clear();
+    else
+    {
+        emit sigStopAudio();
+    }
 #endif
 }
 
@@ -79,28 +93,36 @@ void AudioManager::initAudio()
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
     {
-        CONSOLE_PRINT_MODULE("AudioThread::initAudio", GameConsole::eDEBUG, GameConsole::eAudio);
-        const auto& value = Settings::getAudioOutput();
-        if (value.typeId() == QMetaType::QString &&
-            value.toString() == Settings::DEFAULT_AUDIODEVICE)
+        if (Mainapp::getInstance()->isAudioThread())
         {
-            const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
-            m_audioOutput.setDevice(defaultDeviceInfo);
+            CONSOLE_PRINT_MODULE("AudioThread::initAudio", GameConsole::eDEBUG, GameConsole::eAudio);
+            const auto& value = Settings::getAudioOutput();
+            if (value.typeId() == QMetaType::QString &&
+                value.toString() == Settings::DEFAULT_AUDIODEVICE)
+            {
+                const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
+                m_audioOutput.setDevice(defaultDeviceInfo);
+            }
+            else
+            {
+                m_audioDevice = value.value<QAudioDevice>();
+            }
+            m_audioOutput.setDevice(m_audioDevice);
+            createPlayer();
+            SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
+            m_positionChangedTimer.setInterval(1);
+            m_positionChangedTimer.setSingleShot(false);
+            connect(&m_positionChangedTimer, &QTimer::timeout, this, [this]()
+            {
+                SlotCheckMusicEnded(m_player->m_player.position());
+            });
+            m_positionChangedTimer.start();
         }
         else
         {
-            m_audioDevice = value.value<QAudioDevice>();
+            emit sigInitAudio();
+
         }
-        m_audioOutput.setDevice(m_audioDevice);
-        createPlayer();
-        SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
-        m_positionChangedTimer.setInterval(1);
-        m_positionChangedTimer.setSingleShot(false);
-        connect(&m_positionChangedTimer, &QTimer::timeout, this, [this]()
-        {
-            SlotCheckMusicEnded(m_player->m_player.position());
-        });
-        m_positionChangedTimer.start();
     }
 #endif
 }
@@ -224,7 +246,7 @@ qint32 AudioManager::getSoundsBuffered()
 
 void AudioManager::changeAudioDevice(const QVariant& value)
 {
-    if (Mainapp::getInstance()->isMainThread())
+    if (Mainapp::getInstance()->isAudioThread())
     {
         SlotChangeAudioDevice(value);
     }
@@ -277,7 +299,7 @@ void AudioManager::addMusic(QString File, qint64 startPointMs, qint64 endPointMs
 
 void AudioManager::clearPlayList()
 {
-    if (Mainapp::getInstance()->isMainThread())
+    if (Mainapp::getInstance()->isAudioThread())
     {
         SlotClearPlayList();
     }
@@ -309,7 +331,7 @@ void AudioManager::stopAllSounds()
 
 void AudioManager::loadFolder(QString folder)
 {
-    if (Mainapp::getInstance()->isMainThread())
+    if (Mainapp::getInstance()->isAudioThread())
     {
         SlotLoadFolder(folder);
     }
