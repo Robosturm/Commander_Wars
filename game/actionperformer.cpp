@@ -87,9 +87,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 CONSOLE_PRINT("Async found cause map hash is different from action map hash", GameConsole::eDEBUG);
             }
             if (multiplayer &&
-                m_pMenu != nullptr &&
-                baseGameInput != nullptr &&
-                baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi)
+                m_pMenu != nullptr)
             {
                 autosave = false;
                 m_pMenu->doResyncGame();
