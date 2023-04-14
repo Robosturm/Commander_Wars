@@ -118,7 +118,7 @@ public slots:
 
 protected:
     bool requiresForwarding(const spGameAction & pGameAction) const;
-
+    void onTriggeringActionFinished();
 private:
     GameMenue* m_pMenu{nullptr};
     GameMap* m_pMap{nullptr};
@@ -126,6 +126,7 @@ private:
     spGameAction m_pCurrentAction{nullptr};
     bool m_actionRunning{false};
     bool m_noTimeOut{false};
+    bool m_finishedPerformed{false};
     qint64 m_syncCounter{0};
     SyncData m_multiplayerSyncData;
     QTimer m_delayedActionPerformedTimer{this};
