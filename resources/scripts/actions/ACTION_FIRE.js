@@ -823,35 +823,38 @@ var Constructor = function()
         var player = map.getCurrentPlayer();
         var attacker = ACTION_FIRE.postUnitAnimationAttacker;
         var defUnit = ACTION_FIRE.postUnitAnimationDefender;
-        // level up and defender destruction
-        if (attacker.getHp() <= 0)
+        if (attacker !== null && defUnit !== null)
         {
-            // achievements
-            if (defUnit.getOwner().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+            // level up and defender destruction
+            if (attacker.getHp() <= 0)
             {
-                ACHIEVEMENT_KILL_UNIT.unitKilled(attacker.getUnitID());
+                // achievements
+                if (defUnit.getOwner().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+                {
+                    ACHIEVEMENT_KILL_UNIT.unitKilled(attacker.getUnitID());
+                }
+                // we destroyed a unit
+                map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID(), attacker.getUnitID(), attacker.getOwner().getPlayerID());
+                attacker.killUnit();
+                UNITRANKINGSYSTEM.increaseRang(defUnit);
             }
-            // we destroyed a unit
-            map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID(), attacker.getUnitID(), attacker.getOwner().getPlayerID());
-            attacker.killUnit();
-            UNITRANKINGSYSTEM.increaseRang(defUnit);
-        }
-        // level up and attacker destruction
-        if (defUnit.getHp() <= 0)
-        {
-            // achievements
-            if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+            // level up and attacker destruction
+            if (defUnit.getHp() <= 0)
             {
-                ACHIEVEMENT_KILL_UNIT.unitKilled(defUnit.getUnitID());
+                // achievements
+                if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+                {
+                    ACHIEVEMENT_KILL_UNIT.unitKilled(defUnit.getUnitID());
+                }
+                // we destroyed a unit nice
+                map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID(), defUnit.getUnitID(), defUnit.getOwner().getPlayerID());
+                defUnit.killUnit();
+                UNITRANKINGSYSTEM.increaseRang(attacker);
             }
-            // we destroyed a unit nice
-            map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID(), defUnit.getUnitID(), defUnit.getOwner().getPlayerID());
-            defUnit.killUnit();
-            UNITRANKINGSYSTEM.increaseRang(attacker);
+            ACTION_FIRE.postUnitAnimationAttacker = null;
+            ACTION_FIRE.postUnitAnimationDefender = null;
+            ACTION_FIRE.postAnimationAction = null;
         }
-        ACTION_FIRE.postUnitAnimationAttacker = null;
-        ACTION_FIRE.postUnitAnimationDefender = null;
-        ACTION_FIRE.postAnimationAction = null;
     }
 
     this.postBuildingAnimationTerrain = null;
@@ -871,7 +874,8 @@ var Constructor = function()
                 Global[defBuilding.getBuildingID()].onDestroyed(defBuilding, map);
             }
         }
-        else if (ACTION_FIRE.postBuildingAnimationTerrain.getHp() <= 0)
+        else if (ACTION_FIRE.postBuildingAnimationTerrain !== null &&
+                 ACTION_FIRE.postBuildingAnimationTerrain.getHp() <= 0)
         {
             // achievements
             if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
