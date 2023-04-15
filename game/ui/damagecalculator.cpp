@@ -341,6 +341,8 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
 
 void DamageCalculator::calculateDamage()
 {
+    bool currentUseSeed = GlobalUtils::getUseSeed();
+    GlobalUtils::setUseSeed(false);
     QPoint atkPos = QPoint(0, 0);
     QPoint defPos = QPoint(0, 0);
     updateMapData(defPos);
@@ -386,6 +388,7 @@ void DamageCalculator::calculateDamage()
                      minPostDamage.x(), avgPostDamage.x(), maxPostDamage.x());
     createDamageText(m_defUnit.m_minPostbattleDamage, m_defUnit.m_avgPostbattleDamage, m_defUnit.m_maxPostbattleDamage,
                      maxPostDamage.width(), avgPostDamage.width(), minPostDamage.width());
+    GlobalUtils::setUseSeed(currentUseSeed);
 }
 
 void DamageCalculator::updateMapData(QPoint & defPos, bool forceDirect)

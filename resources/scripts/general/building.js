@@ -333,7 +333,7 @@ var BUILDING =
         var randArmy = 0;
         if (variable === null)
         {
-            rand = globals.randInt(0, 1);
+            rand = globals.randInt(0, 1, true);
             variable = variables.createVariable("BACKGROUND_ID");
             armyVariable = variables.createVariable("ARMYBACKGROUND_ID");
             variable.writeDataInt32(rand);

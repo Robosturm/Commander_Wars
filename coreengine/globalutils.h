@@ -47,9 +47,9 @@ public slots:
      * @return
      */
     static quint32 getSeed();
-    static qint32 randInt(qint32 low, qint32 high);
-    static float randFloat(float low, float high);
-    static qreal randDouble(qreal low, qreal high);
+    static qint32 randInt(qint32 low, qint32 high, bool forceUnseeded = false);
+    static float randFloat(float low, float high, bool forceUnseeded = false);
+    static qreal randDouble(qreal low, qreal high, bool forceUnseeded = false);
     /**
      * @brief roundUp rounds all numbers up. 9.1 -> 10
      * @param value

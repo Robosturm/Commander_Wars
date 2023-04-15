@@ -47,13 +47,13 @@ quint32 GlobalUtils::getSeed()
     return m_pInstace->m_seed;
 }
 
-qint32 GlobalUtils::randInt(qint32 low, qint32 high)
+qint32 GlobalUtils::randInt(qint32 low, qint32 high, bool forceUnseeded)
 {
     if (high <= low)
     {
         return low;
     }
-    if (m_pInstace->m_useSeed)
+    if (m_pInstace->m_useSeed && !forceUnseeded)
     {
         return m_pInstace->m_randGenerator.bounded(low, high + 1);
     }
@@ -63,13 +63,13 @@ qint32 GlobalUtils::randInt(qint32 low, qint32 high)
     }
 }
 
-float GlobalUtils::randFloat(float low, float high)
+float GlobalUtils::randFloat(float low, float high, bool forceUnseeded)
 {
     if (high <= low)
     {
         return low;
     }
-    if (m_pInstace->m_useSeed)
+    if (m_pInstace->m_useSeed && !forceUnseeded)
     {
         return m_pInstace->m_randGenerator.bounded(high - low + 0.00001f) + low;
     }
@@ -79,13 +79,13 @@ float GlobalUtils::randFloat(float low, float high)
     }
 }
 
-qreal GlobalUtils::randDouble(qreal low, qreal high)
+qreal GlobalUtils::randDouble(qreal low, qreal high, bool forceUnseeded)
 {
     if (high <= low)
     {
         return low;
     }
-    if (m_pInstace->m_useSeed)
+    if (m_pInstace->m_useSeed && !forceUnseeded)
     {
         return m_pInstace->m_randGenerator.bounded(high - low + 0.00001) + low;
     }
