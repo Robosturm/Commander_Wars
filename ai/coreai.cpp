@@ -845,7 +845,7 @@ void CoreAI::addSelectedFieldData(spGameAction & pGameAction, const QPoint & poi
     pGameAction->setInputStep(pGameAction->getInputStep() + 1);
 }
 
-CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 min, qint32 max, std::function<CircleReturns(qint32, qint32)> functor)
+CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 currentX, qint32 currentY, qint32 x, qint32 y, qint32 min, qint32 max, std::function<CircleReturns(qint32, qint32)> functor)
 {
     CircleReturns ret = CircleReturns::Fail;
     qint32 x2 = 0;
@@ -854,6 +854,14 @@ CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 
     CircleReturns state = CircleReturns::Success;
     for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
     {
+        if (GlobalUtils::getDistance(currentX, currentY, x, y) == currentRadius)
+        {
+            ret = functor(x, y);
+            if (ret == CircleReturns::Success)
+            {
+                break;
+            }
+        }
         x2 = -currentRadius;
         y2 = 0;
         if (currentRadius == 0)
@@ -992,7 +1000,8 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
     std::vector<Unit*> transportUnits;
-    qint32 transporterMovement = pUnit->getMovementpoints(pUnit->Unit::getPosition());
+    QPoint currentPos = pUnit->Unit::getPosition();
+    qint32 transporterMovement = pUnit->getMovementpoints(currentPos);
     if (transporterMovement > 0)
     {
         for (auto & pOtherUnit : pUnits->getVector())
@@ -1051,7 +1060,9 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
                         qint32 unitY = pLoadingUnit->getY();
                         while (circleResult == CircleReturns::Fail)
                         {
-                            circleResult = doExtendedCircleAction(unitX, unitY, min, max, [this, pUnit, loadingIslandIdx, loadingIsland, unitIslandIdx, unitIsland, &targetX, &targetY, &found](qint32 x, qint32 y)
+
+                            circleResult = doExtendedCircleAction(currentPos.x(), currentPos.y(), unitX, unitY, min, max,
+                                                                  [this, pUnit, loadingIslandIdx, loadingIsland, unitIslandIdx, unitIsland, &targetX, &targetY, &found](qint32 x, qint32 y)
                             {
                                 if (m_pMap->onMap(x, y))
                                 {
@@ -1685,9 +1696,11 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, std::vector
     qint32 max = radius;
     CircleReturns circleResult = CircleReturns::Fail;
     checkedIslands.push_back(loadedUnitIslandIdx);
+    QPoint currentPos = pUnit->Unit::getPosition();
     while (circleResult == CircleReturns::Fail)
     {
-        circleResult = doExtendedCircleAction(islandX, islandY, min, max, [this, pUnit, pLoadedUnit, pUnloadArea, loadedUnitIslandIdx, targetIsland, unitIslandIdx, unitIsland, &targets, distanceModifier](qint32 x, qint32 y)
+        circleResult = doExtendedCircleAction(currentPos.x(), currentPos.y(), islandX, islandY, min, max,
+                                              [this, pUnit, pLoadedUnit, pUnloadArea, loadedUnitIslandIdx, targetIsland, unitIslandIdx, unitIsland, &targets, distanceModifier](qint32 x, qint32 y)
         {
             if (m_pMap->onMap(x, y))
             {

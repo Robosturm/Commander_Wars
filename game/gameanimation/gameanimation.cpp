@@ -388,39 +388,36 @@ bool GameAnimation::onFinished(bool skipping)
 {
     if (!m_finished)
     {
+        m_finished = true;
         m_skipping |= skipping;
         GameAnimationFactory::removeAnimationFromQueue(spGameAnimation(this));
-        if (m_skipping == skipping)
+        if (!m_started)
         {
-            m_finished = true;
-            if (!m_started)
+            doPreAnimationCall();
+        }
+        else
+        {
+            for (auto & data : m_SoundData)
             {
-                doPreAnimationCall();
-            }
-            else
-            {
-                for (auto & data : m_SoundData)
+                if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
                 {
-                    if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
-                    {
-                        Mainapp::getInstance()->getAudioManager()->stopSound(data.soundFile);
-                    }
+                    Mainapp::getInstance()->getAudioManager()->stopSound(data.soundFile);
                 }
             }
-            GameAnimationFactory* pGameAnimationFactory = GameAnimationFactory::getInstance();
-            for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
-            {
-                pGameAnimationFactory->startQueuedAnimation(m_QueuedAnimations[i].get());
-            }
-            m_QueuedAnimations.clear();
-            if ((!m_jsPostActionObject.isEmpty()) && (!m_jsPostActionObject.isEmpty()))
-            {
-                CONSOLE_PRINT("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, GameConsole::eDEBUG);
-                Interpreter* pInterpreter = Interpreter::getInstance();
-                QJSValueList args({pInterpreter->newQObject(this),
-                                   pInterpreter->newQObject(m_pMap)});
-                pInterpreter->doFunction(m_jsPostActionObject, m_jsPostActionFunction, args);
-            }
+        }
+        GameAnimationFactory* pGameAnimationFactory = GameAnimationFactory::getInstance();
+        for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
+        {
+            pGameAnimationFactory->startQueuedAnimation(m_QueuedAnimations[i].get());
+        }
+        m_QueuedAnimations.clear();
+        if ((!m_jsPostActionObject.isEmpty()) && (!m_jsPostActionObject.isEmpty()))
+        {
+            CONSOLE_PRINT("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, GameConsole::eDEBUG);
+            Interpreter* pInterpreter = Interpreter::getInstance();
+            QJSValueList args({pInterpreter->newQObject(this),
+                               pInterpreter->newQObject(m_pMap)});
+            pInterpreter->doFunction(m_jsPostActionObject, m_jsPostActionFunction, args);
         }
         for (auto & tween : m_stageTweens)
         {
@@ -551,7 +548,7 @@ void GameAnimation::setStartOfAnimationCall(QString preActionObject, QString pre
 
 void GameAnimation::emitFinished()
 {
-    if (!m_skipping)
+    if (!m_finished)
     {
         emit sigFinished(m_skipping);
     }

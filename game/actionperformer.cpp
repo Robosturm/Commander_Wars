@@ -27,6 +27,7 @@ void ActionPerformer::setSyncCounter(qint64 counter)
 
 void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
 {
+    CONSOLE_PRINT("Start running action " + pGameAction->getActionID(), GameConsole::eDEBUG);
     auto mapHash = m_pMap->getMapHash();
     if (m_exit)
     {
@@ -42,7 +43,6 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
     {
         CONSOLE_PRINT("An interaction changed the map state outside performing actions.", GameConsole::eERROR);
     }
-    CONSOLE_PRINT("Running action", GameConsole::eDEBUG);
     m_actionRunning = true;
     bool autosave = true;
     m_pMenu->setSaveAllowed(false);
@@ -419,6 +419,7 @@ void ActionPerformer::actionPerformed()
                     }
                     else
                     {
+                        CONSOLE_PRINT("Storing current map hash", GameConsole::eDEBUG);
                         m_mapHash = m_pMap->getMapHash();
                         GlobalUtils::setUseSeed(false);
                         if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)

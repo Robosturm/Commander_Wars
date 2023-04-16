@@ -612,7 +612,7 @@ protected:
                                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                             bool addCaptureTargets, bool virtualLoading, std::vector<QVector3D>& targets,
                                             bool all = false, qint32 distanceModifier = 1, bool onlyTrueIslands = false);
-    CircleReturns doExtendedCircleAction(qint32 x, qint32 y, qint32 min, qint32 max, std::function<CircleReturns(qint32, qint32)> functor);
+    CircleReturns doExtendedCircleAction(qint32 currentX, qint32 currentY, qint32 x, qint32 y, qint32 min, qint32 max, std::function<CircleReturns(qint32, qint32)> functor);
     /**
      * @brief hasCaptureTarget
      * @param pLoadingUnit

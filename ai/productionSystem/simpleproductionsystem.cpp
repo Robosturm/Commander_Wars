@@ -477,7 +477,7 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
             return lhs.distribution.distribution / totalDistributionCount - lhs.currentValue > rhs.distribution.distribution / totalDistributionCount - rhs.currentValue;
         }
     });
-    CONSOLE_PRINT("Created builddsitribution minMode=" + QString::number(minBuildMode) + " maxMode=" + QString::number(maxBuildMode) + " found items=" + QString::number(buildDistribution.size()), GameConsole::eDEBUG);
+    CONSOLE_PRINT("Created builddistribution minMode=" + QString::number(minBuildMode) + " maxMode=" + QString::number(maxBuildMode) + " found items=" + QString::number(buildDistribution.size()), GameConsole::eDEBUG);
 }
 
 bool SimpleProductionSystem::getInit() const
