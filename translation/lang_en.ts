@@ -386,7 +386,7 @@
     <name>ACTION_FIRE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="80"/>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="892"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="897"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -411,7 +411,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="896"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="901"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16165,27 +16165,27 @@ Units have more offensive and defensive bonus.</source>
 <context>
     <name>co_greyfield</name>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="271"/>
         <source>Wants to rule as the supreme global leader. Ambitious and power-hungry.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="275"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="279"/>
         <source>Insubordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="283"/>
         <source>Copter, seaplanes and sea units have higher firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="284"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="287"/>
         <source>
 Special Unit:
 Missile Submarine
@@ -16193,14 +16193,14 @@ Missile Submarine
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="288"/>
         <source>
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="289"/>
         <source>
 
 CO Zone Effect: 
@@ -16208,72 +16208,72 @@ CO Zone Effect:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="290"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="293"/>
         <source>All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="294"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="297"/>
         <source>Supply Chain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="298"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="301"/>
         <source>All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense and increase movement range by 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="305"/>
         <source>Naval War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="309"/>
         <source>I will brook no opposition. The enemy will be eliminated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="307"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="310"/>
         <source>Overwhelming forces need overwhelming supplies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="308"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="311"/>
         <source>Supplies are here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="312"/>
         <source>Admiral Greyfield here. Attack and eliminate them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="316"/>
         <source>Disloyalty will be punished with death.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="317"/>
         <source>Anyone who opposes me will be crushed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="318"/>
         <source>The Teal Isles Army will prevail.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="322"/>
         <source>Nooo... this is not the end of Teal Isles!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="320"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="323"/>
         <source>What? My army has been crushed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="324"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="327"/>
         <source>Greyfield</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18896,76 +18896,76 @@ Units gain additional firepower and defense.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_mina.js" line="252"/>
-        <source>Most expensive enemy units suffer five HP of damage.</source>
+        <source>Most expensive enemy units suffer %0 HP of damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="258"/>
         <source>Dark Lightning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="262"/>
         <source>Enemy is in range. Activating counter-measures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="263"/>
         <source>You&apos;re done hurting my troops!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="264"/>
         <source>You shouldn&apos;t have ticked me off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="265"/>
         <source>Let me show you something I learned fighting Black Hole.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="266"/>
         <source>You want to storm my defenses? I am the storm!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="267"/>
         <source>I once let someone I loved get hurt. I&apos;m not making that mistake again!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="268"/>
         <source>Let me show you why they call it girl power.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="272"/>
         <source>You&apos;ll never hurt my friends again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="273"/>
         <source>Well done girls. Let&apos;s go home.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="274"/>
         <source>They paid the price for their aggression.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="278"/>
         <source>I hate losing like this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="279"/>
         <source>No, I need to be stronger than this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="283"/>
         <source>Mina</source>
         <translation type="unfinished"></translation>
     </message>

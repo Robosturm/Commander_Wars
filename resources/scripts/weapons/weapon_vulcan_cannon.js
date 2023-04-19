@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getEnviromentDamage = function(enviromentId)
     {
-        return 1;
+        return 10;
     };
     this.damageTable = [["INFANTRY", 170],
                         ["MECH", 150],

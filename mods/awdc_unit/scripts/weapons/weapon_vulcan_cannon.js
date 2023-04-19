@@ -1,6 +1,6 @@
 WEAPON_VULCAN_CANNON.getEnviromentDamage = function(enviromentId)
 {
-    return 1;
+    return 10;
 };
 var idx = 0;
 idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "INFANTRY");

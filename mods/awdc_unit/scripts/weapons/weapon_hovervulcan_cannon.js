@@ -1,6 +1,6 @@
 WEAPON_HOVERVULCAN_CANNON.getEnviromentDamage = function(enviromentId)
 {
-    return 1;
+    return 10;
 };
 var idx = 0;
 idx = getIndexOf1(WEAPON_HOVERVULCAN_CANNON.damageTable, "INFANTRY");
