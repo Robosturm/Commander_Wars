@@ -6582,7 +6582,7 @@ Note: This may be caused by a defective mod.</source>
 <context>
     <name>GameScript</name>
     <message>
-        <location filename="../game/gamescript.cpp" line="109"/>
+        <location filename="../game/gamescript.cpp" line="117"/>
         <source>This is a normal game with the following Victory Conditions.</source>
         <translation type="unfinished"></translation>
     </message>

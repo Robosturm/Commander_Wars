@@ -3607,7 +3607,7 @@ void Unit::serializeObject(QDataStream& pStream, bool forHash) const
     }
     pStream << m_capturePoints;
     pStream << m_Hidden;
-    m_Variables.serializeObject(pStream);
+    m_Variables.serializeObject(pStream, forHash);
     pStream << m_IgnoreUnitCollision;
     if (!forHash)
     {

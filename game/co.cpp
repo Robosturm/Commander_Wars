@@ -2024,7 +2024,7 @@ void CO::serializeObject(QDataStream& pStream, bool forHash) const
         pStream << m_powerFilled;
     }
     pStream << static_cast<qint32>(m_PowerMode);
-    m_Variables.serializeObject(pStream);
+    m_Variables.serializeObject(pStream, forHash);
     pStream << m_powerUsed;
     pStream << static_cast<qint32>(m_perkList.size());
     for (const auto & perk : qAsConst(m_perkList))

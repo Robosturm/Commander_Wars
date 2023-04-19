@@ -35,10 +35,18 @@ GameScript::~GameScript()
 
 void GameScript::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void GameScript::serializeObject(QDataStream& pStream, bool forHash) const
+{
     pStream << getVersion();
     pStream << m_script;
-    pStream << m_scriptFile;
-    m_Variables.serializeObject(pStream);
+    if (!forHash)
+    {
+        pStream << m_scriptFile;
+    }
+    m_Variables.serializeObject(pStream, forHash);
 }
 
 void GameScript::deserializeObject(QDataStream& pStream)

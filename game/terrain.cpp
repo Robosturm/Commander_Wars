@@ -1795,7 +1795,7 @@ void Terrain::serializeObject(QDataStream& pStream, bool forHash) const
         pStream << m_customName;
         pStream << m_terrainDescription;
     }
-    m_Variables.serializeObject(pStream);
+    m_Variables.serializeObject(pStream, forHash);
     if (!forHash)
     {
         pStream << static_cast<qint32>(m_terrainOverlay.size());

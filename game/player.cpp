@@ -2180,7 +2180,7 @@ void Player::serializeObject(QDataStream& pStream, bool forHash) const
     }
     Filesupport::writeVectorList(pStream, m_BuildList);
     pStream << m_BuildlistChanged;
-    m_Variables.serializeObject(pStream);
+    m_Variables.serializeObject(pStream, forHash);
     if (!forHash)
     {
         pStream << m_playerArmySelected;

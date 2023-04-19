@@ -11,11 +11,32 @@ ScriptVariables::ScriptVariables()
 
 void ScriptVariables::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void ScriptVariables::serializeObject(QDataStream& pStream, bool forHash) const
+{
     pStream << getVersion();
-    pStream << static_cast<qint32>(m_Variables.size());
-    for (qint32 i = 0; i < m_Variables.size(); i++)
+    if (forHash)
     {
-        m_Variables[i]->serializeObject(pStream);
+        qint32 count = 0;
+        for (qint32 i = 0; i < m_Variables.size(); i++)
+        {
+            if (m_Variables[i]->getModified())
+            {
+                m_Variables[i]->serializeObject(pStream);
+                ++count;
+            }
+        }
+        pStream << count;
+    }
+    else
+    {
+        pStream << static_cast<qint32>(m_Variables.size());
+        for (qint32 i = 0; i < m_Variables.size(); i++)
+        {
+            m_Variables[i]->serializeObject(pStream);
+        }
     }
 }
 

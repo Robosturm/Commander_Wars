@@ -1394,18 +1394,18 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
     {
         m_Recorder->serializeObject(pStream);
     }
-    m_GameScript->serializeObject(pStream);
+    m_GameScript->serializeObject(pStream, forHash);
+    if (m_Campaign.get() != nullptr)
+    {
+        pStream << true;
+        m_Campaign->serializeObject(pStream, forHash);
+    }
+    else
+    {
+        pStream << false;
+    }
     if (!forHash)
     {
-        if (m_Campaign.get() != nullptr)
-        {
-            pStream << true;
-            m_Campaign->serializeObject(pStream);
-        }
-        else
-        {
-            pStream << false;
-        }
         pStream << m_mapPath;
         pStream << m_mapMusic;
         pStream << m_startLoopMs;

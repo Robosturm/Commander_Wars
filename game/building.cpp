@@ -1267,7 +1267,7 @@ void Building::serializeObject(QDataStream& pStream, bool forHash) const
     }
     pStream << m_Hp;
     pStream << m_fireCount;
-    m_Variables.serializeObject(pStream);
+    m_Variables.serializeObject(pStream, forHash);
     if (!forHash)
     {
         pStream << m_BuildingName;

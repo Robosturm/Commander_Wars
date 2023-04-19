@@ -1451,13 +1451,13 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
                 rule->setRuleValue(std::numeric_limits<qint32>::min(), i);
             }
         }
-        rule->serializeObject(pStream);
+        rule->serializeObject(pStream, forHash);
     }
 
     pStream << static_cast<qint32>(m_Weathers.size());
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
-        m_Weathers[i]->serializeObject(pStream);
+        m_Weathers[i]->serializeObject(pStream, forHash);
         pStream << m_WeatherChances[i];
     }
     if (!forHash)
@@ -1510,7 +1510,7 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << static_cast<qint32>(m_GameRules.size());
     for (qint32 i = 0; i < m_GameRules.size(); i++)
     {
-        m_GameRules[i]->serializeObject(pStream);
+        m_GameRules[i]->serializeObject(pStream, forHash);
     }
     if (!forHash)
     {
