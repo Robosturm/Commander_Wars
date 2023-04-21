@@ -31,7 +31,7 @@ var Constructor = function()
         {
             // neutral player
             building.loadSpriteV2("hq+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
-            building.loadSpriteV2("hq+neutral+mask" + armyName, GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
+            building.loadSpriteV2("hq+neutral+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
         }
     };
     this.getName = function()

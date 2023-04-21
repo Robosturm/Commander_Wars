@@ -307,7 +307,14 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
         }
         addChild(pSprite);
         m_pBuildingSprites.append(pSprite);
-        m_addPlayerColor.append(mode);
+        if (forcedPalette.isEmpty())
+        {
+            m_addPlayerColor.append(mode);
+        }
+        else
+        {
+            m_addPlayerColor.append(GameEnums::Recoloring_None);
+        }
     }
     else
     {

@@ -12,7 +12,7 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSprite("weld+N+S", false);
+        building.loadSpriteV2("weld+N+S", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         building.loadSpriteV2("weld+N+S+mask", GameEnums.Recoloring_Matrix);
     };
     this.getBaseIncome = function()

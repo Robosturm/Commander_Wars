@@ -60,6 +60,10 @@ var Constructor = function()
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         return TERRAIN.getTerrainBackgroundId(id, "desert", true);
     };
+    this.getShowInEditor = function()
+    {
+        return false;
+    };
 }
 
 Constructor.prototype = BUILDING;

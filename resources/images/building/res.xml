@@ -20,20 +20,15 @@
         <image file="harbour.png" cols = "2" />
         <image file="harbour+mask.png" />
         <image file="harbour+snow.png" />
-        <image file="harbour+neutral.png" />        
-        <!-- temporary harbour -->
-        <image file="temporary_harbour.png" cols = "2" />
-        <image file="temporary_harbour+mask.png" />
-        <image file="temporary_harbour+snow.png" />
-        <image file="temporary_harbour+neutral.png" />
+        <image file="harbour+neutral.png" />
         <!-- mine -->
         <image file="mine.png" cols = "2" />
         <image file="mine+mask.png" />
         <image file="mine+neutral.png" />
         <!-- oilrig -->
         <image file="oilrig.png" cols = "2" />
-        <image file="oilrig+mask.png" cols = "2" />
-        <image file="oilrig+snow.png" cols = "2" />
+        <image file="oilrig+mask.png" />
+        <image file="oilrig+snow.png" />
         <image file="oilrig+neutral.png" />        
         <!-- pipestation -->
         <image file="pipestation.png" cols = "2" />
@@ -60,6 +55,11 @@
         <image file="temporary_airport+mask.png" />
         <image file="temporary_airport+snow.png" />
         <image file="temporary_airport+neutral.png" />
+        <!-- temporary harbour -->
+        <image file="temporary_harbour.png" cols = "2" />
+        <image file="temporary_harbour+mask.png" />
+        <image file="temporary_harbour+snow.png" />
+        <image file="temporary_harbour+neutral.png" />
         <!-- labor -->
         <image file="labor.png" cols = "2" />
         <image file="labor+mask.png" />
@@ -67,14 +67,16 @@
         <image file="labor+neutral.png" />        
         <!-- labor -->
         <image file="silo.png" />
+        <image file="silo+mask.png" />
         <image file="silo+rocket.png" />
+        <image file="silo+rocket+mask.png" />
         <!-- depot -->
         <image file="depot.png" />
         <image file="depot+mask.png" />
         <!-- powerplant -->
         <image file="powerplant.png" cols = "2" />
-        <image file="powerplant+mask.png" cols = "2" />
-        <image file="powerplant+snow.png" cols = "2" />
+        <image file="powerplant+mask.png" />
+        <image file="powerplant+snow.png" />
         <image file="powerplant+neutral.png" />
         <!-- hq -->
         <image file="hq+ac.png" cols = "2" />
@@ -160,7 +162,7 @@
         <image file="crystall+mask.png" />
 
         <image file="laser.png" cols = "2" />
-        <image file="laser+mask.png" cols = "2" />
+        <image file="laser+mask.png" />
 
         <image file="deathray+E.png" cols = "2" />
         <image file="deathray+E+mask.png" />
@@ -185,10 +187,10 @@
         <image file="minicannon+N+mask.png" />
 
         <image file="monolith.png" cols = "2" />
-        <image file="monolith+mask.png" cols = "2" />
+        <image file="monolith+mask.png" />
 
         <image file="omega+base.png" cols = "2" />
-        <image file="omega+base+mask.png" cols = "2" />
+        <image file="omega+base+mask.png" />
         <image file="omega+base+neutral.png" />
 
         <image file="blackhole+factory.png" cols = "2" />

@@ -17,6 +17,10 @@ var Constructor = function()
     {
         return qsTr("Black Hole snowy factory");
     };
+    this.getShowInEditor = function()
+    {
+        return false;
+    };
 };
 
 Constructor.prototype = __ZBLACKHOLE_FACTORYBASE;

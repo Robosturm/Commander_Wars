@@ -12585,12 +12585,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>airport</name>
     <message>
-        <location filename="../resources/scripts/building/airport.js" line="29"/>
+        <location filename="../resources/scripts/building/airport.js" line="26"/>
         <source>Airport</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/airport.js" line="56"/>
+        <location filename="../resources/scripts/building/airport.js" line="53"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air&lt;/div&gt;&lt;r&gt; units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12598,12 +12598,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>amphibiousfactory</name>
     <message>
-        <location filename="../resources/scripts/building/amphibiousfactory.js" line="24"/>
+        <location filename="../resources/scripts/building/amphibiousfactory.js" line="22"/>
         <source>Amphibious factory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/amphibiousfactory.js" line="50"/>
+        <location filename="../resources/scripts/building/amphibiousfactory.js" line="48"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hovercraft &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24279,12 +24279,12 @@ Units get %0% firepower during sandstorm.</source>
 <context>
     <name>depot</name>
     <message>
-        <location filename="../resources/scripts/building/depot.js" line="44"/>
+        <location filename="../resources/scripts/building/depot.js" line="43"/>
         <source>Depot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/depot.js" line="49"/>
+        <location filename="../resources/scripts/building/depot.js" line="48"/>
         <source>&lt;r&gt;A civilian cargo depot that provides adequate cover and &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply&lt;/div&gt;&lt;r&gt; half their supplies each turn.&lt;/r&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24318,12 +24318,12 @@ Units get %0% firepower during sandstorm.</source>
 <context>
     <name>factory</name>
     <message>
-        <location filename="../resources/scripts/building/factory.js" line="24"/>
+        <location filename="../resources/scripts/building/factory.js" line="21"/>
         <source>Base</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/factory.js" line="57"/>
+        <location filename="../resources/scripts/building/factory.js" line="54"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24450,12 +24450,12 @@ Units get %0% firepower during sandstorm.</source>
 <context>
     <name>harbour</name>
     <message>
-        <location filename="../resources/scripts/building/harbour.js" line="29"/>
+        <location filename="../resources/scripts/building/harbour.js" line="26"/>
         <source>Harbour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/harbour.js" line="55"/>
+        <location filename="../resources/scripts/building/harbour.js" line="52"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24608,12 +24608,12 @@ Units get %0% firepower during sandstorm.</source>
 <context>
     <name>hq</name>
     <message>
-        <location filename="../resources/scripts/building/hq.js" line="40"/>
+        <location filename="../resources/scripts/building/hq.js" line="39"/>
         <source>HQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/hq.js" line="105"/>
+        <location filename="../resources/scripts/building/hq.js" line="104"/>
         <source>&lt;div c=&apos;#00ff00&apos;&gt;Battle ends &lt;/div&gt;&lt;r&gt;when an army&apos;s last HQ is captured. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24647,12 +24647,12 @@ Units get %0% firepower during sandstorm.</source>
 <context>
     <name>labor</name>
     <message>
-        <location filename="../resources/scripts/building/labor.js" line="29"/>
+        <location filename="../resources/scripts/building/labor.js" line="26"/>
         <source>Labor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/labor.js" line="40"/>
+        <location filename="../resources/scripts/building/labor.js" line="37"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;oozium&lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24738,12 +24738,12 @@ Units get %0% firepower during sandstorm.</source>
 <context>
     <name>mine</name>
     <message>
-        <location filename="../resources/scripts/building/mine.js" line="29"/>
+        <location filename="../resources/scripts/building/mine.js" line="26"/>
         <source>Mine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/mine.js" line="34"/>
+        <location filename="../resources/scripts/building/mine.js" line="31"/>
         <source>Ore mine. Once captured produces a lot of funds, but can&apos;t repair units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25381,12 +25381,12 @@ Units get %0% firepower during sandstorm.</source>
 <context>
     <name>oilrig</name>
     <message>
-        <location filename="../resources/scripts/building/oilrig.js" line="38"/>
+        <location filename="../resources/scripts/building/oilrig.js" line="36"/>
         <source>Oil Rig</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/oilrig.js" line="43"/>
+        <location filename="../resources/scripts/building/oilrig.js" line="41"/>
         <source>Oil rig. Once captured produces a lot of funds, but can&apos;t repair units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25567,12 +25567,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>pipestation</name>
     <message>
-        <location filename="../resources/scripts/building/pipestation.js" line="35"/>
+        <location filename="../resources/scripts/building/pipestation.js" line="32"/>
         <source>Pipestation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/pipestation.js" line="39"/>
+        <location filename="../resources/scripts/building/pipestation.js" line="36"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;pipe &lt;/div&gt;&lt;r&gt;units. Produces also more funds.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25593,12 +25593,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>powerplant</name>
     <message>
-        <location filename="../resources/scripts/building/powerplant.js" line="35"/>
+        <location filename="../resources/scripts/building/powerplant.js" line="32"/>
         <source>Power plant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/powerplant.js" line="44"/>
+        <location filename="../resources/scripts/building/powerplant.js" line="41"/>
         <source>A power plant that when captured increases how fast the powermeter charges by %0%.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25606,12 +25606,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>radar</name>
     <message>
-        <location filename="../resources/scripts/building/radar.js" line="35"/>
+        <location filename="../resources/scripts/building/radar.js" line="32"/>
         <source>Radar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/radar.js" line="40"/>
+        <location filename="../resources/scripts/building/radar.js" line="37"/>
         <source>&lt;r&gt;In Fog of War, Radars make a &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;5 square &lt;/div&gt;&lt;r&gt;area around them visible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26226,12 +26226,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>silo</name>
     <message>
-        <location filename="../resources/scripts/building/silo.js" line="29"/>
+        <location filename="../resources/scripts/building/silo.js" line="28"/>
         <source>Silo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/silo.js" line="34"/>
+        <location filename="../resources/scripts/building/silo.js" line="33"/>
         <source>Empty missile silo which provides some defence.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26239,12 +26239,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>silo_rocket</name>
     <message>
-        <location filename="../resources/scripts/building/silo_rocket.js" line="29"/>
+        <location filename="../resources/scripts/building/silo_rocket.js" line="28"/>
         <source>Silo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/silo_rocket.js" line="34"/>
+        <location filename="../resources/scripts/building/silo_rocket.js" line="33"/>
         <source>&lt;r&gt;Missile can be launched once, by Infantry unit. Damage across &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;13 square &lt;/div&gt;&lt;r&gt;area.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26304,12 +26304,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>temporary_airport</name>
     <message>
-        <location filename="../resources/scripts/building/temporary_airport.js" line="31"/>
+        <location filename="../resources/scripts/building/temporary_airport.js" line="28"/>
         <source>Temporary Airport</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/temporary_airport.js" line="65"/>
+        <location filename="../resources/scripts/building/temporary_airport.js" line="62"/>
         <source>&lt;r&gt;Airport made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26317,12 +26317,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>temporary_harbour</name>
     <message>
-        <location filename="../resources/scripts/building/temporary_harbour.js" line="30"/>
+        <location filename="../resources/scripts/building/temporary_harbour.js" line="27"/>
         <source>Temporary Harbour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/temporary_harbour.js" line="62"/>
+        <location filename="../resources/scripts/building/temporary_harbour.js" line="59"/>
         <source>&lt;r&gt;Harbour made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26341,19 +26341,19 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="25"/>
-        <location filename="../resources/scripts/general/terrain.js" line="444"/>
+        <location filename="../resources/scripts/general/terrain.js" line="459"/>
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="26"/>
-        <location filename="../resources/scripts/general/terrain.js" line="445"/>
+        <location filename="../resources/scripts/general/terrain.js" line="460"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="27"/>
-        <location filename="../resources/scripts/general/terrain.js" line="446"/>
+        <location filename="../resources/scripts/general/terrain.js" line="461"/>
         <source>Waste</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26364,82 +26364,82 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="443"/>
+        <location filename="../resources/scripts/general/terrain.js" line="458"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="447"/>
+        <location filename="../resources/scripts/general/terrain.js" line="462"/>
         <source>Clear AW 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="448"/>
+        <location filename="../resources/scripts/general/terrain.js" line="463"/>
         <source>Snow AW 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="449"/>
+        <location filename="../resources/scripts/general/terrain.js" line="464"/>
         <source>Clear AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="450"/>
+        <location filename="../resources/scripts/general/terrain.js" line="465"/>
         <source>Rain AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="451"/>
+        <location filename="../resources/scripts/general/terrain.js" line="466"/>
         <source>Snow AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="452"/>
+        <location filename="../resources/scripts/general/terrain.js" line="467"/>
         <source>Clear AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="453"/>
+        <location filename="../resources/scripts/general/terrain.js" line="468"/>
         <source>Desert AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="454"/>
+        <location filename="../resources/scripts/general/terrain.js" line="469"/>
         <source>Snow AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="455"/>
+        <location filename="../resources/scripts/general/terrain.js" line="470"/>
         <source>Waste AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="456"/>
+        <location filename="../resources/scripts/general/terrain.js" line="471"/>
         <source>Clear AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="457"/>
+        <location filename="../resources/scripts/general/terrain.js" line="472"/>
         <source>Desert AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="458"/>
+        <location filename="../resources/scripts/general/terrain.js" line="473"/>
         <source>Snow AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="459"/>
+        <location filename="../resources/scripts/general/terrain.js" line="474"/>
         <source>Waste AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="460"/>
+        <location filename="../resources/scripts/general/terrain.js" line="475"/>
         <source>SFW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="461"/>
+        <location filename="../resources/scripts/general/terrain.js" line="476"/>
         <source>Wargroove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26460,12 +26460,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>tower</name>
     <message>
-        <location filename="../resources/scripts/building/tower.js" line="42"/>
+        <location filename="../resources/scripts/building/tower.js" line="39"/>
         <source>Tower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/tower.js" line="47"/>
+        <location filename="../resources/scripts/building/tower.js" line="44"/>
         <source>&lt;r&gt;Once captured the Tower boosts your &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;attack by %0% and defence by %1%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26473,12 +26473,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>town</name>
     <message>
-        <location filename="../resources/scripts/building/town.js" line="34"/>
+        <location filename="../resources/scripts/building/town.js" line="31"/>
         <source>Town</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/town.js" line="39"/>
+        <location filename="../resources/scripts/building/town.js" line="36"/>
         <source>&lt;r&gt;Populated city. Once captured &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27416,12 +27416,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblack_building_destroyed</name>
     <message>
-        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="47"/>
+        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="46"/>
         <source>Ruins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="52"/>
+        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="51"/>
         <source>Destroyed Black Hole Building.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27429,12 +27429,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_cannon_E</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="30"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="29"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="103"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="102"/>
         <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27442,12 +27442,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_cannon_N</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="35"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="34"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="104"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="103"/>
         <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27455,12 +27455,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_cannon_S</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="34"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="33"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="103"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="102"/>
         <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27468,12 +27468,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_cannon_W</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="34"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="33"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="103"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="102"/>
         <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27481,7 +27481,7 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_factory</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_factory.js" line="19"/>
+        <location filename="../resources/scripts/building/zblackhole_factory.js" line="18"/>
         <source>Black Hole factory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27489,7 +27489,7 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_factorydesert</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_factorydesert.js" line="19"/>
+        <location filename="../resources/scripts/building/zblackhole_factorydesert.js" line="18"/>
         <source>Black Hole desert factory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27497,7 +27497,7 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_factorysnow</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_factorysnow.js" line="19"/>
+        <location filename="../resources/scripts/building/zblackhole_factorysnow.js" line="18"/>
         <source>Black Hole snowy factory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27505,7 +27505,7 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zblackhole_factorywaste</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_factorywaste.js" line="19"/>
+        <location filename="../resources/scripts/building/zblackhole_factorywaste.js" line="18"/>
         <source>Black Hole waste factory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27513,12 +27513,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zcrystall</name>
     <message>
-        <location filename="../resources/scripts/building/zcrystall.js" line="42"/>
+        <location filename="../resources/scripts/building/zcrystall.js" line="41"/>
         <source>Crystal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zcrystall.js" line="74"/>
+        <location filename="../resources/scripts/building/zcrystall.js" line="73"/>
         <source>Black Hole Crystal that can heal all own units for 2 HP in a 13 square area.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27526,12 +27526,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdeathray_E</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_E.js" line="42"/>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="41"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_E.js" line="132"/>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="131"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27539,12 +27539,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdeathray_N</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_N.js" line="42"/>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="41"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_N.js" line="132"/>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="131"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27552,12 +27552,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdeathray_S</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_S.js" line="42"/>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="41"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_S.js" line="128"/>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="127"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27565,12 +27565,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdeathray_W</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_W.js" line="42"/>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="41"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_W.js" line="131"/>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="130"/>
         <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27604,12 +27604,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdestroyed_gate_e_w</name>
     <message>
-        <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="23"/>
+        <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="22"/>
         <source>Destroyed gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="31"/>
+        <location filename="../resources/scripts/building/zdestroyed_gate_e_w.js" line="30"/>
         <source>A destroyed gate through which all players can pass.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27617,12 +27617,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zdestroyed_gate_n_s</name>
     <message>
-        <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="24"/>
+        <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="23"/>
         <source>Destroyed gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="32"/>
+        <location filename="../resources/scripts/building/zdestroyed_gate_n_s.js" line="31"/>
         <source>A destroyed gate through which all players can pass.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27630,12 +27630,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zfortress</name>
     <message>
-        <location filename="../resources/scripts/building/zfortress.js" line="36"/>
+        <location filename="../resources/scripts/building/zfortress.js" line="35"/>
         <source>Fortress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zfortress.js" line="58"/>
+        <location filename="../resources/scripts/building/zfortress.js" line="57"/>
         <source>Black Hole Fortress that defends a position has no other effects.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27643,12 +27643,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zgate_e_w</name>
     <message>
-        <location filename="../resources/scripts/building/zgate_e_w.js" line="25"/>
+        <location filename="../resources/scripts/building/zgate_e_w.js" line="24"/>
         <source>Gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zgate_e_w.js" line="50"/>
+        <location filename="../resources/scripts/building/zgate_e_w.js" line="49"/>
         <source>A gate through a wall can be crossed by all allied players. Can be destroyed by other players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27656,12 +27656,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zgate_n_s</name>
     <message>
-        <location filename="../resources/scripts/building/zgate_n_s.js" line="26"/>
+        <location filename="../resources/scripts/building/zgate_n_s.js" line="25"/>
         <source>Gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zgate_n_s.js" line="51"/>
+        <location filename="../resources/scripts/building/zgate_n_s.js" line="50"/>
         <source>A gate through a wall can be crossed by all allied players. Can be destroyed by other players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27669,12 +27669,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zlaser</name>
     <message>
-        <location filename="../resources/scripts/building/zlaser.js" line="42"/>
+        <location filename="../resources/scripts/building/zlaser.js" line="41"/>
         <source>Laser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zlaser.js" line="77"/>
+        <location filename="../resources/scripts/building/zlaser.js" line="76"/>
         <source>Black Hole Laser that can deal 5 HP of damage to all units in 4 rays from the laser.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27682,12 +27682,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zminicannon_E</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_E.js" line="38"/>
+        <location filename="../resources/scripts/building/zminicannon_E.js" line="37"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_E.js" line="74"/>
+        <location filename="../resources/scripts/building/zminicannon_E.js" line="73"/>
         <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27695,12 +27695,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zminicannon_N</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_N.js" line="42"/>
+        <location filename="../resources/scripts/building/zminicannon_N.js" line="41"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_N.js" line="73"/>
+        <location filename="../resources/scripts/building/zminicannon_N.js" line="72"/>
         <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27708,12 +27708,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zminicannon_S</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_S.js" line="42"/>
+        <location filename="../resources/scripts/building/zminicannon_S.js" line="41"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_S.js" line="73"/>
+        <location filename="../resources/scripts/building/zminicannon_S.js" line="72"/>
         <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27721,12 +27721,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zminicannon_W</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_W.js" line="42"/>
+        <location filename="../resources/scripts/building/zminicannon_W.js" line="41"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_W.js" line="73"/>
+        <location filename="../resources/scripts/building/zminicannon_W.js" line="72"/>
         <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27734,12 +27734,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zmonolith</name>
     <message>
-        <location filename="../resources/scripts/building/zmonolith.js" line="38"/>
+        <location filename="../resources/scripts/building/zmonolith.js" line="37"/>
         <source>Black Obelisk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zmonolith.js" line="101"/>
+        <location filename="../resources/scripts/building/zmonolith.js" line="100"/>
         <source>Black Hole Monolith that can heal all own units for 2 HP in a 3 square area.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27903,12 +27903,12 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>zomega_base</name>
     <message>
-        <location filename="../resources/scripts/building/zomega_base.js" line="36"/>
+        <location filename="../resources/scripts/building/zomega_base.js" line="35"/>
         <source>Omega Base</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/zomega_base.js" line="58"/>
+        <location filename="../resources/scripts/building/zomega_base.js" line="57"/>
         <source>Black Hole Omega Base meant to launch a giant Rocket on the Earth to destroy it.</source>
         <translation type="unfinished"></translation>
     </message>
