@@ -624,7 +624,7 @@ protected:
      * @return
      */
     TargetDistance hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, QmlVectorBuilding * pEnemyBuildings,
-                          qint32 loadingIslandIdx, qint32 loadingIsland, bool onlyTrueIslands = false);
+                                    qint32 loadingIslandIdx, qint32 loadingIsland, bool onlyTrueIslands = false);
     /**
      * @brief appendNearestUnloadTargets searches for unload fields closest to our current position
      * @param pUnit

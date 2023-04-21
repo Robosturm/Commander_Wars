@@ -1226,7 +1226,7 @@ CoreAI::TargetDistance CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapt
         {
             qint32 x = pBuilding->Building::getX();
             qint32 y = pBuilding->Building::getY();
-            if (onlyTrueIslands)
+            if (onlyTrueIslands || GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
             {
                 if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland &&
                     pBuilding->isCaptureOrMissileBuilding(missileTarget))
