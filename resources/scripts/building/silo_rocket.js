@@ -7,9 +7,8 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
-        // neutral player
-        building.loadSprite("silo+rocket", false);
-        building.loadSprite("silo+rocket+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
+        building.loadSpriteV2("silo+rocket", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
+        building.loadSpriteV2("silo+rocket+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
     };
     this.getBaseIncome = function()
     {

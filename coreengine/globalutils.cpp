@@ -166,19 +166,16 @@ qint32 GlobalUtils::roundDown(qreal value)
 QmlVectorPoint* GlobalUtils::getCircle(qint32 min, qint32 max)
 {
     QmlVectorPoint* ret = new QmlVectorPoint();
-    qint32 x2 = 0;
-    qint32 y2 = 0;
-
     for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
     {
-        x2 = -currentRadius;
-        y2 = 0;
         if (currentRadius == 0)
         {
             ret->append(QPoint(0, 0));
         }
         else
         {
+            qint32 x2 = -currentRadius;
+            qint32 y2 = 0;
             for (qint32 i = 0; i < currentRadius; ++i)
             {
                 x2 += 1;

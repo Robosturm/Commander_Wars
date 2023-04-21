@@ -7,18 +7,15 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
+        building.loadSpriteV2("radar+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
         if (building.getOwnerID() >= 0 && !neutral)
         {
-            // none neutral player
-            building.loadSprite("radar", false);
-            building.loadSpriteV2("radar+mask", GameEnums.Recoloring_Matrix);
+            building.loadSpriteV2("radar", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
         else
         {
-            // neutral player
-            building.loadSprite("radar+neutral", false);
+            building.loadSpriteV2("radar+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
-        building.loadSprite("radar+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.getBaseIncome = function()
     {

@@ -2,22 +2,34 @@
 #include "ai/coreai.h"
 #include "game/gamemap.h"
 
-TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<QVector3D>& targets, std::vector<std::vector<std::tuple<qint32, bool>>>* pMoveCostMap)
+TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<QVector3D>& targets, std::vector<std::vector<std::tuple<qint32, bool>>>* pMoveCostMap, qint32 maxTargets)
     : UnitPathFindingSystem(pMap, pUnit),
       m_Targets(targets),
       m_pMoveCostMap(pMoveCostMap)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("TargetedUnitPathFindingSystem");
-#endif
+#endif    
     Interpreter::setCppOwnerShip(this);
-    setFast(true);
+    setFast(true);    
     for (auto & target : m_Targets)
     {
         if (target.z() <= 0.0f)
         {
             target.setZ(1.0f);
         }
+    }
+    auto x = pUnit->Unit::getX();
+    auto y = pUnit->Unit::getY();
+    std::sort(m_Targets.begin(), m_Targets.end(), [x, y](const QVector3D& lhs, const QVector3D& rhs)
+    {
+        auto dist1 = GlobalUtils::getDistance(x, y, lhs.x(), lhs.y());
+        auto dist2 = GlobalUtils::getDistance(x, y, rhs.x(), rhs.y());
+        return dist1 < dist2 || (dist1 == dist2 && lhs.z() < rhs.z());
+    });
+    if (m_Targets.size()  > maxTargets)
+    {
+        m_Targets.resize(maxTargets);
     }
     setMovepoints(m_pUnit->getFuel() * 2);
 }
@@ -127,14 +139,23 @@ bool TargetedUnitPathFindingSystem::finished(qint32 x, qint32 y, qint32 movement
     qint32 index = CoreAI::index(m_Targets, QPoint(x, y));
     if (index >= 0)
     {
-        m_FinishNodes.push_back(std::tuple<qint32, qint32, qint32, float>(x, y, movementCosts, m_Targets[index].z()));
+        if (m_finishInfo.target < 0 ||
+            (movementCosts < m_finishInfo.bestCost + m_finishInfo.remainingCost &&
+             m_finishInfo.target >= 0))
+        {
+            m_finishInfo.remainingCost = m_Targets[index].z() - m_Targets[0].z();
+            m_finishInfo.bestCost = movementCosts;
+            m_finishInfo.target = index;
+        }
+        m_FinishNodes.push_back({x, y, movementCosts, m_Targets[index].z()});
     }
     Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
     if ((pUnit == nullptr) ||
         m_pUnit->getIgnoreUnitCollision() ||
         pUnit->getOwner() == m_pUnit->getOwner())
     {
-        return (index >= 0);
+        return (m_finishInfo.target >= 0 &&
+                movementCosts > m_finishInfo.bestCost + m_finishInfo.remainingCost);
     }
     return false;
 }
@@ -148,12 +169,12 @@ void TargetedUnitPathFindingSystem::setFinishNode(qint32, qint32)
         qint32 y = -1;
         for (auto & node : m_FinishNodes)
         {
-            qint32 costs = static_cast<qint32>(std::get<2>(node) * std::get<3>(node));
+            qint32 costs = node.movementCost * node.multiplier;
             if (costs < minCosts)
             {
                 minCosts = costs;
-                x = std::get<0>(node);
-                y = std::get<1>(node);
+                x = node.x;
+                y = node.y;
             }
         }
         PathFindingSystem::setFinishNode(x, y);

@@ -239,7 +239,7 @@ public slots:
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400, QPoint pos = QPoint(0, 0));
+    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400, QPoint pos = QPoint(0, 0), const QString & forcedPalette = "", bool forceNeutral = false);
     /**
      * @brief unloadSprites
      */

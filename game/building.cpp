@@ -10,6 +10,7 @@
 #include "coreengine/qmlvector.h"
 
 #include "resource_management/buildingspritemanager.h"
+#include "resource_management/terrainmanager.h"
 
 #include "ai/coreai.h"
 
@@ -229,12 +230,13 @@ void Building::loadSprite(const QString & spriteID, bool addPlayerColor, qint32 
     }
 }
 
-void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime, QPoint pos)
+void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime, QPoint pos, const QString & forcedPalette, bool forceNeutral)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
+        TerrainManager* pTerrainManager = TerrainManager::getInstance();
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
@@ -257,13 +259,35 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
         {
             pSprite->setColor(QColor(150, 150, 150, 255));
         }
-        else if ((mode == GameEnums::Recoloring_Table || matrixMode) && m_pOwner != nullptr)
+        else if ((mode == GameEnums::Recoloring_Table || matrixMode) && m_pOwner != nullptr && !forceNeutral)
         {
-            pSprite->setColorTable(m_pOwner->getColorTableAnim(), matrixMode);
+            if (forcedPalette.isEmpty())
+            {
+                pSprite->setColorTable(m_pOwner->getColorTableAnim(), matrixMode);
+            }
+            else
+            {
+                oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(forcedPalette, oxygine::error_policy::ep_ignore_error));
+                if (pPaletteAnim.get() != nullptr)
+                {
+                    pSprite->setColorTable(pPaletteAnim, true);
+                }
+            }
         }
         else if (mode == GameEnums::Recoloring_Table || matrixMode)
         {
-            pSprite->setColorTable(Player::getNeutralTableAnim(), matrixMode);
+            if (forcedPalette.isEmpty())
+            {
+                pSprite->setColorTable(Player::getNeutralTableAnim(), matrixMode);
+            }
+            else
+            {
+                oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(forcedPalette, oxygine::error_policy::ep_ignore_error));
+                if (pPaletteAnim.get() != nullptr)
+                {
+                    pSprite->setColorTable(pPaletteAnim, true);
+                }
+            }
         }
         else
         {

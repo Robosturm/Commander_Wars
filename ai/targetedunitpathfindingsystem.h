@@ -9,8 +9,16 @@ using spTargetedUnitPathFindingSystem = oxygine::intrusive_ptr<TargetedUnitPathF
 class TargetedUnitPathFindingSystem final : public UnitPathFindingSystem
 {
     Q_OBJECT
+    struct FinishNodeInfo
+    {
+        qint32 x{-1};
+        qint32 y{-1};
+        qint32 movementCost{-1};
+        float multiplier{1.0f};
+    };
+
 public:
-    explicit TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<QVector3D>& targets, std::vector<std::vector<std::tuple<qint32, bool>>>* pMoveCostMap);
+    explicit TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, std::vector<QVector3D>& targets, std::vector<std::vector<std::tuple<qint32, bool>>>* pMoveCostMap, qint32 maxTargets = 40);
     ~TargetedUnitPathFindingSystem() = default;
     /**
      * @brief getRemainingCost
@@ -61,9 +69,16 @@ public:
 
 private:
     bool m_abortOnCostExceed{true};
-    std::vector<QVector3D> m_Targets;
-    std::vector<std::tuple<qint32, qint32, qint32, float>> m_FinishNodes;
+    std::vector<QVector3D> & m_Targets;
+    std::vector<FinishNodeInfo> m_FinishNodes;
     std::vector<std::vector<std::tuple<qint32, bool>>>* m_pMoveCostMap;
+    qint32 m_endCosts{-1};
+    struct
+    {
+        qint32 bestCost{-1};
+        qint32 target{-1};
+        qint32 remainingCost{-1};
+    } m_finishInfo;
 };
 
 #endif // TARGETEDUNITPATHFINDINGSYSTEM_H

@@ -2,17 +2,16 @@ var Constructor = function()
 {
     this.loadSprites = function(building, neutral, map)
     {
+        building.loadSpriteV2("blackhole+factory+waste_pipe", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         if (building.getOwnerID() >= 0 && !neutral)
         {
-            building.loadSprite("blackhole+factory", false);
-            building.loadSpriteV2("blackhole+factory+mask", GameEnums.Recoloring_Matrix);
+            building.loadSpriteV2("blackhole+factory", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
         else
         {
-            building.loadSprite("blackhole+factory+neutral", false);
+            building.loadSpriteV2("blackhole+factory+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
-        building.loadSprite("blackhole+factory+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
-        building.loadSprite("blackhole+factory+waste_pipe", false);
+        building.loadSpriteV2("blackhole+factory+mask", GameEnums.Recoloring_Matrix);
     };
     this.getName = function()
     {

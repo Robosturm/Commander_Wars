@@ -7,18 +7,15 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
+        building.loadSpriteV2("temporary_harbour+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
         if (building.getOwnerID() >= 0 && !neutral)
         {
-            // none neutral player
-            building.loadSprite("temporary_harbour", false);
-            building.loadSpriteV2("temporary_harbour+mask", GameEnums.Recoloring_Matrix);
+            building.loadSpriteV2("temporary_harbour", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
         else
         {
-            // neutral player
-            building.loadSprite("temporary_harbour+neutral", false);
+            building.loadSpriteV2("temporary_harbour+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
-        building.loadSprite("temporary_harbour+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
     {

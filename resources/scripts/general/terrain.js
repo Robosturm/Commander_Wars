@@ -220,6 +220,21 @@ var TERRAIN =
         return weatherModifier;
     },
 
+    getBuildingTerrainPalette : function(building)
+    {
+        let terrain = building.getTerrain();
+        if (terrain !== null)
+        {
+            let palette = terrain.getPalette();
+            if (palette !== "")
+            {
+                return palette;
+            }
+        }
+        return "palette_clear";
+    },
+
+
     getTerrainWeatherModifier : function(terrain)
     {
         var weatherModifier = "";
