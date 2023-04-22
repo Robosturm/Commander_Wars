@@ -1483,7 +1483,7 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
     if (!forHash)
     {
         pStream << roundTime;
-        pStream << m_RoundTimer.interval();
+        pStream << static_cast<qint32>(m_RoundTimer.interval());
     }
     pStream << m_AiAttackTerrain;
     pStream << m_COBannlistEdited;
@@ -1835,8 +1835,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         m_powerGainZone = static_cast<GameEnums::PowerGainZone>(value);
         pStream >> value;
         m_powerGainMode = static_cast<GameEnums::PowerGainMode>(value);
-        pStream >> m_powerUsageReduction;
-
         if (version > 26)
         {
             pStream >> m_powerUsageReduction;
@@ -1846,7 +1844,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         {
             float value = 0;
             pStream >> value;
-            m_resellValue = value;
+            m_powerUsageReduction = value;
             pStream >> value;
             m_powerLoose = value;
         }

@@ -1036,27 +1036,30 @@ void Multiplayermenu::requestRule(quint64 socketID)
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
+            const QString playerId = pMap->getPlayer(i)->getPlayerNameId();
+            qint32 intAiType = 0;
             if (aiType == GameEnums::AiTypes_Human && !m_saveGame)
             {
-                sendStream << pMap->getPlayer(i)->getPlayerNameId();
-                sendStream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
+                intAiType = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
             }
             else
             {
-                sendStream << pMap->getPlayer(i)->getPlayerNameId();
                 if (m_pPlayerSelection->isOpenPlayer(i))
                 {
-                    sendStream << static_cast<qint32>(GameEnums::AiTypes_Open);
+                    intAiType = static_cast<qint32>(GameEnums::AiTypes_Open);
                 }
                 else if (m_pPlayerSelection->isClosedPlayer(i))
                 {
-                    sendStream << static_cast<qint32>(GameEnums::AiTypes_Closed);
+                    intAiType = static_cast<qint32>(GameEnums::AiTypes_Closed);
                 }
                 else
                 {
-                    sendStream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
+                    intAiType = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
                 }
             }
+            sendStream << playerId;
+            sendStream << intAiType;
+            CONSOLE_PRINT("Sending " + playerId + " with ai type " + QString::number(aiType) + " for player " + QString::number(i), GameConsole::eDEBUG);
             m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(sendStream);
         }
         emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
@@ -1095,6 +1098,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
                 qint32 aiType;
                 stream >> name;
                 stream >> aiType;
+                CONSOLE_PRINT("Read " + name + " with ai type " + QString::number(aiType) + " for player " + QString::number(i), GameConsole::eDEBUG);
                 m_pPlayerSelection->setPlayerAiName(i, name);
                 spGameMap pMap = m_pMapSelectionView->getCurrentMap();
                 Player* pPlayer = pMap->getPlayer(i);

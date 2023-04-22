@@ -3325,12 +3325,12 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="138"/>
+        <location filename="../menue/editormenue.cpp" line="137"/>
         <source>Import AW4 Aw4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="138"/>
+        <location filename="../menue/editormenue.cpp" line="137"/>
         <source>Deletes the current map and imports an AW 4 map editor file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3450,180 +3450,180 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="124"/>
-        <source>Massedit terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="124"/>
+        <location filename="../menue/editormenue.cpp" line="123"/>
         <source>Changes the biome or palettes of an area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="126"/>
+        <location filename="../menue/editormenue.cpp" line="123"/>
+        <source>Mass edit terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="125"/>
         <source>Removes all players with no units or buildings from the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="126"/>
+        <location filename="../menue/editormenue.cpp" line="125"/>
         <source>Optimize players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="129"/>
+        <location filename="../menue/editormenue.cpp" line="128"/>
         <source>Copy Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="129"/>
+        <location filename="../menue/editormenue.cpp" line="128"/>
         <source>Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="130"/>
+        <location filename="../menue/editormenue.cpp" line="129"/>
         <source>Paste Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="130"/>
+        <location filename="../menue/editormenue.cpp" line="129"/>
         <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="131"/>
+        <location filename="../menue/editormenue.cpp" line="130"/>
         <source>Paste Ctrl+Shift+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="131"/>
+        <location filename="../menue/editormenue.cpp" line="130"/>
         <source>Paste the current selected area with all terrain, buildings, units. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="134"/>
+        <location filename="../menue/editormenue.cpp" line="133"/>
         <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="135"/>
+        <location filename="../menue/editormenue.cpp" line="134"/>
         <source>Import CoW Txt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="135"/>
+        <location filename="../menue/editormenue.cpp" line="134"/>
         <source>Deletes the current map and imports an old Commander Wars Map from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="136"/>
+        <location filename="../menue/editormenue.cpp" line="135"/>
         <source>Import AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="136"/>
+        <location filename="../menue/editormenue.cpp" line="135"/>
         <source>Deletes the current map and imports an AWS Map Editor from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="137"/>
+        <location filename="../menue/editormenue.cpp" line="136"/>
         <source>Export AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="137"/>
+        <location filename="../menue/editormenue.cpp" line="136"/>
         <source>Exports the map to an AWS Map Editor file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="139"/>
+        <location filename="../menue/editormenue.cpp" line="138"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="139"/>
+        <location filename="../menue/editormenue.cpp" line="138"/>
         <source>Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="465"/>
+        <location filename="../menue/editormenue.cpp" line="464"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="477"/>
+        <location filename="../menue/editormenue.cpp" line="476"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="499"/>
+        <location filename="../menue/editormenue.cpp" line="498"/>
         <source>Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="503"/>
+        <location filename="../menue/editormenue.cpp" line="502"/>
         <source>Change of the map size on the left map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="512"/>
+        <location filename="../menue/editormenue.cpp" line="511"/>
         <source>Top: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="516"/>
+        <location filename="../menue/editormenue.cpp" line="515"/>
         <source>Change of the map size on the top map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="525"/>
+        <location filename="../menue/editormenue.cpp" line="524"/>
         <source>Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="529"/>
+        <location filename="../menue/editormenue.cpp" line="528"/>
         <source>Change of the map size on the right map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="538"/>
+        <location filename="../menue/editormenue.cpp" line="537"/>
         <source>Bottom: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="542"/>
+        <location filename="../menue/editormenue.cpp" line="541"/>
         <source>Change of the map size on the bottom map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="584"/>
-        <location filename="../menue/editormenue.cpp" line="596"/>
-        <location filename="../menue/editormenue.cpp" line="620"/>
-        <location filename="../menue/editormenue.cpp" line="632"/>
+        <location filename="../menue/editormenue.cpp" line="583"/>
+        <location filename="../menue/editormenue.cpp" line="595"/>
+        <location filename="../menue/editormenue.cpp" line="619"/>
+        <location filename="../menue/editormenue.cpp" line="631"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="608"/>
+        <location filename="../menue/editormenue.cpp" line="607"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="646"/>
+        <location filename="../menue/editormenue.cpp" line="645"/>
         <source>Do you want to discard all current changes and create a new map?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="667"/>
+        <location filename="../menue/editormenue.cpp" line="666"/>
         <source>Do you want to apply the map changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="700"/>
+        <location filename="../menue/editormenue.cpp" line="699"/>
         <source>Do you want to create a random map and discard all current changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="753"/>
+        <location filename="../menue/editormenue.cpp" line="752"/>
         <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6567,99 +6567,99 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1151"/>
+        <location filename="../menue/gamemenue.cpp" line="1152"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1174"/>
+        <location filename="../menue/gamemenue.cpp" line="1175"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1431"/>
-        <location filename="../menue/gamemenue.cpp" line="2043"/>
-        <location filename="../menue/gamemenue.cpp" line="2080"/>
+        <location filename="../menue/gamemenue.cpp" line="1432"/>
+        <location filename="../menue/gamemenue.cpp" line="2044"/>
+        <location filename="../menue/gamemenue.cpp" line="2081"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1439"/>
+        <location filename="../menue/gamemenue.cpp" line="1440"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1474"/>
+        <location filename="../menue/gamemenue.cpp" line="1475"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1892"/>
+        <location filename="../menue/gamemenue.cpp" line="1893"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1893"/>
+        <location filename="../menue/gamemenue.cpp" line="1894"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1894"/>
+        <location filename="../menue/gamemenue.cpp" line="1895"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1895"/>
+        <location filename="../menue/gamemenue.cpp" line="1896"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1896"/>
+        <location filename="../menue/gamemenue.cpp" line="1897"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1897"/>
+        <location filename="../menue/gamemenue.cpp" line="1898"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1898"/>
+        <location filename="../menue/gamemenue.cpp" line="1899"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1899"/>
+        <location filename="../menue/gamemenue.cpp" line="1900"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1925"/>
+        <location filename="../menue/gamemenue.cpp" line="1926"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1943"/>
+        <location filename="../menue/gamemenue.cpp" line="1944"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2426"/>
+        <location filename="../menue/gamemenue.cpp" line="2427"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2457"/>
+        <location filename="../menue/gamemenue.cpp" line="2458"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2483"/>
+        <location filename="../menue/gamemenue.cpp" line="2484"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2660"/>
+        <location filename="../menue/gamemenue.cpp" line="2661"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7216,7 +7216,7 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2068"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2072"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7318,54 +7318,54 @@ Note: You won&apos;t be able to change any rules when reentering the lobby later
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="930"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1078"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1081"/>
         <source>Wrong password entered for joining the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1316"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1320"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1320"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1324"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1334"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1338"/>
         <source>Host has different mods. Leaving the game again.
 Host mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1338"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1342"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1438"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1442"/>
         <source>Unable to download script file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1449"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1453"/>
         <source>Unable to download map file from host.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1856"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1860"/>
         <source>Informing server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1939"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1943"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2064"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2068"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

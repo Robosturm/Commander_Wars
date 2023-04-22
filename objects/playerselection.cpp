@@ -2054,6 +2054,7 @@ void PlayerSelection::disconnected(quint64 socketID)
                 {
                     // reopen all players
                     m_pMap->getPlayer(i)->setControlType(GameEnums::AiTypes_Open);
+                    m_pMap->getPlayer(i)->setPlayerNameId("");
                     DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
                     if (pDropDownmenu != nullptr)
                     {

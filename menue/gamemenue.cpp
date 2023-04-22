@@ -978,7 +978,8 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
 
 void GameMenue::removePlayerFromSyncWaitList(quint64 socketID)
 {
-    if (m_pNetworkInterface->getIsServer())
+    if (m_pNetworkInterface.get() != nullptr &&
+        m_pNetworkInterface->getIsServer())
     {
         removeSyncSocket(socketID);
         continueAfterSyncGame();
