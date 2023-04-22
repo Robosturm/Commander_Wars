@@ -4844,5 +4844,6 @@
         <file>resources/images/building/hq+neutral+mask.png</file>
         <file>resources/images/building/silo+mask.png</file>
         <file>resources/images/building/silo+rocket+mask.png</file>
+        <file>resources/images/building/tower+snow.png</file>
     </qresource>
 </RCC>

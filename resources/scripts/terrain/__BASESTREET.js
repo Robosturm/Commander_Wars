@@ -318,7 +318,7 @@ var Constructor = function()
         if (highTerrain !== "")
         {
             var surroundings = terrain.getTerrainSpriteName();
-            terrain.loadOverlaySprite(surroundings + "+shadow");
+            terrain.loadOverlaySprite(surroundings + "+shadow", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_West, ""));
         }
     };
 

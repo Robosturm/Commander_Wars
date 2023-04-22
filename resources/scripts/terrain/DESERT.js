@@ -90,8 +90,8 @@ var Constructor = function()
         {
             var building = map.getTerrain(x - 1, y).getBuilding();
             if (building !== null &&
-                    building.getBuildingWidth() === 1 &&
-                    building.getBuildingHeigth() === 1)
+                building.getBuildingWidth() === 1 &&
+                building.getBuildingHeigth() === 1)
             {
                 highTerrain = "+W";
             }
@@ -99,7 +99,7 @@ var Constructor = function()
 
         if (highTerrain !== "")
         {
-            terrain.loadOverlaySprite("shadow_desert");
+            terrain.loadOverlaySprite("shadow_desert", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_West, ""));
         }
     };
 

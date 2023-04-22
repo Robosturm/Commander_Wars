@@ -75,7 +75,7 @@ var Constructor = function()
 
         if (highTerrain !== "")
         {
-            terrain.loadOverlaySprite("shadow_snow");
+            terrain.loadOverlaySprite("shadow_snow", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_West, ""));
         }
     };
     this.getDescription = function()

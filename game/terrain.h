@@ -466,8 +466,7 @@ public slots:
     {
         if (m_pBaseTerrain.get() != nullptr)
         {
-
-            if (m_pBaseTerrain->m_terrainID == terrainId)
+            if (m_pBaseTerrain->m_terrainID == terrainId || terrainId.isEmpty())
             {
                 return m_pBaseTerrain.get();
             }

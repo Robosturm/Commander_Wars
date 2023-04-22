@@ -56,7 +56,7 @@
         <image file="temporary_airport+snow.png" />
         <image file="temporary_airport+neutral.png" />
         <!-- temporary harbour -->
-        <image file="temporary_harbour.png" cols = "2" />
+        <image file="temporary_harbour.png" />
         <image file="temporary_harbour+mask.png" />
         <image file="temporary_harbour+snow.png" />
         <image file="temporary_harbour+neutral.png" />

@@ -54,7 +54,7 @@ var Constructor = function()
 
         if (highTerrain !== "")
         {
-            terrain.loadOverlaySprite("shadow_plains");
+            terrain.loadOverlaySprite("shadow_plains", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_West, ""));
         }
     };
 

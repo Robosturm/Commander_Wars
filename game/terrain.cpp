@@ -1693,22 +1693,50 @@ QString Terrain::getNeighbourPalette(GameEnums::Directions direction, const QStr
     if (direction == GameEnums::Directions_North &&
         m_pMap->onMap(m_x, m_y - 1))
     {
-        return m_pMap->getTerrain(m_x, m_y - 1)->getBaseTerrain(baseTerrainId)->getPalette();
+        if (baseTerrainId.isEmpty())
+        {
+            return m_pMap->getTerrain(m_x, m_y - 1)->getPalette();
+        }
+        else
+        {
+            return m_pMap->getTerrain(m_x, m_y - 1)->getBaseTerrain(baseTerrainId)->getPalette();
+        }
     }
     else if (direction == GameEnums::Directions_South &&
                  m_pMap->onMap(m_x, m_y + 1))
     {
-        return m_pMap->getTerrain(m_x, m_y + 1)->getBaseTerrain(baseTerrainId)->getPalette();
+        if (baseTerrainId.isEmpty())
+        {
+            return m_pMap->getTerrain(m_x, m_y + 1)->getPalette();
+        }
+        else
+        {
+            return m_pMap->getTerrain(m_x, m_y + 1)->getBaseTerrain(baseTerrainId)->getPalette();
+        }
     }
     else if (direction == GameEnums::Directions_West &&
                  m_pMap->onMap(m_x - 1, m_y))
     {
-        return m_pMap->getTerrain(m_x - 1, m_y)->getBaseTerrain(baseTerrainId)->getPalette();
+        if (baseTerrainId.isEmpty())
+        {
+            return m_pMap->getTerrain(m_x - 1, m_y)->getPalette();
+        }
+        else
+        {
+            return m_pMap->getTerrain(m_x - 1, m_y)->getBaseTerrain(baseTerrainId)->getPalette();
+        }
     }
     else if (direction == GameEnums::Directions_East &&
                  m_pMap->onMap(m_x + 1, m_y))
     {
-        return m_pMap->getTerrain(m_x + 1, m_y)->getBaseTerrain(baseTerrainId)->getPalette();
+        if (baseTerrainId.isEmpty())
+        {
+            return m_pMap->getTerrain(m_x + 1, m_y)->getPalette();
+        }
+        else
+        {
+            return m_pMap->getTerrain(m_x + 1, m_y)->getBaseTerrain(baseTerrainId)->getPalette();
+        }
     }
     else
     {
