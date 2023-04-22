@@ -46,4 +46,6 @@ public slots:
 private:
 };
 
+Q_DECLARE_INTERFACE(GeneratorMenu, "GeneratorMenu");
+
 #endif // GENERATORMENU_H
