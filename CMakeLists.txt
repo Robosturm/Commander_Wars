@@ -503,6 +503,7 @@ set(${PROJECT_NAME}_SRCS
     menue/replaymenu.cpp menue/replaymenu.h
     menue/achievementmenu.cpp menue/achievementmenu.h
     menue/shopmenu.cpp menue/shopmenu.h
+    menue/generatormenu.h menue/generatormenu.cpp
 
     # ressource management
     resource_management/unitspritemanager.cpp resource_management/unitspritemanager.h

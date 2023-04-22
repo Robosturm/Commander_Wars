@@ -6974,29 +6974,29 @@ Note: This may be caused by a defective mod.</source>
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="82"/>
+        <location filename="../menue/mainwindow.cpp" line="83"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="105"/>
+        <location filename="../menue/mainwindow.cpp" line="106"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="105"/>
+        <location filename="../menue/mainwindow.cpp" line="106"/>
         <source>Imports all data from an other Commander Wars release to the current release.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="257"/>
         <location filename="../menue/mainwindow.cpp" line="267"/>
-        <location filename="../menue/mainwindow.cpp" line="304"/>
+        <location filename="../menue/mainwindow.cpp" line="277"/>
+        <location filename="../menue/mainwindow.cpp" line="314"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="417"/>
+        <location filename="../menue/mainwindow.cpp" line="427"/>
         <source>Do you want to enable all current items in the shop?</source>
         <translation type="unfinished"></translation>
     </message>

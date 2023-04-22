@@ -36,6 +36,7 @@ public slots:
     void enterLoadCampaign();
     void enterShopMenu();
     void loadCampaign(QString filename);
+    void enterGeneratorMenu(const QString & generatorUi);
     void enterAchievementmenue();
     void import();
     void importFromDirectory(QString file);

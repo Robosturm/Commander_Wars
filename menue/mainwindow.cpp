@@ -14,6 +14,7 @@
 #include "menue/replaymenu.h"
 #include "menue/achievementmenu.h"
 #include "menue/shopmenu.h"
+#include "menue/generatormenu.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
@@ -226,6 +227,15 @@ void Mainwindow::enterCreditsmenue()
 {
     Mainapp::getInstance()->pauseRendering();
     auto window = spCreditsMenue::create();
+    oxygine::Stage::getStage()->addChild(window);
+    leaveMenue();
+    Mainapp::getInstance()->continueRendering();
+}
+
+void Mainwindow::enterGeneratorMenu(const QString & generatorUi)
+{
+    Mainapp::getInstance()->pauseRendering();
+    auto window = spGeneratorMenu::create(generatorUi);
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
