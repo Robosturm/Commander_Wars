@@ -31,11 +31,8 @@ var MapEditBiomes =
         let width = MapEditBiomes.getSelectedWidth();
         let height = MapEditBiomes.getSelectedHeight();
         let newPalette = MapEditBiomes.getSelectedNewPalette();
-        GameConsole.print(x.toString() + " " +
-                          y.toString() + " " +
-                          width.toString() + " " +
-                          height.toString() + " " +
-                          newPalette.toString(), 1);
+        let rect = Qt.rect(x, y, width, height);
+        currentMenu.getBaseMenu().getMap().applyPaletteToArea(rect, newPalette);
     },
     applyBiome : function()
     {
@@ -44,11 +41,8 @@ var MapEditBiomes =
         let width = MapEditBiomes.getSelectedWidth();
         let height = MapEditBiomes.getSelectedHeight();
         let newBiome = MapEditBiomes.getSelectedNewBiome();
-        GameConsole.print(x.toString() + " " +
-                          y.toString() + " " +
-                          width.toString() + " " +
-                          height.toString() + " " +
-                          newBiome.toString(), 1);
+        let rect = Qt.rect(x, y, width, height);
+        currentMenu.getBaseMenu().getMap().applyBiomeToArea(rect, TERRAIN.terrainBiomeGroups[newBiome]);
     }
 
 }

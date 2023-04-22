@@ -60,7 +60,7 @@ var TERRAIN =
         {
             for (var i = 0; i < terrainCount; ++i)
             {
-                for (var i2 = 0; i2 < groupCount; ++i)
+                for (var i2 = 0; i2 < groupCount; ++i2)
                 {
                     if (TERRAIN.terrainBiomeMapping[i][i2] === currentId)
                     {

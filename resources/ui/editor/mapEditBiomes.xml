@@ -69,10 +69,10 @@
                 <Id>Width</Id>
                 <width>200</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The area width.")</tooltip>
-                <startValue>currentMenu.getBaseMenu().getMap().getMapWidth() - 1</startValue>
+                <startValue>currentMenu.getBaseMenu().getMap().getMapWidth()</startValue>
                 <infinite>-1</infinite>
-                <min>0</min>
-                <max>currentMenu.getBaseMenu().getMap().getMapWidth() - 1</max>
+                <min>1</min>
+                <max>currentMenu.getBaseMenu().getMap().getMapWidth()</max>
                 <onEvent></onEvent>
             </Spinbox>
             <Label>
@@ -89,38 +89,12 @@
                 <Id>Height</Id>
                 <width>200</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The area height.")</tooltip>
-                <startValue>currentMenu.getBaseMenu().getMap().getMapHeight() - 1</startValue>
+                <startValue>currentMenu.getBaseMenu().getMap().getMapHeight()</startValue>
                 <infinite>-1</infinite>
-                <min>0</min>
-                <max>currentMenu.getBaseMenu().getMap().getMapHeight() - 1</max>
+                <min>1</min>
+                <max>currentMenu.getBaseMenu().getMap().getMapHeight()</max>
                 <onEvent></onEvent>
             </Spinbox>
-            <Label>
-                <x>10</x>
-                <y>lastY + lastHeight + 10</y>
-                <width>200</width>
-                <text>QT_TRANSLATE_NOOP("GAME","New palette:")</text>
-                <font>"main"</font>
-                <fontSize>24</fontSize>
-            </Label>
-            <DropDownMenu>
-                <x>lastX + lastWidth + 10</x>
-                <y>lastY</y>
-                <Id>NewPalette</Id>
-                <width>400</width>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","New palette for the terrains in the area.")</tooltip>
-                <startValue>0</startValue>
-                <items>TERRAIN.getPaletteNamesArray()</items>
-                <onEvent></onEvent>
-            </DropDownMenu>
-            <Button>
-                <x>10</x>
-                <y>lastY + lastHeight + 10</y>
-                <width>300</width>
-                <text>QT_TRANSLATE_NOOP("GAME","Apply palette")</text>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","Apply palette")</tooltip>
-                <onEvent>MapEditBiomes.applyPalette()</onEvent>
-            </Button>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
@@ -146,6 +120,32 @@
                 <text>QT_TRANSLATE_NOOP("GAME","Apply biome")</text>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Apply biome")</tooltip>
                 <onEvent>MapEditBiomes.applyBiome()</onEvent>
+            </Button>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","New palette:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>NewPalette</Id>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","New palette for the terrains in the area.")</tooltip>
+                <startValue>0</startValue>
+                <items>TERRAIN.getPaletteNamesArray()</items>
+                <onEvent></onEvent>
+            </DropDownMenu>
+            <Button>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Apply palette")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Apply palette")</tooltip>
+                <onEvent>MapEditBiomes.applyPalette()</onEvent>
             </Button>
         </childs>
     </Panel>

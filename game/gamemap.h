@@ -218,6 +218,12 @@ public:
      */
     bool isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction);
     /**
+     * @brief applyToArea
+     * @param area
+     * @param applyFunction
+     */
+    void applyToArea(const QRect& area, std::function<void (qint32 x, qint32 y)> applyFunction);
+    /**
      * @brief anyPlayerAlive
      * @return
      */
@@ -327,6 +333,18 @@ signals:
     void sigShowMovementPlanner();
     void sigShowLoadSaveGame();
 public slots:
+    /**
+     * @brief applyPaletteToArea
+     * @param area
+     * @param newPalette
+     */
+    void applyPaletteToArea(const QRect& area, qint32 newPalette);
+    /**
+     * @brief applyBiomeToArea
+     * @param area
+     * @param newBiome
+     */
+    void applyBiomeToArea(const QRect& area, qint32 newBiome);
     /**
      * @brief getMapTagsText
      * @return

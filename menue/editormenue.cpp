@@ -120,8 +120,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Edit terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain or building"));
     m_Topbar->addItem(tr("Edit players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
     m_Topbar->addItem(tr("Edit rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
-
-    m_Topbar->addItem(tr("Massedit terrain"), "EDITBIOMES", 2, tr("Changes the biome or palettes of an area."));
+    m_Topbar->addItem(tr("Mass edit terrain"), "EDITBIOMES", 2, tr("Changes the biome or palettes of an area."));
 
     m_Topbar->addItem(tr("Optimize players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
     if (!Settings::getSmallScreenDevice())

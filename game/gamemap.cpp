@@ -187,6 +187,48 @@ bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> chec
     return false;
 }
 
+void GameMap::applyPaletteToArea(const QRect& area, qint32 newPalette)
+{
+    applyToArea(area, [newPalette, this](qint32 x, qint32 y)
+    {
+        getTerrain(x, y)->setTerrainPaletteGroup(newPalette);
+    });
+    updateSprites();
+}
+
+void GameMap::applyBiomeToArea(const QRect& area, qint32 newBiome)
+{
+    auto* pInterpreter = Interpreter::getInstance();
+    applyToArea(area, [pInterpreter, newBiome, this](qint32 x, qint32 y)
+    {
+        const auto currentTerrain = getTerrain(x, y)->getID();
+        QJSValueList args = {currentTerrain,
+                             newBiome};
+        auto erg = pInterpreter->doFunction("TERRAIN", "getTerrainBiomeMappingId", args);
+        QString newTerrain = erg.toString();
+        if (!newTerrain.isEmpty() &&
+            currentTerrain != newTerrain)
+        {
+            replaceTerrain(newTerrain, x, y);
+        }
+    });
+    updateSprites();
+}
+
+void GameMap::applyToArea(const QRect& area, std::function<void (qint32 x, qint32 y)> applyFunction)
+{
+    for (qint32 x = area.x(); x < area.x() + area.width(); x++)
+    {
+        for (qint32 y = area.y(); y < area.y() + area.height(); y++)
+        {
+            if (onMap(x, y))
+            {
+                applyFunction(x, y);
+            }
+        }
+    }
+}
+
 bool GameMap::anyPlayerAlive()
 {
     qint32 count = 0;
