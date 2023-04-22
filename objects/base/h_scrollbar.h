@@ -31,8 +31,6 @@ public:
 
     virtual void update(const oxygine::UpdateState&) override;
     virtual void setHeight(qint32 h) override;
-    bool getSliding() const;
-    void setSliding(bool sliding);
 
 signals:
     /**
@@ -48,6 +46,8 @@ signals:
 public slots:
     void changeScrollValue(float value);
     void setScrollvalue(float Scrollvalue);
+    bool getSliding() const;
+    void setSliding(bool sliding);
 private:
     void scroll(oxygine::Event* pEvent);
 private:
@@ -64,5 +64,7 @@ private:
     oxygine::spBox9Sprite m_pBox;
     oxygine::spButton m_pArrowDown;
 };
+
+Q_DECLARE_INTERFACE(H_Scrollbar, "H_Scrollbar");
 
 #endif // H_SCROLLBAR_H

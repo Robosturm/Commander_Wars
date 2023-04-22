@@ -25,6 +25,7 @@
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/editor/dialogmodifyterrain.h"
 #include "objects/dialogs/editor/dialogviewmapstats.h"
+#include "objects/dialogs/customdialog.h"
 
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/label.h"
@@ -119,6 +120,9 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Edit terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain or building"));
     m_Topbar->addItem(tr("Edit players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
     m_Topbar->addItem(tr("Edit rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
+
+    m_Topbar->addItem(tr("Massedit terrain"), "EDITBIOMES", 2, tr("Changes the biome or palettes of an area."));
+
     m_Topbar->addItem(tr("Optimize players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
     if (!Settings::getSmallScreenDevice())
     {
@@ -388,6 +392,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("TOGGLEGRID",          &EditorMenue::toggleGridLayout),
         MenuItem("TOGGLEMIDDLECROSS",   &EditorMenue::toggleMiddleCrossGrid),
         MenuItem("VIEWMAPSTATS",        &EditorMenue::viewMapStats),
+        MenuItem("EDITBIOMES",          &EditorMenue::showEditBiomes),
     };
     for (auto & item : qAsConst(items))
     {
@@ -398,6 +403,17 @@ void EditorMenue::clickedTopbar(QString itemID)
             break;
         }
     }
+}
+
+void EditorMenue::showEditBiomes()
+{
+    spCustomDialog dialog = spCustomDialog::create("", "ui/editor/mapEditBiomes.xml", this);
+    addChild(dialog);
+    connect(dialog.get(), &CustomDialog::sigFinished, this, [this]()
+    {
+        setFocused(true);
+    }, Qt::QueuedConnection);
+    setFocused(false);
 }
 
 void EditorMenue::viewMapStats()

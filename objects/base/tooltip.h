@@ -46,4 +46,6 @@ private:
 #endif
 };
 
+Q_DECLARE_INTERFACE(Tooltip, "Tooltip");
+
 #endif // TOOLTIP_H

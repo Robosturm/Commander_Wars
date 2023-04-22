@@ -19,12 +19,18 @@ class TimeSpinBox final : public TextInput
 public:
     explicit TimeSpinBox(qint32 width);
     ~TimeSpinBox() = default;
+    virtual void update(const oxygine::UpdateState& us) override;
+
+    virtual void setEnabled(bool value) override;
+signals:
+    void sigValueChanged(qint32 value);
+public slots:
+    virtual void focusedLost() override;
     /**
      * @brief getCurrentValue
      * @return the current value of the spin box
      */
     qint32 getCurrentValue();
-    virtual void update(const oxygine::UpdateState& us) override;
     /**
      * @brief setCurrentValue changes the value of this spin box
      * @param text
@@ -32,12 +38,6 @@ public:
     void setCurrentValue(qint32 value);
     qint32 getSpinSpeed() const;
     void setSpinSpeed(qint32 SpinSpeed);
-
-    virtual void setEnabled(bool value) override;
-signals:
-    void sigValueChanged(qint32 value);
-public slots:
-    virtual void focusedLost() override;
 protected:
     /**
      * @brief checkInput checks if the input is correct and updates it if needed and returns the value is valid
@@ -60,5 +60,7 @@ private:
     qint32 m_spinDirection{0};
     qint32 m_SpinSpeed{1000 * 60};
 };
+
+Q_DECLARE_INTERFACE(TimeSpinBox, "TimeSpinBox");
 
 #endif // SPINBOX_H

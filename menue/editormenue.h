@@ -73,6 +73,10 @@ public slots:
      */
     void viewMapStats();
     /**
+     * @brief showEditBiomes
+     */
+    void showEditBiomes();
+    /**
      * @brief toggleMiddleCrossGrid
      */
     void toggleMiddleCrossGrid();

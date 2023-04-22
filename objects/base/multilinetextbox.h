@@ -40,4 +40,3 @@ protected:
 private:
     QString m_lastDrawText;
 };
-

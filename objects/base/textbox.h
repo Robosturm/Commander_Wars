@@ -29,6 +29,7 @@ signals:
     void sigEnterPressed(QString text);
 public slots:
     virtual void focusedLost() override;
+
 protected:
     virtual bool onEditFinished() override;
 protected:
@@ -37,5 +38,7 @@ protected:
 private:
     QString m_lastDrawText;
 };
+
+Q_DECLARE_INTERFACE(Textbox, "Textbox");
 
 #endif // TEXTBOX_H

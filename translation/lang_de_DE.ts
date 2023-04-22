@@ -3185,435 +3185,445 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="90"/>
+        <location filename="../menue/editormenue.cpp" line="91"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="92"/>
+        <location filename="../menue/editormenue.cpp" line="93"/>
         <source>Saves a map to a give file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="93"/>
+        <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Loads a map to a give file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="96"/>
+        <location filename="../menue/editormenue.cpp" line="97"/>
         <source>Edit and create a script for any map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="97"/>
+        <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Edit and create a campaign.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="99"/>
+        <location filename="../menue/editormenue.cpp" line="100"/>
         <source>Undo Ctrl+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="99"/>
+        <location filename="../menue/editormenue.cpp" line="100"/>
         <source>Undo the last map modification.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="100"/>
+        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>Redo Ctrl+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="100"/>
+        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>Redo the last undo command.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="101"/>
+        <location filename="../menue/editormenue.cpp" line="102"/>
         <source>Exits the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="104"/>
+        <location filename="../menue/editormenue.cpp" line="105"/>
         <source>Create a new map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="105"/>
+        <location filename="../menue/editormenue.cpp" line="106"/>
         <source>Edit the information for a map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="106"/>
+        <location filename="../menue/editormenue.cpp" line="107"/>
         <source>Resizes the map using left, top, right and bottom size changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="106"/>
+        <location filename="../menue/editormenue.cpp" line="107"/>
         <source>Resize map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="107"/>
+        <location filename="../menue/editormenue.cpp" line="108"/>
         <source>Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="108"/>
+        <location filename="../menue/editormenue.cpp" line="109"/>
         <source>Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="109"/>
+        <location filename="../menue/editormenue.cpp" line="110"/>
         <source>Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="109"/>
+        <location filename="../menue/editormenue.cpp" line="110"/>
         <source>Rotate map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="110"/>
+        <location filename="../menue/editormenue.cpp" line="111"/>
         <source>Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="111"/>
+        <location filename="../menue/editormenue.cpp" line="112"/>
         <source>Creates a new random map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="112"/>
+        <location filename="../menue/editormenue.cpp" line="113"/>
         <source>Shows or hides a grid layout.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="113"/>
+        <location filename="../menue/editormenue.cpp" line="114"/>
         <source>Shows or hides the cross marking the middle of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="113"/>
+        <location filename="../menue/editormenue.cpp" line="114"/>
         <source>Toggle cross Strg+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="116"/>
+        <location filename="../menue/editormenue.cpp" line="117"/>
         <source>Place selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="117"/>
+        <location filename="../menue/editormenue.cpp" line="118"/>
         <source>Delete units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="119"/>
+        <location filename="../menue/editormenue.cpp" line="120"/>
         <source>Edit terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="120"/>
+        <location filename="../menue/editormenue.cpp" line="121"/>
         <source>Edit players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="121"/>
+        <location filename="../menue/editormenue.cpp" line="122"/>
         <source>Edit rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="134"/>
+        <location filename="../menue/editormenue.cpp" line="138"/>
         <source>Import AW4 Aw4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="134"/>
+        <location filename="../menue/editormenue.cpp" line="138"/>
         <source>Deletes the current map and imports an AW 4 map editor file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="91"/>
+        <location filename="../menue/editormenue.cpp" line="92"/>
         <source>Shows the general information about the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="91"/>
+        <location filename="../menue/editormenue.cpp" line="92"/>
         <source>View map stats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="92"/>
+        <location filename="../menue/editormenue.cpp" line="93"/>
         <source>Save map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="93"/>
+        <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Load map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="96"/>
+        <location filename="../menue/editormenue.cpp" line="97"/>
         <source>Edit script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="97"/>
+        <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Edit campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="101"/>
+        <location filename="../menue/editormenue.cpp" line="102"/>
         <source>Exit editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="103"/>
+        <location filename="../menue/editormenue.cpp" line="104"/>
         <source>Map info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="104"/>
+        <location filename="../menue/editormenue.cpp" line="105"/>
         <source>New map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="105"/>
+        <location filename="../menue/editormenue.cpp" line="106"/>
         <source>Edit map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="107"/>
+        <location filename="../menue/editormenue.cpp" line="108"/>
         <source>Flip map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="108"/>
+        <location filename="../menue/editormenue.cpp" line="109"/>
         <source>Flip map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="110"/>
+        <location filename="../menue/editormenue.cpp" line="111"/>
         <source>Rotate map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="111"/>
+        <location filename="../menue/editormenue.cpp" line="112"/>
         <source>Random map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="112"/>
+        <location filename="../menue/editormenue.cpp" line="113"/>
         <source>Toggle grid Strg+G</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="115"/>
+        <location filename="../menue/editormenue.cpp" line="116"/>
         <source>Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="116"/>
+        <location filename="../menue/editormenue.cpp" line="117"/>
         <source>Selects the editor mode placing the current tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="117"/>
+        <location filename="../menue/editormenue.cpp" line="118"/>
         <source>Selects the editor mode deleting units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="118"/>
+        <location filename="../menue/editormenue.cpp" line="119"/>
         <source>Selects the editor mode modifying the stats of a unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="118"/>
+        <location filename="../menue/editormenue.cpp" line="119"/>
         <source>Edit units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="119"/>
+        <location filename="../menue/editormenue.cpp" line="120"/>
         <source>Selects the editor mode editing the style of a terrain or building</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="120"/>
+        <location filename="../menue/editormenue.cpp" line="121"/>
         <source>Edit the CO&apos;s and player start setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="121"/>
+        <location filename="../menue/editormenue.cpp" line="122"/>
         <source>Selects the editor rules for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="122"/>
+        <location filename="../menue/editormenue.cpp" line="124"/>
+        <source>Massedit terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="124"/>
+        <source>Changes the biome or palettes of an area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="126"/>
         <source>Removes all players with no units or buildings from the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="122"/>
+        <location filename="../menue/editormenue.cpp" line="126"/>
         <source>Optimize players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="125"/>
+        <location filename="../menue/editormenue.cpp" line="129"/>
         <source>Copy Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="125"/>
+        <location filename="../menue/editormenue.cpp" line="129"/>
         <source>Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="126"/>
+        <location filename="../menue/editormenue.cpp" line="130"/>
         <source>Paste Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="126"/>
+        <location filename="../menue/editormenue.cpp" line="130"/>
         <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="127"/>
+        <location filename="../menue/editormenue.cpp" line="131"/>
         <source>Paste Ctrl+Shift+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="127"/>
+        <location filename="../menue/editormenue.cpp" line="131"/>
         <source>Paste the current selected area with all terrain, buildings, units. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="130"/>
+        <location filename="../menue/editormenue.cpp" line="134"/>
         <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="131"/>
+        <location filename="../menue/editormenue.cpp" line="135"/>
         <source>Import CoW Txt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="131"/>
+        <location filename="../menue/editormenue.cpp" line="135"/>
         <source>Deletes the current map and imports an old Commander Wars Map from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="132"/>
+        <location filename="../menue/editormenue.cpp" line="136"/>
         <source>Import AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="132"/>
+        <location filename="../menue/editormenue.cpp" line="136"/>
         <source>Deletes the current map and imports an AWS Map Editor from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="133"/>
+        <location filename="../menue/editormenue.cpp" line="137"/>
         <source>Export AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="133"/>
+        <location filename="../menue/editormenue.cpp" line="137"/>
         <source>Exports the map to an AWS Map Editor file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="135"/>
+        <location filename="../menue/editormenue.cpp" line="139"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="135"/>
+        <location filename="../menue/editormenue.cpp" line="139"/>
         <source>Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="449"/>
+        <location filename="../menue/editormenue.cpp" line="465"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="461"/>
+        <location filename="../menue/editormenue.cpp" line="477"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="483"/>
+        <location filename="../menue/editormenue.cpp" line="499"/>
         <source>Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="487"/>
+        <location filename="../menue/editormenue.cpp" line="503"/>
         <source>Change of the map size on the left map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="496"/>
+        <location filename="../menue/editormenue.cpp" line="512"/>
         <source>Top: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="500"/>
+        <location filename="../menue/editormenue.cpp" line="516"/>
         <source>Change of the map size on the top map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="509"/>
+        <location filename="../menue/editormenue.cpp" line="525"/>
         <source>Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="513"/>
+        <location filename="../menue/editormenue.cpp" line="529"/>
         <source>Change of the map size on the right map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="522"/>
+        <location filename="../menue/editormenue.cpp" line="538"/>
         <source>Bottom: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="526"/>
+        <location filename="../menue/editormenue.cpp" line="542"/>
         <source>Change of the map size on the bottom map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="568"/>
-        <location filename="../menue/editormenue.cpp" line="580"/>
-        <location filename="../menue/editormenue.cpp" line="604"/>
-        <location filename="../menue/editormenue.cpp" line="616"/>
+        <location filename="../menue/editormenue.cpp" line="584"/>
+        <location filename="../menue/editormenue.cpp" line="596"/>
+        <location filename="../menue/editormenue.cpp" line="620"/>
+        <location filename="../menue/editormenue.cpp" line="632"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="592"/>
+        <location filename="../menue/editormenue.cpp" line="608"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="630"/>
+        <location filename="../menue/editormenue.cpp" line="646"/>
         <source>Do you want to discard all current changes and create a new map?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="651"/>
+        <location filename="../menue/editormenue.cpp" line="667"/>
         <source>Do you want to apply the map changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="684"/>
+        <location filename="../menue/editormenue.cpp" line="700"/>
         <source>Do you want to create a random map and discard all current changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="737"/>
+        <location filename="../menue/editormenue.cpp" line="753"/>
         <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3703,10 +3713,11 @@ Distributed: Units are spawned at the given rate.</source>
     <name>GAME</name>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="772"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="442"/>
         <location filename="../resources/ui/gamepadInfoDialog.xml" line="148"/>
         <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="99"/>
         <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="119"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="442"/>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="156"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4998,7 +5009,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="38"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="38"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="38"/>
         <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5009,7 +5020,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="54"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="95"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="95"/>
         <source>Player:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5032,7 +5043,8 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="92"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="114"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="114"/>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="62"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5048,7 +5060,8 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="130"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="133"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="133"/>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="82"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5165,7 +5178,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="326"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="206"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="206"/>
         <source>Predeployed:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5177,13 +5190,13 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="356"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="221"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="221"/>
         <source>Map layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="364"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="229"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="229"/>
         <source>Mixed bases:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5194,13 +5207,13 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="394"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="244"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="244"/>
         <source>Symetric:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="424"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="259"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="259"/>
         <source>PvP:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5211,7 +5224,7 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="454"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="274"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="274"/>
         <source>FTA:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5222,258 +5235,258 @@ Distributed: Units are spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="484"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="289"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="289"/>
         <source>Versus AI:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="491"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="296"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="296"/>
         <source>If the map is designed to be played against an ai.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="514"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="304"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="304"/>
         <source>Team Play:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="521"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="311"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="311"/>
         <source>If the map is designed to be played teams versus teams.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="544"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="319"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="319"/>
         <source>Historical:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="551"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="326"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="326"/>
         <source>If the map is designed as historical map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="574"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="334"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="334"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="582"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="342"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="342"/>
         <source>Low funds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="589"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="349"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="349"/>
         <source>If the map is designed as low funds map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="612"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="357"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="357"/>
         <source>High funds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="619"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="364"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="364"/>
         <source>If the map is designed as high funds map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="642"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="372"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="372"/>
         <source>Battle type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="650"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="380"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="380"/>
         <source>Naval map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="657"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="387"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="387"/>
         <source>If the map is designed as naval map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="680"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="395"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="395"/>
         <source>Ground map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="687"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="402"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="402"/>
         <source>If the map is designed as ground map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="710"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="410"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="410"/>
         <source>Air map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="717"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="417"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="417"/>
         <source>If the map is designed as air map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="740"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="425"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="425"/>
         <source>Scripted map:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/mapSelectionFilterDialog.xml" line="747"/>
-        <location filename="../resources/ui/mapEditDialog.xml" line="432"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="432"/>
         <source>If the map is designed as scripted map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="13"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="13"/>
         <source>Map Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="22"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="22"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="30"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="30"/>
         <source>The name of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="46"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="46"/>
         <source>The author of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="54"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="54"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="62"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="62"/>
         <source>The description for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="70"/>
         <location filename="../resources/ui/game/ruleSelection.xml" line="673"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="70"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="79"/>
         <location filename="../resources/ui/game/ruleSelection.xml" line="682"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="79"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="87"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="87"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="88"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="88"/>
         <source>Shows the scriptfile select dialog </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="103"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="103"/>
         <source>The amount of players for this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="122"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="122"/>
         <source>The width of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="141"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="141"/>
         <source>The heigth of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="152"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="152"/>
         <source>Score Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="160"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="160"/>
         <source>Turn Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="168"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="168"/>
         <source>The amount of turns in which the map needs to be finished to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="179"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="179"/>
         <source>Deploy Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="187"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="187"/>
         <source>The amount of units allowed to be deploayed to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="198"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="198"/>
         <source>Map Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="213"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="213"/>
         <source>If the map is predeoployed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="236"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="236"/>
         <source>If the map is a mixed bases map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="251"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="251"/>
         <source>If the map is symetric.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="266"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="266"/>
         <source>If the map is a player versus player map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="281"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="281"/>
         <source>If the map has a first turn advantage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="443"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="443"/>
         <source>Closes the map dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="450"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="450"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/mapEditDialog.xml" line="451"/>
+        <location filename="../resources/ui/editor/mapEditDialog.xml" line="451"/>
         <source>Cancel the map dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6210,6 +6223,78 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     <message>
         <location filename="../resources/ui/multiplayer/networkGameDataView.xml" line="89"/>
         <source>Observers:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="13"/>
+        <source>Change biomes and palettes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="22"/>
+        <source>X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="31"/>
+        <source>The start x area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="42"/>
+        <source>Y:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="51"/>
+        <source>The start y area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="71"/>
+        <source>The area width.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="91"/>
+        <source>The area height.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="102"/>
+        <source>New palette:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="111"/>
+        <source>New palette for the terrains in the area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="120"/>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="121"/>
+        <source>Apply palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="128"/>
+        <source>New biome:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="137"/>
+        <source>New biome for the terrains in the area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="146"/>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="147"/>
+        <source>Apply biome</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapEditBiomes.xml" line="157"/>
+        <source>Closes the mass edit dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -26341,105 +26426,105 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="25"/>
-        <location filename="../resources/scripts/general/terrain.js" line="459"/>
+        <location filename="../resources/scripts/general/terrain.js" line="512"/>
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="26"/>
-        <location filename="../resources/scripts/general/terrain.js" line="460"/>
+        <location filename="../resources/scripts/general/terrain.js" line="513"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="27"/>
-        <location filename="../resources/scripts/general/terrain.js" line="461"/>
+        <location filename="../resources/scripts/general/terrain.js" line="514"/>
         <source>Waste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="35"/>
-        <location filename="../resources/scripts/general/terrain.js" line="74"/>
+        <location filename="../resources/scripts/general/terrain.js" line="127"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="458"/>
+        <location filename="../resources/scripts/general/terrain.js" line="511"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="462"/>
+        <location filename="../resources/scripts/general/terrain.js" line="515"/>
         <source>Clear AW 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="463"/>
+        <location filename="../resources/scripts/general/terrain.js" line="516"/>
         <source>Snow AW 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="464"/>
+        <location filename="../resources/scripts/general/terrain.js" line="517"/>
         <source>Clear AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="465"/>
+        <location filename="../resources/scripts/general/terrain.js" line="518"/>
         <source>Rain AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="466"/>
+        <location filename="../resources/scripts/general/terrain.js" line="519"/>
         <source>Snow AW 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="467"/>
+        <location filename="../resources/scripts/general/terrain.js" line="520"/>
         <source>Clear AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="468"/>
+        <location filename="../resources/scripts/general/terrain.js" line="521"/>
         <source>Desert AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="469"/>
+        <location filename="../resources/scripts/general/terrain.js" line="522"/>
         <source>Snow AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="470"/>
+        <location filename="../resources/scripts/general/terrain.js" line="523"/>
         <source>Waste AW DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="471"/>
+        <location filename="../resources/scripts/general/terrain.js" line="524"/>
         <source>Clear AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="472"/>
+        <location filename="../resources/scripts/general/terrain.js" line="525"/>
         <source>Desert AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="473"/>
+        <location filename="../resources/scripts/general/terrain.js" line="526"/>
         <source>Snow AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="474"/>
+        <location filename="../resources/scripts/general/terrain.js" line="527"/>
         <source>Waste AW 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="475"/>
+        <location filename="../resources/scripts/general/terrain.js" line="528"/>
         <source>SFW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="476"/>
+        <location filename="../resources/scripts/general/terrain.js" line="529"/>
         <source>Wargroove</source>
         <translation type="unfinished"></translation>
     </message>

@@ -26,12 +26,20 @@ public:
 
     explicit SpinBox(qint32 width, qreal min = 0, qreal max = 100, Mode mode = Mode::Int);
     ~SpinBox() = default;
+
+    virtual void update(const oxygine::UpdateState& us) override;
+    virtual void setEnabled(bool value) override;
+signals:
+    void sigValueChanged(qreal value);
+public slots:
+    virtual void focusedLost() override;
     /**
      * @brief getCurrentValue
      * @return the current value of the spin box
      */
     qreal getCurrentValue();
-    virtual void update(const oxygine::UpdateState& us) override;
+    QString getUnit() const;
+    void setUnit(const QString &unit);
     /**
      * @brief setCurrentValue changes the value of this spin box
      * @param text
@@ -42,14 +50,6 @@ public:
 
     qreal getInfinityValue() const;
     void setInfinityValue(qreal InfinityValue);
-
-    virtual void setEnabled(bool value) override;
-    QString getUnit() const;
-    void setUnit(const QString &unit);
-signals:
-    void sigValueChanged(qreal value);
-public slots:
-    virtual void focusedLost() override;
 protected:
     /**
      * @brief checkInput checks if the input is correct and updates it if needed and returns the value is valid
@@ -77,5 +77,7 @@ private:
     qreal m_SpinSpeed{1.0};
     Mode m_Mode{Mode::Int};
 };
+
+Q_DECLARE_INTERFACE(SpinBox, "SpinBox");
 
 #endif // SPINBOX_H

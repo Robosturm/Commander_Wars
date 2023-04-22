@@ -18,6 +18,10 @@ class DropDownmenu final : public DropDownmenuBase
 public:
     explicit DropDownmenu(qint32 width, const QStringList & items);
     ~DropDownmenu() = default;
+signals:
+    void sigItemChanged(qint32 item);
+public slots:
+    virtual void itemChanged(qint32 item) override;
     /**
      * @brief getCurrentItemText text of the current item
      * @return
@@ -38,10 +42,6 @@ public:
      * @param index
      */
     void setCurrentItem(qint32 index) override;
-signals:
-    void sigItemChanged(qint32 item);
-public slots:
-    virtual void itemChanged(qint32 item) override;
 protected:
     void addDropDownText(QString text, qint32 id);
     /**
@@ -53,5 +53,7 @@ private:
     oxygine::spTextField m_Textfield;
     QStringList m_ItemTexts;
 };
+
+Q_DECLARE_INTERFACE(DropDownmenu, "DropDownmenu");
 
 #endif // DROPDOWNMENU_H

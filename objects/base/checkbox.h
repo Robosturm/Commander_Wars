@@ -12,6 +12,7 @@ class Checkbox final : public Tooltip
 public:
     explicit Checkbox();
     ~Checkbox() = default;
+public slots:
     bool getChecked() const;
     void setChecked(bool Checked);
 signals:
@@ -20,5 +21,8 @@ signals:
 private:
     bool m_Checked{false};
 };
+
+Q_DECLARE_INTERFACE(Checkbox, "Checkbox");
+
 
 #endif // CHECKBOX_H

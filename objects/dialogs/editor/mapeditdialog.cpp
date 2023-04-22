@@ -37,7 +37,7 @@ MapEditDialog::MapEditDialog(MapEditInfo info, const QString & confirmMessage)
     connect(this, &MapEditDialog::sigFinished, this, &MapEditDialog::remove, Qt::QueuedConnection);
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(MapEdit, pInterpreter->newQObject(this));
-    UiFactory::getInstance().createUi("ui/mapEditDialog.xml", this);
+    UiFactory::getInstance().createUi("ui/editor/mapEditDialog.xml", this);
 }
 
 MapEditDialog::~MapEditDialog()

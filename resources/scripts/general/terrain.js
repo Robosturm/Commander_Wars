@@ -35,6 +35,59 @@ var TERRAIN =
         return qsTr("Unknown");
     },
 
+    terrainBiomeMapping = [["",  "PLAINS",        "DESERT",                  "SNOW",                 "WASTE"],
+                           ["",  "FOREST",        "DESERT_FOREST",           "SNOW_FOREST",          "WASTE_FOREST"],
+                           ["",  "FOREST1",       "DESERT_FOREST1",          "SNOW_FOREST1",         "WASTE_FOREST"],
+                           ["",  "FOREST2",       "DESERT_FOREST",           "SNOW_FOREST2",         "WASTE_FOREST"],
+                           ["",  "FOREST3",       "DESERT_FOREST",           "SNOW_FOREST",          "WASTE_FOREST"],
+                           ["",  "MOUNTAIN",      "DESERT_ROCK",             "SNOW_MOUNTAIN",        "WASTE_MOUNTAIN"],
+                           ["",  "RIVER",         "DESERT_TRY_RIVER",        "",                     ""],
+                           ["",  "DESTROYEDWELD", "DESERT_DESTROYEDWELD",    "SNOW_DESTROYEDWELD",   "WASTE_DESTROYEDWELD"],
+                           ["",  "STREET",        "DESERT_PATH",             "SNOW_STREET",          "WASTE_PATH"],
+                           ["",  "STREET1",       "DESERT_PATH1",            "SNOW_STREET",          "WASTE_PATH"],
+                           ["",  "PIPELINE",      "DESERT_PIPELINE",         "SNOW_PIPELINE",        "WASTE_PIPELINE"],
+                           ["",  "RUIN",          "DESERT_RUIN",             "SNOW_RUIN",            "WASTE_RUIN"],
+                           ["",  "WASTELAND",     "DESERT_WASTELAND",        "SNOW_WASTELAND",       "WASTE_WASTELAND"],
+                           ["",  "WELD",          "DESERT_WELD",             "SNOW_WELD",            "WASTE_WELD"],
+
+    ],
+
+    getTerrainBiomeMappingId : function(currentId, targetGroup)
+    {
+        var terrainCount = TERRAIN.terrainBiomeMapping.length
+        var groupCount = TERRAIN.terrainBiomeMapping[0].length
+        if (targetGroup < groupCount)
+        {
+            for (var i = 0; i < terrainCount; ++i)
+            {
+                for (var i2 = 0; i2 < groupCount; ++i)
+                {
+                    if (TERRAIN.terrainBiomeMapping[i][i2] === currentId)
+                    {
+                        return TERRAIN.terrainBiomeMapping[i][targetGroup];
+                    }
+                }
+            }
+        }
+        return "";
+    },
+
+    terrainBiomeGroups = [1, 2, 3, 4],
+    getTerrainBiomeGroups : function()
+    {
+        return TERRAIN.terrainBiomeGroups;
+    },
+    getTerrainBiomeGroupsNameArray : function()
+    {
+        let count = TERRAIN.terrainBiomeGroups.length;
+        let names = [];
+        for (var i = 0; i < count; ++i)
+        {
+            names.push(TERRAIN.getTerrainGroupName(TERRAIN.terrainBiomeGroups[i]));
+        }
+        return names;
+    },
+
     // loader for stuff which needs C++ Support
     init : function (terrain, map)
     {

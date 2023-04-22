@@ -16,10 +16,7 @@ public:
     explicit FocusableObject();
     virtual ~FocusableObject();
 
-    bool getFocused() const;
     static void looseFocus();
-    bool getSubComponent() const;
-    void setSubComponent(bool subComponent);
     static FocusableObject* getFocusedObject()
     {
         return m_focusedObject;
@@ -44,6 +41,9 @@ protected:
 protected slots:
     virtual void looseFocusInternal();
 public slots:
+    bool getSubComponent() const;
+    void setSubComponent(bool subComponent);
+    bool getFocused() const;
     virtual void focusedLost(){}
 private slots:
     void focusedInternal();
@@ -54,5 +54,7 @@ private:
     static bool m_registeredAtStage;
     bool m_subComponent{false};
 };
+
+Q_DECLARE_INTERFACE(FocusableObject, "FocusableObject");
 
 #endif // FOCUSABLEOBJECT_H

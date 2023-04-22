@@ -2642,7 +2642,6 @@
         <file>resources/images/game/battlesprites/background/back_rainruin.png</file>
         <file>resources/images/game/battlesprites/background/back_snowruin.png</file>
         <file>resources/images/game/battlesprites/background/back_tower.png</file>
-        <file>resources/ui/mapEditDialog.xml</file>
         <file>resources/images/building/desert_weld+E+W+mask.png</file>
         <file>resources/images/building/desert_weld+E+W.png</file>
         <file>resources/images/building/desert_weld+N+S+mask.png</file>
@@ -4845,5 +4844,8 @@
         <file>resources/images/building/silo+mask.png</file>
         <file>resources/images/building/silo+rocket+mask.png</file>
         <file>resources/images/building/tower+snow.png</file>
+        <file>resources/ui/editor/mapEditDialog.xml</file>
+        <file>resources/ui/editor/mapEditBiomes.xml</file>
+        <file>resources/ui/editor/mapEditBiomes.js</file>
     </qresource>
 </RCC>

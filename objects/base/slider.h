@@ -15,14 +15,14 @@ class Slider final : public V_Scrollbar
 public:
     explicit Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit = "%");
     ~Slider() = default;
-    qint32 getCurrentValue() const;
-    void setCurrentValue(const qint32 &CurrentValue);
 
     virtual void setEnabled(bool value) override;
 signals:
     void sliderValueChanged(qint32 value);
 public slots:
     void slotSliderValueChanged(float value);
+    qint32 getCurrentValue() const;
+    void setCurrentValue(const qint32 &CurrentValue);
 private slots:
     void slotSpinBoxValueChanged(qreal currentValuevalue);
 private:
@@ -31,5 +31,7 @@ private:
     qint32 m_maxValue{0};
     QString m_Unit;
 };
+
+Q_DECLARE_INTERFACE(Slider, "Slider");
 
 #endif // SLIDER_H
