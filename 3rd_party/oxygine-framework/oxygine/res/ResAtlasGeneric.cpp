@@ -131,29 +131,9 @@ namespace oxygine
             {
                 columns = 1;
             }
-            if (path.endsWith("+mask.png") && maskExtend)
-            {
-                QString basePath = path;
-                basePath = basePath.replace("+mask.png", ".png");
-                QString overlayPath = basePath;
-                if (QFile::exists(Settings::getUserPath() + basePath))
-                {
-                    overlayPath = Settings::getUserPath() + basePath;
-                }
-                else
-                {
-                    overlayPath = oxygine::Resource::RCC_PREFIX_PATH + basePath;
-                }
-                if (QFile::exists(overlayPath))
-                {
-                    CONSOLE_PRINT("SpriteCreator::preProcessMask for file " + path, GameConsole::eDEBUG);
-                    QImage overlay(overlayPath);
-                    SpriteCreator::preProcessMask(img, overlay, columns, rows);
-                }
-            }
             spResAnim ra = spResAnim::create(this);
             ra->setResPath(path);
-            ra->init(img, columns, rows, walker.getScaleFactor() * scaleFactor, context.m_addTransparentBorder, m_clamp2edge, linearFilter);
+            ra->init(img, columns, rows, walker.getScaleFactor() * scaleFactor, m_clamp2edge, linearFilter);
             ra->setParent(this);
             init_resAnim(ra, file, child_node);
             // add loaded res anim

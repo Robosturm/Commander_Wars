@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "gameinput/humanplayerinputmenu.h"
 
 #include "game/gamemap.h"
@@ -71,14 +73,14 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
         qint32 x = 0;
         qint32 xCount = 0;
         m_maxXCount = Settings::getMenuItemRowCount();
-        if ((Settings::getWidth() - 120) / width < m_maxXCount)
+        if ((oxygine::Stage::getStage()->getWidth() - 120) / width < m_maxXCount)
         {
-            m_maxXCount = (Settings::getWidth() - 120) / width;
+            m_maxXCount = (oxygine::Stage::getStage()->getWidth() - 120) / width;
         }
         m_rowCount = Settings::getMenuItemCount();
-        if ((Settings::getHeight() - 60) / m_itemHeigth < m_rowCount)
+        if ((oxygine::Stage::getStage()->getHeight() - 60) / m_itemHeigth < m_rowCount)
         {
-            m_rowCount = (Settings::getHeight() - 60) / m_itemHeigth;
+            m_rowCount = (oxygine::Stage::getStage()->getHeight() - 60) / m_itemHeigth;
         }
         qint32 maxY = 0;
         for (qint32 i = 0; i < actionIDs.size(); i++)

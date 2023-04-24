@@ -292,6 +292,7 @@ public:
     ~Settings() = default;
     static Settings* getInstance();
     void setup();
+    static QString getActiveUserPath();
     static void loadSettings();    
     static void saveSettings();
     static void resetSettings();
@@ -305,9 +306,10 @@ public:
 
     static void setPipeUuid(const QString & newPipeUuid);
 
-
-
 public slots:
+    static float getGameScale();
+    static void setGameScale(float newGameScale);
+
     static float getIngameMenuScaling();
     static void setIngameMenuScaling(float newIngameMenuScaling);
 
@@ -366,9 +368,6 @@ public slots:
 
     static QString getDefaultBannlist();
     static void setDefaultBannlist(const QString &newDefaultBannlist);
-
-    static bool getUseHighDpi();
-    static void setUseHighDpi(bool newUseHighDpi);
 
     static bool getDay2dayScreen();
     static void setDay2dayScreen(bool newDay2dayScreen);
@@ -577,7 +576,7 @@ public slots:
     static std::chrono::seconds getAutoSavingCylceTime();
     static void setAutoSavingCylceTime(const std::chrono::seconds &value);
     static quint64 getAutoSavingCylceTimeRaw();
-    static void setAutoSavingCylceTimeRaw(quint64 &value);
+    static void setAutoSavingCylceTimeRaw(const quint32 &value);
 
     static qint32 getAutoSavingCycle();
     static void setAutoSavingCycle(const qint32 &value);
@@ -636,6 +635,8 @@ public slots:
     {
         return m_pInstance->m_height;
     }
+    static qint32 getStageWidth();
+    static qint32 getStageHeight();
 
     inline static bool getBorderless()
     {
@@ -841,11 +842,6 @@ public slots:
      */
     static QSize getScreenSize();
     /**
-     * @brief Settings::getDpiFactor
-     * @return
-     */
-    static float getDpiFactor();
-    /**
      * @brief getScreenMode
      * @return
      */
@@ -906,9 +902,9 @@ private:
     bool m_gamepadEnabled{false};
     float m_gamepadSensitivity{1.0f};
     qint32 m_framesPerSecond{60};
-    bool m_useHighDpi{true};
     float m_ingameMenuScaling{1.0f};
     bool m_automaticUpdates{true};
+    float m_gameScale{1.0f};
 
     bool m_borderless{true};
     bool m_fullscreen{false};

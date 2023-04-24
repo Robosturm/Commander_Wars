@@ -10,6 +10,7 @@
 #include "coreengine/qmlvector.h"
 
 #include "resource_management/buildingspritemanager.h"
+#include "resource_management/terrainmanager.h"
 
 #include "ai/coreai.h"
 
@@ -229,12 +230,13 @@ void Building::loadSprite(const QString & spriteID, bool addPlayerColor, qint32 
     }
 }
 
-void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime, QPoint pos)
+void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime, QPoint pos, const QString & forcedPalette, bool forceNeutral)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
+        TerrainManager* pTerrainManager = TerrainManager::getInstance();
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
@@ -257,13 +259,35 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
         {
             pSprite->setColor(QColor(150, 150, 150, 255));
         }
-        else if ((mode == GameEnums::Recoloring_Table || matrixMode) && m_pOwner != nullptr)
+        else if ((mode == GameEnums::Recoloring_Table || matrixMode) && m_pOwner != nullptr && !forceNeutral)
         {
-            pSprite->setColorTable(m_pOwner->getColorTableAnim(), matrixMode);
+            if (forcedPalette.isEmpty())
+            {
+                pSprite->setColorTable(m_pOwner->getColorTableAnim(), matrixMode);
+            }
+            else
+            {
+                oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(forcedPalette, oxygine::error_policy::ep_ignore_error));
+                if (pPaletteAnim.get() != nullptr)
+                {
+                    pSprite->setColorTable(pPaletteAnim, true);
+                }
+            }
         }
         else if (mode == GameEnums::Recoloring_Table || matrixMode)
         {
-            pSprite->setColorTable(Player::getNeutralTableAnim(), matrixMode);
+            if (forcedPalette.isEmpty())
+            {
+                pSprite->setColorTable(Player::getNeutralTableAnim(), matrixMode);
+            }
+            else
+            {
+                oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(forcedPalette, oxygine::error_policy::ep_ignore_error));
+                if (pPaletteAnim.get() != nullptr)
+                {
+                    pSprite->setColorTable(pPaletteAnim, true);
+                }
+            }
         }
         else
         {
@@ -283,7 +307,14 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
         }
         addChild(pSprite);
         m_pBuildingSprites.append(pSprite);
-        m_addPlayerColor.append(mode);
+        if (forcedPalette.isEmpty())
+        {
+            m_addPlayerColor.append(mode);
+        }
+        else
+        {
+            m_addPlayerColor.append(GameEnums::Recoloring_None);
+        }
     }
     else
     {
@@ -1022,7 +1053,7 @@ QPoint Building::getActionTargetOffset()
     return ret.toVariant().toPoint();
 }
 
-float Building::getDamage(Unit* pUnit)
+qreal Building::getDamage(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDamage";
@@ -1034,7 +1065,7 @@ float Building::getDamage(Unit* pUnit)
     {
         return ret.toNumber();
     }
-    return 0.0f;
+    return 0.0;
 }
 
 GameEnums::BuildingTarget Building::getBuildingTargets()
@@ -1267,7 +1298,7 @@ void Building::serializeObject(QDataStream& pStream, bool forHash) const
     }
     pStream << m_Hp;
     pStream << m_fireCount;
-    m_Variables.serializeObject(pStream);
+    m_Variables.serializeObject(pStream, forHash);
     if (!forHash)
     {
         pStream << m_BuildingName;

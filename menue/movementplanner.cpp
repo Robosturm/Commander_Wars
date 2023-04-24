@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/movementplanner.h"
 #include "game/gamemap.h"
 
@@ -25,7 +27,7 @@ MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
     reloadMap();
     loadHandling();
     loadGameMenue();
-    m_Topbar = spTopbar::create(0, Settings::getWidth() - m_IngameInfoBar->getScaledWidth());
+    m_Topbar = spTopbar::create(0, oxygine::Stage::getStage()->getWidth() - m_IngameInfoBar->getScaledWidth());
     QStringList loadedGroups;
     loadedGroups.append(tr("Menu"));
     m_Topbar->addGroup(loadedGroups[0]);

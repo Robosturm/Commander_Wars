@@ -13,12 +13,12 @@ namespace oxygine
         m_texture = nullptr;
     }
 
-    void SingleResAnim::init(const QString & file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void SingleResAnim::init(const QString & file, qint32 columns, qint32 rows, float scaleFactor)
     {
-        ResAnim::init(file, columns, rows, scaleFactor, addTransparentBorder);
+        ResAnim::init(file, columns, rows, scaleFactor);
     }
 
-    void SingleResAnim::init(QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder,
+    void SingleResAnim::init(QImage & image, qint32 columns, qint32 rows, float scaleFactor,
                              bool clamp2Edge, quint32 linearFilter)
     {
 
@@ -30,7 +30,7 @@ namespace oxygine
         m_texture->init(image);
         m_texture->setClamp2Edge(clamp2Edge);
         m_texture->setLinearFilter(linearFilter);
-        ResAnim::init(m_texture, image.size(), columns, rows, scaleFactor, addTransparentBorder);
+        ResAnim::init(m_texture, image.size(), columns, rows, scaleFactor);
     }
 
     spTexture SingleResAnim::getTexture() const

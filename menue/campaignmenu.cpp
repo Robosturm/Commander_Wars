@@ -43,8 +43,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
+        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/mapselection");
@@ -53,7 +53,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
     pButtonExit->setPosition(10,
-                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
+                             oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -61,8 +61,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     connect(this, &CampaignMenu::sigExitMenue, this, &CampaignMenu::exitMenue, Qt::QueuedConnection);
 
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
-    m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getScaledWidth(),
-                               Settings::getHeight() - 10 - m_pButtonNext->getScaledHeight());
+    m_pButtonNext->setPosition(oxygine::Stage::getStage()->getWidth() - 10 - m_pButtonNext->getScaledWidth(),
+                               oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonNext->getScaledHeight());
     addChild(m_pButtonNext);
     m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -71,8 +71,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     connect(this, &CampaignMenu::sigButtonNext, this, &CampaignMenu::slotButtonNext, Qt::QueuedConnection);
 
     m_pButtonSave = ObjectManager::createButton(tr("Save"));
-    m_pButtonSave->setPosition(Settings::getWidth() / 2 - m_pButtonSave->getScaledWidth() / 2,
-                               Settings::getHeight() - 10 - m_pButtonSave->getScaledHeight());
+    m_pButtonSave->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pButtonSave->getScaledWidth() / 2,
+                               oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonSave->getScaledHeight());
     addChild(m_pButtonSave);
     m_pButtonSave->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event *)->void
     {
@@ -100,13 +100,13 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
 {
     QStringList filter = {".map"};
-    m_pMapSelectionView = spMapSelectionView::create(filter, Settings::getHeight() / 3 - 30);
+    m_pMapSelectionView = spMapSelectionView::create(filter, oxygine::Stage::getStage()->getHeight() / 3 - 30);
     m_pMapSelectionView->setCurrentSetCampaign(campaign);
     GameManager* pGameManager = GameManager::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
     campaign->getCampaignMapData(m_campaignData);
     m_pSlidingActor = oxygine::spSlidingActor::create();
-    m_pSlidingActor->setSize(Settings::getWidth(), Settings::getHeight());
+    m_pSlidingActor->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(m_pSlidingActor);
     m_campaignBackground = oxygine::spSingleResAnim::create();
     QString path = Settings::getUserPath() + m_campaignData.getMapBackground();
@@ -115,7 +115,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
         path = oxygine::Resource::RCC_PREFIX_PATH + m_campaignData.getMapBackground();
     }
     QImage background(path);
-    pApp->loadResAnim(m_campaignBackground, background, 1, 1, 1.0f, false);
+    pApp->loadResAnim(m_campaignBackground, background, 1, 1, 1.0f);
     m_pMapBackground = oxygine::spSprite::create();
     m_pMapBackground->setResAnim(m_campaignBackground.get());
     m_pMapBackground->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event* event)
@@ -130,17 +130,17 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
             emit sigHideMinimap();
         }
     });
-    if (m_campaignData.getMapHeight() < Settings::getHeight())
+    if (m_campaignData.getMapHeight() < oxygine::Stage::getStage()->getHeight())
     {
-        m_pMapBackground->setHeight(Settings::getHeight());
+        m_pMapBackground->setHeight(oxygine::Stage::getStage()->getHeight());
     }
     else
     {
         m_pMapBackground->setHeight(m_campaignData.getMapHeight());
     }
-    if (m_campaignData.getMapWidth() < Settings::getWidth())
+    if (m_campaignData.getMapWidth() < oxygine::Stage::getStage()->getWidth())
     {
-        m_pMapBackground->setWidth(Settings::getWidth());
+        m_pMapBackground->setWidth(oxygine::Stage::getStage()->getWidth());
     }
     else
     {
@@ -248,7 +248,7 @@ void CampaignMenu::playNextEvent(qint32 event)
 
 void CampaignMenu::focusOnPosition(QPoint position)
 {
-    m_pMapBackground->setPosition(Settings::getWidth() / 2 - position.x(), Settings::getHeight() / 2 - position.y());
+    m_pMapBackground->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - position.x(), oxygine::Stage::getStage()->getHeight() / 2 - position.y());
     m_pSlidingActor->snap();
 }
 
@@ -310,9 +310,9 @@ void CampaignMenu::showMinimap()
         {
             xPos = -m_pMapBackground->getX();
         }
-        else if (xPos + pMiniMapPanel->getScaledWidth() + m_pMapBackground->getX() > Settings::getWidth())
+        else if (xPos + pMiniMapPanel->getScaledWidth() + m_pMapBackground->getX() > oxygine::Stage::getStage()->getWidth())
         {
-            xPos = Settings::getWidth() - pMiniMapPanel->getScaledWidth() - m_pMapBackground->getX();
+            xPos = oxygine::Stage::getStage()->getWidth() - pMiniMapPanel->getScaledWidth() - m_pMapBackground->getX();
         }
         pMiniMapPanel->setX(xPos);
         m_pMapBackground->addChild(pMiniMapPanel);
@@ -368,9 +368,9 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
             {
                 xPos = -m_pMapBackground->getX();
             }
-            else if (xPos + pBuildingBackground->getScaledWidth() + m_pMapBackground->getX() > Settings::getWidth())
+            else if (xPos + pBuildingBackground->getScaledWidth() + m_pMapBackground->getX() > oxygine::Stage::getStage()->getWidth())
             {
-                xPos = Settings::getWidth() - pBuildingBackground->getScaledWidth() - m_pMapBackground->getX();
+                xPos = oxygine::Stage::getStage()->getWidth() - pBuildingBackground->getScaledWidth() - m_pMapBackground->getX();
             }
             pBuildingBackground->setX(xPos);
             m_pMapBackground->addChild(pBuildingBackground);
@@ -388,9 +388,9 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
             {
                 xPos = -m_pMapBackground->getX();
             }
-            else if (xPos + pMapInfo->getScaledWidth() + m_pMapBackground->getX() > Settings::getWidth())
+            else if (xPos + pMapInfo->getScaledWidth() + m_pMapBackground->getX() > oxygine::Stage::getStage()->getWidth())
             {
-                xPos = Settings::getWidth() - pMapInfo->getScaledWidth() - m_pMapBackground->getX();
+                xPos = oxygine::Stage::getStage()->getWidth() - pMapInfo->getScaledWidth() - m_pMapBackground->getX();
             }
             pMapInfo->setX(xPos);
             m_pMapBackground->addChild(pMapInfo);

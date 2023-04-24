@@ -1,3 +1,6 @@
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include <QSettings>
 #include <QTranslator>
 #include <QLocale>
@@ -23,8 +26,6 @@
 #include "coreengine/Gamepad.h"
 #include "coreengine/interpreter.h"
 
-#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
-
 const char* const Settings::DEFAULT_AUDIODEVICE = "@@default@@";
 
 // this Object
@@ -45,6 +46,16 @@ Settings::Settings()
     setObjectName("Settings");
 #endif
     Interpreter::setCppOwnerShip(this);
+}
+
+float Settings::getGameScale()
+{
+    return Settings::getInstance()->m_gameScale;
+}
+
+void Settings::setGameScale(float newGameScale)
+{
+    Settings::getInstance()->m_gameScale = newGameScale;
 }
 
 float Settings::getIngameMenuScaling()
@@ -246,16 +257,6 @@ QString Settings::getDefaultBannlist()
 void Settings::setDefaultBannlist(const QString &newDefaultBannlist)
 {
     Settings::getInstance()->m_defaultBannlist = newDefaultBannlist;
-}
-
-bool Settings::getUseHighDpi()
-{
-    return Settings::getInstance()->m_useHighDpi;
-}
-
-void Settings::setUseHighDpi(bool newUseHighDpi)
-{
-    Settings::getInstance()->m_useHighDpi = newUseHighDpi;
 }
 
 bool Settings::getMovementAnimations()
@@ -1024,7 +1025,7 @@ quint64 Settings::getAutoSavingCylceTimeRaw()
     return std::chrono::duration_cast<std::chrono::milliseconds>(getAutoSavingCylceTime()).count();
 }
 
-void Settings::setAutoSavingCylceTimeRaw(quint64 &value)
+void Settings::setAutoSavingCylceTimeRaw(const quint32 &value)
 {
     setAutoSavingCylceTime(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::milliseconds(value)));
 }
@@ -1074,6 +1075,29 @@ void Settings::setRecord(bool record)
     Settings::getInstance()->m_record = record;
 }
 
+QString Settings::getActiveUserPath()
+{
+    bool smallScreenDevice = hasSmallScreen();
+    QString defaultPath = "";
+    if (smallScreenDevice)
+    {
+        defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
+    }
+#ifdef USEAPPCONFIGPATH
+    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
+#endif
+    Mainapp::getInstance()->getParser().getUserPath(defaultPath);
+    if (!defaultPath.isEmpty())
+    {
+        defaultPath += "/";
+    }
+    while (defaultPath.contains("//"))
+    {
+        defaultPath = defaultPath.replace("//", "/");
+    }
+    return defaultPath;
+}
+
 void Settings::setup()
 {
     QSize size;
@@ -1082,21 +1106,14 @@ void Settings::setup()
     size = screens[Settings::getScreen()]->availableSize() * screens[Settings::getScreen()]->devicePixelRatio();
 #endif
     bool smallScreenDevice = hasSmallScreen();
-    QString defaultPath = "";
     qint32 defaultCoCount = 0;
     if (smallScreenDevice)
     {
-        defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
         defaultCoCount = 1;
     }
-#ifdef USEAPPCONFIGPATH
-    defaultPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/";
-#endif
-    Mainapp::getInstance()->getParser().getUserPath(defaultPath);
-    while (defaultPath.contains("//"))
-    {
-        defaultPath = defaultPath.replace("//", "/");
-    }
+    QString defaultPath = getActiveUserPath();
+    setUserPath(defaultPath);
+    Settings::getInstance()->m_settingFile = defaultPath + Settings::getInstance()->m_settingFile;
     auto devices = QInputDevice::devices();
     bool hasTouch = false;
     for (const auto & device: qAsConst(devices))
@@ -1121,8 +1138,8 @@ void Settings::setup()
         new Value<quint8>{"Resolution", "screen", &m_screen, 0, 0, 255, true},
         new Value<bool>{"Resolution", "recordgames", &m_record, false, false, true},
         new Value<bool>{"Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true},
-        new Value<bool>{"Resolution", "UseHighDpi", &m_useHighDpi, false, false, true},
         new Value<float>{"Resolution", "IngameMenuScaling", &m_ingameMenuScaling, 1.0f, 0.5f, 10.0f},
+        new Value<float>{"Resolution", "GameScale", &m_gameScale, 1.0f, 0.125f, 16.0f},
 
         // general
         new Value<QString>{"General", "language", &m_language, "en", "", ""},
@@ -1202,7 +1219,7 @@ void Settings::setup()
         new Value<quint32>{"Game", "WalkAnimationSpeed", &m_walkAnimationSpeed, 20, 1, 100},
         new Value<quint32>{"Game", "DialogAnimationSpeed", &m_dialogAnimationSpeed, 1, 1, 100},
         new Value<quint32>{"Game", "CaptureAnimationSpeed", &m_captureAnimationSpeed, 1, 1, 100},
-        new Value<quint32>{"Game", "MultiTurnCounter", &multiTurnCounter, 4, 1, 10},
+        new Value<quint32>{"Game", "MultiTurnCounter", &multiTurnCounter, 1, 1, 10},
         new Value<qint32>{"Game", "MenuItemCount", &m_MenuItemCount, 13, 5, std::numeric_limits<qint32>::max()},
         new Value<qint32>{"Game", "MenuItemRowCount", &m_MenuItemRowCount, 2, 1, std::numeric_limits<qint32>::max()},
         new Value<float>{"Game", "SupplyWarning", &m_supplyWarning, 0.33f, 0.0f, 1.0f},
@@ -1284,11 +1301,6 @@ void Settings::loadSettings()
     {
         setting->readValue(settings);
     }
-    QString userPath;
-    if (Mainapp::getInstance()->getParser().getUserPath(userPath))
-    {
-        setUserPath(userPath);
-    }
     setFramesPerSecond(Settings::getInstance()->m_framesPerSecond);
     setActiveMods(Settings::getInstance()->m_activeMods);
     GameConsole::setLogLevel(Settings::getInstance()->m_defaultLogLevel);
@@ -1304,7 +1316,7 @@ void Settings::loadSettings()
         setPipeUuid(QUuid::createUuid().toString());
         saveSettings();
     }
-    Userdata::getInstance()->setUniqueIdentifier(getUsername());
+    setUsername(getUsername());
 }
 
 void Settings::resetSettings()
@@ -1753,7 +1765,15 @@ QString Settings::getUsername()
 
 void Settings::setUsername(const QString &Username)
 {
-    Settings::getInstance()->m_Username = Username;
+    if (Username.length() < 50)
+    {
+        Settings::getInstance()->m_Username = Username;
+    }
+    else
+    {
+        Settings::getInstance()->m_Username = "";
+
+    }
     Userdata::getInstance()->setUniqueIdentifier(getUsername());
 }
 
@@ -1994,11 +2014,6 @@ QSize Settings::getScreenSize()
     return screenSize.size();
 }
 
-float Settings::getDpiFactor()
-{
-    return Mainapp::getInstance()->getActiveDpiFactor();
-}
-
 qint32 Settings::getScreenMode()
 {
     return static_cast<qint32>(Mainapp::getInstance()->getScreenMode());
@@ -2013,6 +2028,16 @@ void Settings::changeBrightness(qint32 value)
 {
     setBrightness(value);
     Mainapp::getInstance()->setBrightness(value);
+}
+
+qint32 Settings::getStageWidth()
+{
+    return oxygine::Stage::getStage()->getWidth();
+}
+
+qint32 Settings::getStageHeight()
+{
+    return oxygine::Stage::getStage()->getHeight();
 }
 
 void Settings::changeGamma(float value)

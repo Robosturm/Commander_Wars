@@ -27,7 +27,7 @@
         <Textbox>
             <x>lastX + lastWidth + 10</x>
             <y>lastY</y>
-            <width>settings.getWidth() - 400</width>
+            <width>settings.getStageWidth() - 400</width>
             <tooltip>QT_TRANSLATE_NOOP("GAME","Map description shown for players who want to join. Keep it short here.")</tooltip>
             <startValue>currentMenu.getMap().getGameRules().getDescription()</startValue>
             <onEvent>currentMenu.getMap().getGameRules().setDescription(input)</onEvent>
@@ -45,7 +45,7 @@
             <x>lastX + lastWidth + 10</x>
             <y>lastY</y>
             <Id>"BannlistTextbox"</Id>
-            <width>settings.getWidth() - 400</width>
+            <width>settings.getStageWidth() - 400</width>
             <tooltip>QT_TRANSLATE_NOOP("GAME","Password used to protect your multiplayer game against unwanted joins.")</tooltip>
             <startValue>currentMenu.getMap().getGameRules().getPasswordText()</startValue>
             <onEvent>currentMenu.getMap().getGameRules().setPassword(input)</onEvent>
@@ -92,7 +92,7 @@
     <Label>
         <x>5</x>
         <y>lastY + lastHeight + 10</y>
-        <width>settings.getWidth() - 100</width>
+        <width>settings.getStageWidth() - 100</width>
         <text>QT_TRANSLATE_NOOP("GAME","Environment")</text>
         <font>"main"</font>
         <fontSize>48</fontSize>
@@ -100,7 +100,7 @@
     <MultiSlider>
         <x>5</x>
         <y>lastY + lastHeight + 10</y>
-        <width>settings.getWidth() - 100</width>
+        <width>settings.getStageWidth() - 100</width>
         <labelWidth>310</labelWidth>
         <Id>"WeatherChances"</Id>
         <labels>RuleSelectionScript.getWeatherLabelNames()</labels>
@@ -163,7 +163,7 @@
     <Label>
         <x>5</x>
         <y>lastY + lastHeight + 10</y>
-        <width>settings.getWidth() - 100</width>
+        <width>settings.getStageWidth() - 100</width>
         <text>QT_TRANSLATE_NOOP("GAME","Gameplay")</text>
         <font>"main"</font>
         <fontSize>48</fontSize>
@@ -315,7 +315,7 @@
         <Label>
             <x>5</x>
             <y>lastY + lastHeight + 10</y>
-            <width>settings.getWidth() - 100</width>
+            <width>settings.getStageWidth() - 100</width>
             <text>QT_TRANSLATE_NOOP("GAME","CO powergain")</text>
             <font>"main"</font>
             <fontSize>48</fontSize>
@@ -426,7 +426,7 @@
     <Label>
         <x>5</x>
         <y>lastY + lastHeight + 10</y>
-        <width>settings.getWidth() - 100</width>
+        <width>settings.getStageWidth() - 100</width>
         <text>QT_TRANSLATE_NOOP("GAME","Fog of war")</text>
         <font>"main"</font>
         <fontSize>48</fontSize>
@@ -504,7 +504,7 @@
     <Label>
         <x>5</x>
         <y>lastY + lastHeight + 10</y>
-        <width>settings.getWidth() - 100</width>
+        <width>settings.getStageWidth() - 100</width>
         <text>QT_TRANSLATE_NOOP("GAME","Advanced")</text>
         <font>"main"</font>
         <fontSize>48</fontSize>
@@ -678,7 +678,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <Id>"ScriptTextbox"</Id>
-                <width>settings.getWidth() - 160 - 110 - 300</width>
+                <width>settings.getStageWidth() - 160 - 110 - 300</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The relative path from the exe to the script associated with this map.")</tooltip>
                 <startValue>currentMenu.getMap().getGameScript().getScriptFile()</startValue>
                 <onEvent>currentMenu.getMap().getGameScript().setScriptFile(input)</onEvent>
@@ -697,7 +697,7 @@
         <Label>
             <x>5</x>
             <y>lastY + lastHeight + 10</y>
-            <width>settings.getWidth() - 100</width>
+            <width>settings.getStageWidth() - 100</width>
             <text>QT_TRANSLATE_NOOP("GAME","Miscellaneous")</text>
             <font>"main"</font>
             <fontSize>48</fontSize>
@@ -789,6 +789,7 @@
                         <Checkbox>
                             <x>lastX + lastWidth + 10</x>
                             <y>lastY</y>
+                            <Id>gameRuleManager.getGameRuleID(RuleSelectionScript.currentGameRuleIndex)</Id>
                             <tooltip>RuleSelectionScript.getGameRuleDescription(loopIdx)</tooltip>
                             <startValue>RuleSelectionScript.getGameRuleValue(loopIdx)</startValue>
                             <onEvent>RuleSelectionScript.setGameRuleValue(input, loopIdx)</onEvent>
@@ -818,7 +819,7 @@
     <Label>
         <x>5</x>
         <y>lastY + lastHeight + 10</y>
-        <width>settings.getWidth() - 100</width>
+        <width>settings.getStageWidth() - 100</width>
         <text>QT_TRANSLATE_NOOP("GAME","Victory rules")</text>
         <font>"main"</font>
         <fontSize>48</fontSize>

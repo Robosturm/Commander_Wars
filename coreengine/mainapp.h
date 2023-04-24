@@ -238,6 +238,10 @@ public:
      */
     static AiProcessPipe & getAiProcessPipe();
 
+    bool isAudioThread() const
+    {
+        return QThread::currentThread() == m_audioThread.get();
+    }
 public slots:
     /**
      * @brief createBaseDirs
@@ -325,6 +329,7 @@ private:
     QScopedPointer<QThread> m_Workerthread;
     QScopedPointer<QThread> m_Networkthread;
     QScopedPointer<QThread> m_GameServerThread;
+    QScopedPointer<QThread> m_audioThread;
     QScopedPointer<QProcess> m_aiSubProcess;
     WorkerThread* m_Worker;
     QScopedPointer<AudioManager> m_AudioManager;

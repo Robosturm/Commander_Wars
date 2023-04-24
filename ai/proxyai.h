@@ -59,7 +59,10 @@ public slots:
      * @param name
      */
     virtual void readIni(QString name) override;
-
+    /**
+     * @brief verifyActionStack
+     */
+    bool verifyActionStack();
 private:
     QList<spGameAction> m_ActionBuffer;
     QMutex m_ActionMutex;

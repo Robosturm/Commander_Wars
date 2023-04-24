@@ -107,10 +107,17 @@ private:
       */
     bool createMultiSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**
+      * Nodename: Custom
+      * supported attributes are:
+      * mandatory: x, y, customItem
+      * optional: tooltip, id, enabled, visible
+     */
+    bool createCustom(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
+    /**
       * Nodename: Textbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
-      * optional: tooltip, id, enabled, visible
+      * optional: tooltip, id, enabled, visible, scale
       */
     bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx = 0);
     /**

@@ -168,14 +168,6 @@ public slots:
      */
     void receivedSlaveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
-     * @brief updateGameData marks the lobby data as changed
-     */
-    void updateGameData();
-    /**
-     * @brief sendGameDataUpdate sends the lobby data to all clients if needed
-     */
-    void sendGameDataUpdate();
-    /**
      * @brief playerJoined a new player connected to server. Send him the initial lobby data
      * @param socketId
      */
@@ -279,11 +271,6 @@ private:
      */
     bool validHostRequest(QStringList mods);
     /**
-     * @brief sendGameDataToClient sends the lobby-data to the client
-     * @param socketId 0 for all clients
-     */
-    void sendGameDataToClient(qint64 socketId);
-    /**
      * @brief joinSlaveGame request of a client to join a specific slave game
      * @param socketID
      * @param stream
@@ -310,7 +297,7 @@ private:
      * @param socketID
      * @param data
      */
-    void spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data);
+    void spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data, QByteArray & minimapData);
     /**
      * @brief spawnSlave
      * @param slaveInfo
@@ -365,6 +352,12 @@ private:
      * @param objData
      */
     void onRequestUsergames(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onRequestObservegames
+     * @param socketID
+     * @param objData
+     */
+    void onRequestObservegames(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief onRequestGameData
      * @param socketId
@@ -475,10 +468,12 @@ private:
     public:
         QScopedPointer<QProcess> process;
         spNetworkGame game;
+        QString slaveName;
     };
     explicit MainServer();
     friend spMainServer;
     static spMainServer m_pInstance;
+    InternNetworkGame * getInternGame(const QString & slaveName, qint32 * index = nullptr);
 private:
     /**
      *  TCP-Server used for clients to connect to the server
@@ -496,19 +491,11 @@ private:
     /**
      * @brief m_games data of games currently run on the server as slaves
      */
-    QMap<QString, spInternNetworkGame> m_games;
-    /**
-     * @brief m_updateTimer update timer to send lobby data to clients if needed
-     */
-    QTimer m_updateTimer;
+    QVector<spInternNetworkGame> m_games;
     /**
      * @brief m_scriptExecutionTimer
      */
     QTimer m_periodicExecutionTimer;
-    /**
-     * guard marking if new lobby data is available or not.
-     */
-    bool m_updateGameData{false};
     /**
      * @brief m_slaveAddressOptions address/port combination that can used for spawning a slave
      */

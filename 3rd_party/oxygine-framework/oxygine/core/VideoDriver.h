@@ -113,7 +113,7 @@ namespace oxygine
         const VertexDeclaration* getVertexDeclaration() const;
         void setScissorRect(const QRect* rect);
         void setDefaultSettings();
-        void setViewport(const QRect& viewport);
+        void setViewport(const QRectF& viewport);
         void setRenderTarget(spTexture &);
         void setShaderProgram(ShaderProgram*);
         void setTexture(qint32 sampler, spTexture &);

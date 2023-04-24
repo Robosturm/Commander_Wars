@@ -1,3 +1,4 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 #include "objects/dialogs/ingame/dialogunitinfo.h"
@@ -26,7 +27,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -38,15 +39,15 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getScaledWidth() / 2,
-                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
+    pOkButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pOkButton->getScaledWidth() / 2,
+                           oxygine::Stage::getStage()->getHeight() - 10 - pOkButton->getScaledHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigFinished();
     });
-    spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
-                               QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));
+    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
+                               QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150));
     pPanel->setPosition(30, 70);
     pSpriteBox->addChild(pPanel);
 

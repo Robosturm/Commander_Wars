@@ -40,14 +40,12 @@ private:
 #endif
 public:
     explicit AudioManager(bool noAudio);
-    ~AudioManager();
+    ~AudioManager() = default;
     qint32 getSoundsBuffered();
-    /**
-     * @brief createSoundCache
-     */
-    void createSoundCache();
 
 signals:
+    void sigCreateSoundCache();
+    void sigInitAudio();
     void sigPlayMusic(qint32 File);
     void sigSetVolume(qint32 value);
     void sigAddMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);
@@ -60,6 +58,7 @@ signals:
     void sigStopAllSounds();
     void sigChangeAudioDevice(const QVariant& value);
     void sigLoadNextAudioFile();
+    void sigStopAudio();
 #ifdef AUDIOSUPPORT
     void sigDeleteSound(AudioManager::SoundData* soundData, qint32 soundIndex);
     void sigStopSoundInternal(AudioManager::SoundData* soundData, qint32 soundIndex);
@@ -67,9 +66,17 @@ signals:
 #endif
 public slots:
     /**
+     * @brief createSoundCache
+     */
+    void createSoundCache();
+    /**
      * @brief initAudio
      */
     void initAudio();
+    /**
+     * @brief stopAudio
+     */
+    void stopAudio();
     /**
      * @brief getLoadBaseGameFolders
      * @return

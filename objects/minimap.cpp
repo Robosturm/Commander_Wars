@@ -137,7 +137,10 @@ void Minimap::updateMinimap(const GameMap* pMap, bool useVision)
                                         pSprite->setResAnim(pAnim);
                                     }
                                     pSprite->setPosition(x * IMAGE_SIZE, y * IMAGE_SIZE);
-                                    pSprite->setScale(static_cast<float>(pAnim->getWidth()) / static_cast<float>(IMAGE_SIZE));
+                                    if (pAnim->getWidth() > 0)
+                                    {
+                                        pSprite->setScale(static_cast<float>(IMAGE_SIZE) / static_cast<float>(pAnim->getWidth()));
+                                    }
                                     if (pPlayer != nullptr && !pBuilding->getNeutralLoaded())
                                     {
                                         QColor color = pPlayer->getColor();
@@ -170,7 +173,10 @@ void Minimap::updateMinimap(const GameMap* pMap, bool useVision)
                                     pSprite->setResAnim(pAnim);
                                 }
                                 pSprite->setPosition(x * IMAGE_SIZE, y * IMAGE_SIZE);
-                                pSprite->setScale(static_cast<float>(pAnim->getWidth()) / static_cast<float>(IMAGE_SIZE));
+                                if (pAnim->getWidth() > 0)
+                                {
+                                    pSprite->setScale(static_cast<float>(IMAGE_SIZE) / static_cast<float>(pAnim->getWidth()));
+                                }
                                 addChild(pSprite);
                                 m_Items[item].background = pSprite;
                             }
@@ -207,7 +213,10 @@ void Minimap::updateMinimap(const GameMap* pMap, bool useVision)
                                         oxygine::spTween tween2 = oxygine::createTween(TweenToggleVisibility(0, 0.5f), oxygine::timeMS(1000), -1);
                                         pSprite->addTween(tween2);
                                         pSprite->setPosition(x * IMAGE_SIZE, y * IMAGE_SIZE);
-                                        pSprite->setScale(static_cast<float>(pAnim->getWidth()) / static_cast<float>(IMAGE_SIZE));
+                                        if (pAnim->getWidth() > 0)
+                                        {
+                                            pSprite->setScale(static_cast<float>(IMAGE_SIZE) / static_cast<float>(pAnim->getWidth()));
+                                        }
                                         Player* pPlayer = pUnit->getOwner();
                                         QColor color = pPlayer->getColor();
                                         pSprite->setColor(color.red(), color.green(), color.blue(), 255);

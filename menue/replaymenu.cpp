@@ -162,13 +162,13 @@ void ReplayMenu::loadUIButtons()
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     m_taskBar = oxygine::spBox9Sprite::create();
     m_taskBar->setResAnim(pAnim);
-    qint32 width = Settings::getWidth();
+    qint32 width = oxygine::Stage::getStage()->getWidth();
     if (!Settings::getSmallScreenDevice())
     {
         width += -m_IngameInfoBar->getWidth() - m_IngameInfoBar->getDetailedViewBox()->getScaledWidth();
     }
     m_taskBar->setSize(width, 50);
-    m_taskBar->setPosition(0, Settings::getHeight() + 6);
+    m_taskBar->setPosition(0, oxygine::Stage::getStage()->getHeight() + 6);
     m_taskBar->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(m_taskBar);
 
@@ -260,7 +260,7 @@ void ReplayMenu::loadUIButtons()
     m_xyTextInfo->setPosition(8, 8);
     pButtonBox->addChild(m_xyTextInfo);
     pButtonBox->setSize(200, 50);
-    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) - pButtonBox->getScaledWidth(), 0);
+    pButtonBox->setPosition((oxygine::Stage::getStage()->getWidth() - m_IngameInfoBar->getScaledWidth()) - pButtonBox->getScaledWidth(), 0);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_XYButtonBox = pButtonBox;
     m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates());
@@ -296,7 +296,7 @@ void ReplayMenu::loadSeekUi()
     m_seekDayLabel->setPosition(8, 8);
     pDayBox->addChild(m_seekDayLabel);
     pDayBox->setSize(160, 50);
-    pDayBox->setPosition(0, Settings::getHeight() - pDayBox->getScaledHeight() + 6 - pDayBox->getScaledHeight());
+    pDayBox->setPosition(0, oxygine::Stage::getStage()->getHeight() - pDayBox->getScaledHeight() + 6 - pDayBox->getScaledHeight());
     pDayBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pDayBox);
     m_seekActor = pDayBox;
@@ -466,8 +466,8 @@ void ReplayMenu::showConfig()
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
-                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
+    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
+                                     QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110));
     pPanel->setPosition(30, 30);
     pBox->addChild(pPanel);
     qint32 width = 450;
@@ -641,7 +641,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Animation Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pAnimationSpeed = spSlider::create(Settings::getWidth() - 40 - width, 1, 100, "");
+    spSlider pAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Note: This does not include capture or battle animations."));
     pAnimationSpeed->setPosition(width - 130, y);
     pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getAnimationSpeedValue()));
@@ -657,7 +657,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Walk Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pWalkSpeed = spSlider::create(Settings::getWidth() - 40 - width, 1, 100, "");
+    spSlider pWalkSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pWalkSpeed->setTooltipText(tr("Selects the speed at which units walk across the map."));
     pWalkSpeed->setPosition(width - 130, y);
     pWalkSpeed->setCurrentValue(static_cast<qint32>(Settings::getWalkAnimationSpeedValue()));
@@ -673,7 +673,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Battle Anim. Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pBattleAnimationSpeed = spSlider::create(Settings::getWidth() - 40 - width, 1, 100, "");
+    spSlider pBattleAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pBattleAnimationSpeed->setTooltipText(tr("Selects the speed at which battle animations are played."));
     pBattleAnimationSpeed->setPosition(width - 130, y);
     pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getBattleAnimationSpeedValue()));
@@ -689,7 +689,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Capture Anim. Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pCaptureAnimationSpeed = spSlider::create(Settings::getWidth() - 40 - width, 1, 100, "");
+    spSlider pCaptureAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pCaptureAnimationSpeed->setTooltipText(tr("Selects the speed at which capture animations are played."));
     pCaptureAnimationSpeed->setPosition(width - 130, y);
     pCaptureAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getCaptureAnimationSpeedValue()));
@@ -705,7 +705,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Dialog Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pDialogAnimationSpeed = spSlider::create(Settings::getWidth() - 40 - width, 1, 100, "");
+    spSlider pDialogAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pDialogAnimationSpeed->setTooltipText(tr("Selects the speed at which dialog animations are played."));
     pDialogAnimationSpeed->setPosition(width - 130, y);
     pDialogAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getDialogAnimationSpeedValue()));

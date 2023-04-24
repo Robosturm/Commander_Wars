@@ -1,5 +1,7 @@
 #include <QDirIterator>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "coreengine/filesupport.h"
 
 #include "resource_management/objectmanager.h"
@@ -29,7 +31,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     m_pSpriteBox->setResAnim(pAnim);
-    m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    m_pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(m_pSpriteBox);
     m_pSpriteBox->setPosition(0, 0);
     m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -40,8 +42,8 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     style.multiline = false;
 
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
-                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));    pPanel->setPosition(30, 30);
+    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
+                                     QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150));    pPanel->setPosition(30, 30);
     m_pSpriteBox->addChild(pPanel);
 
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
@@ -125,8 +127,8 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() - m_OkButton->getScaledWidth() - 30,
+                            oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     m_pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -137,7 +139,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_ExitButton->setPosition(30,
-                              Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
+                              oxygine::Stage::getStage()->getHeight() - 30 - m_ExitButton->getScaledHeight());
     m_pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -145,8 +147,8 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     });
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 + 10,
-                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
+    pSave->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10,
+                       oxygine::Stage::getStage()->getHeight() - 30 - m_ExitButton->getScaledHeight());
     pSave->addClickListener([this](oxygine::Event*)
     {
         emit sigShowSaveBannlist();
@@ -156,8 +158,8 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     connect(this, &COBannListDialog::sigDoSaveBannlist, this, &COBannListDialog::doSaveBannlist, Qt::QueuedConnection);
 
     oxygine::spButton pDelete = pObjectManager->createButton(tr("Delete"), 150);
-    pDelete->setPosition(Settings::getWidth() / 2 - pDelete->getScaledWidth() - 10,
-                       Settings::getHeight() - 30 - m_ExitButton->getScaledHeight());
+    pDelete->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pDelete->getScaledWidth() - 10,
+                       oxygine::Stage::getStage()->getHeight() - 30 - m_ExitButton->getScaledHeight());
     pDelete->addClickListener([this](oxygine::Event*)
     {
         emit sigShowDeleteBannlist();
@@ -167,8 +169,8 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     connect(this, &COBannListDialog::sigDeleteBannlist, this, &COBannListDialog::deleteBannlist, Qt::QueuedConnection);
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 10,
-                             Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
+    m_ToggleAll->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10,
+                             oxygine::Stage::getStage()->getHeight() - 75 - m_ToggleAll->getScaledHeight());
     m_pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -338,8 +340,8 @@ void COBannListDialog::updatePredefinedList()
 
     auto items = getNameList();
     m_PredefinedLists = spDropDownmenu::create(260, items);
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2  - m_PredefinedLists->getScaledWidth() - 10,
-                                   Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
+    m_PredefinedLists->setPosition(oxygine::Stage::getStage()->getWidth() / 2  - m_PredefinedLists->getScaledWidth() - 10,
+                                   oxygine::Stage::getStage()->getHeight() - 75 - m_ToggleAll->getScaledHeight());
     m_pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &COBannListDialog::setCOBannlist, Qt::QueuedConnection);
 }

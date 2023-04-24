@@ -1,5 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -32,20 +33,20 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     style.multiline = false;
 
     qint32 width = 0;
-    if (Settings::getWidth() / 2 > 400)
+    if (oxygine::Stage::getStage()->getWidth() / 2 > 400)
     {
         width = 400;
     }
-    else if (Settings::getWidth() / 2 < 300)
+    else if (oxygine::Stage::getStage()->getWidth() / 2 < 300)
     {
         width = 300;
     }
     else
     {
-        width = Settings::getWidth() / 2;
+        width = oxygine::Stage::getStage()->getWidth() / 2;
     }
 
-    m_pMapSelection = spMapSelection::create(Settings::getHeight() - 40, width, "", m_filter);
+    m_pMapSelection = spMapSelection::create(oxygine::Stage::getStage()->getHeight() - 40, width, "", m_filter);
     m_pMapSelection->setPosition(10, 10);
     addChild(m_pMapSelection);
     m_pMinimap = spMinimap::create();
@@ -53,11 +54,11 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     m_pMinimap->setScale(2.0f);
 
     constexpr qint32 buildingInfoHeight = 135;
-    QSize size(Settings::getWidth() - width - 80,
-               Settings::getHeight() / 2 - buildingInfoHeight);
+    QSize size(oxygine::Stage::getStage()->getWidth() - width - 80,
+               oxygine::Stage::getStage()->getHeight() / 2 - buildingInfoHeight);
     if (Settings::getSmallScreenDevice())
     {
-        size.setHeight(Settings::getHeight() - buildingInfoHeight - 15);
+        size.setHeight(oxygine::Stage::getStage()->getHeight() - buildingInfoHeight - 15);
     }
     m_MinimapPanel = spPanel::create(true, size, size);
     m_MinimapPanel->setPosition(width + 50, 10);
@@ -65,11 +66,11 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     addChild(m_MinimapPanel);
     if (Settings::getSmallScreenDevice())
     {
-        size = QSize(Settings::getWidth() - 100, Settings::getHeight() - 60);
+        size = QSize(oxygine::Stage::getStage()->getWidth() - 100, oxygine::Stage::getStage()->getHeight() - 60);
     }
     else
     {
-        size = QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60);
+        size = QSize(oxygine::Stage::getStage()->getWidth() - width - 100, oxygine::Stage::getStage()->getHeight() / 2 - 60);
     }
     if (mapInfoHeight > 0)
     {
@@ -79,12 +80,12 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     m_MapInfo = spPanel::create(true, size, size);
     if (Settings::getSmallScreenDevice())
     {
-        m_MapInfo->setPosition(Settings::getWidth() - 1, 10);
+        m_MapInfo->setPosition(oxygine::Stage::getStage()->getWidth() - 1, 10);
         m_MapInfo->addChild(spMoveInButton::create(m_MapInfo.get(), m_MapInfo->getScaledWidth()));
     }
     else
     {
-        m_MapInfo->setPosition(width + 50, Settings::getHeight() / 2 - 100);
+        m_MapInfo->setPosition(width + 50, oxygine::Stage::getStage()->getHeight() / 2 - 100);
     }
     addChild(m_MapInfo);
     qint32 y = 10;
@@ -154,7 +155,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
     m_pBuildingBackground = oxygine::spBox9Sprite::create();
     m_pBuildingBackground->setResAnim(pAnim);
-    m_pBuildingBackground->setSize(Settings::getWidth() - width - 100, GameMap::getImageSize() * 1.2f + 32);
+    m_pBuildingBackground->setSize(oxygine::Stage::getStage()->getWidth() - width - 100, GameMap::getImageSize() * 1.2f + 32);
     m_pBuildingBackground->setPosition(m_MapInfo->getX(),
                                        m_MapInfo->getY() + m_MapInfo->getScaledHeight() + 20);
     oxygine::TextStyle styleMain16 = oxygine::TextStyle(FontManager::getMainFont16());
@@ -429,6 +430,11 @@ void MapSelectionView::loadMapVictoryInfo()
         }
         posY += 55;
     }
+}
+
+Minimap* MapSelectionView::getMinimap() const
+{
+    return m_pMinimap.get();
 }
 
 spGameMap MapSelectionView::getCurrentMap() const

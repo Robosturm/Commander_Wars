@@ -12,7 +12,7 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSprite("snow_weld+N+S", false);
+        building.loadSpriteV2("snow_weld+N+S", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         building.loadSpriteV2("snow_weld+N+S+mask", GameEnums.Recoloring_Matrix);
     };
     this.getBaseIncome = function()
@@ -55,6 +55,10 @@ var Constructor = function()
     {
         var id = TERRAIN.getTerrainAnimationId(terrain, map);
         return TERRAIN.getTerrainBackgroundId(id, "snow", true);
+    };
+    this.getShowInEditor = function()
+    {
+        return false;
     };
 }
 

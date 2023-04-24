@@ -1,3 +1,6 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
+
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/label.h"
@@ -8,7 +11,6 @@
 
 #include "resource_management/objectmanager.h"
 
-#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 const char* const ROOT = "::::";
 
@@ -27,24 +29,24 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // current folder
-    m_CurrentFolder = spTextbox::create(Settings::getWidth() - 60);
+    m_CurrentFolder = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 60);
     m_CurrentFolder->setPosition(30, 30);
     pSpriteBox->addChild(m_CurrentFolder);
     m_CurrentFolder->setCurrentText(startFolder);
     connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FileDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
-    m_MainPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 210), QSize(Settings::getWidth() - 60, Settings::getHeight() - 300));
+    m_MainPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 210), QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 300));
     m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getScaledHeight() + 10);
     pSpriteBox->addChild(m_MainPanel);
     // file folder
-    m_CurrentFile = spTextbox::create(Settings::getWidth() - 60 - 160);
+    m_CurrentFile = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 60 - 160);
     m_CurrentFile->setPosition(30, m_MainPanel->getY() + m_MainPanel->getScaledHeight() + 45);
     m_CurrentFile->setCurrentText(startFile);
     pSpriteBox->addChild(m_CurrentFile);
@@ -287,7 +289,7 @@ void FileDialog::showFolder(QString folder)
             {
                 QImage img(infoList[i].filePath());
                 oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
-                Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1, false);
+                Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
                 m_ResAnims.append(pAnim);
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
                 pSprite->setResAnim(pAnim.get());

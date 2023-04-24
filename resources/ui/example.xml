@@ -17,7 +17,7 @@
                 mapselectionmapsmenu        
         -->
     <Label>
-        <x>settings.getWidth() - 200</x>
+        <x>settings.getStageWidth() - 200</x>
         <y>10</y>
         <width>100</width>
         <text>QT_TRANSLATE_NOOP("GAME","Test")</text>
@@ -27,7 +27,7 @@
         <onUpdate>Works</onUpdate>
     </Label>
     <Checkbox>
-        <x>settings.getWidth() - 100</x>
+        <x>settings.getStageWidth() - 100</x>
         <y>10</y>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
         <startValue>settings.getAutoCamera()</startValue>

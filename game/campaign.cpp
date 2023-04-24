@@ -222,11 +222,19 @@ void Campaign::getCampaignMapData(CampaignMapData & pCampaignMapData)
 
 void Campaign::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void Campaign::serializeObject(QDataStream& pStream, bool forHash) const
+{
     CONSOLE_PRINT("Campaign::serializeObject", GameConsole::eDEBUG);
     pStream << getVersion();
     pStream << m_script;
-    pStream << m_scriptFile;
-    m_Variables.serializeObject(pStream);
+    if (!forHash)
+    {
+        pStream << m_scriptFile;
+    }
+    m_Variables.serializeObject(pStream, forHash);
 }
 
 void Campaign::deserializeObject(QDataStream& pStream)

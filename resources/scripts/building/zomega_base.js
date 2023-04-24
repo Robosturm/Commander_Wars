@@ -14,14 +14,13 @@ var Constructor = function()
     {
         if (building.getOwnerID() >= 0 && !neutral)
         {
-            building.loadSprite("omega+base", false);
-            building.loadSpriteV2("omega+base+mask", GameEnums.Recoloring_Matrix);
+            building.loadSpriteV2("omega+base", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
         else
         {
-            building.loadSprite("omega+base+neutral", false);
+            building.loadSpriteV2("omega+base+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
-        building.loadSprite("omega+base+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
+        building.loadSpriteV2("omega+base+mask", GameEnums.Recoloring_Matrix);
     };
     this.getDefense = function(building)
     {

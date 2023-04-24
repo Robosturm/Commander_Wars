@@ -102,7 +102,7 @@ void CoreAI::init(GameMenue* pMenu)
         m_initDone = true;
         m_pMenu = pMenu;
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
-        connect(this, &CoreAI::performAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+        connect(this, &CoreAI::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
         if (m_pMap != nullptr)
         {
             qint32 heigth = m_pMap->getMapHeight();
@@ -403,7 +403,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
                 }
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }
@@ -419,7 +419,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
                     pAction->setActionID(ACTION_ACTIVATE_TAGPOWER);
                     if (pAction->canBePerformed())
                     {
-                        emit performAction(pAction);
+                        emit sigPerformAction(pAction);
                         return true;
                     }
                     else if (i == 1)
@@ -430,7 +430,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
                     {
                         pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_0);
                     }
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }
@@ -819,7 +819,7 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
                 pAction->setMovepath(path, turnPfs.getCosts(path));
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }
@@ -845,7 +845,7 @@ void CoreAI::addSelectedFieldData(spGameAction & pGameAction, const QPoint & poi
     pGameAction->setInputStep(pGameAction->getInputStep() + 1);
 }
 
-CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 min, qint32 max, std::function<CircleReturns(qint32, qint32)> functor)
+CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 currentX, qint32 currentY, qint32 x, qint32 y, qint32 min, qint32 max, std::function<CircleReturns(qint32, qint32)> functor)
 {
     CircleReturns ret = CircleReturns::Fail;
     qint32 x2 = 0;
@@ -854,6 +854,14 @@ CoreAI::CircleReturns CoreAI::doExtendedCircleAction(qint32 x, qint32 y, qint32 
     CircleReturns state = CircleReturns::Success;
     for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
     {
+        if (GlobalUtils::getDistance(currentX, currentY, x, y) == currentRadius)
+        {
+            ret = functor(x, y);
+            if (ret == CircleReturns::Success)
+            {
+                break;
+            }
+        }
         x2 = -currentRadius;
         y2 = 0;
         if (currentRadius == 0)
@@ -992,7 +1000,8 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
     std::vector<Unit*> transportUnits;
-    qint32 transporterMovement = pUnit->getMovementpoints(pUnit->Unit::getPosition());
+    QPoint currentPos = pUnit->Unit::getPosition();
+    qint32 transporterMovement = pUnit->getMovementpoints(currentPos);
     if (transporterMovement > 0)
     {
         for (auto & pOtherUnit : pUnits->getVector())
@@ -1051,7 +1060,9 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
                         qint32 unitY = pLoadingUnit->getY();
                         while (circleResult == CircleReturns::Fail)
                         {
-                            circleResult = doExtendedCircleAction(unitX, unitY, min, max, [this, pUnit, loadingIslandIdx, loadingIsland, unitIslandIdx, unitIsland, &targetX, &targetY, &found](qint32 x, qint32 y)
+
+                            circleResult = doExtendedCircleAction(currentPos.x(), currentPos.y(), unitX, unitY, min, max,
+                                                                  [this, pUnit, loadingIslandIdx, loadingIsland, unitIslandIdx, unitIsland, &targetX, &targetY, &found](qint32 x, qint32 y)
                             {
                                 if (m_pMap->onMap(x, y))
                                 {
@@ -1215,7 +1226,7 @@ CoreAI::TargetDistance CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapt
         {
             qint32 x = pBuilding->Building::getX();
             qint32 y = pBuilding->Building::getY();
-            if (onlyTrueIslands)
+            if (onlyTrueIslands || GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
             {
                 if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland &&
                     pBuilding->isCaptureOrMissileBuilding(missileTarget))
@@ -1685,9 +1696,11 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, std::vector
     qint32 max = radius;
     CircleReturns circleResult = CircleReturns::Fail;
     checkedIslands.push_back(loadedUnitIslandIdx);
+    QPoint currentPos = pUnit->Unit::getPosition();
     while (circleResult == CircleReturns::Fail)
     {
-        circleResult = doExtendedCircleAction(islandX, islandY, min, max, [this, pUnit, pLoadedUnit, pUnloadArea, loadedUnitIslandIdx, targetIsland, unitIslandIdx, unitIsland, &targets, distanceModifier](qint32 x, qint32 y)
+        circleResult = doExtendedCircleAction(currentPos.x(), currentPos.y(), islandX, islandY, min, max,
+                                              [this, pUnit, pLoadedUnit, pUnloadArea, loadedUnitIslandIdx, targetIsland, unitIslandIdx, unitIsland, &targets, distanceModifier](qint32 x, qint32 y)
         {
             if (m_pMap->onMap(x, y))
             {
@@ -2040,18 +2053,18 @@ void CoreAI::sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQm
 bool CoreAI::needsRefuel(const Unit *pUnit) const
 {
     if (pUnit->getMaxFuel() > 0 &&
-        pUnit->getFuel() / static_cast<float>(pUnit->getMaxFuel()) < m_fuelResupply)
+        static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < m_fuelResupply)
     {
         return true;
     }
     if (pUnit->getMaxAmmo1() > 0 &&
-        pUnit->getAmmo1() / static_cast<float>(pUnit->getMaxAmmo1()) < m_ammoResupply &&
+        static_cast<float>(pUnit->getAmmo1()) / static_cast<float>(pUnit->getMaxAmmo1()) < m_ammoResupply &&
         !pUnit->getWeapon1ID().isEmpty())
     {
         return true;
     }
     if (pUnit->getMaxAmmo2() > 0 &&
-        pUnit->getAmmo2() / static_cast<float>(pUnit->getMaxAmmo2()) < m_ammoResupply &&
+        static_cast<float>(pUnit->getAmmo2()) / static_cast<float>(pUnit->getMaxAmmo2()) < m_ammoResupply &&
         !pUnit->getWeapon2ID().isEmpty())
     {
         return true;
@@ -2220,7 +2233,7 @@ void CoreAI::finishTurn()
     {
         pAction->setActionID(ACTION_NEXT_PLAYER);
     }
-    emit performAction(pAction);
+    emit sigPerformAction(pAction);
 }
 
 bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
@@ -2242,7 +2255,7 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
                     {
                         if (pAction->isFinalStep())
                         {
-                            emit performAction(pAction);
+                            emit sigPerformAction(pAction);
                             return true;
                         }
                         else
@@ -2351,7 +2364,7 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
                             {
                                 if (pAction->canBePerformed())
                                 {
-                                    emit performAction(pAction);
+                                    emit sigPerformAction(pAction);
                                     return true;
                                 }
                             }
@@ -2672,7 +2685,7 @@ bool CoreAI::buildCOUnit(spQmlVectorUnit & pUnits)
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 if (pAction->canBePerformed())
                 {
-                    emit performAction(pAction);
+                    emit sigPerformAction(pAction);
                     return true;
                 }
             }

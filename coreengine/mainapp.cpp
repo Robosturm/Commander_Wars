@@ -74,6 +74,10 @@ Mainapp::Mainapp()
     m_Networkthread.reset(new QThread());
     m_GameServerThread.reset(new QThread());
     m_aiSubProcess.reset(new QProcess());
+#ifdef AUDIOSUPPORT
+    m_audioThread.reset(new QThread());
+    m_audioThread->setObjectName("Audiothread");
+#endif
 #ifdef GRAPHICSUPPORT
     m_Workerthread->setObjectName("Workerthread");
     m_Networkthread->setObjectName("Networkthread");
@@ -86,7 +90,7 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
     connect(this, &Mainapp::sigDoMapshot, this, &Mainapp::doMapshot, Qt::BlockingQueuedConnection);
-    QObject::connect(this, &Mainapp::sigSaveMapAsImage, this, &Mainapp::saveMapAsImage, Qt::BlockingQueuedConnection);
+    connect(this, &Mainapp::sigSaveMapAsImage, this, &Mainapp::saveMapAsImage, Qt::BlockingQueuedConnection);
     CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
 }
 
@@ -226,10 +230,14 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
+#ifdef AUDIOSUPPORT
+            m_audioThread->start(QThread::Priority::NormalPriority);
             m_AudioManager.reset(new AudioManager(m_noAudio));
+            m_AudioManager->moveToThread(m_audioThread.get());
             m_AudioManager->initAudio();
             m_AudioManager->clearPlayList();
             m_AudioManager->loadFolder("resources/music/hauptmenue");
+#endif
             FontManager::getInstance();
             // load ressources by creating the singletons
             BackgroundManager::getInstance();
@@ -528,9 +536,9 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
             Settings::setFullscreen(false);
             Settings::setBorderless(true);
             setWidth(screenSize.width());
-            Settings::setWidth(screenSize.width() * getActiveDpiFactor());
+            Settings::setWidth(screenSize.width());
             setHeight(screenSize.height());
-            Settings::setHeight(screenSize.height() * getActiveDpiFactor());
+            Settings::setHeight(screenSize.height());
             show();
             break;
         }
@@ -541,14 +549,14 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
 #ifdef ANDROID
             showMaximized();
             // set window info
-            Settings::setWidth(width() * getActiveDpiFactor());
-            Settings::setHeight(height() * getActiveDpiFactor());
+            Settings::setWidth(width());
+            Settings::setHeight(height());
 #else
             QScreen* screen = screens[Settings::getScreen()];
             QRect screenSize = screen->geometry();
             // set window info
-            Settings::setWidth(screenSize.width() * getActiveDpiFactor());
-            Settings::setHeight(screenSize.height() * getActiveDpiFactor());
+            Settings::setWidth(screenSize.width());
+            Settings::setHeight(screenSize.height());
             setPosition(screenSize.x(), screenSize.y());
             setGeometry(screenSize);
             showFullScreen();
@@ -566,12 +574,12 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
             if (screenSize.width() < Settings::getWidth())
             {
                 setWidth(screenSize.width());
-                Settings::setWidth(screenSize.width() * getActiveDpiFactor());
+                Settings::setWidth(screenSize.width());
             }
             if (screenSize.height() < Settings::getHeight())
             {
                 setHeight(screenSize.height());
-                Settings::setHeight(screenSize.height() * getActiveDpiFactor());
+                Settings::setHeight(screenSize.height());
             }
             showNormal();
         }
@@ -589,10 +597,9 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
         return;
     }
     CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), GameConsole::eDEBUG);
-    auto ratio = getActiveDpiFactor();
-    resize(width / ratio, heigth / ratio);
-    setMinimumSize(QSize(width / ratio, heigth / ratio));
-    setMaximumSize(QSize(width / ratio, heigth / ratio));
+    resize(width, heigth);
+    setMinimumSize(QSize(width, heigth));
+    setMaximumSize(QSize(width, heigth));
 
     Settings::setWidth(width);
     Settings::setHeight(heigth);
@@ -605,12 +612,12 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
 
 QPoint Mainapp::mapPosFromGlobal(QPoint pos) const
 {
-    return mapFromGlobal(pos) * getActiveDpiFactor();
+    return mapFromGlobal(pos);
 }
 
 QPoint Mainapp::mapPosToGlobal(QPoint pos) const
 {
-    return mapToGlobal(pos / getActiveDpiFactor());
+    return mapToGlobal(pos);
 }
 
 void Mainapp::changePosition(QPoint pos, bool invert)
@@ -859,7 +866,19 @@ void Mainapp::onQuit()
         m_Workerthread->wait();
     }
     QCoreApplication::processEvents();
-    m_AudioManager.reset(nullptr);
+#ifdef AUDIOSUPPORT
+    if (!m_AudioManager.isNull())
+    {
+        m_AudioManager->stopAudio();
+        m_AudioManager->moveToThread(QThread::currentThread());
+        m_AudioManager.reset(nullptr);
+    }
+    if (m_audioThread->isRunning())
+    {
+        m_audioThread->quit();
+        m_audioThread->wait();
+    }
+#endif
     QCoreApplication::processEvents();
     if (m_Networkthread->isRunning())
     {
@@ -946,7 +965,7 @@ void Mainapp::saveMapAsImage(Minimap* pMinimap, QImage & img)
     {
         if (isMainThread())
         {
-            saveMapAsImage(pMinimap, img);
+            GamemapImageSaver::saveMapAsImage(pMinimap, img);
         }
         else
         {

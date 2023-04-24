@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/dialogs/rules/playerselectiondialog.h"
 
 #include "coreengine/mainapp.h"
@@ -14,7 +16,7 @@ PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -22,16 +24,16 @@ PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigPlayersChanged();
     });
 
-    m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 60,
-                                             Settings::getHeight() - 80 - m_OkButton->getScaledHeight());
+    m_pPlayerSelection = spPlayerSelection::create(oxygine::Stage::getStage()->getWidth() - 60,
+                                             oxygine::Stage::getStage()->getHeight() - 80 - m_OkButton->getScaledHeight());
     m_pPlayerSelection->setMap(pMap);
     m_pPlayerSelection->setPosition(30, 30);
     m_pPlayerSelection->showPlayerSelection();

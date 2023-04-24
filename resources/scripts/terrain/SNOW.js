@@ -75,7 +75,7 @@ var Constructor = function()
 
         if (highTerrain !== "")
         {
-            terrain.loadOverlaySprite("shadow_snow");
+            terrain.loadOverlaySprite("shadow_snow", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_West, ""));
         }
     };
     this.getDescription = function()
@@ -89,7 +89,7 @@ var Constructor = function()
         var rand = 0;
         if (variable === null)
         {
-            rand = globals.randInt(0, 3);
+            rand = globals.randInt(0, 3, true);
             variable = variables.createVariable("FOREGROUND_ID");
             variable.writeDataInt32(rand);
         }

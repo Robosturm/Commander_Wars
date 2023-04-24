@@ -179,9 +179,9 @@ protected:
     spGameMap createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);    
     void clientMapInfo(QDataStream & stream, quint64 socketID);
-    void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, bool & sameMods, bool & differentHash, bool & sameVersion);
-    void handleVersionMissmatch(const QStringList & mods, bool sameMods, bool differentHash, bool sameVersion);
-    bool checkMods(const QStringList & mods, const QStringList & versions, bool filter);
+    void readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, bool & sameMods, bool & differentHash, bool & sameVersion);
+    void handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, bool sameMods, bool differentHash, bool sameVersion);
+    bool checkMods(const QStringList & mods, const QStringList & versions, QStringList & myMods, QStringList & myVersions, bool filter);
     void verifyGameData(QDataStream & stream, quint64 socketID);
     /**
      * @brief filterCosmeticMods
@@ -331,6 +331,7 @@ private:
      * @brief initClientConnection
      */
     void initClientConnection(const QString & address, const QString & secondaryAddress, quint16 port);
+
 private:
     NetworkMode m_networkMode{NetworkMode::Client};
     spNetworkInterface m_pNetworkInterface;

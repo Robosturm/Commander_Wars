@@ -38,7 +38,6 @@ public slots:
     void selectMods(qint32 item);
     void reloadSettings();
     void changeScreenSize(QSize size);
-    void changeHighDpi(bool value);
     void updateModCheckboxes();
     void updateModFilter(QString tag);
     void onReset();
@@ -46,6 +45,7 @@ public slots:
     void showGamepadInfo();
     void markRestartNeeded();
     quint8 getSupportedScreenCount();
+    void changeGameScale(qreal gameScale);
 protected slots:
     virtual void onEnter() override;
 private slots:

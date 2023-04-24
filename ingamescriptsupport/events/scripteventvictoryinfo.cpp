@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "ingamescriptsupport/events/scripteventvictoryinfo.h"
 
 #include "ingamescriptsupport/scriptdata.h"
@@ -59,7 +61,7 @@ void ScriptEventVictoryInfo::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 30);
     pBox->addItem(pText);
 
-    spTextbox pTextBox = spTextbox::create(Settings::getWidth() - width - 40, Settings::getHeight() - 100);
+    spTextbox pTextBox = spTextbox::create(oxygine::Stage::getStage()->getWidth() - width - 40, oxygine::Stage::getStage()->getHeight() - 100);
     pTextBox->setCurrentText(info);
     pTextBox->setPosition(width, 30);
     pTextBox->setTooltipText(tr("Additional info text shown in the victory info screen. Replaces the last set text with this one."));

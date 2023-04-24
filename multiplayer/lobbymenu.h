@@ -21,11 +21,13 @@ using spLobbyMenu = oxygine::intrusive_ptr<LobbyMenu>;
 class LobbyMenu final : public Basemenu
 {
     Q_OBJECT
+    static constexpr qint32 REQUEST_COUNT = 50;
 public:
     enum class GameViewMode
     {
         OpenGames,
         OwnGames,
+        ObserveGames,
     };
 
     explicit LobbyMenu();
@@ -39,9 +41,14 @@ signals:
     void sigObserveGame();
     void sigObserveAdress();
     void sigUpdateGamesView();
-    void sigChangeLobbyMode();
     void sigRequestUpdateGames();
     void sigServerResponded();
+
+    void sigShowNextStep();
+    void sigShowPreviousStep();
+    void sigShowStart();
+    void sigShowEnd();
+
 public slots:
     bool getServerRequestNewPassword() const;
     void setServerRequestNewPassword(bool newServerRequestNewPassword);
@@ -70,10 +77,14 @@ public slots:
     void resetPasswordOnServerAccount(const QString & emailAdress);
     void changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress);
     void enableServerButtons(bool enable);
-    void changeLobbyMode();
     void requestUpdateGames();
+    void requestObserverUpdateGames();
     void showContactingServer();
     void cancelWaitingForServer();
+    void showNextStep();
+    void showPreviousStep();
+    void showStart();
+    void showEnd();
 protected slots:
     virtual void onEnter() override;
 private:
@@ -87,7 +98,17 @@ private:
     void onPublicKeyChangePassword(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action);
     void handleAccountMessage(quint64 socketID, const QJsonObject & objData);
     void requestServerGames();
-    void requestUserUpdateGames();
+    void requestUserUpdateGames();    /**
+     * @brief getMinimapImage
+     * @param img
+     * @param data
+     */
+    void getMinimapImage(QImage & img, NetworkGameData & data);
+    /**
+     * @brief showNetworkGameData
+     * @param data
+     */
+    void showNetworkGameData(NetworkGameData & data);
 private:
     spNetworkInterface m_pTCPClient{nullptr};
     QVector<NetworkGameData> m_games;
@@ -95,8 +116,15 @@ private:
     oxygine::spButton m_pButtonHostOnServer;
     oxygine::spButton m_pButtonGameObserve;    
     oxygine::spButton m_pButtonGameJoin;
-    oxygine::spButton m_pButtonSwapLobbyMode;
+    oxygine::spButton m_pButtonSwapOpenGamesMode;
+    oxygine::spButton m_pButtonSwapOwnGamesMode;
+    oxygine::spButton m_pButtonSwapObserveGamesMode;
     oxygine::spButton m_pButtonUpdateGamesMode;
+    oxygine::spButton m_pEndStepButton;
+    oxygine::spButton m_pNextStepButton;
+    oxygine::spButton m_pPreviousStepButton;
+    oxygine::spButton m_pStartStepButton;
+    spLabel m_matchViewInfo;
     spComplexTableView m_gamesview;
     QString m_password;
     bool m_loggedIn{false};
@@ -106,6 +134,9 @@ private:
     QString m_serverEmailAdress;
     bool m_serverRequestNewPassword;
     GameViewMode m_mode{GameViewMode::OpenGames};
+    qint32 m_lastSelectedItem{-1};
+    qint32 m_gameIndex{0};
+    qint32 m_serverCurrentMatchCount{0};
 };
 
 #endif // LOBBYMENU_H

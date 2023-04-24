@@ -27,6 +27,7 @@ void ActionPerformer::setSyncCounter(qint64 counter)
 
 void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
 {
+    CONSOLE_PRINT("Start running action " + pGameAction->getActionID(), GameConsole::eDEBUG);
     auto mapHash = m_pMap->getMapHash();
     if (m_exit)
     {
@@ -42,7 +43,6 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
     {
         CONSOLE_PRINT("An interaction changed the map state outside performing actions.", GameConsole::eERROR);
     }
-    CONSOLE_PRINT("Running action", GameConsole::eDEBUG);
     m_actionRunning = true;
     bool autosave = true;
     m_pMenu->setSaveAllowed(false);
@@ -87,9 +87,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 CONSOLE_PRINT("Async found cause map hash is different from action map hash", GameConsole::eDEBUG);
             }
             if (multiplayer &&
-                m_pMenu != nullptr &&
-                baseGameInput != nullptr &&
-                baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi)
+                m_pMenu != nullptr)
             {
                 autosave = false;
                 m_pMenu->doResyncGame();
@@ -341,7 +339,7 @@ void ActionPerformer::skipAnimations(bool postAnimation)
 void ActionPerformer::finishActionPerformed()
 {
     CONSOLE_PRINT("Doing post action update", GameConsole::eDEBUG);
-
+    m_finishedPerformed = true;
     if (m_pCurrentAction.get() != nullptr)
     {
         Unit* pUnit = m_pCurrentAction->getMovementTarget();
@@ -353,10 +351,7 @@ void ActionPerformer::finishActionPerformed()
         m_pMap->getGameScript()->actionDone(m_pCurrentAction);
         m_pCurrentAction = nullptr;
     }
-    m_pMap->killDeadUnits();
-    m_pMap->getGameRules()->checkVictory();
     skipAnimations(true);
-    m_pMap->getGameRules()->createFogVision();
     if (m_pMenu != nullptr)
     {
         m_pMenu->updateQuickButtons();
@@ -368,88 +363,107 @@ void ActionPerformer::actionPerformed()
     if (m_pMenu != nullptr &&
         m_pMap != nullptr)
     {
-        CONSOLE_PRINT("Action performed", GameConsole::eDEBUG);
-        finishActionPerformed();
-        if (Settings::getSyncAnimations())
-        {
-            m_pMap->syncUnitsAndBuildingAnimations();
-        }
-        if (m_pMenu != nullptr)
-        {
-            m_pMenu->updateGameInfo();
-        }
         if (GameAnimationFactory::getAnimationCount() == 0)
         {
-            if (m_pMenu != nullptr &&
-                m_pMenu->getIndespawningMode())
+            CONSOLE_PRINT("Action performed", GameConsole::eDEBUG);
+            if (!m_finishedPerformed)
             {
-                m_pMenu->setSaveAllowed(true);
-                m_pMenu->doDespawnSlave();
+                finishActionPerformed();
             }
-            else if (m_exit)
+            if (Settings::getSyncAnimations())
             {
-                CONSOLE_PRINT("ActionPerformer state is exiting game. Emitting exit", GameConsole::eDEBUG);
-                emit m_pMenu->sigVictory(-1);
+                m_pMap->syncUnitsAndBuildingAnimations();
             }
-            else if (!m_pMap->getGameRules()->getVictory())
+            if (m_pMenu != nullptr)
+            {
+                m_pMenu->updateGameInfo();
+            }
+            if (GameAnimationFactory::getAnimationCount() == 0)
             {
                 CONSOLE_PRINT("Action finished", GameConsole::eDEBUG);
+                m_pMap->killDeadUnits();
+                m_pMap->getGameRules()->checkVictory();
+                m_pMap->getGameRules()->createFogVision();
                 m_actionRunning = false;
-                if (!m_pMap->anyPlayerAlive() &&
-                    m_pMenu != nullptr)
+                m_finishedPerformed = false;
+                if (m_pMenu != nullptr &&
+                    m_pMenu->getIndespawningMode())
                 {
-                    CONSOLE_PRINT("Forcing exiting the game cause no player is alive", GameConsole::eDEBUG);
-                    emit m_pMenu->sigExitGame();
+                    m_pMenu->setSaveAllowed(true);
+                    m_pMenu->doDespawnSlave();
                 }
-                else if (m_pMap->getCurrentPlayer()->getIsDefeated())
+                else if (m_exit)
                 {
-                    CONSOLE_PRINT("Triggering next player cause current player is defeated", GameConsole::eDEBUG);
-                    spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
-                    performAction(pAction);
+                    CONSOLE_PRINT("ActionPerformer state is exiting game. Emitting exit", GameConsole::eDEBUG);
+                    emit m_pMenu->sigVictory(-1);
                 }
-                else if (m_pStoredAction.get() != nullptr)
+                else if (!m_pMap->getGameRules()->getVictory())
                 {
-                    performAction(m_pStoredAction);
-                }
-                else
-                {
-                    m_mapHash = m_pMap->getMapHash();
-                    GlobalUtils::setUseSeed(false);
-                    if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+                    if (!m_pMap->anyPlayerAlive() &&
+                        m_pMenu != nullptr)
                     {
-                        m_pMap->getGameRules()->resumeRoundTime();
+                        CONSOLE_PRINT("Forcing exiting the game cause no player is alive", GameConsole::eDEBUG);
+                        emit m_pMenu->sigExitGame();
                     }
-                    if (m_noTimeOut &&
-                        !Settings::getAiSlave())
+                    else if (m_pMap->getCurrentPlayer()->getIsDefeated())
                     {
+                        onTriggeringActionFinished();
+                        CONSOLE_PRINT("Triggering next player cause current player is defeated", GameConsole::eDEBUG);
                         spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
                         performAction(pAction);
-                        m_noTimeOut = false;
+                    }
+                    else if (m_pStoredAction.get() != nullptr)
+                    {
+                        onTriggeringActionFinished();
+                        performAction(m_pStoredAction);
                     }
                     else
                     {
-                        CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);                        
-                        quint32 delay = Settings::getPauseAfterAction();
-                        if (delay == 0)
+                        CONSOLE_PRINT("Storing current map hash", GameConsole::eDEBUG);
+                        m_mapHash = m_pMap->getMapHash();
+                        GlobalUtils::setUseSeed(false);
+                        if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
                         {
-                            emit sigActionPerformed();
+                            m_pMap->getGameRules()->resumeRoundTime();
+                        }
+                        if (m_noTimeOut &&
+                            !Settings::getAiSlave())
+                        {
+                            onTriggeringActionFinished();
+                            spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
+                            performAction(pAction);
+                            m_noTimeOut = false;
                         }
                         else
                         {
-                            m_delayedActionPerformedTimer.start(std::chrono::seconds(delay));
+                            CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
+                            quint32 delay = Settings::getPauseAfterAction();
+                            if (delay == 0)
+                            {
+                                onTriggeringActionFinished();
+                                emit sigActionPerformed();
+                            }
+                            else
+                            {
+                                m_delayedActionPerformedTimer.start(std::chrono::seconds(delay));
+                            }
                         }
                     }
+                }
+                else
+                {
+                    CONSOLE_PRINT("Game already won not finishing the action.", GameConsole::eDEBUG);
+                    emit m_pMenu->sigVictory(-1);
                 }
             }
             else
             {
-                CONSOLE_PRINT("Game already won not finishing the action.", GameConsole::eDEBUG);
-                emit m_pMenu->sigVictory(-1);
+                CONSOLE_PRINT("Skipping action performed cause finishActionPerformed added new animations", GameConsole::eDEBUG);
             }
         }
         else
         {
-            CONSOLE_PRINT("Animation finish error. Cause following animations are still active", GameConsole::eDEBUG);
+            CONSOLE_PRINT("Animation finish error. Cause following animations are still active", GameConsole::eERROR);
             GameAnimationFactory::printActiveAnimations();
         }
     }
@@ -457,9 +471,13 @@ void ActionPerformer::actionPerformed()
     {
         CONSOLE_PRINT("Skipping action performed", GameConsole::eDEBUG);
     }
+}
 
+void ActionPerformer::onTriggeringActionFinished()
+{
     if (m_pMenu != nullptr)
     {
+        CONSOLE_PRINT("ActionPerformer::onTriggeringActionFinished", GameConsole::eDEBUG);
         m_pMenu->setSaveAllowed(true);
         if (m_pMenu->getSaveMap())
         {

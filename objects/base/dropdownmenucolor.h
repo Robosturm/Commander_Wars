@@ -17,20 +17,6 @@ class DropDownmenuColor final : public DropDownmenuBase
 public:
     explicit DropDownmenuColor(qint32 width, QVector<QColor> items);
     ~DropDownmenuColor() = default;
-    /**
-     * @brief getCurrentItem color of the current item
-     * @return
-     */
-    QColor getCurrentItemColor();
-
-    void setCurrentItem(QColor color);
-    /**
-     * @brief setCurrentItem
-     * @param index
-     */
-    virtual void setCurrentItem(qint32 index) override;
-    bool getShowUnitPreview() const;
-    void setShowUnitPreview(bool newShowUnitPreview);
 
 signals:
     void sigItemChanged(QColor color);
@@ -47,6 +33,19 @@ public slots:
      * @param item
      */
     virtual void itemChanged(qint32 item) override;
+    /**
+     * @brief getCurrentItem color of the current item
+     * @return
+     */
+    QColor getCurrentItemColor();
+    void setCurrentItem(QColor color);
+    /**
+     * @brief setCurrentItem
+     * @param index
+     */
+    virtual void setCurrentItem(qint32 index) override;
+    bool getShowUnitPreview() const;
+    void setShowUnitPreview(bool newShowUnitPreview);
 protected:
     void addDropDownColor(QColor color, qint32 id);
 private:
@@ -55,5 +54,7 @@ private:
     QColor m_currentColor;
     bool m_showUnitPreview{false};
 };
+
+Q_DECLARE_INTERFACE(DropDownmenuColor, "DropDownmenuColor");
 
 #endif // DropDownmenuColor_H

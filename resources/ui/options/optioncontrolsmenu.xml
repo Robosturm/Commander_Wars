@@ -3,13 +3,13 @@
     <Panel>
         <x>10</x>
         <y>10</y>
-        <width>settings.getWidth() - 20</width>
-        <height>settings.getHeight() - 90</height>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 90</height>
         <childs>
             <Label>
                 <x>10</x>
                 <y>10</y>
-                <width>settings.getWidth() - 80</width>
+                <width>settings.getStageWidth() - 80</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Inputs")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -97,7 +97,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>settings.getWidth() - 80</width>
+                <width>settings.getStageWidth() - 80</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Keys")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -584,7 +584,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>settings.getWidth() - 80</width>
+                <width>settings.getStageWidth() - 80</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Key Editor")</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>

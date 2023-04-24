@@ -366,7 +366,7 @@ namespace oxygine
 #endif
     }
 
-    void Actor::setScale(float scale)
+    void Actor::setScale(qreal scale)
     {
         setScale(QPointF(scale, scale));
     }
@@ -384,12 +384,12 @@ namespace oxygine
 #endif
     }
 
-    void Actor::setScale(float scaleX, float scaleY)
+    void Actor::setScale(qreal scaleX, qreal scaleY)
     {
         setScale(QPointF(scaleX, scaleY));
     }
 
-    void Actor::setScaleX(float sx)
+    void Actor::setScaleX(qreal sx)
     {
 #ifdef GRAPHICSUPPORT
         if (m_scale.x() == sx)
@@ -402,7 +402,7 @@ namespace oxygine
 #endif
     }
 
-    void Actor::setScaleY(float sy)
+    void Actor::setScaleY(qreal sy)
     {
 #ifdef GRAPHICSUPPORT
         if (m_scale.y() == sy)
@@ -866,7 +866,7 @@ namespace oxygine
 
     QRect Actor::getDestRect() const
     {
-        return QRect(0, 0, getWidth() + 1, getHeight() + 1);
+        return QRect(0, 0, getWidth(), getHeight());
     }
 
     spTween Actor::__addTween(spTween tween, bool)

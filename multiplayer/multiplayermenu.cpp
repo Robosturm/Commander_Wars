@@ -38,7 +38,7 @@
 #include "resource_management/fontmanager.h"
 
 Multiplayermenu::Multiplayermenu(const QString & address, const QString & secondaryAddress, quint16 port, const QString & password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
       m_password(password)
@@ -57,14 +57,14 @@ Multiplayermenu::Multiplayermenu(const QString & address, const QString & second
             emit sigShowIPs();
         });
         m_pHostAdresse->setPosition(m_pButtonStart->getX() - m_pHostAdresse->getScaledWidth() - 10,
-                                    Settings::getHeight() - m_pHostAdresse->getScaledHeight() - 10);
+                                    oxygine::Stage::getStage()->getHeight() - m_pHostAdresse->getScaledHeight() - 10);
         m_pHostAdresse->setVisible(false);
         connect(this, &Multiplayermenu::sigShowIPs, this, &Multiplayermenu::showIPs, Qt::QueuedConnection);
     }
 }
 
 Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Password * password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
       m_password(*password)
@@ -74,7 +74,7 @@ Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Pa
 }
 
 Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, const QString & password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 230),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(false),
       m_password(password)
@@ -134,8 +134,8 @@ void Multiplayermenu::init()
     CONSOLE_PRINT("Entering Multiplayer Menue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
-    m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
-                                       Settings::getHeight() - 10 - m_pButtonLoadSavegame->getScaledHeight());
+    m_pButtonLoadSavegame->setPosition(oxygine::Stage::getStage()->getWidth() - m_pButtonLoadSavegame->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
+                                       oxygine::Stage::getStage()->getHeight() - 10 - m_pButtonLoadSavegame->getScaledHeight());
     addChild(m_pButtonLoadSavegame);
     m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -144,8 +144,8 @@ void Multiplayermenu::init()
     connect(this, &Multiplayermenu::sigLoadSaveGame, this, &Multiplayermenu::showLoadSaveGameDialog, Qt::QueuedConnection);
 
     m_pReadyAndLeave = ObjectManager::createButton(tr("Ready + Exit"));
-    m_pReadyAndLeave->setPosition(Settings::getWidth() - m_pReadyAndLeave->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
-                                       Settings::getHeight() - 10 - m_pReadyAndLeave->getScaledHeight());
+    m_pReadyAndLeave->setPosition(oxygine::Stage::getStage()->getWidth() - m_pReadyAndLeave->getScaledWidth() - m_pButtonNext->getScaledWidth() - 20,
+                                       oxygine::Stage::getStage()->getHeight() - 10 - m_pReadyAndLeave->getScaledHeight());
     addChild(m_pReadyAndLeave);
     m_pReadyAndLeave->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -280,7 +280,7 @@ void Multiplayermenu::showIPs()
 {
     spGenericBox pGenericBox = spGenericBox::create();
     QStringList items = NetworkInterface::getIPAdresses();
-    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() - 80);
     spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -290,7 +290,7 @@ void Multiplayermenu::showIPs()
     info->setStyle(style);
     info->setHtmlText((tr("Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses") +
                        tr(" may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work")));
-    info->setSize(Settings::getWidth() - 80, 500);
+    info->setSize(oxygine::Stage::getStage()->getWidth() - 80, 500);
     info->setPosition(10, 10);
     pPanel->addItem(info);
     qint32 starty = 10 + info->getTextRect().height();
@@ -1036,27 +1036,30 @@ void Multiplayermenu::requestRule(quint64 socketID)
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
+            const QString playerId = pMap->getPlayer(i)->getPlayerNameId();
+            qint32 intAiType = 0;
             if (aiType == GameEnums::AiTypes_Human && !m_saveGame)
             {
-                sendStream << pMap->getPlayer(i)->getPlayerNameId();
-                sendStream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
+                intAiType = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
             }
             else
             {
-                sendStream << pMap->getPlayer(i)->getPlayerNameId();
                 if (m_pPlayerSelection->isOpenPlayer(i))
                 {
-                    sendStream << static_cast<qint32>(GameEnums::AiTypes_Open);
+                    intAiType = static_cast<qint32>(GameEnums::AiTypes_Open);
                 }
                 else if (m_pPlayerSelection->isClosedPlayer(i))
                 {
-                    sendStream << static_cast<qint32>(GameEnums::AiTypes_Closed);
+                    intAiType = static_cast<qint32>(GameEnums::AiTypes_Closed);
                 }
                 else
                 {
-                    sendStream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
+                    intAiType = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
                 }
             }
+            sendStream << playerId;
+            sendStream << intAiType;
+            CONSOLE_PRINT("Sending " + playerId + " with ai type " + QString::number(aiType) + " for player " + QString::number(i), GameConsole::eDEBUG);
             m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(sendStream);
         }
         emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
@@ -1095,6 +1098,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
                 qint32 aiType;
                 stream >> name;
                 stream >> aiType;
+                CONSOLE_PRINT("Read " + name + " with ai type " + QString::number(aiType) + " for player " + QString::number(i), GameConsole::eDEBUG);
                 m_pPlayerSelection->setPlayerAiName(i, name);
                 spGameMap pMap = m_pMapSelectionView->getCurrentMap();
                 Player* pPlayer = pMap->getPlayer(i);
@@ -1137,7 +1141,10 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
         bool differentHash = false;
         bool sameVersion = false;
         QStringList mods;
-        readHashInfo(stream, socketID, mods, sameMods, differentHash, sameVersion);
+        QStringList versions;
+        QStringList myMods;
+        QStringList myVersions;
+        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
         if (sameVersion && sameMods && !differentHash)
         {
             QString command = QString(NetworkCommands::GAMEDATAVERIFIED);
@@ -1149,15 +1156,15 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            handleVersionMissmatch(mods, sameMods, differentHash, sameVersion);
+            handleVersionMissmatch(mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
         }
     }
 }
 
-bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & versions, bool filter)
+bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & versions, QStringList & myMods, QStringList & myVersions, bool filter)
 {
-    QStringList myVersions = Settings::getActiveModVersions();
-    QStringList myMods = Settings::getMods();
+    myVersions = Settings::getActiveModVersions();
+    myMods = Settings::getMods();
     Settings::filterCosmeticMods(myMods, myVersions, filter);
     bool sameMods = true;
     if (myMods.size() != mods.size())
@@ -1201,7 +1208,7 @@ bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & ve
     return sameMods;
 }
 
-void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, bool & sameMods, bool & differentHash, bool & sameVersion)
+void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStringList & mods, QStringList & versions, QStringList & myMods, QStringList & myVersions, bool & sameMods, bool & differentHash, bool & sameVersion)
 {
     QString version;
     stream >> version;
@@ -1209,7 +1216,6 @@ void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStri
     stream >> filter;
     qint32 size = 0;
     stream >> size;
-    QStringList versions;
     for (qint32 i = 0; i < size; i++)
     {
         QString mod;
@@ -1219,7 +1225,7 @@ void Multiplayermenu::readHashInfo(QDataStream & stream, quint64 socketID, QStri
         stream >> version;
         versions.append(version);
     }
-    sameMods = checkMods(mods, versions, filter);
+    sameMods = checkMods(mods, versions, myMods, myVersions, filter);
     QByteArray hostRuntime = Filesupport::readByteArray(stream);
     QByteArray ownRuntime = Filesupport::getRuntimeHash(mods);
     if (GameConsole::eDEBUG >= GameConsole::getLogLevel())
@@ -1242,7 +1248,10 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         bool differentHash = false;
         bool sameVersion = false;
         QStringList mods;
-        readHashInfo(stream, socketID, mods, sameMods, differentHash, sameVersion);
+        QStringList versions;
+        QStringList myMods;
+        QStringList myVersions;
+        readHashInfo(stream, socketID, mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
         if (sameVersion && sameMods && !differentHash)
         {
             stream >> m_saveGame;
@@ -1297,12 +1306,12 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         }
         else
         {
-            handleVersionMissmatch(mods, sameMods, differentHash, sameVersion);
+            handleVersionMissmatch(mods, versions, myMods, myVersions, sameMods, differentHash, sameVersion);
         }
     }
 }
 
-void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, bool sameMods, bool differentHash, bool sameVersion)
+void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QStringList & versions, const QStringList & myMods, const QStringList & myVersions, bool sameMods, bool differentHash, bool sameVersion)
 {
     // quit game with wrong version
     spDialogMessageBox pDialogMessageBox;
@@ -1316,18 +1325,17 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, bool same
     }
     else if (!sameMods)
     {
-        QString hostMods;
-        for (auto & mod : mods)
+        QString hostModsInfo;
+        for (qint32 i = 0; i < mods.size(); ++i)
         {
-            hostMods += Settings::getModName(mod) + "\n";
+            hostModsInfo += Settings::getModName(mods[i]) + " " + versions[i] + "\n";
         }
-        QStringList myModsList = Settings::getMods();
-        QString myMods;
-        for (auto & mod : myModsList)
+        QString myModsInfo;
+        for (qint32 i = 0; i < myMods.size(); ++i)
         {
-            myMods += Settings::getModName(mod) + "\n";
+            myModsInfo += Settings::getModName(myMods[i]) + " " + myVersions[i]  + "\n";
         }
-        pDialogMessageBox = spDialogMessageBox::create(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods: " + myMods);
+        pDialogMessageBox = spDialogMessageBox::create(tr("Host has different mods. Leaving the game again.\nHost mods:\n") + hostModsInfo + "\nYour Mods:\n" + myModsInfo);
     }
     else
     {
@@ -1469,6 +1477,7 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     hideMapSelection();
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
+    Filesupport::readByteArray(stream); // minimap data
     spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
     stream >> m_saveGame;    
     CONSOLE_PRINT("Is save game" + QString::number(m_saveGame), GameConsole::eDEBUG);
@@ -1732,7 +1741,7 @@ void Multiplayermenu::showRuleSelection()
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    m_pRuleSelectionView = spRuleSelection::create(pMap.get(), Settings::getWidth() - 80, RuleSelection::Mode::Multiplayer);
+    m_pRuleSelectionView = spRuleSelection::create(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, RuleSelection::Mode::Multiplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &Multiplayermenu::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 40);
@@ -1908,6 +1917,7 @@ void Multiplayermenu::disconnectNetworkSlots()
 
 void Multiplayermenu::startGameOnServer()
 {
+    Mainapp* pApp = Mainapp::getInstance();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     QString command = QString(NetworkCommands::LAUNCHGAMEONSERVER);
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
@@ -1918,6 +1928,14 @@ void Multiplayermenu::startGameOnServer()
     QStringList myMods = Settings::getMods();
     Settings::filterCosmeticMods(myMods, myVersions, pMap->getGameRules()->getCosmeticModsAllowed());
     Filesupport::writeVectorList(sendStream, myMods);
+    QImage img;
+    pApp->saveMapAsImage(m_pMapSelectionView->getMinimap(), img);
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    img.save(&buffer, "PNG"); // writes image into ba in PNG format
+    Filesupport::writeByteArray(sendStream, ba);
+
     pMap->serializeObject(sendStream);
     sendStream << m_saveGame;
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
@@ -1939,7 +1957,7 @@ void Multiplayermenu::createChat()
     if (Settings::getSmallScreenDevice())
     {
         m_Chat = spChat::create(m_pNetworkInterface,
-                                QSize(Settings::getWidth() - 60, Settings::getHeight() - 90),
+                                QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 90),
                                 NetworkInterface::NetworkSerives::GameChat, nullptr);
         m_Chat->setPosition(-m_Chat->getScaledWidth() + 1, 10);
         auto moveButton = spMoveInButton::create(m_Chat.get(), m_Chat->getScaledWidth(), 1, -1, 1.0f);
@@ -1948,9 +1966,9 @@ void Multiplayermenu::createChat()
     else
     {
         m_Chat = spChat::create(m_pNetworkInterface,
-                                QSize(Settings::getWidth() - 20, 150),
+                                QSize(oxygine::Stage::getStage()->getWidth() - 20, 150),
                                 NetworkInterface::NetworkSerives::GameChat, nullptr);
-        m_Chat->setPosition(10, Settings::getHeight() - 210);
+        m_Chat->setPosition(10, oxygine::Stage::getStage()->getHeight() - 210);
     }
     addChild(m_Chat);    
 }

@@ -43,9 +43,9 @@ public:
         eResources   = 1 << 2,
         eAI          = 1 << 3,
         eFileSupport = 1 << 4,
-        eJavaScript  = 1 << 4,
-        eAudio       = 1 << 5,
-        eUiFactory   = 1 << 6,
+        eJavaScript  = 1 << 5,
+        eAudio       = 1 << 6,
+        eUiFactory   = 1 << 7,
     };
     Q_ENUM(eModules)
 

@@ -150,7 +150,7 @@ var Constructor = function()
         default:
             if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
-                return towers * 5 + 10;
+                return 10;
             }
         }
         return 0;
@@ -181,7 +181,7 @@ var Constructor = function()
         default:
             if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
-                ret += towers * 5 + 10;
+                ret += towers * 10 + 10;
                 if (rangedAttacked)
                 {
                     ret += 20;

@@ -271,7 +271,7 @@ bool HeavyAi::selectActionToPerform()
         {
             m_planedCaptureTargets.push_back(unit.captureTarget);
         }
-        emit performAction(unit.m_action);
+        emit sigPerformAction(unit.m_action);
         unit.m_action = nullptr;
         unit.m_score = 0;
         unit.captureTarget = QPoint(-1, -1);

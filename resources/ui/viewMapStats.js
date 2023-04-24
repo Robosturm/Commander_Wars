@@ -124,7 +124,7 @@ var ViewMapStats =
         var x = 10;
         if (ViewMapStats.initialX === false)
         {
-            if (lastX + lastWidth + 150 > settings.getWidth() - 20)
+            if (lastX + lastWidth + 150 > settings.getStageWidth() - 20)
             {
                 x = 10;
             }
@@ -145,7 +145,7 @@ var ViewMapStats =
         }
         else
         {
-            if (lastX + lastWidth + 150 > settings.getWidth() - 20)
+            if (lastX + lastWidth + 150 > settings.getStageWidth() - 20)
             {
                 y = lastY + lastHeight + 40;
             }

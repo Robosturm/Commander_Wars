@@ -237,6 +237,19 @@ bool Terrain::getHasFlowDirection() const
     return m_hasFlowDirection;
 }
 
+bool Terrain::getTileHasFlowDirection() const
+{
+    if (m_hasFlowDirection)
+    {
+        return m_hasFlowDirection;
+    }
+    else if (m_pBaseTerrain.get() != nullptr)
+    {
+        return m_pBaseTerrain->getHasFlowDirection();
+    }
+    return false;
+}
+
 void Terrain::setHasFlowDirection(bool newHasFlowDirection)
 {
     m_hasFlowDirection = newHasFlowDirection;
@@ -636,7 +649,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime, qint32 
             img = QImage(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
         }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
-        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1, false);
+        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
         m_SpriteAnim = pAnim;
         pSprite->setResAnim(pAnim.get());
         if (pAnim.get() != nullptr)
@@ -1680,22 +1693,50 @@ QString Terrain::getNeighbourPalette(GameEnums::Directions direction, const QStr
     if (direction == GameEnums::Directions_North &&
         m_pMap->onMap(m_x, m_y - 1))
     {
-        return m_pMap->getTerrain(m_x, m_y - 1)->getBaseTerrain(baseTerrainId)->getPalette();
+        if (baseTerrainId.isEmpty())
+        {
+            return m_pMap->getTerrain(m_x, m_y - 1)->getPalette();
+        }
+        else
+        {
+            return m_pMap->getTerrain(m_x, m_y - 1)->getBaseTerrain(baseTerrainId)->getPalette();
+        }
     }
     else if (direction == GameEnums::Directions_South &&
                  m_pMap->onMap(m_x, m_y + 1))
     {
-        return m_pMap->getTerrain(m_x, m_y + 1)->getBaseTerrain(baseTerrainId)->getPalette();
+        if (baseTerrainId.isEmpty())
+        {
+            return m_pMap->getTerrain(m_x, m_y + 1)->getPalette();
+        }
+        else
+        {
+            return m_pMap->getTerrain(m_x, m_y + 1)->getBaseTerrain(baseTerrainId)->getPalette();
+        }
     }
     else if (direction == GameEnums::Directions_West &&
                  m_pMap->onMap(m_x - 1, m_y))
     {
-        return m_pMap->getTerrain(m_x - 1, m_y)->getBaseTerrain(baseTerrainId)->getPalette();
+        if (baseTerrainId.isEmpty())
+        {
+            return m_pMap->getTerrain(m_x - 1, m_y)->getPalette();
+        }
+        else
+        {
+            return m_pMap->getTerrain(m_x - 1, m_y)->getBaseTerrain(baseTerrainId)->getPalette();
+        }
     }
     else if (direction == GameEnums::Directions_East &&
                  m_pMap->onMap(m_x + 1, m_y))
     {
-        return m_pMap->getTerrain(m_x + 1, m_y)->getBaseTerrain(baseTerrainId)->getPalette();
+        if (baseTerrainId.isEmpty())
+        {
+            return m_pMap->getTerrain(m_x + 1, m_y)->getPalette();
+        }
+        else
+        {
+            return m_pMap->getTerrain(m_x + 1, m_y)->getBaseTerrain(baseTerrainId)->getPalette();
+        }
     }
     else
     {
@@ -1782,7 +1823,7 @@ void Terrain::serializeObject(QDataStream& pStream, bool forHash) const
         pStream << m_customName;
         pStream << m_terrainDescription;
     }
-    m_Variables.serializeObject(pStream);
+    m_Variables.serializeObject(pStream, forHash);
     if (!forHash)
     {
         pStream << static_cast<qint32>(m_terrainOverlay.size());

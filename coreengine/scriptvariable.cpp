@@ -38,3 +38,8 @@ void ScriptVariable::deserializeObject(QDataStream& pStream)
     m_buffer.seek(0);
     m_buffer.write(data);
 }
+
+bool ScriptVariable::getModified() const
+{
+    return m_modified;
+}

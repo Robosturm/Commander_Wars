@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "game/ui/damagecalculator.h"
 
 #include "resource_management/unitspritemanager.h"
@@ -10,8 +12,6 @@
 
 #include "ai/coreai.h"
 
-#include "coreengine/settings.h"
-
 static constexpr qint32 xAdvance = 5;
 static constexpr qint32 maxBuildingCount = 40;
 
@@ -21,8 +21,8 @@ DamageCalculator::DamageCalculator()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    setPosition(Settings::getWidth() / 2 - getScaledWidth() / 2,
-                Settings::getHeight() / 2 - getScaledHeight() / 2);
+    setPosition(oxygine::Stage::getStage()->getWidth() / 2 - getScaledWidth() / 2,
+                oxygine::Stage::getStage()->getHeight() / 2 - getScaledHeight() / 2);
     if (getX() < 0)
     {
         setX(20);
@@ -341,6 +341,8 @@ void DamageCalculator::loadUnitData(qint32 & x, qint32 & y, UnitData & unitData,
 
 void DamageCalculator::calculateDamage()
 {
+    bool currentUseSeed = GlobalUtils::getUseSeed();
+    GlobalUtils::setUseSeed(false);
     QPoint atkPos = QPoint(0, 0);
     QPoint defPos = QPoint(0, 0);
     updateMapData(defPos);
@@ -386,6 +388,7 @@ void DamageCalculator::calculateDamage()
                      minPostDamage.x(), avgPostDamage.x(), maxPostDamage.x());
     createDamageText(m_defUnit.m_minPostbattleDamage, m_defUnit.m_avgPostbattleDamage, m_defUnit.m_maxPostbattleDamage,
                      maxPostDamage.width(), avgPostDamage.width(), minPostDamage.width());
+    GlobalUtils::setUseSeed(currentUseSeed);
 }
 
 void DamageCalculator::updateMapData(QPoint & defPos, bool forceDirect)
@@ -527,8 +530,8 @@ QRectF DamageCalculator::calculatePostBattleDamage(spUnit pAttacker, spUnit pDef
                        true});
     pInterpreter->doFunction(CoreAI::ACTION_FIRE, "battle", args);
 
-    float counterDmg = (m_atkUnit.m_hp->getCurrentValue() - pAttacker->getHp()) * Unit::MAX_UNIT_HP;
-    float dmg = (m_defUnit.m_hp->getCurrentValue() - pDefender->getHp()) * Unit::MAX_UNIT_HP;
+    qreal counterDmg = (m_atkUnit.m_hp->getCurrentValue() - pAttacker->getHp()) * Unit::MAX_UNIT_HP;
+    qreal dmg = (m_defUnit.m_hp->getCurrentValue() - pDefender->getHp()) * Unit::MAX_UNIT_HP;
     ret = QRectF(dmg, info.y(), counterDmg, info.height());
     pAttacker->setHp(m_atkUnit.m_hp->getCurrentValue());
     m_map.getTerrain(attackerPos.x(), attackerPos.y())->setUnit(pAttacker);

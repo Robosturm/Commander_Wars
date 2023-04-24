@@ -21,9 +21,14 @@ Weather::Weather(GameMap* pMap)
 
 void Weather::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void Weather::serializeObject(QDataStream& pStream, bool forHash) const
+{
     pStream << getVersion();
     pStream << m_WeatherId;
-    m_Variables.serializeObject(pStream);
+    m_Variables.serializeObject(pStream, forHash);
 }
 
 void Weather::deserializeObject(QDataStream& pStream)

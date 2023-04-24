@@ -22,13 +22,13 @@ public:
     static const qint32 SLIDER_LOCK_BUTTON_WIDTH = SLIDER_OFFSET_X + 110 + 50;
     explicit Multislider(QStringList texts, qint32 width, QVector<qint32> values = {}, qint32 startX = -1);
     ~Multislider() = default;
-    qint32 getSliderValue(qint32 slider);
     virtual void setEnabled(bool value) override;
 signals:
     void signalSliderChanged();
     void signalSliderValueChanged(qint32 slider);
 public slots:
     void sliderValueChanged(qint32 slider);
+    qint32 getSliderValue(qint32 slider);
 private:
     QVector<spLabel> m_Textfields;
     QVector<spSlider> m_Slider;
@@ -36,5 +36,7 @@ private:
     QVector<bool> m_locked;
     qint32 m_currentSliderChange{0};
 };
+
+Q_DECLARE_INTERFACE(Multislider, "Multislider");
 
 #endif // MULTISLIDER_H

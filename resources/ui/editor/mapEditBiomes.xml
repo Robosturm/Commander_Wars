@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
+        <childs>
+            <Label>
+                <x>40</x>
+                <y>10</y>
+                <width>parentWidth - 80</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Change biomes and palettes")</text>
+                <font>"main"</font>
+                <hAlign>"Middle"</hAlign>
+                <fontSize>48</fontSize>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","X:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>StartX</Id>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The start x area.")</tooltip>
+                <startValue>0</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>currentMenu.getBaseMenu().getMap().getMapWidth() - 1</max>
+                <onEvent></onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Y:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>StartY</Id>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The start y area.")</tooltip>
+                <startValue>0</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>currentMenu.getBaseMenu().getMap().getMapHeight() - 1</max>
+                <onEvent></onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Width:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>Width</Id>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The area width.")</tooltip>
+                <startValue>currentMenu.getBaseMenu().getMap().getMapWidth()</startValue>
+                <infinite>-1</infinite>
+                <min>1</min>
+                <max>currentMenu.getBaseMenu().getMap().getMapWidth()</max>
+                <onEvent></onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Height:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>Height</Id>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The area height.")</tooltip>
+                <startValue>currentMenu.getBaseMenu().getMap().getMapHeight()</startValue>
+                <infinite>-1</infinite>
+                <min>1</min>
+                <max>currentMenu.getBaseMenu().getMap().getMapHeight()</max>
+                <onEvent></onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","New biome:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>NewBiome</Id>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","New biome for the terrains in the area.")</tooltip>
+                <startValue>0</startValue>
+                <items>TERRAIN.getTerrainBiomeGroupsNameArray()</items>
+                <onEvent></onEvent>
+            </DropDownMenu>
+            <Button>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Apply biome")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Apply biome")</tooltip>
+                <onEvent>MapEditBiomes.applyBiome()</onEvent>
+            </Button>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <text>QT_TRANSLATE_NOOP("GAME","New palette:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>NewPalette</Id>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","New palette for the terrains in the area.")</tooltip>
+                <startValue>0</startValue>
+                <items>TERRAIN.getPaletteNamesArray()</items>
+                <onEvent></onEvent>
+            </DropDownMenu>
+            <Button>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Apply palette")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Apply palette")</tooltip>
+                <onEvent>MapEditBiomes.applyPalette()</onEvent>
+            </Button>
+        </childs>
+    </Panel>
+    <Button>
+        <x>settings.getStageWidth() / 2 - 75</x>
+        <y>settings.getStageHeight() - 60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Ok")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Closes the mass edit dialog")</tooltip>
+        <onEvent>currentMenu.exit();</onEvent>
+    </Button>
+</ui>

@@ -35,19 +35,19 @@ public:
         QStringList unitIds;
         QVector<qint32> chance;
         qint32 totalChance;
-        float distribution;
-        float maxUnitDistribution;
+        qreal distribution;
+        qreal maxUnitDistribution;
         qint32 buildMode;
         QString guardCondition;
     };
     struct CurrentBuildDistribution
     {
-        float currentValue;
+        qreal currentValue;
         BuildDistribution distribution;
     };
     struct AverageBuildData
     {
-        float averageValue{0};
+        qreal averageValue{0};
         std::map<QString, qint32> islandSizes;
     };
 
@@ -91,10 +91,10 @@ public slots:
     void resetBuildDistribution();
     void resetForcedProduction();
     void resetInitialProduction();
-    bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode, float minAverageIslandSize = 0.025f);
+    bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode, qreal minAverageIslandSize = 0.025);
     void addInitialProduction(const QStringList & unitIds, qint32 count);
     void addForcedProduction(const QStringList & unitId, qint32 x = -1, qint32 y = -1);
-    void addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, float distribution, qint32 buildMode, const QString & guardCondition = "", float maxUnitDistribution = 1.0f);
+    void addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, qreal distribution, qint32 buildMode, const QString & guardCondition = "", qreal maxUnitDistribution = 1.0);
     /**
      * @brief getDummyUnit creates a dummy unit to calculate values not only one dummy unit will be alive at all time.
      * @param unitId
@@ -104,7 +104,7 @@ public slots:
     qint32 getProductionFromList(const QStringList & unitIds, QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, qint32 minBuildMode, qint32 maxBuildMode, const QVector<bool> & enableList = QVector<bool>());
     void updateIslandSizeForBuildings(QmlVectorBuilding* pBuildings);
 private:
-    bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, float minAverageIslandSize);
+    bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize);
     bool buildUnit(qint32 x, qint32 y, QString unitId);
     void getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode);
     void updateActiveProductionSystem(QmlVectorBuilding* pBuildings);

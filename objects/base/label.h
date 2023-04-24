@@ -15,16 +15,6 @@ public:
     explicit Label(qint32 width, bool showBox = false);
     ~Label() = default;
     /**
-     * @brief setText
-     * @param str
-     */
-    void setText(QString str);
-    /**
-     * @brief setHtmlText
-     * @param str
-     */
-    void setHtmlText(QString str);
-    /**
      * @brief setStyle
      * @param st
      */
@@ -55,10 +45,26 @@ public:
     virtual void setHeight(qint32 height) override;
 public slots:
     virtual void focusedLost() override {}
+    /**
+     * @brief setText
+     * @param str
+     */
+    void setText(QString str);
+    /**
+     * @brief getText
+     */
+    QString getText();
+    /**
+     * @brief setHtmlText
+     * @param str
+     */
+    void setHtmlText(QString str);
 protected:
     oxygine::spTextField m_textField;
     oxygine::spClipRectActor m_clipRect;
     qint32 m_clipOffset{0};
 };
+
+Q_DECLARE_INTERFACE(Label, "Label");
 
 #endif // LABEL_H

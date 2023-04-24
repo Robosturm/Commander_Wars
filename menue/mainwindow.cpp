@@ -14,6 +14,7 @@
 #include "menue/replaymenu.h"
 #include "menue/achievementmenu.h"
 #include "menue/shopmenu.h"
+#include "menue/generatormenu.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
@@ -56,8 +57,8 @@ Mainwindow::Mainwindow(const QString & initialView)
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
+        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 
     pApp->getAudioManager()->clearPlayList();
@@ -91,7 +92,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     spLabel pTextfield = spLabel::create(300);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(Mainapp::getGameVersion());
-    pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().width(), Settings::getHeight() - 10 - pTextfield->getTextRect().height());
+    pTextfield->setPosition(oxygine::Stage::getStage()->getWidth() - 10 - pTextfield->getTextRect().width(), oxygine::Stage::getStage()->getHeight() - 10 - pTextfield->getTextRect().height());
     pTextfield->addClickListener([this](oxygine::Event*)
     {
         emit sigVersionClicked();
@@ -104,7 +105,7 @@ Mainwindow::Mainwindow(const QString & initialView)
         // import
         oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), 170, tr("Imports all data from an other Commander Wars release to the current release."));
         addChild(pImport);
-        pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getScaledHeight());
+        pImport->setPosition(10, oxygine::Stage::getStage()->getHeight() - 10 - pImport->getScaledHeight());
         pImport->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
         {
             emit sigImport();
@@ -226,6 +227,15 @@ void Mainwindow::enterCreditsmenue()
 {
     Mainapp::getInstance()->pauseRendering();
     auto window = spCreditsMenue::create();
+    oxygine::Stage::getStage()->addChild(window);
+    leaveMenue();
+    Mainapp::getInstance()->continueRendering();
+}
+
+void Mainwindow::enterGeneratorMenu(const QString & generatorUi)
+{
+    Mainapp::getInstance()->pauseRendering();
+    auto window = spGeneratorMenu::create(generatorUi);
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();

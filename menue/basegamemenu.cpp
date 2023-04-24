@@ -3,6 +3,8 @@
 #include <QApplication>
 #endif
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "menue/basegamemenu.h"
 
 #include "coreengine/interpreter.h"
@@ -114,8 +116,8 @@ void BaseGamemenu::changeBackground(QString background)
         m_backgroundSprite->setResAnim(pBackground);
         // background should be last to draw
         m_backgroundSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        m_backgroundSprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
-        m_backgroundSprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
+        m_backgroundSprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+        m_backgroundSprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 }
 
@@ -268,9 +270,9 @@ void BaseGamemenu::autoScroll(QPoint cursorPosition)
             {
                 moveX = GameMap::getImageSize() * m_pMap->getZoom();
             }
-            else if ((cursorPosition.x() < Settings::getWidth() - m_autoScrollBorder.width()) &&
-                     (cursorPosition.x() > Settings::getWidth() - m_autoScrollBorder.width() - 50) &&
-                     (mapX + m_pMap->getMapWidth() * m_pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - m_autoScrollBorder.width() - 50))
+            else if ((cursorPosition.x() < oxygine::Stage::getStage()->getWidth() - m_autoScrollBorder.width()) &&
+                     (cursorPosition.x() > oxygine::Stage::getStage()->getWidth() - m_autoScrollBorder.width() - 50) &&
+                     (mapX + m_pMap->getMapWidth() * m_pMap->getZoom() * GameMap::getImageSize() > oxygine::Stage::getStage()->getWidth() - m_autoScrollBorder.width() - 50))
             {
                 moveX = -GameMap::getImageSize() * m_pMap->getZoom();
             }
@@ -280,8 +282,8 @@ void BaseGamemenu::autoScroll(QPoint cursorPosition)
             {
                 moveY = GameMap::getImageSize() * m_pMap->getZoom();
             }
-            else if ((cursorPosition.y() > Settings::getHeight() - m_autoScrollBorder.height()) &&
-                     (mapY + m_pMap->getMapHeight() * m_pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height()))
+            else if ((cursorPosition.y() > oxygine::Stage::getStage()->getHeight() - m_autoScrollBorder.height()) &&
+                     (mapY + m_pMap->getMapHeight() * m_pMap->getZoom() * GameMap::getImageSize() > oxygine::Stage::getStage()->getHeight() - m_autoScrollBorder.height()))
             {
                 moveY = -GameMap::getImageSize() * m_pMap->getZoom();
             }
@@ -396,7 +398,7 @@ void BaseGamemenu::calcNewMousePosition(qint32 x, qint32 y)
             m_pMap->moveMap(moveX, 0);
             mousePosX += moveX;
         }
-        if (mousePosX > Settings::getWidth() - m_autoScrollBorder.width())
+        if (mousePosX > oxygine::Stage::getStage()->getWidth() - m_autoScrollBorder.width())
         {
             qint32 moveX = -GameMap::getImageSize() * m_pMap->getZoom();
             m_pMap->moveMap(moveX, 0);
@@ -409,7 +411,7 @@ void BaseGamemenu::calcNewMousePosition(qint32 x, qint32 y)
             m_pMap->moveMap(0, moveY);
             mousePosY += moveY;
         }
-        if (mousePosY > Settings::getHeight() - m_autoScrollBorder.height())
+        if (mousePosY > oxygine::Stage::getStage()->getHeight() - m_autoScrollBorder.height())
         {
             qint32 moveY = -GameMap::getImageSize() * m_pMap->getZoom();
             m_pMap->moveMap(0, moveY);

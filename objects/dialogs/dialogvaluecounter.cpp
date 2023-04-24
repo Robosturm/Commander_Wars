@@ -1,6 +1,7 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/settings.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -22,7 +23,7 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -30,8 +31,8 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -39,15 +40,15 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
     });
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont48());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    m_pointsAddedLabel = spLabel::create(Settings::getWidth() / 2 + 3 * 50 - 30);
+    m_pointsAddedLabel = spLabel::create(oxygine::Stage::getStage()->getWidth() / 2 + 3 * 50 - 30);
     m_pointsAddedLabel->setStyle(style);
     m_pointsAddedLabel->setHtmlText("Score: " + QString::number(m_pointsToAdd));
-    m_pointsAddedLabel->setPosition(Settings::getWidth() / 2 - 3 * 50, Settings::getHeight() / 2 - 50);
+    m_pointsAddedLabel->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - 3 * 50, oxygine::Stage::getStage()->getHeight() / 2 - 50);
     pSpriteBox->addChild(m_pointsAddedLabel);
-    m_totalPointsLabel = spLabel::create(Settings::getWidth() / 2 + 3 * 50 - 30);
+    m_totalPointsLabel = spLabel::create(oxygine::Stage::getStage()->getWidth() / 2 + 3 * 50 - 30);
     m_totalPointsLabel->setStyle(style);
     m_totalPointsLabel->setHtmlText("Total: " + QString::number(m_totalPoints));
-    m_totalPointsLabel->setPosition(Settings::getWidth() / 2 - 3 * 50, Settings::getHeight() / 2 + 10);
+    m_totalPointsLabel->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - 3 * 50, oxygine::Stage::getStage()->getHeight() / 2 + 10);
     pSpriteBox->addChild(m_totalPointsLabel);
 
     m_updateTimer.setInterval(15);

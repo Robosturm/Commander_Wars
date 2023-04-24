@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "gameinput/humanplayerinput.h"
 #include "gameinput/markedfielddata.h"
 
@@ -52,7 +54,7 @@ void HumanPlayerInput::init(GameMenue* pMenu)
             connect(m_pMap, &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
             connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
             connect(m_pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
-            connect(this, &HumanPlayerInput::performAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::QueuedConnection);
+            connect(this, &HumanPlayerInput::performAction, &pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
             connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
             m_Fields.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
             m_FieldPoints.reserve(m_pMap->getMapWidth() * m_pMap->getMapHeight() / 4);
@@ -809,9 +811,9 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
         oxygine::spSlidingActorNoClipRect pMapSliding = m_pMenu->getMapSliding();
         oxygine::spActor pMapSlidingActor = m_pMenu->getMapSlidingActor();
         float posX = x * GameMap::getImageSize() * m_pMap->getZoom() + m_pMap->getX() + pMapSliding->getX() + pMapSlidingActor->getX();
-        if (posX + m_CurrentMenu->getScaledWidth() > Settings::getWidth() - 40 - m_pMenu->getGameInfoBar()->getScaledWidth())
+        if (posX + m_CurrentMenu->getScaledWidth() > oxygine::Stage::getStage()->getWidth() - 40 - m_pMenu->getGameInfoBar()->getScaledWidth())
         {
-            posX = Settings::getWidth() - m_CurrentMenu->getScaledWidth() - 40 - m_pMenu->getGameInfoBar()->getScaledWidth();
+            posX = oxygine::Stage::getStage()->getWidth() - m_CurrentMenu->getScaledWidth() - 40 - m_pMenu->getGameInfoBar()->getScaledWidth();
         }
         if (posX < 10)
         {
@@ -822,9 +824,9 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
         {
             posY = 10;
         }
-        else if (posY + m_CurrentMenu->getScaledHeight() > Settings::getHeight())
+        else if (posY + m_CurrentMenu->getScaledHeight() > oxygine::Stage::getStage()->getHeight())
         {
-            posY = Settings::getHeight() - m_CurrentMenu->getScaledHeight() - 10;
+            posY = oxygine::Stage::getStage()->getHeight() - m_CurrentMenu->getScaledHeight() - 10;
         }
         m_CurrentMenu->setPosition(posX, posY);
         m_pMenu->addChild(m_CurrentMenu);

@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/base/topbar.h"
 
 #include "coreengine/interpreter.h"
@@ -125,7 +127,7 @@ void Topbar::addGroup(QString text)
 
 void Topbar::finishCreation()
 {
-    qint32 maxHeight = Settings::getHeight() / 2;
+    qint32 maxHeight = oxygine::Stage::getStage()->getHeight() / 2;
     for (qint32 i = 0; i < m_Items.size(); ++i)
     {
         qint32 panelHeight = m_Items[i].size() + 1 * 40;

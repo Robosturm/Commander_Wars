@@ -7,18 +7,15 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
+        building.loadSpriteV2("pipestation+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
         if (building.getOwnerID() >= 0 && !neutral)
         {
-            // none neutral player
-            building.loadSprite("pipestation", false);
-            building.loadSpriteV2("pipestation+mask", GameEnums.Recoloring_Matrix);
+            building.loadSpriteV2("pipestation", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
         else
         {
-            // neutral player
-            building.loadSprite("pipestation+neutral", false);
+            building.loadSpriteV2("pipestation+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
-        building.loadSprite("pipestation+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.actionList = ["ACTION_BUILD_UNITS"];
     this.constructionList = ["PIPERUNNER"];

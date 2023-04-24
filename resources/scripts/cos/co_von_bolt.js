@@ -95,10 +95,10 @@ var Constructor = function()
                 {
                     unit.setHasMoved(true);
                     var hp = unit.getHpRounded();
-                    if (hp <= damage)
+                    if (hp - damage <= 0.1)
                     {
                         // set hp to very very low
-                        unit.setHp(0.001);
+                        unit.setHp(0.1);
                     }
                     else
                     {

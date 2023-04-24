@@ -12,9 +12,8 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSprite("gate+N+S", false);
+        building.loadSpriteV2("gate+N+S", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         building.loadSpriteV2("gate+N+S+mask", GameEnums.Recoloring_Matrix);
-        building.loadSprite("gate+N+S+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.getBaseIncome = function()
     {
@@ -57,7 +56,7 @@ var Constructor = function()
         var rand = 0;
         if (variable === null)
         {
-            rand = globals.randInt(0, 1);
+            rand = globals.randInt(0, 1, true);
             variable = variables.createVariable("FOREGROUND_ID");
             variable.writeDataInt32(rand);
         }
@@ -66,7 +65,7 @@ var Constructor = function()
             rand = variable.readDataInt32();
             if (rand > 1)
             {
-                rand = globals.randInt(0, 1);
+                rand = globals.randInt(0, 1, true);
                 variable = variables.createVariable("FOREGROUND_ID");
                 variable.writeDataInt32(rand);
             }

@@ -25,8 +25,10 @@
 #include "menue/optionmenue.h"
 #include "menue/basemenu.h"
 #include "menue/movementplanner.h"
+#include "menue/generatormenu.h"
 
 #include "multiplayer/multiplayermenu.h"
+#include "multiplayer/networkgamedataview.h"
 
 #include "ui_reader/uifactory.h"
 #include "ui_reader/createdgui.h"
@@ -69,12 +71,29 @@
 #include "wiki/wikidatabase.h"
 #include "wiki/wikiview.h"
 
-#include "objects/base/textbox.h"
 #include "objects/playerselection.h"
 #include "objects/dialogs/mapSelection/mapselectionfilterdialog.h"
 #include "objects/dialogs/editor/mapeditdialog.h"
 #include "objects/dialogs/gamepadinfo.h"
 #include "objects/dialogs/customdialog.h"
+
+#include "objects/base/checkbox.h"
+#include "objects/base/colorselector.h"
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/dropdownmenubase.h"
+#include "objects/base/dropdownmenucolor.h"
+#include "objects/base/dropdownmenusprite.h"
+#include "objects/base/focusableobject.h"
+#include "objects/base/label.h"
+#include "objects/base/multislider.h"
+#include "objects/base/passwordbox.h"
+#include "objects/base/slider.h"
+#include "objects/base/spinbox.h"
+#include "objects/base/tableview.h"
+#include "objects/base/textbox.h"
+#include "objects/base/textinput.h"
+#include "objects/base/timespinbox.h"
+#include "objects/base/tooltip.h"
 
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
@@ -211,9 +230,33 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<BaseGamemenu>("BaseGamemenu", 1);
     qmlRegisterInterface<Basemenu>("Basemenu", 1);
+    qmlRegisterInterface<GeneratorMenu>("GeneratorMenu", 1);
 
     qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
     qmlRegisterInterface<MainServer>("MainServer", 1);
     qmlRegisterInterface<AutoMatchMaker>("AutoMatchMaker", 1);
     qmlRegisterInterface<Multiplayermenu>("Multiplayermenu", 1);
+    qmlRegisterInterface<NetworkGameDataView>("NetworkGameDataView", 1);
+
+    // objects
+    qmlRegisterInterface<Checkbox>("Checkbox", 1);
+    qmlRegisterInterface<ColorSelector>("ColorSelector", 1);
+    qmlRegisterInterface<DropDownmenu>("DropDownmenu", 1);
+    qmlRegisterInterface<DropDownmenuBase>("DropDownmenuBase", 1);
+    qmlRegisterInterface<DropDownmenuColor>("DropDownmenuColor", 1);
+    qmlRegisterInterface<DropDownmenuSprite>("DropDownmenuSprite", 1);
+    qmlRegisterInterface<FocusableObject>("FocusableObject", 1);
+    qmlRegisterInterface<Label>("Label", 1);
+    qmlRegisterInterface<Multislider>("Multislider", 1);
+    qmlRegisterInterface<Passwordbox>("Passwordbox", 1);
+    qmlRegisterInterface<Slider>("Slider", 1);
+    qmlRegisterInterface<SpinBox>("SpinBox", 1);
+    qmlRegisterInterface<TimeSpinBox>("TimeSpinBox", 1);
+    qmlRegisterInterface<TableView>("TableView", 1);
+    qmlRegisterInterface<Textbox>("Textbox", 1);
+    qmlRegisterInterface<TextInput>("TextInput", 1);
+    qmlRegisterInterface<TimeSpinBox>("TimeSpinBox", 1);
+    qmlRegisterInterface<Tooltip>("Tooltip", 1);
+    qmlRegisterInterface<V_Scrollbar>("V_Scrollbar", 1);
+    qmlRegisterInterface<H_Scrollbar>("H_Scrollbar", 1);
 }

@@ -4,7 +4,6 @@
 #include "resource_management/objectmanager.h"
 
 #include "resource_management/cospritemanager.h"
-#include "resource_management/unitspritemanager.h"
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/gamemanager.h"
 
@@ -52,6 +51,7 @@ static const char* const itemDropDownMenu = "DropDownMenu";
 static const char* const itemDropDownMenuColor = "DropDownMenuColor";
 static const char* const itemDropDownMenuSprite = "DropDownMenuSprite";
 static const char* const itemSelectKey = "SelectKey";
+static const char* const itemCustom = "Custom";
 static const char* const itemLoop = "loop";
 static const char* const itemIf = "if";
 
@@ -93,6 +93,7 @@ static const char* const attrMode = "mode";
 static const char* const attrVisible = "visible";
 static const char* const attrSpinSpeed = "spinSpeed";
 static const char* const attrShowUnitPreview = "showUnitPreview";
+static const char* const attrCustomItem = "customItem";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -125,6 +126,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemIf), std::bind(&UiFactory::ifCondition, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemMultilineTextbox), std::bind(&UiFactory::createMultilineTextbox, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemMultiSlider), std::bind(&UiFactory::createMultiSlider, this, _1, _2, _3, _4, _5)});
+    m_factoryItems.append({QString(itemCustom), std::bind(&UiFactory::createCustom, this, _1, _2, _3, _4, _5)});
 
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
@@ -373,6 +375,8 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
         QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
         qint32 x = getIntValue(getAttribute(childs, attrX), id, loopIdx, pMenu);
         qint32 y = getIntValue(getAttribute(childs, attrY), id, loopIdx, pMenu);
+        qint32 width = getIntValue(getAttribute(childs, attrWidth), id, loopIdx, pMenu, -1);
+        qint32 height = getIntValue(getAttribute(childs, attrHeight), id, loopIdx, pMenu, -1);
         QString text = translate(getStringValue(getAttribute(childs, attrText), id, loopIdx, pMenu));
         QString fontColor = getStringValue(getAttribute(childs, attrFontColor), id, loopIdx, pMenu);
         auto hAlign = getHAlignment(getAttribute(childs, attrHAlign), id, loopIdx, pMenu);
@@ -387,6 +391,23 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
         pLabel->setY(y);
         pLabel->setStyle(style);
         pLabel->setHtmlText(text);
+        const auto & textRect = pLabel->getTextRect();
+        if (width > 0)
+        {
+            pLabel->setWidth(width);
+        }
+        else
+        {
+            pLabel->setWidth(textRect.width());
+        }
+        if (height > 0)
+        {
+            pLabel->setHeight(height);
+        }
+        else
+        {
+            pLabel->setHeight(textRect.height());
+        }
         pLabel->setVisible(visible);
         pLabel->setEnabled(enabled);
         parent->addChild(pLabel);
@@ -749,6 +770,32 @@ bool UiFactory::createMultiSlider(oxygine::spActor parent, QDomElement element, 
         parent->addChild(pMultislider);
         item = pMultislider;
         m_lastCoordinates = QRect(x, y, pMultislider->getScaledWidth(), pMultislider->getScaledHeight());
+        updateMenuSize(pMenu);
+    }
+    return success;
+}
+
+bool UiFactory::createCustom(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu, qint32 loopIdx)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrCustomItem});
+    if (success)
+    {
+        QString id = getId(getStringValue(getAttribute(childs, attrId), "", loopIdx, pMenu));
+        qint32 x = getIntValue(getAttribute(childs,attrX), id, loopIdx, pMenu);
+        qint32 y = getIntValue(getAttribute(childs,attrY), id, loopIdx, pMenu);
+        QString customItem = translate(getStringValue(getAttribute(childs, attrCustomItem), id, loopIdx, pMenu));
+        QString tooltip = translate(getStringValue(getAttribute(childs, attrTooltip), id, loopIdx, pMenu));
+        bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
+        bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
+        float scale = getFloatValue(getAttribute(childs, attrScale), id, loopIdx, pMenu);
+        QString onEventLine = getAttribute(childs, attrOnEvent);
+        qint32 scaledWidth = 0;
+        qint32 scaledHeight = 0;
+        item = pMenu->loadCustomId(customItem, x, y, enabled, visible, scale,id, tooltip, onEventLine,
+                                   this, pMenu, loopIdx, scaledWidth, scaledHeight);
+        parent->addChild(item);
+        m_lastCoordinates = QRect(x, y, scaledWidth, scaledHeight);
         updateMenuSize(pMenu);
     }
     return success;

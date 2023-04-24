@@ -35,4 +35,6 @@ private:
     qint32 m_currentItem{-1};
 };
 
+Q_DECLARE_INTERFACE(TableView, "TableView");
+
 #endif // TABLEVIEW_H

@@ -71,16 +71,16 @@ var GAMEANIMATIONPOWER =
 
     randomDirections : function()
     {
-        var width = settings.getWidth();
-        var height = settings.getHeight();
+        var width = settings.getStageWidth();
+        var height = settings.getStageHeight();
         return [Qt.point(-100, -100), Qt.point(-100, height),
                 Qt.point(width, -100), Qt.point(width, height)]
     },
 
     loadMovingText : function(animation, frameTime, text, timeMs)
     {
-        var screenHeight = settings.getHeight();
-        var screenWidth = settings.getWidth();
+        var screenHeight = settings.getStageHeight();
+        var screenWidth = settings.getStageWidth();
         var fontHeight = 72;
         var font = "main72";
         var totalWidth = animation.getFontWidth(font, text)
@@ -146,18 +146,18 @@ var GAMEANIMATIONPOWER =
         var size = animation.getCoSpriteSize(sprite);
         if (settings.getSmallScreenDevice())
         {
-            scale = (settings.getHeight() - 60) / size.y;
+            scale = (settings.getStageHeight() - 60) / size.y;
         }
         else
         {
-            scale = (settings.getHeight() - 300) / size.y;
+            scale = (settings.getStageHeight() - 300) / size.y;
         }
-        var startPos = Qt.point(settings.getWidth() - size.x * scale * offsetXMult - 20 * offsetXMult, settings.getHeight());
+        var startPos = Qt.point(settings.getStageWidth() - size.x * scale * offsetXMult - 20 * offsetXMult, settings.getStageHeight());
         if (startAtBottom === false)
         {
-            startPos = Qt.point(settings.getWidth() - size.x * scale * offsetXMult - 20 * offsetXMult, - size.y * scale);
+            startPos = Qt.point(settings.getStageWidth() - size.x * scale * offsetXMult - 20 * offsetXMult, - size.y * scale);
         }
 
-        animation.addMovingCoSprite(sprite, scale, startPos, Qt.point(startPos.x, settings.getHeight() / 2 - size.y * scale / 2), frameTime * coMovingDuration, 0, GameEnums.QEasingCurve_OutQuad);
+        animation.addMovingCoSprite(sprite, scale, startPos, Qt.point(startPos.x, settings.getStageHeight() / 2 - size.y * scale / 2), frameTime * coMovingDuration, 0, GameEnums.QEasingCurve_OutQuad);
     }
 };

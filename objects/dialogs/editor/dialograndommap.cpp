@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
@@ -28,21 +30,21 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    m_pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
-                         QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
+    m_pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
+                         QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110));
     m_pPanel->setPosition(LABEL_X, 30);
     pSpriteBox->addChild(m_pPanel);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
 
     float y = 30;
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
-    spLabel text = spLabel::create(Settings::getWidth() - LABEL_WIDTH);
+    spLabel text = spLabel::create(oxygine::Stage::getStage()->getWidth() - LABEL_WIDTH);
     text->setStyle(headerStyle);
     text->setHtmlText(tr("Random map generator"));
     text->setPosition(30, y);
@@ -54,7 +56,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     text->setHtmlText(tr("Generator:"));
     text->setPosition(LABEL_X, y);
     m_pPanel->addItem(text);
-    m_GeneratorFile = spTextbox::create(Settings::getWidth() - 300 - LABEL_WIDTH);
+    m_GeneratorFile = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 300 - LABEL_WIDTH);
     m_GeneratorFile->setTooltipText(tr("Selects the generator script used to generate the random map."));
     m_GeneratorFile->setPosition(text->getX() + LABEL_WIDTH, text->getY());
     m_GeneratorFile->setCurrentText("data/randommaps/commanderwarsgenerator.js");
@@ -194,7 +196,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     text->setHtmlText(tr("Base Size:"));
     text->setPosition(LABEL_X, y);
     m_pPanel->addItem(text);
-    m_BaseSize = spSlider::create(Settings::getWidth() - SLIDER_OFFSET_WIDTH - LABEL_WIDTH - Multislider::SLIDER_LOCK_BUTTON_WIDTH, 0, 100);
+    m_BaseSize = spSlider::create(oxygine::Stage::getStage()->getWidth() - SLIDER_OFFSET_WIDTH - LABEL_WIDTH - Multislider::SLIDER_LOCK_BUTTON_WIDTH, 0, 100);
     m_BaseSize->setCurrentValue(10);
     m_BaseSize->setTooltipText(tr("The percent of randomly placed buildings versus buildings placed near each HQ. A lower percentage places more buildings randomly across the whole map."));
     m_BaseSize->setPosition(text->getX() + LABEL_WIDTH, text->getY());
@@ -202,20 +204,20 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
 
     // Label
     y += text->getHeight() + 10;
-    m_TerrainChanceLabel = spLabel::create(Settings::getWidth() - LABEL_WIDTH);
+    m_TerrainChanceLabel = spLabel::create(oxygine::Stage::getStage()->getWidth() - LABEL_WIDTH);
     m_TerrainChanceLabel->setStyle(headerStyle);
     m_TerrainChanceLabel->setHtmlText(tr("Terrain Distribution"));
     m_TerrainChanceLabel->setPosition(LABEL_X, y);
     m_pPanel->addItem(m_TerrainChanceLabel);
     y += 10 + m_TerrainChanceLabel->getHeight();
-    m_BuildingChanceLabel = spLabel::create(Settings::getWidth() - LABEL_WIDTH);
+    m_BuildingChanceLabel = spLabel::create(oxygine::Stage::getStage()->getWidth() - LABEL_WIDTH);
     m_BuildingChanceLabel->setStyle(headerStyle);
     m_BuildingChanceLabel->setHtmlText(tr("Building Distribution"));
     m_BuildingChanceLabel->setPosition(LABEL_X, y);
     m_pPanel->addItem(m_BuildingChanceLabel);
     y += 10 + m_BuildingChanceLabel->getHeight();
 
-    m_OwnerDistributionLabel = spLabel::create(Settings::getWidth() - LABEL_WIDTH);
+    m_OwnerDistributionLabel = spLabel::create(oxygine::Stage::getStage()->getWidth() - LABEL_WIDTH);
     m_OwnerDistributionLabel->setStyle(headerStyle);
     m_OwnerDistributionLabel->setHtmlText(tr("Owner Distribution"));
     m_OwnerDistributionLabel->setPosition(LABEL_X, y);
@@ -261,13 +263,13 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_unitDistributionSelection->setCurrentItem(1);
     m_pPanel->addItem(m_unitDistributionSelection);
     y += m_unitDistributionLabel->getHeight() + 10;
-    m_UnitDistributionLabel = spLabel::create(Settings::getWidth() - LABEL_WIDTH);
+    m_UnitDistributionLabel = spLabel::create(oxygine::Stage::getStage()->getWidth() - LABEL_WIDTH);
     m_UnitDistributionLabel->setStyle(headerStyle);
     m_UnitDistributionLabel->setHtmlText(tr("Unit distribution"));
     m_UnitDistributionLabel->setPosition(LABEL_X, y);
     m_pPanel->addItem(m_UnitDistributionLabel);
     y += m_UnitDistributionLabel->getHeight() + 10;
-    m_UnitChanceLabel = spLabel::create(Settings::getWidth() - LABEL_WIDTH);
+    m_UnitChanceLabel = spLabel::create(oxygine::Stage::getStage()->getWidth() - LABEL_WIDTH);
     m_UnitChanceLabel->setStyle(headerStyle);
     m_UnitChanceLabel->setHtmlText(tr("Unit spawn chance"));
     m_UnitChanceLabel->setPosition(LABEL_X, y);
@@ -277,14 +279,14 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_pPanel->setContentHeigth(y + 40);
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() - m_OkButton->getScaledWidth() - 30,
+                            oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
 
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_ExitButton->setPosition(30, oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -452,7 +454,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
                 terrainChances.append(terrainChancesVariant[i].toInt());
             }
         }
-        m_TerrainChances = spMultislider::create(terrainStrings, Settings::getWidth() - SLIDER_OFFSET_WIDTH, terrainChances, LABEL_WIDTH);
+        m_TerrainChances = spMultislider::create(terrainStrings, oxygine::Stage::getStage()->getWidth() - SLIDER_OFFSET_WIDTH, terrainChances, LABEL_WIDTH);
         m_TerrainChances->setTooltipText(tr("The percentage of different terrain types distributed."));
         m_TerrainChances->setPosition(LABEL_X, m_TerrainChanceLabel->getY() + 10 + m_TerrainChanceLabel->getHeight());
         m_pPanel->addItem(m_TerrainChances);
@@ -469,7 +471,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
                 buildingChances.append(buildingChancesVariant[i].toInt());
             }
         }
-        m_BuildingChances = spMultislider::create(buildingStrings, Settings::getWidth() - SLIDER_OFFSET_WIDTH, buildingChances, LABEL_WIDTH);
+        m_BuildingChances = spMultislider::create(buildingStrings, oxygine::Stage::getStage()->getWidth() - SLIDER_OFFSET_WIDTH, buildingChances, LABEL_WIDTH);
         m_BuildingChances->setTooltipText(tr("The percentage of different buildings types distributed."));
         m_BuildingChances->setPosition(LABEL_X, m_BuildingChanceLabel->getY() + 10 + m_BuildingChanceLabel->getHeight());
         m_pPanel->addItem(m_BuildingChances);
@@ -501,7 +503,7 @@ void DialogRandomMap::playerChanged(qreal)
         playerStrings.append(tr("Player ") + QString::number(i + 1) + ":");
         playerChances.append(0);
     }
-    m_OwnerDistribution = spMultislider::create(playerStrings, Settings::getWidth() - SLIDER_OFFSET_WIDTH, playerChances, LABEL_WIDTH);
+    m_OwnerDistribution = spMultislider::create(playerStrings, oxygine::Stage::getStage()->getWidth() - SLIDER_OFFSET_WIDTH, playerChances, LABEL_WIDTH);
     m_OwnerDistribution->setTooltipText(tr("The percentage of buildings distributed between the players. Note buildings close to an Player HQ may be ignored."));
     m_OwnerDistribution->setPosition(30, m_OwnerDistributionLabel->getY() + 10 + m_OwnerDistributionLabel->getHeight());
     m_pPanel->addItem(m_OwnerDistribution);
@@ -544,14 +546,14 @@ void DialogRandomMap::createUnitChances()
         playerChances.append(0);
     }
     qint32 y = m_UnitDistributionLabel->getY() + 10 + m_UnitDistributionLabel->getHeight();
-    m_unitDistribution = spMultislider::create(playerStrings, Settings::getWidth() - SLIDER_OFFSET_WIDTH, playerChances, LABEL_WIDTH);
+    m_unitDistribution = spMultislider::create(playerStrings, oxygine::Stage::getStage()->getWidth() - SLIDER_OFFSET_WIDTH, playerChances, LABEL_WIDTH);
     m_unitDistribution->setTooltipText(tr("The percent unit distribution between the players. Note units that can't be spawned still count to the distribution."));
     m_unitDistribution->setPosition(LABEL_X, y);
     m_pPanel->addItem(m_unitDistribution);
 
     y = m_unitDistribution->getY() + 40 * (player - 1) + 10;
     m_UnitChanceLabel->setY(y);
-    m_UnitChances = spMultislider::create(unitStrings, Settings::getWidth() - SLIDER_OFFSET_WIDTH, m_UnitChanceValues, LABEL_WIDTH);
+    m_UnitChances = spMultislider::create(unitStrings, oxygine::Stage::getStage()->getWidth() - SLIDER_OFFSET_WIDTH, m_UnitChanceValues, LABEL_WIDTH);
     m_UnitChances->setTooltipText(tr("The percent distribution between the units that will be spawned. Note units that can't be spawned still count to the distribution."));
     m_UnitChances->setPosition(LABEL_X, m_UnitChanceLabel->getY() + 10 + m_UnitChanceLabel->getHeight());
     m_pPanel->addItem(m_UnitChances);

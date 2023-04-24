@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>settings.getStageWidth() - 100</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Game Info")</text>
+                <font>"main"</font>
+                <fontSize>48</fontSize>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>settings.getStageWidth() - 100</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Description")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <TextField>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>settings.getStageWidth() - 100</width>
+                <text>currentMenu.getDescription()</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </TextField>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Players:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <text>currentMenu.getPlayers() + " / " + currentMenu.getMaxPlayers()</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <loop count="currentMenu.getPlayers()">
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>300</width>
+                    <text>currentMenu.getPlayerName(loopIdx)</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+                <Label>
+                    <x>lastX + lastWidth + 10</x>
+                    <y>lastY</y>
+                    <width>200</width>
+                    <text>NetworkGameDataView.getOnlineText(loopIdx)</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+            </loop>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>settings.getStageWidth() - 100</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Mods")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <loop count="currentMenu.getModCount()">
+                <Label>
+                    <x>10</x>
+                    <y>lastY + lastHeight + 10</y>
+                    <width>settings.getStageWidth() - 100</width>
+                    <text>currentMenu.getModName(loopIdx)</text>
+                    <font>"main"</font>
+                    <fontSize>24</fontSize>
+                </Label>
+            </loop>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Observers:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <text>currentMenu.getObservers() + " / " + currentMenu.getMaxObservers()</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Custom>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <customItem>"MINIMAP"</customItem>
+                <scale>2</scale>
+            </Custom>
+        </childs>
+    </Panel>
+    <Button>
+        <x>settings.getStageWidth() / 2 - 75</x>
+        <y>settings.getStageHeight() - 60</y>
+        <width>150</width>
+        <text>NetworkGameDataView.getOk()</text>
+        <tooltip>NetworkGameDataView.getOkTooltip()</tooltip>
+        <onEvent>currentMenu.close();</onEvent>
+    </Button>
+</ui>

@@ -40,8 +40,8 @@ Achievementmenu::Achievementmenu()
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
+        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/credits_options");
@@ -50,8 +50,8 @@ Achievementmenu::Achievementmenu()
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
-    pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getScaledWidth() / 2.0f,
-                             Settings::getHeight() - pButtonExit->getScaledHeight() - 10);
+    pButtonExit->setPosition(oxygine::Stage::getStage()->getWidth()  / 2.0f - pButtonExit->getScaledWidth() / 2.0f,
+                             oxygine::Stage::getStage()->getHeight() - pButtonExit->getScaledHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -69,7 +69,7 @@ Achievementmenu::Achievementmenu()
     pTextfield->setHtmlText(tr("Search: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
-    m_SearchString = spTextbox::create(Settings::getWidth() - 380);
+    m_SearchString = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 380);
     m_SearchString->setTooltipText(tr("Search for an Achievement by title or description."));
     m_SearchString->setPosition(150, y);
     connect(m_SearchString.get(), &Textbox::sigTextChanged, this, [this](QString)
@@ -130,12 +130,12 @@ Achievementmenu::Achievementmenu()
     x += 10 + m_sort->getScaledWidth();
     y += pTextfield->getHeight() + 10;
 
-    QSize size(Settings::getWidth() - 20, Settings::getHeight() - 210);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 20, oxygine::Stage::getStage()->getHeight() - 210);
     m_MainPanel = spPanel::create(true, size, size);
     m_MainPanel->setPosition(10, 150);
     addChild(m_MainPanel);
 
-    qint32 singleWidth = Settings::getWidth() - 80;
+    qint32 singleWidth = oxygine::Stage::getStage()->getWidth() - 80;
     qint32 achieveCount = 0;
     for (const auto & achievement : qAsConst(*achievements))
     {
@@ -176,7 +176,7 @@ void Achievementmenu::exitMenue()
     m_onEnterTimer.stop();
     auto window = spMainwindow::create("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
-    oxygine::Actor::detach();    
+    oxygine::Actor::detach();
 }
 
 void Achievementmenu::search()
@@ -250,7 +250,7 @@ void Achievementmenu::searchChanged(QString searchText, QString group, SortDirec
     }
     qint32 x = 10;
     qint32 y = 10;
-    qint32 singleWidth = Settings::getWidth() - 80;
+    qint32 singleWidth = oxygine::Stage::getStage()->getWidth() - 80;
     for (const auto & achievement : qAsConst(achievements))
     {
         if (achievement.loaded)
@@ -310,7 +310,7 @@ void Achievementmenu::searchChanged(QString searchText, QString group, SortDirec
                 spProgressInfoBar pProgressInfoBar = spProgressInfoBar::create(singleWidth, 32, info, static_cast<float>(achievement.progress) / static_cast<float>(achievement.targetValue));
                 pProgressInfoBar->setPosition(x, y + 80);
                 pParent->addChild(pProgressInfoBar);
-                pParent->setSize(Settings::getWidth(), 120);
+                pParent->setSize(oxygine::Stage::getStage()->getWidth(), 120);
                 m_MainPanel->addItem(pParent);
                 y += 120;
             }

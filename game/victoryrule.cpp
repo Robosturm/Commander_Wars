@@ -172,9 +172,14 @@ qint32 VictoryRule::getRuleProgress(Player* pPlayer)
 
 void VictoryRule::serializeObject(QDataStream& pStream) const
 {
+    serializeObject(pStream, false);
+}
+
+void VictoryRule::serializeObject(QDataStream& pStream, bool forHash) const
+{
     pStream << getVersion();
     pStream << m_RuleID;
-    m_Variables.serializeObject(pStream);
+    m_Variables.serializeObject(pStream, forHash);
 }
 
 void VictoryRule::deserializeObject(QDataStream& pStream)

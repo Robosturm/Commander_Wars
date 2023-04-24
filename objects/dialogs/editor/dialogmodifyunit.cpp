@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/dialogs/editor/dialogmodifyunit.h"
 
 #include "game/unit.h"
@@ -32,7 +34,7 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -40,8 +42,8 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -49,8 +51,8 @@ DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
     });
 
 
-    m_pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
-                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
+    m_pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
+                                     QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
 
@@ -91,7 +93,7 @@ void DialogModifyUnit::updateData()
     pLabel->setHtmlText(tr("Custom name: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    spTextbox pTexbox = spTextbox::create(Settings::getWidth() - 40 - sliderOffset);
+    spTextbox pTexbox = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 40 - sliderOffset);
     pTexbox->setPosition(sliderOffset - 160, y);
     pTexbox->setCurrentText(m_pUnit->getName());
     pTexbox->setTooltipText(tr("Selects the custom name of the unit shown instead of the actual unit name. An empty name will display the default name for that unit."));
@@ -107,7 +109,7 @@ void DialogModifyUnit::updateData()
     pLabel->setHtmlText(tr("HP: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    spSlider pSlider = spSlider::create(Settings::getWidth() - 40 - sliderOffset, 1, 10, tr("HP"));
+    spSlider pSlider = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - sliderOffset, 1, 10, tr("HP"));
     pSlider->setTooltipText(tr("Selects the HP of the current unit. This is immediately applied."));
     pSlider->setPosition(sliderOffset - 160, y);
     pSlider->setCurrentValue(m_pUnit->getHpRounded());
@@ -124,7 +126,7 @@ void DialogModifyUnit::updateData()
         pLabel->setHtmlText(tr("Fuel: "));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
-        spSlider pSlider = spSlider::create(Settings::getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxFuel(), tr("Fuel"));
+        spSlider pSlider = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxFuel(), tr("Fuel"));
         pSlider->setTooltipText(tr("Selects the Fuel of the current unit. This is immediately applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getFuel());
@@ -150,7 +152,7 @@ void DialogModifyUnit::updateData()
         pLabel->setHtmlText(tr("Ammo 1: "));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
-        spSlider pSlider = spSlider::create(Settings::getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo1(), tr("Ammo"));
+        spSlider pSlider = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo1(), tr("Ammo"));
         pSlider->setTooltipText(tr("Selects the Ammo 1 of the current unit. This is immediately applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo1());
@@ -176,7 +178,7 @@ void DialogModifyUnit::updateData()
         pLabel->setHtmlText(tr("Ammo 2: "));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
-        spSlider pSlider = spSlider::create(Settings::getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo2(), tr("Ammo"));
+        spSlider pSlider = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo2(), tr("Ammo"));
         pSlider->setTooltipText(tr("Selects the Ammo 2 of the current unit. This is immediately applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo2());

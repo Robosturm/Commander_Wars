@@ -153,9 +153,9 @@ var Constructor = function()
     this.calcAttackerDamage = function(action, attacker, attackerWeapon, takenDamage, attackerPosition, defender, luckMode, fastInaccurate = false)
     {
         var hp = globals.roundUp(attacker.getVirtualHp() - takenDamage / 10.0);
-        if (hp < 0)
+        if (hp <= 0)
         {
-            return 0;
+            return -1;
         }
         else
         {
@@ -502,11 +502,11 @@ var Constructor = function()
                     var defUnit = map.getTerrain(x, y).getUnit();
                     if (defUnit !== null)
                     {
-                        var resultNoLuckDmg = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
+                        if (unit.isAttackableFromPosition(defUnit, actionTargetField))
+                        {
+                            var resultNoLuckDmg = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
                                                                             actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                             GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off);
-                        if (resultNoLuckDmg.x >= 0.0)
-                        {
                             var resultMaxDmg = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
                                                                              actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                              GameEnums.LuckDamageMode_Max, GameEnums.LuckDamageMode_Min);
@@ -536,9 +536,14 @@ var Constructor = function()
                     if ((aiType === GameEnums.AiTypes_Human ||
                          aiType === GameEnums.AiTypes_MovePlanner))
                     {
-                        result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
+                        if (unit.isAttackableFromPosition(defUnit, actionTargetField))
+                        {
+                            result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
                                                                    actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                    GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off);
+                            data.addPoint(Qt.point(x, y));
+                            data.addZInformation(result.x);
+                        }
                     }
                     else
                     {
@@ -546,11 +551,11 @@ var Constructor = function()
                                                                actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off,
                                                                false, true);
-                    }
-                    if (result.x >= 0.0)
-                    {
-                        data.addPoint(Qt.point(x, y));
-                        data.addZInformation(result.x);
+                        if (result.x >= 0.0)
+                        {
+                            data.addPoint(Qt.point(x, y));
+                            data.addZInformation(result.x);
+                        }
                     }
                 }
             }
@@ -671,6 +676,10 @@ var Constructor = function()
             var atkStartHp = attacker.getHp();            
             var costs = defUnit.getCosts();
             var damage = attackerDamage / 10.0;
+            var atkPos = attacker.getPosition();
+            var defPos = defUnit.getPosition();
+            var defFirststrike = defUnit.getFirstStrike(defPos, attacker, true, atkPos);
+            var atkFirststrike = attacker.getFirstStrike(atkPos, defUnit, false, defPos);
             if (damage < 0.0)
             {
                 damage = 0.0;
@@ -761,10 +770,6 @@ var Constructor = function()
             // only kill units if we should else we stop here
             if (dontKillUnits === false && !simulation)
             {
-                var atkPos = attacker.getPosition();
-                var defPos = defUnit.getPosition();
-                var defFirststrike = defUnit.getFirstStrike(defPos, attacker, true, atkPos);
-                var atkFirststrike = attacker.getFirstStrike(atkPos, defUnit, false, defPos);
                 var unitBattleAnimation = null;
                 if (defFirststrike && !atkFirststrike && counterdamage >= 0)
                 {
@@ -823,35 +828,38 @@ var Constructor = function()
         var player = map.getCurrentPlayer();
         var attacker = ACTION_FIRE.postUnitAnimationAttacker;
         var defUnit = ACTION_FIRE.postUnitAnimationDefender;
-        // level up and defender destruction
-        if (attacker.getHp() <= 0)
+        if (attacker !== null && defUnit !== null)
         {
-            // achievements
-            if (defUnit.getOwner().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+            // level up and defender destruction
+            if (attacker.getHp() <= 0)
             {
-                ACHIEVEMENT_KILL_UNIT.unitKilled(attacker.getUnitID());
+                // achievements
+                if (defUnit.getOwner().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+                {
+                    ACHIEVEMENT_KILL_UNIT.unitKilled(attacker.getUnitID());
+                }
+                // we destroyed a unit
+                map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID(), attacker.getUnitID(), attacker.getOwner().getPlayerID());
+                attacker.killUnit();
+                UNITRANKINGSYSTEM.increaseRang(defUnit);
             }
-            // we destroyed a unit
-            map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID(), attacker.getUnitID(), attacker.getOwner().getPlayerID());
-            attacker.killUnit();
-            UNITRANKINGSYSTEM.increaseRang(defUnit);
-        }
-        // level up and attacker destruction
-        if (defUnit.getHp() <= 0)
-        {
-            // achievements
-            if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+            // level up and attacker destruction
+            if (defUnit.getHp() <= 0)
             {
-                ACHIEVEMENT_KILL_UNIT.unitKilled(defUnit.getUnitID());
+                // achievements
+                if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+                {
+                    ACHIEVEMENT_KILL_UNIT.unitKilled(defUnit.getUnitID());
+                }
+                // we destroyed a unit nice
+                map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID(), defUnit.getUnitID(), defUnit.getOwner().getPlayerID());
+                defUnit.killUnit();
+                UNITRANKINGSYSTEM.increaseRang(attacker);
             }
-            // we destroyed a unit nice
-            map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID(), defUnit.getUnitID(), defUnit.getOwner().getPlayerID());
-            defUnit.killUnit();
-            UNITRANKINGSYSTEM.increaseRang(attacker);
+            ACTION_FIRE.postUnitAnimationAttacker = null;
+            ACTION_FIRE.postUnitAnimationDefender = null;
+            ACTION_FIRE.postAnimationAction = null;
         }
-        ACTION_FIRE.postUnitAnimationAttacker = null;
-        ACTION_FIRE.postUnitAnimationDefender = null;
-        ACTION_FIRE.postAnimationAction = null;
     }
 
     this.postBuildingAnimationTerrain = null;
@@ -871,7 +879,8 @@ var Constructor = function()
                 Global[defBuilding.getBuildingID()].onDestroyed(defBuilding, map);
             }
         }
-        else if (ACTION_FIRE.postBuildingAnimationTerrain.getHp() <= 0)
+        else if (ACTION_FIRE.postBuildingAnimationTerrain !== null &&
+                 ACTION_FIRE.postBuildingAnimationTerrain.getHp() <= 0)
         {
             // achievements
             if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)

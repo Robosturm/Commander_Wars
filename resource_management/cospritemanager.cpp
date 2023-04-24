@@ -84,21 +84,21 @@ void COSpriteManager::loadResAnim(const QString & coid, const QString & file, QI
         if (coidLower+ "+nrm" == m_Ressources[i].m_spriteId)
         {
             pAnim = oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error);
-            pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+            pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             m_Ressources[i] = CoSprite(coidLower + "+nrm", pCOAnim);
             nrmFound = true;
         }
         else if (coidLower + "+face" == m_Ressources[i].m_spriteId)
         {
             pAnim = oxygine::Resources::getResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error);
-            pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), true);
+            pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             m_Ressources[i] = CoSprite(coidLower + "+face", pCOAnim);
             faceFound = true;
         }
         else if (coidLower + "+info" == m_Ressources[i].m_spriteId)
         {
             pAnim = oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error);
-            pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+            pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             m_Ressources[i] = CoSprite(coidLower + "+info", pCOAnim);
             infoFound = true;
         }
@@ -107,7 +107,7 @@ void COSpriteManager::loadResAnim(const QString & coid, const QString & file, QI
             pAnim = oxygine::Resources::getResAnim(filename + "+mini", oxygine::error_policy::ep_ignore_error);
             if (pAnim.get() != nullptr)
             {
-                pCOAnim = SpriteCreator::createAnim(file + "+mini.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+                pCOAnim = SpriteCreator::createAnim(file + "+mini.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
                 m_Ressources[i] = CoSprite(coidLower + "+mini", pCOAnim);
                 infoFound = true;
             }
@@ -120,7 +120,7 @@ void COSpriteManager::loadResAnim(const QString & coid, const QString & file, QI
         pAnim = oxygine::Resources::getResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error);
         if (pAnim.get() != nullptr)
         {
-            pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), true);
+            pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             if (pCOAnim.get() != nullptr)
             {
                 m_Ressources.append(CoSprite(coidLower + "+face", pCOAnim));
@@ -134,7 +134,7 @@ void COSpriteManager::loadResAnim(const QString & coid, const QString & file, QI
         pAnim = oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error);
         if (pAnim.get() != nullptr)
         {
-            pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+            pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             if (pCOAnim.get() != nullptr)
             {
                 m_Ressources.append(CoSprite(coidLower + "+info", pCOAnim));
@@ -148,7 +148,7 @@ void COSpriteManager::loadResAnim(const QString & coid, const QString & file, QI
         oxygine::spResAnim pAnim = oxygine::spResAnim(oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error));
         if (pAnim.get() != nullptr)
         {
-            oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+            oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             if (pCOAnim.get() != nullptr)
             {
                 m_Ressources.append(CoSprite(coidLower + "+nrm", pCOAnim));
@@ -162,7 +162,7 @@ void COSpriteManager::loadResAnim(const QString & coid, const QString & file, QI
         oxygine::spResAnim pAnim = oxygine::spResAnim(oxygine::Resources::getResAnim(filename + "+mini", oxygine::error_policy::ep_ignore_error));
         if (pAnim.get() != nullptr)
         {
-            oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+mini.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+            oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+mini.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             if (pCOAnim.get() != nullptr)
             {
                 m_Ressources.append(CoSprite(coidLower + "+mini", pCOAnim));

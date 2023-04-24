@@ -235,7 +235,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Sprite: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    m_pTextbox = spTextbox::create(Settings::getWidth() - 200 - width);
+    m_pTextbox = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 200 - width);
     m_pTextbox->setTooltipText(tr("Current select animation."));
     m_pTextbox->setPosition(width, y);
     m_pTextbox->setCurrentText(sprite);

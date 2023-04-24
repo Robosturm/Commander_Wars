@@ -60,14 +60,14 @@ var Constructor = function()
             }
         }
     };
-
+    this.superPowerDamage = 5;
     this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_MINA.minaDamage(co, 4, powerNameAnimation, map);
+        CO_MINA.minaDamage(co, CO_MINA.superPowerDamage, powerNameAnimation, map);
     };
 
     this.minaDamage = function(co, value, animation2, map)
@@ -249,7 +249,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Most expensive enemy units suffer five HP of damage.");
+        var text = qsTr("Most expensive enemy units suffer %0 HP of damage.");
+        text = replaceTextArgs(text, [CO_MINA.superPowerDamage])
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

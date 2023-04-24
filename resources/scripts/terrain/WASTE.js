@@ -112,7 +112,7 @@ var Constructor = function()
         }
         if (highTerrain !== "")
         {
-            terrain.loadOverlaySprite("shadow_waste");
+            terrain.loadOverlaySprite("shadow_waste", -1, -1, terrain.getNeighbourPalette(GameEnums.Directions_West, ""));
         }
     };
     this.getDescription = function()

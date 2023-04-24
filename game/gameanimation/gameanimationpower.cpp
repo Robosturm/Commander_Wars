@@ -1,4 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "objects/rotatingsprite.h"
 
@@ -142,13 +143,13 @@ void GameAnimationPower::setDuration(qint32 timeMs)
 void GameAnimationPower::createRotatingBackground(const QString & resAnim, const QColor & color, qint32 speedX)
 {
     oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim(resAnim);    
-    setSize(Settings::getWidth(), Settings::getHeight());
+    setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     if (pAnimMask != nullptr)
     {
         // first sprite for rotating
         oxygine::spBox9Sprite firstSpriteMask = oxygine::spBox9Sprite::create();
         firstSpriteMask->setResAnim(pAnimMask);
-        firstSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
+        firstSpriteMask->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
         firstSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
         firstSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
         firstSpriteMask->setColor(color);
@@ -156,14 +157,14 @@ void GameAnimationPower::createRotatingBackground(const QString & resAnim, const
         // second sprite for rotating
         oxygine::spBox9Sprite secondSpriteMask = oxygine::spBox9Sprite::create();
         secondSpriteMask->setResAnim(pAnimMask);
-        secondSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
+        secondSpriteMask->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
         secondSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
         secondSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
         secondSpriteMask->setColor(color);
 
         // rotating sprite
         spRotatingSprite rotSprite = spRotatingSprite::create();
-        rotSprite->setSize(Settings::getWidth(), Settings::getHeight());
+        rotSprite->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
         rotSprite->setSprite(firstSpriteMask, secondSpriteMask);
         rotSprite->setDirection(speedX);
         addChild(rotSprite);
@@ -200,7 +201,7 @@ void GameAnimationPower::createPowerDescription(CO* pCo, GameEnums::PowerMode po
         oxygine::spTextField descriptionField = oxygine::spTextField::create();
         descriptionField->setStyle(style);
         descriptionField->setHtmlText(description);
-        descriptionField->setSize(Settings::getWidth() - 100, descriptionField->getTextRect().height());
+        descriptionField->setSize(oxygine::Stage::getStage()->getWidth() - 100, descriptionField->getTextRect().height());
         descriptionField->setX(50);
         if (onTop)
         {
@@ -208,7 +209,7 @@ void GameAnimationPower::createPowerDescription(CO* pCo, GameEnums::PowerMode po
         }
         else
         {
-            descriptionField->setY(Settings::getHeight() - descriptionField->getTextRect().height() - 20);
+            descriptionField->setY(oxygine::Stage::getStage()->getHeight() - descriptionField->getTextRect().height() - 20);
         }
         addChild(descriptionField);
     }

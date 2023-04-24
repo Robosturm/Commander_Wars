@@ -1,101 +1,136 @@
 <?xml version="1.0"?>
 <resources>
     <set path = "resources/images/building/" />
-    <atlas linearFilter = "false">
-
-        <!-- amphibiousfactory -->
-        <image file="amphibiousfactory+mask.png" />
-        <image file="amphibiousfactory.png" cols = "2" />
-        <image file="amphibiousfactory+neutral.png" />
-
-        <!-- factory -->
-        <image file="factory.png" cols = "8" />
-        <image file="factory+mask.png"/>
-        <image file="factory+snow.png"/>
-        <image file="factory+neutral.png" />
-        
-        <!-- harbour -->
-        <image file="harbour.png" cols = "2" />
-        <image file="harbour+mask.png"/>
-        <image file="harbour+snow.png"/>
-        <image file="harbour+neutral.png" />
-        
-        <!-- temporary harbour -->
-        <image file="temporary_harbour.png" cols = "2" />
-        <image file="temporary_harbour+mask.png"/>
-        <image file="temporary_harbour+snow.png"/>
-        <image file="temporary_harbour+neutral.png" />
-        
-        <!-- mine -->
-        <image file="mine.png" cols = "2" />
-        <image file="mine+mask.png"/>
-        <image file="mine+neutral.png" />
-        
-        <!-- oilrig -->
-        <image file="oilrig.png" cols = "2" />
-        <image file="oilrig+mask.png"/>
-        <image file="oilrig+snow.png"/>
-        <image file="oilrig+neutral.png" />
-        
-        <!-- pipestation -->
-        <image file="pipestation.png" cols = "2" />
-        <image file="pipestation+mask.png"/>
-        <image file="pipestation+snow.png"/>
-        <image file="pipestation+neutral.png" />
-        
-        <!-- radar -->
-        <image file="radar.png" cols = "2" />
-        <image file="radar+mask.png"/>
-        <image file="radar+snow.png"/>
-        <image file="radar+neutral.png" />
-        
-        <!-- tower -->
-        <image file="tower.png" cols = "2" />
-        <image file="tower+mask.png"/>
-        <image file="tower+snow.png"/>
-        <image file="tower+neutral.png" />
-        
-        <!-- town -->
-        <image file="town.png" cols = "2" />
-        <image file="town+mask.png"/>
-        <image file="town+snow.png"/>
-        <image file="town+neutral.png" />
-        
+    <atlas linearFilter = "false">    
         <!-- airport -->
         <image file="airport.png" cols = "2" />
-        <image file="airport+mask.png"/>
-        <image file="airport+snow.png"/>
+        <image file="airport+mask.png" />
         <image file="airport+neutral.png" />
-        
+        <image file="airport+snow.png" />
+        <!-- amphibiousfactory -->
+        <image file="amphibiousfactory.png" cols = "2" />
+        <image file="amphibiousfactory+mask.png" />
+        <image file="amphibiousfactory+neutral.png" />
+        <!-- factory -->
+        <image file="factory.png" cols = "8" />
+        <image file="factory+mask.png" />
+        <image file="factory+neutral.png" />
+        <image file="factory+snow.png" />        
+        <!-- harbour -->
+        <image file="harbour.png" cols = "2" />
+        <image file="harbour+mask.png" />
+        <image file="harbour+snow.png" />
+        <image file="harbour+neutral.png" />
+        <!-- mine -->
+        <image file="mine.png" cols = "2" />
+        <image file="mine+mask.png" />
+        <image file="mine+neutral.png" />
+        <!-- oilrig -->
+        <image file="oilrig.png" cols = "2" />
+        <image file="oilrig+mask.png" />
+        <image file="oilrig+snow.png" />
+        <image file="oilrig+neutral.png" />        
+        <!-- pipestation -->
+        <image file="pipestation.png" cols = "2" />
+        <image file="pipestation+mask.png" />
+        <image file="pipestation+snow.png" />
+        <image file="pipestation+neutral.png" />
+        <!-- radar -->
+        <image file="radar.png" cols = "2" />
+        <image file="radar+mask.png" />
+        <image file="radar+snow.png" />
+        <image file="radar+neutral.png" />
+        <!-- tower -->
+        <image file="tower.png" cols = "2" />
+        <image file="tower+mask.png" />
+        <image file="tower+snow.png" />
+        <image file="tower+neutral.png" />
+        <!-- town -->
+        <image file="town.png" cols = "2" />
+        <image file="town+mask.png" />
+        <image file="town+snow.png" />
+        <image file="town+neutral.png" />
         <!-- temporary airport -->
         <image file="temporary_airport.png" cols = "2" />
-        <image file="temporary_airport+mask.png"/>
-        <image file="temporary_airport+snow.png"/>
+        <image file="temporary_airport+mask.png" />
+        <image file="temporary_airport+snow.png" />
         <image file="temporary_airport+neutral.png" />
-        
+        <!-- temporary harbour -->
+        <image file="temporary_harbour.png" />
+        <image file="temporary_harbour+mask.png" />
+        <image file="temporary_harbour+snow.png" />
+        <image file="temporary_harbour+neutral.png" />
         <!-- labor -->
         <image file="labor.png" cols = "2" />
-        <image file="labor+mask.png"/>
-        <image file="labor+snow.png"/>
-        <image file="labor+neutral.png" />
-        
+        <image file="labor+mask.png" />
+        <image file="labor+snow.png" />
+        <image file="labor+neutral.png" />        
         <!-- labor -->
         <image file="silo.png" />
         <image file="silo+mask.png" />
         <image file="silo+rocket.png" />
         <image file="silo+rocket+mask.png" />
-        
+        <!-- depot -->
+        <image file="depot.png" />
+        <image file="depot+mask.png" />
+        <!-- powerplant -->
+        <image file="powerplant.png" cols = "2" />
+        <image file="powerplant+mask.png" />
+        <image file="powerplant+snow.png" />
+        <image file="powerplant+neutral.png" />
+        <!-- hq -->
+        <image file="hq+ac.png" cols = "2" />
+        <image file="hq+ac+mask.png" />
+        <image file="hq+ac+snow.png" />
+        <image file="hq+bd.png" cols = "2" />
+        <image file="hq+bd+mask.png" />
+        <image file="hq+bd+snow.png" />
+        <image file="hq+bg.png" cols = "2" />
+        <image file="hq+bg+mask.png" />
+        <image file="hq+bg+snow.png" />
+        <image file="hq+bh.png" cols = "2" />
+        <image file="hq+bh+mask.png" />
+        <image file="hq+bh+snow.png" />
+        <image file="hq+bm.png" cols = "2" />
+        <image file="hq+bm+mask.png" />
+        <image file="hq+bm+snow.png" />
+        <image file="hq+dm.png" cols = "2" />
+        <image file="hq+dm+mask.png" />
+        <image file="hq+dm+snow.png" />
+        <image file="hq+ge.png" cols = "2" />
+        <image file="hq+ge+mask.png" />
+        <image file="hq+ge+snow.png" />
+        <image file="hq+gs.png" cols = "2" />
+        <image file="hq+gs+mask.png" />
+        <image file="hq+gs+snow.png" />
+        <image file="hq+ma.png" cols = "2" />
+        <image file="hq+ma+mask.png" />
+        <image file="hq+ma+snow.png" />
+        <image file="hq+os.png" cols = "2" />
+        <image file="hq+os+mask.png" />
+        <image file="hq+os+snow.png" />
+        <image file="hq+pf.png" cols = "2" />
+        <image file="hq+pf+mask.png" />
+        <image file="hq+pf+snow.png" />
+        <image file="hq+ti.png" cols = "2" />
+        <image file="hq+ti+mask.png" />
+        <image file="hq+ti+snow.png" />
+        <image file="hq+yc.png" cols = "2" />
+        <image file="hq+yc+mask.png" />
+        <image file="hq+yc+snow.png" />
+        <image file="hq+neutral.png" />
+        <image file="hq+neutral+mask.png" />
+        <image file="hq+neutral+snow.png" />
         <!-- gate -->
         <image file="gate+e+w.png" />
         <image file="gate+e+w+mask.png" />
         <image file="gate+n+s.png" />
         <image file="gate+n+s+mask.png" />
-        
+        <!-- destroyed gate -->
         <image file="destroyed_gate+n+s.png" />
         <image file="destroyed_gate+n+s+mask.png" />
         <image file="destroyed_gate+e+w.png" />
-        <image file="destroyed_gate+e+w+mask.png" />
-        
+        <image file="destroyed_gate+e+w+mask.png" />        
         <!-- weld -->
         <image file="weld+E+W.png" />
         <image file="weld+E+W+mask.png" />
@@ -113,77 +148,16 @@
         <image file="waste_weld+E+W+mask.png" />
         <image file="waste_weld+N+S.png" />
         <image file="waste_weld+N+S+mask.png" />
-        
-        <!-- hq -->
-        <image file="hq+ac.png" cols = "2" />
-        <image file="hq+ac+mask.png"/>
-        <image file="hq+ac+snow.png"/>
-		
-        <image file="hq+bd.png" cols = "2" />
-        <image file="hq+bd+mask.png"/>
-        <image file="hq+bd+snow.png"/>
-		
-        <image file="hq+bg.png" cols = "2" />
-        <image file="hq+bg+mask.png"/>
-        <image file="hq+bg+snow.png"/>
-		
-        <image file="hq+bh.png" cols = "2" />
-        <image file="hq+bh+mask.png"/>
-        <image file="hq+bh+snow.png"/>
-		
-        <image file="hq+bm.png" cols = "2" />
-        <image file="hq+bm+mask.png"/>
-        <image file="hq+bm+snow.png"/>
-		
-        <image file="hq+dm.png" cols = "2" />
-        <image file="hq+dm+mask.png"/>
-        <image file="hq+dm+snow.png"/>
-		
-        <image file="hq+ge.png" cols = "2" />
-        <image file="hq+ge+mask.png"/>
-        <image file="hq+ge+snow.png"/>
-		
-        <image file="hq+gs.png" cols = "2" />
-        <image file="hq+gs+mask.png"/>
-        <image file="hq+gs+snow.png"/>
-		
-        <image file="hq+ma.png" cols = "2" />
-        <image file="hq+ma+mask.png"/>
-        <image file="hq+ma+snow.png"/>
-		
-        <image file="hq+os.png" cols = "2" />
-        <image file="hq+os+mask.png"/>
-        <image file="hq+os+snow.png"/>
-		
-        <image file="hq+pf.png" cols = "2" />
-        <image file="hq+pf+mask.png"/>
-        <image file="hq+pf+snow.png"/>
-		
-        <image file="hq+ti.png" cols = "2" />
-        <image file="hq+ti+mask.png"/>
-        <image file="hq+ti+snow.png"/>
-		
-        <image file="hq+yc.png" cols = "2" />
-        <image file="hq+yc+mask.png"/>
-        <image file="hq+yc+snow.png"/>
-		
-        <image file="hq+neutral.png" />
-        <image file="hq+neutral+mask.png" />
-        <image file="hq+neutral+snow.png" />
-        
+
         <!-- Block Hole Stuff -->
         <image file="black_cannon+E.png" cols = "2" />
-        <image file="black_cannon+E+mask.png"/>
-
+        <image file="black_cannon+E+mask.png" />
         <image file="black_cannon+S.png" cols = "2" />
-        <image file="black_cannon+S+mask.png"/>
-
+        <image file="black_cannon+S+mask.png" />
         <image file="black_cannon+N.png" cols = "2" />
-        <image file="black_cannon+N+mask.png"/>
-
+        <image file="black_cannon+N+mask.png" />
         <image file="black_cannon+W.png" cols = "2" />
-        <image file="black_cannon+W+mask.png"/>
-
+        <image file="black_cannon+W+mask.png" />
         <image file="crystall.png" cols = "2" />
         <image file="crystall+mask.png" />
 
@@ -191,19 +165,16 @@
         <image file="laser+mask.png" />
 
         <image file="deathray+E.png" cols = "2" />
-        <image file="deathray+E+mask.png"/>
-
+        <image file="deathray+E+mask.png" />
         <image file="deathray+S.png" cols = "2" />
-        <image file="deathray+S+mask.png"/>
-
+        <image file="deathray+S+mask.png" />
         <image file="deathray+N.png" cols = "2" />
-        <image file="deathray+N+mask.png"/>
-
+        <image file="deathray+N+mask.png" />
         <image file="deathray+W.png" cols = "2" />
-        <image file="deathray+W+mask.png"/>
+        <image file="deathray+W+mask.png" />
 
         <image file="fortress.png" cols = "2" />
-        <image file="fortress+mask.png"/>
+        <image file="fortress+mask.png" />
         <image file="fortress+neutral.png" />
 
         <image file="minicannon+E.png" />
@@ -216,14 +187,14 @@
         <image file="minicannon+N+mask.png" />
 
         <image file="monolith.png" cols = "2" />
-        <image file="monolith+mask.png"/>
+        <image file="monolith+mask.png" />
 
         <image file="omega+base.png" cols = "2" />
-        <image file="omega+base+mask.png"/>
+        <image file="omega+base+mask.png" />
         <image file="omega+base+neutral.png" />
 
         <image file="blackhole+factory.png" cols = "2" />
-        <image file="blackhole+factory+mask.png"/>        
+        <image file="blackhole+factory+mask.png" />
         <image file="blackhole+factory+neutral.png" />
         <image file="blackhole+factory+pipe.png" />
         <image file="blackhole+factory+snow_pipe.png" />
@@ -256,15 +227,6 @@
         <image file="nest_center_laser_middle+destroyed.png" />
         <image file="nest_center_laser_right+destroyed.png" />
         <image file="nest_laser+destroyed.png" />
-                
-        <!-- depot -->
-        <image file="depot.png" />
-        <image file="depot+mask.png" />
-        
-        <!-- powerplant -->
-        <image file="powerplant.png" cols = "2" />
-        <image file="powerplant+mask.png"/>
-        <image file="powerplant+snow.png"/>
-        <image file="powerplant+neutral.png" />
+
     </atlas>
 </resources>

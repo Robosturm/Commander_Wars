@@ -1,5 +1,6 @@
 #include <QDir>
-#include "objects/base/label.h"
+
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "ingamescriptsupport/campaigneditor.h"
 #include "ingamescriptsupport/genericbox.h"
@@ -14,9 +15,10 @@
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/folderdialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/checkbox.h"
 #include "objects/base/spinbox.h"
-#include "objects/dialogs/dialogmessagebox.h"
+#include "objects/base/label.h"
 
 const char* const CampaignEditor::campaign = "campaign";
 const char* const CampaignEditor::campaignName = "campaignName";
@@ -41,7 +43,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -57,14 +59,14 @@ CampaignEditor::CampaignEditor()
     pText->setHtmlText(tr("Folder:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_CampaignFolder = spTextbox::create(Settings::getWidth() - 500);
+    m_CampaignFolder = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 500);
     m_CampaignFolder->setTooltipText(tr("Folder containing the campaign maps. All maps for this campaign should be directly below this folder. The folder name must end with .camp"));
     m_CampaignFolder->setPosition(300, y);
     m_CampaignFolder->setCurrentText("maps/");
     pSpriteBox->addChild(m_CampaignFolder);
     // Campaign Button
     oxygine::spButton pCampaignButton = pObjectManager->createButton(tr("Folder"), 150);
-    pCampaignButton->setPosition(Settings::getWidth() - pCampaignButton->getScaledWidth() - 30, 30);
+    pCampaignButton->setPosition(oxygine::Stage::getStage()->getWidth() - pCampaignButton->getScaledWidth() - 30, 30);
     pSpriteBox->addChild(pCampaignButton);
     pCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -77,7 +79,7 @@ CampaignEditor::CampaignEditor()
     pText->setHtmlText(tr("Name:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_Name = spTextbox::create(Settings::getWidth() - 500);
+    m_Name = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 500);
     m_Name->setTooltipText(tr("Name of the campaign shown in the map selection screen."));
     m_Name->setPosition(300, y);
     m_Name->setCurrentText("");
@@ -89,7 +91,7 @@ CampaignEditor::CampaignEditor()
     pText->setHtmlText(tr("Author:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_Author = spTextbox::create(Settings::getWidth() - 500);
+    m_Author = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 500);
     m_Author->setTooltipText(tr("Name of the author shown in the map selection screen."));
     m_Author->setPosition(300, y);
     m_Author->setCurrentText(Settings::getUsername());
@@ -101,21 +103,21 @@ CampaignEditor::CampaignEditor()
     pText->setHtmlText(tr("Description:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_Description = spTextbox::create(Settings::getWidth() - 500);
+    m_Description = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 500);
     m_Description->setTooltipText(tr("Description of the campaign shown in the map selection screen."));
     m_Description->setPosition(300, y);
     m_Description->setCurrentText("");
     pSpriteBox->addChild(m_Description);
     y += pText->getHeight() + 10;
 
-    QSize size(Settings::getWidth() - 80, Settings::getHeight() - 280);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 80, oxygine::Stage::getStage()->getHeight() - 280);
     m_Panel = spPanel::create(true, size, size);
     m_Panel->setPosition(40, y);
     pSpriteBox->addChild(m_Panel);
 
     // add campaign
     oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("Add Map"), 200);
-    pAddCampaignButton->setPosition(30, Settings::getHeight() - 10 - pAddCampaignButton->getScaledHeight());
+    pAddCampaignButton->setPosition(30, oxygine::Stage::getStage()->getHeight() - 10 - pAddCampaignButton->getScaledHeight());
     pSpriteBox->addChild(pAddCampaignButton);
     pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -124,8 +126,8 @@ CampaignEditor::CampaignEditor()
 
     // load campaign
     oxygine::spButton pLoadCampaignButton = pObjectManager->createButton(tr("Load"), 150);
-    pLoadCampaignButton->setPosition(Settings::getWidth() / 2 - 10 - pLoadCampaignButton->getScaledWidth(),
-                                     Settings::getHeight() - 10 - pLoadCampaignButton->getScaledHeight());
+    pLoadCampaignButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - 10 - pLoadCampaignButton->getScaledWidth(),
+                                     oxygine::Stage::getStage()->getHeight() - 10 - pLoadCampaignButton->getScaledHeight());
     pSpriteBox->addChild(pLoadCampaignButton);
     pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -134,8 +136,8 @@ CampaignEditor::CampaignEditor()
 
     // save campaign
     oxygine::spButton pSaveCampaignButton = pObjectManager->createButton(tr("Save"), 150);
-    pSaveCampaignButton->setPosition(Settings::getWidth() / 2 + 10,
-                                     Settings::getHeight() - 10 - pSaveCampaignButton->getScaledHeight());
+    pSaveCampaignButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10,
+                                     oxygine::Stage::getStage()->getHeight() - 10 - pSaveCampaignButton->getScaledHeight());
     pSpriteBox->addChild(pSaveCampaignButton);
     pSaveCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -144,8 +146,8 @@ CampaignEditor::CampaignEditor()
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() - pOkButton->getScaledWidth() - 30,
-                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
+    pOkButton->setPosition(oxygine::Stage::getStage()->getWidth() - pOkButton->getScaledWidth() - 30,
+                           oxygine::Stage::getStage()->getHeight() - 10 - pOkButton->getScaledHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -671,7 +673,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
 {
     
     spGenericBox pBox = spGenericBox::create();
-    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() - 100);
     spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
@@ -741,7 +743,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
 {
     
     spGenericBox pBox = spGenericBox::create();
-    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() - 100);
     spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
@@ -809,7 +811,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
 {
     
     spGenericBox pBox = spGenericBox::create();
-    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() - 100);
     spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
@@ -823,7 +825,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
 
     qint32 y = 10;
     qint32 width = 300;
-    spLabel pText = spLabel::create(Settings::getWidth() - 60);
+    spLabel pText = spLabel::create(oxygine::Stage::getStage()->getWidth() - 60);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Enable Variable"));
     pText->setPosition(10, y);
@@ -899,7 +901,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(checkBox);
     y += pText->getHeight() + 10;
 
-    pText = spLabel::create(Settings::getWidth() - 60);
+    pText = spLabel::create(oxygine::Stage::getStage()->getWidth() - 60);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Disable Variable"));
     pText->setPosition(10, y);

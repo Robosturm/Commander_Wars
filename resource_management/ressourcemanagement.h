@@ -85,9 +85,9 @@ public:
     bool getLoaded() const;
 
 protected:
-    explicit RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder = true, bool raiseErrors = true);
+    explicit RessourceManagement(QString resPath, QString scriptPath, bool raiseErrors = true);
     ~RessourceManagement() = default;
-    void loadRessources(QString resPath, bool addTransparentBorder = true);
+    void loadRessources(QString resPath);
     void loadAll(QStringList& list);
     void reset(QStringList& list);
     QStringList getSearchPaths();
@@ -121,35 +121,35 @@ bool RessourceManagement<TClass>::created()
 }
 
 template<class TClass>
-RessourceManagement<TClass>::RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder, bool raiseErrors)
+RessourceManagement<TClass>::RessourceManagement(QString resPath, QString scriptPath, bool raiseErrors)
     : m_scriptPath(scriptPath),
       m_raiseErrors(raiseErrors)
 {
-    loadRessources(resPath, addTransparentBorder);
+    loadRessources(resPath);
 }
 
 template<class TClass>
-void RessourceManagement<TClass>::loadRessources(QString resPath, bool addTransparentBorder)
+void RessourceManagement<TClass>::loadRessources(QString resPath)
 {
     if (!resPath.isEmpty() && !Mainapp::getInstance()->getNoUi())
     {
         if (QFile::exists(QString(RCC_PREFIX_PATH) + "resources/" + resPath))
         {
-            oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + "resources/" + resPath, addTransparentBorder);
+            oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + "resources/" + resPath);
         }
         if (QFile::exists(Settings::getUserPath() + "resources/" + resPath))
         {
-            oxygine::Resources::loadXML(Settings::getUserPath() + "resources/" + resPath, addTransparentBorder);
+            oxygine::Resources::loadXML(Settings::getUserPath() + "resources/" + resPath);
         }
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
             if (QFile::exists(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + resPath))
             {
-                oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + resPath, addTransparentBorder);
+                oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + resPath);
             }
             if (QFile::exists(Settings::getUserPath() + Settings::getMods().at(i) + resPath))
             {
-                oxygine::Resources::loadXML(Settings::getUserPath() + Settings::getMods().at(i) + resPath, addTransparentBorder);
+                oxygine::Resources::loadXML(Settings::getUserPath() + Settings::getMods().at(i) + resPath);
             }
         }
     }

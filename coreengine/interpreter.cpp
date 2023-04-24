@@ -34,7 +34,15 @@ bool Interpreter::reloadInterpreter(const QString runtime)
     m_pInstance = nullptr;
     m_pInstance = spInterpreter::create();
     m_pInstance->init();
-    return m_pInstance->loadScript(runtime, "Interpreter Runtime");
+    bool success = m_pInstance->loadScript(runtime, "Interpreter Runtime");
+    if (!success)
+    {
+        QFile file("scriptDumb.js");
+        file.open(QIODevice::WriteOnly);
+        file.write(runtime.toUtf8());
+        file.close();
+    }
+    return success;
 }
 
 Interpreter::~Interpreter()

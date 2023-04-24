@@ -172,6 +172,7 @@ void NetworkGame::onConnectToLocalServer(quint64 socketId, spTCPServer & pTcpSer
         stream >> messageType;
         QStringList mods;
         mods = Filesupport::readVectorList<QString, QList>(stream);
+        Filesupport::readByteArray(stream); // minimap data
         m_data.setMods(mods);
         GameMap::MapHeaderInfo headerInfo;
         GameMap::readMapHeader(stream, headerInfo);

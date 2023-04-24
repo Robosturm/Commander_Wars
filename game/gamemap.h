@@ -167,7 +167,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 12;
+        return 13;
     }
     /**
      * @brief clearMap
@@ -217,6 +217,12 @@ public:
      * @return
      */
     bool isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction);
+    /**
+     * @brief applyToArea
+     * @param area
+     * @param applyFunction
+     */
+    void applyToArea(const QRect& area, std::function<void (qint32 x, qint32 y)> applyFunction);
     /**
      * @brief anyPlayerAlive
      * @return
@@ -300,6 +306,12 @@ public:
      * @return
      */
     QByteArray getMapHash();
+    QString getRecordFile() const;
+    void setRecordFile(const QString & newRecordFile);
+
+    qint32 getReplayActionCount() const;
+    void setReplayActionCount(qint32 newReplayActionCount);
+
 signals:
     void signalExitGame();
     void sigSaveGame();
@@ -321,6 +333,18 @@ signals:
     void sigShowMovementPlanner();
     void sigShowLoadSaveGame();
 public slots:
+    /**
+     * @brief applyPaletteToArea
+     * @param area
+     * @param newPalette
+     */
+    void applyPaletteToArea(const QRect& area, qint32 newPalette);
+    /**
+     * @brief applyBiomeToArea
+     * @param area
+     * @param newBiome
+     */
+    void applyBiomeToArea(const QRect& area, qint32 newBiome);
     /**
      * @brief getMapTagsText
      * @return
@@ -888,6 +912,8 @@ private:
     bool m_savegame{false};
     bool m_isHumanMatch{false};
     BaseGamemenu* m_pMenu{nullptr};
+    QString m_recordFile;
+    qint32 m_replayActionCount{0};
     static qint32 m_imagesize;
 };
 

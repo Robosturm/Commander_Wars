@@ -12,8 +12,7 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
-		building.loadSprite("black_building_destroyed", false);
-        building.loadSprite("black_building_destroyed+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
+        building.loadSpriteV2("black_building_destroyed", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
     };
     this.getBaseIncome = function()
     {

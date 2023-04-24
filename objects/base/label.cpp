@@ -61,6 +61,11 @@ void Label::setText(QString str)
     m_textField->setText(str);
 }
 
+QString Label::getText()
+{
+    return m_textField->getText();
+}
+
 void Label::setHtmlText(QString str)
 {
 #ifdef GRAPHICSUPPORT

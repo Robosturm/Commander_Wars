@@ -36,8 +36,8 @@ Shopmenu::Shopmenu()
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
+        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
 
     pApp->getAudioManager()->clearPlayList();
@@ -48,13 +48,13 @@ Shopmenu::Shopmenu()
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
     pButtonBox->setResAnim(pAnim);
-    pButtonBox->setSize(Settings::getWidth(), 60);
-    pButtonBox->setY(Settings::getHeight() - 60);
+    pButtonBox->setSize(oxygine::Stage::getStage()->getWidth(), 60);
+    pButtonBox->setY(oxygine::Stage::getStage()->getHeight() - 60);
     addChild(pButtonBox);
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     pButtonBox->addChild(pButtonExit);
-    pButtonExit->setPosition(Settings::getWidth() - pButtonExit->getScaledWidth() - 10,
+    pButtonExit->setPosition(oxygine::Stage::getStage()->getWidth() - pButtonExit->getScaledWidth() - 10,
                              10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -66,12 +66,12 @@ Shopmenu::Shopmenu()
     oxygine::ResAnim* pHachi = pShopLoader->getResAnim("hachi_shop");
     sprite = oxygine::spSprite::create();
     sprite->setResAnim(pHachi);
-    sprite->setScaleX(static_cast<float>(Settings::getWidth() * 0.5f) / static_cast<float>(pHachi->getWidth()));
-    sprite->setScaleY(static_cast<float>(Settings::getHeight() - 60) / static_cast<float>(pHachi->getWidth()));
-    sprite->setX(Settings::getWidth() - sprite->getScaledWidth());
+    sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth() * 0.5f) / static_cast<float>(pHachi->getWidth()));
+    sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 60) / static_cast<float>(pHachi->getWidth()));
+    sprite->setX(oxygine::Stage::getStage()->getWidth() - sprite->getScaledWidth());
     addChild(sprite);
 
-    QSize size = QSize(Settings::getWidth() /2, Settings::getHeight() - 110);
+    QSize size = QSize(oxygine::Stage::getStage()->getWidth() /2, oxygine::Stage::getStage()->getHeight() - 110);
     m_pPanel = spPanel::create(true, size, size);
     m_pPanel->setY(50);
     addChild(m_pPanel);
@@ -90,7 +90,7 @@ Shopmenu::Shopmenu()
 
     m_buyButton = ObjectManager::createButton(tr("Buy"));
     pButtonBox->addChild(m_buyButton);
-    m_buyButton->setPosition(Settings::getWidth() - m_buyButton->getScaledWidth() - pButtonExit->getScaledWidth() - 20,
+    m_buyButton->setPosition(oxygine::Stage::getStage()->getWidth() - m_buyButton->getScaledWidth() - pButtonExit->getScaledWidth() - 20,
                              10);
     m_buyButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
@@ -104,7 +104,7 @@ Shopmenu::Shopmenu()
     pLabel->setPosition(10, 10);
     pButtonBox->addChild(pLabel);
 
-    qint32 pointsSize = Settings::getWidth() - 10 * 7 - m_buyButton->getScaledWidth() - pButtonExit->getScaledWidth() - width * 2;
+    qint32 pointsSize = oxygine::Stage::getStage()->getWidth() - 10 * 7 - m_buyButton->getScaledWidth() - pButtonExit->getScaledWidth() - width * 2;
     m_points = spLabel::create(pointsSize / 2);
     m_points->setHtmlText(QString::number(Userdata::getInstance()->getCredtis()));
     m_points->setPosition(pLabel->getX() + pLabel->getScaledWidth() + 10, 10);
@@ -152,9 +152,9 @@ void Shopmenu::filterChanged(qint32 item)
     m_currentFilter = item;
     qint32 labelX = 95;
     qint32 width = 150;
-    if (Settings::getWidth() / 2 - 50 - labelX > width)
+    if (oxygine::Stage::getStage()->getWidth() / 2 - 50 - labelX > width)
     {
-        width = Settings::getWidth() / 2 - 50 - labelX;
+        width = oxygine::Stage::getStage()->getWidth() / 2 - 50 - labelX;
     }
     auto items = getItems(item);
     qint32 y = 10;

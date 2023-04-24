@@ -140,20 +140,20 @@ namespace oxygine
             return m_dummyPointF;
 #endif
         }
-        float getScaleX() const
+        qreal getScaleX() const
         {
 #ifdef GRAPHICSUPPORT
             return m_scale.x();
 #else
-            return 0.0f;
+            return 0.0;
 #endif
         }
-        float getScaleY() const
+        qreal getScaleY() const
         {
 #ifdef GRAPHICSUPPORT
             return m_scale.y();
 #else
-            return 0.0f;
+            return 0.0;
 #endif
         }
         /**Returns rotation angle in radians*/
@@ -255,11 +255,11 @@ namespace oxygine
         void setTransform(const QTransform& tr);
         /** set z order draw priority, from back (low value) to front (high value). Max value is 32000, Min value -32000*/
         void setPriority(qint32 zorder);
-        void setScale(float scale);
+        void setScale(qreal scale);
         void setScale(const QPointF& scale);
-        void setScale(float scaleX, float scaleY);
-        void setScaleX(float sx);
-        void setScaleY(float sy);
+        void setScale(qreal scaleX, qreal scaleY);
+        void setScaleX(qreal sx);
+        void setScaleY(qreal sy);
         /**Sets rotation angle in radians*/
         void setRotation(float angle);
         /**Sets rotation angle in degrees. Converts internally to radians. (use setRotation!)*/
@@ -389,8 +389,8 @@ namespace oxygine
         using TweenRotation = Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>;
         using TweenRotationDegrees = Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>;
         using TweenScale = Property2Args1Arg<float, QPointF, const QPointF&, Actor, &Actor::getScale, &Actor::setScale>;
-        using TweenScaleX = Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>;
-        using TweenScaleY = Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>;
+        using TweenScaleX = Property<qreal, qreal, Actor, &Actor::getScaleX, &Actor::setScaleX>;
+        using TweenScaleY = Property<qreal, qreal, Actor, &Actor::getScaleY, &Actor::setScaleY>;
         using TweenAlpha = Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>;
 #ifdef GRAPHICSUPPORT
         QMutex* getLocked();

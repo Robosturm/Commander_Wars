@@ -84,21 +84,6 @@ namespace oxygine
         QCoreApplication::exit(exitCode);
     }
 
-
-    float GameWindow::getActiveDpiFactor() const
-    {
-        auto ratio = devicePixelRatio();
-        if (Settings::getUseHighDpi())
-        {
-            ratio = 1.0f;
-        }
-        if (ratio < 1.0f)
-        {
-            ratio = 1.0f;
-        }
-        return ratio;
-    }
-
     bool GameWindow::isReady2Render()
     {
         if (!m_renderEnabled)
@@ -137,11 +122,10 @@ namespace oxygine
     {
         if (oxygine::Stage::getStage().get() != nullptr)
         {
-            auto ratio = getActiveDpiFactor();
+            auto ratio = Settings::getGameScale();
             auto width = Settings::getWidth();
             auto heigth = Settings::getHeight();
-            oxygine::Stage::getStage()->init (QSize(width / ratio, heigth / ratio),
-                                              QSize(width, heigth));
+            oxygine::Stage::getStage()->init(QSize(width / ratio, heigth / ratio), ratio);
         }
     }
 
@@ -158,26 +142,26 @@ namespace oxygine
         }
     }
 
-    void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
         if (!m_shuttingDown && !m_noUi)
         {
             if (isMainThread())
             {
-                loadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
+                loadSingleResAnim(pAnim, image, columns, rows, scaleFactor);
             }
             else
             {
-                emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
+                emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor);
             }
         }
     }
 
-    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
         if (pAnim.get() != nullptr && !m_noUi)
         {
-            pAnim->init(image, columns, rows, scaleFactor, addTransparentBorder);
+            pAnim->init(image, columns, rows, scaleFactor);
         }
     }
 

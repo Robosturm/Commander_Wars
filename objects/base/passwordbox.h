@@ -18,4 +18,6 @@ private:
     QString getVisiblePasswordText();
 };
 
+Q_DECLARE_INTERFACE(Passwordbox, "Passwordbox");
+
 #endif // PASSWORDBOX_H

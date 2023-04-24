@@ -503,6 +503,7 @@ set(${PROJECT_NAME}_SRCS
     menue/replaymenu.cpp menue/replaymenu.h
     menue/achievementmenu.cpp menue/achievementmenu.h
     menue/shopmenu.cpp menue/shopmenu.h
+    menue/generatormenu.h menue/generatormenu.cpp
 
     # ressource management
     resource_management/unitspritemanager.cpp resource_management/unitspritemanager.h
@@ -675,6 +676,7 @@ set(${PROJECT_NAME}_SRCS
     multiplayer/password.cpp multiplayer/password.h
     multiplayer/dialogpasswordandadress.cpp multiplayer/dialogpasswordandadress.h
     multiplayer/dialogpassword.cpp multiplayer/dialogpassword.h
+    multiplayer/networkgamedataview.h multiplayer/networkgamedataview.cpp
     multiplayer/networkcommands.h
 
     #campaign support
@@ -1104,6 +1106,7 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS}  DESTINATION     "platforms"     OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_SQL_LIBS}        DESTINATION     "sqldrivers"    OPTIONAL)
     install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION     "/"             OPTIONAL)
+    install(FILES xinput1_3.dll                                 DESTINATION     "/"             OPTIONAL)
 
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)

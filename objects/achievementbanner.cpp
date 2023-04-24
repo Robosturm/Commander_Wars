@@ -1,5 +1,4 @@
-#include "objects/achievementbanner.h"
-
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 #include "coreengine/mainapp.h"
@@ -11,6 +10,7 @@
 #include "wiki/wikidatabase.h"
 #include "game/gamemap.h"
 
+#include "objects/achievementbanner.h"
 #include "objects/base/label.h"
 
 quint32 AchievementBanner::m_activeBanners = 0;
@@ -49,8 +49,8 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
 void AchievementBanner::init()
 {
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Achievement));
-    setPosition(0, Settings::getHeight() + bannerHeight);
-    oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() - bannerHeight * (m_activeBanners + 1)), oxygine::timeMS(200 * (m_activeBanners + 1)));
+    setPosition(0, oxygine::Stage::getStage()->getHeight() + bannerHeight);
+    oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(oxygine::Stage::getStage()->getHeight() - bannerHeight * (m_activeBanners + 1)), oxygine::timeMS(200 * (m_activeBanners + 1)));
     addTween(tween);
 
     m_activeBanners++;

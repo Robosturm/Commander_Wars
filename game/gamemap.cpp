@@ -2,6 +2,7 @@
 #include <QCryptographicHash>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 
 #include "coreengine/mainapp.h"
@@ -121,10 +122,8 @@ void GameMap::loadMapData()
 {
     Interpreter::setCppOwnerShip(this);
     registerMapAtInterpreter();
-    if (Mainapp::getInstance()->devicePixelRatio() < 2.0f && !Settings::getUseHighDpi())
-    {
-        setZoom(1);
-    }
+    setZoom(1);
+
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
 
      m_markedFieldsLayer = oxygine::spActor::create();
@@ -186,6 +185,48 @@ bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> chec
         }
     }
     return false;
+}
+
+void GameMap::applyPaletteToArea(const QRect& area, qint32 newPalette)
+{
+    applyToArea(area, [newPalette, this](qint32 x, qint32 y)
+    {
+        getTerrain(x, y)->setTerrainPaletteGroup(newPalette);
+    });
+    updateSprites();
+}
+
+void GameMap::applyBiomeToArea(const QRect& area, qint32 newBiome)
+{
+    auto* pInterpreter = Interpreter::getInstance();
+    applyToArea(area, [pInterpreter, newBiome, this](qint32 x, qint32 y)
+    {
+        const auto currentTerrain = getTerrain(x, y)->getID();
+        QJSValueList args = {currentTerrain,
+                             newBiome};
+        auto erg = pInterpreter->doFunction("TERRAIN", "getTerrainBiomeMappingId", args);
+        QString newTerrain = erg.toString();
+        if (!newTerrain.isEmpty() &&
+            currentTerrain != newTerrain)
+        {
+            replaceTerrain(newTerrain, x, y);
+        }
+    });
+    updateSprites();
+}
+
+void GameMap::applyToArea(const QRect& area, std::function<void (qint32 x, qint32 y)> applyFunction)
+{
+    for (qint32 x = area.x(); x < area.x() + area.width(); x++)
+    {
+        for (qint32 y = area.y(); y < area.y() + area.height(); y++)
+        {
+            if (onMap(x, y))
+            {
+                applyFunction(x, y);
+            }
+        }
+    }
 }
 
 bool GameMap::anyPlayerAlive()
@@ -612,12 +653,12 @@ void GameMap::updateSpritesOfTiles(const QVector<QPoint> & points, bool editor, 
 
 void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor, bool applyRulesPalette)
 {
-    if (m_fields[y][x]->getHasFlowDirection() &&
+    if (m_fields[y][x]->getTileHasFlowDirection() &&
         !m_fields[y][x]->getFixedSprite())
     {
         flowPoints.append(QPoint(x, y));
     }
-    else
+    if (!m_fields[y][x]->getHasFlowDirection())
     {
         if (applyRulesPalette)
         {
@@ -640,13 +681,26 @@ void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints, bool applyRulesPalet
     while (flowPoints.size() > 0)
     {
         QPoint pos = flowPoints[0];
-        spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
-        pPfs->explore();
-        m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get(), applyRulesPalette);
-        auto points = pPfs->getAllNodePointsFast();
-        for (const auto & point : qAsConst(points))
+        Terrain* pTerrain = m_fields[pos.y()][pos.x()].get();
+        bool done = false;
+        while (!done)
         {
-            flowPoints.removeAll(point);
+            if (pTerrain->getHasFlowDirection())
+            {
+                spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, pTerrain->getFlowTiles(), pos.x(), pos.y());
+                pPfs->explore();
+                pTerrain->updateFlowSprites(pPfs.get(), applyRulesPalette);
+                auto points = pPfs->getAllNodePointsFast();
+                for (const auto & point : qAsConst(points))
+                {
+                    flowPoints.removeAll(point);
+                }
+                done = true;
+            }
+            else
+            {
+                pTerrain = pTerrain->getNextBaseTerrain();
+            }
         }
     }
 }
@@ -1174,11 +1228,7 @@ void GameMap::setZoom(qint32 zoom)
     }
     // limit zoom
 
-    float minLimit = 1.0f / 4.0f;
-    if (Mainapp::getInstance()->devicePixelRatio() >= 2.0f && !Settings::getUseHighDpi())
-    {
-        minLimit = 1.0f / 8.0f;
-    }
+    float minLimit = 1.0f / 8.0f;
     if (curZoom > 16.0f)
     {
         curZoom = 16.0f;
@@ -1386,23 +1436,25 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
     {
         m_Recorder->serializeObject(pStream);
     }
-    m_GameScript->serializeObject(pStream);
+    m_GameScript->serializeObject(pStream, forHash);
+    if (m_Campaign.get() != nullptr)
+    {
+        pStream << true;
+        m_Campaign->serializeObject(pStream, forHash);
+    }
+    else
+    {
+        pStream << false;
+    }
     if (!forHash)
     {
-        if (m_Campaign.get() != nullptr)
-        {
-            pStream << true;
-            m_Campaign->serializeObject(pStream);
-        }
-        else
-        {
-            pStream << false;
-        }
         pStream << m_mapPath;
         pStream << m_mapMusic;
         pStream << m_startLoopMs;
         pStream << m_endLoopMs;
         pStream << m_isHumanMatch;
+        pStream << m_recordFile;
+        pStream << m_replayActionCount;
     }
 }
 
@@ -1437,6 +1489,26 @@ void GameMap::updateMapFlags() const
             }
         }
     }
+}
+
+qint32 GameMap::getReplayActionCount() const
+{
+    return m_replayActionCount;
+}
+
+void GameMap::setReplayActionCount(qint32 newReplayActionCount)
+{
+    m_replayActionCount = newReplayActionCount;
+}
+
+QString GameMap::getRecordFile() const
+{
+    return m_recordFile;
+}
+
+void GameMap::setRecordFile(const QString & newRecordFile)
+{
+    m_recordFile = newRecordFile;
 }
 
 QByteArray GameMap::getMapHash()
@@ -1647,6 +1719,11 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         if (m_headerInfo.m_Version > 10)
         {
             pStream >> m_isHumanMatch;
+        }
+        if (m_headerInfo.m_Version > 12)
+        {
+            pStream >> m_recordFile;
+            pStream >> m_replayActionCount;
         }
     }
     if (showLoadingScreen)

@@ -398,6 +398,7 @@ private:
     QString m_jsPreActionObject{""};
     QString m_jsPreActionFunction{""};
     bool m_stopSoundAtAnimationEnd{false};
+    bool m_finished{false};
 
     QVector<oxygine::spSingleResAnim> m_resAnims;
     /**

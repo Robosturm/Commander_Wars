@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/base/colorselector.h"
 
 #include "resource_management/fontmanager.h"
@@ -124,7 +126,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     addChild(m_ColorDialog);
     // create dialog fields
     qint32 x = pixelSize * 256 + 30;
-    if (x + barWidth + 30 > Settings::getWidth() - 60)
+    if (x + barWidth + 30 > oxygine::Stage::getStage()->getWidth() - 60)
     {
         pixelSize--;
         x = pixelSize * 256 + 30;

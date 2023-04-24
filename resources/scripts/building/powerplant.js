@@ -6,18 +6,15 @@ var Constructor = function()
     };
     this.loadSprites = function(building, neutral, map)
     {
+        building.loadSpriteV2("powerplant+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
         if (building.getOwnerID() >= 0 && !neutral)
         {
-            // none neutral player
-            building.loadSprite("powerplant", false);
-            building.loadSpriteV2("powerplant+mask", GameEnums.Recoloring_Matrix);
+            building.loadSpriteV2("powerplant", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
         else
         {
-            // neutral player
-            building.loadSprite("powerplant+neutral", false);
+            building.loadSpriteV2("powerplant+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
-        building.loadSprite("powerplant+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
 
     this.getBaseIncome = function()

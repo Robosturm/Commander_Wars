@@ -1,4 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "objects/editorselection.h"
 #include "objects/base/moveinbutton.h"
@@ -29,21 +30,21 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
-    setHeight(Settings::getHeight() - 80);
-    setPosition(Settings::getWidth() - width, 80);
+    setHeight(oxygine::Stage::getStage()->getHeight() - 80);
+    setPosition(oxygine::Stage::getStage()->getWidth() - width, 80);
     if (smallScreen)
     {
         m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, width / 2, m_selectionHeight);
         m_BoxSelectionType = createV9Box(0, m_startHSelectionType, width / 2, m_selectionHeight);
         m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width / 2, m_selectionHeight + GameMap::getImageSize());
-        m_BoxPlacementSelection = createV9Box(width / 2, m_startHPlacementSize, width / 2, Settings::getHeight() -  80);
+        m_BoxPlacementSelection = createV9Box(width / 2, m_startHPlacementSize, width / 2, oxygine::Stage::getStage()->getHeight() -  80);
     }
     else
     {
         m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, width, m_selectionHeight);
         m_BoxSelectionType = createV9Box(0, m_startHSelectionType, width, m_selectionHeight);
         m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width, m_selectionHeight + GameMap::getImageSize());
-        m_BoxPlacementSelection = createV9Box(0, m_startHTerrain, width, Settings::getHeight() - m_startHTerrain - 80);
+        m_BoxPlacementSelection = createV9Box(0, m_startHTerrain, width, oxygine::Stage::getStage()->getHeight() - m_startHTerrain - 80);
     }
 
     m_PlacementSelectionClip = oxygine::spSlidingActor::create();
@@ -235,7 +236,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
 
     if (Settings::getSmallScreenDevice())
     {
-        setX(Settings::getWidth() - 1);
+        setX(oxygine::Stage::getStage()->getWidth() - 1);
         addChild(spMoveInButton::create(this, getScaledWidth()));
     }
 }

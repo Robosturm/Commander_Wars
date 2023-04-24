@@ -21,7 +21,26 @@ class DropDownmenuBase : public Tooltip
 public:
     explicit DropDownmenuBase(qint32 width, qint32 itemcount);
     virtual ~DropDownmenuBase() = default;
+    /**
+     * @brief setEnabled
+     * @param value
+     */
+    virtual void setEnabled(bool value) override;
+    /**
+     * @brief changeItemCount
+     * @param itemcount
+     */
+    void changeItemCount(qint32 itemcount);
+signals:
+    void sigItemChangedInternal(qint32 item);
 
+    void sigShowDropDown();
+    void sigHideDropDown();
+public slots:
+    virtual void itemChanged(qint32 item) = 0;
+    void showDropDown();
+    void hideDropDown();
+    virtual void focusedLost() override;
     /**
      * @brief getCurrentItem index of the current item
      * @return
@@ -40,28 +59,6 @@ public:
     {
         return m_Items.size();
     }
-    /**
-     * @brief setEnabled
-     * @param value
-     */
-    virtual void setEnabled(bool value) override;
-    /**
-     * @brief changeItemCount
-     * @param itemcount
-     */
-    void changeItemCount(qint32 itemcount);
-signals:
-    void sigItemChangedInternal(qint32 item);
-
-    void sigShowDropDown();
-    void sigHideDropDown();
-public slots:
-    virtual void itemChanged(qint32 item) = 0;
-
-public slots:
-    void showDropDown();
-    void hideDropDown();
-    virtual void focusedLost() override;
 protected:
     const QSize& addDropDownItem(oxygine::spActor item, qint32 id);
 protected:
@@ -72,5 +69,7 @@ protected:
     spPanel m_Panel;
     qint32 m_currentItem{0};
 };
+
+Q_DECLARE_INTERFACE(DropDownmenuBase, "DropDownmenuBase");
 
 #endif // DROPDOWNMENU_H

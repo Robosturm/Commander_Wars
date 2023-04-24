@@ -155,7 +155,10 @@ var Constructor = function()
                 {
                     return 70;
                 }
-                break;
+                else
+                {
+                    return 10;
+                }
             case GameEnums.PowerMode_Power:
                 if (boostUnit)
                 {

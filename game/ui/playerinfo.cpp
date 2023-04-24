@@ -232,9 +232,9 @@ void PlayerInfo::showTurnStartInfo(qint32 & yPos)
 {
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("turnStartInfo");
-    if (pAnim != nullptr)
+    Player* pPlayer = m_pMap->getPlayer(0);
+    if (pAnim != nullptr && pPlayer != nullptr)
     {
-        Player* pPlayer = m_pMap->getPlayer(0);
         qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setResAnim(pAnim);

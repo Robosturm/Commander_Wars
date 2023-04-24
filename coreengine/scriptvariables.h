@@ -25,6 +25,12 @@ public:
      */
     virtual void serializeObject(QDataStream& pStream) const override;
     /**
+     * @brief serializeObject
+     * @param pStream
+     * @param forHash
+     */
+    void serializeObject(QDataStream& pStream, bool forHash) const;
+    /**
      * @brief deserialize restores the object
      * @param pStream
      */

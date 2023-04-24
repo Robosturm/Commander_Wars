@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "multiplayer/dialogpasswordandadress.h"
 
 #include "coreengine/mainapp.h"
@@ -12,7 +14,7 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -25,30 +27,30 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     oxygine::spTextField pText = oxygine::spTextField::create();
     pText->setHtmlText(text);
     pText->setStyle(style);
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, Settings::getHeight() / 2 - 80);
+    pText->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pText->getTextRect().width() / 2, oxygine::Stage::getStage()->getHeight() / 2 - 80);
     pSpriteBox->addChild(pText);
 
     m_pTextbox = spTextbox::create(300);
-    m_pTextbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getScaledWidth() / 2, Settings::getHeight() / 2 - 40);
+    m_pTextbox->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pTextbox->getScaledWidth() / 2, oxygine::Stage::getStage()->getHeight() / 2 - 40);
     m_pTextbox->setCurrentText("");
     pSpriteBox->addChild(m_pTextbox);
 
     pText = oxygine::spTextField::create();
     pText->setHtmlText(tr("Password"));
     pText->setStyle(style);
-    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().width() / 2, Settings::getHeight() / 2);
+    pText->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pText->getTextRect().width() / 2, oxygine::Stage::getStage()->getHeight() / 2);
     pSpriteBox->addChild(pText);
 
     m_pPasswordbox = spPasswordbox::create(300);
-    m_pPasswordbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getScaledWidth() / 2, Settings::getHeight() / 2 + 40);
+    m_pPasswordbox->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pTextbox->getScaledWidth() / 2, oxygine::Stage::getStage()->getHeight() / 2 + 40);
     m_pPasswordbox->setCurrentText("");
     pSpriteBox->addChild(m_pPasswordbox);
 
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 + 10,
-                            Settings::getHeight() / 2 + 90);
+    m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10,
+                            oxygine::Stage::getStage()->getHeight() / 2 + 90);
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -61,8 +63,8 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
         }
     });
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_CancelButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() - 10,
-                                Settings::getHeight() / 2 + 90);
+    m_CancelButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_OkButton->getScaledWidth() - 10,
+                                oxygine::Stage::getStage()->getHeight() / 2 + 90);
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {

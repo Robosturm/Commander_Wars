@@ -48,32 +48,32 @@ void LoadingScreen::show()
         sprite->setResAnim(pBackground);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pBackground->getHeight()));
+        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
     }
     m_BackgroundBar = oxygine::spColorRectSprite::create();
-    m_BackgroundBar->setSize(Settings::getWidth(), 60);
-    m_BackgroundBar->setY(Settings::getHeight() - 60);
+    m_BackgroundBar->setSize(oxygine::Stage::getStage()->getWidth(), 60);
+    m_BackgroundBar->setY(oxygine::Stage::getStage()->getHeight() - 60);
     m_BackgroundBar->setColor(Qt::gray);
     addChild(m_BackgroundBar);
 
     m_LoadingBar = oxygine::spColorRectSprite::create();
-    m_LoadingBar->setSize(Settings::getWidth(), 60);
-    m_LoadingBar->setY(Settings::getHeight() - 60);
+    m_LoadingBar->setSize(oxygine::Stage::getStage()->getWidth(), 60);
+    m_LoadingBar->setY(oxygine::Stage::getStage()->getHeight() - 60);
     m_LoadingBar->setColor(Qt::red);
     addChild(m_LoadingBar);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
-    m_workText = spLabel::create(Settings::getWidth());
+    m_workText = spLabel::create(oxygine::Stage::getStage()->getWidth());
     m_workText->setStyle(style);
     m_workText->setX(0);
-    m_workText->setY(Settings::getHeight() / 2);
+    m_workText->setY(oxygine::Stage::getStage()->getHeight() / 2);
     addChild(m_workText);
-    m_loadingProgress = spLabel::create(Settings::getWidth());
+    m_loadingProgress = spLabel::create(oxygine::Stage::getStage()->getWidth());
     m_loadingProgress->setStyle(style);
-    m_loadingProgress->setPosition(0, Settings::getHeight() - 50);
+    m_loadingProgress->setPosition(0, oxygine::Stage::getStage()->getHeight() - 50);
     addChild(m_loadingProgress);
     m_workText->setHtmlText("Loading...");
     m_loadingProgress->setHtmlText("0 %");
@@ -86,7 +86,7 @@ void LoadingScreen::setProgress(QString workText, qint32 value)
     CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), GameConsole::eDEBUG);
     m_workText->setHtmlText(workText);
     m_loadingProgress->setHtmlText(QString::number(value) + " %");
-    m_LoadingBar->setWidth(value * Settings::getWidth() / 100);
+    m_LoadingBar->setWidth(value * oxygine::Stage::getStage()->getWidth() / 100);
     if (Mainapp::getInstance()->isMainThread())
     {
         QCoreApplication::processEvents();

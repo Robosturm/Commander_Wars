@@ -92,6 +92,7 @@ public:
         m_buffer.open(QIODevice::ReadWrite);
         m_buffer.seek(0);
         m_actionData << data;
+        m_modified = true;
     }
     /**
      * @brief readData
@@ -108,6 +109,11 @@ public:
         }
         return data;
     }
+    /**
+     * @brief getModified
+     * @return
+     */
+    bool getModified() const;
 
 public slots:
     inline QString getId()
@@ -240,6 +246,7 @@ private:
      */
     QBuffer m_buffer;
     QDataStream m_actionData{&m_buffer};
+    bool m_modified{false};
 };
 
 Q_DECLARE_INTERFACE(ScriptVariable, "ScriptVariable");

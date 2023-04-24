@@ -3,7 +3,6 @@
 UiManager::UiManager()
     : RessourceManagement<UiManager>("/images/ui/res.xml",
                                      "/ui",
-                                     true,
                                      false)
 {
     Interpreter::setCppOwnerShip(this);

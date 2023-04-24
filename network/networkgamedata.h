@@ -73,8 +73,14 @@ public:
     QVector<bool> getOnlineData() const;
     void setOnlineData(const QVector<bool> & newOnlineData);
 
-    QByteArray getMinimapData() const;
+    QByteArray & getMinimapData();
     void setMinimapData(const QByteArray & newMinimapData);
+
+    qint32 getObservers() const;
+    void setObservers(qint32 newObservers);
+
+    qint32 getMaxObservers() const;
+    void setMaxObservers(qint32 newMaxObservers);
 
 private:
     qint32 m_players{0};
@@ -94,6 +100,8 @@ private:
     qint64 m_uuid{0};
     QVector<bool> m_onlineData;
     QByteArray m_minimapData;
+    qint32 m_observers{0};
+    qint32 m_maxObservers{0};
 };
 
 #endif // NETWORKGAMEDATA_H

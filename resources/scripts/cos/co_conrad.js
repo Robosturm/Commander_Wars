@@ -295,7 +295,7 @@ var Constructor = function()
     {
         return [qsTr("You might be more experienced, but that doesn't mean I can't teach you a thing or two!"),
                 qsTr("I won't go down that easily! This battle isn't even close to being finished!"),
-                qsTr("You have a 0.001% chance of surviving this battle with me."),
+                qsTr("You have a 0.1% chance of surviving this battle with me."),
                 qsTr("My attack plan is perfect! I don't need luck!"),
                 qsTr("Your strategy doesn't quite add up to par with mine!"),
                 qsTr("I have all the information I need to turn this battle around.")];

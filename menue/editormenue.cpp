@@ -25,6 +25,7 @@
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/editor/dialogmodifyterrain.h"
 #include "objects/dialogs/editor/dialogviewmapstats.h"
+#include "objects/dialogs/customdialog.h"
 
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/label.h"
@@ -51,13 +52,13 @@ EditorMenue::EditorMenue()
     setObjectName("EditorMenue");
 #endif
     Mainapp* pApp = Mainapp::getInstance();
-    qint32 selectionWidth = Settings::getWidth() / 4;
+    qint32 selectionWidth = oxygine::Stage::getStage()->getWidth() / 4;
     bool smallScreen = Settings::getSmallScreenDevice();
     Interpreter::setCppOwnerShip(this);
     registerAtInterpreter();
     if (smallScreen)
     {
-        selectionWidth = Settings::getWidth() * 3 / 4;
+        selectionWidth = oxygine::Stage::getStage()->getWidth() * 3 / 4;
     }
     if (selectionWidth < 255)
     {
@@ -66,12 +67,12 @@ EditorMenue::EditorMenue()
     if (smallScreen)
     {
         m_autoScrollBorder = QRect(50, 135, 50, 50);
-        initSlidingActor(50, 125, Settings::getWidth() - 100, Settings::getHeight() - 175);
+        initSlidingActor(50, 125, oxygine::Stage::getStage()->getWidth() - 100, oxygine::Stage::getStage()->getHeight() - 175);
     }
     else
     {
         m_autoScrollBorder = QRect(50, 135, selectionWidth, 50);
-        initSlidingActor(50, 125, Settings::getWidth() - selectionWidth - 100, Settings::getHeight() - 175);
+        initSlidingActor(50, 125, oxygine::Stage::getStage()->getWidth() - selectionWidth - 100, oxygine::Stage::getStage()->getHeight() - 175);
     }
     m_mapSlidingActor->addChild(m_pMap);
     m_mapSliding->setLocked(true);
@@ -81,7 +82,7 @@ EditorMenue::EditorMenue()
     m_EditorSelection = spEditorSelection::create(selectionWidth, smallScreen, m_pMap.get());
     addChild(m_EditorSelection);
 
-    m_Topbar = spTopbar::create(0, Settings::getWidth());
+    m_Topbar = spTopbar::create(0, oxygine::Stage::getStage()->getWidth());
 
     pApp->getAudioManager()->clearPlayList();
     pApp->getAudioManager()->loadFolder("resources/music/mapeditor");
@@ -119,6 +120,8 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Edit terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain or building"));
     m_Topbar->addItem(tr("Edit players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
     m_Topbar->addItem(tr("Edit rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
+    m_Topbar->addItem(tr("Mass edit terrain"), "EDITBIOMES", 2, tr("Changes the biome or palettes of an area."));
+
     m_Topbar->addItem(tr("Optimize players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
     if (!Settings::getSmallScreenDevice())
     {
@@ -151,7 +154,7 @@ EditorMenue::EditorMenue()
         m_xyTextInfo->setPosition(8, 8);
         pButtonBox->addChild(m_xyTextInfo);
         pButtonBox->setSize(200, 50);
-        pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getScaledWidth()) - pButtonBox->getScaledWidth(), -4 + m_Topbar->getScaledHeight());
+        pButtonBox->setPosition((oxygine::Stage::getStage()->getWidth() - m_EditorSelection->getScaledWidth()) - pButtonBox->getScaledWidth(), -4 + m_Topbar->getScaledHeight());
         pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         addChild(pButtonBox);
     }
@@ -388,6 +391,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("TOGGLEGRID",          &EditorMenue::toggleGridLayout),
         MenuItem("TOGGLEMIDDLECROSS",   &EditorMenue::toggleMiddleCrossGrid),
         MenuItem("VIEWMAPSTATS",        &EditorMenue::viewMapStats),
+        MenuItem("EDITBIOMES",          &EditorMenue::showEditBiomes),
     };
     for (auto & item : qAsConst(items))
     {
@@ -398,6 +402,17 @@ void EditorMenue::clickedTopbar(QString itemID)
             break;
         }
     }
+}
+
+void EditorMenue::showEditBiomes()
+{
+    spCustomDialog dialog = spCustomDialog::create("", "ui/editor/mapEditBiomes.xml", this);
+    addChild(dialog);
+    connect(dialog.get(), &CustomDialog::sigFinished, this, [this]()
+    {
+        setFocused(true);
+    }, Qt::QueuedConnection);
+    setFocused(false);
 }
 
 void EditorMenue::viewMapStats()

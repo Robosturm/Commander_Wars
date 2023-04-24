@@ -1385,6 +1385,7 @@ void PlayerSelection::joinObserver(quint64 socketID)
                 client->setIsObserver(true);
             }
             sendPlayerReady(0);
+            sendOpenPlayerCount();
         }
         else
         {
@@ -1438,6 +1439,8 @@ void PlayerSelection::sendOpenPlayerCount()
         data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, getOpenPlayerCount());
         data.insert(JsonKeys::JSONKEY_USERNAMES, getUserNames());
         data.insert(JsonKeys::JSONKEY_ONLINEINFO, getOnlineInfo());
+        data.insert(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT, m_pMap->getGameRules()->getObserverList().size());
+        data.insert(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT, m_pMap->getGameRules()->getMultiplayerObserver());
         QJsonDocument doc(data);
         emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
@@ -1471,6 +1474,7 @@ QJsonArray PlayerSelection::getUserNames()
         else
         {
             CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+            usernames.append(pPlayer->getPlayerNameId());
         }
     }
     return usernames;
@@ -2050,6 +2054,7 @@ void PlayerSelection::disconnected(quint64 socketID)
                 {
                     // reopen all players
                     m_pMap->getPlayer(i)->setControlType(GameEnums::AiTypes_Open);
+                    m_pMap->getPlayer(i)->setPlayerNameId("");
                     DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
                     if (pDropDownmenu != nullptr)
                     {
@@ -2066,6 +2071,7 @@ void PlayerSelection::disconnected(quint64 socketID)
             auto & observer = gameRules->getObserverList();
             observer.removeAll(socketID);
         }
+        sendOpenPlayerCount();
     }
 }
 

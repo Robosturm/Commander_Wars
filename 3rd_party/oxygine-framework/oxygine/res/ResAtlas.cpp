@@ -60,14 +60,14 @@ namespace oxygine
         }
         else
         {
-            m_clamp2edge = false;
+            m_clamp2edge = true;
         }
     }
 
     spResAnim ResAtlas::createEmpty(const XmlWalker& walker, CreateResourceContext& context)
     {
         spResAnim ra = spResAnim::create(this);
-        ra->init(nullptr, 0, 0, walker.getScaleFactor(), context.m_addTransparentBorder);
+        ra->init(nullptr, 0, 0, walker.getScaleFactor());
         init_resAnim(ra, "", walker.getNode());
         ra->setParent(this);
         context.m_resources->add(ra);

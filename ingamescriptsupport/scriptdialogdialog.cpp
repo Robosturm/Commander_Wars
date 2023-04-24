@@ -1,6 +1,9 @@
 #include <QFileInfo>
 #include <QImage>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
+
 #include "ingamescriptsupport/scriptdialogdialog.h"
 
 #include "resource_management/objectmanager.h"
@@ -13,7 +16,6 @@
 #include "objects/base/dropdownmenusprite.h"
 #include "objects/base/dropdownmenucolor.h"
 
-#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     : m_Event(scriptEventDialog)
@@ -22,21 +24,21 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     m_pSpriteBox->setResAnim(pAnim);
-    m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    m_pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(m_pSpriteBox);
     m_pSpriteBox->setPosition(0, 0);
     m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    QSize size(Settings::getWidth() - 80, Settings::getHeight() - 120);
+    QSize size(oxygine::Stage::getStage()->getWidth() - 80, oxygine::Stage::getStage()->getHeight() - 120);
     m_Panel = spPanel::create(true, size, size);
     m_Panel->setPosition(30, 30);
     m_pSpriteBox->addChild(m_Panel);
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() - pOkButton->getScaledWidth() - 30,
-                           Settings::getHeight() - 10 - pOkButton->getScaledHeight());
+    pOkButton->setPosition(oxygine::Stage::getStage()->getWidth() - pOkButton->getScaledWidth() - 30,
+                           oxygine::Stage::getStage()->getHeight() - 10 - pOkButton->getScaledHeight());
     m_pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -45,7 +47,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
 
     // add Dialog button
     oxygine::spButton pDialogButton = pObjectManager->createButton(tr("add Dialog"), 150);
-    pDialogButton->setPosition(30, Settings::getHeight() - 10 - pDialogButton->getScaledHeight());
+    pDialogButton->setPosition(30, oxygine::Stage::getStage()->getHeight() - 10 - pDialogButton->getScaledHeight());
     m_pSpriteBox->addChild(pDialogButton);
     pDialogButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -53,8 +55,8 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     });
     // remove Dialog button
     oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("remove Last"), 150);
-    pRemoveButton->setPosition(Settings::getWidth() / 2 - pRemoveButton->getScaledWidth() / 2,
-                               Settings::getHeight() - 10 - pRemoveButton->getScaledHeight());
+    pRemoveButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pRemoveButton->getScaledWidth() / 2,
+                               oxygine::Stage::getStage()->getHeight() - 10 - pRemoveButton->getScaledHeight());
     m_pSpriteBox->addChild(pRemoveButton);
     pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
@@ -82,7 +84,7 @@ void ScriptDialogDialog::addItem()
 
 qint32 ScriptDialogDialog::getPanelWidth()
 {
-    qint32 panelWidth = Settings::getWidth();
+    qint32 panelWidth = oxygine::Stage::getStage()->getWidth();
     if (panelWidth < 1000)
     {
         panelWidth = 1000;
@@ -296,7 +298,7 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
         }
         oxygine::spResAnim pAnim = oxygine::spSingleResAnim::create();
         m_backgroundAnims[index] = pAnim;
-        Mainapp::getInstance()->loadResAnim(pAnim, image, 1, 1, 1, false);
+        Mainapp::getInstance()->loadResAnim(pAnim, image, 1, 1, 1);
         m_backgrounds[index]->setResAnim(pAnim.get());
         m_backgrounds[index]->setScaleX(60.0f / static_cast<float>(pAnim->getWidth()));
         m_backgrounds[index]->setScaleY(30.0f / static_cast<float>(pAnim->getHeight()));

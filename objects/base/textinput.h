@@ -52,3 +52,4 @@ protected:
     bool m_multiline{false};
 };
 
+Q_DECLARE_INTERFACE(TextInput, "TextInput");

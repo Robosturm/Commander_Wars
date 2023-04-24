@@ -170,14 +170,14 @@ void Tooltip::showTooltip()
             pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
             oxygine::spTextField pText = oxygine::spTextField::create();
             pText->setHtmlText(m_tooltipText);
-            pText->setWidth(Settings::getWidth() / 3);
+            pText->setWidth(oxygine::Stage::getStage()->getWidth() / 3);
             pText->setStyle(style);
             pText->setPosition(10, 10);
             pSpriteBox->addChild(pText);
             pSpriteBox->setSize(pText->getTextRect().size() + QSize(30, 30));
 
             oxygine::Stage::getStage()->addChild(m_Tooltip);
-            if (curPos.x() + 10 + pSpriteBox->getScaledWidth() + 5 > Settings::getWidth())
+            if (curPos.x() + 10 + pSpriteBox->getScaledWidth() + 5 > oxygine::Stage::getStage()->getWidth())
             {
                 m_Tooltip->setX(curPos.x() - 10 - pSpriteBox->getScaledWidth());
             }
@@ -185,7 +185,7 @@ void Tooltip::showTooltip()
             {
                 m_Tooltip->setX(curPos.x() + 10);
             }
-            if (curPos.y() + 10 + pSpriteBox->getScaledHeight() + 5 > Settings::getHeight())
+            if (curPos.y() + 10 + pSpriteBox->getScaledHeight() + 5 > oxygine::Stage::getStage()->getHeight())
             {
                 m_Tooltip->setY(curPos.y() - 10 - pSpriteBox->getScaledHeight());
             }

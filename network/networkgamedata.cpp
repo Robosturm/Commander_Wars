@@ -60,10 +60,12 @@ QJsonObject NetworkGameData::toJson() const
     QJsonArray onlineData;
     for (qint32 i = 0; i < m_onlineData.size(); ++i)
     {
-        onlineData.push_back(m_playerNames[i]);
+        onlineData.push_back(m_onlineData[i]);
     }
     obj.insert(JsonKeys::JSONKEY_ONLINEINFO, onlineData);
-    obj.insert(JsonKeys::JSONKEY_MINIMAPDATA, QString::fromUtf8(m_minimapData));
+    obj.insert(JsonKeys::JSONKEY_MINIMAPDATA, QString::fromLocal8Bit(m_minimapData));
+    obj.insert(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT, m_observers);
+    obj.insert(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT, m_maxObservers);
     return obj;
 }
 
@@ -97,7 +99,9 @@ void NetworkGameData::fromJson(const QJsonObject & obj)
     {
         m_onlineData.append(data.toBool());
     }
-    m_minimapData = obj.value(JsonKeys::JSONKEY_MINIMAPDATA).toString().toUtf8();
+    m_minimapData = obj.value(JsonKeys::JSONKEY_MINIMAPDATA).toString().toLocal8Bit();
+    m_observers = obj.value(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT).toInt();
+    m_maxObservers = obj.value(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT).toInt();
 }
 
 QString NetworkGameData::getMapName() const
@@ -230,7 +234,7 @@ void NetworkGameData::setOnlineData(const QVector<bool> & newOnlineData)
     m_onlineData = newOnlineData;
 }
 
-QByteArray NetworkGameData::getMinimapData() const
+QByteArray & NetworkGameData::getMinimapData()
 {
     return m_minimapData;
 }
@@ -238,6 +242,26 @@ QByteArray NetworkGameData::getMinimapData() const
 void NetworkGameData::setMinimapData(const QByteArray & newMinimapData)
 {
     m_minimapData = newMinimapData;
+}
+
+qint32 NetworkGameData::getObservers() const
+{
+    return m_observers;
+}
+
+void NetworkGameData::setObservers(qint32 newObservers)
+{
+    m_observers = newObservers;
+}
+
+qint32 NetworkGameData::getMaxObservers() const
+{
+    return m_maxObservers;
+}
+
+void NetworkGameData::setMaxObservers(qint32 newMaxObservers)
+{
+    m_maxObservers = newMaxObservers;
 }
 
 const QString &NetworkGameData::getSlaveSecondaryAddress() const

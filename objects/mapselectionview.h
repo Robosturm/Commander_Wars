@@ -84,6 +84,11 @@ public:
 
     spGameMap getCurrentMap() const;
     void setCurrentMap(spGameMap newCurrentMap);
+    /**
+     * @brief getMinimap
+     * @return
+     */
+    Minimap* getMinimap() const;
 
 public slots:
     void loadMap(const QFileInfo & info, bool fast = true);

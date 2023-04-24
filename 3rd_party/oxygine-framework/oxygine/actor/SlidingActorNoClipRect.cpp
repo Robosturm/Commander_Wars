@@ -94,8 +94,8 @@ namespace oxygine
         {
             return;
         }
-        qint32 w = std::max(0.0f, m_content->getWidth() * m_content->getScaleX() - getWidth());
-        qint32 h = std::max(0.0f, m_content->getHeight() * m_content->getScaleY() - getHeight());
+        qint32 w = std::max(0.0, m_content->getWidth() * m_content->getScaleX() - getWidth());
+        qint32 h = std::max(0.0, m_content->getHeight() * m_content->getScaleY() - getHeight());
         QRect bounds(-w, -h, w + 1, h + 1);
 
         m_drag.setDragBounds(bounds);

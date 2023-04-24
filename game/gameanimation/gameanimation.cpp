@@ -230,7 +230,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
             return;
         }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
-        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, frames, 1, true);
+        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, frames, 1);
         m_resAnims.append(pAnim);
         loadSpriteAnim(pAnim.get(), offsetX, offsetY, color, sleepAfterFinish, scaleX, scaleY, delay, loops, easeType);
     }
@@ -386,10 +386,11 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
 
 bool GameAnimation::onFinished(bool skipping)
 {
-    m_skipping |= skipping;
-    GameAnimationFactory::removeAnimationFromQueue(spGameAnimation(this));
-    if (m_skipping == skipping)
+    if (!m_finished)
     {
+        m_finished = true;
+        m_skipping |= skipping;
+        GameAnimationFactory::removeAnimationFromQueue(spGameAnimation(this));
         if (!m_started)
         {
             doPreAnimationCall();
@@ -418,19 +419,19 @@ bool GameAnimation::onFinished(bool skipping)
                                pInterpreter->newQObject(m_pMap)});
             pInterpreter->doFunction(m_jsPostActionObject, m_jsPostActionFunction, args);
         }
-    }
-    for (auto & tween : m_stageTweens)
-    {
-        tween->complete();
-    }
-    m_stageTweens.clear();
-    GameAnimationFactory::removeAnimation(this, m_skipping, false);
-    if (!skipping && GameAnimationFactory::getAnimationCount() > 0)
-    {
-        GameAnimationFactory::skipAllAnimations();
-        if (GameAnimationFactory::getAnimationCount() == 0)
+        for (auto & tween : m_stageTweens)
         {
-            emit GameAnimationFactory::getInstance()->animationsFinished();
+            tween->complete();
+        }
+        m_stageTweens.clear();
+        GameAnimationFactory::removeAnimation(this, m_skipping, false);
+        if (!skipping && GameAnimationFactory::getAnimationCount() > 0)
+        {
+            GameAnimationFactory::skipAllAnimations();
+            if (GameAnimationFactory::getAnimationCount() == 0)
+            {
+                emit GameAnimationFactory::getInstance()->animationsFinished();
+            }
         }
     }
     return true;
@@ -547,7 +548,7 @@ void GameAnimation::setStartOfAnimationCall(QString preActionObject, QString pre
 
 void GameAnimation::emitFinished()
 {
-    if (!m_skipping)
+    if (!m_finished)
     {
         emit sigFinished(m_skipping);
     }

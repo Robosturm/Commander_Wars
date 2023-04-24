@@ -106,7 +106,7 @@ public slots:
      * @param unitIds
      * @return
      */
-    float getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
+    qreal getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
     /**
      * @brief getGlobalCoZone
      * @return
@@ -155,7 +155,7 @@ public slots:
      * @param unitID
      * @return
      */
-    float getUnitBuildValue(const QString & unitID);
+    qreal getUnitBuildValue(const QString & unitID);
     /**
      * @brief getCOName
      * @return
@@ -266,13 +266,13 @@ public slots:
      * @param pUnit
      * @return
      */
-    float getEnemyRepairCostModifier(Unit* pUnit);
+    qreal getEnemyRepairCostModifier(Unit* pUnit);
     /**
      * @brief getRepairCostModifier
      * @param pUnit
      * @return
      */
-    float getRepairCostModifier(Unit* pUnit);
+    qreal getRepairCostModifier(Unit* pUnit);
     /**
      * @brief getTerrainDefenseModifier the bonus defense of this co for a terrain
      * @param pUnit the unit we want to get the bonus points from
@@ -351,7 +351,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    float getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+    qreal getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
                              Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getTrueDamage
@@ -363,7 +363,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    float getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+    qreal getTrueDamage(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
                         Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief canCounterAttack
@@ -592,7 +592,7 @@ public slots:
      * @param atkDamage
      * @param pDefender
      */
-    void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction);
+    void postBattleActions(Unit* pAttacker, qreal atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction);
     /**
      * @brief getVariables
      * @return
@@ -650,14 +650,14 @@ public slots:
      * @param bonus
      * @return
      */
-    float getAiCoUnitBonus(Unit* pUnit, bool & valid);
+    qreal getAiCoUnitBonus(Unit* pUnit, bool & valid);
     /**
      * @brief getAiCoBuildRatioModifier
      * @param pUnit
      * @param valid
      * @return
      */
-    float getAiCoBuildRatioModifier();
+    qreal getAiCoBuildRatioModifier();
     /**
      * @brief getPerkList
      * @return
@@ -789,9 +789,9 @@ public slots:
      * @brief getStarCost
      * @return
      */
-    float getStarCost();
+    qreal getStarCost();
 protected:
-    void limitPowerbar(float previousValue);
+    void limitPowerbar(qreal previousValue);
 
 private:
     void loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
@@ -806,7 +806,7 @@ private:
     QString m_coID;
     qint32 m_powerStars{0};
     qint32 m_superpowerStars{0};
-    double m_powerFilled{0.0};
+    qreal m_powerFilled{0.0};
     spUnit m_pCOUnit;
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
     ScriptVariables m_Variables;

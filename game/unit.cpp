@@ -22,7 +22,7 @@
 
 #include "menue/editormenue.h"
 
-static constexpr float FLOAT_PRECISION = 100.0f;
+static constexpr qreal FLOAT_PRECISION = 100.0f;
 
 Unit::Unit(GameMap* pMap)
     : m_pMap(pMap)
@@ -135,7 +135,7 @@ void Unit::applyMod()
     }
 }
 
-void Unit::postBattleActions(float damage, Unit* pUnit, bool gotAttacked, qint32 weapon, GameAction* pAction)
+void Unit::postBattleActions(qreal damage, Unit* pUnit, bool gotAttacked, qint32 weapon, GameAction* pAction)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "postBattleActions";
@@ -810,7 +810,7 @@ QString Unit::getTerrainAnimationBackground(Unit* pDefender)
     }
 }
 
-float Unit::getTerrainAnimationMoveSpeed()
+qreal Unit::getTerrainAnimationMoveSpeed()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationMoveSpeed";
@@ -923,9 +923,9 @@ bool Unit::isEnvironmentAttackable(QString terrainID)
     return false;
 }
 
-float Unit::getEnvironmentDamage(QString terrainID)
+qreal Unit::getEnvironmentDamage(QString terrainID)
 {
-    float damage = 0;
+    qreal damage = 0;
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     if (hasAmmo1() && !m_weapon1ID.isEmpty())
     {
@@ -933,7 +933,7 @@ float Unit::getEnvironmentDamage(QString terrainID)
     }
     if (hasAmmo2() && !m_weapon2ID.isEmpty())
     {
-        float damage2 = pWeaponManager->getEnviromentDamage(m_weapon2ID, terrainID);
+        qreal damage2 = pWeaponManager->getEnviromentDamage(m_weapon2ID, terrainID);
         if (damage2 > damage)
         {
             damage = damage2;
@@ -1472,10 +1472,10 @@ qint32 Unit::getTerrainDefense(qint32 x, qint32 y)
     return 0;
 }
 
-float Unit::getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
+qreal Unit::getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
                                QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
-    float bonus = 0;
+    qreal bonus = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
@@ -1491,10 +1491,10 @@ float Unit::getDamageReduction(GameAction* pAction, float damage, Unit* pAttacke
     return bonus;
 }
 
-float Unit::getTrueDamage(GameAction* pAction, float damage, QPoint position, qint32 attackerBaseHp,
+qreal Unit::getTrueDamage(GameAction* pAction, qreal damage, QPoint position, qint32 attackerBaseHp,
                           Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
-    float bonus = 0;
+    qreal bonus = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
@@ -1668,10 +1668,10 @@ qint32 Unit::getBonusDefensive(GameAction* pAction, QPoint position, Unit* pAtta
     }
     if (useTerrainDefense())
     {
-        float hpReductionMalus = 1.0f;
+        qreal hpReductionMalus = 1.0f;
         if ( m_pMap->getGameRules()->getHpDefenseReduction())
         {
-            hpReductionMalus = static_cast<float>(getHpRounded()) / MAX_UNIT_HP;
+            hpReductionMalus = static_cast<qreal>(getHpRounded()) / MAX_UNIT_HP;
         }
         bonus += getTerrainDefense(position.x(), position.y()) * m_pMap->getGameRules()->getTerrainDefense() * hpReductionMalus;
     }
@@ -1795,9 +1795,9 @@ qint32 Unit::getRepairBonus(QPoint position)
     return bonus;
 }
 
-float Unit::getRepairCostModifier()
+qreal Unit::getRepairCostModifier()
 {
-    float modifier = 1.0f;
+    qreal modifier = 1.0f;
     if (m_pMap != nullptr)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
@@ -2137,7 +2137,7 @@ void Unit::setFuel(const qint32 &value)
     {
         m_fuel = m_maxFuel;
     }
-    if (m_maxFuel > 0 && static_cast<float>(m_fuel) / static_cast<float>(m_maxFuel) <= Settings::getSupplyWarning())
+    if (m_maxFuel > 0 && static_cast<qreal>(m_fuel) / static_cast<qreal>(m_maxFuel) <= Settings::getSupplyWarning())
     {
         loadIcon("fuel", GameMap::getImageSize() / 2, 0);
     }
@@ -2199,7 +2199,7 @@ void Unit::setAmmo2(const qint32 &value)
     {
         m_ammo2 = m_maxAmmo2;
     }
-    if (m_maxAmmo2 > 0 && static_cast<float>(m_ammo2) / static_cast<float>(m_maxAmmo2) <= Settings::getSupplyWarning())
+    if (m_maxAmmo2 > 0 && static_cast<qreal>(m_ammo2) / static_cast<qreal>(m_maxAmmo2) <= Settings::getSupplyWarning())
     {
         if (m_weapon2ID.isEmpty())
         {
@@ -2266,7 +2266,7 @@ void Unit::setAmmo1(const qint32 &value)
         m_ammo1 = m_maxAmmo1;
     }
 
-    if (m_maxAmmo1 > 0 && static_cast<float>(m_ammo1) / static_cast<float>(m_maxAmmo1) <= Settings::getSupplyWarning())
+    if (m_maxAmmo1 > 0 && static_cast<qreal>(m_ammo1) / static_cast<qreal>(m_maxAmmo1) <= Settings::getSupplyWarning())
     {
         if (m_weapon1ID.isEmpty())
         {
@@ -2304,7 +2304,7 @@ void Unit::reduceAmmo1(qint32 value)
     }
 }
 
-float Unit::getHp() const
+qreal Unit::getHp() const
 {
     return m_hp;
 }
@@ -2314,9 +2314,9 @@ qint32 Unit::getHpRounded() const
     return GlobalUtils::roundUp(m_hp);
 }
 
-void Unit::setHp(const float &value)
+void Unit::setHp(const qreal &value)
 {
-    m_hp = GlobalUtils::roundTo(value, FLOAT_PRECISION);
+    m_hp = GlobalUtils::roundFloor(value, FLOAT_PRECISION);
     if (m_hp > MAX_UNIT_HP)
     {
         m_hp = MAX_UNIT_HP;
@@ -2327,20 +2327,20 @@ void Unit::setHp(const float &value)
     }
 }
 
-void Unit::setVirtualHpValue(const float &value)
+void Unit::setVirtualHpValue(const qreal &value)
 {
-    m_virtualHp = GlobalUtils::roundTo(value, FLOAT_PRECISION);
+    m_virtualHp = GlobalUtils::roundFloor(value, FLOAT_PRECISION);
 }
 
 
-float Unit::getVirtualHpValue() const
+qreal Unit::getVirtualHpValue() const
 {
     return m_virtualHp;
 }
 
-float Unit::getVirtualHp() const
+qreal Unit::getVirtualHp() const
 {
-    if (m_virtualHp > 0.0f)
+    if (m_virtualHp > 0.0)
     {
         return m_virtualHp;
     }
@@ -2554,7 +2554,7 @@ QString Unit::getUnitDamageID()
     return m_UnitID;
 }
 
-float Unit::getUnitDamage(const QString & weaponID)
+qreal Unit::getUnitDamage(const QString & weaponID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitDamage";
@@ -2564,9 +2564,9 @@ float Unit::getUnitDamage(const QString & weaponID)
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isNumber())
     {
-        return static_cast<float>(ret.toNumber());
+        return ret.toNumber();
     }
-    return -1;
+    return -1.0;
 }
 
 qint32 Unit::getX() const
@@ -2593,7 +2593,7 @@ qint32 Unit::getY() const
     }
 }
 
-void Unit::refill(bool noMaterial, float fuelAmount, float ammo1Amount, float ammo2Amount)
+void Unit::refill(bool noMaterial, qreal fuelAmount, qreal ammo1Amount, qreal ammo2Amount)
 {
     setFuel(m_fuel + m_maxFuel * fuelAmount);
     if (!(noMaterial && m_weapon1ID.isEmpty()))
@@ -3544,17 +3544,17 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
     return false;
 }
 
-float Unit::getBaseDamage(Unit* pEnemyUnit)
+qreal Unit::getBaseDamage(Unit* pEnemyUnit)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
-    float dmg = -1.0f;
+    qreal dmg = -1.0;
     if (!getWeapon1ID().isEmpty())
     {
         dmg = pWeaponManager->getBaseDamage(getWeapon1ID(), pEnemyUnit);
     }
     if (!getWeapon2ID().isEmpty())
     {
-        float dmg2 = pWeaponManager->getBaseDamage(getWeapon2ID(), pEnemyUnit);
+        qreal dmg2 = pWeaponManager->getBaseDamage(getWeapon2ID(), pEnemyUnit);
         if (dmg2 > dmg)
         {
             dmg = dmg2;
@@ -3587,7 +3587,7 @@ void Unit::serializeObject(QDataStream& pStream, bool forHash) const
     pStream << m_UnitID;
     if (forHash)
     {
-        pStream << GlobalUtils::roundToInt(m_hp, FLOAT_PRECISION);
+        pStream << GlobalUtils::roundFloorToInt(m_hp, FLOAT_PRECISION);
     }
     else
     {
@@ -3607,7 +3607,7 @@ void Unit::serializeObject(QDataStream& pStream, bool forHash) const
     }
     pStream << m_capturePoints;
     pStream << m_Hidden;
-    m_Variables.serializeObject(pStream);
+    m_Variables.serializeObject(pStream, forHash);
     pStream << m_IgnoreUnitCollision;
     if (!forHash)
     {
@@ -3735,7 +3735,16 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     qint32 bufAmmo1 = 0;
     qint32 bufAmmo2 = 0;
     qint32 bufFuel = 0;
-    pStream >> m_hp;
+    if (version > 22)
+    {
+        pStream >> m_hp;
+    }
+    else
+    {
+        float hp = 0.0f;
+        pStream >> hp;
+        m_hp = hp;
+    }
     pStream >> bufAmmo1;
     pStream >> bufAmmo2;
     pStream >> bufFuel;

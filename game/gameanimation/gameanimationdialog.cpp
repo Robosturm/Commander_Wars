@@ -1,5 +1,6 @@
 #include <QFile>
 
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
@@ -39,7 +40,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     m_TextMask = oxygine::spSprite::create();
     if (pAnim != nullptr)
     {
-        m_TextMask->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pAnim->getWidth()));
+        m_TextMask->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pAnim->getWidth()));
     }
     m_TextMask->setResAnim(pAnim);
     addChild(m_TextMask);
@@ -48,7 +49,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     m_TextBackground = oxygine::spSprite::create();
     if (pAnim != nullptr)
     {
-        m_TextBackground->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pAnim->getWidth()));
+        m_TextBackground->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pAnim->getWidth()));
     }
     m_TextBackground->setResAnim(pAnim);
     m_TextBackground->setPriority(1);
@@ -60,7 +61,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
 
     oxygine::spClipRectActor pRect = oxygine::spClipRectActor::create();
     pRect->setPosition(48 * 2 + 5, 6);
-    pRect->setSize(Settings::getWidth() - pRect->getX() - 5, 96);
+    pRect->setSize(oxygine::Stage::getStage()->getWidth() - pRect->getX() - 5, 96);
 
     m_TextField = oxygine::spTextField::create();
     m_TextField->setPosition(0, 0);
@@ -238,7 +239,7 @@ void GameAnimationDialog::setPositionTop(bool value)
     }
     else
     {
-        setY(Settings::getHeight() - m_TextBackground->getScaledHeight());
+        setY(oxygine::Stage::getStage()->getHeight() - m_TextBackground->getScaledHeight());
         m_BackgroundSprite->setY(-getY());
     }
 }
@@ -334,13 +335,13 @@ void GameAnimationDialog::loadBackground(const QString & file)
             img = QImage(oxygine::Resource::RCC_PREFIX_PATH + file);
         }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
-        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1, false);
+        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
         m_BackgroundAnim = pAnim;
         m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
         if (pAnim.get() != nullptr)
         {
-            m_BackgroundSprite->setScaleX(static_cast<float>(Settings::getWidth()) / static_cast<float>(pAnim->getWidth()));
-            m_BackgroundSprite->setScaleY(static_cast<float>(Settings::getHeight()) / static_cast<float>(pAnim->getHeight()));
+            m_BackgroundSprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pAnim->getWidth()));
+            m_BackgroundSprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pAnim->getHeight()));
         }
     }
     else

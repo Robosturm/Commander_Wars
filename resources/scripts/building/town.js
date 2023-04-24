@@ -7,18 +7,15 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
+        building.loadSpriteV2("town+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
         if (building.getOwnerID() >= 0 && !neutral)
         {
-            // none neutral player
-            building.loadSprite("town", false);
-            building.loadSpriteV2("town+mask", GameEnums.Recoloring_Matrix);
+            building.loadSpriteV2("town", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
         else
         {
-            // neutral player
-            building.loadSprite("town+neutral", false);
+            building.loadSpriteV2("town+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
-        building.loadSprite("town+shadow+" + BUILDING.getBuildingBaseTerrain(building, map), false);
     };
     this.constructionList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
                             "ARTILLERY", "LIGHT_TANK", "FLAK",

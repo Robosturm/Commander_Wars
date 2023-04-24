@@ -3,13 +3,13 @@
     <Panel>
         <x>10</x>
         <y>10</y>
-        <width>settings.getWidth() - 20</width>
-        <height>settings.getHeight() - 80</height>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
         <childs>
             <Label>
                 <x>10</x>
                 <y>10</y>
-                <width>settings.getWidth() - 100</width>
+                <width>settings.getStageWidth() - 100</width>
                 <text>ViewMapStats.getMapStatistics()</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -17,7 +17,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>settings.getWidth() - 100</width>
+                <width>settings.getStageWidth() - 100</width>
                 <text>ViewMapStats.getNeutralText()</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -45,7 +45,7 @@
                 <Label>
                     <x>10</x>
                     <y>lastY + lastHeight + 10</y>
-                    <width>settings.getWidth() - 100</width>
+                    <width>settings.getStageWidth() - 100</width>
                     <text>ViewMapStats.getPlayerText()</text>
                     <font>"main"</font>
                     <fontSize>48</fontSize>
@@ -53,7 +53,7 @@
                 <Label>
                     <x>10</x>
                     <y>lastY + lastHeight + 10</y>
-                    <width>settings.getWidth() - 100</width>
+                    <width>settings.getStageWidth() - 100</width>
                     <text>ViewMapStats.getBuildings()</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
@@ -80,7 +80,7 @@
                 <Label>
                     <x>10</x>
                     <y>lastY + lastHeight + 10</y>
-                    <width>settings.getWidth() - 100</width>
+                    <width>settings.getStageWidth() - 100</width>
                     <text>ViewMapStats.getUnits()</text>
                     <font>"main"</font>
                     <fontSize>24</fontSize>
@@ -108,7 +108,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>settings.getWidth() - 100</width>
+                <width>settings.getStageWidth() - 100</width>
                 <text>ViewMapStats.getTerrainText()</text>
                 <font>"main"</font>
                 <fontSize>48</fontSize>
@@ -134,8 +134,8 @@
         </childs>
     </Panel>
     <Button>
-        <x>settings.getWidth() / 2 - 75</x>
-        <y>settings.getHeight() - 60</y>
+        <x>settings.getStageWidth() / 2 - 75</x>
+        <y>settings.getStageHeight() - 60</y>
         <width>150</width>
         <text>ViewMapStats.getOk()</text>
         <tooltip>ViewMapStats.getOkTooltip()</tooltip>

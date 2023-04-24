@@ -65,7 +65,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 18;
+        return 19;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -156,7 +156,7 @@ public slots:
      * @param unitIds
      * @return
      */
-    float getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
+    qreal getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
     /**
      * @brief getControlType
      * @return this is the ai type set during game creation this may differ to the instanciated ai type during multiplayer matches
@@ -217,7 +217,7 @@ public slots:
      * @param unitID
      * @return
      */
-    float getUnitBuildValue(const QString & unitID);
+    qreal getUnitBuildValue(const QString & unitID);
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
      * @return
@@ -311,13 +311,13 @@ public slots:
      * @brief earnMoney earns money based on the buildings the player has
      * @param modifier multiplier additionaly modifying the income
      */
-    void earnMoney(float modifier = 1.0f);
+    void earnMoney(qreal modifier = 1.0f);
     /**
      * @brief calcIncome
      * @param modifier
      * @return
      */
-    qint32 calcIncome(float modifier = 1.0f) const;
+    qint32 calcIncome(qreal modifier = 1.0f) const;
     /**
      * @brief calcArmyValue
      * @return
@@ -464,7 +464,7 @@ public slots:
      * @param ownUnitValue value of own or allied units compared to enemy ones.
      * @return -1, -1 for no target found
      */
-    QPoint getRockettarget(qint32 radius, qint32 damage, float ownUnitValue = 1.2f, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
+    QPoint getRockettarget(qint32 radius, qint32 damage, qreal ownUnitValue = 1.2, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
     /**
      * @brief getSiloRockettarget
      * @param radius
@@ -474,7 +474,7 @@ public slots:
      * @param targetType
      * @return
      */
-    QPoint getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue = 1.2f, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
+    QPoint getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, qreal ownUnitValue = 1.2, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
     /**
      * @brief getRocketTargetDamage
      * @param x
@@ -485,7 +485,7 @@ public slots:
      * @param targetType
      * @return
      */
-    qint32 getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType, bool ignoreStealthed);
+    qint32 getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, qreal ownUnitValue, GameEnums::RocketTarget targetType, bool ignoreStealthed);
     /**
      * @brief defineArmy defines our army sprites based on the current co at position 0
      */
@@ -494,7 +494,7 @@ public slots:
      * @brief getFundsModifier
      * @return
      */
-    float getFundsModifier() const;
+    qreal getFundsModifier() const;
     /**
      * @brief getPowerChargeBonus
      * @return
@@ -504,7 +504,7 @@ public slots:
      * @brief setFundsModifier
      * @param value
      */
-    void setFundsModifier(float value);
+    void setFundsModifier(qreal value);
     /**
      * @brief calculatePlayerStrength
      * @return
@@ -562,7 +562,7 @@ public slots:
      * @param pAttacker
      * @param pDefender
      */
-    void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction);
+    void postBattleActions(Unit* pAttacker, qreal atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction);
     /**
      * @brief updatePlayerVision updates the current vision of this player.
      * @brief reduces the timer for vision created for several turns
@@ -661,13 +661,13 @@ public slots:
      * @param pUnit
      * @return
      */
-    float getEnemyRepairCostModifier(Unit* pUnit);
+    qreal getEnemyRepairCostModifier(Unit* pUnit);
     /**
      * @brief getBonusRepairCostModifier
      * @param pUnit
      * @return
      */
-    float getRepairCostModifier(Unit* pUnit);
+    qreal getRepairCostModifier(Unit* pUnit);
 private:
     /**
      * @brief loadTable
@@ -721,7 +721,7 @@ protected:
 
 private:
     qint32 m_funds{0};
-    float m_fundsModifier{1.0f};
+    qreal m_fundsModifier{1.0};
 
     QColor m_Color;
 #ifdef GRAPHICSUPPORT

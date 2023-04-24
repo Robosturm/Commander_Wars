@@ -7,16 +7,14 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
+        building.loadSpriteV2("oilrig+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
         if (building.getOwnerID() >= 0 && !neutral)
         {
-            // none neutral player
-            building.loadSprite("oilrig", false);
-            building.loadSpriteV2("oilrig+mask", GameEnums.Recoloring_Matrix);
+            building.loadSpriteV2("oilrig", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
         else
         {
-            // neutral player
-            building.loadSprite("oilrig+neutral", false);
+            building.loadSpriteV2("oilrig+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
     };
     this.baseTerrain = ["LAKE", "SEA", "PLAINS", "SNOW", "WASTE", "DESERT"];

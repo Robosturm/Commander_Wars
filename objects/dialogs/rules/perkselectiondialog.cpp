@@ -1,3 +1,5 @@
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+
 #include "objects/dialogs/rules/perkselectiondialog.h"
 
 #include "resource_management/objectmanager.h"
@@ -29,7 +31,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     m_pSpriteBox->setResAnim(pAnim);
-    m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
+    m_pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(m_pSpriteBox);
     m_pSpriteBox->setPosition(0, 0);
     m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -37,8 +39,8 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
-                            Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+    m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_OkButton->getScaledWidth() / 2,
+                            oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
     m_pSpriteBox->addChild(m_OkButton);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -92,7 +94,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
         });
         connect(this, &PerkSelectionDialog::sigSelectRandomPerks, this, &PerkSelectionDialog::selectRandomPerks, Qt::QueuedConnection);
 
-        m_perkInfo = spLabel::create(Settings::getWidth() - 100);
+        m_perkInfo = spLabel::create(oxygine::Stage::getStage()->getWidth() - 100);
         m_perkInfo->setPosition(30, 70);
         m_pSpriteBox->addChild(m_perkInfo);
     }
@@ -100,13 +102,13 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
     QSize size;
     if (banning)
     {
-        size = QSize(Settings::getWidth() - 60,
-                    Settings::getHeight() - 40 * 3 - m_OkButton->getScaledHeight());
+        size = QSize(oxygine::Stage::getStage()->getWidth() - 60,
+                    oxygine::Stage::getStage()->getHeight() - 40 * 3 - m_OkButton->getScaledHeight());
     }
     else
     {
-        size = QSize(Settings::getWidth() - 60,
-                    Settings::getHeight() - 40 * 5 - m_OkButton->getScaledHeight());
+        size = QSize(oxygine::Stage::getStage()->getWidth() - 60,
+                    oxygine::Stage::getStage()->getHeight() - 40 * 5 - m_OkButton->getScaledHeight());
     }
     m_pPanel = spPanel::create(true, size, size);
     if (banning)
@@ -127,7 +129,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
     pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     m_pPanel->addItem(pLabel);
 
-    m_pPerkSelection = spPerkSelection::create(firstCO, Settings::getWidth() - 80, m_pMap->getGameRules()->getMaxPerkCost(), m_pMap->getGameRules()->getMaxPerkCount(), banning, hiddenList, m_pMap);
+    m_pPerkSelection = spPerkSelection::create(firstCO, oxygine::Stage::getStage()->getWidth() - 80, m_pMap->getGameRules()->getMaxPerkCost(), m_pMap->getGameRules()->getMaxPerkCount(), banning, hiddenList, m_pMap);
     m_pPerkSelection->setY(pLabel->getY() + pLabel->getTextRect().height() + 10);
     m_pPanel->addItem(m_pPerkSelection);
     m_pPanel->setContentHeigth(m_pPerkSelection->getScaledHeight() + m_pPerkSelection->getY() + 40);
@@ -136,12 +138,12 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
 
     if (banning)
     {
-        m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
-                                Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+        m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() - m_OkButton->getScaledWidth() - 30,
+                                oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
 
         m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
         m_CancelButton->setPosition(30,
-                                    Settings::getHeight() - 30 - m_CancelButton->getScaledHeight());
+                                    oxygine::Stage::getStage()->getHeight() - 30 - m_CancelButton->getScaledHeight());
         m_pSpriteBox->addChild(m_CancelButton);
         m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
@@ -149,8 +151,8 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
         });
 
         m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-        m_ToggleAll->setPosition(Settings::getWidth() / 2 + 10,
-                                 Settings::getHeight() - 75 - m_ToggleAll->getScaledHeight());
+        m_ToggleAll->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10,
+                                 oxygine::Stage::getStage()->getHeight() - 75 - m_ToggleAll->getScaledHeight());
         m_pSpriteBox->addChild(m_ToggleAll);
         m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
         {
@@ -161,13 +163,13 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
     }
     else
     {
-        m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getScaledWidth() - 30,
-                                Settings::getHeight() - 30 - m_OkButton->getScaledHeight());
+        m_OkButton->setPosition(oxygine::Stage::getStage()->getWidth() - m_OkButton->getScaledWidth() - 30,
+                                oxygine::Stage::getStage()->getHeight() - 30 - m_OkButton->getScaledHeight());
         connect(m_pPerkSelection.get(), &PerkSelection::sigViewPerkUpdate, this, &PerkSelectionDialog::perkViewUpdated, Qt::QueuedConnection);
     }
     m_pSave = pObjectManager->createButton(tr("Save"), 150);
-    m_pSave->setPosition(Settings::getWidth() / 2 + 10,
-                         Settings::getHeight() - 30 - m_pSave->getScaledHeight());
+    m_pSave->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 10,
+                         oxygine::Stage::getStage()->getHeight() - 30 - m_pSave->getScaledHeight());
     m_pSave->addClickListener([this](oxygine::Event*)
     {
         emit sigShowSavePerklist();
@@ -175,7 +177,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
     m_pSpriteBox->addChild(m_pSave);
 
     oxygine::spButton pDelete = pObjectManager->createButton(tr("Delete"), 150);
-    pDelete->setPosition(Settings::getWidth() / 2 - pDelete->getScaledWidth() - 10,
+    pDelete->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pDelete->getScaledWidth() - 10,
                          m_pSave->getY());
     pDelete->addClickListener([this](oxygine::Event*)
     {
@@ -369,8 +371,8 @@ void PerkSelectionDialog::updatePredefinedList()
     QString path = getFilepath();
     auto items = getNameList(path);
     m_PredefinedLists = spDropDownmenu::create(260, items);
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2  - m_PredefinedLists->getScaledWidth() - 10,
-                                   Settings::getHeight() - 75 - m_pSave->getScaledHeight());
+    m_PredefinedLists->setPosition(oxygine::Stage::getStage()->getWidth() / 2  - m_PredefinedLists->getScaledWidth() - 10,
+                                   oxygine::Stage::getStage()->getHeight() - 75 - m_pSave->getScaledHeight());
     m_pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::setPerkBannlist, Qt::QueuedConnection);
 }

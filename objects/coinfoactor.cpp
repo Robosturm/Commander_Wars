@@ -1,4 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 #include "objects/coinfoactor.h"
 
@@ -50,9 +51,9 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     addChild(m_COName);
 
     m_pCurrentCO = oxygine::spSprite::create();
-    m_pCurrentCO->setScale(static_cast<float>(Settings::getHeight() - 200) / 352.0f);
+    m_pCurrentCO->setScale(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 200) / 352.0f);
     m_pCurrentCO->setSize(208, 352);
-    m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), m_COName->getY() + m_COName->getTextRect().height() + 10);
+    m_pCurrentCO->setPosition(oxygine::Stage::getStage()->getWidth() - 120 - m_pCurrentCO->getScaledWidth(), m_COName->getY() + m_COName->getTextRect().height() + 10);
     addChild(m_pCurrentCO);
 
 

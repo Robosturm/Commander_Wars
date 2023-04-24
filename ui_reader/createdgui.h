@@ -5,6 +5,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "coreengine/scriptvariables.h"
 
+class UiFactory;
 class CreatedGui;
 using spCreatedGui = oxygine::intrusive_ptr<CreatedGui>;
 
@@ -20,6 +21,12 @@ public:
     TClass* getCastedObject(const QString & id)
     {
         return oxygine::safeCast<TClass*>(getObject(id));
+    }
+    virtual oxygine::spActor loadCustomId(const QString & item, qint32 x, qint32 y, bool enabled, bool visible, float scale,
+                                          const QString & id, const QString & tooltip, const QString & onEvent,
+                                          UiFactory* pFactoty, CreatedGui* pMenu, qint32 loopIdx, qint32 & scaledWidth, qint32 & scaledHeight)
+    {
+        return oxygine::spActor();
     }
 signals:
     void sigOnUpdate();

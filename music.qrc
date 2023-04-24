@@ -153,5 +153,8 @@
         <file>resources/music/victorymenue/victory+8.mp3</file>
         <file>resources/music/victorymenue/victory+9.mp3</file>
         <file>resources/music/cos/davis.mp3</file>
+        <file>resources/music/generatorMenu/generatormenu+0.mp3</file>
+        <file>resources/music/generatorMenu/generatormenu+1.mp3</file>
+        <file>resources/music/generatorMenu/generatormenu+2.mp3</file>
     </qresource>
 </RCC>

@@ -44,7 +44,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
         auto & item = m_BuildingData[index];
         CONSOLE_PRINT("HeavyAi::buildUnits " + item.buildingDataInput[item.m_selectedData].unitId + " with scored value " + QString::number(bestScore), GameConsole::eDEBUG);
         m_updatePoints.push_back(item.m_action->getTarget());
-        emit performAction(item.m_action);
+        emit sigPerformAction(item.m_action);
         item.m_action = nullptr;
         item.m_score = 0;
         if (item.buildingDataInput[item.m_selectedData].unitBuildingDataInput[BuildingEntry::CanAttackImmuneUnitRatio] > 0 ||

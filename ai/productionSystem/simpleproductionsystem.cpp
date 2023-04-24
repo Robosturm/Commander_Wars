@@ -149,13 +149,13 @@ void SimpleProductionSystem::updateIslandSizeForBuildings(QmlVectorBuilding* pBu
         {
             qint32 x = pBuilding->getX();
             qint32 y = pBuilding->getY();
-            float averageCount = 0;
+            qreal averageCount = 0;
             QStringList prodList = pBuilding->getConstructionList();
             auto & item = m_averageMoverange[pBuilding.get()];
             for (const auto & unitId : prodList)
             {
                 spUnit pUnit = spUnit::create(unitId, m_owner->getPlayer(), false, m_owner->getMap());
-                float islandSize = m_owner->getIslandSize(pUnit.get(), x, y);
+                qreal islandSize = m_owner->getIslandSize(pUnit.get(), x, y);
                 item.averageValue += islandSize;
                 item.islandSizes[unitId] = islandSize;
                 ++averageCount;
@@ -200,7 +200,7 @@ void SimpleProductionSystem::addInitialProduction(const QStringList & unitIds, q
     m_initialProduction.push_back(item);
 }
 
-void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, float distribution, qint32 buildMode, const QString & guardCondition, float maxUnitDistribution)
+void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, qreal distribution, qint32 buildMode, const QString & guardCondition, qreal maxUnitDistribution)
 {
     if (unitIds.length() == chance.length())
     {
@@ -243,7 +243,7 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, c
     }
 }
 
-bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode, float minAverageIslandSize)
+bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode, qreal minAverageIslandSize)
 {
     bool success = false;
     GameMap* pMap = m_owner->getMap();
@@ -416,7 +416,7 @@ qint32 SimpleProductionSystem::getProductionFromList(const QStringList & unitIds
 
 void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode)
 {
-    QMap<QString, float> unitCounts;
+    QMap<QString, qreal> unitCounts;
     for (auto & unit : pUnits->getVector())
     {
         auto unitId = unit->getUnitID();
@@ -429,11 +429,11 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
         }
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
-    float totalUnitCount = pUnits->size();
-    float totalDistributionCount = 0.0f;
+    qreal totalUnitCount = pUnits->size();
+    qreal totalDistributionCount = 0.0;
     for (const auto& [key, value] : m_activeBuildDistribution)
     {
-        float distribution = 0.0f;
+        qreal distribution = 0.0;
         if (unitCounts.contains(key))
         {
             distribution = unitCounts[key] / totalUnitCount;
@@ -477,7 +477,7 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
             return lhs.distribution.distribution / totalDistributionCount - lhs.currentValue > rhs.distribution.distribution / totalDistributionCount - rhs.currentValue;
         }
     });
-    CONSOLE_PRINT("Created builddsitribution minMode=" + QString::number(minBuildMode) + " maxMode=" + QString::number(maxBuildMode) + " found items=" + QString::number(buildDistribution.size()), GameConsole::eDEBUG);
+    CONSOLE_PRINT("Created builddistribution minMode=" + QString::number(minBuildMode) + " maxMode=" + QString::number(maxBuildMode) + " found items=" + QString::number(buildDistribution.size()), GameConsole::eDEBUG);
 }
 
 bool SimpleProductionSystem::getInit() const
@@ -485,7 +485,7 @@ bool SimpleProductionSystem::getInit() const
     return m_init;
 }
 
-bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString unitId, float minAverageIslandSize)
+bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize)
 {
     bool success = false;
     for (auto & pBuilding : pBuildings->getVector())
@@ -531,7 +531,7 @@ bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
                         if (pAction->canBePerformed())
                         {
                             CONSOLE_PRINT("Building unit " + unitId + " at x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
-                            emit m_owner->performAction(pAction);
+                            emit m_owner->sigPerformAction(pAction);
                             return true;
                         }
                     }

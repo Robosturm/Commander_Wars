@@ -32,13 +32,6 @@ public:
     virtual void update(const oxygine::UpdateState& us) override;
 
     virtual void setWidth(qint32 w) override;
-    float getScrollspeed() const;
-    void setScrollspeed(float Scrollspeed);
-
-    float getScrollvalue() const;
-    void setScrollvalue(float Scrollvalue);
-    bool getSliding() const;
-    void setSliding(bool sliding);
     /**
      * @brief setEnabled
      * @param value
@@ -67,6 +60,13 @@ signals:
 public slots:
     void changeScrollValue(float value);
     virtual void focusedLost() override;
+    float getScrollspeed() const;
+    void setScrollspeed(float Scrollspeed);
+
+    float getScrollvalue() const;
+    void setScrollvalue(float Scrollvalue);
+    bool getSliding() const;
+    void setSliding(bool sliding);
 private:
     void scroll(oxygine::Event* pEvent);
 private:
@@ -84,5 +84,7 @@ private:
     oxygine::spButton m_pArrowRigth;
     oxygine::spButton m_pArrowLeft;
 };
+
+Q_DECLARE_INTERFACE(V_Scrollbar, "V_Scrollbar");
 
 #endif // V_SCROLLBAR_H

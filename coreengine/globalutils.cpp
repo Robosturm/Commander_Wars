@@ -47,13 +47,13 @@ quint32 GlobalUtils::getSeed()
     return m_pInstace->m_seed;
 }
 
-qint32 GlobalUtils::randInt(qint32 low, qint32 high)
+qint32 GlobalUtils::randInt(qint32 low, qint32 high, bool forceUnseeded)
 {
     if (high <= low)
     {
         return low;
     }
-    if (m_pInstace->m_useSeed)
+    if (m_pInstace->m_useSeed && !forceUnseeded)
     {
         return m_pInstace->m_randGenerator.bounded(low, high + 1);
     }
@@ -63,13 +63,13 @@ qint32 GlobalUtils::randInt(qint32 low, qint32 high)
     }
 }
 
-float GlobalUtils::randFloat(float low, float high)
+float GlobalUtils::randFloat(float low, float high, bool forceUnseeded)
 {
     if (high <= low)
     {
         return low;
     }
-    if (m_pInstace->m_useSeed)
+    if (m_pInstace->m_useSeed && !forceUnseeded)
     {
         return m_pInstace->m_randGenerator.bounded(high - low + 0.00001f) + low;
     }
@@ -79,13 +79,13 @@ float GlobalUtils::randFloat(float low, float high)
     }
 }
 
-double GlobalUtils::randDouble(double low, double high)
+qreal GlobalUtils::randDouble(qreal low, qreal high, bool forceUnseeded)
 {
     if (high <= low)
     {
         return low;
     }
-    if (m_pInstace->m_useSeed)
+    if (m_pInstace->m_useSeed && !forceUnseeded)
     {
         return m_pInstace->m_randGenerator.bounded(high - low + 0.00001) + low;
     }
@@ -113,7 +113,7 @@ float GlobalUtils::randFloatBase(float low, float high)
     return QRandomGenerator::global()->bounded(high - low + 0.00001f) + low;
 }
 
-double GlobalUtils::randDoubleBase(double low, double high)
+qreal GlobalUtils::randDoubleBase(qreal low, qreal high)
 {
     if (high <= low)
     {
@@ -122,7 +122,7 @@ double GlobalUtils::randDoubleBase(double low, double high)
     return QRandomGenerator::global()->bounded(high - low + 0.00001) + low;
 }
 
-qint32 GlobalUtils::roundUp(float value)
+qint32 GlobalUtils::roundUp(qreal value)
 {
     qint32 roundDown = static_cast<qint32>(value);
     // little cheat
@@ -157,7 +157,7 @@ qint32 GlobalUtils::roundUpInt(qint32 numToRound, qint32 multiple)
     return numToRound + multiple - remainder;
 }
 
-qint32 GlobalUtils::roundDown(float value)
+qint32 GlobalUtils::roundDown(qreal value)
 {
     qint32 roundDown = static_cast<qint32>(value);
     return roundDown;
@@ -166,19 +166,16 @@ qint32 GlobalUtils::roundDown(float value)
 QmlVectorPoint* GlobalUtils::getCircle(qint32 min, qint32 max)
 {
     QmlVectorPoint* ret = new QmlVectorPoint();
-    qint32 x2 = 0;
-    qint32 y2 = 0;
-
     for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
     {
-        x2 = -currentRadius;
-        y2 = 0;
         if (currentRadius == 0)
         {
             ret->append(QPoint(0, 0));
         }
         else
         {
+            qint32 x2 = -currentRadius;
+            qint32 y2 = 0;
             for (qint32 i = 0; i < currentRadius; ++i)
             {
                 x2 += 1;
@@ -520,22 +517,32 @@ QVector<qint32> GlobalUtils::calcWidths(const QVector<qint32> & maxWidths, const
     return ret;
 }
 
-float GlobalUtils::roundTo(float value, float precision)
+float GlobalUtils::roundFloor(float value, float precision)
 {
     return qFloor(value * precision) / precision;
 }
 
-double GlobalUtils::roundTo(double value, double precision)
+double GlobalUtils::roundFloor(double value, double precision)
 {
     return qFloor(value * precision) / precision;
 }
 
-qint32 GlobalUtils::roundToInt(float value, float precision)
+float GlobalUtils::roundCeil(float value, float precision)
+{
+    return qCeil(value * precision) / precision;
+}
+
+double GlobalUtils::roundCeil(double value, double precision)
+{
+    return qCeil(value * precision) / precision;
+}
+
+qint32 GlobalUtils::roundFloorToInt(float value, float precision)
 {
     return qFloor(value * precision);
 }
 
-qint32 GlobalUtils::roundToInt(double value, float precision)
+qint32 GlobalUtils::roundFloorToInt(qreal value, qreal precision)
 {
     return qFloor(value * precision);
 }
