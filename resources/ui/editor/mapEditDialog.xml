@@ -18,7 +18,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 20</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Name:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -26,7 +26,7 @@
             <Textbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>settings.getStageWidth() - 310</width>
+                <width>settings.getStageWidth() - 360</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The name of the map.")</tooltip>
                 <startValue>mapEdit.getMapName()</startValue>
                 <onEvent>mapEdit.setMapName(input)</onEvent>
@@ -34,7 +34,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Author:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -42,7 +42,7 @@
             <Textbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>settings.getStageWidth() - 310</width>
+                <width>settings.getStageWidth() - 360</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The author of the map.")</tooltip>
                 <startValue>mapEdit.getMapAuthor()</startValue>
                 <onEvent>mapEdit.setMapAuthor(input)</onEvent>
@@ -50,7 +50,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Description:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -58,7 +58,7 @@
             <Textbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>settings.getStageWidth() - 310</width>
+                <width>settings.getStageWidth() - 360</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The description for the map.")</tooltip>
                 <startValue>mapEdit.getMapDescription()</startValue>
                 <onEvent>mapEdit.setMapDescription(input)</onEvent>
@@ -66,7 +66,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Script:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -75,7 +75,7 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <Id>"ScriptTextbox"</Id>
-                <width>settings.getStageWidth() - 470</width>
+                <width>settings.getStageWidth() - 520</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The relative path from the exe to the script associated with this map.")</tooltip>
                 <startValue>mapEdit.getMapScript()</startValue>
                 <onEvent>mapEdit.setMapScript(input)</onEvent>
@@ -91,7 +91,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Player:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -110,7 +110,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Width:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -118,7 +118,7 @@
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>200</width>
+                <width>250</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The width of the map.")</tooltip>
                 <startValue>mapEdit.getMapWidth()</startValue>
                 <infinite>0</infinite>
@@ -129,7 +129,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Height:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -137,7 +137,7 @@
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>200</width>
+                <width>250</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The heigth of the map.")</tooltip>
                 <startValue>mapEdit.getMapHeight()</startValue>
                 <infinite>1</infinite>
@@ -156,7 +156,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Turn Limit:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -164,7 +164,7 @@
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>200</width>
+                <width>250</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The amount of turns in which the map needs to be finished to get a maximum score.")</tooltip>
                 <startValue>mapEdit.getMapTurnLimit()</startValue>
                 <infinite>-1</infinite>
@@ -175,7 +175,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Deploy Limit:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -183,7 +183,7 @@
             <Spinbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>200</width>
+                <width>250</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","The amount of units allowed to be deploayed to get a maximum score.")</tooltip>
                 <startValue>mapEdit.getMapDeployLimit()</startValue>
                 <infinite>-1</infinite>
@@ -202,7 +202,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Predeployed:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -225,7 +225,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Mixed bases:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -240,7 +240,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Symetric:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -255,7 +255,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","PvP:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -270,7 +270,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","FTA:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -285,7 +285,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Versus AI:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -300,7 +300,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Team Play:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -315,7 +315,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Historical:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -338,7 +338,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Low funds:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -353,7 +353,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","High funds:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -376,7 +376,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Naval map:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -391,7 +391,22 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Amphibious map:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as amphibious map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Amphibious)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Amphibious, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Ground map:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -406,7 +421,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Air map:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>
@@ -421,7 +436,7 @@
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>200</width>
+                <width>250</width>
                 <text>QT_TRANSLATE_NOOP("GAME","Scripted map:")</text>
                 <font>"main"</font>
                 <fontSize>24</fontSize>

@@ -166,6 +166,7 @@ void GameEnums::registerEnums()
     value.setProperty("MapFilterFlags_Ground", MapFilterFlags_Ground);
     value.setProperty("MapFilterFlags_Air", MapFilterFlags_Air);
     value.setProperty("MapFilterFlags_Scripted", MapFilterFlags_Scripted);
+    value.setProperty("MapFilterFlags_Amphibious", MapFilterFlags_Amphibious);
 
     value.setProperty("FlowDirections_North", FlowDirections_North);
     value.setProperty("FlowDirections_South", FlowDirections_South);
