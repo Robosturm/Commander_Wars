@@ -72,6 +72,16 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigExitMenue, this, &LobbyMenu::exitMenue, Qt::QueuedConnection);
 
+    m_pOtherButton = ObjectManager::createButton(tr("Other"));
+    addChild(m_pOtherButton);
+    m_pOtherButton->setPosition(10, pButtonExit->getY() - pButtonExit->getScaledHeight() - 10);
+    m_pOtherButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
+    {
+        emit sigOther();
+    });
+    connect(this, &LobbyMenu::sigOther, this, &LobbyMenu::showOther, Qt::QueuedConnection);
+    m_pOtherButton->setEnabled(false);
+
     oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Direct Host"), 220);
     addChild(pButtonHost);
     pButtonHost->setPosition(oxygine::Stage::getStage()->getWidth() - pButtonHost->getScaledWidth() - 10,
@@ -333,6 +343,7 @@ void LobbyMenu::enableServerButtons(bool enable)
     m_pNextStepButton->setEnabled(enable);
     m_pPreviousStepButton->setEnabled(enable);
     m_pStartStepButton->setEnabled(enable);
+    m_pOtherButton->setEnabled(enable);
 }
 
 void LobbyMenu::leaveServer()
@@ -946,4 +957,10 @@ void LobbyMenu::showEnd()
 {
     m_gameIndex = m_serverCurrentMatchCount - (m_serverCurrentMatchCount % REQUEST_COUNT);
     requestUserUpdateGames();
+}
+
+void LobbyMenu::showOther()
+{
+    spCustomDialog pDialog = spCustomDialog::create("", "resources/ui/multiplayer/lobbyOther.xml", this, tr("Close"));
+    addChild(pDialog);
 }

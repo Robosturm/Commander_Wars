@@ -13,7 +13,8 @@
 
 IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QString movementType)
       : m_pOwner(pOwner),
-        m_pMap(pMap)
+        m_pMap(pMap),
+        m_MovementType(movementType)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("IslandMap");
@@ -32,7 +33,7 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QStr
         }
         spUnit pUnit = spUnit::create(unitID, pOwner, false, pMap);
         pUnit->setIgnoreUnitCollision(true);
-        if (movementType.isEmpty())
+        if (m_MovementType.isEmpty())
         {
             m_MovementType = pUnit->getMovementType();
         }

@@ -320,6 +320,7 @@ public:
         MapFilterFlags_Ground      = 0x10000,
         MapFilterFlags_Air         = 0x20000,
         MapFilterFlags_Scripted    = 0x40000,
+        MapFilterFlags_Amphibious  = 0x80000,
     };
     Q_ENUM(MapFilterFlags)
 

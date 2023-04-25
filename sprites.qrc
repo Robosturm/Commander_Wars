@@ -4847,5 +4847,6 @@
         <file>resources/ui/editor/mapEditDialog.xml</file>
         <file>resources/ui/editor/mapEditBiomes.xml</file>
         <file>resources/ui/editor/mapEditBiomes.js</file>
+        <file>resources/ui/multiplayer/lobbyOther.xml</file>
     </qresource>
 </RCC>

@@ -43,6 +43,7 @@ signals:
     void sigUpdateGamesView();
     void sigRequestUpdateGames();
     void sigServerResponded();
+    void sigOther();
 
     void sigShowNextStep();
     void sigShowPreviousStep();
@@ -85,6 +86,7 @@ public slots:
     void showPreviousStep();
     void showStart();
     void showEnd();
+    void showOther();
 protected slots:
     virtual void onEnter() override;
 private:
@@ -124,6 +126,7 @@ private:
     oxygine::spButton m_pNextStepButton;
     oxygine::spButton m_pPreviousStepButton;
     oxygine::spButton m_pStartStepButton;
+    oxygine::spButton m_pOtherButton;
     spLabel m_matchViewInfo;
     spComplexTableView m_gamesview;
     QString m_password;

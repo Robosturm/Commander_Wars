@@ -125,7 +125,7 @@ public slots:
      * @brief doDespawnSlave
      * @return
      */
-    bool doDespawnSlave();
+    bool doDespawnSlave(const QString & savegame);
 
 protected slots:
     /**

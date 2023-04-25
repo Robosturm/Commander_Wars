@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
+        <childs>
+        </childs>
+    </Panel>
+</ui>

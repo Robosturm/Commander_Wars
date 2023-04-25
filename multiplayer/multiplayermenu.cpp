@@ -172,7 +172,7 @@ void Multiplayermenu::despawnSlave()
             CONSOLE_PRINT("Killing slave cause server didn't respond", GameConsole::eERROR);
             QCoreApplication::exit(-10);
         }
-        else if (doDespawnSlave())
+        else if (doDespawnSlave(Settings::getSlaveServerName()))
         {
         }
         else
@@ -185,13 +185,13 @@ void Multiplayermenu::despawnSlave()
     }
 }
 
-bool Multiplayermenu::doDespawnSlave()
+bool Multiplayermenu::doDespawnSlave(const QString & savegame)
 {
     if (m_pPlayerSelection->hasLockedPlayersInCaseOfDisconnect())
     {
         m_despawning = true;
         QString command = NetworkCommands::SLAVEINFODESPAWNING;
-        QString saveFile = "savegames/" +  Settings::getSlaveServerName() + ".lsav";
+        QString saveFile = "savegames/" +  savegame + ".lsav";
         auto doc = doSaveLobbyState(saveFile, command);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
@@ -232,7 +232,6 @@ QJsonDocument Multiplayermenu::doSaveLobbyState(const QString & saveFile, const 
     data.insert(JsonKeys::JSONKEY_USERNAMES, m_pPlayerSelection->getUserNames());
     return QJsonDocument(data);
 }
-
 
 void Multiplayermenu::saveLobbyState(const QString & filename)
 {
@@ -417,7 +416,7 @@ void Multiplayermenu::recieveServerData(quint64 socketID, QByteArray data, Netwo
         }
         else if (messageType == NetworkCommands::SLAVEFORCEDESPAWN)
         {
-            doDespawnSlave();
+            doDespawnSlave(Settings::getSlaveServerName());
         }
         else
         {

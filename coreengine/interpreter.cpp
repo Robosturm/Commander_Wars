@@ -320,6 +320,7 @@ void Interpreter::trackJsObject(oxygine::ref_counter* pObj)
     }
     if (m_inJsCall > 0)
     {
-        m_jsObjects.append(oxygine::intrusive_ptr(pObj));
+        oxygine::intrusive_ptr pPtr(pObj);
+        m_jsObjects.push_back(pPtr);
     }
 }

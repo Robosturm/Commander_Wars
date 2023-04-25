@@ -254,17 +254,14 @@ var COREAI =
                     {
                         if (shareIsland)
                         {
-                            GameConsole.print("Shared naval map", 0);
                             naval += 1;
                         }
                         else if (airportCount === 0)
                         {
-                            GameConsole.print("Detected primary naval map", 0);
                             naval += 4;
                         }
                         else
                         {
-                            GameConsole.print("Detected naval map", 0);
                             naval += 2;
                         }
                         variableNavalBattle.writeDataInt32(naval);
@@ -273,17 +270,14 @@ var COREAI =
                     {
                         if (shareIsland)
                         {
-                            GameConsole.print("Shared air map", 0);
                             air += 1;
                         }
                         else if (harbourCount === 0)
                         {
-                            GameConsole.print("Detected primary air map", 0);
                             air += 4;
                         }
                         else
                         {
-                            GameConsole.print("Detected air map", 0);
                             naval += 2;
                         }
                         variableAirBattle.writeDataInt32(air);
@@ -375,7 +369,7 @@ var COREAI =
         for (var i = COREAI.fundsModes.length - 1; i >= 0; --i)
         {
             if (turn >= COREAI.fundsModes[i][0] &&
-                    funds >= COREAI.fundsModes[i][1])
+                funds >= COREAI.fundsModes[i][1])
             {
                 minMode = COREAI.fundsModes[i][2];
                 maxMode = COREAI.fundsModes[i][3];
