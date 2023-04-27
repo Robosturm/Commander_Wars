@@ -29,11 +29,14 @@ var Constructor = function ()
         var terrainId = terrain.getID();
         if (unitID === "TRANSPORTPLANE")
         {
-            if ((terrainId === "AIRPORT") ||
-                (terrainId === "TEMPORARY_AIRPORT") ||
-                (terrainId === "SNOW_STREET") ||
-                (terrainId === "STREET") ||
-                (terrainId === "STREET1"))
+            if (terrainId === "AIRPORT" ||
+                terrainId === "TEMPORARY_AIRPORT" ||
+                terrainId === "SNOW_STREET" ||
+                terrainId === "STREET" ||
+                terrainId === "STREET1" ||
+                terrainId === "BRIDGE" ||
+                terrainId === "BRIDGE1" ||
+                terrainId === "BRIDGE2")
             {
                 return true;
             }

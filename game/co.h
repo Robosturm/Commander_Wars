@@ -556,7 +556,7 @@ public slots:
      * @param pBuilding
      * @return
      */
-    QString getAdditionalBuildingActions(Building* pBuilding);
+    QStringList getAdditionalBuildingActions(Building* pBuilding);
     /**
      * @brief getBonusIncome
      * @param pBuilding

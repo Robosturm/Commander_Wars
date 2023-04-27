@@ -683,19 +683,19 @@ QStringList Building::getActionList()
         CO* pCO = m_pOwner->getCO(0);
         if (pCO != nullptr)
         {
-            QString result = pCO->getAdditionalBuildingActions(this);
-            if (!result.isEmpty())
+            QStringList result = pCO->getAdditionalBuildingActions(this);
+            if (result.size() > 0)
             {
-                actionModifierList += result.split(",");
+                actionModifierList.append(result);
             }
         }
         pCO = m_pOwner->getCO(1);
         if (pCO != nullptr)
         {
-            QString result = pCO->getAdditionalBuildingActions(this);
-            if (!result.isEmpty())
+            QStringList result = pCO->getAdditionalBuildingActions(this);
+            if (result.size() > 0)
             {
-                actionModifierList += result.split(",");
+                actionModifierList.append(result);
             }
         }
         
@@ -709,19 +709,19 @@ QStringList Building::getActionList()
                 pCO = pPlayer->getCO(0);
                 if (pCO != nullptr)
                 {
-                    QString result = pCO->getAdditionalBuildingActions(this);
-                    if (!result.isEmpty())
+                    QStringList result = pCO->getAdditionalBuildingActions(this);
+                    if (result.size() > 0)
                     {
-                        actionModifierList += result.split(",");
+                        actionModifierList.append(result);
                     }
                 }
                 pCO = pPlayer->getCO(1);
                 if (pCO != nullptr)
                 {
-                    QString result = pCO->getAdditionalBuildingActions(this);
-                    if (!result.isEmpty())
+                    QStringList result = pCO->getAdditionalBuildingActions(this);
+                    if (result.size() > 0)
                     {
-                        actionModifierList += result.split(",");
+                        actionModifierList.append(result);
                     }
                 }
             }
@@ -801,7 +801,7 @@ QStringList Building::getConstructionList()
     QStringList returnList;
     if (m_pOwner != nullptr && m_pMap != nullptr)
     {
-     bool coUnits = m_pMap->getGameRules()->getCoUnits();
+        bool coUnits = m_pMap->getGameRules()->getCoUnits();
         QStringList playerBuildList = m_pOwner->getBuildList();
         for (auto & unitID : buildList)
         {
@@ -818,8 +818,10 @@ QStringList Building::getConstructionList()
                 returnList.append(unitID);
             }
         }
+        returnList.removeDuplicates();
         return returnList;
     }
+    buildList.removeDuplicates();
     return buildList;
 }
 

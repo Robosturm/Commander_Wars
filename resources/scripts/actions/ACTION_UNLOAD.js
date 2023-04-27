@@ -26,20 +26,9 @@ var Constructor = function()
     {
         var unitID = unit.getUnitID();
         var terrainId = transportTerrain.getID();
-        if (unitID === "TRANSPORTPLANE")
-        {
-            if ((terrainId !== "AIRPORT") &&
-                (terrainId !== "TEMPORARY_AIRPORT") &&
-                (terrainId !== "SNOW_STREET") &&
-                (terrainId !== "STREET") &&
-                (terrainId !== "STREET1"))
-            {
-                return false;
-            }
-        }
-        else if (unitID === "LANDER" ||
-                 unitID === "BLACK_BOAT" ||
-                 unitID === "CANNONBOAT")
+        if (unitID === "LANDER" ||
+            unitID === "BLACK_BOAT" ||
+            unitID === "CANNONBOAT")
         {
             if ((transportTerrain !== null &&
                  (terrainId === "BRIDGE" ||

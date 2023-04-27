@@ -732,14 +732,14 @@ qreal CO::getRepairCostModifier(Unit* pUnit)
     return ergValue;
 }
 
-QString CO::getAdditionalBuildingActions(Building* pBuilding)
+QStringList CO::getAdditionalBuildingActions(Building* pBuilding)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getAdditionalBuildingActions";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(pBuilding),
                        pInterpreter->newQObject(m_pMap)});
-    QString ret;
+    QStringList ret;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))
@@ -747,7 +747,15 @@ QString CO::getAdditionalBuildingActions(Building* pBuilding)
             QJSValue erg = pInterpreter->doFunction(perk, function1, args);
             if (erg.isString())
             {
-                ret += erg.toString() + ",";
+                QString result = erg.toString();
+                if (!result.isEmpty())
+                {
+                    ret.append(result.split(","));
+                }
+            }
+            else
+            {
+                ret.append(erg.toVariant().toStringList());
             }
         }
     }

@@ -111,7 +111,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Air unit. </r><div c='#00ff00'>Carries X 2 </div><r>ground units. No attack capability. Units can only be loaded and unloaded on roads or airports.</r>");
+        return qsTr("<r>Air unit. </r><div c='#00ff00'>Carries X 2 </div><r>ground units. No attack capability. Units can only be loaded on roads bridges or airports, but can be unloaded everywhere.</r>");
     };
     this.getUnitType = function()
     {
