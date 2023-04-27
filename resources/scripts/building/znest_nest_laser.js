@@ -16,15 +16,15 @@ var Constructor = function()
             var day = map.getCurrentDay();
             if (day % 3 === 1)
             {
-                building.loadSprite("nest_laser+S", false, 400, Qt.point(0, building.getImageSize()));
+                building.loadSpriteV2("nest_laser+S", GameEnums.Recoloring_Matrix, 400, Qt.point(0, building.getImageSize()));
             }
             else if (day % 3 === 2)
             {
-                building.loadSprite("nest_laser+SE", false, 400, Qt.point(0, building.getImageSize()));
+                building.loadSpriteV2("nest_laser+SE", GameEnums.Recoloring_Matrix, 400, Qt.point(0, building.getImageSize()));
             }
             else if (day % 3 === 0)
             {
-                building.loadSprite("nest_laser+SW", false, 400, Qt.point(0, building.getImageSize()));
+                building.loadSpriteV2("nest_laser+SW", GameEnums.Recoloring_Matrix, 400, Qt.point(0, building.getImageSize()));
             }
             if (day > 1)
             {
@@ -34,7 +34,7 @@ var Constructor = function()
         }
         else
         {
-            building.loadSprite("nest_laser+S", false, 400, Qt.point(0, building.getImageSize()));
+            building.loadSpriteV2("nest_laser+S", GameEnums.Recoloring_Matrix, 400, Qt.point(0, building.getImageSize()));
         }
     };
     this.getBaseIncome = function()

@@ -121,6 +121,10 @@
         <image file="hq+neutral.png" />
         <image file="hq+neutral+mask.png" />
         <image file="hq+neutral+snow.png" />
+        <!-- forthq -->
+        <image file="forthq.png" cols = "2" />
+        <image file="forthq+mask.png" />
+        <image file="forthq+neutral.png" />
         <!-- gate -->
         <image file="gate+e+w.png" />
         <image file="gate+e+w+mask.png" />

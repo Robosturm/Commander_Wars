@@ -77,7 +77,7 @@ var Constructor = function()
         var baseId = terrain.getBaseTerrainID();
         var currentBaseId = currentTerrain.getBaseTerrainID();
         var currentId = currentTerrain.getID();
-        if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&
+        if ((id === "ZGATE_E_W" || id === "ZGATE_N_S" || id === "FORTHQ") &&
             (unit !== null) &&
             (unit.getOwner().isAlly(terrain.getBuilding().getOwner())))
         {

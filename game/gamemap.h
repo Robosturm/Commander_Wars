@@ -790,6 +790,13 @@ public slots:
      */
     QmlVectorBuilding* getBuildings(Player* pPlayer, QString id = "");
     /**
+     * @brief getBuildingsListCount
+     * @param pPlayer
+     * @param ids
+     * @return
+     */
+    QmlVectorBuilding* getBuildingsListCount(Player* pPlayer, const QStringList & ids);
+    /**
      * @brief importTxtMap imports a map in old CoW text-format
      */
     void importTxtMap(QString file);

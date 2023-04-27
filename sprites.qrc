@@ -4848,5 +4848,8 @@
         <file>resources/ui/editor/mapEditBiomes.xml</file>
         <file>resources/ui/editor/mapEditBiomes.js</file>
         <file>resources/ui/multiplayer/lobbyOther.xml</file>
+        <file>resources/images/building/forthq.png</file>
+        <file>resources/images/building/forthq+mask.png</file>
+        <file>resources/images/building/forthq+neutral.png</file>
     </qresource>
 </RCC>

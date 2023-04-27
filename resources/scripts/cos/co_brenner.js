@@ -185,7 +185,8 @@ var Constructor = function()
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||
             buildingId === "TOWN" ||
-            buildingId === "HQ")
+            buildingId === "HQ" ||
+            buildingId === "FORTHQ")
         {
             return ["ZCOUNIT_REPAIR_TANK"];
         }

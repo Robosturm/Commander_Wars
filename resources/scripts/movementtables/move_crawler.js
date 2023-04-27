@@ -76,7 +76,7 @@ var Constructor = function()
     this.getMovementpoints = function(terrain, unit, trapChecking = false)
     {
         var id = terrain.getID();
-        if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&
+        if ((id === "ZGATE_E_W" || id === "ZGATE_N_S" || id === "FORTHQ") &&
             (unit !== null) &&
             (unit.getOwner().isAlly(terrain.getBuilding().getOwner())))
         {

@@ -31,7 +31,7 @@ var Constructor = function()
             var variableName = "Active" + playerID.toString();
             var variables = rule.getVariables();
             var variable = variables.createVariable(variableName);
-            if (player.getBuildingCount("HQ") > 0)
+            if (player.getBuildingListCount(["HQ", "FORTHQ"]) > 0)
             {
                 variable.writeDataBool(true);
             }
@@ -50,7 +50,9 @@ var Constructor = function()
             for (var i2 = 0; i2 < size; i2++)
             {
                 var building = buildings.at(i2);
-                if (building.getBuildingID() === "HQ" && pointsX.length === 0)
+                if ((building.getBuildingID() === "HQ" ||
+                     building.getBuildingID() === "FORTHQ") &&
+                     pointsX.length === 0)
                 {
                     pointsX.push(building.getX());
                     pointsY.push(building.getY());
@@ -66,7 +68,7 @@ var Constructor = function()
         var variableName = "Active" + playerID.toString();
         var variables = rule.getVariables();
         var variable = variables.getVariable(variableName);
-        var buildings = player.getBuildings("HQ");
+        var buildings = player.getBuildingListCount("HQ");
         var size = buildings.size();
         // replace none starting hq's
         var variableHqXsName = "HqXs" + playerID.toString();
@@ -92,7 +94,7 @@ var Constructor = function()
         var value = variable.readDataBool();
         if (value === false)
         {
-            if (player.getBuildingCount("HQ") > 0)
+            if (player.getBuildingListCount(["HQ", "FORTHQ"]) > 0)
             {
                 variable.writeDataBool(true);
                 value = true;
@@ -107,7 +109,8 @@ var Constructor = function()
         for (var i = 0; i < size; i++)
         {
             var building = buildings.at(i);
-            if (building.getBuildingID() === "HQ")
+            if (building.getBuildingID() === "HQ" ||
+                building.getBuildingID() === "FORTHQ")
             {
                 var terrain = building.getTerrain();
                 terrain.loadBuilding("TOWN");
@@ -123,7 +126,7 @@ var Constructor = function()
         }
         if (VICTORYRULE_1NOHQ_TOWN_REPLACE.checkHQCount(rule, player, map))
         {
-            if (player.getBuildingCount("HQ") <= 0)
+            if (player.getBuildingListCount(["HQ", "FORTHQ"]) <= 0)
             {
                 return GameEnums.DefeatType_ByCurrentPlayer;
             }
@@ -132,7 +135,7 @@ var Constructor = function()
     };
     this.getRuleProgress = function(rule, player, map)
     {
-        return player.getBuildingCount("HQ");
+        return player.getBuildingListCount(["HQ", "FORTHQ"]);
     };
 };
 

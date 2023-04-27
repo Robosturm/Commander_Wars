@@ -1711,6 +1711,11 @@ QmlVectorBuilding* Player::getBuildings(const QString & id)
     return m_pMap->getBuildings(this, id);
 }
 
+QmlVectorBuilding* Player::getBuildingsListCount(const QStringList & ids)
+{
+    return m_pMap->getBuildingsListCount(this, ids);
+}
+
 void Player::updateVisualCORange()
 {
     for(auto & pCO : m_playerCOs)

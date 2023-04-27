@@ -2393,6 +2393,13 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
 
 QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer, QString id)
 {
+    QStringList ids;
+    ids.append(id);
+    return getBuildingsListCount(pPlayer, ids);
+}
+
+QmlVectorBuilding* GameMap::getBuildingsListCount(Player* pPlayer, const QStringList & ids)
+{
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     QmlVectorBuilding* ret = new QmlVectorBuilding();
@@ -2404,7 +2411,7 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer, QString id)
             if (pBuilding.get() != nullptr && pBuilding->getTerrain() == m_fields[y][x].get())
             {
                 if (pBuilding->getOwner() == pPlayer &&
-                    (id.isEmpty() || pBuilding->getBuildingID() == id))
+                    (ids.isEmpty() || ids.contains(pBuilding->getBuildingID())))
                 {
                     ret->append(pBuilding.get());
                 }

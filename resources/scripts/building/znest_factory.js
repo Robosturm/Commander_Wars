@@ -10,7 +10,7 @@ var Constructor = function()
     };
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSprite("nest_factory", false);
+        building.loadSpriteV2("nest_factory", GameEnums.Recoloring_Matrix);
     };
     this.getBaseIncome = function()
     {

@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSprite("nest_center_laser_right+destroyed", false, 400, Qt.point(0, building.getImageSize()));
+        building.loadSpriteV2("nest_center_laser_right+destroyed", GameEnums.Recoloring_Matrix, 400, Qt.point(0, building.getImageSize()));
     };
     this.getBaseIncome = function()
     {

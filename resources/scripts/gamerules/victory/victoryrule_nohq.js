@@ -30,7 +30,7 @@ var Constructor = function()
             var variableName = "Active" + playerID.toString();
             var variables = rule.getVariables();
             var variable = variables.createVariable(variableName);
-            if (player.getBuildingCount("HQ") > 0)
+            if (player.getBuildingListCount(["HQ", "FORTHQ"]) > 0)
             {
                 variable.writeDataBool(true);
             }
@@ -49,7 +49,7 @@ var Constructor = function()
         var value = variable.readDataBool();
         if (value === false)
         {
-            if (player.getBuildingCount("HQ") > 0)
+            if (player.getBuildingListCount(["HQ", "FORTHQ"]) > 0)
             {
                 variable.writeDataBool(true);
                 value = true;
@@ -62,7 +62,7 @@ var Constructor = function()
     {
         if (VICTORYRULE_NOHQ.checkHQCount(rule, player, map))
         {
-            if (player.getBuildingCount("HQ") <= 0)
+            if (player.getBuildingListCount(["HQ", "FORTHQ"]) <= 0)
             {
                 return GameEnums.DefeatType_ByCurrentPlayer;
             }
@@ -71,7 +71,7 @@ var Constructor = function()
     };
     this.getRuleProgress = function(rule, player, map)
     {
-        return player.getBuildingCount("HQ");
+        return player.getBuildingListCount(["HQ", "FORTHQ"]);
     };
 };
 

@@ -403,6 +403,12 @@ public slots:
      */
     QmlVectorBuilding* getBuildings(const QString & id = "");
     /**
+     * @brief getBuildingsListCount
+     * @param ids
+     * @return
+     */
+    QmlVectorBuilding* getBuildingsListCount(const QStringList & ids);
+    /**
      * @brief updateCORange
      */
     void updateVisualCORange();
