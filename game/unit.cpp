@@ -3070,6 +3070,23 @@ UnitPathFindingSystem* Unit::createUnitPathFindingSystem(Player* pPlayer)
     return pPfs;
 }
 
+void Unit::unloadIconAndDuration(const QString & iconID)
+{
+    qint32 i = 0;
+    while (i < m_IconDurations.size())
+    {
+        if (m_IconDurations[i].icon == iconID)
+        {
+            m_IconDurations.removeAt(i);
+        }
+        else
+        {
+            ++i;
+        }
+    }
+    unloadIcon(iconID);
+}
+
 void Unit::unloadIcon(const QString & iconID)
 {
     

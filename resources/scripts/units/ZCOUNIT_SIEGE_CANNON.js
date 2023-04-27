@@ -78,7 +78,7 @@ var Constructor = function()
             if (turns >= 2)
             {
                 unit.addOffensiveBonus(-ZCOUNIT_SIEGE_CANNON.offBonus, 1);
-                unit.unloadIcon("arrow_up");
+                unit.unloadIconAndDuration("arrow_up");
             }
         }
     };
