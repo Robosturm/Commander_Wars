@@ -97,7 +97,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.");
+        return qsTr("A Pocket </r><div c='#ff8000'>Battleship</div><r>. Weaker and faster, more suited for engaging with other Naval Units and well armed to defend against and engage Air Units.");
     };
 
     this.getUnitType = function()

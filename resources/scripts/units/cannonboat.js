@@ -108,7 +108,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<r>Naval Unit. Attacks naval units.</r>");
+        return qsTr("<r>Short range Naval Unit that can engage other Naval Units at a distance. Like all boats, can also traverse rivers.</r>");
     };
     this.getUnitType = function()
     {
