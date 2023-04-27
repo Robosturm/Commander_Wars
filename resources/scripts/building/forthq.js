@@ -84,6 +84,22 @@ var Constructor = function()
     {
         return "placeHq.wav";
     };
+    this.onDestroyed = function(building, map)
+    {
+        // called when the terrain is destroyed and replacing of this terrain starts
+        var x = building.getX();
+        var y = building.getY();
+        var player = building.getOwner();
+        map.replaceTerrainOnly("PLAINS", x, y);
+        var terrain = map.getTerrain(x, y);
+        terrain.loadSprites();
+        terrain.loadBuilding("HQ");
+        terrain.getBuilding().setOwner(player);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
+        animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
+        animation.addScreenshake(30, 0.95, 1000, 200);
+        animation.setSound("explosion+land.wav");
+    };
 }
 
 Constructor.prototype = BUILDING;
