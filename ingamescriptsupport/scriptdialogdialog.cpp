@@ -110,7 +110,7 @@ void ScriptDialogDialog::updateDialog()
 
 void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
 {
-    oxygine::spActor pActor = oxygine::spActor::create();
+    QVector<oxygine::spActor> items;
     spDialogEntry pDialog = m_Event->getDialog(i);
     qint32 y = i * 40;
     qint32 boxWidth = panelWidth - 800;
@@ -119,7 +119,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     pTextbox->setTooltipText(tr("The text the CO should talk."));
     pTextbox->setPosition(0, y);
     pTextbox->setCurrentText(pDialog->text);
-    pActor->addChild(pTextbox);
+    items.append(pTextbox);
     DialogEntry* pPtrDialog = pDialog.get();
     connect(pTextbox.get(), &Textbox::sigTextChanged, this, [=](QString text)
     {
@@ -130,7 +130,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     moodMenu->setTooltipText(tr("The CO Mood/Icon that will be used for the dialog."));
     moodMenu->setPosition(posX, y);
     moodMenu->setCurrentItem(static_cast<qint32>(pDialog->mood));
-    pActor->addChild(moodMenu);
+    items.append(moodMenu);
     connect(moodMenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
     {
         pPtrDialog->mood = static_cast<GameEnums::COMood>(item);
@@ -184,7 +184,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     coidsMenu->setTooltipText(tr("The ID of the CO that should talk.\nNote: CO 1 and CO 2 represent the CO of the current Player."));
     coidsMenu->setPosition(posX + 150, y);
     coidsMenu->setCurrentItem(pDialog->coid);
-    pActor->addChild(coidsMenu);
+    items.append(coidsMenu);
     connect(coidsMenu.get(), &DropDownmenuSprite::sigItemChanged, this, [=](qint32)
     {
         pPtrDialog->coid = coidsMenu->getCurrentItemText();
@@ -206,7 +206,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     colors->setTooltipText(tr("The background color of the dialog."));
     colors->setPosition(posX + 300, y);
     colors->setCurrentItem(pDialog->color);
-    pActor->addChild(colors);
+    items.append(colors);
     connect(colors.get(), &DropDownmenuColor::sigItemChanged, this, [this, pPtrDialog](QColor color)
     {
         pPtrDialog->color = color;
@@ -214,7 +214,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
 
     oxygine::spButton pBackgroundTextbox = ObjectManager::createButton(tr("Background"), 200);
     pBackgroundTextbox->setPosition(posX + 420, y);
-    pActor->addChild(pBackgroundTextbox);
+    items.append(pBackgroundTextbox);
     pBackgroundTextbox->addClickListener([this, i](oxygine::Event*)
     {
         dialogIndex = i;
@@ -222,11 +222,14 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     });
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     pSprite->setPosition(posX + 630, y + 5);
-    pActor->addChild(pSprite);
+    items.append(pSprite);
     m_backgrounds.append(pSprite);
     m_backgroundAnims.append(oxygine::spResAnim());
-    m_Panel->addItem(pActor);
-    m_dialogItems.append(pActor);
+    for (auto & item : items)
+    {
+        m_Panel->addItem(item);
+    }
+    m_dialogItems.append(items);
     loadBackground(pDialog->background, i);
 }
 
@@ -235,7 +238,11 @@ void ScriptDialogDialog::removeLast()
     if (m_Event->getDialogSize() > 0)
     {
         m_Event->removeDialog(m_Event->getDialogSize() - 1);
-        m_dialogItems[m_dialogItems.size() - 1]->detach();
+        auto & items = m_dialogItems[m_dialogItems.size() - 1];
+        for (auto & item : items)
+        {
+            item->detach();
+        }
         m_dialogItems.removeLast();
         m_backgrounds.removeLast();
         m_backgroundAnims.removeLast();

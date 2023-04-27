@@ -9,7 +9,7 @@ env:
   BUILD_TYPE: Release
   QT_Version: '6.4.3'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
-  JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/11.0.18-10/x64/'
+  JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/11.0.19-7/x64/'
 jobs:
   create_release:
     name: Create release

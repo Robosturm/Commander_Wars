@@ -69,7 +69,7 @@ private:
     spScriptEventDialog m_Event;
     qint32 dialogIndex{-1};
     spPanel m_Panel;
-    QVector<oxygine::spActor> m_dialogItems;
+    QVector<QVector<oxygine::spActor>> m_dialogItems;
     QVector<oxygine::spSprite> m_backgrounds;
     QVector<oxygine::spResAnim> m_backgroundAnims;
 };

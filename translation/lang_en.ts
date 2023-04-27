@@ -587,13 +587,13 @@
 <context>
     <name>ACTION_LOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="61"/>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="93"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="64"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="96"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="97"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="100"/>
         <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1090,18 +1090,18 @@
 <context>
     <name>ACTION_UNLOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="95"/>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="343"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="84"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="332"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="263"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="252"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="347"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="336"/>
         <source>Unloads loaded units. Units that have been loaded this turn can&apos;t move. Units that were loaded in previous turns can immediately move after beeing unloaded.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8727,7 +8727,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="258"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="265"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26622,7 +26622,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/units/transportplane.js" line="114"/>
-        <source>&lt;r&gt;Air unit. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Carries X 2 &lt;/div&gt;&lt;r&gt;ground units. No attack capability. Units can only be loaded and unloaded on roads or airports.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Air unit. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Carries X 2 &lt;/div&gt;&lt;r&gt;ground units. No attack capability. Units can only be loaded on roads bridges or airports, but can be unloaded everywhere.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
