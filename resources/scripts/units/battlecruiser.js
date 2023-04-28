@@ -97,7 +97,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("A Pocket </r><div c='#ff8000'>Battleship</div><r>. Weaker and faster, more suited for engaging with other Naval Units and well armed to defend against and engage Air Units.");
+        return qsTr("<r>A Pocket </r><div c='#ff8000'>Battleship</div><r>. Weaker and faster, more suited for engaging with other Naval Units and well armed to defend against and engage Air Units.</r>");
     };
 
     this.getUnitType = function()
