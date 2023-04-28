@@ -79,6 +79,9 @@
         <image file="powerplant+snow.png" />
         <image file="powerplant+neutral.png" />
         <!-- hq -->
+        <image file="hq.png" cols = "2" />
+        <image file="hq+mask.png" />
+        <image file="hq+snow.png" />
         <image file="hq+ac.png" cols = "2" />
         <image file="hq+ac+mask.png" />
         <image file="hq+ac+snow.png" />
