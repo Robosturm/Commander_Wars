@@ -1,7 +1,7 @@
 MOVE_TIRE_A.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
 {
     var currentUnit = terrain.getUnit();
-    if ((currentUnit !== null) &&
+    if ((currentUnit !== null && unit !== null) &&
         (unit.getOwner().isEnemy(currentUnit.getOwner())))
     {
         if (!currentUnit.isStealthed(unit.getOwner()) || trapChecking)

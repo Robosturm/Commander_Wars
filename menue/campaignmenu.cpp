@@ -509,7 +509,7 @@ void CampaignMenu::slotButtonNext()
 }
 
 void CampaignMenu::showSaveCampaign()
-{    
+{
     QStringList wildcards;
     wildcards.append("*.camp");
     QString path = Settings::getUserPath() + "savegames";

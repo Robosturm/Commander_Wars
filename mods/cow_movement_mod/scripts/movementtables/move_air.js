@@ -2,7 +2,7 @@ MOVE_AIR.getMovementpoints = function(terrain, unit, currentTerrain, trapCheckin
 {
     var id = terrain.getID();
     var currentUnit = terrain.getUnit();
-    if ((currentUnit !== null) &&
+    if ((currentUnit !== null && unit !== null) &&
         (unit.getOwner().isEnemy(currentUnit.getOwner())))
     {
         if (!currentUnit.isStealthed(unit.getOwner()) || trapChecking)
