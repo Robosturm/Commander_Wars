@@ -138,7 +138,7 @@ QVector<UiFactory::FactoryItem> & UiFactory::getFactoryItems()
 
 void UiFactory::shutdown()
 {
-    delete m_pUiFactory;
+    m_pUiFactory->deleteLater();
     m_pUiFactory = nullptr;
 }
 

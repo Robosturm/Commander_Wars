@@ -180,7 +180,6 @@ void Mainapp::shutdown()
         ShopLoader::getInstance()->free();
     }
     GameWindow::shutdown();
-    UiFactory::shutdown();
 }
 
 bool Mainapp::isWorker()
@@ -857,7 +856,6 @@ void Mainapp::onQuit()
     QCoreApplication::processEvents();
     if (m_Worker != nullptr)
     {
-        m_Worker->deleteLater();
         m_Worker = nullptr;
     }
     if (m_Workerthread->isRunning())
@@ -866,6 +864,10 @@ void Mainapp::onQuit()
         m_Workerthread->wait();
     }
     QCoreApplication::processEvents();
+    if (m_aiProcessPipe.get() != nullptr)
+    {
+        m_aiProcessPipe = nullptr;
+    }
 #ifdef AUDIOSUPPORT
     if (!m_AudioManager.isNull())
     {

@@ -48,7 +48,6 @@ protected slots:
     void cheatTimeout();
     void unlockAllShopItems();
 protected:
-    oxygine::spResAnim test;
     QTimer m_cheatTimeout;
     qint32 m_cheatCounter{0};
 };

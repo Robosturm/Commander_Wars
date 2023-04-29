@@ -54,6 +54,7 @@ Interpreter::~Interpreter()
 
 void Interpreter::release()
 {
+    m_pInstance->m_jsObjects.clear();
     m_pInstance = nullptr;
 }
 

@@ -80,6 +80,8 @@ namespace oxygine
     void Stage::cleanup()
     {
         removeChildren();
+        instance->detach();
+        instance = nullptr;
     }
 
     void Stage::updateStage()

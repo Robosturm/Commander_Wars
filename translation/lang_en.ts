@@ -6986,102 +6986,102 @@ Note: This may be caused by a defective mod.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="284"/>
+        <location filename="../coreengine/mainapp.cpp" line="283"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="291"/>
+        <location filename="../coreengine/mainapp.cpp" line="290"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="298"/>
+        <location filename="../coreengine/mainapp.cpp" line="297"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="305"/>
+        <location filename="../coreengine/mainapp.cpp" line="304"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="246"/>
+        <location filename="../coreengine/mainapp.cpp" line="245"/>
         <source>Checking for new version...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="275"/>
+        <location filename="../coreengine/mainapp.cpp" line="274"/>
         <source>Loading Building Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="314"/>
+        <location filename="../coreengine/mainapp.cpp" line="313"/>
         <source>Loading Terrain Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="321"/>
+        <location filename="../coreengine/mainapp.cpp" line="320"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="328"/>
+        <location filename="../coreengine/mainapp.cpp" line="327"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="335"/>
+        <location filename="../coreengine/mainapp.cpp" line="334"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="342"/>
+        <location filename="../coreengine/mainapp.cpp" line="341"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="349"/>
+        <location filename="../coreengine/mainapp.cpp" line="348"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="356"/>
+        <location filename="../coreengine/mainapp.cpp" line="355"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="363"/>
+        <location filename="../coreengine/mainapp.cpp" line="362"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="370"/>
+        <location filename="../coreengine/mainapp.cpp" line="369"/>
         <source>Loading Movement planner addin Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="377"/>
+        <location filename="../coreengine/mainapp.cpp" line="376"/>
         <source>Loading Ui Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="384"/>
+        <location filename="../coreengine/mainapp.cpp" line="383"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="394"/>
+        <location filename="../coreengine/mainapp.cpp" line="393"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="742"/>
+        <location filename="../coreengine/mainapp.cpp" line="741"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="748"/>
+        <location filename="../coreengine/mainapp.cpp" line="747"/>
         <source>Please use the details or the crashlog to report a bug at 
 &lt;a href=&apos;https://github.com/Robosturm/Commander_Wars/issues&apos;&gt;https://github.com/Robosturm/Commander_Wars/issues&lt;/a&gt;
  The game will be terminated sadly. :(</source>
@@ -12794,7 +12794,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/battlecruiser.js" line="100"/>
-        <source>Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.</source>
+        <source>&lt;r&gt;A Pocket &lt;/r&gt;&lt;div c=&apos;#ff8000&apos;&gt;Battleship&lt;/div&gt;&lt;r&gt;. Weaker and faster, more suited for engaging with other Naval Units and well armed to defend against and engage Air Units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12971,7 +12971,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/cannonboat.js" line="111"/>
-        <source>&lt;r&gt;Naval Unit. Attacks naval units.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Short range Naval Unit that can engage other Naval Units at a distance. Like all boats, can also traverse rivers.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24415,7 +24415,7 @@ Units get %0% firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/destroyer.js" line="96"/>
-        <source>&lt;r&gt;Naval Unit. Attacks naval units. Can place &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Watermines&lt;/div&gt;&lt;r&gt; on sea tiles.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Mine laying Naval Unit that has powerful though limited offensive capability and can place &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Watermines&lt;/div&gt;&lt;r&gt; on sea tiles.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24534,7 +24534,7 @@ Units get %0% firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/frigate.js" line="99"/>
-        <source>&lt;r&gt;Naval Unit. Attacks naval and ground units.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Mid sized Naval Unit for scouting and hunting down smaller Naval Units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24573,7 +24573,7 @@ Units get %0% firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/gunboat.js" line="108"/>
-        <source>&lt;r&gt;Naval Unit. Attacks naval units. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Short range Naval Unit that can contest any waterways and &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture&lt;/div&gt;&lt;r&gt; Naval proporties.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -26583,7 +26583,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/units/torpedoboat.js" line="112"/>
-        <source>&lt;r&gt;Naval Unit. Attacks naval units.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Short range Naval Unit intended for harrasing much larger Naval Units. Like all boats, can also traverse rivers.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

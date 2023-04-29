@@ -100,7 +100,7 @@ namespace oxygine
             if (m_pPointer != nullptr)
             {
                 // allocate new pointer
-                if (m_pPointer->getRefCounter() == 0 && !inConstructor)
+                if (!inConstructor)
                 {
                     oxygine::ref_counter::trackObject(m_pPointer);
                 }

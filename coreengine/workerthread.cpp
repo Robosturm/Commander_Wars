@@ -206,18 +206,28 @@ bool WorkerThread::getStarted() const
 void WorkerThread::onQuit()
 {
     CONSOLE_PRINT("Shutting down workerthread", GameConsole::eDEBUG);
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+    pLoadingScreen->hide();
+    UiFactory::shutdown();
     if (oxygine::Stage::getStage())
     {
         oxygine::Stage::getStage()->cleanup();
+        for (qint32 i = 0; i < 20; ++i)
+        {
+            QCoreApplication::processEvents();
+        }
     }
     GameAnimationFactory::getInstance()->release();
-    Interpreter::release();
-    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-    pLoadingScreen->hide();
     COSpriteManager::getInstance()->release();
     Player::releaseStaticData();
     Mainapp::getAiProcessPipe().quit();
     GameConsole::getInstance()->release();
+    QCoreApplication::processEvents();
+    Interpreter::release();
+    for (qint32 i = 0; i < 20; ++i)
+    {
+        QCoreApplication::processEvents();
+    }
 }
 
 void WorkerThread::startSlaveGame()

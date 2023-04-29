@@ -12,7 +12,7 @@ namespace oxygine
 #endif
     void ref_counter::releaseRef()
     {
-        if (0 >= --m_ref_counter)
+        if (--m_ref_counter <= 0)
         {
 #ifdef MEMORYTRACING
             if (0 > m_ref_counter)
@@ -44,7 +44,6 @@ namespace oxygine
             if (*cIter == this)
             {
                 m_objects.erase(cIter);
-                break;
             }
             else
             {
@@ -57,11 +56,14 @@ namespace oxygine
 
     void ref_counter::trackObject(ref_counter *pObj)
     {
-        ++m_instanceCounter;
+        if (pObj->getRefCounter() == 0)
+        {
+            ++m_instanceCounter;
 #ifdef MEMORYTRACING
-        m_lock.lock();
-        m_objects.push_back(pObj);
-        m_lock.unlock();
+            m_lock.lock();
+            m_objects.push_back(pObj);
+            m_lock.unlock();
 #endif
+        }
     }
 }

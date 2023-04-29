@@ -23,6 +23,7 @@ CreatedGui::~CreatedGui()
     {
         pItem->detach();
     }
+    m_factoryUiItem.clear();
 }
 
 void CreatedGui::addFactoryUiItem(oxygine::spActor pItem)

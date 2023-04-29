@@ -72,7 +72,7 @@ void AudioManager::stopAudio()
                     cache->timer[i]->stop();
                     cache->sound[i]->disconnect();
                     cache->sound[i]->stop();
-                    delete cache->sound[i];
+                    cache->sound[i]->deleteLater();
                     cache->sound[i] = nullptr;
                     cache->timer[i].reset();
                 }
