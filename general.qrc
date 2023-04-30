@@ -798,8 +798,6 @@
         <file>mods/aw2_co/scripts/general/co_perk.js</file>
         <file>mods/aw2_co/scripts/general/tagpower.js</file>
         <file>mods/aw2_co/mod.txt</file>
-        <file>mods/aw2_damage_formula/scripts/general/weapon.js</file>
-        <file>mods/aw2_damage_formula/mod.txt</file>
         <file>mods/aw_co/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js</file>
         <file>mods/aw_co/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js</file>
         <file>mods/aw_co/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js</file>

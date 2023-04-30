@@ -99,7 +99,7 @@ var Constructor = function()
         var baseDamage = Global[attackerWeapon].getEnviromentDamage(enviroment);
         var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, null, targetField, false, luckMode);
         var attackerHp = attacker.getHpRounded() + attacker.getAttackHpBonus(attackerPosition);
-        var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, 100, 0);
+        var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, 100, 0, 0, attacker.getMap());
         return damage;
     };
 
@@ -288,7 +288,7 @@ var Constructor = function()
             {
                 luckDamage = 5;
             }
-            damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive, luckDamage);
+            damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive, luckDamage, attacker.getMap());
             if (fastInaccurate === false)
             {
                 damage += attacker.getTrueDamage(action, damage, attackerPosition, attackerBaseHp,

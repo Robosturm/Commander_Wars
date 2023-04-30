@@ -69,7 +69,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 27;
+        return 28;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -103,9 +103,20 @@ public:
      */
     void onGameStart();
 
+
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief getDamageFormula
+     * @return
+     */
+    GameEnums::DamageFormula getDamageFormula() const;
+    /**
+     * @brief setDamageFormula
+     * @param newDamageFormula
+     */
+    void setDamageFormula(const GameEnums::DamageFormula & newDamageFormula);
     /**
      * @brief getMapPalette
      * @return
@@ -720,6 +731,8 @@ private:
     qreal m_powerLoose{0.0};
     GameMap* m_pMap{nullptr};
     qint32 m_mapPalette{0};
+
+    GameEnums::DamageFormula m_damageFormula{GameEnums::DamageFormula::DamageFormula_AdvanceWars4};
 
     // multiplayer rule section
     Password m_password;

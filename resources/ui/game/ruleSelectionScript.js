@@ -54,6 +54,10 @@ var RuleSelectionScript =
     {
         return [qsTr("Off"), qsTr("Mist of War"), qsTr("Fog of War"), qsTr("Shroud of War")];
     },
+    getDamageFormulaRule : function()
+    {
+        return [qsTr("Advance Wars 4"), qsTr("Advance Wars  1-3")];
+    },
     getFogValue : function()
     {
         let fogMode = currentMenu.getMap().getGameRules().getFogMode();

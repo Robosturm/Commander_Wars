@@ -28,19 +28,43 @@ var WEAPON =
         return -1;
     },
     // aw dc damage formular used here.
-    calculateDamage : function(hp, damage, offBonus, defBonus, luckDamage = 0)
+    calculateDamage : function(hp, damage, offBonus, defBonus, luckDamage = 0, map)
     {
-        if (defBonus <= 0)
+        let formula = map.getGameRules().getDamageFormula();
+        let calcDamage = 0;
+        if (formula === GameEnums.DamageFormula_AdvanceWars4)
         {
-            offBonus += defBonus;
-            defBonus = 1;
+            if (defBonus <= 0)
+            {
+                offBonus += defBonus;
+                defBonus = 1;
+            }
+            if (hp <= 0)
+            {
+                hp = 0;
+            }
+            calcDamage = (hp / 10.0) * damage * (offBonus / defBonus)
+                    + luckDamage * (hp / 10.0) * 100 / defBonus;
         }
-        if (hp <= 0)
+        else
         {
-            hp = 0;
+            if (defBonus <= 0)
+            {
+                offBonus += defBonus;
+                defBonus = 1;
+            }
+            if (hp < 0)
+            {
+                hp = 0;
+            }
+            calcDamage = (hp / 10.0) * (damage * offBonus) / 100 * ((200 - defBonus) / 100)
+                    + luckDamage * (hp / 10.0) * ((200 - defBonus) / 100);
+            if (calcDamage < 0 && damage >= 0)
+            {
+                calcDamage = 0;
+            }
         }
-        var calcDamage = (hp / 10.0) * damage * (offBonus / defBonus)
-            + luckDamage * (hp / 10.0) * 100 / defBonus;
+
         return calcDamage;
     },
 

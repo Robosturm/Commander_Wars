@@ -15,12 +15,18 @@
 static constexpr qint32 xAdvance = 5;
 static constexpr qint32 maxBuildingCount = 40;
 
-DamageCalculator::DamageCalculator()
+DamageCalculator::DamageCalculator(GameMap * pMap)
     : CloseablePopUp(800, 540),
       m_map(2, 2, 2)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
+    QBuffer buffer;
+    buffer.open(QIODevice::ReadWrite);
+    QDataStream stream(&buffer);
+    pMap->getGameRules()->serializeObject(stream);
+    buffer.seek(0);
+    m_map.getGameRules()->deserializeObject(stream);
     setPosition(oxygine::Stage::getStage()->getWidth() / 2 - getScaledWidth() / 2,
                 oxygine::Stage::getStage()->getHeight() / 2 - getScaledHeight() / 2);
     if (getX() < 0)

@@ -96,7 +96,7 @@ var Constructor = function()
             }
         }
         var animation = GameAnimationFactory.createAnimation(map, x - 2, y - 3);
-        animation.addSprite("explosion+black_bomb", 0, map.getImageSize() / 2, 0, 1.875);
+        animation.addSprite("explosion+black_bomb", map.getImageSize() / 2, map.getImageSize() / 2, 0, 1.875);
         animation.setSound("explosion+land.wav");
         // we destroyed a unit
         map.getGameRecorder().destroyedUnit(owner.getPlayerID(), ACTION_EXPLODE.postAnimationUnit.getUnitID(), ACTION_EXPLODE.postAnimationUnit.getOwner().getPlayerID());

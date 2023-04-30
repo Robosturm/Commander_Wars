@@ -137,6 +137,7 @@ void MetaTypeRegister::registerInterfaceData()
     qRegisterMetaType<GameEnums::ShopItemType>("GameEnums::ShopItemType");
     qRegisterMetaType<GameEnums::PowerGainZone>("GameEnums::PowerGainZone");
     qRegisterMetaType<GameEnums::PowerGainMode>("GameEnums::PowerGainMode");
+    qRegisterMetaType<GameEnums::DamageFormula>("GameEnums::DamageFormula");
     qRegisterMetaType<QEasingCurve::Type>("QEasingCurve::Type");
     qRegisterMetaType<GameConsole::eLogLevels>("Console::eLogLevels");
     qRegisterMetaType<Mainapp::StartupPhase>("Mainapp::StartupPhase");

@@ -353,6 +353,13 @@ public:
     };
     Q_ENUM(GameResult)
 
+    enum DamageFormula
+    {
+        DamageFormula_AdvanceWars4,
+        DamageFormula_AdvanceWars1_3,
+    };
+    Q_ENUM(DamageFormula)
+
     static void registerEnums();
 private:
     GameEnums() = default;

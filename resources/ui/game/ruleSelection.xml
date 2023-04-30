@@ -216,6 +216,24 @@
         <onEvent>currentMenu.getMap().getGameRules().setEnableDayToDayCoAbilities(input);</onEvent>
         <enabled>currentMenu.getRuleChangeEabled()</enabled>
     </Checkbox>
+    <Label>
+        <x>5</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>300</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Damage formula:")</text>
+        <font>"main"</font>
+        <fontSize>24</fontSize>
+    </Label>
+    <DropDownMenu>
+        <x>lastX + lastWidth + 10</x>
+        <y>lastY</y>
+        <width>400</width>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Defines how damage gets calculated.")</tooltip>
+        <startValue>currentMenu.getMap().getGameRules().getDamageFormula()</startValue>
+        <items>RuleSelectionScript.getDamageFormulaRule()</items>
+        <onEvent>currentMenu.getMap().getGameRules().setDamageFormula(input);</onEvent>
+        <enabled>currentMenu.getRuleChangeEabled()</enabled>
+    </DropDownMenu>
     <if condition="currentMenu.getShowAdvanced()">
         <Label>
             <x>5</x>

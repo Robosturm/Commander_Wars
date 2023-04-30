@@ -241,6 +241,9 @@ void GameEnums::registerEnums()
     value.setProperty("GameResult_Lost", GameResult_Lost);
     value.setProperty("GameResult_Won", GameResult_Won);
 
+    value.setProperty("DamageFormula_AdvanceWars4", DamageFormula_AdvanceWars4);
+    value.setProperty("DamageFormula_AdvanceWars1_3", DamageFormula_AdvanceWars1_3);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

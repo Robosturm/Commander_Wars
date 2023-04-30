@@ -2508,7 +2508,7 @@ void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 
 void GameMenue::showDamageCalculator()
 {
-    spDamageCalculator calculator = spDamageCalculator::create();
+    spDamageCalculator calculator = spDamageCalculator::create(m_pMap.get());
     if (calculator->getScaledHeight() >= oxygine::Stage::getStage()->getHeight() ||
         calculator->getScaledWidth() >= oxygine::Stage::getStage()->getWidth())
     {
