@@ -2394,7 +2394,10 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
 QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer, QString id)
 {
     QStringList ids;
-    ids.append(id);
+    if (!id.isEmpty())
+    {
+        ids.append(id);
+    }
     return getBuildingsListCount(pPlayer, ids);
 }
 
