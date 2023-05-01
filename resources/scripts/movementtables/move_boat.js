@@ -24,7 +24,8 @@ var Constructor = function()
         }
         if (shipBridges &&
             terrain.getID() === "BRIDGE" &&
-            (terrain.getBaseTerrainID() === "SEA" || terrain.getBaseTerrainID() === "LAKE"))
+            (terrain.getBaseTerrainID() === "SEA" ||
+             terrain.getBaseTerrainID() === "LAKE"))
         {
             return 1;
         }

@@ -15,7 +15,10 @@ namespace oxygine
     {
         if (m_dragClient != nullptr)
         {
-            oxygine::Stage::getStage()->removeEventListeners(this);
+            if (oxygine::Stage::getStage().get() != nullptr)
+            {
+                oxygine::Stage::getStage()->removeEventListeners(this);
+            }
             m_dragClient->removeEventListeners(this);
             m_dragClient->detach();
             m_dragClient = nullptr;
