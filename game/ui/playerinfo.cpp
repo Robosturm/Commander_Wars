@@ -131,7 +131,7 @@ void PlayerInfo::updateData()
                     pAnim = pGameManager->getResAnim("offline");
                 }
                 pSprite->setResAnim(pAnim);
-                pSprite->setY(yPos + 8);
+                pSprite->setY(yPos + 2);
                 pSprite->setX(coWidth + 5);
                 pSprite->setFlippedX(m_flippedX);
                 if (m_flippedX)

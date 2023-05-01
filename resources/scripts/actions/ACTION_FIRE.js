@@ -99,7 +99,7 @@ var Constructor = function()
         var baseDamage = Global[attackerWeapon].getEnviromentDamage(enviroment);
         var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, null, targetField, false, luckMode);
         var attackerHp = attacker.getHpRounded() + attacker.getAttackHpBonus(attackerPosition);
-        var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, 100, 0, 0, attacker.getMap());
+        var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, 100, 0, attacker.getMap());
         return damage;
     };
 
