@@ -99,7 +99,7 @@ var ACTION =
     {
         if (unit.getHasMoved() === false &&
             ((actionTargetField.x === targetField.x && actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null && unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y > 0))))
+            (action.getMovementTarget() === null && unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) > 0)))
         {
             return true;
         }
