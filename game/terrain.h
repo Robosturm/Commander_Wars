@@ -472,7 +472,7 @@ public slots:
             }
             else
             {
-                return m_pBaseTerrain->getBaseTerrain(terrainId);
+                return m_pBaseTerrain->getBaseTerrain(terrainId, returnNullIfNotFound);
             }
         }
         else if (!returnNullIfNotFound)
