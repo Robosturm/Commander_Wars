@@ -6,17 +6,14 @@
         <image file="hit.png"                   guideX1="13" guideX2="27" guideY1="2" guideY2="14" />
         <image file="miss.png"                  guideX1="13" guideX2="27" guideY1="2" guideY2="14" />
         <image file="skill.png"                 guideX1="21" guideX2="24" guideY1="2" guideY2="14" />
-        <image file="lessPowerStart.png"        guideX1="1"  guideX2="3"  guideY1="1" guideY2="7" />
-        <image file="lessPowerEnd.png"          guideX1="0"  guideX2="2"  guideY1="1" guideY2="7" />
-        <image file="normalPowerStart.png"      guideX1="1"  guideX2="3"  guideY1="1" guideY2="7" />
-        <image file="normalPowerEnd.png"        guideX1="0"  guideX2="2"  guideY1="1" guideY2="7" />
-        <image file="strongPowerStart.png"      guideX1="1"  guideX2="3"  guideY1="1" guideY2="7" />
-        <image file="strongPowerEnd.png"        guideX1="0"  guideX2="2"  guideY1="1" guideY2="7" />
-        <image file="superStrongPowerStart.png" guideX1="1"  guideX2="3"  guideY1="1" guideY2="7" />
-        <image file="superStrongPowerEnd.png"   guideX1="1"  guideX2="2"  guideY1="1" guideY2="7" />
-    </atlas>
-    
-    <atlas linearFilter="false">
+        <image file="lessPowerStart.png"        guideX1="8"  guideX2="24" guideY1="8" guideY2="56" />
+        <image file="lessPowerEnd.png"          guideX1="8"  guideX2="16" guideY1="8" guideY2="56" />
+        <image file="normalPowerStart.png"      guideX1="8"  guideX2="24" guideY1="8" guideY2="56" />
+        <image file="normalPowerEnd.png"        guideX1="8"  guideX2="16" guideY1="8" guideY2="56" />
+        <image file="strongPowerStart.png"      guideX1="8"  guideX2="24" guideY1="8" guideY2="56" />
+        <image file="strongPowerEnd.png"        guideX1="8"  guideX2="16" guideY1="8" guideY2="56" />
+        <image file="superStrongPowerStart.png" guideX1="8"  guideX2="24" guideY1="8" guideY2="56" />
+        <image file="superStrongPowerEnd.png"   guideX1="8"  guideX2="16" guideY1="8" guideY2="56" />
         <!-- unusable co's for co selection -->
         <image file="no_co+info.png" />
         <image file="no_co+face.png" cols = "3" />

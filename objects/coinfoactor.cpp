@@ -670,7 +670,8 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     oxygine::ResAnim* pStartAnim;
     oxygine::ResAnim* pEndAnim;
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    qint32 width = 50;
+    constexpr float scale = 8.0f;
+    qint32 width = 50 * scale;
     float divider = 0;
     if (bonus == 0)
     {
@@ -702,14 +703,16 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     }
     oxygine::spBox9Sprite pStartBox = oxygine::spBox9Sprite::create();
     pStartBox->setResAnim(pStartAnim);
-    pStartBox->setSize(static_cast<qint32>(width * divider) + 1, 8);
+    pStartBox->setSize((static_cast<qint32>(width * divider) + 1), 8 * scale);
     pStartBox->setPosition(5 +  GameMap::getImageSize(), y);
+    pStartBox->setScale(1.0f / scale);
     pActor->addChild(pStartBox);
 
     oxygine::spBox9Sprite pEndBox = oxygine::spBox9Sprite::create();
     pEndBox->setResAnim(pEndAnim);
-    pEndBox->setSize(static_cast<qint32>(width * (1.0f - divider)) + 2, 8);
+    pEndBox->setSize((static_cast<qint32>(width * (1.0f - divider)) + 2), 8 * scale);
     pEndBox->setPosition(5 +  GameMap::getImageSize() + pStartBox->getScaledWidth(), y);
+    pEndBox->setScale(1.0f / scale);
     pActor->addChild(pEndBox);
 }
 
