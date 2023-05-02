@@ -3,17 +3,17 @@
     <set path = "resources/images/co/" />
     
     <atlas linearFilter="false">
-        <image file="hit.png" trim="false" extend="false" border="0" guideX1="13" guideX2="27" guideY1="2" guideY2="14" />
-        <image file="miss.png" trim="false" extend="false" border="0" guideX1="13" guideX2="27" guideY1="2" guideY2="14" />
-        <image file="skill.png" trim="false" extend="false" border="0" guideX1="21" guideX2="24" guideY1="2" guideY2="14" />
-        <image file="lessPowerStart.png" trim="false" extend="false" border="0" guideX1="1" guideX2="3" guideY1="1" guideY2="7" />
-        <image file="lessPowerEnd.png" trim="false" extend="false" border="0" guideX1="1" guideX2="2" guideY1="1" guideY2="7" />
-        <image file="normalPowerStart.png" trim="false" extend="false" border="0" guideX1="1" guideX2="3" guideY1="1" guideY2="7" />
-        <image file="normalPowerEnd.png" trim="false" extend="false" border="0" guideX1="1" guideX2="2" guideY1="1" guideY2="7" />
-        <image file="strongPowerStart.png" trim="false" extend="false" border="0" guideX1="1" guideX2="3" guideY1="1" guideY2="7" />
-        <image file="strongPowerEnd.png" trim="false" extend="false" border="0" guideX1="1" guideX2="2" guideY1="1" guideY2="7" />
-        <image file="superStrongPowerStart.png" trim="false" extend="false" border="0" guideX1="1" guideX2="3" guideY1="1" guideY2="7" />
-        <image file="superStrongPowerEnd.png" trim="false" extend="false" border="0" guideX1="1" guideX2="2" guideY1="1" guideY2="7" />
+        <image file="hit.png"                   guideX1="13" guideX2="27" guideY1="2" guideY2="14" />
+        <image file="miss.png"                  guideX1="13" guideX2="27" guideY1="2" guideY2="14" />
+        <image file="skill.png"                 guideX1="21" guideX2="24" guideY1="2" guideY2="14" />
+        <image file="lessPowerStart.png"        guideX1="1"  guideX2="3"  guideY1="1" guideY2="7" />
+        <image file="lessPowerEnd.png"          guideX1="0"  guideX2="2"  guideY1="1" guideY2="7" />
+        <image file="normalPowerStart.png"      guideX1="1"  guideX2="3"  guideY1="1" guideY2="7" />
+        <image file="normalPowerEnd.png"        guideX1="0"  guideX2="2"  guideY1="1" guideY2="7" />
+        <image file="strongPowerStart.png"      guideX1="1"  guideX2="3"  guideY1="1" guideY2="7" />
+        <image file="strongPowerEnd.png"        guideX1="0"  guideX2="2"  guideY1="1" guideY2="7" />
+        <image file="superStrongPowerStart.png" guideX1="1"  guideX2="3"  guideY1="1" guideY2="7" />
+        <image file="superStrongPowerEnd.png"   guideX1="1"  guideX2="2"  guideY1="1" guideY2="7" />
     </atlas>
     
     <atlas linearFilter="false">

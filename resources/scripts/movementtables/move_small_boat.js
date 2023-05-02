@@ -27,7 +27,7 @@ var Constructor = function()
             terrain.getID() === "BRIDGE" &&
             (terrain.getBaseTerrainID() === "SEA" ||
              terrain.getBaseTerrainID() === "LAKE" ||
-             terrain.getBaseTerrain("RIVER") !== null))
+             terrain.getBaseTerrain("RIVER", true) !== null))
         {
             return 1;
         }

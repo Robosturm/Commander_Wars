@@ -462,7 +462,7 @@ public slots:
             return m_terrainID;
         }
     }
-    Terrain* getBaseTerrain(QString terrainId)
+    Terrain* getBaseTerrain(QString terrainId, bool returnNullIfNotFound = false)
     {
         if (m_pBaseTerrain.get() != nullptr)
         {
@@ -475,9 +475,13 @@ public slots:
                 return m_pBaseTerrain->getBaseTerrain(terrainId);
             }
         }
-        else
+        else if (!returnNullIfNotFound)
         {
             return this;
+        }
+        else
+        {
+            return nullptr;
         }
     }
     Terrain* getNextBaseTerrain()

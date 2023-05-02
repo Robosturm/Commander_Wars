@@ -3,9 +3,9 @@
     <set path = "resources/objects/" />
     <atlas linearFilter="false">
         <!-- button -->
-        <image file="button.png" cols = "3"         guideX1="9" guideX2="319" guideY1="6" guideY2="34"/>
+        <image file="button.png"        cols = "3"  guideX1="9" guideX2="319" guideY1="6" guideY2="34"/>
         <image file="button_square.png" cols = "3"  guideX1="2" guideX2="28"  guideY1="2" guideY2="20"/>
-        <image file="checkbox.png" cols = "4" />
+        <image file="checkbox.png"      cols = "4" />
         <!-- button icons -->
         <image file="settings.png" />
         <image file="pause.png" />
@@ -25,7 +25,7 @@
         <image file="unlock.png" />
         <!-- editor selection -->
         <image file="arrow+right.png" cols = "3"/>
-        <image file="editorselection.png"           guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>
+        <image file="editorselection.png" guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>
         <image file="editor+selector.png" cols = "4" />        
         <image file="editor+big+square.png"/>
         <image file="editor+big.png"/>

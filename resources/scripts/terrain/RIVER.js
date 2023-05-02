@@ -199,7 +199,7 @@ var Constructor = function()
                     RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i, map);
                 }
             }
-            else
+            else if (currentTerrain.getBaseTerrain("RIVER", true) !== null)
             {
                 currentTerrain = currentTerrain.getBaseTerrain("RIVER");
                 currentTerrain.unloadSprites();
