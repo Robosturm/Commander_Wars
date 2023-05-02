@@ -33,63 +33,69 @@ LoadingScreen::~LoadingScreen()
 }
 
 void LoadingScreen::show()
-{    
-    CONSOLE_PRINT("LoadingScreen::show", GameConsole::eDEBUG);
-    oxygine::Stage::getStage()->addChild(spLoadingScreen(this));
-    removeChildren();
-    oxygine::ResAnim* pBackground;
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    pBackground = pBackgroundManager->getResAnim("loadingscreen");
-    // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
-    addChild(sprite);
-    if (pBackground != nullptr)
+{
+    if (oxygine::Stage::getStage().get() != nullptr)
     {
-        sprite->setResAnim(pBackground);
-        // background should be last to draw
-        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-        sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
-        sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
+        CONSOLE_PRINT("LoadingScreen::show", GameConsole::eDEBUG);
+        oxygine::Stage::getStage()->addChild(spLoadingScreen(this));
+        removeChildren();
+        oxygine::ResAnim* pBackground;
+        BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
+        pBackground = pBackgroundManager->getResAnim("loadingscreen");
+        // load background
+        oxygine::spSprite sprite = oxygine::spSprite::create();
+        addChild(sprite);
+        if (pBackground != nullptr)
+        {
+            sprite->setResAnim(pBackground);
+            // background should be last to draw
+            sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
+            sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pBackground->getWidth()));
+            sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pBackground->getHeight()));
+        }
+        m_BackgroundBar = oxygine::spColorRectSprite::create();
+        m_BackgroundBar->setSize(oxygine::Stage::getStage()->getWidth(), 60);
+        m_BackgroundBar->setY(oxygine::Stage::getStage()->getHeight() - 60);
+        m_BackgroundBar->setColor(Qt::gray);
+        addChild(m_BackgroundBar);
+
+        m_LoadingBar = oxygine::spColorRectSprite::create();
+        m_LoadingBar->setSize(oxygine::Stage::getStage()->getWidth(), 60);
+        m_LoadingBar->setY(oxygine::Stage::getStage()->getHeight() - 60);
+        m_LoadingBar->setColor(Qt::red);
+        addChild(m_LoadingBar);
+
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
+        style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+        style.multiline = true;
+        m_workText = spLabel::create(oxygine::Stage::getStage()->getWidth());
+        m_workText->setStyle(style);
+        m_workText->setX(0);
+        m_workText->setY(oxygine::Stage::getStage()->getHeight() / 2);
+        addChild(m_workText);
+        m_loadingProgress = spLabel::create(oxygine::Stage::getStage()->getWidth());
+        m_loadingProgress->setStyle(style);
+        m_loadingProgress->setPosition(0, oxygine::Stage::getStage()->getHeight() - 50);
+        addChild(m_loadingProgress);
+        m_workText->setHtmlText("Loading...");
+        m_loadingProgress->setHtmlText("0 %");
+        m_LoadingBar->setWidth(1);
+        setVisible(true);
     }
-    m_BackgroundBar = oxygine::spColorRectSprite::create();
-    m_BackgroundBar->setSize(oxygine::Stage::getStage()->getWidth(), 60);
-    m_BackgroundBar->setY(oxygine::Stage::getStage()->getHeight() - 60);
-    m_BackgroundBar->setColor(Qt::gray);
-    addChild(m_BackgroundBar);
-
-    m_LoadingBar = oxygine::spColorRectSprite::create();
-    m_LoadingBar->setSize(oxygine::Stage::getStage()->getWidth(), 60);
-    m_LoadingBar->setY(oxygine::Stage::getStage()->getHeight() - 60);
-    m_LoadingBar->setColor(Qt::red);
-    addChild(m_LoadingBar);
-
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("mainBlack24"));
-    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
-    style.multiline = true;
-    m_workText = spLabel::create(oxygine::Stage::getStage()->getWidth());
-    m_workText->setStyle(style);
-    m_workText->setX(0);
-    m_workText->setY(oxygine::Stage::getStage()->getHeight() / 2);
-    addChild(m_workText);
-    m_loadingProgress = spLabel::create(oxygine::Stage::getStage()->getWidth());
-    m_loadingProgress->setStyle(style);
-    m_loadingProgress->setPosition(0, oxygine::Stage::getStage()->getHeight() - 50);
-    addChild(m_loadingProgress);
-    m_workText->setHtmlText("Loading...");
-    m_loadingProgress->setHtmlText("0 %");
-    m_LoadingBar->setWidth(1);
-    setVisible(true);    
 }
 
 void LoadingScreen::setProgress(QString workText, qint32 value)
 {
-    CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), GameConsole::eDEBUG);
-    m_workText->setHtmlText(workText);
-    m_loadingProgress->setHtmlText(QString::number(value) + " %");
-    m_LoadingBar->setWidth(value * oxygine::Stage::getStage()->getWidth() / 100);
-    if (Mainapp::getInstance()->isMainThread())
+    if (oxygine::Stage::getStage().get() != nullptr)
     {
-        QCoreApplication::processEvents();
+        CONSOLE_PRINT("LoadingScreen::setProgress " + workText + " " + QString::number(value), GameConsole::eDEBUG);
+        m_workText->setHtmlText(workText);
+        m_loadingProgress->setHtmlText(QString::number(value) + " %");
+        m_LoadingBar->setWidth(value * oxygine::Stage::getStage()->getWidth() / 100);
+        if (Mainapp::getInstance()->isMainThread())
+        {
+            QCoreApplication::processEvents();
+        }
     }
 }
 

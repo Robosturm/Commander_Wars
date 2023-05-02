@@ -18,7 +18,7 @@ const char* const GameUpdater::MODE_FORCE = "force";
 const char* const GameUpdater::MODE_INSTALL = "install";
 
 GameUpdater::GameUpdater()
-    : m_filedownloader(QString(COW_UPDATETARGET),
+    : m_filedownloader(QString("Commander_Wars_Win10_x64.zip"), // COW_UPDATETARGET),
                        UPDATE_URL,
                        LATEST,
                        QString(COW_BUILD_TAG),
