@@ -107,23 +107,35 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
             {
                 if (verifyActionStack())
                 {
-                    spGameAction pAction = m_ActionBuffer.front();
-                    m_ActionBuffer.pop_front();
-                    if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
-                    {
-                        AI_CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for player " + QString::number(m_pPlayer->getPlayerID()) +
-                                         " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
-                                         " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
-                        emit sigPerformAction(pAction);
-                    }
+                    doNextAction();
                 }
                 else
                 {
-                    m_pMenu->doResyncGame();
+                    onInvalidStack();
                 }
             }
         }
     }
+}
+
+void ProxyAi::doNextAction()
+{
+    spGameAction pAction = m_ActionBuffer.front();
+    if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
+    {
+        CONSOLE_PRINT("Proxy ai emitting action " + pAction->getActionID() + " for player " + QString::number(m_pPlayer->getPlayerID()) +
+                          " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
+                          " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
+        m_ActionBuffer.pop_front();
+        emit sigPerformAction(pAction);
+    }
+}
+
+void ProxyAi::onInvalidStack()
+{
+    CONSOLE_PRINT("Invalid action stack found", GameConsole::eDEBUG);
+    m_ActionBuffer.clear();
+    m_pMenu->doResyncGame();
 }
 
 bool ProxyAi::verifyActionStack()
@@ -156,20 +168,12 @@ void ProxyAi::nextAction()
         {
             if (m_ActionBuffer.size() > 0)
             {
-                spGameAction pAction = m_ActionBuffer.front();
-                m_ActionBuffer.pop_front();
-                if (pAction->getSyncCounter() == m_pMenu->getSyncCounter() + 1)
-                {
-                    AI_CONSOLE_PRINT("Emitting action " + pAction->getActionID() + " for player " + QString::number(m_pPlayer->getPlayerID()) +
-                                     " current player is " + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()) +
-                                     " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
-                    emit sigPerformAction(pAction);
-                }
+                doNextAction();
             }
         }
         else
         {
-            m_pMenu->doResyncGame();
+            onInvalidStack();
         }
     }
 }

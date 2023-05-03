@@ -2202,6 +2202,7 @@ void GameMenue::exitGame()
 void GameMenue::startGame()
 {
     CONSOLE_PRINT("GameMenue::startGame", GameConsole::eDEBUG);
+    auto mapHash = m_pMap->getMapHash();
     if (m_pMap.get() != nullptr &&
         m_pMap->getGameScript() != nullptr)
     {
@@ -2210,7 +2211,6 @@ void GameMenue::startGame()
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationFactory::clearAllAnimations();
     qint32 count = m_pMap->getPlayerCount();
-    m_pMap->getGameRules()->onGameStart();
     registerAtInterpreter();
     for (qint32 i = 0; i < count; ++i)
     {
@@ -2234,6 +2234,7 @@ void GameMenue::startGame()
     }
     if (!m_SaveGame)
     {
+        m_pMap->getGameRules()->onGameStart();
         CONSOLE_PRINT("Launching game from start", GameConsole::eDEBUG);
         m_pMap->getGameScript()->gameStart();
         m_pMap->startGame();
@@ -2281,6 +2282,10 @@ void GameMenue::startGame()
             m_ReplayRecorder.startRecording();
         }
         auto* pInput = m_pMap->getCurrentPlayer()->getBaseGameInput();
+        if (m_pMap->getMapHash() != mapHash)
+        {
+            CONSOLE_PRINT("Map hash was modified while starting a savegame", GameConsole::eDEBUG);
+        }
         if ((m_pNetworkInterface.get() == nullptr ||
              m_pNetworkInterface->getIsServer()) &&
             !m_gameStarted ||

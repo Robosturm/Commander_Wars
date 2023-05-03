@@ -201,7 +201,9 @@ void GameMap::applyBiomeToArea(const QRect& area, qint32 newBiome)
     auto* pInterpreter = Interpreter::getInstance();
     applyToArea(area, [pInterpreter, newBiome, this](qint32 x, qint32 y)
     {
-        const auto currentTerrain = getTerrain(x, y)->getID();
+        auto* terrain = getTerrain(x, y);
+        const auto currentTerrain = terrain->getID();
+        spUnit currentUnit = terrain->getSpUnit();
         QJSValueList args = {currentTerrain,
                              newBiome};
         auto erg = pInterpreter->doFunction("TERRAIN", "getTerrainBiomeMappingId", args);
@@ -210,6 +212,7 @@ void GameMap::applyBiomeToArea(const QRect& area, qint32 newBiome)
             currentTerrain != newTerrain)
         {
             replaceTerrain(newTerrain, x, y);
+            getTerrain(x, y)->setUnit(currentUnit);
         }
     });
     updateSprites();

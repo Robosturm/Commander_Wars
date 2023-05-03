@@ -6376,9 +6376,9 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="70"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
-        <location filename="../game/gamemap.cpp" line="600"/>
-        <location filename="../game/gamemap.cpp" line="740"/>
-        <location filename="../game/gamemap.cpp" line="1639"/>
+        <location filename="../game/gamemap.cpp" line="603"/>
+        <location filename="../game/gamemap.cpp" line="743"/>
+        <location filename="../game/gamemap.cpp" line="1642"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6393,164 +6393,164 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="439"/>
+        <location filename="../game/gamemap.cpp" line="442"/>
         <source>Tags
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="442"/>
+        <location filename="../game/gamemap.cpp" line="445"/>
         <source>Bases
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="446"/>
+        <location filename="../game/gamemap.cpp" line="449"/>
         <source>Airports
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="450"/>
+        <location filename="../game/gamemap.cpp" line="453"/>
         <source>Harbours
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="454"/>
+        <location filename="../game/gamemap.cpp" line="457"/>
         <source>Towers
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="458"/>
+        <location filename="../game/gamemap.cpp" line="461"/>
         <source>Teleport
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="462"/>
+        <location filename="../game/gamemap.cpp" line="465"/>
         <source>Mixed bases
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="466"/>
+        <location filename="../game/gamemap.cpp" line="469"/>
         <source>Predeployed
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="470"/>
+        <location filename="../game/gamemap.cpp" line="473"/>
         <source>Symetric
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="474"/>
+        <location filename="../game/gamemap.cpp" line="477"/>
         <source>PvP
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="478"/>
+        <location filename="../game/gamemap.cpp" line="481"/>
         <source>FTA
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="482"/>
+        <location filename="../game/gamemap.cpp" line="485"/>
         <source>Vs AI
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="486"/>
+        <location filename="../game/gamemap.cpp" line="489"/>
         <source>Team play
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="490"/>
+        <location filename="../game/gamemap.cpp" line="493"/>
         <source>Historical
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="494"/>
+        <location filename="../game/gamemap.cpp" line="497"/>
         <source>Low funds
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="498"/>
+        <location filename="../game/gamemap.cpp" line="501"/>
         <source>High funds
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="502"/>
+        <location filename="../game/gamemap.cpp" line="505"/>
         <source>Naval
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="506"/>
+        <location filename="../game/gamemap.cpp" line="509"/>
         <source>Ground
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="510"/>
+        <location filename="../game/gamemap.cpp" line="513"/>
         <source>Air
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="514"/>
+        <location filename="../game/gamemap.cpp" line="517"/>
         <source>Scripted
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="600"/>
-        <location filename="../game/gamemap.cpp" line="1639"/>
+        <location filename="../game/gamemap.cpp" line="603"/>
+        <location filename="../game/gamemap.cpp" line="1642"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="713"/>
+        <location filename="../game/gamemap.cpp" line="716"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="740"/>
+        <location filename="../game/gamemap.cpp" line="743"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1606"/>
+        <location filename="../game/gamemap.cpp" line="1609"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1667"/>
+        <location filename="../game/gamemap.cpp" line="1670"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1677"/>
+        <location filename="../game/gamemap.cpp" line="1680"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1685"/>
+        <location filename="../game/gamemap.cpp" line="1688"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1697"/>
+        <location filename="../game/gamemap.cpp" line="1700"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6676,22 +6676,22 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2427"/>
+        <location filename="../menue/gamemenue.cpp" line="2432"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2458"/>
+        <location filename="../menue/gamemenue.cpp" line="2463"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2484"/>
+        <location filename="../menue/gamemenue.cpp" line="2489"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2661"/>
+        <location filename="../menue/gamemenue.cpp" line="2666"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>

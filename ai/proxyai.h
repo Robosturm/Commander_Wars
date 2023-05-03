@@ -64,6 +64,9 @@ public slots:
      */
     bool verifyActionStack();
 private:
+    void onInvalidStack();
+    void doNextAction();
+private:
     QList<spGameAction> m_ActionBuffer;
     QMutex m_ActionMutex;
 };
