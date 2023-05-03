@@ -21,8 +21,6 @@
 
 #include "ai/aiprocesspipe.h"
 
-#include "ui_reader/uifactory.h"
-
 #include "objects/loadingscreen.h"
 
 #include "network/mainserver.h"
@@ -230,7 +228,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
 #ifdef AUDIOSUPPORT
-            m_audioThread->start(QThread::Priority::NormalPriority);
+            m_audioThread->start(QThread::Priority::HighestPriority);
             m_AudioManager.reset(new AudioManager(m_noAudio));
             m_AudioManager->moveToThread(m_audioThread.get());
             m_AudioManager->initAudio();

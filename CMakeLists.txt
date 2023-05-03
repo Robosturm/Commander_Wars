@@ -69,7 +69,6 @@ find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
 find_package(Qt6 COMPONENTS Sql REQUIRED)
-find_package(Doxygen OPTIONAL_COMPONENTS mscgen dia dot)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
 endif()
@@ -959,7 +958,7 @@ endif()
 ##############################################################
 if (NOT DEPLOY_RESOURCES_AS_FOLDER)
     message("Bundling resources as rcc-pack")
-    # map anme to correct alias
+    # map name to correct alias
     foreach(QM_FILE ${QM_FILES})
         get_filename_component(barename ${QM_FILE} NAME)
         set_source_files_properties(${QM_FILE}
@@ -1147,7 +1146,7 @@ endif()
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(FullInstallPath "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/")
-    message("Build will run windeployqt with path ${FullInstallPath}")
+    message("Build will run windeployqt ${_qt_bin_dir} ${WINDEPLOYQT_EXECUTABLE} with path ${FullInstallPath}")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND "${CMAKE_COMMAND}" -E
         env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
@@ -1157,7 +1156,7 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         COMMENT "Running windeployqt..."
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
-    message("Build will run macdeployqt")
+    message("Build will run macdeployqt ${MACDEPLOYQT_EXECUTABLE}")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND "${MACDEPLOYQT_EXECUTABLE}"
             "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../.."
