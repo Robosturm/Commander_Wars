@@ -405,7 +405,7 @@ void MapSelectionMapsMenue::startGame()
     // start game
     CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    auto window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
+    spGameMenue window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }

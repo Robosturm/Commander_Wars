@@ -27,6 +27,7 @@ void ScriptVariable::serializeObject(QDataStream& pStream) const
     pStream << m_Id;
     QByteArray data = m_buffer.data();
     Filesupport::writeByteArray(pStream, data);
+    pStream << m_modified;
 }
 
 void ScriptVariable::deserializeObject(QDataStream& pStream)
@@ -37,6 +38,10 @@ void ScriptVariable::deserializeObject(QDataStream& pStream)
     auto data = Filesupport::readByteArray(pStream);
     m_buffer.seek(0);
     m_buffer.write(data);
+    if (version > 1)
+    {
+        pStream >> m_modified;
+    }
 }
 
 bool ScriptVariable::getModified() const

@@ -5,7 +5,6 @@
 
 #include "coreengine/settings.h"
 #include "coreengine/gameconsole.h"
-#include "coreengine/mainapp.h"
 #include "coreengine/filesupport.h"
 
 #include "game/gameaction.h"

@@ -39,7 +39,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 1;
+        return 2;
     }
     /**
      * @brief writes a vector of the given type
@@ -57,6 +57,7 @@ public:
         {
             m_actionData << list[i];
         }
+        m_modified = true;
     }
     /**
      * @brief reads a vector of the given type
