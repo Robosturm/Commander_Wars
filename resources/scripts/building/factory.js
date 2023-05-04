@@ -9,7 +9,7 @@ var Constructor = function()
         building.loadSpriteV2("factory+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
         if (building.getOwnerID() >= 0 && !neutral)
         {
-            building.loadSpriteV2("factory", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
+            building.loadSpriteV2("factory", GameEnums.Recoloring_Matrix, 200, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
         else
         {
