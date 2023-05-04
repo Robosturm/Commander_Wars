@@ -497,9 +497,9 @@ var Constructor = function()
             // generally attacks on shrouded fields are forbidden
             if (map.onMap(x, y) && owner.getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
+                var defUnit = map.getTerrain(x, y).getUnit();
                 if ((aiType === GameEnums.AiTypes_Human || aiType === GameEnums.AiTypes_MovePlanner) && detailedForecast)
-                {
-                    var defUnit = map.getTerrain(x, y).getUnit();
+                {                    
                     if (defUnit !== null)
                     {
                         if (unit.isAttackableFromPosition(defUnit, actionTargetField))
@@ -533,26 +533,24 @@ var Constructor = function()
                 }
                 else
                 {
-                    if ((aiType === GameEnums.AiTypes_Human ||
-                         aiType === GameEnums.AiTypes_MovePlanner))
+                    if (unit.isAttackableFromPosition(defUnit, actionTargetField))
                     {
-                        if (unit.isAttackableFromPosition(defUnit, actionTargetField))
+                        if ((aiType === GameEnums.AiTypes_Human ||
+                             aiType === GameEnums.AiTypes_MovePlanner))
                         {
+
                             result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
                                                                    actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                    GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off);
                             data.addPoint(Qt.point(x, y));
                             data.addZInformation(result.x);
                         }
-                    }
-                    else
-                    {
-                        result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
-                                                               actionTargetField.x, actionTargetField.y, null, x, y, 0,
-                                                               GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off,
-                                                               false, true);
-                        if (result.x >= 0.0)
+                        else
                         {
+                            result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
+                                                                   actionTargetField.x, actionTargetField.y, null, x, y, 0,
+                                                                   GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off,
+                                                                   false, true);
                             data.addPoint(Qt.point(x, y));
                             data.addZInformation(result.x);
                         }

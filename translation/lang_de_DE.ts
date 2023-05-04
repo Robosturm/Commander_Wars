@@ -386,7 +386,7 @@
     <name>ACTION_FIRE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="80"/>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="897"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="895"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -411,7 +411,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="901"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="899"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
