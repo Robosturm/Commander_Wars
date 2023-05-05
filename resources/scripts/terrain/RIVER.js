@@ -190,21 +190,25 @@ var Constructor = function()
             {
                 currentTerrain.setTerrainPaletteGroup(map.getGameRules().getMapPalette());
             }
-            if (currentTerrain.getID() === "RIVER")
+            if (!currentTerrain.getFixedSprite())
             {
-                if (!currentTerrain.getFixedSprite())
+                if (currentTerrain.getID() === "RIVER")
                 {
                     currentTerrain.unloadSprites();
                     currentTerrain.loadBaseTerrainSprites();
                     RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i, map);
                 }
+                else if (currentTerrain.getBaseTerrain("RIVER", true) !== null)
+                {
+                    currentTerrain = currentTerrain.getBaseTerrain("RIVER");
+                    currentTerrain.unloadSprites();
+                    currentTerrain.loadBaseTerrainSprites();
+                    RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i, map);
+                }
             }
-            else if (currentTerrain.getBaseTerrain("RIVER", true) !== null)
+            else
             {
-                currentTerrain = currentTerrain.getBaseTerrain("RIVER");
-                currentTerrain.unloadSprites();
-                currentTerrain.loadBaseTerrainSprites();
-                RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i, map);
+                currentTerrain.loadSprites();
             }
         }
     };
