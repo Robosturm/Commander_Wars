@@ -68,24 +68,37 @@ var Constructor = function()
                                 ["WASTE_DESTROYEDWELD", 1],
                                 ["WASTE_RUIN", 1],
                                 ["CREEPER", 1],
-                                ["TELEPORTTILE", 0]];
+                                ["TELEPORTTILE", 0],
+                                ["ZGATE_E_W", 1],
+                                ["ZGATE_N_S", 1],
+                                ["FORTHQ", 1],
+                                ["OILRIG", 1],];
 
     this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
     {
-        var terrainId = terrain.getBaseTerrainID()
-        var id = terrain.getID();
-        if ((id === "ZGATE_E_W" || id === "ZGATE_N_S" || id === "FORTHQ") &&
-            (unit !== null) &&
-            (unit.getOwner().isAlly(terrain.getBuilding().getOwner())))
+        let terrainId = terrain.getTerrainID();
+        let id = terrain.getID();
+        if (id === "ZGATE_E_W" || id === "ZGATE_N_S" || id === "FORTHQ")
         {
-            return 1;
+            if ((unit !== null) && (unit.getOwner().isAlly(terrain.getBuilding().getOwner())))
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
         }
         else if (id === "OILRIG")
         {
             if (terrainId !== "SEA" &&
-                terrainId !== "LAKE" )
+                terrainId !== "LAKE")
             {
                 return 1;
+            }
+            else
+            {
+                return -1;
             }
         }
         return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_HOELLIUM.movementpointsTable);

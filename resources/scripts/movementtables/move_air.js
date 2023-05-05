@@ -74,16 +74,23 @@ var Constructor = function()
                                 ["WASTE_RUIN", 1],
                                 ["WASTE_DESTROYEDWELD", 1],
                                 ["CREEPER", 1],
-                                ["TELEPORTTILE", 0]];
+                                ["TELEPORTTILE", 0],
+                                ["ZGATE_E_W", 1],
+                                ["ZGATE_N_S", 1],];
 
     this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
     {
-        var id = terrain.getID();
-        if ((id === "ZGATE_E_W" || id === "ZGATE_N_S" || id === "FORTHQ") &&
-                (unit !== null) &&
-                (unit.getOwner().isAlly(terrain.getBuilding().getOwner())))
+        let id = terrain.getID();
+        if (id === "ZGATE_E_W" || id === "ZGATE_N_S" || id === "FORTHQ")
         {
-            return 1;
+            if ((unit !== null) && (unit.getOwner().isAlly(terrain.getBuilding().getOwner())))
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
         }
         return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_AIR.movementpointsTable);
     };
