@@ -70,14 +70,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     setObjectName("GameMenue");
 #endif
     CONSOLE_PRINT("Creating game menu", GameConsole::eDEBUG);
-    if (!GlobalUtils::getUseSeed())
-    {
-        quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
-        CONSOLE_PRINT("Creating seed " + QString::number(seed) + " and starting the ai pipe", GameConsole::eDEBUG);
-        GlobalUtils::seed(seed);
-        GlobalUtils::setUseSeed(true);
-        startAiPipeGame();
-    }
+    loadingAiPipe();
     Interpreter::setCppOwnerShip(this);
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
@@ -176,6 +169,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
     setObjectName("GameMenue");
 #endif
     CONSOLE_PRINT("Creating game menu", GameConsole::eDEBUG);
+    loadingAiPipe();
     Interpreter::setCppOwnerShip(this);
     loadHandling();
     loadGameMenue();
@@ -183,6 +177,18 @@ GameMenue::GameMenue(QString map, bool saveGame)
     if (Settings::getAutoSavingCycle() > 0)
     {
         m_enabledAutosaving = true;
+    }
+}
+
+void GameMenue::loadingAiPipe()
+{
+    if (!GlobalUtils::getUseSeed())
+    {
+        quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+        CONSOLE_PRINT("Creating seed " + QString::number(seed) + " and starting the ai pipe", GameConsole::eDEBUG);
+        GlobalUtils::seed(seed);
+        GlobalUtils::setUseSeed(true);
+        startAiPipeGame();
     }
 }
 

@@ -495,6 +495,10 @@ protected:
      * @return
      */
     QString getSaveSlaveMapName() const;
+    /**
+     * @brief loadingAiPipe
+     */
+    void loadingAiPipe();
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
