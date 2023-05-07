@@ -947,31 +947,11 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         OPTIONS "${LUPDATE_OPTIONS}")
     qt_add_translation(${PROJECT_NAME}_QM_FILES ${TS_FILES})
     add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
-    add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_translations)
 endif()
 
 ##############################################################
 # end of this is just for the ide view nothing for execution #
 ##############################################################
-
-##############################################################
-# Qt RCC Resource section                                    #
-##############################################################
-if (NOT DEPLOY_RESOURCES_AS_FOLDER)
-    message("Bundling resources as rcc-pack")
-    # map name to correct alias
-    foreach(QM_FILE ${QM_FILES})
-        get_filename_component(barename ${QM_FILE} NAME)
-        set_source_files_properties(${QM_FILE}
-            PROPERTIES QT_RESOURCE_ALIAS "resources/translation/${barename}"
-            )
-    endforeach()
-    qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}"
-        PREFIX "/"
-        FILES
-        ${QM_FILES}
-    )
-endif()
 
 ##############################################################
 # Install section                                            #

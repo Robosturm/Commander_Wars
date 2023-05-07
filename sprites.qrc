@@ -4851,5 +4851,8 @@
         <file>resources/images/building/forthq.png</file>
         <file>resources/images/building/forthq+mask.png</file>
         <file>resources/images/building/forthq+neutral.png</file>
+        <file>resources/translation/lang_de_DE.qm</file>
+        <file>resources/translation/lang_en.qm</file>
+        <file>resources/translation/lang_zh-tw.qm</file>
     </qresource>
 </RCC>

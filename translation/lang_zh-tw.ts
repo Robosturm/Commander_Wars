@@ -6615,141 +6615,141 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="123"/>
+        <location filename="../menue/gamemenue.cpp" line="116"/>
         <source>Waiting for Players</source>
         <translation>等待玩家</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="437"/>
+        <location filename="../menue/gamemenue.cpp" line="443"/>
         <source>Connection failed.Reason: Invalid login data.</source>
         <translation>連接失敗.原因:登錄數據無效.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="438"/>
+        <location filename="../menue/gamemenue.cpp" line="444"/>
         <source>Connection failed.Reason: No more observers available.</source>
         <translation>連接失敗.原因:沒有更多可用的觀察者.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="439"/>
+        <location filename="../menue/gamemenue.cpp" line="445"/>
         <source>Connection failed.Reason: No valid player available.</source>
         <translation>連接失敗.原因:沒有可用的有效玩家.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="440"/>
+        <location filename="../menue/gamemenue.cpp" line="446"/>
         <source>Connection failed.Reason: Invalid connection.</source>
         <translation>連接失敗.原因:無效連接.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="648"/>
+        <location filename="../menue/gamemenue.cpp" line="654"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart or try to resync with the server.
 Note: This may be caused by a defective mod.</source>
         <translation>遊戲不同步,無法繼續進行.遊戲已停止.您可以保存遊戲並重新啟動,或嘗試與服務器重新同步.
 備註:這可能是由於有缺陷的模組引起的.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="648"/>
+        <location filename="../menue/gamemenue.cpp" line="654"/>
         <source>Resync</source>
         <translation>重新同步</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="648"/>
+        <location filename="../menue/gamemenue.cpp" line="654"/>
         <source>Ok</source>
         <translation>確定</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1152"/>
+        <location filename="../menue/gamemenue.cpp" line="1158"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation>主機已從遊戲中斷開連線!遊戲將停止.您可以保存遊戲,重新載入地圖以繼續遊戲.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1175"/>
+        <location filename="../menue/gamemenue.cpp" line="1181"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation>客戶端已與遊戲斷開連接.客戶端可能會重新連接到遊戲.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1432"/>
-        <location filename="../menue/gamemenue.cpp" line="2044"/>
-        <location filename="../menue/gamemenue.cpp" line="2081"/>
+        <location filename="../menue/gamemenue.cpp" line="1438"/>
+        <location filename="../menue/gamemenue.cpp" line="2050"/>
+        <location filename="../menue/gamemenue.cpp" line="2087"/>
         <source>Save</source>
         <translation>存檔</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1440"/>
+        <location filename="../menue/gamemenue.cpp" line="1446"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1475"/>
+        <location filename="../menue/gamemenue.cpp" line="1481"/>
         <source>Show Chat</source>
         <translation>顯示聊天</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1893"/>
+        <location filename="../menue/gamemenue.cpp" line="1899"/>
         <source>Player</source>
         <translation>玩家</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1894"/>
+        <location filename="../menue/gamemenue.cpp" line="1900"/>
         <source>Produced</source>
         <translation>生產</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1895"/>
+        <location filename="../menue/gamemenue.cpp" line="1901"/>
         <source>Lost</source>
         <translation>失去</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1896"/>
+        <location filename="../menue/gamemenue.cpp" line="1902"/>
         <source>Killed</source>
         <translation>擊殺</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1897"/>
+        <location filename="../menue/gamemenue.cpp" line="1903"/>
         <source>Army Value</source>
         <translation>軍隊質量</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1898"/>
+        <location filename="../menue/gamemenue.cpp" line="1904"/>
         <source>Income</source>
         <translation>收入</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1899"/>
+        <location filename="../menue/gamemenue.cpp" line="1905"/>
         <source>Funds</source>
         <translation>資金</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1900"/>
+        <location filename="../menue/gamemenue.cpp" line="1906"/>
         <source>Bases</source>
         <translation>基地</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1926"/>
+        <location filename="../menue/gamemenue.cpp" line="1932"/>
         <source>Player </source>
         <translation>玩家 </translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1944"/>
+        <location filename="../menue/gamemenue.cpp" line="1950"/>
         <source>Neutral</source>
         <translation>自然</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2432"/>
+        <location filename="../menue/gamemenue.cpp" line="2438"/>
         <source>Do you want to exit the current game?</source>
         <translation>您要退出當前遊戲嗎?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2463"/>
+        <location filename="../menue/gamemenue.cpp" line="2469"/>
         <source>Do you want to surrender the current game?</source>
         <translation>是否要放棄當前遊戲?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2489"/>
+        <location filename="../menue/gamemenue.cpp" line="2495"/>
         <source>Nickname for the Unit:</source>
         <translation>單位暱稱:</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2666"/>
+        <location filename="../menue/gamemenue.cpp" line="2672"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
