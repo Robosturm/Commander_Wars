@@ -875,6 +875,12 @@ public slots:
      */
     GameEnums::MapFilterFlags getMapFlags() const;
     /**
+     * @brief hasMapFlags
+     * @param flags
+     * @return
+     */
+    bool hasMapFlags(GameEnums::MapFilterFlags flags) const;
+    /**
      * @brief setMapFlags
      * @param flags
      */

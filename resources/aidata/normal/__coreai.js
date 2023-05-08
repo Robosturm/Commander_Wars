@@ -243,8 +243,12 @@ var COREAI =
                 var naval = variableNavalBattle.readDataInt32();
                 var variableAirBattle = variables.createVariable("AIRBATTLE");                
                 var air = variableAirBattle.readDataInt32();
-                var mapFlags = map.getMapFlags();
-                if (idleUnitCount > 0)
+                var hasNavalFlag = map.hasMapFlags(GameEnums.MapFilterFlags_Naval);
+                var hasAirFlag = map.hasMapFlags(GameEnums.MapFilterFlags_Air);
+                var hasGroundFlag = map.hasMapFlags(GameEnums.MapFilterFlags_Ground);
+                if (idleUnitCount > 0 ||
+                    hasNavalFlag ||
+                    hasAirFlag)
                 {
                     naval = 0;
                     air = 0;
@@ -265,13 +269,11 @@ var COREAI =
                         {
                             naval += 2;
                         }
-                        if (GameEnums.MapFilterFlags_Naval & mapFlags > 0)
+                        if (hasNavalFlag)
                         {
-                            GameConsole.print("Naval None ground test 0", 1);
                             naval += 1;
-                            if (GameEnums.MapFilterFlags_Ground & mapFlags === 0)
+                            if (hasGroundFlag)
                             {
-                                GameConsole.print("Naval None ground test 1", 1);
                                 naval += 1;
                             }
                         }
@@ -291,13 +293,11 @@ var COREAI =
                         {
                             air += 2;
                         }
-                        if (GameEnums.MapFilterFlags_Air & mapFlags > 0)
+                        if (hasAirFlag)
                         {
-                            GameConsole.print("Air None ground test 0", 1);
                             air += 1;
-                            if (GameEnums.MapFilterFlags_Ground & mapFlags === 0)
+                            if (hasGroundFlag)
                             {
-                                GameConsole.print("Air None ground test 1", 1);
                                 air += 1;
                             }
                         }

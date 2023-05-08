@@ -2762,6 +2762,12 @@ void GameMap::setMapFlags(GameEnums::MapFilterFlags flags)
     m_headerInfo.m_mapFlags = flags;
 }
 
+bool GameMap::hasMapFlags(GameEnums::MapFilterFlags flags) const
+{
+    bool hasFlags = flags & m_headerInfo.m_mapFlags;
+    return hasFlags;
+}
+
 QColor GameMap::getGridColor()
 {
     QColor gridColor = QColor(70, 70, 70, 180);

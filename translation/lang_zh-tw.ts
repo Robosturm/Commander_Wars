@@ -1487,12 +1487,12 @@
     <message>
         <location filename="../objects/coinfoactor.cpp" line="78"/>
         <source>Hit</source>
-        <translation>命中</translation>
+        <translation>喜好</translation>
     </message>
     <message>
         <location filename="../objects/coinfoactor.cpp" line="96"/>
         <source>Miss</source>
-        <translation>未命中</translation>
+        <translation>厭惡</translation>
     </message>
     <message>
         <location filename="../objects/coinfoactor.cpp" line="157"/>
@@ -4906,7 +4906,7 @@ Distributed: Units are spawned at the given rate.</source>
         <location filename="../resources/ui/menu/playermenu.xml" line="48"/>
         <location filename="../resources/ui/menu/playermenu.xml" line="49"/>
         <source>Replay Game</source>
-        <translation>重玩遊戲</translation>
+        <translation>重播遊戲</translation>
     </message>
     <message>
         <location filename="../resources/ui/menu/mainsinglemenu.xml" line="21"/>
@@ -12947,7 +12947,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/bluemoon.js" line="7"/>
         <source>Due to Clone Andy leading an invasion on their land, Blue Moon was at war with Orange Star at the beginning of the original Advance Wars, though later allied with them, co-finding the Allied Nations along with Green Earth and Yellow Comet to defend against the Black Hole invasion. </source>
-        <translation>由於克隆安迪率領入侵他們的領土,藍月在最初的Advance Wars中與橙色之星交戰,但後來與他們聯盟,並與綠色地球和黃彗星一起創立了聯合國來抵禦黑洞的入侵. </translation>
+        <translation>由於克隆安迪率領入侵他們的領土,藍色月亮在最初的Advance Wars中與橙色之星交戰,但後來與他們聯盟,並與綠色地球和黃彗星一起創立了聯合國來抵禦黑洞的入侵. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/bluemoon.js" line="12"/>
@@ -12957,7 +12957,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/bluemoon.js" line="17"/>
         <source>Blue Moon</source>
-        <translation>藍月</translation>
+        <translation>藍色月亮</translation>
     </message>
 </context>
 <context>
@@ -13105,7 +13105,8 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="329"/>
         <source>Previously a researcher, he was recruited as a commander for his high intelligence. Although a reclusive geek, he is slowly finding his place among the other commanders.</source>
-        <translation>他曾是一名研究員,由於其高超的智力而被招募成為指揮官.儘管是一個孤僻的書呆子,但他正在逐漸找到自己在其他指揮官中的位置.</translation>
+        <translation>他曾是一名研究員,由於其高超的智力而被招募成為指揮官.儘管是一個孤僻的書呆子,
+但他正在逐漸找到自己在其他指揮官中的位置.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="333"/>
@@ -13120,7 +13121,8 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="341"/>
         <source>Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose more firepower than normal the more damaged they are.</source>
-        <translation>Adam可以利用最大的運氣機會來進行攻擊,但前提是敵軍只能被一擊擊殺.然而,他的部隊越受損失,失去的火力就會比正常情況下更多.</translation>
+        <translation>Adam可以利用最大的運氣機會來進行攻擊,但前提是敵軍只能被一擊擊殺.
+然而,他的部隊越受損失,失去的火力就會比正常情況下更多.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="345"/>
@@ -13140,12 +13142,14 @@ An attacking unit instantly kills an enemy unit if a max luck roll would kill th
         <translation>
 
 CO區域效果:
-如果最大運氣擲骰能夠擊敗敵軍,攻擊單位會立即消滅一個敵軍單位.如果一個單位消滅一個敵軍單位,該單位會獲得1回合的防禦提升.</translation>
+如果最大運氣擲骰能夠擊敗敵軍,攻擊單位會立即消滅一個敵軍單位.
+如果一個單位消滅一個敵軍單位,該單位會獲得1回合的防禦提升.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="350"/>
         <source>All of Adam&apos;s units gains a firepower boost and movement range. Whenever Adam destroys a unit, the next unit gains bonus firepower.</source>
-        <translation>亞當的所有部隊獲得火力提升和移動範圍增加.每當亞當摧毀一個敵軍部隊時,下一個攻擊的部隊將獲得額外的火力加成.</translation>
+        <translation>亞當的所有部隊獲得火力提升和移動範圍增加.
+每當亞當摧毀一個敵軍部隊時,下一個攻擊的部隊將獲得額外的火力加成.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="354"/>
@@ -13155,7 +13159,8 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="358"/>
         <source>Each time Adam destroys an enemy unit, the attacking unit can move again; however, each kill drastically reduces that units firepower. Conversely, after killing a unit, using a unit that has not been used for that turn will give it additional firepower.</source>
-        <translation>每當Adam摧毀一個敵軍單位時,攻擊單位可以再次行動;然而,每次消滅單位後,該單位的火力都會大幅下降.相反地,殺死一個單位後,使用當前回合未行動的單位將獲得額外的火力加成.</translation>
+        <translation>每當Adam摧毀一個敵軍單位時,攻擊單位可以再次行動;然而,每次消滅單位後,該單位的火力都會大幅下降.
+相反地,殺死一個單位後,使用當前回合未行動的單位將獲得額外的火力加成.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="362"/>
@@ -13279,7 +13284,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="224"/>
         <source>Movement range for all units is increased by one space.</source>
-        <translation>所有單位的移動範圍增加一格.</translation>
+        <translation>所有單位的移動範圍+1.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="228"/>
@@ -13289,7 +13294,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="232"/>
         <source>Movement range for all units is increased by two spaces.</source>
-        <translation>所有部隊的移動範圍增加兩格.</translation>
+        <translation>所有單位的移動範圍+2.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="236"/>
@@ -13515,7 +13520,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_alexander.js" line="195"/>
         <source>A diligent politician who works only for the benefit of the citizens and the promotion of peace. Olaf&apos;s son and future ruler of Blue Moon.</source>
-        <translation>一位勤奮的政治家,致力於為公民的利益和和平的推進而工作.奧拉夫的兒子,未來的藍月統治者.</translation>
+        <translation>一位勤奮的政治家,致力於為公民的利益和和平的推進而工作.奧拉夫的兒子,未來的藍色月亮統治者.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_alexander.js" line="199"/>
@@ -13566,7 +13571,8 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_alexander.js" line="219"/>
         <source>Alexander&apos;s charisma and brilliant speech wins over the people. Alexander&apos;s troops capture at a faster rate, while enemy captures are forced to restart entirely.</source>
-        <translation>亞歷山大的領袖魅力和卓越的演講技巧贏得人民的支持.亞歷山大的部隊可以更快地進行佔領,而敵軍的佔領進程會被迫重置.</translation>
+        <translation>亞歷山大的領袖魅力和卓越的演講技巧贏得人民的支持.
+亞歷山大的部隊可以更快地進行佔領,而敵軍的佔領進程會被迫重置.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_alexander.js" line="223"/>
@@ -13684,7 +13690,8 @@ Global Effect:
 Units heal only 1 HP while on an owned property, however, units will still heal from any owned property within 1 space of a unit. This effect stacks with each additional nearby property.</source>
         <translation>
 全局效果:
-部隊在自己佔領的領地上只能恢復 1 點生命,但只要部隊與其相鄰的自己佔領的領地在1格距離內,部隊就能持續回復生命.每多鄰近一塊佔領的領地,此效果就會疊加一次.</translation>
+部隊在領地上只能恢復 1 點生命,但只要部隊與其相鄰的領地在1格距離內,部隊就能持續回復生命.
+每多鄰近一塊佔領的領地,此效果就會疊加一次.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="402"/>
@@ -13700,7 +13707,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="408"/>
         <source>Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property.</source>
-        <translation>距離己方任何擁有的建築物兩格以內的部隊,會獲得火力加成且每個相鄰的己方建築物會回復 3 點生命值.</translation>
+        <translation>距離己方任何擁有的建築物2格以內的部隊,會獲得火力加成且每個相鄰的己方建築物會回復 3 點生命值.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="412"/>
@@ -13710,7 +13717,8 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="416"/>
         <source>Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property. Enemies within one spaces of their own properties suffer 3 HP of damage per nearby property.</source>
-        <translation>在任何擁有的建築物兩格範圍內的部隊將獲得火力加成,每個相鄰的擁有建築物將恢復3點生命值.同時,每個敵方擁有建築物的相鄰位置將對其造成3點傷害.</translation>
+        <translation>在任何擁有的建築物2格範圍內的部隊將獲得火力加成,每個相鄰的擁有建築物將恢復3點生命值.
+同時,每個敵方擁有建築物的相鄰位置將對其造成3點傷害.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="420"/>
@@ -14111,7 +14119,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_beast.js" line="247"/>
         <source>Restores 3 HP to all units. Units movement is increases by one space.</source>
-        <translation>所有單位回復3點生命值,單位移動力增加一格.</translation>
+        <translation>所有單位回復3點生命值,單位移動力+1.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_beast.js" line="251"/>
@@ -14457,7 +14465,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_cassidy.js" line="246"/>
         <source>All enemies suffer one HP of damage. Firepower is greatly increased by %0% when attacking a unit with equal or less health.</source>
-        <translation>所有敵方單位將遭受一點傷害.當攻擊一個生命值等於或低於自己的單位時,火力大幅提高%0%.</translation>
+        <translation>所有敵方單位將遭受1點傷害.當攻擊一個生命值等於或低於自己的單位時,火力大幅提高%0%.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_cassidy.js" line="252"/>
@@ -14823,7 +14831,8 @@ Global Effect:
 Conrad&apos;s units gain firepower when attacking an enemy unit that is within vision range of Conrad&apos;s units, including enhanced vision from terrain. The more of Conrad&apos;s units that has sight on an enemy unit, the stronger the firepower. Counter attacks are slightly weaker and units are never lucky.</source>
         <translation>
 全局效果:
-當Conrad的部隊攻擊到一個在Conrad部隊視野範圍內的敵軍時(包括地形視野的增強),Conrad的部隊會獲得火力加成.當Conrad的更多部隊能看到敵軍時,火力加成就越強.反擊能力稍微虛弱,部隊沒有運氣可言.</translation>
+當Conrad的部隊攻擊到一個在Conrad部隊視野範圍內的敵軍時(包括地形視野的增強),Conrad的部隊會獲得火力加成.
+當Conrad的更多部隊能看到敵軍時,火力加成就越強.反擊能力稍微虛弱,部隊沒有運氣可言.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_conrad.js" line="275"/>
@@ -14849,7 +14858,8 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_conrad.js" line="287"/>
         <source>Conrad&apos;s very first attack of the turn deals +%0% luck damage. For the entire turn, all percent damage that exceeds the enemy&apos;s current health is carried over to the next engagement.</source>
-        <translation>Conrad的回合第一次攻擊會造成 +%0% 的幸運傷害.在整個回合中,所有超過敵方目前生命值的百分比傷害都會攜帶到下一次攻擊.</translation>
+        <translation>Conrad的回合第一次攻擊會造成 +%0% 的幸運傷害.
+在整個回合中,所有超過敵方目前生命值的百分比傷害都會攜帶到下一次攻擊.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_conrad.js" line="293"/>
@@ -14968,12 +14978,14 @@ Units gain bonus luck based on the amount of troops Davis controls and gain miss
         <translation>
 
 CO 區域效果:
-部隊獲得的幸運值根據 Davis 控制的部隊數量而增加,並根據所有敵人控制的部隊數量而減少.獲得的獎勵/懲罰取決於哪個部隊數量更高.</translation>
+部隊獲得的幸運值根據Davis控制的部隊數量而增加,
+並根據所有敵人控制的部隊數量而減少.獲得的獎勵/懲罰取決於哪個部隊數量更高.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_davis.js" line="307"/>
         <source>His luck is increased  based on the amount of troops Davis controls. However he also gains increased missfortune based  on the amount of troops all enemies control. The bonus/penalty depends of which unit count is higher.</source>
-        <translation>他的幸運值會根據 Davis 所控制的部隊數量而提高.但是他也會因敵人控制的部隊數量增加而遭遇更多的厄運.這個獎勵/懲罰取決於哪一方的部隊數量更高.</translation>
+        <translation>他的幸運值會根據 Davis 所控制的部隊數量而提高.但是他也會因敵人控制的部隊數量增加而遭遇更多的厄運.
+獎勵/懲罰取決於哪一方擁有更多的部隊數量.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_davis.js" line="311"/>
@@ -14983,7 +14995,8 @@ CO 區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_davis.js" line="315"/>
         <source>His luck raises even more based on the amount of troops Davis controls. However the cap for missfortune raises as well. The bonus/penalty depends of which unit count is higher.</source>
-        <translation>他的幸運值會根據Davis所控制的部隊數量而進一步提高.然而,他的不幸值上限也會提高.獎勵/懲罰取決於哪一方擁有更多的部隊數量.</translation>
+        <translation>他的幸運值會根據Davis所控制的部隊數量而進一步提高.然而,他的不幸值上限也會提高.
+獎勵/懲罰取決於哪一方擁有更多的部隊數量.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_davis.js" line="319"/>
@@ -15097,7 +15110,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_drake.js" line="283"/>
         <source>Causes a giant tidal wave that does two HP of damage to all enemy units and halves their fuel and weather changes to rain.</source>
-        <translation>引起巨大的海嘯,對所有敵軍單位造成兩點傷害,將其燃料減半,並改變天氣為雨天.</translation>
+        <translation>引起巨大的海嘯,對所有敵軍單位造成2點傷害,將其燃料減半,並改變天氣為雨天.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_drake.js" line="287"/>
@@ -15226,7 +15239,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_eagle.js" line="270"/>
         <source>All non-infantry units that have already carried out orders may move again with no firepower penalty.</source>
-        <translation>所有已經完成行動的非步兵單位可以再次移動,且沒有火力懲罰.</translation>
+        <translation>所有已經完成指令的非步兵單位可以再次移動,且沒有火力懲罰.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_eagle.js" line="274"/>
@@ -15485,7 +15498,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_empty_bm.js" line="57"/>
         <source>Due to Clone Andy leading an invasion on their land, Blue Moon was at war with Orange Star at the beginning of the original Advance Wars, though </source>
-        <translation>由於克隆安迪率領的入侵,藍月亮在原始的Advance Wars遊戲開始時與橙星處於戰爭狀態,儘管 </translation>
+        <translation>由於克隆安迪率領的入侵,藍色月亮在原始的Advance Wars遊戲開始時與橙星處於戰爭狀態,儘管 </translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_empty_bm.js" line="58"/>
@@ -15972,7 +15985,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_epoch.js" line="290"/>
         <source>Direct combat units gain one movement and indirect combat units receive one extra range. Hides HP from opponents and firepower is increased.</source>
-        <translation>直接戰鬥部隊增加一點移動力,間接戰鬥部隊增加一格攻擊範圍.同時,隱藏所有部隊的生命值,並且增加火力.</translation>
+        <translation>直接戰鬥部隊移動力+1,間接戰鬥部隊範圍+1.同時,隱藏所有部隊的生命值,並且增加火力.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_epoch.js" line="294"/>
@@ -16350,7 +16363,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_gage.js" line="290"/>
         <source>Increases range of indirect units by three spaces. Firepower of sea and indirect units greatly rise.</source>
-        <translation>增加間接攻擊單位的攻擊範圍+3,海軍和間接攻擊單位的火力也大幅提高.</translation>
+        <translation>增加間接部隊的射程+3,海軍和間接攻擊單位的火力也大幅提高.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_gage.js" line="294"/>
@@ -16409,7 +16422,8 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_graves.js" line="210"/>
         <source>A former assassin dissatisfied with where Wars World is headed. Secretly aids Hawke&apos;s cause and overtly aids Dark Matter. No one knows where his true loyalties lie.</source>
-        <translation>一個前刺客,對戰爭世界的走向感到不滿.他暗中協助霍克的事業,並公然幫助黑暗物質.沒有人知道他真正的忠誠在哪裡.</translation>
+        <translation>一個前刺客,對戰爭世界的走向感到不滿.他暗中協助霍克的事業,並公然幫助黑暗物質.
+沒有人知道他真正的忠誠在哪裡.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_graves.js" line="214"/>
@@ -16583,7 +16597,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_greyfield.js" line="293"/>
         <source>All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense.</source>
-        <translation>所有部隊都獲得補給,他的直升機､水上飛機和海軍部隊具有更高的火力和防禦.</translation>
+        <translation>所有部隊都獲得補給,並且他的直升機､水上飛機和海軍單位具有更高的火力和防禦.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_greyfield.js" line="297"/>
@@ -16593,7 +16607,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_greyfield.js" line="301"/>
         <source>All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense and increase movement range by 1.</source>
-        <translation>所有部隊恢復彈藥,並且他的直升機､水上飛機和海軍單位攻擊力和防禦力提升.此外,所有部隊移動範圍增加 1.</translation>
+        <translation>所有部隊都獲得補給,並且他的直升機､水上飛機和海軍單位具有更高的火力和防禦.此外,所有部隊移動力+1.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_greyfield.js" line="305"/>
@@ -16820,7 +16834,7 @@ Global Effect:
 Indirect units have 1 increased firerange and non-infantry direct units have reduced firepower.</source>
         <translation>
 全局效果:
-間接攻擊單位的攻擊範圍增加1,非步兵直接攻擊單位的火力減弱.</translation>
+間接攻擊單位的範圍+1,非步兵直接攻擊單位的火力減弱.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_grit.js" line="289"/>
@@ -16836,7 +16850,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_grit.js" line="293"/>
         <source>Increases range of indirect units by one space. Firepower of these units also rise.</source>
-        <translation>將間接戰鬥單位的攻擊範圍增加一格,同時提升這些單位的火力.</translation>
+        <translation>間接攻擊單位的範圍+1,同時提升這些單位的火力.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_grit.js" line="297"/>
@@ -16846,7 +16860,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_grit.js" line="301"/>
         <source>Increases range of indirect units by two spaces. Firepower of these units greatly rise.</source>
-        <translation>將間接攻擊單位的攻擊範圍增加兩格,這些單位的火力也會大幅提升.</translation>
+        <translation>間接攻擊單位的範圍+2,這些單位的火力也會大幅提升.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_grit.js" line="305"/>
@@ -17093,7 +17107,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="217"/>
         <source>All enemy units suffer one HP of damage. In addition, all allied units recover one HP.</source>
-        <translation>所有敵軍損失 1 點生命值,同時,所有友軍回復 1 點生命值.</translation>
+        <translation>所有敵軍-1生命值,同時所有友軍+1生命值.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="221"/>
@@ -17103,7 +17117,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="225"/>
         <source>All enemy units suffer two HP of damage. In addition, all allied units recover two HP.</source>
-        <translation>所有敵方單位受到2點傷害.此外,所有友軍單位恢復2點HP.</translation>
+        <translation>所有敵軍-2生命值,同時所有友軍+2生命值.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="229"/>
@@ -17222,12 +17236,12 @@ Direct Units gain an additional firerange when they don&apos;t move. However fir
         <translation>
 
 CO區域效果:
-當直接攻擊單位不進行移動時,攻擊範圍增加一格,但攻擊力會有所減弱.普通攻擊更加強大.</translation>
+當直接攻擊單位不進行移動時,攻擊範圍+1,但攻擊力會有所減弱.普通攻擊更加強大.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="287"/>
         <source>The defense of his direct units raises and the firerange is increased by 1 when they don&apos;t move.</source>
-        <translation>當直接作戰單位不移動時,它們的防禦力提高,射程增加 1.</translation>
+        <translation>當直接作戰單位不移動時,它們的防禦力提高,射程+1.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="291"/>
@@ -17237,7 +17251,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="295"/>
         <source>The defense of his direct units raises extremely and the firerange is increased by 2 when they don&apos;t move.</source>
-        <translation>他的直接部隊在不移動時,防禦力大幅提升,並且攻擊範圍增加2.</translation>
+        <translation>當直接作戰單位不移動時,它們的防禦力大幅提升,並且射程+2.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="307"/>
@@ -17350,7 +17364,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_isabella.js" line="236"/>
         <source>Increases her movement range and firerange by 1.</source>
-        <translation>增加她的移動距離和射程 1 格.</translation>
+        <translation>增加她的移動距離和射程+1.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_isabella.js" line="240"/>
@@ -17360,7 +17374,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_isabella.js" line="244"/>
         <source>Increases her movement range and firerange by 2, increases her firepower.</source>
-        <translation>將她的移動範圍和射程增加 2,增加她的火力.</translation>
+        <translation>增加她的移動距離和射程+2,增加她的火力.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_isabella.js" line="248"/>
@@ -17469,7 +17483,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_jake.js" line="263"/>
         <source>Firepower is increased on plains. Firing range of indirect-combat units is increased by one.</source>
-        <translation>在平原地形上,所有部隊的火力和防禦力均提高,間接攻擊單位的攻擊範圍增加1.</translation>
+        <translation>在平原上戰鬥時火力增加,間接攻擊單位的攻擊範圍+1.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_jake.js" line="267"/>
@@ -17479,7 +17493,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_jake.js" line="271"/>
         <source>Firepower is greatly increased on plains. Firing range of indirect units is increased by one, and movement of direct units by two</source>
-        <translation>在平原上戰鬥時火力大增.間接戰鬥部隊的攻擊範圍增加一格,直接戰鬥部隊的移動距離增加二格</translation>
+        <translation>在平原上戰鬥時火力大增.間接攻擊單位的攻擊範圍+1.直接戰鬥部隊的移動距離+2</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_jake.js" line="275"/>
@@ -17598,7 +17612,7 @@ Units have increased defense against indirect units. Units gain additional firep
         <translation>
 
 CO區域效果:
-單位對間接攻擊有更高的防禦力.每個通訊塔可以讓部隊獲得額外的火力和防禦力.</translation>
+單位對間接攻擊有更高的防禦力.每個指揮塔可以讓部隊獲得額外的火力和防禦力.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_javier.js" line="237"/>
@@ -17613,7 +17627,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_javier.js" line="245"/>
         <source>Units have even greater defenses vs. indirect attacks and firepower increases at a high rate the more Comtowers he owns.</source>
-        <translation>部隊對間接攻擊具有更高的防禦,擁有的通訊塔越多,部隊的火力和防禦就會越高.</translation>
+        <translation>部隊對間接攻擊具有更高的防禦,並且擁有的指揮塔越多,部隊的火力和防禦就會越高.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_javier.js" line="249"/>
@@ -18535,7 +18549,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_koal.js" line="252"/>
         <source>Movement range for all units is increased by one space. Units have more firepower on roads.</source>
-        <translation>所有部隊的移動範圍增加了一格.在道路上的單位火力增強.</translation>
+        <translation>所有部隊的移動範圍+1.在道路上的單位火力增強.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_koal.js" line="256"/>
@@ -18545,7 +18559,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_koal.js" line="260"/>
         <source>Movement range for all units is increased by two spaces. Greatly increases firepower of units on roads.</source>
-        <translation>所有部隊的移動範圍增加兩格,並大幅增加在道路上的部隊火力.</translation>
+        <translation>所有部隊的移動範圍+2.並大幅增加在道路上的部隊火力.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_koal.js" line="264"/>
@@ -18881,7 +18895,8 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_mary.js" line="341"/>
         <source>Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.</source>
-        <translation>被攻擊的部隊在下一個回合內無法從建築物中恢復.每當瑪莉摧毀了一個佔領的單位,她就會獲得該單位所佔領物業的佔領獎勵.</translation>
+        <translation>被攻擊的部隊在下一個回合內無法從建築物中恢復.
+每當瑪莉摧毀了一個佔領的單位,她就會獲得該單位所佔領物業的佔領獎勵.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_mary.js" line="345"/>
@@ -19184,7 +19199,7 @@ CO 區效應:
     <message>
         <location filename="../resources/scripts/cos/co_meiyo.js" line="315"/>
         <source>Units with a higher rank have even higher defence and offense. All units gain two ranks.</source>
-        <translation>等級越高的單位防禦力和攻擊力就更高.所有單位獲得兩個等級.</translation>
+        <translation>等級越高的單位防禦力和攻擊力就更高.所有單位獲得2個等級.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_meiyo.js" line="319"/>
@@ -19262,7 +19277,7 @@ CO 區效應:
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="288"/>
         <source>Effects of natural terrain are increased by one star and firepower is increased on natural terrain. Units are repaired by 1 HP less on Buildings.</source>
-        <translation>自然地形的效果提升一顆星,自然地形上的火力增加.單位在建築物上的修理量減少1 HP.</translation>
+        <translation>自然地形的效果提升1顆星,自然地形上的火力增加.單位在建築物上的修理量減少1 HP.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="292"/>
@@ -19298,7 +19313,7 @@ CO Zone效果:
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="298"/>
         <source>Units on natural terrain restore three HP of health. Effects of natural terrain are increased.</source>
-        <translation>自然地形上的部隊恢復三點生命值,自然地形效果增加.</translation>
+        <translation>自然地形上的部隊恢復3點生命值,自然地形效果增加.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="302"/>
@@ -20084,7 +20099,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_olaf.js" line="218"/>
         <source>A mighty blizzard causes two HP of damage to all enemy troops. The snow will also cause his firepower to rise for one day.</source>
-        <translation>一場強大的暴風雪會給所有敵軍部隊造成兩點傷害.雪也會使他的火力在一天內提高.</translation>
+        <translation>一場強大的暴風雪會給所有敵軍部隊造成2點傷害.雪也會使他的火力在一天內提高.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_olaf.js" line="222"/>
@@ -21782,7 +21797,7 @@ Global Effect:
 Direct Units have increased firepower and loose additional firepower per terrain star.</source>
         <translation>
 全局效果:
-直接戰鬥單位擁有增強的火力,並且每一個地形星會讓它們失去額外的火力.</translation>
+直接戰鬥單位擁有增強的火力,並且每1個地形星會讓它們失去額外的火力.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_peter.js" line="249"/>
@@ -21896,7 +21911,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_rachel.js" line="246"/>
         <source>Her troops are quite hardworking, and they increase repairs by one on properties.</source>
-        <translation>她的部隊很勤勞,他們對財產的維修增加了一個.</translation>
+        <translation>她的部隊很勤勞,他們對財產的維修+1.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_rachel.js" line="250"/>
@@ -21931,7 +21946,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_rachel.js" line="263"/>
         <source>Launches three missiles from Orange Star HQ in Omega Land.</source>
-        <translation>從 Omega Land 的 Orange Star HQ 發射三枚導彈.</translation>
+        <translation>從 Omega Land 的 Orange Star HQ 發射3枚導彈.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_rachel.js" line="267"/>
@@ -22187,7 +22202,8 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_roboandy.js" line="240"/>
         <source>Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.</source>
-        <translation>Lash被軍方要求創造能指揮部隊的人工智慧,但是接受電腦指令的士兵感到驚恐.所以她把它放在原始的Robo-Andy中解決了這個問題.</translation>
+        <translation>Lash被軍方要求創造能指揮部隊的人工智慧,
+但是接受電腦指令的士兵感到驚恐.所以她把它放在原始的Robo-Andy中解決了這個問題.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_roboandy.js" line="244"/>
@@ -22619,7 +22635,7 @@ Global Effect:
 Transporter have 1 more movement point and infantries have increased capture rate. Non-infantry direct-combat units have weaker firepower.</source>
         <translation>
 全局效果:
-運輸單位的移動力增加 1 點,步兵的佔領速度增加.非步兵直接戰鬥單位攻擊力降低.</translation>
+運輸單位的移動力+1,步兵的佔領速度增加.非步兵直接戰鬥單位攻擊力降低.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sami.js" line="294"/>
@@ -22635,7 +22651,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_sami.js" line="298"/>
         <source>Infantry units receive a movement bonus of one space. Their attack also increases. </source>
-        <translation>步兵單位移動能力增加一格,攻擊力也會提高. </translation>
+        <translation>所有步兵移動+1,攻擊力也會提高. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sami.js" line="302"/>
@@ -22645,7 +22661,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_sami.js" line="306"/>
         <source>All foot soldiers can capture buildings instantly. Their movement is increased by two spaces and their attack increases greatly. </source>
-        <translation>所有步兵可以立即佔領建築物.他們的移動+2,攻擊力也大大提高. </translation>
+        <translation>所有步兵移動+2,他們可以立即佔領建築物,攻擊力也大大提高. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sami.js" line="310"/>
@@ -22733,7 +22749,8 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_sanjuro.js" line="385"/>
         <source>A keen mind for his finances, he spends more for better equipment when there&apos;s a surplus and focuses on getting the best deal when he&apos;s pressed for money.</source>
-        <translation>他對財務有敏銳的頭腦,當有資金盈餘時會花更多的錢來購買更好的裝備,而當資金緊缺時,他會專注於尋找最優惠的交易.</translation>
+        <translation>他對財務有敏銳的頭腦,當有資金盈餘時會花更多的錢來購買更好的裝備,
+而當資金緊缺時,他會專注於尋找最優惠的交易.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sanjuro.js" line="389"/>
@@ -23037,7 +23054,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_sensei.js" line="255"/>
         <source>Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.</source>
-        <translation>直升機火力增加.在他的所有城市中,會出現擁有9點生命值的步兵部隊,可以立即移動.</translation>
+        <translation>直升機火力增加.有他的城市裡都會出現擁有9點生命值的步兵,可以立即移動.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sensei.js" line="259"/>
@@ -23047,7 +23064,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_sensei.js" line="263"/>
         <source>Copter firepower increases. Mech units with 9 HP appear in all his cities, ready to be moved.</source>
-        <translation>直升機的火力增加,所有他的城市裡都會出現擁有 9 生命值的火箭兵,可隨時調動.</translation>
+        <translation>直升機火力大幅增加,所有他的城市裡都會出現擁有 9 生命值的火箭兵,可以立即移動.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sensei.js" line="267"/>
@@ -23171,7 +23188,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_smitan.js" line="341"/>
         <source>Increases the range of indirect units by one space. Indirect units can move after firing.</source>
-        <translation>增加間接部隊的攻擊範圍一格.間接部隊可以在攻擊後移動.</translation>
+        <translation>增加間接部隊的攻擊範圍+1.間接部隊在攻擊後可以移動.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_smitan.js" line="345"/>
@@ -23181,7 +23198,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_smitan.js" line="349"/>
         <source>Increases the range of indirect units by two spaces. Indirect units can fire twice and move after firing.</source>
-        <translation>增加間接部隊的攻擊範圍兩格.間接部隊可以攻擊兩次且攻擊後可以移動.</translation>
+        <translation>增加間接部隊的攻擊範圍+2.間接部隊可以攻擊2次且攻擊後可以移動.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_smitan.js" line="353"/>
@@ -23284,7 +23301,7 @@ Global Effect:
 Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased</source>
         <translation>
 全局效果:
-隱藏自己部隊的生命值,降低敵人的地形防禦力值一格.不過她有着不幸的體質,運氣較差</translation>
+隱藏自己部隊的生命值,降低敵人的地形防禦星星-1.不過她有着不幸的體質,運氣較差</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sonja.js" line="203"/>
@@ -23300,7 +23317,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_sonja.js" line="207"/>
         <source>Reduces enemy terrain defensive cover by two. Allows all units to see into woods and reefs.</source>
-        <translation>減少敵方地形的防禦值兩點.所有部隊可以看到森林和礁石的內部.</translation>
+        <translation>敵方地形的防禦星星-2.所有部隊可以看到森林和礁石的內部.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sonja.js" line="211"/>
@@ -23310,7 +23327,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_sonja.js" line="215"/>
         <source>Reduces enemy terrain defensive cover by three. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.</source>
-        <translation>減少敵方地形防禦力 3 點.讓所有部隊能夠看到森林和礁石中的情況.即使在反擊期間,部隊也總是先攻.</translation>
+        <translation>敵方地形的防禦星星-3.所有部隊可以看到森林和礁石的內部.即使在反擊期間,部隊也總是先攻.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sonja.js" line="219"/>
@@ -23444,7 +23461,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_sophie.js" line="305"/>
         <source>Sophie&apos;s units strike twice when ordered to attack. However, firepower is reduced</source>
-        <translation>Sophie的部隊攻擊時會連續攻擊兩次.然而,火力會降低</translation>
+        <translation>Sophie的部隊攻擊時會連續攻擊2次.然而,火力會降低</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sophie.js" line="309"/>
@@ -23804,7 +23821,7 @@ CO 區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_tasha.js" line="265"/>
         <source>Air units have higher firepower, defense and all units can move 1 space farther.</source>
-        <translation>空軍單位有更高的火力和防禦能力,所有單位移動距離增加1格.</translation>
+        <translation>空軍單位有更高的火力和防禦能力,所有單位移動距離+1.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_tasha.js" line="269"/>
@@ -23814,7 +23831,7 @@ CO 區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_tasha.js" line="273"/>
         <source>Air units have impressive firepower, higher defense and all units can move 2 space farther</source>
-        <translation>空軍單位火力大幅提升,防禦能力增強,且所有單位移動範圍增加 2 格</translation>
+        <translation>空軍單位火力大幅提升,防禦能力增強,且所有單位移動距離+2</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_tasha.js" line="277"/>
@@ -24432,7 +24449,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_will.js" line="256"/>
         <source>Boost movement by 1 and increases the firepower of ground units.</source>
-        <translation>增加 1 移動力並增加地面單位的火力.</translation>
+        <translation>移動力+1,並且增加地面單位的火力.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_will.js" line="260"/>
@@ -24442,7 +24459,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_will.js" line="264"/>
         <source>Boost movement by 2 and firepower of ground units.</source>
-        <translation>增加移動力 2 和地面單位的火力.</translation>
+        <translation>移動力+2,並且增加地面單位的火力.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_will.js" line="268"/>
@@ -24624,7 +24641,8 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="271"/>
         <source>Dark founder of the Dark Matter Cooperation. He&apos;s the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn&apos;t care if people die.</source>
-        <translation>Dark Matter Cooperation的黑暗創始人.他是Sturm和Von Bolt入侵的主要原因.他以戰爭為賺錢的方式,對人類的死亡毫不在意.</translation>
+        <translation>Dark Matter Cooperation的黑暗創始人.他是Sturm和Von Bolt入侵的主要原因.
+他以戰爭為賺錢的方式,對人類的死亡毫不在意.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="275"/>
@@ -24803,12 +24821,12 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="238"/>
         <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%.</source>
-        <translation>引起沙暴持續一天,增加間接攻擊單位%0的射程並提高%1%火力.</translation>
+        <translation>引起沙暴持續一天,間接攻擊單位射程+%0並提高%1%火力.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="248"/>
         <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 hp damage to enemies.</source>
-        <translation>引起沙暴持續一天,增加間接攻擊單位%0的射程並提高%1%火力.同時對敵方造成 %2 點傷害.</translation>
+        <translation>引起沙暴持續一天,間接攻擊單位射程+%0並提高%1%火力.同時對敵方造成 %2 點傷害.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="254"/>
