@@ -43,7 +43,7 @@ var COREAI =
     tankTransporter : ["LANDER", "TRANSPORTPLANE"],
     tankNavalTransporter : ["LANDER"],
     tankAirTransporter : ["TRANSPORTPLANE"],
-    antiAirUnits : ["FLAK", "FIGHTER", "MISSILE"],
+    antiAirUnits : ["FLAK", "FIGHTER", "FIGHTER", "STEALTHBOMBER", "DUSTER", "MISSILE"],
     antiAirSeaUnits : ["CRUISER"],
     airUnits : ["K_HELI", "DUSTER", "BOMBER", "ZCOUNIT_KIROV", "FIGHTER", "WATERPLANE"],
     stealthAirUnits : ["STEALTHBOMBER"],
