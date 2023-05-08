@@ -273,11 +273,22 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
         for (qint32 i = 0; i < m_forcedProduction.size(); ++i)
         {
             auto & forcedProduction = m_forcedProduction[i];
-            std::random_shuffle(forcedProduction.unitIds.begin(), forcedProduction.unitIds.end(), [](qint32 max)
+            QStringList unitIds(forcedProduction.unitIds.size(), "");
+            qint32 size = unitIds.size() - 1;
+            for (const QString & item : forcedProduction.unitIds)
             {
-                qint32 ret = QRandomGenerator::global()->bounded(0, max);
-                return ret;
-            });
+                qint32 count = 0;
+                while (count < 100)
+                {
+                    qint32 index = GlobalUtils::randIntBase(0, size);
+                    if (unitIds[index].isEmpty())
+                    {
+                        unitIds[index] = item;
+                        break;
+                    }
+                    ++count;
+                }
+            }
             if (pMap->onMap(forcedProduction.x, forcedProduction.y) &&
                 pMap->getTerrain(forcedProduction.x, forcedProduction.y)->getBuilding() != nullptr &&
                 pMap->getTerrain(forcedProduction.x, forcedProduction.y)->getBuilding()->getOwner() == m_owner->getPlayer())
