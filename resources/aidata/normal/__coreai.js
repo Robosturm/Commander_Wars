@@ -80,7 +80,7 @@ var COREAI =
         var groundModifer = 1;
         if (naval > 0)
         {
-            groundModifer = 1 / naval;
+            groundModifer *= 1 / naval;
         }
         var variableAirBattle = variables.createVariable("AIRBATTLE");
         var air = variableAirBattle.readDataInt32();
@@ -243,6 +243,7 @@ var COREAI =
                 var naval = variableNavalBattle.readDataInt32();
                 var variableAirBattle = variables.createVariable("AIRBATTLE");                
                 var air = variableAirBattle.readDataInt32();
+                var mapFlags = map.getMapFlags();
                 if (idleUnitCount > 0)
                 {
                     naval = 0;
@@ -264,6 +265,16 @@ var COREAI =
                         {
                             naval += 2;
                         }
+                        if (GameEnums.MapFilterFlags_Naval & mapFlags > 0)
+                        {
+                            GameConsole.print("Naval None ground test 0", 1);
+                            naval += 1;
+                            if (GameEnums.MapFilterFlags_Ground & mapFlags === 0)
+                            {
+                                GameConsole.print("Naval None ground test 1", 1);
+                                naval += 1;
+                            }
+                        }
                         variableNavalBattle.writeDataInt32(naval);
                     }
                     if (airportCount > 0)
@@ -278,7 +289,17 @@ var COREAI =
                         }
                         else
                         {
-                            naval += 2;
+                            air += 2;
+                        }
+                        if (GameEnums.MapFilterFlags_Air & mapFlags > 0)
+                        {
+                            GameConsole.print("Air None ground test 0", 1);
+                            air += 1;
+                            if (GameEnums.MapFilterFlags_Ground & mapFlags === 0)
+                            {
+                                GameConsole.print("Air None ground test 1", 1);
+                                air += 1;
+                            }
                         }
                         variableAirBattle.writeDataInt32(air);
                     }
