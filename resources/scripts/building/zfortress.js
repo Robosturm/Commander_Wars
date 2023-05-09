@@ -12,6 +12,7 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
+        building.loadSpriteV2("fortress+mask", GameEnums.Recoloring_Matrix);
         if (building.getOwnerID() >= 0 && !neutral)
         {
             building.loadSpriteV2("fortress", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
@@ -20,7 +21,6 @@ var Constructor = function()
         {
             building.loadSpriteV2("fortress+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
-        building.loadSpriteV2("fortress+mask", GameEnums.Recoloring_Matrix);
     };
     this.getDefense = function(building)
     {

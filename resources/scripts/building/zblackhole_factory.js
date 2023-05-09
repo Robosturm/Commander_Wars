@@ -2,6 +2,7 @@ var Constructor = function()
 {
     this.loadSprites = function(building, neutral, map)
     {
+        building.loadSpriteV2("blackhole+factory+mask", GameEnums.Recoloring_Matrix);
         building.loadSpriteV2("blackhole+factory+pipe", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         if (building.getOwnerID() >= 0 && !neutral)
         {
@@ -11,7 +12,6 @@ var Constructor = function()
         {
             building.loadSpriteV2("blackhole+factory+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
-        building.loadSpriteV2("blackhole+factory+mask", GameEnums.Recoloring_Matrix);
     };
     this.getName = function()
     {

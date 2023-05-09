@@ -22,8 +22,8 @@ var Constructor = function()
     };
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSpriteV2("depot", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         building.loadSpriteV2("depot+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
+        building.loadSpriteV2("depot", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
     };
     this.getBaseIncome = function()
     {

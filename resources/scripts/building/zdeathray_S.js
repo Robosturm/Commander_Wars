@@ -12,8 +12,8 @@ var Constructor = function()
     
     this.loadSprites = function(building, neutral, map)
     {
-        building.loadSpriteV2("deathray+S", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         building.loadSpriteV2("deathray+S+mask", GameEnums.Recoloring_Matrix);
+        building.loadSpriteV2("deathray+S", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
     };
     this.getDefense = function(building)
     {

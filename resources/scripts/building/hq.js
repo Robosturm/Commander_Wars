@@ -24,14 +24,14 @@ var Constructor = function()
         {
             var player = building.getOwner();
             var armyName = Global.getArmyNameFromPlayerTable(player, HQ.buildingData);
-            building.loadSpriteV2("hq+" + armyName, GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
             building.loadSpriteV2("hq+" + armyName + "+mask", GameEnums.Recoloring_Matrix);
+            building.loadSpriteV2("hq+" + armyName, GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
         else
         {
             // neutral player
-            building.loadSpriteV2("hq+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
             building.loadSpriteV2("hq+neutral+mask", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), "", neutral);
+            building.loadSpriteV2("hq+neutral", GameEnums.Recoloring_Matrix, 400, Qt.point(0,0), TERRAIN.getBuildingTerrainPalette(building));
         }
     };
     this.getName = function()
