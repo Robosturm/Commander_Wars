@@ -35,8 +35,8 @@ var Constructor = function()
         }
         else if (id === "OILRIG")
         {
-            if (terrainId !== "SEA" &&
-                terrainId !== "LAKE")
+            if (terrainId === "SEA" ||
+                terrainId === "LAKE")
             {
                 return 1;
             }
