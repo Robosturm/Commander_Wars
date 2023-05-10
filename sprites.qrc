@@ -4399,7 +4399,6 @@
         <file>resources/images/terrain/river/riverend+E+3+land+E+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+3+land+E+S+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+3+land+S+mask.png</file>
-        <file>resources/images/terrain/river/riverend+E+3+land+SE+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+3+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+4+land+S+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+4+mask.png</file>
@@ -4445,7 +4444,6 @@
         <file>resources/images/terrain/river/riverend+W+4+land+W+mask.png</file>
         <file>resources/images/terrain/river/riverend+W+4+mask.png</file>
         <file>resources/images/terrain/river/river+S+W+land+E+NW+SW+mask.png</file>
-        <file>resources/images/terrain/river/riverend+E+2+land+NE+mask.png</file>
         <file>resources/images/terrain/river/riverend+E+3+land+SE+mask.png</file>
         <file>resources/images/terrain/river/riverend+S+1+land+W+mask.png</file>
         <file>resources/images/terrain/biome_palettes/palette_clear.png</file>
