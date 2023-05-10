@@ -133,6 +133,7 @@ var Constructor = function()
         return 1;
     };
     this.coZoneBonus = 20;
+    this.coPowerBonus = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
@@ -140,9 +141,9 @@ var Constructor = function()
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 10;
+            return CO_ADDER.coPowerBonus;
         case GameEnums.PowerMode_Power:
-            return 10;
+            return CO_ADDER.coPowerBonus;
         default:
             if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
@@ -156,7 +157,7 @@ var Constructor = function()
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+            co.getPowerMode() > GameEnums.PowerMode_Off)
         {
             return CO_ADDER.coZoneBonus;
         }

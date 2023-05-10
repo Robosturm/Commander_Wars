@@ -918,7 +918,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         )
 endif()
 
-qt_finalize_executable(${PROJECT_NAME})
+qt_finalize_target(${PROJECT_NAME})
 
 ##############################################################
 # Translation section                                        #

@@ -167,7 +167,7 @@ var Constructor = function()
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return -5;
+                    return 0;
                 }
                 break;
             case GameEnums.PowerMode_Power:
@@ -177,7 +177,7 @@ var Constructor = function()
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return -5;
+                    return 0;
                 }
                 break;
             default:

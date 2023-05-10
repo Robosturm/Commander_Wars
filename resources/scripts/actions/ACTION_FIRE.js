@@ -46,9 +46,8 @@ var Constructor = function()
                                 break;
                             }
                         }
-                        if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
-                             (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
-                                (defTerrain.getHp() > 0))
+                        if ((defBuilding !== null && defBuilding.getHp() > 0 && defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner())) ||
+                             defTerrain.getHp() > 0)
                         {
                             if (unit.hasAmmo1() && unit.getWeapon1ID() !== "" &&
                                 unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y))
@@ -429,9 +428,8 @@ var Constructor = function()
             {
                 var dmg1 = -1;
                 var dmg2 = -1;
-                if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
-                     (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
-                        (defTerrain.getHp() > 0))
+                if ((defBuilding !== null && defBuilding.getHp() > 0 && defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner())) ||
+                     defTerrain.getHp() > 0)
                 {
                     if (unit.hasAmmo1() && unit.getWeapon1ID() !== "" &&
                         unit.canAttackWithWeapon(0, atkPosX, atkPosY, x, y))
@@ -526,31 +524,46 @@ var Constructor = function()
                         result = ACTION_FIRE.calcBattleDamage(map, action, x, y, GameEnums.LuckDamageMode_Off);
                         if (result.x >= 0.0)
                         {
+                            var names       = [qsTr("Dmg"),             qsTr("Min"),        qsTr("Max")];
+                            var ownData     = [result.x,                result.x,           result.x];
+                            var enemyData   = [-1,                      -1,                 -1];
                             data.addPoint(Qt.point(x, y));
-                            data.addZInformation(result.x);
+                            data.addComplexZInformation(names, ownData, enemyData, unit.getOwner().getColor());
                         }
                     }
                 }
                 else
                 {
-                    if (unit.isAttackableFromPosition(defUnit, actionTargetField))
+                    if (defUnit !== null)
                     {
-                        if ((aiType === GameEnums.AiTypes_Human ||
-                             aiType === GameEnums.AiTypes_MovePlanner))
+                        if (unit.isAttackableFromPosition(defUnit, actionTargetField))
                         {
+                            if ((aiType === GameEnums.AiTypes_Human ||
+                                 aiType === GameEnums.AiTypes_MovePlanner))
+                            {
 
-                            result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
-                                                                   actionTargetField.x, actionTargetField.y, null, x, y, 0,
-                                                                   GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off);
-                            data.addPoint(Qt.point(x, y));
-                            data.addZInformation(result.x);
+                                result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
+                                                                       actionTargetField.x, actionTargetField.y, null, x, y, 0,
+                                                                       GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off);
+                                data.addPoint(Qt.point(x, y));
+                                data.addZInformation(result.x);
+                            }
+                            else
+                            {
+                                result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
+                                                                       actionTargetField.x, actionTargetField.y, null, x, y, 0,
+                                                                       GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off,
+                                                                       false, true);
+                                data.addPoint(Qt.point(x, y));
+                                data.addZInformation(result.x);
+                            }
                         }
-                        else
+                    }
+                    else
+                    {
+                        result = ACTION_FIRE.calcBattleDamage(map, action, x, y, GameEnums.LuckDamageMode_Off);
+                        if (result.x >= 0.0)
                         {
-                            result = ACTION_FIRE.calcBattleDamage4(map, action, unit, 0,
-                                                                   actionTargetField.x, actionTargetField.y, null, x, y, 0,
-                                                                   GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off,
-                                                                   false, true);
                             data.addPoint(Qt.point(x, y));
                             data.addZInformation(result.x);
                         }

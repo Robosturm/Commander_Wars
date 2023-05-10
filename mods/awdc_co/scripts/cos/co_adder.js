@@ -23,7 +23,7 @@ CO_ADDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     case GameEnums.PowerMode_Tagpower:
     case GameEnums.PowerMode_Superpower:
     case GameEnums.PowerMode_Power:
-        return 10;
+        return CO_ADDER.coPowerBonus;
     default:
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
         {

@@ -385,33 +385,36 @@
 <context>
     <name>ACTION_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="80"/>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="895"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="79"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="908"/>
         <source>Fire</source>
         <translation>開火</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="484"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="482"/>
         <source>Damage</source>
         <translation>傷害</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="517"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="515"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="527"/>
         <source>Dmg</source>
         <translation>平均</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="517"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="515"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="527"/>
         <source>Min</source>
         <translation>最小</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="517"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="515"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="527"/>
         <source>Max</source>
         <translation>最大</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="899"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="912"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation>命令一個單位攻擊另一個單位.如果攻擊是直接攻擊,敵人單位將會反擊.</translation>
     </message>
@@ -13231,27 +13234,27 @@ CO區域效果:
 <context>
     <name>co_adder</name>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="201"/>
         <source>A self-absorbed CO who believes his skills are matchless. Second to Hawke in rank.</source>
         <translation>一個自負的CO,認為自己的技能無人能及.排名僅次於霍克.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="205"/>
         <source>His own Face</source>
         <translation>他的臉</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="209"/>
         <source>Dirty Things</source>
         <translation>骯髒的事物</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="213"/>
         <source>Adept at making quick command decisions. He stores up energy for his CO Power more rapidly than other CO&apos;s.</source>
         <translation>能夠迅速做出決策的指揮官.他的指揮能力比其他指揮官更快地積累 CO 能力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="217"/>
         <source>
 Special Unit:
 Hot Tank
@@ -13262,7 +13265,7 @@ Hot Tank
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="218"/>
         <source>
 Global Effect: 
 None.</source>
@@ -13271,7 +13274,7 @@ None.</source>
 沒有.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="219"/>
         <source>
 
 CO Zone Effect: 
@@ -13282,112 +13285,112 @@ CO區域效果:
 部隊獲得%0%的火力和防禦.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="225"/>
         <source>Movement range for all units is increased by one space.</source>
         <translation>所有單位的移動範圍+1.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="229"/>
         <source>Sideslip</source>
         <translation>側滑</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="233"/>
         <source>Movement range for all units is increased by two spaces.</source>
         <translation>所有單位的移動範圍+2.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="237"/>
         <source>Sidewinder</source>
         <translation>響尾蛇</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="241"/>
         <source>The look of terror on your face... It&apos;s absolutely delicious!</source>
         <translation>滿臉驚恐的神情...絕對好吃!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="242"/>
         <source>Heh heh heh... I&apos;m going to enjoy breaking you!</source>
         <translation>嘿嘿嘿...我會很享受打破你的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="243"/>
         <source>Heh heh heh... Can&apos;t a guy have a little fun!?</source>
         <translation>嘿嘿嘿...男人就不能找點樂子嗎!?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="244"/>
         <source>Heh heh heh... It only hurts for a moment.</source>
         <translation>呵呵呵...只是一時的痛.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="245"/>
         <source>A battle with me is a greater honor than you deserve!</source>
         <translation>與我一戰是你應得的更大榮譽!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="246"/>
         <source>Heh heh heh... Kneel before Adder!</source>
         <translation>嘿嘿嘿...跪在阿德面前!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="247"/>
         <source>Hee hee. Your skills are laughable!</source>
         <translation>嘻嘻.你的技能令人發笑!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="248"/>
         <source>It&apos;s already too late for you!</source>
         <translation>對你來說已經太遲了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="249"/>
         <source>Let me hear your last words!</source>
         <translation>讓我聽聽你最後的話!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="250"/>
         <source>Check out my new and improved powers!</source>
         <translation>看看我新的和改進的能力!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="251"/>
         <source>Wiggle worm... wiggle!</source>
         <translation>擺動蠕蟲...擺動!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="252"/>
         <source>My venom courses through your veins!</source>
         <translation>我的毒液在你的血管中流淌!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="256"/>
         <source>Heh heh heh... What did you expect?</source>
         <translation>嘿嘿嘿...你以為呢?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="257"/>
         <source>My apologies. Should I have gone easier on you?</source>
         <translation>我很抱歉.我應該對你放輕鬆點嗎?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="258"/>
         <source>Don&apos;t forget me now. That would be a shame.</source>
         <translation>現在不要忘記我.那將是一種恥辱.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="262"/>
         <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
         <translation>噓!今天...倒霉.不好的一天.而已.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="263"/>
         <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
         <translation>這是該死的天氣!這就是問題所在!噓!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="267"/>
         <source>Adder</source>
         <translation>Adder</translation>
     </message>

@@ -29,7 +29,7 @@ CO_DRAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             else if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
-                return -5;
+                return 0;
             }
             break;
         default:

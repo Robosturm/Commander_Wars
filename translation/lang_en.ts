@@ -385,33 +385,36 @@
 <context>
     <name>ACTION_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="80"/>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="895"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="79"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="908"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="484"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="482"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="517"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="515"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="527"/>
         <source>Dmg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="517"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="515"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="527"/>
         <source>Min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="517"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="515"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="527"/>
         <source>Max</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="899"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="912"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13144,27 +13147,27 @@ An attacking unit instantly kills an enemy unit if a max luck roll would kill th
 <context>
     <name>co_adder</name>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="201"/>
         <source>A self-absorbed CO who believes his skills are matchless. Second to Hawke in rank.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="205"/>
         <source>His own Face</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="209"/>
         <source>Dirty Things</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="213"/>
         <source>Adept at making quick command decisions. He stores up energy for his CO Power more rapidly than other CO&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="217"/>
         <source>
 Special Unit:
 Hot Tank
@@ -13172,14 +13175,14 @@ Hot Tank
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="218"/>
         <source>
 Global Effect: 
 None.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="219"/>
         <source>
 
 CO Zone Effect: 
@@ -13187,112 +13190,112 @@ Units gain %0% firepower and defence.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="225"/>
         <source>Movement range for all units is increased by one space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="229"/>
         <source>Sideslip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="233"/>
         <source>Movement range for all units is increased by two spaces.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="237"/>
         <source>Sidewinder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="241"/>
         <source>The look of terror on your face... It&apos;s absolutely delicious!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="242"/>
         <source>Heh heh heh... I&apos;m going to enjoy breaking you!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="243"/>
         <source>Heh heh heh... Can&apos;t a guy have a little fun!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="244"/>
         <source>Heh heh heh... It only hurts for a moment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="245"/>
         <source>A battle with me is a greater honor than you deserve!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="246"/>
         <source>Heh heh heh... Kneel before Adder!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="247"/>
         <source>Hee hee. Your skills are laughable!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="248"/>
         <source>It&apos;s already too late for you!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="249"/>
         <source>Let me hear your last words!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="250"/>
         <source>Check out my new and improved powers!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="251"/>
         <source>Wiggle worm... wiggle!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="252"/>
         <source>My venom courses through your veins!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="256"/>
         <source>Heh heh heh... What did you expect?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="257"/>
         <source>My apologies. Should I have gone easier on you?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="258"/>
         <source>Don&apos;t forget me now. That would be a shame.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="262"/>
         <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="263"/>
         <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="267"/>
         <source>Adder</source>
         <translation type="unfinished"></translation>
     </message>
