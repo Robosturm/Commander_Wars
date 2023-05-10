@@ -48,9 +48,8 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     }
 
     m_PlacementSelectionClip = oxygine::spSlidingActor::create();
-    m_PlacementSelectionClip->setPosition(10, 50);
     m_PlacementSelectionClip->setSize(m_BoxPlacementSelection->getScaledWidth() - 20,
-                                        m_BoxPlacementSelection->getScaledHeight() - 100);
+                                      m_BoxPlacementSelection->getScaledHeight() - 100);
     m_BoxPlacementSelection->addChild(m_PlacementSelectionClip);
     m_PlacementActor = oxygine::spActor::create();
     m_PlacementActor->setWidth(m_PlacementSelectionClip->getScaledWidth());
@@ -77,26 +76,25 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
         m_CurrentSelector->setResAnim(pAnim);
     }
 
-    oxygine::spButton pButtonTop = oxygine::spButton::create();
-    pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
-    pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    oxygine::Sprite* ptr = pButtonTop.get();
-    pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ptr](oxygine::Event*)
+    m_pButtonTop = oxygine::spButton::create();
+    m_pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
+    m_pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    oxygine::Sprite* ptr = m_pButtonTop.get();
+    m_pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ptr](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-
-    pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [ptr](oxygine::Event*)
+    m_pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [ptr](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pButtonTop->setFlippedY(true);
-    pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
+    m_pButtonTop->setFlippedY(true);
+    m_pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
         emit sigChangeScrollValue(1);
     });
-    pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - pButtonTop->getScaledWidth() / 2, 15);
-    m_BoxPlacementSelection->addChild(pButtonTop);
+    m_pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - m_pButtonTop->getScaledWidth() / 2, 15);
+    m_BoxPlacementSelection->addChild(m_pButtonTop);
 
     oxygine::spButton pButtonDown = oxygine::spButton::create();
     pButtonDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
@@ -124,7 +122,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
            pTouchEvent->stopPropagation();
         }
     });
-    pButtonDown->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - pButtonTop->getScaledWidth() / 2,
+    pButtonDown->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - m_pButtonTop->getScaledWidth() / 2,
                              m_BoxPlacementSelection->getScaledHeight() - pButtonDown->getScaledHeight() - 18);
     m_BoxPlacementSelection->addChild(pButtonDown);
 
@@ -603,6 +601,10 @@ qint32 EditorSelection::getActivePalette() const
 void EditorSelection::updateTerrainView()
 {    
     hideSelection();
+    constexpr qint32 dropDownHeight = 40;
+    m_PlacementSelectionClip->setPosition(10, 50 + dropDownHeight);
+    m_PlacementSelectionClip->setSize(m_BoxPlacementSelection->getScaledWidth() - 20,
+                                      m_BoxPlacementSelection->getScaledHeight() - 100 - dropDownHeight);
     for (auto & terrain : m_Terrains)
     {
         terrain->setVisible(true);
@@ -614,12 +616,17 @@ void EditorSelection::updateTerrainView()
     m_PlacementActor->setHeight(m_Terrains[m_Terrains.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->updateDragBounds();
-    selectTerrain(0);    
+    selectTerrain(0);
+    m_pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - m_pButtonTop->getScaledWidth() / 2, 15 + dropDownHeight);
 }
 
 void EditorSelection::updateBuildingView()
 {    
     hideSelection();
+    m_pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - m_pButtonTop->getScaledWidth() / 2, 15);
+    m_PlacementSelectionClip->setPosition(10, 50);
+    m_PlacementSelectionClip->setSize(m_BoxPlacementSelection->getScaledWidth() - 20,
+                                      m_BoxPlacementSelection->getScaledHeight() - 100);
     for (auto & building : m_Buildings)
     {
         building->setVisible(true);
@@ -631,12 +638,16 @@ void EditorSelection::updateBuildingView()
     m_PlacementActor->setHeight(m_Buildings[m_Buildings.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->updateDragBounds();
-    selectBuilding(0);    
+    selectBuilding(0);
 }
 
 void EditorSelection::updateUnitView()
 {    
     hideSelection();
+    m_pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - m_pButtonTop->getScaledWidth() / 2, 15);
+    m_PlacementSelectionClip->setPosition(10, 50);
+    m_PlacementSelectionClip->setSize(m_BoxPlacementSelection->getScaledWidth() - 20,
+                                      m_BoxPlacementSelection->getScaledHeight() - 100);
     for (auto & unit : m_Units)
     {
         unit->setVisible(true);
@@ -648,7 +659,8 @@ void EditorSelection::updateUnitView()
     m_PlacementActor->setHeight(m_Units[m_Units.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->updateDragBounds();
-    selectUnit(0);    
+    selectUnit(0);
+    m_pButtonTop->setPosition(m_BoxPlacementSelection->getScaledWidth() / 2 - m_pButtonTop->getScaledWidth() / 2, 15);
 }
 
 void EditorSelection::hideSelection()
@@ -742,15 +754,15 @@ void EditorSelection::initTerrainSection()
 {
     spDropDownmenu pDropDownmenu = spDropDownmenu::create(m_labelWidth, Terrain::getPaletteNames());
     pDropDownmenu->setTooltipText(tr("Changes the palette used by the terrain."));
-    pDropDownmenu->setPosition(getPosX(0), m_startH);
+    pDropDownmenu->setPosition(getPosX(0), 15);
     pDropDownmenu->setCurrentItemText(Terrain::getPaletteNameFromIndex(m_activePalette));
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
     {
         emit sigPaletteChanged(item);
     }, Qt::QueuedConnection);
-    m_PlacementActor->addChild(pDropDownmenu);
+    m_BoxPlacementSelection->addChild(pDropDownmenu);
     m_terrainActors.append(pDropDownmenu);
-    qint32 posY = m_startH - GameMap::getImageSize() + 10 + pDropDownmenu->getHeight();
+    qint32 posY = m_startH - GameMap::getImageSize();
     qint32 xCounter = 0;
     qint32 currentIdentifier = std::numeric_limits<qint32>::min();
     for (qint32 i = 0; i < m_Terrains.size(); i++)

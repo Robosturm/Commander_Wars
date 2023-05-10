@@ -206,6 +206,7 @@ private:
     qint32 m_xCount{0};
     qint32 m_labelWidth{0};
 
+    oxygine::spButton m_pButtonTop;
     oxygine::spSlidingActor m_PlacementSelectionClip;
     oxygine::spActor m_PlacementActor;
     QVector<spTerrain> m_Terrains;

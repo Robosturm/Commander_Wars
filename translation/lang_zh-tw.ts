@@ -3648,7 +3648,7 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>EditorSelection</name>
     <message>
-        <location filename="../objects/editorselection.cpp" line="744"/>
+        <location filename="../objects/editorselection.cpp" line="756"/>
         <source>Changes the palette used by the terrain.</source>
         <translation>更改地形調色板.</translation>
     </message>
