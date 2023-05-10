@@ -48,7 +48,7 @@ var Constructor = function()
         }
         else
         {
-            terrain.loadBaseTerrain("RIVER");
+            terrain.loadBaseTerrain("RIVER", currentPalette);
         }
     };
     this.loadSprite = function(terrain, style, map)

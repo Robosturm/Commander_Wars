@@ -40,7 +40,7 @@ var Constructor = function()
         }
         else
         {
-            terrain.loadBaseTerrain("DESERT");
+            terrain.loadBaseTerrain("DESERT", currentPalette);
         }
     };
     this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,

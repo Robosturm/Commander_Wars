@@ -106,7 +106,7 @@ var Constructor = function()
             {
                 baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
             }
-            terrain.loadBaseTerrain(baseTerrainId);
+            terrain.loadBaseTerrain(baseTerrainId, currentPalette);
         }
     };
 

@@ -35,7 +35,7 @@ var Constructor = function()
         }
         else
         {
-            terrain.loadBaseTerrain("SEA");
+            terrain.loadBaseTerrain("SEA", currentPalette);
         }
     };
     this.isSeaTile = function(x, y, map)

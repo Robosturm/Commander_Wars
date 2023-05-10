@@ -42,7 +42,7 @@ var Constructor = function()
         }
         else
         {
-            terrain.loadBaseTerrain("PLAINS");
+            terrain.loadBaseTerrain("PLAINS", currentPalette);
         }
     };
     this.loadBaseSprite = function(terrain, map)
