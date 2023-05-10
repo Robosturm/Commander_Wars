@@ -12846,7 +12846,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/artillery.js" line="45"/>
         <source>Artillery</source>
-        <translation>高射炮</translation>
+        <translation>火炮</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/artillery.js" line="50"/>
@@ -12859,7 +12859,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/artillerycraft.js" line="45"/>
         <source>Artillerycraft</source>
-        <translation>兩棲高射炮</translation>
+        <translation>氣墊火炮艇</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/artillerycraft.js" line="50"/>
@@ -25129,7 +25129,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/units/flak.js" line="44"/>
         <source>Anti Air</source>
-        <translation>對空戰車</translation>
+        <translation>對空坦克</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/flak.js" line="53"/>
@@ -25142,7 +25142,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/units/flare.js" line="44"/>
         <source>Flare</source>
-        <translation>閃光彈</translation>
+        <translation>信號彈</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/flare.js" line="54"/>
@@ -25341,7 +25341,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/units/heavy_hovercraft.js" line="44"/>
         <source>Heavy Hovercraft</source>
-        <translation>重型氣墊船</translation>
+        <translation>重型氣墊艇</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/heavy_hovercraft.js" line="53"/>
@@ -25380,7 +25380,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/units/hovercraft.js" line="44"/>
         <source>Hovercraft</source>
-        <translation>氣墊船</translation>
+        <translation>氣墊艇</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/hovercraft.js" line="52"/>
@@ -25393,7 +25393,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/units/hoverflak.js" line="44"/>
         <source>Hover Anti Air</source>
-        <translation>氣墊對空船</translation>
+        <translation>氣墊對空艇</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/hoverflak.js" line="53"/>
@@ -25432,7 +25432,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/units/k_heli.js" line="36"/>
         <source>Battle Copter</source>
-        <translation>B直升機</translation>
+        <translation>戰鬥直升機</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/k_heli.js" line="102"/>
@@ -25471,7 +25471,7 @@ CO區域效果:
     <message>
         <location filename="../resources/scripts/units/light_tank.js" line="44"/>
         <source>Light Tank</source>
-        <translation>輕坦克</translation>
+        <translation>輕型坦克</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/light_tank.js" line="52"/>
@@ -27907,7 +27907,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/weapons/weapon_designator.js" line="5"/>
         <source>Designator</source>
-        <translation>指定者</translation>
+        <translation>標記</translation>
     </message>
 </context>
 <context>
@@ -27923,7 +27923,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/weapons/weapon_flare.js" line="5"/>
         <source>Flare</source>
-        <translation>閃光彈</translation>
+        <translation>信號彈</translation>
     </message>
 </context>
 <context>
@@ -27963,7 +27963,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/weapons/weapon_heavy_hovercraft_gun.js" line="5"/>
         <source>Gun</source>
-        <translation>機槍</translation>
+        <translation>主砲</translation>
     </message>
 </context>
 <context>
@@ -27979,7 +27979,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/weapons/weapon_heavy_tank_gun.js" line="5"/>
         <source>Gun</source>
-        <translation>機槍</translation>
+        <translation>主砲</translation>
     </message>
 </context>
 <context>
@@ -27995,7 +27995,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/weapons/weapon_hovercraft_gun.js" line="5"/>
         <source>Gun</source>
-        <translation>機槍</translation>
+        <translation>主砲</translation>
     </message>
 </context>
 <context>
@@ -28035,7 +28035,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/weapons/weapon_light_tank_gun.js" line="5"/>
         <source>Gun</source>
-        <translation>機槍</translation>
+        <translation>主砲</translation>
     </message>
 </context>
 <context>
@@ -28059,7 +28059,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/weapons/weapon_megatank_gun.js" line="5"/>
         <source>Gun</source>
-        <translation>機槍</translation>
+        <translation>主砲</translation>
     </message>
 </context>
 <context>
@@ -28083,7 +28083,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/weapons/weapon_neotank_gun.js" line="5"/>
         <source>Gun</source>
-        <translation>機槍</translation>
+        <translation>主砲</translation>
     </message>
 </context>
 <context>
@@ -28139,7 +28139,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../resources/scripts/weapons/weapon_tankhunter_gun.js" line="5"/>
         <source>Gun</source>
-        <translation>機槍</translation>
+        <translation>主砲</translation>
     </message>
 </context>
 <context>
