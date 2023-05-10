@@ -1120,11 +1120,6 @@ else()
         LIBRARY         DESTINATION         ".")
 endif()
 
-if (DOXYGEN_FOUND)
-    doxygen_add_docs(doxyGen ${${PROJECT_NAME}_SRCS})
-endif()
-
-
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(FullInstallPath "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/")
     message("Build will run windeployqt ${_qt_bin_dir} ${WINDEPLOYQT_EXECUTABLE} with path ${FullInstallPath}")
@@ -1134,6 +1129,8 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
                 "$<TARGET_FILE:${PROJECT_NAME}>"
                 --libdir \"${FullInstallPath}\"
                 --plugindir \"${FullInstallPath}\"
+                --no-quick-import
+                --no-translations
         COMMENT "Running windeployqt..."
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
