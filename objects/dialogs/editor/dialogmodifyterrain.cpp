@@ -54,6 +54,7 @@ DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     connect(this, &DialogModifyTerrain::sigChangePalette, this, &DialogModifyTerrain::changePalette, Qt::QueuedConnection);
     connect(this, &DialogModifyTerrain::sigTerrainClicked, this, &DialogModifyTerrain::terrainClicked, Qt::QueuedConnection);
     connect(this, &DialogModifyTerrain::sigShowLoadDialog, this, &DialogModifyTerrain::showLoadDialog, Qt::QueuedConnection);
+    connect(this, &DialogModifyTerrain::sigLoadCustomSprite, this, &DialogModifyTerrain::loadCustomSprite, Qt::QueuedConnection);
 }
 
 void DialogModifyTerrain::load()
@@ -128,7 +129,7 @@ void DialogModifyTerrain::load()
         pDropDownmenu->setCurrentItemText(Terrain::getPaletteName(m_pTerrain->getPalette()));
         m_selectedPalette = 0;
     }
-    connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, m_pTerrain, [this](qint32 item)
+    connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [this](qint32 item)
     {
         m_selectedPalette = item;
         emit sigChangePalette(Terrain::getPaletteId(item, m_pTerrain->getTerrainID()));
@@ -136,24 +137,40 @@ void DialogModifyTerrain::load()
     m_pPanel->addItem(pDropDownmenu);
     y += pLabel->getHeight() + 10;
 
-    loadBaseImageview(y, m_pTerrain);
-    loadOverlayview(y, m_pTerrain);
+    spLabel pTextfield = spLabel::create(180);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Terrain Style"));
+    pTextfield->setPosition(10, y);
+    m_pPanel->addItem(pTextfield);
+    m_pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pTextfield->getScaledWidth());
+    m_pTextbox->setTooltipText(tr("Current select terrain image or terrain path or empty for default selection."));
+    m_pTextbox->setPosition(200 + 20 + pTextfield->getX(), y);
+    connect(m_pTextbox.get(), &Textbox::sigTextChanged, this, [this](QString text)
+    {
+        emit sigLoadCustomSprite(text);
+    });
+    m_pPanel->addItem(m_pTextbox);
+    y += pTextfield->getHeight() + 20;
 
-    oxygine::spButton pButtonDefault = pObjectManager->createButton(tr("Default"), 150);
+    oxygine::spButton pButtonDefault = pObjectManager->createButton(tr("Default"), 250);
     pButtonDefault->setPosition(10, y);
-    m_pPanel->addChild(pButtonDefault);
+    m_pPanel->addItem(pButtonDefault);
     pButtonDefault->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
-         emit sigTerrainClicked("");
+        emit sigTerrainClicked("");
     });
 
-    oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select Image"), 150);
+    oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select Image"), 250);
     pButtonSelect->setPosition(10 + 20 + pButtonDefault->getScaledWidth(), y);
-    m_pPanel->addChild(pButtonSelect);
+    m_pPanel->addItem(pButtonSelect);
     pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event*)
     {
-         emit sigShowLoadDialog();
+        emit sigShowLoadDialog();
     });
+    y += pButtonSelect->getHeight() + 20;
+
+    loadBaseImageview(y, m_pTerrain);
+    loadOverlayview(y, m_pTerrain);
 
     m_pPanel->setContentHeigth(y + 60);
     if (m_pTerrain->getFixedSprite())
@@ -212,17 +229,6 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
         }
     }
     y += GameMap::getImageSize() * 3;
-
-    spLabel pTextfield = spLabel::create(180);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Terrain Style"));
-    pTextfield->setPosition(10, y);
-    m_pPanel->addItem(pTextfield);
-    m_pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pTextfield->getScaledWidth());
-    m_pTextbox->setTooltipText(tr("Current select terrain image or terrain path or empty for default selection."));
-    m_pTextbox->setPosition(200 + 20 + pTextfield->getX(), y);
-    m_pPanel->addItem(m_pTextbox);
-    y += pTextfield->getHeight() + 20;
 }
 
 void DialogModifyTerrain::changePalette(const QString & newPalette)
@@ -304,6 +310,11 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
 
 void DialogModifyTerrain::remove()
 {
+    if (m_changed)
+    {
+        QVector<QPoint> points({QPoint(m_pTerrain->getX(), m_pTerrain->getY())});
+       m_pMap->updateSpritesOfTiles(points, true);
+    }
     detach();
 }
 
@@ -313,6 +324,7 @@ void DialogModifyTerrain::terrainClicked(QString id)
     m_pTerrain->setTerrainSpriteName(id);
     m_pTerrain->loadSprites();
     m_pTextbox->setCurrentText(id);
+    m_changed = true;
 }
 
 void DialogModifyTerrain::showLoadDialog()
@@ -328,7 +340,10 @@ void DialogModifyTerrain::showLoadDialog()
 void DialogModifyTerrain::loadCustomSprite(QString id)
 {
     QString imageId = GlobalUtils::makePathRelative(id);
-    terrainClicked(imageId);
+    if (QFile::exists(imageId))
+    {
+        terrainClicked(imageId);
+    }
 }
 
 void DialogModifyTerrain::overlayChanged(QString id, bool selected)

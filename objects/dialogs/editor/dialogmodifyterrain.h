@@ -25,6 +25,7 @@ signals:
     void sigShowLoadDialog();
     void sigOverlayChanged(QString id, bool selected);
     void sigChangePalette(const QString & newPalette);
+    void sigLoadCustomSprite(QString id);
 public slots:
     void terrainClicked(QString id);
     void showLoadDialog();
@@ -43,6 +44,7 @@ private:
     oxygine::spButton m_OkButton;
     GameMap* m_pMap{nullptr};
     qint32 m_selectedPalette{-1};
+    bool m_changed{false};
 
 };
 

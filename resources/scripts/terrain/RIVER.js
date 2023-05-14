@@ -180,8 +180,8 @@ var Constructor = function()
     };
     this.updateFlowSprites = function(terrain, pPfs, map, applyRulesPalette)
     {
-        var flowData = pPfs.getFlowData();        
-        var length = flowData.size()
+        let flowData = pPfs.getFlowData();
+        let length = flowData.size()
         for (var i  = 0; i < length; ++i)
         {
             var pos = flowData.getPosition(i);
@@ -190,20 +190,28 @@ var Constructor = function()
             {
                 currentTerrain.setTerrainPaletteGroup(map.getGameRules().getMapPalette());
             }
-            if (!currentTerrain.getFixedSprite())
+            if (currentTerrain.getID() === "RIVER")
             {
-                if (currentTerrain.getID() === "RIVER")
+                if (!currentTerrain.getFixedSprite())
                 {
                     currentTerrain.unloadSprites();
                     currentTerrain.loadBaseTerrainSprites();
                     RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i, map);
                 }
-                else if (currentTerrain.getBaseTerrain("RIVER", true) !== null)
+                else
                 {
-                    currentTerrain = currentTerrain.getBaseTerrain("RIVER");
-                    currentTerrain.unloadSprites();
-                    currentTerrain.loadBaseTerrainSprites();
-                    RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i, map);
+                    currentTerrain.loadSprites();
+                }
+            }
+            else if (currentTerrain.getBaseTerrain("RIVER", true) !== null)
+            {
+                let riverTerrain = currentTerrain.getBaseTerrain("RIVER");
+                currentTerrain.loadSprites();
+                if (!riverTerrain.getFixedSprite())
+                {
+                    riverTerrain.unloadSprites();
+                    riverTerrain.loadBaseTerrainSprites();
+                    RIVER.loadSpriteFromFlowData(riverTerrain, pos, flowData, i, map);
                 }
             }
             else

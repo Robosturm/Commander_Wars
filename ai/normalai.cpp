@@ -1490,7 +1490,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(MoveUnitData & unitData, 
         if (m_pMap->getTerrain(x, y)->getUnit() == nullptr &&
             turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y, 0) > 0)
         {
-            float currentDamage = calculateCounterDamage(unitData, moveTarget, nullptr, 0.0f, pBuildings, pEnemyBuildings);
+            float currentDamage = calculateCounterDamage(unitData, moveTarget, nullptr, 0.0f, pBuildings, pEnemyBuildings, true);
             if (currentDamage < 0)
             {
                 currentDamage = 0;
@@ -1543,7 +1543,7 @@ qint32 NormalAi::getMoveTargetField(MoveUnitData & unitData, UnitPathFindingSyst
         {
             if (isMoveableTile(pBuilding))
             {
-                float counterDamage = calculateCounterDamage(unitData, movePath[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
+                float counterDamage = calculateCounterDamage(unitData, movePath[i], nullptr, 0.0f, pBuildings, pEnemyBuildings, true);
                 if (counterDamage <= bestMinDamge &&
                     (i != movePathSize || counterDamage <= 0))
                 {
@@ -1612,7 +1612,7 @@ qint32 NormalAi::getBestAttackTarget(MoveUnitData & unitData, std::vector<CoreAI
         {
             fundsDamage = static_cast<qint32>(ret[i].fundsDamage);
         }
-        float counterDamage = calculateCounterDamage(unitData, moveTarget, pEnemy, ret[i].hpDamage + bonusDamage, pBuildings, pEnemyBuildings);
+        float counterDamage = calculateCounterDamage(unitData, moveTarget, pEnemy, ret[i].hpDamage + bonusDamage, pBuildings, pEnemyBuildings, true);
         if (counterDamage < 0)
         {
             counterDamage = 0;
