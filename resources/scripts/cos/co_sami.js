@@ -303,7 +303,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Sami's foot soldiers can capture buildings instantlyand gain 2 movement. Their firepower becomes 180%, indirect-combat units have 110% firepower, and other direct-combat units have 100% firepower. All units have 110% deffense.");
+        return qsTr("Sami's foot soldiers can capture buildings instantly and gain 2 movement. Their firepower becomes 180%, indirect-combat units have 110% firepower, and other direct-combat units have 100% firepower. All units have 110% deffense.");
     };
     this.getSuperPowerName = function(co)
     {
