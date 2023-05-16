@@ -156,6 +156,7 @@ var Constructor = function()
     this.coZoneBonus = 20;
     this.coPowerBonus = 20;
     this.coSuperPowerBonus = 30;
+    this.coMovementBonus = 1;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
@@ -190,7 +191,7 @@ var Constructor = function()
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
             co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
-            return 1;
+            return CO_ANDY.coMovementBonus;
         }
         return 0;
     };
@@ -239,7 +240,9 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("All units are restored 2 HP. Andy's firepower becomes 120% and defense 120%.");
+        return qsTr("All units are restored </r><div c='#ffffff'>Two HP</div><r>. Andy's firepower increases by </r><div c='#ffffff'>%0%</div><r> and defense by </r><div c='#ffffff'>%0%</div><r>.");
+        text = replaceTextArgs(text, [CO_ANDY.coPowerBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -247,7 +250,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All units are restored 5 HP. Andy's firepower becomes 130% and defense 120%. All units gain 1 movement.");
+        return qsTr("All units are restored </r><div c='#ffffff'>Five HP</div><r>. Andy's firepower becomes </r><div c='#ffffff'>%0%</div><r> and defense </r><div c='#ffffff'>%0%</div><r>. All units gain </r><div c='#ffffff'>%2 movement</div><r>.");
+        text = replaceTextArgs(text, [CO_ANDY.coSuperPowerBonus, CO_ANDY.coPowerBonus, CO_ANDY.coMovementBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

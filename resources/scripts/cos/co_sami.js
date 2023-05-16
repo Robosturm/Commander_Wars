@@ -142,6 +142,21 @@ var Constructor = function()
         return "OS";
     };
 
+    this.superPowerInfBonus = 80;
+    this.superPowerDirectBonus = 0;
+    this.superPowerOtherBonus = 10;
+    this.PowerInfBonus = 50;
+    this.PowerDirectBonus = 0;
+    this.PowerOtherBonus = 10;
+    this.ZoneInfBonus = 50;
+    this.ZoneDirectBonus = 0;
+    this.ZoneOtherBonus = 10;
+    this.ZoneDefBonus = 10;
+    this.d2dInfBonus = 10;
+    this.d2dDirectBonus = 10;
+    this.d2dOtherBonus = 0;
+    this.d2dDefBonus = 0;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
@@ -151,57 +166,58 @@ var Constructor = function()
         case GameEnums.PowerMode_Superpower:
             if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
-                return 80;
+                return CO_SAMI.superPowerInfBonus;
             }
             else if (attacker.getBaseMaxRange() === 1)
             {
-                return 0;
+                return CO_SAMI.superPowerDirectBonus;
             }
-            return 10;
+            return CO_SAMI.superPowerOtherBonus;
         case GameEnums.PowerMode_Power:
             if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
-                return 50;
+                return CO_SAMI.PowerInfBonus;
             }
             else if (attacker.getBaseMaxRange() === 1)
             {
-                return 0;
+                return CO_SAMI.PowerDirectBonus;
             }
-            return 10;
+            return CO_SAMI.PowerOtherBonus;
         default:
             if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
                 if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
-                    return 50;
+                    return CO_SAMI.ZoneInfBonus;
                 }
                 else if (attacker.getBaseMaxRange() === 1)
                 {
-                    return 0;
+                    return CO_SAMI.ZoneDirectBonus;
                 }
-                return 10;
+                return CO_SAMI.ZoneOtherBonus;
             }
             if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
-                return 10;
+                return CO_SAMI.d2dInfBonus;
             }
             break;
         }
         if (attacker.getBaseMaxRange() === 1)
         {
-            return -10;
+            return -CO_SAMI.d2dDirectBonus;
         }
-        return 0;
+        return CO_SAMI.d2dOtherBonus;
     };
+
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return CO_SAMI.ZoneDefBonus;
         }
-        return 0;
+        return CO_SAMI.d2dDefBonus;
     };
     this.getCaptureBonus = function(co, unit, posX, posY, map)
     {
@@ -285,17 +301,22 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Global Day-to-day: \nSami's transport units gain 1 movement and her foot soldier units have 110% firepower and capture at 1.5 times the normal rate. Her other direct-combat units deal 90% damage.");
+        return qsTr("Global Day-to-day: \nSami's transport units gain </r><div c='#ffffff'>+1 movement</div><r> and her foot soldier units gain </r><div c='#ffffff'>+%0%</div><r> firepower and capture at 1.5 times the normal rate. Her other direct-combat units deal  </r><div c='#ff0000'>-%1%</div><r> less damage.");
+        text = replaceTextArgs(text, [CO_SAMI.d2dInfBonus, CO_SAMI.d2dDirectBonus]);
+        return text;
     };
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nCommando\n") +
-               qsTr("\nActive CO Day-to-day: \nNo abilities") +
-               qsTr("\n\nCO Zone Effect: \nSami's foot soldiers firepower becomes 150% while indirect-combat units have 110% firepower and other direct-combat units have 100% firepower. All units have 110% deffense.");
+               qsTr("\n\nCO Zone Effect: \nSami's foot soldiers firepower increases by </r><div c='#ffffff'>+%0%</div><r> while all other units gain </r><div c='#ffffff'>+%1%</div><r> firepower and </r><div c='#ffffff'>+%2%</div><r> defense.");
+        text = replaceTextArgs(text, [CO_SAMI.ZoneInfBonus CO_SAMI.ZoneOtherBonus, CO_SAMI.ZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Sami's foot soldiers gain 1 movement and their firepower becomes 150%. indirect-combat units have 110% firepower, other direct-combat units have 100% firepower, and all units have 110% deffense.");
+        return qsTr("Sami's foot soldiers gain </r><div c='#ffffff'>+1 movement</div><r> and their firepower increases by </r><div c='#ffffff'>+%0%</div><r> while all other units gain </r><div c='#ffffff'>+%1%</div><r> firepower and </r><div c='#ffffff'>+%2%</div><r> defense.");
+        text = replaceTextArgs(text, [CO_SAMI.PowerInfBonus CO_SAMI.PowerOtherBonus, CO_SAMI.ZoneDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -303,8 +324,11 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Sami's foot soldiers can capture buildings instantly and gain 2 movement. Their firepower becomes 180%, indirect-combat units have 110% firepower, and other direct-combat units have 100% firepower. All units have 110% deffense.");
+        return qsTr("Sami's foot soldiers can capture buildings instantly and gain </r><div c='#ffffff'>+2 movement</div><r>. Their firepower increases by </r><div c='#ffffff'>+%0%</div><r> while all other units gain </r><div c='#ffffff'>+%1%</div><r> firepower and </r><div c='#ffffff'>+%2%</div><r> defense.");
+        text = replaceTextArgs(text, [CO_SAMI.superPowerInfBonus CO_SAMI.superPowerOtherBonus, CO_SAMI.ZoneDefBonus]);
+        return text;
     };
+
     this.getSuperPowerName = function(co)
     {
         return qsTr("Victory March");

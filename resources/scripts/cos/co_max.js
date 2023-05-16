@@ -23,18 +23,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/max.mp3", 57, 70080)
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/max.mp3", 57, 70080)
+            break;
         }
     };
 
@@ -135,68 +135,119 @@ var Constructor = function()
     {
         return 3;
     };
+
+    this.superPowerOffBonus = 70;
+    this.superpowerMovementBonus = 2;
+    this.powerOffBonus = 45;
+    this.powerMovementBonus = 1
+    this.powerIndirectOffBonus = 0;
+    this.powerOtherBonus = 10;
+    this.powerDefBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneOffBonus = 45;
+    this.d2dCoZoneIndirectOffBonus = 0;
+    this.d2dCoZoneOtherOffBonus = 10;
+    this.d2dIndirectFirerangeMalus = 1;
+    this.d2dOffBonus = 15;
+    this.d2dIndirectOffBonus = 10;
+    this.d2dOtherOffBonus = 0;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
+       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            let isDirect = (attacker.getBaseMaxRange() === 1 && attacker.getUnitType() !== GameEnums.UnitType_Infantry);
+            let isIndirect = (attacker.getBaseMaxRange() > 1);
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (attacker.getBaseMaxRange() === 1 &&
-                    attacker.getUnitType() !== GameEnums.UnitType_Infantry)
                 {
-                    return 70;
-                }                
-                else if (attacker.getBaseMaxRange() > 1)
-                {
-                    return 0;
-                }
-                return 10;
-            case GameEnums.PowerMode_Power:
-                if (attacker.getBaseMaxRange() === 1 &&
-                    attacker.getUnitType() !== GameEnums.UnitType_Infantry)
-                {
-                    return 45;
-                }
-
-                else if (attacker.getBaseMaxRange() > 1)
-                {
-                    return 0;
-                }
-                return 10;
-            default:
-                if (attacker.getBaseMaxRange() === 1 &&
-                    attacker.getUnitType() !== GameEnums.UnitType_Infantry)
-                {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    if (isDirect)
                     {
-                        return 45;
+                        return CO_MAX.superPowerOffBonus;
                     }
-                    return 15;
+                    else if (isIndirect)
+                    {
+                        return CO_MAX.powerIndirectOffBonus;
+                    }
+                    return CO_MAX.powerOtherBonus;
                 }
-                break;
-        }
-        if (attacker.getBaseMaxRange() > 1)
-        {
-            return -10;
+            case GameEnums.PowerMode_Power:
+                {
+                    if (isDirect)
+                    {
+                        return CO.powerOffBonus;
+                    }
+                    else if (isIndirect)
+                    {
+                        return CO_MAX.powerIndirectOffBonus;
+                    }
+                    return CO_MAX.powerOtherBonus;
+                }
+            default:
+                {
+                    let inCoZone = co.inCORange(Qt.point(atkPosX, atkPosY), attacker);
+                    if (inCoZone)
+                    {
+                        if (isDirect)
+                        {
+                            return CO_MAX.d2dCoZoneOffBonus;
+                        }
+                        else if (isIndirect)
+                        {
+                            return CO_MAX.d2dCoZoneIndirectOffBonus;
+                        }
+                        else
+                        {
+                            return CO_MAX.d2dCoZoneOtherOffBonus;
+                        }
+                    }
+                    else
+                    {
+                        if (isDirect)
+                        {
+                            return CO_MAX.d2dOffBonus;
+                        }
+                        else if (isIndirect)
+                        {
+                            return -CO_MAX.d2dIndirectOffBonus;
+                        }
+                        else
+                        {
+                            return CO_MAX.d2dOtherOffBonus;
+                        }
+                    }
+                }
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+     defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_MAX.d2dCoZoneDefBonus;
+            }
+            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_MAX.powerDefBonus;
+            }
         }
         return 0;
     };
     this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.getBaseMaxRange() > 1)
+        if (CO.isActive(co))
         {
-            return -1;
+            if (unit.getBaseMaxRange() > 1)
+            {
+                return -CO_MAX.d2dIndirectFirerangeMalus;
+            }
         }
         return 0;
     };
@@ -206,22 +257,39 @@ var Constructor = function()
     };
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Power)
+        if (CO.isActive(co))
         {
-            if (unit.getBaseMaxRange() === 1 &&
-                unit.getUnitType() !== GameEnums.UnitType_Infantry)
+            if (co.getPowerMode() === GameEnums.PowerMode_Power)
             {
-                return 1;
+                if (unit.getBaseMaxRange() === 1 &&
+                    unit.getUnitType() !== GameEnums.UnitType_Infantry)
+                {
+                    return CO_MAX.powerMovementBonus;
+                }
+            }
+            else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+               co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            {
+                if (unit.getBaseMaxRange() === 1 &&
+                    unit.getUnitType() !== GameEnums.UnitType_Infantry)
+                {
+                    return CO_MAX.superpowerMovementBonus;
+                }
             }
         }
-        else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+        return 0;
+    };
+
+    this.getAiCoUnitBonus = function(co, unit, map)
+    {
+        if (unit.getBaseMaxRange() === 1 &&
+            unit.getUnitType() !== GameEnums.UnitType_Infantry)
         {
-            if (unit.getBaseMaxRange() === 1 &&
-                unit.getUnitType() !== GameEnums.UnitType_Infantry)
-            {
-                return 2;
-            }
+            return 3;
+        }
+        else if (unit.getBaseMaxRange() > 1)
+        {
+            return -3;
         }
         return 0;
     };
@@ -272,17 +340,22 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Global Day-to-day: \nMax's non-infantry direct-combat units have 115% firepower and his indirect-combat units have 90% firepower and 1 range penalty.");
+        return qsTr("Active CO Day-to-day: \nMax's non-infantry direct-combat units gain </r><div c='#ffffff'>%0%</div><r> firepower and his indirect-combat units have </r><div c='#ff0000'>-%1%</div><r> firepower and </r><div c='#ff0000'>%2 range</div><r> penalty.");
+        text = replaceTextArgs(text, [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectOffBonus, CO_MAX.d2dIndirectFirerangeMalus]);
+        return text;
     };
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nTank Hunter\n") +
-               qsTr("\nActive CO Day-to-day: \nNo abilities") +
-               qsTr("\n\nCO Zone Effect: \nMax's non-infantry direct-combat units firepower raises to 145% and all units deffense raises to 110%.");
+        qsTr("\n\nCO Zone Effect: \nMax's non-infantry direct-combat units firepower raises by </r><div c='#ffffff'>+%0%</div><r> and all others gain </r><div c='#ffffff'>+%1%</div><r> firepower and all units defense raises by </r><div c='#ffffff'>+%2%</div><r>.");
+        text = replaceTextArgs(text, [CO_MAX.d2dCoZoneOffBonus, CO_MAX.d2dCoZoneOtherOffBonus, CO_MAX.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Max's non-infantry direct-combat units gain 1 movement and raise their firepower to 145%. his indirect-combat units firepower raises to 100% and all other units firepower raises to 110%. All units deffense raises to 110%.");
+        return qsTr("Max's non-infantry direct-combat units gain </r><div c='#ffffff'>+%0 movement</div><r> and raise their firepower by </r><div c='#ffffff'>+%1%</div><r> and all other units firepower raises by </r><div c='#ffffff'>+%2%</div><r>. All units defense raises by </r><div c='#ffffff'>+%3%</div><r>.");
+        text = replaceTextArgs(text, [CO_MAX.powerMovementBonus, CO_MAX.powerOffBonus, CO_MAX.powerOtherBonus , CO_MAX.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -290,8 +363,11 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Max's non-infantry direct-combat units gain 2 movement and raise their firepower to 170%. his indirect-combat units firepower raises to 100% and all other units firepower raises to 110%. All units deffense raises to 110%.");
+        return qsTr("Max's non-infantry direct-combat units gain </r><div c='#ffffff'>+%0 movement</div><r> and raise their firepower by </r><div c='#ffffff'>+%1%</div><r> and all other units firepower raises by </r><div c='#ffffff'>+%2%</div><r>. All units defense raises by </r><div c='#ffffff'>+%3%</div><r>.");
+        text = replaceTextArgs(text, [CO_MAX.superpowerMovementBonus, CO_MAX.superPowerOffBonus, CO_MAX.powerOtherBonus , CO_MAX.powerDefBonus]);
+        return text;
     };
+
     this.getSuperPowerName = function(co)
     {
         return qsTr("Max Blast");
@@ -299,22 +375,22 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Roll, tanks, roll!"),
-                qsTr("Now you're gonna get hurt!"),
-                qsTr("Hey!  Give up while you still can!"),
-                qsTr("Wanna test might?  I won't lose!"),
-                qsTr("That's enough!  Get outta the road!"),
-                qsTr("Alright, the gloves are comin' off.")];
+            qsTr("Now you're gonna get hurt!"),
+            qsTr("Hey!  Give up while you still can!"),
+            qsTr("Wanna test might?  I won't lose!"),
+            qsTr("That's enough!  Get outta the road!"),
+            qsTr("Alright, the gloves are comin' off.")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("That was a piece of cake!"),
-                qsTr("Ha! It'll take more than that to beat me!"),
-                qsTr("I'm on a roll!")];
+            qsTr("Ha! It'll take more than that to beat me!"),
+            qsTr("I'm on a roll!")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Ouch... I let my guard down."),
-                qsTr("Oh, man! Not good! What are we supposed to do now!?")];
+            qsTr("Oh, man! Not good! What are we supposed to do now!?")];
     };
     this.getName = function()
     {
