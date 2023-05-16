@@ -92,7 +92,15 @@ public:
         qint32 y{-1};
         float fundsDamage{0};
         float hpDamage{0};
+        float hpDamageDifference{0};
         float counterDamage{0.0f};
+    };
+
+    struct FundsDamageData
+    {
+        float atkHpDamage{0.0f};
+        float fundsDamage{0.0f};
+        float hpDamage{0.0f};
     };
 
     /**
@@ -411,7 +419,7 @@ public slots:
      * @param pDef
      * @return
      */
-    QPointF calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef) const;
+    FundsDamageData calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef) const;
     /**
      * @brief appendAttackTargets
      * @param pUnit
@@ -805,6 +813,7 @@ protected:
     double m_minSameIslandDistance{2.5};
     double m_slowUnitSpeed{2};
     double m_minTerrainDamage{20.0f};
+    double m_minHpDamage{-2};
 
     QVector<IniData> m_iniData;
     QString m_aiName{"CoreAI"};

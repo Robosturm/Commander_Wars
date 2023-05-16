@@ -569,26 +569,29 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction & pAction, std::v
             Unit* pDef = pTerrain->getUnit();
             if (pDef != nullptr)
             {
-                QPointF dmg = calcFundsDamage(damage, pUnit, pDef);
-                if (ret.size() == 0)
+                auto dmg = calcFundsDamage(damage, pUnit, pDef);
+                if (dmg.hpDamage >= m_minHpDamage)
                 {
-                    ret.push_back(QVector3D(target.x(), target.y(), dmg.y()));
-                    QPoint point = pAction->getActionTarget();
-                    moveTargetFields.push_back(QVector3D(point.x(), point.y(), 1));
-                }
-                else if (static_cast<float>(ret[0].z()) == dmg.y())
-                {
-                    ret.push_back(QVector3D(target.x(), target.y(), dmg.y()));
-                    QPoint point = pAction->getActionTarget();
-                    moveTargetFields.push_back(QVector3D(point.x(), point.y(), 1));
-                }
-                else if (dmg.y() > ret[0].z())
-                {
-                    ret.clear();
-                    moveTargetFields.clear();
-                    ret.push_back(QVector3D(target.x(), target.y(), dmg.y()));
-                    QPoint point = pAction->getActionTarget();
-                    moveTargetFields.push_back(QVector3D(point.x(), point.y(), 1));
+                    if (ret.size() == 0)
+                    {
+                        ret.push_back(QVector3D(target.x(), target.y(), dmg.fundsDamage));
+                        QPoint point = pAction->getActionTarget();
+                        moveTargetFields.push_back(QVector3D(point.x(), point.y(), 1));
+                    }
+                    else if (static_cast<float>(ret[0].z()) == dmg.fundsDamage)
+                    {
+                        ret.push_back(QVector3D(target.x(), target.y(), dmg.fundsDamage));
+                        QPoint point = pAction->getActionTarget();
+                        moveTargetFields.push_back(QVector3D(point.x(), point.y(), 1));
+                    }
+                    else if (dmg.fundsDamage > ret[0].z())
+                    {
+                        ret.clear();
+                        moveTargetFields.clear();
+                        ret.push_back(QVector3D(target.x(), target.y(), dmg.fundsDamage));
+                        QPoint point = pAction->getActionTarget();
+                        moveTargetFields.push_back(QVector3D(point.x(), point.y(), 1));
+                    }
                 }
             }
             else
@@ -669,12 +672,13 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, std::vecto
                         stealthMalus /= 2;
                     }
                 }
-                QPointF dmg = calcFundsDamage(damage, pUnit, pDef);
+                auto dmg = calcFundsDamage(damage, pUnit, pDef);
                 DamageData data;
                 data.x = target.x();
                 data.y = target.y();
-                data.fundsDamage = dmg.y();
-                data.hpDamage = dmg.x();
+                data.fundsDamage = dmg.fundsDamage;
+                data.hpDamage = dmg.atkHpDamage;
+                data.hpDamageDifference = dmg.hpDamage;
                 ret.push_back(data);
                 QPoint point = pAction->getActionTarget();
                 moveTargetFields.push_back(QVector3D(point.x(), point.y(), 1 + stealthMalus));
@@ -712,16 +716,18 @@ bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain, float damage) const
     return false;
 }
 
-QPointF CoreAI::calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef) const
+CoreAI::FundsDamageData CoreAI::calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef) const
 {
     float atkDamage = static_cast<float>(damage.x()) / Unit::MAX_UNIT_HP;
     if (atkDamage > pDef->getHp())
     {
         atkDamage = pDef->getHp();
     }
+    float hpDamage = atkDamage;
     float fundsDamage = pDef->getUnitCosts() * atkDamage / Unit::MAX_UNIT_HP;
     if (damage.width() >= 0.0)
     {
+        hpDamage -= damage.width() / Unit::MAX_UNIT_HP;
         float counterDamage = static_cast<float>(damage.width()) / Unit::MAX_UNIT_HP;
         if (counterDamage > pAtk->getHp())
         {
@@ -729,7 +735,7 @@ QPointF CoreAI::calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef) c
         }
         fundsDamage -= pAtk->getUnitCosts() * counterDamage / Unit::MAX_UNIT_HP * m_ownUnitValue;
     }
-    return QPointF(atkDamage, fundsDamage);
+    return FundsDamageData(atkDamage, fundsDamage, hpDamage);
 }
 
 QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target) const
@@ -2806,12 +2812,13 @@ void CoreAI::getAttacksFromFieldFast(Unit* pUnit, QPoint position, QmlVectorPoin
             if (pDef != nullptr)
             {
                 QRectF damage = calcUnitDamageFast(pUnit, pDef);
-                QPointF dmg = calcFundsDamage(damage, pUnit, pDef);
+                auto dmg = calcFundsDamage(damage, pUnit, pDef);
                 DamageData data;
                 data.x = finalPos.x();
                 data.y = finalPos.y();
-                data.fundsDamage = dmg.y();
-                data.hpDamage = dmg.x();
+                data.fundsDamage = dmg.fundsDamage;
+                data.hpDamage = dmg.hpDamage;
+                data.hpDamageDifference = dmg.hpDamage;
                 ret.push_back(data);
             }
         }
