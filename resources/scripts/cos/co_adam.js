@@ -129,54 +129,71 @@ var Constructor = function()
     {
         return "BD";
     };
+
+    this.superPowerOffBaseBonus = 20;
+    this.superPowerOffDestroyedBonus = 15;
+    this.superPowerOffMalus = 45;
+    this.powerBaseBonus = 30;
+    this.powerDestroyedBonus = 10;
+    this.powerMovementBonus = 1;
+    this.powerDefBonus = 10;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dPowerMalus = 2;
+    this.d2dDefDestroyedBonus = 15;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         var ret = 0;
-        var variables = co.getVariables();
-        var destroyed = variables.createVariable("DESTROYED");
-        var value = destroyed.readDataBool();
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            ret += 20;
-            var unitId = attacker.getUniqueID();
-            var bonusUnitVariable = variables.createVariable("BONUSUNITS");
-            var bonusUnits = bonusUnitVariable.readDataListInt32();
-            var offBonusVariable = variables.createVariable("OFFBONUS");
-            var offbonusArray = offBonusVariable.readDataListInt32();
-            var index = bonusUnits.indexOf(unitId);
-            if (index >= 0)
+            var variables = co.getVariables();
+            var destroyed = variables.createVariable("DESTROYED");
+            var value = destroyed.readDataBool();
+            switch (co.getPowerMode())
             {
-                ret += offbonusArray[index];
-            }
-            else if (value)
-            {
-                ret += 15;
-            }
-            break;
-        case GameEnums.PowerMode_Power:
-            if (isDefender === false)
-            {
-                ret += 30;
-                if (value)
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                ret += CO_ADAM.superPowerOffBaseBonus;
+                var unitId = attacker.getUniqueID();
+                var bonusUnitVariable = variables.createVariable("BONUSUNITS");
+                var bonusUnits = bonusUnitVariable.readDataListInt32();
+                var offBonusVariable = variables.createVariable("OFFBONUS");
+                var offbonusArray = offBonusVariable.readDataListInt32();
+                var index = bonusUnits.indexOf(unitId);
+                if (index >= 0)
                 {
-                    ret += 10;
+                    ret += offbonusArray[index];
                 }
-            }
-            break;
-        default:
-            if (isDefender === false)
-            {
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                else if (value)
                 {
-                    ret += 10;
+                    ret += CO_ADAM.superPowerOffDestroyedBonus;
                 }
+                break;
+            case GameEnums.PowerMode_Power:
+                if (isDefender === false)
+                {
+                    ret += CO_ADAM.powerBaseBonus;
+                    if (value)
+                    {
+                        ret += CO_ADAM.powerDestroyedBonus;
+                    }
+                }
+                break;
+            default:
+                if (isDefender === false)
+                {
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        ret += CO_ADAM.d2dCoZoneOffBonus;
+                    }
+                }
+                break;
             }
-            break;
+            // calc malus based on missing hp
+            ret -= (10 - attacker.getHpRounded()) * CO_ADAM.d2dPowerMalus;
         }
-        ret -= (10 - attacker.getHpRounded()) * 2;
         return ret;
     };
 
@@ -184,25 +201,27 @@ var Constructor = function()
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         var ret = 0;
-        var unitId = defender.getUniqueID();
-        var variables = co.getVariables();
-        var bonusUnitVariable = variables.createVariable("BONUSUNITS");
-        var bonusUnits = bonusUnitVariable.readDataListInt32();
-        var defBonusVariable = variables.createVariable("DEFBONUS");
-        var deffbonusArray = defBonusVariable.readDataListInt32();
-        var index = bonusUnits.indexOf(unitId);
-        if (index >= 0)
+        if (CO.isActive(co))
         {
-            ret += deffbonusArray[index];
-        }
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            ret += 10;
-        }
-        else
-        {
-            ret /= 2;
+            var unitId = defender.getUniqueID();
+            var variables = co.getVariables();
+            var bonusUnitVariable = variables.createVariable("BONUSUNITS");
+            var bonusUnits = bonusUnitVariable.readDataListInt32();
+            var defBonusVariable = variables.createVariable("DEFBONUS");
+            var deffbonusArray = defBonusVariable.readDataListInt32();
+            var index = bonusUnits.indexOf(unitId);
+            if (index >= 0)
+            {
+                ret += deffbonusArray[index];
+            }
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                ret += CO_ADAM.d2dCoZoneDefBonus;
+            }
+            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                ret += CO_ADAM.powerDefBonus;
+            }
         }
         return ret;
     };
@@ -224,66 +243,72 @@ var Constructor = function()
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        var variables = co.getVariables();
-        var bonusUnitVariable = variables.createVariable("BONUSUNITS");
-        var bonusUnits = bonusUnitVariable.readDataListInt32();
-        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            var destroyed = variables.createVariable("DESTROYED");
-            var offBonusVariable = variables.createVariable("OFFBONUS");
-            var unitId = attacker.getUniqueID();
-            var offbonusArray = offBonusVariable.readDataListInt32();
-            var index = -1;
-            index = bonusUnits.indexOf(unitId);
-            if ((defender.getHp() <= 0.0) &&
-                    (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker) ||
-                     co.getPowerMode() > GameEnums.PowerMode_Off))
+            var variables = co.getVariables();
+            var bonusUnitVariable = variables.createVariable("BONUSUNITS");
+            var bonusUnits = bonusUnitVariable.readDataListInt32();
+            if (gotAttacked === false && attacker.getOwner() === co.getOwner())
             {
-                var powerMode = co.getPowerMode();
-                if (powerMode === GameEnums.PowerMode_Tagpower ||
-                        powerMode === GameEnums.PowerMode_Superpower)
+                var destroyed = variables.createVariable("DESTROYED");
+                var offBonusVariable = variables.createVariable("OFFBONUS");
+                var unitId = attacker.getUniqueID();
+                var offbonusArray = offBonusVariable.readDataListInt32();
+                var index = -1;
+                index = bonusUnits.indexOf(unitId);
+                if ((defender.getHp() <= 0.0) &&
+                        (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker) ||
+                         co.getPowerMode() > GameEnums.PowerMode_Off))
                 {
-                    attacker.setHasMoved(false);
+                    var powerMode = co.getPowerMode();
+                    if (powerMode === GameEnums.PowerMode_Tagpower ||
+                            powerMode === GameEnums.PowerMode_Superpower)
+                    {
+                        attacker.setHasMoved(false);
 
+                        if (index >= 0)
+                        {
+                            offbonusArray[index] -= CO_ADAM.superPowerOffMalus;
+                        }
+                        else
+                        {
+                            offbonusArray.push(-CO_ADAM.superPowerOffMalus);
+                            bonusUnits.push(unitId);
+                        }
+                        offBonusVariable.writeDataListInt32(offbonusArray);
+                    }
+                    var defBonusVariable = variables.createVariable("DEFBONUS");
+                    var defbonusArray = defBonusVariable.readDataListInt32();
+                    index = bonusUnits.indexOf(unitId);
                     if (index >= 0)
                     {
-                        offbonusArray[index] -= 45;
+                        defbonusArray[index] += CO_ADAM.d2dDefDestroyedBonus;
                     }
                     else
                     {
-                        offbonusArray.push(-45);
+                        defbonusArray.push(CO_ADAM.d2dDefDestroyedBonus);
                         bonusUnits.push(unitId);
                     }
-                    offBonusVariable.writeDataListInt32(offbonusArray);
+                    defBonusVariable.writeDataListInt32(defbonusArray);
+                    destroyed.writeDataBool(true);
                 }
-                var defBonusVariable = variables.createVariable("DEFBONUS");
-                var defbonusArray = defBonusVariable.readDataListInt32();
-                index = bonusUnits.indexOf(unitId);
-                if (index >= 0)
+                else if (index < 0)
                 {
-                    defbonusArray[index] += 10;
+                    destroyed.writeDataBool(false);
                 }
-                else
-                {
-                    defbonusArray.push(15);
-                    bonusUnits.push(unitId);
-                }
-                defBonusVariable.writeDataListInt32(defbonusArray);
-                destroyed.writeDataBool(true);
             }
-            else if (index < 0)
-            {
-                destroyed.writeDataBool(false);
-            }
+            bonusUnitVariable.writeDataListInt32(bonusUnits);
         }
-        bonusUnitVariable.writeDataListInt32(bonusUnits);
     };
 
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Power)
+        if (CO.isActive(co))
         {
-            return 1;
+            if (co.getPowerMode() === GameEnums.PowerMode_Power)
+            {
+                return CO_ADAM.powerMovementBonus;
+            }
         }
         return 0;
     };
@@ -291,29 +316,31 @@ var Constructor = function()
     this.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                   defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        // check for luck finish if  the attacker is in co range or a power mode is active
-        if (defender !== null && attacker !== null &&
+        if (CO.isActive(co))
+        {
+            // check for luck finish if  the attacker is in co range or a power mode is active
+            if (defender !== null && attacker !== null &&
                 ((co.inCORange(Qt.point(atkPosX, atkPosY), attacker) && !isDefender) ||
                  (co.inCORange(Qt.point(defPosX, defPosY), defender) && isDefender) ||
-                 co.getPowerMode() > GameEnums.PowerMode_Off))
-        {
-            // check for finishing blow return absurd amount of true damage if luck is enough
-            if (isDefender)
+                  co.getPowerMode() > GameEnums.PowerMode_Off))
             {
-                if (defender.getHp() - damage / 10.0 - attackerBaseHp / 20.0 <= 0)
+                // check for finishing blow return absurd amount of true damage if luck is enough
+                if (isDefender)
                 {
-                    return 100;
+                    if (defender.getHp() - damage / 10.0 - attackerBaseHp / 20.0 <= 0)
+                    {
+                        return 100;
+                    }
                 }
-            }
-            else
-            {
-                if (defender.getHp() - damage / 10.0  - attacker.getHpRounded() / 20.0 <= 0)
+                else
                 {
-                    return 100;
+                    if (defender.getHp() - damage / 10.0  - attacker.getHpRounded() / 20.0 <= 0)
+                    {
+                        return 100;
+                    }
                 }
             }
         }
-        // 0
         return 0;
     };
 
@@ -338,16 +365,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose more firepower than normal the more damaged they are.");
+        return qsTr("Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose more firepower the less HP they have compared to other co's.");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits lose more firepower than other CO's when they are damaged.") +
-                qsTr("\n\nCO Zone Effect: \nAn attacking unit instantly kills an enemy unit if a max luck roll would kill them. A unit gains a 1 turn defense boost by killing an enemy unit.");
+        let text = qsTr("\nGlobal Effect: \nUnits lose %0 more firepower per lost HP.") +
+                   qsTr("\n\nCO Zone Effect: \nAn attacking unit instantly kills an enemy unit if a max luck roll would kill them. A unit gains a 1 turn %1% defense boost by killing an enemy unit. Units gain %2% firepower and %3% defence.");
+        text = replaceTextArgs(text, [CO_ADAM.d2dPowerMalus, CO_ADAM.d2dDefDestroyedBonus, CO_ADAM.d2dCoZoneOffBonus, CO_ADAM.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("All of Adam's units gains a firepower boost and movement range. Whenever Adam destroys a unit, the next unit gains bonus firepower.");
+        let text = qsTr("All of Adam's units gains a %0% firepower boost and %1 movement range. Whenever Adam destroys a unit, the next unit gains %2 bonus firepower.");
+        text = replaceTextArgs(text, [CO_ADAM.powerBaseBonus, CO_ADAM.powerMovementBonus, CO_ADAM.powerDestroyedBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -355,7 +386,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Each time Adam destroys an enemy unit, the attacking unit can move again; however, each kill drastically reduces that units firepower. Conversely, after killing a unit, using a unit that has not been used for that turn will give it additional firepower.");
+        let text = qsTr("Adams units gain %1% firepower. Each time Adam destroys an enemy unit, the attacking unit can move again. However, each kill reduces that units firepower by %0%. Conversely, after killing a unit, using a unit that has not been used for that turn will give it additional %1% firepower.");
+        text = replaceTextArgs(text, [CO_ADAM.superPowerOffMalus, CO_ADAM.superPowerOffBaseBonus, CO_ADAM.superPowerOffDestroyedBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

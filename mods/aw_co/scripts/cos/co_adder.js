@@ -1,3 +1,8 @@
+CO_ADDER.cod2dPowerChargeBonus = 0;
+CO_ADDER.cod2dBonus = 0;
+CO_ADDER.coPowerOffBonus = 0;
+CO_ADDER.coPowerDefBonus = 10;
+
 CO_ADDER.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +11,7 @@ CO_ADDER.init = function(co, map)
 CO_ADDER.activateSuperpower = function(co, powerMode, map)
 {
     CO_ADDER.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_ADDER.getSuperPowerDescription = function()
 {
@@ -14,34 +20,4 @@ CO_ADDER.getSuperPowerDescription = function()
 CO_ADDER.getSuperPowerName = function()
 {
     return CO_ADDER.getPowerName();
-};
-CO_ADDER.getMovementpointModifier = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 1;
-        }
-    }
-    return 0;
-};
-CO_ADDER.coZoneBonus = 0;
-CO_ADDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    return 0;
-};
-
-CO_ADDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
 };

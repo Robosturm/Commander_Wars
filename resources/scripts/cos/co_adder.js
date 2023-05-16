@@ -132,65 +132,90 @@ var Constructor = function()
     {
         return 1;
     };
-    this.coZoneBonus = 20;
-    this.coPowerBonus = 20;
+
+    this.cod2dPowerChargeBonus = 20;
+    this.cod2dBonus = 20;
+    this.coPowerOffBonus = 20;
+    this.coPowerDefBonus = 20;
+    this.coPowerMovement = 1;
+    this.coSuperPowerMovement = 2;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return CO_ADDER.coPowerBonus;
-        case GameEnums.PowerMode_Power:
-            return CO_ADDER.coPowerBonus;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            switch (co.getPowerMode())
             {
-                return CO_ADDER.coZoneBonus;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return CO_ADDER.coPowerOffBonus;
+            case GameEnums.PowerMode_Power:
+                return CO_ADDER.coPowerOffBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_ADDER.cod2dBonus;
+                }
+                break;
             }
-            break;
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return CO_ADDER.coZoneBonus;
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_ADDER.coZoneBonus;
+            }
+            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_ADDER.coPowerDefBonus;
+            }
         }
         return 0;
     };
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+        if (CO.isActive(co))
         {
-            return 2;
-        }
-        else if (co.getPowerMode() === GameEnums.PowerMode_Power)
-        {
-            return 1;
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            {
+                return CO_ADDER.coSuperPowerMovement;
+            }
+            else if (co.getPowerMode() === GameEnums.PowerMode_Power)
+            {
+                return CO_ADDER.coPowerMovement;
+            }
         }
         return 0;
     };
 
     this.getPowerChargeBonus = function(co, map)
     {
-        return 20;
+        if (CO.isActive(co))
+        {
+            return CO_ADDER.cod2dPowerChargeBonus;
+        }
+        return 0;
     };
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_HOT_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_HOT_TANK"];
+            }
         }
         return [];
     };
@@ -215,14 +240,16 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
-                   qsTr("\nGlobal Effect: \nNone.") +
+                   qsTr("\nGlobal Effect: \nPower charge is increased by %1%.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
-        text = replaceTextArgs(text, [CO_ADDER.coZoneBonus]);
+        text = replaceTextArgs(text, [CO_ADDER.coZoneBonus, CO_ADDER.cod2dPowerChargeBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Movement range for all units is increased by one space.");
+        var text = qsTr("Movement range for all units is increased by %0 space and firepower by %1% and defence by %2%.");
+        text = replaceTextArgs(text, [CO_ADDER.coPowerMovement, CO_ADDER.coPowerOffBonus, CO_ADDER.coPowerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -230,7 +257,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Movement range for all units is increased by two spaces.");
+        var text = qsTr("Movement range for all units is increased by %0 spaces and firepower by %1% and defence by %2%");
+        text = replaceTextArgs(text, [CO_ADDER.coSuperPowerMovement, CO_ADDER.coPowerOffBonus, CO_ADDER.coPowerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

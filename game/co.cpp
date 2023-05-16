@@ -41,9 +41,14 @@ void CO::init()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "init";
-        QJSValueList args({pInterpreter->newQObject(this),
+        QJSValueList args1({pInterpreter->newQObject(this),
                            pInterpreter->newQObject(m_pMap)});
-        pInterpreter->doFunction(m_coID, function1, args);
+        pInterpreter->doFunction(m_coID, function1, args1);
+
+        QString function2 = "getGlobalZone";
+        QJSValueList args2({pInterpreter->newQObject(this),
+                            pInterpreter->newQObject(m_pMap)});
+        m_globalCoZone = pInterpreter->doFunction(m_coID, function2, args2).toBool();
     }
 }
 
@@ -2044,6 +2049,7 @@ void CO::serializeObject(QDataStream& pStream, bool forHash) const
         writeCoStyleToStream(pStream);
     }
     pStream << m_coRangeEnabled;
+    pStream << m_globalCoZone;
 }
 
 void CO::deserializeObject(QDataStream& pStream)
@@ -2110,6 +2116,10 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     if (version > 5)
     {
         pStream >> m_coRangeEnabled;
+    }
+    if (version > 6)
+    {
+        pStream >> m_globalCoZone;
     }
     if (!fast)
     {

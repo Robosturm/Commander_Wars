@@ -653,5 +653,15 @@ var CO =
                 "co_officier_ti",
                 "co_officier_dm",];
     },
+
+    isActive : function(co)
+    {
+        return true;
+    },
+
+    getGlobalZone : function(co, map)
+    {
+        return false;
+    }
 }
 
