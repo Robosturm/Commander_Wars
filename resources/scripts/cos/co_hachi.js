@@ -160,17 +160,17 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Uses secret trade routes to get slightly lower deployment costs for all units.");
+        return qsTr("\nGlobal Day-to-day: \nHachi's units cost 90%.");
     };
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nSmuggler\n") +
-               qsTr("\nGlobal Effect: \nUnits are cheaper") +
-               qsTr("\n\nCO Zone Effect: \nUnits have more firepower and defense.");
+               qsTr("\nActive CO Day-to-day: \nNo abilities") +
+               qsTr("\n\nCO Zone Effect: \nUnits have 110% firepower and deffence.");
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Speaks with such authority that he obtains even lower deployment costs.");
+        return qsTr("The cost of Hachi's units reduces to 50%. Units have 110% firepower and deffence.");
     };
     this.getPowerName = function(co)
     {
@@ -178,7 +178,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Merchant pals gather from around the globe and help him deploy ground units from any allied city even cheaper.");
+        return qsTr("The cost of Hachi's units reduces to 50% and </r><div c='#00ff00'>Cities</div><r> become able to deploy ground units. Units have 110% firepower and deffence.");
     };
     this.getSuperPowerName = function(co)
     {

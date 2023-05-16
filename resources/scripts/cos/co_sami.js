@@ -285,17 +285,17 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("As an infantry specialist, her foot soldiers do more damage and capture faster. Non-infantry direct-combat units have weaker firepower.");
+        return qsTr("\nGlobal Day-to-day: \nSami's transport units gain 1 movement and her foot soldier units have 110% firepower and capture at 1.5 times the normal rate. Her other direct-combat units deal 90% damage.");
     };
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nCommando\n") +
-               qsTr("\nGlobal Effect: \nTransporter have 1 more movement point and infantries have increased capture rate. Non-infantry direct-combat units have weaker firepower.") +
-               qsTr("\n\nCO Zone Effect: \nInfantry Units have increased firepower.");
+               qsTr("\nActive CO Day-to-day: \nNo abilities") +
+               qsTr("\n\nCO Zone Effect: \nSami's foot soldiers firepower becomes 150% while indirect-combat units have 110% firepower and other direct-combat units have 100% firepower. All units have 110% deffense.");
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Infantry units receive a movement bonus of one space. Their attack also increases. ");
+        return qsTr("Sami's foot soldiers gain 1 movement and their firepower becomes 150%. indirect-combat units have 110% firepower, other direct-combat units have 100% firepower, and all units have 110% deffense.");
     };
     this.getPowerName = function(co)
     {
@@ -303,7 +303,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All foot soldiers can capture buildings instantly. Their movement is increased by two spaces and their attack increases greatly. ");
+        return qsTr("Sami's foot soldiers can capture buildings instantlyand gain 2 movement. Their firepower becomes 180%, indirect-combat units have 110% firepower, and other direct-combat units have 100% firepower. All units have 110% deffense.");
     };
     this.getSuperPowerName = function(co)
     {

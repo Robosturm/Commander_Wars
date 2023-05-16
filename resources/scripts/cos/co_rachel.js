@@ -243,16 +243,16 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Her troops are quite hardworking, and they increase repairs by one on properties.");
+        return qsTr("\nGlobal Day-to-day: \nRachel's units repair by +1 if funds allow.");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits have increased repairs by one on properties.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower.");
+        return qsTr("\nActive CO Day-to-day: \nNo abilities.") +
+               qsTr("\n\nCO Zone Effect: \nRachel's firepower becomes 120% and defense 120%.");
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Has a chance to strike with more damage than expected. Lucky!");
+        return qsTr("Rachel's units may deal up to 40% luck damage. Firepower becomes 120% and defense 120%.");
     };
     this.getPowerName = function(co)
     {
@@ -260,7 +260,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Launches three missiles from Orange Star HQ in Omega Land.");
+        return qsTr("Launches three missiles from Orange Star HQ in Omega Land. Firepower becomes 120% and defense 120%.");
     };
     this.getSuperPowerName = function(co)
     {

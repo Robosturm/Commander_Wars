@@ -272,17 +272,17 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Non-infantry direct-combat units are tops.");
+        return qsTr("\nGlobal Day-to-day: \nMax's non-infantry direct-combat units have 115% firepower and his indirect-combat units have 90% firepower and 1 range penalty.");
     };
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nTank Hunter\n") +
-               qsTr("\nGlobal Effect: \nDirect Units gain additional firepower and indirect Units loose firepower and 1 firerange.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Units gain additional firepower.");
+               qsTr("\nActive CO Day-to-day: \nNo abilities") +
+               qsTr("\n\nCO Zone Effect: \nMax's non-infantry direct-combat units firepower raises to 145% and all units deffense raises to 110%.");
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Firepower and movement of all non-infantry direct-combat units rises.");
+        return qsTr("Max's non-infantry direct-combat units gain 1 movement and raise their firepower to 145%. his indirect-combat units firepower raises to 100% and all other units firepower raises to 110%. All units deffense raises to 110%.");
     };
     this.getPowerName = function(co)
     {
@@ -290,7 +290,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Firepower and movement of all non-infantry direct-combat units rises greatly.");
+        return qsTr("Max's non-infantry direct-combat units gain 2 movement and raise their firepower to 170%. his indirect-combat units firepower raises to 100% and all other units firepower raises to 110%. All units deffense raises to 110%.");
     };
     this.getSuperPowerName = function(co)
     {

@@ -190,16 +190,16 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Sometimes strikes with slightly more force than expected. She's the first to tell you she was born lucky.");
+        return qsTr("\nGlobal Day-to-day: \nNo abilities");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects") +
-               qsTr("\n\nCO Zone Effect: \nUnits have more luck.");
+        return qsTr("\nActive CO Day-to-day: \nNo abilities") +
+               qsTr("\n\nCO Zone Effect: \nNell's units can inflict up to +15% luck damage instead of the standard +10%.");
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Has a chance to strike with more damage than expected. Lucky!");
+        return qsTr("Nell's luck damage increases up to +60% and all units attack and deffense become 110%.");
     };
     this.getPowerName = function(co)
     {
@@ -207,7 +207,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Improves her chance to strike with massive damage. Very lucky!");
+        return qsTr("Nell's luck damage increases up to +100% and all units attack and deffense become 110%.");
     };
     this.getSuperPowerName = function(co)
     {

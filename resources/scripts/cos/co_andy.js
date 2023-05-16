@@ -227,19 +227,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("No real weaknesses. Proficient with air, sea and land units. Ready to fight wherever and whenever.");
+        return qsTr("\nGlobal Day-to-day: \nNo abilities.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRepair Tanks\n") +
-                   qsTr("\nGlobal Effect: \nNone") +
+                   qsTr("\nActive CO Day-to-day: \nNo abilities") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
         text = replaceTextArgs(text, [CO_ANDY.coZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Restores two HP to all units.");
+        return qsTr("All units are restored 2 HP. Andy's firepower becomes 120% and defense 120%.");
     };
     this.getPowerName = function(co)
     {
@@ -247,7 +247,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Restores five HP to all units. Firepower rises and unit movement increases by one space.");
+        return qsTr("All units are restored 5 HP. Andy's firepower becomes 130% and defense 120%. All units gain 1 movement.");
     };
     this.getSuperPowerName = function(co)
     {

@@ -250,17 +250,17 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Fights well in the open. Firepower of all units increased on plains.");
+        return qsTr("\nGlobal Day-to-day: \nNo abilities");
     };
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nTank Hunter\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased defense and firepower and high firepower on plains.");
+               qsTr("\nActive CO Day-to-day: \nNo abilities.") +
+               qsTr("\n\nCO Zone Effect: \nJakes's units (including air) gain 70% firepower on plains terrain and gain 10% firepower and deffense overall.");
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Firepower is increased on plains. Firing range of indirect-combat units is increased by one.");
+        return qsTr("Jake's plains terrain firepower bonus becomes 170% and overall firepower and deffense becomes 110%. His ground indirect-combat units gain 1 attack range.");
     };
     this.getPowerName = function(co)
     {
@@ -268,7 +268,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Firepower is greatly increased on plains. Firing range of indirect units is increased by one, and movement of direct units by two");
+        return qsTr("Jake's plains terrain firepower bonus becomes 170% and overall firepower and deffense becomes 110%. His ground indirect-combat units gain 1 attack range and all his ground vehicle units gain 2 movement.");
     };
     this.getSuperPowerName = function(co)
     {

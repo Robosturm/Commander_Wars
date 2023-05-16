@@ -271,7 +271,7 @@ var Constructor = function()
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Enhanced Vision");
+        return qsTr("Scout");
     };
     this.getSuperPowerDescription = function(co)
     {
