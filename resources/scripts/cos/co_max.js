@@ -20,9 +20,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -35,6 +36,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/max.mp3", 57, 70080)
                 break;
+            }
         }
     };
 

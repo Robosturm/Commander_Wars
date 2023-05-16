@@ -1,9 +1,9 @@
-this.superPowerDamage = 3;
-this.superPowerMovementCostIncrease = 1;
-this.powerFuelIncrease = 5;
-this.powerOffBonus = 0;
-this.powerDefBonus = 10;
-this.coZoneBonus = 0;
+CO_AIRA.superPowerDamage = 3;
+CO_AIRA.superPowerMovementCostIncrease = 1;
+CO_AIRA.powerFuelIncrease = 5;
+CO_AIRA.powerOffBonus = 0;
+CO_AIRA.powerDefBonus = 10;
+CO_AIRA.coZoneBonus = 0;
 
 CO_AIRA.init = function(co, map)
 {
