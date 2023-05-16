@@ -243,7 +243,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("\nGlobal Day-to-day: \nRachel's units repair by +1 if funds allow.");
+        return qsTr("Global Day-to-day: \nRachel's units repair by +1 if funds allow.");
     };
     this.getLongCODescription = function()
     {

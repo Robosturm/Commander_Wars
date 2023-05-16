@@ -272,7 +272,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("\nGlobal Day-to-day: \nMax's non-infantry direct-combat units have 115% firepower and his indirect-combat units have 90% firepower and 1 range penalty.");
+        return qsTr("Global Day-to-day: \nMax's non-infantry direct-combat units have 115% firepower and his indirect-combat units have 90% firepower and 1 range penalty.");
     };
     this.getLongCODescription = function()
     {

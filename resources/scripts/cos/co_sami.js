@@ -285,7 +285,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("\nGlobal Day-to-day: \nSami's transport units gain 1 movement and her foot soldier units have 110% firepower and capture at 1.5 times the normal rate. Her other direct-combat units deal 90% damage.");
+        return qsTr("Global Day-to-day: \nSami's transport units gain 1 movement and her foot soldier units have 110% firepower and capture at 1.5 times the normal rate. Her other direct-combat units deal 90% damage.");
     };
     this.getLongCODescription = function()
     {

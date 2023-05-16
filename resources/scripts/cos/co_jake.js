@@ -250,7 +250,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("\nGlobal Day-to-day: \nNo abilities");
+        return qsTr("Global Day-to-day: \nNo abilities");
     };
     this.getLongCODescription = function()
     {

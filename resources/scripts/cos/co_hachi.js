@@ -160,7 +160,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("\nGlobal Day-to-day: \nHachi's units cost 90%.");
+        return qsTr("Global Day-to-day: \nHachi's units cost 90%.");
     };
     this.getLongCODescription = function()
     {
