@@ -735,7 +735,11 @@ CoreAI::FundsDamageData CoreAI::calcFundsDamage(const QRectF & damage, Unit* pAt
         }
         fundsDamage -= pAtk->getUnitCosts() * counterDamage / Unit::MAX_UNIT_HP * m_ownUnitValue;
     }
-    return FundsDamageData(atkDamage, fundsDamage, hpDamage);
+    FundsDamageData dmg;
+    dmg.atkHpDamage = atkDamage;
+    dmg.fundsDamage = fundsDamage;
+    dmg.hpDamage = hpDamage;
+    return dmg;
 }
 
 QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target) const

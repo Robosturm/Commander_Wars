@@ -2081,5 +2081,8 @@
         <file>maps/advance_wars_dual_strike_campaign/Verdant Hills.map</file>
         <file>templates/serverscript/despawnServer/serverScript.js</file>
         <file>resources/scripts/building/forthq.js</file>
+        <file>mods/aw2_co/scripts/general/co.js</file>
+        <file>mods/aw_co/scripts/general/co.js</file>
+        <file>mods/awds_co/scripts/general/co.js</file>
     </qresource>
 </RCC>
