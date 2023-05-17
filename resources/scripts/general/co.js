@@ -659,7 +659,7 @@ var CO =
         return true;
     },
 
-    getGlobalZone : function(co, map)
+    getGlobalZone : function()
     {
         return false;
     }

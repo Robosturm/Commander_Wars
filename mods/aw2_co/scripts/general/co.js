@@ -7,7 +7,7 @@ CO.isActive = function(co)
 	return false;
 };
 
-CO.getGlobalZone = function(co, map)
+CO.getGlobalZone = function()
 {
     return true;
 };

@@ -161,7 +161,7 @@ var Constructor = function()
                         }
                         return CO_ZANDRA.d2dCoZoneOffBonus;
                     }
-                    else if (CO.getGlobalZone(co, map))
+                    else if (CO.getGlobalZone())
                     {
                         if (hasSandstorm)
                         {

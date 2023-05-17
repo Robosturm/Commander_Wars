@@ -172,7 +172,7 @@ var Constructor = function()
                     }
                     return CO_AMY.d2dCoZoneOffBonus;
                 }
-                else if (CO.getGlobalZone(co, map))
+                else if (CO.getGlobalZone())
                 {
                     if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
                     {

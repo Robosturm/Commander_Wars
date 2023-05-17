@@ -1,5 +1,11 @@
-CO_XAVIER.firepowerBonus = 0;
-CO_XAVIER.luckDamage = 40;
+CO_XAVIER.superpowerBonus = 60;
+CO_XAVIER.powerFirepowerBonus = 0;
+CO_XAVIER.powerLuckDamage = 40;
+CO_XAVIER.powerDefBonus = 10;
+CO_XAVIER.d2dCoZoneFirepowerBonus = 0;
+CO_XAVIER.d2dCoZoneDefBonus = 0;
+CO_XAVIER.minLuckHp = 5;
+
 
 CO_XAVIER.init = function(co, map)
 {
@@ -9,6 +15,7 @@ CO_XAVIER.init = function(co, map)
 CO_XAVIER.activateSuperpower = function(co, powerMode, map)
 {
     CO_XAVIER.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_XAVIER.getSuperPowerDescription = function()
 {
@@ -17,84 +24,4 @@ CO_XAVIER.getSuperPowerDescription = function()
 CO_XAVIER.getSuperPowerName = function()
 {
     return CO_XAVIER.getPowerName();
-};
-CO_XAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            return 0;
-        default:
-            break;
-        }
-    }
-    return 0;
-};
-CO_XAVIER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
-
-CO_XAVIER.getBonusLuck = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        var hpRounded = unit.getHpRounded();
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (hpRounded <= 5)
-            {
-                return CO_XAVIER.luckDamage + hpRounded / 2;
-            }
-            return CO_XAVIER.luckDamage;
-        default:
-            if (hpRounded <= 5)
-            {
-                return hpRounded / 2;
-            }
-        }
-    }
-    return 0;
-};
-
-CO_XAVIER.getBonusMisfortune = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        var hpRounded = unit.getHpRounded();
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (hpRounded <= 5)
-            {
-                return -CO_XAVIER.luckDamage + -hpRounded;
-            }
-            return -CO_XAVIER.luckDamage;
-        default:
-            if (hpRounded <= 5)
-            {
-                return -hpRounded;
-            }
-            break;
-        }
-    }
-    return 0;
 };
