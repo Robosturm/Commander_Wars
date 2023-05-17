@@ -44,11 +44,6 @@ void CO::init()
         QJSValueList args1({pInterpreter->newQObject(this),
                            pInterpreter->newQObject(m_pMap)});
         pInterpreter->doFunction(m_coID, function1, args1);
-
-        QString function2 = "getGlobalZone";
-        QJSValueList args2({pInterpreter->newQObject(this),
-                            pInterpreter->newQObject(m_pMap)});
-        m_globalCoZone = pInterpreter->doFunction(m_coID, function2, args2).toBool();
     }
 }
 

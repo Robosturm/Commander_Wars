@@ -6,6 +6,7 @@ CO_ZANDRA.init = function(co, map)
 CO_ZANDRA.activateSuperpower = function(co, powerMode, map)
 {
 	CO_ZANDRA.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_ZANDRA.getSuperPowerDescription = function()
 {

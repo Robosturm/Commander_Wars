@@ -144,7 +144,7 @@ var Constructor = function()
         {
             // set income to 0 during scop
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 return income;
             }

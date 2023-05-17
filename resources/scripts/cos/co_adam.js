@@ -212,7 +212,7 @@ var Constructor = function()
             if (index >= 0)
             {
                 ret += deffbonusArray[index];
-            }
+            }            
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
                 ret += CO_ADAM.powerDefBonus;

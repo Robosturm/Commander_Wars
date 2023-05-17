@@ -163,21 +163,21 @@ var Constructor = function()
                     return CO_AMY.powerHoverCraftBoost;
                 }
                 return CO_AMY.powerOffBonus;
-            default:
-                if (CO.getGlobalZone(co, map))
-                {
-                    if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
-                    {
-                        return CO_AMY.d2dHoverCraftBoost;
-                    }
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            default:                
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
                     {
                         return CO_AMY.d2dCoZoneHoverCraftBoost;
                     }
                     return CO_AMY.d2dCoZoneOffBonus;
+                }
+                else if (CO.getGlobalZone(co, map))
+                {
+                    if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
+                    {
+                        return CO_AMY.d2dHoverCraftBoost;
+                    }
                 }
                 break;
             }
