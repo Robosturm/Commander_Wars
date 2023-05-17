@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -23,7 +21,7 @@ var Constructor = function()
         var counter = 0;
         var buildings = co.getOwner().getBuildings();
         buildings.randomize();
-        var fields = globals.getCircle(0, 2);
+        var fields = globals.getCircle(0, CO_ALEXIS.powerRadius);
         for (var i2 = 0; i2 < buildings.size(); i2++)
         {
             var building = buildings.at(i2);
@@ -42,7 +40,7 @@ var Constructor = function()
                         animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                         animation.writeDataInt32(unit.getX());
                         animation.writeDataInt32(unit.getY());
-                        animation.writeDataInt32(3);
+                        animation.writeDataInt32(CO_ALEXIS.powerHeal);
                         animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
                         var delay = globals.randInt(135, 265);
                         if (animations.length < 5)
@@ -85,7 +83,7 @@ var Constructor = function()
         var player = co.getOwner();
         var buildings = player.getBuildings();
         buildings.randomize();
-        var fields = globals.getCircle(0, 2);
+        var fields = globals.getCircle(0, CO_ALEXIS.superPowerHealRadius);
 
         var unit =  null;
         var building = null;
@@ -114,7 +112,7 @@ var Constructor = function()
                         animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                         animation.writeDataInt32(unitX);
                         animation.writeDataInt32(unitY);
-                        animation.writeDataInt32(3);
+                        animation.writeDataInt32(CO_ALEXIS.superPowerHeal);
                         animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
                         var delay = globals.randInt(135, 265);
                         if (animations.length < 5)
@@ -143,7 +141,7 @@ var Constructor = function()
                 }
             }
         }
-        fields = globals.getCircle(0, 1);
+        fields = globals.getCircle(0, CO_ALEXIS.superPowerDamageRadius);
         var playerCounter = map.getPlayerCount();
         for (var i3 = 0; i3 < playerCounter; i3++)
         {
@@ -171,7 +169,7 @@ var Constructor = function()
                                 animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                                 animation.writeDataInt32(unit.getX());
                                 animation.writeDataInt32(unit.getY());
-                                animation.writeDataInt32(3);
+                                animation.writeDataInt32(CO_ALEXIS.superPowerDamage);
                                 animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
                                 var delay = globals.randInt(135, 265);
                                 if (animations.length < 5)
@@ -206,21 +204,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/alexis.mp3", 51, 56938);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/alexis.mp3", 51, 56938);
+                break;
+            }
         }
     };
 
@@ -232,122 +232,150 @@ var Constructor = function()
     {
         return "PF";
     };
+    this.superPowerOffBonus = 50;
+    this.superPowerOffBaseBonus = 15;
+    this.superPowerHeal = 3;
+    this.superPowerHealRadius = 2;
+    this.superPowerDamage = 3;
+    this.superPowerDamageRadius = 1;
+    this.powerOffBonus = 30;
+    this.powerOffBaseBonus = 15;
+    this.powerDefBonus = 15;
+    this.powerHeal = 3;
+    this.powerRadius = 2;
     this.coZoneBonus = 15;
+    this.d2dHealBonus = 1;
+    this.d2dHealRadius = 1;
+    this.d2dHealMalus = 1;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        var nearBuildings = false;
-        var fields = globals.getCircle(0, 2);
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            for (var i = 0; i < fields.size(); i++)
+            var nearBuildings = false;
+            var fields = globals.getCircle(0, 2);
+            if (map !== null)
             {
-                var x = fields.at(i).x + atkPosX;
-                var y = fields.at(i).y + atkPosY;
-                if (map.onMap(x, y))
+                for (var i = 0; i < fields.size(); i++)
                 {
-                    var building = map.getTerrain(x, y).getBuilding();
-                    if (building !== null && building.getOwner() === co.getOwner())
+                    var x = fields.at(i).x + atkPosX;
+                    var y = fields.at(i).y + atkPosY;
+                    if (map.onMap(x, y))
                     {
-                        nearBuildings = true;
-                        break;
+                        var building = map.getTerrain(x, y).getBuilding();
+                        if (building !== null && building.getOwner() === co.getOwner())
+                        {
+                            nearBuildings = true;
+                            break;
+                        }
                     }
                 }
             }
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (nearBuildings)
+                {
+                    return CO_ALEXIS.superPowerOffBonus;
+                }
+                return CO_ALEXIS.superPowerOffBaseBonus;
+            case GameEnums.PowerMode_Power:
+                if (nearBuildings)
+                {
+                    return CO_ALEXIS.powerOffBonus;
+                }
+                return CO_ALEXIS.powerOffBaseBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_ALEXIS.coZoneBonus;
+                }
+            }
         }
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (nearBuildings)
-            {
-                return 50;
-            }
-            return 10;
-        case GameEnums.PowerMode_Power:
-            if (nearBuildings)
-            {
-                return 30;
-            }
-            return 10;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
-                return CO_ALEXIS.coZoneBonus;
-            }
-        }
+        return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return CO_ALEXIS.coZoneBonus;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_ALEXIS.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_ALEXIS.coZoneBonus;
+            }
         }
         return 0;
     };
 
     this.startOfTurn = function(co, map)
     {
-        var player = co.getOwner();
-        if (!player.getIsDefeated())
+        if (CO.isActive(co))
         {
-            var animations = [];
-            var counter = 0;
-            var buildings = co.getOwner().getBuildings();
-            var fields = globals.getCircle(1, 1);
-            var viewplayer = map.getCurrentViewPlayer();
-            var size1 = buildings.size();
-            var size2 = fields.size();
-            for (var i2 = 0; i2 < size1; i2++)
+            var player = co.getOwner();
+            if (!player.getIsDefeated())
             {
-                var building = buildings.at(i2);
-                var id = building.getBuildingID();
-                if (!id.startsWith("TEMPORARY_"))
+                var animations = [];
+                var counter = 0;
+                var buildings = co.getOwner().getBuildings();
+                var fields = globals.getCircle(1, CO_ALEXIS.d2dHealRadius);
+                var viewplayer = map.getCurrentViewPlayer();
+                var size1 = buildings.size();
+                var size2 = fields.size();
+                for (var i2 = 0; i2 < size1; i2++)
                 {
-                    var x = building.getX();
-                    var y = building.getY();
-                    var animation = null;
-                    for (var i = 0; i < size2; i++)
+                    var building = buildings.at(i2);
+                    var id = building.getBuildingID();
+                    if (!id.startsWith("TEMPORARY_"))
                     {
-                        var point = fields.at(i);
-                        if (map.onMap(x + point.x, y + point.y))
+                        var x = building.getX();
+                        var y = building.getY();
+                        var animation = null;
+                        for (var i = 0; i < size2; i++)
                         {
-                            var unitX = x + point.x;
-                            var unitY = y + point.y;
-                            var unit = map.getTerrain(unitX, unitY).getUnit();
-                            if ((unit !== null) &&
-                                    (unit.getOwner() === co.getOwner()))
+                            var point = fields.at(i);
+                            if (map.onMap(x + point.x, y + point.y))
                             {
-                                UNIT.repairUnit(unit, 1, map);
-                                animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
-                                var delay = globals.randInt(135, 265);
-                                if (animations.length < 5)
+                                var unitX = x + point.x;
+                                var unitY = y + point.y;
+                                var unit = map.getTerrain(unitX, unitY).getUnit();
+                                if ((unit !== null) &&
+                                    (unit.getOwner() === co.getOwner()))
                                 {
-                                    delay *= i;
-                                }
-                                animation.setSound("power0.wav", 1, delay);
-                                if (animations.length < 5)
-                                {
-                                    animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                    animations.push(animation);
-                                }
-                                else
-                                {
-                                    animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                    animations[counter].queueAnimation(animation);
-                                    animations[counter] = animation;
-                                    counter++;
-                                    if (counter >= animations.length)
+                                    UNIT.repairUnit(unit, CO_ALEXIS.d2dHealBonus, map);
+                                    animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
+                                    var delay = globals.randInt(135, 265);
+                                    if (animations.length < 5)
                                     {
-                                        counter = 0;
+                                        delay *= i;
                                     }
-                                }
-                                if (!viewplayer.getFieldVisible(unitX, unitY))
-                                {
-                                    animation.setVisible(false);
+                                    animation.setSound("power0.wav", 1, delay);
+                                    if (animations.length < 5)
+                                    {
+                                        animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                                        animations.push(animation);
+                                    }
+                                    else
+                                    {
+                                        animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                                        animations[counter].queueAnimation(animation);
+                                        animations[counter] = animation;
+                                        counter++;
+                                        if (counter >= animations.length)
+                                        {
+                                            counter = 0;
+                                        }
+                                    }
+                                    if (!viewplayer.getFieldVisible(unitX, unitY))
+                                    {
+                                        animation.setVisible(false);
+                                    }
                                 }
                             }
                         }
@@ -359,7 +387,11 @@ var Constructor = function()
 
     this.getRepairBonus = function(co, unit, posX, posY, map)
     {
-        return -1;
+        if (CO.isActive(co))
+        {
+            return -CO_ALEXIS.d2dHealMalus;
+        }
+        return 0;
     };
     this.getAiCoUnitBonus = function(co, unit, map)
     {
@@ -367,13 +399,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_REPAIR_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_REPAIR_TANK"];
+            }
         }
         return [];
     };
@@ -397,15 +432,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nRepair Tank\n") +
-                   qsTr("\nGlobal Effect: \nUnits heal only 1 HP while on an owned property, however, units will still heal from any owned property within 1 space of a unit. This effect stacks with each additional nearby property.") +
+        let text = qsTr("\nSpecial Unit:\nRepair Tank\n") +
+                   qsTr("\nGlobal Effect: \nUnits heal only %0 HP while on an owned property, however, units will still heal from any owned property within %1 space of a unit by %2 HP. This effect stacks with each additional nearby property.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
-        text = replaceTextArgs(text, [CO_ALEXANDER.coZoneBonus]);
+        text = replaceTextArgs(text, [CO_ALEXIS.d2dHealMalus, CO_ALEXIS.d2dHealBonus,  CO_ALEXIS.d2dHealBonus, CO_ALEXIS.coZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property.");
+        let text =  qsTr("Units within %0 spaces of any owned properties receive %1% firepower bonus and restore %2 HP per nearby property. All other units gain %3% firepower and %4% defence.");
+        text = replaceTextArgs(text, [CO_ALEXIS.powerRadius, CO_ALEXIS.powerOffBonus,  CO_ALEXIS.powerHeal, CO_ALEXIS.powerOffBaseBonus, CO_ALEXIS.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -413,7 +450,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property. Enemies within one spaces of their own properties suffer 3 HP of damage per nearby property.");
+        let text = qsTr("Units within %0 spaces of any owned properties receive %1% firepower bonuses and restore %2 HP per nearby property. Enemies within %3 spaces of their own properties suffer %4 HP of damage per nearby property. All other units gain %5% firepower and %6% defence.");
+        text = replaceTextArgs(text, [CO_ALEXIS.superPowerHealRadius, CO_ALEXIS.superPowerOffBonus,  CO_ALEXIS.superPowerHeal,  CO_ALEXIS.superPowerDamageRadius,  CO_ALEXIS.superPowerDamage, CO_ALEXIS.powerOffBaseBonus, CO_ALEXIS.powerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

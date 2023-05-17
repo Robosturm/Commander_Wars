@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -109,21 +107,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/amy.mp3", 3444, 604297)
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/amy.mp3", 3444, 604297)
+                break;
+            }
         }
     };
 
@@ -135,65 +135,90 @@ var Constructor = function()
     {
         return "PF";
     };
-    this.hoverCraftBoost = 80;
-    this.powerHoverCraftBoost = 80;
+
     this.superPowerDeffensiveBonus = 110;
+    this.powerHoverCraftBoost = 80;
     this.powerCostReduction = 0.3;
+    this.powerMovementBonus = 2;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.d2dCoZoneHoverCraftBoost = 80;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dHoverCraftBoost = 0;
+    this.d2dMovementBonus = 1;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
+            switch (co.getPowerMode())
             {
-                return CO_AMY.powerHoverCraftBoost;
-            }
-            return 10;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+            case GameEnums.PowerMode_Power:
                 if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
                 {
-                    return CO_AMY.hoverCraftBoost;
+                    return CO_AMY.powerHoverCraftBoost;
                 }
-                return 10;
+                return CO_AMY.powerOffBonus;
+            default:
+                if (CO.getGlobalZone(co, map))
+                {
+                    if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
+                    {
+                        return CO_AMY.d2dHoverCraftBoost;
+                    }
+                }
+                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
+                    {
+                        return CO_AMY.d2dCoZoneHoverCraftBoost;
+                    }
+                    return CO_AMY.d2dCoZoneOffBonus;
+                }
+                break;
             }
-            break;
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:            
-            return CO_AMY.superPowerDeffensiveBonus;
-        case GameEnums.PowerMode_Power:
-            return 10;
-        default:
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            switch (co.getPowerMode())
             {
-                return 10;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return CO_AMY.superPowerDeffensiveBonus;
+            case GameEnums.PowerMode_Power:
+                return CO_AMY.powerDefBonus;
+            default:
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return CO_AMY.d2dCoZoneDefBonus;
+                }
+                break;
             }
-            break;
         }
         return 0;
     };
     this.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                        defender, defPosX, defPosY, isDefender, luckMode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (isDefender === true)
+            switch (co.getPowerMode())
             {
-                return damage;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (isDefender === true)
+                {
+                    return damage;
+                }
             }
         }
         return 0;
@@ -201,27 +226,33 @@ var Constructor = function()
 
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.getMovementType() === "MOVE_HOVERCRAFT")
+        if (CO.isActive(co))
         {
-            if (co.getPowerMode() === GameEnums.PowerMode_Power)
+            if (unit.getMovementType() === "MOVE_HOVERCRAFT")
             {
+                if (co.getPowerMode() === GameEnums.PowerMode_Power)
+                {
 
-                return 2;
-            }
-            else
-            {
-                return 1;
+                    return CO_AMY.powerMovementBonus;
+                }
+                else
+                {
+                    return CO_AMY.d2dMovementBonus;
+                }
             }
         }
         return 0;
     };    
     this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Power)
+        if (CO.isActive(co))
         {
-            if (Global[id].getMovementType() === "MOVE_HOVERCRAFT")
+            if (co.getPowerMode() === GameEnums.PowerMode_Power)
             {
-                return -baseCost * CO_AMY.powerCostReduction;
+                if (Global[id].getMovementType() === "MOVE_HOVERCRAFT")
+                {
+                    return -baseCost * CO_AMY.powerCostReduction;
+                }
             }
         }
         return 0;
@@ -230,9 +261,12 @@ var Constructor = function()
 
     this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
-        if (map.getTerrain(posX, posY).getTerrainID() === "REAF")
+        if (CO.isActive(co))
         {
-            return -999;
+            if (map.getTerrain(posX, posY).getTerrainID() === "REAF")
+            {
+                return -999;
+            }
         }
         return 0;
     };
@@ -265,15 +299,15 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units and Hovercrafts have one extra movement.") +
-                qsTr("\n\nCO Zone Effect: \nHovercrafts gain %0% firepower.");
-        text = replaceTextArgs(text, [CO_AMY.hoverCraftBoost]);
+        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units and Hovercrafts have %1 extra movement and gain %2% firepower.") +
+                   qsTr("\n\nCO Zone Effect: \nHovercrafts gain %3% firepower.");
+        text = replaceTextArgs(text, [CO_AMY.d2dMovementBonus, CO_AMY.d2dHoverCraftBoost, CO_AMY.hoverCraftBoost]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("All hovercraft units gain %0% firepower along with one extra movement. Hovercrafts also receive a %1% reduction in deployment costs.");
-        text = replaceTextArgs(text, [CO_AMY.powerHoverCraftBoost, CO_AMY.powerCostReduction * 100]);
+        var text = qsTr("All hovercraft units gain %0% firepower along with one extra movement and %1% defence. Hovercrafts also receive a %2% reduction in deployment costs. All other units gain %1% firepower and %3% defence");
+        text = replaceTextArgs(text, [CO_AMY.powerHoverCraftBoost, CO_AMY.powerDefBonus, CO_AMY.powerCostReduction * 100, CO_AMY.powerOffBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -282,8 +316,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Her defense rises to an astonishing %0%. Additionally, she takes no counter-attack damage when attacking an enemy.");
-        text = replaceTextArgs(text, [CO_AMY.superPowerDeffensiveBonus]);
+        var text = qsTr("All hovercraft units gain %0% firepower. Her defense rises to an astonishing %1%. Additionally, she takes no counter-attack damage when attacking an enemy. All other units gain %2% firepower");
+        text = replaceTextArgs(text, [CO_AMY.powerHoverCraftBoost, CO_AMY.superPowerDeffensiveBonus, CO_AMY.powerOffBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

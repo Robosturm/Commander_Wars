@@ -2,7 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
         return ["+alt", "+alt1", "+alt2"];
     };
 
@@ -22,9 +21,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -38,6 +38,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/yellow_comet+0.mp3", 0, 30806)
                 audio.addMusic("resources/music/cos/yellow_comet+1.mp3", 0, 30369);
                 break;
+            }
         }
     };
 

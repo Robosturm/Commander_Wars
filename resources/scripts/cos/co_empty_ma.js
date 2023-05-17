@@ -16,9 +16,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -31,6 +32,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/metal_army.mp3", 0, 106204);
                 break;
+            }
         }
     };
 

@@ -169,13 +169,13 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-            {
-                return CO_ADDER.coZoneBonus;
-            }
-            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
                 return CO_ADDER.coPowerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_ADDER.coZoneBonus;
             }
         }
         return 0;

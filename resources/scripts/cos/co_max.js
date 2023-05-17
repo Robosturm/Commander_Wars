@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-
         return ["+alt", "+alt2", "+alt3"];
     };
 
@@ -231,13 +229,13 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-            {
-                return CO_MAX.d2dCoZoneDefBonus;
-            }
-            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
                 return CO_MAX.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_MAX.d2dCoZoneDefBonus;
             }
         }
         return 0;
@@ -344,7 +342,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text =  qsTr("Firepower raises by %0% and movement by %1 of all non-infantry direct-combat units. The defence raises by %2");
+        let text =  qsTr("<r>Max's non-infantry direct-combat units gain </r><div c='#ffffff'>+%0 movement</div><r> and raise their firepower by </r><div c='#ffffff'>+%1%</div><r> and all other units firepower raises by </r><div c='#ffffff'>+%2%</div><r>. All units defense raises by </r><div c='#ffffff'>+%3%</div><r>.</r>");
         text = replaceTextArgs(text, [CO_MAX.powerOffBonus, CO_MAX.powerMovementBonus, CO_MAX.powerDefBonus]);
         return text;
     };

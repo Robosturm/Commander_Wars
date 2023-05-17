@@ -8,14 +8,11 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -216,13 +213,13 @@ var Constructor = function()
             {
                 ret += deffbonusArray[index];
             }
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-            {
-                ret += CO_ADAM.d2dCoZoneDefBonus;
-            }
-            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
                 ret += CO_ADAM.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                ret += CO_ADAM.d2dCoZoneDefBonus;
             }
         }
         return ret;
