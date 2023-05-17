@@ -110,9 +110,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
                 break;
@@ -125,6 +126,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/waylon.mp3", 58182, 112806);
                 break;
+            }
         }
     };
 
@@ -137,34 +139,57 @@ var Constructor = function()
         return "TI";
     };
 
+    this.superPowerOffBonus = 60;
+    this.superPowerDefBonus = 310;
+    this.powerBaseOffBonus = 10;
+    this.powerOffBonus = 30;
+    this.powerDefBonus = 200;
+    this.powerDefBaseBonus = 10;
+    this.d2DOffBonus = 0;
+    this.d2DDefBonus = 0;
+    this.d2DCoZoneDefBonus = 40;
+    this.d2DCoZoneDefBaseBonus = 10;
+    this.d2DCoZoneOffBonus = 30;
+    this.d2DCoZoneOffBaseBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return 60;
+                    return CO_WAYLON.superPowerOffBonus;
                 }
-                return 10;
+                return CO_WAYLON.powerBaseOffBonus;
             case GameEnums.PowerMode_Power:
                 if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return 30;
+                    return CO_WAYLON.powerOffBonus;
                 }
-                return 10;
+                return CO_WAYLON.powerBaseOffBonus;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (CO.getGlobalZone())
+                {
+                    if (defender.getUnitType() === GameEnums.UnitType_Air)
+                    {
+                        return CO_WAYLON.d2DOffBonus;
+                    }
+                }
+                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
-                        return 30;
+                        return CO_WAYLON.d2DCoZoneOffBonus;
                     }
-                    return 10;
+                    return CO_WAYLON.d2DCoZoneOffBaseBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
@@ -172,42 +197,55 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return 310;
+                    return CO_WAYLON.superPowerDefBonus;
                 }
-                return 10;
+                return CO_WAYLON.powerDefBaseBonus;
             case GameEnums.PowerMode_Power:
                 if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return 200;
+                    return CO_WAYLON.powerDefBonus;
                 }
-                return 10;
+                return CO_WAYLON.powerDefBaseBonus;
             default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (CO.getGlobalZone())
                 {
                     if (defender.getUnitType() === GameEnums.UnitType_Air)
                     {
-                        return 40;
+                        return CO_WAYLON.d2DDefBonus;
                     }
-                    return 10;
+                }
+                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    if (defender.getUnitType() === GameEnums.UnitType_Air)
+                    {
+                        return CO_WAYLON.d2DCoZoneDefBonus;
+                    }
+                    return CO_WAYLON.d2DCoZoneDefBaseBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "AIRPORT" ||
-            buildingId === "TEMPORARY_AIRPORT")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_KIROV"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "AIRPORT" ||
+                    buildingId === "TEMPORARY_AIRPORT")
+            {
+                return ["ZCOUNIT_KIROV"];
+            }
         }
         return [];
     };
@@ -238,12 +276,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nKirov\n\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nAir Units have 30% increased firepower and 40% increased defense.");
+        let text = qsTr("\nSpecial Unit:\nKirov\n\nGlobal Effect: \nAir Units have %0% increased firepower and %1% increased defense.") +
+                   qsTr("\n\nCO Zone Effect: \nAir Units have %2% increased firepower and %3% increased defense.");
+        text = replaceTextArgs(text, [CO_WAYLON.d2DOffBonus, CO_WAYLON.d2DDefBonus, CO_WAYLON.d2DCoZoneOffBonus, CO_WAYLON.d2DCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Air units get increased firepower and highly increased defense.");
+        let text = qsTr("Air units get increased firepower by %0% and increased defense by %1%.");
+        text = replaceTextArgs(text, [CO_WAYLON.powerOffBonus, CO_WAYLON.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -251,7 +293,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Air units get increased firepower and highly increased defense.");
+        let text = qsTr("Air units get increased firepower by %0% and increased defense by %1%.");
+        text = replaceTextArgs(text, [CO_WAYLON.superPowerOffBonus, CO_WAYLON.superPowerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

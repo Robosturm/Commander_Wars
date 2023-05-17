@@ -342,7 +342,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text =  qsTr("<r>Max's non-infantry direct-combat units gain </r><div c='#ffffff'>+%0 movement</div><r> and raise their firepower by </r><div c='#ffffff'>+%1%</div><r> and all other units firepower raises by </r><div c='#ffffff'>+%2%</div><r>. All units defense raises by </r><div c='#ffffff'>+%3%</div><r>.</r>");
+        let text =  qsTr("Max's non-infantry direct-combat units gain +%0 movement and raise their firepower by +%1% and all other units firepower raises by +%2%. All units defense raises by +%3%.");
         text = replaceTextArgs(text, [CO_MAX.powerOffBonus, CO_MAX.powerMovementBonus, CO_MAX.powerDefBonus]);
         return text;
     };
@@ -352,7 +352,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text =  qsTr("Firepower raises by %0% and movement by %1 of all non-infantry direct-combat units. The defence raises by %2");
+        let text = qsTr("Firepower raises by %0% and movement by %1 of all non-infantry direct-combat units. The defence raises by %2");
         text = replaceTextArgs(text, [CO_MAX.superPowerOffBonus, CO_MAX.superpowerMovementBonus, CO_MAX.powerDefBonus]);
         return text;
     };

@@ -110,9 +110,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power_awdc.mp3", 0, 0);
                 break;
@@ -125,6 +126,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/will.mp3", 36421, 91424);
                 break;
+            }
         }
     };
 
@@ -137,36 +139,57 @@ var Constructor = function()
         return "AC";
     };
 
+    this.superPowerOffBonus = 50;
+    this.superPowerMovementBonus = 2;
+    this.powerOffBaseBonus = 10;
+    this.powerOffBonus = 30;
+    this.powerDefBonus = 10;
+    this.powerMovementBonus = 1;
+    this.d2dOffBonus = 0;
+    this.d2dCoZoneOffBonus = 30;
+    this.d2dCoZoneBaseBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
-                         (attacker.getUnitType() === GameEnums.UnitType_Naval);
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
+                    (attacker.getUnitType() === GameEnums.UnitType_Naval);
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() === 1 && !seaAirUnit)
                 {
-                    return 50;
+                    return CO_WILL.superPowerOffBonus;
                 }
-                return 10;
+                return CO_WILL.powerOffBaseBonus;
             case GameEnums.PowerMode_Power:
                 if (attacker.getBaseMaxRange() === 1 && !seaAirUnit)
                 {
-                    return 30;
+                    return CO_WILL.powerOffBonus;
                 }
-                return 10;
+                return CO_WILL.powerOffBaseBonus;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (CO.getGlobalZone())
                 {
                     if (attacker.getBaseMaxRange() === 1 && !seaAirUnit)
                     {
-                        return 30;
+                        return CO_WILL.d2dOffBonus;
                     }
-                    return 10;
+                }
+                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (attacker.getBaseMaxRange() === 1 && !seaAirUnit)
+                    {
+                        return CO_WILL.d2dCoZoneOffBonus;
+                    }
+                    return CO_WILL.d2dCoZoneBaseBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
@@ -174,35 +197,44 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_WILL.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_WILL.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
 
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        var seaAirUnit = (unit.getUnitType() === GameEnums.UnitType_Air) ||
-                         (unit.getUnitType() === GameEnums.UnitType_Naval);
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var seaAirUnit = (unit.getUnitType() === GameEnums.UnitType_Air) ||
+                             (unit.getUnitType() === GameEnums.UnitType_Naval);
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (!seaAirUnit)
                 {
-                    return 2;
+                    return CO_WILL.superPowerMovementBonus;
                 }
                 return 0;
             case GameEnums.PowerMode_Power:
                 if (!seaAirUnit)
                 {
-                    return 1;
+                    return CO_WILL.powerMovementBonus;
                 }
                 return 0;
             default:
                 return 0;
+            }
         }
     };
     this.getAiCoUnitBonus = function(co, unit, map)
@@ -217,13 +249,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_HOT_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_HOT_TANK"];
+            }
         }
         return [];
     };
@@ -247,13 +282,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nHot Tank\n") +
-               qsTr("\nGlobal Effect:\nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Ground Units have 30% increased firepower.");
+        let text = qsTr("\nSpecial Unit:\nHot Tank\n") +
+               qsTr("\nGlobal Effect:\nDirect ground units have %0% increased firepower.") +
+               qsTr("\n\nCO Zone Effect: \nDirect Ground Units have 1% increased firepower and other units gain %2% firepower. All units gain %3% defence.");
+        text = replaceTextArgs(text, [CO_WILL.d2dOffBonus, CO_WILL.d2dCoZoneOffBonus, CO_WILL.d2dCoZoneBaseBonus, CO_WILL.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Boost movement by 1 and increases the firepower of ground units.");
+        let text = qsTr("Boost movement of ground units by %0 and increases the firepower of direct ground units by %1%.");
+        text = replaceTextArgs(text, [CO_WILL.powerMovementBonus, CO_WILL.powerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -261,7 +300,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Boost movement by 2 and firepower of ground units.");
+        let text = qsTr("Boost movement of ground units by %0 and increases the firepower of direct ground units by %1%.");
+        text = replaceTextArgs(text, [CO_WILL.superPowerMovementBonus, CO_WILL.superPowerOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
