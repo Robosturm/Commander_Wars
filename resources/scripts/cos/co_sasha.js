@@ -241,7 +241,7 @@ var Constructor = function()
         let text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
                qsTr("\nGlobal Effect: \nShe gets additional %0% funds from allied properties and a flat %1% on top.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional %2% firepower and %1% defense.");
-        text = replaceTextArgs(text, [CO_SASHA.d2dPercentIncomeBonus *100, CO_SASHA.d2dFlatIncomeBonus, CO_SASHA.d2dCoZoneOffBonus, CO_SASHA.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [CO_SASHA.d2dPercentIncomeBonus * 100, CO_SASHA.d2dFlatIncomeBonus, CO_SASHA.d2dCoZoneOffBonus, CO_SASHA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

@@ -136,6 +136,19 @@ var Constructor = function()
         return "GS";
     };
 
+    this.superPowerDefBonus = 40;
+    this.superPowerOffBonus = 50;
+    this.superPowerCostReduction = 0.5;
+    this.powerRefund = 0.5;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCostModifier = 0.01;
+    this.d2dOffModifier = 1;
+    this.d2dExceedBonus = 0.01;
+    this.d2dMaxBonus = 20;
+
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
@@ -152,18 +165,18 @@ var Constructor = function()
                 case GameEnums.PowerMode_Superpower:
                     if (builded === true)
                     {
-                        return 40;
+                        return CO_SANJURO.superPowerDefBonus;
                     }
                     else
                     {
-                        return 10;
+                        return CO_SANJURO.powerDefBonus;
                     }
                 case GameEnums.PowerMode_Power:
-                    return 10;
+                    return CO_SANJURO.powerDefBonus;
                 default:
                     if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                     {
-                        return 10;
+                        return CO_SANJURO.d2dCoZoneDefBonus;
                     }
                     break;
                 }
@@ -192,31 +205,31 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (builded === true)
                 {
-                    return modifier + 50;
+                    return modifier + CO_SANJURO.superPowerOffBonus;
                 }
                 else
                 {
-                    return modifier + 10;
+                    return modifier + CO_SANJURO.powerOffBonus;
                 }
             case GameEnums.PowerMode_Power:
-                return modifier + 10;
+                return modifier + CO_SANJURO.powerOffBonus;
             default:
                 if (modifier > 0)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
-                        return modifier + 10;
+                        return modifier + CO_SANJURO.d2dCoZoneOffBonus;
                     }
                     else
                     {
-                        return modifier / 2 + 10;
+                        return modifier;
                     }
                 }
                 else
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
-                        return modifier + 10;
+                        return modifier + CO_SANJURO.d2dCoZoneOffBonus;
                     }
                     else
                     {
@@ -236,41 +249,38 @@ var Constructor = function()
 
     this.startOfTurn = function(co, map)
     {
-        if (CO.isActive(co))
+        var player = co.getOwner();
+        var funds = player.getFunds();
+        var income = player.calcIncome();
+        var costModifier = 0.0;
+        var damageModifier = 0.0;
+        var exceed = 0;
+        var maxCounter = CO_SANJURO.d2dMaxBonus;
+        var counter = 0;
+        if (income < funds)
         {
-            var player = co.getOwner();
-            var funds = player.getFunds();
-            var income = player.calcIncome();
-            var costModifier = 0.0;
-            var damageModifier = 0.0;
-            var exceed = 0;
-            var maxCounter = 20;
-            var counter = 0;
-            if (income < funds)
+            // we have more funds than income
+            exceed = funds - income;
+            // this means our troops get stronger and more expensive
+            while (exceed >= 0 && counter < maxCounter)
             {
-                // we have more funds than income
-                exceed = funds - income;
-                // this means our troops get stronger and more expensive
-                while (exceed >= 0 && counter < maxCounter)
-                {
-                    damageModifier += 1;
-                    costModifier += 0.01;
-                    exceed -= income * 0.1;
-                    counter++;
-                }
+                damageModifier += CO_SANJURO.d2dOffModifier;
+                costModifier += CO_SANJURO.d2dCostModifier;
+                exceed -= income * CO_SANJURO.d2dExceedBonus;
+                counter++;
             }
-            else
+        }
+        else
+        {
+            // we have less funds than income
+            exceed = income - funds;
+            // this means our troops get weaker and less expensive
+            while (exceed >= 0 && counter < maxCounter)
             {
-                // we have less funds than income
-                exceed = income - funds;
-                // this means our troops get weaker and less expensive
-                while (exceed >= 0 && counter < maxCounter)
-                {
-                    damageModifier -= 1;
-                    costModifier -= 0.01;
-                    exceed -= income * 0.05;
-                    counter++;
-                }
+                damageModifier -= CO_SANJURO.d2dOffModifier;
+                costModifier -= CO_SANJURO.d2dCostModifier;
+                exceed -= income * CO_SANJURO.d2dExceedBonus;
+                counter++;
             }
         }
         var variables = co.getVariables();
@@ -300,7 +310,7 @@ var Constructor = function()
                 if (builded === true)
                 {
                     // reduce cost of following units of the same type
-                    return -(baseCost * costMod + baseCost) * 0.5;
+                    return -(baseCost * costMod + baseCost) * CO_SANJURO.superPowerCostReduction;
                 }
                 break;
             case GameEnums.PowerMode_Power:
@@ -360,7 +370,7 @@ var Constructor = function()
                     // avoid loosing money cause of our passive or power
                     if (atkDamage > 0)
                     {
-                        co.getOwner().addFunds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                        co.getOwner().addFunds(atkDamage / 10.0 * defender.getUnitCosts() * CO_SANJURO.powerRefund);
                     }
                     break;
                 default:
@@ -408,14 +418,19 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nSmuggler\n") +
-               qsTr("\nGlobal Effect: \nUnit costs are decreased when he has more income than funds and firepower is decreased.") +
-               qsTr("\n\nCO Zone Effect: \nGlobal firepower effects are doubled.");
+        let text =  qsTr("\nSpecial Unit:\nSmuggler\n" +
+                         "\nGlobal Effect: \nFor each %0% difference between income and funds at the start of the turn. His troops gain %1% firepower per %0% percent and cost %2% more if the funds are greater than the current funds. " +
+                         "Otherwise he looses %1% firepower per %0% percent and his troops cost %2% more. This effect stacks up to %5 times." +
+                         "\n\nCO Zone Effect: \nGains %3% firepower and %4% defense.");
+        text = replaceTextArgs(text, [CO_SANJURO.d2dExceedBonus, CO_SANJURO.d2dOffModifier, CO_SANJURO.d2dCostModifier * 100, CO_SANJURO.d2dCoZoneOffBonus, CO_SANJURO.d2dCoZoneDefBonus, CO_SANJURO.d2dMaxBonus]);
+        return text;
     };
 
     this.getPowerDescription = function(co)
     {
-        return qsTr("When his units take combat damage, he receives a portion of the value damage in funds.");
+        let text = qsTr("When his units take combat damage, he receives %0% of the damage value in funds.");
+        text = replaceTextArgs(text, [CO_SANJURO.powerRefund * 100]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -423,7 +438,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("When a unit is built, units of the same type receive a firepower and defense boost, unhindered by terrain, and production costs reduced by half.");
+        let text =  qsTr("When a unit is built, units of the same type receive a %0% firepower and %1% defense boost are unhindered by terrain, and production costs for that unit are reduced by %2%.");
+        text = replaceTextArgs(text, [CO_SANJURO.superPowerOffBonus, CO_SANJURO.superPowerDefBonus, CO_SANJURO.superPowerCostReduction * 100]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
