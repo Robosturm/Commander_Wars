@@ -8,9 +8,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -23,6 +24,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/robosturm.mp3", 1395, 41092);
                 break;
+            }
         }
     };
 
@@ -32,7 +34,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_ROBOSTURM.power(co, 0, powerNameAnimation, map);
+        CO_ROBOSTURM.power(co, CO_ROBOSTURM.powerDamage, powerNameAnimation, map);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -41,8 +43,8 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_ROBOSTURM.power(co, 2, powerNameAnimation, map);
-    };
+        CO_ROBOSTURM.power(co, CO_ROBOSTURM.superPowerDamage, powerNameAnimation, map);
+    };    
 
     this.power = function(co, value, powerNameAnimation, map)
     {
@@ -160,16 +162,30 @@ var Constructor = function()
                 // reduce ammo
                 if (unit.getMaxAmmo2() > 0)
                 {
-                    unit.reduceAmmo2(unit.getAmmo2() / 2);
+                    unit.reduceAmmo2(unit.getAmmo2() * CO_ROBOSTURM.powerAmmoLoose);
                 }
                 if (unit.getMaxAmmo1() > 0)
                 {
-                    unit.reduceAmmo1(unit.getAmmo1() / 2);
+                    unit.reduceAmmo1(unit.getAmmo1() * CO_ROBOSTURM.powerAmmoLoose);
                 }
             }
-
         }
     };
+
+    this.superPowerDamage = 2;
+    this.superPowerMovementPoints = 3;
+    this.superPowerDefBonus = 80;
+    this.superPowerOffBonus = 0;
+    this.powerDamage = 0;
+    this.powerMovementPoints = 2;
+    this.powerDefBonus = 60;
+    this.powerOffBonus = 0;
+    this.powerAmmoLoose = 0.5;
+    this.d2dCoZoneOffBonus = -10;
+    this.d2dCoZoneDefBonus = 30;
+    this.d2dOffBonus = -20;
+    this.d2dDefBonus = 0;
+    this.d2dMovementPoints = 1;
 
     this.getCOUnitRange = function(co, map)
     {
@@ -178,58 +194,74 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
+                return CO_ROBOSTURM.superPowerOffBonus;
             case GameEnums.PowerMode_Power:
-                return 0;
+                return CO_ROBOSTURM.powerOffBonus;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (CO.getGlobalZone())
                 {
-                    return -10;
+                    return CO_ROBOSTURM.d2dOffBonus;
+                }
+                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_ROBOSTURM.d2dCoZoneOffBonus;
                 }
                 break;
+            }
+            return CO_ROBOSTURM.d2dOffBonus;
         }
-        return -20;
+        return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 80;
+                return CO_ROBOSTURM.superPowerDefBonus;
             case GameEnums.PowerMode_Power:
-                return 60;
+                return CO_ROBOSTURM.powerDefBonus;
             default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (CO.getGlobalZone())
                 {
-                    return 30;
+                    return CO_ROBOSTURM.d2dDefBonus;
+                }
+                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return CO_ROBOSTURM.d2dCoZoneDefBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
 
-    this.getCOArmy = function()
-    {
-        return "MA";
-    };
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Power)
+        if (CO.isActive(co))
         {
-            return 2;
+            if (co.getPowerMode() === GameEnums.PowerMode_Power)
+            {
+                return CO_ROBOSTURM.powerMovementPoints;
+            }
+            else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                     co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            {
+                return CO_ROBOSTURM.superPowerMovementPoints;
+            }
+            return CO_ROBOSTURM.d2dMovementPoints;
         }
-        else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)
-        {
-            return 3;
-        }
-        return 1;
+        return 0;
     };
     this.getAiCoUnitBonus = function(co, unit, map)
     {
@@ -237,17 +269,25 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_TANK_HUNTER"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_TANK_HUNTER"];
+            }
         }
         return [];
     };
     // CO - Intel
+    this.getCOArmy = function()
+    {
+        return "MA";
+    };
+
     this.getBio = function(co)
     {
         return qsTr("Black Hole was in need of new strong CO's so Lash invented a second Sturm. But he doesn't accept any orders and formed his own Army.");
@@ -262,17 +302,25 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("His troops can move 1 point more, but they have weaker firepower and higher defense capabilities.");
+        let text = qsTr("His troops can move %0 point more, but they have weaker firepower and higher defense capabilities.");
+        text = replaceTextArgs(text, [CO_ROBOSTURM.d2dMovementPoints]);
+        return text;
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nTank Hunter\n") +
-               qsTr("\nGlobal Effect: \nUnits gain 1 additional movement point and have reduced firepower.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain defense and have reduced firepower.");
+        let text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
+               qsTr("\nGlobal Effect: \nUnits gain %0 additional movement point and have %1% reduced firepower and %2% increased defense.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain %3% defense and have %4% reduced firepower.");
+        text = replaceTextArgs(text, [CO_ROBOSTURM.d2dMovementPoints, CO_ROBOSTURM.d2dOffBonus, CO_ROBOSTURM.d2dDefBonus,
+                                      CO_ROBOSTURM.d2dCoZoneDefBonus, CO_ROBOSTURM.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Enemy loses half of their ammo, his troops can move 1 point more and their defense rises.");
+        let text = qsTr("Enemy loses %0% of their ammo, take %1 HP damage, his troops can move %2 point more and their defense rises by %3%.");
+        text = replaceTextArgs(text, [CO_ROBOSTURM.powerAmmoLoose * 100, CO_ROBOSTURM.powerDamage, CO_ROBOSTURM.powerMovementPoints,
+                                      CO_ROBOSTURM.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -280,7 +328,10 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Enemy loses half of their ammo, take 2 HP damage, his troops can move 2 points more and their defense rises extremely.");
+        let text = qsTr("Enemy loses %0% of their ammo, take %1 HP damage, his troops can move %2 point more and their defense rises by %3%.");
+        text = replaceTextArgs(text, [CO_ROBOSTURM.powerAmmoLoose * 100, CO_ROBOSTURM.superPowerDamage, CO_ROBOSTURM.superPowerMovementPoints,
+                                      CO_ROBOSTURM.superPowerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
