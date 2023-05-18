@@ -6,6 +6,7 @@ CO_MELANTHE.init = function(co, map)
 CO_MELANTHE.activateSuperpower = function(co, powerMode, map)
 {
 	CO_MELANTHE.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_MELANTHE.getSuperPowerDescription = function()
 {

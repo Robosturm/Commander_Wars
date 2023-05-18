@@ -8,7 +8,6 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -96,21 +95,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/minamoto.mp3", 7779, 61530)
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/minamoto.mp3", 7779, 61530)
+                break;
+            }
         }
     };
 
@@ -154,113 +155,152 @@ var Constructor = function()
         return nearMountains;
     }
 
+    this.superPowerOffBonus = 80;
+    this.superPowerMovementPoints = 2;
+    this.superPowerBlowHp = 3.5;
+    this.superPowerBlowRange = 4;
+
+    this.powerBlowHp = 4.5;
+    this.powerBlowRange = 2;
+    this.powerOffBonus = 70;
+    this.powerBaseOffBonus = 10;
+    this.powerDefBonus = 10;
+
+    this.d2dOffBonus = 0;
+
+    this.d2dCoZoneOffBonus = 70;
+    this.d2dCoZoneBaseOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        var nearMountains = CO_MINAMOTO.getNearMountain(map, atkPosX, atkPosY);
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (nearMountains === true)
+            var nearMountains = CO_MINAMOTO.getNearMountain(map, atkPosX, atkPosY);
+            switch (co.getPowerMode())
             {
-                return 80;
-            }
-            else
-            {
-                return 10;
-            }
-        case GameEnums.PowerMode_Power:
-            if (nearMountains === true)
-            {
-                return 70;
-            }
-            else
-            {
-                return 10;
-            }
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
                 if (nearMountains === true)
                 {
-                    return 70;
+                    return CO_MINAMOTO.superPowerOffBonus;
                 }
-                return 10;
+                else
+                {
+                    return CO_MINAMOTO.powerBaseOffBonus;
+                }
+            case GameEnums.PowerMode_Power:
+                if (nearMountains === true)
+                {
+                    return CO_MINAMOTO.powerOffBonus;
+                }
+                else
+                {
+                    return CO_MINAMOTO.powerBaseOffBonus;
+                }
+            default:
+                if (CO.getGlobalZone())
+                {
+                    if (nearMountains === true)
+                    {
+                        return CO_MINAMOTO.d2dOffBonus;
+                    }
+                }
+                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (nearMountains === true)
+                    {
+                        return CO_MINAMOTO.d2dCoZoneOffBonus;
+                    }
+                    return CO_MINAMOTO.d2dCoZoneBaseOffBonus;
+                }
+                break;
             }
-            break;
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_MINAMOTO.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_MINAMOTO.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+        if (CO.isActive(co))
         {
-            return 2;
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            {
+                return CO_MINAMOTO.superPowerMovementPoints;
+            }
         }
         return 0;
     };
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            // here begins the fun :D
-            var blowRange = 0;
-            switch (co.getPowerMode())
+            if (gotAttacked === false && attacker.getOwner() === co.getOwner())
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (atkDamage >= 3.5)
+                // here begins the fun :D
+                var blowRange = 0;
+                switch (co.getPowerMode())
                 {
-                    blowRange = 4;
-                }
-                break;
-            case GameEnums.PowerMode_Power:
-                if (atkDamage >= 4.5)
-                {
-                    blowRange = 2;
-                }
-                break;
-            default:
-                break;
-            }
-            var distX = defender.getX() - attacker.getX();
-            var distY = defender.getY() - attacker.getY();
-            var distance = Math.abs(distX) + Math.abs(distY);
-            if (defender.getHp() > 0 && blowRange > 0 && distance === 1)
-            {
-                var newPosition = Qt.point(defender.getX(), defender.getY());
-                // find blow away position
-                for (var i = 1; i <= blowRange; i++)
-                {
-                    var testPosition = Qt.point(defender.getX() + distX * i, defender.getY() + distY * i);
-                    if (map.onMap(testPosition.x, testPosition.y))
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    if (atkDamage >= CO_MINAMOTO.superPowerBlowHp)
                     {
-                        var terrain = map.getTerrain(testPosition.x, testPosition.y);
-                        if (terrain.getUnit() === null &&
-                                defender.canMoveOver(testPosition.x, testPosition.y) === true)
+                        blowRange = CO_MINAMOTO.superPowerBlowRange;
+                    }
+                    break;
+                case GameEnums.PowerMode_Power:
+                    if (atkDamage >= CO_MINAMOTO.powerBlowHp)
+                    {
+                        blowRange = CO_MINAMOTO.powerBlowRange;
+                    }
+                    break;
+                default:
+                    break;
+                }
+                var distX = defender.getX() - attacker.getX();
+                var distY = defender.getY() - attacker.getY();
+                var distance = Math.abs(distX) + Math.abs(distY);
+                if (defender.getHp() > 0 && blowRange > 0 && distance === 1)
+                {
+                    var newPosition = Qt.point(defender.getX(), defender.getY());
+                    // find blow away position
+                    for (var i = 1; i <= blowRange; i++)
+                    {
+                        var testPosition = Qt.point(defender.getX() + distX * i, defender.getY() + distY * i);
+                        if (map.onMap(testPosition.x, testPosition.y))
                         {
-                            newPosition = testPosition;
-                        }
-                        else
-                        {
-                            break;
+                            var terrain = map.getTerrain(testPosition.x, testPosition.y);
+                            if (terrain.getUnit() === null &&
+                                    defender.canMoveOver(testPosition.x, testPosition.y) === true)
+                            {
+                                newPosition = testPosition;
+                            }
+                            else
+                            {
+                                break;
+                            }
                         }
                     }
+                    // blow unit away
+                    defender.moveUnitToField(newPosition.x, newPosition.y);
                 }
-                // blow unit away
-                defender.moveUnitToField(newPosition.x, newPosition.y);
             }
         }
     };
@@ -270,13 +310,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_NEOSPIDER_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_NEOSPIDER_TANK"];
+            }
         }
         return [];
     };
@@ -299,13 +342,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits near Mountains gain additional firepower.");
+        let text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
+               qsTr("\nGlobal Effect: \nUnits near Mountains gain %0% additional firepower.") +
+               qsTr("\n\nCO Zone Effect: \nUnits near Mountains gain %1% additional firepower.");
+        text = replaceTextArgs(text, [CO_MINAMOTO.d2dOffBonus, CO_MINAMOTO.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Direct units can blow lighter enemies away when attacking.");
+        let text = qsTr("Direct units blow enemies %0 fields away when dealing %1 HP damage. Units near Mountains gain %2% additional firepower.");
+        text = replaceTextArgs(text, [CO_MINAMOTO.powerBlowRange, CO_MINAMOTO.powerBlowHp, CO_MINAMOTO.powerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -313,7 +360,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Unit movement is increased by two, and large direct units blow enemies away.");
+        let text = qsTr("Unit movement is increased by %0. Direct units blow enemies %1 fields away when dealing %2 HP damage. Units near Mountains gain %3% additional firepower.");
+        text = replaceTextArgs(text, [CO_MINAMOTO.superPowerMovementPoints, CO_MINAMOTO.superPowerBlowRange, CO_MINAMOTO.superPowerBlowHp, CO_MINAMOTO.superPowerOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

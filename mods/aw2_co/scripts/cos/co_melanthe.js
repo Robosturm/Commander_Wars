@@ -1,70 +1,18 @@
-CO_MELANTHE.getTerrainDefenseModifier = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (CO_MELANTHE.isNature(posX, posY, map) === true)
-        {
-            switch (co.getPowerMode())
-            {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-            case GameEnums.PowerMode_Power:
-                return 2;
-            default:
-                return 1;
-            }
-        }
-    }
-    return 0;
-};
-CO_MELANTHE.getRepairBonus = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        return -1;
-    }
-    return 0;
-};
-CO_MELANTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (map !== null)
-        {
-            if (map.onMap(atkPosX, atkPosY))
-            {
-                switch (co.getPowerMode())
-                {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                case GameEnums.PowerMode_Power:
-                    if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
-                    {
-                        return 20;
-                    }
-                    return 0;
-                default:
-                    if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
-                    {
-                        return 15;
-                    }
-                }
-            }
-        }
-    }
-    return 0;
-};
+CO_MELANTHE.superPowerHeal = 4;
+CO_MELANTHE.superPowerDamage = 2;
 
-CO_MELANTHE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
+CO_MELANTHE.powerOffBonus = 20;
+CO_MELANTHE.powerBaseOffBonus = 0;
+CO_MELANTHE.powerDefBonus = 10;
+CO_MELANTHE.powerTerrainBonus = 2;
+CO_MELANTHE.powerHeal = 3;
+CO_MELANTHE.powerDamage = 0;
+
+CO_MELANTHE.d2dOffBonus = 20;
+CO_MELANTHE.d2dTerrainBonus = 1;
+CO_MELANTHE.d2dRepairBonus = -1;
+
+CO_MELANTHE.d2dCoZoneOffBonus = 0;
+CO_MELANTHE.d2dCoZoneTerrainBonus = 0;
+CO_MELANTHE.d2dCoZoneDefBonus = 0;
+CO_MELANTHE.d2dCoZoneBaseOffBonus = 0;
