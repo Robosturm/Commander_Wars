@@ -157,6 +157,10 @@ public slots:
      * @return
      */
     static QString getNextAutosavePath(const QString & path, const QString & ending, qint32 max);
+    /**
+     * @brief sleepMs
+     */
+    static void sleepMs(qint32 ms);
 private:
     explicit GlobalUtils() = default;
 private:

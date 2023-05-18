@@ -177,7 +177,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                switch (defender.getUnitRank())
+                switch (attacker.getUnitRank())
                 {
                 case 0:
                     return CO_MEIYO.powerSoldier;
@@ -191,7 +191,7 @@ var Constructor = function()
             default:
                 if (CO.getGlobalZone())
                 {
-                    switch (defender.getUnitRank())
+                    switch (attacker.getUnitRank())
                     {
                     case 0:
                         return CO_MEIYO.d2dSoldier;
@@ -205,7 +205,7 @@ var Constructor = function()
                 }
                 else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    switch (defender.getUnitRank())
+                    switch (attacker.getUnitRank())
                     {
                     case 0:
                         return CO_MEIYO.d2dCoZoneSoldier;

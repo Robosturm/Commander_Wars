@@ -1,8 +1,6 @@
 #pragma once
 
 #include <QTimer>
-
-#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "menue/basemenu.h"
 
 class Mainwindow;
@@ -32,6 +30,7 @@ public slots:
     void changeUsername(QString name);
     void leaveMenue();
     void quitGame();
+    void restartGame();
     void enterCOStyleMenu();
     void enterLoadCampaign();
     void enterShopMenu();

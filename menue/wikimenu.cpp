@@ -6,7 +6,6 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
-#include "coreengine/settings.h"
 #include "coreengine/audiomanager.h"
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"

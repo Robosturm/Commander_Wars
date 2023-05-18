@@ -135,7 +135,17 @@ void WikiView::showPage(QString id)
 {
     WikiDatabase::PageData page;
     page.m_id = id;
-    addChild(WikiDatabase::getInstance()->getPage(page));
+    m_lastPage = WikiDatabase::getInstance()->getPage(page);
+    addChild(m_lastPage);
+}
+
+void WikiView::hideLastPage()
+{
+    if (m_lastPage.get() != nullptr)
+    {
+        m_lastPage->detach();
+        m_lastPage = nullptr;
+    }
 }
 
 void WikiView::tagChanged(qint32)

@@ -23,6 +23,19 @@ var Init =
             ],
     main = function(menu)
     {
+        // disable animations
+        settings.setOverworldAnimations(false);
+        settings.setBattleAnimationMode(GameEnums.BattleAnimationMode_None);
+        settings.setDialogAnimation(false);
+        settings.setCaptureAnimation(false);
+        settings.setMovementAnimations(false);
+        settings.setDay2dayScreen(false);
+        settings.setAnimationSpeed(100);
+        settings.setBattleAnimationSpeed(100);
+        settings.setDialogAnimationSpeed(100);
+        settings.setCaptureAnimationSpeed(100);
+
+
         var current = Init.step;
         if (current < Init.steps.length)
         {
@@ -31,6 +44,45 @@ var Init =
         }
         else
         {
+            Init.checkNextMod();
+        }
+    },
+
+    checkNextMod = function()
+    {
+        let activeMod = settings.getModString();
+        let nextMod = "";
+
+        let mods = settings.getAvailableMods();
+        if (activeMod === "")
+        {
+            nextMod = mods[0];
+        }
+        else
+        {
+            let length = mods.length;
+            let i = 0;
+            for (i = 0; i < length; ++i)
+            {
+                if (mods[i] === activeMod)
+                {
+                    if (i + 1 < length)
+                    {
+                        nextMod = mods[i + 1];
+                    }
+                    break;
+                }
+            }
+        }
+        if (nextMod !== "")
+        {
+            settings.removeMod(activeMod);
+            settings.addMod(nextMod);
+            menu.restartGame();
+        }
+        else
+        {
+            settings.removeMod(activeMod);
             menu.quitGame();
         }
     },
@@ -91,10 +143,52 @@ var Init =
     {
         var wikiView = menu.getWikiView();
         wikiView.tagChanged(0);
-        wikiView.showPage("CO_ANDY");
-        wikiView.showPage("MECH");
-        wikiView.showPage("PLAINS");
-        wikiView.showPage("HQ");
+        // test co's
+        let ids = coSpriteManager.getCoIds();
+        let length = ids.length;
+        let i = 0;
+        for (i = 0; i < length; ++i)
+        {
+            wikiView.showPage(ids[i]);
+            globals.sleepMs(1000);
+            wikiView.hideLastPage();
+        }
+        // test unit's
+        ids = unitSpriteManager.getUnitsSorted();
+        length = ids.length;
+        for (i = 0; i < length; ++i)
+        {
+            wikiView.showPage(ids[i]);
+            globals.sleepMs(1000);
+            wikiView.hideLastPage();
+        }
+        // test terrain's
+        ids = terrainSpriteManager.getTerrainsSorted();
+        length = ids.length;
+        for (i = 0; i < length; ++i)
+        {
+            wikiView.showPage(ids[i]);
+            globals.sleepMs(1000);
+            wikiView.hideLastPage();
+        }
+        // test building's
+        ids = buildingSpriteManager.getLoadedBuildings();
+        length = ids.length;
+        for (i = 0; i < length; ++i)
+        {
+            wikiView.showPage(ids[i]);
+            globals.sleepMs(1000);
+            wikiView.hideLastPage();
+        }
+        // test perk's
+        ids = coPerkSpriteManager.getLoadedPerks();
+        length = ids.length;
+        for (i = 0; i < length; ++i)
+        {
+            wikiView.showPage(ids[i]);
+            globals.sleepMs(1000);
+            wikiView.hideLastPage();
+        }
         menu.exitMenue();
     },
     shopTest = function(menu)

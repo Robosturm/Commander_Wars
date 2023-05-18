@@ -29,10 +29,13 @@ public slots:
     void search(bool onlyTag);
     void tagChanged(qint32 item);
     void showPage(QString id);
+    void hideLastPage();
+
 private:
     spTextbox m_SearchString;
     spDropDownmenu m_Tags;
     spPanel m_MainPanel;
+    spWikipage m_lastPage;
 };
 
 Q_DECLARE_INTERFACE(WikiView, "WikiView");
