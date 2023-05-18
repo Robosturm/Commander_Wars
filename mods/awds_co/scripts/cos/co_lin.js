@@ -1,96 +1,21 @@
-CO_LIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                    defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
-                         (attacker.getUnitType() === GameEnums.UnitType_Naval);
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (!seaAirUnit)
-            {
-                return 50;
-            }
-            return 10;
-        case GameEnums.PowerMode_Power:
-            if (!seaAirUnit)
-            {
-                return 30;
-            }
-            return 10;
-        default:
-            if (!seaAirUnit)
-            {
-                return 10;
-            }
-            break;
-        }
-    }
-    return 0;
-};
+CO_LIN.superPowerVisionRange = 2;
+CO_LIN.superPowerOffBonus = 50;
+CO_LIN.superPowerBaseOffBonus = 10;
+CO_LIN.superPowerDefBonus = 50;
+CO_LIN.superPowerBaseDefBonus = 10;
 
-CO_LIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        var seaAirUnit = (defender.getUnitType() === GameEnums.UnitType_Air) ||
-                         (defender.getUnitType() === GameEnums.UnitType_Naval);
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (!seaAirUnit)
-            {
-                return 50;
-            }
-            return 10;
-        case GameEnums.PowerMode_Power:
-            if (!seaAirUnit)
-            {
-                return 30;
-            }
-            return 10;
-        default:
-            return 5;
-        }
-    }
-    return 0;
-};
+CO_LIN.powerVisionRange = 1;
+CO_LIN.powerOffBonus = 30;
+CO_LIN.powerBaseOffBonus = 10;
+CO_LIN.powerDefBonus = 30;
+CO_LIN.powerBaseDefBonus = 10;
 
-CO_LIN.getVisionrangeModifier = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return 2;
-        case GameEnums.PowerMode_Power:
-            return 1;
-        default:
-            return 0;
-        }
-    }
-    return 0;
-};
+CO_LIN.d2dOffBonus = 10;
+CO_LIN.d2dBaseOffBonus = 0;
+CO_LIN.d2dDefBonus = 5;
+CO_LIN.d2dBaseDefBonus = 0;
 
-CO_LIN.getPerfectVision = function(co, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return true;
-        case GameEnums.PowerMode_Power:
-            return true;
-        default:
-            return false;
-        }
-    }
-};
+CO_LIN.d2dCoZoneOffBonus = 0;
+CO_LIN.d2dCoZoneBaseOffBonus = 0;
+CO_LIN.d2dCoZoneDefBonus = 0;
+CO_LIN.d2dCoZoneBaseDefBonus = 0;

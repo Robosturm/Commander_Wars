@@ -13,7 +13,6 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -124,21 +123,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/meiyo.mp3", 76678, 146244);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/meiyo.mp3", 76678, 146244);
+                break;
+            }
         }
     };
 
@@ -150,128 +151,130 @@ var Constructor = function()
     {
         return "GS";
     };
+
+    this.powerSoldier = 10;
+    this.powerExperienced = 20;
+    this.powerVeteran = 30;
+    this.powerElite = 50;
+
+    this.d2dSoldier = -5;
+    this.d2dExperienced = 3;
+    this.d2dVeteran = 5;
+    this.d2dElite = 10;
+
+    this.d2dCoZoneSoldier = 10;
+    this.d2dCoZoneExperienced = 20;
+    this.d2dCoZoneVeteran = 30;
+    this.d2dCoZoneElite = 50;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            switch (attacker.getUnitRank())
+            switch (co.getPowerMode())
             {
-            case 0:
-                return 10;
-            case 1:
-                return 20;
-            case 2:
-                return 30;
-            default:
-                return 50;
-            }
-        case GameEnums.PowerMode_Power:
-            switch (attacker.getUnitRank())
-            {
-            case 0:
-                return 10;
-            case 1:
-                return 20;
-            case 2:
-                return 30;
-            default:
-                return 50;
-            }
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
-                switch (attacker.getUnitRank())
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+            case GameEnums.PowerMode_Power:
+                switch (defender.getUnitRank())
                 {
                 case 0:
-                    return 10;
+                    return CO_MEIYO.powerSoldier;
                 case 1:
-                    return 20;
+                    return CO_MEIYO.powerExperienced;
                 case 2:
-                    return 30;
+                    return CO_MEIYO.powerVeteran;
                 default:
-                    return 50;
+                    return CO_MEIYO.powerElite;
                 }
-            }
-            else
-            {
-                switch (attacker.getUnitRank())
+            default:
+                if (CO.getGlobalZone())
                 {
-                case 0:
-                    return -5;
-                case 1:
-                    return 2.5;
-                case 2:
-                    return 5;
-                default:
-                    return 10;
+                    switch (defender.getUnitRank())
+                    {
+                    case 0:
+                        return CO_MEIYO.d2dSoldier;
+                    case 1:
+                        return CO_MEIYO.d2dExperienced;
+                    case 2:
+                        return CO_MEIYO.d2dVeteran;
+                    default:
+                        return CO_MEIYO.d2dElite;
+                    }
+                }
+                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    switch (defender.getUnitRank())
+                    {
+                    case 0:
+                        return CO_MEIYO.d2dCoZoneSoldier;
+                    case 1:
+                        return CO_MEIYO.d2dCoZoneExperienced;
+                    case 2:
+                        return CO_MEIYO.d2dCoZoneVeteran;
+                    default:
+                        return CO_MEIYO.d2dCoZoneElite;
+                    }
                 }
             }
         }
+        return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            switch (defender.getUnitRank())
+            switch (co.getPowerMode())
             {
-            case 0:
-                return 10;
-            case 1:
-                return 20;
-            case 2:
-                return 30;
-            default:
-                return 50;
-            }
-        case GameEnums.PowerMode_Power:
-            switch (defender.getUnitRank())
-            {
-            case 0:
-                return 10;
-            case 1:
-                return 20;
-            case 2:
-                return 30;
-            default:
-                return 50;
-            }
-        default:
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+            case GameEnums.PowerMode_Power:
                 switch (defender.getUnitRank())
                 {
                 case 0:
-                    return 10;
+                    return CO_MEIYO.powerSoldier;
                 case 1:
-                    return 20;
+                    return CO_MEIYO.powerExperienced;
                 case 2:
-                    return 30;
+                    return CO_MEIYO.powerVeteran;
                 default:
-                    return 50;
+                    return CO_MEIYO.powerElite;
                 }
-            }
-            else
-            {
-                switch (defender.getUnitRank())
+            default:
+                if (CO.getGlobalZone())
                 {
-                case 0:
-                    return -5;
-                case 1:
-                    return 2.5;
-                case 2:
-                    return 5;
-                default:
-                    return 10;
+                    switch (defender.getUnitRank())
+                    {
+                    case 0:
+                        return CO_MEIYO.d2dSoldier;
+                    case 1:
+                        return CO_MEIYO.d2dExperienced;
+                    case 2:
+                        return CO_MEIYO.d2dVeteran;
+                    default:
+                        return CO_MEIYO.d2dElite;
+                    }
+                }
+                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    switch (defender.getUnitRank())
+                    {
+                    case 0:
+                        return CO_MEIYO.d2dCoZoneSoldier;
+                    case 1:
+                        return CO_MEIYO.d2dCoZoneExperienced;
+                    case 2:
+                        return CO_MEIYO.d2dCoZoneVeteran;
+                    default:
+                        return CO_MEIYO.d2dCoZoneElite;
+                    }
                 }
             }
         }
+        return 0;
     };
     this.getAiCoUnitBonus = function(co, unit, map)
     {
@@ -297,12 +300,29 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnit Ranks are more effective. Units without a Rank loose firepower.") +
-                qsTr("\n\nCO Zone Effect: \nUnit Ranks are way more effective.");
+        let text = qsTr("\nGlobal Effect: \nUnit Ranks are more effective.\n" +
+                    "Soldier have %0% firepower and defence.\n" +
+                    "Experienced have %1% firepower and defence.\n" +
+                    "Veteran have %2% firepower and defence.\n" +
+                    "Elite have %3% firepower and defence.\n" +
+                    "\n\nCO Zone Effect: \nUnit Ranks are way more effective.\n" +
+                    "Soldier have %4% firepower and defence.\n" +
+                    "Experienced have %5% firepower and defence.\n" +
+                    "Veteran have %6% firepower and defence.\n" +
+                    "Elite have %7% firepower and defence.\n");
+        text = replaceTextArgs(text, [CO_MEIYO.d2dSoldier, CO_MEIYO.d2dExperienced, CO_MEIYO.d2dVeteran, CO_MEIYO.d2dElite,
+                                      CO_MEIYO.d2dCoZoneSoldier, CO_MEIYO.d2dCoZoneExperienced, CO_MEIYO.d2dCoZoneVeteran, CO_MEIYO.d2dCoZoneElite]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Units with a higher rank have even higher defence and offense.");
+        let text = qsTr("Units with a higher rank have even higher defence and offense.\n" +
+                    "Soldier have %0% firepower and defence.\n" +
+                    "Experienced have %1% firepower and defence.\n" +
+                    "Veteran have %2% firepower and defence.\n" +
+                    "Elite have %3% firepower and defence.");
+        text = replaceTextArgs(text, [CO_MEIYO.powerSoldier, CO_MEIYO.powerExperienced, CO_MEIYO.powerVeteran, CO_MEIYO.powerElite]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -310,7 +330,13 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Units with a higher rank have even higher defence and offense. All units gain two ranks.");
+        let text = qsTr("Units with a higher rank have even higher defence and offense. All units gain two ranks.\n" +
+                    "Soldier have %0% firepower and defence.\n" +
+                    "Experienced have %1% firepower and defence.\n" +
+                    "Veteran have %2% firepower and defence.\n" +
+                    "Elite have %3% firepower and defence.");
+        text = replaceTextArgs(text, [CO_MEIYO.powerSoldier, CO_MEIYO.powerExperienced, CO_MEIYO.powerVeteran, CO_MEIYO.powerElite]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

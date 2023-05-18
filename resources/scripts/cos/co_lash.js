@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2"];
     };
 
@@ -15,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/lash.mp3", 8885, 58311);
                 break;
+            }
         }
     };
 
@@ -128,77 +128,103 @@ var Constructor = function()
     {
         return "BH";
     };
-    this.globalTerrainBonus = 0;
-    this.zoneTerrainBonus = 10;
-    this.terrainDefenseModifier = 1;
+
+    this.superPowerTerrainDefenseModifier = 1;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+
+    this.d2dTerrainBonus = 10;
+    this.d2dCoZoneTerrainBonus = 10;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            if (map.onMap(atkPosX, atkPosY))
+            if (map !== null)
             {
-
-                var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
-                switch (co.getPowerMode())
+                if (map.onMap(atkPosX, atkPosY))
                 {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                case GameEnums.PowerMode_Power:
-                    if (attacker.useTerrainDefense())
+                    var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
+                    switch (co.getPowerMode())
                     {
-                        return terrainDefense * CO_LASH.globalTerrainBonus + 10;
+                    case GameEnums.PowerMode_Tagpower:
+                    case GameEnums.PowerMode_Superpower:
+                    case GameEnums.PowerMode_Power:
+                        if (attacker.useTerrainDefense())
+                        {
+                            return terrainDefense * CO_LASH.d2dTerrainBonus + CO_LASH.powerOffBonus;
+                        }
+                        return CO_LASH.powerOffBonus;
+                    default:
+                        if (CO.getGlobalZone())
+                        {
+                            return terrainDefense * CO_LASH.d2dTerrainBonus;
+                        }
+                        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        {
+                            return terrainDefense * CO_LASH.d2dCoZoneTerrainBonus + CO_LASH.d2dCoZoneOffBonus;
+                        }
+                        break;
                     }
-                    return 10;
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
-                        return terrainDefense * CO_LASH.zoneTerrainBonus + 10;
-                    }
-                    break;
                 }
             }
-        }
-        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-        {
-            return 10;
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_LASH.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_LASH.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_LASH.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getTerrainDefenseModifier = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return map.getTerrain(posX, posY).getBaseDefense() * CO_LASH.terrainDefenseModifier;
+                return map.getTerrain(posX, posY).getBaseDefense() * CO_LASH.superPowerTerrainDefenseModifier;
             case GameEnums.PowerMode_Power:
                 return 0;
             default:
                 return 0;
+            }
         }
+        return 0;
     };
     this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (unit.getOwner() === co.getOwner())
             {
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                 case GameEnums.PowerMode_Power:
                     return -999;
                 default:
+                }
             }
         }
         return 0;
@@ -206,13 +232,16 @@ var Constructor = function()
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_NEOSPIDER_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_NEOSPIDER_TANK"];
+            }
         }
         return [];
     };
@@ -240,8 +269,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nNeo Spider Tank\n\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain increased firepower per defense star.");
+        let text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n\nGlobal Effect: \nUnits gain %0% increased firepower per defense star.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain %1% increased firepower per defense star.");
+        text = replaceTextArgs(text, [CO_LASH.d2dTerrainBonus, CO_LASH.d2dCoZoneTerrainBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
@@ -253,7 +284,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Terrain effects are doubled and used to increase firepower. Additionally, all units movements are unhindered by terrain.");
+        let text = qsTr("Terrain stars get multiplied by %0. Additionally, all units movements are unhindered by terrain.");
+        text = replaceTextArgs(text, [CO_LASH.superPowerTerrainDefenseModifier + 1]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
@@ -315,20 +348,20 @@ var Constructor = function()
         if (powerMode === GameEnums.PowerMode_Tagpower ||
             powerMode === GameEnums.PowerMode_Superpower)
         {
-            defenseBoost = 10;
-            info.addBonusIcon("defenseStar", "+" + defenseStars * CO_LASH.terrainDefenseModifier);
+            defenseBoost = CO_LASH.powerDefBonus;
+            info.addBonusIcon("defenseStar", "+" + defenseStars * CO_LASH.superPowerTerrainDefenseModifier);
             info.addBonusIcon("moveRange", "=1");
-            offensiveBoost = CO_LASH.zoneTerrainBonus * defenseStars * (1 + CO_LASH.terrainDefenseModifier) + 10;
+            offensiveBoost = CO_LASH.d2dTerrainBonus * defenseStars * (1 + CO_LASH.superPowerTerrainDefenseModifier) + CO_LASH.powerOffBonus;
         }
         else if (powerMode === GameEnums.PowerMode_Power)
         {
-            defenseBoost = 10;
+            defenseBoost = CO_LASH.powerDefBonus;
             info.addBonusIcon("moveRange", "=1");
-            offensiveBoost = CO_LASH.zoneTerrainBonus * defenseStars + 10;
+            offensiveBoost = CO_LASH.d2dTerrainBonus * defenseStars + CO_LASH.powerOffBonus;
         }
         else
         {
-            offensiveBoost = CO_LASH.globalTerrainBonus * defenseStars;
+            offensiveBoost = CO_LASH.d2dTerrainBonus * defenseStars;
         }
         info.setOffensiveBoost(offensiveBoost);
         info.setDefensiveBoost(defenseBoost);
@@ -364,20 +397,21 @@ var Constructor = function()
         if (powerMode === GameEnums.PowerMode_Tagpower ||
             powerMode === GameEnums.PowerMode_Superpower)
         {
-            defenseBoost = 10;
-            info.addBonusIcon("defenseStar", "+" + defenseStars * CO_LASH.terrainDefenseModifier);
+            defenseBoost = CO_LASH.powerDefBonus;
+            info.addBonusIcon("defenseStar", "+" + defenseStars * CO_LASH.superPowerTerrainDefenseModifier);
             info.addBonusIcon("moveRange", "=1");
-            offensiveBoost = CO_LASH.zoneTerrainBonus * defenseStars * (1 + CO_LASH.terrainDefenseModifier) + 10;
+            offensiveBoost = CO_LASH.d2dTerrainBonus * defenseStars * (1 + CO_LASH.superPowerTerrainDefenseModifier) + CO_LASH.powerOffBonus;
         }
         else if (powerMode === GameEnums.PowerMode_Power)
         {
-            defenseBoost = 10;
+            defenseBoost = CO_LASH.powerDefBonus;
             info.addBonusIcon("moveRange", "=1");
-            offensiveBoost = CO_LASH.zoneTerrainBonus * defenseStars + 10;
+            offensiveBoost = CO_LASH.d2dTerrainBonus * defenseStars + CO_LASH.powerOffBonus;
         }
         else
         {
-            offensiveBoost = CO_LASH.zoneTerrainBonus * defenseStars + 10;
+            defenseBoost = CO_LASH.d2dCoZoneDefBonus;
+            offensiveBoost = CO_LASH.d2dCoZoneTerrainBonus * defenseStars + CO_LASH.d2dCoZoneOffBonus;
         }
         info.setOffensiveBoost(offensiveBoost);
         info.setDefensiveBoost(defenseBoost);

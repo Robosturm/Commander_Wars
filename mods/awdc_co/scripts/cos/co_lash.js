@@ -1,4 +1,3 @@
-CO_LASH.terrainDefenseModifier = 0;
 CO_LASH.init = function(co, map)
 {
     co.setPowerStars(3);
@@ -7,6 +6,7 @@ CO_LASH.init = function(co, map)
 CO_LASH.activateSuperpower = function(co, powerMode, map)
 {
 	CO_LASH.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_LASH.getSuperPowerDescription = function()
 {
