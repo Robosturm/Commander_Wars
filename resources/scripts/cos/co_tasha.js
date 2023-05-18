@@ -108,9 +108,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power_awdc.mp3", 992, 45321);
                 break;
@@ -123,6 +124,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/tasha.mp3", 1663, 66947);
                 break;
+            }
         }
     };
 
@@ -135,37 +137,65 @@ var Constructor = function()
         return "BD";
     };
 
+    this.superPowerOffBonus = 70;
+    this.superPowerDefBonus = 30;
+    this.superPowerMovementBonus = 2;
+    this.powerOffBonus = 50;
+    this.powerBaseOffBonus = 10;
+    this.powerDefBonus = 30;
+    this.powerMovementBonus = 1;
+    this.powerBaseDefBonus = 10;
+    this.d2dOffBonus = 0;
+    this.d2dDeffBonus = 0;
+    this.d2dCoZoneOffBonus = 50;
+    this.d2dCoZoneDeffBonus = 30;
+    this.d2dCoZoneBaseOffBonus = 10;
+    this.d2dCoZoneBaseDeffBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return 70;
-                }
-                break;
-            case GameEnums.PowerMode_Power:
-                if (attacker.getUnitType() === GameEnums.UnitType_Air)
-                {
-                    return 50;
+                    return CO_TASHA.superPowerOffBonus;
                 }
                 else
                 {
-                    return 10;
+                    return CO_TASHA.powerBaseOffBonus;
+                }
+            case GameEnums.PowerMode_Power:
+                if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_TASHA.powerOffBonus;
+                }
+                else
+                {
+                    return CO_TASHA.powerBaseOffBonus;
                 }
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (CO.getGlobalZone())
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
-                        return 50;
+                        return CO_TASHA.d2dOffBonus;
                     }
-                    return 10;
+                }
+                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                    {
+                        return CO_TASHA.d2dCoZoneOffBonus;
+                    }
+                    return CO_TASHA.d2dCoZoneBaseOffBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
@@ -173,48 +203,64 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return 30;
-                }
-                break;
-            case GameEnums.PowerMode_Power:
-                if (defender.getUnitType() === GameEnums.UnitType_Air)
-                {
-                    return 30;
+                    return CO_TASHA.superPowerDefBonus;
                 }
                 else
                 {
-                    return 10;
+                    return CO_TASHA.powerBaseDefBonus;
+                }
+            case GameEnums.PowerMode_Power:
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_TASHA.powerDefBonus;
+                }
+                else
+                {
+                    return CO_TASHA.powerBaseDefBonus;
                 }
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
+                if (CO.getGlobalZone())
                 {
                     if (defender.getUnitType() === GameEnums.UnitType_Air)
                     {
-                        return 30;
+                        return CO_TASHA.d2dDeffBonus;
                     }
-                    return 10;
+                }
+                else if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
+                {
+                    if (defender.getUnitType() === GameEnums.UnitType_Air)
+                    {
+                        return CO_TASHA.d2dCoZoneDeffBonus;
+                    }
+                    return CO_TASHA.d2dCoZoneBaseDeffBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
 
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+        if (CO.isActive(co))
         {
-            return 2;
-        }
-        else if (co.getPowerMode() === GameEnums.PowerMode_Power)
-        {
-            return 1;
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            {
+                return CO_TASHA.superPowerMovementBonus;
+            }
+            else if (co.getPowerMode() === GameEnums.PowerMode_Power)
+            {
+                return CO_TASHA.powerMovementBonus;
+            }
         }
         return 0;
     };
@@ -228,11 +274,14 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "AIRPORT" ||
-            buildingId === "TEMPORARY_AIRPORT")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_KIROV"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "AIRPORT" ||
+                    buildingId === "TEMPORARY_AIRPORT")
+            {
+                return ["ZCOUNIT_KIROV"];
+            }
         }
         return [];
     };
@@ -256,13 +305,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nKirov\n") +
-               qsTr("\nGlobal Effect: \nNo Effects") +
-               qsTr("\n\nCO Zone Effect: \nAir Units have 50% increased firepower and 30% increased defense.");
+        let text = qsTr("\nSpecial Unit:\nKirov\n") +
+               qsTr("\nGlobal Effect: \nAir Units have %0% increased firepower and %1% increased defense.") +
+               qsTr("\n\nCO Zone Effect: \nAir Units have %2% increased firepower and %3% increased defense.");
+        text = replaceTextArgs(text, [CO_TASHA.d2dOffBonus , CO_TASHA.d2dDeffBonus, CO_TASHA.d2dCoZoneOffBonus, CO_TASHA.d2dCoZoneDeffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Air units have higher firepower, defense and all units can move 1 space farther.");
+        let text = qsTr("Air units have increased firepower by %0 and defense by %1. All units can move %2 space farther.");
+        text = replaceTextArgs(text, [CO_TASHA.powerOffBonus , CO_TASHA.powerDefBonus, CO_TASHA.powerMovementBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -270,7 +323,10 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Air units have impressive firepower, higher defense and all units can move 2 space farther");
+
+        let text = qsTr("Air units have increased firepower by %0 and defense by %1. All units can move %2 space farther.");
+        text = replaceTextArgs(text, [CO_TASHA.superPowerOffBonus , CO_TASHA.superPowerDefBonus, CO_TASHA.superPowerMovementBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

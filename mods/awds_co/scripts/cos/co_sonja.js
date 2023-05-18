@@ -1,3 +1,16 @@
+CO_SONJA.superPowerEnemyTerrainDefenseModifier = 3;
+CO_SONJA.powerOffBonus = 10;
+CO_SONJA.powerDefBonus = 10;
+CO_SONJA.powerVisionBonus = 2;
+CO_SONJA.powerEnemyTerrainDefenseModifier = 2;
+CO_SONJA.d2dCoZoneOffBonus = 0;
+CO_SONJA.d2dCoZoneDefBonus = 0;
+CO_SONJA.d2dVisionBonus = 1;
+CO_SONJA.d2dEnemyTerrainDefenseModifier = 1;
+CO_SONJA.d2dBonusMisfortune = 5;
+CO_SONJA.d2dCounterAttackBonus = 0;
+
+
 CO_SONJA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {

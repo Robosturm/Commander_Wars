@@ -1,41 +1,16 @@
+CO_TABITHA.superPowerDamage = 8;
+CO_TABITHA.powerDamage = 4;
+CO_TABITHA.superPowerOffBonus = 60;
+CO_TABITHA.superPowerDefBonus = 60;
+CO_TABITHA.powerOffBonus = 60;
+CO_TABITHA.powerDefBonus = 60;
+CO_TABITHA.d2dCoZoneOffBonus = 60;
+CO_TABITHA.d2dCoZoneDefBonus = 60;
+CO_TABITHA.d2dOffBonus = 0;
+CO_TABITHA.d2dDefBonus = 0;
+
 CO_TABITHA.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
-};
-
-CO_TABITHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    switch (co.getPowerMode())
-    {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            return 60;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
-                return 60;
-            }
-            break;
-    }
-    return 0;
-};
-CO_TABITHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    switch (co.getPowerMode())
-    {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            return 60;
-        default:
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-            {
-                return 60;
-            }
-            break;
-    }
 };

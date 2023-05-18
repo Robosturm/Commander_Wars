@@ -8,28 +8,28 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/sophie.mp3", 27799, 69801);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/sophie.mp3", 27799, 69801);
+                break;
+            }
         }
     };
 
@@ -133,34 +133,47 @@ var Constructor = function()
         return 2;
     };
 
+    this.superPowerSecondAttackOffMalus = 30;
+    this.superPowerDefenderDamageReduction = 0.2;
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 20;
+    this.d2dDefenderDamageReduction = 0.0;
+    this.d2dCoZoneDefenderDamageReduction = 0.2;
+    this.d2dCoZoneDefBonus = 20;
+    this.d2dCoZoneOffBonus = 20;
+
     this.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                        defender, defPosX, defPosY, isDefender, luckMode, map)
     {
-        // reduce counter damage by a flat amount here
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (isDefender === true)
+            switch (co.getPowerMode())
             {
-                return damage * 0.2;
-            }
-            break;
-        case GameEnums.PowerMode_Power:
-            if (isDefender === true)
-            {
-                return damage;
-            }
-            break;
-        default:
-            if (isDefender === true)
-            {
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (isDefender === true)
                 {
-                    return damage * 0.2;
+                    return damage * CO_SOPHIE.defenderDamageReduction;
                 }
+                break;
+            case GameEnums.PowerMode_Power:
+                if (isDefender === true)
+                {
+                    return damage;
+                }
+                break;
+            default:
+                if (isDefender === true)
+                {
+
+                    if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                        CO.getGlobalZone())
+                    {
+                        return damage * CO_SOPHIE.d2dCoZoneDefenderDamageReduction;
+                    }
+                }
+                break;
             }
-            break;
         }
         return 0;
     };
@@ -180,32 +193,35 @@ var Constructor = function()
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (gotAttacked === false && attacker.getOwner() === co.getOwner())
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (!gotAttacked && defender.getHp() > 0 && attacker.getHp() > 0)
+                switch (co.getPowerMode())
                 {
-                    // we're the attacker
-                    var variable = attacker.getVariables().createVariable("SOPHIE_SCOP");
-                    if (variable.readDataBool() === false)
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    if (!gotAttacked && defender.getHp() > 0 && attacker.getHp() > 0)
                     {
-                        variable.writeDataBool(true);
-                        var damageResult = ACTION_FIRE.calcBattleDamage2(map, action, attacker, Qt.point(attacker.getX(), attacker.getY()),
-                                                                         defender.getX(), defender.getY(), GameEnums.LuckDamageMode_On);
-                        // do another attack
-                        ACTION_FIRE.battle(map, attacker, damageResult.x, damageResult.y,
-                                           defender.getX(), defender.getY(), damageResult.width, damageResult.height,
-                                           true);
+                        // we're the attacker
+                        var variable = attacker.getVariables().createVariable("SOPHIE_SCOP");
+                        if (variable.readDataBool() === false)
+                        {
+                            variable.writeDataBool(true);
+                            var damageResult = ACTION_FIRE.calcBattleDamage2(map, action, attacker, Qt.point(attacker.getX(), attacker.getY()),
+                                                                             defender.getX(), defender.getY(), GameEnums.LuckDamageMode_On);
+                            // do another attack
+                            ACTION_FIRE.battle(map, attacker, damageResult.x, damageResult.y,
+                                               defender.getX(), defender.getY(), damageResult.width, damageResult.height,
+                                               true);
+                        }
                     }
+                    break;
+                case GameEnums.PowerMode_Power:
+                    break;
+                default:
+                    break;
                 }
-                break;
-            case GameEnums.PowerMode_Power:
-                break;
-            default:
-                break;
             }
         }
     };
@@ -213,38 +229,46 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (isDefender === false)
+            switch (co.getPowerMode())
             {
-                var variable = attacker.getVariables().createVariable("SOPHIE_SCOP");
-                if (variable.readDataBool() === true)
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (isDefender === false)
                 {
-                    // reduce damage during the second attack
-                    return -30;
+                    var variable = attacker.getVariables().createVariable("SOPHIE_SCOP");
+                    if (variable.readDataBool() === true)
+                    {
+                        return -CO_SOPHIE.superPowerSecondAttackOffMalus;
+                    }
                 }
+                return CO_SOPHIE.powerOffBonus;
+            case GameEnums.PowerMode_Power:
+                return CO_SOPHIE.powerOffBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_SOPHIE.d2dCoZoneOffBonus;
+                }
+                break;
             }
-            return 10;
-        case GameEnums.PowerMode_Power:
-            return 10;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
-                return 20;
-            }
-            break;
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 20;
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_SOPHIE.powerDefBonus;
+            }
+            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_SOPHIE.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -258,13 +282,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_COMMANDO"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_COMMANDO"];
+            }
         }
         return [];
     };
@@ -288,9 +315,11 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nCommando\n") +
-                qsTr("\nGlobal Effect: \nNo Effects") +
-                qsTr("\n\nCO Zone Effect: \nEnemy counterattacks deal less damage. Units gain firepower and defense.");
+        let text = qsTr("\nSpecial Unit:\nCommando\n") +
+                qsTr("\nGlobal Effect: \nEnemy counterattacks deal %0% less damage.") +
+                qsTr("\n\nCO Zone Effect: \nEnemy counterattacks deal %1% less damage. Units gain %2% firepower and %3% defense.");
+        text = replaceTextArgs(text, [CO_SOPHIE.d2dDefenderDamageReduction, CO_SOPHIE.d2dCoZoneDefenderDamageReduction, CO_SOPHIE.d2dCoZoneOffBonus, CO_SOPHIE.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
@@ -302,7 +331,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Sophie's units strike twice when ordered to attack. However, firepower is reduced");
+        let text = qsTr("Sophie's units strike twice when ordered to attack. However, firepower of the second attack is reduced by %0%");
+        text = replaceTextArgs(text, [CO_SOPHIE.superPowerSecondAttackOffMalus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

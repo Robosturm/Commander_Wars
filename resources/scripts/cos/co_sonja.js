@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2", "+alt3", "+alt4", "+alt5", "+alt6"];
     };
 
@@ -15,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/sonja.mp3", 4059, 60078);
                 break;
+            }
         }
     };
 
@@ -67,18 +67,55 @@ var Constructor = function()
     {
         return "YC";
     };
-	
+
+    this.superPowerEnemyTerrainDefenseModifier = 3;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.powerVisionBonus = 2;
+    this.powerEnemyTerrainDefenseModifier = 2;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dVisionBonus = 1;
+    this.d2dEnemyTerrainDefenseModifier = 1;
+    this.d2dBonusMisfortune = 5;
+    this.d2dCounterAttackBonus = 0;
+
     this.getBonusMisfortune = function(co, unit, posX, posY, map)
     {
-        return 5;
+        if (CO.isActive(co))
+        {
+            return CO_SONJA.d2dBonusMisfortune;
+        }
+        return 0;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                if (isDefender && CO_SONJA.counterAttackBonus !== 0)
+                {
+                    return CO_SONJA.d2dCounterAttackBonus;
+                }
+                return CO_SONJA.powerOffBonus;
+            }
+            else if (CO.getGlobalZone())
+            {
+                if (isDefender && CO_SONJA.counterAttackBonus !== 0)
+                {
+                    return CO_SONJA.d2dCounterAttackBonus;
+                }
+            }
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                if (isDefender && CO_SONJA.counterAttackBonus !== 0)
+                {
+                    return CO_SONJA.d2dCounterAttackBonus;
+                }
+                return CO_SONJA.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
@@ -86,72 +123,92 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_SONJA.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_SONJA.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getVisionrangeModifier = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return 2;
+                return CO_SONJA.powerVisionBonus;
             default:
-                return 1;
+                return CO_SONJA.d2dVisionBonus;
+            }
         }
+        return 0;
     };
     this.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (co.getIsCO0() === true)
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return -3;
+                return -CO_SONJA.superPowerEnemyTerrainDefenseModifier;
             case GameEnums.PowerMode_Power:
-                return -2;
+                return -CO_SONJA.powerEnemyTerrainDefenseModifier;
             default:
-                return -1;
+                return -CO_SONJA.d2dEnemyTerrainDefenseModifier;
+            }
         }
+        return 0;
     };
 
     this.getPerfectVision = function(co, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
                 return true;
             default:
                 return false;
+            }
         }
     };
 
     this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
     {
-        if(unit !== null)
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if(unit !== null)
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (isDefender)
+                switch (co.getPowerMode())
                 {
-                    return true;
-                }
-                else
-                {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    if (isDefender)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case GameEnums.PowerMode_Power:
+                    return false;
+                default:
                     return false;
                 }
-            case GameEnums.PowerMode_Power:
-                return false;
-            default:
-                return false;
             }
         }
         return false;
@@ -159,8 +216,10 @@ var Constructor = function()
 
     this.getHpHidden = function(co, unit, posX, posY, map)
     {
-        // are the hp hidden of this unit?
-        return true;
+        if (CO.isActive(co))
+        {
+            return true;
+        }
     };
     this.getAiCoUnitBonus = function(co, unit, map)
     {
@@ -168,13 +227,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_INTEL_TRUCK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_INTEL_TRUCK"];
+            }
         }
         return [];
     };
@@ -198,13 +260,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nIntel truck\n") +
-               qsTr("\nGlobal Effect: \nKeeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain firepower and defense.");
+        let text = qsTr("\nSpecial Unit:\nIntel truck\n") +
+            qsTr("\nGlobal Effect: \nKeeps HP intel hidden from foes. Units have increased vision by %4. Reduces enemy terrain defensive cover by %0. Her misfortune is increased by %1. Units have %5% increased firepower during counter attacks.") +
+            qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower and %3% defense.");
+        text = replaceTextArgs(text, [CO_SONJA.d2dEnemyTerrainDefenseModifier, CO_SONJA.d2dBonusMisfortune, CO_SONJA.d2dCoZoneOffBonus, CO_SONJA.d2dBonusMisfortune, CO_SONJA.d2dVisionBonus, CO_SONJA.d2dCounterAttackBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Reduces enemy terrain defensive cover by two. Allows all units to see into woods and reefs.");
+        let text = qsTr("Reduces enemy terrain defensive cover by %0. Units have increased vision by %1. Allows all units to see into woods and reefs.");
+        text = replaceTextArgs(text, [CO_SONJA.powerEnemyTerrainDefenseModifier, CO_SONJA.powerVisionBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -212,7 +278,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Reduces enemy terrain defensive cover by three. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.");
+        let text = qsTr("Reduces enemy terrain defensive cover by %0. Units have increased vision by %1. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.");
+        text = replaceTextArgs(text, [CO_SONJA.superPowerEnemyTerrainDefenseModifier, CO_SONJA.powerVisionBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -15,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/von_bolt.mp3", 47693, 113984);
                 break;
+            }
         }
     };
 
@@ -39,7 +39,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_VON_BOLT.throwLaserray(co, 1, 2, powerNameAnimation, map);
+        CO_VON_BOLT.throwLaserray(co, CO_VON_BOLT.powerDamage, CO_VON_BOLT.powerRange, powerNameAnimation, map);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -48,7 +48,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_VON_BOLT.throwLaserray(co, 3, 3, powerNameAnimation, map);
+        CO_VON_BOLT.throwLaserray(co, CO_VON_BOLT.superPowerDamage, CO_VON_BOLT.superPowerRange, powerNameAnimation, map);
     };
 
     this.throwLaserray = function(co, damage, range, powerNameAnimation, map)
@@ -120,52 +120,81 @@ var Constructor = function()
     {
         return "BG";
     };
+
+    this.superPowerDamage = 3;
+    this.superPowerRange = 3;
+    this.powerDamage = 1;
+    this.powerRange = 2;
+    this.powerOffBonus = 40;
+    this.powerDefBonus = 40;
+    this.d2dCoZoneOffBonus = 40;
+    this.d2dCoZoneDefBonus = 40;
+    this.d2dOffBonus = 0;
+    this.d2dDefBonus = 0;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return 40;
+                return CO_VON_BOLT.powerOffBonus;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (CO.getGlobalZone())
                 {
-                    return 40;
+                    return CO_VON_BOLT.powerOffBonus;
+                }
+                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_VON_BOLT.d2dCoZoneOffBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return 40;
+                return CO_VON_BOLT.powerDefBonus;
             default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (CO.getGlobalZone())
                 {
-                    return 40;
+                    return CO_VON_BOLT.powerDefBonus;
+                }
+                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return CO_VON_BOLT.d2dCoZoneDefBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_CRYSTAL_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_CRYSTAL_TANK"];
+            }
         }
         return [];
     };
@@ -192,12 +221,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and increased defense.");
+        let text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect:\nFirepower is increased by %0% and defence by %1%.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %2% and increased defense by %3%.");
+        text = replaceTextArgs(text, [CO_VON_BOLT.d2dOffBonus, CO_VON_BOLT.d2dDefBonus, CO_VON_BOLT.d2dCoZoneOffBonus, CO_VON_BOLT.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.");
+        let text = qsTr("Fires shock waves that disables electrical systems and all forces in range of %0 become paralyzed. Affected units suffer %1 HP of damage. Firepower rises by %2% and defense %3%.");
+        text = replaceTextArgs(text, [CO_VON_BOLT.powerRange, CO_VON_BOLT.powerDamage, CO_VON_BOLT.powerOffBonus, CO_VON_BOLT.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -205,7 +238,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.");
+        let text = qsTr("Fires shock waves that disables electrical systems and all forces in rangeof %0 become paralyzed. Affected units suffer %1 HP of damage.  Firepower rises by %2% and defense %3%.");
+        text = replaceTextArgs(text, [CO_VON_BOLT.superPowerRange, CO_VON_BOLT.superPowerDamage, CO_VON_BOLT.powerOffBonus, CO_VON_BOLT.powerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
