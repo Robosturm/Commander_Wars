@@ -177,6 +177,9 @@ var Constructor = function()
     {
         return "OS";
     };
+
+    this.coPowerBonus = 20;
+    this.coPowerLuck = 40;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
@@ -185,11 +188,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return 20;
+                return CO_RACHEL.coPowerBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return CO_RACHEL.coPowerBonus;
                 }
                 break;
         }
@@ -201,7 +204,7 @@ var Constructor = function()
             if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                     co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                return 20;
+                return CO_RACHEL.coPowerBonus;
             }
             return 0;
         };
@@ -213,7 +216,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 break;
             case GameEnums.PowerMode_Power:
-                return 40;
+                return CO_RACHEL.coPowerLuck;
             default:
                 break;
         }
@@ -243,16 +246,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Global Day-to-day: \nRachel's units repair by +1 if funds allow.");
+        return qsTr("extra healing from proporties.");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nActive CO Day-to-day: \nNo abilities.") +
-               qsTr("\n\nCO Zone Effect: \nRachel's firepower becomes 120% and defense 120%.");
+        var text = qsTr("<r>\n\nActive CO Day-to-day: \nRachel's units repair by </r><div c='#55ff00'>+1</div><r> on porporties if funds allow.</r>") +
+               qsTr("<r>\n\nCO Zone Effect: \nRachel's firepower and defense increase by </r><div c='#55ff00'>+%0%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_RACHEL.coPowerBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Rachel's units may deal up to 40% luck damage. Firepower becomes 120% and defense 120%.");
+        var text = qsTr("<r>Rachel's units may deal up to </r><div c='#55ff00'>+%0%</div><r> luck damage. Firepower and defense increase by </r><div c='#55ff00'>+%1%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_RACHEL.coPowerLuck, CO_RACHEL.coPowerBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -260,7 +267,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Launches three missiles from Orange Star HQ in Omega Land. Firepower becomes 120% and defense 120%.");
+        var text = qsTr("<r>Launches three missiles from Orange Star HQ. Firepower and defense increase by </r><div c='#55ff00'>+%0%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_RACHEL.coPowerBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

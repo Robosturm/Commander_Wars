@@ -16,18 +16,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/nell.mp3", 59, 61394);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/nell.mp3", 59, 61394);
+            break;
         }
     };
 
@@ -133,41 +133,46 @@ var Constructor = function()
     {
         return "OS";
     };
+
+    this.coSuperpowerLuck = 100;
+    this.coPowerLuck = 60;
+    this.coZoneLuck = 15;
+    this.coZoneBonus = 10;
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 100;
-            case GameEnums.PowerMode_Power:
-                return 60;
-            default:
-                if (co.inCORange(Qt.point(posX, posY), unit))
-                {
-                    return 15;
-                }
-                break;
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            return CO_NELL.coSuperpowerLuck;
+        case GameEnums.PowerMode_Power:
+            return CO_NELL.coPowerLuck;
+        default:
+            if (co.inCORange(Qt.point(posX, posY), unit))
+            {
+                return CO_NELL.coZoneLuck;
+            }
+            break;
         }
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
+      defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+            co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return CO_NELL.coZoneBonus;
         }
         return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+     defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+            co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return CO_NELL.coZoneBonus;
         }
         return 0;
     };
@@ -190,16 +195,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Global Day-to-day: \nNo abilities");
+        return qsTr("<r>Luck boost from powers.</r>");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nActive CO Day-to-day: \nNo abilities") +
-               qsTr("\n\nCO Zone Effect: \nNell's units can inflict up to +15% luck damage instead of the standard +10%.");
+        var text = qsTr("<r>\n\nActive CO Day-to-day: \nNo abilities</r>") +
+        qsTr("<r>\n\nCO Zone Effect: \nNell's units can inflict up to </r><div c='#55ff00'>+%0%</div><r> luck damage instead of the standard +10%.</r>");
+        text = replaceTextArgs(text, [CO_NELL.coZoneLuck]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Nell's luck damage increases up to +60% and all units attack and deffense become 110%.");
+        var text = qsTr("<r>Nell's luck damage increases up to </r><div c='#55ff00'>+%0%</div><r> and all units attack and deffense raises by </r><div c='#55ff00'>+%1%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_NELL.coPowerLuck, CO_NELL.coZoneBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -207,7 +216,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Nell's luck damage increases up to +100% and all units attack and deffense become 110%.");
+        var text = qsTr("<r>Nell's luck damage increases up to </r><div c='#55ff00'>+%0%</div><r> and all units attack and deffense raises by </r><div c='#55ff00'>+%1%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_NELL.coSuperpowerLuck, CO_NELL.coZoneBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
@@ -216,22 +227,22 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Luck IS a skill!"),
-                qsTr("Hmm... Time to get serious!"),
-                qsTr("I'm just getting started!"),
-                qsTr("Don't hate me just because I'm lucky!"),
-                qsTr("Everything will work out!"),
-                qsTr("I'm feelin' lucky!")];
+            qsTr("Hmm... Time to get serious!"),
+            qsTr("I'm just getting started!"),
+            qsTr("Don't hate me just because I'm lucky!"),
+            qsTr("Everything will work out!"),
+            qsTr("I'm feelin' lucky!")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("Did I go too far?"),
-                qsTr("Lady luck was with me!"),
-                qsTr("...And that's how it's done.")];
+            qsTr("Lady luck was with me!"),
+            qsTr("...And that's how it's done.")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Seems like I just wasn't lucky enough..."),
-                qsTr("Congratulations! You've beaten me!")];
+            qsTr("Congratulations! You've beaten me!")];
     };
     this.getName = function()
     {

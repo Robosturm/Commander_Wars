@@ -3,7 +3,7 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-        
+
         return ["+alt"];
     };
 
@@ -18,18 +18,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/jake.mp3", 5421, 96121);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/jake.mp3", 5421, 96121);
+            break;
         }
     };
 
@@ -135,8 +135,17 @@ var Constructor = function()
     {
         return "OS";
     };
+
+    this.coSuperpowerBonus = 90;
+    this.coPowerBonus = 70;
+    this.coZoneBonus = 70;
+    this.coPlainsBonus = 10;
+    this.coDefenseBonus = 10;
+    this.coIndirectBonus = 1;
+    this.coMoveBonus = 2;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
+     defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (map !== null)
         {
@@ -149,23 +158,23 @@ var Constructor = function()
                 case GameEnums.PowerMode_Superpower:
                     if (terrainID === "PLAINS")
                     {
-                        return 90;
+                        return CO_JAKE.coSuperpowerBonus;
                     }
-                    return 10;
+                    return CO_JAKE.coPlainsBonus;
                 case GameEnums.PowerMode_Power:
                     if (terrainID === "PLAINS")
                     {
-                        return 70;
+                        return CO_JAKE.coPowerBonus;
                     }
-                    return 10;
+                    return CO_JAKE.coPlainsBonus;
                 default:
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         if (terrainID === "PLAINS")
                         {
-                            return 70;
+                            return CO_JAKE.coZoneBonus;
                         }
-                        return 10;
+                        return CO_JAKE.coPlainsBonus;
                     }
                     break;
                 }
@@ -173,17 +182,17 @@ var Constructor = function()
         }
         else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
         {
-            return 10;
+            return CO_JAKE.coPlainsBonus;
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+            co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return coDefenseBonus;
         }
         return 0;
     };
@@ -191,17 +200,17 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-            case GameEnums.PowerMode_Power:
-                if (unit.getBaseMaxRange() > 1 &&
-                    unit.getUnitType() === GameEnums.UnitType_Ground)
-                {
-                    return 1;
-                }
-                break;
-            default:
-                    return 0;
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            if (unit.getBaseMaxRange() > 1 &&
+                unit.getUnitType() === GameEnums.UnitType_Ground)
+            {
+                return CO_JAKE.coIndirectBonus;
+            }
+            break;
+        default:
+            return 0;
         }
         return 0;
     };
@@ -213,7 +222,7 @@ var Constructor = function()
             if (unit.getUnitType() === GameEnums.UnitType_Ground &&
                 unit.getBaseMaxRange() === 1)
             {
-                return 2;
+                return CO_JAKE.coMoveBonus;
             }
         }
         return 0;
@@ -250,17 +259,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Global Day-to-day: \nNo abilities");
+        return qsTr("Ground units have increased firepower on plains.");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nTank Hunter\n") +
-               qsTr("\nActive CO Day-to-day: \nNo abilities.") +
-               qsTr("\n\nCO Zone Effect: \nJakes's units (including air) gain 70% firepower on plains terrain and gain 10% firepower and deffense overall.");
+        var text = qsTr("<r>\n\nSpecial Unit:\nTank Hunter\n</r>") +
+        qsTr("<r>\n\nActive CO Day-to-day: \nJakes's units (including air) gain </r><div c='#55ff00'>+%0%</div><r> firepower on plains terrain.</r>") +
+        qsTr("<r>\n\nCO Zone Effect: \nJakes's units (including air) gain </r><div c='#55ff00'>+%1%</div><r> firepower on plains terrain and gain </r><div c='#55ff00'>+%2%</div><r> firepower and deffense overall.</r>");
+        text = replaceTextArgs(text, [CO_JAKE.coPlainsBonus, CO_JAKE.coZoneBonus, CO_JAKE.coDefenseBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Jake's plains terrain firepower bonus becomes 170% and overall firepower and deffense becomes 110%. His ground indirect-combat units gain 1 attack range.");
+     var text = qsTr("<r>Jake's plains terrain firepower bonus becomes </r><div c='#55ff00'>+%0%</div><r> and deffense becomes </r><div c='#55ff00'>+%1%</div><r>. His ground indirect-combat units gain </r><div c='#55ff00'>+%2</div><r> range.</r>");
+     text = replaceTextArgs(text, [CO_JAKE.coPowerBonus, CO_JAKE.coDefenseBonus, CO_JAKE.coIndirectBonus]);
+     return text;
     };
     this.getPowerName = function(co)
     {
@@ -268,7 +281,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Jake's plains terrain firepower bonus becomes 170% and overall firepower and deffense becomes 110%. His ground indirect-combat units gain 1 attack range and all his ground vehicle units gain 2 movement.");
+        var text = qsTr("<r>Jake's plains terrain firepower bonus becomes </r><div c='#55ff00'>+%0%</div><r> and deffense becomes </r><div c='#55ff00'>+%1%</div><r>. His ground indirect-combat units gain </r><div c='#55ff00'>+%2</div><r> range and all his ground vehicle units gain </r><div c='#55ff00'>+%3 movement</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_JAKE.coSuperpowerBonus, CO_JAKE.coDefenseBonus, CO_JAKE.coIndirectBonus CO_JAKE.coMoveBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
@@ -277,22 +292,22 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Give it up, fool!"),
-                qsTr("Prepare to get served."),
-                qsTr("Prepare for a subpoena of pain! Yeah, that's lawyer style!"),
-                qsTr("This is how I roll!"),
-                qsTr("Wassup now?!"),
-                qsTr("Here...have a taste!")];
+            qsTr("Prepare to get served."),
+            qsTr("Prepare for a subpoena of pain! Yeah, that's lawyer style!"),
+            qsTr("This is how I roll!"),
+            qsTr("Wassup now?!"),
+            qsTr("Here...have a taste!")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("Get the plates, 'cause you just got served!"),
-                qsTr("Owned!"),
-                qsTr("You got dropped like a phat beat!")];
+            qsTr("Owned!"),
+            qsTr("You got dropped like a phat beat!")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("I got spanked out there! This combat is the real deal..."),
-                qsTr("Dude, we so don't have time for this.")];
+            qsTr("Dude, we so don't have time for this.")];
     };
     this.getName = function()
     {
