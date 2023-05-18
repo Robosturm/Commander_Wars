@@ -228,19 +228,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Global Day-to-day: \nNo abilities.");
+        return qsTr("<r>No straignths or weaknesses.</r>");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n") +
-                   qsTr("\nActive CO Day-to-day: \nNo abilities") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
+        var text = qsTr("<r>\n\nGlobal Day-to-day: \nNo abilities</r>") +
+                   qsTr("<r>\n\nSpecial Unit:\nRepair Tank</r>") + 
+                   qsTr("<r>\n\nCO Zone Effect: \nUnits gain </r><div c='#55ff00'>+%0%</div><r> firepower and defense.</r>");
         text = replaceTextArgs(text, [CO_ANDY.coZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("All units are restored </r><div c='#ffffff'>Two HP</div><r>. Andy's firepower increases by </r><div c='#ffffff'>%0%</div><r> and defense by </r><div c='#ffffff'>%0%</div><r>.");
+        return qsTr("<r>\nAll units are restored </r><div c='#55ff00'>+Two HP</div><r>. Andy's firepower and defense increases by </r><div c='#55ff00'>+%0%</div><r>.</r>");
         text = replaceTextArgs(text, [CO_ANDY.coPowerBonus]);
         return text;
     };
@@ -250,7 +250,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All units are restored </r><div c='#ffffff'>Five HP</div><r>. Andy's firepower becomes </r><div c='#ffffff'>%0%</div><r> and defense </r><div c='#ffffff'>%0%</div><r>. All units gain </r><div c='#ffffff'>%2 movement</div><r>.");
+        return qsTr("<r>\nAll units are restored </r><div c='#55ff00'>+Five HP</div><r>. Andy's firepower increases by </r><div c='#55ff00'>+%0%</div><r> and defense by </r><div c='#55ff00'>+%1%</div><r>. All units gain </r><div c='#55ff00'>+%2 movement</div><r>.</r>");
         text = replaceTextArgs(text, [CO_ANDY.coSuperPowerBonus, CO_ANDY.coPowerBonus, CO_ANDY.coMovementBonus]);
         return text;
     };

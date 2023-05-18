@@ -301,20 +301,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Global Day-to-day: \nSami's transport units gain </r><div c='#ffffff'>+1 movement</div><r> and her foot soldier units gain </r><div c='#ffffff'>+%0%</div><r> firepower and capture at 1.5 times the normal rate. Her other direct-combat units deal  </r><div c='#ff0000'>-%1%</div><r> less damage.");
-        text = replaceTextArgs(text, [CO_SAMI.d2dInfBonus, CO_SAMI.d2dDirectBonus]);
-        return text;
+        return qsTr("<r>strong infantry units, weak direct combat units.</r>");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nCommando\n") +
-               qsTr("\n\nCO Zone Effect: \nSami's foot soldiers firepower increases by </r><div c='#ffffff'>+%0%</div><r> while all other units gain </r><div c='#ffffff'>+%1%</div><r> firepower and </r><div c='#ffffff'>+%2%</div><r> defense.");
-        text = replaceTextArgs(text, [CO_SAMI.ZoneInfBonus CO_SAMI.ZoneOtherBonus, CO_SAMI.ZoneDefBonus]);
+        return qsTr("<r>\n\nGlobal Day-to-day: \nSami's transport units gain </r><div c='#55ff00'>+1 movement</div><r> and her foot soldier units gain </r><div c='#55ff00'>+%0%</div><r> firepower and capture at 1.5 times the normal rate. Her other direct-combat units deal  </r><div c='#ff2626'>-%1%</div><r> less damage.</r>");
+               qsTr("<r>\n\nSpecial Unit:\nCommando</r>") +
+               qsTr("<r>\n\nCO Zone Effect: \nSami's foot soldiers firepower increases by </r><div c='#55ff00'>+%2%</div><r> while all other units gain </r><div c='#55ff00'>+%3%</div><r> firepower and </r><div c='#55ff00'>+%4%</div><r> defense.</r>");
+        text = replaceTextArgs(text, [CO_SAMI.d2dInfBonus, CO_SAMI.d2dDirectBonus], [CO_SAMI.ZoneInfBonus CO_SAMI.ZoneOtherBonus, CO_SAMI.ZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Sami's foot soldiers gain </r><div c='#ffffff'>+1 movement</div><r> and their firepower increases by </r><div c='#ffffff'>+%0%</div><r> while all other units gain </r><div c='#ffffff'>+%1%</div><r> firepower and </r><div c='#ffffff'>+%2%</div><r> defense.");
+        return qsTr("<r>Sami's foot soldiers gain </r><div c='#55ff00'>+1 movement</div><r> and their firepower increases by </r><div c='#55ff00'>+%0%</div><r> while all other units gain </r><div c='#55ff00'>+%1%</div><r> firepower and </r><div c='#55ff00'>+%2%</div><r> defense.</r>");
         text = replaceTextArgs(text, [CO_SAMI.PowerInfBonus CO_SAMI.PowerOtherBonus, CO_SAMI.ZoneDefBonus]);
         return text;
     };
@@ -324,7 +323,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Sami's foot soldiers can capture buildings instantly and gain </r><div c='#ffffff'>+2 movement</div><r>. Their firepower increases by </r><div c='#ffffff'>+%0%</div><r> while all other units gain </r><div c='#ffffff'>+%1%</div><r> firepower and </r><div c='#ffffff'>+%2%</div><r> defense.");
+        return qsTr("<r>Sami's foot soldiers can capture buildings instantly and gain </r><div c='#55ff00'>+2 movement</div><r>. Their firepower increases by </r><div c='#55ff00'>+%0%</div><r> while all other units gain </r><div c='#55ff00'>+%1%</div><r> firepower and </r><div c='#55ff00'>+%2%</div><r> defense.</r>");
         text = replaceTextArgs(text, [CO_SAMI.superPowerInfBonus CO_SAMI.superPowerOtherBonus, CO_SAMI.ZoneDefBonus]);
         return text;
     };

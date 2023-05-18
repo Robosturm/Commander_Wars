@@ -340,20 +340,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Active CO Day-to-day: \nMax's non-infantry direct-combat units gain </r><div c='#ffffff'>%0%</div><r> firepower and his indirect-combat units have </r><div c='#ff0000'>-%1%</div><r> firepower and </r><div c='#ff0000'>%2 range</div><r> penalty.");
-        text = replaceTextArgs(text, [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectOffBonus, CO_MAX.d2dIndirectFirerangeMalus]);
-        return text;
+        return qsTr("<r>Strong non-infantry direct-combat units, weaker indirect-combat units.</r>");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nTank Hunter\n") +
-        qsTr("\n\nCO Zone Effect: \nMax's non-infantry direct-combat units firepower raises by </r><div c='#ffffff'>+%0%</div><r> and all others gain </r><div c='#ffffff'>+%1%</div><r> firepower and all units defense raises by </r><div c='#ffffff'>+%2%</div><r>.");
-        text = replaceTextArgs(text, [CO_MAX.d2dCoZoneOffBonus, CO_MAX.d2dCoZoneOtherOffBonus, CO_MAX.d2dCoZoneDefBonus]);
+        return qsTr("<r>\n\nActive CO Day-to-day: \nMax's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0%</div><r> firepower and his indirect-combat units have </r><div c='#ff2626'>-%1%</div><r> firepower and </r><div c='#ff2626'>%2 range</div><r> penalty.</r>") +
+        ("<r>\n\nSpecial Unit:\nTank Hunter</r>") +
+        qsTr("<r>\n\nCO Zone Effect: \nMax's non-infantry direct-combat units firepower raises by </r><div c='#55ff00'>+%3%</div><r> and all others gain </r><div c='#55ff00'>+%4%</div><r> firepower and all units defense raises by </r><div c='#55ff00'>+%5%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectOffBonus, CO_MAX.d2dIndirectFirerangeMalus], [CO_MAX.d2dCoZoneOffBonus, CO_MAX.d2dCoZoneOtherOffBonus, CO_MAX.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Max's non-infantry direct-combat units gain </r><div c='#ffffff'>+%0 movement</div><r> and raise their firepower by </r><div c='#ffffff'>+%1%</div><r> and all other units firepower raises by </r><div c='#ffffff'>+%2%</div><r>. All units defense raises by </r><div c='#ffffff'>+%3%</div><r>.");
+        return qsTr("<r>Max's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0 movement</div><r> and raise their firepower by </r><div c='#55ff00'>+%1%</div><r> and all other units firepower raises by </r><div c='#55ff00'>+%2%</div><r>. All units defense raises by </r><div c='#55ff00'>+%3%</div><r>.</r>");
         text = replaceTextArgs(text, [CO_MAX.powerMovementBonus, CO_MAX.powerOffBonus, CO_MAX.powerOtherBonus , CO_MAX.powerDefBonus]);
         return text;
     };
@@ -363,7 +362,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Max's non-infantry direct-combat units gain </r><div c='#ffffff'>+%0 movement</div><r> and raise their firepower by </r><div c='#ffffff'>+%1%</div><r> and all other units firepower raises by </r><div c='#ffffff'>+%2%</div><r>. All units defense raises by </r><div c='#ffffff'>+%3%</div><r>.");
+        return qsTr("<r>Max's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0 movement</div><r> and raise their firepower by </r><div c='#55ff00'>+%1%</div><r> and all other units firepower raises by </r><div c='#55ff00'>+%2%</div><r>. All units defense raises by </r><div c='#55ff00'>+%3%</div><r>.</r>");
         text = replaceTextArgs(text, [CO_MAX.superpowerMovementBonus, CO_MAX.superPowerOffBonus, CO_MAX.powerOtherBonus , CO_MAX.powerDefBonus]);
         return text;
     };
