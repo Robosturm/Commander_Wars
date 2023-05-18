@@ -8,16 +8,15 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/smitan.mp3", 578, 70397);
                 break;
+            }
         }
     };
 
@@ -141,10 +141,12 @@ var Constructor = function()
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (gotAttacked === false && attacker.getOwner() === co.getOwner())
             {
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                 case GameEnums.PowerMode_Power:
@@ -161,14 +163,17 @@ var Constructor = function()
                     break;
                 default:
                     break;
+                }
             }
         }
     };
 
     this.getActionModifierList = function(co, unit, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
@@ -179,13 +184,13 @@ var Constructor = function()
                     var counter = variable.readDataInt32();
                     if (counter <= 0)
                     {
-                        // disable firing with this unit
                         return ["-ACTION_FIRE"];
                     }
                 }
                 break;
             default:
                 break;
+            }
         }
         return [];
     };
@@ -194,93 +199,124 @@ var Constructor = function()
     {
         return 3;
     };
+
+    this.superPowerFirerangeModifier = 2;
+    this.superPowerOffBonus = 20;
+    this.powerOffBonus = 10;
+    this.powerBaseOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.powerFirerangeModifier = 1;
+    this.d2dOffBonus = 0;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneBaseOffBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        var inRangeCount = 0;
-        if (attacker.getBaseMaxRange() === 1)
+        if (CO.isActive(co))
         {
-            var units = co.getOwner().getUnits();
-            var size = units.size();
-            for (var i = 0; i < size; i++)
+            var inRangeCount = 0;
+            if (attacker.getBaseMaxRange() === 1)
             {
-                var unit = units.at(i);
-                var x = unit.getX();
-                var y = unit.getY();
-                var distance = Math.abs(x - defPosX) + Math.abs(y - defPosY);
-                if (unit.getBaseMaxRange() > 1)
+                var units = co.getOwner().getUnits();
+                var size = units.size();
+                for (var i = 0; i < size; i++)
                 {
-                    if (unit.getMinRange(Qt.point(x, y)) <= distance && distance <= unit.getMaxRange(unit.getPosition()))
+                    var unit = units.at(i);
+                    var x = unit.getX();
+                    var y = unit.getY();
+                    var distance = Math.abs(x - defPosX) + Math.abs(y - defPosY);
+                    if (unit.getBaseMaxRange() > 1)
                     {
-                        inRangeCount += 1;
+                        if (unit.getMinRange(Qt.point(x, y)) <= distance && distance <= unit.getMaxRange(unit.getPosition()))
+                        {
+                            inRangeCount += 1;
+                        }
                     }
                 }
             }
-        }
 
-        switch (co.getPowerMode())
-        {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() === 1)
                 {
-                    return inRangeCount * 20 + 10;
+                    return inRangeCount * CO_SMITAN.superPowerOffBonus + CO_SMITAN.powerBaseOffBonus;
                 }
                 else
                 {
-                    return 10;
+                    return CO_SMITAN.powerBaseOffBonus;
                 }
             case GameEnums.PowerMode_Power:
                 if (attacker.getBaseMaxRange() === 1)
                 {
-                    return inRangeCount * 10 + 10;
+                    return inRangeCount * CO_SMITAN.powerOffBonus + CO_SMITAN.powerBaseOffBonus;
                 }
                 else
                 {
-                    return 10;
+                    return CO_SMITAN.powerBaseOffBonus;
                 }
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (CO.getGlobalZone())
                 {
                     if (attacker.getBaseMaxRange() === 1)
                     {
-                        return inRangeCount * 10 + 10;
+                        return inRangeCount * CO_SMITAN.d2dOffBonus;
                     }
-                    return 10;
+                }
+                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (attacker.getBaseMaxRange() === 1)
+                    {
+                        return inRangeCount * CO_SMITAN.d2dCoZoneOffBonus + CO_SMITAN.d2dCoZoneBaseOffBonus;
+                    }
+                    return CO_SMITAN.d2dCoZoneBaseOffBonus;
                 }
                 break;
-        }        
+            }
+        }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_SMITAN.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_SMITAN.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (unit.getBaseMaxRange() > 1)
                 {
-                    return 2;
+                    return CO_SMITAN.superPowerFirerangeModifier;
                 }
                 break;
             case GameEnums.PowerMode_Power:
                 if (unit.getBaseMaxRange() > 1)
                 {
-                    return 1;
+                    return CO_SMITAN.powerFirerangeModifier;
                 }
                 break;
             default:
                 break;
+            }
         }
         return 0;
     };
@@ -302,13 +338,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_SIEGE_CANNON"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_SIEGE_CANNON"];
+            }
         }
         return [];
     };

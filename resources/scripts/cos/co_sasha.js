@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -15,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/sasha.mp3", 15916, 105733);
                 break;
+            }
         }
     };
 
@@ -47,7 +47,7 @@ var Constructor = function()
 
         var player = co.getOwner();
         // i prefer this version you could change it to 10% per funds easily
-        var reduction = co.getOwner().getFunds() / 5000.0;
+        var reduction = co.getOwner().getFunds() / CO_SASHA.powerFundsPerReduction;
         var playerCounter = map.getPlayerCount();
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
@@ -126,50 +126,76 @@ var Constructor = function()
         return "BM";
     };
 
+    this.superPowerIncomeBonus = 0.5;
+    this.powerFundsPerReduction = 5000;
+    this.d2dPercentIncomeBonus = 0.1;
+    this.d2dFlatIncomeBonus = 0;
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 10;
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getBonusIncome = function(co, building, income, map)
     {
-        return income * 0.1;
+        if (CO.isActive(co))
+        {
+            return income * CO_SASHA.d2dPercentIncomeBonus + CO_SASHA.d2dFlatIncomeBonus;
+        }
+        return 0;
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 20;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_SASHA.d2dCoZoneDefBonus;
+            }
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_SASHA.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_SASHA.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_SASHA.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (gotAttacked === false && attacker.getOwner() === co.getOwner())
             {
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    // damage can be negativ if we can't do a counter attack the damge is -1
-                    // avoid loosing money cause of our super power
                     if (atkDamage > 0)
                     {
-                        co.getOwner().addFunds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                        co.getOwner().addFunds(atkDamage / 10.0 * defender.getUnitCosts() * CO_SASHA.superPowerIncomeBonus);
                     }
                     break;
                 case GameEnums.PowerMode_Power:
                     break;
                 default:
                     break;
+                }
             }
         }
     };
@@ -179,13 +205,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_LOGIC_TRUCK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_LOGIC_TRUCK"];
+            }
         }
         return [];
     };
@@ -209,13 +238,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nLogistic Truck\n") +
-               qsTr("\nGlobal Effect: \nShe gets additional funds from allied properties.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defense.");
+        let text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
+               qsTr("\nGlobal Effect: \nShe gets additional %0% funds from allied properties and a flat %1% on top.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain additional %2% firepower and %1% defense.");
+        text = replaceTextArgs(text, [CO_SASHA.d2dPercentIncomeBonus *100, CO_SASHA.d2dFlatIncomeBonus, CO_SASHA.d2dCoZoneOffBonus, CO_SASHA.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("The more funds she has, the more she can decrease the enemy's CO power gauge.");
+        let text = qsTr("Decrease the enemy's CO power gauge by 1 star per %0 funds.");
+        text = replaceTextArgs(text, [CO_SASHA.powerFundsPerReduction]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -223,7 +256,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Earns funds when she inflicts damage on a foe. The greater the damage, the more she earns.");
+        let text = qsTr("Earns %0% funds of the damage inflicted on a foe.");
+        text = replaceTextArgs(text, [CO_SASHA.superPowerIncomeBonus * 100]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

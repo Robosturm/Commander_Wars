@@ -318,7 +318,7 @@ var Constructor = function()
         let text = qsTr("\nSpecial Unit:\nCommando\n") +
                 qsTr("\nGlobal Effect: \nEnemy counterattacks deal %0% less damage.") +
                 qsTr("\n\nCO Zone Effect: \nEnemy counterattacks deal %1% less damage. Units gain %2% firepower and %3% defense.");
-        text = replaceTextArgs(text, [CO_SOPHIE.d2dDefenderDamageReduction, CO_SOPHIE.d2dCoZoneDefenderDamageReduction, CO_SOPHIE.d2dCoZoneOffBonus, CO_SOPHIE.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [CO_SOPHIE.d2dDefenderDamageReduction * 100, CO_SOPHIE.d2dCoZoneDefenderDamageReduction * 100, CO_SOPHIE.d2dCoZoneOffBonus, CO_SOPHIE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

@@ -1,3 +1,12 @@
+CO_SASHA.superPowerIncomeBonus = 0.5;
+CO_SASHA.powerFundsPerReduction = 5000;
+CO_SASHA.d2dPercentIncomeBonus = 0.1;
+CO_SASHA.d2dFlatIncomeBonus = 0;
+CO_SASHA.powerOffBonus = 0;
+CO_SASHA.powerDefBonus = 10;
+CO_SASHA.d2dCoZoneOffBonus = 0;
+CO_SASHA.d2dCoZoneDefBonus = 0;
+
 CO_SASHA.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +15,7 @@ CO_SASHA.init = function(co, map)
 CO_SASHA.activateSuperpower = function(co, powerMode, map)
 {
     CO_SASHA.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_SASHA.getSuperPowerDescription = function()
 {
@@ -14,35 +24,4 @@ CO_SASHA.getSuperPowerDescription = function()
 CO_SASHA.getSuperPowerName = function()
 {
     return CO_SASHA.getPowerName();
-};
-CO_SASHA.getBonusIncome = function(co, building, income, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        return income * 0.1;
-    }
-    return 0;
-};
-
-CO_SASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    return 0;
-};
-
-CO_SASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
-
-CO_SASHA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
-{
 };

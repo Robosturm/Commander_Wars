@@ -149,7 +149,7 @@ var Constructor = function()
     this.d2dCoZoneOtherOffBonus = 10;
     this.d2dIndirectFirerangeMalus = 1;
     this.d2dOffBonus = 15;
-    this.d2dIndirectOffBonus = 10;
+    this.d2dIndirectOffBonus = -10;
     this.d2dOtherOffBonus = 0;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -212,7 +212,7 @@ var Constructor = function()
                         }
                         else if (isIndirect)
                         {
-                            return -CO_MAX.d2dIndirectOffBonus;
+                            return CO_MAX.d2dIndirectOffBonus;
                         }
                         else
                         {

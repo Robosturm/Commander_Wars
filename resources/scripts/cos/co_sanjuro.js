@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -109,9 +107,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -124,6 +123,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/sanjuro.mp3", 100, 63433);
                 break;
+            }
         }
     };
 
@@ -139,13 +139,15 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (defender !== null)
+        if (CO.isActive(co))
         {
-            var variables = co.getVariables();
-            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + defender.getUnitID());
-            var builded = buildedVar.readDataBool();
-            switch (co.getPowerMode())
+            if (defender !== null)
             {
+                var variables = co.getVariables();
+                var buildedVar = variables.createVariable("SANJURO_BUILDED_" + defender.getUnitID());
+                var builded = buildedVar.readDataBool();
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     if (builded === true)
@@ -164,6 +166,7 @@ var Constructor = function()
                         return 10;
                     }
                     break;
+                }
             }
         }
         return 0;
@@ -172,17 +175,19 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        var variables = co.getVariables();
-        var dmgModVar = variables.createVariable("SANJURO_DMG_MOD");
-        var builded = false
-        if (attacker !== null)
+        if (CO.isActive(co))
         {
-            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + attacker.getUnitID());
-            builded = buildedVar.readDataBool();
-        }
-        var modifier = dmgModVar.readDataFloat();
-        switch (co.getPowerMode())
-        {
+            var variables = co.getVariables();
+            var dmgModVar = variables.createVariable("SANJURO_DMG_MOD");
+            var builded = false
+            if (attacker !== null)
+            {
+                var buildedVar = variables.createVariable("SANJURO_BUILDED_" + attacker.getUnitID());
+                builded = buildedVar.readDataBool();
+            }
+            var modifier = dmgModVar.readDataFloat();
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (builded === true)
@@ -218,12 +223,12 @@ var Constructor = function()
                         return modifier;
                     }
                 }
+            }
         }
     };
 
     this.buildedUnit = function(co, unit, map)
     {
-        // called when someone builded a unit -> ACTION_BUILD_UNITS was performed
         var variables = co.getVariables();
         var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
         buildedVar.writeDataBool(true);
@@ -231,38 +236,41 @@ var Constructor = function()
 
     this.startOfTurn = function(co, map)
     {
-        var player = co.getOwner();
-        var funds = player.getFunds();
-        var income = player.calcIncome();
-        var costModifier = 0.0;
-        var damageModifier = 0.0;
-        var exceed = 0;
-        var maxCounter = 20;
-        var counter = 0;
-        if (income < funds)
+        if (CO.isActive(co))
         {
-            // we have more funds than income
-            exceed = funds - income;
-            // this means our troops get stronger and more expensive
-            while (exceed >= 0 && counter < maxCounter)
+            var player = co.getOwner();
+            var funds = player.getFunds();
+            var income = player.calcIncome();
+            var costModifier = 0.0;
+            var damageModifier = 0.0;
+            var exceed = 0;
+            var maxCounter = 20;
+            var counter = 0;
+            if (income < funds)
             {
-                damageModifier += 1;
-                costModifier += 0.01;
-                exceed -= income * 0.1;
-                counter++;
+                // we have more funds than income
+                exceed = funds - income;
+                // this means our troops get stronger and more expensive
+                while (exceed >= 0 && counter < maxCounter)
+                {
+                    damageModifier += 1;
+                    costModifier += 0.01;
+                    exceed -= income * 0.1;
+                    counter++;
+                }
             }
-        }
-        else
-        {
-            // we have less funds than income
-            exceed = income - funds;
-            // this means our troops get weaker and less expensive
-            while (exceed >= 0 && counter < maxCounter)
+            else
             {
-                damageModifier -= 1;
-                costModifier -= 0.01;
-                exceed -= income * 0.05;
-                counter++;
+                // we have less funds than income
+                exceed = income - funds;
+                // this means our troops get weaker and less expensive
+                while (exceed >= 0 && counter < maxCounter)
+                {
+                    damageModifier -= 1;
+                    costModifier -= 0.01;
+                    exceed -= income * 0.05;
+                    counter++;
+                }
             }
         }
         var variables = co.getVariables();
@@ -273,17 +281,20 @@ var Constructor = function()
         dmgModVar.writeDataFloat(damageModifier);
         var costModVar = variables.createVariable("SANJURO_COST_MOD");
         costModVar.writeDataFloat(costModifier);
+
     };
 
     this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
-        var variables = co.getVariables();
-        var costModVar = variables.createVariable("SANJURO_COST_MOD");
-        var buildedVar = variables.createVariable("SANJURO_BUILDED_" + id);
-        var builded = buildedVar.readDataBool();
-        var costMod = costModVar.readDataFloat();
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var variables = co.getVariables();
+            var costModVar = variables.createVariable("SANJURO_COST_MOD");
+            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + id);
+            var builded = buildedVar.readDataBool();
+            var costMod = costModVar.readDataFloat();
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (builded === true)
@@ -296,14 +307,18 @@ var Constructor = function()
                 break;
             default:
                 break;
+            }
+            return (baseCost * costMod);
         }
-        return (baseCost * costMod);
+        return 0;
     };
 
     this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (unit.getOwner() === co.getOwner())
@@ -322,16 +337,19 @@ var Constructor = function()
                 break;
             default:
                 break;
+            }
         }
         return 0;
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (gotAttacked === true && defender.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (gotAttacked === true && defender.getOwner() === co.getOwner())
             {
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
 
@@ -347,6 +365,7 @@ var Constructor = function()
                     break;
                 default:
                     break;
+                }
             }
         }
     };
@@ -356,13 +375,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_SMUGGLER"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_SMUGGLER"];
+            }
         }
         return [];
     };

@@ -8,14 +8,11 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -75,9 +72,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -90,80 +88,84 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/mary.mp3", 8299, 73941);
                 break;
+            }
         }
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        var destroyed = false;
-        var x = -1;
-        var y = -1;
-        var unitID = 0;
-        if (gotAttacked && defender.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            if (attacker.getHp() <= 0)
+            var destroyed = false;
+            var x = -1;
+            var y = -1;
+            var unitID = 0;
+            if (gotAttacked && defender.getOwner() === co.getOwner())
             {
-                destroyed = true;
-                x = attacker.getX();
-                y = attacker.getY();
-            }
-            else if (attacker.getOwner() === co.getOwner())
-            {
-                unitID = attacker.getUniqueID();
-            }
-        }
-        else
-        {
-            if (defender.getHp() <= 0)
-            {
-                destroyed = true;
-                x = defender.getX();
-                y = defender.getY();
+                if (attacker.getHp() <= 0)
+                {
+                    destroyed = true;
+                    x = attacker.getX();
+                    y = attacker.getY();
+                }
+                else if (attacker.getOwner() === co.getOwner())
+                {
+                    unitID = attacker.getUniqueID();
+                }
             }
             else
             {
-                unitID = defender.getUniqueID();
-            }
-        }
-        // store variable data
-
-        var variables = co.getVariables();
-        if (destroyed)
-        {
-            var building = map.getTerrain(x, y).getBuilding();
-            if (building !== null)
-            {
-                // store capture bonus
-                var xVariable = variables.createVariable("POSXBUILDINGS");
-                var yVariable = variables.createVariable("POSYBUILDINGS");
-                var pointsX = xVariable.readDataListInt32();
-                var pointsY = yVariable.readDataListInt32();
-                var found = false;
-                for (var i = 0; i < pointsX.length; i++)
+                if (defender.getHp() <= 0)
                 {
-                    if (pointsX[i] === x &&
-                        pointsY[i] === y)
+                    destroyed = true;
+                    x = defender.getX();
+                    y = defender.getY();
+                }
+                else
+                {
+                    unitID = defender.getUniqueID();
+                }
+            }
+            // store variable data
+
+            var variables = co.getVariables();
+            if (destroyed)
+            {
+                var building = map.getTerrain(x, y).getBuilding();
+                if (building !== null)
+                {
+                    // store capture bonus
+                    var xVariable = variables.createVariable("POSXBUILDINGS");
+                    var yVariable = variables.createVariable("POSYBUILDINGS");
+                    var pointsX = xVariable.readDataListInt32();
+                    var pointsY = yVariable.readDataListInt32();
+                    var found = false;
+                    for (var i = 0; i < pointsX.length; i++)
                     {
-                        found = true;
-                        break;
+                        if (pointsX[i] === x &&
+                                pointsY[i] === y)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found === false)
+                    {
+                        pointsX.push(x);
+                        pointsY.push(y);
+                        xVariable.writeDataListInt32(pointsX);
+                        yVariable.writeDataListInt32(pointsY);
                     }
                 }
-                if (found === false)
-                {
-                    pointsX.push(x);
-                    pointsY.push(y);
-                    xVariable.writeDataListInt32(pointsX);
-                    yVariable.writeDataListInt32(pointsY);
-                }
             }
-        }
-        else
-        {
-            // store repair block
-            var repairVariable = variables.createVariable("UNITREPAIR");
-            var repairs = repairVariable.readDataListInt32();
-            repairs.push(unitID);
-            repairVariable.writeDataListInt32(repairs);
+            else
+            {
+                // store repair block
+                var repairVariable = variables.createVariable("UNITREPAIR");
+                var repairs = repairVariable.readDataListInt32();
+                repairs.push(unitID);
+                repairVariable.writeDataListInt32(repairs);
+            }
         }
     };
 
@@ -178,9 +180,11 @@ var Constructor = function()
 
     this.canBeRepaired = function(co, unit, posX, posY, map)
     {
-        // disable enemy repairs
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            // disable enemy repairs
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 return false;
             case GameEnums.PowerMode_Tagpower:
@@ -194,50 +198,69 @@ var Constructor = function()
                 {
                     return false;
                 }
+            }
         }
         return true;
     };
 
+    this.superPowerOffBonus = 30;
+    this.superPowerDefenseReduction = 15;
+    this.superPowerCaptureBonus = 15;
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 10;
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCaptureBonus = 5;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        // get cop and scop offensive bonus
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 30;
+                return CO_MARY.superPowerOffBonus;
             case GameEnums.PowerMode_Power:
-                return 20;
+                return CO_MARY.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return CO_MARY.d2dCoZoneOffBonus;
                 }
                 return 0;
+            }
         }
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_MARY.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_MARY.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
                                   defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        // reduce enemy defense
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+        if (CO.isActive(co))
         {
-            if (co.getOwner().isEnemyUnit(defender) &&
-                    defender.useTerrainDefense())
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
-                return defender.getTerrainDefense() * 15;
+                if (co.getOwner().isEnemyUnit(defender) && defender.useTerrainDefense())
+                {
+                    return defender.getTerrainDefense() * CO_MARY.superPowerDefenseReduction;
+                }
             }
         }
         return 0;
@@ -245,8 +268,10 @@ var Constructor = function()
 
     this.getAdditionalBuildingActions = function(co, building, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return ""
@@ -259,42 +284,46 @@ var Constructor = function()
                 break;
             default:
                 break;
+            }
         }
         return "";
     };
 
     this.getCaptureBonus = function(co, unit, posX, posY, map)
     {
-        var applyBonus = false;
-        // store capture bonus
-        var variables = co.getVariables();
-        var xVariable = variables.createVariable("POSXBUILDINGS");
-        var yVariable = variables.createVariable("POSYBUILDINGS");
-        var pointsX = xVariable.readDataListInt32();
-        var pointsY = yVariable.readDataListInt32();
-        for (var i = 0; i < pointsX.length; i++)
+        if (CO.isActive(co))
         {
-            if (pointsX[i] === posX &&
-                pointsX[i] === posX)
+            var applyBonus = false;
+            // store capture bonus
+            var variables = co.getVariables();
+            var xVariable = variables.createVariable("POSXBUILDINGS");
+            var yVariable = variables.createVariable("POSYBUILDINGS");
+            var pointsX = xVariable.readDataListInt32();
+            var pointsY = yVariable.readDataListInt32();
+            for (var i = 0; i < pointsX.length; i++)
             {
-                // apply capture bonus and remove it from the list
-                applyBonus = true;
-                pointsX.splice(i, 1);
-                pointsY.splice(i, 1);
-                xVariable.writeDataListInt32(pointsX);
-                yVariable.writeDataListInt32(pointsY);
-                break;
+                if (pointsX[i] === posX &&
+                        pointsX[i] === posX)
+                {
+                    // apply capture bonus and remove it from the list
+                    applyBonus = true;
+                    pointsX.splice(i, 1);
+                    pointsY.splice(i, 1);
+                    xVariable.writeDataListInt32(pointsX);
+                    yVariable.writeDataListInt32(pointsY);
+                    break;
+                }
             }
-        }
-        if ((co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-             co.getPowerMode() === GameEnums.PowerMode_Tagpower) &&
-            applyBonus === true)
-        {
-            return 15;
-        }
-        else if (applyBonus === true)
-        {
-            return 5;
+            if ((co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                 co.getPowerMode() === GameEnums.PowerMode_Tagpower) &&
+                    applyBonus === true)
+            {
+                return CO_MARY.superPowerCaptureBonus;
+            }
+            else if (applyBonus === true)
+            {
+                return CO_MARY.d2dCaptureBonus;
+            }
         }
         return 0;
     };
@@ -312,13 +341,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_AT_CYCLE"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_AT_CYCLE"];
+            }
         }
         return [];
     };
@@ -342,13 +374,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nAT Cycle\n") +
-               qsTr("\nGlobal Effect: \nAttacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain firepower and defense.");
+        let text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
+               qsTr("\nGlobal Effect: \nAttacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus of %0 for that property.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain firepower %1% and defense %2.");
+        text = replaceTextArgs(text, [CO_MARY.d2dCaptureBonus, CO_MARY.d2dCoZoneOffBonus, CO_MARY.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Deployment and repairs from properties are disabled and she gets an offensive bonus.");
+        let text = qsTr("Deployment and repairs from properties are disabled and she gets an offensive bonus of %0%.");
+        text = replaceTextArgs(text, [CO_MARY.powerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -356,7 +392,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Terrain stars now reduces the foe's defense and Mary's capture bonus is greatly increased. All units gain substantial firepower.");
+        let text = qsTr("Terrain stars now reduces the foe's defense by %2% and Mary's capture bonus is greatly increased by %0. All units gain %1% firepower.");
+        text = replaceTextArgs(text, [CO_MARY.superPowerCaptureBonus ,CO_MARY.superPowerOffBonus, CO_MARY.superPowerDefenseReduction]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
