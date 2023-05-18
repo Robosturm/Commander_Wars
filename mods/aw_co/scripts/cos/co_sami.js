@@ -1,3 +1,20 @@
+CO_SAMI.superPowerOffBonus = 80;
+CO_SAMI.superpowerMovementPoints = 2;
+CO_SAMI.superpowerCaptureMultiplier = 20;
+CO_SAMI.powerOffBonus = 20;
+CO_SAMI.powerDefBonus = 10;
+CO_SAMI.powerBaseOffBonus = 0;
+CO_SAMI.powerMovementPoints = 1;
+CO_SAMI.powerMovementCostModifier = -998;
+CO_SAMI.d2dCoZoneOffBonus = 0;
+CO_SAMI.d2dCoZoneBaseOffBonus = 0;
+CO_SAMI.d2dCoZoneDefBonus = 0;
+CO_SAMI.d2dInfOffBonus = 20;
+CO_SAMI.d2dInfDefBonus = 10;
+CO_SAMI.d2dDirectOffBonus = -10;
+CO_SAMI.d2dCaptureMultiplier = 0.5;
+CO_SAMI.d2dTransporterMovementPoints = 1;
+
 CO_SAMI.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +23,7 @@ CO_SAMI.init = function(co, map)
 CO_SAMI.activateSuperpower = function(co, powerMode, map)
 {
     CO_SAMI.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_SAMI.getSuperPowerDescription = function()
 {
@@ -14,100 +32,4 @@ CO_SAMI.getSuperPowerDescription = function()
 CO_SAMI.getSuperPowerName = function()
 {
     return CO_SAMI.getPowerName();
-};
-CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
-            {
-                return 50;
-            }
-            else if (attacker.getBaseMaxRange() === 1)
-            {
-                return -10;
-            }
-            return 0;
-        default:
-            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
-            {
-                return 20;
-            }
-            break;
-        }
-        if (attacker.getBaseMaxRange() === 1)
-        {
-            return -10;
-        }
-    }
-    return 0;
-};
-CO_SAMI.getCaptureBonus = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        var hp = unit.getHpRounded();
-        return hp / 2;
-    }
-    return 0;
-};
-CO_SAMI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
-CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (unit.isTransporter())
-        {
-            return 1;
-        }
-        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
-        {
-            switch (co.getPowerMode())
-            {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-            case GameEnums.PowerMode_Power:
-                return 1;
-            default:
-                return 0;
-            }
-        }
-    }
-    return 0;
-};
-CO_SAMI.getMovementcostModifier = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (unit.getOwner() === co.getOwner())
-        {
-            switch (co.getPowerMode())
-            {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-            case GameEnums.PowerMode_Power:
-                return -999;
-            default:
-                return 0;
-            }
-        }
-    }
-    return 0;
 };

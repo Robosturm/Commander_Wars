@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -109,9 +107,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -124,6 +123,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/sabaki.mp3", 42287, 86073);
                 break;
+            }
         }
     };
 
@@ -135,44 +135,61 @@ var Constructor = function()
     {
         return "AC";
     };
+
+    this.superPowerHeal = 1;
+    this.powerHeal = 0.5;
+    this.powerDefBonus = 10;
+    this.powerOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneHeal = 0.4;
+    this.d2dHeal = 0.0;
     
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            var healPercent = 0.0;
-            switch (co.getPowerMode())
+            if (gotAttacked === false && attacker.getOwner() === co.getOwner())
             {
+                var healPercent = 0.0;
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    healPercent = 1.0;
+                    healPercent = CO_SABAKI.superPowerHeal;
                     break;
                 case GameEnums.PowerMode_Power:
-                    healPercent = 0.5;
+                    healPercent = CO_SABAKI.powerHeal;
                     break;
                 default:
-                    if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
+                    if (CO.getGlobalZone())
                     {
-                        healPercent = 0.4;
+                        healPercent = CO_SABAKI.d2dHeal;
+                    }
+                    else if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
+                    {
+                        healPercent = CO_SABAKI.d2dCoZoneHeal;
                     }
                     break;
 
-            }
-            // damage can be negativ if we can't do a counter attack the damge is -1
-            // avoid loosing hp cause of our passive or power
-            if (atkDamage > 0)
-            {
-                attacker.setHp(attacker.getHp() + atkDamage * healPercent);
+                }
+                if (atkDamage > 0)
+                {
+                    attacker.setHp(attacker.getHp() + atkDamage * healPercent);
+                }
             }
         }
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return CO_SABAKI.powerOffBonus;
+        }
+        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+        {
+            return CO_SABAKI.d2dCoZoneOffBonus;
         }
         return 0;
     };
@@ -180,23 +197,29 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return CO_SABAKI.powerDefBonus;
+        }
+        else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+        {
+            return CO_SABAKI.d2dCoZoneDefBonus;
         }
         return 0;
     };
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_CRYSTAL_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_CRYSTAL_TANK"];
+            }
         }
         return [];
     };
@@ -223,12 +246,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have lifesteal.");
+        let text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nUnits have %0% lifesteal.") +
+            qsTr("\n\nCO Zone Effect: \nUnits have %1% lifesteal.");
+        text = replaceTextArgs(text, [CO_SABAKI.d2dHeal * 100, CO_SABAKI.d2dCoZoneHeal * 100]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Units can drain even more HP.");
+        let text = qsTr("Units have %0% lifesteal.");
+        text = replaceTextArgs(text, [CO_SABAKI.powerHeal * 100]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -236,7 +263,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Units heal HP equal amount of damage they inflict.");
+        let text = qsTr("Units have %0% lifesteal.");
+        text = replaceTextArgs(text, [CO_SABAKI.superPowerHeal * 100]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
