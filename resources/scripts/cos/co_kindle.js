@@ -194,7 +194,7 @@ var Constructor = function()
         return "BG";
     };
 
-    this.superPowerOffBonus = 120;
+    this.superPowerOffBonus = 130;
     this.superPowerOffMultiplier = 3;
 
     this.powerDamage = 3;

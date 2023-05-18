@@ -1,3 +1,14 @@
+CO_JULIA.superPowerStunChance = 1;
+
+CO_JULIA.powerStunChance = 0.5;
+CO_JULIA.powerOffBonus = 70;
+CO_JULIA.powerDefBonus = 10;
+
+CO_JULIA.d2dCoZoneOffBonus = 0;
+CO_JULIA.d2dCoZoneDefBonus = 0;
+
+CO_JULIA.d2dOffBonus = 70;
+
 CO_JULIA.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +17,7 @@ CO_JULIA.init = function(co, map)
 CO_JULIA.activateSuperpower = function(co, powerMode, map)
 {
     CO_JULIA.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_JULIA.getSuperPowerDescription = function()
 {
@@ -14,27 +26,4 @@ CO_JULIA.getSuperPowerDescription = function()
 CO_JULIA.getSuperPowerName = function()
 {
     return CO_JULIA.getPowerName();
-};
-CO_JULIA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        var baseDamage = 70;
-        return baseDamage * 10 / attacker.getHpRounded() - 100;
-    }
-    return 0;
-};
-
-CO_JULIA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
 };

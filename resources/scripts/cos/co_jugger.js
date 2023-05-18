@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -15,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/jugger.mp3", 7861, 81685);
                 break;
+            }
         }
     };
 
@@ -137,8 +137,10 @@ var Constructor = function()
     };
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 95;
@@ -150,14 +152,18 @@ var Constructor = function()
                     return 30;
                 }
                 break;
+            }
+            return 14;
         }
-        return 14;
+        return 0;
     };
 	
     this.getBonusMisfortune = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 45;
@@ -169,16 +175,21 @@ var Constructor = function()
                     return 15;
                 }
                 break;
+            }
+            return 7;
         }
-        return 7;
+        return 0;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+                    co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return 10;
+            }
         }
         return 0;
     };
@@ -186,10 +197,13 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                    co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return 10;
+            }
         }
         return 0;
     };
@@ -200,13 +214,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_AUTO_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_AUTO_TANK"];
+            }
         }
         return [];
     };
