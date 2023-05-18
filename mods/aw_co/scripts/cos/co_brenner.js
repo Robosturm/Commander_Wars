@@ -1,5 +1,16 @@
-CO_BRENNER.powerBonus = 20;
-CO_BRENNER.superPowerBonus = 20;
+CO_BRENNER.superPowerHeal = 5;
+CO_BRENNER.superPowerDefBonus = 50;
+
+CO_BRENNER.powerHeal = 3;
+CO_BRENNER.powerDefBonus = 30;
+CO_BRENNER.powerOffBonus = 0;
+
+CO_BRENNER.d2dCoZoneDefBonus = 0;
+CO_BRENNER.d2dCoZoneOffBonus = 0;
+
+CO_BRENNER.d2dDefBonus = 15;
+
+
 CO_BRENNER.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -8,6 +19,7 @@ CO_BRENNER.init = function(co, map)
 CO_BRENNER.activateSuperpower = function(co, powerMode, map)
 {
     CO_BRENNER.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_BRENNER.getSuperPowerDescription = function()
 {
@@ -16,28 +28,4 @@ CO_BRENNER.getSuperPowerDescription = function()
 CO_BRENNER.getSuperPowerName = function()
 {
     return CO_BRENNER.getPowerName();
-};
-CO_BRENNER.coZoneBonus = 0;
-CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            return CO_BRENNER.powerBonus;
-        default:
-            return 0;
-        }
-    }
-    return 0;
-};
-
-CO_BRENNER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    return 0;
 };

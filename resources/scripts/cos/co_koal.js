@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -15,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/koal.mp3", 14166, 103617);
                 break;
+            }
         }
     };
 
@@ -130,54 +130,79 @@ var Constructor = function()
     {
         return "BG";
     };
+
+    this.superPowerMovementBonus = 2;
+    this.superPowerOffBonus = 70;
+
+    this.powerMovementBonus = 1;
+    this.powerOffBonus = 50;
+    this.powerDefBonus = 10;
+    this.powerBaseOffBonus = 10;
+
+    this.d2dOffBonus = 0;
+
+    this.d2dCoZoneOffBonus = 50;
+    this.d2dCoZoneBaseOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            if (map.onMap(atkPosX, atkPosY))
+            if (map !== null)
             {
-                var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
-                var isStreet = (terrainID === "STREET") ||
-                               (terrainID === "STREET1") ||
-                               (terrainID === "SNOW_STREET") ||
-                               (terrainID === "BRIDGE") ||
-                               (terrainID === "BRIDGE1") ||
-                               (terrainID === "BRIDGE2") ||
-                               (terrainID === "WASTE_PATH") ||
-                               (terrainID === "DESERT_PATH") ||
-                               (terrainID === "DESERT_PATH1");
-                switch (co.getPowerMode())
+                if (map.onMap(atkPosX, atkPosY))
                 {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    if (isStreet)
+                    var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
+                    var isStreet = (terrainID === "STREET") ||
+                            (terrainID === "STREET1") ||
+                            (terrainID === "SNOW_STREET") ||
+                            (terrainID === "BRIDGE") ||
+                            (terrainID === "BRIDGE1") ||
+                            (terrainID === "BRIDGE2") ||
+                            (terrainID === "WASTE_PATH") ||
+                            (terrainID === "DESERT_PATH") ||
+                            (terrainID === "DESERT_PATH1");
+                    switch (co.getPowerMode())
                     {
-                        return 70;
-                    }
-                    return 10;
-                case GameEnums.PowerMode_Power:
-                    if (isStreet)
-                    {
-                        return 50;
-                    }
-                    return 10;
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
+                    case GameEnums.PowerMode_Tagpower:
+                    case GameEnums.PowerMode_Superpower:
                         if (isStreet)
                         {
-                            return 50;
+                            return CO_KOAL.superPowerOffBonus;
                         }
-                        return 10;
+                        return CO_KOAL.powerBaseOffBonus;
+                    case GameEnums.PowerMode_Power:
+                        if (isStreet)
+                        {
+                            return CO_KOAL.powerOffBonus;
+                        }
+                        return CO_KOAL.powerBaseOffBonus;
+                    default:
+                        if (CO.getGlobalZone())
+                        {
+                            if (isStreet)
+                            {
+                                return CO_KOAL.d2dOffBonus;
+                            }
+                        }
+                        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        {
+                            if (isStreet)
+                            {
+                                return CO_KOAL.d2dCoZoneOffBonus;
+                            }
+                            return CO_KOAL.d2dCoZoneBaseOffBonus;
+                        }
+                        break;
                     }
-                    break;
                 }
             }
-        }
-        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-        {
-            return 10;
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_KOAL.d2dCoZoneBaseOffBonus;
+            }
         }
         return 0;
     };
@@ -185,24 +210,33 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_KOAL.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_KOAL.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
 
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
-    {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+    {        
+        if (CO.isActive(co))
         {
-            return 2;
-        }
-		else if (co.getPowerMode() === GameEnums.PowerMode_Power)
-        {
-            return 1;
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            {
+                return CO_KOAL.superPowerMovementBonus;
+            }
+            else if (co.getPowerMode() === GameEnums.PowerMode_Power)
+            {
+                return CO_KOAL.powerMovementBonus;
+            }
         }
         return 0;
     };
@@ -213,13 +247,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_HOT_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_HOT_TANK"];
+            }
         }
         return [];
     };
@@ -243,13 +280,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nHot Tank\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain increased firepower on street.");
+        let text = qsTr("\nSpecial Unit:\nHot Tank\n") +
+               qsTr("\nGlobal Effect: \nUnits gain increased %0% firepower on street.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain increased %1% firepower on street.");
+        text = replaceTextArgs(text, [CO_KOAL.d2dOffBonus, CO_KOAL.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Movement range for all units is increased by one space. Units have more firepower on roads.");
+        let text = qsTr("Movement range for all units is increased by %0 space. Units have %1% more firepower on roads.");
+        text = replaceTextArgs(text, [CO_KOAL.powerMovementBonus, CO_KOAL.powerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -257,7 +298,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Movement range for all units is increased by two spaces. Greatly increases firepower of units on roads.");
+        let text = qsTr("Movement range for all units is increased by %0 space. Units have %1% more firepower on roads.");
+        text = replaceTextArgs(text, [CO_KOAL.superPowerMovementBonus, CO_KOAL.superPowerOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

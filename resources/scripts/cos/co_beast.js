@@ -284,9 +284,9 @@ var Constructor = function()
         return text;
     };
     this.getPowerName = function(co)
-        {
-            return qsTr("Steroids");
-        };
+    {
+        return qsTr("Steroids");
+    };
     this.getSuperPowerDescription = function(co)
     {
         let text = qsTr("Restores %0 HP to all units. Units movement is increases by %1 space.");

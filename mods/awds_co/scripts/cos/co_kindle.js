@@ -1,52 +1,13 @@
-CO_KINDLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (map !== null)
-        {
-            if (map.onMap(atkPosX, atkPosY))
-            {
-                var building = map.getTerrain(atkPosX, atkPosY).getBuilding();
-                switch (co.getPowerMode())
-                {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    var ret = 0;
-                    if (building !== null)
-                    {
-                        ret = 120;
-                    }
-                    ret += co.getOwner().getBuildingCount() * 3 + 10;
-                    return ret;
-                case GameEnums.PowerMode_Power:
-                    if (building !== null)
-                    {
-                        return 80;
-                    }
-                    return 10;
-                default:
-                    if (building !== null)
-                    {
-                        return 40;
-                    }
-                    break;
-                }
-            }
-        }
-    }
-    return 0;
-};
+CO_KINDLE.superPowerOffBonus = 120;
+CO_KINDLE.superPowerOffMultiplier = 3;
 
-CO_KINDLE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
+CO_KINDLE.powerDamage = 3;
+CO_KINDLE.powerOffBonus = 80;
+CO_KINDLE.powerBaseOffBonus = 10;
+CO_KINDLE.powerDefBonus = 10;
+
+CO_KINDLE.d2dOffBonus = 40;
+
+CO_KINDLE.d2dCoZoneOffBonus = 0;
+CO_KINDLE.d2dCoZoneBaseOffBonus = 0;
+CO_KINDLE.d2dCoZoneDefBonus = 0;

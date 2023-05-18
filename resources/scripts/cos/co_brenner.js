@@ -24,7 +24,6 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -39,7 +38,7 @@ var Constructor = function()
             var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(3);
+            animation.writeDataInt32(CO_BRENNER.powerHeal);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
             var delay = globals.randInt(135, 265);
             if (animations.length < 5)
@@ -83,7 +82,7 @@ var Constructor = function()
             var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(5);
+            animation.writeDataInt32(CO_BRENNER.superPowerHeal);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
             var delay = globals.randInt(135, 265);
             if (animations.length < 7)
@@ -120,9 +119,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power_awdc.mp3", 0, 0);
                 break;
@@ -135,6 +135,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/brenner.mp3", 631, 59458);
                 break;
+            }
         }
     };
 
@@ -146,25 +147,42 @@ var Constructor = function()
     {
         return "AC";
     };
-    this.coZoneBonus = 30;
-    this.powerBonus = 30;
-    this.superPowerBonus = 50;
+
+    this.superPowerHeal = 5;
+    this.superPowerDefBonus = 50;
+
+    this.powerHeal = 3;
+    this.powerDefBonus = 30;
+    this.powerOffBonus = 10;
+
+    this.d2dCoZoneDefBonus = 30;
+    this.d2dCoZoneOffBonus = 10;
+
+    this.d2dDefBonus = 0;
+
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return CO_BRENNER.superPowerBonus;
+                return CO_BRENNER.superPowerDefBonus;
             case GameEnums.PowerMode_Power:
-                return CO_BRENNER.powerBonus;
+                return CO_BRENNER.powerDefBonus;
             default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (CO.getGlobalZone())
                 {
-                    return CO_BRENNER.coZoneBonus;
+                    return CO_BRENNER.d2dDefBonus;
+                }
+                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return CO_BRENNER.d2dCoZoneDefBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
@@ -172,23 +190,32 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_BRENNER.powerOffBonus;
+            }
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_BRENNER.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_REPAIR_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_REPAIR_TANK"];
+            }
         }
         return [];
     };
@@ -216,14 +243,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nNone") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% defense.");
-        text = replaceTextArgs(text, [CO_BRENNER.coZoneBonus]);
+        let text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nUnits gain %0% defense.") +
+                   qsTr("\n\nCO Zone Effect: \nUnits gain %1% defense.");
+        text = replaceTextArgs(text, [CO_BRENNER.d2dDefBonus, CO_BRENNER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Heals 3 hp to all of his units and increases their defence.");
+        let text = qsTr("Heals %0 hp to all of his units and increases their defence by %1%.");
+        text = replaceTextArgs(text, [CO_BRENNER.powerHeal, CO_BRENNER.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -231,8 +260,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Heals 5 hp to all of his units and increases their defence by %0%.");
-        text = replaceTextArgs(text, [CO_BRENNER.superPowerBonus]);
+        let text = qsTr("Heals %0 hp to all of his units and increases their defence by %1%.");
+        text = replaceTextArgs(text, [CO_BRENNER.superPowerHeal, CO_BRENNER.superPowerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

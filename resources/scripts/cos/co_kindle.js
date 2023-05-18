@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -15,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/kindle.mp3", 1995, 63956);
                 break;
+            }
         }
     };
 
@@ -80,7 +80,7 @@ var Constructor = function()
                 }
             }
         }
-        CO_KINDLE.kindleDamage(co, 3, animations, powerNameAnimation, map);
+        CO_KINDLE.kindleDamage(co, CO_KINDLE.powerDamage, animations, powerNameAnimation, map);
     };
 
     this.kindleDamage = function(co, value, animations, powerNameAnimation, map)
@@ -193,47 +193,72 @@ var Constructor = function()
     {
         return "BG";
     };
+
+    this.superPowerOffBonus = 120;
+    this.superPowerOffMultiplier = 3;
+
+    this.powerDamage = 3;
+    this.powerOffBonus = 80;
+    this.powerBaseOffBonus = 10;
+    this.powerDefBonus = 10;
+
+    this.d2dOffBonus = 0;
+
+    this.d2dCoZoneOffBonus = 70;
+    this.d2dCoZoneBaseOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            if (map.onMap(atkPosX, atkPosY))
+            if (map !== null)
             {
-                var building = map.getTerrain(atkPosX, atkPosY).getBuilding();
-                switch (co.getPowerMode())
+                if (map.onMap(atkPosX, atkPosY))
                 {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    var ret = 0;
-                    if (building !== null)
+                    var building = map.getTerrain(atkPosX, atkPosY).getBuilding();
+                    switch (co.getPowerMode())
                     {
-                        ret = 130;
-                    }
-                    ret += co.getOwner().getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false) * 3 + 10;
-                    return ret;
-                case GameEnums.PowerMode_Power:
-                    if (building !== null)
-                    {
-                        return 80;
-                    }
-                    return 10;
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
+                    case GameEnums.PowerMode_Tagpower:
+                    case GameEnums.PowerMode_Superpower:
+                        var ret = 0;
                         if (building !== null)
                         {
-                            return 70;
+                            ret = CO_KINDLE.superPowerOffBonus;
                         }
-                        return 10;
+                        ret += co.getOwner().getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false) * CO_KINDLE.superPowerOffMultiplier + CO_KINDLE.powerBaseOffBonus;
+                        return ret;
+                    case GameEnums.PowerMode_Power:
+                        if (building !== null)
+                        {
+                            return CO_KINDLE.powerOffBonus;
+                        }
+                        return CO_KINDLE.powerBaseOffBonus;
+                    default:
+                        if (CO.getGlobalZone())
+                        {
+                            if (building !== null)
+                            {
+                                return CO_KINDLE.d2dOffBonus;
+                            }
+                        }
+                        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        {
+                            if (building !== null)
+                            {
+                                return CO_KINDLE.d2dCoZoneOffBonus;
+                            }
+                            return CO_KINDLE.d2dCoZoneBaseOffBonus;
+                        }
+                        break;
                     }
-                    break;
                 }
             }
-        }
-        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-        {
-            return 10;
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_KINDLE.d2dCoZoneBaseOffBonus;
+            }
         }
         return 0;
     };
@@ -241,10 +266,16 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_KINDLE.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_KINDLE.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -255,13 +286,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_PARTISAN"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_PARTISAN"];
+            }
         }
         return [];
     };
@@ -285,13 +319,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nPartisan\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits on buildings have increased firepower.");
+        let text = qsTr("\nSpecial Unit:\nPartisan\n") +
+               qsTr("\nGlobal Effect: \nUnits on buildings have %0% increased firepower.") +
+               qsTr("\n\nCO Zone Effect: \nUnits on buildings have %1% increased firepower.");
+        text = replaceTextArgs(text, [CO_KINDLE.d2dOffBonus, CO_KINDLE.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Inflicts three HP of damage to enemy units on properties and increases firepower of all units on a property.");
+        let text = qsTr("Inflicts %0 HP of damage to enemy units on properties and increases firepower of all units on a property by %1%.");
+        text = replaceTextArgs(text, [CO_KINDLE.powerDamage, CO_KINDLE.powerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -299,7 +337,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("The more properties she controls, the more firepower she gains and greatly increases firepower of all units on a property.");
+        let text = qsTr("She gains %0% firepower per building she controls and greatly increases firepower of all units on a property by %1%.");
+        text = replaceTextArgs(text, [CO_KINDLE.superPowerOffMultiplier, CO_KINDLE.superPowerOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
