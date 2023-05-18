@@ -23,7 +23,7 @@ var Constructor = function()
             var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(2);
+            animation.writeDataInt32(CO_BEAST.powerHeal);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
             var delay = globals.randInt(135, 265);
             if (animations.length < 5)
@@ -68,7 +68,7 @@ var Constructor = function()
             var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(3);
+            animation.writeDataInt32(CO_BEAST.superPowerHeal);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
             var delay = globals.randInt(135, 265);
             if (animations.length < 7)
@@ -105,21 +105,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/beast.mp3",  0, 0);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/beast.mp3",  0, 0);
+                break;
+            }
         }
     };
 
@@ -131,63 +133,101 @@ var Constructor = function()
     {
         return "DM";
     };
-    this.coZoneBonus = 60;
+
+    this.superPowerHeal = 3;
+    this.superPowerMovementBonus = 2;
+
+    this.powerHeal = 2;
+    this.powerOffBonus = 60;
+    this.powerDefBonus = 10;
+
+    this.d2dCoZoneBaseOffBonus = 10;
+    this.d2dCoZoneOffBonus = 60;
+    this.d2dCoZoneDefBonus = 10;
+
+    this.d2dOffBonus = 0;
+    this.d2dSelfDamage = 1;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (!isDefender)
+            switch (co.getPowerMode())
             {
-                return CO_BEAST.coZoneBonus;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+            case GameEnums.PowerMode_Power:
+                if (!isDefender)
+                {
+                    return CO_BEAST.powerOffBonus;
+                }
+                break;
+            default:
+                if (CO.getGlobalZone())
+                {
+                    return CO_BEAST.d2dOffBonus;
+                }
+                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (!isDefender)
+                    {
+                        return CO_BEAST.d2dCoZoneOffBonus;
+                    }
+                    return CO_BEAST.d2dCoZoneBaseOffBonus;
+                }
+                break;
             }
-            break;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) && !isDefender)
-            {
-                return CO_BEAST.coZoneBonus;
-            }
-            break;
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_BEAST.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_BEAST.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+        if (CO.isActive(co))
         {
-            return 2;
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            {
+                return CO_BEAST.superPowerMovementBonus;
+            }
         }
         return 0;
     };
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
+            if (CO.getGlobalZone() ||
+                co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                var hp = attacker.getHp();
-                if (hp > 1)
+                if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
                 {
-                    attacker.setHp(hp - 1);
-                }
-                else
-                {
-                    attacker.setHp(0.00001);
+                    var hp = attacker.getHp();
+                    if (hp > CO_BEAST.d2dSelfDamage)
+                    {
+                        attacker.setHp(hp - CO_BEAST.d2dSelfDamage);
+                    }
+                    else
+                    {
+                        attacker.setHp(0.00001);
+                    }
                 }
             }
         }
@@ -198,6 +238,8 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
+        if (CO.isActive(co))
+        {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||
             buildingId === "TOWN" ||
@@ -205,6 +247,7 @@ var Constructor = function()
             buildingId === "FORTHQ")
         {
             return ["ZCOUNIT_AT_CYCLE"];
+        }
         }
         return [];
     };
@@ -228,15 +271,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
-                   qsTr("\nGlobal Effect: \nNone.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower when attacking but also receive 1 HP of extra damage in recoil.");
-        text = replaceTextArgs(text, [CO_BEAST.coZoneBonus]);
+        let text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
+                   qsTr("\nGlobal Effect: \nUnits gain %1% firepower when attacking but also receive %1 HP of extra damage in recoil.") +
+                   qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower when attacking but also receive %1 HP of extra damage in recoil.");
+        text = replaceTextArgs(text, [CO_BEAST.d2dOffBonus, CO_BEAST.d2dSelfDamage, CO_BEAST.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Restores two HP to all units.");
+        let text = qsTr("Restores %0 HP to all units.");
+        text = replaceTextArgs(text, [CO_BEAST.powerHeal]);
+        return text;
     };
     this.getPowerName = function(co)
         {
@@ -244,7 +289,9 @@ var Constructor = function()
         };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Restores 3 HP to all units. Units movement is increases by one space.");
+        let text = qsTr("Restores %0 HP to all units. Units movement is increases by %1 space.");
+        text = replaceTextArgs(text, [CO_BEAST.superPowerHeal, CO_BEAST.superPowerMovementBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

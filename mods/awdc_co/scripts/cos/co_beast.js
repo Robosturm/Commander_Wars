@@ -6,6 +6,7 @@ CO_BEAST.init = function(co, map)
 CO_BEAST.activateSuperpower = function(co, powerMode, map)
 {
     CO_BEAST.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_BEAST.getSuperPowerDescription = function()
 {
