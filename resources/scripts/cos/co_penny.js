@@ -21,7 +21,7 @@ var Constructor = function()
         var count = rules.getWeatherCount();
         // weather 0 is sun we don't want sun
         var newWeather = globals.randInt(1, count - 1);
-        rules.changeWeather(rules.getWeather(newWeather).getWeatherId(), map.getPlayerCount() * 2);
+        rules.changeWeather(rules.getWeather(newWeather).getWeatherId(), map.getPlayerCount() * CO_PENNY.powerDayChanges);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -39,26 +39,28 @@ var Constructor = function()
         var count = rules.getWeatherCount();
         // weather 0 is sun we don't want sun
         var newWeather = globals.randInt(1, count - 1);
-        rules.changeWeather(rules.getWeather(newWeather).getWeatherId(), map.getPlayerCount() * 2);
+        rules.changeWeather(rules.getWeather(newWeather).getWeatherId(), map.getPlayerCount() * CO_PENNY.powerDayChanges);
     };
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/penny.mp3", 56308, 108812);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/penny.mp3", 56308, 108812);
+                break;
+            }
         }
     };
 
@@ -70,54 +72,78 @@ var Constructor = function()
     {
         return "DM";
     };
+
+    this.superPowerOffBonus = 30;
+    this.superPowerFirerangeModifier = 2;
+    this.superPowerMovementPointBonus = 2;
+    this.superPowerRainVisionBonus = 3;
+    this.superPowerMistVisionBonus = 5;
+    this.powerDayChanges = 2;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (map !== null)
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 30;
-            case GameEnums.PowerMode_Power:
-                return 10;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                    co.getPowerMode() > GameEnums.PowerMode_Off)
+                switch (co.getPowerMode())
                 {
-                    return 10;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    return CO_PENNY.superPowerOffBonus;
+                case GameEnums.PowerMode_Power:
+                    return CO_PENNY.powerOffBonus;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+                        co.getPowerMode() > GameEnums.PowerMode_Off)
+                    {
+                        return CO_PENNY.d2dCoZoneOffBonus;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-        {
-            return 10;
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_PENNY.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_PENNY.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_PENNY.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            if (map.getGameRules().getCurrentWeather() !== null &&
+            if (map !== null)
+            {
+                if (map.getGameRules().getCurrentWeather() !== null &&
                     map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
                     unit.getBaseMaxRange() > 1)
-            {
-                if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
                 {
-                    return 2;
+                    if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+                    {
+                        return CO_PENNY.superPowerFirerangeModifier;
+                    }
                 }
             }
         }
@@ -126,17 +152,24 @@ var Constructor = function()
 
     this.getWeatherImmune = function(co, map)
     {
-        return true;
+        if (CO.isActive(co))
+        {
+            return true;
+        }
+        return false;
     };
 
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+        if (CO.isActive(co))
         {
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
-                return 2;
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                {
+                    return CO_PENNY.superPowerMovementPointBonus;
+                }
             }
         }
         return 0;
@@ -144,19 +177,22 @@ var Constructor = function()
 
     this.getVisionrangeModifier = function(co, unit, posX, posY, map)
     {
-        if (map.getGameRules().getCurrentWeather() !== null)
+        if (CO.isActive(co))
         {
-            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            if (map.getGameRules().getCurrentWeather() !== null)
             {
-                var currentWeatherId = map.getGameRules().getCurrentWeather().getWeatherId();
-                if (currentWeatherId === "WEATHER_RAIN")
+                if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                        co.getPowerMode() === GameEnums.PowerMode_Tagpower)
                 {
-                    return 3;
-                }
-                else if (currentWeatherId === "WEATHER_MIST")
-                {
-                    return 5;
+                    var currentWeatherId = map.getGameRules().getCurrentWeather().getWeatherId();
+                    if (currentWeatherId === "WEATHER_RAIN")
+                    {
+                        return CO_PENNY.superPowerRainVisionBonus;
+                    }
+                    else if (currentWeatherId === "WEATHER_MIST")
+                    {
+                        return CO_PENNY.superPowerMistVisionBonus;
+                    }
                 }
             }
         }
@@ -165,16 +201,19 @@ var Constructor = function()
 
     this.getPerfectVision = function(co, map)
     {
-        if (map.getGameRules().getCurrentWeather() !== null)
+        if (CO.isActive(co))
         {
-            var currentWeatherId = map.getGameRules().getCurrentWeather().getWeatherId();
-            if (currentWeatherId === "WEATHER_RAIN" ||
-                currentWeatherId === "WEATHER_MIST")
+            if (map.getGameRules().getCurrentWeather() !== null)
             {
-                if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                var currentWeatherId = map.getGameRules().getCurrentWeather().getWeatherId();
+                if (currentWeatherId === "WEATHER_RAIN" ||
+                        currentWeatherId === "WEATHER_MIST")
                 {
-                    return true;
+                    if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -203,12 +242,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nHer troops are immune to all weather effects.") +
-                qsTr("\n\nCO Zone Effect: \n10% increased firepower and defense.");
+        let text = qsTr("\nGlobal Effect: \nHer troops are immune to all weather effects." +
+                        "\n\nCO Zone Effect: \n%0% increased firepower and %1% defense.");
+        text = replaceTextArgs(text, [CO_PENNY.d2dCoZoneOffBonus, CO_PENNY.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Changes the weather to a random one for two days.");
+        let text = qsTr("Changes the weather to a random one for %0 days.");
+        text = replaceTextArgs(text, [CO_PENNY.powerDayChanges]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -216,10 +259,14 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Changes the weather to a random one for two days and she gets a firepower boost for this turn.\n") +
-               qsTr("During rain she gets additionally improved vision.\n") +
-               qsTr("During snow she gets additionally improved movement.\n") +
-               qsTr("During sandstorm she gets additionally improved firerange for her indirects.\n");
+        let text = qsTr("Changes the weather to a random for %4 days and she gets a firepower boost for this turn.\n" +
+                    "During rain she gets additionally %0 improved vision.\n" +
+                    "During mist she gets additionally %1 improved vision.\n" +
+                    "During snow she gets additionally %2 improved movement.\n" +
+                    "During sandstorm she gets additionally %3 improved firerange for her indirects.\n");
+        text = replaceTextArgs(text, [CO_PENNY.superPowerRainVisionBonus, CO_PENNY.superPowerMistVisionBonus,
+                                      CO_PENNY.superPowerMovementPointBonus, CO_PENNY.superPowerFirerangeModifier, CO_PENNY.powerDayChanges]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -15,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/rachel.mp3", 2220, 63662);
                 break;
+            }
         }
     };
 
@@ -86,9 +86,9 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        var ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpLowMoney, powerNameAnimation, 0, map);
-        ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpHighMoney, ret, 1, map);
-        CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_Money, ret, 2, map);
+        var ret = CO_RACHEL.throwRocket(co, CO_RACHEL.superPowerDamage, GameEnums.RocketTarget_HpLowMoney, powerNameAnimation, 0, map);
+        ret = CO_RACHEL.throwRocket(co, CO_RACHEL.superPowerDamage, GameEnums.RocketTarget_HpHighMoney, ret, 1, map);
+        CO_RACHEL.throwRocket(co, CO_RACHEL.superPowerDamage, GameEnums.RocketTarget_Money, ret, 2, map);
     };
 
     this.throwRocket = function(co, damage, targetType, animation2, index, map)
@@ -177,52 +177,77 @@ var Constructor = function()
     {
         return "OS";
     };
+
+    this.superPowerDamage = 3;
+    this.powerLuckDamage = 40;
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 20;
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneDefBonus = 20;
+    this.d2dRepairBonus = 1;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return 20;
+                return CO_RACHEL.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return CO_RACHEL.d2dCoZoneOffBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+    {
+        if (CO.isActive(co))
         {
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                    co.getPowerMode() > GameEnums.PowerMode_Off)
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                return 20;
+                return CO_RACHEL.powerDefBonus;
             }
-            return 0;
-        };
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_RACHEL.d2dCoZoneDefBonus;
+            }
+        }
+        return 0;
+    };
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 break;
             case GameEnums.PowerMode_Power:
-                return 40;
+                return CO_RACHEL.powerLuckDamage;
             default:
                 break;
+            }
         }
         return 0;
     };
 
     this.getRepairBonus = function(co, unit, posX, posY, map)
     {
-        return 1;
+        if (CO.isActive(co))
+        {
+            return CO_RACHEL.d2dRepairBonus;
+        }
+        return 0;
     };
     this.getAiCoUnitBonus = function(co, unit, map)
     {
@@ -247,12 +272,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits have increased repairs by one on properties.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower.");
+        let text = qsTr("\nGlobal Effect: \nUnits have increased repairs by %0 on properties.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %1% and defence by %2.");
+        text = replaceTextArgs(text, [CO_RACHEL.d2dRepairBonus, CO_RACHEL.d2dCoZoneOffBonus, CO_RACHEL.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Has a chance to strike with more damage than expected. Lucky!");
+        let text = qsTr("Luck damage is increased by %0%.");
+        text = replaceTextArgs(text, [CO_RACHEL.powerLuckDamage]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -260,7 +289,10 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Launches three missiles from Orange Star HQ in Omega Land.");
+        let text = qsTr("Launches three missiles from Orange Star HQ in Omega Land dealing %0 HP of damage.");
+        text = replaceTextArgs(text, [CO_RACHEL.superPowerDamage]);
+        return text;
+
     };
     this.getSuperPowerName = function(co)
     {

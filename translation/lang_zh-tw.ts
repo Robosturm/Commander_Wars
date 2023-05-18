@@ -2563,77 +2563,77 @@
         <translation>確定</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="181"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="198"/>
         <source>Base image</source>
         <translation>基礎圖片</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="87"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="88"/>
         <source>Name:</source>
         <translation>名稱:</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="73"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="74"/>
         <source>Edit terrain</source>
         <translation>編輯地形</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="80"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="81"/>
         <source>Information</source>
         <translation>信息</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="91"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="92"/>
         <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation>地形的自訂名稱.如果不填寫名稱,則使用預設名稱.</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="103"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="104"/>
         <source>Description:</source>
         <translation>說明:</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="106"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="107"/>
         <source>Custom Description of the Terrain. Empty description equals the default description.</source>
         <translation>地形的自訂描述.如果不填寫描述,則使用預設描述.</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="116"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="117"/>
         <source>Palette:</source>
         <translation>調色板:</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="120"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="121"/>
         <source>Changes the palette used by the terrain.</source>
         <translation>更改地形調色板.</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="218"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="142"/>
         <source>Terrain Style</source>
         <translation>地形風格</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="222"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="146"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation>目前所選擇的地形圖片或路徑,如果不需要特別指定,則保持空白即可使用預設設定.</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="249"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="255"/>
         <source>Overlays</source>
         <translation>疊加</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="142"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="155"/>
         <source>Default</source>
         <translation>預設</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="150"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="163"/>
         <source>Select Image</source>
         <translation>選擇圖片</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="323"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="335"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
@@ -13106,127 +13106,152 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>co_adam</name>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="329"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="355"/>
         <source>Previously a researcher, he was recruited as a commander for his high intelligence. Although a reclusive geek, he is slowly finding his place among the other commanders.</source>
         <translation>他曾是一名研究員,由於其高超的智力而被招募成為指揮官.儘管是一個孤僻的書呆子,
 但他正在逐漸找到自己在其他指揮官中的位置.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="333"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="359"/>
         <source>Vectors</source>
         <translation>載體</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="337"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="363"/>
         <source>Percent Error</source>
         <translation>百分比誤差</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="341"/>
         <source>Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose more firepower than normal the more damaged they are.</source>
-        <translation>Adam可以利用最大的運氣機會來進行攻擊,但前提是敵軍只能被一擊擊殺.
+        <translation type="vanished">Adam可以利用最大的運氣機會來進行攻擊,但前提是敵軍只能被一擊擊殺.
 然而,他的部隊越受損失,失去的火力就會比正常情況下更多.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="345"/>
         <source>
 Global Effect: 
 Units lose more firepower than other CO&apos;s when they are damaged.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 部隊在受損時失去比其他CO更多的火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="346"/>
         <source>
 
 CO Zone Effect: 
 An attacking unit instantly kills an enemy unit if a max luck roll would kill them. A unit gains a 1 turn defense boost by killing an enemy unit.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 如果最大運氣擲骰能夠擊敗敵軍,攻擊單位會立即消滅一個敵軍單位.
 如果一個單位消滅一個敵軍單位,該單位會獲得1回合的防禦提升.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="350"/>
         <source>All of Adam&apos;s units gains a firepower boost and movement range. Whenever Adam destroys a unit, the next unit gains bonus firepower.</source>
-        <translation>亞當的所有部隊獲得火力提升和移動範圍增加.
+        <translation type="vanished">亞當的所有部隊獲得火力提升和移動範圍增加.
 每當亞當摧毀一個敵軍部隊時,下一個攻擊的部隊將獲得額外的火力加成.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="354"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="384"/>
         <source>Decimation</source>
         <translation>十分之一懲罰</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="358"/>
         <source>Each time Adam destroys an enemy unit, the attacking unit can move again; however, each kill drastically reduces that units firepower. Conversely, after killing a unit, using a unit that has not been used for that turn will give it additional firepower.</source>
-        <translation>每當Adam摧毀一個敵軍單位時,攻擊單位可以再次行動;然而,每次消滅單位後,該單位的火力都會大幅下降.
+        <translation type="vanished">每當Adam摧毀一個敵軍單位時,攻擊單位可以再次行動;然而,每次消滅單位後,該單位的火力都會大幅下降.
 相反地,殺死一個單位後,使用當前回合未行動的單位將獲得額外的火力加成.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="362"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="367"/>
+        <source>Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose more firepower the less HP they have compared to other co&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="371"/>
+        <source>
+Global Effect: 
+Units lose %0 more firepower per lost HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="372"/>
+        <source>
+
+CO Zone Effect: 
+An attacking unit instantly kills an enemy unit if a max luck roll would kill them. A unit gains a 1 turn %1% defense boost by killing an enemy unit. Units gain %2% firepower and %3% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="378"/>
+        <source>All of Adam&apos;s units gains a %0% firepower boost and %1 movement range. Whenever Adam destroys a unit, the next unit gains %2 bonus firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="388"/>
+        <source>Adams units gain %1% firepower. Each time Adam destroys an enemy unit, the attacking unit can move again. However, each kill reduces that units firepower by %0%. Conversely, after killing a unit, using a unit that has not been used for that turn will give it additional %1% firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="394"/>
         <source>Cartesian Cleanup</source>
         <translation>笛卡爾清理</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="366"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="398"/>
         <source>Get a hobby? This IS my hobby!</source>
         <translation>培養愛好?這是我的愛好!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="367"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="399"/>
         <source>Woo! Watch out for shrapnel!</source>
         <translation>哇!小心彈片!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="368"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="400"/>
         <source>Research pays off!</source>
         <translation>研究有回報!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="369"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="401"/>
         <source>As my troops approach their limit...you become insignificant!</source>
         <translation>當我的部隊接近極限時...你變得微不足道!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="370"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="402"/>
         <source>Prepare to have your strategy debunked!</source>
         <translation>準備好讓你的策略被揭穿!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="371"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="403"/>
         <source>I&apos;ll blind you with science!</source>
         <translation>我要用科學來蒙蔽你!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="375"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="407"/>
         <source>Call it bad luck, if you must.</source>
         <translation>如果必須的話,可以稱之為倒霉.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="376"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="408"/>
         <source>Who said math had no applications in real life?</source>
         <translation>誰說數學在現實生活中沒有應用?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="377"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="409"/>
         <source>Ha! And you thought nerds were weak!</source>
         <translation>哈!你認為書呆子很弱!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="381"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="413"/>
         <source>How were my calculations so off?</source>
         <translation>我的計算怎麼這麼差?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="382"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="414"/>
         <source>Your stupidity rubbed off on me! Ugh!!</source>
         <translation>你的愚蠢感染了我!啊!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="386"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="418"/>
         <source>Adam</source>
         <translation>Adam</translation>
     </message>
@@ -13234,27 +13259,27 @@ CO區域效果:
 <context>
     <name>co_adder</name>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="201"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="228"/>
         <source>A self-absorbed CO who believes his skills are matchless. Second to Hawke in rank.</source>
         <translation>一個自負的CO,認為自己的技能無人能及.排名僅次於霍克.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="232"/>
         <source>His own Face</source>
         <translation>他的臉</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="236"/>
         <source>Dirty Things</source>
         <translation>骯髒的事物</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="240"/>
         <source>Adept at making quick command decisions. He stores up energy for his CO Power more rapidly than other CO&apos;s.</source>
         <translation>能夠迅速做出決策的指揮官.他的指揮能力比其他指揮官更快地積累 CO 能力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="244"/>
         <source>
 Special Unit:
 Hot Tank
@@ -13265,16 +13290,15 @@ Hot Tank
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="218"/>
         <source>
 Global Effect: 
 None.</source>
-        <translation>
+        <translation type="vanished">
 全局效果 
 沒有.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="246"/>
         <source>
 
 CO Zone Effect: 
@@ -13285,112 +13309,127 @@ CO區域效果:
 部隊獲得%0%的火力和防禦.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="225"/>
         <source>Movement range for all units is increased by one space.</source>
-        <translation>所有單位的移動範圍+1.</translation>
+        <translation type="vanished">所有單位的移動範圍+1.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="258"/>
         <source>Sideslip</source>
         <translation>側滑</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="233"/>
         <source>Movement range for all units is increased by two spaces.</source>
-        <translation>所有單位的移動範圍+2.</translation>
+        <translation type="vanished">所有單位的移動範圍+2.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="245"/>
+        <source>
+Global Effect: 
+Power charge is increased by %1%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="252"/>
+        <source>Movement range for all units is increased by %0 space and firepower by %1% and defence by %2%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="262"/>
+        <source>Movement range for all units is increased by %0 spaces and firepower by %1% and defence by %2%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adder.js" line="268"/>
         <source>Sidewinder</source>
         <translation>響尾蛇</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="272"/>
         <source>The look of terror on your face... It&apos;s absolutely delicious!</source>
         <translation>滿臉驚恐的神情...絕對好吃!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="273"/>
         <source>Heh heh heh... I&apos;m going to enjoy breaking you!</source>
         <translation>嘿嘿嘿...我會很享受打破你的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="274"/>
         <source>Heh heh heh... Can&apos;t a guy have a little fun!?</source>
         <translation>嘿嘿嘿...男人就不能找點樂子嗎!?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="275"/>
         <source>Heh heh heh... It only hurts for a moment.</source>
         <translation>呵呵呵...只是一時的痛.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="276"/>
         <source>A battle with me is a greater honor than you deserve!</source>
         <translation>與我一戰是你應得的更大榮譽!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="277"/>
         <source>Heh heh heh... Kneel before Adder!</source>
         <translation>嘿嘿嘿...跪在阿德面前!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="278"/>
         <source>Hee hee. Your skills are laughable!</source>
         <translation>嘻嘻.你的技能令人發笑!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="279"/>
         <source>It&apos;s already too late for you!</source>
         <translation>對你來說已經太遲了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="280"/>
         <source>Let me hear your last words!</source>
         <translation>讓我聽聽你最後的話!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="281"/>
         <source>Check out my new and improved powers!</source>
         <translation>看看我新的和改進的能力!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="282"/>
         <source>Wiggle worm... wiggle!</source>
         <translation>擺動蠕蟲...擺動!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="283"/>
         <source>My venom courses through your veins!</source>
         <translation>我的毒液在你的血管中流淌!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="287"/>
         <source>Heh heh heh... What did you expect?</source>
         <translation>嘿嘿嘿...你以為呢?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="288"/>
         <source>My apologies. Should I have gone easier on you?</source>
         <translation>我很抱歉.我應該對你放輕鬆點嗎?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="289"/>
         <source>Don&apos;t forget me now. That would be a shame.</source>
         <translation>現在不要忘記我.那將是一種恥辱.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="293"/>
         <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
         <translation>噓!今天...倒霉.不好的一天.而已.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="294"/>
         <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
         <translation>這是該死的天氣!這就是問題所在!噓!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="298"/>
         <source>Adder</source>
         <translation>Adder</translation>
     </message>
@@ -13398,27 +13437,27 @@ CO區域效果:
 <context>
     <name>co_aira</name>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="270"/>
         <source>A reserved commander who is often found daydreaming. Likes to walk in the wind.</source>
         <translation>一位沉默寡言的指揮官,常被發現出神.喜歡在風中漫步.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="274"/>
         <source>Cool Breezes</source>
         <translation>涼爽的微風</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="278"/>
         <source>Surprises</source>
         <translation>驚喜</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="282"/>
         <source>Aira never felt a need to specialize, so all units are average.</source>
         <translation>Aira沒有特定的專長,所以所有單位都是平均水平.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="286"/>
         <source>
 Global Effect: 
 No bonus.</source>
@@ -13427,7 +13466,7 @@ No bonus.</source>
 沒有.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="287"/>
         <source>
 
 CO Zone Effect: 
@@ -13438,82 +13477,90 @@ CO區域效果:
 軍隊得到%0%火力和防禦提升.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="274"/>
         <source>Enemies expend 6 times more fuel when they move for their next turn and the weather changes to sun.</source>
-        <translation>敵人在下一回合移動時,消耗的燃料增加6倍,且天氣會轉為晴天.</translation>
+        <translation type="vanished">敵人在下一回合移動時,消耗的燃料增加6倍,且天氣會轉為晴天.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="278"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="299"/>
         <source>Gust Storm</source>
         <translation>陣風</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="282"/>
         <source>The cheapest enemy ground and sea units suffer 3 HP of damage while all enemy air units suffer 3 HP of damage. All enemy units have half of their movement range and the weather changes to sun.</source>
-        <translation>敵方最便宜的陸地和海洋單位受到3點傷害,所有敵方空軍單位受到3點傷害.所有敵方單位移動範圍減半,天氣變為晴天.</translation>
+        <translation type="vanished">敵方最便宜的陸地和海洋單位受到3點傷害,所有敵方空軍單位受到3點傷害.所有敵方單位移動範圍減半,天氣變為晴天.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="293"/>
+        <source>Enemies expend an additional %0 times more fuel when they move for their next turn and the weather changes to sun. Her units also gain %1% firepower and %2% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="303"/>
+        <source>The cheapest enemy ground and sea units suffer %0 HP of damage while all enemy air units suffer %0 HP of damage. All enemy units need %1 additional movement cost to traverse terrain and the weather changes to sun. Her units also gain %2% firepower and %3% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="309"/>
         <source>Hurricannon</source>
         <translation>颶風炮</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="290"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="313"/>
         <source>Amazing what a little gust can do...</source>
         <translation>令人驚奇的是一陣小風可以做什麼...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="314"/>
         <source>Huh? Oh, wind&apos;s about to change.</source>
         <translation>嗯?哦,風向要變了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="292"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="315"/>
         <source>The only surprises I like are the ones that help me win.</source>
         <translation>我唯一喜歡的驚喜是那些幫助我獲勝的驚喜.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="316"/>
         <source>The winds will help me blow through this battle.</source>
         <translation>風會幫助我度過這場戰鬥.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="294"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="317"/>
         <source>Wind is coming in from the southeast. And the north. And the west.</source>
         <translation>風從東南吹來.還有北方.還有西方.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="318"/>
         <source>You&apos;re about to see why my troops don&apos;t wear skirts.</source>
         <translation>你馬上就會明白為什麼我的部隊不穿裙子了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="299"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="322"/>
         <source>...Huh? Oh, right. I won. Woohoo?</source>
         <translation>...嗯?啊對.我贏了.哇哦?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="323"/>
         <source>I tore through you like a tornado.</source>
         <translation>我像龍捲風一樣撕裂了你.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="324"/>
         <source>You could say... you were swept under the wind.</source>
         <translation>你可以說...你被風吹走了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="328"/>
         <source>You caught me by surprise. I hate that.</source>
         <translation>你讓我大吃一驚.我討厭那個.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="329"/>
         <source>The winds weren&apos;t with me today.</source>
         <translation>今天沒有風.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="333"/>
         <source>Aira</source>
         <translation>Aira</translation>
     </message>
@@ -13521,27 +13568,27 @@ CO區域效果:
 <context>
     <name>co_alexander</name>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="195"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="229"/>
         <source>A diligent politician who works only for the benefit of the citizens and the promotion of peace. Olaf&apos;s son and future ruler of Blue Moon.</source>
         <translation>一位勤奮的政治家,致力於為公民的利益和和平的推進而工作.奧拉夫的兒子,未來的藍色月亮統治者.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="233"/>
         <source>Peace</source>
         <translation>和平</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="203"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="237"/>
         <source>Cruelty</source>
         <translation>壓迫</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="241"/>
         <source>Alexander is loved by his citizens so much that they have a tendency to resist being captured.</source>
         <translation>亞歷山大深受其公民愛戴,以至於他們有抵抗被俘虜的傾向.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="245"/>
         <source>
 Special Unit:
 Partisan
@@ -13552,103 +13599,127 @@ Partisan
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="212"/>
         <source>
 Global Effect: 
 Buildings that Alexander owns put up a fight when being captured by enemy soldiers. Each building recovers 1 capture point each day while under siege.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 亞歷山大所擁有的建築在被敵軍佔領時進行抵抗.每個建築在被圍攻時每天恢復1個佔領點.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="213"/>
         <source>
 
 CO Zone Effect: 
 Units gain %0% firepower and defence.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 單位的火力和防禦增加%0%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="219"/>
         <source>Alexander&apos;s charisma and brilliant speech wins over the people. Alexander&apos;s troops capture at a faster rate, while enemy captures are forced to restart entirely.</source>
-        <translation>亞歷山大的領袖魅力和卓越的演講技巧贏得人民的支持.
+        <translation type="vanished">亞歷山大的領袖魅力和卓越的演講技巧贏得人民的支持.
 亞歷山大的部隊可以更快地進行佔領,而敵軍的佔領進程會被迫重置.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="259"/>
         <source>Peace Riots</source>
         <translation>和平暴動</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="227"/>
         <source>Enemies receive no income for this turn, and half of their current funds are diverted to Alexander.</source>
-        <translation>敵方本回合不會收到收入,且其現有資金的一半會轉移至亞歷山大帳戶中.</translation>
+        <translation type="vanished">敵方本回合不會收到收入,且其現有資金的一半會轉移至亞歷山大帳戶中.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="246"/>
+        <source>
+Global Effect: 
+Buildings that Alexander owns put up a fight when being captured by enemy soldiers. Each building recovers %0 capture point each day while under siege.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="247"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %1% firepower and defence.</source>
+        <translation type="unfinished">
+
+CO區域效果:
+單位獲得 %0% 的火力和防禦. {1%?}</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="253"/>
+        <source>Alexander&apos;s charisma and brilliant speech wins over the people. Alexander&apos;s troops capture at a %0% faster rate, while enemy captures are forced to restart entirely. They also gain %1% firepower and %2% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="263"/>
+        <source>Enemies receive no income for this turn, and half of their current funds are diverted to Alexander. They also gain %0% firepower and %1% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="269"/>
         <source>Inevitable Revolution</source>
         <translation>不可避免的革命</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="273"/>
         <source>Comrades! I beg of you to come to your senses!</source>
         <translation>戰友們!我求求你清醒過來!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="274"/>
         <source>There is more to war than bullets and explosions.</source>
         <translation>戰爭不僅僅是子彈和爆炸.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="275"/>
         <source>The people will rally under my cause!</source>
         <translation>人民將團結在我的事業之下!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="276"/>
         <source>Now we shall see where their loyalties truly belong.</source>
         <translation>現在我們將看到他們真正忠誠的地方.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="277"/>
         <source>Perhaps this will get you to consider a peaceful resolution!</source>
         <translation>也許這會讓您考慮和平解決!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="278"/>
         <source>You can only win a war if your people support you, allow me to demonstrate!</source>
         <translation>只有你的人民支持你,你才能贏得戰爭,讓我來證明!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="282"/>
         <source>Your shortcomings stemmed from within your own ranks.</source>
         <translation>你的缺點來自於你自己的隊伍.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="283"/>
         <source>The citizens were on my side all along.</source>
         <translation>市民一直都站在我這邊.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="284"/>
         <source>Only through unrivaled support did I achieve success.</source>
         <translation>只有通過無與倫比的支持,我才取得了成功.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="288"/>
         <source>I failed my people, but I will free them soon.</source>
         <translation>我辜負了我的人民,但我很快就會解放他們.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="289"/>
         <source>You have the support of your people....for now.</source>
         <translation>你得到了你的人民的支持...暫時.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexander.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="293"/>
         <source>Alexander</source>
         <translation>Alexander</translation>
     </message>
@@ -13656,27 +13727,27 @@ CO區域效果:
 <context>
     <name>co_alexis</name>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="384"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="419"/>
         <source>A crystal-obsessed person. Blindly follows orders.</source>
         <translation>一個痴迷於水晶的人.盲目地遵從命令.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="388"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="423"/>
         <source>Crystals</source>
         <translation>水晶</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="392"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="427"/>
         <source>Experiments</source>
         <translation>實驗</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="396"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="431"/>
         <source>Units heal at half the normal rate on owned properties, but units still heal while standing next to them.</source>
         <translation>在己方擁有的建築物上,部隊的恢復速度為正常速度的一半.但是,站在己方建築物旁時,部隊仍會恢復血量.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="400"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="435"/>
         <source>
 Special Unit:
 Repair Tank
@@ -13687,17 +13758,16 @@ Repair Tank
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="401"/>
         <source>
 Global Effect: 
 Units heal only 1 HP while on an owned property, however, units will still heal from any owned property within 1 space of a unit. This effect stacks with each additional nearby property.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 部隊在領地上只能恢復 1 點生命,但只要部隊與其相鄰的領地在1格距離內,部隊就能持續回復生命.
 每多鄰近一塊佔領的領地,此效果就會疊加一次.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="402"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="437"/>
         <source>
 
 CO Zone Effect: 
@@ -13708,83 +13778,98 @@ CO區域效果:
 友軍部隊攻擊和防禦提升 %0%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="408"/>
         <source>Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property.</source>
-        <translation>距離己方任何擁有的建築物2格以內的部隊,會獲得火力加成且每個相鄰的己方建築物會回復 3 點生命值.</translation>
+        <translation type="vanished">距離己方任何擁有的建築物2格以內的部隊,會獲得火力加成且每個相鄰的己方建築物會回復 3 點生命值.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="412"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="449"/>
         <source>Crystal Brace</source>
         <translation>水晶護腕</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="416"/>
         <source>Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property. Enemies within one spaces of their own properties suffer 3 HP of damage per nearby property.</source>
-        <translation>在任何擁有的建築物2格範圍內的部隊將獲得火力加成,每個相鄰的擁有建築物將恢復3點生命值.
+        <translation type="vanished">在任何擁有的建築物2格範圍內的部隊將獲得火力加成,每個相鄰的擁有建築物將恢復3點生命值.
 同時,每個敵方擁有建築物的相鄰位置將對其造成3點傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="420"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="436"/>
+        <source>
+Global Effect: 
+Units heal only %0 HP while on an owned property, however, units will still heal from any owned property within %1 space of a unit by %2 HP. This effect stacks with each additional nearby property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="443"/>
+        <source>Units within %0 spaces of any owned properties receive %1% firepower bonus and restore %2 HP per nearby property. All other units gain %3% firepower and %4% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="453"/>
+        <source>Units within %0 spaces of any owned properties receive %1% firepower bonuses and restore %2 HP per nearby property. Enemies within %3 spaces of their own properties suffer %4 HP of damage per nearby property. All other units gain %5% firepower and %6% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="459"/>
         <source>Crystal Edge</source>
         <translation>水晶邊緣</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="424"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="463"/>
         <source>You&apos;ll regret angering me!</source>
         <translation>你會後悔激怒我的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="425"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="464"/>
         <source>It&apos;s time you learned the real power of the crystals!</source>
         <translation>是時候了解水晶的真正力量了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="426"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="465"/>
         <source>You were probably enjoying this battle... until now!</source>
         <translation>你可能很享受這場戰鬥...直到現在!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="427"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="466"/>
         <source>Witness the power of the black crystal!</source>
         <translation>見證黑水晶的威力!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="428"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="467"/>
         <source>I hope you&apos;re ready for what&apos;s coming next!</source>
         <translation>我希望你為接下來的事情做好準備!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="429"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="468"/>
         <source>Now my army will really shine... like diamonds!</source>
         <translation>現在我的軍隊真的會閃閃發光...就像鑽石一樣!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="433"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="472"/>
         <source>I&apos;m the brightest crystal of all!</source>
         <translation>我是最亮的水晶!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="434"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="473"/>
         <source>Haha, you were shattered!</source>
         <translation>哈哈,你崩潰了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="435"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="474"/>
         <source>I&apos;ll leave you to clean this up, &apos;kay?</source>
         <translation>我會讓你清理這一切,&apos;好嗎?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="439"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="478"/>
         <source>My crystals failed me.</source>
         <translation>我的水晶讓我失望了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="440"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="479"/>
         <source>My diamonds shattered?</source>
         <translation>我的鑽石碎了?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="444"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="483"/>
         <source>Alexis</source>
         <translation>Alexis</translation>
     </message>
@@ -13792,122 +13877,146 @@ CO區域效果:
 <context>
     <name>co_amy</name>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="286"/>
         <source>The Commander-in-Chief of Pink Frontier. A former physicist who was thrust into war. She is now a hardened naval commander.</source>
         <translation>粉紅邊疆的總司令,一位曾經的物理學家,因戰爭而被迫成為軍隊指揮官.現在她已經成為一位經驗豐富的海軍指揮官.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="290"/>
         <source>Quantum Theory</source>
         <translation>量子理論</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="294"/>
         <source>Hawke</source>
         <translation>Hawke</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="298"/>
         <source>She can command hovercraft units at optimal level. Reefs pose no problem for Amy&apos;s units.</source>
         <translation>她能夠使得氣墊船單位發揮最佳效果.海礁對於Amy的部隊來說並不是問題.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="268"/>
         <source>
 Global Effect: 
 Reef movement costs are equal to 1 for all of Amy&apos;s units and Hovercrafts have one extra movement.</source>
-        <translation>
+        <translation type="vanished">
 全局效果: 
 所有的部隊在礁石上移動時,消耗的移動力為1,而氣墊船的移動力增加1.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="269"/>
         <source>
 
 CO Zone Effect: 
 Hovercrafts gain %0% firepower.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 所有氣墊艇的火力增加%0%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="275"/>
         <source>All hovercraft units gain %0% firepower along with one extra movement. Hovercrafts also receive a %1% reduction in deployment costs.</source>
-        <translation>所有氣墊艇單位都增加了%0%的火力,並且移動範圍增加了1.此外,氣墊艇的部署成本降低了%1%.</translation>
+        <translation type="vanished">所有氣墊艇單位都增加了%0%的火力,並且移動範圍增加了1.此外,氣墊艇的部署成本降低了%1%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="315"/>
         <source>Fluid Dynamics</source>
         <translation>流體動力學</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="285"/>
         <source>Her defense rises to an astonishing %0%. Additionally, she takes no counter-attack damage when attacking an enemy.</source>
-        <translation>她的防禦力驚人地提高了 %0%.此外,她攻擊敵人時不會受到反擊傷害.</translation>
+        <translation type="vanished">她的防禦力驚人地提高了 %0%.此外,她攻擊敵人時不會受到反擊傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="302"/>
+        <source>
+Global Effect: 
+Reef movement costs are equal to 1 for all of Amy&apos;s units and Hovercrafts have %1 extra movement and gain %2% firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="303"/>
+        <source>
+
+CO Zone Effect: 
+Hovercrafts gain %3% firepower.</source>
+        <translation type="unfinished">
+
+CO區域效果:
+所有氣墊艇的火力增加%0%. {3%?}</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="309"/>
+        <source>All hovercraft units gain %0% firepower along with one extra movement and %1% defence. Hovercrafts also receive a %2% reduction in deployment costs. All other units gain %1% firepower and %3% defence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="319"/>
+        <source>All hovercraft units gain %0% firepower. Her defense rises to an astonishing %1%. Additionally, she takes no counter-attack damage when attacking an enemy. All other units gain %2% firepower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="325"/>
         <source>Photon Discharge</source>
         <translation>光子放電</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="329"/>
         <source>Try all you might, my magnetic shields will prove to be impenetrable!</source>
         <translation>盡你所能,我的磁屏蔽將被證明是堅不可摧的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="330"/>
         <source>Quantum physics... allow me to show you its true potential.</source>
         <translation>量子物理學...請允許我向您展示它的真正潛力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="331"/>
         <source>I will show you exactly what splitting an atom feels like.</source>
         <translation>我將向您展示分裂原子的確切感覺.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="298"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="332"/>
         <source>Allow me to demonstrate the power of my hovercraft!</source>
         <translation>讓我展示一下我氣墊船的威力吧!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="299"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="333"/>
         <source>Perhaps if you valued science more, you would not be in this predicament!</source>
         <translation>也許如果你更重視科學,你就不會陷入這種困境!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="334"/>
         <source>Science has gotten me this far, let&apos;s see just how far it will take me.</source>
         <translation>科學已經讓我走了這麼遠,讓我們看看它能帶我走多遠.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="338"/>
         <source>That one was for you, Lara.</source>
         <translation>那是給你的,勞拉.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="339"/>
         <source>Theoretically speaking, you never stood a chance.</source>
         <translation>從理論上講,你從來沒有機會.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="340"/>
         <source>For lack of a better word, you were fully atomized!</source>
         <translation>找不到更好的詞了,你完全霧化了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="344"/>
         <source>How can this be?! All of my calculations were flawless!</source>
         <translation>怎麼會這樣?!我所有的計算都是完美的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="345"/>
         <source>It seems I need to do more experimentations.</source>
         <translation>看來我需要做更多的實驗.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="349"/>
         <source>Amy</source>
         <translation>Amy</translation>
     </message>
@@ -15313,38 +15422,38 @@ CO區域效果:
 <context>
     <name>co_empty_ac</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="55"/>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="59"/>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="63"/>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="71"/>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="75"/>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="79"/>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="83"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="60"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="64"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="72"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="84"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="68"/>
         <source>A Blank CO for Amber Corona.</source>
         <translation>一個空白的指揮官,適用於琥珀日冕.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="87"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="88"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="91"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="92"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="95"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="96"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ac.js" line="99"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="100"/>
         <source>Amber Corona</source>
         <translation>琥珀日冕</translation>
     </message>
@@ -15352,38 +15461,38 @@ CO區域效果:
 <context>
     <name>co_empty_bd</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="57"/>
         <source>A Blank CO for Brown Desert.</source>
         <translation>一個空白的指揮官,適用於棕色沙漠.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="60"/>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="64"/>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="68"/>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="72"/>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="76"/>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="80"/>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="84"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="61"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="65"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="69"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="73"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="85"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="88"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="89"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="92"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="93"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="96"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="97"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bd.js" line="100"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="101"/>
         <source>Brown Desert</source>
         <translation>棕色沙漠</translation>
     </message>
@@ -15391,48 +15500,48 @@ CO區域效果:
 <context>
     <name>co_empty_bg</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="57"/>
         <source>A Blank CO for the Bolt Guard.</source>
         <translation>一個空白的指揮官,適用於Bolt Guard.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="57"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="58"/>
         <source>Bolt Guard is a sub section of the Black Hole Army lead by Von Bolt.</source>
         <translation>Bolt Guard 是由 Von Bolt 領導的黑洞軍團的一個分支.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="59"/>
         <source>The CO&apos;s of Bolt Guard only wishes to destroy the land to achieve their own goals.</source>
         <translation>Bolt Guard的CO只想摧毀土地以實現自己的目標.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="62"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="66"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="70"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="74"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="78"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="82"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="86"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="83"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="87"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="90"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="91"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="94"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="95"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="98"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="99"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="102"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="103"/>
         <source>Bolt Guard</source>
         <translation>Bolt Guard</translation>
     </message>
@@ -15440,53 +15549,53 @@ CO區域效果:
 <context>
     <name>co_empty_bh</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="57"/>
         <source>A Blank CO for Black Hole.</source>
         <translation>一個空白的指揮官,適用於黑洞.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="57"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="58"/>
         <source>Black Hole is an aggressive force that seeks to dominate Wars World. Its COs have evil intents and are highly destructive, </source>
         <translation>黑洞是一支進攻性強的勢力,旨在統治戰爭世界.其CO具有邪惡的意圖並極具破壞性, </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="59"/>
         <source>not caring about how many units they lose, as long as they can achieve their goal. In the first two games, Black Hole occupies </source>
         <translation>只要能達到目標,黑洞部隊的指揮官們就不在乎失去多少部隊.在前兩個遊戲中,黑洞占領 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="60"/>
         <source> some small islands in Cosmo Land and Macro Land respectively as their base of operation, before being driven out by the Allied Nations. </source>
         <translation> 科斯莫土地和宏觀土地上的一些小島作為他們的行動基地,但最終被聯合國驅逐出境. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="63"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="67"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="71"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="75"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="79"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="83"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="87"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="64"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="68"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="72"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="84"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="88"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="91"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="92"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="95"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="96"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="99"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="100"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="103"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="104"/>
         <source>Black Hole</source>
         <translation>黑洞</translation>
     </message>
@@ -15494,48 +15603,48 @@ CO區域效果:
 <context>
     <name>co_empty_bm</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="57"/>
         <source>A Blank CO for Blue Moon.</source>
         <translation>一個空白的指揮官,適用於藍色月亮.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="57"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="58"/>
         <source>Due to Clone Andy leading an invasion on their land, Blue Moon was at war with Orange Star at the beginning of the original Advance Wars, though </source>
         <translation>由於克隆安迪率領的入侵,藍色月亮在原始的Advance Wars遊戲開始時與橙星處於戰爭狀態,儘管 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="59"/>
         <source>later allied with them, co-finding the Allied Nations along with Green Earth and Yellow Comet to defend against the Black Hole invasion. </source>
         <translation>但後來與他們聯盟,與綠色地球和黃色彗星一起創立了聯合國,以抵抗黑洞入侵. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="62"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="66"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="70"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="74"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="78"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="82"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="86"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="83"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="87"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="90"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="91"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="94"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="95"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="98"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="99"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="102"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="103"/>
         <source>Blue Moon</source>
         <translation>藍色月亮</translation>
     </message>
@@ -15543,58 +15652,58 @@ CO區域效果:
 <context>
     <name>co_empty_dm</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="57"/>
         <source>A Blank CO for Dark Matter.</source>
         <translation>一個空白的指揮官,適用於黑暗物質.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="57"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="58"/>
         <source>A military production company. Dark Matter originally supplied Black Hole with weapons in order to create a war to raise the income of the company. </source>
         <translation>一家軍事生產公司.Dark Matter 最初向 Black Hole 提供武器,以便制造戰爭來提高公司的收入. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="59"/>
         <source>After three wars against the allied nations. The allied nations got some intel about the original creators of the war.</source>
         <translation>在對抗同盟國進行了三場戰爭之後,同盟國得到了一些關於戰爭的最初創造者的情報.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="60"/>
         <source>The Intelligent Defense System section (IDS) is the research section of Dark Matter lead by Dr. Caulder. </source>
         <translation>智能防禦系統部門（IDS）是由 Caulder 博士領導的 Dark Matter 研究部門. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="60"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="61"/>
         <source>Dark Matter is lead by Yukio who lives to make money.</source>
         <translation>Dark Matter 是由為了賺錢而活的 Yukio 領導的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="64"/>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="68"/>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="72"/>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="76"/>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="80"/>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="84"/>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="88"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="65"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="69"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="73"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="89"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="92"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="93"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="96"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="97"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="100"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="101"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="104"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="105"/>
         <source>Dark Matter</source>
         <translation>黑暗物質</translation>
     </message>
@@ -15602,48 +15711,48 @@ CO區域效果:
 <context>
     <name>co_empty_ge</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="67"/>
         <source>A Blank CO for Green Earth.</source>
         <translation>一個空白的指揮官,適用於綠色地球.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="68"/>
         <source>Green Earth&apos;s forces are extremely organized. Eagle, the leader of Green Earth, specializes in aerial combat, with Jess dominating the ground, and </source>
         <translation>綠色地球的軍隊非常有組織性.領袖 Eagle 擅長空中戰鬥,而 Jess 則擅長地面戰鬥 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="68"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="69"/>
         <source>Drake the seas. </source>
         <translation>德雷克海. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="72"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="76"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="80"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="84"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="88"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="92"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="96"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="73"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="89"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="93"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="97"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="100"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="101"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="104"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="105"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="108"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="109"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="112"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="113"/>
         <source>Green Earth</source>
         <translation>綠色地球</translation>
     </message>
@@ -15651,38 +15760,38 @@ CO區域效果:
 <context>
     <name>co_empty_gs</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="57"/>
         <source>A Blank CO for Golden Sun.</source>
         <translation>一個空白的指揮官,適用於黃金太陽.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="60"/>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="64"/>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="68"/>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="72"/>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="76"/>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="80"/>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="84"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="61"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="65"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="69"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="73"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="85"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="88"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="89"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="92"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="93"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="96"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="97"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_gs.js" line="100"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="101"/>
         <source>Golden Sun</source>
         <translation>黃金太陽</translation>
     </message>
@@ -15690,58 +15799,58 @@ CO區域效果:
 <context>
     <name>co_empty_ma</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="48"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="50"/>
         <source>A Blank CO for Metal Army.</source>
         <translation>一個空白的指揮官,適用於金屬軍隊.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="50"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="52"/>
         <source>The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. </source>
         <translation>機器人的人工智能開發出了自己的行為,而不是遵從 Lash 或 Dark Matter 的命令. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="49"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="51"/>
         <source>The Metal Army is an army of robots. The robots were initially invented by Lash. </source>
         <translation>金屬軍隊是由機器人組成的軍隊.這些機器人最初是由 Lash 發明的. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="51"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="53"/>
         <source>The Metal Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it.</source>
         <translation>當金屬軍隊失去自己的領土時,它會不惜一切代價保衛自己的領土,並試圖重新奪回領土.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="52"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="54"/>
         <source>Besides this the Metal Army is very defensive oriented and doesn&apos;t attack anyone.</source>
         <translation>此外,金屬軍隊非常防禦性,不主動攻擊任何人.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="56"/>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="60"/>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="64"/>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="68"/>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="72"/>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="76"/>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="78"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="82"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="84"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="86"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="88"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="90"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="92"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="94"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="96"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="98"/>
         <source>Metal Army</source>
         <translation>金屬軍隊</translation>
     </message>
@@ -15749,48 +15858,48 @@ CO區域效果:
 <context>
     <name>co_empty_os</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="55"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="56"/>
         <source>A Blank CO for Orange Star.</source>
         <translation>一個空白的指揮官,適用於橙色之星.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="57"/>
         <source>The Orange Star army is lead by Nell and her Sister Rachel also  de-facto leads the Allied Nations. </source>
         <translation>橙色之星軍隊由 Nell 及她的姊姊 Rachel 領導,Rachel 也事實上領導著聯合國. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="57"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="58"/>
         <source>With the exception of Jake, the forces of Orange Star concentrates in direct warfare, excelling in frontal assaults. </source>
         <translation>除了Jake之外,Orange Star的部隊專注於直接戰爭,擅長正面攻擊. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="61"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="65"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="69"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="73"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="77"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="81"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="78"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="82"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="86"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="89"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="90"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="93"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="94"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="97"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="98"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="101"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="102"/>
         <source>Orange Star</source>
         <translation>橙色之星</translation>
     </message>
@@ -15798,38 +15907,38 @@ CO區域效果:
 <context>
     <name>co_empty_pf</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="55"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="56"/>
         <source>A Blank CO for Pink Frontier.</source>
         <translation>一個空白的指揮官,適用於粉紅邊疆.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="59"/>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="63"/>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="67"/>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="71"/>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="75"/>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="79"/>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="83"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="60"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="64"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="68"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="72"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="84"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="87"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="88"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="91"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="92"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="95"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="96"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_pf.js" line="99"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="100"/>
         <source>Pink Frontier</source>
         <translation>粉紅邊疆</translation>
     </message>
@@ -15837,38 +15946,38 @@ CO區域效果:
 <context>
     <name>co_empty_ti</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="57"/>
         <source>A Blank CO for Teal Islands.</source>
         <translation>一個空白的指揮官,適用於青色群島.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="60"/>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="64"/>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="68"/>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="72"/>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="76"/>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="80"/>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="84"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="61"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="65"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="69"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="73"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="85"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="88"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="89"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="92"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="93"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="96"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="97"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ti.js" line="100"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="101"/>
         <source>Teal Islands</source>
         <translation>青色群島</translation>
     </message>
@@ -15876,48 +15985,48 @@ CO區域效果:
 <context>
     <name>co_empty_yc</name>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="55"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="56"/>
         <source>A Blank CO for Yellow Comet.</source>
         <translation>一個空白的指揮官,適用於黃色彗星.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="57"/>
         <source>Yellow Comet is on a group of islands on the far east. They&apos;re also the smallest nation of the Allied Nations, but their strong army deters any </source>
         <translation>黃彗星位於遠東的一群島嶼上.他們是同盟國中最小的國家,但他們強大的軍隊可以阻止任何可能的攻擊.他們的指揮官是一位叫做Kanbei的將領,他的部隊以高精度和防禦力量著稱,並且相當擅長在城市地區進行戰鬥 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="57"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="58"/>
         <source>outside forces from invading them. </source>
         <translation>防止外來勢力入侵他們. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="61"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="65"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="69"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="73"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="77"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="81"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="78"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="82"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="86"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="89"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="90"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="93"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="94"/>
         <source>Victory!</source>
         <translation>勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="97"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="98"/>
         <source>Defeat...</source>
         <translation>戰敗...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="101"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="102"/>
         <source>Yellow Comet</source>
         <translation>黃色彗星</translation>
     </message>
@@ -18881,28 +18990,28 @@ CO區域效果:
 <context>
     <name>co_mary</name>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="329"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="361"/>
         <source>A ruthless commander recruited into the Amber Corona army.</source>
         <translation>一位被招募到琥珀日冕軍隊的無情指揮官.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="333"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="365"/>
         <source>Cocktails</source>
         <translation>雞尾酒</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="337"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="369"/>
         <source>Excuses</source>
         <translation>藉口</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="341"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="373"/>
         <source>Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.</source>
         <translation>被攻擊的部隊在下一個回合內無法從建築物中恢復.
 每當瑪莉摧毀了一個佔領的單位,她就會獲得該單位所佔領物業的佔領獎勵.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="345"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="377"/>
         <source>
 Special Unit:
 AT Cycle
@@ -18913,102 +19022,123 @@ AT摩托車
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="346"/>
         <source>
 Global Effect: 
 Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.</source>
-        <translation>
+        <translation type="vanished">
 全局效果：
 攻擊的單位將無法在下一回合從建築物中修復.每當Mary摧毀一個在一個地產上的單位,她將獲得該地產的佔領獎勵.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="347"/>
         <source>
 
 CO Zone Effect: 
 Units gain firepower and defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO 區域效果:
 所有單位的攻擊力和防禦力增強.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="351"/>
         <source>Deployment and repairs from properties are disabled and she gets an offensive bonus.</source>
-        <translation>從建築物部署和修復單位都會被禁用,她的單位攻擊會得到加成.</translation>
+        <translation type="vanished">從建築物部署和修復單位都會被禁用,她的單位攻擊會得到加成.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="355"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="391"/>
         <source>Highway of Pain</source>
         <translation>痛苦的高速公路</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="359"/>
         <source>Terrain stars now reduces the foe&apos;s defense and Mary&apos;s capture bonus is greatly increased. All units gain substantial firepower.</source>
-        <translation>現在地形星數會降低敵方的防禦力,而Mary的佔領獎勵大大提高.所有單位都會獲得可觀的火力加成.</translation>
+        <translation type="vanished">現在地形星數會降低敵方的防禦力,而Mary的佔領獎勵大大提高.所有單位都會獲得可觀的火力加成.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="363"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="378"/>
+        <source>
+Global Effect: 
+Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus of %0 for that property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="379"/>
+        <source>
+
+CO Zone Effect: 
+Units gain firepower %1% and defense %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="385"/>
+        <source>Deployment and repairs from properties are disabled and she gets an offensive bonus of %0%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="395"/>
+        <source>Terrain stars now reduces the foe&apos;s defense by %2% and Mary&apos;s capture bonus is greatly increased by %0. All units gain %1% firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="401"/>
         <source>Bloody Mary</source>
         <translation>血腥瑪麗</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="367"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="405"/>
         <source>Keep marching guys, the victory is close!</source>
         <translation>繼續前進,勝利就在眼前!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="368"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="406"/>
         <source>No pain! NO GLORY!</source>
         <translation>不痛!沒有榮耀!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="369"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="407"/>
         <source>A drop of blood is a drop of effort...you must be proud of your troops.</source>
         <translation>一滴血就是一滴心血...你們要為你們的部隊感到驕傲.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="370"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="408"/>
         <source>People call me Bloody Mary....and no, you can&apos;t drink me.</source>
         <translation>人們叫我血腥瑪麗...不,你不能喝我.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="371"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="409"/>
         <source>We will fight until your last soldier is dead!</source>
         <translation>我們會戰鬥到你最後一個士兵死去!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="372"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="410"/>
         <source>I am a soldier, I fight where I am told, and I win where I fight.</source>
         <translation>我是一名士兵,我在我被告知的地方戰鬥,我在我戰鬥的地方獲勝.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="376"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="414"/>
         <source>Heh, looks like all my effort paid off in the end</source>
         <translation>呵呵,看來我的努力終於得到了回報</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="377"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="415"/>
         <source>Let&apos;s go, people. Let&apos;s have a drink to celebrate this victory.</source>
         <translation>走吧,人們.讓我們喝一杯慶祝這次勝利吧.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="378"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="416"/>
         <source>All right troops, now you can rest, your job here is done.</source>
         <translation>好的部隊,現在你們可以休息了,你們的工作已經完成了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="382"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="420"/>
         <source>You were better.... This time</source>
         <translation>這次...你更好</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="383"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="421"/>
         <source>That is impossible. I need a drink now.</source>
         <translation>那是不可能的.我現在需要喝一杯.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mary.js" line="387"/>
+        <location filename="../resources/scripts/cos/co_mary.js" line="425"/>
         <source>Mary</source>
         <translation>Mary</translation>
     </message>
@@ -19016,27 +19146,27 @@ CO 區域效果:
 <context>
     <name>co_max</name>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="320"/>
         <source>A brave and loyal friend, not to mention a strong fighter. Max hates any kind of treachery, preferring a good, old-fashioned brawl.</source>
         <translation>Max 是一位勇敢忠誠的好友,同時也是一位強壯的戰士.他厭惡任何形式的背叛,更喜歡一場純粹的鬥爭.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="324"/>
         <source>Weight Training</source>
         <translation>重量訓練</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="328"/>
         <source>Studying</source>
         <translation>讀書</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="332"/>
         <source>Non-infantry direct-combat units are tops.</source>
         <translation>非步兵的直接戰鬥單位表現最好.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="336"/>
         <source>
 Special Unit:
 Tank Hunter
@@ -19047,102 +19177,123 @@ Tank Hunter
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="280"/>
         <source>
 Global Effect: 
 Direct Units gain additional firepower and indirect Units loose firepower and 1 firerange.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 直接作戰的單位獲得額外的火力,而間接作戰的單位失去火力和1格攻擊範圍.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="281"/>
         <source>
 
 CO Zone Effect: 
 Direct Units gain additional firepower.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 直接攻擊單位獲得額外火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="285"/>
         <source>Firepower and movement of all non-infantry direct-combat units rises.</source>
-        <translation>所有非步兵直接戰鬥單位的火力和移動能力增加.</translation>
+        <translation type="vanished">所有非步兵直接戰鬥單位的火力和移動能力增加.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="351"/>
         <source>Max Force</source>
         <translation>最大力量</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="293"/>
         <source>Firepower and movement of all non-infantry direct-combat units rises greatly.</source>
-        <translation>所有非步兵直接戰鬥單位的火力和移動力大幅提高.</translation>
+        <translation type="vanished">所有非步兵直接戰鬥單位的火力和移動力大幅提高.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="337"/>
+        <source>
+Global Effect: 
+Direct Units gain additional %0% firepower and indirect Units loose %2% firepower and %1 firerange.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="338"/>
+        <source>
+
+CO Zone Effect: 
+Direct Units gain additional %3% firepower and none indirect units gain %4%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="345"/>
+        <source>Max&apos;s non-infantry direct-combat units gain +%0 movement and raise their firepower by +%1% and all other units firepower raises by +%2%. All units defense raises by +%3%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="355"/>
+        <source>Firepower raises by %0% and movement by %1 of all non-infantry direct-combat units. The defence raises by %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="361"/>
         <source>Max Blast</source>
         <translation>最大爆炸</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="365"/>
         <source>Roll, tanks, roll!</source>
         <translation>滾動,坦克,滾動!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="366"/>
         <source>Now you&apos;re gonna get hurt!</source>
         <translation>現在你要受傷了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="303"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="367"/>
         <source>Hey!  Give up while you still can!</source>
         <translation>嘿!趁還來得及放棄!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="368"/>
         <source>Wanna test might?  I won&apos;t lose!</source>
         <translation>想試試威力?我不會輸的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="369"/>
         <source>That&apos;s enough!  Get outta the road!</source>
         <translation>夠了!離開馬路!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="370"/>
         <source>Alright, the gloves are comin&apos; off.</source>
         <translation>好吧,手套來了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="374"/>
         <source>That was a piece of cake!</source>
         <translation>那是小菜一碟!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="375"/>
         <source>Ha! It&apos;ll take more than that to beat me!</source>
         <translation>哈!打敗我需要更多!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="312"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="376"/>
         <source>I&apos;m on a roll!</source>
         <translation>我在滾動!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="316"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="380"/>
         <source>Ouch... I let my guard down.</source>
         <translation>哎喲...我放鬆了警惕.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="317"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="381"/>
         <source>Oh, man! Not good! What are we supposed to do now!?</source>
         <translation>天啊!不好!我們現在該怎麼辦!?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="321"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="385"/>
         <source>Max</source>
         <translation>Max</translation>
     </message>
@@ -20307,126 +20458,144 @@ CO區域效果:
 <context>
     <name>co_penny</name>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="190"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="229"/>
         <source>Youngest child of Caulder. She is still too young to know right from wrong.</source>
         <translation>考爾德最小的孩子.她還太小,不知道是非.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="194"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="233"/>
         <source>Mr. Bear</source>
         <translation>小熊先生</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="237"/>
         <source>Broken &quot;Toys&quot;</source>
         <translation>壞掉的&quot;玩具&quot;</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="241"/>
         <source>Her troops are immune to all weather effects</source>
         <translation>她的部隊不受所有天氣影響</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="206"/>
         <source>
 Global Effect: 
 Her troops are immune to all weather effects.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 她的部隊不受所有天氣影響.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="207"/>
         <source>
 
 CO Zone Effect: 
 10% increased firepower and defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 火力和防禦增加 10%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="211"/>
         <source>Changes the weather to a random one for two days.</source>
-        <translation>將天氣隨機更改為兩天.</translation>
+        <translation type="vanished">將天氣隨機更改為兩天.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="258"/>
         <source>Stormfront</source>
         <translation>風暴前線</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="219"/>
         <source>Changes the weather to a random one for two days and she gets a firepower boost for this turn.
 </source>
-        <translation>將天氣隨機更改為另一種類,持續兩天.此回合她的部隊攻擊力提升.
+        <translation type="vanished">將天氣隨機更改為另一種類,持續兩天.此回合她的部隊攻擊力提升.
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="220"/>
         <source>During rain she gets additionally improved vision.
 </source>
-        <translation>在雨天時,她的視野進一步得到改善.
+        <translation type="vanished">在雨天時,她的視野進一步得到改善.
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="221"/>
         <source>During snow she gets additionally improved movement.
 </source>
-        <translation>在雪天時,她的部隊移動距離額外增加,讓她擁有更高的機動性.
+        <translation type="vanished">在雪天時,她的部隊移動距離額外增加,讓她擁有更高的機動性.
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="222"/>
         <source>During sandstorm she gets additionally improved firerange for her indirects.
 </source>
-        <translation>在沙暴期間,她的間接部隊攻擊範圍會額外增強.
+        <translation type="vanished">在沙暴期間,她的間接部隊攻擊範圍會額外增強.
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="245"/>
+        <source>
+Global Effect: 
+Her troops are immune to all weather effects.
+
+CO Zone Effect: 
+%0% increased firepower and %1% defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="252"/>
+        <source>Changes the weather to a random one for %0 days.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="262"/>
+        <source>Changes the weather to a random for %4 days and she gets a firepower boost for this turn.
+During rain she gets additionally %0 improved vision.
+During mist she gets additionally %1 improved vision.
+During snow she gets additionally %2 improved movement.
+During sandstorm she gets additionally %3 improved firerange for her indirects.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="273"/>
         <source>Weatherchaos</source>
         <translation>渾沌天氣</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="230"/>
-        <location filename="../resources/scripts/cos/co_penny.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="285"/>
         <source>Tee he he!!!</source>
         <translation>嘻嘻嘻!!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="278"/>
         <source>Nice weather we&apos;re having</source>
         <translation>我們的好天氣</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="279"/>
         <source>Giggle</source>
         <translation>暗笑</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="283"/>
         <source>Daddy will be pleased!</source>
         <translation>爸爸會很高興的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="284"/>
         <source>Wow! I&apos;m getting the hang of this!</source>
         <translation>哇!我正在掌握這個竅門!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="289"/>
         <source>Mr. Bear we lost our toys.</source>
         <translation>小熊先生,我們正在失去玩具.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="290"/>
         <source>You don&apos;t get Mr. Bear. He&apos;s mine!</source>
         <translation>你不懂熊先生.他是我的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_penny.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="294"/>
         <source>Penny</source>
         <translation>Penny</translation>
     </message>
@@ -21763,27 +21932,27 @@ CO區域效果:
 <context>
     <name>co_peter</name>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="263"/>
         <source>A veteran CO with over 30 years of experience, mostly from the plains of Cosmo Land. Cautious but decisive.</source>
         <translation>一位有著超過 30 年經驗的老將指揮官,主要在Cosmo Land的平原上作戰.謹慎但果斷.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="267"/>
         <source>Electric razors</source>
         <translation>電動剃須刀</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="271"/>
         <source>Excuses</source>
         <translation>藉口</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="275"/>
         <source>Peter&apos;s units plow through enemy direct-combat units with ease. However, thicker terrain weakens his attacks.</source>
         <translation>Peter 的軍隊能輕鬆突破敵方的直接戰鬥部隊.但在較厚的地形上攻擊能力會減弱.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="279"/>
         <source>
 Special Unit:
 Royal Guard
@@ -21794,7 +21963,7 @@ Royal Guard
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="280"/>
         <source>
 Global Effect: 
 Direct Units have increased firepower and loose additional firepower per terrain star.</source>
@@ -21803,7 +21972,7 @@ Direct Units have increased firepower and loose additional firepower per terrain
 直接戰鬥單位擁有增強的火力,並且每1個地形星會讓它們失去額外的火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="281"/>
         <source>
 
 CO Zone Effect: 
@@ -21814,82 +21983,82 @@ CO區域效果:
 直接戰鬥單位的火力增加.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="286"/>
         <source>Firepower is greatly increased against enemy direct-combat units.</source>
         <translation>對敵方直接戰鬥單位的火力大幅提升.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="290"/>
         <source>General Offensive</source>
         <translation>總攻</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="294"/>
         <source>Enemy units not on a property suffer 2 HP of damage.</source>
         <translation>敵軍單位若不在建築物上,則會受到2點傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="298"/>
         <source>Bombing Run</source>
         <translation>轟炸運行</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="302"/>
         <source>We&apos;re going in, boys. Wait for the signal, then strike!</source>
         <translation>我們進去了,孩子們.等待信號､然後罷工!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="303"/>
         <source>You won&apos;t even have time to take cover.</source>
         <translation>你甚至沒有時間躲起來.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="304"/>
         <source>It&apos;s time to tear through their tanks.</source>
         <translation>是時候撕破他們的坦克了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="305"/>
         <source>Bogged down? Me? Ha! You seriously overestimate yourself.</source>
         <translation>越陷越深?我?哈!你嚴重高估了自己.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="306"/>
         <source>I&apos;ve been down there with the grunts... I know what&apos;s feasible and what&apos;s not.</source>
         <translation>我和那些咕嚕咕嚕的人一起去過那裡...我知道什麼是可行的,什麼是不可行的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="307"/>
         <source>I may not be unbeatable, but you&apos;re obviously not either.</source>
         <translation>我可能不是無敵的,但你顯然也不是.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="311"/>
         <source>Experience is the key to my success.</source>
         <translation>經驗是我成功的關鍵.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="312"/>
         <source>I hope you learned something from this.</source>
         <translation>我希望你能從中學到一些東西.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="313"/>
         <source>What did you think you were doing with those tanks?</source>
         <translation>你以為你在用那些坦克做什麼?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="317"/>
         <source>Your tanks were better than mine.</source>
         <translation>你的坦克比我的好.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="318"/>
         <source>You&apos;re never to old to learn some new moves.</source>
         <translation>你永遠不會老去學習一些新動作.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="290"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="322"/>
         <source>Peter</source>
         <translation>Peter</translation>
     </message>
@@ -21897,122 +22066,143 @@ CO區域效果:
 <context>
     <name>co_rachel</name>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="259"/>
         <source>Brings a breath of fresh air to her troops. Strives to follow in the footsteps of her older sister, Nell. Led the Allied Nations during the Omega war. Rocket Girl</source>
         <translation>Rocket Girl帶給部隊全新的風貌,努力跟隨姐姐Nell的腳步.在Omega戰爭期間領導了聯合國軍</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="263"/>
         <source>Hard Work</source>
         <translation>努力工作</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="267"/>
         <source>Excuses</source>
         <translation>藉口</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="271"/>
         <source>Her troops are quite hardworking, and they increase repairs by one on properties.</source>
         <translation>她的部隊很勤勞,他們對財產的維修+1.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="250"/>
         <source>
 Global Effect: 
 Units have increased repairs by one on properties.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 部隊在領地上修理值增加1.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="251"/>
         <source>
 
 CO Zone Effect: 
 Units have increased firepower.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果: 
 所有單位攻擊力增加.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="255"/>
         <source>Has a chance to strike with more damage than expected. Lucky!</source>
-        <translation>有機會造成比預期更多的傷害.幸運的!</translation>
+        <translation type="vanished">有機會造成比預期更多的傷害.幸運的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="288"/>
         <source>Lucky Lass</source>
         <translation>幸運姑娘</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="263"/>
         <source>Launches three missiles from Orange Star HQ in Omega Land.</source>
-        <translation>從 Omega Land 的 Orange Star HQ 發射3枚導彈.</translation>
+        <translation type="vanished">從 Omega Land 的 Orange Star HQ 發射3枚導彈.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="275"/>
+        <source>
+Global Effect: 
+Units have increased repairs by %0 on properties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="276"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower by %1% and defence by %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="282"/>
+        <source>Luck damage is increased by %0%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="292"/>
+        <source>Launches three missiles from Orange Star HQ in Omega Land dealing %0 HP of damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="299"/>
         <source>Covering Fire</source>
         <translation>火力掩護</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="303"/>
         <source>I will protect this land to the end!</source>
         <translation>這片土地，我會守護到底！</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="304"/>
         <source>This time, I&apos;m serious!</source>
         <translation>這一次，我是認真的！</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="305"/>
         <source>You don&apos;t have a chance!</source>
         <translation>你沒有機會!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="306"/>
         <source>I&apos;m going to send you packing!</source>
         <translation>我要打包送你!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="307"/>
         <source>Don&apos;t pick a fight with me!</source>
         <translation>別找我打架!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="308"/>
         <source>Finally, some real competition!</source>
         <translation>最後,一些真正的競爭!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="312"/>
         <source>Another one down... Who&apos;s next?</source>
         <translation>又一個倒下了...下一個是誰?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="313"/>
         <source>I never give up.</source>
         <translation>我從不放棄.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="282"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="314"/>
         <source>Don&apos;t take me lightly just because I&apos;m cute!</source>
         <translation>不要因為我可愛就看不起我!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="318"/>
         <source>You beat me! Hmmm... Not bad!</source>
         <translation>你打敗我了!嗯...還不錯!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="319"/>
         <source>You&apos;ve got to be kidding me!</source>
         <translation>你一定是在開玩笑吧!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="323"/>
         <source>Rachel</source>
         <translation>Rachel</translation>
     </message>
@@ -22069,27 +22259,27 @@ CO區域效果:
 <context>
     <name>co_rattigan</name>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="317"/>
         <source>A dutiful CO of the Yellow Comet army addled by a childhood phobia. Blames Sensei for Yellow Comet&apos;s lack of former glory.</source>
         <translation>一位盡責的CO,屬於黃色彗星軍隊,但因童年恐懼症而心神不寧.他認為先生是造成黃色彗星失去昔日榮耀的罪魁禍首.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="321"/>
         <source>Yellow Comet</source>
         <translation>黃色彗星</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="325"/>
         <source>Infestations</source>
         <translation>侵擾</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="329"/>
         <source>Rattigan&apos;s troops are trained to be extremely capable at dealing with large regiments of units, but are taken off guard by lone units.</source>
         <translation>Rattigan 的部隊訓練有素,擅長應對大規模的敵軍,但對於單獨的敵軍會措手不及.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="333"/>
         <source>
 Special Unit:
 Auto Tank
@@ -22100,7 +22290,7 @@ Auto Tank
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="288"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="334"/>
         <source>
 Global Effect: 
 Units have increased firepower against large regiments of units and reduced firepower against lone units.</source>
@@ -22109,7 +22299,7 @@ Units have increased firepower against large regiments of units and reduced fire
 對大型部隊的單位增加火力,對孤立單位減少火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="335"/>
         <source>
 
 CO Zone Effect: 
@@ -22120,82 +22310,82 @@ CO區域效果:
 單位增加了對大單位團的火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="339"/>
         <source>Receives a small offensive boost when attacking enemies in groups. Movement is increased by one space.</source>
         <translation>攻擊成群的敵人時獲得小幅攻擊力提升.移動+1.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="343"/>
         <source>Raid</source>
         <translation>襲擊</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="347"/>
         <source>Receives a firepower and defense boost for engaging enemies in groups. Enemy units suffer one HP of damage.</source>
         <translation>與成群結隊的敵人交戰時獲得火力和防禦力提升.敵方單位受到 1 HP 的傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="351"/>
         <source>The Sweep</source>
         <translation>橫掃</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="355"/>
         <source>All those enemy men... heh, perfect!</source>
         <translation>所有那些敵人...嘿,完美!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="356"/>
         <source>G-gah! They&apos;re everywhere!</source>
         <translation>G-gah!他們無處不在!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="357"/>
         <source>Hrumph! This&apos;ll learn yeh!</source>
         <translation>哼!學學這招!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="312"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="358"/>
         <source>Heh, could Sensei do THIS?</source>
         <translation>呵,老師能做到嗎!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="359"/>
         <source>Who the heck taught you to fight?</source>
         <translation>誰教你打架的?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="360"/>
         <source>Stay on your toes! I&apos;m talking to you!!</source>
         <translation>保持警惕!我和你說話呢!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="364"/>
         <source>With all of those troops, you&apos;d think they&apos;d last longer...</source>
         <translation>有了所有這些部隊,你會認為他們會持續更長時間...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="365"/>
         <source>A-aughk!! Uhm… I mean… congratulations, men.</source>
         <translation>啊啊!!嗯...我的意思是...恭喜,伙計們.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="320"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="366"/>
         <source>With Yellow Comet on the line, I can&apos;t lose.</source>
         <translation>有黃色彗星在線上,我不能輸.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="324"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="370"/>
         <source>What? You had enough troops...</source>
         <translation>什麼?你有足夠的軍隊...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="325"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="371"/>
         <source>Sensei that&apos;s your fault!</source>
         <translation>老師是你的錯!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="329"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="375"/>
         <source>Rattigan</source>
         <translation>Rattigan</translation>
     </message>
@@ -22203,28 +22393,28 @@ CO區域效果:
 <context>
     <name>co_roboandy</name>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="278"/>
         <source>Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.</source>
         <translation>Lash被軍方要求創造能指揮部隊的人工智慧,
 但是接受電腦指令的士兵感到驚恐.所以她把它放在原始的Robo-Andy中解決了這個問題.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="282"/>
         <source>Puppet Shows</source>
         <translation>木偶戲</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="286"/>
         <source>Housework</source>
         <translation>家事</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="290"/>
         <source>He gets firepower for his powermeter, but his firepower may also drop drastically.</source>
         <translation>他會因為蓄力槽而增加火力,但火力也可能會急劇下降.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="294"/>
         <source>
 Special Unit:
 AT Cycle
@@ -22235,102 +22425,119 @@ AT摩托車
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="257"/>
         <source>
 Global Effect: 
 Units gain firepower and misfortune per star.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 單位每顆星星可獲得火力和不幸。</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="258"/>
         <source>
 
 CO Zone Effect: 
 Units gain even more firepower and misfortune per star.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 單位每顆星可獲得更多的火力和不幸.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="262"/>
         <source>His units heal 1 HP after any attack or counter-attack, and deal 1 HP damage to the offender if they are destroyed.</source>
-        <translation>他的部隊會在攻擊或反擊後恢復1點生命,如果被摧毀,會對攻擊者造成1點傷害.</translation>
+        <translation type="vanished">他的部隊會在攻擊或反擊後恢復1點生命,如果被摧毀,會對攻擊者造成1點傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="308"/>
         <source>Cooldown</source>
         <translation>冷卻</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="270"/>
         <source>His units heal 3 HP after any attack or counter-attack, and deal 3 HP damage to the offender if they are destroyed.</source>
-        <translation>他的部隊在任何進攻或反擊後會回復3點生命值,如果它們被摧毀,那麼將對攻擊者造成3點傷害.</translation>
+        <translation type="vanished">他的部隊在任何進攻或反擊後會回復3點生命值,如果它們被摧毀,那麼將對攻擊者造成3點傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="295"/>
+        <source>
+Global Effect: 
+Units gain %0% firepower and %1% misfortune per star.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="296"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %2% firepower and %3% misfortune per star.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="312"/>
+        <source>His units heal %0 HP after any attack or counter-attack, and deal %1 HP damage to the offender if they are destroyed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="318"/>
         <source>Critical Mass</source>
         <translation>臨界質量</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="278"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="322"/>
         <source>DADADA! ANNOYING PESTS DESERVE TO BE SWATTED!</source>
         <translation>達達達!煩人的害蟲應該被拍打!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="323"/>
         <source>ERROR DETECTED. PREPARE TO BE ELIMINATED!</source>
         <translation>檢測到錯誤.做好被淘汰的準備!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="324"/>
         <source>YOU&apos;RE A RUDE ONE! EAT HEAVY METAL!</source>
         <translation>你是個粗魯的人!吃重金屬!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="325"/>
         <source>KYAAA! SUCH A JERK! TIME TO DIE!</source>
         <translation>哇!真混蛋!死的時間到了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="282"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="326"/>
         <source>WARNING! WARNING! EXECUTING EMERGENCY VENTING MODULE.</source>
         <translation>警告!警告!執行緊急通風模塊.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="327"/>
         <source>YOU&apos;RE SO DISAPPOINTING. WITNESS MY POWER!</source>
         <translation>你太令人失望了.見證我的力量!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="331"/>
         <source>USELESS CREATURE!</source>
         <translation>無用的生物!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="288"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="332"/>
         <source>THANK YOU FOR USING ROBO-ANDY, INFERIOR BEING!</source>
         <translation>感謝您使用 ROBO-ANDY,低人一等!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="333"/>
         <source>FOR MORE EXCITING PERFORMANCES PLEASE UPGRADE TO THE LATEST VERSION.</source>
         <translation>如需更多精彩表演,請升級至最新版本.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="337"/>
         <source>HOW MAY I SERVE YOU, INFERIOR BEING?</source>
         <translation>我該如何為您服務,低等生物?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="294"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="338"/>
         <source>ALT+TAB! ALT+TAB! ALT+TAB!</source>
         <translation>ALT+TAB! ALT+TAB! ALT+TAB!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="298"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="342"/>
         <source>Robo-Andy</source>
         <translation>Robo-Andy</translation>
     </message>
@@ -22338,27 +22545,26 @@ CO區域效果:
 <context>
     <name>co_robosturm</name>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="293"/>
         <source>Black Hole was in need of new strong CO&apos;s so Lash invented a second Sturm. But he doesn&apos;t accept any orders and formed his own Army.</source>
         <translation>黑洞軍團需要新的強力指揮官,所以拉許發明了第二個司托姆.然而,他不接受任何命令,並組建了自己的軍隊.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="297"/>
         <source>Robots</source>
         <translation>機器人</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="301"/>
         <source>Livings</source>
         <translation>生物</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="265"/>
         <source>His troops can move 1 point more, but they have weaker firepower and higher defense capabilities.</source>
-        <translation>他的部隊移動力增加 1 點,但攻擊力較弱,防禦力較高.</translation>
+        <translation type="vanished">他的部隊移動力增加 1 點,但攻擊力較弱,防禦力較高.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="311"/>
         <source>
 Special Unit:
 Tank Hunter
@@ -22369,102 +22575,124 @@ Tank Hunter
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="270"/>
         <source>
 Global Effect: 
 Units gain 1 additional movement point and have reduced firepower.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 單位獲得額外的移動力,但火力減弱.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="271"/>
         <source>
 
 CO Zone Effect: 
 Units gain defense and have reduced firepower.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 單位增加防禦值,但攻擊力減弱.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="275"/>
         <source>Enemy loses half of their ammo, his troops can move 1 point more and their defense rises.</source>
-        <translation>敵人失去一半彈藥,他的部隊移動點數增加1點,防禦力提高.</translation>
+        <translation type="vanished">敵人失去一半彈藥,他的部隊移動點數增加1點,防禦力提高.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="327"/>
         <source>Mechanized Storm</source>
         <translation>機械風暴</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="283"/>
         <source>Enemy loses half of their ammo, take 2 HP damage, his troops can move 2 points more and their defense rises extremely.</source>
-        <translation>敵方失去一半彈藥,並且會受到2點傷害,他的部隊移動力增加2點,防禦力極大提升.</translation>
+        <translation type="vanished">敵方失去一半彈藥,並且會受到2點傷害,他的部隊移動力增加2點,防禦力極大提升.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="305"/>
+        <source>His troops can move %0 point more, but they have weaker firepower and higher defense capabilities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="312"/>
+        <source>
+Global Effect: 
+Units gain %0 additional movement point and have %1% reduced firepower and %2% increased defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="313"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %3% defense and have %4% reduced firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="320"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="331"/>
+        <source>Enemy loses %0% of their ammo, take %1 HP damage, his troops can move %2 point more and their defense rises by %3%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="338"/>
         <source>Mechanized Destruction</source>
         <translation>機械化破壞</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="342"/>
         <source>System Runtime. Error! No more enemies found!</source>
         <translation>系統運行時錯誤!沒有發現更多的敵人!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="292"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="343"/>
         <source>...Sturm is coming...you have no chance...</source>
         <translation>...Sturm 來了...你沒有機會...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="344"/>
         <source>Order analyzed! Destroy enemies.</source>
         <translation>命令分析!消滅敵人.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="294"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="345"/>
         <source>Nobody can kill a Robot.</source>
         <translation>沒有人可以殺死機器人.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="346"/>
         <source>This is a war of a new time!</source>
         <translation>這是一場新時代的戰爭!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="347"/>
         <source>Humans beware the power of machines coming to your country.</source>
         <translation>人類提防機器來到你的國家的力量.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="351"/>
         <source>..........</source>
         <translation>..........</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="352"/>
         <source>...Enemy destroyed! Country conquered.</source>
         <translation>...敵人全滅!國家被征服.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="353"/>
         <source>Robots are stronger than human beings.</source>
         <translation>機器人比人類強壯.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="357"/>
         <source>No Program found for this Situation.</source>
         <translation>找不到適合這種情況的程序.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="307"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="358"/>
         <source>Inaccurate attack! This situation is impossible.</source>
         <translation>攻擊不准確!這種情況是不可能的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="362"/>
         <source>Robo-Sturm</source>
         <translation>Robo-Sturm</translation>
     </message>
@@ -22472,34 +22700,33 @@ CO區域效果:
 <context>
     <name>co_sabaki</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="233"/>
         <source>A former Yellow Comet CO that started a rebellion, when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.</source>
         <translation>一名曾經在黃彗星軍服役的指揮官,在看到琥珀日冕的狀況後發動了一場叛亂.她擅長於回收零件並進行現場維修.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="237"/>
         <source>Spare parts</source>
         <translation>備件</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="241"/>
         <source>Poverty</source>
         <translation>貧窮</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="245"/>
         <source>Highly skilled at salvaging parts, Sabaki&apos;s units can drain HP from enemies.</source>
         <translation>Sabaki擅長回收零件,其部隊能夠從敵人身上吸取生命值.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="226"/>
         <source>
 Special Unit:
 Crystal Tanks
 
 Global Effect: 
 No Effects.</source>
-        <translation>
+        <translation type="vanished">
 特殊部隊:
 水晶坦克
 
@@ -22507,93 +22734,114 @@ No Effects.</source>
 沒有.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="227"/>
         <source>
 
 CO Zone Effect: 
 Units have lifesteal.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 部隊擁有吸血能力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="231"/>
         <source>Units can drain even more HP.</source>
-        <translation>部隊可以吸取更多的生命值.</translation>
+        <translation type="vanished">部隊可以吸取更多的生命值.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="262"/>
         <source>Speed Salvage</source>
         <translation>速度打撈</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="239"/>
         <source>Units heal HP equal amount of damage they inflict.</source>
-        <translation>部隊可以回復與其造成的傷害相等的生命值.</translation>
+        <translation type="vanished">部隊可以回復與其造成的傷害相等的生命值.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="249"/>
+        <source>
+Special Unit:
+Crystal Tanks
+
+Global Effect: 
+Units have %0% lifesteal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="250"/>
+        <source>
+
+CO Zone Effect: 
+Units have %1% lifesteal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="266"/>
+        <source>Units have %0% lifesteal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="272"/>
         <source>Rejuvenation Raid</source>
         <translation>回春突襲</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="276"/>
         <source>Grab those parts! There&apos;s a tank that needs fixing!</source>
         <translation>抓住那些零件!有一個坦克需要修理!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="277"/>
         <source>Get those machines up and running! We need to push forward!</source>
         <translation>啟動並運行這些機器!我們需要向前推進!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="278"/>
         <source>Every machine has a weakness, you just have to know where to look.</source>
         <translation>每台機器都有一個弱點,你只需要知道去哪裡找.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="279"/>
         <source>You may think I&apos;m nuts, but you&apos;re about to get screwed...</source>
         <translation>你可能認為我瘋了,但你即將被搞砸了...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="280"/>
         <source>Time to throw a wrench in their plans.</source>
         <translation>是時候破壞他們的計劃了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="281"/>
         <source>Let&apos;s see how you react when the hammer falls...</source>
         <translation>讓我們看看當錘子落下時你的反應...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="285"/>
         <source>My army acts like a well-oiled machine.</source>
         <translation>我的軍隊就像一台運轉良好的機器.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="286"/>
         <source>Nothing&apos;s more satisfying than killing an enemy with their own gun.</source>
         <translation>沒有什麼比用自己的槍殺死敵人更令人滿足的了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="287"/>
         <source>Your army just fell apart out there.</source>
         <translation>你的軍隊剛剛在外面土崩瓦解.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="291"/>
         <source>The revolution isn&apos;t over.</source>
         <translation>革命還沒有結束.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="292"/>
         <source>Even by healing my troops.. I couldn&apos;t win.</source>
         <translation>即使通過治療我的部隊...我也贏不了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="296"/>
         <source>Sabaki</source>
         <translation>Sabaki</translation>
     </message>
@@ -22601,27 +22849,27 @@ CO區域效果:
 <context>
     <name>co_sami</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="338"/>
         <source>A strong-willed Orange Star special forces captain who loves long hair. Despite having short hair. Whatever, IS.</source>
         <translation>一位意志堅定的橙色之星特種部隊上尉,喜愛長髮,儘管自己的髮型是短髮.不過,這又如何.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="342"/>
         <source>Chocolate</source>
         <translation>巧克力</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="284"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="346"/>
         <source>Cowards</source>
         <translation>懦夫</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="288"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="350"/>
         <source>As an infantry specialist, her foot soldiers do more damage and capture faster. Non-infantry direct-combat units have weaker firepower.</source>
         <translation>作為一名步兵專家,她的步兵可以造成更多傷害且能更快地佔領建築物.非步兵的直接戰鬥單位則會有較弱的火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="292"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="354"/>
         <source>
 Special Unit:
 Commando
@@ -22632,102 +22880,123 @@ Commando
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="293"/>
         <source>
 Global Effect: 
 Transporter have 1 more movement point and infantries have increased capture rate. Non-infantry direct-combat units have weaker firepower.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 運輸單位的移動力+1,步兵的佔領速度增加.非步兵直接戰鬥單位攻擊力降低.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="294"/>
         <source>
 
 CO Zone Effect: 
 Infantry Units have increased firepower.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 步兵單位火力增加.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="298"/>
         <source>Infantry units receive a movement bonus of one space. Their attack also increases. </source>
-        <translation>所有步兵移動+1,攻擊力也會提高. </translation>
+        <translation type="vanished">所有步兵移動+1,攻擊力也會提高. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="368"/>
         <source>Double Time</source>
         <translation>雙倍時間</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="306"/>
         <source>All foot soldiers can capture buildings instantly. Their movement is increased by two spaces and their attack increases greatly. </source>
-        <translation>所有步兵移動+2,他們可以立即佔領建築物,攻擊力也大大提高. </translation>
+        <translation type="vanished">所有步兵移動+2,他們可以立即佔領建築物,攻擊力也大大提高. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="355"/>
+        <source>
+Global Effect: 
+Transporter have %0 more movement point and infantries have increased capture rate by %1% and firepower by %2% and defence by %3%. Non-infantry direct-combat units have %4% weaker firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="356"/>
+        <source>
+
+CO Zone Effect: 
+Infantry Units have %5% increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="362"/>
+        <source>Infantry units receive a movement bonus of %0 space. Their attack also increases by %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="372"/>
+        <source>All foot soldiers gain a capture %0 capture rate. Their movement is increased by %1 spaces and their attack increases by %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="378"/>
         <source>Victory March</source>
         <translation>勝利行軍</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="382"/>
         <source>You&apos;re not bad!  Now it&apos;s my turn!</source>
         <translation>你還不錯!現在該我了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="383"/>
         <source>All right!  Time to end this!</source>
         <translation>好的!是時候結束這一切了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="316"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="384"/>
         <source>Infantry... Assault!</source>
         <translation>步兵...突擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="317"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="385"/>
         <source>Ready or not, here I come!</source>
         <translation>準備好與否,我來了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="386"/>
         <source>All right, it&apos;s make-or-break time!</source>
         <translation>好吧,現在是成敗時刻!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="387"/>
         <source>Move out, grunts!</source>
         <translation>滾出去,咕嚕!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="323"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="391"/>
         <source>Mission accomplished! Awaiting orders!</source>
         <translation>任務完成!等待指令!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="324"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="392"/>
         <source>Commandos always complete their mission.</source>
         <translation>突擊隊總是完成他們的任務.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="325"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="393"/>
         <source>Score one for the grunts!</source>
         <translation>咕嚕聲得一分!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="329"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="397"/>
         <source>Things would be easier if we had more infantry units...</source>
         <translation>如果我們有更多的步兵單位，事情會更容易...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="330"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="398"/>
         <source>Next time&apos;s for real. I won&apos;t lose focus.</source>
         <translation>下一次是真的.我不會失去注意力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="334"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="402"/>
         <source>Sami</source>
         <translation>Sami</translation>
     </message>
@@ -22735,134 +23004,152 @@ CO區域效果:
 <context>
     <name>co_sanjuro</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="373"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="405"/>
         <source>A respected mercenary from Golden Sun. Once he accepts a job, he sees it through to the end no matter how difficult or dangerous it becomes.</source>
         <translation>一個來自&quot;黃金太陽&quot;的受人尊敬的傭兵.一旦接受了工作,不管多麼困難或危險,都會堅持到底.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="377"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="409"/>
         <source>Honest work</source>
         <translation>誠實做事</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="381"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="413"/>
         <source>Shady business</source>
         <translation>陰暗的生意</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="385"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="417"/>
         <source>A keen mind for his finances, he spends more for better equipment when there&apos;s a surplus and focuses on getting the best deal when he&apos;s pressed for money.</source>
         <translation>他對財務有敏銳的頭腦,當有資金盈餘時會花更多的錢來購買更好的裝備,
 而當資金緊缺時,他會專注於尋找最優惠的交易.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="389"/>
         <source>
 Special Unit:
 Smuggler
 </source>
-        <translation>
+        <translation type="vanished">
 特殊單位:
 走私者
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="390"/>
         <source>
 Global Effect: 
 Unit costs are decreased when he has more income than funds and firepower is decreased.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 當他的收入高於資金時,單位成本會降低,但火力會減弱.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="391"/>
         <source>
 
 CO Zone Effect: 
 Global firepower effects are doubled.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 全局火力效果加倍.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="396"/>
         <source>When his units take combat damage, he receives a portion of the value damage in funds.</source>
-        <translation>當他的部隊受到戰鬥損傷時,他會獲得部分損傷價值的資金.</translation>
+        <translation type="vanished">當他的部隊受到戰鬥損傷時,他會獲得部分損傷價值的資金.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="400"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="437"/>
         <source>Heart of Gold</source>
         <translation>黃金之心</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="404"/>
         <source>When a unit is built, units of the same type receive a firepower and defense boost, unhindered by terrain, and production costs reduced by half.</source>
-        <translation>當一個單位被建造時,同類型的單位將獲得火力和防禦力提升,不受地形的限制,而生產成本則減少一半.</translation>
+        <translation type="vanished">當一個單位被建造時,同類型的單位將獲得火力和防禦力提升,不受地形的限制,而生產成本則減少一半.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="408"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="421"/>
+        <source>
+Special Unit:
+Smuggler
+
+Global Effect: 
+For each %0% difference between income and funds at the start of the turn. His troops gain %1% firepower per %0% percent and cost %2% more if the funds are greater than the current funds. Otherwise he looses %1% firepower per %0% percent and his troops cost %2% less. This effect stacks up to %5 times.
+
+CO Zone Effect: 
+Gains %3% firepower and %4% defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="431"/>
+        <source>When his units take combat damage, he receives %0% of the damage value in funds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="441"/>
+        <source>When a unit is built, units of the same type receive a %0% firepower and %1% defense boost are unhindered by terrain, and production costs for that unit type are reduced by %2%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="447"/>
         <source>Buying Power</source>
         <translation>採購力量</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="412"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="451"/>
         <source>My services are expensive, and worth every penny.</source>
         <translation>我的服務很昂貴,而且每一分錢都值得.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="413"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="452"/>
         <source>Consider this a free sample!</source>
         <translation>將此視為免費樣品!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="414"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="453"/>
         <source>You&apos;re finished! Surrender now!</source>
         <translation>你被終結了!現在投降!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="415"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="454"/>
         <source>War is my livelihood. Can you handle my level of experience?</source>
         <translation>戰爭是我的生計.你能處理我的經驗水平嗎?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="416"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="455"/>
         <source>I was born for battle. I have no limits!</source>
         <translation>我為戰鬥而生.我沒有限制!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="417"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="456"/>
         <source>If you think this is strictly business, think again. The battlefield calls to me!</source>
         <translation>如果您認為這完全是商業行為,請三思.戰場在召喚我!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="421"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="460"/>
         <source>I have a reputation to keep, you know.</source>
         <translation>我要保持聲譽,你知道的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="422"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="461"/>
         <source>Another job well done...where&apos;s the next fight?</source>
         <translation>另一項工作做得很好...下一場戰斗在哪裡?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="423"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="462"/>
         <source>Did you expect anything less from a hardened mercenary?</source>
         <translation>你對一個強硬的僱傭兵有什麼期望嗎?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="427"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="466"/>
         <source>For this I get too less money</source>
         <translation>為此,我得到的錢太少了</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="428"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="467"/>
         <source>Now, I know how the Romans felt like.</source>
         <translation>現在,我知道羅馬人的感受了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="432"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="471"/>
         <source>Sanjuro</source>
         <translation>Sanjuro</translation>
     </message>
@@ -22870,27 +23157,27 @@ CO區域效果:
 <context>
     <name>co_sasha</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="196"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="225"/>
         <source>Colin&apos;s older sister. Normally ladylike, but becomes daring when she gets angry. Dominatrix</source>
         <translation>Colin的姐姐.通常很有淑女風範,但當她生氣時會變得大膽.女王調</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="229"/>
         <source>Truffles</source>
         <translation>松露</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="233"/>
         <source>Pork rinds</source>
         <translation>豬皮</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="237"/>
         <source>Being the heir to a vast fortune, she gets an additional 10% funds from allied properties.</source>
         <translation>作為一個巨大財富的繼承人,她可以從同盟領地中額外獲得10%的資金.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="241"/>
         <source>
 Special Unit:
 Logistic Truck
@@ -22901,102 +23188,123 @@ Logistic Truck
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="213"/>
         <source>
 Global Effect: 
 She gets additional funds from allied properties.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 她可以從友軍擁有的建築物獲得額外的資金.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="214"/>
         <source>
 
 CO Zone Effect: 
 Units gain additional firepower and defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 單位獲得額外的火力和防禦.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="218"/>
         <source>The more funds she has, the more she can decrease the enemy&apos;s CO power gauge.</source>
-        <translation>她擁有越多的資金,就能夠越有效地減少敵方CO能力條.</translation>
+        <translation type="vanished">她擁有越多的資金,就能夠越有效地減少敵方CO能力條.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="255"/>
         <source>Market Crash</source>
         <translation>市場崩潰</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="226"/>
         <source>Earns funds when she inflicts damage on a foe. The greater the damage, the more she earns.</source>
-        <translation>當她對敵人造成傷害時,會獲得資金.傷害越大,獲得的資金就越多.</translation>
+        <translation type="vanished">當她對敵人造成傷害時,會獲得資金.傷害越大,獲得的資金就越多.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="242"/>
+        <source>
+Global Effect: 
+She gets additional %0% funds from allied properties and a flat %1% on top.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="243"/>
+        <source>
+
+CO Zone Effect: 
+Units gain additional %2% firepower and %1% defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="249"/>
+        <source>Decrease the enemy&apos;s CO power gauge by 1 star per %0 funds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="259"/>
+        <source>Earns %0% funds of the damage inflicted on a foe.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="265"/>
         <source>War Bonds</source>
         <translation>戰爭獲利</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="269"/>
         <source>Wealth is power.</source>
         <translation>財富就是力量.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="270"/>
         <source>I won&apos;t go easy on you.</source>
         <translation>我不會對你好過的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="271"/>
         <source>I&apos;ll keep fighting until peace is restored.</source>
         <translation>我會繼續戰鬥,直到恢復和平.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="272"/>
         <source>I will not back down.</source>
         <translation>我不會退縮.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="273"/>
         <source>I&apos;ll show you my true strength.</source>
         <translation>我會讓你看到我真正的實力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="274"/>
         <source>You&apos;ve made me very, very...upset.</source>
         <translation>你讓我非常､非常....難過.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="278"/>
         <source>Even kittens have claws.</source>
         <translation>即使是小貓也有爪子.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="279"/>
         <source>Money is power.</source>
         <translation>金錢就是力量.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="280"/>
         <source>Bravo!</source>
         <translation>幹得好!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="284"/>
         <source>This is like some horrible dream.</source>
         <translation>這就像一個可怕的夢.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="285"/>
         <source>This is such a nightmare.</source>
         <translation>這真是一場噩夢.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sasha.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_sasha.js" line="289"/>
         <source>Sasha</source>
         <translation>Sasha</translation>
     </message>
@@ -23004,27 +23312,27 @@ CO區域效果:
 <context>
     <name>co_sensei</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="321"/>
         <source>A former paratrooper rumored to have been quite the commander in his day. Cranky Paratrooper</source>
         <translation>一位聽說在其軍旅生涯中是位出色指揮官的前空降兵.脾氣暴躁的降落傘兵</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="325"/>
         <source>Lazy, rainy days</source>
         <translation>慵懶的雨天</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="329"/>
         <source>Busy malls</source>
         <translation>繁忙的商場</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="333"/>
         <source>Copters have incredibly high firepower, but naval units are weaker. Foot soldiers have increased firepower.</source>
         <translation>直升機擁有極高的火力,但海軍單位較弱,步兵的攻擊力提高.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="337"/>
         <source>
 Special Unit:
 Commando
@@ -23035,102 +23343,123 @@ Commando
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="250"/>
         <source>
 Global Effect: 
 Copters have increased firepower and Naval Units are weaker.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 直升機擁有增加的火力,而海軍單位則較弱.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="251"/>
         <source>
 
 CO Zone Effect: 
 Copters have way more firepower and infantries higher firepower as well.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 直升機的火力增強,步兵的火力也提高.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="255"/>
         <source>Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.</source>
-        <translation>直升機火力增加.有他的城市裡都會出現擁有9點生命值的步兵,可以立即移動.</translation>
+        <translation type="vanished">直升機火力增加.有他的城市裡都會出現擁有9點生命值的步兵,可以立即移動.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="352"/>
         <source>Copter Command</source>
         <translation>直升機司令部</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="263"/>
         <source>Copter firepower increases. Mech units with 9 HP appear in all his cities, ready to be moved.</source>
-        <translation>直升機火力大幅增加,所有他的城市裡都會出現擁有 9 生命值的火箭兵,可以立即移動.</translation>
+        <translation type="vanished">直升機火力大幅增加,所有他的城市裡都會出現擁有 9 生命值的火箭兵,可以立即移動.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="338"/>
+        <source>
+Global Effect: 
+Copters have increased firepower by %0% and infantry gain %1% firepower and Naval Units loose %2% firepower and ground units %3% firepower. Transport units gain %6 movement points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="339"/>
+        <source>
+
+CO Zone Effect: 
+Copters have firepower %4% and infantries gain firepower %5%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="346"/>
+        <source>Copter firepower increases. Infantry units with %0 HP appear in all his cities, ready to be moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="356"/>
+        <source>Copter firepower increases. Mech units with %0 HP appear in all his cities, ready to be moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="362"/>
         <source>Airborne Assault</source>
         <translation>空降突擊</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="366"/>
         <source>Nothing good ever comes from war... when this is done, let&apos;s go home.</source>
         <translation>戰爭永遠不會帶來任何好處...完成後,讓我們回家吧.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="367"/>
         <source>I&apos;ve still got what it takes to defeat you youngsters!</source>
         <translation>我還有擊敗你們這些年輕人的本事!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="368"/>
         <source>Paratroopers! Prepare to jump!</source>
         <translation>傘兵!準備跳!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="369"/>
         <source>Ha ha hah!  This will be a crushing victory!</source>
         <translation>哈哈哈哈!...這將是一場壓倒性的勝利!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="370"/>
         <source>See what experience can do for you!?</source>
         <translation>看看有什麼經驗可以幫到你!?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="371"/>
         <source>Ha ha! I didn&apos;t get old for nothing!</source>
         <translation>哈哈!我沒有白白變老!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="375"/>
         <source>Hm hm hmmm... I&apos;ve still got what it takes!</source>
         <translation>嗯嗯嗯...我還是有辦法的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="376"/>
         <source>Ah, time for a nap.</source>
         <translation>啊,該睡午覺了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="282"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="377"/>
         <source>Now we can take things nice and slow again...</source>
         <translation>現在我們又可以慢慢來了...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="381"/>
         <source>Hah ha! We were defeated fair and square. Score one for the young &apos;uns.</source>
         <translation>哈哈哈!我們公平地被擊敗了.為年輕人打一分.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="382"/>
         <source>Eh? The battle&apos;s over? When did that happen?</source>
         <translation>嗯?戰鬥結束了?什麼時候發生的?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="386"/>
         <source>Sensei</source>
         <translation>Sensei</translation>
     </message>
@@ -23138,27 +23467,27 @@ CO區域效果:
 <context>
     <name>co_smitan</name>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="358"/>
         <source>A violent old commander of the Green Earth army who hates limitations.</source>
         <translation>一位狂暴的老綠色地球軍指揮官,厭惡限制.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="323"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="362"/>
         <source>Dominance, yelling</source>
         <translation>霸道,大喊大叫</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="327"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="366"/>
         <source>(Victory by) Surrender</source>
         <translation>(勝利由)投降</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="331"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="370"/>
         <source>Direct units gain additional firepower against enemy units which may come under fire from indirect units.</source>
         <translation>直接部隊可以獲得額外火力,對可能受到間接攻擊的敵方部隊進行反擊.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="335"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="374"/>
         <source>
 Special Unit:
 Siege Cannon
@@ -23169,7 +23498,7 @@ Siege Cannon
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="336"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="375"/>
         <source>
 Global Effect: 
 No Effect.</source>
@@ -23178,7 +23507,7 @@ No Effect.</source>
 沒有.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="337"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="376"/>
         <source>
 
 CO Zone Effect: 
@@ -23189,77 +23518,77 @@ CO區域效果:
 對於每個能夠攻擊防守部隊的間接部隊,直接部隊可以獲得額外的火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="341"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="380"/>
         <source>Increases the range of indirect units by one space. Indirect units can move after firing.</source>
         <translation>增加間接部隊的攻擊範圍+1.間接部隊在攻擊後可以移動.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="345"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="384"/>
         <source>Scramble Tactics</source>
         <translation>爭奪戰術</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="349"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="388"/>
         <source>Increases the range of indirect units by two spaces. Indirect units can fire twice and move after firing.</source>
         <translation>增加間接部隊的攻擊範圍+2.間接部隊可以攻擊2次且攻擊後可以移動.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="353"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="392"/>
         <source>Flare Drive</source>
         <translation>火炬驅動</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="357"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="396"/>
         <source>Whites of their eyes? Pahaha!</source>
         <translation>他們的眼白?哈哈哈!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="358"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="397"/>
         <source>It&apos;s over! Get used to it!!</source>
         <translation>結束了!習慣它!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="359"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="398"/>
         <source>Fire, you idiots!!</source>
         <translation>開火,你們這些白痴!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="360"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="399"/>
         <source>What&apos;re you waiting for?! SHOOT them!!</source>
         <translation>你還在等什麼?!射他們!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="361"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="400"/>
         <source>&apos;Calm before the storm&apos;? ... Nonsense.</source>
         <translation>&apos;暴風雨前的平靜&apos;?..廢話.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="362"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="401"/>
         <source>No more games! All units, full power!!</source>
         <translation>沒有更多的遊戲!所有單位,全力以赴!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="366"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="405"/>
         <source>Wasn&apos;t even any dust to settle.</source>
         <translation>甚至沒有任何塵埃落定.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="367"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="406"/>
         <source>Grah hah hah. Ooh, that was FUN.</source>
         <translation>格拉哈哈哈哈.哦,那很有趣.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="371"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="410"/>
         <source>Grah! Ha! Ha. Ooh! What i lost</source>
         <translation>啊!哈!哈.哦!我失去了什麼</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="372"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="411"/>
         <source>This and that! And what...i&apos;ve lost?</source>
         <translation>這個和那個!還有……我失去了什麼?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="376"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="415"/>
         <source>Smitan</source>
         <translation>Smitan</translation>
     </message>
@@ -23267,27 +23596,27 @@ CO區域效果:
 <context>
     <name>co_sonja</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="247"/>
         <source>Kanbei&apos;s cool and collected daughter who likes to plan before acting. She excels in gathering information. Sees All, Knows All</source>
         <translation>Kanbei的冷靜沉著的女兒,喜歡先計畫再行動.她擅長收集情報,能夠洞悉一切並知曉一切</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="251"/>
         <source>Computers</source>
         <translation>電腦</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="255"/>
         <source>Bugs</source>
         <translation>臭蟲</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="259"/>
         <source>Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. However, she suffers from chronic bad luck.</source>
         <translation>隱藏部隊的HP信息,減少敵人的地形防禦能力1點.但她受到長期的厄運影響.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="201"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="263"/>
         <source>
 Special Unit:
 Intel truck
@@ -23298,102 +23627,123 @@ Intel truck
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="202"/>
         <source>
 Global Effect: 
 Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 隱藏自己部隊的生命值,降低敵人的地形防禦星星-1.不過她有着不幸的體質,運氣較差</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="203"/>
         <source>
 
 CO Zone Effect: 
 Units gain firepower and defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 單位獲得火力和防禦.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="207"/>
         <source>Reduces enemy terrain defensive cover by two. Allows all units to see into woods and reefs.</source>
-        <translation>敵方地形的防禦星星-2.所有部隊可以看到森林和礁石的內部.</translation>
+        <translation type="vanished">敵方地形的防禦星星-2.所有部隊可以看到森林和礁石的內部.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="277"/>
         <source>Enhanced Vision</source>
         <translation>增強視力</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="215"/>
         <source>Reduces enemy terrain defensive cover by three. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.</source>
-        <translation>敵方地形的防禦星星-3.所有部隊可以看到森林和礁石的內部.即使在反擊期間,部隊也總是先攻.</translation>
+        <translation type="vanished">敵方地形的防禦星星-3.所有部隊可以看到森林和礁石的內部.即使在反擊期間,部隊也總是先攻.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="264"/>
+        <source>
+Global Effect: 
+Keeps HP intel hidden from foes. Units have increased vision by %4. Reduces enemy terrain defensive cover by %0. Her misfortune is increased by %1. Units have %5% increased firepower during counter attacks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="265"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %2% firepower and %3% defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="271"/>
+        <source>Reduces enemy terrain defensive cover by %0. Units have increased vision by %1. Allows all units to see into woods and reefs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="281"/>
+        <source>Reduces enemy terrain defensive cover by %0. Units have increased vision by %1. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="287"/>
         <source>Counter Break</source>
         <translation>反制打斷</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="291"/>
         <source>I see right through your plans!</source>
         <translation>我看穿了你的計劃!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="292"/>
         <source>I&apos;ll show you there&apos;s more to combat than power alone!</source>
         <translation>我會告訴你戰鬥不僅僅是力量!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="293"/>
         <source>Number of enemy troops...location... Got it! This is so easy!</source>
         <translation>敵軍人數...位置...知道了!這太容易了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="294"/>
         <source>Get me some fresh intel, stat!</source>
         <translation>給我一些新的情報,統計!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="295"/>
         <source>You can&apos;t hide from me!</source>
         <translation>你是躲不過我的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="296"/>
         <source>Just like I planned...</source>
         <translation>就像我計劃的那樣...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="300"/>
         <source>My strategy was merely better... That is all.</source>
         <translation>我的策略只是更好...僅此而已.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="301"/>
         <source>I must review my strategy.</source>
         <translation>我必須重新審視我的策略.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="302"/>
         <source>Perfect planning wins the day!</source>
         <translation>完美的計劃贏得了一天!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="306"/>
         <source>... I&apos;m sorry, Father... I&apos;ve broken my promise...</source>
         <translation>...對不起，父親...我違背了諾言...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="307"/>
         <source>I have learned much from this...</source>
         <translation>我從中學到了很多...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="311"/>
         <source>Sonja</source>
         <translation>Sonja</translation>
     </message>
@@ -23401,27 +23751,27 @@ CO區域效果:
 <context>
     <name>co_sophie</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="302"/>
         <source>A skilled veteran that demands perfection from her soldiers. She is small but feisty.</source>
         <translation>一位技藝高超的老兵,要求士兵們完美無瑕.儘管個頭不大,但個性堅強.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="306"/>
         <source>Mail Call</source>
         <translation>Mail呼叫</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="310"/>
         <source>Mess Hall</source>
         <translation>食堂</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="314"/>
         <source>Enemy counterattacks deal less damage to Sophie&apos;s units.</source>
         <translation>敵人的反擊對Sophie的部隊造成較少的傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="318"/>
         <source>
 Special Unit:
 Commando
@@ -23432,102 +23782,119 @@ Commando
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="292"/>
         <source>
 Global Effect: 
 No Effects</source>
-        <translation>
+        <translation type="vanished">
 全局效果 
 沒有</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="293"/>
         <source>
 
 CO Zone Effect: 
 Enemy counterattacks deal less damage. Units gain firepower and defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 敵人的反擊傷害減少.部隊攻擊力和防禦力增加.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="326"/>
         <source>Enemy counterattacks deal no damage to Sophie&apos;s units.</source>
         <translation>敵方反擊對Sophie的部隊沒有傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="330"/>
         <source>Sudden Strike</source>
         <translation>突然襲擊</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="305"/>
         <source>Sophie&apos;s units strike twice when ordered to attack. However, firepower is reduced</source>
-        <translation>Sophie的部隊攻擊時會連續攻擊2次.然而,火力會降低</translation>
+        <translation type="vanished">Sophie的部隊攻擊時會連續攻擊2次.然而,火力會降低</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="319"/>
+        <source>
+Global Effect: 
+Enemy counterattacks deal %0% less damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="320"/>
+        <source>
+
+CO Zone Effect: 
+Enemy counterattacks deal %1% less damage. Units gain %2% firepower and %3% defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="334"/>
+        <source>Sophie&apos;s units strike twice when ordered to attack. However, firepower of the second attack is reduced by %0%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="340"/>
         <source>Total War</source>
         <translation>全面戰爭</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="344"/>
         <source>Get your butts in gear troops! The bad guys are not going to wait all day for us!</source>
         <translation>讓你的屁股穿上裝備部隊!壞人不會整天等我們的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="345"/>
         <source>Give&apos;em lead men!</source>
         <translation>給他們帶頭人!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="346"/>
         <source>It&apos;s time to prove that we are made of the right stuff!</source>
         <translation>是時候證明我們是由正確的材料製成的了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="316"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="347"/>
         <source>War ain&apos;t no picnic soldier! You have to put in 110% if you want to survive!</source>
         <translation>戰爭不是沒有野餐的士兵!想要活下去就必須投入110%!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="317"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="348"/>
         <source>All right, move out and try not to get yourselves killed!</source>
         <translation>好吧,搬出去,盡量別把自己弄死!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="349"/>
         <source>I expect nothing but the best!</source>
         <translation>我只期待最好的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="322"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="353"/>
         <source>Hoorah! The day is done and the battle is won!</source>
         <translation>歡呼!日子結束了,戰鬥勝利了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="323"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="354"/>
         <source>That showed them!</source>
         <translation>這表明他們!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="324"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="355"/>
         <source>We are the finest fighting force in the world!</source>
         <translation>我們是世界上最優秀的戰鬥力量!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="328"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="359"/>
         <source>I thought my troops would be tougher.</source>
         <translation>我以為我的部隊會更加強硬.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="329"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="360"/>
         <source>My Soldiers lost. I can&apos;t be proud of them.</source>
         <translation>我的士兵輸了.我不能為他們感到驕傲.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sophie.js" line="333"/>
+        <location filename="../resources/scripts/cos/co_sophie.js" line="364"/>
         <source>Sophie</source>
         <translation>Sophie</translation>
     </message>
@@ -23535,122 +23902,143 @@ CO區域效果:
 <context>
     <name>co_sturm</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="214"/>
         <source>The original commander of the Black Hole army. A mysterious invader from another world. Mastermind of the Cosmo and Macro wars. Enigma</source>
         <translation>黑洞軍團的最初指揮官.來自另一個世界的神秘侵略者.宇宙大戰和宏觀戰爭的主謀.神秘莫測</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="218"/>
         <source>Plotting invasions</source>
         <translation>策劃入侵</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="222"/>
         <source>Peace</source>
         <translation>和平</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="226"/>
         <source>His troops are not affected by terrain only snow can stop him.</source>
         <translation>他的部隊不受地形影響,只有雪地可以阻止他的行軍.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="201"/>
         <source>
 Global Effect: 
 His troops are not affected by terrain except snow.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 他的部隊不受地形影響,除了雪地.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="202"/>
         <source>
 
 CO Zone Effect: 
 Units have increased firepower and defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 部隊擁有增強的火力和防禦.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="206"/>
         <source>A small Meteor fall from space and deal 4 HP of damage to all affected units.</source>
-        <translation>一顆小型隕石從太空中墜落,對所有受影響的部隊造成4點傷害.</translation>
+        <translation type="vanished">一顆小型隕石從太空中墜落,對所有受影響的部隊造成4點傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="243"/>
         <source>Meteor</source>
         <translation>隕石</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="214"/>
         <source>Pulls a giant meteor from space, which deals 8 HP of damage to all affected units. Firepower and defense is increased.</source>
-        <translation>從太空中拖來一顆巨大的隕石,對所有受影響的部隊造成8點傷害.火力和防禦都會增強.</translation>
+        <translation type="vanished">從太空中拖來一顆巨大的隕石,對所有受影響的部隊造成8點傷害.火力和防禦都會增強.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="230"/>
+        <source>
+Global Effect: 
+His troops are not affected by terrain except snow and have %0% firepower and %1% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="231"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower by %2% and defence by %3%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="237"/>
+        <source>A small Meteor fall from space and deal %0 HP of damage to all affected units. Firepower is increased by %1% and defence is increased by %2%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="247"/>
+        <source>Pulls a giant meteor from space, which deals %0 HP of damage to all affected units. Firepower is increased by %1% and defence is increased by %2%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="253"/>
         <source>Meteor Strike</source>
         <translation>流星雨</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="257"/>
         <source>Prepare to embrace darkness!</source>
         <translation>準備擁抱黑暗吧!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="258"/>
         <source>You will tremble before my power!</source>
         <translation>你會在我的力量面前顫抖!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="259"/>
         <source>Fear is all you have left...</source>
         <translation>恐懼是你所剩下的一切...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="260"/>
         <source>You shall not survive!</source>
         <translation>你將無法生存!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="261"/>
         <source>Burning earth!!!</source>
         <translation>燃燒的地球!!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="262"/>
         <source>Such power... I regret crushing it.</source>
         <translation>這樣的力量...我後悔捏碎了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="266"/>
         <source>Who would have thought you could oppose me?</source>
         <translation>誰會想到你能反對我?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="267"/>
         <source>My name is Sturm. Hear it and tremble.</source>
         <translation>我的名字是斯特姆.聞之而顫.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="268"/>
         <source>This is but a taste of my power!</source>
         <translation>這不過是對我力量的一種體驗!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="272"/>
         <source>Gwaaaaaaaaaahhhh! I underestimated the strength of these worms!</source>
         <translation>哇啊啊啊啊啊啊啊!我低估了這些虫族的實力!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="273"/>
         <source>NOOOOOOOOOOOOOOOOOOO!!!</source>
         <translation>不不不不不不不不不不不!!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sturm.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_sturm.js" line="277"/>
         <source>Sturm</source>
         <translation>Sturm</translation>
     </message>
@@ -23658,112 +24046,129 @@ CO區域效果:
 <context>
     <name>co_tabitha</name>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="153"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="182"/>
         <source>Belongs to the private army of Dark Matter. Eldest daughter of Caulder. Extremely cruel.</source>
         <translation>屬於黑暗物質的私人軍隊.是 Caulder 的長女,非常殘忍.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="157"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="186"/>
         <source>Breakfast in bed</source>
         <translation>在床上吃早餐</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="161"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="190"/>
         <source>Stupid weak people</source>
         <translation>愚蠢的弱者</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="165"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="194"/>
         <source>Her co unit is strong, weak outside of that she gets no bonuses.</source>
         <translation>她的CO單位很強大,但在此之外她沒有任何額外的加成.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="169"/>
         <source>
 Global Effect: 
 No Effects</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 沒有</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="170"/>
         <source>
 
 CO Zone Effect: 
 Units have 60% increased firepower and defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 單位的火力和防禦力增加 60%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="174"/>
         <source>A small attack from the great owl that deals 4 HP of damage to all affected units. Also increases the firepower of all units.</source>
-        <translation>一次小范圍攻擊,對所有受影響的單位造成 4 點傷害.同時提升所有單位的火力.</translation>
+        <translation type="vanished">一次小范圍攻擊,對所有受影響的單位造成 4 點傷害.同時提升所有單位的火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="178"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="211"/>
         <source>Firestorm</source>
         <translation>風暴</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="182"/>
         <source>A giant attack from the great owl that deals 8 HP of damage to all affected units. Firepower and defense is increased.</source>
-        <translation>一個來自大貓頭鷹的巨大攻擊,對所有受影響的單位造成8點傷害.同時增加所有單位的火力和防禦.</translation>
+        <translation type="vanished">一個來自大貓頭鷹的巨大攻擊,對所有受影響的單位造成8點傷害.同時增加所有單位的火力和防禦.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="186"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="198"/>
+        <source>
+Global Effect: 
+Units have %0% increased firepower and %1% increased  defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="199"/>
+        <source>
+
+CO Zone Effect: 
+Units have %2% increased firepower and %3% increased  defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="215"/>
+        <source>A small attack from the great owl that deals %0 HP of damage to all affected units. Also increases the firepower of all units by %1% and defense by %2%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="221"/>
         <source>Apocalypse</source>
         <translation>啟示錄</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="190"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="225"/>
         <source>Input enemy&apos;s coordinates... And now let&apos;s enjoy the show!</source>
         <translation>輸入敵人的坐標...現在讓我們欣賞表演吧!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="226"/>
         <source>Isn&apos;t this so much fun?</source>
         <translation>這不是很有趣嗎?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="192"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="227"/>
         <source>I hope you don&apos;t think i&apos;m picking on you.</source>
         <translation>我希望你不要認為我在挑剔你.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="228"/>
         <source>Can you really be this weak? At least try to put up a fight.</source>
         <translation>你真的可以這麼弱嗎?至少試著打架.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="232"/>
         <source>That was hardly worth the trouble.</source>
         <translation>那幾乎不值得麻煩.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="233"/>
         <source>At least put up a fight!</source>
         <translation>起碼打架吧!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="234"/>
         <source>I pity the weak!</source>
         <translation>可憐弱者!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="203"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="238"/>
         <source>I&apos;m not stronger?</source>
         <translation>我不是更強嗎?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="239"/>
         <source>I had no breakfast that&apos;s the problem.</source>
         <translation>我沒有吃早餐,這就是問題所在.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="243"/>
         <source>Tabitha</source>
         <translation>Tabitha</translation>
     </message>
@@ -23771,27 +24176,27 @@ CO區域效果:
 <context>
     <name>co_tasha</name>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="292"/>
         <source>Brown Desert soldier. Burns with desire to avenge her late brother. Aims to make Teal Isles pay for what they did.</source>
         <translation>棕色沙漠軍士兵.心中燃燒著為她已故的兄弟復仇的慾望.她的目標是讓青色群島為他們所做的付出代價.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="296"/>
         <source>Her brother John, Revenge</source>
         <translation>她的兄弟約翰,復仇</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="300"/>
         <source>Teal Isles</source>
         <translation>青色群島</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="304"/>
         <source>Air units have higher firepower and defense.</source>
         <translation>空軍單位擁有更高的火力和防禦力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="308"/>
         <source>
 Special Unit:
 Kirov
@@ -23802,88 +24207,105 @@ Kirov
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="260"/>
         <source>
 Global Effect: 
 No Effects</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 沒有</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="261"/>
         <source>
 
 CO Zone Effect: 
 Air Units have 50% increased firepower and 30% increased defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO 區域效果:
 空軍單位的攻擊力增加50％,防禦力增加30％.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="265"/>
         <source>Air units have higher firepower, defense and all units can move 1 space farther.</source>
-        <translation>空軍單位有更高的火力和防禦能力,所有單位移動距離+1.</translation>
+        <translation type="vanished">空軍單位有更高的火力和防禦能力,所有單位移動距離+1.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="322"/>
         <source>Sonic Boom</source>
         <translation>音爆</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="273"/>
         <source>Air units have impressive firepower, higher defense and all units can move 2 space farther</source>
-        <translation>空軍單位火力大幅提升,防禦能力增強,且所有單位移動距離+2</translation>
+        <translation type="vanished">空軍單位火力大幅提升,防禦能力增強,且所有單位移動距離+2</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="309"/>
+        <source>
+Global Effect: 
+Air Units have %0% increased firepower and %1% increased defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="310"/>
+        <source>
+
+CO Zone Effect: 
+Air Units have %2% increased firepower and %3% increased defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="316"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="327"/>
+        <source>Air units have increased firepower by %0 and defense by %1. All units can move %2 space farther.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="333"/>
         <source>Fox One</source>
         <translation>福克斯一號</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="337"/>
         <source>All units follow my lead.</source>
         <translation>各單位都聽我的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="282"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="338"/>
         <source>The time for revenge is at hand!</source>
         <translation>復仇的時刻到了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="339"/>
         <source>I will fight on, even if it costs my life!</source>
         <translation>我會繼續戰鬥,哪怕付出生命!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="284"/>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="290"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="340"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="346"/>
         <source>I will have my revenge!</source>
         <translation>我會報仇的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="288"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="344"/>
         <source>It&apos;s not about tactics - it&apos;s about passion!</source>
         <translation>這與戰術無關 - 這與激情有關!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="345"/>
         <source>Revenge will be mine!</source>
         <translation>復仇將是我的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="294"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="350"/>
         <source>This is not the end. I will fight for John.</source>
         <translation>這不是結束.我會為約翰而戰.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="351"/>
         <source>Next time... Next time i will avenge you John...</source>
         <translation>下次...下次我會為你報仇約翰...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="299"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="355"/>
         <source>Tasha</source>
         <translation>Tasha</translation>
     </message>
@@ -23891,27 +24313,27 @@ CO 區域效果:
 <context>
     <name>co_varlot</name>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="295"/>
         <source>This CO joined the military and rose through the ranks, not quickly enough. Currently is a sub-commander.</source>
         <translation>這位 CO 參軍併升職,但速度不夠快.目前是副指揮官.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="299"/>
         <source>Caviar</source>
         <translation>魚子醬</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="303"/>
         <source>Ethics</source>
         <translation>道德</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="307"/>
         <source>Varlot reduces the income from a property he captures by an amount proportional to its Capture Points.</source>
         <translation>Varlot會減少他佔領的資源產出,減少的幅度與資源的佔領點數有關.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="311"/>
         <source>
 Special Unit:
 Smuggler
@@ -23922,102 +24344,123 @@ Smuggler
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="275"/>
         <source>
 Global Effect: 
 Income is reduced for buildings he captures.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 佔領的建築物的收入會減少。</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="276"/>
         <source>
 
 CO Zone Effect: 
 Units have increased firepower and defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 單位增加了火力和防禦.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="280"/>
         <source>His troops get a capture bonus. Varlot also gains a fraction of the enemy income.</source>
-        <translation>他的部隊獲得佔領獎勵. Varlot 也會獲得敵人收入的一小部分.</translation>
+        <translation type="vanished">他的部隊獲得佔領獎勵. Varlot 也會獲得敵人收入的一小部分.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="284"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="325"/>
         <source>Acquisition</source>
         <translation>收穫</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="288"/>
         <source>All units are healed for 4 HP, gaining firepower for each point over 10HP they&apos;d be healed. The enemy pays for these repairs.</source>
-        <translation>所有部隊會被治療 4 點生命,超過 10 點生命的部隊每多 1 點生命,就會增加一定的火力.敵方支付治療費用.</translation>
+        <translation type="vanished">所有部隊會被治療 4 點生命,超過 10 點生命的部隊每多 1 點生命,就會增加一定的火力.敵方支付治療費用.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="292"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="312"/>
+        <source>
+Global Effect: 
+Income from enemies is reduced for buildings he captures. Units gain firepower by %0 and defence by %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="313"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower by %2 and defence by %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="319"/>
+        <source>His troops get a %0 capture bonus. Varlot also gains %1 fraction of the enemy income.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="329"/>
+        <source>All units are healed for %0 HP, gaining %1% firepower for each point over 10HP they&apos;d be healed. The enemy pays for these repairs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="335"/>
         <source>Hostile Takeover</source>
         <translation>惡意收購</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="339"/>
         <source>Move out!</source>
         <translation>移動!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="340"/>
         <source>Attack!</source>
         <translation>攻擊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="298"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="341"/>
         <source>Forward march!</source>
         <translation>前進步伐!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="299"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="342"/>
         <source>Onward to victory!</source>
         <translation>向著勝利前進!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="343"/>
         <source>Never surrender!</source>
         <translation>永不投降!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="344"/>
         <source>Push forward!</source>
         <translation>向前推進!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="348"/>
         <source>Mission complete.</source>
         <translation>任務完成.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="349"/>
         <source>Another day, another battle won.</source>
         <translation>另一天,又一場戰鬥贏了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="307"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="350"/>
         <source>Maybe I&apos;ll be up for promotion soon...</source>
         <translation>也許我很快就會升職...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="354"/>
         <source>I won&apos;t get demoted for this lost!</source>
         <translation>我不會因為這個輸而被降職的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="312"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="355"/>
         <source>Retreat!!!</source>
         <translation>撤退!!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="316"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="359"/>
         <source>Varlot</source>
         <translation>Varlot</translation>
     </message>
@@ -24025,34 +24468,33 @@ CO區域效果:
 <context>
     <name>co_von_bolt</name>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="179"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="208"/>
         <source>Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Mastermind of the Omega war. Immortal Evil</source>
         <translation>黑洞軍隊的前總司令.一位神秘的老人,已經活了非常非常長的時間.歐米茄戰爭的主謀.不死之惡</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="183"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="212"/>
         <source>Long life</source>
         <translation>長生</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="187"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="216"/>
         <source>Young &apos;uns!</source>
         <translation>年輕!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="220"/>
         <source>All units have superior firepower and defense.</source>
         <translation>所有部隊擁有優越的火力和防禦能力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="195"/>
         <source>
 Special Unit:
 Crystal Tanks
 
 Global Effect: 
 No Effects.</source>
-        <translation>
+        <translation type="vanished">
 特殊單位:
 水晶坦克
 
@@ -24060,93 +24502,118 @@ No Effects.</source>
 沒有.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="196"/>
         <source>
 
 CO Zone Effect: 
 Units have increased firepower and increased defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 部隊擁有增強的火力和防禦.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="237"/>
         <source>Shockwave</source>
         <translation>震波</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="200"/>
         <source>Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.</source>
-        <translation>發射能夠禁用電子系統的震波,使範圍內所有部隊癱瘓.受影響的部隊會遭受1點傷害.火力和防禦力也會增加.</translation>
+        <translation type="vanished">發射能夠禁用電子系統的震波,使範圍內所有部隊癱瘓.受影響的部隊會遭受1點傷害.火力和防禦力也會增加.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="208"/>
         <source>Fires shock waves that disables electrical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.</source>
-        <translation>發射能夠禁用電子系統的震波,使範圍內所有部隊癱瘓.受影響的部隊會遭受3點傷害.火力和防禦力也會增加.</translation>
+        <translation type="vanished">發射能夠禁用電子系統的震波,使範圍內所有部隊癱瘓.受影響的部隊會遭受3點傷害.火力和防禦力也會增加.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="224"/>
+        <source>
+Special Unit:
+Crystal Tanks
+
+Global Effect:
+Firepower is increased by %0% and defence by %1%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="225"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower by %2% and increased defense by %3%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="231"/>
+        <source>Fires shock waves that disables electrical systems and all forces in range of %0 become paralyzed. Affected units suffer %1 HP of damage. Firepower rises by %2% and defense %3%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="241"/>
+        <source>Fires shock waves that disables electrical systems and all forces in rangeof %0 become paralyzed. Affected units suffer %1 HP of damage.  Firepower rises by %2% and defense %3%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="247"/>
         <source>Deus Ex Machina</source>
         <translation>機械之神</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="251"/>
         <source>No matter how powerful...hhh...you are, you&apos;re...hhh...still a worm on a hook...</source>
         <translation>不管你有多厲害...呵...你也是...呵...還是一條被鉤住的蟲子...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="252"/>
         <source>Well...hhh...let me have a taste...hhh...of your soul.</source>
         <translation>好吧...hhh...讓我嚐嚐...hhh...你的靈魂.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="253"/>
         <source>Hheh heh heh... Stop panicking... it&apos;s...hhh...almost over...</source>
         <translation>呵呵呵呵...別慌了...已經...呵呵...快結束了...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="254"/>
         <source>Hheh heh heh. The darkness rises...</source>
         <translation>呵呵呵呵。黑暗升起...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="255"/>
         <source>The sweet scent of destruction...hhh...it makes me...hhh...feel young!</source>
         <translation>甜美的毀滅氣息...啊...讓我...啊...年輕了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="256"/>
         <source>Hold still...hhh...I&apos;m going to...hhhhh...suck the marrow from your bones.</source>
         <translation>別動...啊啊啊...我要...啊啊啊...把你的骨髓吸乾.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="260"/>
         <source>Predator...prey...hhh... I hunt them all...</source>
         <translation>捕食者...獵物...hhh...我把它們都獵殺了...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="261"/>
         <source>Hehh hhh hhh... Pathetic.</source>
         <translation>呵呵呵...可憐.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="262"/>
         <source>Even death...hhh...fears me...</source>
         <translation>甚至死亡...hhh...害怕我...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="266"/>
         <source>What? Why are you Youth so strong?</source>
         <translation>什麼?青年為什麼這麼強?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="267"/>
         <source>Nooo...I want to live forever.</source>
         <translation>不...我想長生不老.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="271"/>
         <source>Von Bolt</source>
         <translation>Von Bolt</translation>
     </message>
@@ -24154,27 +24621,27 @@ CO區域效果:
 <context>
     <name>co_walter</name>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="340"/>
         <source>Commander of the Capitol Guard of Teal Islands. He excels in survival and sheer tenacity. The Long Standing Guardian</source>
         <translation>青色群島首都衛隊的指揮官,他擅長生存和純粹的堅韌.長久守衛者</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="344"/>
         <source>Tongue Twisters</source>
         <translation>繞口令</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="323"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="348"/>
         <source>Colloquialisms</source>
         <translation>俗話</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="327"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="352"/>
         <source>Using Teal Isles intelligence division, Walter can view units&apos; HP more accurately than other COs.</source>
         <translation>使用青色群島情報部門,Walter比其他CO更準確地查看單位的HP.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="331"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="356"/>
         <source>
 Special Unit:
 Intel truck
@@ -24185,7 +24652,7 @@ Intel truck
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="332"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="357"/>
         <source>
 Global Effect: 
 No bonus.</source>
@@ -24194,93 +24661,108 @@ No bonus.</source>
 沒有.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="333"/>
         <source>
 
 CO Zone Effect: 
 Units gain additional firepower and defence.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 單位獲得額外的火力和防禦力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="337"/>
         <source>Enemies take additional damage when they attack.</source>
-        <translation>敵人在攻擊時會額外承受傷害.</translation>
+        <translation type="vanished">敵人在攻擊時會額外承受傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="341"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="370"/>
         <source>Memento</source>
         <translation>紀念</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="345"/>
         <source>Massively reduces the ammo from enemy units and deals minor damage to them. Hides his units HP from enemies.</source>
-        <translation>大幅降低敵軍武器彈藥數量,並對其造成輕微損傷.隱藏他的部隊生命值.讓敵人無法得知.</translation>
+        <translation type="vanished">大幅降低敵軍武器彈藥數量,並對其造成輕微損傷.隱藏他的部隊生命值.讓敵人無法得知.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="349"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="358"/>
+        <source>
+
+CO Zone Effect: 
+Units gain additional %0% firepower and %1% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="364"/>
+        <source>Enemies take additional damage when they attack and units gain  additional %0% firepower and %1% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="374"/>
+        <source>Massively reduces the ammo from enemy units and deals %0 HP damage to them. Hides his units HP from enemies. Units gain  additional %0% firepower and %1% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="380"/>
         <source>Magnum Opus</source>
         <translation>傑作</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="353"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="384"/>
         <source>Greater opponents have burnt out against me.</source>
         <translation>更強大的對手已經厭倦了我.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="354"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="385"/>
         <source>For the Isles sake, I will endure you!</source>
         <translation>為了群島,我會忍受你!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="355"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="386"/>
         <source>I am the most stalwart foe that you will ever face!</source>
         <translation>我是你所面對過的最頑固的敵人!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="356"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="387"/>
         <source>Morale is the key to victory, but you seem rather....ill equipped.</source>
         <translation>士氣是勝利的關鍵,但你似乎相當...裝備不足.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="357"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="388"/>
         <source>A battle does not determine who is right. It determines who is left. Me, of course.</source>
         <translation>一場戰鬥並不能決定誰對誰錯.它決定了剩下的人.當然是我.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="358"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="389"/>
         <source>The spirit of Teal Isles will carry us for eternity!</source>
         <translation>青色群島的精神將承載我們永恆!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="362"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="393"/>
         <source>Another battle has been won. Teal Isles is safe for now.</source>
         <translation>又一場戰鬥勝利了.青色群島目前是安全的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="363"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="394"/>
         <source>You have been outwitted, outmatched and outmaneuvered.</source>
         <translation>你被智取､擊敗和智取.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="364"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="395"/>
         <source>Hah, yet again I have stood the test of time!</source>
         <translation>哈,我又一次經受住了時間的考驗!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="368"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="399"/>
         <source>That wasn&apos;t the best idea to take fight.</source>
         <translation>那不是打架的最佳主意.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="369"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="400"/>
         <source>I got detected too early..</source>
         <translation>被發現的太早了..</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="373"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="404"/>
         <source>Walter</source>
         <translation>Walter</translation>
     </message>
@@ -24288,34 +24770,33 @@ CO區域效果:
 <context>
     <name>co_waylon</name>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="263"/>
         <source>A Teal Isle Commander. Destructive, egotistical and extremely vain.</source>
         <translation>一位青色群島指揮官.具有破壞性､自我中心和極端虛榮的特質.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="267"/>
         <source>Living the good life</source>
         <translation>過著美好的生活</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="271"/>
         <source>Responsibility</source>
         <translation>負責任</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="275"/>
         <source>Air units have higher firepower and defense.</source>
         <translation>空軍單位擁有更高的火力和防禦力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="241"/>
         <source>
 Special Unit:
 Kirov
 
 Global Effect: 
 No Effects.</source>
-        <translation>
+        <translation type="vanished">
 特別單位:
 基洛夫
 
@@ -24323,75 +24804,96 @@ No Effects.</source>
 沒有.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="242"/>
         <source>
 
 CO Zone Effect: 
 Air Units have 30% increased firepower and 40% increased defense.</source>
-        <translation>
+        <translation type="vanished">
 
 CO 區域效果：
 空軍單位的火力增加 30%,防禦增加 40%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="246"/>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="254"/>
         <source>Air units get increased firepower and highly increased defense.</source>
-        <translation>空軍單位獲得增強的火力和高度增強的防禦.</translation>
+        <translation type="vanished">空軍單位獲得增強的火力和高度增強的防禦.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="279"/>
+        <source>
+Special Unit:
+Kirov
+
+Global Effect: 
+Air Units have %0% increased firepower and %1% increased defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="280"/>
+        <source>
+
+CO Zone Effect: 
+Air Units have %2% increased firepower and %3% increased defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="296"/>
+        <source>Air units get increased firepower by %0% and increased defense by %1%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="292"/>
         <source>Bad Company</source>
         <translation>糟糕的公司</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="302"/>
         <source>Wingman</source>
         <translation>僚機</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="306"/>
         <source>I&apos;m over here! C&apos;mon give me your best shot.</source>
         <translation>我在這裡!來吧,給我你最好的一擊.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="307"/>
         <source>You think you can get the better of me? You&apos;ve got a lot to learn.</source>
         <translation>你以為你能打敗我嗎?你還有很多要學的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="264"/>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="308"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="314"/>
         <source>Woo-hoo!</source>
         <translation>太好了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="309"/>
         <source>All i want is total air supremacy! Then i&apos;ll pick off your forces.</source>
         <translation>我只要完全的空中優勢!然後我就會摧毀你的部隊.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="313"/>
         <source>The end of the world? Fine by me...</source>
         <translation>世界的末日?對我來說沒關係...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="315"/>
         <source>How&apos;d you like that?</source>
         <translation>你覺得怎麼樣?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="319"/>
         <source>This is not the freedom I want!</source>
         <translation>這不是我想要的自由!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="320"/>
         <source>The eagle has landed.</source>
         <translation>鷹已著陸.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="324"/>
         <source>Waylon</source>
         <translation>Waylon</translation>
     </message>
@@ -24399,27 +24901,27 @@ CO 區域效果：
 <context>
     <name>co_will</name>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="269"/>
         <source>Former Brown Desert cadet. Joined Amber Corona after being rescued by Brenner.</source>
         <translation>曾是棕色沙漠學員的士兵,被Brenner所救後加入了琥珀日冕.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="273"/>
         <source>Brenner, Isabella</source>
         <translation>Brenner, Isabella</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="277"/>
         <source>The Beast, Greyfield, Caulder</source>
         <translation>The Beast, Greyfield, Caulder</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="281"/>
         <source>His direct ground units are slightly stronger.</source>
         <translation>他的直接地面單位稍微強一點.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="285"/>
         <source>
 Special Unit:
 Hot Tank
@@ -24430,88 +24932,105 @@ Hot Tank
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="251"/>
         <source>
 Global Effect:
 No Effects.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 沒有.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="252"/>
         <source>
 
 CO Zone Effect: 
 Direct Ground Units have 30% increased firepower.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 直接地面單位的火力增加 30%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="256"/>
         <source>Boost movement by 1 and increases the firepower of ground units.</source>
-        <translation>移動力+1,並且增加地面單位的火力.</translation>
+        <translation type="vanished">移動力+1,並且增加地面單位的火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="299"/>
         <source>Begin of an Era</source>
         <translation>一個時代的開始</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="264"/>
         <source>Boost movement by 2 and firepower of ground units.</source>
-        <translation>移動力+2,並且增加地面單位的火力.</translation>
+        <translation type="vanished">移動力+2,並且增加地面單位的火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="286"/>
+        <source>
+Global Effect:
+Direct ground units have %0% increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="287"/>
+        <source>
+
+CO Zone Effect: 
+Direct Ground Units have 1% increased firepower and other units gain %2% firepower. All units gain %3% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="303"/>
+        <source>Boost movement of ground units by %0 and increases the firepower of direct ground units by %1%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="309"/>
         <source>New Era</source>
         <translation>新時代</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="313"/>
         <source>This is our chance to win. Prepare to move out.</source>
         <translation>這是我們獲勝的機會.準備搬出去.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="314"/>
         <source>The captain saved my life. I need to take care of it.</source>
         <translation>船長救了我的命.我需要照顧它.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="274"/>
-        <location filename="../resources/scripts/cos/co_will.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="321"/>
         <source>I&apos;ll never give up...</source>
         <translation>我永遠不會放棄...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="316"/>
         <source>There&apos;s no time. Now or never...</source>
         <translation>沒時間了.機不可失,時不再來...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="320"/>
         <source>I did it!</source>
         <translation>我做到了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="322"/>
         <source>Is everyone okay?</source>
         <translation>大家還好嗎?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="326"/>
         <source>Never give up hope.</source>
         <translation>永遠不要放棄希望.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="327"/>
         <source>I can&apos;t remember anything</source>
         <translation>我什麼都不記得了</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="290"/>
+        <location filename="../resources/scripts/cos/co_will.js" line="331"/>
         <source>Will</source>
         <translation>Will</translation>
     </message>
@@ -24519,27 +25038,27 @@ CO區域效果:
 <context>
     <name>co_xavier</name>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="284"/>
         <source>Fulfills his duties without second thought or consideration of the after-effects of his actions. Wears a pair of fake claws.</source>
         <translation>他不會考慮他行動的後果,也不會猶豫地履行他的職責.他戴著一雙假爪子.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="288"/>
         <source>Uncertainty</source>
         <translation>不明確</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="292"/>
         <source>Definitives</source>
         <translation>明確的</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="296"/>
         <source>When Xavier&apos;s units drop to %0 HP or less, they are able to strike for maximum luck damage.</source>
         <translation>當Xavier的部隊的生命值降至%0或更低時,它們能夠造成最大的幸運傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="302"/>
         <source>
 Global Effect: 
 Units with %0 HP or less deal maximum luck damage.</source>
@@ -24548,93 +25067,108 @@ Units with %0 HP or less deal maximum luck damage.</source>
 生命值為%0或更低的單位造成最大的幸運傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="303"/>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower by %1% and defence by %2%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="309"/>
+        <source>Increases luck damage to %0% and firepower by %1% and defence by %2%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="315"/>
         <source>Phasing Charge</source>
         <translation>定相充電</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="284"/>
         <source>
 
 CO Zone Effect: 
 Units have increased firepower by %1%.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 部隊的火力提高%1%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="290"/>
         <source>Increases luck damage to %0%.</source>
-        <translation>將幸運傷害增加到%0%.</translation>
+        <translation type="vanished">將幸運傷害增加到%0%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="300"/>
         <source>Units gain %0% firepower for each own unit nearby the attacked unit.</source>
-        <translation>部隊的火力每有一個在受攻擊單位附近的友軍單位,就會增加%0%.</translation>
+        <translation type="vanished">部隊的火力每有一個在受攻擊單位附近的友軍單位,就會增加%0%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="319"/>
+        <source>Units gain %0% firepower for each own unit nearby the attacked unit and in addition a bonus firepower of %1% and defence of %2%..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="325"/>
         <source>Reality Minus</source>
         <translation>現實減號</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="329"/>
         <source>You know, the laws of physics are made to be broken. Observe.</source>
         <translation>你知道,物理定律就是用來被打破的.觀察.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="330"/>
         <source>You might say I&apos;m a rather.. twisted individual.</source>
         <translation>你可能會說我是一個相當...扭曲的人.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="312"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="331"/>
         <source>Reality is only trivial. Watch and learn.</source>
         <translation>現實只是微不足道的.觀看並學習.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="332"/>
         <source>Allow me to reprimand, for your atrocious command.</source>
         <translation>容我斥責,為你的殘暴命令.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="333"/>
         <source>I&apos;m sure you&apos;ll get quite a scare out of this!</source>
         <translation>我相信你會被嚇到的!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="334"/>
         <source>Are you sure of the truth in what you see?</source>
         <translation>你確定你所看到的是真的嗎?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="338"/>
         <source>... I must return to my work now.</source>
         <translation>...我現在必須回去工作了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="320"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="339"/>
         <source>See, this is reality. You never stood a chance.</source>
         <translation>看,這就是現實.你從來沒有機會.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="321"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="340"/>
         <source>You are intellectually inferior to me. Simple as that.</source>
         <translation>你在智力上不如我.就那麼簡單.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="325"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="344"/>
         <source>That&apos;s not my reality.</source>
         <translation>那不是我的現實.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="326"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="345"/>
         <source>You were supposed to be intellectually inferior to me.</source>
         <translation>你應該在智力上不如我.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="330"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="349"/>
         <source>Xavier</source>
         <translation>Xavier</translation>
     </message>
@@ -24642,28 +25176,28 @@ CO區域效果:
 <context>
     <name>co_yukio</name>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="297"/>
         <source>Dark founder of the Dark Matter Cooperation. He&apos;s the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn&apos;t care if people die.</source>
         <translation>Dark Matter Cooperation的黑暗創始人.他是Sturm和Von Bolt入侵的主要原因.
 他以戰爭為賺錢的方式,對人類的死亡毫不在意.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="301"/>
         <source>Astronomic gains</source>
         <translation>天文數字的收益</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="305"/>
         <source>Any losses</source>
         <translation>任何損失</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="309"/>
         <source>As the leader of dark matter his troops have special armor and armor piercing weapons.</source>
         <translation>作為暗物質的領袖,他的部隊擁有特殊的裝甲和穿甲武器.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="320"/>
         <source>
 Special Unit:
 Logistic Truck
@@ -24674,102 +25208,118 @@ Logistic Truck
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="288"/>
         <source>
 Global Effect: 
 None.</source>
-        <translation>
+        <translation type="vanished">
 全局效果 
 沒有.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="328"/>
         <source>A small army spawns and fights for Yukio.</source>
         <translation>一支小型軍隊將會出現並為Yukio戰鬥.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="299"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="332"/>
         <source>Invasion</source>
         <translation>侵略</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="289"/>
         <source>
 
 CO Zone Effect: 
 Damage against his troops is reduced by %0%. Troops deal %1% true damage if the base damage is at least %2%.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 他的部隊受到的傷害減少%0%。如果基礎傷害至少為%2％，部隊將造成%1％的真實傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="303"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="321"/>
+        <source>
+Global Effect: 
+Damage against his troops is reduced by %0%. Troops deal %1% true damage if the base damage is at least %4%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="322"/>
+        <source>
+
+CO Zone Effect: 
+Damage against his troops is reduced by %2%. Troops deal %3% true damage if the base damage is at least %4%.</source>
+        <translation type="unfinished">
+
+CO區域效果:
+他的部隊受到的傷害減少%0%。如果基礎傷害至少為%2％，部隊將造成%1％的真實傷害. {2%?} {3%?} {4%?}</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="336"/>
         <source>An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing %0 Hp to half of the enemy troops is launched.</source>
         <translation>一支軍隊會為Yukio生成並為其戰鬥.為了支持入侵,會進行轟炸,對敵方軍隊造成%0的傷害,影響一半的敵方部隊.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="342"/>
         <source>Ground-Air-Invasion</source>
         <translation>地空入侵</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="346"/>
         <source>I show you, what true power means.</source>
         <translation>我告訴你,真正的力量意味著什麼.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="347"/>
         <source>I&apos;m the evil that destroys you.</source>
         <translation>我是毀滅你的惡魔.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="348"/>
         <source>Your weapons are the rubbish of my factories.</source>
         <translation>你的武器是我工廠的垃圾.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="316"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="349"/>
         <source>The victory is mine!  Alea iacta est!</source>
         <translation>勝利屬於我!命運已定!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="317"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="350"/>
         <source>My troops are behind you.</source>
         <translation>我的部隊在你身後.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="351"/>
         <source>I&apos;ll become the ruler of the world.</source>
         <translation>我要成為世界的統治者.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="322"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="355"/>
         <source>Investment...Profits...great. Continue.</source>
         <translation>投資...利潤...太好了.繼續.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="323"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="356"/>
         <source>War is just another tool to make profit.</source>
         <translation>戰爭只是另一種獲利的工具.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="324"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="357"/>
         <source>Give me all your money and your lifes.</source>
         <translation>把你所有的錢和你的生命都給我.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="328"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="361"/>
         <source>Even with this loss I made profit...</source>
         <translation>即使有這種損失,我還是盈利了...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="329"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="362"/>
         <source>I lost but I got your money to build a new army.</source>
         <translation>我輸了,但我得到了你的錢來建立一支新軍隊.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="333"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="366"/>
         <source>Yukio</source>
         <translation>Yukio</translation>
     </message>
@@ -24777,122 +25327,139 @@ CO區域效果:
 <context>
     <name>co_zandra</name>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="242"/>
         <source>A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.</source>
         <translation>一位年輕的指揮官,她會不惜一切代價保護她的村莊.她擅長應對沙暴.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="246"/>
         <source>Coconuts</source>
         <translation>椰子</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="250"/>
         <source>Seafood</source>
         <translation>海鮮</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="254"/>
         <source>Zandra&apos;s units are unaffected by sandstorms and are fighting better during them.</source>
         <translation>Zandra的部隊不受沙暴影響,並且在沙暴期間表現更好.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="258"/>
+        <source>
+Global Effect: 
+Units are unaffected by sandstorms and gain %0% firepower during sandstorm.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="259"/>
+        <source>
+
+CO Zone Effect: 
+Units get %1% firepower during sandstorm and %2% firepower otherwise. All units also gain %3% defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="271"/>
         <source>Sand Shift</source>
         <translation>沙移</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="231"/>
         <source>
 Global Effect: 
 Units are unaffected by sandstorms</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 部隊不受沙暴影響</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="232"/>
         <source>
 
 CO Zone Effect: 
 Units get %0% firepower during sandstorm.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果: 
 部隊在沙暴天氣期間攻擊力提高%0%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="265"/>
         <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%.</source>
         <translation>引起沙暴持續一天,間接攻擊單位射程+%0並提高%1%火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="248"/>
         <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 hp damage to enemies.</source>
-        <translation>引起沙暴持續一天,間接攻擊單位射程+%0並提高%1%火力.同時對敵方造成 %2 點傷害.</translation>
+        <translation type="vanished">引起沙暴持續一天,間接攻擊單位射程+%0並提高%1%火力.同時對敵方造成 %2 點傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="275"/>
+        <source>Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 HP damage to enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="281"/>
         <source>Desert Gale</source>
         <translation>沙漠大風</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="285"/>
         <source>It&apos;s high time that you felt the wrath of the desert winds.</source>
         <translation>現在是您感受沙漠狂風的時候了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="286"/>
         <source>I feel the power coming in, on the far winds.</source>
         <translation>我感覺到一股力量在遠方的風中襲來.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="287"/>
         <source>You&apos;ll regret challenging me.</source>
         <translation>你會後悔挑戰我的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="288"/>
         <source>Come, father of the four winds!</source>
         <translation>來吧,四風之父!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="289"/>
         <source>Your eyes will fill with sand, as you scan this wasted land...</source>
         <translation>當你掃視這片荒地時,你的眼睛會充滿沙子...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="290"/>
         <source>Troops, attack now, before the winds halt their blessing!</source>
         <translation>部隊,在狂風停止他們的祝福之前,現在就進攻吧!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="294"/>
         <source>Everyone, hurry back to the village. Our job here is done.</source>
         <translation>大家快點回村.我們的工作完成了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="295"/>
         <source>These sacred lands will be protected for as long as I stand.</source>
         <translation>只要我還活著,這些神聖的土地就會受到保護.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="296"/>
         <source>Thank you, Uncle, for giving me the strength I needed.</source>
         <translation>謝謝你,叔叔,給了我需要的力量.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="300"/>
         <source>I only lost because of the Snow around here.</source>
         <translation>我只是因為這裡的雪而迷路了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="301"/>
         <source>What? I can&apos;t lose. We have a Global Heating.</source>
         <translation>什麼?我不能輸.我們有全球供暖.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="278"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="305"/>
         <source>Zandra</source>
         <translation>Zandra</translation>
     </message>

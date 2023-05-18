@@ -1,48 +1,10 @@
-CO_PETER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (defender === null)
-        {
-            return 0;
-        }
-        var bonus = 0;
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (defender.getBaseMaxRange() === 1)
-            {
-                bonus += 40;
-            }
-            bonus += 10;
-            break;
-        case GameEnums.PowerMode_Power:
-            if (defender.getBaseMaxRange() === 1)
-            {
-                bonus += 60;
-            }
-            bonus += 10;
-            break;
-        default:
-            bonus = 20;
-            break;
-        }
-        bonus -= defender.getTerrainDefense() * 5;
-        return bonus;
-    }
-    return 0;
-};
-CO_PETER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
+CO_PETER.superPowerDamage = 2;
+CO_PETER.superPowerOffBonus = 60
+CO_PETER.powerBaseOffBonus = 10;
+CO_PETER.powerOffBonus = 40;
+CO_PETER.powerDefBonus = 10;
+CO_PETER.d2dCoZoneOffBonus = 0;
+CO_PETER.d2dCoZoneBaseOffBonus = 0;
+CO_PETER.d2dCoZoneDefBonus = 0;
+CO_PETER.d2dOffBonus = 20;
+CO_PETER.d2dTerrainMalus = 5;
