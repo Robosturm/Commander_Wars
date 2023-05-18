@@ -13,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -28,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/nell.mp3", 59, 61394);
                 break;
+            }
         }
     };
 
@@ -133,30 +135,54 @@ var Constructor = function()
     {
         return "OS";
     };
+
+    this.superPowerLuckBonus = 100;
+    this.powerLuckBonus = 60;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.d2dCoZoneLuckBonus = 10;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dLuckBonus = 0;
+
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 100;
+                return CO_NELL.superPowerLuckBonus;
             case GameEnums.PowerMode_Power:
-                return 60;
+                return CO_NELL.powerLuckBonus;
             default:
-                if (co.inCORange(Qt.point(posX, posY), unit))
+                if (CO.getGlobalZone())
                 {
-                    return 15;
+                    return CO_NELL.d2dLuckBonus;
+                }
+                else if (co.inCORange(Qt.point(posX, posY), unit))
+                {
+                    return CO_NELL.d2dCoZoneLuckBonus;
                 }
                 break;
+            }
         }
+        return 0;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_NELL.powerOffBonus;
+            }
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_NELL.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
@@ -164,10 +190,16 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_NELL.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_NELL.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -194,12 +226,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects") +
-               qsTr("\n\nCO Zone Effect: \nUnits have more luck.");
+        let text = qsTr("\nGlobal Effect: \nUnits have %0% luck.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have %1% luck.");
+        text = replaceTextArgs(text, [CO_NELL.d2dLuckBonus, CO_NELL.d2dCoZoneLuckBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Has a chance to strike with more damage than expected. Lucky!");
+        let text = qsTr("Has a chance to strike with %0% more damage than expected. Lucky!");
+        text = replaceTextArgs(text, [CO_NELL.powerLuckBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -207,7 +243,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Improves her chance to strike with massive damage. Very lucky!");
+        let text = qsTr("Improves her chance to strike with %0% more damage. Very lucky!");
+        text = replaceTextArgs(text, [CO_NELL.superPowerLuckBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

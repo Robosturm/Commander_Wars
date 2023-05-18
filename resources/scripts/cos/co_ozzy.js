@@ -13,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -28,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/ozzy.mp3", 877, 60878);
                 break;
+            }
         }
     };
 
@@ -136,52 +138,72 @@ var Constructor = function()
     {
         return "AC";
     };
+
+    this.superPowerOffCounterBonus = 100;
+    this.superPowerDefBonus = 200;
+    this.powerOffBonus = 10;
+    this.powerAtkDefBonus = 50;
+    this.powerDefBonus = 100;
+    this.d2dDefBonus = 0;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 50;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (isDefender)
                 {
-                    return 100;
+                    return CO_OZZY.superPowerOffCounterBonus;
                 }
-                return 10;
+                return CO_OZZY.powerOffBonus;
             case GameEnums.PowerMode_Power:
-                return 10;
+                return CO_OZZY.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 10;
+                    return CO_OZZY.d2dCoZoneOffBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                            defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 200;
+                return CO_OZZY.superPowerDefBonus;
             case GameEnums.PowerMode_Power:
                 if (isAttacker)
                 {
-                    return 60;
+                    return CO_OZZY.powerDefBonus + CO_OZZY.powerAtkDefBonus;
                 }
                 else
                 {
-                    return 100;
+                    return CO_OZZY.powerDefBonus;
                 }
             default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (CO.getGlobalZone())
                 {
-                    return 50;
+                    return CO_OZZY.d2dDefBonus;
+                }
+                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return CO_OZZY.d2dCoZoneDefBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
@@ -191,13 +213,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_IRON_SHIELD_GENERATOR"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_IRON_SHIELD_GENERATOR"];
+            }
         }
         return [];
     };
@@ -221,13 +246,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nIron Shield Generator\n") +
-               qsTr("\nGlobal Effect: \nNo Effect.") +
-               qsTr("\n\nCO Zone Effect: \nDefense is increased.");
+        let text = qsTr("\nSpecial Unit:\nIron Shield Generator\n") +
+            qsTr("\nGlobal Effect: \nDefense is increased by %0%.") +
+            qsTr("\n\nCO Zone Effect: \nDefense is increased by %1%.");
+        text = replaceTextArgs(text, [CO_OZZY.d2dDefBonus, CO_OZZY.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Units gain a modest defense boost. Enemy counterattacks are less effective.");
+        let text = qsTr("Units gain a %0% defense boost and gain additional %1% defence counterattacks.");
+        text = replaceTextArgs(text, [CO_OZZY.powerDefBonus, CO_OZZY.powerAtkDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -235,7 +264,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Defense rises dramatically. Counterattack strength is doubled.");
+        let text = qsTr("Defense rises by %0%. Counterattack strength is increased by %1%.");
+        text = replaceTextArgs(text, [CO_OZZY.superPowerDefBonus, CO_OZZY.superPowerOffCounterBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

@@ -6,6 +6,7 @@ CO_NELL.init = function(co, map)
 CO_NELL.activateSuperpower = function(co, powerMode, map)
 {
 	CO_NELL.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_NELL.getSuperPowerDescription = function()
 {
@@ -14,20 +15,4 @@ CO_NELL.getSuperPowerDescription = function()
 CO_NELL.getSuperPowerName = function()
 {
     return CO_NELL.getPowerName();
-};
-CO_NELL.getBonusLuck = function(co, unit, posX, posY, map)
-{
-    switch (co.getPowerMode())
-    {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            return 60;
-        default:
-            if (co.inCORange(Qt.point(posX, posY), unit))
-            {
-                return 15;
-            }
-            break;
-    }
 };
