@@ -18,9 +18,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -33,6 +34,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/graves.mp3")
                 break;
+            }
         }
     };
 
@@ -42,7 +44,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_GRAVES.gravesDamage(co, 1, 3, powerNameAnimation, map);
+        CO_GRAVES.gravesDamage(co, CO_GRAVES.powerDamage, CO_GRAVES.powerStunLevel, powerNameAnimation, map);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -51,7 +53,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_GRAVES.gravesDamage(co, 2, 4, powerNameAnimation, map);
+        CO_GRAVES.gravesDamage(co, CO_GRAVES.superPowerDamage, CO_GRAVES.superPowerStunLevel, powerNameAnimation, map);
     };
 
     this.gravesDamage = function(co, value, stunLevel, animation2, map)
@@ -110,6 +112,19 @@ var Constructor = function()
         }
     };
 
+    this.superPowerDamage = 2;
+    this.superPowerStunLevel = 4;
+
+    this.powerDamage = 1;
+    this.powerStunLevel = 3;
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 15;
+
+    this.d2dStunLevel = 2;
+
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneDefBonus = 15;
+
     this.postAnimationDamage = function(postAnimation, map)
     {
         postAnimation.seekBuffer();
@@ -153,10 +168,16 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 20;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_GRAVES.powerOffBonus;
+            }
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_GRAVES.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
@@ -164,35 +185,44 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 15;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_GRAVES.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_GRAVES.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            var stunLevel = 0;
-            switch (co.getPowerMode())
+            if (gotAttacked === false && attacker.getOwner() === co.getOwner())
             {
+                var stunLevel = 0;
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    stunLevel = 4;
+                    stunLevel = CO_GRAVES.superPowerStunLevel;
                     break;
                 case GameEnums.PowerMode_Power:
-                    stunLevel = 3;
+                    stunLevel = CO_GRAVES.powerStunLevel;
                     break;
                 default:
-                    stunLevel = 2;
+                    stunLevel = CO_GRAVES.d2dStunLevel;
                     break;
-            }
-            if (defender.getHpRounded() <= stunLevel)
-            {
-                defender.setHasMoved(true);
+                }
+                if (defender.getHpRounded() <= stunLevel)
+                {
+                    defender.setHasMoved(true);
+                }
             }
         }
     };
@@ -217,16 +247,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Enemy units reduced to two or less HP by Graves' units become paralyzed.");
+        return qsTr("Enemy units reduced to %0 or less HP by Graves' units become paralyzed.");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nEnemy units reduced to two or less HP by Graves' units become paralyzed.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have more offensive and defensive bonus.");
+        let text = qsTr("\nGlobal Effect: \nEnemy units reduced to %0 or less HP by Graves' units become paralyzed.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have %1% more offensive and %2% defensive bonus.");
+        text = replaceTextArgs(text, [CO_GRAVES.d2dStunLevel, CO_GRAVES.d2dCoZoneOffBonus, CO_GRAVES.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Enemy units suffer one HP of damage. Enemy units with three or less HP become paralyzed.");
+        let text = qsTr("Enemy units suffer %0 HP of damage. Enemy units with %1 or less HP become paralyzed.");
+        text = replaceTextArgs(text, [CO_GRAVES.powerDamage, CO_GRAVES.powerStunLevel]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -234,7 +268,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Enemy units suffer two HP of damage. Enemy units with four or less HP become paralyzed.");
+        let text = qsTr("Enemy units suffer %0 HP of damage. Enemy units with %1 or less HP become paralyzed.");
+        text = replaceTextArgs(text, [CO_GRAVES.superPowerDamage, CO_GRAVES.superPowerStunLevel]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

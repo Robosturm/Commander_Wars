@@ -1,3 +1,16 @@
+CO_GRAVES.superPowerDamage = 2;
+CO_GRAVES.superPowerStunLevel = 4;
+
+CO_GRAVES.powerDamage = 1;
+CO_GRAVES.powerStunLevel = 3;
+CO_GRAVES.powerOffBonus = 0;
+CO_GRAVES.powerDefBonus = 10;
+
+CO_GRAVES.d2dStunLevel = 2;
+
+CO_GRAVES.d2dCoZoneOffBonus = 0;
+CO_GRAVES.d2dCoZoneDefBonus = 0;
+
 CO_GRAVES.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +19,7 @@ CO_GRAVES.init = function(co, map)
 CO_GRAVES.activateSuperpower = function(co, powerMode, map)
 {
     CO_GRAVES.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_GRAVES.getSuperPowerDescription = function()
 {
@@ -14,47 +28,4 @@ CO_GRAVES.getSuperPowerDescription = function()
 CO_GRAVES.getSuperPowerName = function()
 {
     return CO_GRAVES.getPowerName();
-};
-CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
-        {
-            var stunLevel = 0;
-            switch (co.getPowerMode())
-            {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-            case GameEnums.PowerMode_Power:
-                stunLevel = 3;
-                break;
-            default:
-                stunLevel = 2;
-                break;
-            }
-            if (defender.getHpRounded() <= stunLevel)
-            {
-                defender.setHasMoved(true);
-            }
-        }
-    }
-};
-CO_GRAVES.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    return 0;
-};
-
-CO_GRAVES.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
 };
