@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -66,7 +64,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_CASSIDY.cassidyDamage(co, 1, dialogAnimation, map);
+        CO_CASSIDY.cassidyDamage(co, CO_CASSIDY.superPowerDamage, dialogAnimation, map);
     };
 
     this.cassidyDamage = function(co, value, animation2, map)
@@ -125,21 +123,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/cassidy.mp3", 76, 75279)
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/cassidy.mp3", 76, 75279)
+                break;
+            }
         }
     };
 
@@ -151,40 +151,57 @@ var Constructor = function()
     {
         return "TI";
     };
-    this.coZoneBonus = 40;
-    this.defaultPowerBonus = 30;
-    this.powerBonus = 60;
+
+    this.superPowerDamage = 1;
     this.superPowerBonus = 80;
+
+    this.powerBonus = 60;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+
+    this.d2dOffBonus = 0;
+
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneBonus = 40;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (defender !== null)
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (defender !== null)
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (attacker.getHp() >= defender.getHp())
+                switch (co.getPowerMode())
                 {
-                    return CO_CASSIDY.superPowerBonus;
-                }
-                return CO_CASSIDY.defaultPowerBonus;
-            case GameEnums.PowerMode_Power:
-                if (attacker.getHp() >= defender.getHp())
-                {
-                    return CO_CASSIDY.powerBonus;
-                }
-                return CO_CASSIDY.defaultPowerBonus;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
                     if (attacker.getHp() >= defender.getHp())
                     {
-                        return CO_CASSIDY.coZoneBonus;
+                        return CO_CASSIDY.superPowerBonus;
                     }
-                    return 10;
+                    return CO_CASSIDY.powerOffBonus;
+                case GameEnums.PowerMode_Power:
+                    if (attacker.getHp() >= defender.getHp())
+                    {
+                        return CO_CASSIDY.powerBonus;
+                    }
+                    return CO_CASSIDY.powerOffBonus;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        if (attacker.getHp() >= defender.getHp())
+                        {
+                            return CO_CASSIDY.d2dCoZoneBonus;
+                        }
+                        return CO_CASSIDY.d2dCoZoneOffBonus;
+                    }
+                    else if (attacker.getHp() >= defender.getHp())
+                    {
+                        return CO_CASSIDY.d2dOffBonus;
+                    }
+                    break;
                 }
-                break;
             }
         }
         return 0;
@@ -193,10 +210,16 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_CASSIDY.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_CASSIDY.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -225,9 +248,9 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nNone.") +
+        var text = qsTr("\nGlobal Effect: \nUnits gain %0% firepower when attacking units with equal or less health.") +
                 qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower when attacking units with equal or less health.");
-        text = replaceTextArgs(text, [CO_CASSIDY.coZoneBonus]);
+        text = replaceTextArgs(text, [CO_CASSIDY.d2dOffBonus, CO_CASSIDY.d2dCoZoneBonus]);
         return text;
 
     };
@@ -243,8 +266,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("All enemies suffer one HP of damage. Firepower is greatly increased by %0% when attacking a unit with equal or less health.");
-        text = replaceTextArgs(text, [CO_CASSIDY.superPowerBonus]);
+        var text = qsTr("All enemies suffer %0 HP of damage. Firepower is greatly increased by %1% when attacking a unit with equal or less health.");
+        text = replaceTextArgs(text, [CO_CASSIDY.superPowerDamage, CO_CASSIDY.superPowerBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

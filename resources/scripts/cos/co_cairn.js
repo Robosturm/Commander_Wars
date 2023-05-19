@@ -129,10 +129,6 @@ var Constructor = function()
     {
         return "BD";
     };
-    this.coZoneStarBonus = 2;
-    this.coFirepowerDebuff = 10;
-    this.defaultModifier = 10;
-    this.globalRules = false;
 
     this.wilderness = ["DESERT_FOREST",
                        "DESERT_FOREST1",
@@ -168,23 +164,47 @@ var Constructor = function()
         return false;
     };
 
+    this.superPowerHeal = 1;
+    this.superPowerDefenseReduction = 10;
+    this.superPowerOffBonus = 10;
+
+    this.powerTerrainBonus = 2;
+    this.powerFirerangeBonus = 1;
+    this.powerMovementCostReduction = -1;
+    this.powerVisionrangeModifier = 1;
+    this.powerDefBonus = 10;
+    this.powerOffBonus = 10;
+
+    this.d2dBuildingMalus = -10;
+    this.d2dTerrainBonus = 0;
+
+    this.d2dCoZoneTerrainBonus = 2;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getTerrainDefenseModifier = function(co, unit, posX, posY, map)
     {
         if (CO.isActive(co))
         {
-            if (CO_CAIRN.isWildernessTile(posX, posY, map))
+            if (CO.isActive(co))
             {
-                switch (co.getPowerMode())
+                if (CO_CAIRN.isWildernessTile(posX, posY, map))
                 {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                case GameEnums.PowerMode_Power:
-                    return CO_CAIRN.coZoneStarBonus;
-                default:
-
-                    if (co.inCORange(Qt.point(posX, posY), unit))
+                    switch (co.getPowerMode())
                     {
-                        return CO_CAIRN.coZoneStarBonus;
+                    case GameEnums.PowerMode_Tagpower:
+                    case GameEnums.PowerMode_Superpower:
+                    case GameEnums.PowerMode_Power:
+                        return CO_CAIRN.powerTerrainBonus;
+                    default:
+                        if (co.inCORange(Qt.point(posX, posY), unit))
+                        {
+                            return CO_CAIRN.d2dCoZoneTerrainBonus;
+                        }
+                        else
+                        {
+                            return CO_CAIRN.d2dTerrainBonus;
+                        }
                     }
                 }
             }
@@ -200,11 +220,11 @@ var Constructor = function()
             {
                 if (map.onMap(atkPosX, atkPosY))
                 {
-                    var terrain = map.getTerrain(atkPosX, atkPosY);
-                    var startpower = 0;
+                    let terrain = map.getTerrain(atkPosX, atkPosY);
+                    let startpower = 0;
                     if (terrain.getBuilding() !== null)
                     {
-                        startpower = -10;
+                        startpower = CO_CAIRN.d2dBuildingMalus;
                     }
                     switch (co.getPowerMode())
                     {
@@ -212,23 +232,23 @@ var Constructor = function()
                     case GameEnums.PowerMode_Superpower:
                         if (CO_CAIRN.isWildernessTile(atkPosX, atkPosY, map))
                         {
-                            var terrainDefense = terrain.getDefense(attacker);
-                            return terrainDefense * 10 + 10;
+                            let terrainDefense = terrain.getDefense(attacker);
+                            return terrainDefense * CO_CAIRN.superPowerOffBonus + CO_CAIRN.powerOffBonus;
                         }
                         else
                         {
-                            return 10 + startpower;
+                            return CO_CAIRN.powerOffBonus + startpower;
                         }
                     case GameEnums.PowerMode_Power:
-                        return 10 + startpower;
+                        return CO_CAIRN.powerOffBonus + startpower;
                     default:
                         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
-                            return 10 + startpower;
+                            return CO_CAIRN.d2dCoZoneOffBonus + startpower;
                         }
                         else
                         {
-                            return 0;
+                            return startpower;
                         }
                     }
                 }
@@ -251,7 +271,7 @@ var Constructor = function()
 
                     if (unit.getBaseMaxRange() > 1)
                     {
-                        return 1;
+                        return CO_CAIRN.powerVisionrangeModifier;
                     }
                     break;
                 default:
@@ -276,7 +296,7 @@ var Constructor = function()
 
                     if (unit.getBaseMaxRange() > 1)
                     {
-                        return 1;
+                        return CO_CAIRN.powerFirerangeBonus;
                     }
                     break;
                 default:
@@ -298,7 +318,7 @@ var Constructor = function()
                 if (CO_CAIRN.isWildernessTile(defPosX, defPosY, map))
                 {
                     var terrainDefense = map.getTerrain(defPosX, defPosY).getDefense(defender);
-                    return terrainDefense * 10;
+                    return terrainDefense * CO_CAIRN.superPowerDefenseReduction;
                 }
                 break;
             case GameEnums.PowerMode_Power:
@@ -314,10 +334,13 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                    co.getPowerMode() > GameEnums.PowerMode_Off)
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                return 10;
+                return CO_CAIRN.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_CAIRN.d2dCoZoneDefBonus;
             }
         }
         return 0;
@@ -336,7 +359,7 @@ var Constructor = function()
                 case GameEnums.PowerMode_Power:
                     if (CO_CAIRN.isWildernessTile(posX, posY, map))
                     {
-                        return -1;
+                        return CO_CAIRN.powerMovementCostReduction;
                     }
                     break;
                 default:
@@ -349,33 +372,36 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (CO.isActive(co))
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                var unit = action.getPerformingUnit();
-                if (unit !== null && unit.getHp() > 0)
+                switch (co.getPowerMode())
                 {
-                    var path = action.getMovePath();
-                    var heal = 0;
-                    for (var i = 0; i < path.length; ++i)
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    var unit = action.getPerformingUnit();
+                    if (unit !== null && unit.getHp() > 0)
                     {
-                        var pos = path[i];
-                        if (CO_CAIRN.isWildernessTile(pos.x, pos.y, map))
+                        var path = action.getMovePath();
+                        var heal = 0;
+                        for (var i = 0; i < path.length; ++i)
                         {
-                            ++heal;
+                            var pos = path[i];
+                            if (CO_CAIRN.isWildernessTile(pos.x, pos.y, map))
+                            {
+                                heal += CO_CAIRN.superPowerHeal;
+                            }
+                        }
+                        if (heal > 0)
+                        {
+                            unit.setHp(unit.getHpRounded() + heal);
                         }
                     }
-                    if (heal > 0)
-                    {
-                        unit.setHp(unit.getHpRounded() + heal);
-                    }
+                    break;
+                case GameEnums.PowerMode_Power:
+                    break;
+                default:
+                    break;
                 }
-                break;
-            case GameEnums.PowerMode_Power:
-                break;
-            default:
-                break;
             }
         }
     };
@@ -504,41 +530,41 @@ var Constructor = function()
         if (powerMode === GameEnums.PowerMode_Tagpower ||
             powerMode === GameEnums.PowerMode_Superpower)
         {
-            defenseBoost = 10;
+            defenseBoost = CO_CAIRN.powerDefBonus;
             if (wilderness)
             {
-                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.coZoneStarBonus);
-                offensiveBoost = 10 * (defenseStars + CO_CAIRN.coZoneStarBonus) + 10;
+                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.powerTerrainBonus);
+                offensiveBoost = CO_CAIRN.superPowerOffBonus * (defenseStars + CO_CAIRN.powerTerrainBonus) + CO_CAIRN.powerOffBonus;
             }
             else if (building)
             {
-                offensiveBoost = 0;
+                offensiveBoost = CO_CAIRN.d2dBuildingMalus + CO_CAIRN.powerOffBonus;
             }
             else
             {
-                offensiveBoost = 10;
+                offensiveBoost = CO_CAIRN.powerOffBonus;
             }
         }
         else if (powerMode === GameEnums.PowerMode_Power)
         {
-            defenseBoost = 10;
+            defenseBoost = CO_CAIRN.powerDefBonus;
             if (wilderness)
             {
-                info.addBonusIcon("moveRange", "-1");
-                info.addBonusIcon("atkRange", "+1");
+                info.addBonusIcon("moveRange", CO_CAIRN.powerMovementCostReduction.toString());
+                info.addBonusIcon("atkRange", "+" + CO_CAIRN.powerFirerangeBonus.toString());
             }
         }
-        else if (CO_CAIRN.globalRules)
+        else
         {
-            defenseBoost = 10;
-            offensiveBoost = 10;
+            defenseBoost = 0;
+            offensiveBoost = 0;
             if (wilderness)
             {
-                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.coZoneStarBonus);
+                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.d2dTerrainBonus);
             }
             else if (building)
             {
-                offensiveBoost = -10;
+                offensiveBoost = CO_CAIRN.d2dBuildingMalus;
             }
         }
         info.setOffensiveBoost(offensiveBoost);
@@ -579,42 +605,41 @@ var Constructor = function()
         if (powerMode === GameEnums.PowerMode_Tagpower ||
             powerMode === GameEnums.PowerMode_Superpower)
         {
-            defenseBoost = 10;
+            defenseBoost = CO_CAIRN.powerDefBonus;
             if (wilderness)
             {
-                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.coZoneStarBonus);
-                offensiveBoost = 10 * (defenseStars + CO_CAIRN.coZoneStarBonus) + 10;
+                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.powerTerrainBonus);
+                offensiveBoost = CO_CAIRN.superPowerOffBonus * (defenseStars + CO_CAIRN.powerTerrainBonus) + CO_CAIRN.powerOffBonus;
             }
             else if (building)
             {
-                offensiveBoost = 0;
+                offensiveBoost = CO_CAIRN.d2dBuildingMalus + CO_CAIRN.powerOffBonus;
             }
             else
             {
-                offensiveBoost = 10;
+                offensiveBoost = CO_CAIRN.powerOffBonus;
             }
         }
         else if (powerMode === GameEnums.PowerMode_Power)
         {
-            defenseBoost = 10;
+            defenseBoost = CO_CAIRN.powerDefBonus;
             if (wilderness)
             {
-                info.addBonusIcon("moveRange", "=1");
-                info.addBonusIcon("atkRange", "+1");
-                offensiveBoost = CO_CAIRN.zoneTerrainBonus * defenseStars + 10;
+                info.addBonusIcon("moveRange", CO_CAIRN.powerMovementCostReduction.toString());
+                info.addBonusIcon("atkRange", "+" + CO_CAIRN.powerFirerangeBonus.toString());
             }
         }
         else
         {
-            defenseBoost = 10;
-            offensiveBoost = 10;
+            defenseBoost = CO_CAIRN.d2dCoZoneOffBonus;
+            offensiveBoost = CO_CAIRN.d2dCoZoneDefBonus;
             if (wilderness)
             {
-                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.coZoneStarBonus);
+                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.d2dCoZoneTerrainBonus);
             }
             else if (building)
             {
-                offensiveBoost = 0;
+                offensiveBoost = CO_CAIRN.d2dCoZoneOffBonus + CO_CAIRN.d2dBuildingMalus;
             }
         }
         info.setOffensiveBoost(offensiveBoost);
