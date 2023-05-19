@@ -44,11 +44,11 @@ var Init =
         }
         else
         {
-            Init.checkNextMod();
+            Init.checkNextMod(menu);
         }
     },
 
-    checkNextMod = function()
+    checkNextMod = function(menu)
     {
         let activeMod = settings.getModString();
         let nextMod = "";

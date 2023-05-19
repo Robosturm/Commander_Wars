@@ -8,14 +8,11 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -103,9 +100,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -118,6 +116,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/joey.mp3")
                 break;
+            }
         }
     };
 
@@ -129,68 +128,98 @@ var Constructor = function()
     {
         return "TI";
     };
+
+    this.superPowerOffMalus = 0;
+    this.superPowerOffBonus = 60;
+    this.superPowerBaseOffBonus = 10;
+    this.superPowerDefBonus = 10;
+    this.superPowerCostReduction = 0.2;
+
+    this.powerOffMalus = 0;
+    this.powerOffBonus = 60;
+    this.powerBaseOffBonus = 10;
+    this.powerDefBonus = 30;
+    this.powerBaseDefBonus = 10;
+
+    this.d2dOffMalus = -10;
+    this.d2dOffBonus = 20;
+    this.d2dBaseOffBonus = 0;
+
+    this.d2dCoZoneOffMalus = 0;
+    this.d2dCoZoneOffBonus = 60;
+    this.d2dCoZoneBaseOffBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if(defender !== null)
+        if (CO.isActive(co))
         {
-            var attackerValue = attacker.getUnitValue();
-            var defenderValue = defender.getUnitValue();
-            switch (co.getPowerMode())
+            if(defender !== null)
             {
+                var attackerValue = attacker.getUnitValue();
+                var defenderValue = defender.getUnitValue();
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
+                {
                     if (attackerValue > defenderValue)
                     {
-                        return 0;
+                        return CO_JOEY.superPowerOffMalus;
                     }
                     else if (attackerValue < defenderValue)
                     {
-                        return 60;
+                        return CO_JOEY.superPowerOffBonus;
                     }
                     else
                     {
-                        return 10;
-                    }
-                case GameEnums.PowerMode_Power:
-                    if (attackerValue > defenderValue)
-                    {
-                        return 0;
-                    }
-                    else if (attackerValue < defenderValue)
-                    {
-                        return 60;
-                    }
-                    else
-                    {
-                        return 10;
-                    }
-                default:
-                    if (attackerValue > defenderValue)
-                    {
-                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                        {
-                            return 0;
-                        }
-                        return -10;
-                    }
-                    else if (attackerValue < defenderValue)
-                    {
-                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                        {
-                            return 60;
-                        }
-                        return 10;
-                    }
-                    else
-                    {
-                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                        {
-                            return 10;
-                        }
-                        return 0;
+                        return CO_JOEY.superPowerBaseOffBonus;
                     }
                 }
+                case GameEnums.PowerMode_Power:
+                {
+                    if (attackerValue > defenderValue)
+                    {
+                        return CO_JOEY.powerOffMalus;
+                    }
+                    else if (attackerValue < defenderValue)
+                    {
+                        return CO_JOEY.powerOffBonus;
+                    }
+                    else
+                    {
+                        return CO_JOEY.powerBaseOffBonus;
+                    }
+                }
+                default:
+                {
+                    if (attackerValue > defenderValue)
+                    {
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        {
+                            return CO_JOEY.d2dCoZoneOffMalus;
+                        }
+                        return CO_JOEY.d2dOffMalus;
+                    }
+                    else if (attackerValue < defenderValue)
+                    {
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        {
+                            return CO_JOEY.d2dCoZoneOffBonus;
+                        }
+                        return CO_JOEY.d2dOffBonus;
+                    }
+                    else
+                    {
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        {
+                            return CO_JOEY.d2dCoZoneBaseOffBonus;
+                        }
+                        return CO_JOEY.d2dBaseOffBonus;
+                    }
+                }
+                }
+            }
         }
         return 0;
     };
@@ -198,22 +227,25 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if(attacker !== null)
+        if (CO.isActive(co))
         {
-            var attackerValue = attacker.getUnitValue();
-            var defenderValue = defender.getUnitValue();
-            switch (co.getPowerMode())
+            if(attacker !== null)
             {
+                var attackerValue = attacker.getUnitValue();
+                var defenderValue = defender.getUnitValue();
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    return 10;
+                    return CO_JOEY.superPowerDefBonus;
                 case GameEnums.PowerMode_Power:
                     if (attackerValue > defenderValue)
                     {
-                        return 30;
+                        return CO_JOEY.powerDefBonus;
                     }
-                    return 10;
+                    return CO_JOEY.powerBaseDefBonus;
                 default:
+                }
             }
         }
         return 0;
@@ -221,13 +253,14 @@ var Constructor = function()
 
     this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
     {
-        if(unit !== null &&
-           isDefender)
+        if (CO.isActive(co))
         {
-            var defenderValue = unit.getUnitValue();
-            var attackerValue = attacker.getUnitValue();
-            switch (co.getPowerMode())
+            if(unit !== null && isDefender)
             {
+                var defenderValue = unit.getUnitValue();
+                var attackerValue = attacker.getUnitValue();
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     if (attackerValue > defenderValue)
@@ -239,6 +272,7 @@ var Constructor = function()
                     return false;
                 default:
                     return false;
+                }
             }
         }
         return false;
@@ -246,15 +280,18 @@ var Constructor = function()
 
     this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return -baseCost * 0.2;
+                return -baseCost * CO_JOEY.superPowerCostReduction;
             case GameEnums.PowerMode_Power:
                 return 0;
             default:
                 return 0;
+            }
         }
     };
 
@@ -281,12 +318,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits are stronger when engaging stronger units, but firepower is reduced by when engaging a weaker unit.") +
-               qsTr("\n\nCO Zone Effect: \nUnits are way stronger when engaging stronger units");
+        let text = qsTr("\nGlobal Effect: \nUnits gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.");
+        text = replaceTextArgs(text, [CO_JOEY.d2dOffBonus, CO_JOEY.d2dOffMalus,
+                                      CO_JOEY.d2dCoZoneOffBonus, CO_JOEY.d2dCoZoneOffMalus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Units receive a large firepower boost when engaging a stronger unit.");
+        let text = qsTr("Units receive %0% firepower and %1% defence boost when fighting a stronger unit.");
+        text = replaceTextArgs(text, [CO_JOEY.powerOffBonus, CO_JOEY.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -294,7 +336,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Deployment costs drop and units get first strike when engaging a stronger unit.");
+        let text = qsTr("Deployment costs drops by %0% and units get first strike when fighting a stronger unit. Units gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.");
+        text = replaceTextArgs(text, [CO_JOEY.superPowerCostReduction * 100, CO_JOEY.powerDefBonus, CO_JOEY.superPowerOffBonus, CO_JOEY.superPowerOffMalus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
