@@ -1,3 +1,29 @@
+CO_EAGLE.superPowerAirOffBonus = 30;
+CO_EAGLE.superPowerNavalOffBonus = -30;
+CO_EAGLE.superPowerOtherOffBonus = 10;
+CO_EAGLE.superPowerAirDefBonus = 10;
+CO_EAGLE.superPowerDefBonus = 10;
+
+CO_EAGLE.powerAirOffBonus = -5;
+CO_EAGLE.powerNavalOffBonus = -40;
+CO_EAGLE.powerInfOffBonus = 0;
+CO_EAGLE.powerOtherOffBonus = -20;
+CO_EAGLE.powerDefBonus = -30;
+CO_EAGLE.powerAirDefBonus = -30;
+CO_EAGLE.powerRefresh = true;
+
+CO_EAGLE.d2dCoZoneAirDefBonus = 0;
+CO_EAGLE.d2dCoZoneDefBonus = 0;
+CO_EAGLE.d2dCoZoneAirOffBonus = 0;
+CO_EAGLE.d2dCoZoneNavalOffBonus = 0;
+CO_EAGLE.d2dCoZoneOtherOffBonus = 0;
+
+CO_EAGLE.d2dFuelModifier = -2;
+CO_EAGLE.d2dAirDefBonus = 10;
+CO_EAGLE.d2dAirOffBonus = 15;
+CO_EAGLE.d2dNavalOffBonus = -20;
+CO_EAGLE.d2dOtherOffBonus = 0;
+
 CO_EAGLE.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +32,7 @@ CO_EAGLE.init = function(co, map)
 CO_EAGLE.activateSuperpower = function(co, powerMode, map)
 {
     CO_EAGLE.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_EAGLE.getSuperPowerDescription = function()
 {
@@ -14,72 +41,4 @@ CO_EAGLE.getSuperPowerDescription = function()
 CO_EAGLE.getSuperPowerName = function()
 {
     return CO_EAGLE.getPowerName();
-};
-CO_EAGLE.getFuelCostModifier = function(co, unit, costs, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (unit.getUnitType() === GameEnums.UnitType_Air)
-        {
-            return -2;
-        }
-    }
-    return 0;
-};
-
-CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (attacker.getUnitType() === GameEnums.UnitType_Air)
-            {
-                return 0;
-            }
-            else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-            {
-                return -30;
-            }
-            else
-            {
-                return -20;
-            }
-        default:
-            if (attacker.getUnitType() === GameEnums.UnitType_Air)
-            {
-                return 20;
-            }
-            break;
-        }
-        if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-        {
-            return -10;
-        }
-    }
-    return 0;
-};
-
-CO_EAGLE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            return -30;
-        default:
-            if (defender.getUnitType() === GameEnums.UnitType_Air)
-            {
-                return 10;
-            }
-            break;
-        }
-    }
-    return 0;
 };

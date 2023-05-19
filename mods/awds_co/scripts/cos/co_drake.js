@@ -1,60 +1,24 @@
-CO_DRAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-            {
-                return 30;
-            }
-            else if (defender.getUnitType() === GameEnums.UnitType_Air)
-            {
-                return 0;
-            }
-            return 10;
-        case GameEnums.PowerMode_Power:
-            if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-            {
-                return 30;
-            }
-            else if (attacker.getUnitType() === GameEnums.UnitType_Air)
-            {
-                return 0;
-            }
-            return 10;
-        default:
-            if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-            {
-                return 20;
-            }
-            break;
-        }
-        if (attacker.getUnitType() === GameEnums.UnitType_Air)
-        {
-            return -10;
-        }
-    }
-    return 0;
-};
+CO_DRAKE.superPowerDamage = 2;
+CO_DRAKE.superPowerNavalOffBonus = 30;
+CO_DRAKE.superPowerAirOffBonus = 0;
+CO_DRAKE.superPowerOtherOffBonus = 0;
 
-CO_DRAKE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
+CO_DRAKE.powerDamage = 1;
+CO_DRAKE.powerNavalDefBonus = 30;
+CO_DRAKE.powerDefBonus = 10;
+CO_DRAKE.powerNavalOffBonus = 0;
+CO_DRAKE.powerAirOffBonus = 0;
+CO_DRAKE.powerOtherOffBonus = 0;
 
-CO_DRAKE.getMovementpointModifier = function(co, unit, posX, posY, map)
-{
-    return 0;
-};
+CO_DRAKE.d2dNavalDefBonus = 0;
+CO_DRAKE.d2dDefBonus = 0;
+CO_DRAKE.d2dNavalMovementPoints = 1;
+CO_DRAKE.d2dNavalOffBonus = 20;
+CO_DRAKE.d2dAirOffBonus = -10;
+CO_DRAKE.d2dOtherOffBonus = 0;
+
+CO_DRAKE.d2dCoZoneNavalDefBonus = 0;
+CO_DRAKE.d2dCoZoneDefBonus = 0;
+CO_DRAKE.d2dCoZoneNavalOffBonus = 0;
+CO_DRAKE.d2dCoZoneAirOffBonus = 0;
+CO_DRAKE.d2dCoZoneOtherOffBonus = 0;

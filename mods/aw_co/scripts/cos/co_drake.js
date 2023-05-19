@@ -1,3 +1,28 @@
+CO_DRAKE.superPowerDamage = 2;
+CO_DRAKE.superPowerNavalOffBonus = 10;
+CO_DRAKE.superPowerAirOffBonus = 0;
+CO_DRAKE.superPowerOtherOffBonus = 0;
+
+CO_DRAKE.powerDamage = 1;
+CO_DRAKE.powerNavalDefBonus = 10;
+CO_DRAKE.powerDefBonus = 10;
+CO_DRAKE.powerNavalOffBonus = 0;
+CO_DRAKE.powerAirOffBonus = 0;
+CO_DRAKE.powerOtherOffBonus = 0;
+
+CO_DRAKE.d2dNavalDefBonus = 20;
+CO_DRAKE.d2dDefBonus = 0;
+CO_DRAKE.d2dNavalMovementPoints = 1;
+CO_DRAKE.d2dNavalOffBonus = 0;
+CO_DRAKE.d2dAirOffBonus = -20;
+CO_DRAKE.d2dOtherOffBonus = 0;
+
+CO_DRAKE.d2dCoZoneNavalDefBonus = 0;
+CO_DRAKE.d2dCoZoneDefBonus = 0;
+CO_DRAKE.d2dCoZoneNavalOffBonus = 0;
+CO_DRAKE.d2dCoZoneAirOffBonus = 0;
+CO_DRAKE.d2dCoZoneOtherOffBonus = 0;
+
 CO_DRAKE.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +31,7 @@ CO_DRAKE.init = function(co, map)
 CO_DRAKE.activateSuperpower = function(co, powerMode, map)
 {
     CO_DRAKE.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_DRAKE.getSuperPowerDescription = function()
 {
@@ -14,49 +40,4 @@ CO_DRAKE.getSuperPowerDescription = function()
 CO_DRAKE.getSuperPowerName = function()
 {
     return CO_DRAKE.getPowerName();
-};
-CO_DRAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (attacker.getUnitType() === GameEnums.UnitType_Air)
-        {
-            return -20;
-        }
-    }
-    return 0;
-};
-
-CO_DRAKE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            if (defender.getUnitType() === GameEnums.UnitType_Naval)
-            {
-                return 30;
-            }
-            return 10;
-        }
-        else if (defender.getUnitType() === GameEnums.UnitType_Naval)
-        {
-            return 20;
-        }
-    }
-    return 0;
-};
-
-CO_DRAKE.getMovementpointModifier = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (unit.getUnitType() === GameEnums.UnitType_Naval)
-        {
-            return 1;
-        }
-    }
-    return 0;
 };

@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return [];
     };
 
@@ -109,9 +107,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -124,6 +123,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/davis.mp3")
                 break;
+            }
         }
     };
 
@@ -172,89 +172,137 @@ var Constructor = function()
         return enemyCount;
     }
 
+    this.superPowerMaxLuck = 150;
+    this.superPowerLuckPerUnit = 6;
+    this.superPowerMaxMissFortune = 100;
+    this.superPowerMissFortunePerUnit = 4;
+
+    this.powerMaxLuck = 100;
+    this.powerLuckPerUnit = 4;
+    this.powerMaxMissFortune = 60;
+    this.powerMissFortunePerUnit = 3;
+    this.powerDefBonus = 10;
+    this.powerOffBonus = 10;
+
+    this.d2dMaxLuck = 0;
+    this.d2dLuckPerUnit = 0;
+    this.d2dMaxMissFortune = 0;
+    this.d2dMissFortunePerUnit = 0;
+
+    this.d2dCoZoneMaxLuck = 50;
+    this.d2dCoZoneLuckPerUnit = 2;
+    this.d2dCoZoneMaxMissFortune = 40;
+    this.d2dCoZoneMissFortunePerUnit = 2;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneOffBonus = 10;
+
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
-        var owner = co.getOwner();
-        var unitCount = CO_DAVIS.getAlliedUnitCount(owner, map);
-        var enemyCount = CO_DAVIS.getEnemyUnitCount(owner, map);
-        var luck = 0;
-        if (unitCount > enemyCount)
+        if (CO.isActive(co))
         {
-            var maxLuck = 0;
-            var luckPerUnit = 0;
-            switch (co.getPowerMode())
+            var owner = co.getOwner();
+            var unitCount = CO_DAVIS.getAlliedUnitCount(owner, map);
+            var enemyCount = CO_DAVIS.getEnemyUnitCount(owner, map);
+            var luck = 0;
+            if (unitCount > enemyCount)
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                maxLuck = 150;
-                luckPerUnit = 6;
-                break;
-            case GameEnums.PowerMode_Power:
-                luckPerUnit = 4;
-                maxLuck = 100;
-                break;
-            default:
-                if (co.inCORange(Qt.point(posX, posY), unit))
+                var maxLuck = 0;
+                var luckPerUnit = 0;
+                switch (co.getPowerMode())
                 {
-                    luckPerUnit = 2;
-                    maxLuck = 50
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    maxLuck = CO_DAVIS.superPowerMaxLuck;
+                    luckPerUnit = CO_DAVIS.superPowerLuckPerUnit;
+                    break;
+                case GameEnums.PowerMode_Power:
+                    maxLuck = CO_DAVIS.powerMaxLuck;
+                    luckPerUnit = CO_DAVIS.powerLuckPerUnit;
+                    break;
+                default:
+                    if (co.inCORange(Qt.point(posX, posY), unit))
+                    {
+                        maxLuck = CO_DAVIS.d2dCoZoneMaxLuck;
+                        luckPerUnit = CO_DAVIS.d2dCoZoneLuckPerUnit;
+                    }
+                    else
+                    {
+                        maxLuck = CO_DAVIS.d2dMaxLuck;
+                        luckPerUnit = CO_DAVIS.d2dLuckPerUnit;
+                    }
+                    break;
                 }
-                break;
+                luck = luckPerUnit * (unitCount - enemyCount);
+                if (luck > maxLuck)
+                {
+                    luck = maxLuck;
+                }
             }
-            luck = luckPerUnit * (unitCount - enemyCount);
-            if (luck > maxLuck)
-            {
-                luck = maxLuck;
-            }
+            return luck;
         }
-        return luck;
+        return 0;
     };
 	
     this.getBonusMisfortune = function(co, unit, posX, posY, map)
     {
-        var owner = co.getOwner();
-        var unitCount = CO_DAVIS.getAlliedUnitCount(owner, map);
-        var enemyCount = CO_DAVIS.getEnemyUnitCount(owner, map);
-        var missFortune = 0;
-        if (enemyCount > unitCount)
+        if (CO.isActive(co))
         {
-            var maxMissFortune = 0;
-            var luckMissFortune = 0;
-            switch (co.getPowerMode())
+            var owner = co.getOwner();
+            var unitCount = CO_DAVIS.getAlliedUnitCount(owner, map);
+            var enemyCount = CO_DAVIS.getEnemyUnitCount(owner, map);
+            var missFortune = 0;
+            if (enemyCount > unitCount)
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                maxMissFortune = 100;
-                luckMissFortune = 4;
-                break;
-            case GameEnums.PowerMode_Power:
-                maxMissFortune = 60;
-                luckMissFortune = 3;
-                break;
-            default:
-                if (co.inCORange(Qt.point(posX, posY), unit))
+                var maxMissFortune = 0;
+                var luckMissFortune = 0;
+                switch (co.getPowerMode())
                 {
-                    maxMissFortune = 40;
-                    luckMissFortune = 2;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    maxMissFortune = CO_DAVIS.superPowerMaxMissFortune;
+                    luckMissFortune = CO_DAVIS.superPowerMissFortunePerUnit;
+                    break;
+                case GameEnums.PowerMode_Power:
+                    maxMissFortune = CO_DAVIS.powerMaxMissFortune;
+                    luckMissFortune = CO_DAVIS.powerMissFortunePerUnit;
+                    break;
+                default:
+                    if (co.inCORange(Qt.point(posX, posY), unit))
+                    {
+                        maxMissFortune = CO_DAVIS.d2dCoZoneMaxMissFortune;
+                        luckMissFortune = CO_DAVIS.d2dCoZoneMissFortunePerUnit;
+                    }
+                    else
+                    {
+                        maxMissFortune = CO_DAVIS.d2dMaxMissFortune;
+                        luckMissFortune = CO_DAVIS.d2dMissFortunePerUnit;
+                    }
+                    break;
                 }
-                break;
+                missFortune = luckMissFortune * (enemyCount - unitCount);
+                if (missFortune > maxMissFortune)
+                {
+                    missFortune = maxMissFortune;
+                }
             }
-            missFortune = luckMissFortune * (enemyCount - unitCount);
-            if (missFortune > maxMissFortune)
-            {
-                missFortune = maxMissFortune;
-            }
+            return missFortune;
         }
-        return missFortune;
+        return 0;
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
-    {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+    {        
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_DAVIS.powerOffBonus;
+            }
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_DAVIS.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
@@ -262,10 +310,16 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_DAVIS.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_DAVIS.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -294,17 +348,22 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Gains luck and mussfortune based on the amount of troops on the field.");
+        return qsTr("Gains luck and missfortune based on the amount of troops on the field.");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nNone\n") +
-               qsTr("\nGlobal Effect: \nNone") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain bonus luck based on the amount of troops Davis controls and gain missfortune based on the amount of troops all enemies control. The bonus/penalty depends of which unit count is higher.");
+        let text = qsTr("\nSpecial Unit:\nNone\n") +
+               qsTr("\nGlobal Effect: \nIf Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.") +
+               qsTr("\n\nCO Zone Effect: \nIf Davis and his allies controls more units than his enemies. He gains %4% luck per unit up to a maximum of %5%. Else he gains %6% missfortune per unit up to a maximum of %7%.");
+        text = replaceTextArgs(text, [CO_DAVIS.d2dLuckPerUnit, CO_DAVIS.d2dMaxLuck, CO_DAVIS.d2dMissFortunePerUnit, CO_DAVIS.d2dMaxMissFortune,
+                                      CO_DAVIS.d2dCoZoneLuckPerUnit, CO_DAVIS.d2dCoZoneMaxLuck, CO_DAVIS.d2dCoZoneMissFortunePerUnit, CO_DAVIS.d2dCoZoneMaxMissFortune]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("His luck is increased  based on the amount of troops Davis controls. However he also gains increased missfortune based  on the amount of troops all enemies control. The bonus/penalty depends of which unit count is higher.");
+        let text = qsTr("If Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.");
+        text = replaceTextArgs(text, [CO_DAVIS.powerLuckPerUnit, CO_DAVIS.powerMaxLuck, CO_DAVIS.powerMissFortunePerUnit, CO_DAVIS.powerMaxMissFortune]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -312,7 +371,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("His luck raises even more based on the amount of troops Davis controls. However the cap for missfortune raises as well. The bonus/penalty depends of which unit count is higher.");
+        let text = qsTr("If Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.");
+        text = replaceTextArgs(text, [CO_DAVIS.superPowerLuckPerUnit, CO_DAVIS.superPowerMaxLuck, CO_DAVIS.superPowerMissFortunePerUnit, CO_DAVIS.superPowerMaxMissFortune]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
