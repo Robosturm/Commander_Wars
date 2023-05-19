@@ -1,3 +1,25 @@
+CO_JESS.superPowerMovementBonus = 2;
+CO_JESS.superPowerGroundBonus = 70;
+CO_JESS.superPowerNavalAirBonus = -10;
+CO_JESS.superPowerInfBonus = 0;
+
+CO_JESS.powerMovementBonus = 1;
+CO_JESS.powerDefBonus = 10;
+CO_JESS.powerOffBonus = 0;
+CO_JESS.powerGroundBonus = 50;
+CO_JESS.powerNavalAirBonus = -10;
+CO_JESS.powerInfBonus = 0;
+
+CO_JESS.d2dCoZoneDefBonus = 0;
+CO_JESS.d2dCoZoneOffBonus = 0;
+CO_JESS.d2dCoZoneGroundBonus = 0;
+CO_JESS.d2dCoZoneNavalAirBonus = 0;
+CO_JESS.d2dCoZoneInfBonus = 0;
+
+CO_JESS.d2dGroundBonus = 20;
+CO_JESS.d2dNavalAirBonus = -10;
+CO_JESS.d2dInfBonus = 0;
+
 CO_JESS.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +28,7 @@ CO_JESS.init = function(co, map)
 CO_JESS.activateSuperpower = function(co, powerMode, map)
 {
     CO_JESS.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_JESS.getSuperPowerDescription = function()
 {
@@ -14,73 +37,4 @@ CO_JESS.getSuperPowerDescription = function()
 CO_JESS.getSuperPowerName = function()
 {
     return CO_JESS.getPowerName();
-};
-CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if ((attacker.getUnitType() !== GameEnums.UnitType_Air) &&
-                (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
-                (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
-            {
-                return 30;
-            }
-            else if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
-                     (attacker.getUnitType() === GameEnums.UnitType_Naval))
-            {
-                return -10;
-            }
-            return 0;
-        default:
-            if ((attacker.getUnitType() !== GameEnums.UnitType_Air) &&
-                (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
-                (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
-            {
-                return 30;
-            }
-            break;
-        }
-        if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
-            (attacker.getUnitType() === GameEnums.UnitType_Naval))
-        {
-            return -10;
-        }
-    }
-    return 0;
-};
-
-CO_JESS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
-
-CO_JESS.getMovementpointModifier = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            if ((unit.getUnitType() !== GameEnums.UnitType_Air) &&
-                (unit.getUnitType() !== GameEnums.UnitType_Naval) &&
-                (unit.getUnitType() !== GameEnums.UnitType_Infantry))
-            {
-                return 1;
-            }
-        }
-    }
-    return 0;
 };
