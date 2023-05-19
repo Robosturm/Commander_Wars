@@ -1,3 +1,15 @@
+CO_COLIN.superPowerOffBonus = 3.33;
+
+CO_COLIN.powerFundsMultiplier = 0.5;
+CO_COLIN.powerOffBonus = -10;
+CO_COLIN.powerDefBonus = 10;
+
+CO_COLIN.d2dCostModifier = -20;
+CO_COLIN.d2dOffBonus = -10;
+
+CO_COLIN.d2dCoZoneOffBonus = 0;
+CO_COLIN.d2dCoZoneDefBonus = 0;
+
 CO_COLIN.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +18,7 @@ CO_COLIN.init = function(co, map)
 CO_COLIN.activateSuperpower = function(co, powerMode, map)
 {
     CO_COLIN.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_COLIN.getSuperPowerDescription = function()
 {
@@ -14,35 +27,4 @@ CO_COLIN.getSuperPowerDescription = function()
 CO_COLIN.getSuperPowerName = function()
 {
     return CO_COLIN.getPowerName();
-};
-CO_COLIN.globalBoost = 10;
-CO_COLIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        return -CO_COLIN.globalBoost;
-    }
-    return 0;
-};
-
-CO_COLIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
-CO_COLIN.getCostModifier = function(co, id, baseCost, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        return -baseCost * CO_COLIN.costModifier / 100;
-    }
-    return 0;
 };
