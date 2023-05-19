@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -112,9 +110,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -127,6 +126,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/grimm.mp3", 12479, 76493);
                 break;
+            }
         }
     };
 
@@ -138,34 +138,57 @@ var Constructor = function()
     {
         return "YC";
     };
+
+    this.superPowerOffBonus = 90;
+
+    this.powerOffBonus = 60;
+    this.powerDefBonus = 0;
+
+    this.d2dCoZoneOffBonus = 50;
+    this.d2dCoZoneDefBonus = 0;
+
+    this.d2dOffBonus = 30;
+    this.d2dDefBonus = -10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 90;
+                return CO_GRIMM.superPowerOffBonus;
             case GameEnums.PowerMode_Power:
-                return 60;
+                return CO_GRIMM.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 50;
+                    return CO_GRIMM.d2dCoZoneOffBonus;
                 }
                 break;
+            }
+            return CO_GRIMM.d2dOffBonus;
         }
-        return 30;
+        return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 0;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_GRIMM.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_GRIMM.d2dCoZoneDefBonus;
+            }
+            return CO_GRIMM.d2dDefBonus;
         }
-        return -10;
+        return 0;
     };
 
     this.getAiCoUnitBonus = function(co, unit, map)
@@ -174,17 +197,19 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_AT_CYCLE"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_AT_CYCLE"];
+            }
         }
         return [];
     };
-
 
     // CO - Intel
     this.getBio = function(co)
@@ -205,13 +230,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nAT Cycle\n") +
-               qsTr("\nGlobal Effect: \nUnits have reduced defense and increased firepower.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have high offensive bonus and a defensive malus.");
+        let text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
+               qsTr("\nGlobal Effect: \nUnits have %0% reduced defense and %1% increased firepower.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have %2% increased firepower bonus.");
+        text = replaceTextArgs(text, [CO_GRIMM.d2dDefBonus, CO_GRIMM.d2dOffBonus, CO_GRIMM.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Increases the attack of all units.");
+        let text = qsTr("Increases the attack of all units by %0%.");
+        text = replaceTextArgs(text, [CO_GRIMM.powerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -219,7 +248,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Greatly increases the attack of all units.");
+        let text = qsTr("Greatly increases the attack of all units by %0%.");
+        text = replaceTextArgs(text, [CO_GRIMM.superPowerOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

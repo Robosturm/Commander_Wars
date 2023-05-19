@@ -1,3 +1,26 @@
+CO_GRIT.superPowerFirerangeBonus = 3;
+CO_GRIT.superPowerOffBonus = 50;
+CO_GRIT.superPowerDirectMalus = -20;
+CO_GRIT.superPowerInfMalus = -20;
+
+CO_GRIT.powerFirerangeBonus = 2;
+CO_GRIT.powerOffBonus = 50;
+CO_GRIT.powerDirectMalus = -20;
+CO_GRIT.powerInfMalus = -20;
+CO_GRIT.powerDefBonus = 10;
+CO_GRIT.powerOffBonus = 0;
+
+CO_GRIT.d2dFirerangeBonus = 1;
+CO_GRIT.d2dOffBonus = 20;
+CO_GRIT.d2dDirectMalus = -20;
+CO_GRIT.d2dInfMalus = -20;
+
+CO_GRIT.d2dCoZoneOffBonus = 0;
+CO_GRIT.d2dCoZoneDirectMalus = 0;
+CO_GRIT.d2dCoZoneInfMalus = 0;
+CO_GRIT.d2dCoZoneOffBonus = 0;
+CO_GRIT.d2dCoZoneDefBonus = 0;
+
 CO_GRIT.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +29,7 @@ CO_GRIT.init = function(co, map)
 CO_GRIT.activateSuperpower = function(co, powerMode, map)
 {
     CO_GRIT.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_GRIT.getSuperPowerDescription = function()
 {
@@ -14,71 +38,4 @@ CO_GRIT.getSuperPowerDescription = function()
 CO_GRIT.getSuperPowerName = function()
 {
     return CO_GRIT.getPowerName();
-};
-CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (attacker.getBaseMaxRange() > 1)
-            {
-                return 50;
-            }
-            else if (attacker.getBaseMaxRange() === 1 &&
-                     attacker.getUnitType() !== GameEnums.UnitType_Infantry)
-            {
-                return -20;
-            }
-            return 0;
-        default:
-            break;
-        }
-        if (attacker.getBaseMaxRange() === 1 &&
-            attacker.getUnitType() !== GameEnums.UnitType_Infantry)
-        {
-            return -20;
-        }
-    }
-    return 0;
-};
-CO_GRIT.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
-CO_GRIT.getFirerangeModifier = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (unit.getBaseMaxRange() > 1)
-            {
-                return 3;
-            }
-            break;
-        default:
-            if (unit.getBaseMaxRange() > 1)
-            {
-                return 1;
-            }
-            break;
-        }
-    }
-    return 0;
 };

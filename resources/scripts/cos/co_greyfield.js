@@ -116,9 +116,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
                 break;
@@ -131,6 +132,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/greyfield.mp3", 3229, 64409);
                 break;
+            }
         }
     };
 
@@ -143,41 +145,71 @@ var Constructor = function()
         return "TI";
     };
 
+    this.superPowerMovementBonus = 1;
+    this.superPowerOffBonus = 70;
+    this.superPowerDefBonus = 70;
+
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 50;
+    this.powerBaseOffBonus = 10;
+    this.powerBaseDefBonus = 10;
+
+    this.d2dOffBonus = 0;
+    this.d2dDefBonus = 0;
+
+    this.d2dCoZoneBaseOffBonus = 10;
+    this.d2dCoZoneBaseDefBonus = 10;
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneDefBonus = 50;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        var boostUnit = CO_GREYFIELD.isBoostUnit(attacker);
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var boostUnit = CO_GREYFIELD.isBoostUnit(attacker);
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
+            {
                 if (boostUnit)
                 {
-                    return 70;
+                    return CO_GREYFIELD.superPowerOffBonus;
                 }
                 else
                 {
-                    return 10;
+                    return CO_GREYFIELD.powerBaseOffBonus;
                 }
+            }
             case GameEnums.PowerMode_Power:
+            {
                 if (boostUnit)
                 {
-                    return 20;
+                    return CO_GREYFIELD.powerOffBonus;
                 }
                 else
                 {
-                    return 10;
+                    return CO_GREYFIELD.powerBaseOffBonus;
                 }
+            }
             default:
+            {
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (boostUnit)
                     {
-                        return 20;
+                        return CO_GREYFIELD.d2dCoZoneOffBonus;
                     }
-                    return 10;
+                    return CO_GREYFIELD.d2dCoZoneBaseOffBonus;
                 }
-                break;
+                else if (boostUnit)
+                {
+                    return CO_GREYFIELD.d2dOffBonus;
+                }
+                return 0;
+            }
+            }
         }
         return 0;
     };
@@ -185,63 +217,76 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        var boostUnit = CO_GREYFIELD.isBoostUnit(defender);
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var boostUnit = CO_GREYFIELD.isBoostUnit(defender);
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (boostUnit)
                 {
-                    return 70;
+                    return CO_GREYFIELD.superPowerDefBonus;
                 }
-                return 10;
+                return CO_GREYFIELD.powerBaseDefBonus;
             case GameEnums.PowerMode_Power:
                 if (boostUnit)
                 {
-                    return 50;
+                    return CO_GREYFIELD.powerDefBonus;
                 }
-                return 10;
+                return CO_GREYFIELD.powerBaseDefBonus;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     if (boostUnit)
                     {
-                        return 50;
+                        return CO_GREYFIELD.d2dCoZoneDefBonus;
                     }
-                    return 10;
+                    return CO_GREYFIELD.d2dCoZoneBaseDefBonus;
                 }
-                break;
+                else if (boostUnit)
+                {
+                    return CO_GREYFIELD.d2dDefBonus;
+                }
+                return 0;
+            }
         }
         return 0;
     };
 
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        var boostUnit = CO_GREYFIELD.isBoostUnit(unit);
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var boostUnit = CO_GREYFIELD.isBoostUnit(unit);
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (boostUnit)
                 {
-                    return 1;
+                    return CO_GREYFIELD.superPowerMovementBonus;
                 }
                 return 0;
             case GameEnums.PowerMode_Power:
                 return 0;
             default:
                 break;
+            }
         }
         return 0;
     };
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "HARBOUR" ||
-            buildingId === "TEMPORARY_HARBOUR")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_MISSILE_SUB"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "HARBOUR" ||
+                    buildingId === "TEMPORARY_HARBOUR")
+            {
+                return ["ZCOUNIT_MISSILE_SUB"];
+            }
         }
         return [];
     };
@@ -253,16 +298,6 @@ var Constructor = function()
             return 6;
         }
         return 0;
-    };
-    this.getCOUnits = function(co, building, map)
-    {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "HARBOUR" ||
-            buildingId === "TEMPORARY_HARBOUR")
-        {
-            return ["ZCOUNIT_MISSILE_SUB"];
-        }
-        return [];
     };
 
     // CO - Intel
@@ -284,13 +319,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nMissile Submarine\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \n Sea Units have 20% offensive and 50% defensive bonus.");
+        let text = qsTr("\nSpecial Unit:\nMissile Submarine\n") +
+               qsTr("\nGlobal Effect: \nSea Units and copters have %0% offensive and %1% defensive bonus.") +
+               qsTr("\n\nCO Zone Effect: \nSea Units and copters have %2% offensive and %3% defensive bonus.");
+        text = replaceTextArgs(text, [CO_GREYFIELD.d2dOffBonus, CO_GREYFIELD.d2dDefBonus,
+                                      CO_GREYFIELD.d2dCoZoneOffBonus, CO_GREYFIELD.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense.");
+        let text = qsTr("All units get resupplied and his copter, seaplanes and sea units have %0% higher firepower and %1% defense.");
+        text = replaceTextArgs(text, [CO_GREYFIELD.powerOffBonus, CO_GREYFIELD.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -298,7 +338,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense and increase movement range by 1.");
+        let text = qsTr("All units get resupplied and his copter, seaplanes and sea units have %0% higher firepower and %1% defense and increase movement range by %2.");
+        text = replaceTextArgs(text, [CO_GREYFIELD.superPowerOffBonus, CO_GREYFIELD.superPowerDefBonus, CO_GREYFIELD.superPowerMovementBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

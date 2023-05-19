@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-
         return ["+alt", "+alt2"];
     };
 
@@ -39,9 +37,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -54,6 +53,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/hachi.mp3", 12402, 68059);
                 break;
+            }
         }
     };
 
@@ -65,28 +65,44 @@ var Constructor = function()
     {
         return "OS";
     };
+
+    this.powerCostReduction = 0.5;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+
+    this.d2dCostReduction = 0.1;
+
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
-		switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-				return -baseCost * 0.5;
+                return -baseCost * CO_HACHI.powerCostReduction;
             default:
                 break;
+            }
+            return -baseCost * CO_HACHI.d2dCostReduction;
         }
-        return -baseCost * 0.1;
+        return 0;
     };
 
     this.getAdditionalBuildingActions = function(co, building, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (building.getBuildingID() === "TOWN" &&
-                    building.getOwner() === co.getOwner())
+                        building.getOwner() === co.getOwner())
                 {
                     return "ACTION_BUILD_UNITS";
                 }
@@ -95,6 +111,7 @@ var Constructor = function()
                 break;
             default:
                 break;
+            }
         }
         return "";
     };
@@ -102,29 +119,38 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 10;
+                return CO_HACHI.powerOffBonus;
             case GameEnums.PowerMode_Power:
-                return 10;
+                return CO_HACHI.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 10;
+                    return CO_HACHI.d2dCoZoneOffBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_HACHI.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_HACHI.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -134,13 +160,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_SMUGGLER"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_SMUGGLER"];
+            }
         }
         return [];
     };
@@ -164,13 +193,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nSmuggler\n") +
-               qsTr("\nGlobal Effect: \nUnits are cheaper") +
-               qsTr("\n\nCO Zone Effect: \nUnits have more firepower and defense.");
+        let text = qsTr("\nSpecial Unit:\nSmuggler\n") +
+               qsTr("\nGlobal Effect: \nUnits are %0% cheaper") +
+               qsTr("\n\nCO Zone Effect: \nUnits have %1% more firepower and %2% defense.");
+        text = replaceTextArgs(text, [CO_HACHI.d2dCostReduction * 100, CO_HACHI.d2dCoZoneOffBonus, CO_HACHI.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Speaks with such authority that he obtains even lower deployment costs.");
+        let text = qsTr("Speaks with such authority that he obtains %0% lower deployment costs.");
+        text = replaceTextArgs(text, [CO_HACHI.powerCostReduction * 100]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -178,7 +211,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Merchant pals gather from around the globe and help him deploy ground units from any allied city even cheaper.");
+        let text = qsTr("Merchant pals gather from around the globe and help him deploy ground units from any allied city with %0% lower deployment costs.");
+        text = replaceTextArgs(text, [CO_HACHI.powerCostReduction * 100]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

@@ -1,3 +1,20 @@
+CO_GREYFIELD.superPowerMovementBonus = 1;
+CO_GREYFIELD.superPowerOffBonus = 60;
+CO_GREYFIELD.superPowerDefBonus = 70;
+
+CO_GREYFIELD.powerOffBonus = 20;
+CO_GREYFIELD.powerDefBonus = 50;
+CO_GREYFIELD.powerBaseOffBonus = 0;
+CO_GREYFIELD.powerBaseDefBonus = 10;
+
+CO_GREYFIELD.d2dOffBonus = 0;
+CO_GREYFIELD.d2dDefBonus = 20;
+
+CO_GREYFIELD.d2dCoZoneBaseOffBonus = 0;
+CO_GREYFIELD.d2dCoZoneBaseDefBonus = 0;
+CO_GREYFIELD.d2dCoZoneOffBonus = 0;
+CO_GREYFIELD.d2dCoZoneDefBonus = 0;
+
 CO_GREYFIELD.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +23,7 @@ CO_GREYFIELD.init = function(co, map)
 CO_GREYFIELD.activateSuperpower = function(co, powerMode, map)
 {
     CO_GREYFIELD.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_GREYFIELD.getSuperPowerDescription = function()
 {
@@ -14,62 +32,4 @@ CO_GREYFIELD.getSuperPowerDescription = function()
 CO_GREYFIELD.getSuperPowerName = function()
 {
     return CO_GREYFIELD.getPowerName();
-};
-CO_GREYFIELD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        var boostUnit = CO_GREYFIELD.isBoostUnit(attacker);
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (boostUnit)
-            {
-                return 20;
-            }
-            return 0;
-        default:
-            if (boostUnit)
-            {
-                return 0;
-            }
-            break;
-        }
-    }
-    return 0;
-};
-
-CO_GREYFIELD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        var boostUnit = CO_GREYFIELD.isBoostUnit(defender);
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (boostUnit)
-            {
-                return 40;
-            }
-            return 10;
-        default:
-            if (boostUnit)
-            {
-                return 20;
-            }
-            break;
-        }
-    }
-    return 0;
-};
-
-CO_GREYFIELD.getMovementpointModifier = function(co, unit, posX, posY, map)
-{
-    return 0;
 };

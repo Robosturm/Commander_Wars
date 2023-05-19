@@ -2,14 +2,11 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2"];
     };
 
     this.getAiUsePower = function(co, powerSurplus, turnMode)
     {
-        // scop spam
         if (co.canUseSuperpower())
         {
             return GameEnums.PowerMode_Superpower;
@@ -25,9 +22,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -40,6 +38,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/hawke.mp3", 981, 63770);
                 break;
+            }
         }
     };
 
@@ -49,7 +48,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_HAWKE.hawkeDamage(co, 1, powerNameAnimation, map);
+        CO_HAWKE.hawkeDamage(co, CO_HAWKE.powerDamage, powerNameAnimation, map);
     };
 
     this.hawkeDamage = function(co, value, powerNameAnimation, map)
@@ -145,7 +144,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_HAWKE.hawkeDamage(co, 2, powerNameAnimation, map);
+        CO_HAWKE.hawkeDamage(co, CO_HAWKE.superPowerDamage, powerNameAnimation, map);
     };
 
     this.getCOUnitRange = function(co, map)
@@ -156,32 +155,59 @@ var Constructor = function()
     {
         return "BH";
     };
+
+    this.superPowerDamage = 2;
+    this.superPowerOffBonus = 40;
+
+    this.powerDamage = 1;
+    this.powerOffBonus = 40;
+    this.powerDefBonus = 20;
+
+    this.d2dOffBonus = 0;
+    this.d2dDefBonus = 0;
+
+    this.d2dCoZoneOffBonus = 40;
+    this.d2dCoZoneDefBonus = 20;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 40;
+                return CO_HAWKE.superPowerOffBonus;
             case GameEnums.PowerMode_Power:
-                return 40;
+                return CO_HAWKE.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 40;
+                    return CO_HAWKE.d2dCoZoneOffBonus;
                 }
-                break;
+                return CO_HAWKE.d2dOffBonus
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 20;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_HAWKE.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_HAWKE.d2dCoZoneDefBonus;
+            }
+            else
+            {
+                return CO_HAWKE.d2dDefBonus;
+            }
         }
         return 0;
     };
@@ -209,12 +235,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have more firepower.");
+        let text = qsTr("\nGlobal Effect: \nUnits have %0% more firepower and %1% defense.") +
+            qsTr("\n\nCO Zone Effect: \nUnits have %2% more firepower and %3% defense.");
+        text = replaceTextArgs(text, [CO_HAWKE.d2dOffBonus, CO_HAWKE.d2dDefBonus,
+                                      CO_HAWKE.d2dCoZoneOffBonus, CO_HAWKE.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("All enemy units suffer one HP of damage. In addition, all allied units recover one HP.");
+        let text = qsTr("All enemy units suffer %0 HP of damage. In addition, all allied units recover %0 HP.");
+        text = replaceTextArgs(text, [CO_HAWKE.powerDamage]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -222,7 +253,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All enemy units suffer two HP of damage. In addition, all allied units recover two HP.");
+        let text = qsTr("All enemy units suffer %0 HP of damage. In addition, all allied units recover %0 HP.");
+        text = replaceTextArgs(text, [CO_HAWKE.superPowerDamage]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

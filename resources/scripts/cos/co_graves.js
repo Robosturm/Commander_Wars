@@ -13,8 +13,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 

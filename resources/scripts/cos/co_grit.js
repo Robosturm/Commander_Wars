@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2", "+alt3", "+alt4", "+alt5", "+alt6"];
     };
 
@@ -20,9 +18,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -35,6 +34,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/grit.mp3", 13156, 66022)
                 break;
+            }
         }
     };
 
@@ -142,90 +142,153 @@ var Constructor = function()
     {
         return 2;
     };
+
+    this.superPowerFirerangeBonus = 3;
+    this.superPowerOffBonus = 50;
+    this.superPowerDirectMalus = -10;
+    this.superPowerInfMalus = 10;
+
+    this.powerFirerangeBonus = 2;
+    this.powerOffBonus = 50;
+    this.powerDirectMalus = -10;
+    this.powerInfMalus = 10;
+    this.powerDefBonus = 10;
+    this.powerOffBonus = 10;
+
+    this.d2dFirerangeBonus = 1;
+    this.d2dOffBonus = 0;
+    this.d2dDirectMalus = -20;
+    this.d2dInfMalus = 0;
+
+    this.d2dCoZoneOffBonus = 30;
+    this.d2dCoZoneDirectMalus = -10;
+    this.d2dCoZoneInfMalus = 10;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
+            {
                 if (attacker.getBaseMaxRange() > 1)
                 {
-                    return 50;
+                    return CO_GRIT.superPowerOffBonus;
                 }
                 else if (attacker.getBaseMaxRange() === 1 &&
                          attacker.getUnitType() !== GameEnums.UnitType_Infantry)
                 {
-                    return -10;
+                    return CO_GRIT.superPowerDirectMalus;
                 }
-                return 10;
+                else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                {
+                    return CO_GRIT.superPowerInfMalus;
+                }
+                return CO_GRIT.powerOffBonus;
+            }
             case GameEnums.PowerMode_Power:
+            {
                 if (attacker.getBaseMaxRange() > 1)
                 {
-                    return 50;
+                    return CO_GRIT.powerOffBonus;
                 }
                 else if (attacker.getBaseMaxRange() === 1 &&
                          attacker.getUnitType() !== GameEnums.UnitType_Infantry)
                 {
-                    return -10;
+                    return CO_GRIT.powerDirectMalus;
                 }
-                return 10;
+                else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                {
+                    return CO_GRIT.powerInfMalus;
+                }
+                return CO_GRIT.powerOffBonus;
+            }
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getBaseMaxRange() > 1)
                     {
-                        return 30;
+                        return CO_GRIT.d2dCoZoneOffBonus;
                     }
                     else if (attacker.getBaseMaxRange() === 1 &&
                              attacker.getUnitType() !== GameEnums.UnitType_Infantry)
                     {
-                        return -10;
+                        return CO_GRIT.d2dCoZoneDirectMalus;
                     }
-                    return 10;
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                    {
+                        return CO_GRIT.d2dCoZoneInfMalus;
+                    }
+                    return CO_GRIT.d2dCoZoneOffBonus;
                 }
-                break;
-        }
-        if (attacker.getBaseMaxRange() === 1 &&
-            attacker.getUnitType() !== GameEnums.UnitType_Infantry)
-        {
-            return -20;
+                else
+                {
+                    if (attacker.getBaseMaxRange() > 1)
+                    {
+                        return CO_GRIT.d2dOffBonus;
+                    }
+                    else if (attacker.getBaseMaxRange() === 1 &&
+                             attacker.getUnitType() !== GameEnums.UnitType_Infantry)
+                    {
+                        return CO_GRIT.d2dDirectMalus;
+                    }
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                    {
+                        return CO_GRIT.d2dInfMalus;
+                    }
+                    return 0;
+                }
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_GRIT.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_GRIT.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (unit.getBaseMaxRange() > 1)
                 {
-                    return 3;
+                    return CO_GRIT.superPowerFirerangeBonus;
                 }
                 break;
             case GameEnums.PowerMode_Power:
                 if (unit.getBaseMaxRange() > 1)
                 {
-                    return 2;
+                    return CO_GRIT.powerFirerangeBonus;
                 }
                 break;
             default:
                 if (unit.getBaseMaxRange() > 1)
                 {
-                    return 1;
+                    return CO_GRIT.d2dFirerangeBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
@@ -254,13 +317,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_SIEGE_CANNON"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_SIEGE_CANNON"];
+            }
         }
         return [];
     };
@@ -284,13 +350,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nSiege Cannon\n") +
-               qsTr("\nGlobal Effect: \nIndirect units have 1 increased firerange and non-infantry direct units have reduced firepower.") +
-               qsTr("\n\nCO Zone Effect: \nIndirect units  have an offensive bonus.");
+        let text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+               qsTr("\nGlobal Effect: \nIndirect units have %0 increased firerange and %1% firepower and non-infantry direct units have %2% reduced firepower. Infantry units have %3% reduced firepower.") +
+               qsTr("\n\nCO Zone Effect: \nIndirect units have an %4% offensive bonus.");
+        text = replaceTextArgs(text, [CO_GRIT.d2dFirerangeBonus, CO_GRIT.d2dOffBonus, CO_GRIT.d2dDirectMalus, CO_GRIT.d2dInfMalus, CO_GRIT.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Increases range of indirect units by one space. Firepower of these units also rise.");
+        let text = qsTr("Increases range of indirect units by %0 spaces. Firepower of these units also rise by %1%.");
+        text = replaceTextArgs(text, [CO_GRIT.powerFirerangeBonus, CO_GRIT.powerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -298,7 +368,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Increases range of indirect units by two spaces. Firepower of these units greatly rise.");
+        let text = qsTr("Increases range of indirect units by %0 spaces. Firepower of these units greatly rise by %1%.");
+        text = replaceTextArgs(text, [CO_GRIT.superPowerFirerangeBonus, CO_GRIT.superPowerOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

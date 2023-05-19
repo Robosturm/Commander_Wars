@@ -1,26 +1,12 @@
-CO_HAWKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 20;
-        }
-        return 10;
-    }
-    return 0;
-};
+CO_HAWKE.superPowerDamage = 2;
+CO_HAWKE.superPowerOffBonus = 20;
 
-CO_HAWKE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
+CO_HAWKE.powerDamage = 1;
+CO_HAWKE.powerOffBonus = 20;
+CO_HAWKE.powerDefBonus = 10;
+
+CO_HAWKE.d2dOffBonus = 10;
+CO_HAWKE.d2dDefBonus = 0;
+
+CO_HAWKE.d2dCoZoneOffBonus = 0;
+CO_HAWKE.d2dCoZoneDefBonus = 0;
