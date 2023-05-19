@@ -137,14 +137,17 @@ var Constructor = function()
     };
 
     this.superPowerDeffensiveBonus = 110;
+
     this.powerHoverCraftBoost = 80;
     this.powerCostReduction = 0.3;
     this.powerMovementBonus = 2;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
+
     this.d2dCoZoneHoverCraftBoost = 80;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
+
     this.d2dHoverCraftBoost = 0;
     this.d2dMovementBonus = 1;
 
@@ -172,12 +175,9 @@ var Constructor = function()
                     }
                     return CO_AMY.d2dCoZoneOffBonus;
                 }
-                else if (CO.getGlobalZone())
+                else if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
                 {
-                    if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
-                    {
-                        return CO_AMY.d2dHoverCraftBoost;
-                    }
+                    return CO_AMY.d2dHoverCraftBoost;
                 }
                 break;
             }

@@ -123,12 +123,15 @@ var Constructor = function()
 
     this.superPowerDamage = 3;
     this.superPowerRange = 3;
+
     this.powerDamage = 1;
     this.powerRange = 2;
     this.powerOffBonus = 40;
     this.powerDefBonus = 40;
+
     this.d2dCoZoneOffBonus = 40;
     this.d2dCoZoneDefBonus = 40;
+
     this.d2dOffBonus = 0;
     this.d2dDefBonus = 0;
 
@@ -144,15 +147,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return CO_VON_BOLT.powerOffBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_VON_BOLT.powerOffBonus;
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return CO_VON_BOLT.d2dCoZoneOffBonus;
                 }
-                break;
+                return CO_VON_BOLT.d2dOffBonus;
             }
         }
         return 0;
@@ -169,15 +168,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return CO_VON_BOLT.powerDefBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_VON_BOLT.powerDefBonus;
-                }
-                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     return CO_VON_BOLT.d2dCoZoneDefBonus;
                 }
-                break;
+                return CO_VON_BOLT.d2dDefBonus;
             }
         }
         return 0;

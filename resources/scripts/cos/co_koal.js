@@ -180,20 +180,17 @@ var Constructor = function()
                         }
                         return CO_KOAL.powerBaseOffBonus;
                     default:
-                        if (CO.getGlobalZone())
-                        {
-                            if (isStreet)
-                            {
-                                return CO_KOAL.d2dOffBonus;
-                            }
-                        }
-                        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
                             if (isStreet)
                             {
                                 return CO_KOAL.d2dCoZoneOffBonus;
                             }
                             return CO_KOAL.d2dCoZoneBaseOffBonus;
+                        }
+                        else if (isStreet)
+                        {
+                            return CO_KOAL.d2dOffBonus;
                         }
                         break;
                     }

@@ -173,15 +173,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return CO_BRENNER.powerDefBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_BRENNER.d2dDefBonus;
-                }
-                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     return CO_BRENNER.d2dCoZoneDefBonus;
                 }
-                break;
+                return CO_BRENNER.d2dDefBonus;
             }
         }
         return 0;

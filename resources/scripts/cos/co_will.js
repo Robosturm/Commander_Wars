@@ -141,11 +141,14 @@ var Constructor = function()
 
     this.superPowerOffBonus = 50;
     this.superPowerMovementBonus = 2;
+
     this.powerOffBaseBonus = 10;
     this.powerOffBonus = 30;
     this.powerDefBonus = 10;
     this.powerMovementBonus = 1;
+
     this.d2dOffBonus = 0;
+
     this.d2dCoZoneOffBonus = 30;
     this.d2dCoZoneBaseBonus = 10;
     this.d2dCoZoneDefBonus = 10;
@@ -173,20 +176,17 @@ var Constructor = function()
                 }
                 return CO_WILL.powerOffBaseBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (attacker.getBaseMaxRange() === 1 && !seaAirUnit)
-                    {
-                        return CO_WILL.d2dOffBonus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getBaseMaxRange() === 1 && !seaAirUnit)
                     {
                         return CO_WILL.d2dCoZoneOffBonus;
                     }
                     return CO_WILL.d2dCoZoneBaseBonus;
+                }
+                else if (attacker.getBaseMaxRange() === 1 && !seaAirUnit)
+                {
+                    return CO_WILL.d2dOffBonus;
                 }
                 break;
             }

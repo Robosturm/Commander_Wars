@@ -207,14 +207,11 @@ var Constructor = function()
                 case GameEnums.PowerMode_Power:
                     return CO_MELANTHE.powerTerrainBonus;
                 default:
-                    if (CO.getGlobalZone())
-                    {
-                        return CO_MELANTHE.d2dTerrainBonus;
-                    }
-                    else if (co.inCORange(Qt.point(posX, posY), unit))
+                    if (co.inCORange(Qt.point(posX, posY), unit))
                     {
                         return CO_MELANTHE.d2dCoZoneTerrainBonus;
                     }
+                    return CO_MELANTHE.d2dTerrainBonus;
                 }
             }
         }
@@ -257,20 +254,17 @@ var Constructor = function()
                         }
                         return CO_MELANTHE.powerBaseOffBonus;
                     default:
-                        if (CO.getGlobalZone())
-                        {
-                            if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
-                            {
-                                return CO_MELANTHE.d2dOffBonus;
-                            }
-                        }
-                        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
                             if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
                             {
                                 return CO_MELANTHE.d2dCoZoneOffBonus;
                             }
                             return CO_MELANTHE.d2dCoZoneBaseOffBonus;
+                        }
+                        if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
+                        {
+                            return CO_MELANTHE.d2dOffBonus;
                         }
                     }
                     return 0;

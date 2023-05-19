@@ -13,7 +13,6 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -114,21 +113,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/ik-486-b7.mp3", 8310, 95764);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/ik-486-b7.mp3", 8310, 95764);
+                break;
+            }
         }
     };
 
@@ -140,70 +141,86 @@ var Constructor = function()
     {
         return "MA";
     };
+
+    this.superPowerFirerangeBonus = 3;
+
+    this.powerFirerangeBonus = 2;
+
+    this.d2dFirerangeBonus = 0;
+
+    this.d2dCoZoneFirerangeBonus = 1;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (attacker.getBaseMaxRange() === 1 &&
-                    atkPosX === attacker.getX() &&
-                    atkPosY === attacker.getY() &&
-                    Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+            switch (co.getPowerMode())
             {
-                return 0;
-            }
-            else
-            {
-                return 10;
-            }
-        case GameEnums.PowerMode_Power:
-            if (attacker.getBaseMaxRange() === 1 &&
-                    atkPosX === attacker.getX() &&
-                    atkPosY === attacker.getY() &&
-                    Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
-            {
-                return 0;
-            }
-            else
-            {
-                return 10;
-            }
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() === 1 &&
                         atkPosX === attacker.getX() &&
                         atkPosY === attacker.getY() &&
                         Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                 {
-                    return -10;
+                    return 0;
                 }
-                return 10;
+                else
+                {
+                    return 10;
+                }
+            case GameEnums.PowerMode_Power:
+                if (attacker.getBaseMaxRange() === 1 &&
+                        atkPosX === attacker.getX() &&
+                        atkPosY === attacker.getY() &&
+                        Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 10;
+                }
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (attacker.getBaseMaxRange() === 1 &&
+                            atkPosX === attacker.getX() &&
+                            atkPosY === attacker.getY() &&
+                            Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                    {
+                        return -10;
+                    }
+                    return 10;
+                }
+                break;
             }
-            break;
         }
         return 0;
     };
 
     this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.getBaseMaxRange() === 1 &&
+        if (CO.isActive(co))
+        {
+            if (unit.getBaseMaxRange() === 1 &&
                 posX === unit.getX() &&
                 posY === unit.getY())
-        {
-            switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 3;
-            case GameEnums.PowerMode_Power:
-                return 2;
-            default:
-                if (co.inCORange(Qt.point(posX, posY), unit))
+                switch (co.getPowerMode())
                 {
-                    return 1;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    return CO_IK_486_B7.superPowerFirerangeBonus;
+                case GameEnums.PowerMode_Power:
+                    return CO_IK_486_B7.powerFirerangeBonus;
+                default:
+                    if (co.inCORange(Qt.point(posX, posY), unit))
+                    {
+                        return CO_IK_486_B7.d2dCoZoneFirerangeBonus;
+                    }
+                    return CO_IK_486_B7.d2dFirerangeBonus;
                 }
             }
         }
@@ -213,27 +230,30 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (defender.getBaseMaxRange() === 1)
+            switch (co.getPowerMode())
             {
-                return 50;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (defender.getBaseMaxRange() === 1)
+                {
+                    return 50;
+                }
+                break;
+            case GameEnums.PowerMode_Power:
+                if (defender.getBaseMaxRange() === 1)
+                {
+                    return 30;
+                }
+                break;
+            default:
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return 10;
+                }
+                break;
             }
-            break;
-        case GameEnums.PowerMode_Power:
-            if (defender.getBaseMaxRange() === 1)
-            {
-                return 30;
-            }
-            break;
-        default:
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-            {
-                return 10;
-            }
-            break;
         }
         return 0;
     };
@@ -248,13 +268,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_CHAPERON"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_CHAPERON"];
+            }
         }
         return [];
     };

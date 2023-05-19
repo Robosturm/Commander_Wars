@@ -69,12 +69,15 @@ var Constructor = function()
     };
 
     this.superPowerEnemyTerrainDefenseModifier = 3;
+
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
     this.powerVisionBonus = 2;
     this.powerEnemyTerrainDefenseModifier = 2;
+
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
+
     this.d2dVisionBonus = 1;
     this.d2dEnemyTerrainDefenseModifier = 1;
     this.d2dBonusMisfortune = 5;
@@ -101,13 +104,6 @@ var Constructor = function()
                 }
                 return CO_SONJA.powerOffBonus;
             }
-            else if (CO.getGlobalZone())
-            {
-                if (isDefender && CO_SONJA.counterAttackBonus !== 0)
-                {
-                    return CO_SONJA.d2dCounterAttackBonus;
-                }
-            }
             else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
                 if (isDefender && CO_SONJA.counterAttackBonus !== 0)
@@ -115,6 +111,10 @@ var Constructor = function()
                     return CO_SONJA.d2dCounterAttackBonus;
                 }
                 return CO_SONJA.d2dCoZoneOffBonus;
+            }
+            else if (isDefender && CO_SONJA.counterAttackBonus !== 0)
+            {
+                return CO_SONJA.d2dCounterAttackBonus;
             }
         }
         return 0;

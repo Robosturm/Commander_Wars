@@ -111,13 +111,16 @@ var Constructor = function()
     };
 
     this.superPowerDamage = 8;
-    this.powerDamage = 4;
     this.superPowerOffBonus = 80;
     this.superPowerDefBonus = 80;
+
+    this.powerDamage = 4;
     this.powerOffBonus = 60;
     this.powerDefBonus = 60;
+
     this.d2dCoZoneOffBonus = 60;
     this.d2dCoZoneDefBonus = 60;
+
     this.d2dOffBonus = 0;
     this.d2dDefBonus = 0;
 
@@ -134,15 +137,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return CO_TABITHA.powerOffBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_TABITHA.d2dOffBonus;
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return CO_TABITHA.d2dCoZoneOffBonus;
                 }
-                break;
+                return CO_TABITHA.d2dOffBonus;
             }
         }
         return 0;
@@ -160,15 +159,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return CO_TABITHA.powerDefBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_TABITHA.d2dDefBonus;
-                }
-                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     return CO_TABITHA.d2dCoZoneDefBonus;
                 }
-                break;
+                return CO_TABITHA.d2dDefBonus;
             }
         }
     };

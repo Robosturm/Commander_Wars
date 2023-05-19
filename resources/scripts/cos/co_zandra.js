@@ -34,11 +34,14 @@ var Constructor = function()
     };
 
     this.superPowerSandstormDamage = 2;
+
     this.powerSandstormBonus = 55;
     this.powerSandstormRangeBonus = 1;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
+
     this.d2dSandStormBonus = 0;
+
     this.d2dCoZoneSandStormBonus = 55;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
@@ -153,20 +156,17 @@ var Constructor = function()
                     }
                     return CO_ZANDRA.powerOffBonus;
                 default:
-                    if (CO.getGlobalZone())
-                    {
-                        if (hasSandstorm)
-                        {
-                            return CO_ZANDRA.d2dSandStormBonus;
-                        }
-                    }
-                    else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         if (hasSandstorm)
                         {
                             return CO_ZANDRA.d2dCoZoneSandStormBonus;
                         }
                         return CO_ZANDRA.d2dCoZoneOffBonus;
+                    }
+                    else if (hasSandstorm)
+                    {
+                        return CO_ZANDRA.d2dSandStormBonus;
                     }
                     break;
                 }

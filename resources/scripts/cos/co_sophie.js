@@ -135,9 +135,12 @@ var Constructor = function()
 
     this.superPowerSecondAttackOffMalus = 30;
     this.superPowerDefenderDamageReduction = 0.2;
+
     this.powerOffBonus = 20;
     this.powerDefBonus = 20;
+
     this.d2dDefenderDamageReduction = 0.0;
+
     this.d2dCoZoneDefenderDamageReduction = 0.2;
     this.d2dCoZoneDefBonus = 20;
     this.d2dCoZoneOffBonus = 20;
@@ -153,7 +156,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (isDefender === true)
                 {
-                    return damage * CO_SOPHIE.defenderDamageReduction;
+                    return damage * CO_SOPHIE.superPowerDefenderDamageReduction;
                 }
                 break;
             case GameEnums.PowerMode_Power:
@@ -165,11 +168,13 @@ var Constructor = function()
             default:
                 if (isDefender === true)
                 {
-
-                    if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                        CO.getGlobalZone())
+                    if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                     {
                         return damage * CO_SOPHIE.d2dCoZoneDefenderDamageReduction;
+                    }
+                    else
+                    {
+                        return damage * CO_SOPHIE.d2dDefenderDamageReduction;
                     }
                 }
                 break;

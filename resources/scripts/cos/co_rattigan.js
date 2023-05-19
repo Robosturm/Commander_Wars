@@ -155,14 +155,17 @@ var Constructor = function()
     this.superPowerDamage = 1;
     this.superPowerOffBonus = 50;
     this.superPowerDefBonus = 30;
+
     this.powerOffBonus = 30;
     this.powerBaseOffBonus = 10;
     this.powerBaseDefBonus = 10;
     this.powerMultiplier = 5;
     this.powerMovementPoints = 1;
+
     this.d2dOffBonus = 5;
     this.d2dOffMalus = -10;
     this.d2dDefBonus = 0;
+
     this.d2dCoZoneDefBonus = 10;
     this.d2dCoZoneOffBonus = 50;
     this.d2dCoZoneOffMalus = 0;
@@ -189,18 +192,7 @@ var Constructor = function()
                 }
                 return CO_RATTIGAN.powerBaseOffBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (count > 0)
-                    {
-                        return CO_RATTIGAN.d2dOffBonus;
-                    }
-                    else
-                    {
-                        return CO_RATTIGAN.d2dOffMalus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (count > 0)
                     {
@@ -242,15 +234,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return CO_RATTIGAN.powerBaseDefBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_RATTIGAN.d2dDefBonus;
-                }
-                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     return CO_RATTIGAN.d2dCoZoneDefBonus;
                 }
-                break;
+                return CO_RATTIGAN.d2dDefBonus;
             }
         }
         return 0;

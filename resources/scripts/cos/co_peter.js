@@ -156,12 +156,15 @@ var Constructor = function()
 
     this.superPowerDamage = 2;
     this.superPowerOffBonus = 60
+
     this.powerBaseOffBonus = 10;
     this.powerOffBonus = 50;
     this.powerDefBonus = 10;
+
     this.d2dCoZoneOffBonus = 50;
     this.d2dCoZoneBaseOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
+
     this.d2dOffBonus = 7;
     this.d2dTerrainMalus = 5;
 
@@ -193,14 +196,7 @@ var Constructor = function()
                 bonus += CO_PETER.powerBaseOffBonus;
                 break;
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (defender.getBaseMaxRange() === 1)
-                    {
-                        bonus = CO_PETER.d2dOffBonus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (defender.getBaseMaxRange() === 1)
                     {

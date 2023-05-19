@@ -145,14 +145,17 @@ var Constructor = function()
     this.superPowerOffBonus = 80;
     this.superpowerMovementPoints = 2;
     this.superpowerCaptureMultiplier = 20;
+
     this.powerOffBonus = 50;
     this.powerDefBonus = 10;
     this.powerBaseOffBonus = 10;
     this.powerMovementPoints = 1;
     this.powerMovementCostModifier = 0;
+
     this.d2dCoZoneOffBonus = 50;
     this.d2dCoZoneBaseOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
+
     this.d2dInfOffBonus = 20;
     this.d2dInfDefBonus = 0;
     this.d2dDirectOffBonus = -10;
@@ -187,13 +190,8 @@ var Constructor = function()
                     return CO_SAMI.powerBaseOffBonus + CO_SAMI.d2dDirectOffBonus;
                 }
                 return CO_SAMI.powerBaseOffBonus;
-            default:
-                if (CO.getGlobalZone() &&
-                    attacker.getUnitType() === GameEnums.UnitType_Infantry)
-                {
-                    return CO_SAMI.d2dInfOffBonus;
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            default:                
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                     {
@@ -204,6 +202,10 @@ var Constructor = function()
                         return CO_SAMI.d2dCoZoneBaseOffBonus + CO_SAMI.d2dDirectOffBonus;
                     }
                     return CO_SAMI.d2dCoZoneBaseOffBonus;
+                }
+                else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                {
+                    return CO_SAMI.d2dInfOffBonus;
                 }
                 break;
             }
@@ -222,15 +224,14 @@ var Constructor = function()
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
                 return CO_SAMI.powerDefBonus + CO_SAMI.d2dInfDefBonus;
-            }
-            if (CO.getGlobalZone() &&
-                attacker.getUnitType() === GameEnums.UnitType_Infantry)
-            {
-                return CO_SAMI.d2dInfDefBonus;
-            }
+            }            
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
                 return CO_SAMI.d2dCoZoneDefBonus;
+            }
+            else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+            {
+                return CO_SAMI.d2dInfDefBonus;
             }
         }
         return 0;

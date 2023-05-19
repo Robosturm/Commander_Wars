@@ -118,6 +118,7 @@ var Constructor = function()
 
     this.superPowerInfOffBonus = 30;
     this.superPowerHeliOffBonus = 80;
+
     this.powerGroundBonus = 10;
     this.powerInfOffBonus = 30;
     this.powerHeliOffBonus = 80;
@@ -125,12 +126,14 @@ var Constructor = function()
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
     this.powerSpawnHp = 9;
+
     this.d2dCoZoneGroundBonus = 10;
     this.d2dCoZoneInfOffBonus = 40;
     this.d2dCoZoneHeliOffBonus = 50;
     this.d2dCoZoneNavalOffBonus = 0;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
+
     this.d2dInfOffBonus = 0;
     this.d2dHeliOffBonus = 30;
     this.d2dNavalOffBonus = -10;
@@ -195,7 +198,28 @@ var Constructor = function()
             }
             default:
             {
-                if (CO.getGlobalZone())
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                    {
+                        return CO_SENSEI.d2dCoZoneInfOffBonus;
+                    }
+                    else if (attacker.getUnitID() === "K_HELI")
+                    {
+                        return CO_SENSEI.d2dCoZoneHeliOffBonus;
+                    }
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+                    {
+                        return CO_SENSEI.d2dCoZoneNavalOffBonus;
+                    }
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Ground ||
+                             attacker.getUnitType() === GameEnums.UnitType_Hovercraft)
+                    {
+                        return CO_SENSEI.d2dCoZoneGroundBonus;
+                    }
+                    return CO_SENSEI.d2dCoZoneOffBonus;
+                }
+                else
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                     {
@@ -219,37 +243,6 @@ var Constructor = function()
                         return 0;
                     }
                 }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
-                    {
-                        return CO_SENSEI.d2dCoZoneInfOffBonus;
-                    }
-                    else if (attacker.getUnitID() === "K_HELI")
-                    {
-                        return CO_SENSEI.d2dCoZoneHeliOffBonus;
-                    }
-                    else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-                    {
-                        return CO_SENSEI.d2dCoZoneNavalOffBonus;
-                    }
-                    else if (attacker.getUnitType() === GameEnums.UnitType_Ground ||
-                             attacker.getUnitType() === GameEnums.UnitType_Hovercraft)
-                    {
-                        return CO_SENSEI.d2dCoZoneGroundBonus;
-                    }
-                    return CO_SENSEI.d2dCoZoneOffBonus;
-                }
-                else if (attacker.getUnitID() === "K_HELI")
-                {
-                    return CO_SENSEI.d2dHeliOffBonus;
-                }
-                else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-                {
-                    return CO_SENSEI.d2dNavalOffBonus;
-                }
-
-                break;
             }
             }
         }

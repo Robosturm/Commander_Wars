@@ -202,11 +202,14 @@ var Constructor = function()
 
     this.superPowerFirerangeModifier = 2;
     this.superPowerOffBonus = 20;
+
     this.powerOffBonus = 10;
     this.powerBaseOffBonus = 10;
     this.powerDefBonus = 10;
     this.powerFirerangeModifier = 1;
+
     this.d2dOffBonus = 0;
+
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
     this.d2dCoZoneBaseOffBonus = 10;
@@ -259,20 +262,17 @@ var Constructor = function()
                     return CO_SMITAN.powerBaseOffBonus;
                 }
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (attacker.getBaseMaxRange() === 1)
-                    {
-                        return inRangeCount * CO_SMITAN.d2dOffBonus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getBaseMaxRange() === 1)
                     {
                         return inRangeCount * CO_SMITAN.d2dCoZoneOffBonus + CO_SMITAN.d2dCoZoneBaseOffBonus;
                     }
                     return CO_SMITAN.d2dCoZoneBaseOffBonus;
+                }
+                else if (attacker.getBaseMaxRange() === 1)
+                {
+                    return inRangeCount * CO_SMITAN.d2dOffBonus;
                 }
                 break;
             }

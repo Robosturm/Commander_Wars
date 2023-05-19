@@ -140,13 +140,15 @@ var Constructor = function()
     this.powerHeal = 2;
     this.powerOffBonus = 60;
     this.powerDefBonus = 10;
+    this.powerSelfDamage = 1;
 
     this.d2dCoZoneBaseOffBonus = 10;
     this.d2dCoZoneOffBonus = 60;
     this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneSelfDamage = 1;
 
     this.d2dOffBonus = 0;
-    this.d2dSelfDamage = 1;
+    this.d2dSelfDamage = 0;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -164,11 +166,7 @@ var Constructor = function()
                 }
                 break;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_BEAST.d2dOffBonus;
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (!isDefender)
                     {
@@ -176,7 +174,7 @@ var Constructor = function()
                     }
                     return CO_BEAST.d2dCoZoneBaseOffBonus;
                 }
-                break;
+                return CO_BEAST.d2dOffBonus;
             }
         }
         return 0;
@@ -213,16 +211,23 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (CO.getGlobalZone() ||
-                co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+            let selfDamage = CO_BEAST.d2dSelfDamage;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                selfDamage = CO_BEAST.powerSelfDamage;
+            }
+            else if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
+            {
+                selfDamage = CO_BEAST.d2dCoZoneSelfDamage;
+            }
+            if (selfDamage > 0)
             {
                 if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
                 {
                     var hp = attacker.getHp();
-                    if (hp > CO_BEAST.d2dSelfDamage)
+                    if (hp > selfDamage)
                     {
-                        attacker.setHp(hp - CO_BEAST.d2dSelfDamage);
+                        attacker.setHp(hp - selfDamage);
                     }
                     else
                     {
@@ -273,8 +278,8 @@ var Constructor = function()
     {
         let text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                    qsTr("\nGlobal Effect: \nUnits gain %1% firepower when attacking but also receive %1 HP of extra damage in recoil.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower when attacking but also receive %1 HP of extra damage in recoil.");
-        text = replaceTextArgs(text, [CO_BEAST.d2dOffBonus, CO_BEAST.d2dSelfDamage, CO_BEAST.d2dCoZoneOffBonus]);
+                   qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower when attacking but also receive %3 HP of extra damage in recoil.");
+        text = replaceTextArgs(text, [CO_BEAST.d2dOffBonus, CO_BEAST.d2dSelfDamage, CO_BEAST.d2dCoZoneOffBonus, CO_BEAST.d2dCoZoneSelfDamage]);
         return text;
     };
     this.getPowerDescription = function(co)

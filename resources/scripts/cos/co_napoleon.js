@@ -164,15 +164,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return CO_NAPOLEON.powerOffBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_NAPOLEON.d2dOffBonus;
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return CO_NAPOLEON.d2dCoZoneOffBonus;
                 }
-                break;
+                return CO_NAPOLEON.d2dOffBonus;
             }
         }
         return 0;
@@ -247,18 +243,7 @@ var Constructor = function()
                     return CO_NAPOLEON.powerDefBonus;
                 }
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
-                    {
-                        return CO_NAPOLEON.d2dIndirectDefBonus;
-                    }
-                    else
-                    {
-                        return CO_NAPOLEON.d2dDefBonus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                     {
@@ -269,7 +254,14 @@ var Constructor = function()
                         return CO_NAPOLEON.d2dCoZoneDefBonus;
                     }
                 }
-                break;
+                if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                {
+                    return CO_NAPOLEON.d2dIndirectDefBonus;
+                }
+                else
+                {
+                    return CO_NAPOLEON.d2dDefBonus;
+                }
             }
         }
         return 0;

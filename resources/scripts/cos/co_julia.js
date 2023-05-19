@@ -137,6 +137,7 @@ var Constructor = function()
     this.d2dCoZoneDefBonus = 10;
 
     this.d2dOffBonus = 0;
+    this.d2dFixedDamage = false;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -144,7 +145,7 @@ var Constructor = function()
         if (CO.isActive(co))
         {
             let baseDamage = CO_JULIA.d2dOffBonus;
-            let fixedDamage = false;
+            let fixedDamage = CO_JULIA.d2dFixedDamage;
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Tagpower:
@@ -154,12 +155,7 @@ var Constructor = function()
                 fixedDamage = true;
                 break;
             default:
-                if (CO.getGlobalZone())
-                {
-                    baseDamage = d2dOffBonus;
-                    fixedDamage = true;
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     baseDamage = 80;
                     fixedDamage = true;

@@ -172,14 +172,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return towers * CO_JAVIER.powerTowerOffBonus + CO_JAVIER.powerOffBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return towers * CO_JAVIER.d2dTowerOffBonus;
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return CO_JAVIER.d2dCoZoneOffBonus + towers * CO_JAVIER.d2dCoZoneTowerOffBonus;
                 }
+                return towers * CO_JAVIER.d2dTowerOffBonus;
             }
         }
         return 0;
@@ -210,21 +207,18 @@ var Constructor = function()
                 ret += towers * CO_JAVIER.powerTowerDefBonus + CO_JAVIER.powerDefBonus;
                 break;
             default:
-                if (CO.getGlobalZone())
-                {
-                    ret += towers * CO_JAVIER.d2dTowerDefBonus;
-                    if (rangedAttacked)
-                    {
-                        ret += CO_JAVIER.d2dIndirectDefBonus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     ret += towers * CO_JAVIER.d2dCoZoneTowerDefBonus + CO_JAVIER.d2dCoZoneDefBonus;
                     if (rangedAttacked)
                     {
                         ret += CO_JAVIER.d2dCoZoneIndirectDefBonus;
                     }
+                }
+                ret += towers * CO_JAVIER.d2dTowerDefBonus;
+                if (rangedAttacked)
+                {
+                    ret += CO_JAVIER.d2dIndirectDefBonus;
                 }
                 break;
             }

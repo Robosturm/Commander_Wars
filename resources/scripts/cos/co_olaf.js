@@ -155,20 +155,17 @@ var Constructor = function()
                         return CO_OLAF.powerOffBonus;
                     }
                 default:
-                    if (CO.getGlobalZone())
-                    {
-                        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-                        {
-                            return CO_OLAF.d2dOffBonus;
-                        }
-                    }
-                    else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                         {
                             return CO_OLAF.d2dCoZoneOffBonus;
                         }
                         return CO_OLAF.d2dCoZoneBaseOffBonus;
+                    }
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                    {
+                        return CO_OLAF.d2dOffBonus;
                     }
                     break;
                 }

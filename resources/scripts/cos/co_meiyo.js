@@ -189,21 +189,7 @@ var Constructor = function()
                     return CO_MEIYO.powerElite;
                 }
             default:
-                if (CO.getGlobalZone())
-                {
-                    switch (attacker.getUnitRank())
-                    {
-                    case 0:
-                        return CO_MEIYO.d2dSoldier;
-                    case 1:
-                        return CO_MEIYO.d2dExperienced;
-                    case 2:
-                        return CO_MEIYO.d2dVeteran;
-                    default:
-                        return CO_MEIYO.d2dElite;
-                    }
-                }
-                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     switch (attacker.getUnitRank())
                     {
@@ -216,6 +202,17 @@ var Constructor = function()
                     default:
                         return CO_MEIYO.d2dCoZoneElite;
                     }
+                }
+                switch (attacker.getUnitRank())
+                {
+                case 0:
+                    return CO_MEIYO.d2dSoldier;
+                case 1:
+                    return CO_MEIYO.d2dExperienced;
+                case 2:
+                    return CO_MEIYO.d2dVeteran;
+                default:
+                    return CO_MEIYO.d2dElite;
                 }
             }
         }
@@ -244,21 +241,7 @@ var Constructor = function()
                     return CO_MEIYO.powerElite;
                 }
             default:
-                if (CO.getGlobalZone())
-                {
-                    switch (defender.getUnitRank())
-                    {
-                    case 0:
-                        return CO_MEIYO.d2dSoldier;
-                    case 1:
-                        return CO_MEIYO.d2dExperienced;
-                    case 2:
-                        return CO_MEIYO.d2dVeteran;
-                    default:
-                        return CO_MEIYO.d2dElite;
-                    }
-                }
-                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     switch (defender.getUnitRank())
                     {
@@ -271,6 +254,17 @@ var Constructor = function()
                     default:
                         return CO_MEIYO.d2dCoZoneElite;
                     }
+                }
+                switch (defender.getUnitRank())
+                {
+                case 0:
+                    return CO_MEIYO.d2dSoldier;
+                case 1:
+                    return CO_MEIYO.d2dExperienced;
+                case 2:
+                    return CO_MEIYO.d2dVeteran;
+                default:
+                    return CO_MEIYO.d2dElite;
                 }
             }
         }

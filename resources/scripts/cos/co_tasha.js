@@ -140,13 +140,16 @@ var Constructor = function()
     this.superPowerOffBonus = 70;
     this.superPowerDefBonus = 30;
     this.superPowerMovementBonus = 2;
+
     this.powerOffBonus = 50;
     this.powerBaseOffBonus = 10;
     this.powerDefBonus = 30;
     this.powerMovementBonus = 1;
     this.powerBaseDefBonus = 10;
+
     this.d2dOffBonus = 0;
     this.d2dDeffBonus = 0;
+
     this.d2dCoZoneOffBonus = 50;
     this.d2dCoZoneDeffBonus = 30;
     this.d2dCoZoneBaseOffBonus = 10;
@@ -179,20 +182,17 @@ var Constructor = function()
                     return CO_TASHA.powerBaseOffBonus;
                 }
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (attacker.getUnitType() === GameEnums.UnitType_Air)
-                    {
-                        return CO_TASHA.d2dOffBonus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
                         return CO_TASHA.d2dCoZoneOffBonus;
                     }
                     return CO_TASHA.d2dCoZoneBaseOffBonus;
+                }
+                else if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_TASHA.d2dOffBonus;
                 }
                 break;
             }
@@ -227,20 +227,17 @@ var Constructor = function()
                     return CO_TASHA.powerBaseDefBonus;
                 }
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (defender.getUnitType() === GameEnums.UnitType_Air)
-                    {
-                        return CO_TASHA.d2dDeffBonus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
                 {
                     if (defender.getUnitType() === GameEnums.UnitType_Air)
                     {
                         return CO_TASHA.d2dCoZoneDeffBonus;
                     }
                     return CO_TASHA.d2dCoZoneBaseDeffBonus;
+                }
+                else if (defender.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_TASHA.d2dDeffBonus;
                 }
                 break;
             }

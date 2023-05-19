@@ -236,20 +236,17 @@ var Constructor = function()
                         }
                         return CO_KINDLE.powerBaseOffBonus;
                     default:
-                        if (CO.getGlobalZone())
-                        {
-                            if (building !== null)
-                            {
-                                return CO_KINDLE.d2dOffBonus;
-                            }
-                        }
-                        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
                             if (building !== null)
                             {
                                 return CO_KINDLE.d2dCoZoneOffBonus;
                             }
                             return CO_KINDLE.d2dCoZoneBaseOffBonus;
+                        }
+                        else if (building !== null)
+                        {
+                            return CO_KINDLE.d2dOffBonus;
                         }
                         break;
                     }

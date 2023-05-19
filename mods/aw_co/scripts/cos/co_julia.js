@@ -8,6 +8,7 @@ CO_JULIA.d2dCoZoneOffBonus = 0;
 CO_JULIA.d2dCoZoneDefBonus = 0;
 
 CO_JULIA.d2dOffBonus = 70;
+CO_JULIA.d2dFixedDamage = true;
 
 CO_JULIA.init = function(co, map)
 {

@@ -130,8 +130,10 @@ var Constructor = function()
     this.powerHeal = 1;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
+
     this.d2dOffMissfortuneBonus = 1;
     this.d2dOffBonus = 3;
+
     this.d2dCoZoneMissfortuneBonus = 3;
     this.d2dCoZoneOffBonus = 5;
     this.d2dCoZoneOffBaseBonus = 10;
@@ -186,14 +188,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return 0;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return co.getPowerFilled() * CO_ROBOANDY.d2dOffMissfortuneBonus;
-                }
-                else if (co.inCORange(Qt.point(posX, posY), unit))
+                if (co.inCORange(Qt.point(posX, posY), unit))
                 {
                     return co.getPowerFilled() * CO_ROBOANDY.d2dCoZoneMissfortuneBonus;
                 }
+                return co.getPowerFilled() * CO_ROBOANDY.d2dOffMissfortuneBonus;
             }
         }
         return 0;

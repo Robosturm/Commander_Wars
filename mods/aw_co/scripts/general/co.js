@@ -6,8 +6,3 @@ CO.isActive = function(co)
 	}
 	return false;
 };
-
-CO.getGlobalZone = function()
-{
-    return true;
-};

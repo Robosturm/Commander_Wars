@@ -658,10 +658,5 @@ var CO =
     {
         return true;
     },
-
-    getGlobalZone : function()
-    {
-        return false;
-    }
 }
 

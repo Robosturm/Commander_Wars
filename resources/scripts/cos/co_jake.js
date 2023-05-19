@@ -176,20 +176,17 @@ var Constructor = function()
                         }
                         return CO_JAKE.powerOffBonus;
                     default:
-                        if (CO.getGlobalZone())
-                        {
-                            if (terrainID === "PLAINS")
-                            {
-                                return CO_JAKE.d2dPlainsBonus;
-                            }
-                        }
-                        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
                             if (terrainID === "PLAINS")
                             {
                                 return CO_JAKE.d2dCoZonePlainsBonus;
                             }
                             return CO_JAKE.d2dCoZoneOffBonus;
+                        }
+                        else if (terrainID === "PLAINS")
+                        {
+                            return CO_JAKE.d2dPlainsBonus;
                         }
                         break;
                     }

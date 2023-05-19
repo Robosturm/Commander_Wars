@@ -157,15 +157,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return CO_NELL.powerLuckBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_NELL.d2dLuckBonus;
-                }
-                else if (co.inCORange(Qt.point(posX, posY), unit))
+                if (co.inCORange(Qt.point(posX, posY), unit))
                 {
                     return CO_NELL.d2dCoZoneLuckBonus;
                 }
-                break;
+                return CO_NELL.d2dLuckBonus;
             }
         }
         return 0;

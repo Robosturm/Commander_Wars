@@ -216,14 +216,15 @@ var Constructor = function()
                     }
                     break;
                 default:
-                    if (CO.getGlobalZone())
-                    {
-                        damage = CO_NANA.d2dExplosionDamage;
-                    }
-                    else if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
+                    if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
                     {
                         damage = CO_NANA.d2dCoZoneExplosionDamage;
                     }
+                    else
+                    {
+                        damage = CO_NANA.d2dExplosionDamage;
+                    }
+
                     break;
                 }
 

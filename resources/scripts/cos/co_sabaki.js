@@ -137,12 +137,15 @@ var Constructor = function()
     };
 
     this.superPowerHeal = 1;
+
     this.powerHeal = 0.5;
     this.powerDefBonus = 10;
     this.powerOffBonus = 10;
+
     this.d2dCoZoneDefBonus = 10;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneHeal = 0.4;
+
     this.d2dHeal = 0.0;
     
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
@@ -162,13 +165,13 @@ var Constructor = function()
                     healPercent = CO_SABAKI.powerHeal;
                     break;
                 default:
-                    if (CO.getGlobalZone())
-                    {
-                        healPercent = CO_SABAKI.d2dHeal;
-                    }
-                    else if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
+                    if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
                     {
                         healPercent = CO_SABAKI.d2dCoZoneHeal;
+                    }
+                    else
+                    {
+                        healPercent = CO_SABAKI.d2dHeal;
                     }
                     break;
 

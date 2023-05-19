@@ -194,15 +194,11 @@ var Constructor = function()
                     return CO_OZZY.powerDefBonus;
                 }
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_OZZY.d2dDefBonus;
-                }
-                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     return CO_OZZY.d2dCoZoneDefBonus;
                 }
-                break;
+                return CO_OZZY.d2dDefBonus;
             }
         }
         return 0;

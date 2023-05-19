@@ -141,12 +141,15 @@ var Constructor = function()
 
     this.superPowerOffBonus = 60;
     this.superPowerDefBonus = 310;
+
     this.powerBaseOffBonus = 10;
     this.powerOffBonus = 30;
     this.powerDefBonus = 200;
     this.powerDefBaseBonus = 10;
+
     this.d2DOffBonus = 0;
     this.d2DDefBonus = 0;
+
     this.d2DCoZoneDefBonus = 40;
     this.d2DCoZoneDefBaseBonus = 10;
     this.d2DCoZoneOffBonus = 30;
@@ -173,20 +176,17 @@ var Constructor = function()
                 }
                 return CO_WAYLON.powerBaseOffBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (defender.getUnitType() === GameEnums.UnitType_Air)
-                    {
-                        return CO_WAYLON.d2DOffBonus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
                         return CO_WAYLON.d2DCoZoneOffBonus;
                     }
                     return CO_WAYLON.d2DCoZoneOffBaseBonus;
+                }
+                else if (defender.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_WAYLON.d2DOffBonus;
                 }
                 break;
             }
@@ -215,20 +215,17 @@ var Constructor = function()
                 }
                 return CO_WAYLON.powerDefBaseBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (defender.getUnitType() === GameEnums.UnitType_Air)
-                    {
-                        return CO_WAYLON.d2DDefBonus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     if (defender.getUnitType() === GameEnums.UnitType_Air)
                     {
                         return CO_WAYLON.d2DCoZoneDefBonus;
                     }
                     return CO_WAYLON.d2DCoZoneDefBaseBonus;
+                }
+                else if (defender.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_WAYLON.d2DDefBonus;
                 }
                 break;
             }

@@ -167,12 +167,15 @@ var Constructor = function()
 
     this.superPowerHeal = 4;
     this.superPowerOverhealOffBonus = 10;
+
     this.powerCaptureBonus = 5;
     this.powerIncome = 25;
     this.powerOffBonus = 20;
     this.powerDefBonus = 20;
+
     this.d2dOffBonus = 0;
     this.d2dDefBonus = 0;
+
     this.d2dCoZoneOffBonus = 20;
     this.d2dCoZoneDefBonus = 20;
 
@@ -200,15 +203,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return CO_VARLOT.powerOffBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    return CO_VARLOT.d2dOffBonus;
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return CO_VARLOT.d2dCoZoneOffBonus;
                 }
-                break;
+                return CO_VARLOT.d2dOffBonus;
             }
         }
         return 0;
@@ -222,13 +221,13 @@ var Constructor = function()
             {
                 return CO_VARLOT.powerDefBonus;
             }
-            else if (CO.getGlobalZone())
-            {
-                return CO_VARLOT.d2dDefBonus;
-            }
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
                 return CO_VARLOT.d2dCoZoneDefBonus;
+            }
+            else
+            {
+                return CO_VARLOT.d2dDefBonus;
             }
         }
         return 0;

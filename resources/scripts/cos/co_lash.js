@@ -159,15 +159,11 @@ var Constructor = function()
                         }
                         return CO_LASH.powerOffBonus;
                     default:
-                        if (CO.getGlobalZone())
-                        {
-                            return terrainDefense * CO_LASH.d2dTerrainBonus;
-                        }
-                        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
                             return terrainDefense * CO_LASH.d2dCoZoneTerrainBonus + CO_LASH.d2dCoZoneOffBonus;
                         }
-                        break;
+                        return terrainDefense * CO_LASH.d2dTerrainBonus;
                     }
                 }
             }

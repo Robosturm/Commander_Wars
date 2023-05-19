@@ -169,15 +169,7 @@ var Constructor = function()
                 }
                 return CO_LIN.powerBaseOffBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (!seaAirUnit)
-                    {
-                        return CO_LIN.d2dOffBonus;
-                    }
-                    return CO_LIN.d2dBaseOffBonus;
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (!seaAirUnit)
                     {
@@ -185,7 +177,11 @@ var Constructor = function()
                     }
                     return CO_LIN.d2dCoZoneBaseOffBonus;
                 }
-                break;
+                if (!seaAirUnit)
+                {
+                    return CO_LIN.d2dOffBonus;
+                }
+                return CO_LIN.d2dBaseOffBonus;
             }
         }
         return 0;
@@ -214,15 +210,7 @@ var Constructor = function()
                 }
                 return CO_LIN.powerBaseDefBonus;
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (!seaAirUnit)
-                    {
-                        return CO_LIN.d2dDefBonus;
-                    }
-                    return CO_LIN.d2dBaseDefBonus;
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
                 {
                     if (!seaAirUnit)
                     {
@@ -230,7 +218,11 @@ var Constructor = function()
                     }
                     return CO_LIN.d2dCoZoneBaseDefBonus;
                 }
-                break;
+                if (!seaAirUnit)
+                {
+                    return CO_LIN.d2dDefBonus;
+                }
+                return CO_LIN.d2dBaseDefBonus;
             }
         }
         return 0;

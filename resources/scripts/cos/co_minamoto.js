@@ -200,20 +200,17 @@ var Constructor = function()
                     return CO_MINAMOTO.powerBaseOffBonus;
                 }
             default:
-                if (CO.getGlobalZone())
-                {
-                    if (nearMountains === true)
-                    {
-                        return CO_MINAMOTO.d2dOffBonus;
-                    }
-                }
-                else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (nearMountains === true)
                     {
                         return CO_MINAMOTO.d2dCoZoneOffBonus;
                     }
                     return CO_MINAMOTO.d2dCoZoneBaseOffBonus;
+                }
+                if (nearMountains === true)
+                {
+                    return CO_MINAMOTO.d2dOffBonus;
                 }
                 break;
             }
