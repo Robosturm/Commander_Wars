@@ -2,15 +2,15 @@ var Constructor = function()
 {
     this.canBePerformed = function(action, map)
     {
-        var co = map.getCurrentPlayer().getCO(1);
-        if ((co !== null) && co.canUseSuperpower())
+        if (map.getGameRules().getParallelCos())
         {
-            return true;
+            let co = map.getCurrentPlayer().getCO(1);
+            if ((co !== null) && co.canUseSuperpower())
+            {
+                return true;
+            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     };
     this.getActionText = function(map)
     {

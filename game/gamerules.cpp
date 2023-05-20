@@ -40,6 +40,16 @@ void GameRules::resetArrays()
     m_FogSprites.clear();
 }
 
+bool GameRules::getParallelCos() const
+{
+    return m_parallelCos;
+}
+
+void GameRules::setParallelCos(bool newParallelCos)
+{
+    m_parallelCos = newParallelCos;
+}
+
 GameEnums::DamageFormula GameRules::getDamageFormula() const
 {
     return m_damageFormula;
@@ -1547,6 +1557,7 @@ void GameRules::serializeObject(QDataStream& pStream, bool forHash) const
         pStream << m_mapPalette;
     }
     pStream << static_cast<qint32>(m_damageFormula);
+    pStream << m_parallelCos;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1885,6 +1896,10 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         qint32 value;
         pStream >> value;
         m_damageFormula = static_cast<GameEnums::DamageFormula>(value);
+    }
+    if (version > 28)
+    {
+        pStream >> m_parallelCos;
     }
     CONSOLE_PRINT("Weather prediction for days after restoring " + QString::number(m_WeatherDays.size()), GameConsole::eDEBUG);
 }

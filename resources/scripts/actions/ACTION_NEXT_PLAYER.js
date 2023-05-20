@@ -3,6 +3,18 @@ var Constructor = function()
     
     this.canBePerformed = function(action, map)
     {
+        if (!map.getGameRules().getParallelCos())
+        {
+            let player = map.getCurrentPlayer();
+            let co0 = player.getCO(0);
+            let co1 = player.getCO(1);
+            if (co0 !== null && co1 !== null &&
+                co0.getPowerMode() === GameEnums.PowerMode_Tagpower &&
+                co1.getPowerMode() === GameEnums.PowerMode_Off)
+            {
+                return false;
+            }
+        }
         return true;
     };
     this.getActionText = function(map)

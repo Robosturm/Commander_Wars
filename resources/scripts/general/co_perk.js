@@ -2,6 +2,22 @@ var CO_PERK =
 {
     isActive : function(co)
     {
+        let map = owner.getMap();
+        if (map !== null)
+        {
+            if (map.getGameRules().getParallelCos())
+            {
+                return true;
+            }
+            else if (co.getIsCO0() === true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         return true;
     },
 

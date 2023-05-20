@@ -97,12 +97,12 @@
     <name>ACTION_ACTIVATE_TAGPOWER</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="17"/>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="44"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="51"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="48"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="55"/>
         <source>Activates the superpower of both CO&apos;s. Read the CO&apos;s superpower for more information. This will also apply the Tagpower-Synergy. The synergy gives a hidden firepower boost and a luck boost based on the affinity of the co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -704,13 +704,13 @@
 <context>
     <name>ACTION_NEXT_PLAYER</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="10"/>
-        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="26"/>
+        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="22"/>
+        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="38"/>
         <source>Next player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="30"/>
+        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="42"/>
         <source>Ends your turn and gives control to the next player.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1024,13 +1024,13 @@
 <context>
     <name>ACTION_SWAP_COS</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="10"/>
-        <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="42"/>
+        <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="24"/>
+        <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="54"/>
         <source>Swap CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="46"/>
+        <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="58"/>
         <source>Swaps the position of co 1 and 2 and ends your turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4392,8 +4392,8 @@ Distributed: Units are spawned at the given rate.</source>
     <message>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="637"/>
         <location filename="../resources/ui/options/optiongameplaymenu.xml" line="661"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="709"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="710"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="725"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="726"/>
         <source>Select file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5399,13 +5399,13 @@ Distributed: Units are spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="691"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="707"/>
         <location filename="../resources/ui/editor/mapEditDialog.xml" line="70"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="700"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="716"/>
         <location filename="../resources/ui/editor/mapEditDialog.xml" line="79"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
@@ -5759,111 +5759,121 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     </message>
     <message>
         <location filename="../resources/ui/game/ruleSelection.xml" line="258"/>
-        <source>CO specific units:</source>
+        <source>Parallel CO&apos;s:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/game/ruleSelection.xml" line="265"/>
-        <source>If unchecked specific CO-Units can&apos;t be produced.</source>
+        <source>If checked the effect of both CO&apos;s are active all the time and Tagpower doesn&apos;t give an extra turn but gain 2 extra movement points.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/game/ruleSelection.xml" line="274"/>
+        <source>CO specific units:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="281"/>
+        <source>If unchecked specific CO-Units can&apos;t be produced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="290"/>
         <source>CO perk cost:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="282"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="298"/>
         <source>Selects the total cost of co perks that can be assigned per CO.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="295"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="311"/>
         <source>CO perk count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="303"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="319"/>
         <source>Selects the total amout of co perks that can be assigned per CO.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="316"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="332"/>
         <source>Unit limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="324"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="340"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="337"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="353"/>
         <source>CO powergain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="345"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="361"/>
         <source>CO powergain zone:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="353"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="369"/>
         <source>Defines where a player can gain power for his co powermeter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="363"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="379"/>
         <source>CO powergain mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="371"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="387"/>
         <source>Defines how the powermeter fills.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="381"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="397"/>
         <source>Powergain reduction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="389"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="405"/>
         <source>The reduction in powergain for each time a co powers was used. Making each consecutive power more expensive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="403"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="419"/>
         <source>Powergain speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="411"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="427"/>
         <source>The speed at which the power bar fills up. This affects gains from HP damage or funds damage based on the mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="425"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="441"/>
         <source>CO power loss:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="433"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="449"/>
         <source>The percentage of the CO gauge lost when the CO unit gets destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="448"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="464"/>
         <source>Fog of war</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="456"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="472"/>
         <source>Fog of war:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="464"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="480"/>
         <source>Select the fog of war rule for the current game.
  In Mist of War all units can be seen but not targeted without Vision.
  In Fog of War all units cannot be seen without vision.
@@ -5871,37 +5881,37 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="475"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="491"/>
         <source>Vision block:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="482"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="498"/>
         <source>If checked units can&apos;t see over certain terrains, reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="491"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="507"/>
         <source>Building hiding:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="498"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="514"/>
         <source>If checked most buildings deny vision. This means you can hide a unit in a building similar to a forest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="507"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="523"/>
         <source>Day screen:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="515"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="531"/>
         <source>If set to &apos;Permanent&apos; the new day screen for human players will remain on screen until dismissed. If set to &apos;Default&apos; this feature will be off except in fog of war games. This setting only takes effect in games with more than 1 Human players on the host&apos;s pc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="526"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="542"/>
         <location filename="../resources/ui/game/playerSelection.xml" line="50"/>
         <location filename="../resources/ui/game/playerSelection.xml" line="136"/>
         <location filename="../resources/ui/game/playerSelection.xml" line="200"/>
@@ -5909,128 +5919,128 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="534"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="550"/>
         <source>Map palette:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="542"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="558"/>
         <source>Selects the palette used for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="553"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="569"/>
         <source>CO banlist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="570"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="586"/>
         <source>Perk banlist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="587"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="603"/>
         <source>Action banlist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="604"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="620"/>
         <source>Terrain defense:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="612"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="628"/>
         <source>The defense each terrain star grants a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="625"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="641"/>
         <source>HP defense impact:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="632"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="648"/>
         <source>If checked: the impact of terrain defense stars is reduced the less hp a unit has.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="641"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="657"/>
         <source>Ship bridges:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="648"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="664"/>
         <source>If checked: ships and boats can move through ship bridges placed on sea tiles, like in Advance Wars 4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="657"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="673"/>
         <source>Transporter refresh:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="664"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="680"/>
         <source>If checked: units can move after getting unloaded if the unit had remained in their transporter for more than one turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="673"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="689"/>
         <source>Round time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="681"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="697"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="719"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="735"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="727"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="743"/>
         <source>Unique CO&apos;s:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="734"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="750"/>
         <source>If checked: CO&apos;s that are randomly selected are unique.
  Note: If not enough CO&apos;s are available this may select no CO for a player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="743"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="759"/>
         <source>AI attack terrain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="750"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="766"/>
         <source>If checked the ai attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="759"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="775"/>
         <source>Unit sell value:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="767"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="783"/>
         <source>The amount of funds you are refunded for selling a unit. Selling is only possible if the &apos;Sell&apos; action is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="782"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="798"/>
         <source>Team facing:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="789"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="805"/>
         <source>If checked units of the same team face the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="841"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="857"/>
         <source>Victory rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6162,12 +6172,12 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="561"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="562"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="577"/>
         <location filename="../resources/ui/game/ruleSelection.xml" line="578"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="579"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="594"/>
         <location filename="../resources/ui/game/ruleSelection.xml" line="595"/>
-        <location filename="../resources/ui/game/ruleSelection.xml" line="596"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="611"/>
+        <location filename="../resources/ui/game/ruleSelection.xml" line="612"/>
         <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="91"/>
         <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="93"/>
         <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="110"/>
@@ -19901,7 +19911,7 @@ During sandstorm she gets additionally %3 improved firerange for her indirects.
 <context>
     <name>co_perk</name>
     <message>
-        <location filename="../resources/scripts/general/co_perk.js" line="340"/>
+        <location filename="../resources/scripts/general/co_perk.js" line="356"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
