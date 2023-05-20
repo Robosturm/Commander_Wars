@@ -184,7 +184,7 @@ var Constructor = function()
                     }
                     return CO_WAYLON.d2DCoZoneOffBaseBonus;
                 }
-                else if (defender.getUnitType() === GameEnums.UnitType_Air)
+                else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return CO_WAYLON.d2DOffBonus;
                 }

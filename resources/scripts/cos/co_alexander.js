@@ -166,7 +166,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return CO_ALEXANDER.coZoneBonus;
+                    return CO_ALEXANDER.d2dCoZoneBonus;
                 }
                 break;
             }
@@ -185,7 +185,7 @@ var Constructor = function()
             }
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
-                return CO_ALEXANDER.coZoneBonus;
+                return CO_ALEXANDER.d2dCoZoneBonus;
             }
         }
         return 0;

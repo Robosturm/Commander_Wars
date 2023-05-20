@@ -138,11 +138,14 @@ var Constructor = function()
         return "GS";
     };
     this.superpowerBonus = 60;
+
     this.powerFirepowerBonus = 20;
     this.powerLuckDamage = 40;
     this.powerDefBonus = 10;
+
     this.d2dCoZoneFirepowerBonus = 20;
     this.d2dCoZoneDefBonus = 10;
+
     this.minLuckHp = 5;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -177,7 +180,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return CO_XAVIER.firepowerBonus;
+                    return CO_XAVIER.d2dCoZoneFirepowerBonus;
                 }
                 break;
             }

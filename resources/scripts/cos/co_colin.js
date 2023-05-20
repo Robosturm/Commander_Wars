@@ -146,9 +146,9 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return -CO_COLIN.d2dCoZoneOffBonus;
+                    return CO_COLIN.d2dCoZoneOffBonus;
                 }
-                return -CO_COLIN.globalBoost;
+                return CO_COLIN.globalBoost;
             }
         }
         return 0;

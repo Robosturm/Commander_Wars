@@ -3,6 +3,8 @@ var Init =
     step = 0,
     playTest = 0,
     optionTestCount = 0,
+    coTestStep = 0,
+    currentCoTest = 0,
     steps = ["creditsTest",
              "achievementTest",
              "optionTest",
@@ -255,13 +257,28 @@ var Init =
     },
     mapsSelection = function(menu)
     {
-        if (Init.playTest === 0)
+        if (Init.coTestStep < 3)
+        {
+            let ids = coSpriteManager.getCoIds();
+            let co = ids[Init.currentCoTest]
+            GameConsole.print("Testing co " + co + " testing co step " + Init.coTestStep.toString(), 0);
+            menu.selectMap("maps/test/", "co_test.map");
+            menu.buttonNext();
+            menu.buttonNext();
+            let selection = menu.getPlayerSelection();
+            selection.selectPlayerAi(0, 0);
+            selection.selectPlayerAi(1, 2);
+            selection.playerCO1Changed(co, 0);
+            Init.currentCoTest += 1;
+            menu.startGame();
+        }
+        else if (Init.playTest === 0)
         {
             GameConsole.print("Testing ingame menus", 0);
             menu.selectMap("maps/2_player/", "Agitated.map");
             menu.buttonNext();
             menu.buttonNext();
-            var selection = menu.getPlayerSelection();
+            let selection = menu.getPlayerSelection();
             selection.selectPlayerAi(0, 0);
             selection.selectPlayerAi(1, 2);
             selection.playerCO1Changed("CO_RANDOM", 0);
@@ -291,7 +308,24 @@ var Init =
     },
     gameMenu = function(menu)
     {
-        if (Init.playTest === 0)
+        if (Init.coTestStep < 3)
+        {
+            if (Init.coTestStep === 1)
+            {
+                menu.getMap().getPlayer(0).getCO(0).activatePower();
+            }
+            else if (Init.coTestStep === 2)
+            {
+                menu.getMap().getPlayer(0).getCO(0).activateSuperpower(GameEnums.PowerMode_Superpower);
+            }
+            menu.changeAiForPlayer(GameEnums.AiTypes_Normal);
+            let ids = coSpriteManager.getCoIds();
+            if (Init.currentCoTest >= ids.length)
+            {
+                Init.coTestStep += 1;
+            }
+        }
+        else if (Init.playTest === 0)
         {
             GameConsole.print("Showing all ingame menus", 0);
             menu.victoryInfo();

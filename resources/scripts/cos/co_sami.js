@@ -229,7 +229,7 @@ var Constructor = function()
             {
                 return CO_SAMI.d2dCoZoneDefBonus;
             }
-            else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+            else if (defender.getUnitType() === GameEnums.UnitType_Infantry)
             {
                 return CO_SAMI.d2dInfDefBonus;
             }

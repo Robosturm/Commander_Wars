@@ -270,7 +270,7 @@ var Constructor = function()
         {
             if (co.getPowerMode() > GameEnums.PowerMode_Superpower)
             {
-                if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return CO_EAGLE.superPowerAirDefBonus;
                 }
@@ -281,7 +281,7 @@ var Constructor = function()
             }
             else if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return CO_EAGLE.powerAirDefBonus;
                 }
@@ -292,7 +292,7 @@ var Constructor = function()
             }
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
-                if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return CO_EAGLE.d2dCoZoneAirDefBonus;
                 }
@@ -303,7 +303,7 @@ var Constructor = function()
             }
             else
             {
-                if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return CO_EAGLE.d2dAirDefBonus;
                 }

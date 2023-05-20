@@ -154,71 +154,73 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
+            let attackerValue = 0;
+            let defenderValue = 0;
             if(defender !== null)
             {
-                var attackerValue = attacker.getUnitValue();
-                var defenderValue = defender.getUnitValue();
-                switch (co.getPowerMode())
+                attackerValue = attacker.getUnitValue();
+                defenderValue = defender.getUnitValue();
+            }
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+            {
+                if (attackerValue > defenderValue)
                 {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
+                    return CO_JOEY.superPowerOffMalus;
+                }
+                else if (attackerValue < defenderValue)
                 {
-                    if (attackerValue > defenderValue)
-                    {
-                        return CO_JOEY.superPowerOffMalus;
-                    }
-                    else if (attackerValue < defenderValue)
-                    {
-                        return CO_JOEY.superPowerOffBonus;
-                    }
-                    else
-                    {
-                        return CO_JOEY.superPowerBaseOffBonus;
-                    }
+                    return CO_JOEY.superPowerOffBonus;
                 }
-                case GameEnums.PowerMode_Power:
+                else
                 {
-                    if (attackerValue > defenderValue)
-                    {
-                        return CO_JOEY.powerOffMalus;
-                    }
-                    else if (attackerValue < defenderValue)
-                    {
-                        return CO_JOEY.powerOffBonus;
-                    }
-                    else
-                    {
-                        return CO_JOEY.powerBaseOffBonus;
-                    }
+                    return CO_JOEY.superPowerBaseOffBonus;
                 }
-                default:
+            }
+            case GameEnums.PowerMode_Power:
+            {
+                if (attackerValue > defenderValue)
                 {
-                    if (attackerValue > defenderValue)
-                    {
-                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                        {
-                            return CO_JOEY.d2dCoZoneOffMalus;
-                        }
-                        return CO_JOEY.d2dOffMalus;
-                    }
-                    else if (attackerValue < defenderValue)
-                    {
-                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                        {
-                            return CO_JOEY.d2dCoZoneOffBonus;
-                        }
-                        return CO_JOEY.d2dOffBonus;
-                    }
-                    else
-                    {
-                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                        {
-                            return CO_JOEY.d2dCoZoneBaseOffBonus;
-                        }
-                        return CO_JOEY.d2dBaseOffBonus;
-                    }
+                    return CO_JOEY.powerOffMalus;
                 }
+                else if (attackerValue < defenderValue)
+                {
+                    return CO_JOEY.powerOffBonus;
                 }
+                else
+                {
+                    return CO_JOEY.powerBaseOffBonus;
+                }
+            }
+            default:
+            {
+                if (attackerValue > defenderValue)
+                {
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        return CO_JOEY.d2dCoZoneOffMalus;
+                    }
+                    return CO_JOEY.d2dOffMalus;
+                }
+                else if (attackerValue < defenderValue)
+                {
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        return CO_JOEY.d2dCoZoneOffBonus;
+                    }
+                    return CO_JOEY.d2dOffBonus;
+                }
+                else
+                {
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        return CO_JOEY.d2dCoZoneBaseOffBonus;
+                    }
+                    return CO_JOEY.d2dBaseOffBonus;
+                }
+            }
             }
         }
         return 0;
@@ -229,23 +231,25 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
+            let attackerValue = 0;
+            let defenderValue = 0;
             if(attacker !== null)
             {
-                var attackerValue = attacker.getUnitValue();
-                var defenderValue = defender.getUnitValue();
-                switch (co.getPowerMode())
+                attackerValue = attacker.getUnitValue();
+                defenderValue = defender.getUnitValue();
+            }
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return CO_JOEY.superPowerDefBonus;
+            case GameEnums.PowerMode_Power:
+                if (attackerValue > defenderValue)
                 {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    return CO_JOEY.superPowerDefBonus;
-                case GameEnums.PowerMode_Power:
-                    if (attackerValue > defenderValue)
-                    {
-                        return CO_JOEY.powerDefBonus;
-                    }
-                    return CO_JOEY.powerBaseDefBonus;
-                default:
+                    return CO_JOEY.powerDefBonus;
                 }
+                return CO_JOEY.powerBaseDefBonus;
+            default:
             }
         }
         return 0;

@@ -274,7 +274,7 @@ var Constructor = function()
         {
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+                if (defender.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return CO_DRAKE.powerNavalDefBonus;
                 }
@@ -285,7 +285,7 @@ var Constructor = function()
             }
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
-                if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+                if (defender.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return CO_DRAKE.d2dCoZoneNavalDefBonus;
                 }
@@ -296,7 +296,7 @@ var Constructor = function()
             }
             else
             {
-                if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+                if (defender.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return CO_DRAKE.d2dDefBonus;
                 }

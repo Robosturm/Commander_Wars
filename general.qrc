@@ -2084,5 +2084,6 @@
         <file>mods/aw2_co/scripts/general/co.js</file>
         <file>mods/aw_co/scripts/general/co.js</file>
         <file>mods/awds_co/scripts/general/co.js</file>
+        <file>maps/test/co_test.map</file>
     </qresource>
 </RCC>

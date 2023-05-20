@@ -285,11 +285,11 @@ bool CoreAI::processPredefinedAi()
         pEnemyUnits->randomize();
         spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
         pEnemyBuildings->randomize();
+        QCoreApplication::processEvents();
         for (auto & spUnit : pUnits->getVector())
         {
             Unit* pUnit = spUnit.get();
-            QCoreApplication::processEvents();
-            if (!pUnit->getHasMoved())
+            if (pUnit!= nullptr && !pUnit->getHasMoved())
             {
                 switch (pUnit->getAiMode())
                 {

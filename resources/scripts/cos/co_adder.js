@@ -137,9 +137,11 @@ var Constructor = function()
 
     this.cod2dPowerChargeBonus = 20;
     this.cod2dBonus = 20;
+
     this.coPowerOffBonus = 20;
     this.coPowerDefBonus = 20;
     this.coPowerMovement = 1;
+
     this.coSuperPowerMovement = 2;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -175,7 +177,7 @@ var Constructor = function()
             }
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
-                return CO_ADDER.coZoneBonus;
+                return CO_ADDER.cod2dBonus;
             }
         }
         return 0;

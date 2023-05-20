@@ -173,23 +173,24 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (defender === null)
+            let directEnemy = false;
+            if (defender !== null)
             {
-                return 0;
+                directEnemy = (defender.getBaseMaxRange() === 1);
             }
             var bonus = 0;
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (defender.getBaseMaxRange() === 1)
+                if (directEnemy)
                 {
                     bonus += CO_PETER.superPowerOffBonus;
                 }
                 bonus += CO_PETER.powerBaseOffBonus;
                 break;
             case GameEnums.PowerMode_Power:
-                if (defender.getBaseMaxRange() === 1)
+                if (directEnemy)
                 {
                     bonus += CO_PETER.powerOffBonus;
                 }
@@ -198,7 +199,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (defender.getBaseMaxRange() === 1)
+                    if (directEnemy)
                     {
                         bonus = CO_PETER.d2dCoZoneOffBonus;
                     }
@@ -206,7 +207,7 @@ var Constructor = function()
                 }
                 else
                 {
-                    if (defender.getBaseMaxRange() === 1)
+                    if (directEnemy)
                     {
                         bonus = CO_PETER.d2dOffBonus;
                     }

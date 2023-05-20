@@ -2314,6 +2314,23 @@ void GameMenue::startGame()
     CONSOLE_PRINT("Game started", GameConsole::eDEBUG);
 }
 
+void GameMenue::changeAiForPlayer(qint32 player, GameEnums::AiTypes ai)
+{
+    qint32 count = m_pMap->getPlayerCount();
+    if (player < count)
+    {
+        Player* pPlayer = m_pMap->getPlayer(player);
+        pPlayer->setControlType(ai);
+        pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap.get(), ai));
+        pPlayer->getBaseGameInput()->init(this);
+        if (m_pMap->getCurrentPlayer() == pPlayer)
+        {
+            CONSOLE_PRINT("GameMenue::changeAiForPlayer emitting sigActionPerformed()", GameConsole::eDEBUG);
+            emit m_actionPerformer.sigActionPerformed();
+        }
+    }
+}
+
 void GameMenue::startAiPipeGame()
 {
     Mainapp::getAiProcessPipe().onGameStarted(this);

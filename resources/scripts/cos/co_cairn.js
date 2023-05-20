@@ -494,7 +494,6 @@ var Constructor = function()
         return qsTr("Cairn");
     };
 
-
     this.showDefaultUnitGlobalBoost = function(co)
     {
         return false;

@@ -170,38 +170,40 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
+            let getsBonus = false;
             if (defender !== null)
             {
-                switch (co.getPowerMode())
+                getsBonus = attacker.getHp() >= defender.getHp();
+            }
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (getsBonus)
                 {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    if (attacker.getHp() >= defender.getHp())
-                    {
-                        return CO_CASSIDY.superPowerBonus;
-                    }
-                    return CO_CASSIDY.powerOffBonus;
-                case GameEnums.PowerMode_Power:
-                    if (attacker.getHp() >= defender.getHp())
-                    {
-                        return CO_CASSIDY.powerBonus;
-                    }
-                    return CO_CASSIDY.powerOffBonus;
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
-                        if (attacker.getHp() >= defender.getHp())
-                        {
-                            return CO_CASSIDY.d2dCoZoneBonus;
-                        }
-                        return CO_CASSIDY.d2dCoZoneOffBonus;
-                    }
-                    else if (attacker.getHp() >= defender.getHp())
-                    {
-                        return CO_CASSIDY.d2dOffBonus;
-                    }
-                    break;
+                    return CO_CASSIDY.superPowerBonus;
                 }
+                return CO_CASSIDY.powerOffBonus;
+            case GameEnums.PowerMode_Power:
+                if (getsBonus)
+                {
+                    return CO_CASSIDY.powerBonus;
+                }
+                return CO_CASSIDY.powerOffBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (getsBonus)
+                    {
+                        return CO_CASSIDY.d2dCoZoneBonus;
+                    }
+                    return CO_CASSIDY.d2dCoZoneOffBonus;
+                }
+                else if (getsBonus)
+                {
+                    return CO_CASSIDY.d2dOffBonus;
+                }
+                break;
             }
         }
         return 0;
