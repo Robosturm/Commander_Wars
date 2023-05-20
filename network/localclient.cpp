@@ -58,8 +58,8 @@ void LocalClient::disconnectTCP()
         {
             m_pTXTask->close();
         }
-        m_pRXTask = nullptr;
-        m_pTXTask = nullptr;
+        m_pRXTask.free();
+        m_pTXTask.free();
         m_pSocket->disconnect();
         m_pSocket->close();
         m_pSocket = nullptr;

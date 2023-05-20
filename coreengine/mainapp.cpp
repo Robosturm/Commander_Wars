@@ -862,10 +862,7 @@ void Mainapp::onQuit()
         m_Workerthread->wait();
     }
     QCoreApplication::processEvents();
-    if (m_aiProcessPipe.get() != nullptr)
-    {
-        m_aiProcessPipe = nullptr;
-    }
+    m_aiProcessPipe.free();
 #ifdef AUDIOSUPPORT
     if (!m_AudioManager.isNull())
     {

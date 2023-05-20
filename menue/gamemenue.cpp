@@ -1079,7 +1079,7 @@ void GameMenue::continueAfterSyncGame()
         if (multiplayerSyncData.m_postSyncAction.get() != nullptr)
         {
             m_actionPerformer.performAction(multiplayerSyncData.m_postSyncAction);
-            multiplayerSyncData.m_postSyncAction = nullptr;
+            multiplayerSyncData.m_postSyncAction.free();
         }
         sendOpenPlayerCount();
         sendOnlineInfo();
@@ -1147,10 +1147,7 @@ void GameMenue::disconnected(quint64 socketID)
                         break;
                     }
                 }
-                if (m_pNetworkInterface.get() != nullptr)
-                {
-                    m_pNetworkInterface = nullptr;
-                }
+                m_pNetworkInterface.free();
                 if (showDisconnect && socketID > 0)
                 {
                     CONSOLE_PRINT("Connection to host lost", GameConsole::eDEBUG);
@@ -1788,7 +1785,7 @@ void GameMenue::victory(qint32 team)
         if (m_pNetworkInterface.get() != nullptr)
         {
             m_pChat->detach();
-            m_pChat = nullptr;
+            m_pChat.free();
         }
         if (m_pMap->getCampaign() != nullptr)
         {
@@ -2614,7 +2611,7 @@ void GameMenue::exitMovementPlanner()
             m_pMovementPlanner->onExitPlanner();
         }
         m_pMovementPlanner->detach();
-        m_pMovementPlanner = nullptr;
+        m_pMovementPlanner.free();
     }
     unhideGameMenue();
 }

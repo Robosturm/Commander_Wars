@@ -6670,99 +6670,99 @@ Note: This may be caused by a defective mod.</source>
         <translation>確定</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1158"/>
+        <location filename="../menue/gamemenue.cpp" line="1155"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation>主機已從遊戲中斷開連線!遊戲將停止.您可以保存遊戲,重新載入地圖以繼續遊戲.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1181"/>
+        <location filename="../menue/gamemenue.cpp" line="1178"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation>客戶端已與遊戲斷開連接.客戶端可能會重新連接到遊戲.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1438"/>
-        <location filename="../menue/gamemenue.cpp" line="2050"/>
-        <location filename="../menue/gamemenue.cpp" line="2087"/>
+        <location filename="../menue/gamemenue.cpp" line="1435"/>
+        <location filename="../menue/gamemenue.cpp" line="2047"/>
+        <location filename="../menue/gamemenue.cpp" line="2084"/>
         <source>Save</source>
         <translation>存檔</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1446"/>
+        <location filename="../menue/gamemenue.cpp" line="1443"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1481"/>
+        <location filename="../menue/gamemenue.cpp" line="1478"/>
         <source>Show Chat</source>
         <translation>顯示聊天</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1899"/>
+        <location filename="../menue/gamemenue.cpp" line="1896"/>
         <source>Player</source>
         <translation>玩家</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1900"/>
+        <location filename="../menue/gamemenue.cpp" line="1897"/>
         <source>Produced</source>
         <translation>生產</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1901"/>
+        <location filename="../menue/gamemenue.cpp" line="1898"/>
         <source>Lost</source>
         <translation>失去</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1902"/>
+        <location filename="../menue/gamemenue.cpp" line="1899"/>
         <source>Killed</source>
         <translation>擊殺</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1903"/>
+        <location filename="../menue/gamemenue.cpp" line="1900"/>
         <source>Army Value</source>
         <translation>軍隊質量</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1904"/>
+        <location filename="../menue/gamemenue.cpp" line="1901"/>
         <source>Income</source>
         <translation>收入</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1905"/>
+        <location filename="../menue/gamemenue.cpp" line="1902"/>
         <source>Funds</source>
         <translation>資金</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1906"/>
+        <location filename="../menue/gamemenue.cpp" line="1903"/>
         <source>Bases</source>
         <translation>基地</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1932"/>
+        <location filename="../menue/gamemenue.cpp" line="1929"/>
         <source>Player </source>
         <translation>玩家 </translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1950"/>
+        <location filename="../menue/gamemenue.cpp" line="1947"/>
         <source>Neutral</source>
         <translation>自然</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2455"/>
+        <location filename="../menue/gamemenue.cpp" line="2452"/>
         <source>Do you want to exit the current game?</source>
         <translation>您要退出當前遊戲嗎?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2486"/>
+        <location filename="../menue/gamemenue.cpp" line="2483"/>
         <source>Do you want to surrender the current game?</source>
         <translation>是否要放棄當前遊戲?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2512"/>
+        <location filename="../menue/gamemenue.cpp" line="2509"/>
         <source>Nickname for the Unit:</source>
         <translation>單位暱稱:</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2689"/>
+        <location filename="../menue/gamemenue.cpp" line="2686"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
@@ -7231,14 +7231,14 @@ Note: This may be caused by a defective mod.</source>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="104"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="476"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="473"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="115"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="487"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="535"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="484"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="532"/>
         <source>Save</source>
         <translation>儲存</translation>
     </message>
@@ -7253,17 +7253,17 @@ Note: This may be caused by a defective mod.</source>
         <translation>開始遊戲</translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="518"/>
         <source>Do you want to make the saved ruleset the default ruleset?</source>
         <translation>您是否要將已保存的規則集設為默認的規則集?</translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="518"/>
         <source>Yes</source>
         <translation>是</translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="518"/>
         <source>No</source>
         <translation>否</translation>
     </message>

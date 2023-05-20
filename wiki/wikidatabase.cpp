@@ -349,7 +349,7 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
             {
                 if (pMap != nullptr)
                 {
-                    pPlayer = pMap->getCurrentPlayer();
+                    pPlayer = spPlayer(pMap->getCurrentPlayer());
                 }
                 pFinalIconPlayer = pPlayer.get();
             }

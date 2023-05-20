@@ -107,7 +107,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 ++m_syncCounter;
             }
             CONSOLE_PRINT("Updated sync counter to " + QString::number(m_syncCounter), GameConsole::eDEBUG);
-            m_pStoredAction = nullptr;
+            m_pStoredAction.free();
             m_pMap->getGameRules()->pauseRoundTime();
             if (!pGameAction->getIsLocal() &&
                 baseGameInput != nullptr &&
@@ -161,7 +161,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
             pGameAction->perform();
             // clean up the action
             m_pCurrentAction = pGameAction;
-            pGameAction = nullptr;
+            pGameAction.free();
             skipAnimations(false);
         }
         if (pCurrentPlayer != m_pMap->getCurrentPlayer() &&
@@ -349,7 +349,7 @@ void ActionPerformer::finishActionPerformed()
         }
         m_pMap->getCurrentPlayer()->postAction(m_pCurrentAction.get());
         m_pMap->getGameScript()->actionDone(m_pCurrentAction);
-        m_pCurrentAction = nullptr;
+        m_pCurrentAction.free();
     }
     skipAnimations(true);
     if (m_pMenu != nullptr)

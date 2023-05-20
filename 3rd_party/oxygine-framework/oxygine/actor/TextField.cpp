@@ -184,7 +184,7 @@ namespace oxygine
         {
             m_Locked.lock();
         }
-        m_root = nullptr;
+        m_root.free();
         if (m_htmlText)
         {
             text::TextBuilder b;

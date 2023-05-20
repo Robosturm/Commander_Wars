@@ -217,8 +217,8 @@ void HeavyAi::endTurn()
 {
     m_aiStep = AISteps::moveUnits;
     turnMode = GameEnums::AiTurnMode_EndOfDay;
-    m_pUnits = nullptr;
-    m_pEnemyUnits = nullptr;
+    m_pUnits.free();
+    m_pEnemyUnits.free();
     m_usedPredefinedAi = false;
     spQmlVectorUnit pUnits(m_pPlayer->getUnits());
     spQmlVectorUnit pEnemyUnits(m_pPlayer->getEnemyUnits());
@@ -263,7 +263,7 @@ bool HeavyAi::selectActionToPerform()
         if (target != unit.pUnit->Unit::getPosition())
         {
             oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "HeavyAi::selectActionToPerform action error");
-            unit.m_action = nullptr;
+            unit.m_action.free();
             unit.m_score = 0;
             return false;
         }
@@ -272,7 +272,7 @@ bool HeavyAi::selectActionToPerform()
             m_planedCaptureTargets.push_back(unit.captureTarget);
         }
         emit sigPerformAction(unit.m_action);
-        unit.m_action = nullptr;
+        unit.m_action.free();
         unit.m_score = 0;
         unit.captureTarget = QPoint(-1, -1);
         return true;
@@ -288,13 +288,13 @@ void HeavyAi::setupTurn(const spQmlVectorBuilding & buildings)
     bool startOfTurn = (m_pUnits.get() == nullptr);
     if (m_pEnemyUnits.get() == nullptr)
     {
-        m_pEnemyUnits = m_pPlayer->getEnemyUnits();
+        m_pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
         m_pEnemyUnits->randomize();
         initUnits(m_pEnemyUnits, m_enemyUnits, true);
     }
     if (m_pUnits.get() == nullptr)
     {
-        m_pUnits = m_pPlayer->getUnits();
+        m_pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
         initUnits(m_pUnits, m_ownUnits, false);
     }
     if (startOfTurn)
@@ -353,7 +353,7 @@ void HeavyAi::initUnits(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & un
 void HeavyAi::addNewUnitToUnitData(std::vector<MoveUnitData> & units, Unit* pUnit, bool enemyUnits)
 {
     MoveUnitData data;
-    data.pUnit = pUnit;
+    data.pUnit = spUnit(pUnit);
     data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
     data.movementPoints = data.pUnit->getMovementpoints(data.pUnit->getPosition());
     data.pUnitPfs->setMovepoints(data.movementPoints * 2);
@@ -392,7 +392,7 @@ void HeavyAi::updateUnits(std::vector<MoveUnitData> & units, spQmlVectorUnit & p
         {
             if (units[i].pUnit->getHasMoved())
             {
-                units[i].m_action = nullptr;
+                units[i].m_action.free();
                 units[i].m_score = 0;
             }
             ++i;
@@ -567,7 +567,7 @@ void HeavyAi::scoreActions(MoveUnitData & unit)
             unit.pUnit->getHp() <= 0)
         {
             oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "invalid unit found");
-            unit.m_action = nullptr;
+            unit.m_action.free();
             unit.m_score = 0;
             return;
         }
@@ -604,9 +604,9 @@ void HeavyAi::scoreActions(MoveUnitData & unit)
         else
         {
             unit.m_score = 0.0f;
-            unit.m_action = nullptr;
+            unit.m_action.free();
         }
-        m_currentTargetedPfs = nullptr;
+        m_currentTargetedPfs.free();
     }
 }
 
@@ -1324,9 +1324,9 @@ void HeavyAi::scoreMoveToTargets()
             else
             {
                 unit.m_score = 0.0f;
-                unit.m_action = nullptr;
+                unit.m_action.free();
             }
-            m_currentTargetedPfs = nullptr;
+            m_currentTargetedPfs.free();
         }
     }
 }

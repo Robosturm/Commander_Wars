@@ -54,8 +54,8 @@ namespace oxygine
         rsCache().setDriver(nullptr);
         MaterialCache::mc().clear();
         STDRenderer::release();
-        RenderDelegate::instance = nullptr;
-        VideoDriver::instance = nullptr;
+        RenderDelegate::instance.free();
+        VideoDriver::instance.free();
         Material::null = spMaterial();
         Material::current = spMaterial();
         Input::getInstance().cleanup();

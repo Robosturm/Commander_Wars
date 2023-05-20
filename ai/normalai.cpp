@@ -190,7 +190,7 @@ void NormalAi::process()
     spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
     spQmlVectorUnit pUnits;
-    pUnits = m_pPlayer->getUnits();
+    pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
     spQmlVectorUnit pEnemyUnits;
     spQmlVectorBuilding pEnemyBuildings;
     qint32 cost = 0;
@@ -200,9 +200,9 @@ void NormalAi::process()
     else
     {
         AI_CONSOLE_PRINT("NormalAi::creating unit arrays()", GameConsole::eDEBUG);
-        pEnemyUnits = m_pPlayer->getEnemyUnits();
+        pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
         pEnemyUnits->randomize();
-        pEnemyBuildings = m_pPlayer->getEnemyBuildings();
+        pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
         pEnemyBuildings->randomize();
         updateAllUnitData(pUnits);
         if (useCOPower(pUnits, pEnemyUnits))
@@ -1659,7 +1659,7 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
             {
                 std::vector<CoreAI::DamageData> ret;
                 spQmlVectorPoint firerange;
-                firerange = GlobalUtils::getCircle(pUnitData.minFireRange, pUnitData.maxFireRange);
+                firerange = spQmlVectorPoint(GlobalUtils::getCircle(pUnitData.minFireRange, pUnitData.maxFireRange));
                 CoreAI::getAttackTargetsFast(pUnitData.pUnit.get(), *firerange.get(), pUnitData.pUnitPfs.get(), ret);
 
                 std::vector<Unit*> pUsedUnits;
@@ -2092,7 +2092,7 @@ void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint
     data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
     data.movementPoints = pUnit->getMovementpoints(pos);
     data.maxFireRange = pUnit->getMaxRange(pos);
-    data.pUnit = pUnit;
+    data.pUnit = spUnit(pUnit);
     data.minFireRange = pUnit->getMinRange(pos);
     data.unitCosts = pUnit->getCoUnitValue();
     data.nextAiStep = m_aiFunctionStep;

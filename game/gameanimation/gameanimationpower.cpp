@@ -38,7 +38,7 @@ spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameT
     }
     else
     {
-        animation = m_pGameAnimationPower;
+        animation = spGameAnimationPower(m_pGameAnimationPower);
     }
     return animation;
 }

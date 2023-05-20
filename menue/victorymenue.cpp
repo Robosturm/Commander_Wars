@@ -827,10 +827,7 @@ void VictoryMenue::exitMenue()
 {
     CONSOLE_PRINT("Leaving Victory Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    if (m_pNetworkInterface.get() != nullptr)
-    {
-        m_pNetworkInterface = nullptr;
-    }
+    m_pNetworkInterface.free();
     spCampaign campaign = m_pMap->getSpCampaign();
     if (campaign.get() != nullptr && campaign->getCampaignFinished() == false && !m_isReplay)
     {

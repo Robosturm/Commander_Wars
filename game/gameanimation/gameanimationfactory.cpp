@@ -66,7 +66,7 @@ GameAnimationFactory* GameAnimationFactory::getInstance()
 void GameAnimationFactory::release()
 {
     m_Animations.clear();
-    m_pInstance = nullptr;
+    m_pInstance.free();
 }
 
 GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
@@ -185,8 +185,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
         auto battleViewMode = Settings::getBattleAnimationType();
         if (battleViewMode == GameEnums::BattleAnimationType_Overworld)
         {
-            pRet = createOverworldBattleAnimation(pMap, pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
-                                                  pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
+            pRet = spGameAnimation(createOverworldBattleAnimation(pMap, pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
+                                                                  pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage));
         }
         else
         {
@@ -274,7 +274,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
     else
     {
         // attacking building or terrain
-        pRet = createAnimation(pMap, pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), 70);
+        pRet = spGameAnimation(createAnimation(pMap, pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), 70));
         pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 2.0f);
         pRet->setSound("talongunhit.wav", 1);
     }

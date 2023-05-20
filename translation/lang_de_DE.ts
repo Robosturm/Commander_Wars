@@ -6612,99 +6612,99 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1158"/>
+        <location filename="../menue/gamemenue.cpp" line="1155"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1181"/>
+        <location filename="../menue/gamemenue.cpp" line="1178"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1438"/>
-        <location filename="../menue/gamemenue.cpp" line="2050"/>
-        <location filename="../menue/gamemenue.cpp" line="2087"/>
+        <location filename="../menue/gamemenue.cpp" line="1435"/>
+        <location filename="../menue/gamemenue.cpp" line="2047"/>
+        <location filename="../menue/gamemenue.cpp" line="2084"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1446"/>
+        <location filename="../menue/gamemenue.cpp" line="1443"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1481"/>
+        <location filename="../menue/gamemenue.cpp" line="1478"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1899"/>
+        <location filename="../menue/gamemenue.cpp" line="1896"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1900"/>
+        <location filename="../menue/gamemenue.cpp" line="1897"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1901"/>
+        <location filename="../menue/gamemenue.cpp" line="1898"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1902"/>
+        <location filename="../menue/gamemenue.cpp" line="1899"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1903"/>
+        <location filename="../menue/gamemenue.cpp" line="1900"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1904"/>
+        <location filename="../menue/gamemenue.cpp" line="1901"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1905"/>
+        <location filename="../menue/gamemenue.cpp" line="1902"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1906"/>
+        <location filename="../menue/gamemenue.cpp" line="1903"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1932"/>
+        <location filename="../menue/gamemenue.cpp" line="1929"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1950"/>
+        <location filename="../menue/gamemenue.cpp" line="1947"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2455"/>
+        <location filename="../menue/gamemenue.cpp" line="2452"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2486"/>
+        <location filename="../menue/gamemenue.cpp" line="2483"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2512"/>
+        <location filename="../menue/gamemenue.cpp" line="2509"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2689"/>
+        <location filename="../menue/gamemenue.cpp" line="2686"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7173,14 +7173,14 @@ Note: This may be caused by a defective mod.</source>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="104"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="476"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="473"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="115"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="487"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="535"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="484"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="532"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7195,17 +7195,17 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="518"/>
         <source>Do you want to make the saved ruleset the default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="518"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="518"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>

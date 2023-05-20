@@ -751,7 +751,7 @@ void GameRules::resetWeatherSprites()
         if (sprite.get() != nullptr)
         {
             sprite->detach();
-            sprite = nullptr;
+            sprite.free();
         }
     }
     m_WeatherSprites.clear();
@@ -766,7 +766,7 @@ void GameRules::resetFogSprites()
             if (sprite.get() != nullptr)
             {
                 sprite->detach();
-                sprite = nullptr;
+                sprite.free();
             }
         }
     }
@@ -882,7 +882,7 @@ void GameRules::createFieldFogClear(qint32 x, qint32 y, Player* pPlayer)
     if (m_FogSprites[x][y].get() != nullptr)
     {
         m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y] = nullptr;
+        m_FogSprites[x][y].free();
     }
     if (pUnit != nullptr)
     {
@@ -902,7 +902,7 @@ void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor f
     if (m_FogSprites[x][y].get() != nullptr)
     {
         m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y] = nullptr;
+        m_FogSprites[x][y].free();
     }
     if (pUnit != nullptr)
     {
@@ -930,7 +930,7 @@ void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor f
     else if (m_FogSprites[x][y].get() != nullptr)
     {
         m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y] = nullptr;
+        m_FogSprites[x][y].free();
     }
 }
 
@@ -969,7 +969,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
     else if (m_FogSprites[x][y].get() != nullptr)
     {
         m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y] = nullptr;
+        m_FogSprites[x][y].free();
     }
 }
 
@@ -991,7 +991,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
     if (m_FogSprites[x][y].get() != nullptr)
     {
         m_FogSprites[x][y]->detach();
-        m_FogSprites[x][y] = nullptr;
+        m_FogSprites[x][y].free();
     }
     switch (visible)
     {

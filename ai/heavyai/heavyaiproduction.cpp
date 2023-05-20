@@ -45,7 +45,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
         CONSOLE_PRINT("HeavyAi::buildUnits " + item.buildingDataInput[item.m_selectedData].unitId + " with scored value " + QString::number(bestScore), GameConsole::eDEBUG);
         m_updatePoints.push_back(item.m_action->getTarget());
         emit sigPerformAction(item.m_action);
-        item.m_action = nullptr;
+        item.m_action.free();
         item.m_score = 0;
         if (item.buildingDataInput[item.m_selectedData].unitBuildingDataInput[BuildingEntry::CanAttackImmuneUnitRatio] > 0 ||
             item.buildingDataInput[item.m_selectedData].unitBuildingDataInput[BuildingEntry::UnitsToTransportRatio] > 0)
@@ -92,7 +92,7 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
     double bestScore = 0.0;
     std::vector<qint32> bestItems;
     std::vector<double> scores;
-    building.m_action = nullptr;
+    building.m_action.free();
     building.m_score = 0;
     qint32 coCount = m_pPlayer->getCoCount();
     qint32 maxCoCount = m_pPlayer->getMaxCoCount();

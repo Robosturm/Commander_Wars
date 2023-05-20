@@ -88,7 +88,7 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         m_ActionBuffer.clear();
         CONSOLE_PRINT("AI-Pipe preparing the game", GameConsole::eDEBUG);
         m_pipeState = PipeState::PreparingGame;
-        m_pMenu = pMenu;
+        m_pMenu = spGameMenue(pMenu);
         m_pMap = pMenu->getMap();
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToSlave, Qt::QueuedConnection);
         connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
@@ -122,7 +122,7 @@ void AiProcessPipe::onQuitGame()
     {
         QMutexLocker locker(&m_ActionMutex);
         m_pipeState = PipeState::Ready;
-        m_pMenu = nullptr;
+        m_pMenu.free();
         m_pMap = nullptr;
         m_ActionBuffer.clear();
         QString command = QString(QUITGAME);
@@ -139,8 +139,8 @@ void AiProcessPipe::quit()
     if (m_pActiveConnection != nullptr)
     {
         m_pActiveConnection->disconnectTCP();
-        m_pServer = nullptr;
-        m_pClient = nullptr;
+        m_pServer.free();
+        m_pClient.free();
         m_pActiveConnection = nullptr;
     }
 }
@@ -263,7 +263,7 @@ void AiProcessPipe::onStartGame(QDataStream & stream)
         spGameMenue pMenu = spGameMenue::create(pMap, false, spNetworkInterface());
         oxygine::Stage::getStage()->addChild(pMenu);
         m_pMap = pMap.get();
-        m_pMenu = pMenu.get();
+        m_pMenu = pMenu;
         m_pipeState = PipeState::Ingame;
         QString command = QString(GAMESTARTED);
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToMaster, Qt::QueuedConnection);
@@ -289,7 +289,7 @@ void AiProcessPipe::quitGame()
     {
         m_pMenu->exitGame();
     }
-    m_pMenu = nullptr;
+    m_pMenu.free();
     m_pMap = nullptr;
     m_ActionBuffer.clear();
 }

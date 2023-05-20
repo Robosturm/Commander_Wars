@@ -115,7 +115,7 @@ void CO::setCOUnit(Unit* pUnit)
             }
         }
     }
-    m_pCOUnit = pUnit;
+    m_pCOUnit = spUnit(pUnit);
 }
 
 qreal CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
@@ -2250,8 +2250,8 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+face", pCOAnim));
         }
     }
-    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error);
-    pCOAnim = nullptr;
+    pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error));
+    pCOAnim.free();
     if (pAnim.get() != nullptr)
     {
         oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
@@ -2260,8 +2260,8 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+info", pCOAnim));
         }
     }
-    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error);
-    pCOAnim = nullptr;
+    pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error));
+    pCOAnim.free();
     if (pAnim.get() != nullptr)
     {
         oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
@@ -2270,7 +2270,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+nrm", pCOAnim));
         }
     }
-    pCOAnim = nullptr;
+    pCOAnim.free();
     if (m_pMenu != nullptr)
     {
         m_pMenu->updatePlayerinfo();

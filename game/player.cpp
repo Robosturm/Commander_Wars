@@ -22,7 +22,7 @@ QImage Player::m_neutralTableImage;
 
 void Player::releaseStaticData()
 {
-    m_neutralTableAnim = nullptr;
+    m_neutralTableAnim.free();
 }
 
 Player::Player(GameMap* pMap)
@@ -32,7 +32,7 @@ Player::Player(GameMap* pMap)
     setObjectName("Player");
 #endif
     Interpreter::setCppOwnerShip(this);
-    m_pBaseGameInput = nullptr;
+    m_pBaseGameInput.free();
     // for older versions we allow all loaded units to be buildable
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
@@ -1203,11 +1203,11 @@ void Player::updatePlayerVision(bool reduceTimer)
                     spQmlVectorPoint pPoints;
                     if (visionBlock)
                     {
-                        pPoints = m_pMap->getVisionCircle(x, y, 0, visionRange, pTerrain->getTotalVisionHigh());
+                        pPoints = spQmlVectorPoint(m_pMap->getVisionCircle(x, y, 0, visionRange, pTerrain->getTotalVisionHigh()));
                     }
                     else
                     {
-                        pPoints = GlobalUtils::getCircle(0, visionRange);
+                        pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
                     }
                     for (auto & point : pPoints->getVector())
                     {
@@ -1782,7 +1782,7 @@ void Player::setCO(QString coId, quint8 idx)
     {
         if (coId.isEmpty())
         {
-            m_playerCOs[idx] = nullptr;
+            m_playerCOs[idx].free();
         }
         else
         {
@@ -2237,7 +2237,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
                 m_playerCOs[co]->deserializer(pStream, fast);
                 if (!m_playerCOs[co]->isValid())
                 {
-                    m_playerCOs[co] = nullptr;
+                    m_playerCOs[co].free();
                 }
             }
             ++co;

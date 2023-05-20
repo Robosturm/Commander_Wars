@@ -50,7 +50,7 @@ void Userdata::release()
     m_mapVictoryInfo.clear();
     m_shopItems.clear();
     m_scriptVariableFiles.clear();
-    m_pInstance = nullptr;
+    m_pInstance.free();
 }
 
 qint32 Userdata::getCredtis() const

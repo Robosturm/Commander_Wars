@@ -89,7 +89,7 @@ void MainServer::initDatabase()
 
 void MainServer::release()
 {
-    m_pInstance = nullptr;
+    m_pInstance.free();
 }
 
 MainServer::MainServer()
@@ -1098,7 +1098,7 @@ void MainServer::closeGame(NetworkGame* pGame)
                       " and port " + QString::number(game->game->getData().getSlavePort()), GameConsole::eDEBUG);
         m_freeAddresses.append(freeAddress);
         game->process->kill();
-        game->game = nullptr;
+        game->game.free();
         m_games.removeAt(index);
     }
 }

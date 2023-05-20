@@ -112,7 +112,7 @@ namespace oxygine
     {
         if (!event->target)
         {
-            event->target = this;
+            event->target = spEventDispatcher(this);
         }
         if (!m_enabled)
         {
@@ -124,7 +124,7 @@ namespace oxygine
             auto & listener = m_listeners[i];
             if (listener.type == event->type)
             {
-                event->currentTarget = this;
+                event->currentTarget = spEventDispatcher(this);
                 event->listenerID = listener.id;
                 listener.cb(event);
                 if (event->stopsImmediatePropagation)

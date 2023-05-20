@@ -68,8 +68,8 @@ BaseGamemenu::~BaseGamemenu()
     cursor.setShape(Qt::CursorShape::ArrowCursor);
 #endif
     m_pMap->detach();
-    m_pMap = nullptr;
-    m_MapMover = nullptr;
+    m_pMap.free();
+    m_MapMover.free();
     if (!m_jsName.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();

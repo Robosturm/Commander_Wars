@@ -506,7 +506,7 @@ void Terrain::setBaseTerrain(spTerrain terrain)
     if (m_pBaseTerrain.get() != nullptr)
     {
         m_pBaseTerrain->detach();
-        m_pBaseTerrain = nullptr;
+        m_pBaseTerrain.free();
     }
     if (terrain.get() != nullptr)
     {
@@ -523,7 +523,7 @@ void Terrain::unloadSprites()
     if (m_pTerrainSprite.get() != nullptr)
     {
         m_pTerrainSprite->detach();
-        m_pTerrainSprite = nullptr;
+        m_pTerrainSprite.free();
     }
     for (qint32 i = 0; i < m_pOverlaySprites.size(); i++)
     {
@@ -1189,7 +1189,7 @@ void Terrain::removeBuilding()
                 pTerrain->removeBuilding();
             }
         }
-        m_Building = nullptr;
+        m_Building.free();
     }
 }
 
@@ -1235,7 +1235,7 @@ void Terrain::setUnit(spUnit pUnit)
     {
         m_Unit->setTerrain(nullptr);
         m_Unit->detach();
-        m_Unit = nullptr;
+        m_Unit.free();
     }
     if (pUnit.get() != nullptr)
     {
@@ -1896,7 +1896,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
             }
             else
             {
-                m_pBaseTerrain = nullptr;
+                m_pBaseTerrain.free();
             }
         }
     }
@@ -1918,7 +1918,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_Building = nullptr;
+            m_Building.free();
         }
     }
     bool hasUnit = false;
@@ -1936,7 +1936,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_Unit = nullptr;
+            m_Unit.free();
         }
     }
     if (version > 1)
@@ -2064,5 +2064,5 @@ void Terrain::createBuildingDownStream()
 
 void Terrain::removeDownstream()
 {
-    m_Building = nullptr;
+    m_Building.free();
 }

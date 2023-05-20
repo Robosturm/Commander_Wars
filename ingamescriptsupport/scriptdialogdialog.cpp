@@ -313,6 +313,6 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
     else
     {
         m_backgrounds[index]->setResAnim(nullptr);
-        m_backgroundAnims[index] = nullptr;
+        m_backgroundAnims[index].free();
     }
 }

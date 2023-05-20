@@ -201,7 +201,7 @@ LobbyMenu::LobbyMenu()
     spNetworkInterface pInterface = m_pTCPClient;
     if (Settings::getServer())
     {
-        pInterface = MainServer::getInstance()->getGameServer();
+        pInterface = spNetworkInterface(MainServer::getInstance()->getGameServer());
     }
     qint32 y = m_gamesview->getY() + m_gamesview->getScaledHeight() + 10;
     const qint32 infoWidth = 100;
@@ -348,7 +348,7 @@ void LobbyMenu::enableServerButtons(bool enable)
 
 void LobbyMenu::leaveServer()
 {
-    m_pTCPClient = nullptr;
+    m_pTCPClient.free();
     enableServerButtons(false);
 }
 
@@ -738,7 +738,7 @@ void LobbyMenu::checkVersionAndShowInfo(const QJsonObject & objData)
         spDialogMessageBox pDialogMessageBox;
         pDialogMessageBox = spDialogMessageBox::create(tr("Connection refused. Server has a different version of the game. Server ") + version);
         addChild(pDialogMessageBox);
-        m_pTCPClient = nullptr;
+        m_pTCPClient.free();
     }
 }
 

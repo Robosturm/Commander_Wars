@@ -26,7 +26,7 @@ namespace oxygine
             if (me->mouseButton == MouseButton_Left)
             {
                 event->phase = Event::phase_target;
-                event->target = this;
+                event->target = spEventDispatcher(this);
             }
             else
             {

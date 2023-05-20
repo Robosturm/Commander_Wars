@@ -144,7 +144,7 @@ void WikiView::hideLastPage()
     if (m_lastPage.get() != nullptr)
     {
         m_lastPage->detach();
-        m_lastPage = nullptr;
+        m_lastPage.free();
     }
 }
 

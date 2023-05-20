@@ -10,7 +10,7 @@ namespace oxygine
     SingleResAnim::~SingleResAnim()
     {
         m_frames.clear();
-        m_texture = nullptr;
+        m_texture.free();
     }
 
     void SingleResAnim::init(const QString & file, qint32 columns, qint32 rows, float scaleFactor)
@@ -25,7 +25,7 @@ namespace oxygine
         SpriteCreator::convertToRgba(image);
         m_scaleFactor = scaleFactor;
         m_frames.clear();
-        m_texture = nullptr;
+        m_texture.free();
         m_texture = VideoDriver::instance->createTexture();
         m_texture->init(image);
         m_texture->setClamp2Edge(clamp2Edge);
