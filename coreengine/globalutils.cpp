@@ -549,5 +549,7 @@ qint32 GlobalUtils::roundFloorToInt(qreal value, qreal precision)
 
 void GlobalUtils::sleepMs(qint32 ms)
 {
+    QCoreApplication::processEvents();
     QThread::msleep(ms);
+    QCoreApplication::processEvents();
 }

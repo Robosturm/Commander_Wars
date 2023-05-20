@@ -37,7 +37,6 @@ var Init =
         settings.setDialogAnimationSpeed(100);
         settings.setCaptureAnimationSpeed(100);
 
-
         var current = Init.step;
         if (current < Init.steps.length)
         {
@@ -318,7 +317,8 @@ var Init =
             {
                 menu.getMap().getPlayer(0).getCO(0).activateSuperpower(GameEnums.PowerMode_Superpower);
             }
-            menu.changeAiForPlayer(GameEnums.AiTypes_Normal);
+            menu.getMap().setIsHumanMatch(false);
+            menu.changeAiForPlayer(0, GameEnums.AiTypes_Normal);
             let ids = coSpriteManager.getCoIds();
             if (Init.currentCoTest >= ids.length)
             {
@@ -340,7 +340,7 @@ var Init =
             menu.showExitGame();
             menu.showSurrenderGame();
             menu.showSaveAndExitGame();
-            var wikiView = menu.showWiki();
+            let wikiView = menu.showWiki();
             wikiView.tagChanged(0);
             wikiView.showPage("CO_ANDY");
             wikiView.showPage("MECH");

@@ -259,11 +259,6 @@ public:
      */
     void limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY);
     /**
-     * @brief setIsHumanMatch
-     * @param newIsHumanMatch
-     */
-    void setIsHumanMatch(bool newIsHumanMatch);
-    /**
      * @brief getRowActor
      * @return
      */
@@ -333,6 +328,11 @@ signals:
     void sigShowMovementPlanner();
     void sigShowLoadSaveGame();
 public slots:
+    /**
+     * @brief setIsHumanMatch
+     * @param newIsHumanMatch
+     */
+    void setIsHumanMatch(bool newIsHumanMatch);
     /**
      * @brief applyPaletteToArea
      * @param area
