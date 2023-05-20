@@ -1,4 +1,4 @@
-CO_ADDER.cod2dPowerChargeBonus = 0;
-CO_ADDER.cod2dBonus = 0;
-CO_ADDER.coPowerOffBonus = 0;
-CO_ADDER.coPowerDefBonus = 10;
+CO_ADDER.d2dPowerChargeBonus = 0;
+CO_ADDER.d2dCoZoneBonus = 0;
+CO_ADDER.powerOffBonus = 0;
+CO_ADDER.powerDefBonus = 10;

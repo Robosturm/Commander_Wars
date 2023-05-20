@@ -207,8 +207,10 @@ var Constructor = function()
     };
 
     this.superPowerDamage = 1;
+
     this.powerOffBonus = 20;
     this.powerDefBonus = 20;
+
     this.d2dCoZoneOffBonus = 20;
     this.d2dCoZoneDefBonus = 20;
 

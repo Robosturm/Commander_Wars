@@ -147,13 +147,13 @@ var Constructor = function()
     this.powerDefBonus = 200;
     this.powerDefBaseBonus = 10;
 
-    this.d2DOffBonus = 0;
-    this.d2DDefBonus = 0;
+    this.d2dOffBonus = 0;
+    this.d2dDefBonus = 0;
 
-    this.d2DCoZoneDefBonus = 40;
-    this.d2DCoZoneDefBaseBonus = 10;
-    this.d2DCoZoneOffBonus = 30;
-    this.d2DCoZoneOffBaseBonus = 10;
+    this.d2dCoZoneDefBonus = 40;
+    this.d2dCoZoneDefBaseBonus = 10;
+    this.d2dCoZoneOffBonus = 30;
+    this.d2dCoZoneOffBaseBonus = 10;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -180,13 +180,13 @@ var Constructor = function()
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
-                        return CO_WAYLON.d2DCoZoneOffBonus;
+                        return CO_WAYLON.d2dCoZoneOffBonus;
                     }
-                    return CO_WAYLON.d2DCoZoneOffBaseBonus;
+                    return CO_WAYLON.d2dCoZoneOffBaseBonus;
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return CO_WAYLON.d2DOffBonus;
+                    return CO_WAYLON.d2dOffBonus;
                 }
                 break;
             }
@@ -219,13 +219,13 @@ var Constructor = function()
                 {
                     if (defender.getUnitType() === GameEnums.UnitType_Air)
                     {
-                        return CO_WAYLON.d2DCoZoneDefBonus;
+                        return CO_WAYLON.d2dCoZoneDefBonus;
                     }
-                    return CO_WAYLON.d2DCoZoneDefBaseBonus;
+                    return CO_WAYLON.d2dCoZoneDefBaseBonus;
                 }
                 else if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return CO_WAYLON.d2DDefBonus;
+                    return CO_WAYLON.d2dDefBonus;
                 }
                 break;
             }
@@ -275,7 +275,7 @@ var Constructor = function()
     {
         let text = qsTr("\nSpecial Unit:\nKirov\n\nGlobal Effect: \nAir Units have %0% increased firepower and %1% increased defense.") +
                    qsTr("\n\nCO Zone Effect: \nAir Units have %2% increased firepower and %3% increased defense.");
-        text = replaceTextArgs(text, [CO_WAYLON.d2DOffBonus, CO_WAYLON.d2DDefBonus, CO_WAYLON.d2DCoZoneOffBonus, CO_WAYLON.d2DCoZoneDefBonus]);
+        text = replaceTextArgs(text, [CO_WAYLON.d2dOffBonus, CO_WAYLON.d2dDefBonus, CO_WAYLON.d2dCoZoneOffBonus, CO_WAYLON.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

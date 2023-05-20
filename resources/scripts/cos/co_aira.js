@@ -192,10 +192,12 @@ var Constructor = function()
     };
     this.superPowerDamage = 3;
     this.superPowerMovementCostIncrease = 1;
+
     this.powerFuelIncrease = 5;
     this.powerOffBonus = 20;
     this.powerDefBonus = 20;
-    this.coZoneBonus = 20;
+
+    this.d2dCoZoneBonus = 20;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -212,7 +214,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return CO_AIRA.coZoneBonus;
+                    return CO_AIRA.d2dCoZoneBonus;
                 }
                 break;
             }
@@ -240,7 +242,7 @@ var Constructor = function()
         {
             if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
-                return CO_AIRA.coZoneBonus;
+                return CO_AIRA.d2dCoZoneBonus;
             }
             else if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
@@ -285,7 +287,7 @@ var Constructor = function()
     {
         var text = qsTr("\nGlobal Effect: \nNo bonus.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
-        text = replaceTextArgs(text, [CO_AIRA.coZoneBonus]);
+        text = replaceTextArgs(text, [CO_AIRA.d2dCoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

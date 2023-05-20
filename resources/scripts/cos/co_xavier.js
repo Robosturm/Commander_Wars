@@ -146,7 +146,7 @@ var Constructor = function()
     this.d2dCoZoneFirepowerBonus = 20;
     this.d2dCoZoneDefBonus = 10;
 
-    this.minLuckHp = 5;
+    this.d2dMinLuckHp = 5;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -226,19 +226,19 @@ var Constructor = function()
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
                     return hpRounded / 2;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
                     return CO_XAVIER.powerLuckDamage + hpRounded / 2;
                 }
                 return CO_XAVIER.powerLuckDamage;
             default:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
                     return hpRounded / 2;
                 }
@@ -256,19 +256,19 @@ var Constructor = function()
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
                     return -hpRounded;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
                     return -CO_XAVIER.powerLuckDamage + -hpRounded;
                 }
                 break;
             default:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
                     return -hpRounded;
                 }
@@ -297,14 +297,14 @@ var Constructor = function()
     this.getCODescription = function(co)
     {
         var text = qsTr("When Xavier's units drop to %0 HP or less, they are able to strike for maximum luck damage.");
-        text = replaceTextArgs(text, [CO_XAVIER.minLuckHp]);
+        text = replaceTextArgs(text, [CO_XAVIER.d2dMinLuckHp]);
         return text;
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nGlobal Effect: \nUnits with %0 HP or less deal maximum luck damage.") +
                    qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %1% and defence by %2%.");
-        text = replaceTextArgs(text, [CO_XAVIER.minLuckHp, CO_XAVIER.d2dCoZoneFirepowerBonus, CO_XAVIER.d2dCoZoneDefBonus]);
+        text = replaceTextArgs(text, [CO_XAVIER.d2dMinLuckHp, CO_XAVIER.d2dCoZoneFirepowerBonus, CO_XAVIER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

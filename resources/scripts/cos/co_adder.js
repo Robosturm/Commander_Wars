@@ -135,14 +135,15 @@ var Constructor = function()
         return 1;
     };
 
-    this.cod2dPowerChargeBonus = 20;
-    this.cod2dBonus = 20;
+    this.d2dPowerChargeBonus = 20;
 
-    this.coPowerOffBonus = 20;
-    this.coPowerDefBonus = 20;
-    this.coPowerMovement = 1;
+    this.d2dCoZoneBonus = 20;
 
-    this.coSuperPowerMovement = 2;
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 20;
+    this.powerMovement = 1;
+
+    this.superPowerMovement = 2;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
@@ -153,13 +154,13 @@ var Constructor = function()
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return CO_ADDER.coPowerOffBonus;
+                return CO_ADDER.powerOffBonus;
             case GameEnums.PowerMode_Power:
-                return CO_ADDER.coPowerOffBonus;
+                return CO_ADDER.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return CO_ADDER.cod2dBonus;
+                    return CO_ADDER.d2dCoZoneBonus;
                 }
                 break;
             }
@@ -173,11 +174,11 @@ var Constructor = function()
         {
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                return CO_ADDER.coPowerDefBonus;
+                return CO_ADDER.powerDefBonus;
             }
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
-                return CO_ADDER.cod2dBonus;
+                return CO_ADDER.d2dCoZoneBonus;
             }
         }
         return 0;
@@ -189,11 +190,11 @@ var Constructor = function()
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
                     co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
-                return CO_ADDER.coSuperPowerMovement;
+                return CO_ADDER.superPowerMovement;
             }
             else if (co.getPowerMode() === GameEnums.PowerMode_Power)
             {
-                return CO_ADDER.coPowerMovement;
+                return CO_ADDER.powerMovement;
             }
         }
         return 0;
@@ -203,7 +204,7 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            return CO_ADDER.cod2dPowerChargeBonus;
+            return CO_ADDER.d2dPowerChargeBonus;
         }
         return 0;
     };
@@ -246,13 +247,13 @@ var Constructor = function()
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
                    qsTr("\nGlobal Effect: \nPower charge is increased by %1%.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
-        text = replaceTextArgs(text, [CO_ADDER.coZoneBonus, CO_ADDER.cod2dPowerChargeBonus]);
+        text = replaceTextArgs(text, [CO_ADDER.coZoneBonus, CO_ADDER.d2dPowerChargeBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
         var text = qsTr("Movement range for all units is increased by %0 space and firepower by %1% and defence by %2%.");
-        text = replaceTextArgs(text, [CO_ADDER.coPowerMovement, CO_ADDER.coPowerOffBonus, CO_ADDER.coPowerDefBonus]);
+        text = replaceTextArgs(text, [CO_ADDER.powerMovement, CO_ADDER.powerOffBonus, CO_ADDER.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -262,7 +263,7 @@ var Constructor = function()
     this.getSuperPowerDescription = function(co)
     {
         var text = qsTr("Movement range for all units is increased by %0 spaces and firepower by %1% and defence by %2%");
-        text = replaceTextArgs(text, [CO_ADDER.coSuperPowerMovement, CO_ADDER.coPowerOffBonus, CO_ADDER.coPowerDefBonus]);
+        text = replaceTextArgs(text, [CO_ADDER.superPowerMovement, CO_ADDER.powerOffBonus, CO_ADDER.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

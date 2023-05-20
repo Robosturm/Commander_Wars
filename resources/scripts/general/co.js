@@ -656,7 +656,7 @@ var CO =
 
     isActive : function(co)
     {
-        let map = owner.getMap();
+        let map = co.getMap();
         if (map !== null)
         {
             if (map.getGameRules().getParallelCos())

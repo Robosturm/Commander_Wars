@@ -238,12 +238,15 @@ var Constructor = function()
     this.superPowerHealRadius = 2;
     this.superPowerDamage = 3;
     this.superPowerDamageRadius = 1;
+
     this.powerOffBonus = 30;
     this.powerOffBaseBonus = 15;
     this.powerDefBonus = 15;
     this.powerHeal = 3;
     this.powerRadius = 2;
-    this.coZoneBonus = 15;
+
+    this.d2dCoZoneBonus = 15;
+
     this.d2dHealBonus = 1;
     this.d2dHealRadius = 1;
     this.d2dHealMalus = 1;
@@ -290,7 +293,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return CO_ALEXIS.coZoneBonus;
+                    return CO_ALEXIS.d2dCoZoneBonus;
                 }
             }
         }
@@ -308,7 +311,7 @@ var Constructor = function()
             }
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
-                return CO_ALEXIS.coZoneBonus;
+                return CO_ALEXIS.d2dCoZoneBonus;
             }
         }
         return 0;
@@ -435,7 +438,7 @@ var Constructor = function()
         let text = qsTr("\nSpecial Unit:\nRepair Tank\n") +
                    qsTr("\nGlobal Effect: \nUnits heal only %0 HP while on an owned property, however, units will still heal from any owned property within %1 space of a unit by %2 HP. This effect stacks with each additional nearby property.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
-        text = replaceTextArgs(text, [CO_ALEXIS.d2dHealMalus, CO_ALEXIS.d2dHealBonus,  CO_ALEXIS.d2dHealBonus, CO_ALEXIS.coZoneBonus]);
+        text = replaceTextArgs(text, [CO_ALEXIS.d2dHealMalus, CO_ALEXIS.d2dHealBonus,  CO_ALEXIS.d2dHealBonus, CO_ALEXIS.d2dCoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
