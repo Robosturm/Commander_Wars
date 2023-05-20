@@ -40,7 +40,6 @@ var Init =
         var current = Init.step;
         if (current < Init.steps.length)
         {
-            ++Init.step;
             Init[steps[current]](menu);
         }
         else
@@ -91,6 +90,7 @@ var Init =
     creditsTest = function(menu)
     {
         menu.enterCreditsmenue();
+        ++Init.step;
     },
     creditsMenu = function(menu)
     {
@@ -99,6 +99,7 @@ var Init =
     achievementTest = function(menu)
     {
         menu.enterAchievementmenue();
+        ++Init.step;
     },
     achievementMenu = function(menu)
     {
@@ -130,7 +131,8 @@ var Init =
         else  if (Init.optionTestCount === 6)
         {
             menu.enterOptionmenue("ui/options/optionnetworkmenu.xml");
-        }        
+        }
+        ++Init.step;
     },
     optionMenu = function(menu)
     {
@@ -139,6 +141,7 @@ var Init =
     wikiTest = function(menu)
     {
         menu.enterWikimenue();
+        ++Init.step;
     },
     wikiMenu = function(menu)
     {
@@ -195,6 +198,7 @@ var Init =
     shopTest = function(menu)
     {
         menu.enterShopMenu();
+        ++Init.step;
     },
     shopMenu = function(menu)
     {
@@ -203,6 +207,7 @@ var Init =
     coStyleTest = function(menu)
     {
         menu.enterCOStyleMenu();
+        ++Init.step;
     },
     coStyleMenu = function(menu)
     {
@@ -213,6 +218,7 @@ var Init =
     mapEditorTest = function(menu)
     {
         menu.enterEditor();
+        ++Init.step;
     },
     mapEditorMenu = function(menu)
     {
@@ -285,6 +291,7 @@ var Init =
             selection.playerCO1Changed("CO_RANDOM", 1);
             selection.playerCO2Changed("CO_RANDOM", 1);
             menu.startGame();
+            ++Init.step;
         }
         else
         {
@@ -303,6 +310,7 @@ var Init =
             selection.playerCO1Changed("CO_RANDOM", 1);
             selection.playerCO2Changed("CO_RANDOM", 1);
             menu.startGame();
+            ++Init.step;
         }
     },
     gameMenu = function(menu)

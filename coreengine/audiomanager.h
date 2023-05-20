@@ -13,7 +13,12 @@
 #include <QIODevice>
 #include <QTimer>
 
-class AudioManager final : public QObject
+#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
+
+class AudioManager;
+using spAudioManager = oxygine::intrusive_ptr<AudioManager>;
+
+class AudioManager final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 private:

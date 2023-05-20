@@ -229,7 +229,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             pLoadingScreen->moveToThread(m_Workerthread.get());
 #ifdef AUDIOSUPPORT
             m_audioThread->start(QThread::Priority::HighestPriority);
-            m_AudioManager.reset(new AudioManager(m_noAudio));
+            m_AudioManager = spAudioManager::create(m_noAudio);
             m_AudioManager->moveToThread(m_audioThread.get());
             m_AudioManager->initAudio();
             m_AudioManager->clearPlayList();
@@ -384,7 +384,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::Sound:
         {
             redrawUi();
-            if (!m_noAudio && !m_AudioManager.isNull())
+            if (!m_noAudio && m_AudioManager.get() != nullptr)
             {
                 m_AudioManager->createSoundCache();
             }
@@ -864,11 +864,10 @@ void Mainapp::onQuit()
     QCoreApplication::processEvents();
     m_aiProcessPipe.free();
 #ifdef AUDIOSUPPORT
-    if (!m_AudioManager.isNull())
+    if (m_AudioManager.get() != nullptr)
     {
         m_AudioManager->stopAudio();
-        m_AudioManager->moveToThread(QThread::currentThread());
-        m_AudioManager.reset(nullptr);
+        m_AudioManager.free();
     }
     if (m_audioThread->isRunning())
     {
