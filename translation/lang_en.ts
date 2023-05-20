@@ -21230,27 +21230,27 @@ During sandstorm she gets additionally %3 improved firerange for her indirects.
 <context>
     <name>co_peter</name>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="263"/>
         <source>A veteran CO with over 30 years of experience, mostly from the plains of Cosmo Land. Cautious but decisive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="267"/>
         <source>Electric razors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="271"/>
         <source>Excuses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="275"/>
         <source>Peter&apos;s units plow through enemy direct-combat units with ease. However, thicker terrain weakens his attacks.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="279"/>
         <source>
 Special Unit:
 Royal Guard
@@ -21258,14 +21258,14 @@ Royal Guard
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="280"/>
         <source>
 Global Effect: 
 Direct Units have increased firepower and loose additional firepower per terrain star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="278"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="281"/>
         <source>
 
 CO Zone Effect: 
@@ -21273,82 +21273,82 @@ Direct Units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="286"/>
         <source>Firepower is greatly increased against enemy direct-combat units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="290"/>
         <source>General Offensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="294"/>
         <source>Enemy units not on a property suffer 2 HP of damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="298"/>
         <source>Bombing Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="299"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="302"/>
         <source>We&apos;re going in, boys. Wait for the signal, then strike!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="303"/>
         <source>You won&apos;t even have time to take cover.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="304"/>
         <source>It&apos;s time to tear through their tanks.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="305"/>
         <source>Bogged down? Me? Ha! You seriously overestimate yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="303"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="306"/>
         <source>I&apos;ve been down there with the grunts... I know what&apos;s feasible and what&apos;s not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="307"/>
         <source>I may not be unbeatable, but you&apos;re obviously not either.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="308"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="311"/>
         <source>Experience is the key to my success.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="312"/>
         <source>I hope you learned something from this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="313"/>
         <source>What did you think you were doing with those tanks?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="317"/>
         <source>Your tanks were better than mine.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="318"/>
         <source>You&apos;re never to old to learn some new moves.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="322"/>
         <source>Peter</source>
         <translation type="unfinished"></translation>
     </message>

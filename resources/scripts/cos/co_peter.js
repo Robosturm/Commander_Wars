@@ -214,7 +214,10 @@ var Constructor = function()
                 }
                 break;
             }
-            bonus -= defender.getTerrainDefense() * CO_PETER.d2dTerrainMalus;
+            if (defender !== null)
+            {
+                bonus -= defender.getTerrainDefense() * CO_PETER.d2dTerrainMalus;
+            }
             return bonus;
         }
         return 0;

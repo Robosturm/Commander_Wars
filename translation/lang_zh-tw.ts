@@ -22721,27 +22721,27 @@ During sandstorm she gets additionally %3 improved firerange for her indirects.
 <context>
     <name>co_peter</name>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="263"/>
         <source>A veteran CO with over 30 years of experience, mostly from the plains of Cosmo Land. Cautious but decisive.</source>
         <translation>一位有著超過 30 年經驗的老將指揮官,主要在Cosmo Land的平原上作戰.謹慎但果斷.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="267"/>
         <source>Electric razors</source>
         <translation>電動剃須刀</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="271"/>
         <source>Excuses</source>
         <translation>藉口</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="275"/>
         <source>Peter&apos;s units plow through enemy direct-combat units with ease. However, thicker terrain weakens his attacks.</source>
         <translation>Peter 的軍隊能輕鬆突破敵方的直接戰鬥部隊.但在較厚的地形上攻擊能力會減弱.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="279"/>
         <source>
 Special Unit:
 Royal Guard
@@ -22752,7 +22752,7 @@ Royal Guard
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="280"/>
         <source>
 Global Effect: 
 Direct Units have increased firepower and loose additional firepower per terrain star.</source>
@@ -22761,7 +22761,7 @@ Direct Units have increased firepower and loose additional firepower per terrain
 直接戰鬥單位擁有增強的火力,並且每1個地形星會讓它們失去額外的火力.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="278"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="281"/>
         <source>
 
 CO Zone Effect: 
@@ -22772,82 +22772,82 @@ CO區域效果:
 直接戰鬥單位的火力增加.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="286"/>
         <source>Firepower is greatly increased against enemy direct-combat units.</source>
         <translation>對敵方直接戰鬥單位的火力大幅提升.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="290"/>
         <source>General Offensive</source>
         <translation>總攻</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="294"/>
         <source>Enemy units not on a property suffer 2 HP of damage.</source>
         <translation>敵軍單位若不在建築物上,則會受到2點傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="298"/>
         <source>Bombing Run</source>
         <translation>轟炸運行</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="299"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="302"/>
         <source>We&apos;re going in, boys. Wait for the signal, then strike!</source>
         <translation>我們進去了,孩子們.等待信號､然後罷工!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="303"/>
         <source>You won&apos;t even have time to take cover.</source>
         <translation>你甚至沒有時間躲起來.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="304"/>
         <source>It&apos;s time to tear through their tanks.</source>
         <translation>是時候撕破他們的坦克了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="305"/>
         <source>Bogged down? Me? Ha! You seriously overestimate yourself.</source>
         <translation>越陷越深?我?哈!你嚴重高估了自己.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="303"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="306"/>
         <source>I&apos;ve been down there with the grunts... I know what&apos;s feasible and what&apos;s not.</source>
         <translation>我和那些咕嚕咕嚕的人一起去過那裡...我知道什麼是可行的,什麼是不可行的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="307"/>
         <source>I may not be unbeatable, but you&apos;re obviously not either.</source>
         <translation>我可能不是無敵的,但你顯然也不是.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="308"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="311"/>
         <source>Experience is the key to my success.</source>
         <translation>經驗是我成功的關鍵.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="312"/>
         <source>I hope you learned something from this.</source>
         <translation>我希望你能從中學到一些東西.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="313"/>
         <source>What did you think you were doing with those tanks?</source>
         <translation>你以為你在用那些坦克做什麼?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="317"/>
         <source>Your tanks were better than mine.</source>
         <translation>你的坦克比我的好.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="318"/>
         <source>You&apos;re never to old to learn some new moves.</source>
         <translation>你永遠不會老去學習一些新動作.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="322"/>
         <source>Peter</source>
         <translation>Peter</translation>
     </message>

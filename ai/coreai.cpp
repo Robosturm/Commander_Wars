@@ -707,7 +707,7 @@ bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain, float damage) const
     {
         Building* pBuilding = pTerrain->getBuilding();
         if ((m_enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
-            (pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() != nullptr && pBuilding->getOwner() != m_pPlayer) ||
+            (pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() != nullptr && pBuilding->getOwner()->isEnemy(m_pPlayer)) ||
             (m_enableNeutralTerrainAttack && pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() == nullptr))
         {
             return true;

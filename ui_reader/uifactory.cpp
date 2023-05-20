@@ -180,6 +180,16 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                         success = true;
                         oxygine::spActor root = oxygine::spActor::create();                        
                         auto rootElement = document.documentElement();
+
+                        bool overwrite = false;
+                        QVariant value = QVariant(rootElement.attribute("overwrite"));
+                        if (value.typeId() == QMetaType::QString &&
+                            !value.isNull() &&
+                            rootElement.hasAttribute("overwrite"))
+                        {
+                            overwrite = value.toBool();
+                        }
+
                         auto node = rootElement.firstChild();
                         while (!node.isNull())
                         {
@@ -204,11 +214,14 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
                         if (success)
                         {
                             pMenu->addFactoryUiItem(root);
-                            break;
                         }
                         else
                         {
                             CONSOLE_PRINT("Unable to load: " + uiFile, GameConsole::eERROR);
+                        }
+                        if (overwrite)
+                        {
+                            break;
                         }
                     }
                     else

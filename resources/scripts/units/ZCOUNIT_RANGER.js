@@ -127,8 +127,8 @@ var Constructor = function()
             if (indirectToUse !== null)
             {
                 indirectToUse.setHasMoved(true);
-                var targetDamage = Global[indirectToUse.getWeapon1ID()].getBaseDamage(defender);
-                var targetDamage2 = Global[indirectToUse.getWeapon2ID()].getBaseDamage(defender);
+                var targetDamage = Global[indirectToUse.getWeapon1ID()].getBaseDamage(otherUnit);
+                var targetDamage2 = Global[indirectToUse.getWeapon2ID()].getBaseDamage(otherUnit);
                 if  (targetDamage2 > targetDamage)
                 {
                     indirectToUse.reduceAmmo1(1);
