@@ -24,6 +24,7 @@ VictoryRule::VictoryRule(QString ruleID, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("VictoryRule");
 #endif
+    Interpreter::setCppOwnerShip(this);
     init();
 }
 

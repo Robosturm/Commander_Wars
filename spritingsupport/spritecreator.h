@@ -6,9 +6,8 @@
 
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
-class SpriteCreator : public QObject
+class SpriteCreator
 {
-    Q_OBJECT
     static const qint32 colorBoxSize;
 public:
     /**

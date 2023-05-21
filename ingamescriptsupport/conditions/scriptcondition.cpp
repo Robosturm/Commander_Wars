@@ -15,6 +15,7 @@
 #include "ingamescriptsupport/conditions/scriptconditionisco.h"
 
 #include "coreengine/gameconsole.h"
+#include "coreengine/interpreter.h"
 
 const char* const ScriptCondition::ConditionVictory = "Victory";
 const char* const ScriptCondition::ConditionStartOfTurn = "Start Of Turn";
@@ -35,6 +36,7 @@ ScriptCondition::ScriptCondition(GameMap* pMap, ConditionType type)
     : m_Type(type),
       m_pMap(pMap)
 {
+    Interpreter::setCppOwnerShip(this);
 }
 
 ScriptCondition *ScriptCondition::getParent() const

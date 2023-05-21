@@ -1,5 +1,11 @@
 #include "game/gameanimation/animationskipper.h"
 #include "coreengine/settings.h"
+#include "coreengine/interpreter.h"
+
+AnimationSkipper::AnimationSkipper()
+{
+    Interpreter::setCppOwnerShip(this);
+}
 
 void AnimationSkipper::startSeeking()
 {

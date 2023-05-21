@@ -1,15 +1,18 @@
 #include "multiplayer/password.h"
 
 #include "coreengine/filesupport.h"
+#include "coreengine/interpreter.h"
 #include <QCryptographicHash>
 
 Password::Password()
 {
+    Interpreter::setCppOwnerShip(this);
     setPassword("");
 }
 
 Password::Password(QString password)
 {
+    Interpreter::setCppOwnerShip(this);
     setPassword(password);
 }
 
@@ -18,6 +21,7 @@ Password::Password(const Password & password)
       m_password(password.m_password),
       m_isSet(password.m_isSet)
 {
+    Interpreter::setCppOwnerShip(this);
 }
 
 void Password::serializeObject(QDataStream& pStream) const

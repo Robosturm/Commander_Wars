@@ -13,6 +13,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 #include "coreengine/gameconsole.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/LUPDATE_MACROS.h"
 
 class Serializable;
@@ -50,6 +51,7 @@ public:
           m_isConnected(false)
 
     {
+        Interpreter::setCppOwnerShip(this);
         connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
         connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
     }

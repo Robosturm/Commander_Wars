@@ -18,6 +18,7 @@ NetworkGame::NetworkGame(QObject* pParent, const QString & serverName)
       m_serverName(serverName)
 
 {
+    Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Creating NetworkGame " + m_serverName, GameConsole::eDEBUG);
     connect(&m_closeTimer, &QTimer::timeout, this, &NetworkGame::closeTimerExpired, Qt::QueuedConnection);
 }

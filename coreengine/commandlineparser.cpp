@@ -88,6 +88,7 @@ CommandLineParser::CommandLineParser()
       m_mailServerAuthMethod(ARG_MAILSERVERAUTHMETHOD, tr("Mail server authentication type (Plain, Login) for the server for sending mails to accounts."), tr("method"), ""),
       m_serverSaveFile(ARG_SERVERSAVEFILE, tr("Path to the server game save file"), tr("path"), "")
 {
+    Interpreter::setCppOwnerShip(this);
     m_parser.setApplicationDescription("Commander Wars game");
     m_parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     m_parser.addHelpOption();

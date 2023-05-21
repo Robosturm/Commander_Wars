@@ -1,5 +1,12 @@
 #include "game/ui/customcoboostinfo.h"
 
+#include "coreengine/interpreter.h"
+
+CustomCoBoostInfo::CustomCoBoostInfo()
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
 const QString &CustomCoBoostInfo::getIconId() const
 {
     return m_iconId;

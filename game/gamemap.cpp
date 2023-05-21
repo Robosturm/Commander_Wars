@@ -49,6 +49,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
 #endif
+    Interpreter::setCppOwnerShip(this);
     m_headerInfo.m_mapAuthor = Settings::getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
@@ -63,6 +64,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
 #endif
+    Interpreter::setCppOwnerShip(this);
     loadMapData();
     deserializer(stream, false);
     m_loaded = true;
@@ -76,6 +78,7 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
 #endif
+    Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Loading map: " + map, GameConsole::eDEBUG);
     loadMapData();
     loadMap(map, onlyLoad, fast, savegame);

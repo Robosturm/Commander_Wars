@@ -102,6 +102,7 @@ UiFactory* UiFactory::m_pUiFactory{nullptr};
 
 UiFactory::UiFactory()
 {
+    Interpreter::setCppOwnerShip(this);
     setObjectName("UiFactory");
     m_factoryItems.append({QString(itemLabel), std::bind(&UiFactory::createLabel, this, _1, _2, _3, _4, _5)});
     m_factoryItems.append({QString(itemCheckbox), std::bind(&UiFactory::createCheckbox, this, _1, _2, _3, _4, _5)});

@@ -22,6 +22,7 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
 #ifdef GRAPHICSUPPORT
     setObjectName("COInfoActor");
 #endif
+    Interpreter::setCppOwnerShip(this);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

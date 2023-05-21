@@ -14,6 +14,11 @@ static constexpr double DOUBLE_EPSILON = 0.5;
 static constexpr float FLOAT_EPSILON = 0.5f;
 QScopedPointer<GlobalUtils> GlobalUtils::m_pInstace;
 
+GlobalUtils::GlobalUtils()
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
 void GlobalUtils::setup()
 {
     m_pInstace.reset(new GlobalUtils());

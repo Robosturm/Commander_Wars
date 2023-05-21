@@ -1,6 +1,7 @@
 #include "ingamescriptsupport/scriptdata.h"
 
 #include "coreengine/gameconsole.h"
+#include "coreengine/interpreter.h"
 
 const char* const ScriptData::victoryInfo = "victoryInfo";
 const char* const ScriptData::immediateStart = "immediateStart";
@@ -17,6 +18,7 @@ quint32 ScriptData::m_variableCounter = 0;
 ScriptData::ScriptData(GameMap* pMap)
     : m_pMap(pMap)
 {
+    Interpreter::setCppOwnerShip(this);
 }
 
 void ScriptData::clearData()

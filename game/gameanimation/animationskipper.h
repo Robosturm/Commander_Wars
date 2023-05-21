@@ -8,7 +8,7 @@ class AnimationSkipper final : public QObject
 {
     Q_OBJECT
 public:
-    explicit AnimationSkipper() = default;
+    explicit AnimationSkipper();
     ~AnimationSkipper() = default;
     void startSeeking();
     static void disableAllAnimations();

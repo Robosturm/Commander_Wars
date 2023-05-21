@@ -162,7 +162,7 @@ public slots:
      */
     static void sleepMs(qint32 ms);
 private:
-    explicit GlobalUtils() = default;
+    explicit GlobalUtils();
 private:
     static QScopedPointer<GlobalUtils> m_pInstace;
     QRandomGenerator m_randGenerator;

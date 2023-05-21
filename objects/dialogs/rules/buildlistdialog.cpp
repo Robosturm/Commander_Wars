@@ -28,6 +28,7 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
 #ifdef GRAPHICSUPPORT
     setObjectName("BuildListDialog");
 #endif
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
