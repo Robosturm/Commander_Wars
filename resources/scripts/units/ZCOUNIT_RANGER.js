@@ -121,14 +121,24 @@ var Constructor = function()
     {
         if (weapon === 1 && gotAttacked === false)
         {
-            var unitPos = unit.getPosition();
-            var enemyPos = otherUnit.getPosition();
-            var indirectToUse = ZCOUNIT_RANGER.getIndirectToUse(unit, unitPos.x, unitPos.y, enemyPos.x, enemyPos.y, map);
+            let unitPos = unit.getPosition();
+            let enemyPos = otherUnit.getPosition();
+            let indirectToUse = ZCOUNIT_RANGER.getIndirectToUse(unit, unitPos.x, unitPos.y, enemyPos.x, enemyPos.y, map);
             if (indirectToUse !== null)
             {
                 indirectToUse.setHasMoved(true);
-                var targetDamage = Global[indirectToUse.getWeapon1ID()].getBaseDamage(otherUnit);
-                var targetDamage2 = Global[indirectToUse.getWeapon2ID()].getBaseDamage(otherUnit);
+                let targetDamage = 0;
+                if (indirectToUse.getWeapon1ID() !== undefined &&
+                    indirectToUse.getWeapon1ID() !== null)
+                {
+                    targetDamage = Global[indirectToUse.getWeapon1ID()].getBaseDamage(otherUnit);
+                }
+                let targetDamage2 = 0;
+                if (indirectToUse.getWeapon2ID() !== undefined &&
+                    indirectToUse.getWeapon2ID() !== null)
+                {
+                    targetDamage2 = Global[indirectToUse.getWeapon2ID()].getBaseDamage(otherUnit);
+                }
                 if  (targetDamage2 > targetDamage)
                 {
                     indirectToUse.reduceAmmo1(1);
