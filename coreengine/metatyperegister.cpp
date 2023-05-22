@@ -236,8 +236,9 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<AutoMatchMaker>("AutoMatchMaker", 1);
     qmlRegisterInterface<Multiplayermenu>("Multiplayermenu", 1);
     qmlRegisterInterface<NetworkGameDataView>("NetworkGameDataView", 1);
-
+#ifdef AUDIOSUPPORT
     qmlRegisterInterface<SoundData>("SoundData", 1);
+#endif
     qmlRegisterInterface<AudioManager>("AudioManager", 1);
 
     // objects
