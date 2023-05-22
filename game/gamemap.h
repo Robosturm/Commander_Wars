@@ -315,7 +315,6 @@ signals:
     void sigShowGameInfo(qint32 player);
     void sigShowAttackLog(qint32 player);
     void sigShowUnitInfo(qint32 player);
-    void sigQueueAction(spGameAction pAction, bool fromAiPipe = false);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
     void sigShowXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
@@ -453,16 +452,6 @@ public slots:
      * @return
      */
     QStringList getAllUnitIDs();
-    /**
-     * @brief createAction
-     * @return
-     */
-    spGameAction createAction();
-    /**
-     * @brief queueAction
-     * @param pAction
-     */
-    void queueAction(spGameAction pAction);
     /**
      * @brief getGameRecorder
      * @return

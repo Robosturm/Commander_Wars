@@ -1369,7 +1369,7 @@ void GameMenue::loadGameMenue()
     connect(this, &GameMenue::sigLoadSaveGame, this, &GameMenue::loadSaveGame, Qt::QueuedConnection);
     connect(&m_actionPerformer, &ActionPerformer::sigActionPerformed, this, &GameMenue::checkMovementPlanner, Qt::QueuedConnection);
 
-    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, &m_actionPerformer, &ActionPerformer::actionPerformed, Qt::DirectConnection);
+    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, &m_actionPerformer, &ActionPerformer::actionPerformed, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &GameMenue::cursorMoved, Qt::QueuedConnection);
 
@@ -1388,7 +1388,6 @@ void GameMenue::connectMap()
     connect(m_pMap.get(), &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowUnitInfo, this, &GameMenue::showUnitInfo, Qt::QueuedConnection);
-    connect(m_pMap.get(), &GameMap::sigQueueAction, &m_actionPerformer, &ActionPerformer::performAction, Qt::DirectConnection);
     connect(m_pMap.get(), &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowXmlFileDialog, this, &GameMenue::showXmlFileDialog, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowWiki, this, &GameMenue::showWiki, Qt::QueuedConnection);

@@ -406,16 +406,6 @@ QStringList GameMap::getAllUnitIDs()
     return UnitSpriteManager::getInstance()->getLoadedRessources();
 }
 
-spGameAction GameMap::createAction()
-{
-    return spGameAction::create(this);
-}
-
-void GameMap::queueAction(spGameAction pAction)
-{
-    emit sigQueueAction(pAction);
-}
-
 spTerrain GameMap::getSpTerrain(qint32 x, qint32 y)
 {
     if (onMap(x, y))

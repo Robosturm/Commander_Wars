@@ -387,6 +387,9 @@ void ActionPerformer::actionPerformed()
                 m_pMap->getGameRules()->createFogVision();
                 m_actionRunning = false;
                 m_finishedPerformed = false;
+                CONSOLE_PRINT("Storing current map hash", GameConsole::eDEBUG);
+                m_mapHash = m_pMap->getMapHash();
+                GlobalUtils::setUseSeed(false);
                 if (m_pMenu != nullptr &&
                     m_pMenu->getIndespawningMode())
                 {
@@ -420,9 +423,6 @@ void ActionPerformer::actionPerformed()
                     }
                     else
                     {
-                        CONSOLE_PRINT("Storing current map hash", GameConsole::eDEBUG);
-                        m_mapHash = m_pMap->getMapHash();
-                        GlobalUtils::setUseSeed(false);
                         if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
                         {
                             m_pMap->getGameRules()->resumeRoundTime();
@@ -451,7 +451,7 @@ void ActionPerformer::actionPerformed()
                         }
                     }
                 }
-                else
+                else if (m_pMenu != nullptr)
                 {
                     CONSOLE_PRINT("Game already won not finishing the action.", GameConsole::eDEBUG);
                     emit m_pMenu->sigVictory(-1);
