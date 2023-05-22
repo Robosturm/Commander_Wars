@@ -230,7 +230,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
+        var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                qsTr("\nGlobal Effect: \nUnits have %0% reduced defense and %1% increased firepower.") +
                qsTr("\n\nCO Zone Effect: \nUnits have %2% increased firepower bonus.");
         text = replaceTextArgs(text, [CO_GRIMM.d2dDefBonus, CO_GRIMM.d2dOffBonus, CO_GRIMM.d2dCoZoneOffBonus]);
@@ -238,7 +238,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Increases the attack of all units by %0%.");
+        var text = qsTr("Increases the attack of all units by %0%.");
         text = replaceTextArgs(text, [CO_GRIMM.powerOffBonus]);
         return text;
     };
@@ -248,7 +248,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Greatly increases the attack of all units by %0%.");
+        var text = qsTr("Greatly increases the attack of all units by %0%.");
         text = replaceTextArgs(text, [CO_GRIMM.superPowerOffBonus]);
         return text;
     };

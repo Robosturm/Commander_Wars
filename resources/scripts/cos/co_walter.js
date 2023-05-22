@@ -355,7 +355,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nIntel truck\n") +
+        var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
             qsTr("\nGlobal Effect: \nNo bonus.") +
             qsTr("\n\nCO Zone Effect: \nUnits gain additional %0% firepower and %1% defence.");
         text = replaceTextArgs(text, [CO_WALTER.d2dCoZoneOffBonus, CO_WALTER.d2dCoZoneDefBonus]);
@@ -363,7 +363,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Enemies take additional damage when they attack and units gain  additional %0% firepower and %1% defence.");
+        var text = qsTr("Enemies take additional damage when they attack and units gain  additional %0% firepower and %1% defence.");
         text = replaceTextArgs(text, [CO_WALTER.powerOffBonus, CO_WALTER.powerDefBonus]);
         return text;
     };
@@ -373,7 +373,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Massively reduces the ammo from enemy units and deals %0 HP damage to them. Hides his units HP from enemies. Units gain  additional %0% firepower and %1% defence.");
+        var text = qsTr("Massively reduces the ammo from enemy units and deals %0 HP damage to them. Hides his units HP from enemies. Units gain  additional %0% firepower and %1% defence.");
         text = replaceTextArgs(text, [CO_WALTER.superPowerDamage, CO_WALTER.powerOffBonus, CO_WALTER.powerDefBonus]);
         return text;
     };

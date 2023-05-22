@@ -355,7 +355,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nMissile Submarine\n\n" +
+        var text = qsTr("\nSpecial Unit:\nMissile Submarine\n\n" +
                     "Global Effect: \nNaval units have %0 more movement point and have %1% firepower and %2% defence. Air units suffer from %3% reduced firepower." +
                     "\n\nCO Zone Effect: \nNaval units have increased %4% firepower and %5% defence.");
         text = replaceTextArgs(text, [CO_DRAKE.d2dNavalMovementPoints, CO_DRAKE.d2dNavalOffBonus, CO_DRAKE.d2dNavalDefBonus, CO_DRAKE.d2dAirOffBonus,
@@ -364,7 +364,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Causes a tidal wave that does %0 HP of damage to all enemy units and halves their fuel.");
+        var text = qsTr("Causes a tidal wave that does %0 HP of damage to all enemy units and halves their fuel.");
         text = replaceTextArgs(text, [CO_DRAKE.powerDamage]);
         return text;
     };
@@ -374,7 +374,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Causes a giant tidal wave that does %0 HP of damage to all enemy units and halves their fuel and weather changes to rain.");
+        var text = qsTr("Causes a giant tidal wave that does %0 HP of damage to all enemy units and halves their fuel and weather changes to rain.");
         text = replaceTextArgs(text, [CO_DRAKE.superPowerDamage]);
         return text;
     };

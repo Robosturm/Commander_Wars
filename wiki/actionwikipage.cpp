@@ -2,7 +2,7 @@
 
 #include "coreengine/interpreter.h"
 
-ActionWikipage::ActionWikipage(WikiDatabase::PageData item)
+ActionWikipage::ActionWikipage(const PageData & item)
     : Wikipage(item.m_id)
 {
     Interpreter::setCppOwnerShip(this);

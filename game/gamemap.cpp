@@ -375,9 +375,9 @@ bool GameMap::isPlayerUnitInArea(const QRect& area, qint32 playerID)
     });
 }
 
-bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs)
+bool GameMap::isPlayersUnitInArea(const QRect& area, const QVector<qint32> & playerIDs)
 {
-    return isInArea(area, [=](Unit* pUnit)
+    return isInArea(area, [playerIDs](Unit* pUnit)
     {
         qint32 owner = pUnit->getOwner()->getPlayerID();
         return playerIDs.contains(owner);

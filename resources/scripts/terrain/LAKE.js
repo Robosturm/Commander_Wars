@@ -33,7 +33,7 @@ var Constructor = function()
         var surroundingsRiver = terrain.getSurroundings("RIVER", false, false, GameEnums.Directions_Direct, false);
         var surroundingsRiver2 = terrain.getSurroundings("RIVER", true, false, GameEnums.Directions_Direct, false, false, 1);
 
-        let placedSea = false;
+        var placedSea = false;
         // load overlay north
         if ((surroundingsRiver.includes("+N") || surroundingsRiver2.includes("+N")))
         {

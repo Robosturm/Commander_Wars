@@ -260,7 +260,7 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let unit = map.getTerrain(building.getX(), building.getY()).getUnit();
+            var unit = map.getTerrain(building.getX(), building.getY()).getUnit();
             if (unit !== null && unit.getOwner() === co.getOwner())
             {
                 return income * unit.getCapturePoints() / 20;
@@ -307,7 +307,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nSmuggler\n") +
+        var text = qsTr("\nSpecial Unit:\nSmuggler\n") +
             qsTr("\nGlobal Effect: \nIncome from enemies is reduced for buildings he captures. Units gain firepower by %0 and defence by %1.") +
             qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %2 and defence by %3.");
         text = replaceTextArgs(text, [CO_VARLOT.d2dOffBonus , CO_VARLOT.d2dDefBonus, CO_VARLOT.d2dCoZoneOffBonus, CO_VARLOT.d2dCoZoneDefBonus]);
@@ -315,7 +315,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("His troops get a %0 capture bonus. Varlot also gains %1 fraction of the enemy income.");
+        var text = qsTr("His troops get a %0 capture bonus. Varlot also gains %1 fraction of the enemy income.");
         text = replaceTextArgs(text, [CO_VARLOT.powerCaptureBonus, CO_VARLOT.powerIncome]);
         return text;
     };
@@ -325,7 +325,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("All units are healed for %0 HP, gaining %1% firepower for each point over 10HP they'd be healed. The enemy pays for these repairs.");
+        var text = qsTr("All units are healed for %0 HP, gaining %1% firepower for each point over 10HP they'd be healed. The enemy pays for these repairs.");
         text = replaceTextArgs(text, [CO_VARLOT.superPowerHeal, CO_VARLOT.superPowerOverhealOffBonus]);
         return text;
     };

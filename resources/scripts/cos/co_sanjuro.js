@@ -418,7 +418,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text =  qsTr("\nSpecial Unit:\nSmuggler\n" +
+        var text =  qsTr("\nSpecial Unit:\nSmuggler\n" +
                          "\nGlobal Effect: \nFor each %0% difference between income and funds at the start of the turn. His troops gain %1% firepower per %0% percent and cost %2% more if the funds are greater than the current funds. " +
                          "Otherwise he looses %1% firepower per %0% percent and his troops cost %2% less. This effect stacks up to %5 times." +
                          "\n\nCO Zone Effect: \nGains %3% firepower and %4% defense.");
@@ -428,7 +428,7 @@ var Constructor = function()
 
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("When his units take combat damage, he receives %0% of the damage value in funds.");
+        var text = qsTr("When his units take combat damage, he receives %0% of the damage value in funds.");
         text = replaceTextArgs(text, [CO_SANJURO.powerRefund * 100]);
         return text;
     };
@@ -438,7 +438,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text =  qsTr("When a unit is built, units of the same type receive a %0% firepower and %1% defense boost are unhindered by terrain, and production costs for that unit type are reduced by %2%.");
+        var text =  qsTr("When a unit is built, units of the same type receive a %0% firepower and %1% defense boost are unhindered by terrain, and production costs for that unit type are reduced by %2%.");
         text = replaceTextArgs(text, [CO_SANJURO.superPowerOffBonus, CO_SANJURO.superPowerDefBonus, CO_SANJURO.superPowerCostReduction * 100]);
         return text;
     };

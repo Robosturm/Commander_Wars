@@ -350,7 +350,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+        var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
                qsTr("\nGlobal Effect: \nIndirect units have %0 increased firerange and %1% firepower and non-infantry direct units have %2% reduced firepower. Infantry units have %3% reduced firepower.") +
                qsTr("\n\nCO Zone Effect: \nIndirect units have an %4% offensive bonus.");
         text = replaceTextArgs(text, [CO_GRIT.d2dFirerangeBonus, CO_GRIT.d2dOffBonus, CO_GRIT.d2dDirectMalus, CO_GRIT.d2dInfMalus, CO_GRIT.d2dCoZoneOffBonus]);
@@ -358,7 +358,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Increases range of indirect units by %0 spaces. Firepower of these units also rise by %1%.");
+        var text = qsTr("Increases range of indirect units by %0 spaces. Firepower of these units also rise by %1%.");
         text = replaceTextArgs(text, [CO_GRIT.powerFirerangeBonus, CO_GRIT.powerOffBonus]);
         return text;
     };
@@ -368,7 +368,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Increases range of indirect units by %0 spaces. Firepower of these units greatly rise by %1%.");
+        var text = qsTr("Increases range of indirect units by %0 spaces. Firepower of these units greatly rise by %1%.");
         text = replaceTextArgs(text, [CO_GRIT.superPowerFirerangeBonus, CO_GRIT.superPowerOffBonus]);
         return text;
     };

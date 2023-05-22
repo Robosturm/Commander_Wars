@@ -256,7 +256,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nRepair Tanks\n") +
+        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n") +
                    qsTr("\nGlobal Effect: \nNone") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and %1 defence.");
         text = replaceTextArgs(text, [CO_ANDY.d2dCoZoneOffBonus, CO_ANDY.d2dCoZoneDefBonus]);
@@ -264,7 +264,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Restores %0 HP to all units.");
+        var text = qsTr("Restores %0 HP to all units.");
         text = replaceTextArgs(text, [CO_ANDY.powerHeal]);
         return text;
     };
@@ -274,7 +274,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Restores %0 HP to all units. Firepower rises by %0% and unit movement increases by %2 space.");
+        var text = qsTr("Restores %0 HP to all units. Firepower rises by %0% and unit movement increases by %2 space.");
         text = replaceTextArgs(text, [CO_ANDY.superPowerHeal, CO_ANDY.superPowerOffBonus, CO_ANDY.superPowerMovementBonus]);
         return text;
     };

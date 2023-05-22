@@ -144,8 +144,8 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let baseDamage = CO_JULIA.d2dOffBonus;
-            let fixedDamage = CO_JULIA.d2dFixedDamage;
+            var baseDamage = CO_JULIA.d2dOffBonus;
+            var fixedDamage = CO_JULIA.d2dFixedDamage;
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Tagpower:
@@ -226,7 +226,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nPartisan\n");
+        var text = qsTr("\nSpecial Unit:\nPartisan\n");
         if (CO_JULIA.d2dOffBonus > 0)
         {
             text +=  qsTr("\nGlobal Effect: \nNo Effects.");
@@ -241,7 +241,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("%0% of enemy units can't move next turn and all units are unaffected by loss of HP but get %1% firepower.");
+        var text = qsTr("%0% of enemy units can't move next turn and all units are unaffected by loss of HP but get %1% firepower.");
         text = replaceTextArgs(text, [CO_JULIA.powerStunChance * 100, CO_JULIA.powerOffBonus]);
         return text;
     };
@@ -251,7 +251,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("%0% of enemy units can't move next turn and all units are unaffected by loss of HP but get %1% firepower.");
+        var text = qsTr("%0% of enemy units can't move next turn and all units are unaffected by loss of HP but get %1% firepower.");
         text = replaceTextArgs(text, [CO_JULIA.superPowerStunChance * 100, CO_JULIA.powerOffBonus]);
         return text;
     };

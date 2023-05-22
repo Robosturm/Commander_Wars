@@ -302,7 +302,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nKirov\n") +
+        var text = qsTr("\nSpecial Unit:\nKirov\n") +
                qsTr("\nGlobal Effect: \nAir Units have %0% increased firepower and %1% increased defense.") +
                qsTr("\n\nCO Zone Effect: \nAir Units have %2% increased firepower and %3% increased defense.");
         text = replaceTextArgs(text, [CO_TASHA.d2dOffBonus , CO_TASHA.d2dDeffBonus, CO_TASHA.d2dCoZoneOffBonus, CO_TASHA.d2dCoZoneDeffBonus]);
@@ -310,7 +310,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Air units have increased firepower by %0 and defense by %1. All units can move %2 space farther.");
+        var text = qsTr("Air units have increased firepower by %0 and defense by %1. All units can move %2 space farther.");
         text = replaceTextArgs(text, [CO_TASHA.powerOffBonus , CO_TASHA.powerDefBonus, CO_TASHA.powerMovementBonus]);
         return text;
     };
@@ -321,7 +321,7 @@ var Constructor = function()
     this.getSuperPowerDescription = function(co)
     {
 
-        let text = qsTr("Air units have increased firepower by %0 and defense by %1. All units can move %2 space farther.");
+        var text = qsTr("Air units have increased firepower by %0 and defense by %1. All units can move %2 space farther.");
         text = replaceTextArgs(text, [CO_TASHA.superPowerOffBonus , CO_TASHA.superPowerDefBonus, CO_TASHA.superPowerMovementBonus]);
         return text;
     };

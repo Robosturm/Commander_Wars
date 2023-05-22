@@ -211,7 +211,7 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let selfDamage = CO_BEAST.d2dSelfDamage;
+            var selfDamage = CO_BEAST.d2dSelfDamage;
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
                 selfDamage = CO_BEAST.powerSelfDamage;
@@ -276,7 +276,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
+        var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                    qsTr("\nGlobal Effect: \nUnits gain %1% firepower when attacking but also receive %1 HP of extra damage in recoil.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower when attacking but also receive %3 HP of extra damage in recoil.");
         text = replaceTextArgs(text, [CO_BEAST.d2dOffBonus, CO_BEAST.d2dSelfDamage, CO_BEAST.d2dCoZoneOffBonus, CO_BEAST.d2dCoZoneSelfDamage]);
@@ -284,7 +284,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Restores %0 HP to all units.");
+        var text = qsTr("Restores %0 HP to all units.");
         text = replaceTextArgs(text, [CO_BEAST.powerHeal]);
         return text;
     };
@@ -294,7 +294,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Restores %0 HP to all units. Units movement is increases by %1 space.");
+        var text = qsTr("Restores %0 HP to all units. Units movement is increases by %1 space.");
         text = replaceTextArgs(text, [CO_BEAST.superPowerHeal, CO_BEAST.superPowerMovementBonus]);
         return text;
     };

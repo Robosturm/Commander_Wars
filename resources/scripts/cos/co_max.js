@@ -157,8 +157,8 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let isDirect = (attacker.getBaseMaxRange() === 1 && attacker.getUnitType() !== GameEnums.UnitType_Infantry);
-            let isIndirect = (attacker.getBaseMaxRange() > 1);
+            var isDirect = (attacker.getBaseMaxRange() === 1 && attacker.getUnitType() !== GameEnums.UnitType_Infantry);
+            var isIndirect = (attacker.getBaseMaxRange() > 1);
             switch (co.getPowerMode())
             {
                 case GameEnums.PowerMode_Tagpower:
@@ -188,7 +188,7 @@ var Constructor = function()
                 }
                 default:
                 {
-                    let inCoZone = co.inCORange(Qt.point(atkPosX, atkPosY), attacker);
+                    var inCoZone = co.inCORange(Qt.point(atkPosX, atkPosY), attacker);
                     if (inCoZone)
                     {
                         if (isDirect)
@@ -333,7 +333,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
+        var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
             qsTr("\nGlobal Effect: \nDirect Units gain additional %0% firepower and indirect Units loose %2% firepower and %1 firerange.") +
             qsTr("\n\nCO Zone Effect: \nDirect Units gain additional %3% firepower and none indirect units gain %4%.");
         text = replaceTextArgs(text, [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectFirerangeMalus, CO_MAX.d2dIndirectOffBonus,
@@ -342,7 +342,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text =  qsTr("Max's non-infantry direct-combat units gain +%0 movement and raise their firepower by +%1% and all other units firepower raises by +%2%. All units defense raises by +%3%.");
+        var text =  qsTr("Max's non-infantry direct-combat units gain +%0 movement and raise their firepower by +%1% and all other units firepower raises by +%2%. All units defense raises by +%3%.");
         text = replaceTextArgs(text, [CO_MAX.powerOffBonus, CO_MAX.powerMovementBonus, CO_MAX.powerDefBonus]);
         return text;
     };
@@ -352,7 +352,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Firepower raises by %0% and movement by %1 of all non-infantry direct-combat units. The defence raises by %2");
+        var text = qsTr("Firepower raises by %0% and movement by %1 of all non-infantry direct-combat units. The defence raises by %2");
         text = replaceTextArgs(text, [CO_MAX.superPowerOffBonus, CO_MAX.superpowerMovementBonus, CO_MAX.powerDefBonus]);
         return text;
     };

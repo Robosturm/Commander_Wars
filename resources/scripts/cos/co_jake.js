@@ -291,7 +291,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
+        var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
                qsTr("\nGlobal Effect: \nUnits have %0% higher firepower on plains.") +
                qsTr("\n\nCO Zone Effect: \nUnits have %0% higher firepower on plains.");
         text = replaceTextArgs(text, [CO_JAKE.d2dPlainsBonus, CO_JAKE.d2dCoZonePlainsBonus]);
@@ -299,7 +299,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Firepower is increased by %0% on plains. Firing range of indirect-combat units is increased by %1.");
+        var text = qsTr("Firepower is increased by %0% on plains. Firing range of indirect-combat units is increased by %1.");
         text = replaceTextArgs(text, [CO_JAKE.powerPlainsBonus, CO_JAKE.powerFirerangeBonus]);
         return text;
     };
@@ -309,7 +309,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Firepower is greatly increased by %0% on plains. Firing range of indirect units is increased by %1, and movement of direct units by %2");
+        var text = qsTr("Firepower is greatly increased by %0% on plains. Firing range of indirect units is increased by %1, and movement of direct units by %2");
         text = replaceTextArgs(text, [CO_JAKE.superPowerPlainsBonus, CO_JAKE.powerFirerangeBonus, CO_JAKE.superPowerMovementBonus]);
         return text;
     };

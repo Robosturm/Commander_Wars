@@ -339,7 +339,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
+        var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
                qsTr("\nGlobal Effect: \nUnits near Mountains gain %0% additional firepower.") +
                qsTr("\n\nCO Zone Effect: \nUnits near Mountains gain %1% additional firepower.");
         text = replaceTextArgs(text, [CO_MINAMOTO.d2dOffBonus, CO_MINAMOTO.d2dCoZoneOffBonus]);
@@ -347,7 +347,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Direct units blow enemies %0 fields away when dealing %1 HP damage. Units near Mountains gain %2% additional firepower.");
+        var text = qsTr("Direct units blow enemies %0 fields away when dealing %1 HP damage. Units near Mountains gain %2% additional firepower.");
         text = replaceTextArgs(text, [CO_MINAMOTO.powerBlowRange, CO_MINAMOTO.powerBlowHp, CO_MINAMOTO.powerOffBonus]);
         return text;
     };
@@ -357,7 +357,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Unit movement is increased by %0. Direct units blow enemies %1 fields away when dealing %2 HP damage. Units near Mountains gain %3% additional firepower.");
+        var text = qsTr("Unit movement is increased by %0. Direct units blow enemies %1 fields away when dealing %2 HP damage. Units near Mountains gain %3% additional firepower.");
         text = replaceTextArgs(text, [CO_MINAMOTO.superPowerMovementPoints, CO_MINAMOTO.superPowerBlowRange, CO_MINAMOTO.superPowerBlowHp, CO_MINAMOTO.superPowerOffBonus]);
         return text;
     };

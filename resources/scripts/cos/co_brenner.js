@@ -239,14 +239,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nUnits gain %0% defense.") +
+        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nUnits gain %0% defense.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %1% defense.");
         text = replaceTextArgs(text, [CO_BRENNER.d2dDefBonus, CO_BRENNER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Heals %0 hp to all of his units and increases their defence by %1%.");
+        var text = qsTr("Heals %0 hp to all of his units and increases their defence by %1%.");
         text = replaceTextArgs(text, [CO_BRENNER.powerHeal, CO_BRENNER.powerDefBonus]);
         return text;
     };
@@ -256,7 +256,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Heals %0 hp to all of his units and increases their defence by %1%.");
+        var text = qsTr("Heals %0 hp to all of his units and increases their defence by %1%.");
         text = replaceTextArgs(text, [CO_BRENNER.superPowerHeal, CO_BRENNER.superPowerDefBonus]);
         return text;
     };

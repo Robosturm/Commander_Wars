@@ -271,7 +271,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
+        var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                qsTr("\nGlobal Effect: \nUnits have %0% more Luck and %1% Misfortune.") +
                qsTr("\n\nCO Zone Effect: \nUnits have %0% more Luck and %1% Misfortune.");
         text = replaceTextArgs(text, [CO_FLAK.d2dBonusLuck, CO_FLAK.d2dBonusMissfortune,
@@ -280,7 +280,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Units have %0% more Luck and %1% Misfortune.");
+        var text = qsTr("Units have %0% more Luck and %1% Misfortune.");
         text = replaceTextArgs(text, [CO_FLAK.powerBonusLuck, CO_FLAK.powerBonusMissfortune]);
         return text;
     };
@@ -290,7 +290,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Units have %0% more Luck and %1% Misfortune.");
+        var text = qsTr("Units have %0% more Luck and %1% Misfortune.");
         text = replaceTextArgs(text, [CO_FLAK.superPowerBonusLuck, CO_FLAK.superPowerBonusMissfortune]);
         return text;
     };

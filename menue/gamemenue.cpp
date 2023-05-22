@@ -2225,6 +2225,10 @@ void GameMenue::startGame()
             CONSOLE_PRINT("Controller for player " + QString::number(i) + " is " + QString::number(pInput->getAiType()) + " original ai is " + QString::number(pPlayer->getControlType()), GameConsole::eDEBUG);
             pInput->onGameStart();
         }
+        if (m_pNetworkInterface.get() == nullptr)
+        {
+            pPlayer->setIsOnline(true);
+        }
         qint32 coCount = pPlayer->getMaxCoCount();
         for (qint32 co = 0; co < coCount; ++co)
         {

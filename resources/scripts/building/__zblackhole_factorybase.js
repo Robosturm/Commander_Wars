@@ -25,15 +25,15 @@ var Constructor = function()
     this.actionList = ["ACTION_BLACKHOLEFACTORY_DOOR1", "ACTION_BLACKHOLEFACTORY_DOOR2", "ACTION_BLACKHOLEFACTORY_DOOR3"];
     this.getConstructionList = function(building)
     {
-        let xBuilding = building.getX();
-        let y = building.getY() + 1;
-        let map = building.getMap();
-        let unitIds = [];
+        var xBuilding = building.getX();
+        var y = building.getY() + 1;
+        var map = building.getMap();
+        var unitIds = [];
         if (map !== null)
         {
-            let units = map.getAllUnitIDs();
-            let buildlist = building.getOwner().getBuildList();
-            let length = units.length;
+            var units = map.getAllUnitIDs();
+            var buildlist = building.getOwner().getBuildList();
+            var length = units.length;
             for (var x = xBuilding - 2; x <= xBuilding; ++x)
             {
                 var terrain = map.getTerrain(x, y);

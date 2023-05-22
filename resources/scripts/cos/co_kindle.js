@@ -316,7 +316,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nPartisan\n") +
+        var text = qsTr("\nSpecial Unit:\nPartisan\n") +
                qsTr("\nGlobal Effect: \nUnits on buildings have %0% increased firepower.") +
                qsTr("\n\nCO Zone Effect: \nUnits on buildings have %1% increased firepower.");
         text = replaceTextArgs(text, [CO_KINDLE.d2dOffBonus, CO_KINDLE.d2dCoZoneOffBonus]);
@@ -324,7 +324,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Inflicts %0 HP of damage to enemy units on properties and increases firepower of all units on a property by %1%.");
+        var text = qsTr("Inflicts %0 HP of damage to enemy units on properties and increases firepower of all units on a property by %1%.");
         text = replaceTextArgs(text, [CO_KINDLE.powerDamage, CO_KINDLE.powerOffBonus]);
         return text;
     };
@@ -334,7 +334,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("She gains %0% firepower per building she controls and greatly increases firepower of all units on a property by %1%.");
+        var text = qsTr("She gains %0% firepower per building she controls and greatly increases firepower of all units on a property by %1%.");
         text = replaceTextArgs(text, [CO_KINDLE.superPowerOffMultiplier, CO_KINDLE.superPowerOffBonus]);
         return text;
     };

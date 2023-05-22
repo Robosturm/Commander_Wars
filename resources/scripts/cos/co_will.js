@@ -282,7 +282,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nHot Tank\n") +
+        var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
                qsTr("\nGlobal Effect:\nDirect ground units have %0% increased firepower.") +
                qsTr("\n\nCO Zone Effect: \nDirect Ground Units have 1% increased firepower and other units gain %2% firepower. All units gain %3% defence.");
         text = replaceTextArgs(text, [CO_WILL.d2dOffBonus, CO_WILL.d2dCoZoneOffBonus, CO_WILL.d2dCoZoneBaseBonus, CO_WILL.d2dCoZoneOffBonus]);
@@ -290,7 +290,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Boost movement of ground units by %0 and increases the firepower of direct ground units by %1%.");
+        var text = qsTr("Boost movement of ground units by %0 and increases the firepower of direct ground units by %1%.");
         text = replaceTextArgs(text, [CO_WILL.powerMovementBonus, CO_WILL.powerOffBonus]);
         return text;
     };
@@ -300,7 +300,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Boost movement of ground units by %0 and increases the firepower of direct ground units by %1%.");
+        var text = qsTr("Boost movement of ground units by %0 and increases the firepower of direct ground units by %1%.");
         text = replaceTextArgs(text, [CO_WILL.superPowerMovementBonus, CO_WILL.superPowerOffBonus]);
         return text;
     };

@@ -260,7 +260,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nIntel truck\n") +
+        var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
             qsTr("\nGlobal Effect: \nKeeps HP intel hidden from foes. Units have increased vision by %4. Reduces enemy terrain defensive cover by %0. Her misfortune is increased by %1. Units have %5% increased firepower during counter attacks.") +
             qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower and %3% defense.");
         text = replaceTextArgs(text, [CO_SONJA.d2dEnemyTerrainDefenseModifier, CO_SONJA.d2dBonusMisfortune, CO_SONJA.d2dCoZoneOffBonus, CO_SONJA.d2dBonusMisfortune, CO_SONJA.d2dVisionBonus, CO_SONJA.d2dCounterAttackBonus]);
@@ -268,7 +268,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Reduces enemy terrain defensive cover by %0. Units have increased vision by %1. Allows all units to see into woods and reefs.");
+        var text = qsTr("Reduces enemy terrain defensive cover by %0. Units have increased vision by %1. Allows all units to see into woods and reefs.");
         text = replaceTextArgs(text, [CO_SONJA.powerEnemyTerrainDefenseModifier, CO_SONJA.powerVisionBonus]);
         return text;
     };
@@ -278,7 +278,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Reduces enemy terrain defensive cover by %0. Units have increased vision by %1. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.");
+        var text = qsTr("Reduces enemy terrain defensive cover by %0. Units have increased vision by %1. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.");
         text = replaceTextArgs(text, [CO_SONJA.superPowerEnemyTerrainDefenseModifier, CO_SONJA.powerVisionBonus]);
         return text;
     };

@@ -346,7 +346,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+        var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
                qsTr("\nGlobal Effect: \nIndirect attacks deal %0 HP of damage to all nearby units, no matter their allegiance.") +
                qsTr("\n\nCO Zone Effect: \nIndirect attacks deal %1 HP of damage to all nearby units, no matter their allegiance.");
         text = replaceTextArgs(text, [CO_NANA.d2dExplosionDamage, CO_NANA.d2dCoZoneExplosionDamage]);
@@ -354,7 +354,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Direct attacks deal %0 HP of damage to the nearest enemy unit. Nana's units are no longer affected by collateral damage.");
+        var text = qsTr("Direct attacks deal %0 HP of damage to the nearest enemy unit. Nana's units are no longer affected by collateral damage.");
         text = replaceTextArgs(text, [CO_NANA.powerExplosionDamage]);
         return text;
     };
@@ -364,7 +364,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Indirect attacks deal %0 HP of damage to all units within a blast radius of %1. Nana's units are no longer affected by collateral damage.");
+        var text = qsTr("Indirect attacks deal %0 HP of damage to all units within a blast radius of %1. Nana's units are no longer affected by collateral damage.");
         text = replaceTextArgs(text, [CO_NANA.superPowerExplosionDamage, CO_NANA.superPowerExplosionRange]);
         return text;
     };

@@ -26,22 +26,22 @@ var MapEditBiomes =
     },
     applyPalette : function()
     {
-        let x = MapEditBiomes.getSelectedX();
-        let y = MapEditBiomes.getSelectedY();
-        let width = MapEditBiomes.getSelectedWidth();
-        let height = MapEditBiomes.getSelectedHeight();
-        let newPalette = MapEditBiomes.getSelectedNewPalette();
-        let rect = Qt.rect(x, y, width, height);
+        var x = MapEditBiomes.getSelectedX();
+        var y = MapEditBiomes.getSelectedY();
+        var width = MapEditBiomes.getSelectedWidth();
+        var height = MapEditBiomes.getSelectedHeight();
+        var newPalette = MapEditBiomes.getSelectedNewPalette();
+        var rect = Qt.rect(x, y, width, height);
         currentMenu.getBaseMenu().getMap().applyPaletteToArea(rect, newPalette);
     },
     applyBiome : function()
     {
-        let x = MapEditBiomes.getSelectedX();
-        let y = MapEditBiomes.getSelectedY();
-        let width = MapEditBiomes.getSelectedWidth();
-        let height = MapEditBiomes.getSelectedHeight();
-        let newBiome = MapEditBiomes.getSelectedNewBiome();
-        let rect = Qt.rect(x, y, width, height);
+        var x = MapEditBiomes.getSelectedX();
+        var y = MapEditBiomes.getSelectedY();
+        var width = MapEditBiomes.getSelectedWidth();
+        var height = MapEditBiomes.getSelectedHeight();
+        var newBiome = MapEditBiomes.getSelectedNewBiome();
+        var rect = Qt.rect(x, y, width, height);
         currentMenu.getBaseMenu().getMap().applyBiomeToArea(rect, TERRAIN.terrainBiomeGroups[newBiome]);
     }
 

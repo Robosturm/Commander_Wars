@@ -47,7 +47,6 @@ var Constructor = function()
     };
     this.throwMeteor = function(co, damage, powerNameAnimation, map)
     {
-        // let a meteor fall :D
         var rocketTarget = co.getOwner().getRockettarget(2, damage);
         // create cool meteor animation :)
         var animation = GameAnimationFactory.createAnimation(map, rocketTarget.x - 2, rocketTarget.y - 2 - 1);
@@ -190,14 +189,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nUnits have %0% increased firepower and %1% increased  defense.") +
+        var text = qsTr("\nGlobal Effect: \nUnits have %0% increased firepower and %1% increased  defense.") +
                qsTr("\n\nCO Zone Effect: \nUnits have %2% increased firepower and %3% increased  defense.");
         text = replaceTextArgs(text, [CO_TABITHA.d2dOffBonus, CO_TABITHA.d2dDefBonus, CO_TABITHA.d2dCoZoneDefBonus, CO_TABITHA.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("A small attack from the great owl that deals %0 HP of damage to all affected units. Also increases the firepower of all units by %1% and defense by %2%.");
+        var text = qsTr("A small attack from the great owl that deals %0 HP of damage to all affected units. Also increases the firepower of all units by %1% and defense by %2%.");
         text = replaceTextArgs(text, [CO_TABITHA.powerDamage, CO_TABITHA.powerOffBonus, CO_TABITHA.powerDefBonus]);
         return text;
     };
@@ -207,7 +206,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("A small attack from the great owl that deals %0 HP of damage to all affected units. Also increases the firepower of all units by %1% and defense by %2%.");
+        var text = qsTr("A small attack from the great owl that deals %0 HP of damage to all affected units. Also increases the firepower of all units by %1% and defense by %2%.");
         text = replaceTextArgs(text, [CO_TABITHA.superPowerDamage, CO_TABITHA.superPowerOffBonus, CO_TABITHA.superPowerDefBonus]);
         return text;
     };

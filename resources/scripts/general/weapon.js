@@ -30,8 +30,8 @@ var WEAPON =
     // aw dc damage formular used here.
     calculateDamage : function(hp, damage, offBonus, defBonus, luckDamage = 0, map)
     {
-        let formula = map.getGameRules().getDamageFormula();
-        let calcDamage = 0;
+        var formula = map.getGameRules().getDamageFormula();
+        var calcDamage = 0;
         if (formula === GameEnums.DamageFormula_AdvanceWars4)
         {
             if (defBonus <= 0)

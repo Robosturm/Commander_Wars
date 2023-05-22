@@ -265,7 +265,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nChaperon\n") +
+        var text = qsTr("\nSpecial Unit:\nChaperon\n") +
                 qsTr("\nGlobal Effect: \nUnits have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.") +
                 qsTr("\n\nCO Zone Effect: \nUnits have %3% increased defense against indirect units. Units gain additional %4% firepower and %5% defense per Comtower.");
         text = replaceTextArgs(text, [CO_JAVIER.d2dIndirectDefBonus, CO_JAVIER.d2dTowerOffBonus, CO_JAVIER.d2dTowerDefBonus,
@@ -274,7 +274,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Units have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.");
+        var text = qsTr("Units have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.");
         text = replaceTextArgs(text, [CO_JAVIER.powerIndirectDefBonus, CO_JAVIER.powerTowerOffBonus, CO_JAVIER.powerTowerDefBonus]);
         return text;
     };
@@ -284,7 +284,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Units have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.");
+        var text = qsTr("Units have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.");
         text = replaceTextArgs(text, [CO_JAVIER.superPowerIndirectDefBonus, CO_JAVIER.superPowerTowerOffBonus, CO_JAVIER.superPowerTowerDefBonus]);
         return text;
     };

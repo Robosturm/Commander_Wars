@@ -242,7 +242,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nIron Shield Generator\n") +
+        var text = qsTr("\nSpecial Unit:\nIron Shield Generator\n") +
             qsTr("\nGlobal Effect: \nDefense is increased by %0%.") +
             qsTr("\n\nCO Zone Effect: \nDefense is increased by %1%.");
         text = replaceTextArgs(text, [CO_OZZY.d2dDefBonus, CO_OZZY.d2dCoZoneDefBonus]);
@@ -250,7 +250,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Units gain a %0% defense boost and gain additional %1% defence counterattacks.");
+        var text = qsTr("Units gain a %0% defense boost and gain additional %1% defence counterattacks.");
         text = replaceTextArgs(text, [CO_OZZY.powerDefBonus, CO_OZZY.powerAtkDefBonus]);
         return text;
     };
@@ -260,7 +260,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Defense rises by %0%. Counterattack strength is increased by %1%.");
+        var text = qsTr("Defense rises by %0%. Counterattack strength is increased by %1%.");
         text = replaceTextArgs(text, [CO_OZZY.superPowerDefBonus, CO_OZZY.superPowerOffCounterBonus]);
         return text;
     };

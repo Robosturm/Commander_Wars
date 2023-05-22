@@ -222,14 +222,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nUnits have %0% luck.") +
+        var text = qsTr("\nGlobal Effect: \nUnits have %0% luck.") +
                qsTr("\n\nCO Zone Effect: \nUnits have %1% luck.");
         text = replaceTextArgs(text, [CO_NELL.d2dLuckBonus, CO_NELL.d2dCoZoneLuckBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Has a chance to strike with %0% more damage than expected. Lucky!");
+        var text = qsTr("Has a chance to strike with %0% more damage than expected. Lucky!");
         text = replaceTextArgs(text, [CO_NELL.powerLuckBonus]);
         return text;
     };
@@ -239,7 +239,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Improves her chance to strike with %0% more damage. Very lucky!");
+        var text = qsTr("Improves her chance to strike with %0% more damage. Very lucky!");
         text = replaceTextArgs(text, [CO_NELL.superPowerLuckBonus]);
         return text;
     };

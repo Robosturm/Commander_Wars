@@ -130,7 +130,7 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let ret = 0;
+            var ret = 0;
             if (isDefender)
             {
                 ret = CO_CONRAD.d2dCounterDamageBonus;
@@ -309,7 +309,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nIntel truck\n") +
+        var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
                qsTr("\nGlobal Effect: \nConrad's units gain %0% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain. Counter attacks are %1% weaker and units deal always average luck damage.") +
                qsTr("\n\nCO Zone Effect: \nConrad's units gain %2% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain.");
         text = replaceTextArgs(text, [CO_CONRAD.d2dVisionMultiplier, CO_CONRAD.d2dCounterDamageBonus, CO_CONRAD.d2dCoZoneVisionMultiplier]);
@@ -317,7 +317,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Unit vision is extended by %0. Conrad's units gain %1% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain.");
+        var text = qsTr("Unit vision is extended by %0. Conrad's units gain %1% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain.");
         text = replaceTextArgs(text, [CO_CONRAD.powerBonusVisionRange, CO_CONRAD.powerVisionMultiplier]);
         return text;
     };

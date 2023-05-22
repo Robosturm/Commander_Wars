@@ -143,7 +143,7 @@ var Constructor = function()
         {
             if (map !== null)
             {
-                let hasSandstorm = map.getGameRules().getCurrentWeather() !== null &&
+                var hasSandstorm = map.getGameRules().getCurrentWeather() !== null &&
                                    map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM";
                 switch (co.getPowerMode())
                 {
@@ -255,14 +255,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms and gain %0% firepower during sandstorm.") +
+        var text = qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms and gain %0% firepower during sandstorm.") +
                    qsTr("\n\nCO Zone Effect: \nUnits get %1% firepower during sandstorm and %2% firepower otherwise. All units also gain %3% defence.");
         text = replaceTextArgs(text, [CO_ZANDRA.d2dSandStormBonus, CO_ZANDRA.d2dCoZoneSandStormBonus, CO_ZANDRA.d2dCoZoneOffBonus, CO_ZANDRA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%.");
+        var text = qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%.");
         text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus]);
         return text;
     };
@@ -272,7 +272,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 HP damage to enemies.");
+        var text = qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 HP damage to enemies.");
         text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.sandstormDamage]);
         return text;
     };

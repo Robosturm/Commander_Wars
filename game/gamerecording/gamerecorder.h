@@ -152,8 +152,6 @@ public:
      */
     const QVector<PlayerData> & getPlayerDataRecords() const;
 
-signals:
-
 public slots:
     /**
      * @brief getDayRecord

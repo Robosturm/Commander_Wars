@@ -327,7 +327,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nCommando\n") +
+        var text = qsTr("\nSpecial Unit:\nCommando\n") +
             qsTr("\nGlobal Effect: \nCopters have increased firepower by %0% and infantry gain %1% firepower and Naval Units loose %2% firepower and ground units %3% firepower. Transport units gain %6 movement points") +
             qsTr("\n\nCO Zone Effect: \nCopters have firepower %4% and infantries gain firepower %5%.");
         text = replaceTextArgs(text, [CO_SENSEI.d2dHeliOffBonus, CO_SENSEI.d2dInfOffBonus, CO_SENSEI.d2dNavalOffBonus, CO_SENSEI.d2dGroundBonus,
@@ -336,7 +336,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Copter firepower increases. Infantry units with %0 HP appear in all his cities, ready to be moved.");
+        var text = qsTr("Copter firepower increases. Infantry units with %0 HP appear in all his cities, ready to be moved.");
         text = replaceTextArgs(text, [CO_SENSEI.powerSpawnHp]);
         return text;
     };
@@ -346,7 +346,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Copter firepower increases. Mech units with %0 HP appear in all his cities, ready to be moved.");
+        var text = qsTr("Copter firepower increases. Mech units with %0 HP appear in all his cities, ready to be moved.");
         text = replaceTextArgs(text, [CO_SENSEI.powerSpawnHp]);
         return text;
     };

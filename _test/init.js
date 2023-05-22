@@ -50,19 +50,18 @@ var Init =
 
     checkNextMod = function(menu)
     {
-        let activeMod = settings.getModString();
-        let nextMod = "";
+        var activeMod = settings.getModString();
+        var nextMod = "";
 
-        let mods = settings.getAvailableMods();
+        var mods = settings.getAvailableMods();
         if (activeMod === "")
         {
             nextMod = mods[0];
         }
         else
         {
-            let length = mods.length;
-            let i = 0;
-            for (i = 0; i < length; ++i)
+            var length = mods.length;
+            for (var i = 0; i < length; ++i)
             {
                 if (mods[i] === activeMod)
                 {
@@ -148,9 +147,9 @@ var Init =
         var wikiView = menu.getWikiView();
         wikiView.tagChanged(0);
         // test co's
-        let ids = coSpriteManager.getCoIds();
-        let length = ids.length;
-        let i = 0;
+        var ids = coSpriteManager.getCoIds();
+        var length = ids.length;
+        var i = 0;
         for (i = 0; i < length; ++i)
         {
             wikiView.showPage(ids[i]);
@@ -264,13 +263,13 @@ var Init =
     {
         if (Init.coTestStep < 3)
         {
-            let ids = coSpriteManager.getCoIds();
-            let co = ids[Init.currentCoTest]
+            var ids = coSpriteManager.getCoIds();
+            var co = ids[Init.currentCoTest]
             GameConsole.print("Testing co " + co + " testing co step " + Init.coTestStep.toString(), 0);
             menu.selectMap("maps/test/", "co_test.map");
             menu.buttonNext();
             menu.buttonNext();
-            let selection = menu.getPlayerSelection();
+            var selection = menu.getPlayerSelection();
             selection.selectPlayerAi(0, 0);
             selection.selectPlayerAi(1, 2);
             selection.playerCO1Changed(co, 0);
@@ -283,7 +282,7 @@ var Init =
             menu.selectMap("maps/2_player/", "Agitated.map");
             menu.buttonNext();
             menu.buttonNext();
-            let selection = menu.getPlayerSelection();
+            var selection = menu.getPlayerSelection();
             selection.selectPlayerAi(0, 0);
             selection.selectPlayerAi(1, 2);
             selection.playerCO1Changed("CO_RANDOM", 0);
@@ -327,10 +326,11 @@ var Init =
             }
             menu.getMap().setIsHumanMatch(false);
             menu.changeAiForPlayer(0, GameEnums.AiTypes_Normal);
-            let ids = coSpriteManager.getCoIds();
+            var ids = coSpriteManager.getCoIds();
             if (Init.currentCoTest >= ids.length)
             {
                 Init.coTestStep += 1;
+                Init.currentCoTest = 0;
             }
         }
         else if (Init.playTest === 0)
@@ -348,7 +348,7 @@ var Init =
             menu.showExitGame();
             menu.showSurrenderGame();
             menu.showSaveAndExitGame();
-            let wikiView = menu.showWiki();
+            var wikiView = menu.showWiki();
             wikiView.tagChanged(0);
             wikiView.showPage("CO_ANDY");
             wikiView.showPage("MECH");

@@ -2,42 +2,42 @@ var RuleSelectionScript =
 {
     getWeatherLabelNames : function()
     {
-        let map = currentMenu.getMap();
-        let rules = map.getGameRules();
-        let count = rules.getWeatherCount();
-        let i = 0;
-        let array = [];
+        var map = currentMenu.getMap();
+        var rules = map.getGameRules();
+        var count = rules.getWeatherCount();
+        var i = 0;
+        var array = [];
         for (i = 0; i < count; ++i)
         {
-            let weather = rules.getWeather(i);
+            var weather = rules.getWeather(i);
             array.push(weather.getWeatherName() + ":");
         }
         return array;
     },
     getWeatherNames : function()
     {
-        let map = currentMenu.getMap();
-        let rules = map.getGameRules();
-        let count = rules.getWeatherCount();
-        let i = 0;
-        let array = [];
+        var map = currentMenu.getMap();
+        var rules = map.getGameRules();
+        var count = rules.getWeatherCount();
+        var i = 0;
+        var array = [];
         for (i = 0; i < count; ++i)
         {
-            let weather = rules.getWeather(i);
+            var weather = rules.getWeather(i);
             array.push(weather.getWeatherName());
         }
         return array;
     },
     getWeatherChances : function()
     {
-        let map = currentMenu.getMap();
-        let rules = map.getGameRules();
-        let count = rules.getWeatherCount();
-        let i = 0;
-        let array = [];
+        var map = currentMenu.getMap();
+        var rules = map.getGameRules();
+        var count = rules.getWeatherCount();
+        var i = 0;
+        var array = [];
         for (i = 0; i < count; ++i)
         {
-            let weather = rules.getWeather(i);
+            var weather = rules.getWeather(i);
             array.push(rules.getWeatherChance(weather.getWeatherId()));
         }
         return array;
@@ -60,7 +60,7 @@ var RuleSelectionScript =
     },
     getFogValue : function()
     {
-        let fogMode = currentMenu.getMap().getGameRules().getFogMode();
+        var fogMode = currentMenu.getMap().getGameRules().getFogMode();
         if (fogMode === GameEnums.Fog_OfMist)
         {
             return 1;
@@ -122,27 +122,27 @@ var RuleSelectionScript =
     },
     getVictoryRulename : function(loopIdx)
     {
-        let rule = RuleSelectionScript.getVictoryRule();
+        var rule = RuleSelectionScript.getVictoryRule();
         return rule.getRuleName(loopIdx);
     },
     getVictoryRuleDescription : function(loopIdx)
     {
-        let rule = RuleSelectionScript.getVictoryRule();
+        var rule = RuleSelectionScript.getVictoryRule();
         return rule.getRuleDescription(loopIdx);
     },
     getVictoryRuleValue : function(loopIdx)
     {
-        let rule = RuleSelectionScript.getVictoryRule();
+        var rule = RuleSelectionScript.getVictoryRule();
         return rule.getRuleValue(loopIdx);
     },
     getVictoryRuleInfiniteValue : function(loopIdx)
     {
-        let rule = RuleSelectionScript.getVictoryRule();
+        var rule = RuleSelectionScript.getVictoryRule();
         return rule.getInfiniteValue(loopIdx);
     },
     setVictoryRuleValue : function(input, loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getVictoryRule(objectId);
+        var rule = currentMenu.getMap().getGameRules().getVictoryRule(objectId);
         return rule.setRuleValue(input, loopIdx);
     },
     getVictoryRuleX : function(loopIdx)
@@ -194,27 +194,27 @@ var RuleSelectionScript =
     },
     getGameRulename : function(loopIdx)
     {
-        let rule = RuleSelectionScript.getGameRule();
+        var rule = RuleSelectionScript.getGameRule();
         return rule.getRuleName(loopIdx);
     },
     getGameRuleDescription : function(loopIdx)
     {
-        let rule = RuleSelectionScript.getGameRule();
+        var rule = RuleSelectionScript.getGameRule();
         return rule.getRuleDescription(loopIdx);
     },
     getGameRuleValue : function(loopIdx)
     {
-        let rule = RuleSelectionScript.getGameRule();
+        var rule = RuleSelectionScript.getGameRule();
         return rule.getRuleValue(loopIdx);
     },
     getGameRuleInfiniteValue : function(loopIdx)
     {
-        let rule = RuleSelectionScript.getGameRule();
+        var rule = RuleSelectionScript.getGameRule();
         return rule.getInfiniteValue(loopIdx);
     },
     setGameRuleValue : function(input, loopIdx)
     {
-        let rule = currentMenu.getMap().getGameRules().getGameRule(objectId);
+        var rule = currentMenu.getMap().getGameRules().getGameRule(objectId);
         return rule.setRuleValue(input, loopIdx);
     },
     getGameRuleX : function(loopIdx)

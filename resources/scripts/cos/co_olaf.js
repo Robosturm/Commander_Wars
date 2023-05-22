@@ -259,14 +259,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nWinter poses no problem for Olaf or his troops. Firepower is increased by %0% during snow.") +
+        var text = qsTr("\nGlobal Effect: \nWinter poses no problem for Olaf or his troops. Firepower is increased by %0% during snow.") +
                 qsTr("\n\nCO Zone Effect: \nFirepower is increased by %1% during snow.");
         text = replaceTextArgs(text, [CO_OLAF.d2dOffBonus, CO_OLAF.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Causes snow to fall for %0 day, causing his firepower to rise by %1%.");
+        var text = qsTr("Causes snow to fall for %0 day, causing his firepower to rise by %1%.");
         text = replaceTextArgs(text, [CO_OLAF.powerSnowDays, CO_OLAF.superPowerOffBonus]);
         return text;
     };
@@ -276,7 +276,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("A mighty blizzard causes %0 HP of damage to all enemy troops and changes the weather to snow %2 day. The snow will also cause his firepower to rise by %1.");
+        var text = qsTr("A mighty blizzard causes %0 HP of damage to all enemy troops and changes the weather to snow %2 day. The snow will also cause his firepower to rise by %1.");
         text = replaceTextArgs(text, [CO_OLAF.superPowerDamage, CO_OLAF.superPowerOffBonus, CO_OLAF.powerSnowDays]);
         return text;
     };

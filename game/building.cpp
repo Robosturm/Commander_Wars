@@ -751,7 +751,7 @@ QStringList Building::getActionList()
     return retList;
 }
 
-QList<qint32> Building::getRepairTypes()
+QVector<qint32> Building::getRepairTypes()
 {
 
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -760,7 +760,7 @@ QList<qint32> Building::getRepairTypes()
                        pInterpreter->newQObject(m_pMap)});
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     auto list = ret.toVariant().toList();
-    QList<qint32> retList;
+    QVector<qint32> retList;
     for (auto & item : list)
     {
         retList.append(item.toInt());

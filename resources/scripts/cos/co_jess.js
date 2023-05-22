@@ -341,7 +341,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
+        var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
                qsTr("\nGlobal Effect: \nInfantry units get %0% firepower. Air and Sea Units get %1% firepower and Ground Units have increased firepower by %2%.") +
                qsTr("\n\nCO Zone Effect: \nInfantry units get %3% firepower. Air and Sea Units get %4% firepower and Ground Units have increased firepower by %5%.");
         text = replaceTextArgs(text, [CO_JESS.d2dInfBonus, CO_JESS.d2dNavalAirBonus, CO_JESS.d2dGroundBonus,
@@ -350,7 +350,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Infantry units get %0% firepower. Air and Sea Units get %1% firepower and Ground Units have increased firepower by %2%. Movement range of vehicles increases by %3 space. All units' fuel and ammunition supplies are replenished.");
+        var text = qsTr("Infantry units get %0% firepower. Air and Sea Units get %1% firepower and Ground Units have increased firepower by %2%. Movement range of vehicles increases by %3 space. All units' fuel and ammunition supplies are replenished.");
         text = replaceTextArgs(text, [CO_JESS.powerInfBonus, CO_JESS.powerNavalAirBonus, CO_JESS.powerGroundBonus, CO_JESS.powerMovementBonus]);
         return text;
     };
@@ -360,7 +360,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Infantry units get %0% firepower. Air and Sea Units get %1% firepower and Ground Units have increased firepower by %2%. Movement range of vehicles increases by %3 spaces. All units' fuel and ammunition supplies are replenished.");
+        var text = qsTr("Infantry units get %0% firepower. Air and Sea Units get %1% firepower and Ground Units have increased firepower by %2%. Movement range of vehicles increases by %3 spaces. All units' fuel and ammunition supplies are replenished.");
         text = replaceTextArgs(text, [CO_JESS.superPowerInfBonus, CO_JESS.superPowerNavalAirBonus, CO_JESS.superPowerGroundBonus, CO_JESS.superPowerMovementBonus]);
         return text;
     };

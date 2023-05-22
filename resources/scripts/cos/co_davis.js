@@ -352,7 +352,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nNone\n") +
+        var text = qsTr("\nSpecial Unit:\nNone\n") +
                qsTr("\nGlobal Effect: \nIf Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.") +
                qsTr("\n\nCO Zone Effect: \nIf Davis and his allies controls more units than his enemies. He gains %4% luck per unit up to a maximum of %5%. Else he gains %6% missfortune per unit up to a maximum of %7%.");
         text = replaceTextArgs(text, [CO_DAVIS.d2dLuckPerUnit, CO_DAVIS.d2dMaxLuck, CO_DAVIS.d2dMissFortunePerUnit, CO_DAVIS.d2dMaxMissFortune,
@@ -361,7 +361,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("If Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.");
+        var text = qsTr("If Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.");
         text = replaceTextArgs(text, [CO_DAVIS.powerLuckPerUnit, CO_DAVIS.powerMaxLuck, CO_DAVIS.powerMissFortunePerUnit, CO_DAVIS.powerMaxMissFortune]);
         return text;
     };
@@ -371,7 +371,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("If Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.");
+        var text = qsTr("If Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.");
         text = replaceTextArgs(text, [CO_DAVIS.superPowerLuckPerUnit, CO_DAVIS.superPowerMaxLuck, CO_DAVIS.superPowerMissFortunePerUnit, CO_DAVIS.superPowerMaxMissFortune]);
         return text;
     };

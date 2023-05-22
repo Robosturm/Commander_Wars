@@ -310,7 +310,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nIron Shield Generator\n\n" +
+        var text = qsTr("\nSpecial Unit:\nIron Shield Generator\n\n" +
                     "Global Effect: \nDefense is increased by %0% and by %1% against indirect units and offense by %2%." +
                     "\n\nCO Zone Effect: \nDefense is increased by %3% and by %4% against indirect units and offense by %5%.");
         text = replaceTextArgs(text, [CO_NAPOLEON.d2dDefBonus, CO_NAPOLEON.d2dIndirectDefBonus, CO_NAPOLEON.d2dOffBonus,
@@ -319,7 +319,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Units cannot take damage that is more than %0% of their current HP in a single attack.");
+        var text = qsTr("Units cannot take damage that is more than %0% of their current HP in a single attack.");
         text = replaceTextArgs(text, [CO_NAPOLEON.powerDefReduction * 100]);
         return text;
     };
@@ -329,7 +329,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Units fight as though they were %0 HP stronger and inflict extra damage by %1% based on their terrain cover. Defense is increased by %2% and by %3% against indirect units");
+        var text = qsTr("Units fight as though they were %0 HP stronger and inflict extra damage by %1% based on their terrain cover. Defense is increased by %2% and by %3% against indirect units");
         text = replaceTextArgs(text, [CO_NAPOLEON.superPowerHpBonus, CO_NAPOLEON.superPowerTerrainBonus, CO_NAPOLEON.superPowerDefBonus, CO_NAPOLEON.superPowerIndirectDefBonus]);
         return text;
     };

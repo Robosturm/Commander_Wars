@@ -18,6 +18,20 @@
 class AudioManager;
 using spAudioManager = oxygine::intrusive_ptr<AudioManager>;
 
+#ifdef AUDIOSUPPORT
+struct SoundData : public QObject
+{
+    static constexpr qint32 MAX_SAME_SOUNDS = 60;
+    static constexpr qint32 DEFAULT_CACHE_SIZE = 10;
+    QSoundEffect* sound[MAX_SAME_SOUNDS];
+    std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
+    qint32 nextSoundToUse = 0;
+    QUrl cacheUrl;
+};
+
+Q_DECLARE_INTERFACE(SoundData, "SoundData");
+#endif
+
 class AudioManager final : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
@@ -32,15 +46,6 @@ private:
         QMediaPlayer m_player;
         qint32 m_currentMedia{-1};
         qint32 m_nextMedia{-1};
-    };
-    struct SoundData
-    {
-        static constexpr qint32 MAX_SAME_SOUNDS = 60;
-        static constexpr qint32 DEFAULT_CACHE_SIZE = 10;
-        QSoundEffect* sound[MAX_SAME_SOUNDS];
-        std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
-        qint32 nextSoundToUse = 0;
-        QUrl cacheUrl;
     };
 #endif
 public:
@@ -65,9 +70,9 @@ signals:
     void sigLoadNextAudioFile();
     void sigStopAudio();
 #ifdef AUDIOSUPPORT
-    void sigDeleteSound(AudioManager::SoundData* soundData, qint32 soundIndex);
-    void sigStopSoundInternal(AudioManager::SoundData* soundData, qint32 soundIndex);
-    void sigPlayDelayedSound(AudioManager::SoundData* soundData, qint32 soundIndex, bool stopOldestSound, qint32 duration);
+    void sigDeleteSound(SoundData* soundData, qint32 soundIndex);
+    void sigStopSoundInternal(SoundData* soundData, qint32 soundIndex);
+    void sigPlayDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound, qint32 duration);
 #endif
 public slots:
     /**
@@ -174,7 +179,7 @@ protected slots:
      * @param soundData
      * @param soundIndex
      */
-    void stopSoundInternal(AudioManager::SoundData* soundData, qint32 soundIndex);
+    void stopSoundInternal(SoundData* soundData, qint32 soundIndex);
 #endif
 protected:
     /**
@@ -299,5 +304,7 @@ private:
     bool m_loadBaseGameFolders{true};
     bool m_noAudio{false};
 };
+
+Q_DECLARE_INTERFACE(AudioManager, "AudioManager");
 
 #endif // AUDIOTHREAD_H

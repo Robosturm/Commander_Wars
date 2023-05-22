@@ -355,7 +355,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nKirov\n") +
+        var text = qsTr("\nSpecial Unit:\nKirov\n") +
                 qsTr("\nGlobal Effect: \nAir units gain %0% firepower and %1% defence and use %2 less fuel, but sea units have %3% less firepower.") +
                 qsTr("\n\nCO Zone Effect: \nAir units are gain %0% firepower and %1% defence.");
         text = replaceTextArgs(text, [CO_EAGLE.d2dAirOffBonus, CO_EAGLE.d2dAirDefBonus, CO_EAGLE.d2dFuelModifier, CO_EAGLE.d2dNavalOffBonus,
@@ -366,13 +366,13 @@ var Constructor = function()
     {
         if (CO_EAGLE.powerRefresh)
         {
-            let text = qsTr("All non-infantry units that have already carried out orders may move again. Air units are gain %0% firepower and %1% defence and sea units have %2% less firepower and ground units have %3% less firepower.");
+            var text = qsTr("All non-infantry units that have already carried out orders may move again. Air units are gain %0% firepower and %1% defence and sea units have %2% less firepower and ground units have %3% less firepower.");
             text = replaceTextArgs(text, [CO_EAGLE.powerAirOffBonus, CO_EAGLE.powerAirDefBonus, CO_EAGLE.powerNavalOffBonus, CO_EAGLE.powerOtherOffBonus]);
             return text;
         }
         else
         {
-            let text = qsTr("Air units gain %0% firepower and %1% defence");
+            var text = qsTr("Air units gain %0% firepower and %1% defence");
             text = replaceTextArgs(text, [CO_EAGLE.powerAirOffBonus, CO_EAGLE.powerAirDefBonus]);
             return text;
         }
@@ -383,7 +383,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("All non-infantry units that have already carried out orders may move again. Air units are gain %0% firepower and %1% defence and sea units have %2% less firepower and ground units have %3% less firepower.");
+        var text = qsTr("All non-infantry units that have already carried out orders may move again. Air units are gain %0% firepower and %1% defence and sea units have %2% less firepower and ground units have %3% less firepower.");
         text = replaceTextArgs(text, [CO_EAGLE.superPowerAirOffBonus, CO_EAGLE.superPowerAirDefBonus, CO_EAGLE.superPowerNavalOffBonus, CO_EAGLE.superPowerOtherOffBonus]);
         return text;
     };

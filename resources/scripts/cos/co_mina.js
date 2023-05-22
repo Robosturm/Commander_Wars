@@ -255,14 +255,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nNo Effects.") +
+        var text = qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain %0% additional firepower and %1% defense.");
         text = replaceTextArgs(text, [CO_MINA.d2dCoZoneOffBonus, CO_MINA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Unit's may take unexpectedly less damage up to %0%.");
+        var text = qsTr("Unit's may take unexpectedly less damage up to %0%.");
         text = replaceTextArgs(text, [CO_MINA.powerDamageReduction]);
         return text;
     };

@@ -193,7 +193,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nSmuggler\n") +
+        var text = qsTr("\nSpecial Unit:\nSmuggler\n") +
                qsTr("\nGlobal Effect: \nUnits are %0% cheaper") +
                qsTr("\n\nCO Zone Effect: \nUnits have %1% more firepower and %2% defense.");
         text = replaceTextArgs(text, [CO_HACHI.d2dCostReduction * 100, CO_HACHI.d2dCoZoneOffBonus, CO_HACHI.d2dCoZoneDefBonus]);
@@ -201,7 +201,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Speaks with such authority that he obtains %0% lower deployment costs.");
+        var text = qsTr("Speaks with such authority that he obtains %0% lower deployment costs.");
         text = replaceTextArgs(text, [CO_HACHI.powerCostReduction * 100]);
         return text;
     };
@@ -211,7 +211,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Merchant pals gather from around the globe and help him deploy ground units from any allied city with %0% lower deployment costs.");
+        var text = qsTr("Merchant pals gather from around the globe and help him deploy ground units from any allied city with %0% lower deployment costs.");
         text = replaceTextArgs(text, [CO_HACHI.powerCostReduction * 100]);
         return text;
     };

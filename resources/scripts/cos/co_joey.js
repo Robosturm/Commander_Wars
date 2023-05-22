@@ -154,8 +154,8 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let attackerValue = 0;
-            let defenderValue = 0;
+            var attackerValue = 0;
+            var defenderValue = 0;
             if(defender !== null)
             {
                 attackerValue = attacker.getUnitValue();
@@ -231,8 +231,8 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let attackerValue = 0;
-            let defenderValue = 0;
+            var attackerValue = 0;
+            var defenderValue = 0;
             if(attacker !== null)
             {
                 attackerValue = attacker.getUnitValue();
@@ -322,7 +322,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nUnits gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.") +
+        var text = qsTr("\nGlobal Effect: \nUnits gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.");
         text = replaceTextArgs(text, [CO_JOEY.d2dOffBonus, CO_JOEY.d2dOffMalus,
                                       CO_JOEY.d2dCoZoneOffBonus, CO_JOEY.d2dCoZoneOffMalus]);
@@ -330,7 +330,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Units receive %0% firepower and %1% defence boost when fighting a stronger unit.");
+        var text = qsTr("Units receive %0% firepower and %1% defence boost when fighting a stronger unit.");
         text = replaceTextArgs(text, [CO_JOEY.powerOffBonus, CO_JOEY.powerDefBonus]);
         return text;
     };
@@ -340,7 +340,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Deployment costs drops by %0% and units get first strike when fighting a stronger unit. Units gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.");
+        var text = qsTr("Deployment costs drops by %0% and units get first strike when fighting a stronger unit. Units gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.");
         text = replaceTextArgs(text, [CO_JOEY.superPowerCostReduction * 100, CO_JOEY.powerDefBonus, CO_JOEY.superPowerOffBonus, CO_JOEY.superPowerOffMalus]);
         return text;
     };

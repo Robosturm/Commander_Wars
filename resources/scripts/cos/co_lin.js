@@ -309,7 +309,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nIntel truck\n") +
+        var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
                qsTr("\nGlobal Effect: \nGround Units gain %0% firepower and %1% defense.") +
                qsTr("\n\nCO Zone Effect: \nGround Units gain %2% firepower and %3% defense.");
         text = replaceTextArgs(text, [CO_LIN.d2dOffBonus, CO_LIN.d2dDefBonus,
@@ -318,7 +318,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Increases vision range by %0 and allows her to view into hidden places. Ground Units gain %1% firepower and %2% defense.");
+        var text = qsTr("Increases vision range by %0 and allows her to view into hidden places. Ground Units gain %1% firepower and %2% defense.");
         text = replaceTextArgs(text, [CO_LIN.powerVisionRange,
                                       CO_LIN.powerOffBonus, CO_LIN.powerDefBonus]);
         return text;
@@ -329,7 +329,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Increases vision range by %0 and allows her to view into hidden places. Ground Units gain %1% firepower and %2% defense.");
+        var text = qsTr("Increases vision range by %0 and allows her to view into hidden places. Ground Units gain %1% firepower and %2% defense.");
         text = replaceTextArgs(text, [CO_LIN.superPowerVisionRange,
                                       CO_LIN.superPowerOffBonus, CO_LIN.superPowerDefBonus]);
         return text;

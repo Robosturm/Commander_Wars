@@ -371,14 +371,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nUnits lose %0 more firepower per lost HP.") +
+        var text = qsTr("\nGlobal Effect: \nUnits lose %0 more firepower per lost HP.") +
                    qsTr("\n\nCO Zone Effect: \nAn attacking unit instantly kills an enemy unit if a max luck roll would kill them. A unit gains a 1 turn %1% defense boost by killing an enemy unit. Units gain %2% firepower and %3% defence.");
         text = replaceTextArgs(text, [CO_ADAM.d2dPowerMalus, CO_ADAM.d2dDefDestroyedBonus, CO_ADAM.d2dCoZoneOffBonus, CO_ADAM.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("All of Adam's units gains a %0% firepower boost and %1 movement range. Whenever Adam destroys a unit, the next unit gains %2 bonus firepower.");
+        var text = qsTr("All of Adam's units gains a %0% firepower boost and %1 movement range. Whenever Adam destroys a unit, the next unit gains %2 bonus firepower.");
         text = replaceTextArgs(text, [CO_ADAM.powerBaseBonus, CO_ADAM.powerMovementBonus, CO_ADAM.powerDestroyedBonus]);
         return text;
     };
@@ -388,7 +388,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Adams units gain %1% firepower. Each time Adam destroys an enemy unit, the attacking unit can move again. However, each kill reduces that units firepower by %0%. Conversely, after killing a unit, using a unit that has not been used for that turn will give it additional %1% firepower.");
+        var text = qsTr("Adams units gain %1% firepower. Each time Adam destroys an enemy unit, the attacking unit can move again. However, each kill reduces that units firepower by %0%. Conversely, after killing a unit, using a unit that has not been used for that turn will give it additional %1% firepower.");
         text = replaceTextArgs(text, [CO_ADAM.superPowerOffMalus, CO_ADAM.superPowerOffBaseBonus, CO_ADAM.superPowerOffDestroyedBonus]);
         return text;
     };

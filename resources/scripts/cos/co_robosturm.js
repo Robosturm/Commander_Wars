@@ -296,13 +296,13 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        let text = qsTr("His troops can move %0 point more, but they have weaker firepower and higher defense capabilities.");
+        var text = qsTr("His troops can move %0 point more, but they have weaker firepower and higher defense capabilities.");
         text = replaceTextArgs(text, [CO_ROBOSTURM.d2dMovementPoints]);
         return text;
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
+        var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
                qsTr("\nGlobal Effect: \nUnits gain %0 additional movement point and have %1% reduced firepower and %2% increased defense.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain %3% defense and have %4% reduced firepower.");
         text = replaceTextArgs(text, [CO_ROBOSTURM.d2dMovementPoints, CO_ROBOSTURM.d2dOffBonus, CO_ROBOSTURM.d2dDefBonus,
@@ -311,7 +311,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Enemy loses %0% of their ammo, take %1 HP damage, his troops can move %2 point more and their defense rises by %3%.");
+        var text = qsTr("Enemy loses %0% of their ammo, take %1 HP damage, his troops can move %2 point more and their defense rises by %3%.");
         text = replaceTextArgs(text, [CO_ROBOSTURM.powerAmmoLoose * 100, CO_ROBOSTURM.powerDamage, CO_ROBOSTURM.powerMovementPoints,
                                       CO_ROBOSTURM.powerDefBonus]);
         return text;
@@ -322,7 +322,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Enemy loses %0% of their ammo, take %1 HP damage, his troops can move %2 point more and their defense rises by %3%.");
+        var text = qsTr("Enemy loses %0% of their ammo, take %1 HP damage, his troops can move %2 point more and their defense rises by %3%.");
         text = replaceTextArgs(text, [CO_ROBOSTURM.powerAmmoLoose * 100, CO_ROBOSTURM.superPowerDamage, CO_ROBOSTURM.superPowerMovementPoints,
                                       CO_ROBOSTURM.superPowerDefBonus]);
         return text;

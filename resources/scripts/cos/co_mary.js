@@ -374,7 +374,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
+        var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                qsTr("\nGlobal Effect: \nAttacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus of %0 for that property.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain firepower %1% and defense %2.");
         text = replaceTextArgs(text, [CO_MARY.d2dCaptureBonus, CO_MARY.d2dCoZoneOffBonus, CO_MARY.d2dCoZoneDefBonus]);
@@ -382,7 +382,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Deployment and repairs from properties are disabled and she gets an offensive bonus of %0%.");
+        var text = qsTr("Deployment and repairs from properties are disabled and she gets an offensive bonus of %0%.");
         text = replaceTextArgs(text, [CO_MARY.powerOffBonus]);
         return text;
     };
@@ -392,7 +392,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Terrain stars now reduces the foe's defense by %2% and Mary's capture bonus is greatly increased by %0. All units gain %1% firepower.");
+        var text = qsTr("Terrain stars now reduces the foe's defense by %2% and Mary's capture bonus is greatly increased by %0. All units gain %1% firepower.");
         text = replaceTextArgs(text, [CO_MARY.superPowerCaptureBonus ,CO_MARY.superPowerOffBonus, CO_MARY.superPowerDefenseReduction]);
         return text;
     };

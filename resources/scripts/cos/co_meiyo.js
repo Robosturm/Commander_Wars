@@ -294,7 +294,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nUnit Ranks are more effective.\n" +
+        var text = qsTr("\nGlobal Effect: \nUnit Ranks are more effective.\n" +
                     "Soldier have %0% firepower and defence.\n" +
                     "Experienced have %1% firepower and defence.\n" +
                     "Veteran have %2% firepower and defence.\n" +
@@ -310,7 +310,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Units with a higher rank have even higher defence and offense.\n" +
+        var text = qsTr("Units with a higher rank have even higher defence and offense.\n" +
                     "Soldier have %0% firepower and defence.\n" +
                     "Experienced have %1% firepower and defence.\n" +
                     "Veteran have %2% firepower and defence.\n" +
@@ -324,7 +324,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Units with a higher rank have even higher defence and offense. All units gain two ranks.\n" +
+        var text = qsTr("Units with a higher rank have even higher defence and offense. All units gain two ranks.\n" +
                     "Soldier have %0% firepower and defence.\n" +
                     "Experienced have %1% firepower and defence.\n" +
                     "Veteran have %2% firepower and defence.\n" +

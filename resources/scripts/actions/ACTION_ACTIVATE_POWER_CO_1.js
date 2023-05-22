@@ -4,7 +4,7 @@ var Constructor = function()
     {
         if (map.getGameRules().getParallelCos())
         {
-            let co = map.getCurrentPlayer().getCO(1);
+            var co = map.getCurrentPlayer().getCO(1);
             if ((co !== null) && co.canUsePower())
             {
                 return true;

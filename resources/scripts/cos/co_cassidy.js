@@ -170,7 +170,7 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let getsBonus = false;
+            var getsBonus = false;
             if (defender !== null)
             {
                 getsBonus = attacker.getHp() >= defender.getHp();

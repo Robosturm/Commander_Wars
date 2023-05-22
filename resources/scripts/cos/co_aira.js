@@ -292,7 +292,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Enemies expend an additional %0 times more fuel when they move for their next turn and the weather changes to sun. Her units also gain %1% firepower and %2% defence.");
+        var text = qsTr("Enemies expend an additional %0 times more fuel when they move for their next turn and the weather changes to sun. Her units also gain %1% firepower and %2% defence.");
         text = replaceTextArgs(text, [CO_AIRA.powerFuelIncrease, CO_AIRA.powerOffBonus, CO_AIRA.powerDefBonus]);
         return text;
     };
@@ -302,7 +302,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("The cheapest enemy ground and sea units suffer %0 HP of damage while all enemy air units suffer %0 HP of damage. All enemy units need %1 additional movement cost to traverse terrain and the weather changes to sun. Her units also gain %2% firepower and %3% defence.");
+        var text = qsTr("The cheapest enemy ground and sea units suffer %0 HP of damage while all enemy air units suffer %0 HP of damage. All enemy units need %1 additional movement cost to traverse terrain and the weather changes to sun. Her units also gain %2% firepower and %3% defence.");
         text = replaceTextArgs(text, [CO_AIRA.superPowerDamage, CO_AIRA.superPowerMovementCostIncrease, CO_AIRA.powerOffBonus, CO_AIRA.powerDefBonus]);
         return text;
     };

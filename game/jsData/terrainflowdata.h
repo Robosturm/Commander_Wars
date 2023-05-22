@@ -13,7 +13,17 @@ class TerrainFlowData final : public QObject
 public:
     explicit TerrainFlowData(GameMap* pMap);
     ~TerrainFlowData() = default;
-
+    /**
+     * @brief getOverlayTiles
+     * @param terrains
+     * @return
+     */
+    QVector<QPoint> getOverlayTiles(const QStringList & terrains);
+    /**
+     * @brief getOverlayTileMapping
+     * @return
+     */
+    QVector<qint32> getOverlayTileMapping() const;
 public slots:
     GameMap *getMap() const;
     bool addData(QPoint newPosition, qint32 newCosts, GameEnums::FlowDirections newFlowDirection);
@@ -30,17 +40,6 @@ public slots:
         return m_positions.size();
     }
     void print();
-    /**
-     * @brief getOverlayTiles
-     * @param terrains
-     * @return
-     */
-    QVector<QPoint> getOverlayTiles(const QStringList & terrains);
-    /**
-     * @brief getOverlayTileMapping
-     * @return
-     */
-    QVector<qint32> getOverlayTileMapping() const;
 private:
     QVector<QPoint> m_positions;
     QVector<qint32> m_costs;

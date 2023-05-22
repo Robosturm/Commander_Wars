@@ -202,8 +202,8 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let healing = 0;
-            let damage = 0;
+            var healing = 0;
+            var damage = 0;
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Tagpower:
@@ -226,7 +226,7 @@ var Constructor = function()
                 }
                 else if (!gotAttacked && attacker.getOwner() === co.getOwner() && attacker.getHp() <= 0)
                 {
-                    let hp = defender.getHp();
+                    var hp = defender.getHp();
                     if (hp > damage)
                     {
                         defender.setHp(hp - damage);
@@ -238,7 +238,7 @@ var Constructor = function()
                 }
                 else if (gotAttacked && defender.getOwner() === co.getOwner() && defender.getHp() <= 0)
                 {
-                    let hp = attacker.getHp();
+                    var hp = attacker.getHp();
                     if (hp > damage)
                     {
                         attacker.setHp(hp - damage);
@@ -290,7 +290,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
+        var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
                qsTr("\nGlobal Effect: \nUnits gain %0% firepower and %1% misfortune per star.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower and %3% misfortune per star.");
         text = replaceTextArgs(text, [CO_ROBOANDY.d2dOffBonus, CO_ROBOANDY.d2dOffMissfortuneBonus, CO_ROBOANDY.d2dCoZoneOffBonus, CO_ROBOANDY.d2dCoZoneMissfortuneBonus]);
@@ -298,7 +298,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("His units heal %0 HP after any attack or counter-attack, and deal %1 HP damage to the offender if they are destroyed.");
+        var text = qsTr("His units heal %0 HP after any attack or counter-attack, and deal %1 HP damage to the offender if they are destroyed.");
         text = replaceTextArgs(text, [CO_ROBOANDY.powerHeal, CO_ROBOANDY.powerDamage]);
         return text;
     };
@@ -308,7 +308,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("His units heal %0 HP after any attack or counter-attack, and deal %1 HP damage to the offender if they are destroyed.");
+        var text = qsTr("His units heal %0 HP after any attack or counter-attack, and deal %1 HP damage to the offender if they are destroyed.");
         text = replaceTextArgs(text, [CO_ROBOANDY.superPowerHeal, CO_ROBOANDY.superPowerDamage]);
         return text;
     };

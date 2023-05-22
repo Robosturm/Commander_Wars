@@ -220,15 +220,15 @@ var Constructor = function()
             var player = co.getOwner();
             if (!player.getIsDefeated())
             {
-                let counit = co.getCOUnit();
-                let coRange = co.getCORange();
-                let animations = [];
-                let animation = null;
-                let counter = 0;
-                let viewplayer = map.getCurrentViewPlayer();
-                let size = 0;
-                let delay = 0;
-                let unit = null;
+                var counit = co.getCOUnit();
+                var coRange = co.getCORange();
+                var animations = [];
+                var animation = null;
+                var counter = 0;
+                var viewplayer = map.getCurrentViewPlayer();
+                var size = 0;
+                var delay = 0;
+                var unit = null;
                 if (counit !== null && CO_CAULDER.d2dCoZoneHealing > 0)
                 {
                     UNIT.repairUnit(counit, CO_CAULDER.d2dCoZoneHealing, map);

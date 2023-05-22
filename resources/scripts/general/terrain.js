@@ -79,8 +79,8 @@ var TERRAIN =
     },
     getTerrainBiomeGroupsNameArray : function()
     {
-        let count = TERRAIN.terrainBiomeGroups.length;
-        let names = [];
+        var count = TERRAIN.terrainBiomeGroups.length;
+        var names = [];
         for (var i = 0; i < count; ++i)
         {
             names.push(TERRAIN.getTerrainGroupName(TERRAIN.terrainBiomeGroups[i]));
@@ -275,10 +275,10 @@ var TERRAIN =
 
     getBuildingTerrainPalette : function(building)
     {
-        let terrain = building.getTerrain();
+        var terrain = building.getTerrain();
         if (terrain !== null)
         {
-            let palette = terrain.getPalette();
+            var palette = terrain.getPalette();
             if (palette !== "")
             {
                 return palette;

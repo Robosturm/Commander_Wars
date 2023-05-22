@@ -165,7 +165,7 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let indirectAttack = (attacker.getBaseMaxRange() === 1 &&
+            var indirectAttack = (attacker.getBaseMaxRange() === 1 &&
                                   atkPosX === attacker.getX() &&
                                   atkPosY === attacker.getY() &&
                                   Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1);
@@ -312,7 +312,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nChaperon\n") +
+        var text = qsTr("\nSpecial Unit:\nChaperon\n") +
                qsTr("\nGlobal Effect: \nDirect Units gain an additional firerange of %0 when they don't move. However firepower is reduced by %1% in doing so.") +
                qsTr("\n\nCO Zone Effect: \nDirect Units gain an additional firerange of %2 when they don't move. However firepower is reduced by %3% in doing so.");
         text = replaceTextArgs(text, [CO_IK_486_B7.d2dFirerangeBonus, CO_IK_486_B7.d2dOffMalus,
@@ -321,7 +321,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("The defense of his direct units raises by %0 and their firerange is increased by %1% when they don't move and firepower is reduced by %2%");
+        var text = qsTr("The defense of his direct units raises by %0 and their firerange is increased by %1% when they don't move and firepower is reduced by %2%");
         text = replaceTextArgs(text, [CO_IK_486_B7.powerDirectDefBonus, CO_IK_486_B7.powerFirerangeBonus, CO_IK_486_B7.powerOffMalus]);
         return text;
     };
@@ -331,7 +331,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("The defense of his direct units raises by %0 and their firerange is increased by %1% when they don't move and firepower is reduced by %2%");
+        var text = qsTr("The defense of his direct units raises by %0 and their firerange is increased by %1% when they don't move and firepower is reduced by %2%");
         text = replaceTextArgs(text, [CO_IK_486_B7.superPowerDirectDefBonus, CO_IK_486_B7.superPowerFirerangeBonus, CO_IK_486_B7.superPowerOffMalus]);
         return text;
     };

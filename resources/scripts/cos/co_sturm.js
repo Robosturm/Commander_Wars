@@ -53,7 +53,6 @@ var Constructor = function()
 
     this.throwMeteor = function(co, damage, powerNameAnimation, map)
     {
-        // let a meteor fall :D
         var meteorTarget = co.getOwner().getRockettarget(2, damage);
         // create cool meteor animation :)
         var animation = GameAnimationFactory.createAnimation(map, meteorTarget.x + 2, meteorTarget.y - 4);
@@ -222,14 +221,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nHis troops are not affected by terrain except snow and have %0% firepower and %1% defence.") +
+        var text = qsTr("\nGlobal Effect: \nHis troops are not affected by terrain except snow and have %0% firepower and %1% defence.") +
                    qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %2% and defence by %3%.");
         text = replaceTextArgs(text, [CO_STURM.d2dOffBonus, CO_STURM.d2dDefBonus, CO_STURM.d2dCoZoneOffBonus, CO_STURM.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("A small Meteor fall from space and deal %0 HP of damage to all affected units. Firepower is increased by %1% and defence is increased by %2%.");
+        var text = qsTr("A small Meteor fall from space and deal %0 HP of damage to all affected units. Firepower is increased by %1% and defence is increased by %2%.");
         text = replaceTextArgs(text, [CO_STURM.powerDamage, CO_STURM.powerOffBonus, CO_STURM.powerDefBonus]);
         return text;
     };
@@ -239,7 +238,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Pulls a giant meteor from space, which deals %0 HP of damage to all affected units. Firepower is increased by %1% and defence is increased by %2%.");
+        var text = qsTr("Pulls a giant meteor from space, which deals %0 HP of damage to all affected units. Firepower is increased by %1% and defence is increased by %2%.");
         text = replaceTextArgs(text, [CO_STURM.superPowerDamage, CO_STURM.superPowerOffBonus, CO_STURM.superPowerDefBonus]);
         return text;
     };

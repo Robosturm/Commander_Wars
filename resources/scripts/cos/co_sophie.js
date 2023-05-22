@@ -320,7 +320,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nCommando\n") +
+        var text = qsTr("\nSpecial Unit:\nCommando\n") +
                 qsTr("\nGlobal Effect: \nEnemy counterattacks deal %0% less damage.") +
                 qsTr("\n\nCO Zone Effect: \nEnemy counterattacks deal %1% less damage. Units gain %2% firepower and %3% defense.");
         text = replaceTextArgs(text, [CO_SOPHIE.d2dDefenderDamageReduction * 100, CO_SOPHIE.d2dCoZoneDefenderDamageReduction * 100, CO_SOPHIE.d2dCoZoneOffBonus, CO_SOPHIE.d2dCoZoneDefBonus]);
@@ -336,7 +336,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Sophie's units strike twice when ordered to attack. However, firepower of the second attack is reduced by %0%");
+        var text = qsTr("Sophie's units strike twice when ordered to attack. However, firepower of the second attack is reduced by %0%");
         text = replaceTextArgs(text, [CO_SOPHIE.superPowerSecondAttackOffMalus]);
         return text;
     };

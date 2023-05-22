@@ -2,9 +2,9 @@ var Constructor = function()
 {
     this.canBePerformed = function(action, map)
     {
-        let player = map.getCurrentPlayer();
-        let co0 = player.getCO(0);
-        let co1 = player.getCO(1);
+        var player = map.getCurrentPlayer();
+        var co0 = player.getCO(0);
+        var co1 = player.getCO(1);
         if ((co0 !== null) && co0.canUseSuperpower() &&
             (co1 !== null) && co1.canUseSuperpower())
         {
@@ -24,9 +24,9 @@ var Constructor = function()
     {
         if (map.getGameRules().getParallelCos())
         {
-            let player = map.getCurrentPlayer();
-            let co0 = player.getCO(0);
-            let co1 = player.getCO(1);
+            var player = map.getCurrentPlayer();
+            var co0 = player.getCO(0);
+            var co1 = player.getCO(1);
             co0.activateSuperpower(GameEnums.PowerMode_Tagpower);
             co1.activateSuperpower(GameEnums.PowerMode_Tagpower);
         }

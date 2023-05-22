@@ -242,14 +242,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nHer troops are immune to all weather effects." +
+        var text = qsTr("\nGlobal Effect: \nHer troops are immune to all weather effects." +
                         "\n\nCO Zone Effect: \n%0% increased firepower and %1% defense.");
         text = replaceTextArgs(text, [CO_PENNY.d2dCoZoneOffBonus, CO_PENNY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Changes the weather to a random one for %0 days.");
+        var text = qsTr("Changes the weather to a random one for %0 days.");
         text = replaceTextArgs(text, [CO_PENNY.powerDayChanges]);
         return text;
     };
@@ -259,7 +259,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Changes the weather to a random for %4 days and she gets a firepower boost for this turn.\n" +
+        var text = qsTr("Changes the weather to a random for %4 days and she gets a firepower boost for this turn.\n" +
                     "During rain she gets additionally %0 improved vision.\n" +
                     "During mist she gets additionally %1 improved vision.\n" +
                     "During snow she gets additionally %2 improved movement.\n" +

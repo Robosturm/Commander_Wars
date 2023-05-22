@@ -235,7 +235,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nUnits have %0% more firepower and %1% defense.") +
+        var text = qsTr("\nGlobal Effect: \nUnits have %0% more firepower and %1% defense.") +
             qsTr("\n\nCO Zone Effect: \nUnits have %2% more firepower and %3% defense.");
         text = replaceTextArgs(text, [CO_HAWKE.d2dOffBonus, CO_HAWKE.d2dDefBonus,
                                       CO_HAWKE.d2dCoZoneOffBonus, CO_HAWKE.d2dCoZoneDefBonus]);
@@ -243,7 +243,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("All enemy units suffer %0 HP of damage. In addition, all allied units recover %0 HP.");
+        var text = qsTr("All enemy units suffer %0 HP of damage. In addition, all allied units recover %0 HP.");
         text = replaceTextArgs(text, [CO_HAWKE.powerDamage]);
         return text;
     };
@@ -253,7 +253,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("All enemy units suffer %0 HP of damage. In addition, all allied units recover %0 HP.");
+        var text = qsTr("All enemy units suffer %0 HP of damage. In addition, all allied units recover %0 HP.");
         text = replaceTextArgs(text, [CO_HAWKE.superPowerDamage]);
         return text;
     };

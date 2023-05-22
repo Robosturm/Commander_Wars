@@ -277,7 +277,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nHot Tank\n") +
+        var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
                qsTr("\nGlobal Effect: \nUnits gain increased %0% firepower on street.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain increased %1% firepower on street.");
         text = replaceTextArgs(text, [CO_KOAL.d2dOffBonus, CO_KOAL.d2dCoZoneOffBonus]);
@@ -285,7 +285,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Movement range for all units is increased by %0 space. Units have %1% more firepower on roads.");
+        var text = qsTr("Movement range for all units is increased by %0 space. Units have %1% more firepower on roads.");
         text = replaceTextArgs(text, [CO_KOAL.powerMovementBonus, CO_KOAL.powerOffBonus]);
         return text;
     };
@@ -295,7 +295,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Movement range for all units is increased by %0 space. Units have %1% more firepower on roads.");
+        var text = qsTr("Movement range for all units is increased by %0 space. Units have %1% more firepower on roads.");
         text = replaceTextArgs(text, [CO_KOAL.superPowerMovementBonus, CO_KOAL.superPowerOffBonus]);
         return text;
     };

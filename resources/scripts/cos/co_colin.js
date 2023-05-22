@@ -208,7 +208,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
+        var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
                 qsTr("\nGlobal Effect: \nUnits are %0% cheaper and have %1% less firepower.") +
                 qsTr("\n\nCO Zone Effect: \nUnits have only %2% weaker firepower.");
         text = replaceTextArgs(text, [CO_COLIN.d2dCostModifier, CO_COLIN.d2dOffBonus, CO_COLIN.d2dCoZoneOffBonus]);
@@ -216,7 +216,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Increases current funds by %0%.");
+        var text = qsTr("Increases current funds by %0%.");
         text = replaceTextArgs(text, [CO_COLIN.powerFundsMultiplier * 100]);
         return text;
     };
@@ -226,7 +226,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Uses wealth to increase the strength of units. He gains %0% firepower per 1000 funds.");
+        var text = qsTr("Uses wealth to increase the strength of units. He gains %0% firepower per 1000 funds.");
         text = replaceTextArgs(text, [CO_COLIN.superPowerOffBonus]);
         return text;
     };

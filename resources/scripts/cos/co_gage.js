@@ -316,7 +316,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+        var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
                qsTr("\nGlobal Effect: \nIndirect and Sea Units have %0% offensive and %1% defensive bonus.") +
                qsTr("\n\nCO Zone Effect: \nIndirect and Sea Units have %2% offensive and %3% defensive bonus.");
         text = replaceTextArgs(text, [CO_GAGE.d2dOffBonus, CO_GAGE.d2dDefBonus,
@@ -325,7 +325,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Increases range of indirect units by %0 spaces. Indirect and Sea Units have %0% offensive and %1% defensive bonus.");
+        var text = qsTr("Increases range of indirect units by %0 spaces. Indirect and Sea Units have %0% offensive and %1% defensive bonus.");
         text = replaceTextArgs(text, [CO_GAGE.powerFirerangeBonus, CO_GAGE.powerOffBonus, CO_GAGE.powerDefBonus]);
         return text;
     };
@@ -335,7 +335,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Increases range of indirect units by %0 spaces. Indirect and Sea Units have %0% offensive and %1% defensive bonus.");
+        var text = qsTr("Increases range of indirect units by %0 spaces. Indirect and Sea Units have %0% offensive and %1% defensive bonus.");
         text = replaceTextArgs(text, [CO_GAGE.superPowerFirerangeBonus, CO_GAGE.superPowerOffBonus, CO_GAGE.superPowerDefBonus]);
         return text;
     };

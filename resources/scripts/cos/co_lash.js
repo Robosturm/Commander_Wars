@@ -265,7 +265,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n\nGlobal Effect: \nUnits gain %0% increased firepower per defense star.") +
+        var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n\nGlobal Effect: \nUnits gain %0% increased firepower per defense star.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain %1% increased firepower per defense star.");
         text = replaceTextArgs(text, [CO_LASH.d2dTerrainBonus, CO_LASH.d2dCoZoneTerrainBonus]);
         return text;
@@ -280,7 +280,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Terrain stars get multiplied by %0. Additionally, all units movements are unhindered by terrain.");
+        var text = qsTr("Terrain stars get multiplied by %0. Additionally, all units movements are unhindered by terrain.");
         text = replaceTextArgs(text, [CO_LASH.superPowerTerrainDefenseModifier + 1]);
         return text;
     };

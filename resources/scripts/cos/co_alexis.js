@@ -435,7 +435,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nRepair Tank\n") +
+        var text = qsTr("\nSpecial Unit:\nRepair Tank\n") +
                    qsTr("\nGlobal Effect: \nUnits heal only %0 HP while on an owned property, however, units will still heal from any owned property within %1 space of a unit by %2 HP. This effect stacks with each additional nearby property.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
         text = replaceTextArgs(text, [CO_ALEXIS.d2dHealMalus, CO_ALEXIS.d2dHealBonus,  CO_ALEXIS.d2dHealBonus, CO_ALEXIS.d2dCoZoneBonus]);
@@ -443,7 +443,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text =  qsTr("Units within %0 spaces of any owned properties receive %1% firepower bonus and restore %2 HP per nearby property. All other units gain %3% firepower and %4% defence.");
+        var text =  qsTr("Units within %0 spaces of any owned properties receive %1% firepower bonus and restore %2 HP per nearby property. All other units gain %3% firepower and %4% defence.");
         text = replaceTextArgs(text, [CO_ALEXIS.powerRadius, CO_ALEXIS.powerOffBonus,  CO_ALEXIS.powerHeal, CO_ALEXIS.powerOffBaseBonus, CO_ALEXIS.powerDefBonus]);
         return text;
     };
@@ -453,7 +453,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Units within %0 spaces of any owned properties receive %1% firepower bonuses and restore %2 HP per nearby property. Enemies within %3 spaces of their own properties suffer %4 HP of damage per nearby property. All other units gain %5% firepower and %6% defence.");
+        var text = qsTr("Units within %0 spaces of any owned properties receive %1% firepower bonuses and restore %2 HP per nearby property. Enemies within %3 spaces of their own properties suffer %4 HP of damage per nearby property. All other units gain %5% firepower and %6% defence.");
         text = replaceTextArgs(text, [CO_ALEXIS.superPowerHealRadius, CO_ALEXIS.superPowerOffBonus,  CO_ALEXIS.superPowerHeal,  CO_ALEXIS.superPowerDamageRadius,  CO_ALEXIS.superPowerDamage, CO_ALEXIS.powerOffBaseBonus, CO_ALEXIS.powerDefBonus]);
         return text;
     };

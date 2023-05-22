@@ -249,14 +249,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nUnits have %0% lifesteal.") +
+        var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nUnits have %0% lifesteal.") +
             qsTr("\n\nCO Zone Effect: \nUnits have %1% lifesteal.");
         text = replaceTextArgs(text, [CO_SABAKI.d2dHeal * 100, CO_SABAKI.d2dCoZoneHeal * 100]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Units have %0% lifesteal.");
+        var text = qsTr("Units have %0% lifesteal.");
         text = replaceTextArgs(text, [CO_SABAKI.powerHeal * 100]);
         return text;
     };
@@ -266,7 +266,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Units have %0% lifesteal.");
+        var text = qsTr("Units have %0% lifesteal.");
         text = replaceTextArgs(text, [CO_SABAKI.superPowerHeal * 100]);
         return text;
     };

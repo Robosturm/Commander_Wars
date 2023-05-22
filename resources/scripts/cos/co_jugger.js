@@ -271,7 +271,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
+        var text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
                qsTr("\nGlobal Effect: \nUnits have %0% more Luck and %1% Misfortune.") +
                qsTr("\n\nCO Zone Effect: \nUnits have %2% more Luck and %3% Misfortune.");
         text = replaceTextArgs(text, [CO_JUGGER.d2dBonusLuck, CO_JUGGER.d2dBonusMissfortune,
@@ -280,7 +280,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Units have %0% more Luck and %1% Misfortune.");
+        var text = qsTr("Units have %0% more Luck and %1% Misfortune.");
         text = replaceTextArgs(text, [CO_JUGGER.powerBonusLuck, CO_JUGGER.powerBonusMissfortune]);
         return text;
     };
@@ -290,7 +290,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Units have %0% more Luck and %1% Misfortune.");
+        var text = qsTr("Units have %0% more Luck and %1% Misfortune.");
         text = replaceTextArgs(text, [CO_JUGGER.superPowerBonusLuck, CO_JUGGER.superPowerBonusMissfortune]);
         return text;
     };

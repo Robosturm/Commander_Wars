@@ -238,7 +238,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
+        var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
                qsTr("\nGlobal Effect: \nShe gets additional %0% funds from allied properties and a flat %1% on top.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional %2% firepower and %1% defense.");
         text = replaceTextArgs(text, [CO_SASHA.d2dPercentIncomeBonus * 100, CO_SASHA.d2dFlatIncomeBonus, CO_SASHA.d2dCoZoneOffBonus, CO_SASHA.d2dCoZoneDefBonus]);
@@ -246,7 +246,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Decrease the enemy's CO power gauge by 1 star per %0 funds.");
+        var text = qsTr("Decrease the enemy's CO power gauge by 1 star per %0 funds.");
         text = replaceTextArgs(text, [CO_SASHA.powerFundsPerReduction]);
         return text;
     };
@@ -256,7 +256,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Earns %0% funds of the damage inflicted on a foe.");
+        var text = qsTr("Earns %0% funds of the damage inflicted on a foe.");
         text = replaceTextArgs(text, [CO_SASHA.superPowerIncomeBonus * 100]);
         return text;
     };

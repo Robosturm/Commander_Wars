@@ -53,7 +53,6 @@ var Constructor = function()
 
     this.throwLaserray = function(co, damage, range, powerNameAnimation, map)
     {
-        // let a meteor fall :D
         var meteorTarget = co.getOwner().getRockettarget(range, damage);
 
         var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
@@ -216,14 +215,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect:\nFirepower is increased by %0% and defence by %1%.") +
+        var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect:\nFirepower is increased by %0% and defence by %1%.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %2% and increased defense by %3%.");
         text = replaceTextArgs(text, [CO_VON_BOLT.d2dOffBonus, CO_VON_BOLT.d2dDefBonus, CO_VON_BOLT.d2dCoZoneOffBonus, CO_VON_BOLT.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Fires shock waves that disables electrical systems and all forces in range of %0 become paralyzed. Affected units suffer %1 HP of damage. Firepower rises by %2% and defense %3%.");
+        var text = qsTr("Fires shock waves that disables electrical systems and all forces in range of %0 become paralyzed. Affected units suffer %1 HP of damage. Firepower rises by %2% and defense %3%.");
         text = replaceTextArgs(text, [CO_VON_BOLT.powerRange, CO_VON_BOLT.powerDamage, CO_VON_BOLT.powerOffBonus, CO_VON_BOLT.powerDefBonus]);
         return text;
     };
@@ -233,7 +232,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Fires shock waves that disables electrical systems and all forces in rangeof %0 become paralyzed. Affected units suffer %1 HP of damage.  Firepower rises by %2% and defense %3%.");
+        var text = qsTr("Fires shock waves that disables electrical systems and all forces in rangeof %0 become paralyzed. Affected units suffer %1 HP of damage.  Firepower rises by %2% and defense %3%.");
         text = replaceTextArgs(text, [CO_VON_BOLT.superPowerRange, CO_VON_BOLT.superPowerDamage, CO_VON_BOLT.powerOffBonus, CO_VON_BOLT.powerDefBonus]);
         return text;
     };

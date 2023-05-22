@@ -173,7 +173,7 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let directEnemy = false;
+            var directEnemy = false;
             if (defender !== null)
             {
                 directEnemy = (defender.getBaseMaxRange() === 1);

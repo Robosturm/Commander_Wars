@@ -260,7 +260,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nUnits have %0% firepower and %1% defense bonus.") +
+        var text = qsTr("\nGlobal Effect: \nUnits have %0% firepower and %1% defense bonus.") +
                qsTr("\n\nCO Zone Effect: \nUnits have %0% firepower and %1% defense bonus.");
         text = replaceTextArgs(text, [CO_ISABELLA.d2dOffBonus, CO_ISABELLA.d2dDefBonus,
                                       CO_ISABELLA.d2dCoZoneOffBonus, CO_ISABELLA.d2dCoZoneDefBonus]);
@@ -268,7 +268,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Units have %0% firepower and %1% defense bonus. Increases her movement range by %2 and indirect firerange by %3.");
+        var text = qsTr("Units have %0% firepower and %1% defense bonus. Increases her movement range by %2 and indirect firerange by %3.");
         text = replaceTextArgs(text, [CO_ISABELLA.powerOffBonus, CO_ISABELLA.powerDefBonus,
                                       CO_ISABELLA.powerMovementBonus, CO_ISABELLA.powerFirerangeBonus]);
         return text;
@@ -279,7 +279,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Units have %0% firepower and %1% defense bonus. Increases her movement range by %2 and indirect firerange by %3.");
+        var text = qsTr("Units have %0% firepower and %1% defense bonus. Increases her movement range by %2 and indirect firerange by %3.");
         text = replaceTextArgs(text, [CO_ISABELLA.superPowerOffBonus, CO_ISABELLA.superPowerDefBonus,
                                       CO_ISABELLA.superPowerMovementBonus, CO_ISABELLA.superPowerFirerangeBonus]);
         return text;

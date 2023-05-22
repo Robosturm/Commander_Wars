@@ -311,7 +311,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
+        var text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
                qsTr("\nGlobal Effect: \nUnits have %0% increased firepower and %1% luck.") +
                qsTr("\n\nCO Zone Effect: \nUnits have %2% increased firepower and %3% luck.");
         text = replaceTextArgs(text, [CO_EPOCH.d2dOffBonus, CO_EPOCH.d2dLuckBonus,
@@ -320,7 +320,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Firepower is increased by %0% and defence by %1% and luck raises by %2% and unit HP is hidden from opponents.");
+        var text = qsTr("Firepower is increased by %0% and defence by %1% and luck raises by %2% and unit HP is hidden from opponents.");
         text = replaceTextArgs(text, [CO_EPOCH.powerOffBonus, CO_EPOCH.powerDefBonus, CO_EPOCH.powerLuckBonus]);
         return text;
     };
@@ -330,7 +330,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Direct combat units gain %0 movement and indirect combat units receive %1 extra range. Firepower is increased by %2% and defence by %3% and luck raises by %4%. And hides HP from opponents.");
+        var text = qsTr("Direct combat units gain %0 movement and indirect combat units receive %1 extra range. Firepower is increased by %2% and defence by %3% and luck raises by %4%. And hides HP from opponents.");
         text = replaceTextArgs(text, [CO_EPOCH.superPowerMovementBonus, CO_EPOCH.superPowerFirerangeBonus,
                                       CO_EPOCH.superPowerOffBonus, CO_EPOCH.superPowerDefBonus, CO_EPOCH.superPowerLuckBonus]);
         return text;

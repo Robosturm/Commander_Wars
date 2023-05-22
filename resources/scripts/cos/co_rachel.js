@@ -93,7 +93,6 @@ var Constructor = function()
 
     this.throwRocket = function(co, damage, targetType, animation2, index, map)
     {
-        // let a rocket fall :D
         var rocketTarget = co.getOwner().getRockettarget(2, damage, 1.2, targetType);
         
         var animation = GameAnimationFactory.createAnimation(map, rocketTarget.x - 2, rocketTarget.y - 2 - 1);
@@ -272,14 +271,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nUnits have increased repairs by %0 on properties.") +
+        var text = qsTr("\nGlobal Effect: \nUnits have increased repairs by %0 on properties.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %1% and defence by %2.");
         text = replaceTextArgs(text, [CO_RACHEL.d2dRepairBonus, CO_RACHEL.d2dCoZoneOffBonus, CO_RACHEL.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Luck damage is increased by %0%.");
+        var text = qsTr("Luck damage is increased by %0%.");
         text = replaceTextArgs(text, [CO_RACHEL.powerLuckDamage]);
         return text;
     };
@@ -289,7 +288,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Launches three missiles from Orange Star HQ in Omega Land dealing %0 HP of damage.");
+        var text = qsTr("Launches three missiles from Orange Star HQ in Omega Land dealing %0 HP of damage.");
         text = replaceTextArgs(text, [CO_RACHEL.superPowerDamage]);
         return text;
 

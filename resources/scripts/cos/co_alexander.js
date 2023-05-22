@@ -242,7 +242,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nPartisan\n") +
+        var text = qsTr("\nSpecial Unit:\nPartisan\n") +
                    qsTr("\nGlobal Effect: \nBuildings that Alexander owns put up a fight when being captured by enemy soldiers. Each building recovers %0 capture point each day while under siege.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and defence.");
         text = replaceTextArgs(text, [CO_ALEXANDER.d2dRevoltPoints, CO_ALEXANDER.coZoneBonus]);
@@ -250,7 +250,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Alexander's charisma and brilliant speech wins over the people. Alexander's troops capture at a %0% faster rate, while enemy captures are forced to restart entirely. They also gain %1% firepower and %2% defence.");
+        var text = qsTr("Alexander's charisma and brilliant speech wins over the people. Alexander's troops capture at a %0% faster rate, while enemy captures are forced to restart entirely. They also gain %1% firepower and %2% defence.");
         text = replaceTextArgs(text, [CO_ALEXANDER.powerCaptureBonus, CO_ALEXANDER.powerOffBonus, CO_ALEXANDER.powerDefBonus]);
         return text;
     };
@@ -260,7 +260,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Enemies receive no income for this turn, and half of their current funds are diverted to Alexander. They also gain %0% firepower and %1% defence.");
+        var text = qsTr("Enemies receive no income for this turn, and half of their current funds are diverted to Alexander. They also gain %0% firepower and %1% defence.");
         text = replaceTextArgs(text, [CO_ALEXANDER.powerOffBonus, CO_ALEXANDER.powerDefBonus]);
         return text;
     };

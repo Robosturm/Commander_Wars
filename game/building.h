@@ -328,7 +328,7 @@ public slots:
      * @brief getRepairTypes
      * @return
      */
-    QList<qint32> getRepairTypes();
+    QVector<qint32> getRepairTypes();
     /**
      * @brief endOfTurn
      */

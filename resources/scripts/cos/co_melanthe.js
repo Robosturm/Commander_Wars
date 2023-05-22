@@ -332,7 +332,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
+        var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
                qsTr("\nGlobal Effect: \nUnits gain an additional %0% firepower on natural terrain and increased terrain defence by %1 stars and repairs are reduced by %2.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain an additional %3% firepower on natural terrain and increased terrain defence by %4 stars.");
         text = replaceTextArgs(text, [CO_MELANTHE.d2dOffBonus, CO_MELANTHE.d2dTerrainBonus, CO_MELANTHE.d2dRepairBonus,
@@ -341,7 +341,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Units on natural terrain restore %0 HP of health. Units gain an additional %1% firepower on natural terrain and increased terrain defence by %2 stars.");
+        var text = qsTr("Units on natural terrain restore %0 HP of health. Units gain an additional %1% firepower on natural terrain and increased terrain defence by %2 stars.");
         text = replaceTextArgs(text, [CO_MELANTHE.powerHeal, CO_MELANTHE.powerOffBonus, CO_MELANTHE.powerTerrainBonus]);
         return text;
     };
@@ -351,7 +351,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Enemies on natural terrain suffer %0 HP of damage. In addition, units on natural terrain restore %1 HP of health. Units gain an additional %2% firepower on natural terrain and increased terrain defence by %3 stars.");
+        var text = qsTr("Enemies on natural terrain suffer %0 HP of damage. In addition, units on natural terrain restore %1 HP of health. Units gain an additional %2% firepower on natural terrain and increased terrain defence by %3 stars.");
         text = replaceTextArgs(text, [CO_MELANTHE.superPowerDamage, CO_MELANTHE.superPowerHeal, CO_MELANTHE.powerOffBonus, CO_MELANTHE.powerTerrainBonus]);
         return text;
     };

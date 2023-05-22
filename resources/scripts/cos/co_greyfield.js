@@ -319,7 +319,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nMissile Submarine\n") +
+        var text = qsTr("\nSpecial Unit:\nMissile Submarine\n") +
                qsTr("\nGlobal Effect: \nSea Units and copters have %0% offensive and %1% defensive bonus.") +
                qsTr("\n\nCO Zone Effect: \nSea Units and copters have %2% offensive and %3% defensive bonus.");
         text = replaceTextArgs(text, [CO_GREYFIELD.d2dOffBonus, CO_GREYFIELD.d2dDefBonus,
@@ -328,7 +328,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("All units get resupplied and his copter, seaplanes and sea units have %0% higher firepower and %1% defense.");
+        var text = qsTr("All units get resupplied and his copter, seaplanes and sea units have %0% higher firepower and %1% defense.");
         text = replaceTextArgs(text, [CO_GREYFIELD.powerOffBonus, CO_GREYFIELD.powerDefBonus]);
         return text;
     };
@@ -338,7 +338,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("All units get resupplied and his copter, seaplanes and sea units have %0% higher firepower and %1% defense and increase movement range by %2.");
+        var text = qsTr("All units get resupplied and his copter, seaplanes and sea units have %0% higher firepower and %1% defense and increase movement range by %2.");
         text = replaceTextArgs(text, [CO_GREYFIELD.superPowerOffBonus, CO_GREYFIELD.superPowerDefBonus, CO_GREYFIELD.superPowerMovementBonus]);
         return text;
     };

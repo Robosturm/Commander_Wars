@@ -251,14 +251,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nGlobal Effect: \nEnemy units reduced to %0 or less HP by Graves' units become paralyzed.") +
+        var text = qsTr("\nGlobal Effect: \nEnemy units reduced to %0 or less HP by Graves' units become paralyzed.") +
                qsTr("\n\nCO Zone Effect: \nUnits have %1% more offensive and %2% defensive bonus.");
         text = replaceTextArgs(text, [CO_GRAVES.d2dStunLevel, CO_GRAVES.d2dCoZoneOffBonus, CO_GRAVES.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Enemy units suffer %0 HP of damage. Enemy units with %1 or less HP become paralyzed.");
+        var text = qsTr("Enemy units suffer %0 HP of damage. Enemy units with %1 or less HP become paralyzed.");
         text = replaceTextArgs(text, [CO_GRAVES.powerDamage, CO_GRAVES.powerStunLevel]);
         return text;
     };
@@ -268,7 +268,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Enemy units suffer %0 HP of damage. Enemy units with %1 or less HP become paralyzed.");
+        var text = qsTr("Enemy units suffer %0 HP of damage. Enemy units with %1 or less HP become paralyzed.");
         text = replaceTextArgs(text, [CO_GRAVES.superPowerDamage, CO_GRAVES.superPowerStunLevel]);
         return text;
     };

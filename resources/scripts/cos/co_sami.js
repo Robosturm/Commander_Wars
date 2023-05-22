@@ -352,7 +352,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nCommando\n") +
+        var text = qsTr("\nSpecial Unit:\nCommando\n") +
                qsTr("\nGlobal Effect: \nTransporter have %0 more movement point and infantries have increased capture rate by %1% and firepower by %2% and defence by %3%. Non-infantry direct-combat units have %4% weaker firepower.") +
                qsTr("\n\nCO Zone Effect: \nInfantry Units have %5% increased firepower.");
         text = replaceTextArgs(text, [CO_SAMI.d2dTransporterMovementPoints, CO_SAMI.d2dCaptureMultiplier * 100, CO_SAMI.d2dInfOffBonus, CO_SAMI.d2dInfDefBonus, CO_SAMI.d2dDirectOffBonus]);
@@ -360,7 +360,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Infantry units receive a movement bonus of %0 space. Their attack also increases by %1.");
+        var text = qsTr("Infantry units receive a movement bonus of %0 space. Their attack also increases by %1.");
         text = replaceTextArgs(text, [CO_SAMI.powerMovementPoints, CO_SAMI.powerOffBonus]);
         return text;
     };
@@ -370,7 +370,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("All foot soldiers gain a capture %0 capture rate. Their movement is increased by %1 spaces and their attack increases by %2.");
+        var text = qsTr("All foot soldiers gain a capture %0 capture rate. Their movement is increased by %1 spaces and their attack increases by %2.");
         text = replaceTextArgs(text, [CO_SAMI.superpowerCaptureMultiplier * 100, CO_SAMI.superpowerMovementPoints, CO_SAMI.superPowerOffBonus]);
         return text;
     };

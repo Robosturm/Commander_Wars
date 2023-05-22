@@ -102,7 +102,11 @@ public:
      * @brief onGameStart
      */
     void onGameStart();
-
+    /**
+     * @brief getPassword
+     * @return
+     */
+    const Password & getPassword() const;
 signals:
     void sigVictory(qint32 team);
 public slots:
@@ -298,11 +302,6 @@ public slots:
      * @param singleCo
      */
     void setSingleCo(bool singleCo);
-    /**
-     * @brief getPassword
-     * @return
-     */
-    const Password & getPassword() const;
     /**
      * @brief getPassword
      * @return

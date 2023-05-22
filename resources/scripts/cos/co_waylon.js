@@ -273,14 +273,14 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        let text = qsTr("\nSpecial Unit:\nKirov\n\nGlobal Effect: \nAir Units have %0% increased firepower and %1% increased defense.") +
+        var text = qsTr("\nSpecial Unit:\nKirov\n\nGlobal Effect: \nAir Units have %0% increased firepower and %1% increased defense.") +
                    qsTr("\n\nCO Zone Effect: \nAir Units have %2% increased firepower and %3% increased defense.");
         text = replaceTextArgs(text, [CO_WAYLON.d2dOffBonus, CO_WAYLON.d2dDefBonus, CO_WAYLON.d2dCoZoneOffBonus, CO_WAYLON.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        let text = qsTr("Air units get increased firepower by %0% and increased defense by %1%.");
+        var text = qsTr("Air units get increased firepower by %0% and increased defense by %1%.");
         text = replaceTextArgs(text, [CO_WAYLON.powerOffBonus, CO_WAYLON.powerDefBonus]);
         return text;
     };
@@ -290,7 +290,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        let text = qsTr("Air units get increased firepower by %0% and increased defense by %1%.");
+        var text = qsTr("Air units get increased firepower by %0% and increased defense by %1%.");
         text = replaceTextArgs(text, [CO_WAYLON.superPowerOffBonus, CO_WAYLON.superPowerDefBonus]);
         return text;
     };

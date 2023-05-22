@@ -220,8 +220,8 @@ var Constructor = function()
             {
                 if (map.onMap(atkPosX, atkPosY))
                 {
-                    let terrain = map.getTerrain(atkPosX, atkPosY);
-                    let startpower = 0;
+                    var terrain = map.getTerrain(atkPosX, atkPosY);
+                    var startpower = 0;
                     if (terrain.getBuilding() !== null)
                     {
                         startpower = CO_CAIRN.d2dBuildingMalus;
@@ -232,7 +232,7 @@ var Constructor = function()
                     case GameEnums.PowerMode_Superpower:
                         if (CO_CAIRN.isWildernessTile(atkPosX, atkPosY, map))
                         {
-                            let terrainDefense = terrain.getDefense(attacker);
+                            var terrainDefense = terrain.getDefense(attacker);
                             return terrainDefense * CO_CAIRN.superPowerOffBonus + CO_CAIRN.powerOffBonus;
                         }
                         else
