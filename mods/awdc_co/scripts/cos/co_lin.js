@@ -6,6 +6,7 @@ CO_LIN.init = function(co, map)
 CO_LIN.activateSuperpower = function(co, powerMode, map)
 {
 	CO_LIN.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_LIN.getSuperPowerDescription = function()
 {
@@ -26,62 +27,4 @@ CO_LIN.getVisionrangeModifier = function(co, unit, posX, posY, map)
         default:
             return 0;
     }
-};
-
-CO_LIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
-                     (attacker.getUnitType() === GameEnums.UnitType_Naval);
-    switch (co.getPowerMode())
-    {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (!seaAirUnit)
-            {
-                return 30;
-            }
-            return 10;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
-                if (!seaAirUnit)
-                {
-                    return 30;
-                }
-                return 10;
-            }
-            break;
-    }
-    return 0;
-};
-
-CO_LIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    var seaAirUnit = (defender.getUnitType() === GameEnums.UnitType_Air) ||
-                     (defender.getUnitType() === GameEnums.UnitType_Naval);
-    switch (co.getPowerMode())
-    {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (!seaAirUnit)
-            {
-                return 30;
-            }
-            return 10;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
-            {
-                if (!seaAirUnit)
-                {
-                    return 30;
-                }
-                return 10;
-            }
-            break;
-    }
-    return 0;
 };

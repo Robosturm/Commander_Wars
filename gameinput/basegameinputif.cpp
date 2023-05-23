@@ -170,7 +170,7 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
         case GameEnums::AiTypes_Open:
         case GameEnums::AiTypes_Closed:
         {
-            ret = nullptr;
+            ret.free();
             break;
         }
         default: // heavy ai case

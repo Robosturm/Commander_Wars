@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -109,9 +107,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -124,6 +123,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/sanjuro.mp3", 100, 63433);
                 break;
+            }
         }
     };
 
@@ -136,34 +136,50 @@ var Constructor = function()
         return "GS";
     };
 
+    this.superPowerDefBonus = 40;
+    this.superPowerOffBonus = 50;
+    this.superPowerCostReduction = 0.5;
+    this.powerRefund = 0.5;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCostModifier = 0.01;
+    this.d2dOffModifier = 1;
+    this.d2dExceedBonus = 0.01;
+    this.d2dMaxBonus = 20;
+
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (defender !== null)
+        if (CO.isActive(co))
         {
-            var variables = co.getVariables();
-            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + defender.getUnitID());
-            var builded = buildedVar.readDataBool();
-            switch (co.getPowerMode())
+            if (defender !== null)
             {
+                var variables = co.getVariables();
+                var buildedVar = variables.createVariable("SANJURO_BUILDED_" + defender.getUnitID());
+                var builded = buildedVar.readDataBool();
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     if (builded === true)
                     {
-                        return 40;
+                        return CO_SANJURO.superPowerDefBonus;
                     }
                     else
                     {
-                        return 10;
+                        return CO_SANJURO.powerDefBonus;
                     }
                 case GameEnums.PowerMode_Power:
-                    return 10;
+                    return CO_SANJURO.powerDefBonus;
                 default:
                     if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                     {
-                        return 10;
+                        return CO_SANJURO.d2dCoZoneDefBonus;
                     }
                     break;
+                }
             }
         }
         return 0;
@@ -172,58 +188,60 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        var variables = co.getVariables();
-        var dmgModVar = variables.createVariable("SANJURO_DMG_MOD");
-        var builded = false
-        if (attacker !== null)
+        if (CO.isActive(co))
         {
-            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + attacker.getUnitID());
-            builded = buildedVar.readDataBool();
-        }
-        var modifier = dmgModVar.readDataFloat();
-        switch (co.getPowerMode())
-        {
+            var variables = co.getVariables();
+            var dmgModVar = variables.createVariable("SANJURO_DMG_MOD");
+            var builded = false
+            if (attacker !== null)
+            {
+                var buildedVar = variables.createVariable("SANJURO_BUILDED_" + attacker.getUnitID());
+                builded = buildedVar.readDataBool();
+            }
+            var modifier = dmgModVar.readDataFloat();
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (builded === true)
                 {
-                    return modifier + 50;
+                    return modifier + CO_SANJURO.superPowerOffBonus;
                 }
                 else
                 {
-                    return modifier + 10;
+                    return modifier + CO_SANJURO.powerOffBonus;
                 }
             case GameEnums.PowerMode_Power:
-                return modifier + 10;
+                return modifier + CO_SANJURO.powerOffBonus;
             default:
                 if (modifier > 0)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
-                        return modifier + 10;
-                    }
-                    else
-                    {
-                        return modifier / 2 + 10;
-                    }
-                }
-                else
-                {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
-                        return modifier + 10;
+                        return modifier + CO_SANJURO.d2dCoZoneOffBonus;
                     }
                     else
                     {
                         return modifier;
                     }
                 }
+                else
+                {
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        return modifier + CO_SANJURO.d2dCoZoneOffBonus;
+                    }
+                    else
+                    {
+                        return modifier;
+                    }
+                }
+            }
         }
     };
 
     this.buildedUnit = function(co, unit, map)
     {
-        // called when someone builded a unit -> ACTION_BUILD_UNITS was performed
         var variables = co.getVariables();
         var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
         buildedVar.writeDataBool(true);
@@ -237,7 +255,7 @@ var Constructor = function()
         var costModifier = 0.0;
         var damageModifier = 0.0;
         var exceed = 0;
-        var maxCounter = 20;
+        var maxCounter = CO_SANJURO.d2dMaxBonus;
         var counter = 0;
         if (income < funds)
         {
@@ -246,9 +264,9 @@ var Constructor = function()
             // this means our troops get stronger and more expensive
             while (exceed >= 0 && counter < maxCounter)
             {
-                damageModifier += 1;
-                costModifier += 0.01;
-                exceed -= income * 0.1;
+                damageModifier += CO_SANJURO.d2dOffModifier;
+                costModifier += CO_SANJURO.d2dCostModifier;
+                exceed -= income * CO_SANJURO.d2dExceedBonus;
                 counter++;
             }
         }
@@ -259,9 +277,9 @@ var Constructor = function()
             // this means our troops get weaker and less expensive
             while (exceed >= 0 && counter < maxCounter)
             {
-                damageModifier -= 1;
-                costModifier -= 0.01;
-                exceed -= income * 0.05;
+                damageModifier -= CO_SANJURO.d2dOffModifier;
+                costModifier -= CO_SANJURO.d2dCostModifier;
+                exceed -= income * CO_SANJURO.d2dExceedBonus;
                 counter++;
             }
         }
@@ -273,37 +291,44 @@ var Constructor = function()
         dmgModVar.writeDataFloat(damageModifier);
         var costModVar = variables.createVariable("SANJURO_COST_MOD");
         costModVar.writeDataFloat(costModifier);
+
     };
 
     this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
-        var variables = co.getVariables();
-        var costModVar = variables.createVariable("SANJURO_COST_MOD");
-        var buildedVar = variables.createVariable("SANJURO_BUILDED_" + id);
-        var builded = buildedVar.readDataBool();
-        var costMod = costModVar.readDataFloat();
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var variables = co.getVariables();
+            var costModVar = variables.createVariable("SANJURO_COST_MOD");
+            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + id);
+            var builded = buildedVar.readDataBool();
+            var costMod = costModVar.readDataFloat();
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (builded === true)
                 {
                     // reduce cost of following units of the same type
-                    return -(baseCost * costMod + baseCost) * 0.5;
+                    return -(baseCost * costMod + baseCost) * CO_SANJURO.superPowerCostReduction;
                 }
                 break;
             case GameEnums.PowerMode_Power:
                 break;
             default:
                 break;
+            }
+            return (baseCost * costMod);
         }
-        return (baseCost * costMod);
+        return 0;
     };
 
     this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (unit.getOwner() === co.getOwner())
@@ -322,16 +347,19 @@ var Constructor = function()
                 break;
             default:
                 break;
+            }
         }
         return 0;
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (gotAttacked === true && defender.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (gotAttacked === true && defender.getOwner() === co.getOwner())
             {
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
 
@@ -342,11 +370,12 @@ var Constructor = function()
                     // avoid loosing money cause of our passive or power
                     if (atkDamage > 0)
                     {
-                        co.getOwner().addFunds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                        co.getOwner().addFunds(atkDamage / 10.0 * defender.getUnitCosts() * CO_SANJURO.powerRefund);
                     }
                     break;
                 default:
                     break;
+                }
             }
         }
     };
@@ -356,13 +385,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_SMUGGLER"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_SMUGGLER"];
+            }
         }
         return [];
     };
@@ -386,14 +418,19 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nSmuggler\n") +
-               qsTr("\nGlobal Effect: \nUnit costs are decreased when he has more income than funds and firepower is decreased.") +
-               qsTr("\n\nCO Zone Effect: \nGlobal firepower effects are doubled.");
+        var text =  qsTr("\nSpecial Unit:\nSmuggler\n" +
+                         "\nGlobal Effect: \nFor each %0% difference between income and funds at the start of the turn. His troops gain %1% firepower per %0% percent and cost %2% more if the funds are greater than the current funds. " +
+                         "Otherwise he looses %1% firepower per %0% percent and his troops cost %2% less. This effect stacks up to %5 times." +
+                         "\n\nCO Zone Effect: \nGains %3% firepower and %4% defense.");
+        text = replaceTextArgs(text, [CO_SANJURO.d2dExceedBonus * 100, CO_SANJURO.d2dOffModifier, CO_SANJURO.d2dCostModifier * 100, CO_SANJURO.d2dCoZoneOffBonus, CO_SANJURO.d2dCoZoneDefBonus, CO_SANJURO.d2dMaxBonus]);
+        return text;
     };
 
     this.getPowerDescription = function(co)
     {
-        return qsTr("When his units take combat damage, he receives a portion of the value damage in funds.");
+        var text = qsTr("When his units take combat damage, he receives %0% of the damage value in funds.");
+        text = replaceTextArgs(text, [CO_SANJURO.powerRefund * 100]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -401,7 +438,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("When a unit is built, units of the same type receive a firepower and defense boost, unhindered by terrain, and production costs reduced by half.");
+        var text =  qsTr("When a unit is built, units of the same type receive a %0% firepower and %1% defense boost are unhindered by terrain, and production costs for that unit type are reduced by %2%.");
+        text = replaceTextArgs(text, [CO_SANJURO.superPowerOffBonus, CO_SANJURO.superPowerDefBonus, CO_SANJURO.superPowerCostReduction * 100]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

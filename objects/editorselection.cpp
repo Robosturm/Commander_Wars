@@ -453,11 +453,11 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
     // update buildings
     if (player < 0)
     {
-        m_currentPlayer = nullptr;
+        m_currentPlayer.free();
     }
     else
     {
-        m_currentPlayer = m_Players.at(player + 1)->getOwner();
+        m_currentPlayer = spPlayer(m_Players.at(player + 1)->getOwner());
     }
     for (qint32 i2 = 0; i2 < m_Buildings.size(); i2++)
     {

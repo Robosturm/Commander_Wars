@@ -14,6 +14,7 @@ AutoMatchMaker::AutoMatchMaker(const QString & matchName, MainServer * mainServe
     : m_matchName(matchName),
       m_mainServer(*mainServer)
 {
+    Interpreter::setCppOwnerShip(this);
 }
 
 QString AutoMatchMaker::getMatchName() const

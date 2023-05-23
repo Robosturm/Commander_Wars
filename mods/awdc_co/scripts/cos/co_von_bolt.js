@@ -6,6 +6,7 @@ CO_VON_BOLT.init = function(co, map)
 CO_VON_BOLT.activateSuperpower = function(co, powerMode, map)
 {
 	CO_VON_BOLT.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_VON_BOLT.getSuperPowerDescription = function()
 {

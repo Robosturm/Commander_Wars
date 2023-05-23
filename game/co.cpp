@@ -41,9 +41,9 @@ void CO::init()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "init";
-        QJSValueList args({pInterpreter->newQObject(this),
+        QJSValueList args1({pInterpreter->newQObject(this),
                            pInterpreter->newQObject(m_pMap)});
-        pInterpreter->doFunction(m_coID, function1, args);
+        pInterpreter->doFunction(m_coID, function1, args1);
     }
 }
 
@@ -115,7 +115,7 @@ void CO::setCOUnit(Unit* pUnit)
             }
         }
     }
-    m_pCOUnit = pUnit;
+    m_pCOUnit = spUnit(pUnit);
 }
 
 qreal CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
@@ -2044,6 +2044,7 @@ void CO::serializeObject(QDataStream& pStream, bool forHash) const
         writeCoStyleToStream(pStream);
     }
     pStream << m_coRangeEnabled;
+    pStream << m_globalCoZone;
 }
 
 void CO::deserializeObject(QDataStream& pStream)
@@ -2110,6 +2111,10 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     if (version > 5)
     {
         pStream >> m_coRangeEnabled;
+    }
+    if (version > 6)
+    {
+        pStream >> m_globalCoZone;
     }
     if (!fast)
     {
@@ -2245,8 +2250,8 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+face", pCOAnim));
         }
     }
-    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error);
-    pCOAnim = nullptr;
+    pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error));
+    pCOAnim.free();
     if (pAnim.get() != nullptr)
     {
         oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
@@ -2255,8 +2260,8 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+info", pCOAnim));
         }
     }
-    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error);
-    pCOAnim = nullptr;
+    pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error));
+    pCOAnim.free();
     if (pAnim.get() != nullptr)
     {
         oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
@@ -2265,7 +2270,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+nrm", pCOAnim));
         }
     }
-    pCOAnim = nullptr;
+    pCOAnim.free();
     if (m_pMenu != nullptr)
     {
         m_pMenu->updatePlayerinfo();

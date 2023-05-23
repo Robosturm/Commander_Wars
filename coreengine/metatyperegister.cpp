@@ -7,6 +7,7 @@
 #include "coreengine/scriptvariable.h"
 #include "coreengine/scriptvariables.h"
 #include "coreengine/scriptvariablefile.h"
+#include "coreengine/audiomanager.h"
 
 #include "ai/productionSystem/simpleproductionsystem.h"
 #include "ai/heavyai.h"
@@ -141,24 +142,20 @@ void MetaTypeRegister::registerInterfaceData()
     qRegisterMetaType<QEasingCurve::Type>("QEasingCurve::Type");
     qRegisterMetaType<GameConsole::eLogLevels>("Console::eLogLevels");
     qRegisterMetaType<Mainapp::StartupPhase>("Mainapp::StartupPhase");
-    qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
     qRegisterMetaType<spScriptEvent>("spScriptEvent");
     qRegisterMetaType<spScriptCondition>("spScriptCondition");
-    qRegisterMetaType<WikiDatabase::PageData>("WikiDatabase::PageData");
     qRegisterMetaType<oxygine::spActor>("oxygine::spActor");
     qRegisterMetaType<oxygine::spResAnim>("oxygine::spResAnimf");
     qRegisterMetaType<oxygine::KeyEvent>("oxygine::KeyEvent");
     qRegisterMetaType<oxygine::MouseButton>("oxygine::MouseButton");
-    qRegisterMetaType<QVector<std::tuple<QString,float>>>("QVector<std::tuple<QString,float>>");
     qRegisterMetaType<QVector<float>>("QVector<float>");
-    qRegisterMetaType<QList<qint32>>("QList<qint32>");
+    qRegisterMetaType<QVector<qint32>>("QVector<qint32>");
     qRegisterMetaType<QLocalSocket::LocalSocketError>("QLocalSocket::LocalSocketError");
     qRegisterMetaType<QAbstractSocket::SocketError>("QAbstractSocket::SocketError");
     qRegisterMetaType<QAbstractSocket::SocketState>("QAbstractSocket::SocketState");
-    qRegisterMetaType<spTextbox>("spTextbox");
     qRegisterMetaType<spGameAction>("spGameAction");
-    qRegisterMetaType<std::shared_ptr<QEvent>>("std::shared_ptr<QEvent>");
     qRegisterMetaType<MapEditDialog::MapEditInfo>("MapEditDialog::MapEditInfo");
+
     // interface
     qmlRegisterInterface<Terrain>("Terrain", 1);
     qmlRegisterInterface<Player>("Player", 1);
@@ -232,12 +229,17 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<BaseGamemenu>("BaseGamemenu", 1);
     qmlRegisterInterface<Basemenu>("Basemenu", 1);
     qmlRegisterInterface<GeneratorMenu>("GeneratorMenu", 1);
+    qmlRegisterInterface<PageData>("PageData", 1);
 
     qmlRegisterInterface<CustomDialog>("CustomDialog", 1);
     qmlRegisterInterface<MainServer>("MainServer", 1);
     qmlRegisterInterface<AutoMatchMaker>("AutoMatchMaker", 1);
     qmlRegisterInterface<Multiplayermenu>("Multiplayermenu", 1);
     qmlRegisterInterface<NetworkGameDataView>("NetworkGameDataView", 1);
+#ifdef AUDIOSUPPORT
+    qmlRegisterInterface<SoundData>("SoundData", 1);
+#endif
+    qmlRegisterInterface<AudioManager>("AudioManager", 1);
 
     // objects
     qmlRegisterInterface<Checkbox>("Checkbox", 1);

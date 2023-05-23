@@ -6,6 +6,7 @@ CO_YUKIO.init = function(co, map)
 CO_YUKIO.activateSuperpower = function(co, powerMode, map)
 {
 	CO_YUKIO.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_YUKIO.getSuperPowerDescription = function()
 {

@@ -1,47 +1,8 @@
-CO_OZZY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (isDefender)
-            {
-                return 100;
-            }
-            return 10;
-        case GameEnums.PowerMode_Power:
-            return 10;
-        default:
-            break;
-        }
-    }
-    return 0;
-};
-CO_OZZY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return 200;
-        case GameEnums.PowerMode_Power:
-            if (isAttacker)
-            {
-                return 60;
-            }
-            else
-            {
-                return 100;
-            }
-        default:
-            return 15;
-        }
-    }
-    return 0;
-};
+CO_OZZY.superPowerOffCounterBonus = 100;
+CO_OZZY.superPowerDefBonus = 200;
+CO_OZZY.powerOffBonus = 10;
+CO_OZZY.powerAtkDefBonus = 60;
+CO_OZZY.powerDefBonus = 100;
+CO_OZZY.d2dDefBonus = 15;
+CO_OZZY.d2dCoZoneOffBonus = 0;
+CO_OZZY.d2dCoZoneDefBonus = 0;

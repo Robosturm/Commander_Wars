@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2", "+alt3"];
     };
 
@@ -33,7 +31,10 @@ var Constructor = function()
             var unit = units.at(i);
             if (unit.getUnitType() !== GameEnums.UnitType_Infantry)
             {
-                unit.setHasMoved(false);
+                if (powerRefresh)
+                {
+                    unit.setHasMoved(false);
+                }
                 var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                 var delay = globals.randInt(135, 265);
                 if (animations.length < 5)
@@ -115,9 +116,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -130,6 +132,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/eagle.mp3", 27, 67923)
                 break;
+            }
         }
     };
 
@@ -144,60 +147,118 @@ var Constructor = function()
 
     this.getFuelCostModifier = function(co, unit, costs, map)
     {
-        if (unit.getUnitType() === GameEnums.UnitType_Air)
+        if (CO.isActive(co))
         {
-            return -2;
+            if (unit.getUnitType() === GameEnums.UnitType_Air)
+            {
+                return CO_EAGLE.d2dFuelModifier;
+            }
         }
         return 0;
     };
 
+    this.superPowerAirOffBonus = 30;
+    this.superPowerNavalOffBonus = 0;
+    this.superPowerOtherOffBonus = 0;
+    this.superPowerAirDefBonus = 20;
+    this.superPowerDefBonus = 10;
+
+    this.powerAirOffBonus = -30;
+    this.powerNavalOffBonus = -40;
+    this.powerInfOffBonus = 0;
+    this.powerOtherOffBonus = -45;
+    this.powerDefBonus = 10;
+    this.powerAirDefBonus = 20;
+    this.powerRefresh = true;
+
+    this.d2dCoZoneAirDefBonus = 20;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneAirOffBonus = 30;
+    this.d2dCoZoneNavalOffBonus = 0;
+    this.d2dCoZoneOtherOffBonus = 10;
+
+    this.d2dFuelModifier = -2;
+    this.d2dAirDefBonus = 10;
+    this.d2dAirOffBonus = 10;
+    this.d2dNavalOffBonus = -10;
+    this.d2dOtherOffBonus = 0;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
+            {
                 if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return 30;
-                }
-                break;
-            case GameEnums.PowerMode_Power:
-                if (attacker.getUnitType() === GameEnums.UnitType_Air)
-                {
-                    return -30;
+                    return CO_EAGLE.superPowerAirOffBonus;
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return -40;
+                    return CO_EAGLE.superPowerNavalOffBonus;
                 }
                 else
                 {
-                    return -45;
+                    return CO_EAGLE.superPowerOtherOffBonus;
                 }
-            default:
+            }
+            case GameEnums.PowerMode_Power:
+            {
                 if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
-                        return 30;
-                    }
-                    return 10;
+                    return CO_EAGLE.powerAirOffBonus;
                 }
+                else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+                {
+                    return CO_EAGLE.powerNavalOffBonus;
+                }
+                else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                {
+                    return CO_EAGLE.powerInfOffBonus;
+                }
+                else
+                {
+                    return CO_EAGLE.powerOtherOffBonus;
+                }
+            }
+            default:
+            {
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+                    if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
-                        return 0;
+                        return CO_EAGLE.d2dCoZoneAirOffBonus;
                     }
-                    return 10;
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+                    {
+                        return CO_EAGLE.d2dCoZoneNavalOffBonus;
+                    }
+                    else
+                    {
+                        return CO_EAGLE.d2dCoZoneOtherOffBonus;
+                    }
                 }
-                break;
-        }
-        if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-        {
-            return -10;
+                else
+                {
+                    if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                    {
+                        return CO_EAGLE.d2dAirOffBonus;
+                    }
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+                    {
+                        return CO_EAGLE.d2dNavalOffBonus;
+                    }
+                    else
+                    {
+                        return CO_EAGLE.d2dOtherOffBonus;
+                    }
+                }
+            }
+            }
         }
         return 0;
     };
@@ -205,10 +266,48 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Superpower)
+            {
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_EAGLE.superPowerAirDefBonus;
+                }
+                else
+                {
+                    return CO_EAGLE.superPowerDefBonus;
+                }
+            }
+            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_EAGLE.powerAirDefBonus;
+                }
+                else
+                {
+                    return CO_EAGLE.powerDefBonus;
+                }
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_EAGLE.d2dCoZoneAirDefBonus;
+                }
+                else
+                {
+                    return CO_EAGLE.d2dCoZoneDefBonus;
+                }
+            }
+            else
+            {
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return CO_EAGLE.d2dAirDefBonus;
+                }
+            }
         }
         return 0;
     };
@@ -226,11 +325,14 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "AIRPORT" ||
-            buildingId === "TEMPORARY_AIRPORT")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_KIROV"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "AIRPORT" ||
+                    buildingId === "TEMPORARY_AIRPORT")
+            {
+                return ["ZCOUNIT_KIROV"];
+            }
         }
         return [];
     };
@@ -253,13 +355,27 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return  qsTr("\nSpecial Unit:\nKirov\n") +
-                qsTr("\nGlobal Effect: \nAir units are stronger and use less fuel, but Sea units are weaker in comparison.") +
-                qsTr("\n\nCO Zone Effect: \nAir units have increased firepower.");
+        var text = qsTr("\nSpecial Unit:\nKirov\n") +
+                qsTr("\nGlobal Effect: \nAir units gain %0% firepower and %1% defence and use %2 less fuel, but sea units have %3% less firepower.") +
+                qsTr("\n\nCO Zone Effect: \nAir units are gain %0% firepower and %1% defence.");
+        text = replaceTextArgs(text, [CO_EAGLE.d2dAirOffBonus, CO_EAGLE.d2dAirDefBonus, CO_EAGLE.d2dFuelModifier, CO_EAGLE.d2dNavalOffBonus,
+                                      CO_EAGLE.d2dCoZoneAirOffBonus, CO_EAGLE.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("All non-infantry units that have already carried out orders may move again, but their firepower is cut in half.");
+        if (CO_EAGLE.powerRefresh)
+        {
+            var text = qsTr("All non-infantry units that have already carried out orders may move again. Air units are gain %0% firepower and %1% defence and sea units have %2% less firepower and ground units have %3% less firepower.");
+            text = replaceTextArgs(text, [CO_EAGLE.powerAirOffBonus, CO_EAGLE.powerAirDefBonus, CO_EAGLE.powerNavalOffBonus, CO_EAGLE.powerOtherOffBonus]);
+            return text;
+        }
+        else
+        {
+            var text = qsTr("Air units gain %0% firepower and %1% defence");
+            text = replaceTextArgs(text, [CO_EAGLE.powerAirOffBonus, CO_EAGLE.powerAirDefBonus]);
+            return text;
+        }
     };
     this.getPowerName = function(co)
     {
@@ -267,7 +383,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All non-infantry units that have already carried out orders may move again with no firepower penalty.");
+        var text = qsTr("All non-infantry units that have already carried out orders may move again. Air units are gain %0% firepower and %1% defence and sea units have %2% less firepower and ground units have %3% less firepower.");
+        text = replaceTextArgs(text, [CO_EAGLE.superPowerAirOffBonus, CO_EAGLE.superPowerAirDefBonus, CO_EAGLE.superPowerNavalOffBonus, CO_EAGLE.superPowerOtherOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

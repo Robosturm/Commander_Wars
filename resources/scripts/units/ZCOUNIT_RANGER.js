@@ -127,8 +127,18 @@ var Constructor = function()
             if (indirectToUse !== null)
             {
                 indirectToUse.setHasMoved(true);
-                var targetDamage = Global[indirectToUse.getWeapon1ID()].getBaseDamage(defender);
-                var targetDamage2 = Global[indirectToUse.getWeapon2ID()].getBaseDamage(defender);
+                var targetDamage = 0;
+                if (Global[indirectToUse.getWeapon1ID()] !== undefined &&
+                    Global[indirectToUse.getWeapon1ID()] !== null)
+                {
+                    targetDamage = Global[indirectToUse.getWeapon1ID()].getBaseDamage(otherUnit);
+                }
+                var targetDamage2 = 0;
+                if (Global[indirectToUse.getWeapon2ID()] !== undefined &&
+                    Global[indirectToUse.getWeapon2ID()] !== null)
+                {
+                    targetDamage2 = Global[indirectToUse.getWeapon2ID()].getBaseDamage(otherUnit);
+                }
                 if  (targetDamage2 > targetDamage)
                 {
                     indirectToUse.reduceAmmo1(1);

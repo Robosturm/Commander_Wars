@@ -33,6 +33,7 @@ protected:
         : RessourceManagement<WeaponManager>("",
                                              "/scripts/weapons")
     {
+        Interpreter::setCppOwnerShip(this);
 #ifdef GRAPHICSUPPORT
         setObjectName("WeaponManager");
 #endif

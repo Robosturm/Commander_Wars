@@ -15,6 +15,11 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
+InfluenceInfo::InfluenceInfo()
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
 InfluenceInfo::InfluenceInfo(GameMap* pMap)
     : m_pMap(pMap)
 {

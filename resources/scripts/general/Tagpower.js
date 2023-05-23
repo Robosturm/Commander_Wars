@@ -227,8 +227,20 @@ var TAGPOWER =
 		return 0;
     },
 
-    isActive : function(co, map)
+    isActive : function(co)
     {
+        var map = co.getMap();
+        if (map !== null)
+        {
+            if (map.getGameRules().getParallelCos())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         return true;
     },
 

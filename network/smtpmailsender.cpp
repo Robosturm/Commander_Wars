@@ -3,11 +3,13 @@
 #include "network/smtpmailsender.h"
 
 #include "coreengine/settings.h"
+#include "coreengine/interpreter.h"
 
 SmtpMailSender::SmtpMailSender(QObject *parent)
     : QObject{parent}
 
 {
+    Interpreter::setCppOwnerShip(this);
     connect(this, &SmtpMailSender::sigSendMail, this, &SmtpMailSender::sendMail, Qt::QueuedConnection);
 }
 

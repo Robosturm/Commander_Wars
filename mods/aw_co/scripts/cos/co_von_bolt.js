@@ -1,3 +1,14 @@
+CO_VON_BOLT.superPowerDamage = 3;
+CO_VON_BOLT.superPowerRange = 3;
+CO_VON_BOLT.powerDamage = 1;
+CO_VON_BOLT.powerRange = 2;
+CO_VON_BOLT.powerOffBonus = 10;
+CO_VON_BOLT.powerDefBonus = 20;
+CO_VON_BOLT.d2dCoZoneOffBonus = 0;
+CO_VON_BOLT.d2dCoZoneDefBonus = 0;
+CO_VON_BOLT.d2dOffBonus = 10;
+CO_VON_BOLT.d2dDefBonus = 10;
+
 CO_VON_BOLT.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +17,7 @@ CO_VON_BOLT.init = function(co, map)
 CO_VON_BOLT.activateSuperpower = function(co, powerMode, map)
 {
     CO_VON_BOLT.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_VON_BOLT.getSuperPowerDescription = function()
 {
@@ -14,30 +26,4 @@ CO_VON_BOLT.getSuperPowerDescription = function()
 CO_VON_BOLT.getSuperPowerName = function()
 {
     return CO_VON_BOLT.getPowerName();
-};
-CO_VON_BOLT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        return 10;
-    }
-    return 0;
-};
-CO_VON_BOLT.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            return 20;
-        default:
-            return 10;
-        }
-    }
-    return 0;
 };

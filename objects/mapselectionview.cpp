@@ -261,11 +261,11 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
             (info.fileName().endsWith(".map") ||
              info.fileName().endsWith(".msav")))
         {
-            m_CurrentLoadedCampaign = nullptr;
+            m_CurrentLoadedCampaign.free();
             if (m_pCurrentMap.get() != nullptr)
             {
                 m_pCurrentMap->detach();
-                m_pCurrentMap = nullptr;
+                m_pCurrentMap.free();
             }
             bool savegame = info.fileName().endsWith(".msav");
             QString file = info.canonicalFilePath();
@@ -320,10 +320,10 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
             {
                 m_pCurrentMap->detach();
                 m_currentMapFile = QFileInfo();
-                m_pCurrentMap = nullptr;
+                m_pCurrentMap.free();
             }
             m_pMinimap->updateMinimap(nullptr);
-            m_CurrentLoadedCampaign = nullptr;
+            m_CurrentLoadedCampaign.free();
             m_CurrentLoadedCampaign = spCampaign::create(info.canonicalFilePath());
             m_MapDescription->setHtmlText(m_CurrentLoadedCampaign->getDescription());
             m_MapAuthor->setHtmlText(m_CurrentLoadedCampaign->getAuthor());
@@ -337,9 +337,9 @@ void MapSelectionView::loadMap(const QFileInfo & info, bool fast)
         if (m_pCurrentMap.get() != nullptr)
         {
             m_pCurrentMap->detach();
-            m_pCurrentMap = nullptr;
+            m_pCurrentMap.free();
         }
-        m_CurrentLoadedCampaign = nullptr;
+        m_CurrentLoadedCampaign.free();
         m_currentMapFile = info;
     }
     qint32 maxWidth = m_MapDescription->getX() + m_MapDescription->getTextRect().width();

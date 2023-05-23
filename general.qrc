@@ -712,13 +712,8 @@
         <file>maps/readme.txt</file>
         <file>maps/tutorial.jsm</file>
         <file>maps/war_room.jsm</file>
-        <file>mods/aw2_co/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js</file>
-        <file>mods/aw2_co/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js</file>
-        <file>mods/aw2_co/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js</file>
         <file>mods/aw2_co/scripts/actions/ACTION_CO_UNIT_0.js</file>
         <file>mods/aw2_co/scripts/actions/ACTION_CO_UNIT_1.js</file>
-        <file>mods/aw2_co/scripts/actions/ACTION_NEXT_PLAYER.js</file>
-        <file>mods/aw2_co/scripts/actions/ACTION_SWAP_COS.js</file>
         <file>mods/aw2_co/scripts/cos/co_adam.js</file>
         <file>mods/aw2_co/scripts/cos/co_adder.js</file>
         <file>mods/aw2_co/scripts/cos/co_aira.js</file>
@@ -795,16 +790,9 @@
         <file>mods/aw2_co/scripts/cos/co_xavier.js</file>
         <file>mods/aw2_co/scripts/cos/co_yukio.js</file>
         <file>mods/aw2_co/scripts/cos/co_zandra.js</file>
-        <file>mods/aw2_co/scripts/general/co_perk.js</file>
-        <file>mods/aw2_co/scripts/general/tagpower.js</file>
         <file>mods/aw2_co/mod.txt</file>
-        <file>mods/aw_co/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js</file>
-        <file>mods/aw_co/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js</file>
-        <file>mods/aw_co/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js</file>
         <file>mods/aw_co/scripts/actions/ACTION_CO_UNIT_0.js</file>
         <file>mods/aw_co/scripts/actions/ACTION_CO_UNIT_1.js</file>
-        <file>mods/aw_co/scripts/actions/ACTION_NEXT_PLAYER.js</file>
-        <file>mods/aw_co/scripts/actions/ACTION_SWAP_COS.js</file>
         <file>mods/aw_co/scripts/cos/co_adam.js</file>
         <file>mods/aw_co/scripts/cos/co_adder.js</file>
         <file>mods/aw_co/scripts/cos/co_aira.js</file>
@@ -881,8 +869,6 @@
         <file>mods/aw_co/scripts/cos/co_xavier.js</file>
         <file>mods/aw_co/scripts/cos/co_yukio.js</file>
         <file>mods/aw_co/scripts/cos/co_zandra.js</file>
-        <file>mods/aw_co/scripts/general/co_perk.js</file>
-        <file>mods/aw_co/scripts/general/tagpower.js</file>
         <file>mods/aw_co/mod.txt</file>
         <file>mods/aw_styled_icons/images/game/arrow+unit.png</file>
         <file>mods/aw_styled_icons/images/game/res.xml</file>
@@ -1113,13 +1099,8 @@
         <file>mods/awdc_weather/scripts/gamerules/weather/weather_snow.js</file>
         <file>mods/awdc_weather/scripts/terrain/FIRE.js</file>
         <file>mods/awdc_weather/mod.txt</file>
-        <file>mods/awds_co/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js</file>
-        <file>mods/awds_co/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js</file>
-        <file>mods/awds_co/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js</file>
         <file>mods/awds_co/scripts/actions/ACTION_CO_UNIT_0.js</file>
         <file>mods/awds_co/scripts/actions/ACTION_CO_UNIT_1.js</file>
-        <file>mods/awds_co/scripts/actions/ACTION_NEXT_PLAYER.js</file>
-        <file>mods/awds_co/scripts/actions/ACTION_SWAP_COS.js</file>
         <file>mods/awds_co/scripts/cos/co_adam.js</file>
         <file>mods/awds_co/scripts/cos/co_adder.js</file>
         <file>mods/awds_co/scripts/cos/co_aira.js</file>
@@ -1196,8 +1177,6 @@
         <file>mods/awds_co/scripts/cos/co_xavier.js</file>
         <file>mods/awds_co/scripts/cos/co_yukio.js</file>
         <file>mods/awds_co/scripts/cos/co_zandra.js</file>
-        <file>mods/awds_co/scripts/general/co_perk.js</file>
-        <file>mods/awds_co/scripts/general/tagpower.js</file>
         <file>mods/awds_co/aw_dualstrike.png</file>
         <file>mods/awds_co/mod.txt</file>
         <file>mods/awds_unit/scripts/actions/ACTION_EXPLODE.js</file>
@@ -2081,5 +2060,6 @@
         <file>maps/advance_wars_dual_strike_campaign/Verdant Hills.map</file>
         <file>templates/serverscript/despawnServer/serverScript.js</file>
         <file>resources/scripts/building/forthq.js</file>
+        <file>maps/test/co_test.map</file>
     </qresource>
 </RCC>

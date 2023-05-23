@@ -14,6 +14,11 @@ static constexpr double DOUBLE_EPSILON = 0.5;
 static constexpr float FLOAT_EPSILON = 0.5f;
 QScopedPointer<GlobalUtils> GlobalUtils::m_pInstace;
 
+GlobalUtils::GlobalUtils()
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
 void GlobalUtils::setup()
 {
     m_pInstace.reset(new GlobalUtils());
@@ -545,4 +550,13 @@ qint32 GlobalUtils::roundFloorToInt(float value, float precision)
 qint32 GlobalUtils::roundFloorToInt(qreal value, qreal precision)
 {
     return qFloor(value * precision);
+}
+
+void GlobalUtils::sleepMs(qint32 ms)
+{
+    for (qint32 i = 0; i < ms; ++i)
+    {
+        QCoreApplication::processEvents();
+        QThread::msleep(1);
+    }
 }

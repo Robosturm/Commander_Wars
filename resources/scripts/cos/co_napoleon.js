@@ -8,21 +8,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/napoleon.mp3", 40388, 83068);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/napoleon.mp3", 40388, 83068);
+                break;
+            }
         }
     };
 
@@ -119,48 +121,73 @@ var Constructor = function()
             }
         }
     };
-
     
     this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
+
+    this.superPowerTerrainBonus = 10;
+    this.superPowerOffBonus = 20;
+    this.superPowerHpBonus = 4;
+    this.superPowerIndirectDefBonus = 70;
+    this.superPowerDefBonus = 50;
+
+    this.powerDefReduction = 0.5;
+    this.powerOffBonus = 20;
+    this.powerIndirectDefBonus = 60;
+    this.powerDefBonus = 40;
+
+    this.d2dIndirectDefBonus = 0;
+    this.d2dDefBonus = 0;
+    this.d2dOffBonus = 0;
+
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneIndirectDefBonus = 60;
+    this.d2dCoZoneDefBonus = 40;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            var terrainDefense = 0;
-            if (map.onMap(atkPosX, atkPosY))
+            switch (co.getPowerMode())
             {
-                terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                var terrainDefense = 0;
+                if (map.onMap(atkPosX, atkPosY))
+                {
+                    terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
+                }
+                return terrainDefense * CO_NAPOLEON.superPowerTerrainBonus + CO_NAPOLEON.superPowerOffBonus;
+            case GameEnums.PowerMode_Power:
+                return CO_NAPOLEON.powerOffBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_NAPOLEON.d2dCoZoneOffBonus;
+                }
+                return CO_NAPOLEON.d2dOffBonus;
             }
-            return terrainDefense * 10 + 20;
-        case GameEnums.PowerMode_Power:
-            return 20;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
-                return 20;
-            }
-            break;
         }
         return 0;
     };
 
     this.getAttackHpBonus = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return 4;
-        case GameEnums.PowerMode_Power:
-            return 0;
-        default:
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return CO_NAPOLEON.superPowerHpBonus;
+            case GameEnums.PowerMode_Power:
+                return 0;
+            default:
+                break;
+            }
         }
         return 0;
     };
@@ -168,20 +195,23 @@ var Constructor = function()
     this.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                        defender, defPosX, defPosY, isDefender, luckMode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return 0;
-        case GameEnums.PowerMode_Power:
-            var defHp = defender.getHp() * 10;
-            if (damage > defHp / 2 && defHp > 1.0 && damage >= 0)
+            switch (co.getPowerMode())
             {
-                return damage - defHp / 2;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return 0;
+            case GameEnums.PowerMode_Power:
+                var defHp = defender.getHp() * 10;
+                if (damage > defHp * CO_NAPOLEON.powerDefReduction && defHp > 1.0 && damage >= 0)
+                {
+                    return damage - defHp * CO_NAPOLEON.powerDefReduction;
+                }
+                return 0;
+            default:
+                break;
             }
-            return 0;
-        default:
-            break;
         }
         return 0;
     };
@@ -189,41 +219,52 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+            switch (co.getPowerMode())
             {
-                return 65;
-            }
-            else
-            {
-                return 45;
-            }
-        case GameEnums.PowerMode_Power:
-            if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
-            {
-                return 45;
-            }
-            else
-            {
-                return 25;
-            }
-        default:
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
                 if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                 {
-                    return 60;
+                    return CO_NAPOLEON.superPowerIndirectDefBonus;
                 }
                 else
                 {
-                    return 40;
+                    return CO_NAPOLEON.superPowerDefBonus;
+                }
+            case GameEnums.PowerMode_Power:
+                if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                {
+                    return CO_NAPOLEON.powerIndirectDefBonus;
+                }
+                else
+                {
+                    return CO_NAPOLEON.powerDefBonus;
+                }
+            default:
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                    {
+                        return CO_NAPOLEON.d2dCoZoneIndirectDefBonus;
+                    }
+                    else
+                    {
+                        return CO_NAPOLEON.d2dCoZoneDefBonus;
+                    }
+                }
+                if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                {
+                    return CO_NAPOLEON.d2dIndirectDefBonus;
+                }
+                else
+                {
+                    return CO_NAPOLEON.d2dDefBonus;
                 }
             }
-            break;
         }
+        return 0;
     };
     this.getAiCoUnitBonus = function(co, unit, map)
     {
@@ -236,13 +277,16 @@ var Constructor = function()
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_IRON_SHIELD_GENERATOR"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_IRON_SHIELD_GENERATOR"];
+            }
         }
         return [];
     };
@@ -266,12 +310,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nIron Shield Generator\n\nGlobal Effect: \nNo Effects.") +
-                qsTr("\n\nCO Zone Effect: \nDefense is increased, even more against indirect units.");
+        var text = qsTr("\nSpecial Unit:\nIron Shield Generator\n\n" +
+                    "Global Effect: \nDefense is increased by %0% and by %1% against indirect units and offense by %2%." +
+                    "\n\nCO Zone Effect: \nDefense is increased by %3% and by %4% against indirect units and offense by %5%.");
+        text = replaceTextArgs(text, [CO_NAPOLEON.d2dDefBonus, CO_NAPOLEON.d2dIndirectDefBonus, CO_NAPOLEON.d2dOffBonus,
+                                      CO_NAPOLEON.d2dCoZoneDefBonus, CO_NAPOLEON.d2dCoZoneIndirectDefBonus, CO_NAPOLEON.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Units cannot take damage that is more than half of their current HP in a single attack.");
+        var text = qsTr("Units cannot take damage that is more than %0% of their current HP in a single attack.");
+        text = replaceTextArgs(text, [CO_NAPOLEON.powerDefReduction * 100]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -279,7 +329,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Units fight as though they were four HP stronger and inflict extra damage relative to their terrain cover.");
+        var text = qsTr("Units fight as though they were %0 HP stronger and inflict extra damage by %1% based on their terrain cover. Defense is increased by %2% and by %3% against indirect units");
+        text = replaceTextArgs(text, [CO_NAPOLEON.superPowerHpBonus, CO_NAPOLEON.superPowerTerrainBonus, CO_NAPOLEON.superPowerDefBonus, CO_NAPOLEON.superPowerIndirectDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

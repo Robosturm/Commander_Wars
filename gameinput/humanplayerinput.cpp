@@ -64,19 +64,19 @@ void HumanPlayerInput::init(GameMenue* pMenu)
 
 HumanPlayerInput::~HumanPlayerInput()
 {
-    m_pGameAction = nullptr;
-    m_pUnitPathFindingSystem = nullptr;
+    m_pGameAction.free();
+    m_pUnitPathFindingSystem.free();
     if (m_ZInformationLabel.get() != nullptr)
     {
         m_ZInformationLabel->detach();
-        m_ZInformationLabel = nullptr;
+        m_ZInformationLabel.free();
     }
     if (m_CurrentMenu.get() != nullptr)
     {
         m_CurrentMenu->detach();
-        m_CurrentMenu = nullptr;
+        m_CurrentMenu.free();
     }
-    m_pMarkedFieldData = nullptr;
+    m_pMarkedFieldData.free();
     m_Fields.clear();
     m_FieldPoints.clear();
     m_InfoFields.clear();
@@ -341,8 +341,8 @@ void HumanPlayerInput::cleanUpInput()
 {
     CONSOLE_PRINT("HumanPlayerInput::cleanUpInput", GameConsole::eDEBUG);
     clearMenu();
-    m_pGameAction = nullptr;
-    m_pUnitPathFindingSystem = nullptr;
+    m_pGameAction.free();
+    m_pUnitPathFindingSystem.free();
     m_showVisionFields = false;
     clearMarkedFields();
     deleteArrow();
@@ -364,7 +364,7 @@ void HumanPlayerInput::clearMenu()
             m_pMenu->setFocused(true);
         }
         m_CurrentMenu->detach();
-        m_CurrentMenu = nullptr;
+        m_CurrentMenu.free();
     }
 }
 
@@ -377,11 +377,11 @@ void HumanPlayerInput::clearMarkedFields()
     }
     m_FieldPoints.clear();
     m_Fields.clear();
-    m_pMarkedFieldData = nullptr;
+    m_pMarkedFieldData.free();
     if (m_ZInformationLabel.get() != nullptr)
     {
         m_ZInformationLabel->detach();
-        m_ZInformationLabel = nullptr;
+        m_ZInformationLabel.free();
     }
     for (auto & fields : m_InfoFields)
     {
@@ -526,13 +526,13 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                         else
                         {
                             m_doubleClickTime.start();
-                            m_pGameAction = nullptr;
+                            m_pGameAction.free();
                         }
                     }
                 }
                 else
                 {
-                    m_pGameAction = nullptr;
+                    m_pGameAction.free();
                 }
             }
             // we want to select an action
@@ -779,13 +779,13 @@ void HumanPlayerInput::finishAction()
             {
                 m_pGameAction->perform();
             }
-            m_pGameAction = nullptr;
+            m_pGameAction.free();
         }
         else
         {
             // do nothing
         }
-        m_pGameAction = nullptr;
+        m_pGameAction.free();
     }
     cleanUpInput();
 }
@@ -976,7 +976,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                             if (m_ZInformationLabel.get() != nullptr)
                             {
                                 m_ZInformationLabel->detach();
-                                m_ZInformationLabel = nullptr;
+                                m_ZInformationLabel.free();
                             }
                             QPoint field(x, y);
                             const MarkedFieldData::ZInformation* pData = nullptr;
@@ -1006,7 +1006,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                             if (m_ZInformationLabel.get() != nullptr)
                             {
                                 m_ZInformationLabel->detach();
-                                m_ZInformationLabel = nullptr;
+                                m_ZInformationLabel.free();
                             }
                         }
                     }

@@ -79,6 +79,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"SupportDamageBonus", "Attacking", &m_supportDamageBonus, 1.0f, 0.1f, 10.0f},
                   {"InfluenceIgnoreValue", "Attacking", &m_influenceIgnoreValue, 0.2f, 0.01f, 1.0f},
                   {"InfluenceMultiplier", "Attacking", &m_influenceMultiplier, 2.0f, 0.1f, 10.0f},
+                  {"MinHpDamage", "Attacking", &m_minHpDamage, -2.0f, -10.0f, 10.0f},
+
                   // Production
                   {"FundsPerBuildingFactorA", "Production", &m_fundsPerBuildingFactorA, 1.85f, 0.5f, 10.0f},
                   {"FundsPerBuildingFactorB", "Production", &m_fundsPerBuildingFactorB, 2.0f, 0.5f, 10.0f},
@@ -188,7 +190,7 @@ void NormalAi::process()
     spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
     spQmlVectorUnit pUnits;
-    pUnits = m_pPlayer->getUnits();
+    pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
     spQmlVectorUnit pEnemyUnits;
     spQmlVectorBuilding pEnemyBuildings;
     qint32 cost = 0;
@@ -198,9 +200,9 @@ void NormalAi::process()
     else
     {
         AI_CONSOLE_PRINT("NormalAi::creating unit arrays()", GameConsole::eDEBUG);
-        pEnemyUnits = m_pPlayer->getEnemyUnits();
+        pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
         pEnemyUnits->randomize();
-        pEnemyBuildings = m_pPlayer->getEnemyBuildings();
+        pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
         pEnemyBuildings->randomize();
         updateAllUnitData(pUnits);
         if (useCOPower(pUnits, pEnemyUnits))
@@ -1620,7 +1622,8 @@ qint32 NormalAi::getBestAttackTarget(MoveUnitData & unitData, std::vector<CoreAI
         fundsDamage -= counterDamage;
         Terrain* pTerrain = m_pMap->getTerrain(static_cast<qint32>(ret[i].x), static_cast<qint32>(ret[i].y));
         qint32 targetDefense = pTerrain->getDefense(pUnit);
-        if (fundsDamage >= minFundsDamage)
+        if (fundsDamage >= minFundsDamage &&
+            ret[i].hpDamageDifference >= m_minHpDamage)
         {
             if (fundsDamage > currentDamage)
             {
@@ -1656,7 +1659,7 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
             {
                 std::vector<CoreAI::DamageData> ret;
                 spQmlVectorPoint firerange;
-                firerange = GlobalUtils::getCircle(pUnitData.minFireRange, pUnitData.maxFireRange);
+                firerange = spQmlVectorPoint(GlobalUtils::getCircle(pUnitData.minFireRange, pUnitData.maxFireRange));
                 CoreAI::getAttackTargetsFast(pUnitData.pUnit.get(), *firerange.get(), pUnitData.pUnitPfs.get(), ret);
 
                 std::vector<Unit*> pUsedUnits;
@@ -1911,7 +1914,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
                             }
                             if (damageData.x() > 0)
                             {
-                                counterDamage += static_cast<qint32>(calcFundsDamage(damageData, pNextEnemy.get(), pUnit).y());
+                                counterDamage += static_cast<qint32>(calcFundsDamage(damageData, pNextEnemy.get(), pUnit).fundsDamage);
                             }
                         }
                     }
@@ -2089,7 +2092,7 @@ void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint
     data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
     data.movementPoints = pUnit->getMovementpoints(pos);
     data.maxFireRange = pUnit->getMaxRange(pos);
-    data.pUnit = pUnit;
+    data.pUnit = spUnit(pUnit);
     data.minFireRange = pUnit->getMinRange(pos);
     data.unitCosts = pUnit->getCoUnitValue();
     data.nextAiStep = m_aiFunctionStep;

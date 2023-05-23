@@ -259,11 +259,6 @@ public:
      */
     void limitPosition(BaseGamemenu* pMenu, qint32 & newX, qint32 & newY);
     /**
-     * @brief setIsHumanMatch
-     * @param newIsHumanMatch
-     */
-    void setIsHumanMatch(bool newIsHumanMatch);
-    /**
      * @brief getRowActor
      * @return
      */
@@ -320,7 +315,6 @@ signals:
     void sigShowGameInfo(qint32 player);
     void sigShowAttackLog(qint32 player);
     void sigShowUnitInfo(qint32 player);
-    void sigQueueAction(spGameAction pAction, bool fromAiPipe = false);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
     void sigShowXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
@@ -333,6 +327,11 @@ signals:
     void sigShowMovementPlanner();
     void sigShowLoadSaveGame();
 public slots:
+    /**
+     * @brief setIsHumanMatch
+     * @param newIsHumanMatch
+     */
+    void setIsHumanMatch(bool newIsHumanMatch);
     /**
      * @brief applyPaletteToArea
      * @param area
@@ -404,7 +403,7 @@ public slots:
      * @param unitID
      * @return
      */
-    bool isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs);
+    bool isPlayersUnitInArea(const QRect& area, const QVector<qint32> & playerIDs);
     /**
      * @brief getUnit
      * @param uniqueID
@@ -453,16 +452,6 @@ public slots:
      * @return
      */
     QStringList getAllUnitIDs();
-    /**
-     * @brief createAction
-     * @return
-     */
-    spGameAction createAction();
-    /**
-     * @brief queueAction
-     * @param pAction
-     */
-    void queueAction(spGameAction pAction);
     /**
      * @brief getGameRecorder
      * @return

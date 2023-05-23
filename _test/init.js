@@ -3,6 +3,8 @@ var Init =
     step = 0,
     playTest = 0,
     optionTestCount = 0,
+    coTestStep = 0,
+    currentCoTest = 0,
     steps = ["creditsTest",
              "achievementTest",
              "optionTest",
@@ -23,14 +25,63 @@ var Init =
             ],
     main = function(menu)
     {
+        // disable animations
+        settings.setOverworldAnimations(false);
+        settings.setBattleAnimationMode(GameEnums.BattleAnimationMode_None);
+        settings.setDialogAnimation(false);
+        settings.setCaptureAnimation(false);
+        settings.setMovementAnimations(false);
+        settings.setDay2dayScreen(false);
+        settings.setAnimationSpeed(100);
+        settings.setBattleAnimationSpeed(100);
+        settings.setDialogAnimationSpeed(100);
+        settings.setCaptureAnimationSpeed(100);
+
         var current = Init.step;
         if (current < Init.steps.length)
         {
-            ++Init.step;
             Init[steps[current]](menu);
         }
         else
         {
+            Init.checkNextMod(menu);
+        }
+    },
+
+    checkNextMod = function(menu)
+    {
+        var activeMod = settings.getModString();
+        var nextMod = "";
+
+        var mods = settings.getAvailableMods();
+        if (activeMod === "")
+        {
+            nextMod = mods[0];
+        }
+        else
+        {
+            var length = mods.length;
+            for (var i = 0; i < length; ++i)
+            {
+                if (mods[i] === activeMod)
+                {
+                    if (i + 1 < length)
+                    {
+                        nextMod = mods[i + 1];
+                    }
+                    break;
+                }
+            }
+        }
+        if (nextMod !== "")
+        {
+            settings.removeMod(activeMod);
+            settings.addMod(nextMod);
+            menu.restartGame();
+        }
+        else
+        {
+            settings.removeMod(activeMod);
             menu.quitGame();
         }
     },
@@ -38,6 +89,7 @@ var Init =
     creditsTest = function(menu)
     {
         menu.enterCreditsmenue();
+        ++Init.step;
     },
     creditsMenu = function(menu)
     {
@@ -46,6 +98,7 @@ var Init =
     achievementTest = function(menu)
     {
         menu.enterAchievementmenue();
+        ++Init.step;
     },
     achievementMenu = function(menu)
     {
@@ -77,7 +130,8 @@ var Init =
         else  if (Init.optionTestCount === 6)
         {
             menu.enterOptionmenue("ui/options/optionnetworkmenu.xml");
-        }        
+        }
+        ++Init.step;
     },
     optionMenu = function(menu)
     {
@@ -86,20 +140,64 @@ var Init =
     wikiTest = function(menu)
     {
         menu.enterWikimenue();
+        ++Init.step;
     },
     wikiMenu = function(menu)
     {
         var wikiView = menu.getWikiView();
         wikiView.tagChanged(0);
-        wikiView.showPage("CO_ANDY");
-        wikiView.showPage("MECH");
-        wikiView.showPage("PLAINS");
-        wikiView.showPage("HQ");
+        // test co's
+        var ids = coSpriteManager.getCoIds();
+        var length = ids.length;
+        var i = 0;
+        for (i = 0; i < length; ++i)
+        {
+            wikiView.showPage(ids[i]);
+            globals.sleepMs(1000);
+            wikiView.hideLastPage();
+        }
+        // test unit's
+        ids = unitSpriteManager.getUnitsSorted();
+        length = ids.length;
+        for (i = 0; i < length; ++i)
+        {
+            wikiView.showPage(ids[i]);
+            globals.sleepMs(1000);
+            wikiView.hideLastPage();
+        }
+        // test terrain's
+        ids = terrainSpriteManager.getTerrainsSorted();
+        length = ids.length;
+        for (i = 0; i < length; ++i)
+        {
+            wikiView.showPage(ids[i]);
+            globals.sleepMs(1000);
+            wikiView.hideLastPage();
+        }
+        // test building's
+        ids = buildingSpriteManager.getLoadedBuildings();
+        length = ids.length;
+        for (i = 0; i < length; ++i)
+        {
+            wikiView.showPage(ids[i]);
+            globals.sleepMs(1000);
+            wikiView.hideLastPage();
+        }
+        // test perk's
+        ids = coPerkSpriteManager.getLoadedPerks();
+        length = ids.length;
+        for (i = 0; i < length; ++i)
+        {
+            wikiView.showPage(ids[i]);
+            globals.sleepMs(1000);
+            wikiView.hideLastPage();
+        }
         menu.exitMenue();
     },
     shopTest = function(menu)
     {
         menu.enterShopMenu();
+        ++Init.step;
     },
     shopMenu = function(menu)
     {
@@ -108,6 +206,7 @@ var Init =
     coStyleTest = function(menu)
     {
         menu.enterCOStyleMenu();
+        ++Init.step;
     },
     coStyleMenu = function(menu)
     {
@@ -118,6 +217,7 @@ var Init =
     mapEditorTest = function(menu)
     {
         menu.enterEditor();
+        ++Init.step;
     },
     mapEditorMenu = function(menu)
     {
@@ -161,7 +261,22 @@ var Init =
     },
     mapsSelection = function(menu)
     {
-        if (Init.playTest === 0)
+        if (Init.coTestStep < 3)
+        {
+            var ids = coSpriteManager.getCoIds();
+            var co = ids[Init.currentCoTest]
+            GameConsole.print("Testing co " + co + " testing co step " + Init.coTestStep.toString(), 0);
+            menu.selectMap("maps/test/", "co_test.map");
+            menu.buttonNext();
+            menu.buttonNext();
+            var selection = menu.getPlayerSelection();
+            selection.selectPlayerAi(0, 0);
+            selection.selectPlayerAi(1, 2);
+            selection.playerCO1Changed(co, 0);
+            Init.currentCoTest += 1;
+            menu.startGame();
+        }
+        else if (Init.playTest === 0)
         {
             GameConsole.print("Testing ingame menus", 0);
             menu.selectMap("maps/2_player/", "Agitated.map");
@@ -175,6 +290,7 @@ var Init =
             selection.playerCO1Changed("CO_RANDOM", 1);
             selection.playerCO2Changed("CO_RANDOM", 1);
             menu.startGame();
+            ++Init.step;
         }
         else
         {
@@ -193,11 +309,31 @@ var Init =
             selection.playerCO1Changed("CO_RANDOM", 1);
             selection.playerCO2Changed("CO_RANDOM", 1);
             menu.startGame();
+            ++Init.step;
         }
     },
     gameMenu = function(menu)
     {
-        if (Init.playTest === 0)
+        if (Init.coTestStep < 3)
+        {
+            if (Init.coTestStep === 1)
+            {
+                menu.getMap().getPlayer(0).getCO(0).activatePower();
+            }
+            else if (Init.coTestStep === 2)
+            {
+                menu.getMap().getPlayer(0).getCO(0).activateSuperpower(GameEnums.PowerMode_Superpower);
+            }
+            menu.getMap().setIsHumanMatch(false);
+            menu.changeAiForPlayer(0, GameEnums.AiTypes_Normal);
+            var ids = coSpriteManager.getCoIds();
+            if (Init.currentCoTest >= ids.length)
+            {
+                Init.coTestStep += 1;
+                Init.currentCoTest = 0;
+            }
+        }
+        else if (Init.playTest === 0)
         {
             GameConsole.print("Showing all ingame menus", 0);
             menu.victoryInfo();

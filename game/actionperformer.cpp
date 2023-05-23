@@ -11,6 +11,7 @@ ActionPerformer::ActionPerformer(GameMap* pMap, GameMenue* pMenu)
     : m_pMenu(pMenu),
       m_pMap(pMap)
 {
+    Interpreter::setCppOwnerShip(this);
     m_delayedActionPerformedTimer.setSingleShot(true);
     connect(&m_delayedActionPerformedTimer, &QTimer::timeout, this, &ActionPerformer::delayedActionPerformed, Qt::QueuedConnection);
 }
@@ -107,7 +108,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 ++m_syncCounter;
             }
             CONSOLE_PRINT("Updated sync counter to " + QString::number(m_syncCounter), GameConsole::eDEBUG);
-            m_pStoredAction = nullptr;
+            m_pStoredAction.free();
             m_pMap->getGameRules()->pauseRoundTime();
             if (!pGameAction->getIsLocal() &&
                 baseGameInput != nullptr &&
@@ -161,7 +162,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
             pGameAction->perform();
             // clean up the action
             m_pCurrentAction = pGameAction;
-            pGameAction = nullptr;
+            pGameAction.free();
             skipAnimations(false);
         }
         if (pCurrentPlayer != m_pMap->getCurrentPlayer() &&
@@ -349,7 +350,7 @@ void ActionPerformer::finishActionPerformed()
         }
         m_pMap->getCurrentPlayer()->postAction(m_pCurrentAction.get());
         m_pMap->getGameScript()->actionDone(m_pCurrentAction);
-        m_pCurrentAction = nullptr;
+        m_pCurrentAction.free();
     }
     skipAnimations(true);
     if (m_pMenu != nullptr)
@@ -386,6 +387,9 @@ void ActionPerformer::actionPerformed()
                 m_pMap->getGameRules()->createFogVision();
                 m_actionRunning = false;
                 m_finishedPerformed = false;
+                CONSOLE_PRINT("Storing current map hash", GameConsole::eDEBUG);
+                m_mapHash = m_pMap->getMapHash();
+                GlobalUtils::setUseSeed(false);
                 if (m_pMenu != nullptr &&
                     m_pMenu->getIndespawningMode())
                 {
@@ -419,9 +423,6 @@ void ActionPerformer::actionPerformed()
                     }
                     else
                     {
-                        CONSOLE_PRINT("Storing current map hash", GameConsole::eDEBUG);
-                        m_mapHash = m_pMap->getMapHash();
-                        GlobalUtils::setUseSeed(false);
                         if (m_pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
                         {
                             m_pMap->getGameRules()->resumeRoundTime();
@@ -450,7 +451,7 @@ void ActionPerformer::actionPerformed()
                         }
                     }
                 }
-                else
+                else if (m_pMenu != nullptr)
                 {
                     CONSOLE_PRINT("Game already won not finishing the action.", GameConsole::eDEBUG);
                     emit m_pMenu->sigVictory(-1);

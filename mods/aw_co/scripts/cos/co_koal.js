@@ -1,3 +1,17 @@
+CO_KOAL.superPowerMovementBonus = 2;
+CO_KOAL.superPowerOffBonus = 40;
+
+CO_KOAL.powerMovementBonus = 1;
+CO_KOAL.powerOffBonus = 30;
+CO_KOAL.powerDefBonus = 10;
+CO_KOAL.powerBaseOffBonus = 0;
+
+CO_KOAL.d2dOffBonus = 10;
+
+CO_KOAL.d2dCoZoneOffBonus = 0;
+CO_KOAL.d2dCoZoneBaseOffBonus = 0;
+CO_KOAL.d2dCoZoneDefBonus = 0;
+
 CO_KOAL.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +20,7 @@ CO_KOAL.init = function(co, map)
 CO_KOAL.activateSuperpower = function(co, powerMode, map)
 {
     CO_KOAL.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_KOAL.getSuperPowerDescription = function()
 {
@@ -14,70 +29,4 @@ CO_KOAL.getSuperPowerDescription = function()
 CO_KOAL.getSuperPowerName = function()
 {
     return CO_KOAL.getPowerName();
-};
-CO_KOAL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (map !== null)
-        {
-            if (map.onMap(atkPosX, atkPosY))
-            {
-                var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
-                var isStreet = (terrainID === "STREET") ||
-                               (terrainID === "STREET1") ||
-                               (terrainID === "SNOW_STREET") ||
-                               (terrainID === "BRIDGE") ||
-                               (terrainID === "BRIDGE1") ||
-                               (terrainID === "BRIDGE2") ||
-                               (terrainID === "WASTE_PATH") ||
-                               (terrainID === "DESERT_PATH") ||
-                               (terrainID === "DESERT_PATH1");
-                switch (co.getPowerMode())
-                {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                case GameEnums.PowerMode_Power:
-                    if (isStreet)
-                    {
-                        return 20;
-                    }
-                    return 0;
-                default:
-                    if (isStreet)
-                    {
-                        return 10;
-                    }
-                    return 0;
-                }
-            }
-        }
-    }
-    return 0;
-};
-
-CO_KOAL.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
-
-CO_KOAL.getMovementpointModifier = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 1;
-        }
-    }
-    return 0;
 };

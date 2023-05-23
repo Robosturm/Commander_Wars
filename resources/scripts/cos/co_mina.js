@@ -8,14 +8,11 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -60,7 +57,6 @@ var Constructor = function()
             }
         }
     };
-    this.superPowerDamage = 5;
     this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
@@ -128,9 +124,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -143,52 +140,73 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/mina.mp3", 76, 100073);
                 break;
+            }
         }
     };
+
+    this.superPowerDamage = 5;
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 20;
+    this.powerDamageReduction = 50;
+
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneDefBonus = 20;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return 20;
+                return CO_MINA.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return CO_MINA.d2dCoZoneOffBonus;
                 }
                 return 0;
+            }
         }
+        return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 20;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_MINA.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_MINA.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                   defender, defPosX, defPosY, isDefender, luckMode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 0;
             case GameEnums.PowerMode_Power:
                 if (luckMode === GameEnums.LuckDamageMode_On)
                 {
-                    return globals.randInt(0, 50);
+                    return globals.randInt(0, CO_MINA.powerDamageReduction);
                 }
                 else if (luckMode === GameEnums.LuckDamageMode_Average)
                 {
-                    return 25;
+                    return CO_MINA.powerDamageReduction * 0.5;
                 }
                 else if (luckMode === GameEnums.LuckDamageMode_Max)
                 {
@@ -196,11 +214,12 @@ var Constructor = function()
                 }
                 else if (luckMode === GameEnums.LuckDamageMode_Min)
                 {
-                    return 50;
+                    return CO_MINA.powerDamageReduction;
                 }
                 return 0;
             default:
                 break;
+            }
         }
         return 0;
     };
@@ -236,12 +255,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defense.");
+        var text = qsTr("\nGlobal Effect: \nNo Effects.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain %0% additional firepower and %1% defense.");
+        text = replaceTextArgs(text, [CO_MINA.d2dCoZoneOffBonus, CO_MINA.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Unit's defenses may unexpectedly rise.");
+        var text = qsTr("Unit's may take unexpectedly less damage up to %0%.");
+        text = replaceTextArgs(text, [CO_MINA.powerDamageReduction]);
+        return text;
     };
     this.getPowerName = function(co)
     {

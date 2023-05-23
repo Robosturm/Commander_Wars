@@ -27,6 +27,7 @@ class BaseGamemenu;
 class WorkerThread;
 using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
 class AudioManager;
+using spAudioManager = oxygine::intrusive_ptr<AudioManager>;
 using spAudioThread = oxygine::intrusive_ptr<AudioManager>;
 class TCPClient;
 using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
@@ -332,7 +333,7 @@ private:
     QScopedPointer<QThread> m_audioThread;
     QScopedPointer<QProcess> m_aiSubProcess;
     WorkerThread* m_Worker;
-    QScopedPointer<AudioManager> m_AudioManager;
+    spAudioManager m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;
     spTCPClient m_slaveClient;
     QString m_initScript;

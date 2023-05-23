@@ -22,11 +22,18 @@ var Constructor = function()
     };
     this.perform = function(action, map)
     {
-        var player = map.getCurrentPlayer();
-        var co0 = player.getCO(0);
-        var co1 = player.getCO(1);
-        co0.activateSuperpower(GameEnums.PowerMode_Tagpower);
-        co1.activateSuperpower(GameEnums.PowerMode_Tagpower);
+        if (map.getGameRules().getParallelCos())
+        {
+            var player = map.getCurrentPlayer();
+            var co0 = player.getCO(0);
+            var co1 = player.getCO(1);
+            co0.activateSuperpower(GameEnums.PowerMode_Tagpower);
+            co1.activateSuperpower(GameEnums.PowerMode_Tagpower);
+        }
+        else
+        {
+            map.getCurrentPlayer().getCO(0).activateSuperpower(GameEnums.PowerMode_Tagpower);
+        }
         map.getGameRecorder().addSpecialEvent(map.getCurrentPlayer().getPlayerID(),
                                               GameEnums.GameRecord_SpecialEvents_SuperPower);
         // achievements

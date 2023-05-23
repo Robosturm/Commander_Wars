@@ -1079,7 +1079,7 @@ void GameMenue::continueAfterSyncGame()
         if (multiplayerSyncData.m_postSyncAction.get() != nullptr)
         {
             m_actionPerformer.performAction(multiplayerSyncData.m_postSyncAction);
-            multiplayerSyncData.m_postSyncAction = nullptr;
+            multiplayerSyncData.m_postSyncAction.free();
         }
         sendOpenPlayerCount();
         sendOnlineInfo();
@@ -1147,10 +1147,7 @@ void GameMenue::disconnected(quint64 socketID)
                         break;
                     }
                 }
-                if (m_pNetworkInterface.get() != nullptr)
-                {
-                    m_pNetworkInterface = nullptr;
-                }
+                m_pNetworkInterface.free();
                 if (showDisconnect && socketID > 0)
                 {
                     CONSOLE_PRINT("Connection to host lost", GameConsole::eDEBUG);
@@ -1372,7 +1369,7 @@ void GameMenue::loadGameMenue()
     connect(this, &GameMenue::sigLoadSaveGame, this, &GameMenue::loadSaveGame, Qt::QueuedConnection);
     connect(&m_actionPerformer, &ActionPerformer::sigActionPerformed, this, &GameMenue::checkMovementPlanner, Qt::QueuedConnection);
 
-    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, &m_actionPerformer, &ActionPerformer::actionPerformed, Qt::DirectConnection);
+    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, &m_actionPerformer, &ActionPerformer::actionPerformed, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &GameMenue::cursorMoved, Qt::QueuedConnection);
 
@@ -1391,7 +1388,6 @@ void GameMenue::connectMap()
     connect(m_pMap.get(), &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowUnitInfo, this, &GameMenue::showUnitInfo, Qt::QueuedConnection);
-    connect(m_pMap.get(), &GameMap::sigQueueAction, &m_actionPerformer, &ActionPerformer::performAction, Qt::DirectConnection);
     connect(m_pMap.get(), &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowXmlFileDialog, this, &GameMenue::showXmlFileDialog, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::sigShowWiki, this, &GameMenue::showWiki, Qt::QueuedConnection);
@@ -1788,7 +1784,7 @@ void GameMenue::victory(qint32 team)
         if (m_pNetworkInterface.get() != nullptr)
         {
             m_pChat->detach();
-            m_pChat = nullptr;
+            m_pChat.free();
         }
         if (m_pMap->getCampaign() != nullptr)
         {
@@ -2228,6 +2224,10 @@ void GameMenue::startGame()
             CONSOLE_PRINT("Controller for player " + QString::number(i) + " is " + QString::number(pInput->getAiType()) + " original ai is " + QString::number(pPlayer->getControlType()), GameConsole::eDEBUG);
             pInput->onGameStart();
         }
+        if (m_pNetworkInterface.get() == nullptr)
+        {
+            pPlayer->setIsOnline(true);
+        }
         qint32 coCount = pPlayer->getMaxCoCount();
         for (qint32 co = 0; co < coCount; ++co)
         {
@@ -2312,6 +2312,23 @@ void GameMenue::startGame()
     }
     sendGameStartedToServer();
     CONSOLE_PRINT("Game started", GameConsole::eDEBUG);
+}
+
+void GameMenue::changeAiForPlayer(qint32 player, GameEnums::AiTypes ai)
+{
+    qint32 count = m_pMap->getPlayerCount();
+    if (player < count)
+    {
+        Player* pPlayer = m_pMap->getPlayer(player);
+        pPlayer->setControlType(ai);
+        pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap.get(), ai));
+        pPlayer->getBaseGameInput()->init(this);
+        if (m_pMap->getCurrentPlayer() == pPlayer)
+        {
+            CONSOLE_PRINT("GameMenue::changeAiForPlayer emitting sigActionPerformed()", GameConsole::eDEBUG);
+            emit m_actionPerformer.sigActionPerformed();
+        }
+    }
 }
 
 void GameMenue::startAiPipeGame()
@@ -2597,7 +2614,7 @@ void GameMenue::exitMovementPlanner()
             m_pMovementPlanner->onExitPlanner();
         }
         m_pMovementPlanner->detach();
-        m_pMovementPlanner = nullptr;
+        m_pMovementPlanner.free();
     }
     unhideGameMenue();
 }

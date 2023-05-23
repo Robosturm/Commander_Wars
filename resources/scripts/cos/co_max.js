@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-
         return ["+alt", "+alt2", "+alt3"];
     };
 
@@ -20,8 +18,7 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
         case GameEnums.PowerMode_Power:
             audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
@@ -149,7 +146,7 @@ var Constructor = function()
     this.d2dCoZoneOtherOffBonus = 10;
     this.d2dIndirectFirerangeMalus = 1;
     this.d2dOffBonus = 15;
-    this.d2dIndirectOffBonus = 10;
+    this.d2dIndirectOffBonus = -10;
     this.d2dOtherOffBonus = 0;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -157,12 +154,12 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            let isDirect = (attacker.getBaseMaxRange() === 1 && attacker.getUnitType() !== GameEnums.UnitType_Infantry);
-            let isIndirect = (attacker.getBaseMaxRange() > 1);
+            var isDirect = (attacker.getBaseMaxRange() === 1 && attacker.getUnitType() !== GameEnums.UnitType_Infantry);
+            var isIndirect = (attacker.getBaseMaxRange() > 1);
             switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
                 {
                     if (isDirect)
                     {
@@ -174,7 +171,7 @@ var Constructor = function()
                     }
                     return CO_MAX.powerOtherBonus;
                 }
-            case GameEnums.PowerMode_Power:
+                case GameEnums.PowerMode_Power:
                 {
                     if (isDirect)
                     {
@@ -186,9 +183,9 @@ var Constructor = function()
                     }
                     return CO_MAX.powerOtherBonus;
                 }
-            default:
+                default:
                 {
-                    let inCoZone = co.inCORange(Qt.point(atkPosX, atkPosY), attacker);
+                    var inCoZone = co.inCORange(Qt.point(atkPosX, atkPosY), attacker);
                     if (inCoZone)
                     {
                         if (isDirect)
@@ -212,7 +209,7 @@ var Constructor = function()
                         }
                         else if (isIndirect)
                         {
-                            return -CO_MAX.d2dIndirectOffBonus;
+                            return CO_MAX.d2dIndirectOffBonus;
                         }
                         else
                         {
@@ -229,13 +226,13 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-            {
-                return CO_MAX.d2dCoZoneDefBonus;
-            }
-            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
                 return CO_MAX.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_MAX.d2dCoZoneDefBonus;
             }
         }
         return 0;
@@ -262,16 +259,16 @@ var Constructor = function()
             if (co.getPowerMode() === GameEnums.PowerMode_Power)
             {
                 if (unit.getBaseMaxRange() === 1 &&
-                    unit.getUnitType() !== GameEnums.UnitType_Infantry)
+                        unit.getUnitType() !== GameEnums.UnitType_Infantry)
                 {
                     return CO_MAX.powerMovementBonus;
                 }
             }
             else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-             co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                     co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 if (unit.getBaseMaxRange() === 1 &&
-                    unit.getUnitType() !== GameEnums.UnitType_Infantry)
+                        unit.getUnitType() !== GameEnums.UnitType_Infantry)
                 {
                     return CO_MAX.superpowerMovementBonus;
                 }
@@ -315,13 +312,16 @@ var Constructor = function()
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_TANK_HUNTER"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_TANK_HUNTER"];
+            }
         }
         return [];
     };
@@ -344,7 +344,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nActive CO Day-to-day: \nMax's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0%</div><r> firepower and his indirect-combat units have </r><div c='#ff2626'>-%1%</div><r> firepower and </r><div c='#ff2626'>-%2 range</div><r> penalty.</r>") +
+        var text = qsTr("<r>\n\nDay-to-day: \nMax's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0%</div><r> firepower and his indirect-combat units have </r><div c='#ff2626'>-%1%</div><r> firepower and </r><div c='#ff2626'>-%2 range</div><r> penalty.</r>") +
         ("<r>\n\nSpecial Unit:\nTank Hunter</r>") +
         qsTr("<r>\n\nCO Zone Effect: \nMax's non-infantry direct-combat units firepower raises by </r><div c='#55ff00'>+%3%</div><r> and all others gain </r><div c='#55ff00'>+%4%</div><r> firepower and all units defense raises by </r><div c='#55ff00'>+%5%</div><r>.</r>");
         text = replaceTextArgs(text, [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectOffBonus, CO_MAX.d2dIndirectFirerangeMalus, CO_MAX.d2dCoZoneOffBonus, CO_MAX.d2dCoZoneOtherOffBonus, CO_MAX.d2dCoZoneDefBonus]);

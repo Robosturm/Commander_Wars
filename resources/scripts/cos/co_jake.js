@@ -3,7 +3,6 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-
         return ["+alt"];
     };
 
@@ -15,8 +14,7 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
         case GameEnums.PowerMode_Power:
             audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
@@ -136,93 +134,118 @@ var Constructor = function()
         return "OS";
     };
 
-    this.coSuperpowerBonus = 90;
-    this.coPowerBonus = 70;
-    this.coZoneBonus = 70;
-    this.coPlainsBonus = 10;
-    this.coDefenseBonus = 10;
-    this.coIndirectBonus = 1;
-    this.coMoveBonus = 2;
+    this.superPowerMovementBonus = 2;
+    this.superPowerPlainsBonus = 90;
+
+    this.powerFirerangeBonus = 1;
+    this.powerPlainsBonus = 70;
+    this.powerDefBonus = 10;
+    this.powerOffBonus = 10;
+
+    this.d2dPlainsBonus = 0;
+
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZonePlainsBonus = 70;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
      defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            if (map.onMap(atkPosX, atkPosY))
+            if (map !== null)
             {
-                var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
-                switch (co.getPowerMode())
+                if (map.onMap(atkPosX, atkPosY))
                 {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    if (terrainID === "PLAINS")
+                    var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
+                    switch (co.getPowerMode())
                     {
-                        return CO_JAKE.coSuperpowerBonus;
-                    }
-                    return CO_JAKE.coPlainsBonus;
-                case GameEnums.PowerMode_Power:
-                    if (terrainID === "PLAINS")
-                    {
-                        return CO_JAKE.coPowerBonus;
-                    }
-                    return CO_JAKE.coPlainsBonus;
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
+                    case GameEnums.PowerMode_Tagpower:
+                    case GameEnums.PowerMode_Superpower:
                         if (terrainID === "PLAINS")
                         {
-                            return CO_JAKE.coZoneBonus;
+                            return CO_JAKE.superPowerPlainsBonus;
                         }
-                        return CO_JAKE.coPlainsBonus;
+                        return CO_JAKE.powerOffBonus;
+                    case GameEnums.PowerMode_Power:
+                        if (terrainID === "PLAINS")
+                        {
+                            return CO_JAKE.powerPlainsBonus;
+                        }
+                        return CO_JAKE.powerOffBonus;
+                    default:
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        {
+                            if (terrainID === "PLAINS")
+                            {
+                                return CO_JAKE.d2dCoZonePlainsBonus;
+                            }
+                            return CO_JAKE.d2dCoZoneOffBonus;
+                        }
+                        else if (terrainID === "PLAINS")
+                        {
+                            return CO_JAKE.d2dPlainsBonus;
+                        }
+                        break;
                     }
-                    break;
                 }
             }
-        }
-        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-        {
-            return CO_JAKE.coPlainsBonus;
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_JAKE.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-    {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+    {        
+        if (CO.isActive(co))
         {
-            return coDefenseBonus;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_JAKE.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_JAKE.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (unit.getBaseMaxRange() > 1 &&
-                unit.getUnitType() === GameEnums.UnitType_Ground)
+            switch (co.getPowerMode())
             {
-                return CO_JAKE.coIndirectBonus;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+            case GameEnums.PowerMode_Power:
+                if (unit.getBaseMaxRange() > 1 &&
+                    unit.getUnitType() === GameEnums.UnitType_Ground)
+                {
+                    return CO_JAKE.powerFirerangeBonus;
+                }
+                break;
+            default:
+                return 0;
             }
-            break;
-        default:
-            return 0;
         }
         return 0;
     };
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+        if (CO.isActive(co))
         {
-            if (unit.getUnitType() === GameEnums.UnitType_Ground &&
-                unit.getBaseMaxRange() === 1)
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
-                return CO_JAKE.coMoveBonus;
+                if (unit.getUnitType() === GameEnums.UnitType_Ground &&
+                    unit.getBaseMaxRange() === 1)
+                {
+                    return CO_JAKE.superPowerMovementBonus;
+                }
             }
         }
         return 0;
@@ -234,13 +257,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_TANK_HUNTER"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_TANK_HUNTER"];
+            }
         }
         return [];
     };
@@ -263,16 +289,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nSpecial Unit:\nTank Hunter\n</r>") +
-        qsTr("<r>\n\nActive CO Day-to-day: \nJakes's units (including air) gain </r><div c='#55ff00'>+%0%</div><r> firepower on plains terrain.</r>") +
-        qsTr("<r>\n\nCO Zone Effect: \nJakes's units (including air) gain </r><div c='#55ff00'>+%1%</div><r> firepower on plains terrain and gain </r><div c='#55ff00'>+%2%</div><r> firepower and deffense overall.</r>");
-        text = replaceTextArgs(text, [CO_JAKE.coPlainsBonus, CO_JAKE.coZoneBonus, CO_JAKE.coDefenseBonus]);
+        var text = qsTr("<r>\n\nDay-to-day: \nJakes's units gain </r><div c='#55ff00'>+%0%</div><r> firepower on plains terrain.</r>") +
+        qsTr("<r>\n\nSpecial Unit:\nTank Hunter\n</r>") +
+        qsTr("<r>\n\nCO Zone Effect: \nJakes's units gain </r><div c='#55ff00'>+%1%</div><r> firepower on plains terrain and gain </r><div c='#55ff00'>+%2%</div><r> firepower and deffense overall.</r>");
+        text = replaceTextArgs(text, [CO_JAKE.d2dPlainsBonus, CO_JAKE.d2dCoZonePlainsBonus, CO_JAKE.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
      var text = qsTr("<r>Jake's plains terrain firepower bonus becomes </r><div c='#55ff00'>+%0%</div><r> and deffense becomes </r><div c='#55ff00'>+%1%</div><r>. His ground indirect-combat units gain </r><div c='#55ff00'>+%2</div><r> range.</r>");
-     text = replaceTextArgs(text, [CO_JAKE.coPowerBonus, CO_JAKE.coDefenseBonus, CO_JAKE.coIndirectBonus]);
+     text = replaceTextArgs(text, [CO_JAKE.powerPlainsBonus, CO_JAKE.powerDefBonus, CO_JAKE.powerFirerangeBonus]);
      return text;
     };
     this.getPowerName = function(co)
@@ -282,7 +308,7 @@ var Constructor = function()
     this.getSuperPowerDescription = function(co)
     {
         var text = qsTr("<r>Jake's plains terrain firepower bonus becomes </r><div c='#55ff00'>+%0%</div><r> and deffense becomes </r><div c='#55ff00'>+%1%</div><r>. His ground indirect-combat units gain </r><div c='#55ff00'>+%2</div><r> range and all his ground vehicle units gain </r><div c='#55ff00'>+%3 movement</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_JAKE.coSuperpowerBonus, CO_JAKE.coDefenseBonus, CO_JAKE.coIndirectBonus CO_JAKE.coMoveBonus]);
+        text = replaceTextArgs(text, [CO_JAKE.superPowerPlainsBonus, CO_JAKE.powerDefBonus, CO_JAKE.powerFirerangeBonus, CO_JAKE.superPowerMovementBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

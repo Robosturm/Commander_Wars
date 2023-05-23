@@ -398,6 +398,11 @@ void Mainwindow::quitGame()
     pApp->quitGame();
 }
 
+void Mainwindow::restartGame()
+{
+    emit Mainapp::getInstance()->sigQuit(1);
+}
+
 void Mainwindow::onEnter()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

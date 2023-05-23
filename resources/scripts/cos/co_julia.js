@@ -8,19 +8,16 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_JULIA.juliaStun(co, 0.5, powerNameAnimation, map);
+        CO_JULIA.juliaStun(co, CO_JULIA.powerStunChance, powerNameAnimation, map);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -29,7 +26,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_JULIA.juliaStun(co, 1, powerNameAnimation, map);
+        CO_JULIA.juliaStun(co, CO_JULIA.superPowerStunChance, powerNameAnimation, map);
     };
 
     this.juliaStun = function(co, amount, animation2, map)
@@ -101,9 +98,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -116,6 +114,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/julia.mp3", 3969, 83932);
                 break;
+            }
         }
     };
 
@@ -127,17 +126,32 @@ var Constructor = function()
     {
         return "DM";
     };
+
+    this.superPowerStunChance = 1;
+
+    this.powerStunChance = 0.5;
+    this.powerOffBonus = 80;
+    this.powerDefBonus = 10;
+
+    this.d2dCoZoneOffBonus = 80;
+    this.d2dCoZoneDefBonus = 10;
+
+    this.d2dOffBonus = 0;
+    this.d2dFixedDamage = false;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        var baseDamage = 70;
-        var fixedDamage = false;
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var baseDamage = CO_JULIA.d2dOffBonus;
+            var fixedDamage = CO_JULIA.d2dFixedDamage;
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                baseDamage = 80;
+                baseDamage = CO_JULIA.powerOffBonus;
                 fixedDamage = true;
                 break;
             default:
@@ -147,10 +161,11 @@ var Constructor = function()
                     fixedDamage = true;
                 }
                 break;
-        }
-        if (fixedDamage)
-        {
-            return baseDamage * 10 / attacker.getHpRounded() - 100;
+            }
+            if (fixedDamage)
+            {
+                return baseDamage * 10 / attacker.getHpRounded() - 100;
+            }
         }
         return 0;
     };
@@ -158,10 +173,16 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_JULIA.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_JULIA.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -172,13 +193,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_PARTISAN"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_PARTISAN"];
+            }
         }
         return [];
     };
@@ -202,13 +226,24 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nPartisan\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits loose firepower but the firepower is unaffected by loss of HP.");
+        var text = qsTr("\nSpecial Unit:\nPartisan\n");
+        if (CO_JULIA.d2dOffBonus > 0)
+        {
+            text +=  qsTr("\nGlobal Effect: \nNo Effects.");
+        }
+        else
+        {
+            text +=  qsTr("\nGlobal Effect: \nUnits have %1 firepower but the firepower is unaffected by loss of HP.");
+        }
+        text += qsTr("\n\nCO Zone Effect: \nUnits have %0 firepower but the firepower is unaffected by loss of HP.");
+        text = replaceTextArgs(text, [CO_JULIA.d2dCoZoneOffBonus, CO_JULIA.d2dOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Half of enemy units can't move next turn and all units are unaffected by loss of HP but get less firepower.");
+        var text = qsTr("%0% of enemy units can't move next turn and all units are unaffected by loss of HP but get %1% firepower.");
+        text = replaceTextArgs(text, [CO_JULIA.powerStunChance * 100, CO_JULIA.powerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -216,7 +251,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All enemy units can't move next turn and all units are unaffected by loss of HP but get less firepower.");
+        var text = qsTr("%0% of enemy units can't move next turn and all units are unaffected by loss of HP but get %1% firepower.");
+        text = replaceTextArgs(text, [CO_JULIA.superPowerStunChance * 100, CO_JULIA.powerOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

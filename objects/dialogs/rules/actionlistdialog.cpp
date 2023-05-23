@@ -27,6 +27,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("ActionListDialog");
 #endif
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");

@@ -6,6 +6,7 @@ CO_AMY.init = function(co, map)
 CO_AMY.activateSuperpower = function(co, powerMode, map)
 {
 	CO_AMY.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_AMY.getSuperPowerDescription = function()
 {

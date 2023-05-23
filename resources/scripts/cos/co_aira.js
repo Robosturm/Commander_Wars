@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -97,9 +95,7 @@ var Constructor = function()
         powerNameAnimation.queueAnimation(animation);
         map.getGameRules().changeWeather("WEATHER_1SUN", map.getPlayerCount() * 1);
 
-        CO_AIRA.airaDamage(co, 3, animation, map);
-
-
+        CO_AIRA.airaDamage(co, CO_AIRA.superPowerDamage, animation, map);
     };
 
     this.airaDamage = function(co, value, animation2, map)
@@ -162,9 +158,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -177,6 +174,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/aira.mp3", 75, 58517);
                 break;
+            }
         }
     };
     this.getAiCoUnitBonus = function(co, unit, map)
@@ -192,55 +190,78 @@ var Constructor = function()
     {
         return "PF";
     };
-    this.coZoneBonus = 20;
+    this.superPowerDamage = 3;
+    this.superPowerMovementCostIncrease = 1;
+
+    this.powerFuelIncrease = 5;
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 20;
+
+    this.d2dCoZoneBonus = 20;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return CO_AIRA.coZoneBonus;
+                return CO_AIRA.powerOffBonus;
             case GameEnums.PowerMode_Power:
-                return CO_AIRA.coZoneBonus;
+                return CO_AIRA.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return CO_AIRA.coZoneBonus;
+                    return CO_AIRA.d2dCoZoneBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
 
     this.getMovementFuelCostModifier = function(co, unit, fuelCost, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Power &&
-            co.getOwner().isEnemyUnit(unit) === true)
+        if (CO.isActive(co))
         {
-            return fuelCost * 5;
+            if (co.getPowerMode() === GameEnums.PowerMode_Power &&
+                co.getOwner().isEnemyUnit(unit) === true)
+            {
+                return fuelCost * CO_AIRA.powerFuelIncrease;
+            }
         }
         return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+    {
+        if (CO.isActive(co))
         {
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
-                return CO_AIRA.coZoneBonus;
+                return CO_AIRA.d2dCoZoneBonus;
             }
-            return 0;
-        };
+            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_AIRA.powerDefBonus;
+            }
+        }
+        return 0;
+    };
 
     this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
-        if ((co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower) &&
-            co.getOwner().isEnemyUnit(unit) === true)
+        if (CO.isActive(co))
         {
-            return 1;
+            if ((co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                 co.getPowerMode() === GameEnums.PowerMode_Tagpower) &&
+                    co.getOwner().isEnemyUnit(unit) === true)
+            {
+                return 1;
+            }
         }
         return 0;
     };
@@ -266,21 +287,25 @@ var Constructor = function()
     {
         var text = qsTr("\nGlobal Effect: \nNo bonus.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
-        text = replaceTextArgs(text, [CO_ADDER.coZoneBonus]);
+        text = replaceTextArgs(text, [CO_AIRA.d2dCoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
-        {
-            return qsTr("Enemies expend 6 times more fuel when they move for their next turn and the weather changes to sun.");
-        };
+    {
+        var text = qsTr("Enemies expend an additional %0 times more fuel when they move for their next turn and the weather changes to sun. Her units also gain %1% firepower and %2% defence.");
+        text = replaceTextArgs(text, [CO_AIRA.powerFuelIncrease, CO_AIRA.powerOffBonus, CO_AIRA.powerDefBonus]);
+        return text;
+    };
     this.getPowerName = function(co)
     {
         return qsTr("Gust Storm");
     };
     this.getSuperPowerDescription = function(co)
-        {
-            return qsTr("The cheapest enemy ground and sea units suffer 3 HP of damage while all enemy air units suffer 3 HP of damage. All enemy units have half of their movement range and the weather changes to sun.");
-        };
+    {
+        var text = qsTr("The cheapest enemy ground and sea units suffer %0 HP of damage while all enemy air units suffer %0 HP of damage. All enemy units need %1 additional movement cost to traverse terrain and the weather changes to sun. Her units also gain %2% firepower and %3% defence.");
+        text = replaceTextArgs(text, [CO_AIRA.superPowerDamage, CO_AIRA.superPowerMovementCostIncrease, CO_AIRA.powerOffBonus, CO_AIRA.powerDefBonus]);
+        return text;
+    };
     this.getSuperPowerName = function(co)
     {
         return qsTr("Hurricannon");

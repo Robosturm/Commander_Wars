@@ -345,10 +345,7 @@ void MapSelectionMapsMenue::hideRuleSelection()
     m_pRuleSelection->setVisible(false);
     m_pButtonSaveRules->setVisible(false);
     m_pButtonLoadRules->setVisible(false);
-    if (m_pRuleSelectionView.get() != nullptr)
-    {
-        m_pRuleSelectionView = nullptr;
-    }
+    m_pRuleSelectionView.free();
     m_pRuleSelection->clearContent();    
 }
 

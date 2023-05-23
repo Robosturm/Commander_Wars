@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -15,21 +13,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/javier.mp3", 22016, 74716);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/javier.mp3", 22016, 74716);
+                break;
+            }
         }
     };
 
@@ -136,21 +136,47 @@ var Constructor = function()
     {
         return "GE";
     };
+
+    this.superPowerTowerOffBonus = 20;
+    this.superPowerTowerDefBonus = 30;
+    this.superPowerIndirectDefBonus = 60;
+
+    this.powerTowerOffBonus = 10;
+    this.powerTowerDefBonus = 20;
+    this.powerIndirectDefBonus = 40;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneTowerOffBonus = 0;
+    this.d2dCoZoneTowerDefBonus = 10;
+    this.d2dCoZoneIndirectDefBonus = 20;
+
+    this.d2dTowerOffBonus = 0;
+    this.d2dTowerDefBonus = 0;
+    this.d2dIndirectDefBonus = 0;
+
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
-    {
-        var towers = co.getOwner().getBuildingCount("TOWER");
-        switch (co.getPowerMode())
+    {        
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return towers * 25 + 10;
-        case GameEnums.PowerMode_Power:
-            return towers * 15 + 10;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            var towers = co.getOwner().getBuildingCount("TOWER");
+            switch (co.getPowerMode())
             {
-                return 10;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return towers * CO_JAVIER.superPowerTowerOffBonus + CO_JAVIER.powerOffBonus;
+            case GameEnums.PowerMode_Power:
+                return towers * CO_JAVIER.powerTowerOffBonus + CO_JAVIER.powerOffBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_JAVIER.d2dCoZoneOffBonus + towers * CO_JAVIER.d2dCoZoneTowerOffBonus;
+                }
+                return towers * CO_JAVIER.d2dTowerOffBonus;
             }
         }
         return 0;
@@ -158,36 +184,44 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        var rangedAttacked = (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1);
-        var towers = co.getOwner().getBuildingCount("TOWER");
-        var ret = 0;
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (rangedAttacked)
+            var rangedAttacked = (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1);
+            var towers = co.getOwner().getBuildingCount("TOWER");
+            var ret = 0;
+            switch (co.getPowerMode())
             {
-                ret += 60;
-            }
-            ret += towers * 5  + 10;
-            break;
-        case GameEnums.PowerMode_Power:
-            if (rangedAttacked)
-            {
-                ret += 40;
-            }
-            ret += towers * 5  + 10;
-            break;
-        default:
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-            {
-                ret += towers * 10 + 10;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
                 if (rangedAttacked)
                 {
-                    ret += 20;
+                    ret += CO_JAVIER.superPowerIndirectDefBonus;
                 }
+                ret += towers * CO_JAVIER.superPowerTowerDefBonus + CO_JAVIER.powerDefBonus;
+                break;
+            case GameEnums.PowerMode_Power:
+                if (rangedAttacked)
+                {
+                    ret += CO_JAVIER.powerIndirectDefBonus;
+                }
+                ret += towers * CO_JAVIER.powerTowerDefBonus + CO_JAVIER.powerDefBonus;
+                break;
+            default:
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    ret += towers * CO_JAVIER.d2dCoZoneTowerDefBonus + CO_JAVIER.d2dCoZoneDefBonus;
+                    if (rangedAttacked)
+                    {
+                        ret += CO_JAVIER.d2dCoZoneIndirectDefBonus;
+                    }
+                }
+                ret += towers * CO_JAVIER.d2dTowerDefBonus;
+                if (rangedAttacked)
+                {
+                    ret += CO_JAVIER.d2dIndirectDefBonus;
+                }
+                break;
             }
-            break;
         }
         return ret;
     };
@@ -198,13 +232,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_CHAPERON"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_CHAPERON"];
+            }
         }
         return [];
     };
@@ -228,13 +265,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nChaperon\n") +
-                qsTr("\nGlobal Effect: \nNo Effects.") +
-                qsTr("\n\nCO Zone Effect: \nUnits have increased defense against indirect units. Units gain additional firepower and defense per Comtower.");
+        var text = qsTr("\nSpecial Unit:\nChaperon\n") +
+                qsTr("\nGlobal Effect: \nUnits have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.") +
+                qsTr("\n\nCO Zone Effect: \nUnits have %3% increased defense against indirect units. Units gain additional %4% firepower and %5% defense per Comtower.");
+        text = replaceTextArgs(text, [CO_JAVIER.d2dIndirectDefBonus, CO_JAVIER.d2dTowerOffBonus, CO_JAVIER.d2dTowerDefBonus,
+                                      CO_JAVIER.d2dCoZoneIndirectDefBonus, CO_JAVIER.d2dCoZoneTowerOffBonus, CO_JAVIER.d2dCoZoneTowerDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Improves defense vs. indirect attacks and firepower slightly rises the more Comtower he owns.");
+        var text = qsTr("Units have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.");
+        text = replaceTextArgs(text, [CO_JAVIER.powerIndirectDefBonus, CO_JAVIER.powerTowerOffBonus, CO_JAVIER.powerTowerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -242,7 +284,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Units have even greater defenses vs. indirect attacks and firepower increases at a high rate the more Comtowers he owns.");
+        var text = qsTr("Units have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.");
+        text = replaceTextArgs(text, [CO_JAVIER.superPowerIndirectDefBonus, CO_JAVIER.superPowerTowerOffBonus, CO_JAVIER.superPowerTowerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

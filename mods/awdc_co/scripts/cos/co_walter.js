@@ -5,15 +5,16 @@ CO_WALTER.init = function(co, map)
 };
 CO_WALTER.activateSuperpower = function(co, powerMode, map)
 {
-    CO_ADAM.activatePower(co, map);
+    CO_WALTER.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_WALTER.getSuperPowerDescription = function()
 {
-    return CO_ADAM.getPowerDescription();
+    return CO_WALTER.getPowerDescription();
 };
 CO_WALTER.getSuperPowerName = function()
 {
-    return CO_ADAM.getPowerName();
+    return CO_WALTER.getPowerName();
 };
 CO_WALTER.getHpHidden = function(co, unit, posX, posY, map)
 {

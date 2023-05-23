@@ -212,7 +212,7 @@ namespace oxygine
                 }
 
                 event->phase = Event::phase_bubbling;
-                event->currentTarget = nullptr;
+                event->currentTarget.free();
                 m_parent->dispatchEvent(event);
             }
         }
@@ -268,7 +268,7 @@ namespace oxygine
                 if (isOn(me->localPosition))
                 {
                     event->phase = Event::phase_target;
-                    event->target = this;
+                    event->target = spEventDispatcher(this);
 
                     me->position = me->localPosition;
                     dispatchEvent(event);

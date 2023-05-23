@@ -69,7 +69,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 28;
+        return 29;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -102,11 +102,24 @@ public:
      * @brief onGameStart
      */
     void onGameStart();
-
-
+    /**
+     * @brief getPassword
+     * @return
+     */
+    const Password & getPassword() const;
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief getParallelCos
+     * @return
+     */
+    bool getParallelCos() const;
+    /**
+     * @brief setParallelCos
+     * @param newParallelCos
+     */
+    void setParallelCos(bool newParallelCos);
     /**
      * @brief getDamageFormula
      * @return
@@ -289,11 +302,6 @@ public slots:
      * @param singleCo
      */
     void setSingleCo(bool singleCo);
-    /**
-     * @brief getPassword
-     * @return
-     */
-    const Password & getPassword() const;
     /**
      * @brief getPassword
      * @return
@@ -733,6 +741,7 @@ private:
     qint32 m_mapPalette{0};
 
     GameEnums::DamageFormula m_damageFormula{GameEnums::DamageFormula::DamageFormula_AdvanceWars4};
+    bool m_parallelCos{true};
 
     // multiplayer rule section
     Password m_password;

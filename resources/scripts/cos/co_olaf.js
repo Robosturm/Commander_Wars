@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2", "+alt3", "+alt4"];
     };
 
@@ -15,21 +13,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/olaf.mp3", 2618, 59888);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/olaf.mp3", 2618, 59888);
+                break;
+            }
         }
     };
 
@@ -43,7 +43,7 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
-        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 1);
+        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * CO_OLAF.powerSnowDays);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -55,9 +55,9 @@ var Constructor = function()
         var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 1);
+        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * CO_OLAF.powerSnowDays);
         powerNameAnimation.queueAnimation(animation2);
-        CO_OLAF.olafDamage(co, 2, animation2, map);
+        CO_OLAF.olafDamage(co, CO_OLAF.superPowerDamage, animation2, map);
     };
 
     this.olafDamage = function(co, value, animation2, map)
@@ -122,63 +122,120 @@ var Constructor = function()
     {
         return "BM";
     };
+
+    this.superPowerDamage = 2;
+    this.superPowerOffBonus = 60;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.powerSnowDays = 1;
+    this.d2dOffBonus = 0;
+    this.d2dRainMalus = true;
+    this.d2dCoZoneOffBonus = 60;
+    this.d2dCoZoneBaseOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (map !== null)
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-            case GameEnums.PowerMode_Power:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                switch (co.getPowerMode())
                 {
-                    // apply snow buff :)
-                    return 60;
-                }
-                else
-                {
-                    return 10;
-                }
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                case GameEnums.PowerMode_Power:
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                     {
-                        // apply snow buff :)
-                        return 60;
+                        return CO_OLAF.superPowerOffBonus;
                     }
-                    return 10;
+                    else
+                    {
+                        return CO_OLAF.powerOffBonus;
+                    }
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                        {
+                            return CO_OLAF.d2dCoZoneOffBonus;
+                        }
+                        return CO_OLAF.d2dCoZoneBaseOffBonus;
+                    }
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                    {
+                        return CO_OLAF.d2dOffBonus;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-        {
-            return 10;
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_OLAF.d2dCoZoneBaseOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_OLAF.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_OLAF.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
 
     this.getWeatherImmune = function(co, map)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        if (CO.isActive(co))
         {
-            return true;
+            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+            {
+                return true;
+            }
         }
         return false;
     };
+    this.getMovementcostModifier = function(co, unit, posX, posY, map)
+    {
+        if (CO.isActive(co) && CO_OLAF.d2dRainMalus === true)
+        {
+            if (map !== null)
+            {
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
+                {
+                    var terrain = map.getTerrain(posX, posY);
+                    var id = terrain.getID();
+                    if ((unit.getUnitType() === GameEnums.UnitType_Air) ||
+                        (id !== "STREET" &&
+                         id !== "STREET1" &&
+                         id !== "SNOW_STREET" &&
+                         id !== "BRIDGE" &&
+                         id !== "BRIDGE1" &&
+                         id !== "BRIDGE2" &&
+                         id !== "WASTE_PATH" &&
+                         id !== "DESERT_PATH" &&
+                         id !== "DESERT_PATH1" &&
+                         id !== "TELEPORTTILE" &&
+                        terrain.getBuilding() === null))
+                    {
+                        return 1;
+                    }
+                }
+            }
+        }
+        return 0;
+    };
+
     this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
@@ -202,12 +259,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nWinter poses no problem for Olaf or his troops.") +
-                qsTr("\n\nCO Zone Effect: \nFirepower is increased by during Snow.");
+        var text = qsTr("\nGlobal Effect: \nWinter poses no problem for Olaf or his troops. Firepower is increased by %0% during snow.") +
+                qsTr("\n\nCO Zone Effect: \nFirepower is increased by %1% during snow.");
+        text = replaceTextArgs(text, [CO_OLAF.d2dOffBonus, CO_OLAF.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Causes snow to fall for one day, causing his firepower to rise.");
+        var text = qsTr("Causes snow to fall for %0 day, causing his firepower to rise by %1%.");
+        text = replaceTextArgs(text, [CO_OLAF.powerSnowDays, CO_OLAF.superPowerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -215,7 +276,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("A mighty blizzard causes two HP of damage to all enemy troops. The snow will also cause his firepower to rise for one day.");
+        var text = qsTr("A mighty blizzard causes %0 HP of damage to all enemy troops and changes the weather to snow %2 day. The snow will also cause his firepower to rise by %1.");
+        text = replaceTextArgs(text, [CO_OLAF.superPowerDamage, CO_OLAF.superPowerOffBonus, CO_OLAF.powerSnowDays]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

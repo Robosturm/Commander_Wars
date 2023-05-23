@@ -81,12 +81,12 @@ var Constructor = function()
     {
         if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y, map))
         {
-            let refillUnit = map.getTerrain(x, y).getUnit();
+            var refillUnit = map.getTerrain(x, y).getUnit();
             refillUnit.refill(refillMaterial);
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
-                let animation = GameAnimationFactory.createAnimation(map, x, y);
-                let width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, -2, 1);
+                var animation = GameAnimationFactory.createAnimation(map, x, y);
+                var width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, -2, 1);
                 animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
                 animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
                 animation.addSound("repair_1.wav");
@@ -100,19 +100,19 @@ var Constructor = function()
 
     this.giveRation = function(unit, map)
     {
-        let refillRule = map.getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL");
-        let refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
-        let animation = null;
-        let refillUnit= null;
-        let width = 0;
-        let animationCount = GameAnimationFactory.getAnimationCount();
-        let queueAnimation = null;
+        var refillRule = map.getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL");
+        var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
+        var animation = null;
+        var refillUnit= null;
+        var width = 0;
+        var animationCount = GameAnimationFactory.getAnimationCount();
+        var queueAnimation = null;
         if (animationCount > 0)
         {
             queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
         }
-        let x = unit.getX() + 1;
-        let y = unit.getY();
+        var x = unit.getX() + 1;
+        var y = unit.getY();
         ACTION_SUPPORTALL_RATION.giveSingleRation(unit, x, y, refillMaterial, queueAnimation, map);
         x = unit.getX() - 1;
         ACTION_SUPPORTALL_RATION.giveSingleRation(unit, x, y, refillMaterial, queueAnimation, map);

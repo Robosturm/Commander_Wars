@@ -8,9 +8,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power_awdc.mp3", 0, 0);
                 break;
@@ -23,6 +24,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/gage.mp3",9315 ,70409)
                 break;
+            }
         }
     };
 
@@ -130,94 +132,132 @@ var Constructor = function()
     {
         return 2;
     };
+
+    this.superPowerFirerangeBonus = 3;
+    this.superPowerDefBonus = 30;
+    this.superPowerOffBonus = 50;
+
+    this.powerFirerangeBonus = 2;
+    this.powerDefBonus = 20;
+    this.powerBaseDefBonus = 10;
+    this.powerOffBonus = 30;
+    this.powerBaseOffBonus = 10;
+
+    this.d2dOffBonus = 0;
+    this.d2dDefBonus = 0;
+
+    this.d2dCoZoneDefBonus = 20;
+    this.d2dCoZoneBaseDefBonus = 10;
+    this.d2dCoZoneOffBonus = 30;
+    this.d2dCoZoneBaseOffBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() > 1 ||
                     attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return 50;
+                    return CO_GAGE.superPowerOffBonus;
                 }
-                return 10;
+                return CO_GAGE.powerBaseOffBonus;
             case GameEnums.PowerMode_Power:
                 if (attacker.getBaseMaxRange() > 1 ||
                     attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return 30;
+                    return CO_GAGE.powerOffBonus;
                 }
-                return 10;
+                return CO_GAGE.powerBaseOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getBaseMaxRange() > 1 ||
                         attacker.getUnitType() === GameEnums.UnitType_Naval)
                     {
-                        return 30;
+                        return CO_GAGE.d2dCoZoneOffBonus;
                     }
-                    return 10;
+                    return CO_GAGE.d2dCoZoneBaseOffBonus;
+                }
+                else if (attacker.getBaseMaxRange() > 1 ||
+                         attacker.getUnitType() === GameEnums.UnitType_Naval)
+                {
+                    return CO_GAGE.d2dOffBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (defender.getBaseMaxRange() > 1 ||
                     defender.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return 30;
+                    return CO_GAGE.superPowerDefBonus;
                 }
-                return 10;
+                return CO_GAGE.powerBaseDefBonus;
             case GameEnums.PowerMode_Power:
                 if (defender.getBaseMaxRange() > 1 ||
                     defender.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return 20;
+                    return CO_GAGE.powerDefBonus;
                 }
-                return 10;
+                return CO_GAGE.powerBaseDefBonus;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     if (defender.getBaseMaxRange() > 1 ||
                         defender.getUnitType() === GameEnums.UnitType_Naval)
                     {
-                        return 20;
+                        return CO_GAGE.d2dCoZoneDefBonus;
                     }
-                    return 10;
+                    return CO_GAGE.d2dCoZoneBaseDefBonus;
+                }
+                else if (defender.getBaseMaxRange() > 1 ||
+                         defender.getUnitType() === GameEnums.UnitType_Naval)
+                {
+                    return CO_GAGE.d2dDefBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
 
     this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (unit.getBaseMaxRange() > 1)
                 {
-                    return 3;
+                    return CO_GAGE.superPowerFirerangeBonus;
                 }
                 break;
             case GameEnums.PowerMode_Power:
                 if (unit.getBaseMaxRange() > 1)
                 {
-                    return 2;
+                    return CO_GAGE.powerFirerangeBonus;
                 }
                 break;
             default:
                 break;
+            }
         }
         return 0;
     };
@@ -243,13 +283,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_SIEGE_CANNON"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_SIEGE_CANNON"];
+            }
         }
         return [];
     };
@@ -273,13 +316,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nSiege Cannon\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nIndirect and Sea Units have 30% offensive and 20% defensive bonus.");
+        var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+               qsTr("\nGlobal Effect: \nIndirect and Sea Units have %0% offensive and %1% defensive bonus.") +
+               qsTr("\n\nCO Zone Effect: \nIndirect and Sea Units have %2% offensive and %3% defensive bonus.");
+        text = replaceTextArgs(text, [CO_GAGE.d2dOffBonus, CO_GAGE.d2dDefBonus,
+                                      CO_GAGE.d2dCoZoneOffBonus, CO_GAGE.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Increases range of indirect units by two space. Firepower of sea and indirect units also rise.");
+        var text = qsTr("Increases range of indirect units by %0 spaces. Indirect and Sea Units have %0% offensive and %1% defensive bonus.");
+        text = replaceTextArgs(text, [CO_GAGE.powerFirerangeBonus, CO_GAGE.powerOffBonus, CO_GAGE.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -287,7 +335,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Increases range of indirect units by three spaces. Firepower of sea and indirect units greatly rise.");
+        var text = qsTr("Increases range of indirect units by %0 spaces. Indirect and Sea Units have %0% offensive and %1% defensive bonus.");
+        text = replaceTextArgs(text, [CO_GAGE.superPowerFirerangeBonus, CO_GAGE.superPowerOffBonus, CO_GAGE.superPowerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

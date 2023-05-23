@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -66,7 +64,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_RATTIGAN.rattiganDamage(co, 1, dialogAnimation, map);
+        CO_RATTIGAN.rattiganDamage(co, CO_RATTIGAN.superPowerDamage, dialogAnimation, map);
     };
 
     this.rattiganDamage = function(co, value, animation2, map)
@@ -125,9 +123,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -140,6 +139,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/rattigan.mp3")
                 break;
+            }
         }
     };
 
@@ -151,67 +151,95 @@ var Constructor = function()
     {
         return "YC";
     };
+
+    this.superPowerDamage = 1;
+    this.superPowerOffBonus = 50;
+    this.superPowerDefBonus = 30;
+
+    this.powerOffBonus = 30;
+    this.powerBaseOffBonus = 10;
+    this.powerBaseDefBonus = 10;
+    this.powerMultiplier = 5;
+    this.powerMovementPoints = 1;
+
+    this.d2dOffBonus = 5;
+    this.d2dOffMalus = -10;
+    this.d2dDefBonus = 0;
+
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneOffBonus = 50;
+    this.d2dCoZoneOffMalus = 0;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY, map);
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY, map);
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (count > 0)
                 {
-                    return 40 + count * 5 + 10;
+                    return CO_RATTIGAN.superPowerOffBonus + count * CO_RATTIGAN.powerMultiplier;
                 }
-                return 10;
+                return CO_RATTIGAN.powerBaseOffBonus;
             case GameEnums.PowerMode_Power:
                 if (count > 0)
                 {
-                    return 20 + count * 5 + 10;
+                    return CO_RATTIGAN.powerOffBonus + count * CO_RATTIGAN.powerMultiplier;
                 }
-                return 10;
+                return CO_RATTIGAN.powerBaseOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (count > 0)
                     {
-                        return 50;
+                        return CO_RATTIGAN.d2dCoZoneOffBonus;
                     }
-                    return 0;
+                    return CO_RATTIGAN.d2dCoZoneOffMalus;
                 }
-                break;
+                else
+                {
+                    if (count > 0)
+                    {
+                        return CO_RATTIGAN.d2dOffBonus;
+                    }
+                    else
+                    {
+                        return CO_RATTIGAN.d2dOffMalus;
+                    }
+                }
+            }
         }
-        if (count > 0)
-        {
-            return 5;
-        }
-        else
-        {
-            return -10;
-        }
+        return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY, map);
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY, map);
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (count > 0)
                 {
-                    return 30;
+                    return CO_RATTIGAN.superPowerDefBonus;
                 }
-                return 10;
+                return CO_RATTIGAN.powerBaseDefBonus;
             case GameEnums.PowerMode_Power:
-                return 10;
+                return CO_RATTIGAN.powerBaseDefBonus;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 10;
+                    return CO_RATTIGAN.d2dCoZoneDefBonus;
                 }
-                break;
+                return CO_RATTIGAN.d2dDefBonus;
+            }
         }
         return 0;
     };
@@ -242,9 +270,12 @@ var Constructor = function()
 
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Power)
+        if (CO.isActive(co))
         {
-            return 1;
+            if (co.getPowerMode() === GameEnums.PowerMode_Power)
+            {
+                return CO_RATTIGAN.powerMovementPoints;
+            }
         }
         return 0;
     };
@@ -254,13 +285,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_AUTO_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_AUTO_TANK"];
+            }
         }
         return [];
     };

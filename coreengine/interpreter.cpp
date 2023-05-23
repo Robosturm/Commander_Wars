@@ -31,7 +31,7 @@ Interpreter::Interpreter()
 bool Interpreter::reloadInterpreter(const QString runtime)
 {
     CONSOLE_PRINT_MODULE("Reloading interpreter", GameConsole::eDEBUG, GameConsole::eJavaScript);
-    m_pInstance = nullptr;
+    m_pInstance.free();
     m_pInstance = spInterpreter::create();
     m_pInstance->init();
     bool success = m_pInstance->loadScript(runtime, "Interpreter Runtime");
@@ -55,7 +55,7 @@ Interpreter::~Interpreter()
 void Interpreter::release()
 {
     m_pInstance->m_jsObjects.clear();
-    m_pInstance = nullptr;
+    m_pInstance.free();
 }
 
 void Interpreter::init()

@@ -78,13 +78,15 @@ namespace oxygine
 
         intrusive_ptr& operator = (const intrusive_ptr& s)
         {
-            intrusive_ptr(s).swap(*this);
-            return *this;
-        }
-
-        intrusive_ptr& operator = (T* ptr)
-        {
-            intrusive_ptr(ptr).swap(*this);
+            if (m_pPointer != nullptr)
+            {
+                m_pPointer->releaseRef();
+            }
+            m_pPointer = s.m_pPointer;
+            if (m_pPointer != nullptr)
+            {
+                m_pPointer->addRef();
+            }
             return *this;
         }
 
@@ -118,6 +120,15 @@ namespace oxygine
             T* p = s.m_pPointer;
             s.m_pPointer = m_pPointer;
             m_pPointer = p;
+        }
+
+        void free()
+        {
+            if (m_pPointer != nullptr)
+            {
+                m_pPointer->releaseRef();
+                m_pPointer = nullptr;
+            }
         }
 
         operator bool ()const

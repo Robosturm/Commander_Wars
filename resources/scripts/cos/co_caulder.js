@@ -24,7 +24,6 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -39,7 +38,7 @@ var Constructor = function()
             var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(5);
+            animation.writeDataInt32(CO_CAULDER.powerHeal);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
             var delay = globals.randInt(135, 265);
             if (animations.length < 5)
@@ -90,7 +89,7 @@ var Constructor = function()
             var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(10);
+            animation.writeDataInt32(CO_CAULDER.superPowerHeal);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
             var delay = globals.randInt(135, 265);
             if (animations.length < 5)
@@ -120,21 +119,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/caulder.mp3", 6755, 60471)
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/caulder.mp3", 6755, 60471)
+                break;
+            }
         }
     };
 
@@ -146,112 +147,173 @@ var Constructor = function()
     {
         return "DM";
     };
-    this.coZoneBonus = 60;
+
+    this.superPowerHeal = 10;
     this.superPowerBonus = 60;
-    this.powerBonus = 40;
-    this.coGlobalBonus = 15;
-    this.coHealing = 5;
+
+    this.powerHeal = 5;
+    this.powerBonus = 60;
+
+    this.d2dHealing = 0;
+    this.d2dOffBonus = 0;
+    this.d2dDefBonus = 0;
+
+    this.d2dCoZoneOffBonus = 60;
+    this.d2dCoZoneDefBonus = 60;
+    this.d2dCoZoneHealing = 5;
+
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return CO_CAULDER.superPowerBonus;
-        case GameEnums.PowerMode_Power:
-            return CO_CAULDER.powerBonus;
-        default:
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            switch (co.getPowerMode())
             {
-                return CO_CAULDER.coZoneBonus;
-            }
-            else
-            {
-                return -CO_CAULDER.coGlobalBonus;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return CO_CAULDER.superPowerBonus;
+            case GameEnums.PowerMode_Power:
+                return CO_CAULDER.powerBonus;
+            default:
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return CO_CAULDER.d2dCoZoneOffBonus;
+                }
+                else
+                {
+                    return CO_CAULDER.d2dOffBonus;
+                }
             }
         }
+        return 0;
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return CO_CAULDER.superPowerBonus;
-        case GameEnums.PowerMode_Power:
-            return CO_CAULDER.powerBonus;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            switch (co.getPowerMode())
             {
-                return CO_CAULDER.coZoneBonus;
-            }
-            else
-            {
-                return -CO_CAULDER.coGlobalBonus;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return CO_CAULDER.superPowerBonus;
+            case GameEnums.PowerMode_Power:
+                return CO_CAULDER.powerBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_CAULDER.d2dCoZoneDefBonus;
+                }
+                else
+                {
+                    return CO_CAULDER.d2dDefBonus;
+                }
             }
         }
     };
 
     this.startOfTurn = function(co, map)
     {
-        var player = co.getOwner();
-        if (!player.getIsDefeated())
+        if (CO.isActive(co))
         {
-            var counit = co.getCOUnit();
-            var coRange = co.getCORange();
-            if (counit !== null)
+            var player = co.getOwner();
+            if (!player.getIsDefeated())
             {
+                var counit = co.getCOUnit();
+                var coRange = co.getCORange();
                 var animations = [];
-                var counter = 0;
-                UNIT.repairUnit(counit, CO_CAULDER.coHealing, map);
-                var fields = globals.getCircle(1, coRange);
-                var x = counit.getX();
-                var y = counit.getY();
                 var animation = null;
+                var counter = 0;
                 var viewplayer = map.getCurrentViewPlayer();
-                var size = fields.size();
-                for (var i = 0; i < size; i++)
+                var size = 0;
+                var delay = 0;
+                var unit = null;
+                if (counit !== null && CO_CAULDER.d2dCoZoneHealing > 0)
                 {
-                    var point = fields.at(i);
-                    var unitX = x + point.x;
-                    var unitY = y + point.y;
-                    if (map.onMap(unitX, unitY))
+                    UNIT.repairUnit(counit, CO_CAULDER.d2dCoZoneHealing, map);
+                    var fields = globals.getCircle(1, coRange);
+                    var x = counit.getX();
+                    var y = counit.getY();
+                    size = fields.size();
+                    for (var i = 0; i < size; i++)
                     {
-                        var unit = map.getTerrain(unitX, unitY).getUnit();
-                        if ((unit !== null) &&
-                            (unit.getOwner() === counit.getOwner()))
+                        var point = fields.at(i);
+                        var unitX = x + point.x;
+                        var unitY = y + point.y;
+                        if (map.onMap(unitX, unitY))
                         {
-                            UNIT.repairUnit(unit, CO_CAULDER.coHealing, map);
-                            var delay = globals.randInt(135, 265);
-                            if (animations.length < 5)
+                            unit = map.getTerrain(unitX, unitY).getUnit();
+                            if ((unit !== null) &&
+                                    (unit.getOwner() === counit.getOwner()))
                             {
-                                delay *= i;
-                            }
-                            animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
-                            animation.setSound("power0.wav", 1, delay);
-                            if (animations.length < 5)
-                            {
-                                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                animations.push(animation);
-                            }
-                            else
-                            {
-                                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                                animations[counter].queueAnimation(animation);
-                                animations[counter] = animation;
-                                counter++;
-                                if (counter >= animations.length)
+                                UNIT.repairUnit(unit, CO_CAULDER.coHealing, map);
+                                delay = globals.randInt(135, 265);
+                                if (animations.length < 5)
                                 {
-                                    counter = 0;
+                                    delay *= i;
+                                }
+                                animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
+                                animation.setSound("power0.wav", 1, delay);
+                                if (animations.length < 5)
+                                {
+                                    animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                                    animations.push(animation);
+                                }
+                                else
+                                {
+                                    animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                                    animations[counter].queueAnimation(animation);
+                                    animations[counter] = animation;
+                                    counter++;
+                                    if (counter >= animations.length)
+                                    {
+                                        counter = 0;
+                                    }
+                                }
+                                if (!viewplayer.getFieldVisible(unitX, unitY))
+                                {
+                                    animation.setVisible(false);
                                 }
                             }
-                            if (!viewplayer.getFieldVisible(unitX, unitY))
+                        }
+                    }
+                }
+                if (CO_CAULDER.d2dHealing)
+                {
+                    var units = co.getOwner().getUnits();
+                    units.randomize();
+                    size = units.size();
+                    for (var i = 0; i < size; i++)
+                    {
+                        unit = units.at(i);
+                        UNIT.repairUnit(unit, CO_CAULDER.d2dHealing, map);
+                        delay = globals.randInt(135, 265);
+                        if (animations.length < 5)
+                        {
+                            delay *= i;
+                        }
+                        animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
+                        animation.setSound("power0.wav", 1, delay);
+                        if (animations.length < 5)
+                        {
+                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                            animations.push(animation);
+                        }
+                        else
+                        {
+                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                            animations[counter].queueAnimation(animation);
+                            animations[counter] = animation;
+                            counter++;
+                            if (counter >= animations.length)
                             {
-                                animation.setVisible(false);
+                                counter = 0;
                             }
+                        }
+                        if (!viewplayer.getFieldVisible(unit.getX(), unit.getY()))
+                        {
+                            animation.setVisible(false);
                         }
                     }
                 }
@@ -265,13 +327,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_CRYSTAL_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_CRYSTAL_TANK"];
+            }
         }
         return [];
     };
@@ -295,17 +360,17 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n") +
-                   qsTr("\nGlobal Effect: \nUnits lose firepower and defense by %0% outside of his CO zone.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and defense. They also heal %2HP each turn.");
-        text = replaceTextArgs(text, [CO_CAULDER.coGlobalBonus, CO_CAULDER.coZoneBonus, CO_CAULDER.coHealing]);
+                   qsTr("\nGlobal Effect: \nUnits have %0% firepower and %1% defense. They also heal %2 HP each turn.") +
+                   qsTr("\n\nCO Zone Effect: \nUnits gain %3% firepower and %4% defense. They also heal %5HP each turn.");
+        text = replaceTextArgs(text, [CO_CAULDER.d2dOffBonus, CO_CAULDER.d2dDefBonus, CO_CAULDER.d2dHealing,
+                                      CO_CAULDER.d2dCoZoneOffBonus, CO_CAULDER.d2dCoZoneDefBonus, CO_CAULDER.d2dCoZoneHealing]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("All of his units gain 5 HP and have %0% increased firepower and defense.");
-        text = replaceTextArgs(text, [CO_CAULDER.powerBonus]);
+        var text = qsTr("All of his units gain %0 HP and have %1% increased firepower and defense.");
+        text = replaceTextArgs(text, [CO_CAULDER.powerHeal, CO_CAULDER.powerBonus]);
         return text;
-
     };
     this.getPowerName = function(co)
     {
@@ -313,8 +378,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("All his units heal to full while gaining %0% firepower and defense.");
-        text = replaceTextArgs(text, [CO_CAULDER.superPowerBonus]);
+        var text = qsTr("All his units heal %0 HP while gaining %1% increased firepower and defense.");
+        text = replaceTextArgs(text, [CO_CAULDER.superPowerHeal, CO_CAULDER.superPowerBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

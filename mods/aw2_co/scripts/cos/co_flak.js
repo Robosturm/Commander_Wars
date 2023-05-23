@@ -1,54 +1,16 @@
-CO_FLAK.getBonusLuck = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return 80;
-        case GameEnums.PowerMode_Power:
-            return 40;
-        default:
-            return 15;
-        }
-    }
-    return 0;
-};
+CO_FLAK.superPowerBonusLuck = 80;
+CO_FLAK.superPowerBonusMissfortune = 30;
 
-CO_FLAK.getBonusMisfortune = function(co, unit, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return 30;
-        case GameEnums.PowerMode_Power:
-            return 20;
-        default:
-            return 10;
-        }
-    }
-    return 0;
-};
+CO_FLAK.powerBonusLuck = 40;
+CO_FLAK.powerBonusMissfortune = 20;
 
-CO_FLAK.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    return 0;
-};
+CO_FLAK.powerOffBonus = 0;
+CO_FLAK.powerDefBonus = 10;
 
-CO_FLAK.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
+CO_FLAK.d2dCoZoneBonusLuck = 0;
+CO_FLAK.d2dCoZoneBonusMissfortune = 0;
+CO_FLAK.d2dCoZoneOffBonus = 0;
+CO_FLAK.d2dCoZoneDefBonus = 0;
+
+CO_FLAK.d2dBonusLuck = 15;
+CO_FLAK.d2dBonusMissfortune = 10;

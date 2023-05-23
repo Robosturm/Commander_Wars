@@ -39,16 +39,16 @@ AudioManager::AudioManager(bool noAudio)
         connect(this, &AudioManager::sigStopSound,         this, &AudioManager::SlotStopSound, Qt::QueuedConnection);
         connect(this, &AudioManager::sigStopAllSounds,     this, &AudioManager::SlotStopAllSounds, Qt::QueuedConnection);
         connect(this, &AudioManager::sigChangeAudioDevice, this, &AudioManager::SlotChangeAudioDevice, Qt::QueuedConnection);
-        connect(this, &AudioManager::sigLoadNextAudioFile, this, &AudioManager::loadNextAudioFile, Qt::QueuedConnection);
-        connect(this, &AudioManager::sigInitAudio,         this, &AudioManager::initAudio, Qt::BlockingQueuedConnection);
-        connect(this, &AudioManager::sigStopAudio,         this, &AudioManager::stopAudio, Qt::BlockingQueuedConnection);
-        connect(this, &AudioManager::sigCreateSoundCache,  this, &AudioManager::createSoundCache, Qt::BlockingQueuedConnection);
-
+        connect(this, &AudioManager::sigLoadNextAudioFile, this, &AudioManager::loadNextAudioFile, Qt::QueuedConnection);        
 #ifdef AUDIOSUPPORT
         connect(this, &AudioManager::sigDeleteSound,       this, &AudioManager::deleteSound, Qt::QueuedConnection);
         connect(this, &AudioManager::sigPlayDelayedSound,  this, &AudioManager::playDelayedSound, Qt::QueuedConnection);
         connect(this, &AudioManager::sigStopSoundInternal, this, &AudioManager::stopSoundInternal, Qt::QueuedConnection);
 #endif
+        // sync startup and stop signals and slots
+        connect(this, &AudioManager::sigInitAudio,         this, &AudioManager::initAudio, Qt::BlockingQueuedConnection);
+        connect(this, &AudioManager::sigStopAudio,         this, &AudioManager::stopAudio, Qt::BlockingQueuedConnection);
+        connect(this, &AudioManager::sigCreateSoundCache,  this, &AudioManager::createSoundCache, Qt::BlockingQueuedConnection);
     }
 }
 

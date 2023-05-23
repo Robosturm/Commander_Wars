@@ -8,9 +8,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power_awdc.mp3", 992, 45321);
                 break;
@@ -23,6 +24,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/forsythe.mp3", 2245, 118383)
                 break;
+            }
         }
     };
 
@@ -128,22 +130,38 @@ var Constructor = function()
     {
         return "BD";
     };
+
+    this.superPowerOffBonus = 30;
+    this.superPowerDefBonus = 30;
+
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 20;
+
+    this.d2dOffBonus = 0;
+    this.d2dDefBonus = 0;
+
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneDefBonus = 20;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 30;
+                return CO_FORSYTHE.superPowerOffBonus;
             case GameEnums.PowerMode_Power:
-                return 20;
+                return CO_FORSYTHE.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return CO_FORSYTHE.d2dCoZoneOffBonus;
                 }
-                break;
+                return CO_FORSYTHE.d2dOffBonus;
+            }
         }
         return 0;
     };
@@ -151,19 +169,22 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 30;
+                return CO_FORSYTHE.superPowerDefBonus;
             case GameEnums.PowerMode_Power:
-                return 20;
+                return CO_FORSYTHE.powerDefBonus;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 20;
+                    return CO_FORSYTHE.d2dCoZoneDefBonus;
                 }
-                break;
+                return CO_FORSYTHE.d2dDefBonus;
+            }
         }
         return 0;
     };
@@ -174,13 +195,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_CHAPERON"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_CHAPERON"];
+            }
         }
         return [];
     };
@@ -204,13 +228,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nChaperon\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 20% offensive and defensive bonus.");
+        var text = qsTr("\nSpecial Unit:\nChaperon\n") +
+               qsTr("\nGlobal Effect: \nUnits have %0% offensive and %1% defensive bonus.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have %2% offensive and %3% defensive bonus.");
+        text = replaceTextArgs(text, [CO_FORSYTHE.d2dOffBonus, CO_FORSYTHE.d2dDefBonus,
+                                      CO_FORSYTHE.d2dCoZoneOffBonus, CO_FORSYTHE.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Increases offensive and defensive bonus.");
+        var text = qsTr("Increases offensive by %0% and defensive by %1%.");
+        text = replaceTextArgs(text, [CO_FORSYTHE.powerOffBonus, CO_FORSYTHE.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -218,7 +247,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Increases offensive and defensive bonus even more.");
+        var text = qsTr("Increases offensive and defensive bonus even more.");
+        text = replaceTextArgs(text, [CO_FORSYTHE.superPowerOffBonus, CO_FORSYTHE.superPowerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

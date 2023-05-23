@@ -8,6 +8,14 @@ class COPerkManager final : public QObject, public RessourceManagement<COPerkMan
     Q_OBJECT
 public slots:
     /**
+     * @brief getLoadedPerks
+     * @return
+     */
+    QStringList getLoadedPerks()
+    {
+        return m_loadedRessources;
+    }
+    /**
      * @brief getIcon
      * @param index
      * @return

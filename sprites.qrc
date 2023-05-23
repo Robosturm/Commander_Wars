@@ -4852,5 +4852,8 @@
         <file>resources/translation/lang_de_DE.qm</file>
         <file>resources/translation/lang_en.qm</file>
         <file>resources/translation/lang_zh-tw.qm</file>
+        <file>resources/images/building/hq.png</file>
+        <file>resources/images/building/hq+mask.png</file>
+        <file>resources/images/building/hq+snow.png</file>
     </qresource>
 </RCC>

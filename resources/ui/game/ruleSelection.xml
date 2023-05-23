@@ -255,6 +255,22 @@
             <x>5</x>
             <y>lastY + lastHeight + 10</y>
             <width>300</width>
+            <text>QT_TRANSLATE_NOOP("GAME","Parallel CO's:")</text>
+            <font>"main"</font>
+            <fontSize>24</fontSize>
+        </Label>
+        <Checkbox>
+            <x>lastX + lastWidth + 10</x>
+            <y>lastY</y>
+            <tooltip>QT_TRANSLATE_NOOP("GAME","If checked the effect of both CO's are active all the time and Tagpower doesn't give an extra turn but gain 2 extra movement points.")</tooltip>
+            <startValue>currentMenu.getMap().getGameRules().getParallelCos()</startValue>
+            <onEvent>currentMenu.getMap().getGameRules().setParallelCos(input);</onEvent>
+            <enabled>currentMenu.getRuleChangeEabled()</enabled>
+        </Checkbox>
+        <Label>
+            <x>5</x>
+            <y>lastY + lastHeight + 10</y>
+            <width>300</width>
             <text>QT_TRANSLATE_NOOP("GAME","CO specific units:")</text>
             <font>"main"</font>
             <fontSize>24</fontSize>

@@ -17,7 +17,7 @@ class InfluenceInfo final : public QObject
 {
     Q_OBJECT
 public:
-    InfluenceInfo() = default;
+    InfluenceInfo();
     explicit InfluenceInfo(GameMap* pMap);
     ~InfluenceInfo() = default;
 

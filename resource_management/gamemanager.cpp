@@ -72,7 +72,7 @@ oxygine::spSprite GameManager::getIcon(GameMap* pMap, const QString & icon)
             }
             else
             {
-                pPlayer = pMap->getCurrentPlayer();
+                pPlayer = pMap->getSpCurrentPlayer();
             }
             oxygine::spSprite ret = spUnit::create(icon, pPlayer.get(), false, pMap);
             return ret;
@@ -84,7 +84,7 @@ oxygine::spSprite GameManager::getIcon(GameMap* pMap, const QString & icon)
             spPlayer pPlayer;
             if (pMap != nullptr)
             {
-                pPlayer = pMap->getCurrentPlayer();
+                pPlayer = pMap->getSpCurrentPlayer();
             }
             spBuilding pBuilding = spBuilding::create(icon, pMap);
             pBuilding->setOwner(pPlayer.get());

@@ -1,3 +1,25 @@
+
+CO_SENSEI.superPowerInfOffBonus = 20;
+CO_SENSEI.superPowerHeliOffBonus = 90;
+CO_SENSEI.powerGroundBonus = 10;
+CO_SENSEI.powerInfOffBonus = 20;
+CO_SENSEI.powerHeliOffBonus = 90;
+CO_SENSEI.powerNavalOffBonus = 0;
+CO_SENSEI.powerOffBonus = 10;
+CO_SENSEI.powerDefBonus = 10;
+CO_SENSEI.powerSpawnHp = 9;
+CO_SENSEI.d2dCoZoneGroundBonus = 0;
+CO_SENSEI.d2dCoZoneInfOffBonus = 0;
+CO_SENSEI.d2dCoZoneHeliOffBonus = 0;
+CO_SENSEI.d2dCoZoneNavalOffBonus = 0;
+CO_SENSEI.d2dCoZoneOffBonus = 0;
+CO_SENSEI.d2dCoZoneDefBonus = 0;
+CO_SENSEI.d2dInfOffBonus = 0;
+CO_SENSEI.d2dHeliOffBonus = 30;
+CO_SENSEI.d2dNavalOffBonus = -10;
+CO_SENSEI.d2dGroundBonus = 0;
+CO_SENSEI.d2dTransporterMovementBonus =1;
+
 CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {

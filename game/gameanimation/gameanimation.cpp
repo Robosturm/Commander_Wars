@@ -37,7 +37,7 @@ void GameAnimation::restart()
     if (m_pMap != nullptr)
     {
         m_stopped = false;
-        m_previousAnimation = nullptr;
+        m_previousAnimation.free();
         for (auto & tween : m_stageTweens)
         {
             oxygine::Stage::getStage()->addTween(tween);
@@ -53,7 +53,7 @@ void GameAnimation::start()
     {
         m_started = true;
         setVisible(true);
-        m_previousAnimation = nullptr;
+        m_previousAnimation.free();
         doPreAnimationCall();
         AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         for (auto & data : m_SoundData)
@@ -174,7 +174,7 @@ void GameAnimation::setVisible(bool vis)
 
 void GameAnimation::setPreviousAnimation(GameAnimation *previousAnimation)
 {
-    m_previousAnimation = previousAnimation;
+    m_previousAnimation = spGameAnimation(previousAnimation);
 }
 
 void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish, float scale, qint32 delay, qint32 loops)

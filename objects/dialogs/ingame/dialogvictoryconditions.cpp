@@ -24,6 +24,7 @@ DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("DialogVictoryConditions");
 #endif
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");

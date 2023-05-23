@@ -12,6 +12,31 @@ class GameMap;
 class WikiDatabase;
 using spWikiDatabase = oxygine::intrusive_ptr<WikiDatabase>;
 
+class PageData;
+using spPageData = oxygine::intrusive_ptr<PageData>;
+
+class PageData final : public QObject, public oxygine::ref_counter
+{
+public:
+    explicit PageData() = default;
+    PageData (QString name, QString id, QStringList tags, QString mainId = "", qint32 item = 0)
+        : m_name(name),
+        m_id(id),
+        m_tags(tags),
+        m_mainId(mainId),
+        m_item(item)
+    {
+        Interpreter::setCppOwnerShip(this);
+    }
+    QString m_name;
+    QString m_id;
+    QStringList m_tags;
+    QString m_mainId;
+    qint32 m_item{0};
+};
+
+Q_DECLARE_INTERFACE(PageData, "PageData");
+
 /**
  * @brief The WikiDatabase class
  */
@@ -19,23 +44,6 @@ class WikiDatabase final : public QObject, public RessourceManagement<WikiDataba
 {
     Q_OBJECT
 public:
-    struct PageData
-    {
-        explicit PageData() = default;
-        PageData (QString name, QString id, QStringList tags, QString mainId = "", qint32 item = 0)
-            : m_name(name),
-              m_id(id),
-              m_tags(tags),
-              m_mainId(mainId),
-              m_item(item)
-        {
-        }
-        QString m_name;
-        QString m_id;
-        QStringList m_tags;
-        QString m_mainId;
-        qint32 m_item{0};
-    };
 
     ~WikiDatabase() = default;
     /**
@@ -47,19 +55,19 @@ public:
      * @param data
      * @return
      */
-    spWikipage getPage(PageData data);
+    spWikipage getPage(const PageData & data);
     /**
      * @brief getEntries
      * @param searchTerm
      * @return
      */
-    QVector<PageData> getEntries(QString searchTerm, bool onlyTag);
+    QVector<PageData *> getEntries(QString searchTerm, bool onlyTag);
     /**
      * @brief getEntries
      * @param entry
      * @return
      */
-    PageData getEntry(qint32 entry);
+    const PageData & getEntry(qint32 entry);
     /**
      * @brief hasEntry
      * @param file1
@@ -71,7 +79,7 @@ public:
      * @param id
      * @return
      */
-    WikiDatabase::PageData getEntry(QString id);
+    const PageData & getEntry(QString id);
     /**
      * @brief tagMatches
      * @param tags
@@ -97,7 +105,8 @@ private:
     explicit WikiDatabase();
 
 private:
-    QVector<PageData> m_Entries;
+    QVector<spPageData> m_Entries;
+    PageData m_emptyPage{"", "", QStringList()};
 };
 
 #endif // WIKIDATABASE_H

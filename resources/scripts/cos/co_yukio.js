@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -22,10 +20,6 @@ var Constructor = function()
         CO_YUKIO.spawnUnits(co, 0.4, invasion, powerNameAnimation, map);
     };
 
-    this.mintrueDamage = 10;
-    this.trueDamageBonus = 15;
-    this.trueDefenseBonus = 15;
-    this.bombDamage = 3;
     this.activateSuperpower = function(co, powerMode, map)
     {
         var invsion = ["HEAVY_TANK", "FLAK", "LIGHT_TANK", "ARTILLERY", "LIGHT_TANK", "K_HELI", "K_HELI"];
@@ -34,9 +28,8 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_YUKIO.spawnUnits(co, 0.7, invsion, powerNameAnimation, map);
-        CO_YUKIO.yukioDamage(co, CO_YUKIO.bombDamage, powerNameAnimation, map);
+        CO_YUKIO.yukioDamage(co, CO_YUKIO.superPowerBombDamage, powerNameAnimation, map);
     };
-
 
     this.yukioDamage = function(co, value, powerNameAnimation, map)
     {
@@ -149,9 +142,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -164,6 +158,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/yukio.mp3", 100, 58286);
                 break;
+            }
         }
     };
 
@@ -175,57 +170,97 @@ var Constructor = function()
     {
         return "DM";
     };
+
+    this.superPowerBombDamage = 4;
+
+    this.powerTrueDamageBonus = 30;
+    this.powerTrueDefenseBonus = 30;
+    this.powerMinTrueDamage = 10
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneTrueDamageBonus = 20;
+    this.d2dCoZoneTrueDefenseBonus = 20;
+    this.d2dCoZoneMinTrueDamage = 10;
+
+    this.d2dOffBonus = 0;
+    this.d2dDefBonus = 0;
+    this.d2dTrueDamageBonus = 0;
+    this.d2dTrueDefenseBonus = 0;
+    this.d2dMinTrueDamage = 0;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return 10;
+                return CO_YUKIO.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 10;
+                    return CO_YUKIO.d2dCoZoneOffBonus;
                 }
-                break;
+                return CO_YUKIO.d2dOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_YUKIO.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_YUKIO.d2dCoZoneDefBonus;
+            }
+            else
+            {
+                return CO_YUKIO.d2dDefBonus
+            }
         }
         return 0;
     };
     this.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                   defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        // reduce counter damage by a flat amount here
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                if (damage >= CO_YUKIO.mintrueDamage)
+                if (damage >= CO_YUKIO.powerMinTrueDamage)
                 {
-                    return CO_YUKIO.trueDamageBonus;
+                    return CO_YUKIO.powerTrueDamageBonus;
                 }
                 break;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (damage >= CO_YUKIO.mintrueDamage)
+                    if (damage >= CO_YUKIO.d2dCoZoneMinTrueDamage)
                     {
-                        return CO_YUKIO.trueDamageBonus;
+                        return CO_YUKIO.d2dCoZoneTrueDamageBonus;
                     }
                 }
+                else if (damage >= CO_YUKIO.d2dMinTrueDamage)
+                {
+                    return CO_YUKIO.d2dTrueDamageBonus;
+                }
                 break;
+            }
         }
         return 0;
     };
@@ -233,19 +268,21 @@ var Constructor = function()
     this.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                   defender, defPosX, defPosY, isDefender, luckMode, map)
     {
-        // reduce counter damage by a flat amount here
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return CO_YUKIO.trueDefenseBonus;
+                return CO_YUKIO.powerTrueDefenseBonus;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return CO_YUKIO.trueDefenseBonus;
+                    return CO_YUKIO.d2dCoZoneTrueDefenseBonus;
                 }
-                break;
+                return CO_YUKIO.d2dTrueDefenseBonus;
+            }
         }
         return 0;
     };
@@ -255,13 +292,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_LOGIC_TRUCK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_LOGIC_TRUCK"];
+            }
         }
         return [];
     };
@@ -285,9 +325,10 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
-                   qsTr("\nGlobal Effect: \nNone.") +
-                   qsTr("\n\nCO Zone Effect: \nDamage against his troops is reduced by %0%. Troops deal %1% true damage if the base damage is at least %2%.");
-        text = replaceTextArgs(text, [CO_YUKIO.trueDefenseBonus, CO_YUKIO.trueDamageBonus, CO_YUKIO.mintrueDamage]);
+                   qsTr("\nGlobal Effect: \nDamage against his troops is reduced by %0%. Troops deal %1% true damage if the base damage is at least %2%.") +
+                   qsTr("\n\nCO Zone Effect: \nDamage against his troops is reduced by %3%. Troops deal %4% true damage if the base damage is at least %5%.");
+        text = replaceTextArgs(text, [CO_YUKIO.d2dTrueDefenseBonus, CO_YUKIO.d2dTrueDamageBonus, CO_YUKIO.d2dMinTrueDamage,
+                                      CO_YUKIO.d2dCoZoneTrueDefenseBonus, CO_YUKIO.d2dCoZoneTrueDamageBonus, CO_YUKIO.d2dCoZoneMinTrueDamage]);
         return text;
     };
     this.getPowerDescription = function(co)
@@ -301,7 +342,7 @@ var Constructor = function()
     this.getSuperPowerDescription = function(co)
     {
          var text =  qsTr("An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing %0 Hp to half of the enemy troops is launched.");
-        text = replaceTextArgs(text, [CO_YUKIO.bombDamage]);
+        text = replaceTextArgs(text, [CO_YUKIO.superPowerBombDamage]);
         return text;
     };
     this.getSuperPowerName = function(co)

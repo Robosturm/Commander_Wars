@@ -95,9 +95,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -110,6 +111,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/roboandy.mp3", 3653, 46346);
                 break;
+            }
         }
     };
 
@@ -121,38 +123,66 @@ var Constructor = function()
     {
         return "MA";
     };
+
+    this.superPowerDamage = 3;
+    this.superPowerHeal = 3;
+    this.powerDamage = 1;
+    this.powerHeal = 1;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+
+    this.d2dOffMissfortuneBonus = 1;
+    this.d2dOffBonus = 3;
+
+    this.d2dCoZoneMissfortuneBonus = 3;
+    this.d2dCoZoneOffBonus = 5;
+    this.d2dCoZoneOffBaseBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return 10;
+                return CO_ROBOANDY.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return co.getPowerFilled() * 5 + 10;
+                    return co.getPowerFilled() * CO_ROBOANDY.d2dCoZoneOffBonus + CO_ROBOANDY.d2dCoZoneOffBaseBonus;
                 }
                 break;
+            }
+            return co.getPowerFilled() * CO_ROBOANDY.d2dOffBonus;
         }
-        return co.getPowerFilled() * 3;
+        return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_ROBOANDY.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_ROBOANDY.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getBonusMisfortune = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
@@ -160,59 +190,63 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(posX, posY), unit))
                 {
-                    return co.getPowerFilled() * 3;
+                    return co.getPowerFilled() * CO_ROBOANDY.d2dCoZoneMissfortuneBonus;
                 }
+                return co.getPowerFilled() * CO_ROBOANDY.d2dOffMissfortuneBonus;
+            }
         }
-        return co.getPowerFilled();
+        return 0;
     };
-
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        var healing = 0;
-        var damage = 0;
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var healing = 0;
+            var damage = 0;
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                healing = 3;
-                damage = 3;
+                healing = CO_ROBOANDY.superPowerDamage;
+                damage = CO_ROBOANDY.superPowerHeal;
                 break;
             case GameEnums.PowerMode_Power:
-                healing = 1;
-                damage = 1;
+                healing = CO_ROBOANDY.powerHeal;
+                damage = CO_ROBOANDY.powerDamage;
                 break;
             default:
                 break;
-        }
-        if (healing > 0 || damage > 0)
-        {
-            if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
-            {
-                attacker.setHp(attacker.getHp() + healing);
             }
-            else if (!gotAttacked && attacker.getOwner() === co.getOwner() && attacker.getHp() <= 0)
+            if (healing > 0 || damage > 0)
             {
-                var hp = defender.getHp();
-                if (hp > damage)
+                if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
                 {
-                    defender.setHp(hp - damage);
+                    attacker.setHp(attacker.getHp() + healing);
                 }
-                else
+                else if (!gotAttacked && attacker.getOwner() === co.getOwner() && attacker.getHp() <= 0)
                 {
-                    defender.setHp(0.00001);
+                    var hp = defender.getHp();
+                    if (hp > damage)
+                    {
+                        defender.setHp(hp - damage);
+                    }
+                    else
+                    {
+                        defender.setHp(0.00001);
+                    }
                 }
-            }
-            else if (gotAttacked && defender.getOwner() === co.getOwner() && defender.getHp() <= 0)
-            {
-                var hp = attacker.getHp();
-                if (hp > damage)
+                else if (gotAttacked && defender.getOwner() === co.getOwner() && defender.getHp() <= 0)
                 {
-                    attacker.setHp(hp - damage);
-                }
-                else
-                {
-                    attacker.setHp(0.00001);
+                    var hp = attacker.getHp();
+                    if (hp > damage)
+                    {
+                        attacker.setHp(hp - damage);
+                    }
+                    else
+                    {
+                        attacker.setHp(0.00001);
+                    }
                 }
             }
         }
@@ -223,13 +257,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_AT_CYCLE"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_AT_CYCLE"];
+            }
         }
         return [];
     };
@@ -253,13 +290,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nAT Cycle\n") +
-               qsTr("\nGlobal Effect: \nUnits gain firepower and misfortune per star.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain even more firepower and misfortune per star.");
+        var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
+               qsTr("\nGlobal Effect: \nUnits gain %0% firepower and %1% misfortune per star.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower and %3% misfortune per star.");
+        text = replaceTextArgs(text, [CO_ROBOANDY.d2dOffBonus, CO_ROBOANDY.d2dOffMissfortuneBonus, CO_ROBOANDY.d2dCoZoneOffBonus, CO_ROBOANDY.d2dCoZoneMissfortuneBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("His units heal 1 HP after any attack or counter-attack, and deal 1 HP damage to the offender if they are destroyed.");
+        var text = qsTr("His units heal %0 HP after any attack or counter-attack, and deal %1 HP damage to the offender if they are destroyed.");
+        text = replaceTextArgs(text, [CO_ROBOANDY.powerHeal, CO_ROBOANDY.powerDamage]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -267,7 +308,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("His units heal 3 HP after any attack or counter-attack, and deal 3 HP damage to the offender if they are destroyed.");
+        var text = qsTr("His units heal %0 HP after any attack or counter-attack, and deal %1 HP damage to the offender if they are destroyed.");
+        text = replaceTextArgs(text, [CO_ROBOANDY.superPowerHeal, CO_ROBOANDY.superPowerDamage]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

@@ -17,9 +17,9 @@ var Constructor = function()
 
     this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
     {
-        let terrainId = terrain.getTerrainID();
-        let id = terrain.getID();
-        let shipBridges = true;
+        var terrainId = terrain.getTerrainID();
+        var id = terrain.getID();
+        var shipBridges = true;
         if (map !== null)
         {
             shipBridges = map.getGameRules().getShipBridges();

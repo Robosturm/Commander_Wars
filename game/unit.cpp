@@ -2868,11 +2868,11 @@ QVector<QVector3D> Unit::getVisionFields(QPoint position)
     Terrain* pTerrain = m_pMap->getTerrain(position.x(), position.y());
     if (visionBlock)
     {
-        pCircle = m_pMap->getVisionCircle(position.x(), position.y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh());
+        pCircle = spQmlVectorPoint(m_pMap->getVisionCircle(position.x(), position.y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh()));
     }
     else
     {
-        pCircle = GlobalUtils::getCircle(0, visionRange);
+        pCircle = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
     }
     for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
     {
@@ -2912,7 +2912,7 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
     // teleport unit to target position
     m_pMap->getTerrain(x, y)->setUnit(pUnit);
     showRanges();
-    pUnit = nullptr;
+    pUnit.free();
     
 }
 

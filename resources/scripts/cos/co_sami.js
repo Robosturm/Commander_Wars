@@ -3,7 +3,6 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-
         return ["+alt", "+alt2", "+alt3"];
     };
 
@@ -15,21 +14,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/sami.mp3", 1934, 62918);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/sami.mp3", 1934, 62918);
+                break;
+            }
         }
     };
 
@@ -142,69 +143,77 @@ var Constructor = function()
         return "OS";
     };
 
-    this.superPowerInfBonus = 80;
-    this.superPowerDirectBonus = 0;
-    this.superPowerOtherBonus = 10;
-    this.PowerInfBonus = 50;
-    this.PowerDirectBonus = 0;
-    this.PowerOtherBonus = 10;
-    this.ZoneInfBonus = 50;
-    this.ZoneDirectBonus = 0;
-    this.ZoneOtherBonus = 10;
-    this.ZoneDefBonus = 10;
-    this.d2dInfBonus = 10;
-    this.d2dDirectBonus = 10;
-    this.d2dOtherBonus = 0;
-    this.d2dDefBonus = 0;
+    this.superPowerOffBonus = 80;
+    this.superpowerMovementPoints = 2;
+    this.superpowerCaptureMultiplier = 20;
+
+    this.powerOffBonus = 50;
+    this.powerDefBonus = 10;
+    this.powerBaseOffBonus = 10;
+    this.powerMovementPoints = 1;
+    this.powerMovementCostModifier = 0;
+
+    this.d2dCoZoneOffBonus = 50;
+    this.d2dCoZoneBaseOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
+    this.d2dInfOffBonus = 20;
+    this.d2dInfDefBonus = 0;
+    this.d2dDirectOffBonus = -10;
+    this.d2dCaptureMultiplier = 0.5;
+    this.d2dTransporterMovementPoints = 1;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+            switch (co.getPowerMode())
             {
-                return CO_SAMI.superPowerInfBonus;
-            }
-            else if (attacker.getBaseMaxRange() === 1)
-            {
-                return CO_SAMI.superPowerDirectBonus;
-            }
-            return CO_SAMI.superPowerOtherBonus;
-        case GameEnums.PowerMode_Power:
-            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
-            {
-                return CO_SAMI.PowerInfBonus;
-            }
-            else if (attacker.getBaseMaxRange() === 1)
-            {
-                return CO_SAMI.PowerDirectBonus;
-            }
-            return CO_SAMI.PowerOtherBonus;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                {
+                    return CO_SAMI.superPowerOffBonus;
+                }
+                else if (attacker.getBaseMaxRange() === 1)
+                {
+                    return CO_SAMI.powerBaseOffBonus + CO_SAMI.d2dDirectOffBonus;
+                }
+                return CO_SAMI.powerBaseOffBonus;
+            case GameEnums.PowerMode_Power:
                 if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
                     return CO_SAMI.ZoneInfBonus;
                 }
                 else if (attacker.getBaseMaxRange() === 1)
                 {
-                    return CO_SAMI.ZoneDirectBonus;
+                    return CO_SAMI.powerBaseOffBonus + CO_SAMI.d2dDirectOffBonus;
                 }
-                return CO_SAMI.ZoneOtherBonus;
+                return CO_SAMI.powerBaseOffBonus;
+            default:                
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                    {
+                        return CO_SAMI.d2dCoZoneOffBonus;
+                    }
+                    else if (attacker.getBaseMaxRange() === 1)
+                    {
+                        return CO_SAMI.d2dCoZoneBaseOffBonus + CO_SAMI.d2dDirectOffBonus;
+                    }
+                    return CO_SAMI.d2dCoZoneBaseOffBonus;
+                }
+                else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                {
+                    return CO_SAMI.d2dInfOffBonus;
+                }
+                break;
             }
-            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+            if (attacker.getBaseMaxRange() === 1)
             {
-                return CO_SAMI.d2dInfBonus;
+                return CO_SAMI.d2dDirectOffBonus;
             }
-            break;
-        }
-        if (attacker.getBaseMaxRange() === 1)
-        {
-            return -CO_SAMI.d2dDirectBonus;
         }
         return CO_SAMI.d2dOtherBonus;
     };
@@ -212,44 +221,81 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return CO_SAMI.ZoneDefBonus;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_SAMI.powerDefBonus + CO_SAMI.d2dInfDefBonus;
+            }            
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_SAMI.d2dCoZoneDefBonus;
+            }
+            else if (defender.getUnitType() === GameEnums.UnitType_Infantry)
+            {
+                return CO_SAMI.d2dInfDefBonus;
+            }
         }
         return CO_SAMI.d2dDefBonus;
     };
     this.getCaptureBonus = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
-        {
-            return 20;
-        }
-        else
+        if (CO.isActive(co))
         {
             var hp = unit.getHpRounded();
-            return hp / 2;
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            {
+                return hp * CO_SAMI.superpowerCaptureMultiplier;
+            }
+            else
+            {
+                return hp * CO_SAMI.d2dCaptureMultiplier;
+            }
         }
+        return 0;
     };
 
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.isTransporter())
+        if (CO.isActive(co))
         {
-            return 1;
-        }
-        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
-        {
-            switch (co.getPowerMode())
+            if (unit.isTransporter())
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 2;
-            case GameEnums.PowerMode_Power:
-                return 1;
-            default:
-                return 0;
+                return CO_SAMI.d2dTransporterMovementPoints;
+            }
+            if (unit.getUnitType() === GameEnums.UnitType_Infantry)
+            {
+                switch (co.getPowerMode())
+                {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    return CO_SAMI.superpowerMovementPoints;
+                case GameEnums.PowerMode_Power:
+                    return CO_SAMI.powerMovementPoints;
+                default:
+                    return 0;
+                }
+            }
+        }
+        return 0;
+    };
+    this.getMovementcostModifier = function(co, unit, posX, posY, map)
+    {
+        if (co.getIsCO0() === true)
+        {
+            if (unit.getOwner() === co.getOwner() &&
+                unit.getUnitType() === GameEnums.UnitType_Infantry)
+            {
+                switch (co.getPowerMode())
+                {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                case GameEnums.PowerMode_Power:
+                    return CO_SAMI.powerMovementCostModifier;
+                default:
+                    return 0;
+                }
             }
         }
         return 0;
@@ -275,13 +321,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_COMMANDO"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_COMMANDO"];
+            }
         }
         return [];
     };
@@ -305,16 +354,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nGlobal Day-to-day: \nSami's transport units gain </r><div c='#55ff00'>+1 movement</div><r> and her foot soldier units gain </r><div c='#55ff00'>+%0%</div><r> firepower and capture at 1.5 times the normal rate. Her other direct-combat units deal  </r><div c='#ff2626'>-%1%</div><r> less damage.</r>");
+        var text = qsTr("<r>\n\nGlobal Day-to-day: \nSami's transport units gain </r><div c='#55ff00'>+%0 movement</div><r> and her foot soldier units gain </r><div c='#55ff00'>+%1%</div><r> firepower and capture at </r><div c='#55ff00'>%2</div><r> times the normal rate. Her other direct-combat units deal </r><div c='#ff2626'>%3%</div><r> less damage.</r>");
         qsTr("<r>\n\nSpecial Unit:\nCommando</r>") +
-        qsTr("<r>\n\nCO Zone Effect: \nSami's foot soldiers firepower increases by </r><div c='#55ff00'>+%2%</div><r> while all other units gain </r><div c='#55ff00'>+%3%</div><r> firepower and </r><div c='#55ff00'>+%4%</div><r> defense.</r>");
-        text = replaceTextArgs(text, [CO_SAMI.d2dInfBonus, CO_SAMI.d2dDirectBonus], [CO_SAMI.ZoneInfBonus CO_SAMI.ZoneOtherBonus, CO_SAMI.ZoneDefBonus]);
+        qsTr("<r>\n\nCO Zone Effect: \nSami's foot soldiers firepower increases by </r><div c='#55ff00'>+%4%</div><r> while all other units gain </r><div c='#55ff00'>+%5%</div><r> firepower and </r><div c='#55ff00'>+%6%</div><r> defense.</r>");
+        text = replaceTextArgs(text, [CO_SAMI.d2dTransporterMovementPoints, CO_SAMI.d2dInfOffBonus, CO_SAMI.d2dCaptureMultiplier * 100, CO_SAMI.d2dDirectOffBonus, CO_SAMI.d2dCoZoneOffBonus, CO_SAMI.d2dCoZoneBaseOffBonus, CO_SAMI.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("<r>Sami's foot soldiers gain </r><div c='#55ff00'>+1 movement</div><r> and their firepower increases by </r><div c='#55ff00'>+%0%</div><r> while all other units gain </r><div c='#55ff00'>+%1%</div><r> firepower and </r><div c='#55ff00'>+%2%</div><r> defense.</r>");
-        text = replaceTextArgs(text, [CO_SAMI.PowerInfBonus CO_SAMI.PowerOtherBonus, CO_SAMI.ZoneDefBonus]);
+        var text = qsTr("<r>Sami's Infantry gain </r><div c='#55ff00'>+%0 movement</div><r> and their firepower increases by </r><div c='#55ff00'>+%1%</div><r> while all other units gain </r><div c='#55ff00'>+%2%</div><r> firepower and </r><div c='#55ff00'>+%3%</div><r> defense.</r>");
+        text = replaceTextArgs(text, [CO_SAMI.powerMovementPoints, CO_SAMI.powerOffBonus, CO_SAMI.powerBaseOffBonus, CO_SAMI.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -323,8 +372,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("<r>Sami's foot soldiers can capture buildings instantly and gain </r><div c='#55ff00'>+2 movement</div><r>. Their firepower increases by </r><div c='#55ff00'>+%0%</div><r> while all other units gain </r><div c='#55ff00'>+%1%</div><r> firepower and </r><div c='#55ff00'>+%2%</div><r> defense.</r>");
-        text = replaceTextArgs(text, [CO_SAMI.superPowerInfBonus CO_SAMI.superPowerOtherBonus, CO_SAMI.ZoneDefBonus]);
+        var text = qsTr("<r>Sami's foot soldiers gain a capture </r><div c='#55ff00'>%0</div><r> capture rate, gain </r><div c='#55ff00'>+%1 movement</div><r> and their firepower increases by </r><div c='#55ff00'>+%2%</div><r> while all other units gain </r><div c='#55ff00'>+%3%</div><r> firepower and </r><div c='#55ff00'>+%4%</div><r> defense.</r>");
+        text = replaceTextArgs(text, [CO_SAMI.superpowerCaptureMultiplier * 100, CO_SAMI.superpowerMovementPoints, CO_SAMI.superPowerOffBonus, CO_SAMI.powerBaseOffBonus, CO_SAMI.d2dCoZoneDefBonus]);
         return text;
     };
 

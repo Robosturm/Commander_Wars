@@ -46,24 +46,24 @@ void WikiDatabase::load()
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
     {
-        m_Entries.append(PageData(pCOSpriteManager->getName(i), pCOSpriteManager->getID(i), {tr("CO")}));
+        m_Entries.append(spPageData::create(pCOSpriteManager->getName(i), pCOSpriteManager->getID(i), QStringList({tr("CO")})));
     }
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
     for (const auto& terrainId : sortedTerrains)
     {
-        m_Entries.append(PageData(pTerrainManager->getName(terrainId), terrainId, {tr("Terrain")}));
+        m_Entries.append(spPageData::create(pTerrainManager->getName(terrainId), terrainId, QStringList({tr("Terrain")})));
     }
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        m_Entries.append(PageData(pBuildingSpriteManager->getName(i), pBuildingSpriteManager->getID(i), {tr("Building")}));
+        m_Entries.append(spPageData::create(pBuildingSpriteManager->getName(i), pBuildingSpriteManager->getID(i), QStringList({tr("Building")})));
     }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     for (const auto& unitId : sortedUnits)
     {
-        m_Entries.append(PageData(pUnitSpriteManager->getName(unitId), unitId, {tr("Unit")}));
+        m_Entries.append(spPageData::create(pUnitSpriteManager->getName(unitId), unitId, QStringList({tr("Unit")})));
     }
 
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -71,7 +71,7 @@ void WikiDatabase::load()
     QStringList  actions = pGameManager->getLoadedRessources();
     for (const auto& action : actions)
     {
-        m_Entries.append(PageData(pGameManager->getName(action), action, {tr("Action")}));
+        m_Entries.append(spPageData::create(pGameManager->getName(action), action, QStringList({tr("Action")})));
         QJSValue count = pInterpreter->doFunction(action, "getSubWikiInfoCount");
         if (count.isNumber())
         {
@@ -80,9 +80,9 @@ void WikiDatabase::load()
             {
                 QJSValueList args;
                 args.append(i);
-                m_Entries.append(PageData(pInterpreter->doFunction(action, "getSubWikiInfoName", args).toString(),
+                m_Entries.append(spPageData::create(pInterpreter->doFunction(action, "getSubWikiInfoName", args).toString(),
                                           pInterpreter->doFunction(action, "getSubWikiInfoId", args).toString(),
-                                          {tr("Action")},
+                                          QStringList({tr("Action")}),
                                           action,
                                           i));
             }
@@ -93,10 +93,10 @@ void WikiDatabase::load()
     QStringList perks = pCOPerkManager->getLoadedRessources();
     for (const auto& perk : perks)
     {
-        m_Entries.append(PageData(pCOPerkManager->getName(perk), perk, {tr("Perk")}));
+        m_Entries.append(spPageData::create(pCOPerkManager->getName(perk), perk, QStringList({tr("Perk")})));
     }
 
-    m_Entries.append(PageData(tr("Damage Table"), DAMAGE_TABLE_NAME, {tr("Others")}));
+    m_Entries.append(spPageData::create(tr("Damage Table"), DAMAGE_TABLE_NAME, QStringList({tr("Others")})));
 
     // load general wiki page
     QStringList searchPaths;
@@ -127,21 +127,21 @@ void WikiDatabase::load()
                 QStringList tags;
                 erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "getTags");
                 tags = erg.toVariant().toStringList();
-                m_Entries.append(PageData(name, file, tags));
+                m_Entries.append(spPageData::create(name, file, tags));
             }
         }
     }
 }
 
-QVector<WikiDatabase::PageData> WikiDatabase::getEntries(QString searchTerm, bool onlyTag)
+QVector<PageData *> WikiDatabase::getEntries(QString searchTerm, bool onlyTag)
 {
-    QVector<PageData> ret;
+    QVector<PageData *> ret;
     for (auto & entry : m_Entries)
     {
-        if ((entry.m_name.contains(searchTerm, Qt::CaseInsensitive) && !onlyTag) ||
-            (tagMatches(entry.m_tags, searchTerm)))
+        if ((entry->m_name.contains(searchTerm, Qt::CaseInsensitive) && !onlyTag) ||
+            (tagMatches(entry->m_tags, searchTerm)))
         {
-            ret.append(entry);
+            ret.append(entry.get());
         }
     }
     return ret;
@@ -155,7 +155,7 @@ bool WikiDatabase::hasEntry(QString file1)
     entry2 = entry2.remove(0, entry2.lastIndexOf("\\") + 1);
     for (auto & entryInfo : m_Entries)
     {
-        QString entry = entryInfo.m_id;
+        QString entry = entryInfo->m_id;
         entry = entry.replace(".js", "");
         entry = entry.remove(0, entry.lastIndexOf("/") + 1);
         entry = entry.remove(0, entry.lastIndexOf("\\") + 1);
@@ -172,7 +172,7 @@ QStringList WikiDatabase::getTags()
     QStringList ret;
     for (auto & entry : m_Entries)
     {
-        QStringList tags = entry.m_tags;
+        QStringList tags = entry->m_tags;
         for (auto & tag : tags)
         {
             if (!ret.contains(tag))
@@ -188,33 +188,33 @@ QStringList WikiDatabase::getTags()
     return ret;
 }
 
-WikiDatabase::PageData WikiDatabase::getEntry(qint32 entry)
+const PageData & WikiDatabase::getEntry(qint32 entry)
 {
     if (entry >= 0 && entry < m_Entries.size())
     {
-        return m_Entries[entry];
+        return *m_Entries[entry].get();
     }
-    return PageData("", "", QStringList());
+    return m_emptyPage;
 }
 
-WikiDatabase::PageData WikiDatabase::getEntry(QString id)
+const PageData & WikiDatabase::getEntry(QString id)
 {
     for (auto & entryPage : m_Entries)
     {
-        QString entry = entryPage.m_id;
+        QString entry = entryPage->m_id;
         entry = entry.replace(".js", "");
         entry = entry.remove(0, entry.lastIndexOf("/") + 1);
         entry = entry.remove(0, entry.lastIndexOf("\\") + 1);
         if (entry == id)
         {
-            return entryPage;
+            return *entryPage.get();
         }
         else if (entry.toUpper() == id.toUpper())
         {
-            return entryPage;
+            return *entryPage.get();
         }
     }
-    return PageData("", id, QStringList());
+    return m_emptyPage;
 }
 
 bool WikiDatabase::tagMatches(const QStringList & tags, const QString & searchTerm)
@@ -229,7 +229,7 @@ bool WikiDatabase::tagMatches(const QStringList & tags, const QString & searchTe
     return false;
 }
 
-spWikipage WikiDatabase::getPage(PageData data)
+spWikipage WikiDatabase::getPage(const PageData & data)
 {
     spWikipage ret;
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -273,8 +273,8 @@ spWikipage WikiDatabase::getPage(PageData data)
         ret = spDamageTablePage::create(DAMAGE_TABLE_NAME);
     }
     else if (!data.m_mainId.isEmpty() || pGameManager->exists(data.m_id))
-    {        
-        ret = spActionWikipage::create(data);
+    {
+        ret = spActionWikipage::create<const PageData &>(data);
     }
     else if (QFile::exists(data.m_id))
     {
@@ -349,7 +349,7 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
             {
                 if (pMap != nullptr)
                 {
-                    pPlayer = pMap->getCurrentPlayer();
+                    pPlayer = spPlayer(pMap->getCurrentPlayer());
                 }
                 pFinalIconPlayer = pPlayer.get();
             }

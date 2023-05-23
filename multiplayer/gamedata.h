@@ -9,7 +9,7 @@ class GameData final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
-    explicit GameData() = default;
+    explicit GameData();
     ~GameData() = default;
     /**
      * @brief serialize stores the object

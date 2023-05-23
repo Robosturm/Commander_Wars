@@ -212,7 +212,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         if (m_pPredefinedStyles.get() != nullptr)
         {
             m_pPredefinedStyles->detach();
-            m_pPredefinedStyles = nullptr;
+            m_pPredefinedStyles.free();
         }
         oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + "+nrm"));
         QString filePath = GlobalUtils::makePathRelative(pAnim->getResPath());

@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2"];
     };
 
@@ -29,7 +27,7 @@ var Constructor = function()
         var funds = player.getFunds();
         if (funds > 0)
         {
-            player.addFunds(player.getFunds() * 0.5);
+            player.addFunds(player.getFunds() * CO_COLIN.powerFundsMultiplier);
         }
     };
 
@@ -83,21 +81,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/colin.mp3", 6900, 75513)
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/colin.mp3", 6900, 75513)
+                break;
+            }
         }
     };
 
@@ -109,41 +109,64 @@ var Constructor = function()
     {
         return "BM";
     };
-    this.costModifier = 20;
-    this.coZoneBoost = 5;
-    this.globalBoost = 15;
+
+    this.superPowerOffBonus = 3.33;
+
+    this.powerFundsMultiplier = 0.5;
+    this.powerOffBonus = -5;
+    this.powerDefBonus = 10;
+
+    this.d2dCostModifier = -20;
+    this.d2dOffBonus = -10;
+
+    this.d2dCoZoneOffBonus = -5;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
-        return -baseCost * CO_COLIN.costModifier / 100;
+        if (CO.isActive(co))
+        {
+            return baseCost * CO_COLIN.d2dCostModifier / 100;
+        }
+        return 0;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            var bonus = attacker.getOwner().getFunds() / 1000 * 3.33 - 5;
-            return bonus;
-        case GameEnums.PowerMode_Power:
-            return -5;
-        default:
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                var bonus = attacker.getOwner().getFunds() / 1000 * CO_COLIN.superPowerOffBonus - CO_COLIN.powerOffBonus;
+                return bonus;
+            case GameEnums.PowerMode_Power:
+                return CO_COLIN.powerOffBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_COLIN.d2dCoZoneOffBonus;
+                }
+                return CO_COLIN.globalBoost;
+            }
         }
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-        {
-            return -CO_COLIN.coZoneBoost;
-        }
-        return -CO_COLIN.globalBoost;
+        return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_COLIN.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_COLIN.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -153,13 +176,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_LOGIC_TRUCK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_LOGIC_TRUCK"];
+            }
         }
         return [];
     };
@@ -185,12 +211,14 @@ var Constructor = function()
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
                 qsTr("\nGlobal Effect: \nUnits are %0% cheaper and have %1% less firepower.") +
                 qsTr("\n\nCO Zone Effect: \nUnits have only %2% weaker firepower.");
-        text = replaceTextArgs(text, [CO_COLIN.costModifier, CO_COLIN.globalBoost, CO_COLIN.coZoneBoost]);
+        text = replaceTextArgs(text, [CO_COLIN.d2dCostModifier, CO_COLIN.d2dOffBonus, CO_COLIN.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Increases current funds by 50 percent.");
+        var text = qsTr("Increases current funds by %0%.");
+        text = replaceTextArgs(text, [CO_COLIN.powerFundsMultiplier * 100]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -198,7 +226,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Uses wealth to increase the strength of units. The more funds available, the more firepower his units receive.");
+        var text = qsTr("Uses wealth to increase the strength of units. He gains %0% firepower per 1000 funds.");
+        text = replaceTextArgs(text, [CO_COLIN.superPowerOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

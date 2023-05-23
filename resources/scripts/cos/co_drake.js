@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2", "+alt3", "+alt4"];
     };
 
@@ -24,7 +22,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_DRAKE.drakeDamage(co, 1, powerNameAnimation, map);
+        CO_DRAKE.drakeDamage(co, CO_DRAKE.powerDamage, powerNameAnimation, map);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -39,7 +37,7 @@ var Constructor = function()
         powerNameAnimation.queueAnimation(animation);
 
         map.getGameRules().changeWeather("WEATHER_RAIN", map.getPlayerCount() * 1);
-        CO_DRAKE.drakeDamage(co, 2, animation, map);
+        CO_DRAKE.drakeDamage(co, CO_DRAKE.superPowerDamage, animation, map);
     };
 
     this.drakeDamage = function(co, value, animation2, map)
@@ -124,13 +122,14 @@ var Constructor = function()
             }
 
         }
-    };
+    };    
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -143,6 +142,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/drake.mp3", 28, 60371)
                 break;
+            }
         }
     };
 
@@ -154,83 +154,171 @@ var Constructor = function()
     {
         return "GE";
     };
+
+    this.superPowerDamage = 2;
+    this.superPowerNavalOffBonus = 40;
+    this.superPowerAirOffBonus = 0;
+    this.superPowerOtherOffBonus = 0;
+
+    this.powerDamage = 1;
+    this.powerNavalDefBonus = 10;
+    this.powerDefBonus = 10;
+    this.powerNavalOffBonus = 40;
+    this.powerAirOffBonus = 0;
+    this.powerOtherOffBonus = 0;
+
+    this.d2dNavalDefBonus = 0;
+    this.d2dDefBonus = 0;
+    this.d2dNavalMovementPoints = 1;
+    this.d2dNavalOffBonus = 10;
+    this.d2dAirOffBonus = -10;
+    this.d2dOtherOffBonus = 0;
+
+    this.d2dCoZoneNavalDefBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneNavalOffBonus = 40;
+    this.d2dCoZoneAirOffBonus = 0;
+    this.d2dCoZoneOtherOffBonus = 0;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
+            {
                 if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return 40;
+                    return CO_DRAKE.superPowerNavalOffBonus;
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return 0;
+                    return CO_DRAKE.superPowerAirOffBonus;
                 }
-                break;
+                else
+                {
+                    return CO_DRAKE.superPowerOtherOffBonus;
+                }
+            }
             case GameEnums.PowerMode_Power:
+            {
                 if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return 40;
+                    return CO_DRAKE.powerNavalOffBonus;
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return 0;
+                    return CO_DRAKE.powerAirOffBonus;
                 }
-                break;
+                else
+                {
+                    return CO_DRAKE.powerOtherOffBonus;
+                }
+            }
             default:
+            {
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                     {
-                        return 40;
+                        return CO_DRAKE.d2dCoZoneNavalOffBonus;
                     }
                     else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
-                        return 0;
+                        return CO_DRAKE.d2dCoZoneAirOffBonus;
                     }
-                    return 10;
+                    else
+                    {
+                        return CO_DRAKE.d2dCoZoneOtherOffBonus;
+                    }
                 }
-                break;
-        }
-        if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-        {
-            return 10;
-        }
-        if (attacker.getUnitType() === GameEnums.UnitType_Air)
-        {
-            return -10;
+                else
+                {
+                    if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+                    {
+                        return CO_DRAKE.d2dNavalOffBonus;
+                    }
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                    {
+                        return CO_DRAKE.d2dAirOffBonus;
+                    }
+                    else
+                    {
+                        return CO_DRAKE.d2dOtherOffBonus;
+                    }
+                }
+            }
+            }
         }
         return 0;
     };
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.getUnitType() === GameEnums.UnitType_Naval)
+        if (CO.isActive(co))
         {
-            return 1;
+            if (unit.getUnitType() === GameEnums.UnitType_Naval)
+            {
+                return CO_DRAKE.d2dNavalMovementPoints;
+            }
         }
+        return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                if (defender.getUnitType() === GameEnums.UnitType_Naval)
+                {
+                    return CO_DRAKE.powerNavalDefBonus;
+                }
+                else
+                {
+                    return CO_DRAKE.powerDefBonus;
+                }
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                if (defender.getUnitType() === GameEnums.UnitType_Naval)
+                {
+                    return CO_DRAKE.d2dCoZoneNavalDefBonus;
+                }
+                else
+                {
+                    return CO_DRAKE.d2dCoZoneDefBonus;
+                }
+            }
+            else
+            {
+                if (defender.getUnitType() === GameEnums.UnitType_Naval)
+                {
+                    return CO_DRAKE.d2dDefBonus;
+                }
+                else
+                {
+                    return CO_DRAKE.d2dNavalDefBonus;
+                }
+            }
         }
         return 0;
     };
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "HARBOUR" ||
-            buildingId === "TEMPORARY_HARBOUR")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_MISSILE_SUB"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "HARBOUR" ||
+                    buildingId === "TEMPORARY_HARBOUR")
+            {
+                return ["ZCOUNIT_MISSILE_SUB"];
+            }
         }
         return [];
     };
@@ -267,12 +355,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNaval units have 1 more movement point and have increased firepower. Air units suffer from reduced firepower.") +
-               qsTr("\n\nCO Zone Effect: \nNaval units have increased firepower.");
+        var text = qsTr("\nSpecial Unit:\nMissile Submarine\n\n" +
+                    "Global Effect: \nNaval units have %0 more movement point and have %1% firepower and %2% defence. Air units suffer from %3% reduced firepower." +
+                    "\n\nCO Zone Effect: \nNaval units have increased %4% firepower and %5% defence.");
+        text = replaceTextArgs(text, [CO_DRAKE.d2dNavalMovementPoints, CO_DRAKE.d2dNavalOffBonus, CO_DRAKE.d2dNavalDefBonus, CO_DRAKE.d2dAirOffBonus,
+                                      CO_DRAKE.d2dCoZoneNavalOffBonus, CO_DRAKE.d2dCoZoneNavalDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Causes a tidal wave that does one HP of damage to all enemy units and halves their fuel.");
+        var text = qsTr("Causes a tidal wave that does %0 HP of damage to all enemy units and halves their fuel.");
+        text = replaceTextArgs(text, [CO_DRAKE.powerDamage]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -280,7 +374,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Causes a giant tidal wave that does two HP of damage to all enemy units and halves their fuel and weather changes to rain.");
+        var text = qsTr("Causes a giant tidal wave that does %0 HP of damage to all enemy units and halves their fuel and weather changes to rain.");
+        text = replaceTextArgs(text, [CO_DRAKE.superPowerDamage]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

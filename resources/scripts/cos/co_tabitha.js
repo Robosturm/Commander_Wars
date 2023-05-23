@@ -8,9 +8,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
                 break;
@@ -23,6 +24,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/tabitha.mp3", 56155, 127410);
                 break;
+            }
         }
     };
 
@@ -32,20 +34,19 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_TABITHA.throwMeteor(co, 4, powerNameAnimation, map);
+        CO_TABITHA.throwMeteor(co, CO_TABITHA.powerDamage, powerNameAnimation, map);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
     {
-        var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(powerMode);
-        powerNameAnimation.queueAnimationBefore(dialogAnimation);
+            var dialogAnimation = co.createPowerSentence();
+            var powerNameAnimation = co.createPowerScreen(powerMode);
+            powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_TABITHA.throwMeteor(co, 8, powerNameAnimation, map);
+            CO_TABITHA.throwMeteor(co, CO_TABITHA.superPowerDamage, powerNameAnimation, map);
     };
     this.throwMeteor = function(co, damage, powerNameAnimation, map)
     {
-        // let a meteor fall :D
         var rocketTarget = co.getOwner().getRockettarget(2, damage);
         // create cool meteor animation :)
         var animation = GameAnimationFactory.createAnimation(map, rocketTarget.x - 2, rocketTarget.y - 2 - 1);
@@ -57,6 +58,7 @@ var Constructor = function()
         CO_TABITHA.postAnimationThrowMeteorTarget = rocketTarget;
         CO_TABITHA.postAnimationThrowMeteorDamage = damage;
     };
+
 
     this.preAnimationThrowMeteor = function(animation, map)
     {
@@ -106,41 +108,62 @@ var Constructor = function()
     {
         return "DM";
     };
+
+    this.superPowerDamage = 8;
+    this.superPowerOffBonus = 80;
+    this.superPowerDefBonus = 80;
+
+    this.powerDamage = 4;
+    this.powerOffBonus = 60;
+    this.powerDefBonus = 60;
+
+    this.d2dCoZoneOffBonus = 60;
+    this.d2dCoZoneDefBonus = 60;
+
+    this.d2dOffBonus = 0;
+    this.d2dDefBonus = 0;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 60;
+                return CO_TABITHA.superPowerOffBonus;
             case GameEnums.PowerMode_Power:
-                return 40;
+                return CO_TABITHA.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 60;
+                    return CO_TABITHA.d2dCoZoneOffBonus;
                 }
-                break;
+                return CO_TABITHA.d2dOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 60;
+                return CO_TABITHA.superPowerDefBonus;
             case GameEnums.PowerMode_Power:
-                return 40;
+                return CO_TABITHA.powerDefBonus;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 60;
+                    return CO_TABITHA.d2dCoZoneDefBonus;
                 }
-                break;
+                return CO_TABITHA.d2dDefBonus;
+            }
         }
     };
     this.getAiCoUnitBonus = function(co, unit, map)
@@ -166,12 +189,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 60% increased firepower and defense.");
+        var text = qsTr("\nGlobal Effect: \nUnits have %0% increased firepower and %1% increased  defense.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have %2% increased firepower and %3% increased  defense.");
+        text = replaceTextArgs(text, [CO_TABITHA.d2dOffBonus, CO_TABITHA.d2dDefBonus, CO_TABITHA.d2dCoZoneDefBonus, CO_TABITHA.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("A small attack from the great owl that deals 4 HP of damage to all affected units. Also increases the firepower of all units.");
+        var text = qsTr("A small attack from the great owl that deals %0 HP of damage to all affected units. Also increases the firepower of all units by %1% and defense by %2%.");
+        text = replaceTextArgs(text, [CO_TABITHA.powerDamage, CO_TABITHA.powerOffBonus, CO_TABITHA.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -179,7 +206,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("A giant attack from the great owl that deals 8 HP of damage to all affected units. Firepower and defense is increased.");
+        var text = qsTr("A small attack from the great owl that deals %0 HP of damage to all affected units. Also increases the firepower of all units by %1% and defense by %2%.");
+        text = replaceTextArgs(text, [CO_TABITHA.superPowerDamage, CO_TABITHA.superPowerOffBonus, CO_TABITHA.superPowerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

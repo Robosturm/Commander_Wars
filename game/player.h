@@ -775,7 +775,7 @@ private:
      */
     QString m_uniqueIdentifier;
     QString m_playerNameId;
-    bool m_isOnline;
+    bool m_isOnline{true};
     static oxygine::spResAnim m_neutralTableAnim;
     static QImage m_neutralTableImage;
 };

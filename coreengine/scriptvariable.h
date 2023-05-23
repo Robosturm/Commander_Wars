@@ -45,7 +45,7 @@ public:
      * @brief writes a vector of the given type
      */
     template<typename ListType>
-    void writeList(QList <ListType> list)
+    void writeList(const QList <ListType> & list)
     {
         // remove the buffer content
         m_buffer.close();
@@ -125,7 +125,7 @@ public slots:
      * @brief writeDataListInt32
      * @param data writes a QList<qint32> to the action data
      */
-    void writeDataListInt32(QList<qint32> data)
+    void writeDataListInt32(const QVector<qint32> & data)
     {
         writeList(data);
     }
@@ -133,7 +133,7 @@ public slots:
      * @brief readDataListInt
      * @return reads a QList<int> from the action data
      */
-    QList<int> readDataListInt32()
+    QVector<qint32> readDataListInt32()
     {
         return readList<qint32>();
     }

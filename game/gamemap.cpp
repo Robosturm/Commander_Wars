@@ -49,6 +49,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
 #endif
+    Interpreter::setCppOwnerShip(this);
     m_headerInfo.m_mapAuthor = Settings::getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
@@ -63,6 +64,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
 #endif
+    Interpreter::setCppOwnerShip(this);
     loadMapData();
     deserializer(stream, false);
     m_loaded = true;
@@ -76,6 +78,7 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
 #endif
+    Interpreter::setCppOwnerShip(this);
     CONSOLE_PRINT("Loading map: " + map, GameConsole::eDEBUG);
     loadMapData();
     loadMap(map, onlyLoad, fast, savegame);
@@ -372,9 +375,9 @@ bool GameMap::isPlayerUnitInArea(const QRect& area, qint32 playerID)
     });
 }
 
-bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs)
+bool GameMap::isPlayersUnitInArea(const QRect& area, const QVector<qint32> & playerIDs)
 {
-    return isInArea(area, [=](Unit* pUnit)
+    return isInArea(area, [playerIDs](Unit* pUnit)
     {
         qint32 owner = pUnit->getOwner()->getPlayerID();
         return playerIDs.contains(owner);
@@ -401,16 +404,6 @@ GameMap::~GameMap()
 QStringList GameMap::getAllUnitIDs()
 {
     return UnitSpriteManager::getInstance()->getLoadedRessources();
-}
-
-spGameAction GameMap::createAction()
-{
-    return spGameAction::create(this);
-}
-
-void GameMap::queueAction(spGameAction pAction)
-{
-    emit sigQueueAction(pAction);
 }
 
 spTerrain GameMap::getSpTerrain(qint32 x, qint32 y)

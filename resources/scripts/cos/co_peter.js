@@ -8,28 +8,28 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/peter.mp3", 45424, 90079);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/peter.mp3", 45424, 90079);
+                break;
+            }
         }
     };
 
@@ -142,7 +142,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_PETER.peterDamage(co, 2, powerNameAnimation, map);
+        CO_PETER.peterDamage(co, CO_PETER.superPowerDamage, powerNameAnimation, map);
     };
 
     this.getCOUnitRange = function(co, map)
@@ -153,59 +153,88 @@ var Constructor = function()
     {
         return "GE";
     };
+
+    this.superPowerDamage = 2;
+    this.superPowerOffBonus = 60
+
+    this.powerBaseOffBonus = 10;
+    this.powerOffBonus = 50;
+    this.powerDefBonus = 10;
+
+    this.d2dCoZoneOffBonus = 50;
+    this.d2dCoZoneBaseOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
+    this.d2dOffBonus = 7;
+    this.d2dTerrainMalus = 5;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (defender === null)
+        if (CO.isActive(co))
         {
-            return 0;
-        }
-        var bonus = 0;
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (defender.getBaseMaxRange() === 1)
+            var directEnemy = false;
+            if (defender !== null)
             {
-                bonus += 60;
+                directEnemy = (defender.getBaseMaxRange() === 1);
             }
-            bonus += 10;
-            break;
-        case GameEnums.PowerMode_Power:
-            if (defender.getBaseMaxRange() === 1)
+            var bonus = 0;
+            switch (co.getPowerMode())
             {
-                bonus += 50;
-            }
-            bonus += 10;
-            break;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
-                if (defender.getBaseMaxRange() === 1)
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (directEnemy)
                 {
-                    bonus = 50;
+                    bonus += CO_PETER.superPowerOffBonus;
                 }
-                bonus += 10;
-            }
-            else
-            {
-                if (defender.getBaseMaxRange() === 1)
+                bonus += CO_PETER.powerBaseOffBonus;
+                break;
+            case GameEnums.PowerMode_Power:
+                if (directEnemy)
                 {
-                    bonus = 7;
+                    bonus += CO_PETER.powerOffBonus;
                 }
+                bonus += CO_PETER.powerBaseOffBonus;
+                break;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (directEnemy)
+                    {
+                        bonus = CO_PETER.d2dCoZoneOffBonus;
+                    }
+                    bonus += CO_PETER.d2dCoZoneBaseOffBonus;
+                }
+                else
+                {
+                    if (directEnemy)
+                    {
+                        bonus = CO_PETER.d2dOffBonus;
+                    }
+                }
+                break;
             }
-            break;
+            if (defender !== null)
+            {
+                bonus -= defender.getTerrainDefense() * CO_PETER.d2dTerrainMalus;
+            }
+            return bonus;
         }
-        bonus -= defender.getTerrainDefense() * 5;
-        return bonus;
+        return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_PETER.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_PETER.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -215,13 +244,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_ROYAL_GUARD"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_ROYAL_GUARD"];
+            }
         }
         return [];
     };

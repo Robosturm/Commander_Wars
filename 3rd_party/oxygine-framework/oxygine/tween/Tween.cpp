@@ -149,7 +149,8 @@ namespace oxygine
     void Tween::__start(Actor& actor, const UpdateState& us)
     {
         TweenEvent ev(this, &us);
-        ev.target = ev.currentTarget = &actor;
+        ev.currentTarget = spEventDispatcher(&actor);
+        ev.target = ev.currentTarget;
         ev.m_tween = this;
         ev.type = TweenEvent::START;
         if (m_cbStart.isSet())
@@ -231,7 +232,8 @@ namespace oxygine
         }
 
         TweenEvent ev(this, &us);
-        ev.target = ev.currentTarget = &actor;
+        ev.currentTarget = spEventDispatcher(&actor);
+        ev.target = ev.currentTarget;
         ev.m_tween = this;
 
         if (m_cbDone.isSet())

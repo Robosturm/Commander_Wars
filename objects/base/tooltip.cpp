@@ -89,7 +89,7 @@ Tooltip::~Tooltip()
     if (m_Tooltip.get() != nullptr)
     {
         m_Tooltip->detach();
-        m_Tooltip = nullptr;
+        m_Tooltip.free();
     }
 }
 
@@ -231,7 +231,7 @@ void Tooltip::removeTooltip()
         Mainapp* pApp = Mainapp::getInstance();
         pApp->pauseRendering();
         m_Tooltip->detach();
-        m_Tooltip = nullptr;
+        m_Tooltip.free();
         pApp->continueRendering();
     }
 }

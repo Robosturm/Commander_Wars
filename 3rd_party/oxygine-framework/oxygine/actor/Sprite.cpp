@@ -207,7 +207,7 @@ namespace oxygine
         else if (m_mat->m_table.get() != nullptr)
         {
             m_mat = m_mat->clone();
-            m_mat->m_table = nullptr;
+            m_mat->m_table.free();
             m_mat->setMatrixMode(matrix);
             m_mat = MaterialCache::mc().cache(*m_mat.get());
             matChanged();

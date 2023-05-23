@@ -6,6 +6,7 @@ CO_ROBOANDY.init = function(co, map)
 CO_ROBOANDY.activateSuperpower = function(co, powerMode, map)
 {
 	CO_ROBOANDY.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_ROBOANDY.getSuperPowerDescription = function()
 {
@@ -14,28 +15,4 @@ CO_ROBOANDY.getSuperPowerDescription = function()
 CO_ROBOANDY.getSuperPowerName = function()
 {
     return CO_ROBOANDY.getPowerName();
-};
-
-CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
-{
-    switch (co.getPowerMode())
-    {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (gotAttacked && defender.getOwner() === co.getOwner())
-            {
-                if (defender.getHp() <= 0)
-                {
-                    attacker.setHp(attacker.getHp() - 1);
-                }
-            }
-            else if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
-            {
-                attacker.setHp(attacker.getHp() + 1);
-            }
-            break;
-        default:
-            break;
-    }
 };

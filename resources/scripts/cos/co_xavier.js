@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -111,9 +109,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -126,6 +125,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/xavier.mp3", 270, 74593);
                 break;
+            }
         }
     };
 
@@ -138,15 +138,23 @@ var Constructor = function()
         return "GS";
     };
     this.superpowerBonus = 60;
-    this.firepowerBonus = 20;
-    this.luckDamage = 40;
-    this.minLuckHp = 5;
+
+    this.powerFirepowerBonus = 20;
+    this.powerLuckDamage = 40;
+    this.powerDefBonus = 10;
+
+    this.d2dCoZoneFirepowerBonus = 20;
+    this.d2dCoZoneDefBonus = 10;
+
+    this.d2dMinLuckHp = 5;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 var count = 0;
@@ -166,15 +174,16 @@ var Constructor = function()
                 {
                     count++;
                 }
-                return CO_XAVIER.firepowerBonus + CO_XAVIER.superpowerBonus * count;
+                return CO_XAVIER.powerFirepowerBonus + CO_XAVIER.superpowerBonus * count;
             case GameEnums.PowerMode_Power:
-                return CO_XAVIER.firepowerBonus;
+                return CO_XAVIER.powerFirepowerBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return CO_XAVIER.firepowerBonus;
+                    return CO_XAVIER.d2dCoZoneFirepowerBonus;
                 }
                 break;
+            }
         }
         return 0;
     };
@@ -195,63 +204,76 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) || co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_XAVIER.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_XAVIER.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
-         var hpRounded = unit.getHpRounded();
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var hpRounded = unit.getHpRounded();
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
                     return hpRounded / 2;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
-                    return CO_XAVIER.luckDamage + hpRounded / 2;
+                    return CO_XAVIER.powerLuckDamage + hpRounded / 2;
                 }
-                return CO_XAVIER.luckDamage;
+                return CO_XAVIER.powerLuckDamage;
             default:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
                     return hpRounded / 2;
                 }
+            }
         }
         return 0;
     };
 
     this.getBonusMisfortune = function(co, unit, posX, posY, map)
     {
-        var hpRounded = unit.getHpRounded();
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            var hpRounded = unit.getHpRounded();
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
                     return -hpRounded;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
-                    return -CO_XAVIER.luckDamage + -hpRounded;
+                    return -CO_XAVIER.powerLuckDamage + -hpRounded;
                 }
-                return -CO_XAVIER.luckDamage;
+                break;
             default:
-                if (hpRounded <= CO_XAVIER.minLuckHp)
+                if (hpRounded <= CO_XAVIER.d2dMinLuckHp)
                 {
                     return -hpRounded;
                 }
                 break;
+            }
         }
         return 0;
     };
@@ -275,20 +297,20 @@ var Constructor = function()
     this.getCODescription = function(co)
     {
         var text = qsTr("When Xavier's units drop to %0 HP or less, they are able to strike for maximum luck damage.");
-        text = replaceTextArgs(text, [CO_XAVIER.minLuckHp]);
+        text = replaceTextArgs(text, [CO_XAVIER.d2dMinLuckHp]);
         return text;
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nGlobal Effect: \nUnits with %0 HP or less deal maximum luck damage.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %1%.");
-        text = replaceTextArgs(text, [CO_XAVIER.minLuckHp, CO_XAVIER.firepowerBonus]);
+                   qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %1% and defence by %2%.");
+        text = replaceTextArgs(text, [CO_XAVIER.d2dMinLuckHp, CO_XAVIER.d2dCoZoneFirepowerBonus, CO_XAVIER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text =  qsTr("Increases luck damage to %0%.");
-        text = replaceTextArgs(text, [CO_XAVIER.luckDamage]);
+        var text =  qsTr("Increases luck damage to %0% and firepower by %1% and defence by %2%.");
+        text = replaceTextArgs(text, [CO_XAVIER.luckDamage, CO_XAVIER.powerFirepowerBonus, CO_XAVIER.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -297,8 +319,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-         var text =  qsTr("Units gain %0% firepower for each own unit nearby the attacked unit.");
-        text = replaceTextArgs(text, [CO_XAVIER.superpowerBonus]);
+         var text =  qsTr("Units gain %0% firepower for each own unit nearby the attacked unit and in addition a bonus firepower of %1% and defence of %2%..");
+        text = replaceTextArgs(text, [CO_XAVIER.superpowerBonus, CO_XAVIER.powerFirepowerBonus, CO_XAVIER.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

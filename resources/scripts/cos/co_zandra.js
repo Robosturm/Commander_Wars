@@ -8,34 +8,43 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/zandra.mp3", 59, 57817);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/zandra.mp3", 59, 57817);
+                break;
+            }
         }
     };
 
-    this.sandstormBonus = 55;
-    this.sandstormRangeBonus = 1;
-    this.sandstormDamage = 2;
+    this.superPowerSandstormDamage = 2;
+
+    this.powerSandstormBonus = 55;
+    this.powerSandstormRangeBonus = 1;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+
+    this.d2dSandStormBonus = 0;
+
+    this.d2dCoZoneSandStormBonus = 55;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
 
     this.activatePower = function(co, map)
     {
@@ -130,66 +139,81 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (map !== null)
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-            case GameEnums.PowerMode_Power:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                var hasSandstorm = map.getGameRules().getCurrentWeather() !== null &&
+                                   map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM";
+                switch (co.getPowerMode())
                 {
-                    // apply sandstorm buff :)
-                    return CO_ZANDRA.sandstormBonus;
-                }
-                return 10;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    if (map.getGameRules().getCurrentWeather() !== null &&
-                        map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                case GameEnums.PowerMode_Power:
+                    if (hasSandstorm)
                     {
-                        // apply sandstorm buff :)
-                        return CO_ZANDRA.sandstormBonus;
+                        return CO_ZANDRA.powerSandstormBonus;
                     }
-                    return 10;
+                    return CO_ZANDRA.powerOffBonus;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        if (hasSandstorm)
+                        {
+                            return CO_ZANDRA.d2dCoZoneSandStormBonus;
+                        }
+                        return CO_ZANDRA.d2dCoZoneOffBonus;
+                    }
+                    else if (hasSandstorm)
+                    {
+                        return CO_ZANDRA.d2dSandStormBonus;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-        {
-            return 10;
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_ZANDRA.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_ZANDRA.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_ZANDRA.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
     this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            if (map.getGameRules().getCurrentWeather() !== null &&
-                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+            if (map !== null)
             {
-                if (unit.getBaseMaxRange() > 1)
+                if (map.getGameRules().getCurrentWeather() !== null &&
+                        map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                 {
-                    switch (co.getPowerMode())
+                    if (unit.getBaseMaxRange() > 1)
                     {
-                    case GameEnums.PowerMode_Tagpower:
-                    case GameEnums.PowerMode_Superpower:
-                    case GameEnums.PowerMode_Power:
-                        return CO_ZANDRA.sandstormRangeBonus;
-                    default:
-                        return 0;
+                        switch (co.getPowerMode())
+                        {
+                        case GameEnums.PowerMode_Tagpower:
+                        case GameEnums.PowerMode_Superpower:
+                        case GameEnums.PowerMode_Power:
+                            return CO_ZANDRA.sandstormRangeBonus;
+                        default:
+                            return 0;
+                        }
                     }
                 }
             }
@@ -199,9 +223,12 @@ var Constructor = function()
 
     this.getWeatherImmune = function(co, map)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+        if (CO.isActive(co))
         {
-            return true;
+            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+            {
+                return true;
+            }
         }
         return false;
     };
@@ -228,15 +255,15 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms") +
-                   qsTr("\n\nCO Zone Effect: \nUnits get %0% firepower during sandstorm.");
-        text = replaceTextArgs(text, [CO_ZANDRA.sandstormBonus]);
+        var text = qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms and gain %0% firepower during sandstorm.") +
+                   qsTr("\n\nCO Zone Effect: \nUnits get %1% firepower during sandstorm and %2% firepower otherwise. All units also gain %3% defence.");
+        text = replaceTextArgs(text, [CO_ZANDRA.d2dSandStormBonus, CO_ZANDRA.d2dCoZoneSandStormBonus, CO_ZANDRA.d2dCoZoneOffBonus, CO_ZANDRA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text =  qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%.");
-        text = replaceTextArgs(text, [CO_ZANDRA.sandstormRangeBonus , CO_ZANDRA.sandstormBonus]);
+        var text = qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%.");
+        text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -245,8 +272,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text =  qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 hp damage to enemies.");
-        text = replaceTextArgs(text, [CO_ZANDRA.sandstormRangeBonus , CO_ZANDRA.sandstormBonus, CO_ZANDRA.sandstormDamage]);
+        var text = qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 HP damage to enemies.");
+        text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.sandstormDamage]);
         return text;
     };
     this.getSuperPowerName = function(co)

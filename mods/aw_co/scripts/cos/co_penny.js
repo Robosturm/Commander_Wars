@@ -1,3 +1,13 @@
+CO_PENNY.superPowerOffBonus = 20;
+CO_PENNY.superPowerFirerangeModifier = 2;
+CO_PENNY.superPowerMovementPointBonus = 2;
+CO_PENNY.superPowerRainVisionBonus = 3;
+CO_PENNY.superPowerMistVisionBonus = 5;
+CO_PENNY.powerOffBonus = 0;
+CO_PENNY.powerDefBonus = 10;
+CO_PENNY.d2dCoZoneOffBonus = 0;
+CO_PENNY.d2dCoZoneDefBonus = 0;
+
 CO_PENNY.init = function(co, map)
 {
     co.setPowerStars(0);
@@ -6,6 +16,7 @@ CO_PENNY.init = function(co, map)
 CO_PENNY.activateSuperpower = function(co, powerMode, map)
 {
     CO_PENNY.activatePower(co, map);
+    co.setPowerMode(GameEnums.PowerMode_Power);
 };
 CO_PENNY.getSuperPowerDescription = function()
 {
@@ -14,49 +25,4 @@ CO_PENNY.getSuperPowerDescription = function()
 CO_PENNY.getSuperPowerName = function()
 {
     return CO_PENNY.getPowerName();
-};
-CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    return 0;
-};
-CO_PENNY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
-CO_PENNY.getFirerangeModifier = function(co, unit, posX, posY, map)
-{
-    return 0;
-};
-
-CO_PENNY.getWeatherImmune = function(co, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        return true;
-    }
-    return false;
-};
-
-CO_PENNY.getMovementpointModifier = function(co, unit, posX, posY, map)
-{
-    return 0;
-};
-
-CO_PENNY.getVisionrangeModifier = function(co, unit, posX, posY, map)
-{
-    return 0;
-};
-
-CO_PENNY.getPerfectVision = function(co, map)
-{
-    return false;
 };

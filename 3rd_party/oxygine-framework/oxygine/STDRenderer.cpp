@@ -55,7 +55,7 @@ namespace oxygine
     {
         for (qint32 i = 0; i < MAX_TEXTURES; ++i)
         {
-            m_textures[i] = nullptr;
+            m_textures[i].free();
         }
     }
 
@@ -152,9 +152,9 @@ namespace oxygine
         {
             white->release();
         }
-        white = nullptr;
-        instance = nullptr;
-        current = nullptr;
+        white.free();
+        instance.free();
+        current.free();
     }
 
     void STDRenderer::reset()
@@ -164,7 +164,7 @@ namespace oxygine
         {
             white->release();
         }
-        white = nullptr;
+        white.free();
         m_uberShader->release();
         m_uberShader.reset(nullptr);
     }
@@ -250,7 +250,7 @@ namespace oxygine
         if (m_prevRT)
         {
             m_driver->setRenderTarget(m_prevRT);
-            m_prevRT = nullptr;
+            m_prevRT.free();
         }
 
     }

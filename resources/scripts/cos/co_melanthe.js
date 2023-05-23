@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -20,9 +18,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -35,6 +34,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/melanthe.mp3", 2716, 75957);
                 break;
+            }
         }
     };
 
@@ -44,7 +44,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_MELANTHE.melantheDamage(co, 3, 0, powerNameAnimation, map);
+        CO_MELANTHE.melantheDamage(co, CO_MELANTHE.powerHeal, CO_MELANTHE.powerDamage, powerNameAnimation, map);
     };
 
     this.melantheDamage = function(co, heal, damage, powerNameAnimation, map)
@@ -150,7 +150,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_MELANTHE.melantheDamage(co, 4, 2, powerNameAnimation, map);
+        CO_MELANTHE.melantheDamage(co, CO_MELANTHE.superPowerHeal, CO_MELANTHE.superPowerDamage, powerNameAnimation, map);
     };
 
     this.isNature = function(posX, posY, map)
@@ -175,28 +175,55 @@ var Constructor = function()
         return true;
     };
 
+    this.superPowerHeal = 4;
+    this.superPowerDamage = 2;
+
+    this.powerOffBonus = 50;
+    this.powerBaseOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.powerTerrainBonus = 2;
+    this.powerHeal = 3;
+    this.powerDamage = 0;
+
+    this.d2dOffBonus = 0;
+    this.d2dTerrainBonus = 0;
+    this.d2dRepairBonus = -1;
+
+    this.d2dCoZoneOffBonus = 40;
+    this.d2dCoZoneTerrainBonus = 2;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneBaseOffBonus = 10;
+
     this.getTerrainDefenseModifier = function(co, unit, posX, posY, map)
     {
-        if (CO_MELANTHE.isNature(posX, posY, map) === true)
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (CO_MELANTHE.isNature(posX, posY, map) === true)
             {
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                 case GameEnums.PowerMode_Power:
-                    return 2;
+                    return CO_MELANTHE.powerTerrainBonus;
                 default:
                     if (co.inCORange(Qt.point(posX, posY), unit))
                     {
-                        return 2;
+                        return CO_MELANTHE.d2dCoZoneTerrainBonus;
                     }
+                    return CO_MELANTHE.d2dTerrainBonus;
+                }
             }
         }
         return 0;
     };
     this.getRepairBonus = function(co, unit, posX, posY, map)
     {
-        return -1;
+        if (CO.isActive(co))
+        {
+            return CO_MELANTHE.d2dRepairBonus;
+        }
+        return 0;
     };
 
     this.getCOUnitRange = function(co, map)
@@ -210,46 +237,59 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (map !== null)
+        if (CO.isActive(co))
         {
-            if (map.onMap(atkPosX, atkPosY))
+            if (map !== null)
             {
-                switch (co.getPowerMode())
+                if (map.onMap(atkPosX, atkPosY))
                 {
+                    switch (co.getPowerMode())
+                    {
                     case GameEnums.PowerMode_Tagpower:
                     case GameEnums.PowerMode_Superpower:
                     case GameEnums.PowerMode_Power:
                         if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
                         {
-                            return 50;
+                            return CO_MELANTHE.powerOffBonus;
                         }
-                        return 10;
+                        return CO_MELANTHE.powerBaseOffBonus;
                     default:
                         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
                             if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
                             {
-                                return 40;
+                                return CO_MELANTHE.d2dCoZoneOffBonus;
                             }
-                            return 10;
+                            return CO_MELANTHE.d2dCoZoneBaseOffBonus;
                         }
+                        if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
+                        {
+                            return CO_MELANTHE.d2dOffBonus;
+                        }
+                    }
+                    return 0;
                 }
-                return 0;
             }
-        }
-        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-        {
-            return 10;
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_MELANTHE.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_MELANTHE.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_MELANTHE.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -259,13 +299,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_NEOSPIDER_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_NEOSPIDER_TANK"];
+            }
         }
         return [];
     };
@@ -289,13 +332,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
-               qsTr("\nGlobal Effect: \nNo bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain an additional firepower on natural terrain and increased terrain defence stars.");
+        var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
+               qsTr("\nGlobal Effect: \nUnits gain an additional %0% firepower on natural terrain and increased terrain defence by %1 stars and repairs are reduced by %2.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain an additional %3% firepower on natural terrain and increased terrain defence by %4 stars.");
+        text = replaceTextArgs(text, [CO_MELANTHE.d2dOffBonus, CO_MELANTHE.d2dTerrainBonus, CO_MELANTHE.d2dRepairBonus,
+                                      CO_MELANTHE.d2dCoZoneOffBonus, CO_MELANTHE.d2dCoZoneTerrainBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Units on natural terrain restore three HP of health. Effects of natural terrain are increased.");
+        var text = qsTr("Units on natural terrain restore %0 HP of health. Units gain an additional %1% firepower on natural terrain and increased terrain defence by %2 stars.");
+        text = replaceTextArgs(text, [CO_MELANTHE.powerHeal, CO_MELANTHE.powerOffBonus, CO_MELANTHE.powerTerrainBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -303,7 +351,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Enemies on natural terrain suffer two HP of damage. In addition, allied units on natural terrain restore four HP of health. Effects of natural terrain are increased.");
+        var text = qsTr("Enemies on natural terrain suffer %0 HP of damage. In addition, units on natural terrain restore %1 HP of health. Units gain an additional %2% firepower on natural terrain and increased terrain defence by %3 stars.");
+        text = replaceTextArgs(text, [CO_MELANTHE.superPowerDamage, CO_MELANTHE.superPowerHeal, CO_MELANTHE.powerOffBonus, CO_MELANTHE.powerTerrainBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

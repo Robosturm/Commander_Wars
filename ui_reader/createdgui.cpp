@@ -14,6 +14,7 @@
 
 CreatedGui::CreatedGui()
 {
+    Interpreter::setCppOwnerShip(this);
     connect(this, &CreatedGui::sigFinished, this, &CreatedGui::remove, Qt::QueuedConnection);
 }
 

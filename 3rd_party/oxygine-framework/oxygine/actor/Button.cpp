@@ -1,6 +1,8 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
+#include "coreengine/interpreter.h"
+
 namespace oxygine
 {
 
@@ -11,6 +13,7 @@ namespace oxygine
           m_btnPressed(0),
           m_btnOvered(0)
     {
+        Interpreter::setCppOwnerShip(this);
         EventCallback ncb = EventCallback(this, &Button::_mouseEvent);
         addEventListener(TouchEvent::TOUCH_DOWN, ncb);
         addEventListener(TouchEvent::OVER, ncb);
@@ -26,7 +29,7 @@ namespace oxygine
             if (me->mouseButton == MouseButton_Left)
             {
                 event->phase = Event::phase_target;
-                event->target = this;
+                event->target = spEventDispatcher(this);
             }
             else
             {

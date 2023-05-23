@@ -4,6 +4,7 @@
 #include "ingamescriptsupport/scripteditor.h"
 
 #include "coreengine/gameconsole.h"
+#include "coreengine/interpreter.h"
 
 const char* const ScriptEventDialog::m_CurrentPlayerCO0 = "map.getCurrentPlayer().getCO(0).getCoID()";
 const char* const ScriptEventDialog::m_CurrentPlayerCO1 = "map.getCurrentPlayer().getCO(1).getCoID()";
@@ -13,7 +14,7 @@ const char* const ScriptEventDialog::ScriptEventDialogItem = "ScriptEventDialogI
 ScriptEventDialog::ScriptEventDialog(GameMap* pMap)
     : ScriptEvent(pMap, EventType::dialog)
 {
-
+    Interpreter::setCppOwnerShip(this);
 }
 
 void ScriptEventDialog::addDialog(QString text, QString coid, GameEnums::COMood mood, QColor color)

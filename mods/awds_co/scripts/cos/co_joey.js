@@ -1,129 +1,19 @@
-CO_JOEY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if(defender !== null)
-        {
-            var attackerValue = attacker.getUnitValue();
-            var defenderValue = defender.getUnitValue();
-            switch (co.getPowerMode())
-            {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (attackerValue > defenderValue)
-                {
-                    return 0;
-                }
-                else if (attackerValue < defenderValue)
-                {
-                    return 40;
-                }
-                else
-                {
-                    return 10;
-                }
-            case GameEnums.PowerMode_Power:
-                if (attackerValue > defenderValue)
-                {
-                    return 0;
-                }
-                else if (attackerValue < defenderValue)
-                {
-                    return 40;
-                }
-                else
-                {
-                    return 10;
-                }
-            default:
-                if (attackerValue > defenderValue)
-                {
-                    return -10;
-                }
-                else if (attackerValue < defenderValue)
-                {
-                    return 10;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-    }
-    return 0;
-};
+CO_JOEY.superPowerOffMalus = 0;
+CO_JOEY.superPowerOffBonus = 40;
+CO_JOEY.superPowerBaseOffBonus = 0;
+CO_JOEY.superPowerDefBonus = 10;
+CO_JOEY.superPowerCostReduction = 0.2;
 
-CO_JOEY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if(attacker !== null)
-        {
-            var attackerValue = attacker.getUnitValue();
-            var defenderValue = defender.getUnitValue();
-            switch (co.getPowerMode())
-            {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 10;
-            case GameEnums.PowerMode_Power:
-                if (attackerValue < defenderValue)
-                {
-                    return 30;
-                }
-                return 10;
-            default:
-            }
-        }
-    }
-    return 0;
-};
+CO_JOEY.powerOffMalus = 0;
+CO_JOEY.powerOffBonus = 40;
+CO_JOEY.powerBaseOffBonus = 10;
+CO_JOEY.powerDefBonus = 30;
+CO_JOEY.powerBaseDefBonus = 10;
 
-CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map, atkPosX, atkPosY)
-{
-    if (co.getIsCO0() === true)
-    {
-        if(unit !== null &&
-           isDefender)
-        {
-            var defenderValue = unit.getUnitValue();
-            var attackerValue = attacker.getUnitValue();
-            switch (co.getPowerMode())
-            {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (attackerValue > defenderValue)
-                {
-                    return true;
-                }
-                return false;
-            case GameEnums.PowerMode_Power:
-                return false;
-            default:
-                return false;
-            }
-        }
-    }
-    return false;
-};
+CO_JOEY.d2dOffMalus = -10;
+CO_JOEY.d2dOffBonus = 20;
+CO_JOEY.d2dBaseOffBonus = 0;
 
-CO_JOEY.getCostModifier = function(co, id, baseCost, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return -baseCost * 0.2;
-        case GameEnums.PowerMode_Power:
-            return 0;
-        default:
-            return 0;
-        }
-    }
-    return 0;
-};
+CO_JOEY.d2dCoZoneOffMalus = 0;
+CO_JOEY.d2dCoZoneOffBonus = 0;
+CO_JOEY.d2dCoZoneBaseOffBonus = 0;

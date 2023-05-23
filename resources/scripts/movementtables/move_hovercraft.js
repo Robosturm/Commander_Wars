@@ -101,7 +101,7 @@ var Constructor = function()
         var currentGroup = currentTerrain.getTerrainGroup();
         var targetGroup = terrain.getTerrainGroup();
         // sea tile near land?
-        if (currentGroup === 0)
+        if (currentGroup === 0 && map !== null)
         {
             // check all fields we can attack
             var valid = false;

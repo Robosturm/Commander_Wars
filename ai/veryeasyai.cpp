@@ -47,6 +47,7 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
                   {"MinCoUnitCount", "CoUnit", &m_minCoUnitCount, 5.0f, 1.0f, 10.0f},
                   {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
+                  {"MinHpDamage", "General", &m_minHpDamage, -2.0f, -10.0f, 10.0f},
                 };
     
     if (m_pMap != nullptr &&

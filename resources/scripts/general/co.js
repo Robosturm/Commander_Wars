@@ -653,5 +653,26 @@ var CO =
                 "co_officier_ti",
                 "co_officier_dm",];
     },
+
+    isActive : function(co)
+    {
+        var map = co.getMap();
+        if (map !== null)
+        {
+            if (map.getGameRules().getParallelCos())
+            {
+                return true;
+            }
+            else if (co.getIsCO0() === true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    },
 }
 

@@ -81,7 +81,7 @@ namespace oxygine
     {
         removeChildren();
         instance->detach();
-        instance = nullptr;
+        instance.free();
     }
 
     void Stage::updateStage()

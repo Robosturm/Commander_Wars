@@ -8,14 +8,11 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -25,7 +22,6 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
     };
-    this.bonusLuckDamage = 50;
     this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
@@ -74,14 +70,15 @@ var Constructor = function()
         }
         var variables = co.getVariables();
         var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
-        dmgModVar.writeDataFloat(CO_CONRAD.bonusLuckDamage);
+        dmgModVar.writeDataFloat(CO_CONRAD.superPowerBonusLuckDamage);
     };
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -94,6 +91,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/conrad.mp3", 4027, 104641)
                 break;
+            }
         }
     };
 
@@ -113,90 +111,127 @@ var Constructor = function()
         variables.clear();
     }
 
+    this.superPowerBonusLuckDamage = 50;
+
+    this.powerVisionMultiplier = 5;
+    this.powerBonusVisionRange = 1;
+    this.powerDefBonus = 10;
+    this.powerOffBonus = 10;
+
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneVisionMultiplier = 5;
+
+    this.d2dCounterDamageBonus = -20;
+    this.d2dVisionMultiplier = 1;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (isDefender)
+        if (CO.isActive(co))
         {
-            // return weak counter damage of conrad
-            return -20;
-        }
-        var units = co.getOwner().getUnits();
-        var visionCount = 0;
-        var size = units.size();
-        for (var i = 0; i < size; i++)
-        {
-            var unit = units.at(i);
-            var x = unit.getX();
-            var y = unit.getY();
-            var distance = Math.abs(x - defPosX) + Math.abs(y - defPosY);
-            if (distance <= unit.getVision(Qt.point(x, y)))
+            var ret = 0;
+            if (isDefender)
             {
-                visionCount += 1;
+                ret = CO_CONRAD.d2dCounterDamageBonus;
             }
-        }
-        switch (co.getPowerMode())
-        {
+            var units = co.getOwner().getUnits();
+            var visionCount = 0;
+            var size = units.size();
+            for (var i = 0; i < size; i++)
+            {
+                var unit = units.at(i);
+                var x = unit.getX();
+                var y = unit.getY();
+                var distance = Math.abs(x - defPosX) + Math.abs(y - defPosY);
+                if (distance <= unit.getVision(Qt.point(x, y)))
+                {
+                    visionCount += 1;
+                }
+            }
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return visionCount * 2 + 10;
+                ret += visionCount * CO_CONRAD.powerVisionMultiplier + CO_CONRAD.powerOffBonus;
+                break;
             case GameEnums.PowerMode_Power:
-                return visionCount * 5 + 10;
+                ret += visionCount * CO_CONRAD.powerVisionMultiplier + CO_CONRAD.powerOffBonus;
+                break;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return visionCount * 5 + 10;
+                    ret += visionCount * CO_CONRAD.d2dCoZoneVisionMultiplier + CO_CONRAD.d2dCoZoneOffBonus;
                 }
-                break;
+                else
+                {
+                    ret += visionCount * CO_CONRAD.d2dVisionMultiplier;
+                }
+            }
+            return ret;
         }
-        return visionCount * 1;
+        return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_CONRAD.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_CONRAD.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
 
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
-        // reduce luck to zero
-        return -unit.getHpRounded() / 2;
+        if (CO.isActive(co))
+        {
+            return -unit.getHpRounded();
+        }
+        return 0;
     };
 
     this.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                   defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (isDefender === false)
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (isDefender === false)
             {
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     var variables = co.getVariables();
                     var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
                     var bonusDamage = dmgModVar.readDataFloat();
-                    return bonusDamage;
+                    return bonusDamage + attackerBaseHp / 2;
                 case GameEnums.PowerMode_Power:
                 default:
                     break;
+                }
             }
+            return attackerBaseHp / 2;
         }
-        // return average luck as true damage
-        return attackerBaseHp / 4;
+        return 0;
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (gotAttacked === false && attacker.getOwner() === co.getOwner())
             {
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     var variables = co.getVariables();
@@ -216,6 +251,7 @@ var Constructor = function()
                     break;
                 default:
                     break;
+                }
             }
         }
     };
@@ -228,7 +264,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 return 0;
             case GameEnums.PowerMode_Power:
-                return 1;
+                return CO_CONRAD.powerBonusVisionRange;
             default:
                 return 0;
         }
@@ -240,13 +276,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_INTEL_TRUCK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_INTEL_TRUCK"];
+            }
         }
         return [];
     };
@@ -270,13 +309,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nIntel truck\n") +
-               qsTr("\nGlobal Effect: \nConrad's units gain firepower when attacking an enemy unit that is within vision range of Conrad's units, including enhanced vision from terrain. The more of Conrad's units that has sight on an enemy unit, the stronger the firepower. Counter attacks are slightly weaker and units are never lucky.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain even more firepower for each unit within vision range.");
+        var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
+               qsTr("\nGlobal Effect: \nConrad's units gain %0% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain. Counter attacks are %1% weaker and units deal always average luck damage.") +
+               qsTr("\n\nCO Zone Effect: \nConrad's units gain %2% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain.");
+        text = replaceTextArgs(text, [CO_CONRAD.d2dVisionMultiplier, CO_CONRAD.d2dCounterDamageBonus, CO_CONRAD.d2dCoZoneVisionMultiplier]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Unit vision is extended and all units get firepower bonuses for enemy units in vision range.");
+        var text = qsTr("Unit vision is extended by %0. Conrad's units gain %1% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain.");
+        text = replaceTextArgs(text, [CO_CONRAD.powerBonusVisionRange, CO_CONRAD.powerVisionMultiplier]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -284,8 +327,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Conrad's very first attack of the turn deals +%0% luck damage. For the entire turn, all percent damage that exceeds the enemy's current health is carried over to the next engagement.");
-        text = replaceTextArgs(text, [CO_CONRAD.bonusLuckDamage]);
+        var text = qsTr("Conrad's very first attack of the turn deals +%0% luck damage. For the entire turn, all percent damage that exceeds the enemy's current health is carried over to the next engagement. Conrad's units gain %1% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain.");
+        text = replaceTextArgs(text, [CO_CONRAD.superPowerBonusLuckDamage, CO_CONRAD.powerVisionMultiplier]);
         return text;
     };
     this.getSuperPowerName = function(co)

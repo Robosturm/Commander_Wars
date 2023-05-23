@@ -37,7 +37,7 @@ void GameAnimationWalk::start()
         {
             setVisible(true);
         }
-        m_previousAnimation = nullptr;
+        m_previousAnimation.free();
         doPreAnimationCall();
         AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         for (auto & data : m_SoundData)

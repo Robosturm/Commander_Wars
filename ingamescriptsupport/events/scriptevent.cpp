@@ -19,6 +19,7 @@
 #include "ingamescriptsupport/events/scripteventcentermap.h"
 #include "ingamescriptsupport/events/scripteventplaysound.h"
 
+#include "coreengine/interpreter.h"
 
 const char* const ScriptEvent::EventDialog  = "Dialog";
 const char* const ScriptEvent::EventSpawnUnit = "Spawn Unit";
@@ -45,6 +46,7 @@ ScriptEvent::ScriptEvent(GameMap* pMap, EventType type)
     : m_Type(type),
       m_pMap(pMap)
 {
+    Interpreter::setCppOwnerShip(this);
 }
 
 spScriptEvent ScriptEvent::createReadEvent(GameMap* pMap, QTextStream& rStream, QString line)

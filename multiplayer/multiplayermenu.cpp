@@ -618,7 +618,7 @@ void Multiplayermenu::showDisconnectReason(quint64 socketID, const QJsonObject &
     if (m_pDialogConnecting.get() != nullptr)
     {
         m_pDialogConnecting->detach();
-        m_pDialogConnecting = nullptr;
+        m_pDialogConnecting.free();
     }
     emit m_pNetworkInterface->sigDisconnectClient(socketID);
     buttonBack();
@@ -1536,7 +1536,7 @@ void Multiplayermenu::slotCancelHostConnection()
 
 void Multiplayermenu::slotHostGameLaunched()
 {
-    m_pDialogConnecting = nullptr;
+    m_pDialogConnecting.free();
     // we're hosting a game so we get the same rights as a local host
     m_pNetworkInterface->setIsServer(true);
     createChat();
@@ -1841,7 +1841,7 @@ void Multiplayermenu::buttonBack()
         if (m_Chat.get() != nullptr)
         {
             m_Chat->detach();
-            m_Chat = nullptr;
+            m_Chat.free();
         }
         disconnectNetwork();
         MapSelectionMapsMenue::buttonBack();
@@ -1980,10 +1980,10 @@ void Multiplayermenu::disconnectNetwork()
         if (m_Chat.get())
         {
             m_Chat->detach();
-            m_Chat = nullptr;
+            m_Chat.free();
         }
         m_pPlayerSelection->attachNetworkInterface(spNetworkInterface());
-        m_pNetworkInterface = nullptr;
+        m_pNetworkInterface.free();
     }    
 }
 

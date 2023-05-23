@@ -362,6 +362,12 @@ public slots:
      * @brief doResyncGame
      */
     void doResyncGame();
+    /**
+     * @brief changeAiForPlayer
+     * @param player
+     * @param ai
+     */
+    void changeAiForPlayer(qint32 player, GameEnums::AiTypes ai);
 protected slots:
     /**
      * @brief keyInput

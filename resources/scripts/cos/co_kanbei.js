@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2", "+alt3", "+alt4"];
     };
 
@@ -15,21 +13,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/kanbei.mp3", 4783, 60483);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/kanbei.mp3", 4783, 60483);
+                break;
+            }
         }
     };
 
@@ -140,57 +140,70 @@ var Constructor = function()
     };
     this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
-        return baseCost * CO_KANBEI.costIncrease / 100;
+        return baseCost * CO_KANBEI.d2dCostIncrease / 100;
     };
-    this.coZoneBonus = 50;
-    this.globalBonus = 15;
-    this.costIncrease = 20;
-    this.powerAtkBonus = 60;
-    this.superPowerAtkBonus = 70;
-    this.superPowerCounterBonus = 140;
+
+    this.d2dcoZoneBonus = 50;
+
+    this.d2dBonus = 50;
+    this.d2dCostIncrease = 20;
+
+    this.powerOffBonus = 60;
     this.powerDefBonus = 60;
+
+    this.superPowerOffBonus = 70;
+    this.superPowerCounterBonus = 140;
     this.superPowerDefBonus = 70;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (isDefender)
+            switch (co.getPowerMode())
             {
-                return CO_KANBEI.superPowerCounterBonus;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (isDefender)
+                {
+                    return CO_KANBEI.superPowerCounterBonus;
+                }
+                return CO_KANBEI.superPowerOffBonus;
+            case GameEnums.PowerMode_Power:
+                return CO_KANBEI.powerOffBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_KANBEI.d2dcoZoneBonus;
+                }
+                break;
             }
-            return CO_KANBEI.superPowerAtkBonus;
-        case GameEnums.PowerMode_Power:
-            return CO_KANBEI.powerAtkBonus;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
-                return CO_KANBEI.coZoneBonus;
-            }
-            break;
+            return CO_KANBEI.d2dBonus;
         }
-        return CO_KANBEI.globalBonus;
+        return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return CO_KANBEI.superPowerDefBonus;
-        case GameEnums.PowerMode_Power:
-            return CO_KANBEI.powerDefBonus;
-        default:
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            switch (co.getPowerMode())
             {
-                return CO_KANBEI.coZoneBonus;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return CO_KANBEI.superPowerDefBonus;
+            case GameEnums.PowerMode_Power:
+                return CO_KANBEI.powerDefBonus;
+            default:
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return CO_KANBEI.d2dcoZoneBonus;
+                }
+                break;
             }
-            break;
+            return CO_KANBEI.d2dBonus;
         }
-        return CO_KANBEI.globalBonus;
+        return 0;
     };
 
     this.getAiCoUnitBonus = function(co, unit, map)
@@ -200,13 +213,16 @@ var Constructor = function()
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_ROYAL_GUARD"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_ROYAL_GUARD"];
+            }
         }
         return [];
     };
@@ -233,13 +249,13 @@ var Constructor = function()
         var text = qsTr("\nSpecial Unit:\nRoyal Guard\n") +
                 qsTr("\nGlobal Effect: \nUnits have %0% stronger firepower and defense, but are %1% more expensive.") +
                 qsTr("\n\nCO Zone Effect: \nUnits have %2% stronger firepower and defense.");
-        text = replaceTextArgs(text, [CO_KANBEI.globalBonus, CO_KANBEI.costIncrease , CO_KANBEI.coZoneBonus]);
+        text = replaceTextArgs(text, [CO_KANBEI.d2dBonus, CO_KANBEI.d2dCostIncrease , CO_KANBEI.d2dcoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
         var text = qsTr("Increases firepower to %0% and defence to %0% of all units.");
-        text = replaceTextArgs(text, [CO_KANBEI.powerAtkBonus, CO_KANBEI.powerDefBonus]);
+        text = replaceTextArgs(text, [CO_KANBEI.powerOffBonus, CO_KANBEI.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -249,7 +265,7 @@ var Constructor = function()
     this.getSuperPowerDescription = function(co)
     {
         var text =  qsTr("Greatly strengthens offensive to %0% and defensive to %1% of all units  and counter attacks are %2% stronger.");
-        text = replaceTextArgs(text, [CO_KANBEI.superPowerAtkBonus, CO_KANBEI.superPowerDefBonus, CO_KANBEI.superPowerCounterBonus]);
+        text = replaceTextArgs(text, [CO_KANBEI.superPowerOffBonus, CO_KANBEI.superPowerDefBonus, CO_KANBEI.superPowerCounterBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

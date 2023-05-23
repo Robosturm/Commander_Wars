@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2"];
     };
 
@@ -109,9 +107,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -124,6 +123,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/flak.mp3", 9650, 78077)
                 break;
+            }
         }
     };
 
@@ -135,51 +135,82 @@ var Constructor = function()
     {
         return "BH";
     };
+
+    this.superPowerBonusLuck = 90;
+    this.superPowerBonusMissfortune = 40;
+
+    this.powerBonusLuck = 50;
+    this.powerBonusMissfortune = 20;
+
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+
+    this.d2dCoZoneBonusLuck = 25;
+    this.d2dCoZoneBonusMissfortune = 10;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
+    this.d2dBonusLuck = 10;
+    this.d2dBonusMissfortune = 5;
+
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 90;
+                return CO_FLAK.superPowerBonusLuck;
             case GameEnums.PowerMode_Power:
-                return 55;
+                return CO_FLAK.powerBonusLuck;
             default:
                 if (co.inCORange(Qt.point(posX, posY), unit))
                 {
-                    return 25;
+                    return CO_FLAK.d2dCoZoneBonusLuck;
                 }
                 break;
+            }
+            return CO_FLAK.d2dBonusLuck;
         }
-        return 10;
-    };
-	
-    this.getBonusMisfortune = function(co, unit, posX, posY, map)
-    {
-        switch (co.getPowerMode())
-        {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 40;
-            case GameEnums.PowerMode_Power:
-                return 20;
-            default:
-                if (co.inCORange(Qt.point(posX, posY), unit))
-                {
-                    return 10;
-                }
-                break;
-        }
-        return 5;
+        return 0;
     };
 
+    this.getBonusMisfortune = function(co, unit, posX, posY, map)
+    {
+        if (CO.isActive(co))
+        {
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return CO_FLAK.superPowerBonusMissfortune;
+            case GameEnums.PowerMode_Power:
+                return CO_FLAK.powerBonusMissfortune;
+            default:
+                if (co.inCORange(Qt.point(posX, posY), unit))
+                {
+                    return CO_FLAK.d2dCoZoneBonusMissfortune;
+                }
+                break;
+            }
+            return CO_FLAK.d2dBonusMissfortune;
+        }
+        return 0;
+    };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_FLAK.powerOffBonus;
+            }
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_FLAK.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
@@ -187,10 +218,16 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_FLAK.powerOffBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_FLAK.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -201,13 +238,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_AT_CYCLE"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_AT_CYCLE"];
+            }
         }
         return [];
     };
@@ -231,13 +271,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nAT Cycle\n") +
-               qsTr("\nGlobal Effect: \nUnits have more luck and misfortune") +
-               qsTr("\n\nCO Zone Effect: \nUnits have even more luck and misfortune");
+        var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
+               qsTr("\nGlobal Effect: \nUnits have %0% more Luck and %1% Misfortune.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have %0% more Luck and %1% Misfortune.");
+        text = replaceTextArgs(text, [CO_FLAK.d2dBonusLuck, CO_FLAK.d2dBonusMissfortune,
+                                      CO_FLAK.d2dCoZoneBonusLuck, CO_FLAK.d2dCoZoneBonusMissfortune]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Firepower rises, but so does his chances of reduced firepower.");
+        var text = qsTr("Units have %0% more Luck and %1% Misfortune.");
+        text = replaceTextArgs(text, [CO_FLAK.powerBonusLuck, CO_FLAK.powerBonusMissfortune]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -245,7 +290,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Firepower rises dramatically, but so does his chances of reduced power.");
+        var text = qsTr("Units have %0% more Luck and %1% Misfortune.");
+        text = replaceTextArgs(text, [CO_FLAK.superPowerBonusLuck, CO_FLAK.superPowerBonusMissfortune]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

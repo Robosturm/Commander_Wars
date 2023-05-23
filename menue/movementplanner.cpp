@@ -229,7 +229,7 @@ void MovementPlanner::clickedTopbar(QString itemID)
 
 void MovementPlanner::hide()
 {
-    m_activeAddIn = nullptr;
+    m_activeAddIn.free();
     emit sigHide();
 }
 
@@ -389,7 +389,7 @@ void MovementPlanner::stopAddIn()
             m_activeAddIn->removeAllSprites();
         }
         m_activeAddIn->detach();
-        m_activeAddIn = nullptr;
+        m_activeAddIn.free();
         CursorData data;
         getCursor()->changeCursor(data.getCursor(), data.getXOffset(), data.getYOffset(), data.getScale());
     }

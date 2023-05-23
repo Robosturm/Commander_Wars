@@ -2,7 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
         return ["+alt", "+alt2", "+alt3"];
     };
 
@@ -45,7 +44,7 @@ var Constructor = function()
             var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(2);
+            animation.writeDataInt32(CO_ANDY.powerHeal);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
             var delay = globals.randInt(135, 265);
             if (animations.length < 5)
@@ -90,7 +89,7 @@ var Constructor = function()
             var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(5);
+            animation.writeDataInt32(CO_ANDY.superPowerHeal);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
             var delay = globals.randInt(135, 265);
             if (animations.length < 7)
@@ -127,8 +126,7 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
         case GameEnums.PowerMode_Power:
             audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
@@ -153,58 +151,80 @@ var Constructor = function()
     {
         return "OS";
     };
-    this.coZoneBonus = 20;
-    this.coPowerBonus = 20;
-    this.coSuperPowerBonus = 30;
-    this.coMovementBonus = 1;
+    this.superPowerHeal = 5;
+    this.superPowerOffBonus = 30;
+    this.superPowerMovementBonus = 1;
+
+    this.powerDefBonus = 10;
+    this.powerOffBonus = 10;
+    this.powerHeal = 2;
+
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneDefBonus = 20;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
        defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return CO_ANDY.coSuperPowerBonus;
-        case GameEnums.PowerMode_Power:
-            return CO_ANDY.coPowerBonus;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            switch (co.getPowerMode())
             {
-                return CO_ANDY.coZoneBonus;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return CO_ANDY.superPowerOffBonus;
+            case GameEnums.PowerMode_Power:
+                return CO_ANDY.powerOffBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_ANDY.d2dCoZoneOffBonus;
+                }
+                break;
             }
-            break;
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return CO_ANDY.coZoneBonus;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_ANDY.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_ANDY.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+        if (CO.isActive(co))
         {
-            return CO_ANDY.coMovementBonus;
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            {
+                return CO_ANDY.superPowerMovementBonus;
+            }
         }
         return 0;
     };
 
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_REPAIR_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_REPAIR_TANK"];
+            }
         }
         return [];
     };
@@ -232,16 +252,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nGlobal Day-to-day: \nNo abilities</r>") +
-        qsTr("<r>\n\nSpecial Unit:\nRepair Tank</r>") + 
-        qsTr("<r>\n\nCO Zone Effect: \nUnits gain </r><div c='#55ff00'>+%0%</div><r> firepower and defense.</r>");
-        text = replaceTextArgs(text, [CO_ANDY.coZoneBonus]);
+        var text = qsTr("<r>\n\nDay-to-day: \nNo abilities</r>") +
+                   qsTr("<r>\n\nSpecial Unit:\nRepair Tank</r>") + 
+                   qsTr("<r>\n\nCO Zone Effect: \nUnits gain </r><div c='#55ff00'>+%0%</div><r> firepower and </r><div c='#55ff00'>+%1</div><r> defence.</r>");
+        text = replaceTextArgs(text, [CO_ANDY.d2dCoZoneOffBonus, CO_ANDY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("<r>\nAll units are restored </r><div c='#55ff00'>+Two HP</div><r>. Andy's firepower and defense increases by </r><div c='#55ff00'>+%0%</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_ANDY.coPowerBonus]);
+        var text = qsTr("<r>\nRestores </r><div c='#55ff00'>+%0 HP</div><r> to all units. firepower and defense increases by </r><div c='#55ff00'>+%0%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_ANDY.powerHeal, CO_ANDY.powerOffBonus, CO_ANDY.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -250,8 +270,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("<r>\nAll units are restored </r><div c='#55ff00'>+Five HP</div><r>. Andy's firepower increases by </r><div c='#55ff00'>+%0%</div><r> and defense by </r><div c='#55ff00'>+%1%</div><r>. All units gain </r><div c='#55ff00'>+%2 movement</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_ANDY.coSuperPowerBonus, CO_ANDY.coPowerBonus, CO_ANDY.coMovementBonus]);
+        var text = qsTr("Restores </r><div c='#55ff00'>+%0 HP</div><r> to all units. Firepower rises by </r><div c='#55ff00'>+%1%</div><r> and defense by </r><div c='#55ff00'>+%2%</div><r>. All units gain </r><div c='#55ff00'>+%3 movement</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_ANDY.superPowerHeal, CO_ANDY.superPowerOffBonus, CO_ANDY.superPowerDefBonus, CO_ANDY.superPowerMovementBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

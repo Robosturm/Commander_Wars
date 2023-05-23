@@ -17,12 +17,12 @@ class TableView final : public QObject, public oxygine::Actor
 public:
     explicit TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QVector<QStringList> & tooltips, const QStringList & header, bool selectable = false);
     ~TableView() = default;
+    const QStringList & getItem(qint32 i) const;
 signals:
     void sigItemClicked();
 public slots:
     void setCurrentItem(qint32 i);
     qint32 getCurrentItem() const;
-    const QStringList & getItem(qint32 i) const;
 private:
     void addRow(qint32 i, qint32 i2, qint32 x, bool selectable, const QVector<QStringList> & tooltips);
 private:

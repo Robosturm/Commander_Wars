@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -59,7 +57,7 @@ var Constructor = function()
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
-        CO_WALTER.power(co, 1, powerNameAnimation, map);
+        CO_WALTER.power(co, CO_WALTER.superPowerDamage, powerNameAnimation, map);
     };
 
     this.power = function(co, value, powerNameAnimation, map)
@@ -188,39 +186,52 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/bh_power.mp3");
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/bh_superpower.mp3");
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/bh_tagpower.mp3");
-            break;
-        default:
-            audio.addMusic("resources/music/cos/walter.mp3");
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/bh_power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/bh_superpower.mp3");
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/walter.mp3");
+                break;
+            }
         }
     };
+
+    this.superPowerDamage = 1;
+
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 20;
+
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneDefBonus = 20;
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            return 20;
-        default:
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            switch (co.getPowerMode())
             {
-                return 20;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+            case GameEnums.PowerMode_Power:
+                return CO_WALTER.powerDefBonus;
+            default:
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return CO_WALTER.d2dCoZoneDefBonus;
+                }
+                break;
             }
-            break;
         }
         return 0;
     };
@@ -228,60 +239,73 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            return 20;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            switch (co.getPowerMode())
             {
-                return 20;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+            case GameEnums.PowerMode_Power:
+                return CO_WALTER.powerOffBonus;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return CO_WALTER.d2dCoZoneOffBonus;
+                }
+                break;
             }
-            break;
         }
         return 0;
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            if (co.getOwner() !== attacker.getOwner())
+            switch (co.getPowerMode())
             {
-                if (atkDamage > 0)
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                break;
+            case GameEnums.PowerMode_Power:
+                if (co.getOwner() !== attacker.getOwner())
                 {
-                    var attackerHp = attacker.getHp();
-                    attacker.setHp(attackerHp - atkDamage);
+                    if (atkDamage > 0)
+                    {
+                        var attackerHp = attacker.getHp();
+                        attacker.setHp(attackerHp - atkDamage);
+                    }
                 }
+                break;
+            default:
+                break;
             }
-            break;
-        default:
-            break;
         }
     };
 
     this.getHpHidden = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return true;
-        case GameEnums.PowerMode_Power:
-        default:
-            return false;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return true;
+            case GameEnums.PowerMode_Power:
+            default:
+                return false;
+            }
         }
     };
 
     this.getPerfectHpView = function(co, unit, posX, posY, map)
     {
-        // are the hp hidden of this unit?
-        return true;
+        if (CO.isActive(co))
+        {
+            return true;
+        }
+        return false;
     };
 
     this.getCOUnitRange = function(co, map)
@@ -298,13 +322,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_INTEL_TRUCK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_INTEL_TRUCK"];
+            }
         }
         return [];
     };
@@ -328,13 +355,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nIntel truck\n") +
-               qsTr("\nGlobal Effect: \nNo bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
+        var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
+            qsTr("\nGlobal Effect: \nNo bonus.") +
+            qsTr("\n\nCO Zone Effect: \nUnits gain additional %0% firepower and %1% defence.");
+        text = replaceTextArgs(text, [CO_WALTER.d2dCoZoneOffBonus, CO_WALTER.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Enemies take additional damage when they attack.");
+        var text = qsTr("Enemies take additional damage when they attack and units gain  additional %0% firepower and %1% defence.");
+        text = replaceTextArgs(text, [CO_WALTER.powerOffBonus, CO_WALTER.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -342,7 +373,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Massively reduces the ammo from enemy units and deals minor damage to them. Hides his units HP from enemies.");
+        var text = qsTr("Massively reduces the ammo from enemy units and deals %0 HP damage to them. Hides his units HP from enemies. Units gain  additional %0% firepower and %1% defence.");
+        text = replaceTextArgs(text, [CO_WALTER.superPowerDamage, CO_WALTER.powerOffBonus, CO_WALTER.powerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

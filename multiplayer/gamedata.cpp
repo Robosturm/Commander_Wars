@@ -1,4 +1,10 @@
 #include "multiplayer/gamedata.h"
+#include "coreengine/interpreter.h"
+
+GameData::GameData()
+{
+    Interpreter::setCppOwnerShip(this);
+}
 
 void GameData::serializeObject(QDataStream& pStream) const
 {

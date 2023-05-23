@@ -1,66 +1,8 @@
-CO_HACHI.getCostModifier = function(co, id, baseCost, posX, posY, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-        case GameEnums.PowerMode_Power:
-            return -baseCost * 0.5;
-        default:
-            break;
-        }
-        return -baseCost * 0.1;
-    }
-    return 0;
-};
+CO_HACHI.powerCostReduction = 0.5;
+CO_HACHI.powerOffBonus = 10;
+CO_HACHI.powerDefBonus = 10;
 
-CO_HACHI.getAdditionalBuildingActions = function(co, building, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (building.getBuildingID() === "TOWN" &&
-                    building.getOwner() === co.getOwner())
-            {
-                return "ACTION_BUILD_UNITS";
-            }
-            break;
-        case GameEnums.PowerMode_Power:
-            break;
-        default:
-            break;
-        }
-    }
-    return "";
-};
+CO_HACHI.d2dCostReduction = 0.1;
 
-CO_HACHI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
-
-CO_HACHI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        if (co.getPowerMode() > GameEnums.PowerMode_Off)
-        {
-            return 10;
-        }
-    }
-    return 0;
-};
+CO_HACHI.d2dCoZoneOffBonus = 0;
+CO_HACHI.d2dCoZoneDefBonus = 0;

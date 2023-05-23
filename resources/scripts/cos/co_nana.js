@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -109,9 +107,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -124,38 +123,54 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/nana.mp3", 409, 66237);
                 break;
+            }
         }
     };
 
+    this.superPowerExplosionRange = 2;
+    this.superPowerExplosionDamage = 2;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.powerExplosionDamage = 2;
+
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+    this.d2dCoZoneExplosionDamage = 1;
+
+    this.d2dExplosionRange = 1;
+    this.d2dExplosionDamage = 0;
+
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
-        if (!gotAttacked && attacker.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            var owner = co.getOwner();
-            var powerMode = co.getPowerMode();
-            var damage = 0;
-            var explosionRange = 1;
-            var friendlyFire = true;
-            var i = 0;
-            var defX = defender.getX();
-            var defY = defender.getY();
-            var unit = null;
-            var point = Qt.point(0, 0);
-            var hp = 0;
-            switch (powerMode)
+            if (!gotAttacked && attacker.getOwner() === co.getOwner())
             {
+                var owner = co.getOwner();
+                var powerMode = co.getPowerMode();
+                var damage = 0;
+                var explosionRange = CO_NANA.d2dExplosionRange;
+                var friendlyFire = true;
+                var i = 0;
+                var defX = defender.getX();
+                var defY = defender.getY();
+                var unit = null;
+                var point = Qt.point(0, 0);
+                var hp = 0;
+                switch (powerMode)
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    damage = 2;
-                    explosionRange = 2;
+                    damage = CO_NANA.superPowerExplosionRange;
+                    explosionRange = CO_NANA.superPowerExplosionDamage;
                     friendlyFire = false;
                     break;
                 case GameEnums.PowerMode_Power:
                     friendlyFire = false;
-                    damage = 1;
+                    damage = CO_NANA.d2dExplosionDamage;
                     if (attacker.getBaseMaxRange() === 1 && damage > 0)
                     {
-                        damage = 2;
+                        damage = CO_NANA.powerExplosionDamage;
                         var width = map.getMapWidth();
                         var heigth = map.getMapHeight();
                         var maxRange = width;
@@ -176,7 +191,7 @@ var Constructor = function()
                                 {
                                     unit = map.getTerrain(defX + point.x, defY + point.y).getUnit();
                                     if (unit !== null &&
-                                        owner.isEnemyUnit(unit))
+                                            owner.isEnemyUnit(unit))
                                     {
                                         hp = unit.getHpRounded();
                                         if (hp - damage <= 0.1)
@@ -203,34 +218,40 @@ var Constructor = function()
                 default:
                     if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
                     {
-                        damage = 1;
+                        damage = CO_NANA.d2dCoZoneExplosionDamage;
                     }
-                    break;
-            }
-
-            // deal indirect unit splash damage
-            if (attacker.getBaseMaxRange() > 1 && damage > 0)
-            {
-                var circle = globals.getCircle(1, explosionRange);
-                for (i = 0; i < circle.size(); i++)
-                {
-                    point = circle.at(i);
-                    if (map.onMap(defX + point.x, defY + point.y))
+                    else
                     {
-                        unit = map.getTerrain(defX + point.x, defY + point.y).getUnit();
-                        if (unit !== null)
+                        damage = CO_NANA.d2dExplosionDamage;
+                    }
+
+                    break;
+                }
+
+                // deal indirect unit splash damage
+                if (attacker.getBaseMaxRange() > 1 && damage > 0)
+                {
+                    var circle = globals.getCircle(1, explosionRange);
+                    for (i = 0; i < circle.size(); i++)
+                    {
+                        point = circle.at(i);
+                        if (map.onMap(defX + point.x, defY + point.y))
                         {
-                            if (owner !== unit.getOwner() || friendlyFire === true)
+                            unit = map.getTerrain(defX + point.x, defY + point.y).getUnit();
+                            if (unit !== null)
                             {
-                                hp = unit.getHpRounded();
-                                if (hp - damage <= 0.1)
+                                if (owner !== unit.getOwner() || friendlyFire === true)
                                 {
-                                    // set hp to very very low
-                                    unit.setHp(0.1);
-                                }
-                                else
-                                {
-                                    unit.setHp(hp - damage);
+                                    hp = unit.getHpRounded();
+                                    if (hp - damage <= 0.1)
+                                    {
+                                        // set hp to very very low
+                                        unit.setHp(0.1);
+                                    }
+                                    else
+                                    {
+                                        unit.setHp(hp - damage);
+                                    }
                                 }
                             }
                         }
@@ -247,20 +268,32 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_NANA.powerOffBonus;
+            }
+            else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_NANA.d2dCoZoneOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_NANA.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_NANA.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
@@ -275,17 +308,19 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_SIEGE_CANNON"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_SIEGE_CANNON"];
+            }
         }
         return [];
     };
-
 
     this.getCOArmy = function()
     {
@@ -311,13 +346,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nSiege Cannon\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nIndirect attacks deal one HP of damage to all nearby units, no matter their allegiance.");
+        var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+               qsTr("\nGlobal Effect: \nIndirect attacks deal %0 HP of damage to all nearby units, no matter their allegiance.") +
+               qsTr("\n\nCO Zone Effect: \nIndirect attacks deal %1 HP of damage to all nearby units, no matter their allegiance.");
+        text = replaceTextArgs(text, [CO_NANA.d2dExplosionDamage, CO_NANA.d2dCoZoneExplosionDamage]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Direct attacks deal one HP of damage to the nearest enemy unit. Nana's units are no longer affected by collateral damage.");
+        var text = qsTr("Direct attacks deal %0 HP of damage to the nearest enemy unit. Nana's units are no longer affected by collateral damage.");
+        text = replaceTextArgs(text, [CO_NANA.powerExplosionDamage]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -325,7 +364,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Indirect attacks deal two HP of damage to all units within a large blast radius. Nana's units are no longer affected by collateral damage.");
+        var text = qsTr("Indirect attacks deal %0 HP of damage to all units within a blast radius of %1. Nana's units are no longer affected by collateral damage.");
+        text = replaceTextArgs(text, [CO_NANA.superPowerExplosionDamage, CO_NANA.superPowerExplosionRange]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

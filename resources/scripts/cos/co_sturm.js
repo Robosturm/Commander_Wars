@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2"];
     };
 
@@ -15,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/sturm.mp3", 4054, 60338);
                 break;
+            }
         }
     };
 
@@ -39,7 +39,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_STURM.throwMeteor(co, 4, powerNameAnimation, map);
+        CO_STURM.throwMeteor(co, CO_STURM.powerDamage, powerNameAnimation, map);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -48,12 +48,11 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_STURM.throwMeteor(co, 8, powerNameAnimation, map);
+        CO_STURM.throwMeteor(co, CO_STURM.superPowerDamage, powerNameAnimation, map);
     };
 
     this.throwMeteor = function(co, damage, powerNameAnimation, map)
     {
-        // let a meteor fall :D
         var meteorTarget = co.getOwner().getRockettarget(2, damage);
         // create cool meteor animation :)
         var animation = GameAnimationFactory.createAnimation(map, meteorTarget.x + 2, meteorTarget.y - 4);
@@ -121,55 +120,79 @@ var Constructor = function()
     {
         return "BH";
     };
+
+    this.superPowerDamage = 8;
+    this.superPowerOffBonus = 50;
+    this.superPowerDefBonus = 50;
+
+    this.powerDamage = 4;
+    this.powerOffBonus = 30;
+    this.powerDefBonus = 30;
+
+    this.d2dCoZoneOffBonus = 30;
+    this.d2dCoZoneDefBonus = 30;
+
+    this.d2dOffBonus = 30;
+    this.d2dDefBonus = 30;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 50;
+                return CO_STURM.superPowerOffBonus;
             case GameEnums.PowerMode_Power:
-                return 30;
+                return CO_STURM.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 30;
+                    return CO_STURM.d2dCoZoneOffBonus;
                 }
-                break;
+                return CO_STURM.d2dOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 50;
+                return CO_STURM.superPowerDefBonus;
             case GameEnums.PowerMode_Power:
-                return 30;
+                return CO_STURM.powerDefBonus;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 30;
+                    return CO_STURM.d2dCoZoneDefBonus;
                 }
-                break;
+                return CO_STURM.d2dDefBonus;
+            }
         }
         return 0;
     };
     this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.getOwner() === co.getOwner())
+        if (CO.isActive(co))
         {
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+            if (unit.getOwner() === co.getOwner())
             {
-                return 0;
-            }
-            else
-            {
-                return -999;
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                {
+                    return 0;
+                }
+                else
+                {
+                    return -999;
+                }
             }
         }
         return 0;
@@ -198,12 +221,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nHis troops are not affected by terrain except snow.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and defense.");
+        var text = qsTr("\nGlobal Effect: \nHis troops are not affected by terrain except snow and have %0% firepower and %1% defence.") +
+                   qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %2% and defence by %3%.");
+        text = replaceTextArgs(text, [CO_STURM.d2dOffBonus, CO_STURM.d2dDefBonus, CO_STURM.d2dCoZoneOffBonus, CO_STURM.d2dCoZoneDefBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("A small Meteor fall from space and deal 4 HP of damage to all affected units.");
+        var text = qsTr("A small Meteor fall from space and deal %0 HP of damage to all affected units. Firepower is increased by %1% and defence is increased by %2%.");
+        text = replaceTextArgs(text, [CO_STURM.powerDamage, CO_STURM.powerOffBonus, CO_STURM.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -211,7 +238,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Pulls a giant meteor from space, which deals 8 HP of damage to all affected units. Firepower and defense is increased.");
+        var text = qsTr("Pulls a giant meteor from space, which deals %0 HP of damage to all affected units. Firepower is increased by %1% and defence is increased by %2%.");
+        text = replaceTextArgs(text, [CO_STURM.superPowerDamage, CO_STURM.superPowerOffBonus, CO_STURM.superPowerDefBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

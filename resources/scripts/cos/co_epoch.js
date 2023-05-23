@@ -8,8 +8,6 @@ var Constructor = function()
 
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt"];
     };
 
@@ -109,9 +107,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
                 break;
@@ -124,6 +123,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/epoch.mp3", 100, 79210)
                 break;
+            }
         }
     };
 
@@ -137,114 +137,152 @@ var Constructor = function()
     };
     this.getHpHidden = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                // are the hp hidden of this unit?
                 return true;
             default:
                 break;
+            }
         }
         return false;
 
     };
 
+    this.superPowerMovementBonus = 1;
+    this.superPowerFirerangeBonus = 1;
+    this.superPowerLuckBonus = 15;
+    this.superPowerOffBonus = 30;
+    this.superPowerDefBonus = 30;
+
+    this.powerLuckBonus = 10;
+    this.powerOffBonus = 20;
+    this.powerDefBonus = 20;
+
+    this.d2dLuckBonus = 0;
+    this.d2dOffBonus = 0;
+    this.d2dDefBonus = 0;
+
+    this.d2dCoZoneLuckBonus = 10;
+    this.d2dCoZoneOffBonus = 20;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getBonusLuck = function(co, unit, posX, posY, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 15;
+                return CO_EPOCH.superPowerLuckBonus;
             case GameEnums.PowerMode_Power:
-                return 10;
+                return CO_EPOCH.powerLuckBonus;
             default:
                 if (co.inCORange(Qt.point(posX, posY), unit))
                 {
-                    return 10;
+                    return CO_EPOCH.d2dCoZoneLuckBonus;
                 }
-                break;
+                return CO_EPOCH.d2dLuckBonus;
+            }
         }
         return 0;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 30;
+                return CO_EPOCH.superPowerOffBonus;
             case GameEnums.PowerMode_Power:
-                return 20;
+                return CO_EPOCH.powerOffBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 10;
+                    return CO_EPOCH.d2dCoZoneOffBonus;
                 }
-                break;
+                return CO_EPOCH.d2dOffBonus;
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 30;
+                return CO_EPOCH.superPowerDefBonus;
             case GameEnums.PowerMode_Power:
-                return 20;
+                return CO_EPOCH.powerDefBonus;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 10;
+                    return CO_EPOCH.d2dCoZoneDefBonus;
                 }
-                break;
+                return CO_EPOCH.d2dDefBonus;
+            }
         }
         return 0;
     };
     this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.getBaseMaxRange() > 1)
+        if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
+            if (unit.getBaseMaxRange() > 1)
             {
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    return 1;
+                    return CO_EPOCH.superPowerFirerangeBonus;
                 case GameEnums.PowerMode_Power:
                     break;
                 default:
                     break;
+                }
             }
         }
         return 0;
     };
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.getBaseMaxRange() === 1)
+        if (CO.isActive(co))
         {
-            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            if (unit.getBaseMaxRange() === 1)
             {
-                return 1;
+                if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                {
+                    return CO_EPOCH.superPowerMovementBonus;
+                }
             }
         }
         return 0;
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_AUTO_TANK"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_AUTO_TANK"];
+            }
         }
         return [];
     };
@@ -273,13 +311,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nAuto Tank\n") +
-               qsTr("\nGlobal Effect: \nNo effects") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and luck.");
+        var text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
+               qsTr("\nGlobal Effect: \nUnits have %0% increased firepower and %1% luck.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have %2% increased firepower and %3% luck.");
+        text = replaceTextArgs(text, [CO_EPOCH.d2dOffBonus, CO_EPOCH.d2dLuckBonus,
+                                      CO_EPOCH.d2dCoZoneOffBonus, CO_EPOCH.d2dCoZoneLuckBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Firepower is increased and unit HP is hidden from opponents.");
+        var text = qsTr("Firepower is increased by %0% and defence by %1% and luck raises by %2% and unit HP is hidden from opponents.");
+        text = replaceTextArgs(text, [CO_EPOCH.powerOffBonus, CO_EPOCH.powerDefBonus, CO_EPOCH.powerLuckBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -287,7 +330,10 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Direct combat units gain one movement and indirect combat units receive one extra range. Hides HP from opponents and firepower is increased.");
+        var text = qsTr("Direct combat units gain %0 movement and indirect combat units receive %1 extra range. Firepower is increased by %2% and defence by %3% and luck raises by %4%. And hides HP from opponents.");
+        text = replaceTextArgs(text, [CO_EPOCH.superPowerMovementBonus, CO_EPOCH.superPowerFirerangeBonus,
+                                      CO_EPOCH.superPowerOffBonus, CO_EPOCH.superPowerDefBonus, CO_EPOCH.superPowerLuckBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

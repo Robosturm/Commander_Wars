@@ -13,7 +13,6 @@ var Constructor = function()
 
     this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -114,21 +113,23 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/ik-486-b7.mp3", 8310, 95764);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/ik-486-b7.mp3", 8310, 95764);
+                break;
+            }
         }
     };
 
@@ -140,70 +141,97 @@ var Constructor = function()
     {
         return "MA";
     };
+
+    this.superPowerFirerangeBonus = 3;
+    this.superPowerOffMalus = 0;
+    this.superPowerDirectDefBonus = 50;
+
+    this.powerOffMalus = 0;
+    this.powerFirerangeBonus = 2;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.powerDirectDefBonus = 30;
+
+    this.d2dFirerangeBonus = 0;
+    this.d2dOffMalus = 0;
+
+    this.d2dCoZoneFirerangeBonus = 1;
+    this.d2dCoZoneOffMalus = -10;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (attacker.getBaseMaxRange() === 1 &&
-                    atkPosX === attacker.getX() &&
-                    atkPosY === attacker.getY() &&
-                    Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+            var indirectAttack = (attacker.getBaseMaxRange() === 1 &&
+                                  atkPosX === attacker.getX() &&
+                                  atkPosY === attacker.getY() &&
+                                  Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1);
+            switch (co.getPowerMode())
             {
-                return 0;
-            }
-            else
-            {
-                return 10;
-            }
-        case GameEnums.PowerMode_Power:
-            if (attacker.getBaseMaxRange() === 1 &&
-                    atkPosX === attacker.getX() &&
-                    atkPosY === attacker.getY() &&
-                    Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
-            {
-                return 0;
-            }
-            else
-            {
-                return 10;
-            }
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
-                if (attacker.getBaseMaxRange() === 1 &&
-                        atkPosX === attacker.getX() &&
-                        atkPosY === attacker.getY() &&
-                        Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (indirectAttack)
                 {
-                    return -10;
+                    return CO_IK_486_B7.superPowerOffMalus;
                 }
-                return 10;
+                else
+                {
+                    return CO_IK_486_B7.powerOffBonus;
+                }
+            case GameEnums.PowerMode_Power:
+                if (indirectAttack)
+                {
+                    return CO_IK_486_B7.powerOffMalus;
+                }
+                else
+                {
+                    return CO_IK_486_B7.powerOffBonus;
+                }
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (indirectAttack)
+                    {
+                        return CO_IK_486_B7.d2dCoZoneOffMalus;
+                    }
+                    return CO_IK_486_B7.d2dCoZoneOffBonus;
+                }
+                else
+                {
+                    if (indirectAttack)
+                    {
+                        return CO_IK_486_B7.d2dOffMalus;
+                    }
+                }
             }
-            break;
         }
         return 0;
     };
 
     this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.getBaseMaxRange() === 1 &&
+        if (CO.isActive(co))
+        {
+            if (unit.getBaseMaxRange() === 1 &&
                 posX === unit.getX() &&
                 posY === unit.getY())
-        {
-            switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 3;
-            case GameEnums.PowerMode_Power:
-                return 2;
-            default:
-                if (co.inCORange(Qt.point(posX, posY), unit))
+                switch (co.getPowerMode())
                 {
-                    return 1;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    return CO_IK_486_B7.superPowerFirerangeBonus;
+                case GameEnums.PowerMode_Power:
+                    return CO_IK_486_B7.powerFirerangeBonus;
+                default:
+                    if (co.inCORange(Qt.point(posX, posY), unit))
+                    {
+                        return CO_IK_486_B7.d2dCoZoneFirerangeBonus;
+                    }
+                    return CO_IK_486_B7.d2dFirerangeBonus;
                 }
             }
         }
@@ -213,27 +241,30 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (defender.getBaseMaxRange() === 1)
+            switch (co.getPowerMode())
             {
-                return 50;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (defender.getBaseMaxRange() === 1)
+                {
+                    return CO_IK_486_B7.superPowerDirectDefBonus;
+                }
+                return CO_IK_486_B7.powerDefBonus;
+            case GameEnums.PowerMode_Power:
+                if (defender.getBaseMaxRange() === 1)
+                {
+                    return CO_IK_486_B7.powerDirectDefBonus;
+                }
+                return CO_IK_486_B7.powerDefBonus;
+            default:
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return CO_IK_486_B7.d2dCoZoneDefBonus;
+                }
+                break;
             }
-            break;
-        case GameEnums.PowerMode_Power:
-            if (defender.getBaseMaxRange() === 1)
-            {
-                return 30;
-            }
-            break;
-        default:
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-            {
-                return 10;
-            }
-            break;
         }
         return 0;
     };
@@ -248,13 +279,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_CHAPERON"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_CHAPERON"];
+            }
         }
         return [];
     };
@@ -278,13 +312,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nChaperon\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Units gain an additional firerange when they don't move. However firepower is reduced by doing so. Normal attacks are stronger.");
+        var text = qsTr("\nSpecial Unit:\nChaperon\n") +
+               qsTr("\nGlobal Effect: \nDirect Units gain an additional firerange of %0 when they don't move. However firepower is reduced by %1% in doing so.") +
+               qsTr("\n\nCO Zone Effect: \nDirect Units gain an additional firerange of %2 when they don't move. However firepower is reduced by %3% in doing so.");
+        text = replaceTextArgs(text, [CO_IK_486_B7.d2dFirerangeBonus, CO_IK_486_B7.d2dOffMalus,
+                                      CO_IK_486_B7.d2dCoZoneFirerangeBonus, CO_IK_486_B7.d2dCoZoneOffMalus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("The defense of his direct units raises and the firerange is increased by 1 when they don't move.");
+        var text = qsTr("The defense of his direct units raises by %0 and their firerange is increased by %1% when they don't move and firepower is reduced by %2%");
+        text = replaceTextArgs(text, [CO_IK_486_B7.powerDirectDefBonus, CO_IK_486_B7.powerFirerangeBonus, CO_IK_486_B7.powerOffMalus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -292,7 +331,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("The defense of his direct units raises extremely and the firerange is increased by 2 when they don't move.");
+        var text = qsTr("The defense of his direct units raises by %0 and their firerange is increased by %1% when they don't move and firepower is reduced by %2%");
+        text = replaceTextArgs(text, [CO_IK_486_B7.superPowerDirectDefBonus, CO_IK_486_B7.superPowerFirerangeBonus, CO_IK_486_B7.superPowerOffMalus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

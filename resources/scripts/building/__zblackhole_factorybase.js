@@ -28,23 +28,26 @@ var Constructor = function()
         var xBuilding = building.getX();
         var y = building.getY() + 1;
         var map = building.getMap();
-        var units = map.getAllUnitIDs();
-        var buildlist = building.getOwner().getBuildList();
         var unitIds = [];
-        var length = units.length;
-        for (var x = xBuilding - 2; x <= xBuilding; ++x)
+        if (map !== null)
         {
-            var terrain = map.getTerrain(x, y);
-            for (var i = 0; i < length; i++)
+            var units = map.getAllUnitIDs();
+            var buildlist = building.getOwner().getBuildList();
+            var length = units.length;
+            for (var x = xBuilding - 2; x <= xBuilding; ++x)
             {
-                if (unitIds.indexOf(units[i]) < 0)
+                var terrain = map.getTerrain(x, y);
+                for (var i = 0; i < length; i++)
                 {
-                    // check all units if they can move over this terrain
-                    if (buildlist.includes(units[i]) &&
-                        Global[Global[units[i]].getMovementType()].getMovementpoints(terrain, null, terrain, true, map) > 0 &&
-                        Global[units[i]].getCOSpecificUnit() === false)
+                    if (unitIds.indexOf(units[i]) < 0)
                     {
-                        unitIds.push(units[i]);
+                        // check all units if they can move over this terrain
+                        if (buildlist.includes(units[i]) &&
+                                Global[Global[units[i]].getMovementType()].getMovementpoints(terrain, null, terrain, true, map) > 0 &&
+                                Global[units[i]].getCOSpecificUnit() === false)
+                        {
+                            unitIds.push(units[i]);
+                        }
                     }
                 }
             }

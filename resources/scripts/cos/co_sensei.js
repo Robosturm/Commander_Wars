@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
-        
         return ["+alt", "+alt2"];
     };
 
@@ -15,9 +13,10 @@ var Constructor = function()
 
     this.loadCOMusic = function(co, map)
     {
-        // put the co music in here.
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Power:
                 audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
                 break;
@@ -30,6 +29,7 @@ var Constructor = function()
             default:
                 audio.addMusic("resources/music/cos/sensei.mp3", 304, 63603);
                 break;
+            }
         }
     };
 
@@ -39,7 +39,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_SENSEI.spawnUnits(co, "INFANTRY", 9, powerNameAnimation, map);
+        CO_SENSEI.spawnUnits(co, "INFANTRY", CO_SENSEI.powerSpawnHp, powerNameAnimation, map);
     };
 
     this.activateSuperpower = function(co, powerMode, map)
@@ -48,7 +48,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_SENSEI.spawnUnits(co, "MECH", 9, powerNameAnimation, map);
+        CO_SENSEI.spawnUnits(co, "MECH", CO_SENSEI.powerSpawnHp, powerNameAnimation, map);
     };
 
     this.spawnUnits = function(co, unitID, hp, powerNameAnimation, map)
@@ -116,85 +116,163 @@ var Constructor = function()
         return "YC";
     };
 
+    this.superPowerInfOffBonus = 30;
+    this.superPowerHeliOffBonus = 80;
+
+    this.powerGroundBonus = 10;
+    this.powerInfOffBonus = 30;
+    this.powerHeliOffBonus = 80;
+    this.powerNavalOffBonus = 0;
+    this.powerOffBonus = 10;
+    this.powerDefBonus = 10;
+    this.powerSpawnHp = 9;
+
+    this.d2dCoZoneGroundBonus = 10;
+    this.d2dCoZoneInfOffBonus = 40;
+    this.d2dCoZoneHeliOffBonus = 50;
+    this.d2dCoZoneNavalOffBonus = 0;
+    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneDefBonus = 10;
+
+    this.d2dInfOffBonus = 0;
+    this.d2dHeliOffBonus = 30;
+    this.d2dNavalOffBonus = -10;
+    this.d2dGroundBonus = 0;
+    this.d2dTransporterMovementBonus =1;
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        switch (co.getPowerMode())
+        if (CO.isActive(co))
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
+            {
                 if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
-                    return 30;
+                    return CO_SENSEI.superPowerInfOffBonus;
                 }
                 else if (attacker.getUnitID() === "K_HELI")
                 {
-                    return 80;
+                    return CO_SENSEI.superPowerHeliOffBonus;
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return 0;
+                    return CO_SENSEI.powerNavalOffBonus;
                 }
-                return 10
+                else if (attacker.getUnitType() === GameEnums.UnitType_Ground ||
+                         attacker.getUnitType() === GameEnums.UnitType_Hovercraft)
+                {
+                    return CO_SENSEI.powerGroundBonus;
+                }
+                else
+                {
+                    return CO_SENSEI.powerOffBonus;
+                }
+            }
             case GameEnums.PowerMode_Power:
+            {
                 if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
-                    return 30;
+                    return CO_SENSEI.powerInfOffBonus;
                 }
                 else if (attacker.getUnitID() === "K_HELI")
                 {
-                    return 80;
+                    return CO_SENSEI.powerHeliOffBonus;
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return 0;
+                    return CO_SENSEI.powerNavalOffBonus;
                 }
-                return 10
+                else if (attacker.getUnitType() === GameEnums.UnitType_Ground ||
+                         attacker.getUnitType() === GameEnums.UnitType_Hovercraft)
+                {
+                    return CO_SENSEI.powerGroundBonus;
+                }
+                else
+                {
+                    return CO_SENSEI.powerOffBonus;
+                }
+            }
             default:
+            {
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                     {
-                        return 40;
+                        return CO_SENSEI.d2dCoZoneInfOffBonus;
                     }
                     else if (attacker.getUnitID() === "K_HELI")
                     {
-                        return 50;
+                        return CO_SENSEI.d2dCoZoneHeliOffBonus;
                     }
                     else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                     {
+                        return CO_SENSEI.d2dCoZoneNavalOffBonus;
+                    }
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Ground ||
+                             attacker.getUnitType() === GameEnums.UnitType_Hovercraft)
+                    {
+                        return CO_SENSEI.d2dCoZoneGroundBonus;
+                    }
+                    return CO_SENSEI.d2dCoZoneOffBonus;
+                }
+                else
+                {
+                    if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+                    {
+                        return CO_SENSEI.d2dInfOffBonus;
+                    }
+                    else if (attacker.getUnitID() === "K_HELI")
+                    {
+                        return CO_SENSEI.d2dHeliOffBonus;
+                    }
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+                    {
+                        return CO_SENSEI.d2dNavalOffBonus;
+                    }
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Ground ||
+                             attacker.getUnitType() === GameEnums.UnitType_Hovercraft)
+                    {
+                        return CO_SENSEI.d2dGroundBonus;
+                    }
+                    else
+                    {
                         return 0;
                     }
-                    return 10;
                 }
-                else if (attacker.getUnitID() === "K_HELI")
-                {
-                    return 30;
-                }
-                break;
-        }
-        if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-        {
-            return -10;
+            }
+            }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (CO.isActive(co))
         {
-            return 10;
+            if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return CO_SENSEI.powerDefBonus;
+            }
+            else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_SENSEI.d2dCoZoneDefBonus;
+            }
         }
         return 0;
     };
 
     this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
-        if (unit.isTransporter())
+        if (CO.isActive(co))
         {
-            return 1;
+            if (unit.isTransporter())
+            {
+                return CO_SENSEI.d2dTransporterMovementBonus;
+            }
         }
         return 0;
     };
@@ -216,13 +294,16 @@ var Constructor = function()
     };
     this.getCOUnits = function(co, building, map)
     {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
+        if (CO.isActive(co))
         {
-            return ["ZCOUNIT_COMMANDO"];
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
+            {
+                return ["ZCOUNIT_COMMANDO"];
+            }
         }
         return [];
     };
@@ -246,13 +327,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nCommando\n") +
-               qsTr("\nGlobal Effect: \nCopters have increased firepower and Naval Units are weaker.") +
-               qsTr("\n\nCO Zone Effect: \nCopters have way more firepower and infantries higher firepower as well.");
+        var text = qsTr("\nSpecial Unit:\nCommando\n") +
+            qsTr("\nGlobal Effect: \nCopters have increased firepower by %0% and infantry gain %1% firepower and Naval Units loose %2% firepower and ground units %3% firepower. Transport units gain %6 movement points") +
+            qsTr("\n\nCO Zone Effect: \nCopters have firepower %4% and infantries gain firepower %5%.");
+        text = replaceTextArgs(text, [CO_SENSEI.d2dHeliOffBonus, CO_SENSEI.d2dInfOffBonus, CO_SENSEI.d2dNavalOffBonus, CO_SENSEI.d2dGroundBonus,
+                                      CO_SENSEI.d2dCoZoneHeliOffBonus, CO_SENSEI.d2dCoZoneInfOffBonus, CO_SENSEI.d2dTransporterMovementBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.");
+        var text = qsTr("Copter firepower increases. Infantry units with %0 HP appear in all his cities, ready to be moved.");
+        text = replaceTextArgs(text, [CO_SENSEI.powerSpawnHp]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -260,7 +346,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Copter firepower increases. Mech units with 9 HP appear in all his cities, ready to be moved.");
+        var text = qsTr("Copter firepower increases. Mech units with %0 HP appear in all his cities, ready to be moved.");
+        text = replaceTextArgs(text, [CO_SENSEI.powerSpawnHp]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

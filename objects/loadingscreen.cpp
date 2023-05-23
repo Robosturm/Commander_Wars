@@ -108,5 +108,5 @@ void LoadingScreen::hide()
 {
     CONSOLE_PRINT("LoadingScreen::hide", GameConsole::eDEBUG);
     m_pLoadingScreen->detach();
-    m_pLoadingScreen = nullptr;
+    m_pLoadingScreen.free();
 }

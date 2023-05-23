@@ -1,60 +1,12 @@
-CO_WAYLON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (attacker.getUnitType() === GameEnums.UnitType_Air)
-            {
-                return 50;
-            }
-            return 0;
-        case GameEnums.PowerMode_Power:
-            if (attacker.getUnitType() === GameEnums.UnitType_Air)
-            {
-                return 10;
-            }
-            return 0;
-        default:
-            break;
-        }
-    }
-    return 0;
-};
-
-CO_WAYLON.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-{
-    if (co.getIsCO0() === true)
-    {
-        switch (co.getPowerMode())
-        {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (defender.getUnitType() === GameEnums.UnitType_Air)
-            {
-                return 270;
-            }
-            break;
-        case GameEnums.PowerMode_Power:
-            if (defender.getUnitType() === GameEnums.UnitType_Air)
-            {
-                return 200;
-            }
-            else
-            {
-                return 0;
-            }
-        default:
-            if (defender.getUnitType() === GameEnums.UnitType_Air)
-            {
-                return 30;
-            }
-            break;
-        }
-    }
-    return 0;
-};
+CO_WAYLON.superPowerOffBonus = 50;
+CO_WAYLON.superPowerDefBonus = 270;
+CO_WAYLON.powerBaseOffBonus = 0;
+CO_WAYLON.powerOffBonus = 10;
+CO_WAYLON.powerDefBonus = 200;
+CO_WAYLON.powerDefBaseBonus = 10;
+CO_WAYLON.d2dOffBonus = 0;
+CO_WAYLON.d2dDefBonus = 30;
+CO_WAYLON.d2dCoZoneDefBonus = 0;
+CO_WAYLON.d2dCoZoneDefBaseBonus = 0;
+CO_WAYLON.d2dCoZoneOffBonus = 0;
+CO_WAYLON.d2dCoZoneOffBaseBonus = 0;
