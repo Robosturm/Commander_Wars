@@ -304,7 +304,7 @@ void PerkSelectionDialog::showDeleteBannlist()
     }
 }
 
-void PerkSelectionDialog::deleteBannlist(const QString & file)
+void PerkSelectionDialog::deleteBannlist(const QString file)
 {
     QFile::remove(file);
     updatePredefinedList();
@@ -351,7 +351,7 @@ void PerkSelectionDialog::savePerklist(QString filename)
     }
 }
 
-void PerkSelectionDialog::doSaveBannlist(const QString & filename, const QString & path)
+void PerkSelectionDialog::doSaveBannlist(const QString filename, const QString path)
 {
     Filesupport::storeList(filename, m_pPerkSelection->getPerks(), path);
     updatePredefinedList();

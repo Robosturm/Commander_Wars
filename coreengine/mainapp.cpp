@@ -227,9 +227,9 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
+            m_AudioManager = spAudioManager::create(m_noAudio);
 #ifdef AUDIOSUPPORT
             m_audioThread->start(QThread::Priority::HighestPriority);
-            m_AudioManager = spAudioManager::create(m_noAudio);
             m_AudioManager->moveToThread(m_audioThread.get());
             m_AudioManager->initAudio();
             m_AudioManager->clearPlayList();
@@ -275,7 +275,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::Building:
         {
-            m_AudioManager->playRandom();
+            if (m_AudioManager.get() != nullptr)
+            {
+                m_AudioManager->playRandom();
+            }
             redrawUi();
             BuildingSpriteManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
@@ -955,7 +958,7 @@ void Mainapp::doMapshot(BaseGamemenu* pMenu)
     }
 }
 
-void Mainapp::saveMapAsImage(Minimap* pMinimap, QImage & img)
+void Mainapp::saveMapAsImage(Minimap* pMinimap, QImage img)
 {
     if (!m_shuttingDown && !m_noUi)
     {

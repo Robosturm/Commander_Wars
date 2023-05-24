@@ -1873,7 +1873,7 @@ void GameMenue::showPlayerUnitStatistics(Player* pPlayer)
     }
 }
 
-void GameMenue::showXmlFileDialog(const QString & xmlFile, bool saveSettings)
+void GameMenue::showXmlFileDialog(const QString xmlFile, bool saveSettings)
 {    
     m_Focused = false;
     CONSOLE_PRINT("showXmlFile() " + xmlFile, GameConsole::eDEBUG);

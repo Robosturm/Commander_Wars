@@ -41,7 +41,7 @@ public:
      */
     QVector<CoGroup> getCoGroups(QStringList & coids);
 signals:
-    void sigLoadResAnim(const QString & coid, const QString & file, QImage colorTable, QImage maskTable, bool useColorBox);
+    void sigLoadResAnim(const QString coid, const QString file, QImage colorTable, QImage maskTable, bool useColorBox);
 public slots:
     /**
      * @brief getSpriteCOIDs
@@ -63,7 +63,7 @@ public slots:
      * @param colorTable
      * @param maskTable
      */
-    void loadResAnim(const QString & coid, const QString & file, QImage colorTable, QImage maskTable, bool useColorBox);
+    void loadResAnim(const QString coid, const QString file, QImage colorTable, QImage maskTable, bool useColorBox);
     /**
      * @brief removeRessource
      * @param id

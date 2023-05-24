@@ -29,6 +29,7 @@ AudioManager::AudioManager(bool noAudio)
     Interpreter::setCppOwnerShip(this);
     if (!m_noAudio)
     {
+#ifdef AUDIOSUPPORT
         connect(this, &AudioManager::sigPlayMusic,         this, &AudioManager::SlotPlayMusic, Qt::QueuedConnection);
         connect(this, &AudioManager::sigSetVolume,         this, &AudioManager::SlotSetVolume, Qt::QueuedConnection);
         connect(this, &AudioManager::sigAddMusic,          this, &AudioManager::SlotAddMusic, Qt::QueuedConnection);
@@ -39,16 +40,26 @@ AudioManager::AudioManager(bool noAudio)
         connect(this, &AudioManager::sigStopSound,         this, &AudioManager::SlotStopSound, Qt::QueuedConnection);
         connect(this, &AudioManager::sigStopAllSounds,     this, &AudioManager::SlotStopAllSounds, Qt::QueuedConnection);
         connect(this, &AudioManager::sigChangeAudioDevice, this, &AudioManager::SlotChangeAudioDevice, Qt::QueuedConnection);
-        connect(this, &AudioManager::sigLoadNextAudioFile, this, &AudioManager::loadNextAudioFile, Qt::QueuedConnection);        
-#ifdef AUDIOSUPPORT
-        connect(this, &AudioManager::sigDeleteSound,       this, &AudioManager::deleteSound, Qt::QueuedConnection);
-        connect(this, &AudioManager::sigPlayDelayedSound,  this, &AudioManager::playDelayedSound, Qt::QueuedConnection);
-        connect(this, &AudioManager::sigStopSoundInternal, this, &AudioManager::stopSoundInternal, Qt::QueuedConnection);
-#endif
+        connect(this, &AudioManager::sigLoadNextAudioFile, this, &AudioManager::loadNextAudioFile, Qt::QueuedConnection);
+
         // sync startup and stop signals and slots
         connect(this, &AudioManager::sigInitAudio,         this, &AudioManager::initAudio, Qt::BlockingQueuedConnection);
         connect(this, &AudioManager::sigStopAudio,         this, &AudioManager::stopAudio, Qt::BlockingQueuedConnection);
         connect(this, &AudioManager::sigCreateSoundCache,  this, &AudioManager::createSoundCache, Qt::BlockingQueuedConnection);
+        for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
+        {
+            m_soundEffectData[i].sound.setObjectName("SoundEffect" + QString::number(i));
+            m_soundEffectData[i].timer.setObjectName("SoundEffect" + QString::number(i));
+            m_soundEffectData[i].timer.setSingleShot(true);
+            connect(&m_soundEffectData[i].sound, &QSoundEffect::statusChanged, this, [this, i]()
+            {
+                if (m_soundEffectData[i].sound.status() == QSoundEffect::Error)
+                {
+                    CONSOLE_PRINT_MODULE("Error: Occured when playing sound: " + m_soundEffectData[i].sound.source().toString(), GameConsole::eDEBUG, GameConsole::eAudio);
+                }
+            }, Qt::QueuedConnection);
+        }
+#endif
     }
 }
 
@@ -61,22 +72,6 @@ void AudioManager::stopAudio()
         {
             m_player->m_player.disconnect();
             m_player->m_player.stop();
-        }
-        for (auto & cache : m_soundCaches)
-        {
-            for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
-            {
-                if (cache->sound[i] != nullptr)
-                {
-                    cache->timer[i]->disconnect();
-                    cache->timer[i]->stop();
-                    cache->sound[i]->disconnect();
-                    cache->sound[i]->stop();
-                    cache->sound[i]->deleteLater();
-                    cache->sound[i] = nullptr;
-                    cache->timer[i].reset();
-                }
-            }
         }
         m_soundCaches.clear();
         m_positionChangedTimer.disconnect();
@@ -232,28 +227,6 @@ void AudioManager::createPlayer()
 #endif
 }
 
-qint32 AudioManager::getSoundsBuffered()
-{    
-    qint32 count = 0;
-#ifdef AUDIOSUPPORT
-    for (const auto & cache : qAsConst(m_soundCaches))
-    {
-        for (const auto & sound : qAsConst(cache->sound))
-        {
-            if (sound != nullptr)
-            {
-                ++count;
-            }
-            else
-            {
-                break;
-            }
-        }
-    }
-#endif
-    return count;
-}
-
 void AudioManager::changeAudioDevice(const QVariant& value)
 {
     if (Mainapp::getInstance()->isAudioThread())
@@ -266,7 +239,7 @@ void AudioManager::changeAudioDevice(const QVariant& value)
     }
 }
 
-void AudioManager::SlotChangeAudioDevice(const QVariant& value)
+void AudioManager::SlotChangeAudioDevice(const QVariant value)
 {
 #ifdef AUDIOSUPPORT
     if (!m_noAudio)
@@ -691,36 +664,16 @@ void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float
         if (m_soundCaches.contains(file))
         {
             auto & soundCache = m_soundCaches[file];
-            bool started = false;
-            for (qint32 i = soundCache->nextSoundToUse; i < SoundData::MAX_SAME_SOUNDS; ++i)
+            if (soundCache->m_usedSounds.size() < soundCache->m_maxUseCount)
             {
-                if (soundCache->timer[i].get() == nullptr)
-                {
-                    break;
-                }
-                else if (tryPlaySoundAtCachePosition(soundCache, i,
-                                                     file, loops, delay, sound,
-                                                     stopOldestSound, duration))
-                {
-                    started = true;
-                    break;
-                }
-            }
-            if (!started)
-            {
-                for (qint32 i = 0; i < soundCache->nextSoundToUse; ++i)
+                for (qint32 i = 0; i < MAX_PARALLEL_SOUNDS; ++i)
                 {
                     if (tryPlaySoundAtCachePosition(soundCache, i,
                                                     file, loops, delay, sound,
                                                     stopOldestSound, duration))
                     {
-                        started = true;
                         break;
                     }
-                }
-                if (!started)
-                {
-                    CONSOLE_PRINT_MODULE("no free cached sound found.", GameConsole::eDEBUG, GameConsole::eAudio);
                 }
             }
         }
@@ -738,9 +691,10 @@ void AudioManager::SlotStopAllSounds()
     CONSOLE_PRINT_MODULE("Stopping all sounds", GameConsole::eDEBUG, GameConsole::eAudio);
     for (auto & soundCache : m_soundCaches)
     {
-        for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
+        for (auto & soundEffect : m_soundEffectData)
         {
-            stopSoundAtIndex(soundCache.get(), i);
+            soundEffect.sound.stop();
+            soundEffect.timer.stop();
         }
     }
 #endif
@@ -753,55 +707,24 @@ void AudioManager::SlotStopSound(QString file)
     {
         CONSOLE_PRINT_MODULE("Stopping sound " + file, GameConsole::eDEBUG, GameConsole::eAudio);
         auto & soundCache = m_soundCaches[file];
-        for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
+        for (auto & item : soundCache->m_usedSounds)
         {
-            stopSoundAtIndex(soundCache.get(), i);
+            stopSoundInternal(item);
         }
+        soundCache->m_usedSounds.clear();
     }
 #endif
 }
 
 #ifdef AUDIOSUPPORT
-bool AudioManager::stopSoundAtIndex(SoundData* soundData, qint32 index)
-{
-    bool stopped = false;
-    if (soundData->sound[index] != nullptr &&
-        soundData->sound[index]->isPlaying())
-    {
-        stopSoundInternal(soundData, index);
-        stopped = true;
-    }
-    if (soundData->timer[index] != nullptr &&
-        soundData->timer[index]->isActive())
-    {
-        soundData->timer[index]->stop();
-        stopped = true;
-    }
-    return stopped;
-}
 
 void AudioManager::stopOldestSound(SoundData* soundData)
 {
     CONSOLE_PRINT_MODULE("Stopping oldest sound sound of " + soundData->cacheUrl.toString(), GameConsole::eDEBUG, GameConsole::eAudio);
-    bool stopped = false;
-    for (qint32 i = soundData->nextSoundToUse; i < SoundData::MAX_SAME_SOUNDS; ++i)
+    if (soundData->m_usedSounds.size() > 0)
     {
-        stopped = stopSoundAtIndex(soundData, i);
-        if (stopped)
-        {
-            break;
-        }
-    }
-    if (!stopped)
-    {
-        for (qint32 i = 0; i < soundData->nextSoundToUse; ++i)
-        {
-            stopped = stopSoundAtIndex(soundData, i);
-            if (stopped)
-            {
-                break;
-            }
-        }
+        stopSoundInternal(soundData->m_usedSounds[0]);
+        soundData->m_usedSounds.removeFirst();
     }
 }
 #endif

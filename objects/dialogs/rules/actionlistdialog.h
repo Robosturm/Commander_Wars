@@ -26,7 +26,7 @@ signals:
     void sigShowSaveBannlist();
     void sigShowDeleteBannlist();
     void sigDoSaveBannlist(QString filename);
-    void sigDeleteBannlist(const QString & file);
+    void sigDeleteBannlist(const QString file);
     void sigFinished();
 public slots:
     /**
@@ -46,7 +46,7 @@ private slots:
     void remove();
     void doSaveBannlist(QString filename);
     void showDeleteBannlist();
-    void deleteBannlist(const QString & file);
+    void deleteBannlist(const QString file);
 private:
     /**
      * @brief getNameList

@@ -317,7 +317,7 @@ signals:
     void sigShowUnitInfo(qint32 player);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
-    void sigShowXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
+    void sigShowXmlFileDialog(const QString xmlFile, bool saveSettings = false);
     void sigShowWiki();
     void sigShowRules();
     void sigShowUnitStatistics(qint32 player);

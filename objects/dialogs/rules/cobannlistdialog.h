@@ -25,7 +25,7 @@ signals:
     void sigShowSaveBannlist();
     void sigShowDeleteBannlist();
     void sigDoSaveBannlist(QString filename);
-    void sigDeleteBannlist(const QString & file);
+    void sigDeleteBannlist(const QString file);
     void sigFinished();
 public slots:
     void setCOBannlist(qint32 item);
@@ -41,7 +41,7 @@ private slots:
     void remove();
     void doSaveBannlist(QString filename);
     void showDeleteBannlist();
-    void deleteBannlist(const QString & file);
+    void deleteBannlist(const QString file);
 private:
     QStringList getNameList();
     void updatePredefinedList();

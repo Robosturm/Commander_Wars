@@ -18,22 +18,20 @@
 class AudioManager;
 using spAudioManager = oxygine::intrusive_ptr<AudioManager>;
 
-#ifdef AUDIOSUPPORT
 struct SoundData : public QObject
 {
-    static constexpr qint32 MAX_SAME_SOUNDS = 60;
+    static constexpr qint32 MAX_SAME_SOUNDS = 30;
     static constexpr qint32 DEFAULT_CACHE_SIZE = 10;
-    QSoundEffect* sound[MAX_SAME_SOUNDS];
-    std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
-    qint32 nextSoundToUse = 0;
     QUrl cacheUrl;
+    QVector<qint32> m_usedSounds;
+    qint32 m_maxUseCount{0};
 };
 
 Q_DECLARE_INTERFACE(SoundData, "SoundData");
-#endif
 
 class AudioManager final : public QObject, public oxygine::ref_counter
 {
+    static constexpr qint32 MAX_PARALLEL_SOUNDS = SoundData::MAX_SAME_SOUNDS;
     Q_OBJECT
 private:
 #ifdef AUDIOSUPPORT
@@ -51,7 +49,6 @@ private:
 public:
     explicit AudioManager(bool noAudio);
     ~AudioManager() = default;
-    qint32 getSoundsBuffered();
 
 signals:
     void sigCreateSoundCache();
@@ -66,14 +63,10 @@ signals:
                       bool stopOldestSound = false, qint32 duration = -1);
     void sigStopSound(QString file);
     void sigStopAllSounds();
-    void sigChangeAudioDevice(const QVariant& value);
+    void sigChangeAudioDevice(const QVariant value);
     void sigLoadNextAudioFile();
     void sigStopAudio();
-#ifdef AUDIOSUPPORT
-    void sigDeleteSound(SoundData* soundData, qint32 soundIndex);
-    void sigStopSoundInternal(SoundData* soundData, qint32 soundIndex);
-    void sigPlayDelayedSound(SoundData* soundData, qint32 soundIndex, bool stopOldestSound, qint32 duration);
-#endif
+
 public slots:
     /**
      * @brief createSoundCache
@@ -167,7 +160,7 @@ protected slots:
                        bool stopOldestSound = false, qint32 duration = -1);
     void SlotStopSound(QString file);
     void SlotStopAllSounds();
-    void SlotChangeAudioDevice(const QVariant& value);
+    void SlotChangeAudioDevice(const QVariant value);
     /**
      * @brief loadNextAudioFile
      * @param playerIndex
@@ -179,7 +172,7 @@ protected slots:
      * @param soundData
      * @param soundIndex
      */
-    void stopSoundInternal(SoundData* soundData, qint32 soundIndex);
+    void stopSoundInternal(qint32 soundIndex);
 #endif
 protected:
     /**
@@ -249,18 +242,6 @@ protected:
      */
     void stopOldestSound(SoundData* soundData);
     /**
-     * @brief stopSoundAtIndex
-     * @param soundData
-     * @param index
-     */
-    bool stopSoundAtIndex(SoundData* soundData, qint32 index);
-    /**
-     * @brief deleteSound
-     * @param soundData
-     * @param soundIndex
-     */
-    void deleteSound(SoundData* soundData, qint32 soundIndex);
-    /**
      * @brief playDelayedSound
      * @param soundData
      * @param soundIndex
@@ -300,6 +281,47 @@ private:
     // general audio info
     QAudioDevice m_audioDevice;
     QAudioOutput m_audioOutput;
+    struct SoundEffect
+    {
+        SoundEffect(QObject* owner)
+            : sound(owner),
+            timer(owner)
+        {
+        }
+        QSoundEffect sound;
+        QTimer timer;
+    };
+    SoundEffect m_soundEffectData[MAX_PARALLEL_SOUNDS]{SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this)};
+
 #endif
     bool m_loadBaseGameFolders{true};
     bool m_noAudio{false};

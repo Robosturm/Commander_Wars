@@ -302,7 +302,7 @@ void COBannListDialog::showDeleteBannlist()
     }
 }
 
-void COBannListDialog::deleteBannlist(const QString & file)
+void COBannListDialog::deleteBannlist(const QString file)
 {
     QFile::remove(file);
     updatePredefinedList();

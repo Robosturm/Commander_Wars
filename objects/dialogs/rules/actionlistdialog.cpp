@@ -236,7 +236,7 @@ void ActionListDialog::showDeleteBannlist()
     }
 }
 
-void ActionListDialog::deleteBannlist(const QString & file)
+void ActionListDialog::deleteBannlist(const QString file)
 {
     QFile::remove(file);
     updatePredefinedList();

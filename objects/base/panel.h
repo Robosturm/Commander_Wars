@@ -47,8 +47,6 @@ public:
     bool getStopMouseWheel() const;
     void setStopMouseWheel(bool newStopMouseWheel);
 
-signals:
-
 public slots:
     void scrolledY(float value);
     void scrolledX(float value);

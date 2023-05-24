@@ -7009,22 +7009,22 @@ Note: This may be caused by a defective mod.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="281"/>
+        <location filename="../coreengine/mainapp.cpp" line="284"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="288"/>
+        <location filename="../coreengine/mainapp.cpp" line="291"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="295"/>
+        <location filename="../coreengine/mainapp.cpp" line="298"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="302"/>
+        <location filename="../coreengine/mainapp.cpp" line="305"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7039,72 +7039,72 @@ Note: This may be caused by a defective mod.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="311"/>
+        <location filename="../coreengine/mainapp.cpp" line="314"/>
         <source>Loading Terrain Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="318"/>
+        <location filename="../coreengine/mainapp.cpp" line="321"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="325"/>
+        <location filename="../coreengine/mainapp.cpp" line="328"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="332"/>
+        <location filename="../coreengine/mainapp.cpp" line="335"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="339"/>
+        <location filename="../coreengine/mainapp.cpp" line="342"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="346"/>
+        <location filename="../coreengine/mainapp.cpp" line="349"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="353"/>
+        <location filename="../coreengine/mainapp.cpp" line="356"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="360"/>
+        <location filename="../coreengine/mainapp.cpp" line="363"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="367"/>
+        <location filename="../coreengine/mainapp.cpp" line="370"/>
         <source>Loading Movement planner addin Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="374"/>
+        <location filename="../coreengine/mainapp.cpp" line="377"/>
         <source>Loading Ui Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="381"/>
+        <location filename="../coreengine/mainapp.cpp" line="384"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="391"/>
+        <location filename="../coreengine/mainapp.cpp" line="394"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="739"/>
+        <location filename="../coreengine/mainapp.cpp" line="742"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="745"/>
+        <location filename="../coreengine/mainapp.cpp" line="748"/>
         <source>Please use the details or the crashlog to report a bug at 
 &lt;a href=&apos;https://github.com/Robosturm/Commander_Wars/issues&apos;&gt;https://github.com/Robosturm/Commander_Wars/issues&lt;/a&gt;
  The game will be terminated sadly. :(</source>

@@ -1448,7 +1448,7 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
     }
 }
 
-void MainServer::onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action)
+void MainServer::onMailSendResult(quint64 socketId, const QString receiverAddress, const QString username, bool result, NetworkCommands::PublicKeyActions action)
 {
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
     GameEnums::LoginError mailSendResult = GameEnums::LoginError_None;

@@ -231,7 +231,7 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
     y += GameMap::getImageSize() * 3;
 }
 
-void DialogModifyTerrain::changePalette(const QString & newPalette)
+void DialogModifyTerrain::changePalette(const QString newPalette)
 {
     m_pTerrain->setPalette(newPalette);
     load();
