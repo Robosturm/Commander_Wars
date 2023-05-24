@@ -12,6 +12,7 @@
 #endif
 #include <QIODevice>
 #include <QTimer>
+#include <QUrl>
 
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 
