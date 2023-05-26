@@ -183,6 +183,10 @@ namespace oxygine
             {
                 m_advance = reader.attributeNode("advance").value().toInt();
             }
+            if (reader.hasAttribute("maxY"))
+            {
+                m_maxY = reader.attributeNode("maxY").value().toFloat();
+            }
             m_stepTimer.setSingleShot(false);
             m_stepTimer.start(speed);
         }
@@ -190,6 +194,10 @@ namespace oxygine
         void WigglyNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
         {
 #ifdef GRAPHICSUPPORT
+            static constexpr float sineTable[16] = {
+                1.0f / 2.0f, 1.38f / 2.0f, 1.71f / 2.0f, 1.92f / 2.0f, 2.0f / 2.0f, 1.92f / 2.0f, 1.71f / 2.0f, 1.38f / 2.0f,
+                1.0f / 2.0f, 0.62f / 2.0f, 0.29f / 2.0f, 0.08f / 2.0f, 0.0f / 2.0f, 0.08f / 2.0f, 0.29f / 2.0f, 0.62f / 2.0f
+            };
             painter.setTransform(rs.transform);
             QFontMetrics metrics(style.font->font);
             QColor color;
@@ -200,9 +208,10 @@ namespace oxygine
                 for (qint32 i = 0; i < m_lines[i2].size(); ++i)
                 {
                     qint32 index = (m_step - i * m_advance) % 16;
+                    qint32 sinIndex = (m_step - i) % 16;
                     color.setHsv((15 - index) * 16, 255, 191);
                     painter.setPen(color);
-                    painter.drawText(x, m_offsets[i2].y(), QString(m_lines[i2][i]));
+                    painter.drawText(x, m_offsets[i2].y() - (sineTable[sinIndex] * m_maxY), QString(m_lines[i2][i]));
                     x += metrics.horizontalAdvance(m_lines[i2][i]);
                 }
             }

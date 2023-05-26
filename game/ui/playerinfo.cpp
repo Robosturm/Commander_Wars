@@ -131,7 +131,7 @@ void PlayerInfo::updateData()
                     pAnim = pGameManager->getResAnim("offline");
                 }
                 pSprite->setResAnim(pAnim);
-                pSprite->setY(yPos + 2);
+                pSprite->setY(yPos);
                 pSprite->setX(coWidth + 5);
                 pSprite->setFlippedX(m_flippedX);
                 if (m_flippedX)
@@ -143,7 +143,7 @@ void PlayerInfo::updateData()
                 if (pCO != nullptr)
                 {
                     spCoPowermeter pCoPowermeter = spCoPowermeter::create(m_pMap, pCO);
-                    pCoPowermeter->setY(pSprite->getY());
+                    pCoPowermeter->setY(pSprite->getY() + 3);
                     pCoPowermeter->setFlippedX(m_flippedX);
                     if (m_flippedX)
                     {
@@ -165,7 +165,7 @@ void PlayerInfo::updateData()
                     pSprite->setResAnim(pAnim);
                     pSprite->setY(yPos + 62);
                     spCoPowermeter pCoPowermeter = spCoPowermeter::create(m_pMap, pCO);
-                    pCoPowermeter->setY(pSprite->getY());
+                    pCoPowermeter->setY(pSprite->getY() + 3);
                     pCoPowermeter->setFlippedX(m_flippedX);
                     pCoPowermeter->drawPowerMeter();
                     addChild(pCoPowermeter);

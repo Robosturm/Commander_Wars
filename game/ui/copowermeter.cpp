@@ -140,7 +140,7 @@ void CoPowermeter::drawPowerMeter()
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
-                pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"3\">Power</wiggly>"));
+                pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"3\" maxY=\"5\">Power</wiggly>"));
                 pText->setY(0);
                 if (m_flippedX)
                 {
@@ -158,7 +158,7 @@ void CoPowermeter::drawPowerMeter()
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
-                pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"2\">Superpower</wiggly>"));
+                pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"2\" maxY=\"5\">Superpower</wiggly>"));
                 pText->setY(0);
                 if (m_flippedX)
                 {
@@ -176,7 +176,7 @@ void CoPowermeter::drawPowerMeter()
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
-                pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"2\">Tagpower</wiggly>"));
+                pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"2\" maxY=\"5\">Tagpower</wiggly>"));
                 pText->setY(- 4);
                 if (m_flippedX)
                 {

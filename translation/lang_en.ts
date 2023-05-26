@@ -1885,17 +1885,17 @@
     <name>CoPowermeter</name>
     <message>
         <location filename="../game/ui/copowermeter.cpp" line="143"/>
-        <source>&lt;wiggly speed=&quot;60&quot; advance=&quot;3&quot;&gt;Power&lt;/wiggly&gt;</source>
+        <source>&lt;wiggly speed=&quot;60&quot; advance=&quot;3&quot; maxY=&quot;5&quot;&gt;Power&lt;/wiggly&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../game/ui/copowermeter.cpp" line="161"/>
-        <source>&lt;wiggly speed=&quot;60&quot; advance=&quot;2&quot;&gt;Superpower&lt;/wiggly&gt;</source>
+        <source>&lt;wiggly speed=&quot;60&quot; advance=&quot;2&quot; maxY=&quot;5&quot;&gt;Superpower&lt;/wiggly&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../game/ui/copowermeter.cpp" line="179"/>
-        <source>&lt;wiggly speed=&quot;60&quot; advance=&quot;2&quot;&gt;Tagpower&lt;/wiggly&gt;</source>
+        <source>&lt;wiggly speed=&quot;60&quot; advance=&quot;2&quot; maxY=&quot;5&quot;&gt;Tagpower&lt;/wiggly&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

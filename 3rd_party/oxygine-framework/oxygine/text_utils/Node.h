@@ -104,6 +104,7 @@ namespace oxygine
             qint32 m_step{0};
             qint32 m_advance{1};
             QTimer m_stepTimer;
+            float m_maxY{0.0f};
         };
 
         class DivNode final : public Node
