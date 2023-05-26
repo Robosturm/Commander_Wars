@@ -95,6 +95,30 @@ namespace oxygine
                 }
                 text += items[items.size() - 1];
             }
+            if (text.contains("</wiggly>"))
+            {
+                QStringList items = text.split("</wiggly>");
+                text = "";
+                for (qint32 i = 0; i < items.size() - 1; ++i)
+                {
+                    QStringList subParts = items[i].split("<wiggly");
+                    if (subParts.length() == 2)
+                    {
+                        text += subParts[0];
+                        text += "<wiggly";
+                        auto end = subParts[1].indexOf('>');
+                        text += subParts[1].section('>', 0, 0) + ">";
+                        subParts[1].remove(0, end + 1);
+                        text += ReplaceSignsToXmlSigns(subParts[1]);
+                        text += "</wiggly>";
+                    }
+                    else
+                    {
+                        text += items[i] + "</r>";
+                    }
+                }
+                text += items[items.size() - 1];
+            }
         }
 
         text::spNode TextBuilder::create(QDomNode& reader)
@@ -123,6 +147,12 @@ namespace oxygine
                     QString text = element.text();
                     ReplaceXmlSignsToSigns(text);
                     tn = text::spTextNode::create(text);
+                }
+                else if (name == "wiggly")
+                {
+                    QString text = element.text();
+                    ReplaceXmlSignsToSigns(text);
+                    tn = text::spWigglyNode::create(element, text);
                 }
                 else if (name == "data")
                 {

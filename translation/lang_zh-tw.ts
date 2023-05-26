@@ -1888,19 +1888,31 @@
 <context>
     <name>CoPowermeter</name>
     <message>
-        <location filename="../game/ui/copowermeter.cpp" line="145"/>
         <source>Power</source>
-        <translation>能力</translation>
+        <translation type="vanished">能力</translation>
     </message>
     <message>
-        <location filename="../game/ui/copowermeter.cpp" line="175"/>
         <source>Superpower</source>
-        <translation>超級能力</translation>
+        <translation type="vanished">超級能力</translation>
     </message>
     <message>
-        <location filename="../game/ui/copowermeter.cpp" line="205"/>
         <source>Tagpower</source>
-        <translation>協同能力</translation>
+        <translation type="vanished">協同能力</translation>
+    </message>
+    <message>
+        <location filename="../game/ui/copowermeter.cpp" line="143"/>
+        <source>&lt;wiggly speed=&quot;60&quot; advance=&quot;3&quot;&gt;Power&lt;/wiggly&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/copowermeter.cpp" line="161"/>
+        <source>&lt;wiggly speed=&quot;60&quot; advance=&quot;2&quot;&gt;Superpower&lt;/wiggly&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/copowermeter.cpp" line="179"/>
+        <source>&lt;wiggly speed=&quot;60&quot; advance=&quot;2&quot;&gt;Tagpower&lt;/wiggly&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

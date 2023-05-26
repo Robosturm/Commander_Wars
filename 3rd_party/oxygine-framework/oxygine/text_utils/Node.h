@@ -9,6 +9,7 @@
 #include <QString>
 #include <QPainter>
 #include <QPainterPath>
+#include <QTimer>
 
 namespace oxygine
 {
@@ -27,6 +28,8 @@ namespace oxygine
         using spBrNode = intrusive_ptr<BrNode>;
         class TextNode;
         using spTextNode = oxygine::intrusive_ptr<TextNode>;
+        class WigglyNode;
+        using spWigglyNode = oxygine::intrusive_ptr<WigglyNode>;
 
         class Node : public oxygine::ref_counter
         {
@@ -63,11 +66,11 @@ namespace oxygine
             spNode m_nextSibling;
         };
 
-        class TextNode final : public Node
+        class TextNode : public Node
         {
         public:
             explicit TextNode(const QString & v);
-            ~TextNode() = default;
+            virtual ~TextNode() = default;
             virtual void xresize(Aligner& rd) override;
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
             virtual qint32 getWidth(Aligner& rd) override;
@@ -84,11 +87,23 @@ namespace oxygine
 #ifdef GRAPHICSUPPORT
             QString * addNewLine(Aligner& rd);
 #endif
-        private:
+        protected:
             QString m_text;
             std::vector<QString> m_lines;
             std::vector<QPoint> m_offsets;
             QPainterPath m_path;
+        };
+
+        class WigglyNode final : public QObject, public TextNode
+        {
+        public:
+            explicit WigglyNode(QDomElement& reader, const QString & v);
+            virtual ~WigglyNode() = default;
+            virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
+        private:
+            qint32 m_step{0};
+            qint32 m_advance{1};
+            QTimer m_stepTimer;
         };
 
         class DivNode final : public Node

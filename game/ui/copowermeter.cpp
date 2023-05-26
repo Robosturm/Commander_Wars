@@ -1,7 +1,5 @@
 #include "game/ui/copowermeter.h"
 
-#include "3rd_party/oxygine-framework/oxygine/tween/TweenQueue.h"
-
 #include "game/gamemap.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
@@ -142,7 +140,7 @@ void CoPowermeter::drawPowerMeter()
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
-                pText->setHtmlText(tr("Power"));
+                pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"3\">Power</wiggly>"));
                 pText->setY(0);
                 if (m_flippedX)
                 {
@@ -152,18 +150,6 @@ void CoPowermeter::drawPowerMeter()
                 {
                     pText->setX(0);
                 }
-                oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
-                oxygine::TextField::TweenColor tweenColor1(QColor(255, 255, 255, 255));
-                oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(200), 1, false);
-                oxygine::TextField::TweenColor tweenColor2(QColor(255, 0, 0, 255));
-                oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(200), 1, false);
-                oxygine::TextField::TweenColor tweenColor3(QColor(0, 255, 0, 255));
-                oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(200), 1, false);
-                queue->add(tween1);
-                queue->add(tween2);
-                queue->add(tween3);
-                queue->setLoops(-1);
-                pText->addTween(queue);
                 addChild(pText);
                 break;
             }
@@ -172,7 +158,7 @@ void CoPowermeter::drawPowerMeter()
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
-                pText->setHtmlText(tr("Superpower"));
+                pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"2\">Superpower</wiggly>"));
                 pText->setY(0);
                 if (m_flippedX)
                 {
@@ -182,18 +168,6 @@ void CoPowermeter::drawPowerMeter()
                 {
                     pText->setX(0);
                 }
-                oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
-                oxygine::TextField::TweenColor tweenColor1(QColor(255, 255, 255, 255));
-                oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(200), 1, false);
-                oxygine::TextField::TweenColor tweenColor2(QColor(255, 0, 0, 255));
-                oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(200), 1, false);
-                oxygine::TextField::TweenColor tweenColor3(QColor(0, 255, 0, 255));
-                oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(200), 1, false);
-                queue->add(tween1);
-                queue->add(tween2);
-                queue->add(tween3);
-                queue->setLoops(-1);
-                pText->addTween(queue);
                 addChild(pText);
                 break;
             }
@@ -202,7 +176,7 @@ void CoPowermeter::drawPowerMeter()
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
-                pText->setHtmlText(tr("Tagpower"));
+                pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"2\">Tagpower</wiggly>"));
                 pText->setY(- 4);
                 if (m_flippedX)
                 {
@@ -212,18 +186,6 @@ void CoPowermeter::drawPowerMeter()
                 {
                     pText->setX(0);
                 }
-                oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
-                oxygine::TextField::TweenColor tweenColor1(QColor(255, 255, 255, 255));
-                oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
-                oxygine::TextField::TweenColor tweenColor2(QColor(255, 0, 0, 255));
-                oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(100), 1, false);
-                oxygine::TextField::TweenColor tweenColor3(QColor(0, 255, 0, 255));
-                oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(100), 1, false);
-                queue->add(tween1);
-                queue->add(tween2);
-                queue->add(tween3);
-                queue->setLoops(-1);
-                pText->addTween(queue);
                 addChild(pText);
                 break;
             }

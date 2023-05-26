@@ -166,6 +166,50 @@ namespace oxygine
             }
         }
 
+        WigglyNode::WigglyNode(QDomElement& reader, const QString & v)
+            : TextNode(v),
+            m_stepTimer(this)
+        {
+            connect(&m_stepTimer, &QTimer::timeout, this, [this]()
+            {
+                ++m_step;
+            });
+            qint32 speed = 60;
+            if (reader.hasAttribute("speed"))
+            {
+                speed = reader.attributeNode("speed").value().toInt();
+            }
+            if (reader.hasAttribute("advance"))
+            {
+                m_advance = reader.attributeNode("advance").value().toInt();
+            }
+            m_stepTimer.setSingleShot(false);
+            m_stepTimer.start(speed);
+        }
+
+        void WigglyNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
+        {
+#ifdef GRAPHICSUPPORT
+            painter.setTransform(rs.transform);
+            QFontMetrics metrics(style.font->font);
+            QColor color;
+            painter.setFont(style.font->font);
+            for (qint32 i2 = 0; i2 < m_lines.size(); ++i2)
+            {
+                qint32 x = m_offsets[i2].x();
+                for (qint32 i = 0; i < m_lines[i2].size(); ++i)
+                {
+                    qint32 index = (m_step - i * m_advance) % 16;
+                    color.setHsv((15 - index) * 16, 255, 191);
+                    painter.setPen(color);
+                    painter.drawText(x, m_offsets[i2].y(), QString(m_lines[i2][i]));
+                    x += metrics.horizontalAdvance(m_lines[i2][i]);
+                }
+            }
+            drawChildren(rs, style, drawColor, painter);
+#endif
+        }
+
         void DivNode::resize(Aligner& rd)
         {
             resizeChildren(rd);
