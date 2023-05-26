@@ -13,6 +13,7 @@ GenericBox::GenericBox(bool cancel)
     setObjectName("GenericBox");
 #endif
     Interpreter::setCppOwnerShip(this);
+
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
@@ -23,6 +24,9 @@ GenericBox::GenericBox(bool cancel)
     m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
+    QSize size(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight() - 100);
+    m_pPanel = spPanel::create(true, size, size);
+    m_pSpriteBox->addChild(m_pPanel);
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
@@ -55,6 +59,16 @@ void GenericBox::remove()
 
 void GenericBox::addItem(oxygine::spActor pActor)
 {
-    m_pSpriteBox->addChild(pActor);
+    m_pPanel->addItem(pActor);
 }
 
+void GenericBox::clearAllItems()
+{
+    m_pPanel->clearContent();
+}
+
+void GenericBox::setContentSize(qint32 width, qint32 height)
+{
+    m_pPanel->setContentWidth(width);
+    m_pPanel->setContentHeigth(height);
+}

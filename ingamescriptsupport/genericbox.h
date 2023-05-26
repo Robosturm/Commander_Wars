@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "objects/base/panel.h"
 
 class GenericBox;
 using spGenericBox = oxygine::intrusive_ptr<GenericBox>;
@@ -19,6 +19,16 @@ public:
      * @param pActor
      */
     void addItem(oxygine::spActor pActor);
+    /**
+     * @brief clearAllItems
+     */
+    void clearAllItems();
+    /**
+     * @brief setContentSize
+     * @param width
+     * @param height
+     */
+    void setContentSize(qint32 width, qint32 height);
 signals:
     /**
      * @brief sigFinished
@@ -32,6 +42,7 @@ private slots:
     void remove();
 private:
     oxygine::spBox9Sprite m_pSpriteBox;
+    spPanel m_pPanel;
 };
 
 #endif // GENERICBOX_H

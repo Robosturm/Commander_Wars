@@ -724,6 +724,8 @@ set(${PROJECT_NAME}_SRCS
     ingamescriptsupport/events/scripteventspawnbuilding.cpp ingamescriptsupport/events/scripteventspawnbuilding.h
     ingamescriptsupport/events/scripteventcentermap.cpp ingamescriptsupport/events/scripteventcentermap.h
     ingamescriptsupport/events/scripteventplaysound.cpp ingamescriptsupport/events/scripteventplaysound.h
+    ingamescriptsupport/events/scripteventbuildingfirecounter.h ingamescriptsupport/events/scripteventbuildingfirecounter.cpp
+    ingamescriptsupport/events/scripteventvolcanfire.h ingamescriptsupport/events/scripteventvolcanfire.cpp
 
     # wiki stuff
     wiki/terraininfo.cpp wiki/terraininfo.h

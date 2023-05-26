@@ -4,6 +4,7 @@
 #include <QVector>
 
 #include "ingamescriptsupport/events/scriptevent.h"
+#include "ingamescriptsupport/genericbox.h"
 
 #include "objects/base/textbox.h"
 
@@ -23,6 +24,7 @@ public:
         Selection,
         File,
         IconSelection,
+        PointList,
     };
 
     struct Data
@@ -33,7 +35,6 @@ public:
         EditTypes types;
         QString tooltip;
         QString labelText;
-
 
         // spinbox
         qreal min{1};
@@ -47,6 +48,10 @@ public:
         // file selection
         QString filter;
         QString startFolder;
+
+        QVariantList pointData;
+        // generic reader writer cb
+        std::function<QString(const Data &)> m_writer;
     };
 
     explicit ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier, const QString & description);
@@ -90,8 +95,19 @@ public:
 
 signals:
     void sigShowSelectFile (QString filter, QString startFolder, QString currentFile, spTextbox pTextbox);
+    void sigLoad(spGenericBox pBox);
 protected slots:
     void showSelectFile (QString filter, QString startFolder, QString currentFile, spTextbox pTextbox);
+private:
+    void load(spGenericBox pBox);
+    void addFloatEditor(spGenericBox & pBox, qint32 i, qint32 & y);
+    void addIntegerEditor(spGenericBox & pBox, qint32 i, qint32 & y);
+    void addStringEditor(spGenericBox & pBox, qint32 i, qint32 & y);
+    void addBoolEditor(spGenericBox & pBox, qint32 i, qint32 & y);
+    void addSelectionEditor(spGenericBox & pBox, qint32 i, qint32 & y);
+    void addFileEditor(spGenericBox & pBox, qint32 i, qint32 & y);
+    void addIconEditor(spGenericBox & pBox, qint32 i, qint32 & y);
+    void addPointListEditor(spGenericBox pBox, qint32 i, qint32 & y);
 protected:
     QVector<Data> m_Items;
     QString m_eventIdentifier;

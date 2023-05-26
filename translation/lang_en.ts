@@ -6720,12 +6720,12 @@ Note: This may be caused by a defective mod.</source>
 <context>
     <name>GenericBox</name>
     <message>
-        <location filename="../ingamescriptsupport/genericbox.cpp" line="28"/>
+        <location filename="../ingamescriptsupport/genericbox.cpp" line="32"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/genericbox.cpp" line="38"/>
+        <location filename="../ingamescriptsupport/genericbox.cpp" line="42"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8769,7 +8769,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="79"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="403"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="405"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8779,17 +8779,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="118"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="120"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="122"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="124"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="136"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8964,46 +8964,56 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="138"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="116"/>
+        <source>Building fire counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="117"/>
+        <source>Volcan fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="140"/>
         <source>If checked the game starts without being able to change rules, players or CO&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="145"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="147"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="154"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="197"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="156"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="199"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="162"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="207"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="164"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="209"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="181"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="183"/>
         <source>Do you want to exit the script editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="303"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="387"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="305"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="389"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="310"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="395"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="312"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="397"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="318"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="320"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9166,6 +9176,44 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.h" line="44"/>
         <source>Animation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventBuildingFireCounter</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventbuildingfirecounter.cpp" line="5"/>
+        <source>Building fire counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventbuildingfirecounter.cpp" line="12"/>
+        <source>X Position of the building which should change the fire counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventbuildingfirecounter.cpp" line="15"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventbuildingfirecounter.cpp" line="21"/>
+        <source>Y Position of the building which should change the fire counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventbuildingfirecounter.cpp" line="24"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventbuildingfirecounter.cpp" line="30"/>
+        <source>The new fire counter of the building. The fire counter affects what a certain special building can do each turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventbuildingfirecounter.cpp" line="33"/>
+        <source>Fire counter: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9497,9 +9545,14 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventGeneric</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="173"/>
-        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="214"/>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="235"/>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="346"/>
         <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="331"/>
+        <source>Add target</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9812,6 +9865,44 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.h" line="41"/>
         <source>Victory Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventVolcanFire</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventvolcanfire.cpp" line="5"/>
+        <source>Volcan fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventvolcanfire.cpp" line="12"/>
+        <source>X Position of the volcan which should fire.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventvolcanfire.cpp" line="15"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventvolcanfire.cpp" line="21"/>
+        <source>Y Position of the volcan which should fire.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventvolcanfire.cpp" line="24"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventvolcanfire.cpp" line="30"/>
+        <source>List of targets for the volcan.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventvolcanfire.cpp" line="33"/>
+        <source>Volcan targets (x, y) : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
