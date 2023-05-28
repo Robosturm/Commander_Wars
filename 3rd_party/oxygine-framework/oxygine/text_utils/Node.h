@@ -2,6 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h"
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include "3rd_party/oxygine-framework/oxygine/Clock.h"
 
 #include <QDomElement>
 #include <vector>
@@ -94,7 +95,7 @@ namespace oxygine
             QPainterPath m_path;
         };
 
-        class WigglyNode final : public QObject, public TextNode
+        class WigglyNode final : public TextNode
         {
         public:
             explicit WigglyNode(QDomElement& reader, const QString & v);
@@ -103,7 +104,8 @@ namespace oxygine
         private:
             qint32 m_step{0};
             qint32 m_advance{1};
-            QTimer m_stepTimer;
+            timeMS m_lastStepTime{0};
+            timeMS m_speed{60};
             float m_maxY{0.0f};
         };
 

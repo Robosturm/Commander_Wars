@@ -167,17 +167,11 @@ namespace oxygine
         }
 
         WigglyNode::WigglyNode(QDomElement& reader, const QString & v)
-            : TextNode(v),
-            m_stepTimer(this)
+            : TextNode(v)
         {
-            connect(&m_stepTimer, &QTimer::timeout, this, [this]()
-            {
-                ++m_step;
-            });
-            qint32 speed = 60;
             if (reader.hasAttribute("speed"))
             {
-                speed = reader.attributeNode("speed").value().toInt();
+                m_speed = timeMS(reader.attributeNode("speed").value().toInt());
             }
             if (reader.hasAttribute("advance"))
             {
@@ -187,8 +181,7 @@ namespace oxygine
             {
                 m_maxY = reader.attributeNode("maxY").value().toFloat();
             }
-            m_stepTimer.setSingleShot(false);
-            m_stepTimer.start(speed);
+            m_lastStepTime = Clock::getTimeMS();
         }
 
         void WigglyNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
@@ -198,6 +191,13 @@ namespace oxygine
                 1.0f / 2.0f, 1.38f / 2.0f, 1.71f / 2.0f, 1.92f / 2.0f, 2.0f / 2.0f, 1.92f / 2.0f, 1.71f / 2.0f, 1.38f / 2.0f,
                 1.0f / 2.0f, 0.62f / 2.0f, 0.29f / 2.0f, 0.08f / 2.0f, 0.0f / 2.0f, 0.08f / 2.0f, 0.29f / 2.0f, 0.62f / 2.0f
             };
+            auto now = Clock::getTimeMS();
+            auto goneTime = now - m_lastStepTime;
+            if (goneTime > m_speed)
+            {
+                m_lastStepTime = now - timeMS(goneTime.count() % m_speed.count());
+                m_step += goneTime.count() / m_speed.count();
+            }
             painter.setTransform(rs.transform);
             QFontMetrics metrics(style.font->font);
             QColor color;
