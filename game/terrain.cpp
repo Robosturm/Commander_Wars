@@ -85,6 +85,14 @@ void Terrain::setTerrainPalette(const QString & newPalette, bool includeBaseTerr
     setPalette(newPalette);
 }
 
+void Terrain::resetTerrainOverlayPalettes()
+{
+    for (auto & palette : m_customOverlayPalettes)
+    {
+        palette = "";
+    }
+}
+
 void Terrain::setTerrainPaletteGroup(qint32 newPaletteGroup)
 {
     if (m_pBaseTerrain.get() != nullptr)
@@ -959,7 +967,8 @@ void Terrain::loadOverlaySprite(const QString & spriteID, qint32 startFrame, qin
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainOverlay));
     QString paletteToUse = palette;
-    if (!customOverlay && palette.isEmpty())
+    if ((!customOverlay && palette.isEmpty()) ||
+        paletteToUse.isEmpty())
     {
         paletteToUse = m_palette;
     }

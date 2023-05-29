@@ -154,6 +154,10 @@ public slots:
      */
     void setTerrainPaletteGroup(qint32 newPaletteGroup);
     /**
+     * @brief resetTerrainOverlayPalettes
+     */
+    void resetTerrainOverlayPalettes();
+    /**
      * @brief getFixedOverlaySprites
      * @return
      */

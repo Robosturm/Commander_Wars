@@ -234,6 +234,13 @@ void DialogModifyTerrain::loadBaseImageview(qint32 & y, Terrain* pTerrain)
 void DialogModifyTerrain::changePalette(const QString newPalette)
 {
     m_pTerrain->setPalette(newPalette);
+    auto overlays = m_pTerrain->getCustomOverlays();
+    QStringList palettes;
+    for (auto & overlay : overlays)
+    {
+        palettes.append(newPalette);
+    }
+    m_pTerrain->setCustomOverlays(overlays, palettes);
     load();
 }
 

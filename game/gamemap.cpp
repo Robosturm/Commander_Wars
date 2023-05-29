@@ -192,9 +192,10 @@ bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> chec
 
 void GameMap::applyPaletteToArea(const QRect& area, qint32 newPalette)
 {
-    applyToArea(area, [newPalette, this](qint32 x, qint32 y)
-    {
-        getTerrain(x, y)->setTerrainPaletteGroup(newPalette);
+    applyToArea(area, [newPalette, this](qint32 x, qint32 y) {
+        Terrain *pTerrain = getTerrain(x, y);
+        pTerrain->setTerrainPaletteGroup(newPalette);
+        pTerrain->resetTerrainOverlayPalettes();
     });
     updateSprites();
 }

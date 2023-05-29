@@ -2630,7 +2630,7 @@
         <translation>目前所選擇的地形圖片或路徑,如果不需要特別指定,則保持空白即可使用預設設定.</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="255"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="262"/>
         <source>Overlays</source>
         <translation>疊加</translation>
     </message>
@@ -2645,7 +2645,7 @@
         <translation>選擇圖片</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="335"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="342"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
@@ -6437,9 +6437,9 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="70"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
-        <location filename="../game/gamemap.cpp" line="596"/>
-        <location filename="../game/gamemap.cpp" line="736"/>
-        <location filename="../game/gamemap.cpp" line="1635"/>
+        <location filename="../game/gamemap.cpp" line="597"/>
+        <location filename="../game/gamemap.cpp" line="737"/>
+        <location filename="../game/gamemap.cpp" line="1636"/>
         <source> of </source>
         <translation> 的 </translation>
     </message>
@@ -6454,7 +6454,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation>讀取圖像</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="435"/>
+        <location filename="../game/gamemap.cpp" line="436"/>
         <source>Tags
 
 </source>
@@ -6463,176 +6463,176 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="438"/>
+        <location filename="../game/gamemap.cpp" line="439"/>
         <source>Bases
 </source>
         <translation>基地
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="442"/>
+        <location filename="../game/gamemap.cpp" line="443"/>
         <source>Airports
 </source>
         <translation>機場
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="446"/>
+        <location filename="../game/gamemap.cpp" line="447"/>
         <source>Harbours
 </source>
         <translation>港口
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="450"/>
+        <location filename="../game/gamemap.cpp" line="451"/>
         <source>Towers
 </source>
         <translation>指揮塔
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="454"/>
+        <location filename="../game/gamemap.cpp" line="455"/>
         <source>Teleport
 </source>
         <translation>傳送器
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="458"/>
+        <location filename="../game/gamemap.cpp" line="459"/>
         <source>Mixed bases
 </source>
         <translation>混合基地
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="462"/>
+        <location filename="../game/gamemap.cpp" line="463"/>
         <source>Predeployed
 </source>
         <translation>預先部署
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="466"/>
+        <location filename="../game/gamemap.cpp" line="467"/>
         <source>Symetric
 </source>
         <translation>對稱
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="470"/>
+        <location filename="../game/gamemap.cpp" line="471"/>
         <source>PvP
 </source>
         <translation>PvP
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="474"/>
+        <location filename="../game/gamemap.cpp" line="475"/>
         <source>FTA
 </source>
         <translation>FTA
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="478"/>
+        <location filename="../game/gamemap.cpp" line="479"/>
         <source>Vs AI
 </source>
         <translation>Vs AI
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="482"/>
+        <location filename="../game/gamemap.cpp" line="483"/>
         <source>Team play
 </source>
         <translation>團隊遊戲
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="486"/>
+        <location filename="../game/gamemap.cpp" line="487"/>
         <source>Historical
 </source>
         <translation>經典的
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="490"/>
+        <location filename="../game/gamemap.cpp" line="491"/>
         <source>Low funds
 </source>
         <translation>低資金
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="494"/>
+        <location filename="../game/gamemap.cpp" line="495"/>
         <source>High funds
 </source>
         <translation>高資金
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="498"/>
+        <location filename="../game/gamemap.cpp" line="499"/>
         <source>Naval
 </source>
         <translation>海軍
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="502"/>
+        <location filename="../game/gamemap.cpp" line="503"/>
         <source>Ground
 </source>
         <translation>陸軍
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="506"/>
+        <location filename="../game/gamemap.cpp" line="507"/>
         <source>Air
 </source>
         <translation>空軍
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="510"/>
+        <location filename="../game/gamemap.cpp" line="511"/>
         <source>Scripted
 </source>
         <translation>已載入腳本
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="596"/>
-        <location filename="../game/gamemap.cpp" line="1635"/>
+        <location filename="../game/gamemap.cpp" line="597"/>
+        <location filename="../game/gamemap.cpp" line="1636"/>
         <source>Loading Map Row </source>
         <translation>加載地圖行 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="709"/>
+        <location filename="../game/gamemap.cpp" line="710"/>
         <source>Loading weather for snowy times</source>
         <translation>加載雪天天氣</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="736"/>
+        <location filename="../game/gamemap.cpp" line="737"/>
         <source>Synchronizing Map Row </source>
         <translation>同步地圖行 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1602"/>
+        <location filename="../game/gamemap.cpp" line="1603"/>
         <source>Loading Players</source>
         <translation>載入玩家</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1663"/>
+        <location filename="../game/gamemap.cpp" line="1664"/>
         <source>Loading Rules</source>
         <translation>載入規則</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1673"/>
+        <location filename="../game/gamemap.cpp" line="1674"/>
         <source>Loading Record</source>
         <translation>載入回放</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1681"/>
+        <location filename="../game/gamemap.cpp" line="1682"/>
         <source>Loading scripts</source>
         <translation>載入腳本</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1693"/>
+        <location filename="../game/gamemap.cpp" line="1694"/>
         <source>Loading Campaign</source>
         <translation>載入戰役</translation>
     </message>
