@@ -10,6 +10,6 @@ class ActionWikipage final : public Wikipage
 {
     Q_OBJECT
 public:
-    explicit ActionWikipage(const PageData & item);
+    explicit ActionWikipage(const PageData * item);
     ~ActionWikipage() = default;
 };

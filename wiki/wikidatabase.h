@@ -55,7 +55,7 @@ public:
      * @param data
      * @return
      */
-    spWikipage getPage(const PageData & data);
+    spWikipage getPage(const PageData * data);
     /**
      * @brief getEntries
      * @param searchTerm
@@ -67,7 +67,7 @@ public:
      * @param entry
      * @return
      */
-    const PageData & getEntry(qint32 entry);
+    const PageData * getEntry(qint32 entry);
     /**
      * @brief hasEntry
      * @param file1
@@ -79,7 +79,7 @@ public:
      * @param id
      * @return
      */
-    const PageData & getEntry(QString id);
+    const PageData * getEntry(QString id);
     /**
      * @brief tagMatches
      * @param tags

@@ -117,9 +117,9 @@ void Wikipage::showLink(QString pageID)
     if (!m_pageStack.contains(pageID))
     {
         WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-        auto & entry = pWikiDatabase->getEntry(pageID);
-        if (!entry.m_name.isEmpty() &&
-            !entry.m_id.isEmpty())
+        auto * entry = pWikiDatabase->getEntry(pageID);
+        if (!entry->m_name.isEmpty() &&
+            !entry->m_id.isEmpty())
         {
             oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(entry));
         }
