@@ -14077,25 +14077,44 @@ CO區域效果:
         <translation type="vanished">她的防禦力驚人地提高了 %0%.此外,她攻擊敵人時不會受到反擊傷害.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="302"/>
         <source>
 Global Effect: 
 Reef movement costs are equal to 1 for all of Amy&apos;s units and Hovercrafts have %1 extra movement and gain %2% firepower.</source>
-        <translation>
+        <translation type="vanished">
 全局效果: 
 所有單位在礁石上的移動成本都為1,
 而氣墊船則額外增加%1的移動能力,並獲得%2%的火力增益。</translation>
+    </message>
+    <message>
+        <source>
+
+CO Zone Effect: 
+Hovercrafts gain %3% firepower.</source>
+        <translation type="vanished">
+
+CO區域效果:
+所有氣墊艇的火力增加%3%.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="302"/>
+        <source>
+Global Effect: 
+Reef movement costs are equal to 1 for all of Amy&apos;s units and Hovercrafts have %0 extra movement and gain %1% firepower.</source>
+        <translation type="unfinished">
+全局效果: 
+所有單位在礁石上的移動成本都為1,
+而氣墊船則額外增加%1的移動能力,並獲得%2%的火力增益。 {1 ?} {0 ?} {1%?} {0  or 1 ?}</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="303"/>
         <source>
 
 CO Zone Effect: 
-Hovercrafts gain %3% firepower.</source>
-        <translation>
+Hovercrafts gain %2% firepower.</source>
+        <translation type="unfinished">
 
 CO區域效果:
-所有氣墊艇的火力增加%3%.</translation>
+所有氣墊艇的火力增加%3%. {2%?}</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="309"/>
@@ -14694,9 +14713,8 @@ CO區域效果:
 她的部隊在野外獲得%0地形星級加成.然而,她的部隊在房產地形上的火力會減少%1%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_cairn.js" line="458"/>
         <source>Wilderness movement cost is reduced by 1.  Unit indirect range and vision are increased by 1 in wilderness.</source>
-        <translation>野外的移動消耗減少 1 點.在野外中,部隊的間接攻擊範圍和視野增加了 1.</translation>
+        <translation type="vanished">野外的移動消耗減少 1 點.在野外中,部隊的間接攻擊範圍和視野增加了 1.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_cairn.js" line="464"/>
@@ -14704,9 +14722,18 @@ CO區域效果:
         <translation>野性的呼喚</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_cairn.js" line="468"/>
         <source>Each wilderness tile crossed restores 1 HP. Increases her firepower by %0% and lower enemy defense by %0% for each wilderness terrain star.</source>
-        <translation>穿過每個荒野地形時,會恢復 1 點生命值.每擁有一個荒野地形星,會增加 %0% 的火力,並減少敵軍 %0% 的防禦力.</translation>
+        <translation type="vanished">穿過每個荒野地形時,會恢復 1 點生命值.每擁有一個荒野地形星,會增加 %0% 的火力,並減少敵軍 %0% 的防禦力.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="458"/>
+        <source>Wilderness movement cost is reduced by %0. Unit indirect range is increased by %1 and vision is increased by %2 in wilderness.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="468"/>
+        <source>Each wilderness tile crossed restores %0 HP. Increases her firepower by %0% and lower enemy defense by %1% for each wilderness terrain star.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_cairn.js" line="474"/>
@@ -16817,6 +16844,7 @@ CO區域效果:
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_forsythe.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="250"/>
         <source>Increases offensive by %0% and defensive by %1%.</source>
         <translation>增加 %0% 的攻擊力和 %1% 的防禦力.</translation>
     </message>
@@ -16826,9 +16854,8 @@ CO區域效果:
         <translation>榮譽之力</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_forsythe.js" line="250"/>
         <source>Increases offensive and defensive bonus even more.</source>
-        <translation>增加更多攻擊和防禦加成。</translation>
+        <translation type="vanished">增加更多攻擊和防禦加成。</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_forsythe.js" line="256"/>
@@ -18159,15 +18186,25 @@ Units have %0% firepower and %1% defense bonus.</source>
 單位有 %0% 的火力和 %1% 的防禦加成.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_isabella.js" line="264"/>
         <source>
 
 CO Zone Effect: 
 Units have %0% firepower and %1% defense bonus.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 單位有 %0% 的火力和 %1% 的防禦加成.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_isabella.js" line="264"/>
+        <source>
+
+CO Zone Effect: 
+Units have %2% firepower and %3% defense bonus.</source>
+        <translation type="unfinished">
+
+CO區域效果:
+單位有 %0% 的火力和 %1% 的防禦加成. {2%?} {3%?}</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_isabella.js" line="271"/>
@@ -18301,15 +18338,25 @@ Units have %0% higher firepower on plains.</source>
 單位在平原上的火力增加 %0%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="296"/>
         <source>
 
 CO Zone Effect: 
 Units have %0% higher firepower on plains.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 單位在平原上的火力增加 %0%.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jake.js" line="296"/>
+        <source>
+
+CO Zone Effect: 
+Units have %1% higher firepower on plains.</source>
+        <translation type="unfinished">
+
+CO區域效果:
+單位在平原上的火力增加 %0%. {1%?}</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_jake.js" line="302"/>
@@ -19638,22 +19685,22 @@ CO區域效果:
 <context>
     <name>co_lash</name>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="253"/>
         <source>The wunderkind of the Black Hole forces. She&apos;s small but fierce. Designed most of Black Hole&apos;s recent weaponry.</source>
         <translation>黑洞部隊的神童.她個子小,但很兇.設計了黑洞最近的大部分武器.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="257"/>
         <source>Getting her way</source>
         <translation>順其自然</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="261"/>
         <source>Not getting it</source>
         <translation>不明白</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="265"/>
         <source>Skilled at taking advantage of terrain features. Can turn terrain effects into firepower bonuses.</source>
         <translation>能夠善於利用地形特點,將地形效果轉化為火力加成.</translation>
     </message>
@@ -19682,12 +19729,12 @@ CO Zone效果:
 每個防禦星星使單位攻擊力增加.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="276"/>
         <source>All units&apos; movements are unhindered by terrain.</source>
         <translation>所有部隊移動不會受到地形阻礙.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="280"/>
         <source>Terrain Tactics</source>
         <translation>地形戰術</translation>
     </message>
@@ -19696,7 +19743,7 @@ CO Zone效果:
         <translation type="vanished">地形效果翻倍,增加火力.此外,所有單位不受地形阻礙.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="269"/>
         <source>
 Special Unit:
 Neo Spider Tank
@@ -19711,7 +19758,7 @@ Units gain %0% increased firepower per defense star.</source>
 每顆防禦星使單位的火力增加 %0%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="270"/>
         <source>
 
 CO Zone Effect: 
@@ -19722,72 +19769,72 @@ CO 區域效果:
 每顆防禦星使單位的火力增加 %1%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="284"/>
         <source>Terrain stars get multiplied by %0. Additionally, all units movements are unhindered by terrain.</source>
         <translation>地形星星乘以 %0.此外,所有單位的移動都不受地形的阻礙.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="290"/>
         <source>Prime Tactics</source>
         <translation>主要戰術</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="294"/>
         <source>Ooh!  You&apos;re so annoying!  I&apos;m gonna have to get rid of you now!</source>
         <translation>哦!你真是煩人!我現在得把你消掉!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="294"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="295"/>
         <source>You&apos;re no fun... I don&apos;t like you at all!</source>
         <translation>你一點都不好玩...我一點都不喜歡你!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="296"/>
         <source>I&apos;ve had enough!  I&apos;m bored now!</source>
         <translation>我受夠了!我現在很無聊!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="297"/>
         <source>Oooo, you&apos;re driving me nuts!</source>
         <translation>噢,你快把我逼瘋了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="298"/>
         <source>You want to match wits with me? You&apos;re so silly!</source>
         <translation>想跟我鬥智斗勇?你真傻!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="298"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="299"/>
         <source>Tee hee! C&apos;mon! Let&apos;s play!</source>
         <translation>嘻嘻!來吧!讓我們玩!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="303"/>
         <source>Hee hee hee... Hm? Broken already?</source>
         <translation>嘻嘻嘻...嗯?已經壞了?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="303"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="304"/>
         <source>Tee hee hee! You&apos;re a loser!</source>
         <translation>嘻嘻!你是一個失敗者!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="305"/>
         <source>Huh? That&apos;s all you got? Wow, you&apos;re no fun!</source>
         <translation>嗯?這就是你的全部?哇,你一點都不好玩!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="308"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="309"/>
         <source>Boo! Nothing&apos;s going right! That&apos;s enough. I&apos;m going home!</source>
         <translation>噓!什麼都不對勁!夠了.我要回家了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="310"/>
         <source>Oh, well. I guess I&apos;ll have to find someplace new to play. Toodles!</source>
         <translation>那好吧.我想我得找個新地方玩了.麵條!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="314"/>
         <source>Lash</source>
         <translation>Lash</translation>
     </message>
@@ -23197,102 +23244,123 @@ Royal Guard
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="280"/>
         <source>
 Global Effect: 
 Direct Units have increased firepower and loose additional firepower per terrain star.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 直接戰鬥單位擁有增強的火力,並且每1個地形星會讓它們失去額外的火力.</translation>
+    </message>
+    <message>
+        <source>
+
+CO Zone Effect: 
+Direct Units have increased firepower.</source>
+        <translation type="vanished">
+
+CO區域效果:
+直接戰鬥單位的火力增加.</translation>
+    </message>
+    <message>
+        <source>Firepower is greatly increased against enemy direct-combat units.</source>
+        <translation type="vanished">對敵方直接戰鬥單位的火力大幅提升.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="296"/>
+        <source>General Offensive</source>
+        <translation>總攻</translation>
+    </message>
+    <message>
+        <source>Enemy units not on a property suffer 2 HP of damage.</source>
+        <translation type="vanished">敵軍單位若不在建築物上,則會受到2點傷害.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_peter.js" line="280"/>
+        <source>
+Global Effect: 
+Direct Units have %0 increased firepower and loose additional %1 firepower per terrain star.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_peter.js" line="281"/>
         <source>
 
 CO Zone Effect: 
-Direct Units have increased firepower.</source>
-        <translation>
-
-CO區域效果:
-直接戰鬥單位的火力增加.</translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="286"/>
-        <source>Firepower is greatly increased against enemy direct-combat units.</source>
-        <translation>對敵方直接戰鬥單位的火力大幅提升.</translation>
+Direct Units have %0 increased firepower and loose additional %1 firepower per terrain star.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_peter.js" line="290"/>
-        <source>General Offensive</source>
-        <translation>總攻</translation>
+        <source>Firepower is greatly increased against enemy direct-combat units by %0%.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="294"/>
-        <source>Enemy units not on a property suffer 2 HP of damage.</source>
-        <translation>敵軍單位若不在建築物上,則會受到2點傷害.</translation>
+        <location filename="../resources/scripts/cos/co_peter.js" line="300"/>
+        <source>Enemy units not on a property suffer %0 HP of damage. Firepower is greatly increased against enemy direct-combat units by %1%.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="298"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="306"/>
         <source>Bombing Run</source>
         <translation>轟炸運行</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="310"/>
         <source>We&apos;re going in, boys. Wait for the signal, then strike!</source>
         <translation>我們進去了,孩子們.等待信號､然後罷工!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="303"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="311"/>
         <source>You won&apos;t even have time to take cover.</source>
         <translation>你甚至沒有時間躲起來.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="312"/>
         <source>It&apos;s time to tear through their tanks.</source>
         <translation>是時候撕破他們的坦克了.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="313"/>
         <source>Bogged down? Me? Ha! You seriously overestimate yourself.</source>
         <translation>越陷越深?我?哈!你嚴重高估了自己.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="314"/>
         <source>I&apos;ve been down there with the grunts... I know what&apos;s feasible and what&apos;s not.</source>
         <translation>我和那些咕嚕咕嚕的人一起去過那裡...我知道什麼是可行的,什麼是不可行的.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="307"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="315"/>
         <source>I may not be unbeatable, but you&apos;re obviously not either.</source>
         <translation>我可能不是無敵的,但你顯然也不是.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="319"/>
         <source>Experience is the key to my success.</source>
         <translation>經驗是我成功的關鍵.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="312"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="320"/>
         <source>I hope you learned something from this.</source>
         <translation>我希望你能從中學到一些東西.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="321"/>
         <source>What did you think you were doing with those tanks?</source>
         <translation>你以為你在用那些坦克做什麼?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="317"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="325"/>
         <source>Your tanks were better than mine.</source>
         <translation>你的坦克比我的好.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="326"/>
         <source>You&apos;re never to old to learn some new moves.</source>
         <translation>你永遠不會老去學習一些新動作.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_peter.js" line="322"/>
+        <location filename="../resources/scripts/cos/co_peter.js" line="330"/>
         <source>Peter</source>
         <translation>Peter</translation>
     </message>
@@ -23529,102 +23597,123 @@ Auto Tank
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="322"/>
         <source>
 Global Effect: 
 Units have increased firepower against large regiments of units and reduced firepower against lone units.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 對大型部隊的單位增加火力,對孤立單位減少火力.</translation>
+    </message>
+    <message>
+        <source>
+
+CO Zone Effect: 
+Units have increased firepower against large regiments of units.</source>
+        <translation type="vanished">
+
+CO區域效果:
+單位增加了對大單位團的火力.</translation>
+    </message>
+    <message>
+        <source>Receives a small offensive boost when attacking enemies in groups. Movement is increased by one space.</source>
+        <translation type="vanished">攻擊成群的敵人時獲得小幅攻擊力提升.移動+1.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="335"/>
+        <source>Raid</source>
+        <translation>襲擊</translation>
+    </message>
+    <message>
+        <source>Receives a firepower and defense boost for engaging enemies in groups. Enemy units suffer one HP of damage.</source>
+        <translation type="vanished">與成群結隊的敵人交戰時獲得火力和防禦力提升.敵方單位受到 1 HP 的傷害.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="322"/>
+        <source>
+Global Effect: 
+Units have increased firepower against large regiments of units by %0% and reduced firepower by %1% against lone units.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_rattigan.js" line="323"/>
         <source>
 
 CO Zone Effect: 
-Units have increased firepower against large regiments of units.</source>
-        <translation>
-
-CO區域效果:
-單位增加了對大單位團的火力.</translation>
+Units have increased firepower by %2% against large regiments of units.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="327"/>
-        <source>Receives a small offensive boost when attacking enemies in groups. Movement is increased by one space.</source>
-        <translation>攻擊成群的敵人時獲得小幅攻擊力提升.移動+1.</translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="331"/>
-        <source>Raid</source>
-        <translation>襲擊</translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="335"/>
-        <source>Receives a firepower and defense boost for engaging enemies in groups. Enemy units suffer one HP of damage.</source>
-        <translation>與成群結隊的敵人交戰時獲得火力和防禦力提升.敵方單位受到 1 HP 的傷害.</translation>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="329"/>
+        <source>Receives a %0% firepower boost and gain %1% per nearby enemy unit. Movement is increased by %2 space.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_rattigan.js" line="339"/>
+        <source>Receives a %0% firepower boost and %1% defense boost and gain %2% per nearby enemy unit. Enemy units suffer %3 HP of damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="345"/>
         <source>The Sweep</source>
         <translation>橫掃</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="343"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="349"/>
         <source>All those enemy men... heh, perfect!</source>
         <translation>所有那些敵人...嘿,完美!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="344"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="350"/>
         <source>G-gah! They&apos;re everywhere!</source>
         <translation>G-gah!他們無處不在!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="345"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="351"/>
         <source>Hrumph! This&apos;ll learn yeh!</source>
         <translation>哼!學學這招!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="346"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="352"/>
         <source>Heh, could Sensei do THIS?</source>
         <translation>呵,老師能做到嗎!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="347"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="353"/>
         <source>Who the heck taught you to fight?</source>
         <translation>誰教你打架的?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="348"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="354"/>
         <source>Stay on your toes! I&apos;m talking to you!!</source>
         <translation>保持警惕!我和你說話呢!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="352"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="358"/>
         <source>With all of those troops, you&apos;d think they&apos;d last longer...</source>
         <translation>有了所有這些部隊,你會認為他們會持續更長時間...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="353"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="359"/>
         <source>A-aughk!! Uhm… I mean… congratulations, men.</source>
         <translation>啊啊!!嗯...我的意思是...恭喜,伙計們.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="354"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="360"/>
         <source>With Yellow Comet on the line, I can&apos;t lose.</source>
         <translation>有黃色彗星在線上,我不能輸.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="358"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="364"/>
         <source>What? You had enough troops...</source>
         <translation>什麼?你有足夠的軍隊...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="359"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="365"/>
         <source>Sensei that&apos;s your fault!</source>
         <translation>老師是你的錯!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="363"/>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="369"/>
         <source>Rattigan</source>
         <translation>Rattigan</translation>
     </message>
@@ -24786,97 +24875,118 @@ Siege Cannon
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="375"/>
         <source>
 Global Effect: 
 No Effect.</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 沒有.</translation>
+    </message>
+    <message>
+        <source>
+
+CO Zone Effect: 
+Direct Units gain additional firepower for each indirect unit that can attack the defending unit.</source>
+        <translation type="vanished">
+
+CO區域效果:
+對於每個能夠攻擊防守部隊的間接部隊,直接部隊可以獲得額外的火力.</translation>
+    </message>
+    <message>
+        <source>Increases the range of indirect units by one space. Indirect units can move after firing.</source>
+        <translation type="vanished">增加間接部隊的攻擊範圍+1.間接部隊在攻擊後可以移動.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="388"/>
+        <source>Scramble Tactics</source>
+        <translation>爭奪戰術</translation>
+    </message>
+    <message>
+        <source>Increases the range of indirect units by two spaces. Indirect units can fire twice and move after firing.</source>
+        <translation type="vanished">增加間接部隊的攻擊範圍+2.間接部隊可以攻擊2次且攻擊後可以移動.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="375"/>
+        <source>
+Global Effect: 
+Direct Units gain additional %0% firepower for each indirect unit that can attack the defending unit.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_smitan.js" line="376"/>
         <source>
 
 CO Zone Effect: 
-Direct Units gain additional firepower for each indirect unit that can attack the defending unit.</source>
-        <translation>
-
-CO區域效果:
-對於每個能夠攻擊防守部隊的間接部隊,直接部隊可以獲得額外的火力.</translation>
+Direct Units gain additional %1% firepower for each indirect unit that can attack the defending unit.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="380"/>
-        <source>Increases the range of indirect units by one space. Indirect units can move after firing.</source>
-        <translation>增加間接部隊的攻擊範圍+1.間接部隊在攻擊後可以移動.</translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="384"/>
-        <source>Scramble Tactics</source>
-        <translation>爭奪戰術</translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="388"/>
-        <source>Increases the range of indirect units by two spaces. Indirect units can fire twice and move after firing.</source>
-        <translation>增加間接部隊的攻擊範圍+2.間接部隊可以攻擊2次且攻擊後可以移動.</translation>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="382"/>
+        <source>Increases the range of indirect units by %0 space. Indirect units can move after firing. Direct Units gain additional %1% firepower for each indirect unit that can attack the defending unit.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_smitan.js" line="392"/>
+        <source>Increases the range of indirect units by %2 spaces. Indirect units can fire twice and move after firing. Direct Units gain additional %1% firepower for each indirect unit that can attack the defending unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="398"/>
         <source>Flare Drive</source>
         <translation>火炬驅動</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="396"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="402"/>
         <source>Whites of their eyes? Pahaha!</source>
         <translation>他們的眼白?哈哈哈!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="397"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="403"/>
         <source>It&apos;s over! Get used to it!!</source>
         <translation>結束了!習慣它!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="398"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="404"/>
         <source>Fire, you idiots!!</source>
         <translation>開火,你們這些白痴!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="399"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="405"/>
         <source>What&apos;re you waiting for?! SHOOT them!!</source>
         <translation>你還在等什麼?!射他們!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="400"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="406"/>
         <source>&apos;Calm before the storm&apos;? ... Nonsense.</source>
         <translation>&apos;暴風雨前的平靜&apos;?..廢話.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="401"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="407"/>
         <source>No more games! All units, full power!!</source>
         <translation>沒有更多的遊戲!所有單位,全力以赴!!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="405"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="411"/>
         <source>Wasn&apos;t even any dust to settle.</source>
         <translation>甚至沒有任何塵埃落定.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="406"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="412"/>
         <source>Grah hah hah. Ooh, that was FUN.</source>
         <translation>格拉哈哈哈哈.哦,那很有趣.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="410"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="416"/>
         <source>Grah! Ha! Ha. Ooh! What i lost</source>
         <translation>啊!哈!哈.哦!我失去了什麼</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="411"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="417"/>
         <source>This and that! And what...i&apos;ve lost?</source>
         <translation>這個和那個!還有……我失去了什麼?</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="415"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="421"/>
         <source>Smitan</source>
         <translation>Smitan</translation>
     </message>
@@ -26321,15 +26431,22 @@ Direct ground units have %0% increased firepower.</source>
 直接地面單位的火力增加 %0%.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_will.js" line="287"/>
         <source>
 
 CO Zone Effect: 
 Direct Ground Units have 1% increased firepower and other units gain %2% firepower. All units gain %3% defence.</source>
-        <translation>
+        <translation type="vanished">
 
 CO區域效果:
 直接地面單位的火力增加了1%,其他單位的火力增加了%2%.所有單位的防禦增加了%3%.</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_will.js" line="287"/>
+        <source>
+
+CO Zone Effect: 
+Direct Ground Units have %1% increased firepower and other units gain %2% firepower. All units gain %3% defence.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_will.js" line="293"/>
