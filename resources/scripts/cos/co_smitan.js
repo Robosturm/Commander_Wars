@@ -371,13 +371,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nSiege Cannon\n") +
-               qsTr("\nGlobal Effect: \nNo Effect.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Units gain additional firepower for each indirect unit that can attack the defending unit.");
+        var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+               qsTr("\nGlobal Effect: \nDirect Units gain additional %0% firepower for each indirect unit that can attack the defending unit.") +
+               qsTr("\n\nCO Zone Effect: \nDirect Units gain additional %1% firepower for each indirect unit that can attack the defending unit.");
+        text = replaceTextArgs(text, [CO_SMITAN.d2dOffBonus, CO_SMITAN.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Increases the range of indirect units by one space. Indirect units can move after firing.");
+        var text = qsTr("Increases the range of indirect units by %0 space. Indirect units can move after firing. Direct Units gain additional %1% firepower for each indirect unit that can attack the defending unit.");
+        text = replaceTextArgs(text, [CO_SMITAN.powerFirerangeModifier, CO_SMITAN.powerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -385,7 +389,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Increases the range of indirect units by two spaces. Indirect units can fire twice and move after firing.");
+        var text = qsTr("Increases the range of indirect units by %2 spaces. Indirect units can fire twice and move after firing. Direct Units gain additional %1% firepower for each indirect unit that can attack the defending unit.");
+        text = replaceTextArgs(text, [CO_SMITAN.superPowerFirerangeModifier, CO_SMITAN.superPowerOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

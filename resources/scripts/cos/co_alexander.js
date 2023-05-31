@@ -245,7 +245,7 @@ var Constructor = function()
         var text = qsTr("\nSpecial Unit:\nPartisan\n") +
                    qsTr("\nGlobal Effect: \nBuildings that Alexander owns put up a fight when being captured by enemy soldiers. Each building recovers %0 capture point each day while under siege.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and defence.");
-        text = replaceTextArgs(text, [CO_ALEXANDER.d2dRevoltPoints, CO_ALEXANDER.coZoneBonus]);
+        text = replaceTextArgs(text, [CO_ALEXANDER.d2dRevoltPoints, CO_ALEXANDER.d2dCoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

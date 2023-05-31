@@ -293,7 +293,7 @@ var Constructor = function()
     {
         var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
                qsTr("\nGlobal Effect: \nUnits have %0% higher firepower on plains.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %0% higher firepower on plains.");
+               qsTr("\n\nCO Zone Effect: \nUnits have %1% higher firepower on plains.");
         text = replaceTextArgs(text, [CO_JAKE.d2dPlainsBonus, CO_JAKE.d2dCoZonePlainsBonus]);
         return text;
     };

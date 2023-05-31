@@ -284,7 +284,7 @@ var Constructor = function()
     {
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
                qsTr("\nGlobal Effect:\nDirect ground units have %0% increased firepower.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Ground Units have 1% increased firepower and other units gain %2% firepower. All units gain %3% defence.");
+               qsTr("\n\nCO Zone Effect: \nDirect Ground Units have %1% increased firepower and other units gain %2% firepower. All units gain %3% defence.");
         text = replaceTextArgs(text, [CO_WILL.d2dOffBonus, CO_WILL.d2dCoZoneOffBonus, CO_WILL.d2dCoZoneBaseBonus, CO_WILL.d2dCoZoneOffBonus]);
         return text;
     };

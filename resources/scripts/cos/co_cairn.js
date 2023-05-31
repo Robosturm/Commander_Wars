@@ -455,8 +455,8 @@ var Constructor = function()
 
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Wilderness movement cost is reduced by 1.  Unit indirect range and vision are increased by 1 in wilderness.");
-        text = replaceTextArgs(text, [CO_CAIRN.defaultModifier]);
+        var text = qsTr("Wilderness movement cost is reduced by %0. Unit indirect range is increased by %1 and vision is increased by %2 in wilderness.");
+        text = replaceTextArgs(text, [CO_CAIRN.powerMovementCostReduction, CO_CAIRN.powerFirerangeBonus, CO_CAIRN.powerVisionrangeModifier]);
         return text;
     };
     this.getPowerName = function(co)
@@ -465,8 +465,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Each wilderness tile crossed restores 1 HP. Increases her firepower by %0% and lower enemy defense by %0% for each wilderness terrain star.");
-        text = replaceTextArgs(text, [CO_CAIRN.defaultModifier]);
+        var text = qsTr("Each wilderness tile crossed restores %0 HP. Increases her firepower by %0% and lower enemy defense by %1% for each wilderness terrain star.");
+        text = replaceTextArgs(text, [CO_CAIRN.superPowerHeal, CO_CAIRN.superPowerOffBonus, CO_CAIRN.superPowerDefenseReduction]);
         return text;
     };
     this.getSuperPowerName = function(co)

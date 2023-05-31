@@ -132,8 +132,9 @@ var Constructor = function()
     this.superPowerTerrainDefenseModifier = 1;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
+    this.powerTerrainBonus = 10;
 
-    this.d2dTerrainBonus = 10;
+    this.d2dTerrainBonus = 0;
     this.d2dCoZoneTerrainBonus = 10;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
@@ -155,7 +156,7 @@ var Constructor = function()
                     case GameEnums.PowerMode_Power:
                         if (attacker.useTerrainDefense())
                         {
-                            return terrainDefense * CO_LASH.d2dTerrainBonus + CO_LASH.powerOffBonus;
+                            return terrainDefense * CO_LASH.powerTerrainBonus + CO_LASH.powerOffBonus;
                         }
                         return CO_LASH.powerOffBonus;
                     default:

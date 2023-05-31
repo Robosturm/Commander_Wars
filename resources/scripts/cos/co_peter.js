@@ -277,13 +277,19 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRoyal Guard\n") +
-                   qsTr("\nGlobal Effect: \nDirect Units have increased firepower and loose additional firepower per terrain star.") +
-                   qsTr("\n\nCO Zone Effect: \nDirect Units have increased firepower.");
+                   qsTr("\nGlobal Effect: \nDirect Units have %0 increased firepower and loose additional %1 firepower per terrain star.") +
+                   qsTr("\n\nCO Zone Effect: \nDirect Units have %0 increased firepower and loose additional %1 firepower per terrain star.");
+        text = replaceTextArgs(text, [CO_PETER.d2dOffBonus, CO_PETER.d2dTerrainMalus,
+                                      CO_PETER.d2dCoZoneOffBonus, CO_PETER.d2dTerrainMalus]);
+
+
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Firepower is greatly increased against enemy direct-combat units.");
+        var text = qsTr("Firepower is greatly increased against enemy direct-combat units by %0%.");
+        text = replaceTextArgs(text, [CO_PETER.powerOffBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -291,7 +297,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Enemy units not on a property suffer 2 HP of damage.");
+        var text = qsTr("Enemy units not on a property suffer %0 HP of damage. Firepower is greatly increased against enemy direct-combat units by %1%.");
+        text = replaceTextArgs(text, [CO_PETER.superPowerDamage, CO_PETER.superPowerOffBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

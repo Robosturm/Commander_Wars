@@ -66,11 +66,11 @@ var Constructor = function()
         return "OS";
     };
 
-    this.powerCostReduction = 0.5;
+    this.powerCostReduction = -0.5;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
 
-    this.d2dCostReduction = 0.1;
+    this.d2dCostReduction = -0.1;
 
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
@@ -84,11 +84,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return -baseCost * CO_HACHI.powerCostReduction;
+                return baseCost * CO_HACHI.powerCostReduction;
             default:
                 break;
             }
-            return -baseCost * CO_HACHI.d2dCostReduction;
+            return baseCost * CO_HACHI.d2dCostReduction;
         }
         return 0;
     };
