@@ -14618,13 +14618,19 @@ Ranger
 </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_cairn.js" line="450"/>
         <source>
 Global Effect: 
 None</source>
-        <translation>
+        <translation type="vanished">
 全局效果:
 沒有</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cairn.js" line="450"/>
+        <source>
+Global Effect: 
+Wilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_cairn.js" line="451"/>

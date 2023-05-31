@@ -82,9 +82,12 @@ bool AudioManager::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soun
         }
         connect(&soundItem, &QSoundEffect::playingChanged, this, [this, pSoundCache, i]()
         {
-            pSoundCache->m_usedSounds.removeAll(i);
-            stopSoundInternal(i);
-        }, Qt::QueuedConnection);
+            if (!m_soundEffectData[i].sound.isPlaying())
+            {
+                pSoundCache->m_usedSounds.removeAll(i);
+                stopSoundInternal(i);
+            }
+        });
 
         started = true;
         soundCache->m_usedSounds.append(i);
