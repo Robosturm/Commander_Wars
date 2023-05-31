@@ -148,7 +148,7 @@ var Constructor = function()
                 {
                     return CO_COLIN.d2dCoZoneOffBonus;
                 }
-                return CO_COLIN.globalBoost;
+                return CO_COLIN.d2dOffBonus;
             }
         }
         return 0;

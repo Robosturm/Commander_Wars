@@ -447,9 +447,9 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRanger\n") +
-                qsTr("\nGlobal Effect: \nNone") +
-                qsTr("\n\nCO Zone Effect: \nWilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.");
-        text = replaceTextArgs(text, [CO_CAIRN.coZoneStarBonus, CO_CAIRN.coFirepowerDebuff]);
+                   qsTr("\nGlobal Effect: \nWilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.") +
+                   qsTr("\n\nCO Zone Effect: \nWilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.");
+        text = replaceTextArgs(text, [CO_CAIRN.d2dTerrainBonus, CO_CAIRN.d2dBuildingMalus, CO_CAIRN.d2dCoZoneTerrainBonus, CO_CAIRN.d2dBuildingMalus]);
         return text;
     };
 

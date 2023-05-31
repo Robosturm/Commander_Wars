@@ -21,7 +21,7 @@ using spAudioManager = oxygine::intrusive_ptr<AudioManager>;
 
 struct SoundData : public QObject
 {
-    static constexpr qint32 MAX_SAME_SOUNDS = 30;
+    static constexpr qint32 MAX_SAME_SOUNDS = 60;
     static constexpr qint32 DEFAULT_CACHE_SIZE = 10;
     QUrl cacheUrl;
     QVector<qint32> m_usedSounds;
@@ -32,7 +32,7 @@ Q_DECLARE_INTERFACE(SoundData, "SoundData");
 
 class AudioManager final : public QObject, public oxygine::ref_counter
 {
-    static constexpr qint32 MAX_PARALLEL_SOUNDS = SoundData::MAX_SAME_SOUNDS;
+    static constexpr qint32 MAX_PARALLEL_SOUNDS = 100;
     Q_OBJECT
 private:
 #ifdef AUDIOSUPPORT
@@ -293,6 +293,76 @@ private:
         QTimer timer;
     };
     SoundEffect m_soundEffectData[MAX_PARALLEL_SOUNDS]{SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
+                                                       SoundEffect(this),
                                                        SoundEffect(this),
                                                        SoundEffect(this),
                                                        SoundEffect(this),
