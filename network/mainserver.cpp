@@ -586,7 +586,7 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
             {
                 if (i < count)
                 {
-                    QJsonObject obj = game->game->getData().toJson(QJsonDocument::Compact);
+                    QJsonObject obj = game->game->getData().toJson();
                     games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
                     ++i;
                 }
@@ -601,7 +601,7 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
         {
             if (i < count)
             {
-                QJsonObject obj = game.game.toJson(QJsonDocument::Compact);
+                QJsonObject obj = game.game.toJson();
                 games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
                 ++i;
             }
@@ -615,7 +615,7 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
         {
             if (i < count)
             {
-                QJsonObject obj = game.game.toJson(QJsonDocument::Compact);
+                QJsonObject obj = game.game.toJson();
                 games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
                 ++i;
             }
@@ -648,7 +648,7 @@ void MainServer::onRequestObservegames(quint64 socketId, const QJsonObject & obj
         {
             if (i < count)
             {
-                QJsonObject obj = game->game->getData().toJson(QJsonDocument::Compact);
+                QJsonObject obj = game->game->getData().toJson();
                 games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
                 ++i;
             }
@@ -662,7 +662,7 @@ void MainServer::onRequestObservegames(quint64 socketId, const QJsonObject & obj
         {
             if (i < count)
             {
-                QJsonObject obj = game.game.toJson(QJsonDocument::Compact);
+                QJsonObject obj = game.game.toJson();
                 games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
                 ++i;
             }
@@ -697,7 +697,7 @@ void MainServer::onRequestGameData(quint64 socketId, const QJsonObject & objData
         {
             if (i < count)
             {
-                QJsonObject obj = game->game->getData().toJson(QJsonDocument::Compact);
+                QJsonObject obj = game->game->getData().toJson();
                 games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
                 ++i;
             }
@@ -709,7 +709,7 @@ void MainServer::onRequestGameData(quint64 socketId, const QJsonObject & objData
         if (i < count)
         {
             auto & game = m_runningLobbies[index];
-            QJsonObject obj = game.game.toJson(QJsonDocument::Compact);
+            QJsonObject obj = game.game.toJson();
             games.insert(JsonKeys::JSONKEY_GAMEDATA + QString::number(i), obj);
             ++i;
         }
@@ -1673,7 +1673,7 @@ void MainServer::SuspendedSlaveInfo::serializeObject(QDataStream& stream) const
     stream << relaunched;
     stream << runningGame;
     stream << savefile;
-    auto obj = game.toJson(QJsonDocument::Compact);
+    auto obj = game.toJson();
     QJsonDocument doc(obj);
     Filesupport::writeByteArray(stream, doc.toJson(QJsonDocument::Compact));
 }
