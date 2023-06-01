@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.canBePerformed = function(action, map)
     {
-        if (!map.getGameRules().getParallelCos())
+        if (map.getGameRules().getParallelCos())
         {
             var player = map.getCurrentPlayer();
             var co0 = player.getCO(0);

@@ -215,7 +215,7 @@ QByteArray RsaCypherHandler::getRequestKeyMessage(NetworkCommands::PublicKeyActi
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument doc(data);
-    return doc.toJson();
+    return doc.toJson(QJsonDocument::Compact);
 }
 
 QByteArray RsaCypherHandler::getPublicKeyMessage(NetworkCommands::PublicKeyActions action) const
@@ -227,7 +227,7 @@ QByteArray RsaCypherHandler::getPublicKeyMessage(NetworkCommands::PublicKeyActio
     data.insert(JsonKeys::JSONKEY_PUBLICKEY, m_publicKeyStr);
     data.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument doc(data);
-    return doc.toJson();
+    return doc.toJson(QJsonDocument::Compact);
 }
 
 QByteArray RsaCypherHandler::getDecryptedMessage(const QJsonDocument & encryptedMessage)

@@ -29,7 +29,7 @@ void NetworkGameData::setSlavePort(quint16 newPort)
     m_slavePort = newPort;
 }
 
-QJsonObject NetworkGameData::toJson() const
+QJsonObject NetworkGameData::toJson(QJsonDocument::Compact) const
 {
     CONSOLE_PRINT("NetworkGameData::toJson", GameConsole::eDEBUG);
     QJsonObject obj;

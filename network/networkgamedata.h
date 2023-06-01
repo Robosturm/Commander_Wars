@@ -16,7 +16,7 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    QJsonObject toJson() const;
+    QJsonObject toJson(QJsonDocument::Compact) const;
     /**
      * @brief deserialize restores the object
      * @param pStream

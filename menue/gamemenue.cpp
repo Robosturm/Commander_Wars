@@ -459,7 +459,7 @@ void GameMenue::sendUsername(quint64 socketID, const QJsonObject & objData)
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     QJsonDocument doc(data);
-    emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void GameMenue::sendOnlineInfo()
@@ -473,7 +473,7 @@ void GameMenue::sendOnlineInfo()
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_ONLINEINFO, getOnlineInfo());
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         updatePlayerinfo();
     }
 }
@@ -516,7 +516,7 @@ void GameMenue::sendLoginData(quint64 socketID, const QJsonObject & objData, Net
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     QJsonDocument doc(data);
     CONSOLE_PRINT("Sending login data to slave", GameConsole::eDEBUG);
-    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
@@ -568,7 +568,7 @@ void GameMenue::verifyLoginData(const QJsonObject & objData, quint64 socketID)
         CONSOLE_PRINT("Login error: " + QString::number(valid) + " reported reason: " + QString::number(reason), GameConsole::eDEBUG);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, reason);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -735,7 +735,7 @@ void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
             data.insert(JsonKeys::JSONKEY_COMMAND, command);
             data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::NoMoreObservers);
             QJsonDocument doc(data);
-            emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         }
     }
     else
@@ -746,7 +746,7 @@ void GameMenue::joinAsObserver(QDataStream & stream, quint64 socketID)
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidConnection);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -795,7 +795,7 @@ void GameMenue::joinAsPlayer(QDataStream & stream, quint64 socketID)
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::InvalidConnection);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -890,7 +890,7 @@ void GameMenue::playerRequestControlInfo(QDataStream & stream, quint64 socketId)
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -924,7 +924,7 @@ void GameMenue::checkSendPlayerRequestControlInfo()
                 data.insert(JsonKeys::JSONKEY_COMMAND, command);
                 data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, NetworkCommands::DisconnectReason::UsernameAlreadyInGame);
                 QJsonDocument doc(data);
-                emit m_pNetworkInterface->sig_sendData(entry.socket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+                emit m_pNetworkInterface->sig_sendData(entry.socket, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
             }
         }
         m_userData.clear();
@@ -1053,7 +1053,7 @@ void GameMenue::sendOpenPlayerCount()
         data.insert(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT, m_pMap->getGameRules()->getObserverList().size());
         data.insert(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT, m_pMap->getGameRules()->getMultiplayerObserver());
         QJsonDocument doc(data);
-        emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -1290,7 +1290,7 @@ bool GameMenue::doDespawnSlave()
         data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
         QJsonDocument doc(data);
         CONSOLE_PRINT("Sending command " + command + " to server", GameConsole::eDEBUG);
-        emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
     else
     {
@@ -2363,7 +2363,7 @@ void GameMenue::sendGameStartedToServer()
         }
         data.insert(JsonKeys::JSONKEY_USERNAMES, usernames);
         QJsonDocument doc(data);
-        emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         startDespawnTimer();
     }
 }

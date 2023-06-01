@@ -86,7 +86,7 @@ void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameS
             data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, m_data.getSlaveSecondaryAddress());
             data.insert(JsonKeys::JSONKEY_PORT, m_data.getSlavePort());
             QJsonDocument doc(data);
-            emit pClient->sig_sendData(m_hostingSocket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            emit pClient->sig_sendData(m_hostingSocket, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
             m_slaveRunning = true;
         }
         else
@@ -192,7 +192,7 @@ void NetworkGame::onConnectToLocalServer(quint64 socketId, spTCPServer & pTcpSer
         data.insert(JsonKeys::JSONKEY_MAPNAME, m_slaveRespawnFile);
         data.insert(JsonKeys::JSONKEY_RUNNINGGAME, m_runningGame);
         QJsonDocument doc(data);
-        emit pTcpServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit pTcpServer->sig_sendData(socketId, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -254,6 +254,6 @@ void NetworkGame::forceDespawn(spTCPServer & pGameServer)
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         QJsonDocument doc(data);
-        emit pClient->sig_sendData(m_hostingSocket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit pClient->sig_sendData(m_hostingSocket, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
