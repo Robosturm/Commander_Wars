@@ -144,7 +144,7 @@ var Constructor = function()
     this.d2dCoZoneOffBonus = 45;
     this.d2dCoZoneIndirectOffBonus = 0;
     this.d2dCoZoneOtherOffBonus = 10;
-    this.d2dIndirectFirerangeMalus = 1;
+    this.d2dIndirectFirerangeMalus = -1;
     this.d2dOffBonus = 15;
     this.d2dIndirectOffBonus = -10;
     this.d2dOtherOffBonus = 0;
@@ -243,7 +243,7 @@ var Constructor = function()
         {
             if (unit.getBaseMaxRange() > 1)
             {
-                return -CO_MAX.d2dIndirectFirerangeMalus;
+                return CO_MAX.d2dIndirectFirerangeMalus;
             }
         }
         return 0;

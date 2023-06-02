@@ -166,6 +166,59 @@ namespace oxygine
             }
         }
 
+        WigglyNode::WigglyNode(QDomElement& reader, const QString & v)
+            : TextNode(v)
+        {
+            if (reader.hasAttribute("speed"))
+            {
+                m_speed = timeMS(reader.attributeNode("speed").value().toInt());
+            }
+            if (reader.hasAttribute("advance"))
+            {
+                m_advance = reader.attributeNode("advance").value().toInt();
+            }
+            if (reader.hasAttribute("maxY"))
+            {
+                m_maxY = reader.attributeNode("maxY").value().toFloat();
+            }
+            m_lastStepTime = Clock::getTimeMS();
+        }
+
+        void WigglyNode::draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter)
+        {
+#ifdef GRAPHICSUPPORT
+            static constexpr float sineTable[16] = {
+                1.0f / 2.0f, 1.38f / 2.0f, 1.71f / 2.0f, 1.92f / 2.0f, 2.0f / 2.0f, 1.92f / 2.0f, 1.71f / 2.0f, 1.38f / 2.0f,
+                1.0f / 2.0f, 0.62f / 2.0f, 0.29f / 2.0f, 0.08f / 2.0f, 0.0f / 2.0f, 0.08f / 2.0f, 0.29f / 2.0f, 0.62f / 2.0f
+            };
+            auto now = Clock::getTimeMS();
+            auto goneTime = now - m_lastStepTime;
+            if (goneTime > m_speed)
+            {
+                m_lastStepTime = now - timeMS(goneTime.count() % m_speed.count());
+                m_step += goneTime.count() / m_speed.count();
+            }
+            painter.setTransform(rs.transform);
+            QFontMetrics metrics(style.font->font);
+            QColor color;
+            painter.setFont(style.font->font);
+            for (qint32 i2 = 0; i2 < m_lines.size(); ++i2)
+            {
+                qint32 x = m_offsets[i2].x();
+                for (qint32 i = 0; i < m_lines[i2].size(); ++i)
+                {
+                    qint32 index = (m_step - i * m_advance) % 16;
+                    qint32 sinIndex = (m_step - i) % 16;
+                    color.setHsv((15 - index) * 16, 255, 191);
+                    painter.setPen(color);
+                    painter.drawText(x, m_offsets[i2].y() - (sineTable[sinIndex] * m_maxY), QString(m_lines[i2][i]));
+                    x += metrics.horizontalAdvance(m_lines[i2][i]);
+                }
+            }
+            drawChildren(rs, style, drawColor, painter);
+#endif
+        }
+
         void DivNode::resize(Aligner& rd)
         {
             resizeChildren(rd);

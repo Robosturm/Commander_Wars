@@ -52,7 +52,6 @@ public:
      * @param player
      */
     void playerJoined(const QString & player);
-signals:
 
 public slots:
     void createNewGame(const QString & players);

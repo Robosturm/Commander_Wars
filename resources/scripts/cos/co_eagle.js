@@ -31,7 +31,7 @@ var Constructor = function()
             var unit = units.at(i);
             if (unit.getUnitType() !== GameEnums.UnitType_Infantry)
             {
-                if (powerRefresh)
+                if (CO_EAGLE.powerRefresh)
                 {
                     unit.setHasMoved(false);
                 }

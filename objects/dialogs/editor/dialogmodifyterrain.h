@@ -24,7 +24,7 @@ signals:
     void sigTerrainClicked(QString id);
     void sigShowLoadDialog();
     void sigOverlayChanged(QString id, bool selected);
-    void sigChangePalette(const QString & newPalette);
+    void sigChangePalette(const QString newPalette);
     void sigLoadCustomSprite(QString id);
 public slots:
     void terrainClicked(QString id);
@@ -32,7 +32,7 @@ public slots:
     void loadCustomSprite(QString id);
     void remove();
     void overlayChanged(QString id, bool selected);
-    void changePalette(const QString & newPalette);
+    void changePalette(const QString newPalette);
 private:
     void loadBaseImageview(qint32 & y, Terrain* pTerrain);
     void loadOverlayview(qint32 & y, Terrain* pTerrain);

@@ -4,7 +4,7 @@ var COREAI =
                                         [70,         10,     20,       30,          10,                 30,                 10,               10],
                                         40, 0, "", 0.4],
     lightTankGroup : ["LIGHT_TANK_GROUP",   ["RECON", "FLARE", "LIGHT_TANK", "ARTILLERY", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK", "ZCOUNIT_SMUGGLER", "ZCOUNIT_AUTO_TANK", "FLAK"],
-                                            [5,       5,       80,           15,          15,                 15,                 15,                 30,                   10],
+                                            [5,       5,       80,           15,          15,                 15,                 15,                 30,                   5],
                                             50, 1, "", 1.0],
     mediumTankGroup : ["MEDIUM_TANK_GROUP", ["ANTITANKCANNON", "HEAVY_TANK", "ROCKETTHROWER", "ZCOUNIT_CRYSTAL_TANK", "ZCOUNIT_NEOSPIDER_TANK", "ZCOUNIT_ROYAL_GUARD", "ZCOUNIT_TANK_HUNTER"],
                                             [30,               70,           10,              40,                     40,                       40,                    40],

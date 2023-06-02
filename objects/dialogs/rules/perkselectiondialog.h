@@ -30,8 +30,8 @@ signals:
     void sigToggleAll(bool toggle);
     void sigShowSavePerklist();
     void sigShowDeleteBannlist();
-    void sigDeleteBannlist(const QString & file);
-    void sigDoSaveBannlist(const QString & filename, const QString & path);
+    void sigDeleteBannlist(const QString file);
+    void sigDoSaveBannlist(const QString filename, const QString path);
     void sigSelectRandomPerks();
 protected slots:
     void changeCO(qint32 index);
@@ -61,7 +61,7 @@ protected slots:
      * @param filename
      * @param path
      */
-    void doSaveBannlist(const QString & filename, const QString & path);
+    void doSaveBannlist(const QString filename, const QString path);
     /**
      * @brief showDeleteBannlist
      */
@@ -70,7 +70,7 @@ protected slots:
      * @brief deleteBannlist
      * @param file
      */
-    void deleteBannlist(const QString & file);
+    void deleteBannlist(const QString file);
     /**
      * @brief perkViewUpdated
      */

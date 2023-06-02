@@ -157,7 +157,7 @@ namespace oxygine
         }
     }
 
-    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
+    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor)
     {
         if (pAnim.get() != nullptr && !m_noUi)
         {

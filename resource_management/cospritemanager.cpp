@@ -64,7 +64,7 @@ QStringList COSpriteManager::getCOStyles(qint32 position)
     return QStringList();
 }
 
-void COSpriteManager::loadResAnim(const QString & coid, const QString & file, QImage colorTable, QImage maskTable, bool useColorBox)
+void COSpriteManager::loadResAnim(const QString coid, const QString file, QImage colorTable, QImage maskTable, bool useColorBox)
 {
     colorTable.convertTo(QImage::Format_ARGB32);
     maskTable.convertTo(QImage::Format_ARGB32);

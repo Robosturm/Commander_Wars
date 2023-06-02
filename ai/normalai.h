@@ -114,7 +114,6 @@ public:
 
     explicit NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType, QString jsName);
     ~NormalAi() = default;
-signals:
 
 public slots:
     virtual void process() override;

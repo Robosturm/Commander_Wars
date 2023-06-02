@@ -411,7 +411,7 @@ bool MainServer::informClientsAboutRelaunch(QVector<SuspendedSlaveInfo> & games,
             for (auto & socket : game.pendingSockets)
             {
                 CONSOLE_PRINT("Sending command " + doc.object().value(JsonKeys::JSONKEY_COMMAND).toString() + " to socket " + QString::number(socket), GameConsole::eDEBUG);
-                emit m_pGameServer->sig_sendData(socket, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+                emit m_pGameServer->sig_sendData(socket, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
             }
             games.removeAt(i);
             return true;
@@ -476,7 +476,7 @@ void MainServer::despawnSlave(quint64 socketID)
      data.insert(JsonKeys::JSONKEY_COMMAND, command);
      QJsonDocument doc(data);
      CONSOLE_PRINT("Sending command " + command + " to slave to socket " + QString::number(socketID), GameConsole::eDEBUG);
-     emit m_pSlaveServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+     emit m_pSlaveServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::setUuidForGame(NetworkGameData & game)
@@ -561,7 +561,7 @@ void MainServer::onRequestServerVersion(quint64 socketId, const QJsonObject & ob
     data.insert(JsonKeys::JSONKEY_VERSION, Mainapp::getGameVersion());
     // send server data to all connected clients
     QJsonDocument doc(data);
-    emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pGameServer->sig_sendData(socketId, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objData)
@@ -626,7 +626,7 @@ void MainServer::onRequestUsergames(quint64 socketId, const QJsonObject & objDat
     data.insert(JsonKeys::JSONKEY_MATCHCOUNT, totalCount);
     // send server data to all connected clients
     QJsonDocument doc(data);
-    emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pGameServer->sig_sendData(socketId, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::onRequestObservegames(quint64 socketId, const QJsonObject & objData)
@@ -673,7 +673,7 @@ void MainServer::onRequestObservegames(quint64 socketId, const QJsonObject & obj
     data.insert(JsonKeys::JSONKEY_MATCHCOUNT, totalCount);
     // send server data to all connected clients
     QJsonDocument doc(data);
-    emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pGameServer->sig_sendData(socketId, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 
 }
 
@@ -719,7 +719,7 @@ void MainServer::onRequestGameData(quint64 socketId, const QJsonObject & objData
     data.insert(JsonKeys::JSONKEY_MATCHCOUNT, totalCount);
     // send server data to all connected clients
     QJsonDocument doc(data);
-    emit m_pGameServer->sig_sendData(socketId, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pGameServer->sig_sendData(socketId, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::onOpenPlayerCount(quint64 socketID, const QJsonObject & objData)
@@ -784,7 +784,7 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
             data.insert(JsonKeys::JSONKEY_SECONDARYADDRESS, internGame->game->getData().getSlaveSecondaryAddress());
             data.insert(JsonKeys::JSONKEY_PORT, static_cast<qint64>(internGame->game->getData().getSlavePort()));
             QJsonDocument doc(data);
-            emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+            emit m_pGameServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
             found = true;
         }
     }
@@ -804,7 +804,7 @@ void MainServer::joinSlaveGame(quint64 socketID, const QJsonObject & objData)
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         QJsonDocument doc(data);
-        emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pGameServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -861,7 +861,7 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         QJsonDocument doc(data);
-        emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pGameServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -945,7 +945,7 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo)
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         QJsonDocument doc(data);
-        emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pGameServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -1023,7 +1023,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         QJsonDocument doc(data);
-        emit m_pGameServer->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pGameServer->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -1246,7 +1246,7 @@ void MainServer::createAccount(qint64 socketId, const QJsonDocument & doc, Netwo
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
     outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
-    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::deleteAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
@@ -1294,7 +1294,7 @@ void MainServer::deleteAccount(qint64 socketId, const QJsonDocument & doc, Netwo
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
     outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
-    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, NetworkCommands::PublicKeyActions action)
@@ -1317,7 +1317,7 @@ void MainServer::loginToAccount(qint64 socketId, const QJsonDocument & doc, Netw
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
     outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
-    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::createUserTable(const QString & username)
@@ -1444,11 +1444,11 @@ void MainServer::resetAccountPassword(qint64 socketId, const QJsonDocument & doc
         outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
         outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
         QJsonDocument outDoc(outData);
-        emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
-void MainServer::onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action)
+void MainServer::onMailSendResult(quint64 socketId, const QString receiverAddress, const QString username, bool result, NetworkCommands::PublicKeyActions action)
 {
     QString command = QString(NetworkCommands::SERVERACCOUNTMESSAGE);
     GameEnums::LoginError mailSendResult = GameEnums::LoginError_None;
@@ -1462,7 +1462,7 @@ void MainServer::onMailSendResult(quint64 socketId, const QString & receiverAddr
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, mailSendResult);
     outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
-    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 
 }
 
@@ -1565,7 +1565,7 @@ void MainServer::changeAccountPassword(qint64 socketId, const QJsonDocument & do
     outData.insert(JsonKeys::JSONKEY_ACCOUNT_ERROR, result);
     outData.insert(JsonKeys::JSONKEY_RECEIVEACTION, static_cast<qint32>(action));
     QJsonDocument outDoc(outData);
-    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pGameServer->sig_sendData(socketId, outDoc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 QSqlQuery MainServer::getAccountInfo(QSqlDatabase & database, const QString & username, bool & success)
@@ -1675,7 +1675,7 @@ void MainServer::SuspendedSlaveInfo::serializeObject(QDataStream& stream) const
     stream << savefile;
     auto obj = game.toJson();
     QJsonDocument doc(obj);
-    Filesupport::writeByteArray(stream, doc.toJson());
+    Filesupport::writeByteArray(stream, doc.toJson(QJsonDocument::Compact));
 }
 
 void MainServer::SuspendedSlaveInfo::deserializeObject(QDataStream& stream)

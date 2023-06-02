@@ -38,7 +38,7 @@ bool SmtpMailSender::connectToServer(SmtpClient & client)
     return success;
 }
 
-void SmtpMailSender::sendMail(quint64 socketId, const QString & subject, const QString & content, const QString & receiverAddress, const QString & username, NetworkCommands::PublicKeyActions action)
+void SmtpMailSender::sendMail(quint64 socketId, const QString subject, const QString content, const QString receiverAddress, const QString username, NetworkCommands::PublicKeyActions action)
 {
     SmtpClient client(Settings::getMailServerAddress(), Settings::getMailServerPort(), static_cast<SmtpClient::ConnectionType>(Settings::getMailServerConnectionType()));
     bool result = false;

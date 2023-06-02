@@ -151,8 +151,6 @@ public:
      */
     void release();
 
-signals:
-
 public slots:
     /**
      * @brief getCredtis

@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.robosturm.commander_wars"
-    android:installLocation="auto"
-    android:versionCode="-- %%INSERT_VERSION_CODE%% --"
-    android:versionName="-- %%INSERT_VERSION_NAME%% --">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.robosturm.commander_wars" android:installLocation="auto" android:versionCode="-- %%INSERT_VERSION_CODE%% --" android:versionName="-- %%INSERT_VERSION_NAME%% --">
     <!-- The comment below will be replaced with dependencies permissions upon deployment.
              Remove the comment if you do not require these default permissions. -->
     <!-- %%INSERT_PERMISSIONS -->
@@ -12,62 +8,50 @@
              Remove the comment if you do not require these default features. -->
     <!-- %%INSERT_FEATURES -->
 
-    <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:smallScreens="true" />
-    <application
-        android:name="org.qtproject.qt.android.bindings.QtApplication"
-        android:extractNativeLibs="true"
-        android:hardwareAccelerated="true"
-        android:label="-- %%INSERT_APP_NAME%% --"
-		android:icon="@drawable/icon"
-        android:requestLegacyExternalStorage="true">
-        <activity
-            android:name="org.qtproject.qt.android.bindings.QtActivity"
-            android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density"
-            android:label="-- %%INSERT_APP_NAME%% --"
-            android:launchMode="singleTop"
-			android:theme="@style/splashScreenTheme"
-            android:screenOrientation="userLandscape">
+    <supports-screens   android:anyDensity="true"
+                        android:largeScreens="true"
+                        android:normalScreens="true"
+                        android:smallScreens="true"/>
+    <application    android:name="org.qtproject.qt.android.bindings.QtApplication"
+                    android:extractNativeLibs="true"
+                    android:hardwareAccelerated="true"
+                    android:label="-- %%INSERT_APP_NAME%% --"
+                    android:icon="@drawable/icon"
+                    android:requestLegacyExternalStorage="true">
+        <activity   android:name="org.qtproject.qt.android.bindings.QtActivity"
+                    android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density"
+                    android:label="-- %%INSERT_APP_NAME%% --"
+                    android:launchMode="singleTop"
+                    android:theme="@style/splashScreenTheme"
+                    android:screenOrientation="userLandscape"
+                    android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <!-- Application arguments -->
-
-            <meta-data
-                android:name="android.app.arguments"
-                android:value="-- %%INSERT_APP_ARGUMENTS%% --" />
+            <meta-data android:name="android.app.arguments" android:value="-- %%INSERT_APP_ARGUMENTS%% --"/>
             <!-- Application arguments -->
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="-- %%INSERT_APP_LIB_NAME%% --" />
-
+            <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --"/>
             <!-- Used to specify custom system library path to run with local system libs -->
-<!--            <meta-data android:name="android.app.system_libs_prefix" android:value="/system/lib/"/>-->
+            <!--            <meta-data android:name="android.app.system_libs_prefix" android:value="/system/lib/"/>-->
             <!-- Splash screen -->
             <!-- Orientation-specific (portrait/landscape) data is checked first. If not available
                  for current orientation, then android.app.splash_screen_drawable. For best
                  results, use together with splash_screen_sticky and use hideSplashScreen() with
                  a fade-out animation to hide the splash screen when you are done populating
                  your window with content. -->
-<!--            <meta-data android:name="android.app.splash_screen_drawable_portrait" android:resource="@drawable/logo_portrait" />-->
-<!--            <meta-data android:name="android.app.splash_screen_drawable_landscape" android:resource="@drawable/logo_landscape" />-->
-<!--            <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/logo"/>-->
-<!--            <meta-data android:name="android.app.splash_screen_sticky" android:value="true"/>-->
+            <!--            <meta-data android:name="android.app.splash_screen_drawable_portrait" android:resource="@drawable/logo_portrait" />-->
+            <!--            <meta-data android:name="android.app.splash_screen_drawable_landscape" android:resource="@drawable/logo_landscape" />-->
+            <!--            <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/logo"/>-->
+            <!--            <meta-data android:name="android.app.splash_screen_sticky" android:value="true"/>-->
             <!-- Splash screen -->
-
             <!-- Background running -->
             <!-- Warning: changing this value to true may cause unexpected crashes if the
                           application still try to draw after
                           "applicationStateChanged(Qt::ApplicationSuspended)" signal is sent! -->
-            <meta-data
-                android:name="android.app.background_running"
-                android:value="false" />
+            <meta-data android:name="android.app.background_running" android:value="false"/>
             <!-- Background running -->
-
             <!-- extract android style -->
             <!-- available android:values :
                 * default - In most cases this will be the same as "full", but it can also be
@@ -75,11 +59,12 @@
                 * full - useful QWidget & Quick Controls 1 apps
                 * minimal - useful for Quick Controls 2 apps, it is much faster than "full"
                 * none - useful for apps that don't use any of the above Qt modules -->
-            <meta-data
-                android:name="android.app.extract_android_style"
-                android:value="default" />
+            <meta-data android:name="android.app.extract_android_style" android:value="default"/>
             <!-- extract android style -->
-			<meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/splashscreen"/>
+            <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/splashscreen"/>
+            <meta-data android:name="android.app.splash_screen_drawable_portrait" android:resource="@drawable/splashscreen_port"/>
+            <meta-data android:name="android.app.splash_screen_drawable_landscape" android:resource="@drawable/splashscreen_land"/>
+            <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/splashscreen"/>
             <meta-data android:name="android.app.splash_screen_drawable_portrait" android:resource="@drawable/splashscreen_port"/>
             <meta-data android:name="android.app.splash_screen_drawable_landscape" android:resource="@drawable/splashscreen_land"/>
         </activity>

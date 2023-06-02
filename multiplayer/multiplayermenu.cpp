@@ -195,7 +195,7 @@ bool Multiplayermenu::doDespawnSlave(const QString & savegame)
         auto doc = doSaveLobbyState(saveFile, command);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-        emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
     return m_despawning;
 }
@@ -632,7 +632,7 @@ void Multiplayermenu::sendUsername(quint64 socketID, const QJsonObject & objData
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     QJsonDocument doc(data);
-    emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -649,7 +649,7 @@ void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objDat
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     QJsonDocument doc(data);
     CONSOLE_PRINT("Sending login data to slave", GameConsole::eDEBUG);
-    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socketID)
@@ -701,7 +701,7 @@ void Multiplayermenu::verifyLoginData(const QJsonObject & objData, quint64 socke
         CONSOLE_PRINT("Login error: " + QString::number(valid) + " reported reason: " + QString::number(reason), GameConsole::eDEBUG);
         data.insert(JsonKeys::JSONKEY_DISCONNECTREASON, reason);
         QJsonDocument doc(data);
-        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -771,7 +771,7 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID, const QJsonObject & ob
     // send map data to client and make sure password message is crypted
     auto & cypher = Mainapp::getInstance()->getCypher();
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, data).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pNetworkInterface->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, data).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void Multiplayermenu::connectToSlave(const QJsonObject & objData, quint64 socketID)
@@ -801,7 +801,7 @@ void Multiplayermenu::onSlaveConnectedToMaster(quint64 socketID)
     data.insert(JsonKeys::JSONKEY_SLAVENAME, slavename);
     QJsonDocument doc(data);
     CONSOLE_PRINT("Sending command " + command + " for slave " + slavename, GameConsole::eDEBUG);
-    emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void Multiplayermenu::onServerRelaunchSlave(quint64 socketID, const QJsonObject & objData)
@@ -876,7 +876,7 @@ void Multiplayermenu::sendSlaveRelaunched(quint64 socketID)
     QJsonDocument doc(data);
     CONSOLE_PRINT("Sending command " + command + " for slave " + slavename, GameConsole::eDEBUG);
     spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
-    emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit pSlaveMasterConnection->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 socketID)
@@ -1525,7 +1525,7 @@ void Multiplayermenu::sendSlaveReady()
         data.insert(JsonKeys::JSONKEY_HASPASSWORD, true);
     }
     QJsonDocument doc(data);
-    emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, true);
+    emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, true);
 }
 
 void Multiplayermenu::slotCancelHostConnection()
@@ -1826,7 +1826,7 @@ void Multiplayermenu::buttonBack()
         QJsonDocument doc(data);
         CONSOLE_PRINT("Sending command " + command + " to slave", GameConsole::eDEBUG);
         showInformingServer();
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);        
+        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);        
     }
     else if (m_networkMode != NetworkMode::Host ||
         m_MapSelectionStep == MapSelectionStep::selectMap ||

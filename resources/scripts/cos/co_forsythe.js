@@ -247,7 +247,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Increases offensive and defensive bonus even more.");
+        var text = qsTr("Increases offensive by %0% and defensive by %1%.");
         text = replaceTextArgs(text, [CO_FORSYTHE.superPowerOffBonus, CO_FORSYTHE.superPowerDefBonus]);
         return text;
     };

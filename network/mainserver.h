@@ -208,7 +208,7 @@ private slots:
      * @param username
      * @param result
      */
-    void onMailSendResult(quint64 socketId, const QString & receiverAddress, const QString & username, bool result, NetworkCommands::PublicKeyActions action);
+    void onMailSendResult(quint64 socketId, const QString receiverAddress, const QString username, bool result, NetworkCommands::PublicKeyActions action);
     /**
      * @brief executeScript
      */

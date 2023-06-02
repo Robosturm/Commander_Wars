@@ -184,7 +184,7 @@ var Constructor = function()
                 {
                     return CO_RATTIGAN.superPowerOffBonus + count * CO_RATTIGAN.powerMultiplier;
                 }
-                return CO_RATTIGAN.powerBaseOffBonus;
+                return CO_RATTIGAN.superPowerOffBonus;
             case GameEnums.PowerMode_Power:
                 if (count > 0)
                 {
@@ -318,13 +318,17 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nAuto Tank\n") +
-               qsTr("\nGlobal Effect: \nUnits have increased firepower against large regiments of units and reduced firepower against lone units.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower against large regiments of units.");
+        var text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
+               qsTr("\nGlobal Effect: \nUnits have increased firepower against large regiments of units by %0% and reduced firepower by %1% against lone units.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %2% against large regiments of units.");
+        text = replaceTextArgs(text, [CO_RATTIGAN.d2dOffBonus, CO_RATTIGAN.d2dOffMalus ,CO_RATTIGAN.d2dCoZoneOffBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Receives a small offensive boost when attacking enemies in groups. Movement is increased by one space.");
+        var text = qsTr("Receives a %0% firepower boost and gain %1% per nearby enemy unit. Movement is increased by %2 space.");
+        text = replaceTextArgs(text, [CO_RATTIGAN.powerOffBonus, CO_RATTIGAN.powerMultiplier, CO_RATTIGAN.powerMovementPoints]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -332,7 +336,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Receives a firepower and defense boost for engaging enemies in groups. Enemy units suffer one HP of damage.");
+        var text = qsTr("Receives a %0% firepower boost and %1% defense boost and gain %2% per nearby enemy unit. Enemy units suffer %3 HP of damage.");
+        text = replaceTextArgs(text, [CO_RATTIGAN.superPowerOffBonus, CO_RATTIGAN.superPowerDefBonus, CO_RATTIGAN.powerMultiplier, CO_RATTIGAN.superPowerDamage]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {

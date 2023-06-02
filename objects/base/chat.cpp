@@ -229,7 +229,7 @@ void Chat::sendData(QString message)
         {
             CONSOLE_PRINT("Sending chat message", GameConsole::eDEBUG);
             QJsonDocument doc(data);
-            emit m_pInterface->sig_sendData(0, doc.toJson(), m_serviceMode, true);
+            emit m_pInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), m_serviceMode, true);
         }
         m_ChatInput->setCurrentText("");
         

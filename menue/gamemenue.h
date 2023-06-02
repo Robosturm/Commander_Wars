@@ -177,7 +177,7 @@ public slots:
     /**
      * @brief showXmlFileDialog
      */
-    void showXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
+    void showXmlFileDialog(const QString xmlFile, bool saveSettings = false);
     /**
      * @brief showAttackLog
      */

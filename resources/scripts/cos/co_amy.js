@@ -299,9 +299,9 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units and Hovercrafts have %1 extra movement and gain %2% firepower.") +
-                   qsTr("\n\nCO Zone Effect: \nHovercrafts gain %3% firepower.");
-        text = replaceTextArgs(text, [CO_AMY.d2dMovementBonus, CO_AMY.d2dHoverCraftBoost, CO_AMY.hoverCraftBoost]);
+        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units and Hovercrafts have %0 extra movement and gain %1% firepower.") +
+                   qsTr("\n\nCO Zone Effect: \nHovercrafts gain %2% firepower.");
+        text = replaceTextArgs(text, [CO_AMY.d2dMovementBonus, CO_AMY.d2dHoverCraftBoost, CO_AMY.d2dCoZoneHoverCraftBoost]);
         return text;
     };
     this.getPowerDescription = function(co)

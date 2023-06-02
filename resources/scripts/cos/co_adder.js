@@ -247,7 +247,7 @@ var Constructor = function()
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
                    qsTr("\nGlobal Effect: \nPower charge is increased by %1%.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
-        text = replaceTextArgs(text, [CO_ADDER.coZoneBonus, CO_ADDER.d2dPowerChargeBonus]);
+        text = replaceTextArgs(text, [CO_ADDER.d2dCoZoneBonus, CO_ADDER.d2dPowerChargeBonus]);
         return text;
     };
     this.getPowerDescription = function(co)

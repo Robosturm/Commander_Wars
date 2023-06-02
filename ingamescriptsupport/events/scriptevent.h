@@ -38,6 +38,8 @@ public:
     static const char* const EventSpawnBuilding;
     static const char* const EventCenterMap;
     static const char* const EventPlaySound;
+    static const char* const EventBuildingFireCounter;
+    static const char* const EventVolcanFire;
 
 
     ENUM_CLASS EventType
@@ -61,6 +63,8 @@ public:
         SpawnBuilding,
         CenterMap,
         PlayGameSound,
+        BuildingFireCounter,
+        VolcanFire,
     };
 
     static spScriptEvent createEvent(GameMap* pMap, EventType type);

@@ -720,9 +720,9 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
 void COInfoActor::showLink(QString pageID)
 {    
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    auto & entry = pWikiDatabase->getEntry(pageID);
-    if (!entry.m_name.isEmpty() &&
-        !entry.m_id.isEmpty())
+    auto * entry = pWikiDatabase->getEntry(pageID);
+    if (!entry->m_name.isEmpty() &&
+        !entry->m_id.isEmpty())
     {
         oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(entry));
     }

@@ -261,7 +261,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nGlobal Effect: \nUnits have %0% firepower and %1% defense bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %0% firepower and %1% defense bonus.");
+               qsTr("\n\nCO Zone Effect: \nUnits have %2% firepower and %3% defense bonus.");
         text = replaceTextArgs(text, [CO_ISABELLA.d2dOffBonus, CO_ISABELLA.d2dDefBonus,
                                       CO_ISABELLA.d2dCoZoneOffBonus, CO_ISABELLA.d2dCoZoneDefBonus]);
         return text;

@@ -145,7 +145,7 @@ var Constructor = function()
 
     this.d2dcoZoneBonus = 50;
 
-    this.d2dBonus = 50;
+    this.d2dBonus = 20;
     this.d2dCostIncrease = 20;
 
     this.powerOffBonus = 60;

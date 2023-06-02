@@ -75,7 +75,6 @@ public:
      * @param files
      */
     void addDeveloperMaps(QString prefix, QString folder, QStringList & files);
-signals:
 
 public slots:
     /**

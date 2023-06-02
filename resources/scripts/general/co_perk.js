@@ -2,7 +2,7 @@ var CO_PERK =
 {
     isActive : function(co)
     {
-        var map = owner.getMap();
+        var map = co.getMap();
         if (map !== null)
         {
             if (map.getGameRules().getParallelCos())

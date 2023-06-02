@@ -298,7 +298,7 @@ void LobbyMenu::requestServerGames()
         data.insert(JsonKeys::JSONKEY_MATCHSTARTINDEX, m_gameIndex);
         data.insert(JsonKeys::JSONKEY_MATCHCOUNT, REQUEST_COUNT);
         QJsonDocument doc(data);
-        emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -312,7 +312,7 @@ void LobbyMenu::requestUserUpdateGames()
         data.insert(JsonKeys::JSONKEY_MATCHCOUNT, REQUEST_COUNT);
         data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
         QJsonDocument doc(data);
-        emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -326,7 +326,7 @@ void LobbyMenu::requestObserverUpdateGames()
         data.insert(JsonKeys::JSONKEY_MATCHCOUNT, REQUEST_COUNT);
         data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
         QJsonDocument doc(data);
-        emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
 }
 
@@ -433,7 +433,7 @@ void LobbyMenu::joinGamePassword(QString password)
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_SLAVENAME, m_currentGame.getSlaveName());
         QJsonDocument doc(data);
-        emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         m_password = password;
     }
 }
@@ -529,7 +529,7 @@ void LobbyMenu::observeGamePassword(QString password)
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_SLAVENAME, m_currentGame.getSlaveName());
         QJsonDocument doc(data);
-        emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
         oxygine::Actor::detach();
     }
 }
@@ -716,7 +716,7 @@ void LobbyMenu::connected(quint64 socket)
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     QJsonDocument doc(data);
-    emit m_pTCPClient->sig_sendData(0, doc.toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::checkVersionAndShowInfo(const QJsonObject & objData)
@@ -849,7 +849,7 @@ void LobbyMenu::onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & o
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -861,7 +861,7 @@ void LobbyMenu::onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject & o
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -872,7 +872,7 @@ void LobbyMenu::onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & ob
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::onPublicKeyResetAccount(quint64 socketID, const QJsonObject & objData, NetworkCommands::PublicKeyActions action)
@@ -883,7 +883,7 @@ void LobbyMenu::onPublicKeyResetAccount(quint64 socketID, const QJsonObject & ob
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 
 }
 
@@ -896,7 +896,7 @@ void LobbyMenu::onPublicKeyChangePassword(quint64 socketID, const QJsonObject & 
     data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
-    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson()).toJson(), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void LobbyMenu::loginToServerAccount(const QString & password)

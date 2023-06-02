@@ -117,7 +117,7 @@ void WikiView::search(bool onlyTag)
         pBox->setPosition(0, itemCount * 40);
         pBox->addEventListener(oxygine::TouchEvent::CLICK, [this, wikiItem](oxygine::Event*)
         {
-            emit sigShowWikipage(*wikiItem);
+            emit sigShowWikipage(wikiItem);
         });
         m_MainPanel->addItem(pBox);
         itemCount++;
@@ -126,7 +126,7 @@ void WikiView::search(bool onlyTag)
     pApp->continueRendering();
 }
 
-void WikiView::showWikipage(const PageData & page)
+void WikiView::showWikipage(const PageData * page)
 {
    addChild(WikiDatabase::getInstance()->getPage(page));
 }
@@ -135,7 +135,7 @@ void WikiView::showPage(QString id)
 {
     PageData page;
     page.m_id = id;
-    m_lastPage = WikiDatabase::getInstance()->getPage(page);
+    m_lastPage = WikiDatabase::getInstance()->getPage(&page);
     addChild(m_lastPage);
 }
 

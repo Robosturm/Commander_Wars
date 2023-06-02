@@ -112,7 +112,9 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
         tr("Change player team"),
         tr("Spawn building"),
         tr("Center map"),
-        tr("Play sound")
+        tr("Play sound"),
+        tr("Building fire counter"),
+        tr("Volcan fire")
     };
     m_Events = spDropDownmenu::create(300, items);
     m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));

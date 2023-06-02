@@ -313,7 +313,7 @@ void BuildListDialog::showDeleteBannlist()
     }
 }
 
-void BuildListDialog::deleteBannlist(const QString & file)
+void BuildListDialog::deleteBannlist(const QString file)
 {
     QFile::remove(file);
     updatePredefinedList();

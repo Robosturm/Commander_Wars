@@ -18,6 +18,8 @@
 #include "ingamescriptsupport/events/scripteventspawnbuilding.h"
 #include "ingamescriptsupport/events/scripteventcentermap.h"
 #include "ingamescriptsupport/events/scripteventplaysound.h"
+#include "ingamescriptsupport/events/scripteventbuildingfirecounter.h"
+#include "ingamescriptsupport/events/scripteventvolcanfire.h"
 
 #include "coreengine/interpreter.h"
 
@@ -40,6 +42,8 @@ const char* const ScriptEvent::EventChangePlayerTeam = "Change Player Team";
 const char* const ScriptEvent::EventSpawnBuilding = "Spawn Building";
 const char* const ScriptEvent::EventCenterMap = "Center Map";
 const char* const ScriptEvent::EventPlaySound = "Play Sound";
+const char* const ScriptEvent::EventBuildingFireCounter = "BuildingFireCounter";
+const char* const ScriptEvent::EventVolcanFire = "VolcanFire";
 
 
 ScriptEvent::ScriptEvent(GameMap* pMap, EventType type)
@@ -124,10 +128,18 @@ spScriptEvent ScriptEvent::createReadEvent(GameMap* pMap, QTextStream& rStream, 
     else if (line.endsWith(EventCenterMap))
     {
         ret = spScriptEventCenterMap::create(pMap);
-    }
+    }    
     else if (line.endsWith(EventPlaySound))
     {
         ret = spScriptEventPlaySound::create(pMap);
+    }
+    else if (line.endsWith(EventBuildingFireCounter))
+    {
+        ret = spScriptEventBuildingFireCounter::create(pMap);
+    }
+    else if (line.endsWith(EventVolcanFire))
+    {
+        ret = spScriptEventVolcanFire::create(pMap);
     }
     if (ret.get() != nullptr)
     {
@@ -219,6 +231,14 @@ spScriptEvent ScriptEvent::createEvent(GameMap* pMap, EventType type)
         {
             return spScriptEventPlaySound::create(pMap);
         }
-    }
+        case EventType::BuildingFireCounter:
+        {
+            return spScriptEventBuildingFireCounter::create(pMap);
+        }
+        case EventType::VolcanFire:
+        {
+            return spScriptEventVolcanFire::create(pMap);
+        }
+    }        
     return spScriptEvent();
 }

@@ -188,16 +188,16 @@ QStringList WikiDatabase::getTags()
     return ret;
 }
 
-const PageData & WikiDatabase::getEntry(qint32 entry)
+const PageData * WikiDatabase::getEntry(qint32 entry)
 {
     if (entry >= 0 && entry < m_Entries.size())
     {
-        return *m_Entries[entry].get();
+        return m_Entries[entry].get();
     }
-    return m_emptyPage;
+    return &m_emptyPage;
 }
 
-const PageData & WikiDatabase::getEntry(QString id)
+const PageData * WikiDatabase::getEntry(QString id)
 {
     for (auto & entryPage : m_Entries)
     {
@@ -207,14 +207,14 @@ const PageData & WikiDatabase::getEntry(QString id)
         entry = entry.remove(0, entry.lastIndexOf("\\") + 1);
         if (entry == id)
         {
-            return *entryPage.get();
+            return entryPage.get();
         }
         else if (entry.toUpper() == id.toUpper())
         {
-            return *entryPage.get();
+            return entryPage.get();
         }
     }
-    return m_emptyPage;
+    return &m_emptyPage;
 }
 
 bool WikiDatabase::tagMatches(const QStringList & tags, const QString & searchTerm)
@@ -229,7 +229,7 @@ bool WikiDatabase::tagMatches(const QStringList & tags, const QString & searchTe
     return false;
 }
 
-spWikipage WikiDatabase::getPage(const PageData & data)
+spWikipage WikiDatabase::getPage(const PageData * data)
 {
     spWikipage ret;
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -238,56 +238,56 @@ spWikipage WikiDatabase::getPage(const PageData & data)
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
     // select page loader and create wiki page
-    if (pCOSpriteManager->exists(data.m_id))
+    if (pCOSpriteManager->exists(data->m_id))
     {
         spPlayer pPlayer = spPlayer::create(nullptr);
         pPlayer->init();
-        spCO pCO = spCO::create(data.m_id, pPlayer.get(), nullptr);
-        ret = spWikipage::create(data.m_id);
+        spCO pCO = spCO::create(data->m_id, pPlayer.get(), nullptr);
+        ret = spWikipage::create(data->m_id);
         spCOInfoActor pInfo = spCOInfoActor::create(nullptr, ret->getPanel()->getScaledWidth());
         pInfo->showCO(pCO, pPlayer);
         ret->getPanel()->addItem(pInfo);
         ret->getPanel()->setContentHeigth(pInfo->getScaledHeight());
     }
-    else if (pTerrainManager->exists(data.m_id))
+    else if (pTerrainManager->exists(data->m_id))
     {
-        spTerrain pTerrain = Terrain::createTerrain(data.m_id, -1, -1, "", nullptr);
+        spTerrain pTerrain = Terrain::createTerrain(data->m_id, -1, -1, "", nullptr);
         ret = spFieldInfo::create(pTerrain.get(), nullptr);
     }
-    else if (pBuildingSpriteManager->exists(data.m_id))
+    else if (pBuildingSpriteManager->exists(data->m_id))
     {
         spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", nullptr);
-        spBuilding pBuilding = spBuilding::create(data.m_id, nullptr);
+        spBuilding pBuilding = spBuilding::create(data->m_id, nullptr);
         pTerrain->setBuilding(pBuilding);
         ret = spFieldInfo::create(pTerrain.get(), nullptr);
     }
-    else if (pUnitSpriteManager->exists(data.m_id))
+    else if (pUnitSpriteManager->exists(data->m_id))
     {
         spPlayer pPlayer = spPlayer::create(nullptr);
         pPlayer->init();
-        spUnit pUnit = spUnit::create(data.m_id, pPlayer.get(), false, nullptr);
+        spUnit pUnit = spUnit::create(data->m_id, pPlayer.get(), false, nullptr);
         ret = spFieldInfo::create(nullptr, pUnit.get());
     }
-    else if (data.m_id == DAMAGE_TABLE_NAME)
+    else if (data->m_id == DAMAGE_TABLE_NAME)
     {
         ret = spDamageTablePage::create(DAMAGE_TABLE_NAME);
     }
-    else if (!data.m_mainId.isEmpty() || pGameManager->exists(data.m_id))
+    else if (!data->m_mainId.isEmpty() || pGameManager->exists(data->m_id))
     {
-        ret = spActionWikipage::create<const PageData &>(data);
+        ret = spActionWikipage::create<const PageData *>(data);
     }
-    else if (QFile::exists(data.m_id))
+    else if (QFile::exists(data->m_id))
     {
         // default loader
-        ret = spWikipage::create(data.m_id);
+        ret = spWikipage::create(data->m_id);
         Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->openScript(data.m_id, false);
+        pInterpreter->openScript(data->m_id, false);
         QJSValueList args({pInterpreter->newQObject(ret.get())});
         pInterpreter->doFunction("LOADEDWIKIPAGE", "loadPage", args);
     }
     else
     {
-        ret = spDefaultWikipage::create(data.m_id);
+        ret = spDefaultWikipage::create(data->m_id);
     }
     ret->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     return ret;
