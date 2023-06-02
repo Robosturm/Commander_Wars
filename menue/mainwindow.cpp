@@ -27,6 +27,8 @@
 
 #include "game/campaign.h"
 
+#include "ai/coreai.h"
+
 #include "multiplayer/lobbymenu.h"
 
 #include "objects/dialogs/filedialog.h"
@@ -442,4 +444,13 @@ void Mainwindow::versionClicked()
 void Mainwindow::unlockAllShopItems()
 {
     Userdata::getInstance()->unlockAllShopItems(true);
+}
+
+void Mainwindow::createRandomInis(GameEnums::AiTypes ai, QString baseName, qint32 amount)
+{
+    spBaseGameInputIF aiClass = BaseGameInputIF::createAi(nullptr, ai);
+    for (qint32 i = 0; i < amount; ++i)
+    {
+        dynamic_cast<CoreAI*>(aiClass.get())->randomizeIni(baseName + QString::number(i) + ".ini", 1.0f, -1.0f);
+    }
 }

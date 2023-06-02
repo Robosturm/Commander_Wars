@@ -2061,5 +2061,8 @@
         <file>templates/serverscript/despawnServer/serverScript.js</file>
         <file>resources/scripts/building/forthq.js</file>
         <file>maps/test/co_test.map</file>
+        <file>ai/training/heavyai_training.js</file>
+        <file>ai/training/normalai_training.js</file>
+        <file>ai/training/situation_training.js</file>
     </qresource>
 </RCC>

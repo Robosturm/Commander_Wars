@@ -16,18 +16,21 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-        case GameEnums.PowerMode_Power:
-            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-            break;
-        case GameEnums.PowerMode_Superpower:
-            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-            break;
-        case GameEnums.PowerMode_Tagpower:
-            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-            break;
-        default:
-            audio.addMusic("resources/music/cos/jake.mp3", 5421, 96121);
-            break;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                break;
+            default:
+                audio.addMusic("resources/music/cos/jake.mp3", 5421, 96121);
+                break;
+            }
         }
     };
 
@@ -149,7 +152,7 @@ var Constructor = function()
     this.d2dCoZonePlainsBonus = 70;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-     defender, defPosX, defPosY, isDefender, action, luckmode, map)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
@@ -199,7 +202,7 @@ var Constructor = function()
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-    {        
+    {
         if (CO.isActive(co))
         {
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -223,7 +226,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
                 if (unit.getBaseMaxRange() > 1 &&
-                    unit.getUnitType() === GameEnums.UnitType_Ground)
+                        unit.getUnitType() === GameEnums.UnitType_Ground)
                 {
                     return CO_JAKE.powerFirerangeBonus;
                 }
@@ -242,7 +245,7 @@ var Constructor = function()
                     co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 if (unit.getUnitType() === GameEnums.UnitType_Ground &&
-                    unit.getBaseMaxRange() === 1)
+                        unit.getBaseMaxRange() === 1)
                 {
                     return CO_JAKE.superPowerMovementBonus;
                 }
@@ -290,16 +293,16 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("<r>\n\nDay-to-day: \nJakes's units gain </r><div c='#55ff00'>+%0%</div><r> firepower on plains terrain.</r>") +
-        qsTr("<r>\n\nSpecial Unit:\nTank Hunter\n</r>") +
-        qsTr("<r>\n\nCO Zone Effect: \nJakes's units gain </r><div c='#55ff00'>+%1%</div><r> firepower on plains terrain and gain </r><div c='#55ff00'>+%2%</div><r> firepower and deffense overall.</r>");
+                qsTr("<r>\n\nSpecial Unit:\nTank Hunter\n</r>") +
+                qsTr("<r>\n\nCO Zone Effect: \nJakes's units gain </r><div c='#55ff00'>+%1%</div><r> firepower on plains terrain and gain </r><div c='#55ff00'>+%2%</div><r> firepower and deffense overall.</r>");
         text = replaceTextArgs(text, [CO_JAKE.d2dPlainsBonus, CO_JAKE.d2dCoZonePlainsBonus, CO_JAKE.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-     var text = qsTr("<r>Jake's plains terrain firepower bonus becomes </r><div c='#55ff00'>+%0%</div><r> and deffense becomes </r><div c='#55ff00'>+%1%</div><r>. His ground indirect-combat units gain </r><div c='#55ff00'>+%2</div><r> range.</r>");
-     text = replaceTextArgs(text, [CO_JAKE.powerPlainsBonus, CO_JAKE.powerDefBonus, CO_JAKE.powerFirerangeBonus]);
-     return text;
+        var text = qsTr("<r>Jake's plains terrain firepower bonus becomes </r><div c='#55ff00'>+%0%</div><r> and deffense becomes </r><div c='#55ff00'>+%1%</div><r>. His ground indirect-combat units gain </r><div c='#55ff00'>+%2</div><r> range.</r>");
+        text = replaceTextArgs(text, [CO_JAKE.powerPlainsBonus, CO_JAKE.powerDefBonus, CO_JAKE.powerFirerangeBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -318,22 +321,22 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Give it up, fool!"),
-            qsTr("Prepare to get served."),
-            qsTr("Prepare for a subpoena of pain! Yeah, that's lawyer style!"),
-            qsTr("This is how I roll!"),
-            qsTr("Wassup now?!"),
-            qsTr("Here...have a taste!")];
+                qsTr("Prepare to get served."),
+                qsTr("Prepare for a subpoena of pain! Yeah, that's lawyer style!"),
+                qsTr("This is how I roll!"),
+                qsTr("Wassup now?!"),
+                qsTr("Here...have a taste!")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("Get the plates, 'cause you just got served!"),
-            qsTr("Owned!"),
-            qsTr("You got dropped like a phat beat!")];
+                qsTr("Owned!"),
+                qsTr("You got dropped like a phat beat!")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("I got spanked out there! This combat is the real deal..."),
-            qsTr("Dude, we so don't have time for this.")];
+                qsTr("Dude, we so don't have time for this.")];
     };
     this.getName = function()
     {

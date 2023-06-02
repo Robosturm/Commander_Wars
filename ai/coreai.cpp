@@ -167,7 +167,7 @@ void CoreAI::readIni(QString name)
     if (QFile::exists(name))
     {
         QSettings settings(name, QSettings::IniFormat);
-        AI_CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), GameConsole::eDEBUG);
+        AI_CONSOLE_PRINT("CoreAI::readIni status=" + QString::number(settings.status()), GameConsole::eDEBUG);
         QString lastGroup = "";
         for (auto & entry : m_iniData)
         {
@@ -197,7 +197,7 @@ void CoreAI::readIni(QString name)
 void CoreAI::saveIni(QString name) const
 {
     QSettings settings(name, QSettings::IniFormat);
-    AI_CONSOLE_PRINT("NormalAi::saveIni status=" + QString::number(settings.status()), GameConsole::eDEBUG);
+    AI_CONSOLE_PRINT("CoreAI::saveIni status=" + QString::number(settings.status()), GameConsole::eDEBUG);
     QString lastGroup = "";
     for (auto & entry : m_iniData)
     {
@@ -222,7 +222,11 @@ void CoreAI::randomizeIni(QString name, float chance, float mutationRate)
     {
         if (GlobalUtils::randFloat(0.0f, 1.0f) < chance)
         {
-            if (qAbs(*entry.m_value) <= 0.05f)
+            if (mutationRate < 0.0f)
+            {
+                *entry.m_value = GlobalUtils::randFloat(entry.m_minValue, entry.m_maxValue);
+            }
+            else if (qAbs(*entry.m_value) <= 0.05f)
             {
                 qint32 rand = GlobalUtils::randInt(-1, 1);
                 if (rand == 0)

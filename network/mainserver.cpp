@@ -969,7 +969,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         QStringList args({QString(prefix) + CommandLineParser::ARG_SLAVE,
                           QString(prefix) + CommandLineParser::ARG_SLAVENAME,
                           slaveName,
-                          QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
+                          // QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
                           QString(prefix) + CommandLineParser::ARG_NOAUDIO,
                           QString(prefix) + CommandLineParser::ARG_SLAVEADDRESS,
                           slaveAddress,

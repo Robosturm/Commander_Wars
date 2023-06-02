@@ -184,7 +184,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
-                    return CO_SAMI.ZoneInfBonus;
+                    return CO_SAMI.powerOffBonus;
                 }
                 else if (attacker.getBaseMaxRange() === 1)
                 {
@@ -215,7 +215,7 @@ var Constructor = function()
                 return CO_SAMI.d2dDirectOffBonus;
             }
         }
-        return CO_SAMI.d2dOtherBonus;
+        return CO_SAMI.d2dDirectOffBonus;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -354,7 +354,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nGlobal Day-to-day: \nSami's transport units gain </r><div c='#55ff00'>+%0 movement</div><r> and her foot soldier units gain </r><div c='#55ff00'>+%1%</div><r> firepower and capture at </r><div c='#55ff00'>%2</div><r> times the normal rate. Her other direct-combat units deal </r><div c='#ff2626'>%3%</div><r> less damage.</r>");
+        var text = qsTr("<r>\n\nGlobal Day-to-day: \nSami's transport units gain </r><div c='#55ff00'>+%0 movement</div><r> and her foot soldier units gain </r><div c='#55ff00'>+%1%</div><r> firepower and capture at </r><div c='#55ff00'>%2</div><r> times the normal rate. Her other direct-combat units deal </r><div c='#ff2626'>%3%</div><r> less damage.</r>") +
         qsTr("<r>\n\nSpecial Unit:\nCommando</r>") +
         qsTr("<r>\n\nCO Zone Effect: \nSami's foot soldiers firepower increases by </r><div c='#55ff00'>+%4%</div><r> while all other units gain </r><div c='#55ff00'>+%5%</div><r> firepower and </r><div c='#55ff00'>+%6%</div><r> defense.</r>");
         text = replaceTextArgs(text, [CO_SAMI.d2dTransporterMovementPoints, CO_SAMI.d2dInfOffBonus, CO_SAMI.d2dCaptureMultiplier * 100, CO_SAMI.d2dDirectOffBonus, CO_SAMI.d2dCoZoneOffBonus, CO_SAMI.d2dCoZoneBaseOffBonus, CO_SAMI.d2dCoZoneDefBonus]);

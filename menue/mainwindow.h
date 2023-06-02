@@ -3,6 +3,8 @@
 #include <QTimer>
 #include "menue/basemenu.h"
 
+#include "game/GameEnums.h"
+
 class Mainwindow;
 using spMainwindow = oxygine::intrusive_ptr<Mainwindow>;
 
@@ -42,7 +44,7 @@ public slots:
     virtual void onEnter() override;
     void versionClicked();
     bool isValidSavegame();
-
+    void createRandomInis(GameEnums::AiTypes ai, QString baseName, qint32 amount);
 protected slots:
     void cheatTimeout();
     void unlockAllShopItems();

@@ -238,21 +238,24 @@ void InfluenceFrontMap::reset()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::reset()", GameConsole::eDEBUG);
     hide();
-    if (m_InfluenceMap.size() == 0)
+    if (m_pMap != nullptr)
     {
-        qint32 width = m_pMap->getMapWidth();
-        qint32 heigth = m_pMap->getMapHeight();
-        for (qint32 x = 0; x < width; x++)
+        if (m_InfluenceMap.size() == 0)
         {
-            m_InfluenceMap.push_back(std::vector<InfluenceInfo>(heigth));
+            qint32 width = m_pMap->getMapWidth();
+            qint32 heigth = m_pMap->getMapHeight();
+            for (qint32 x = 0; x < width; x++)
+            {
+                m_InfluenceMap.push_back(std::vector<InfluenceInfo>(heigth));
+            }
         }
-    }
-    
-    for (qint32 x = 0; x < m_InfluenceMap.size(); ++x)
-    {
-        for (qint32 y = 0; y < m_InfluenceMap[x].size(); ++y)
+
+        for (qint32 x = 0; x < m_InfluenceMap.size(); ++x)
         {
-            m_InfluenceMap[x][y].reset(m_pMap);
+            for (qint32 y = 0; y < m_InfluenceMap[x].size(); ++y)
+            {
+                m_InfluenceMap[x][y].reset(m_pMap);
+            }
         }
     }
     m_totalHighestInfluence = 0;

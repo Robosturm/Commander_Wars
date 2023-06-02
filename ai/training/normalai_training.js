@@ -10,9 +10,11 @@ var Init =
     maxRuns         = 4000,                         // maximum amount of iterations
     turnLimit       = 40,
     logLevel        = 1,
+    randomCos       = true,
     // ai's and names that will be used for training
-    topAis          = 4,
-    trainingAis     =  [["normal1.ini",   2],
+    topAis          = 4,    
+    trainingAis     =  [["normal0.ini",   2],
+                        ["normal1.ini",   2],
                         ["normal2.ini",   2],
                         ["normal3.ini",   2],
                         ["normal4.ini",   2],
@@ -27,9 +29,8 @@ var Init =
                         ["normal13.ini",  2],
                         ["normal14.ini",  2],
                         ["normal15.ini",  2],
-                        ["normal16.ini",  2],
     ],
-    cores = 5, // amount of games started at the same time
+    cores = 30, // amount of games started at the same time
     // internal data
     startAi = 0,
     rotationStartAi = 0,
@@ -46,32 +47,9 @@ var Init =
     nextRun = 2,
     main = function(menu)
     {
-        menu.enterSingleplayer();
-    },
-
-    mapsSelection = function(menu)
-    {
-        menu.selectMap(Init.trainingFolder, Init.trainingMap);
-        menu.buttonNext();
-        menu.buttonNext();
-        var selection = menu.getPlayerSelection();
-        for (var i = 0; i < Init.playerCount; ++i)
-        {
-            selection.selectPlayerAi(0, Init.trainingAis[0][1]);
-        }
-        menu.startGame();
-    },
-
-    gameMenu = function(menu)
-    {
-        menu.exitGame();
-    },
-
-    onVictory = function(menu)
-    {
+        menu.createRandomInis(2, "resources/aidata/normal/normal", 16);
         Init.startAllCores();
     },
-
 
     startAllCores = function()
     {
@@ -150,8 +128,13 @@ var Init =
                 GameConsole.print("Using ai-setting " + Init.trainingAis[aiIdx][0] + " for player " + playerIdx, Init.logLevel);
                 script += "selection.selectPlayerAi(" + playerIdx.toString() + ", " + Init.trainingAis[aiIdx][1].toString() + ");\n";
                 Init.coreData[coreIndex][2].push(aiIdx);
-                script += "selection.playerCO1Changed(\"" + Init.cos[0] + "\", " + i.toString() + ");\n";
-                script += "selection.playerCO2Changed(\"" + Init.cos[1] + "\", " + i.toString() + ");\n";
+                if (Init.randomCos)
+                {
+                    script += "selection.playerCO1Changed(\"" + Init.cos[0] + "\", " + i.toString() + ");\n";
+                    script += "selection.playerCO2Changed(\"" + Init.cos[1] + "\", " + i.toString() + ");\n";
+                }
+                // overwrite existing default ini
+                script += "selection.getMap().getPlayer(" + playerIdx.toString() + ").getBaseGameInput().loadIni(" + Init.trainingAis[aiIdx][0] + ");\n";
             }
             script += "menu.startGame();\n" +
                     "},\n" +
@@ -344,21 +327,24 @@ var Init =
 
     selectCos = function()
     {
-        GameConsole.print("Selecting new co's at random", Init.logLevel);
-        var cos = coSpriteManager.getCoIds();
-        var index = globals.randInt(0, cos.length - 1);
-        while (cos[index] === "CO_RANDOM")
+        if (Init.randomCos)
         {
-            index = globals.randInt(0, cos.length - 1);
+            GameConsole.print("Selecting new co's at random", Init.logLevel);
+            var cos = coSpriteManager.getCoIds();
+            var index = globals.randInt(0, cos.length - 1);
+            while (cos[index] === "CO_RANDOM")
+            {
+                index = globals.randInt(0, cos.length - 1);
+            }
+            Init.cos[0] = cos[index];
+            var index2 = globals.randInt(0, cos.length - 1);
+            while (index === index2 ||
+                   cos[index2] === "CO_RANDOM")
+            {
+                index2 = globals.randInt(0, cos.length - 1);
+            }
+            Init.cos[1] = cos[index2];
         }
-        Init.cos[0] = cos[index];
-        var index2 = globals.randInt(0, cos.length - 1);
-        while (index === index2 ||
-               cos[index2] === "CO_RANDOM")
-        {
-            index2 = globals.randInt(0, cos.length - 1);
-        }
-        Init.cos[1] = cos[index2];
     },
 
     mutate = function(mutateCount, i, aiNames)
@@ -366,8 +352,8 @@ var Init =
         var ai = mutateCount % Init.topAis;
         GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
         var dummyAi = map.getPlayer(0).getBaseGameInput();
-        dummyAi.readIni(aiNames[ai]);
-        dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationChance, Init.mutationRate);
+        dummyAi.readIni("resources/aidata/normal/" + aiNames[ai]);
+        dummyAi.randomizeIni("resources/aidata/normal/" + Init.trainingAis[i][0], Init.mutationChance, Init.mutationRate);
         ++mutateCount;
         return mutateCount;
     },

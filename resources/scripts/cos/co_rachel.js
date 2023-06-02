@@ -267,7 +267,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("extra healing from proporties.");
+        return qsTr("Extra healing from proporties.");
     };
     this.getLongCODescription = function()
     {

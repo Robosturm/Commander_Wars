@@ -33,7 +33,7 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &NormalAi::process, Qt::QueuedConnection);
     m_iniData = { // General
-                  {"MinMovementDamage", "General", &m_minMovementDamage, 0.3f, 0.0f, 1.0f},
+                  {"MinMovementDamage", "General", &m_minMovementDamage, 0.3f, -1.0f, 1.0f},
                   {"MinAttackFunds", "General", &m_minAttackFunds, 0.0f, -1.0f, 1.0f},
                   {"MinSuicideDamage", "General", &m_minSuicideDamage, 0.75f, -1.0f, 1.0f},
                   {"SpamingFunds", "General", &m_spamingFunds, 7500.0f, 5000.0f, 10000.0f},
@@ -47,19 +47,19 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
                   // CO Unit
-                  {"CoUnitValue", "CoUnit", &m_coUnitValue, 6000.0f, 5000.0f, 10000.0f},
-                  {"MinCoUnitScore", "CoUnit", &m_minCoUnitScore, 5000.0f, 3000.0f, 10000.0f},
+                  {"CoUnitValue", "CoUnit", &m_coUnitValue, 6000.0f, 5000.0f, 20000.0f},
+                  {"MinCoUnitScore", "CoUnit", &m_minCoUnitScore, 5000.0f, 3000.0f, 20000.0f},
                   {"CoUnitRankReduction", "CoUnit", &m_coUnitRankReduction, 1000.0f, 0.0f, 5000.0f},
                   {"CoUnitScoreMultiplier", "CoUnit", &m_coUnitScoreMultiplier, 1.1f, 1.0f, 3.0f},
                   {"MinCoUnitCount", "CoUnit", &m_minCoUnitCount, 5.0f, 1.0f, 10.0f},
                   // Repairing
-                  {"MinUnitHealth", "Repairing", &m_minUnitHealth, 3.0f, 0.0f, 4.0f},
+                  {"MinUnitHealth", "Repairing", &m_minUnitHealth, 3.0f, 0.0f, 10.0f},
                   {"MaxUnitHealth", "Repairing", &m_maxUnitHealth, 7.0f, 0.0f, 10.0f},
-                  {"FuelResupply", "Repairing", &m_fuelResupply, 0.33f, 0.0f, 0.5f},
-                  {"AmmoResupply", "Repairing", &m_ammoResupply, 0.25f, 0.0f, 0.5f},
+                  {"FuelResupply", "Repairing", &m_fuelResupply, 0.33f, 0.0f, 0.7f},
+                  {"AmmoResupply", "Repairing", &m_ammoResupply, 0.25f, 0.0f, 0.7f},
                   // Moving
-                  {"LockedUnitHp", "Moving", &m_lockedUnitHp, 4.0f, 1.0f, 4.0f},
-                  {"NoMoveAttackHp", "Moving", &m_noMoveAttackHp, 3.5f, 1.0f, 4.0f},
+                  {"LockedUnitHp", "Moving", &m_lockedUnitHp, 4.0f, 1.0f, 10.0f},
+                  {"NoMoveAttackHp", "Moving", &m_noMoveAttackHp, 3.5f, 1.0f, 10.0f},
                   {"MinTerrainDamage", "Moving", &m_minTerrainDamage, 20.0f, 20.0f, 20.0f},
                   {"InfluenceUnitRange", "Moving", &m_influenceUnitRange, 1.75f, 1.0f, 5.0f},
 
@@ -68,18 +68,18 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"OwnIndirectAttackValue", "Attacking", &m_ownIndirectAttackValue, 2.0f, 0.1f, 10.0f},
                   {"EnemyKillBonus", "Attacking", &m_enemyKillBonus, 2.0f, 0.1f, 10.0f},
                   {"EnemyIndirectBonus", "Attacking", &m_enemyIndirectBonus, 3.0f, 0.1f, 10.0f},
-                  {"AntiCaptureHqBonus", "Attacking", &m_antiCaptureHqBonus, 50.0f, 0.0f, 100.0f},
+                  {"AntiCaptureHqBonus", "Attacking", &m_antiCaptureHqBonus, 50.0f, 0.0f, 10000.0f},
                   {"AntiCaptureBonus", "Attacking", &m_antiCaptureBonus, 21.0f, 0.0f, 100.0f},
-                  {"AntiCaptureBonusScoreReduction", "Attacking", &m_antiCaptureBonusScoreReduction, 6.0f, 0.0f, 20.0f},
+                  {"AntiCaptureBonusScoreReduction", "Attacking", &m_antiCaptureBonusScoreReduction, 6.0f, 0.0f, 200.0f},
                   {"AntiCaptureBonusScoreDivider", "Attacking", &m_antiCaptureBonusScoreDivider, 2.0f, 0.1f, 10.0f},
                   {"EnemyCounterDamageMultiplier", "Attacking", &m_enemyCounterDamageMultiplier, 10.0f, 0.1f, 40.0f},
                   {"WatermineDamage", "Attacking", &m_watermineDamage, 4.0f, 4.0f, 4.0f},
                   {"EnemyUnitCountDamageReductionMultiplier", "Attacking", &m_enemyUnitCountDamageReductionMultiplier, 0.5f, 0.01f, 10.0f},
-                  {"OwnProdctionMalus", "Attacking", &m_ownProdctionMalus, 5000.0f, 5000.0f, 5000.0f},
+                  {"OwnProdctionMalus", "Attacking", &m_ownProdctionMalus, 5000.0f, 5000.0f, 50000.0f},
                   {"SupportDamageBonus", "Attacking", &m_supportDamageBonus, 1.0f, 0.1f, 10.0f},
                   {"InfluenceIgnoreValue", "Attacking", &m_influenceIgnoreValue, 0.2f, 0.01f, 1.0f},
                   {"InfluenceMultiplier", "Attacking", &m_influenceMultiplier, 2.0f, 0.1f, 10.0f},
-                  {"MinHpDamage", "Attacking", &m_minHpDamage, -2.0f, -10.0f, 10.0f},
+                  {"MinHpDamage", "Attacking", &m_minHpDamage, -2.0f, -10.0f, 0.0f},
 
                   // Production
                   {"FundsPerBuildingFactorA", "Production", &m_fundsPerBuildingFactorA, 1.85f, 0.5f, 10.0f},
