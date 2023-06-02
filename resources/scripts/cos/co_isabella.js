@@ -275,7 +275,7 @@ var Constructor = function()
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Initial Strike");
+        return qsTr("Deep Strike");
     };
     this.getSuperPowerDescription = function(co)
     {
@@ -286,7 +286,7 @@ var Constructor = function()
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Deep Strike");
+        return qsTr("Overlord");
     };
     this.getPowerSentences = function(co)
     {

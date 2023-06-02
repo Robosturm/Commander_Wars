@@ -20,21 +20,18 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
-            {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/max.mp3", 57, 70080)
-                break;
-            }
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/max.mp3", 57, 70080)
+            break;
         }
     };
 
@@ -153,7 +150,7 @@ var Constructor = function()
     this.d2dOtherOffBonus = 0;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
+     defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
@@ -225,7 +222,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
@@ -294,6 +291,20 @@ var Constructor = function()
         return 0;
     };
 
+    this.getAiCoUnitBonus = function(co, unit, map)
+    {
+        if (unit.getBaseMaxRange() === 1 &&
+            unit.getUnitType() !== GameEnums.UnitType_Infantry)
+        {
+            return 3;
+        }
+        else if (unit.getBaseMaxRange() > 1)
+        {
+            return -3;
+        }
+        return 0;
+    };
+
     this.getAiCoBuildRatioModifier = function(co, map)
     {
         return 10;
@@ -329,21 +340,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Non-infantry direct-combat units are tops.");
+        return qsTr("<r>Strong non-infantry direct-combat units, weaker indirect-combat units.</r>");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
-            qsTr("\nGlobal Effect: \nDirect Units gain additional %0% firepower and indirect Units loose %2% firepower and %1 firerange.") +
-            qsTr("\n\nCO Zone Effect: \nDirect Units gain additional %3% firepower and none indirect units gain %4%.");
-        text = replaceTextArgs(text, [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectFirerangeMalus, CO_MAX.d2dIndirectOffBonus,
-                                      CO_MAX.d2dCoZoneOffBonus, CO_MAX.d2dCoZoneOtherOffBonus]);
+        var text = qsTr("<r>\n\nDay-to-day: \nMax's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0%</div><r> firepower and his indirect-combat units have </r><div c='#ff2626'>-%1%</div><r> firepower and </r><div c='#ff2626'>-%2 range</div><r> penalty.</r>") +
+        ("<r>\n\nSpecial Unit:\nTank Hunter</r>") +
+        qsTr("<r>\n\nCO Zone Effect: \nMax's non-infantry direct-combat units firepower raises by </r><div c='#55ff00'>+%3%</div><r> and all others gain </r><div c='#55ff00'>+%4%</div><r> firepower and all units defense raises by </r><div c='#55ff00'>+%5%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectOffBonus, CO_MAX.d2dIndirectFirerangeMalus, CO_MAX.d2dCoZoneOffBonus, CO_MAX.d2dCoZoneOtherOffBonus, CO_MAX.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text =  qsTr("Max's non-infantry direct-combat units gain +%0 movement and raise their firepower by +%1% and all other units firepower raises by +%2%. All units defense raises by +%3%.");
-        text = replaceTextArgs(text, [CO_MAX.powerOffBonus, CO_MAX.powerMovementBonus, CO_MAX.powerDefBonus]);
+        var text = qsTr("<r>Max's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0 movement</div><r> and raise their firepower by </r><div c='#55ff00'>+%1%</div><r> and all other units firepower raises by </r><div c='#55ff00'>+%2%</div><r>. All units defense raises by </r><div c='#55ff00'>+%3%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_MAX.powerMovementBonus, CO_MAX.powerOffBonus, CO_MAX.powerOtherBonus, CO_MAX.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -352,10 +362,11 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Firepower raises by %0% and movement by %1 of all non-infantry direct-combat units. The defence raises by %2");
-        text = replaceTextArgs(text, [CO_MAX.superPowerOffBonus, CO_MAX.superpowerMovementBonus, CO_MAX.powerDefBonus]);
+        var text = qsTr("<r>Max's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0 movement</div><r> and raise their firepower by </r><div c='#55ff00'>+%1%</div><r> and all other units firepower raises by </r><div c='#55ff00'>+%2%</div><r>. All units defense raises by </r><div c='#55ff00'>+%3%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_MAX.superpowerMovementBonus, CO_MAX.superPowerOffBonus, CO_MAX.powerOtherBonus, CO_MAX.powerDefBonus]);
         return text;
     };
+
     this.getSuperPowerName = function(co)
     {
         return qsTr("Max Blast");
@@ -363,22 +374,22 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Roll, tanks, roll!"),
-                qsTr("Now you're gonna get hurt!"),
-                qsTr("Hey!  Give up while you still can!"),
-                qsTr("Wanna test might?  I won't lose!"),
-                qsTr("That's enough!  Get outta the road!"),
-                qsTr("Alright, the gloves are comin' off.")];
+            qsTr("Now you're gonna get hurt!"),
+            qsTr("Hey!  Give up while you still can!"),
+            qsTr("Wanna test might?  I won't lose!"),
+            qsTr("That's enough!  Get outta the road!"),
+            qsTr("Alright, the gloves are comin' off.")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("That was a piece of cake!"),
-                qsTr("Ha! It'll take more than that to beat me!"),
-                qsTr("I'm on a roll!")];
+            qsTr("Ha! It'll take more than that to beat me!"),
+            qsTr("I'm on a roll!")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Ouch... I let my guard down."),
-                qsTr("Oh, man! Not good! What are we supposed to do now!?")];
+            qsTr("Oh, man! Not good! What are we supposed to do now!?")];
     };
     this.getName = function()
     {

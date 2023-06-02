@@ -189,7 +189,7 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Uses secret trade routes to get slightly lower deployment costs for all units.");
+        return qsTr("Global Day-to-day: \nHachi's units cost 90%.");
     };
     this.getLongCODescription = function()
     {
@@ -211,8 +211,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Merchant pals gather from around the globe and help him deploy ground units from any allied city with %0% lower deployment costs.");
-        text = replaceTextArgs(text, [CO_HACHI.powerCostReduction * 100]);
+        return qsTr("The cost of Hachi's units reduces to %0% and can deploy ground units from</r><div c='#00ff00'>Cities</div><r>. Units have +%1% firepower and defense.");
+        text = replaceTextArgs(text, [CO_HACHI.powerCostReduction * 100, CO_HACHI.powerOffBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
