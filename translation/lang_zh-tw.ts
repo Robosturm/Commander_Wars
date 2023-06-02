@@ -10898,37 +10898,37 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="239"/>
-        <location filename="../menue/victorymenue.cpp" line="731"/>
+        <location filename="../menue/victorymenue.cpp" line="734"/>
         <source>Funds</source>
         <translation>資金</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="248"/>
-        <location filename="../menue/victorymenue.cpp" line="736"/>
+        <location filename="../menue/victorymenue.cpp" line="739"/>
         <source>Income</source>
         <translation>收入</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="257"/>
-        <location filename="../menue/victorymenue.cpp" line="741"/>
+        <location filename="../menue/victorymenue.cpp" line="744"/>
         <source>Buildings</source>
         <translation>建築</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="266"/>
-        <location filename="../menue/victorymenue.cpp" line="746"/>
+        <location filename="../menue/victorymenue.cpp" line="749"/>
         <source>Units</source>
         <translation>單位</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="275"/>
-        <location filename="../menue/victorymenue.cpp" line="751"/>
+        <location filename="../menue/victorymenue.cpp" line="754"/>
         <source>Player Strength</source>
         <translation>玩家強度</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="284"/>
-        <location filename="../menue/victorymenue.cpp" line="819"/>
+        <location filename="../menue/victorymenue.cpp" line="822"/>
         <source>Player Statistics</source>
         <translation>玩家統計</translation>
     </message>
@@ -10963,17 +10963,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation>總和</translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="651"/>
+        <location filename="../menue/victorymenue.cpp" line="654"/>
         <source>Player </source>
         <translation>玩家 </translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="654"/>
+        <location filename="../menue/victorymenue.cpp" line="657"/>
         <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation>選擇您要查看哪位玩家的統計數據.</translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="807"/>
+        <location filename="../menue/victorymenue.cpp" line="810"/>
         <source>Victory</source>
         <translation>勝利</translation>
     </message>
