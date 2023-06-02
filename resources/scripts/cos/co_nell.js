@@ -222,8 +222,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nActive CO Day-to-day: \nUnits have %0% luck.</r>") +
-                qsTr("<r>\n\nCO Zone Effect: \nNell's units can inflict up to </r><div c='#55ff00'>+%1%</div><r> luck damage instead of the standard %0%. attack and defense raises by </r><div c='#55ff00'>+%2%</div><r>.</r>");
+        var text = qsTr("<r>\n\nGlobal Effect: \nUnits have %0% luck.</r>" +
+                        "<r>\n\nCO Zone Effect: \nNell's units can inflict up to </r><div c='#55ff00'>+%1%</div><r> luck damage instead of the standard %0%. attack and defense raises by </r><div c='#55ff00'>+%2%</div><r>.</r>");
         text = replaceTextArgs(text, [CO_NELL.d2dLuckBonus, CO_NELL.d2dCoZoneLuckBonus, CO_NELL.d2dCoZoneOffBonus]);
         return text;
     };

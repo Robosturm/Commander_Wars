@@ -83,26 +83,33 @@ namespace oxygine
                 for (auto & line : lines)
                 {
                     auto * currentLine = addNewLine(rd);
-                    QStringList words = line.split(' ');
-                    for (auto & word : words)
+                    if (line.contains(' '))
                     {
-                        if (checkWidth && metrics.horizontalAdvance(*currentLine + word) > rd.getWidth() - rd.getX())
+                        QStringList words = line.split(' ');
+                        for (auto & word : words)
                         {
-                            if (rd.getStyle().multiline)
+                            if (checkWidth && metrics.horizontalAdvance(*currentLine + word) > rd.getWidth() - rd.getX())
                             {
-                                currentLine = addNewLine(rd);
-                                *currentLine = metrics.elidedText(word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX());
+                                if (rd.getStyle().multiline)
+                                {
+                                    currentLine = addNewLine(rd);
+                                    *currentLine = metrics.elidedText(word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX());
+                                }
+                                else
+                                {
+                                    *currentLine = metrics.elidedText(*currentLine + word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX());
+                                    break;
+                                }
                             }
                             else
                             {
-                                *currentLine = metrics.elidedText(*currentLine + word + ' ', rd.getStyle().elideText, rd.getWidth() - rd.getX());
-                                break;
+                                *currentLine += word + ' ';
                             }
                         }
-                        else
-                        {
-                            *currentLine += word + ' ';
-                        }
+                    }
+                    else
+                    {
+                        *currentLine = line;
                     }
                 }
                 qint32 index = m_lines.size() - 1;
@@ -149,7 +156,7 @@ namespace oxygine
             if (m_lines.size() > 0)
             {
                 qint32 index = m_lines.size() - 1;
-                width = rd.getMetrics().boundingRect(m_lines[index]).width();
+                width = rd.getMetrics().horizontalAdvance(m_lines[index]);
             }
             return width;
 #else
@@ -221,6 +228,8 @@ namespace oxygine
 
         void DivNode::resize(Aligner& rd)
         {
+            rd.addLineNode(this);
+            xresize(rd);
             resizeChildren(rd);
         }
 

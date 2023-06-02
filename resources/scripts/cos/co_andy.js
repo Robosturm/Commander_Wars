@@ -255,15 +255,15 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nDay-to-day: \nNo abilities</r>") +
-                qsTr("<r>\n\nSpecial Unit:\nRepair Tank</r>") +
-                qsTr("<r>\n\nCO Zone Effect: \nUnits gain </r><div c='#55ff00'>+%0%</div><r> firepower and </r><div c='#55ff00'>+%1</div><r> defence.</r>");
+        var text = qsTr("<r>\n\nSpecial Unit:\nRepair Tank</r>" +
+                        "<r>\n\nGlobal Effect: \nNo abilities</r>" +
+                        "<r>\n\nCO Zone Effect: \nUnits gain </r><div c='#55ff00'>+%0%</div><r> firepower and </r><div c='#55ff00'>+%1</div><r> defence.</r>");
         text = replaceTextArgs(text, [CO_ANDY.d2dCoZoneOffBonus, CO_ANDY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("<r>\nRestores </r><div c='#55ff00'>+%0 HP</div><r> to all units. firepower and defense increases by </r><div c='#55ff00'>+%0%</div><r>.</r>");
+        var text = qsTr("<r>Restores </r><div c='#55ff00'>+%0 HP</div><r> to all units. firepower and defense increases by </r><div c='#55ff00'>+%0%</div><r>.</r>");
         text = replaceTextArgs(text, [CO_ANDY.powerHeal, CO_ANDY.powerOffBonus, CO_ANDY.powerDefBonus]);
         return text;
     };
@@ -273,7 +273,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Restores </r><div c='#55ff00'>+%0 HP</div><r> to all units. Firepower rises by </r><div c='#55ff00'>+%1%</div><r> and defense by </r><div c='#55ff00'>+%2%</div><r>. All units gain </r><div c='#55ff00'>+%3 movement</div><r>.</r>");
+        var text = qsTr("<r>Restores </r><div c='#55ff00'>+%0 HP</div><r> to all units. Firepower rises by </r><div c='#55ff00'>+%1%</div><r> and defense by </r><div c='#55ff00'>+%2%</div><r>. All units gain </r><div c='#55ff00'>+%3 movement</div><r>.</r>");
         text = replaceTextArgs(text, [CO_ANDY.superPowerHeal, CO_ANDY.superPowerOffBonus, CO_ANDY.powerDefBonus, CO_ANDY.superPowerMovementBonus]);
         return text;
     };

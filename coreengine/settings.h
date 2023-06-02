@@ -293,8 +293,7 @@ public:
     static Settings* getInstance();
     void setup();
     static QString getActiveUserPath();
-    static void loadSettings();    
-    static void saveSettings();
+    static void loadSettings();
     static void resetSettings();
 
     static void setLastSaveGame(const QString &LastSaveGame);
@@ -307,6 +306,8 @@ public:
     static void setPipeUuid(const QString & newPipeUuid);
 
 public slots:
+    static void saveSettings();
+
     static float getGameScale();
     static void setGameScale(float newGameScale);
 

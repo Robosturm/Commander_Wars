@@ -10804,37 +10804,37 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="239"/>
-        <location filename="../menue/victorymenue.cpp" line="734"/>
+        <location filename="../menue/victorymenue.cpp" line="735"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="248"/>
-        <location filename="../menue/victorymenue.cpp" line="739"/>
+        <location filename="../menue/victorymenue.cpp" line="740"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="257"/>
-        <location filename="../menue/victorymenue.cpp" line="744"/>
+        <location filename="../menue/victorymenue.cpp" line="745"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="266"/>
-        <location filename="../menue/victorymenue.cpp" line="749"/>
+        <location filename="../menue/victorymenue.cpp" line="750"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="275"/>
-        <location filename="../menue/victorymenue.cpp" line="754"/>
+        <location filename="../menue/victorymenue.cpp" line="755"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="284"/>
-        <location filename="../menue/victorymenue.cpp" line="822"/>
+        <location filename="../menue/victorymenue.cpp" line="823"/>
         <source>Player Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10869,17 +10869,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="654"/>
+        <location filename="../menue/victorymenue.cpp" line="655"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="657"/>
+        <location filename="../menue/victorymenue.cpp" line="658"/>
         <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="810"/>
+        <location filename="../menue/victorymenue.cpp" line="811"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13912,6 +13912,25 @@ Hovercrafts gain %2% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="258"/>
+        <source>&lt;r&gt;
+
+Special Unit:
+Repair Tank&lt;/r&gt;&lt;r&gt;
+
+Global Effect: 
+No abilities&lt;/r&gt;&lt;r&gt;
+
+CO Zone Effect: 
+Units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower and &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1&lt;/div&gt;&lt;r&gt; defence.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="266"/>
+        <source>&lt;r&gt;Restores &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 HP&lt;/div&gt;&lt;r&gt; to all units. firepower and defense increases by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_andy.js" line="272"/>
         <source>Hyper Repair</source>
         <translation type="unfinished"></translation>
@@ -13922,38 +13941,8 @@ Hovercrafts gain %2% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="258"/>
-        <source>&lt;r&gt;
-
-Day-to-day: 
-No abilities&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="259"/>
-        <source>&lt;r&gt;
-
-Special Unit:
-Repair Tank&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="260"/>
-        <source>&lt;r&gt;
-
-CO Zone Effect: 
-Units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower and &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1&lt;/div&gt;&lt;r&gt; defence.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="266"/>
-        <source>&lt;r&gt;
-Restores &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 HP&lt;/div&gt;&lt;r&gt; to all units. firepower and defense increases by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_andy.js" line="276"/>
-        <source>Restores &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 HP&lt;/div&gt;&lt;r&gt; to all units. Firepower rises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; and defense by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%2%&lt;/div&gt;&lt;r&gt;. All units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%3 movement&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Restores &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 HP&lt;/div&gt;&lt;r&gt; to all units. Firepower rises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; and defense by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%2%&lt;/div&gt;&lt;r&gt;. All units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%3 movement&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17222,17 +17211,17 @@ Units have %0% firepower and %1% defense bonus.</source>
         <location filename="../resources/scripts/cos/co_jake.js" line="295"/>
         <source>&lt;r&gt;
 
-Day-to-day: 
-Jakes&apos;s units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower on plains terrain.&lt;/r&gt;</source>
+Special Unit:
+Tank Hunter
+&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_jake.js" line="296"/>
         <source>&lt;r&gt;
 
-Special Unit:
-Tank Hunter
-&lt;/r&gt;</source>
+Global Effect: 
+Jakes&apos;s units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower on plains terrain.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18692,6 +18681,20 @@ Units gain firepower %1% and defense %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_max.js" line="336"/>
+        <source>&lt;r&gt;
+
+Special Unit:
+Tank Hunter&lt;/r&gt;&lt;r&gt;
+
+Global Effect: 
+Max&apos;s non-infantry direct-combat units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower and his indirect-combat units have &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;-%1%&lt;/div&gt;&lt;r&gt; firepower and &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;-%2 range&lt;/div&gt;&lt;r&gt; penalty.&lt;/r&gt;&lt;r&gt;
+
+CO Zone Effect: 
+Max&apos;s non-infantry direct-combat units firepower raises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%3%&lt;/div&gt;&lt;r&gt; and all others gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%4%&lt;/div&gt;&lt;r&gt; firepower and all units defense raises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%5%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_max.js" line="350"/>
         <source>Max Force</source>
         <translation type="unfinished"></translation>
@@ -18699,22 +18702,6 @@ Units gain firepower %1% and defense %2.</source>
     <message>
         <location filename="../resources/scripts/cos/co_max.js" line="332"/>
         <source>&lt;r&gt;Strong non-infantry direct-combat units, weaker indirect-combat units.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="336"/>
-        <source>&lt;r&gt;
-
-Day-to-day: 
-Max&apos;s non-infantry direct-combat units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower and his indirect-combat units have &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;-%1%&lt;/div&gt;&lt;r&gt; firepower and &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;-%2 range&lt;/div&gt;&lt;r&gt; penalty.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="338"/>
-        <source>&lt;r&gt;
-
-CO Zone Effect: 
-Max&apos;s non-infantry direct-combat units firepower raises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%3%&lt;/div&gt;&lt;r&gt; and all others gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%4%&lt;/div&gt;&lt;r&gt; firepower and all units defense raises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%5%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -19550,6 +19537,17 @@ Defense is increased by %3% and by %4% against indirect units and offense by %5%
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_nell.js" line="225"/>
+        <source>&lt;r&gt;
+
+Global Effect: 
+Units have %0% luck.&lt;/r&gt;&lt;r&gt;
+
+CO Zone Effect: 
+Nell&apos;s units can inflict up to &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; luck damage instead of the standard %0%. attack and defense raises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%2%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_nell.js" line="238"/>
         <source>Lucky Star</source>
         <translation type="unfinished"></translation>
@@ -19557,22 +19555,6 @@ Defense is increased by %3% and by %4% against indirect units and offense by %5%
     <message>
         <location filename="../resources/scripts/cos/co_nell.js" line="221"/>
         <source>&lt;r&gt;Luck boost from powers.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_nell.js" line="225"/>
-        <source>&lt;r&gt;
-
-Active CO Day-to-day: 
-Units have %0% luck.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_nell.js" line="226"/>
-        <source>&lt;r&gt;
-
-CO Zone Effect: 
-Nell&apos;s units can inflict up to &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; luck damage instead of the standard %0%. attack and defense raises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%2%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -21463,6 +21445,14 @@ Direct Units have %0 increased firepower and loose additional %1 firepower per t
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="274"/>
+        <source>&lt;r&gt;
+
+Global Effect: 
+Rachel&apos;s units repair by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0&lt;/div&gt;&lt;r&gt; on porporties.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_rachel.js" line="287"/>
         <source>Lucky Lass</source>
         <translation type="unfinished"></translation>
@@ -21470,14 +21460,6 @@ Direct Units have %0 increased firepower and loose additional %1 firepower per t
     <message>
         <location filename="../resources/scripts/cos/co_rachel.js" line="270"/>
         <source>Extra healing from proporties.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="274"/>
-        <source>&lt;r&gt;
-
-Day-to-day: 
-Rachel&apos;s units repair by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0&lt;/div&gt;&lt;r&gt; on porporties.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -22118,6 +22100,20 @@ Units have %1% lifesteal.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_sami.js" line="357"/>
+        <source>&lt;r&gt;
+
+Special Unit:
+Commando&lt;/r&gt;&lt;r&gt;
+
+Global Effect: 
+Sami&apos;s transport units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 movement&lt;/div&gt;&lt;r&gt; and her foot soldier units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; firepower and capture at &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;%2&lt;/div&gt;&lt;r&gt; times the normal rate. Her other direct-combat units deal &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;%3%&lt;/div&gt;&lt;r&gt; less damage.&lt;/r&gt;&lt;r&gt;
+
+CO Zone Effect: 
+Sami&apos;s foot soldiers firepower increases by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%4%&lt;/div&gt;&lt;r&gt; while all other units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%5%&lt;/div&gt;&lt;r&gt; firepower and &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%6%&lt;/div&gt;&lt;r&gt; defense.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_sami.js" line="371"/>
         <source>Double Time</source>
         <translation type="unfinished"></translation>
@@ -22125,30 +22121,6 @@ Units have %1% lifesteal.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sami.js" line="353"/>
         <source>&lt;r&gt;strong infantry units that can capture faster, weak direct combat units.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="357"/>
-        <source>&lt;r&gt;
-
-Global Day-to-day: 
-Sami&apos;s transport units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 movement&lt;/div&gt;&lt;r&gt; and her foot soldier units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; firepower and capture at &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;%2&lt;/div&gt;&lt;r&gt; times the normal rate. Her other direct-combat units deal &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;%3%&lt;/div&gt;&lt;r&gt; less damage.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="358"/>
-        <source>&lt;r&gt;
-
-Special Unit:
-Commando&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="359"/>
-        <source>&lt;r&gt;
-
-CO Zone Effect: 
-Sami&apos;s foot soldiers firepower increases by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%4%&lt;/div&gt;&lt;r&gt; while all other units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%5%&lt;/div&gt;&lt;r&gt; firepower and &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%6%&lt;/div&gt;&lt;r&gt; defense.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

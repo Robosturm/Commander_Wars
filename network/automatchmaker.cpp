@@ -45,8 +45,6 @@ void AutoMatchMaker::createNewGame(const QString & players)
 {
     spNetworkInterface dummy;
     Multiplayermenu multiplayermenu(dummy, "", Multiplayermenu::NetworkMode::Host);
-
-
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(&multiplayermenu),

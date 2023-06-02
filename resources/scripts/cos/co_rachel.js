@@ -271,7 +271,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nDay-to-day: \nRachel's units repair by </r><div c='#55ff00'>+%0</div><r> on porporties.</r>") +
+        var text = qsTr("<r>\n\nGlobal Effect: \nRachel's units repair by </r><div c='#55ff00'>+%0</div><r> on porporties.</r>") +
                qsTr("<r>\n\nCO Zone Effect: \nRachel's firepower and defense increase by </r><div c='#55ff00'>+%0%</div><r>.</r>");
         text = replaceTextArgs(text, [CO_RACHEL.d2dRepairBonus, CO_RACHEL.d2dCoZoneOffBonus]);
         return text;

@@ -58,6 +58,7 @@ var Init =
         settings.setBattleAnimationSpeed(100);
         settings.setDialogAnimationSpeed(100);
         settings.setCaptureAnimationSpeed(100);
+        settings.saveSettings();
         // create random start values
         menu.createRandomInis(2, "resources/aidata/normal/normal", 16);
         // start training on all cores

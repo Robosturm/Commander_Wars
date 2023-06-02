@@ -10898,37 +10898,37 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="239"/>
-        <location filename="../menue/victorymenue.cpp" line="734"/>
+        <location filename="../menue/victorymenue.cpp" line="735"/>
         <source>Funds</source>
         <translation>資金</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="248"/>
-        <location filename="../menue/victorymenue.cpp" line="739"/>
+        <location filename="../menue/victorymenue.cpp" line="740"/>
         <source>Income</source>
         <translation>收入</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="257"/>
-        <location filename="../menue/victorymenue.cpp" line="744"/>
+        <location filename="../menue/victorymenue.cpp" line="745"/>
         <source>Buildings</source>
         <translation>建築</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="266"/>
-        <location filename="../menue/victorymenue.cpp" line="749"/>
+        <location filename="../menue/victorymenue.cpp" line="750"/>
         <source>Units</source>
         <translation>單位</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="275"/>
-        <location filename="../menue/victorymenue.cpp" line="754"/>
+        <location filename="../menue/victorymenue.cpp" line="755"/>
         <source>Player Strength</source>
         <translation>玩家強度</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="284"/>
-        <location filename="../menue/victorymenue.cpp" line="822"/>
+        <location filename="../menue/victorymenue.cpp" line="823"/>
         <source>Player Statistics</source>
         <translation>玩家統計</translation>
     </message>
@@ -10963,17 +10963,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation>總和</translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="654"/>
+        <location filename="../menue/victorymenue.cpp" line="655"/>
         <source>Player </source>
         <translation>玩家 </translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="657"/>
+        <location filename="../menue/victorymenue.cpp" line="658"/>
         <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation>選擇您要查看哪位玩家的統計數據.</translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="810"/>
+        <location filename="../menue/victorymenue.cpp" line="811"/>
         <source>Victory</source>
         <translation>勝利</translation>
     </message>
@@ -14288,21 +14288,11 @@ CO區域效果:
         <location filename="../resources/scripts/cos/co_andy.js" line="258"/>
         <source>&lt;r&gt;
 
-Day-to-day: 
-No abilities&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="259"/>
-        <source>&lt;r&gt;
-
 Special Unit:
-Repair Tank&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="260"/>
-        <source>&lt;r&gt;
+Repair Tank&lt;/r&gt;&lt;r&gt;
+
+Global Effect: 
+No abilities&lt;/r&gt;&lt;r&gt;
 
 CO Zone Effect: 
 Units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower and &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1&lt;/div&gt;&lt;r&gt; defence.&lt;/r&gt;</source>
@@ -14310,13 +14300,12 @@ Units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; 
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_andy.js" line="266"/>
-        <source>&lt;r&gt;
-Restores &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 HP&lt;/div&gt;&lt;r&gt; to all units. firepower and defense increases by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Restores &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 HP&lt;/div&gt;&lt;r&gt; to all units. firepower and defense increases by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_andy.js" line="276"/>
-        <source>Restores &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 HP&lt;/div&gt;&lt;r&gt; to all units. Firepower rises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; and defense by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%2%&lt;/div&gt;&lt;r&gt;. All units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%3 movement&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Restores &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 HP&lt;/div&gt;&lt;r&gt; to all units. Firepower rises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; and defense by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%2%&lt;/div&gt;&lt;r&gt;. All units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%3 movement&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18423,17 +18412,17 @@ CO區域效果:
         <location filename="../resources/scripts/cos/co_jake.js" line="295"/>
         <source>&lt;r&gt;
 
-Day-to-day: 
-Jakes&apos;s units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower on plains terrain.&lt;/r&gt;</source>
+Special Unit:
+Tank Hunter
+&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_jake.js" line="296"/>
         <source>&lt;r&gt;
 
-Special Unit:
-Tank Hunter
-&lt;/r&gt;</source>
+Global Effect: 
+Jakes&apos;s units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower on plains terrain.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -20332,13 +20321,11 @@ CO區域效果:
         <location filename="../resources/scripts/cos/co_max.js" line="336"/>
         <source>&lt;r&gt;
 
-Day-to-day: 
-Max&apos;s non-infantry direct-combat units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower and his indirect-combat units have &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;-%1%&lt;/div&gt;&lt;r&gt; firepower and &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;-%2 range&lt;/div&gt;&lt;r&gt; penalty.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="338"/>
-        <source>&lt;r&gt;
+Special Unit:
+Tank Hunter&lt;/r&gt;&lt;r&gt;
+
+Global Effect: 
+Max&apos;s non-infantry direct-combat units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0%&lt;/div&gt;&lt;r&gt; firepower and his indirect-combat units have &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;-%1%&lt;/div&gt;&lt;r&gt; firepower and &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;-%2 range&lt;/div&gt;&lt;r&gt; penalty.&lt;/r&gt;&lt;r&gt;
 
 CO Zone Effect: 
 Max&apos;s non-infantry direct-combat units firepower raises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%3%&lt;/div&gt;&lt;r&gt; and all others gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%4%&lt;/div&gt;&lt;r&gt; firepower and all units defense raises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%5%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
@@ -21464,13 +21451,8 @@ CO區域效果:
         <location filename="../resources/scripts/cos/co_nell.js" line="225"/>
         <source>&lt;r&gt;
 
-Active CO Day-to-day: 
-Units have %0% luck.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_nell.js" line="226"/>
-        <source>&lt;r&gt;
+Global Effect: 
+Units have %0% luck.&lt;/r&gt;&lt;r&gt;
 
 CO Zone Effect: 
 Nell&apos;s units can inflict up to &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; luck damage instead of the standard %0%. attack and defense raises by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%2%&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
@@ -23584,7 +23566,7 @@ CO區域效果:
         <location filename="../resources/scripts/cos/co_rachel.js" line="274"/>
         <source>&lt;r&gt;
 
-Day-to-day: 
+Global Effect: 
 Rachel&apos;s units repair by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0&lt;/div&gt;&lt;r&gt; on porporties.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24449,21 +24431,11 @@ CO Zone Effect:
         <location filename="../resources/scripts/cos/co_sami.js" line="357"/>
         <source>&lt;r&gt;
 
-Global Day-to-day: 
-Sami&apos;s transport units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 movement&lt;/div&gt;&lt;r&gt; and her foot soldier units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; firepower and capture at &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;%2&lt;/div&gt;&lt;r&gt; times the normal rate. Her other direct-combat units deal &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;%3%&lt;/div&gt;&lt;r&gt; less damage.&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="358"/>
-        <source>&lt;r&gt;
-
 Special Unit:
-Commando&lt;/r&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="359"/>
-        <source>&lt;r&gt;
+Commando&lt;/r&gt;&lt;r&gt;
+
+Global Effect: 
+Sami&apos;s transport units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%0 movement&lt;/div&gt;&lt;r&gt; and her foot soldier units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%1%&lt;/div&gt;&lt;r&gt; firepower and capture at &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;%2&lt;/div&gt;&lt;r&gt; times the normal rate. Her other direct-combat units deal &lt;/r&gt;&lt;div c=&apos;#ff2626&apos;&gt;%3%&lt;/div&gt;&lt;r&gt; less damage.&lt;/r&gt;&lt;r&gt;
 
 CO Zone Effect: 
 Sami&apos;s foot soldiers firepower increases by &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%4%&lt;/div&gt;&lt;r&gt; while all other units gain &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%5%&lt;/div&gt;&lt;r&gt; firepower and &lt;/r&gt;&lt;div c=&apos;#55ff00&apos;&gt;+%6%&lt;/div&gt;&lt;r&gt; defense.&lt;/r&gt;</source>

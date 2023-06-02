@@ -396,7 +396,8 @@ void ActionPerformer::actionPerformed()
                     m_pMenu->setSaveAllowed(true);
                     m_pMenu->doDespawnSlave();
                 }
-                else if (m_exit)
+                else if (m_exit &&
+                         m_pMenu != nullptr)
                 {
                     CONSOLE_PRINT("ActionPerformer state is exiting game. Emitting exit", GameConsole::eDEBUG);
                     emit m_pMenu->sigVictory(-1);
@@ -451,10 +452,9 @@ void ActionPerformer::actionPerformed()
                         }
                     }
                 }
-                else if (m_pMenu != nullptr)
+                else
                 {
                     CONSOLE_PRINT("Game already won not finishing the action.", GameConsole::eDEBUG);
-                    emit m_pMenu->sigVictory(-1);
                 }
             }
             else

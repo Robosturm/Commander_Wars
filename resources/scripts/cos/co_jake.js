@@ -292,8 +292,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nDay-to-day: \nJakes's units gain </r><div c='#55ff00'>+%0%</div><r> firepower on plains terrain.</r>") +
-                qsTr("<r>\n\nSpecial Unit:\nTank Hunter\n</r>") +
+        var text = qsTr("<r>\n\nSpecial Unit:\nTank Hunter\n</r>") +
+                qsTr("<r>\n\nGlobal Effect: \nJakes's units gain </r><div c='#55ff00'>+%0%</div><r> firepower on plains terrain.</r>") +
                 qsTr("<r>\n\nCO Zone Effect: \nJakes's units gain </r><div c='#55ff00'>+%1%</div><r> firepower on plains terrain and gain </r><div c='#55ff00'>+%2%</div><r> firepower and deffense overall.</r>");
         text = replaceTextArgs(text, [CO_JAKE.d2dPlainsBonus, CO_JAKE.d2dCoZonePlainsBonus, CO_JAKE.d2dCoZoneOffBonus]);
         return text;

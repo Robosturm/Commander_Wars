@@ -544,7 +544,8 @@ void VictoryMenue::quitOnAiPipe()
 
 void VictoryMenue::multiplayerGameFinished()
 {
-    if (m_pNetworkInterface.get() != nullptr)
+    spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
+    if (pSlaveMasterConnection.get() != nullptr)
     {
         QJsonObject data;
         QString command = NetworkCommands::SLAVEMULTIPLAYERGAMERESULT;
@@ -577,7 +578,7 @@ void VictoryMenue::multiplayerGameFinished()
         data.insert(JsonKeys::JSONKEY_GAMERESULTARRAY, winnerInfo);
         QJsonDocument doc(data);
         CONSOLE_PRINT("Sending command " + command + "", GameConsole::eDEBUG);
-        emit m_pNetworkInterface->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+        emit pSlaveMasterConnection->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
     CONSOLE_PRINT("Killing self on slave", GameConsole::eDEBUG);
     connect(&m_despawnSlaveTimer, &QTimer::timeout, this, &VictoryMenue::despawnSlave, Qt::QueuedConnection);
