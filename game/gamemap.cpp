@@ -2660,7 +2660,8 @@ void GameMap::initPlayers()
 
 void GameMap::initProxyAis()
 {
-    if (Mainapp::getSlave())
+    if (Mainapp::getSlave() &&
+        !Mainapp::getTrainingSession())
     {
         // fix slave ai's
         for (qint32 i = 0; i < getPlayerCount(); ++i)

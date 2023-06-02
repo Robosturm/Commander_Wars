@@ -962,7 +962,8 @@ void Multiplayermenu::receivePlayerControlledInfo(QDataStream & stream, quint64 
         else if (pInput != nullptr &&
                  pInput->getAiType() != GameEnums::AiTypes_ProxyAi &&
                  pInput->getAiType() != GameEnums::AiTypes_Closed &&
-                 pInput->getAiType() != GameEnums::AiTypes_Open)
+                 pInput->getAiType() != GameEnums::AiTypes_Open &&
+                 !Mainapp::getTrainingSession())
         {
             pPlayer->setBaseGameInput(BaseGameInputIF::createAi(pMap.get(), GameEnums::AiTypes_ProxyAi));
         }

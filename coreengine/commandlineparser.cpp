@@ -31,6 +31,7 @@ const char* const CommandLineParser::ARG_SPAWNAIPROCESS         = "spawnAiProces
 const char* const CommandLineParser::ARG_AISLAVE                = "aiSlave";
 const char* const CommandLineParser::ARG_USERPATH               = "userPath";
 const char* const CommandLineParser::ARG_DEBUGLEVEL             = "debugLevel";
+const char* const CommandLineParser::ARG_SLAVETRAINING          = "slaveTraining";
 
 // options required for hosting a dedicated server
 const char* const CommandLineParser::ARG_SERVER                     = "server";
@@ -86,7 +87,8 @@ CommandLineParser::CommandLineParser()
       m_mailServerPassword(ARG_MAILSERVERPASSWORD, tr("Password on the mail server for the server for sending mails to accounts. Must be set cause the password is never stored in the game."), tr("password"), ""),
       m_mailServerSendAddress(ARG_MAILSERVERSENDADDRESS, tr("E-Mail address used on the mail server for the server for sending mails to accounts."), tr("address"), ""),
       m_mailServerAuthMethod(ARG_MAILSERVERAUTHMETHOD, tr("Mail server authentication type (Plain, Login) for the server for sending mails to accounts."), tr("method"), ""),
-      m_serverSaveFile(ARG_SERVERSAVEFILE, tr("Path to the server game save file"), tr("path"), "")
+      m_serverSaveFile(ARG_SERVERSAVEFILE, tr("Path to the server game save file"), tr("path"), ""),
+      m_slaveTraining(ARG_SLAVETRAINING, tr("mode for starting an ai training session."))
 {
     Interpreter::setCppOwnerShip(this);
     m_parser.setApplicationDescription("Commander Wars game");
@@ -127,6 +129,7 @@ CommandLineParser::CommandLineParser()
     m_parser.addOption(m_mailServerSendAddress);
     m_parser.addOption(m_mailServerAuthMethod);
     m_parser.addOption(m_serverSaveFile);
+    m_parser.addOption(m_slaveTraining);
 }
 
 void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
@@ -149,6 +152,10 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     if (m_parser.isSet(m_slave))
     {
         pApp->actAsSlave();
+    }
+    if (m_parser.isSet(m_slaveTraining))
+    {
+        Mainapp::setTrainingSession(true);
     }
     if (m_parser.isSet(m_spawnAiProcess))
     {

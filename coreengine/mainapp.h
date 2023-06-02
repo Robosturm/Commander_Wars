@@ -243,6 +243,9 @@ public:
     {
         return QThread::currentThread() == m_audioThread.get();
     }
+    static bool getTrainingSession();
+    static void setTrainingSession(bool newTrainingSession);
+
 public slots:
     /**
      * @brief createBaseDirs
@@ -326,6 +329,7 @@ private:
 
     static Mainapp* m_pMainapp;
     static bool m_slave;
+    static bool m_trainingSession;
     QMutex m_crashMutex;
     QScopedPointer<QThread> m_Workerthread;
     QScopedPointer<QThread> m_Networkthread;

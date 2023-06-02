@@ -1126,6 +1126,14 @@ void PlayerSelection::selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType)
     }
 }
 
+void PlayerSelection::forcePlayerAi(qint32 player, GameEnums::AiTypes eAiType)
+{
+    CONSOLE_PRINT("PlayerSelection::forcePlayerAi for player " + QString::number(player) + " with control type " + QString::number(eAiType), GameConsole::eDEBUG);
+    m_pMap->getPlayer(player)->setControlType(eAiType);
+    createAi(player, eAiType, "ForcedAi");
+}
+
+
 void PlayerSelection::selectAI(qint32 player)
 {
     CONSOLE_PRINT("PlayerSelection::selectAI for player " + QString::number(player), GameConsole::eDEBUG);
@@ -1182,7 +1190,8 @@ void PlayerSelection::selectAI(qint32 player)
             }
             else if (m_isServerGame &&
                      Mainapp::getSlave() &&
-                     type != GameEnums::AiTypes_Human)
+                     type != GameEnums::AiTypes_Human &&
+                     !Mainapp::getTrainingSession())
             {
                 CONSOLE_PRINT("Remapping ai " + QString::number(ai) + " to proxy ai on slave", GameConsole::eDEBUG);
                 ai = type;

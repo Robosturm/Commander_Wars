@@ -58,6 +58,7 @@
 Mainapp* Mainapp::m_pMainapp{nullptr};
 
 bool Mainapp::m_slave{false};
+bool Mainapp::m_trainingSession{false};
 const char* const Mainapp::GAME_CONTEXT = "GAME";
 
 Mainapp::Mainapp()
@@ -896,6 +897,16 @@ void Mainapp::onQuit()
         m_GameServerThread->wait();
     }
     QCoreApplication::processEvents();
+}
+
+bool Mainapp::getTrainingSession()
+{
+    return m_trainingSession;
+}
+
+void Mainapp::setTrainingSession(bool newTrainingSession)
+{
+    m_trainingSession = newTrainingSession;
 }
 
 AiProcessPipe & Mainapp::getAiProcessPipe()

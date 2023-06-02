@@ -836,7 +836,7 @@ void MainServer::slotStartRemoteGame(QString initScript, QString id)
 {
     QByteArray sendData;
     QByteArray minimapData;
-    spawnSlave(initScript, Settings::getMods(), id, 0, sendData, minimapData);
+    spawnSlave(initScript, Settings::getMods(), id, 0, sendData, minimapData, true);
 }
 
 void MainServer::disconnected(qint64 socketId)
@@ -949,7 +949,7 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo)
     }
 }
 
-void MainServer::spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data, QByteArray & minimapData)
+void MainServer::spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data, QByteArray & minimapData, bool trainingSession)
 {
 
     QString slaveAddress;
@@ -969,7 +969,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         QStringList args({QString(prefix) + CommandLineParser::ARG_SLAVE,
                           QString(prefix) + CommandLineParser::ARG_SLAVENAME,
                           slaveName,
-                          // QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
+                          QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
                           QString(prefix) + CommandLineParser::ARG_NOAUDIO,
                           QString(prefix) + CommandLineParser::ARG_SLAVEADDRESS,
                           slaveAddress,
@@ -996,6 +996,10 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         if (createLogs)
         {
             args << QString(prefix) + CommandLineParser::ARG_CREATESLAVELOGS;
+        }
+        if (trainingSession)
+        {
+            args << QString(prefix) + CommandLineParser::ARG_SLAVETRAINING;
         }
         game->game = spNetworkGame::create(this, slaveName);
         game->game->setDataBuffer(data);

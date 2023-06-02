@@ -25,6 +25,7 @@ public:
     static const char* const ARG_AISLAVE;
     static const char* const ARG_USERPATH;
     static const char* const ARG_DEBUGLEVEL;
+    static const char* const ARG_SLAVETRAINING;
 
     static const char* const ARG_SERVER;
     static const char* const ARG_SERVERSLAVEHOSTOPTIONS;
@@ -91,6 +92,7 @@ private:
     QCommandLineOption m_mailServerSendAddress;
     QCommandLineOption m_mailServerAuthMethod;
     QCommandLineOption m_serverSaveFile;
+    QCommandLineOption m_slaveTraining;
 
     QCommandLineParser m_parser;
 };

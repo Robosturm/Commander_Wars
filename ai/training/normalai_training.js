@@ -47,7 +47,20 @@ var Init =
     nextRun = 2,
     main = function(menu)
     {
+        // disable animations
+        settings.setOverworldAnimations(false);
+        settings.setBattleAnimationMode(GameEnums.BattleAnimationMode_None);
+        settings.setDialogAnimation(false);
+        settings.setCaptureAnimation(false);
+        settings.setMovementAnimations(false);
+        settings.setDay2dayScreen(false);
+        settings.setAnimationSpeed(100);
+        settings.setBattleAnimationSpeed(100);
+        settings.setDialogAnimationSpeed(100);
+        settings.setCaptureAnimationSpeed(100);
+        // create random start values
         menu.createRandomInis(2, "resources/aidata/normal/normal", 16);
+        // start training on all cores
         Init.startAllCores();
     },
 
@@ -98,20 +111,21 @@ var Init =
                     "{\n" +
                     "main = function(menu)\n" +
                     "{\n" +
-                    "menu.enterSingleplayer();\n" +
+                    "menu.enterSingleplayer([\".map\"]);\n" +
                     "},\n" +
                     "mapsSelection = function(menu)\n" +
                     "{\n" +
                     "menu.selectMap(\"" + Init.trainingFolder + "\", \"" + Init.trainingMap + "\");\n" +
                     "menu.buttonNext();\n" +
                     "menu.buttonNext();\n" +
+                    "var selection = menu.getPlayerSelection();\n" +
+                    "var map = selection.getMap();\n" +
                     "var gameRules = map.getGameRules();\n" +
                     "gameRules.addVictoryRule(\"VICTORYRULE_TURNLIMIT\");\n" +
                     "var victoryRule = gameRules.getVictoryRule(\"VICTORYRULE_TURNLIMIT\");\n" +
                     "victoryRule.setRuleValue(" + Init.turnLimit + ", 0);\n" +
                     "gameRules.setFogMode(" + Init.fogOfWar.toString() + ");\n" +
-                    "gameRules.setRandomWeather(false);\n" +
-                    "var selection = menu.getPlayerSelection();\n";
+                    "gameRules.setRandomWeather(false);\n";
             for (var i = 0; i < Init.playerCount; ++i)
             {
                 var playerIdx = Init.rotationCount + i;
@@ -126,7 +140,7 @@ var Init =
                 }
                 GameConsole.print("Using ai at index " + aiIdx + " for player " + playerIdx, Init.logLevel);
                 GameConsole.print("Using ai-setting " + Init.trainingAis[aiIdx][0] + " for player " + playerIdx, Init.logLevel);
-                script += "selection.selectPlayerAi(" + playerIdx.toString() + ", " + Init.trainingAis[aiIdx][1].toString() + ");\n";
+                script += "selection.forcePlayerAi(" + playerIdx.toString() + ", " + Init.trainingAis[aiIdx][1].toString() + ");\n";
                 Init.coreData[coreIndex][2].push(aiIdx);
                 if (Init.randomCos)
                 {
@@ -134,7 +148,7 @@ var Init =
                     script += "selection.playerCO2Changed(\"" + Init.cos[1] + "\", " + i.toString() + ");\n";
                 }
                 // overwrite existing default ini
-                script += "selection.getMap().getPlayer(" + playerIdx.toString() + ").getBaseGameInput().loadIni(" + Init.trainingAis[aiIdx][0] + ");\n";
+                script += "map.getPlayer(" + playerIdx.toString() + ").getBaseGameInput().loadIni(\"normal/" + Init.trainingAis[aiIdx][0] + "\");\n";
             }
             script += "menu.startGame();\n" +
                     "},\n" +

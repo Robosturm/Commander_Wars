@@ -1188,7 +1188,8 @@ void GameMenue::disconnected(quint64 socketID)
 
 void GameMenue::startDespawnTimer()
 {
-    if (m_pNetworkInterface->getConnectedSockets().size() == 0)
+    if (m_pNetworkInterface.get() != nullptr &&
+        m_pNetworkInterface->getConnectedSockets().size() == 0)
     {
         CONSOLE_PRINT("GameMenue::startDespawnTimer", GameConsole::eDEBUG);
         m_slaveDespawnElapseTimer.start();

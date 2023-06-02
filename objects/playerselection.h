@@ -153,6 +153,12 @@ public slots:
      * @param eAiType
      */
     void selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType);
+    /**
+     * @brief forcePlayerAi forces player ai only for
+     * @param player
+     * @param eAiType
+     */
+    void forcePlayerAi(qint32 player, GameEnums::AiTypes eAiType);
     // slots for changing player data
     void allPlayerIncomeChanged(float value);
     void playerIncomeChanged(float value, qint32 playerIdx);
