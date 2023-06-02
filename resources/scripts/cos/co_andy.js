@@ -14,7 +14,7 @@ var Constructor = function()
                 return GameEnums.PowerMode_Superpower;
             }
             else if (powerSurplus <= 0.5 &&
-                     co.canUsePower())
+               co.canUsePower())
             {
                 return CO.getAiUsePowerAtUnitCount(co, powerSurplus, turnMode, repairUnits);
             }
@@ -128,21 +128,18 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            switch (co.getPowerMode())
-            {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/andy.mp3",  4466, 74972);
-                break;
-            }
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/andy.mp3",  4466, 74972);
+            break;
         }
     };
 
@@ -154,7 +151,6 @@ var Constructor = function()
     {
         return "OS";
     };
-
     this.superPowerHeal = 5;
     this.superPowerOffBonus = 30;
     this.superPowerMovementBonus = 1;
@@ -167,7 +163,7 @@ var Constructor = function()
     this.d2dCoZoneDefBonus = 20;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
+       defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
@@ -189,7 +185,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
@@ -252,20 +248,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("No real weaknesses. Proficient with air, sea and land units. Ready to fight wherever and whenever.");
+        return qsTr("<r>No straignths or weaknesses.</r>");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n") +
-                   qsTr("\nGlobal Effect: \nNone") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and %1 defence.");
+        var text = qsTr("<r>\n\nDay-to-day: \nNo abilities</r>") +
+                   qsTr("<r>\n\nSpecial Unit:\nRepair Tank</r>") + 
+                   qsTr("<r>\n\nCO Zone Effect: \nUnits gain </r><div c='#55ff00'>+%0%</div><r> firepower and </r><div c='#55ff00'>+%1</div><r> defence.</r>");
         text = replaceTextArgs(text, [CO_ANDY.d2dCoZoneOffBonus, CO_ANDY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Restores %0 HP to all units.");
-        text = replaceTextArgs(text, [CO_ANDY.powerHeal]);
+        var text = qsTr("<r>\nRestores </r><div c='#55ff00'>+%0 HP</div><r> to all units. firepower and defense increases by </r><div c='#55ff00'>+%0%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_ANDY.powerHeal, CO_ANDY.powerOffBonus, CO_ANDY.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -274,8 +270,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Restores %0 HP to all units. Firepower rises by %0% and unit movement increases by %2 space.");
-        text = replaceTextArgs(text, [CO_ANDY.superPowerHeal, CO_ANDY.superPowerOffBonus, CO_ANDY.superPowerMovementBonus]);
+        var text = qsTr("Restores </r><div c='#55ff00'>+%0 HP</div><r> to all units. Firepower rises by </r><div c='#55ff00'>+%1%</div><r> and defense by </r><div c='#55ff00'>+%2%</div><r>. All units gain </r><div c='#55ff00'>+%3 movement</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_ANDY.superPowerHeal, CO_ANDY.superPowerOffBonus, CO_ANDY.superPowerDefBonus, CO_ANDY.superPowerMovementBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -285,24 +281,24 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("I've got parts to spare!"),
-                qsTr("I'm not giving up!"),
-                qsTr("Time to roll up my sleeves!"),
-                qsTr("I haven't even cranked the engine yet!"),
-                qsTr("Pass me my wrench!!"),
-                qsTr("It's time for a tune-up!"),
-                qsTr("Never give up, and never lose! I'm on my way!"),
-                qsTr("I'm not worried! I can fix anything!")];
+            qsTr("I'm not giving up!"),
+            qsTr("Time to roll up my sleeves!"),
+            qsTr("I haven't even cranked the engine yet!"),
+            qsTr("Pass me my wrench!!"),
+            qsTr("It's time for a tune-up!"),
+            qsTr("Never give up, and never lose! I'm on my way!"),
+            qsTr("I'm not worried! I can fix anything!")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("We won! Wooooooohooo!"),
-                qsTr("I can fix anything!"),
-                qsTr("I did it! Did you see that!?")];
+            qsTr("I can fix anything!"),
+            qsTr("I did it! Did you see that!?")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Oh, come on!"),
-                qsTr("Next time I see you, you're in trouble!")];
+            qsTr("Next time I see you, you're in trouble!")];
     };
     this.getName = function()
     {

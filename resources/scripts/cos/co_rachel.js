@@ -267,19 +267,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Her troops are quite hardworking, and they increase repairs by one on properties.");
+        return qsTr("extra healing from proporties.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits have increased repairs by %0 on properties.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %1% and defence by %2.");
-        text = replaceTextArgs(text, [CO_RACHEL.d2dRepairBonus, CO_RACHEL.d2dCoZoneOffBonus, CO_RACHEL.d2dCoZoneDefBonus]);
+        var text = qsTr("<r>\n\nDay-to-day: \nRachel's units repair by </r><div c='#55ff00'>+%0</div><r> on porporties.</r>") +
+               qsTr("<r>\n\nCO Zone Effect: \nRachel's firepower and defense increase by </r><div c='#55ff00'>+%0%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_RACHEL.d2dRepairBonus, CO_RACHEL.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Luck damage is increased by %0%.");
-        text = replaceTextArgs(text, [CO_RACHEL.powerLuckDamage]);
+        var text = qsTr("<r>Rachel's units may deal up to </r><div c='#55ff00'>+%0%</div><r> luck damage. Firepower and defense increase by </r><div c='#55ff00'>+%1%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_RACHEL.powerLuckDamage, CO_RACHEL.powerOffBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -288,10 +288,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Launches three missiles from Orange Star HQ in Omega Land dealing %0 HP of damage.");
-        text = replaceTextArgs(text, [CO_RACHEL.superPowerDamage]);
+        var text = qsTr("<r>Launches three missiles from Orange Star HQ dealing %0 HP of damage. Firepower and defense increase by </r><div c='#55ff00'>+%1%</div><r>.</r>");
+        text = replaceTextArgs(text, [CO_RACHEL.superPowerDamage, CO_RACHEL.powerOffBonus]);
         return text;
-
     };
     this.getSuperPowerName = function(co)
     {

@@ -296,7 +296,7 @@ var Constructor = function()
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Begin of an Era");
+        return qsTr("Rally Cry");
     };
     this.getSuperPowerDescription = function(co)
     {
