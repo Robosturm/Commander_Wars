@@ -48,6 +48,7 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
                   {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
                   {"MinHpDamage", "General", &m_minHpDamage, -2.0f, -10.0f, 10.0f},
+                  {"EnemyPruneRange", "General", &m_enemyPruneRange, 3.0f, 3.0f, 3.0f},
                 };
     
     if (m_pMap != nullptr &&
@@ -62,13 +63,17 @@ void VeryEasyAI::process()
 {
     AI_CONSOLE_PRINT("VeryEasyAI::process()", GameConsole::eDEBUG);
     spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
-    pBuildings->randomize();
     spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
     pUnits->randomize();
     spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
     pEnemyUnits->randomize();
+    if (m_aiStep < AISteps::moveToTargets)
+    {
+        pEnemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
+    }
     spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
     pEnemyBuildings->randomize();
+    pBuildings->sortClosestToEnemy(pEnemyUnits);
 
     qint32 cost = 0;
     m_pPlayer->getSiloRockettarget(2, 3, cost);

@@ -1,4 +1,5 @@
 #include <QEasingCurve>
+#include <QQmlEngine>
 
 #include "coreengine/metatyperegister.h"
 

@@ -61,9 +61,7 @@ var Init =
         settings.saveSettings();
         // create random start values
         menu.createRandomInis(2, "resources/aidata/normal/normal", 16);
-        menu.enterSingleplayer();
-        // start training on all cores
-        Init.startAllCores();
+        menu.enterSingleplayer([".map"]);
     },
 
     mapsSelection = function(menu)

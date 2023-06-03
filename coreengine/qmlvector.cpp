@@ -82,7 +82,7 @@ void QmlVectorUnit::sortShortestMovementRange(bool infantriesLast)
     }
 }
 
-qint32 QmlVectorUnit::getUnitCount(const QString & unitId)
+qint32 QmlVectorUnit::getUnitCount(const QString unitId)
 {
     qint32 count = 0;
     for (auto & unit : m_Vector)
@@ -93,6 +93,34 @@ qint32 QmlVectorUnit::getUnitCount(const QString & unitId)
         }
     }
     return count;
+}
+
+void QmlVectorUnit::pruneEnemies(const spQmlVectorUnit & pEnemyUnits, qint32 distanceMultiplier)
+{
+    qint32 i = 0;
+    while (i < m_Vector.size())
+    {
+        qint32 movepoints = m_Vector[i]->getBaseMovementPoints();
+        QPoint position = m_Vector[i]->getMapPosition();
+        bool inRange = false;
+        for (auto & enemy : pEnemyUnits->getVector())
+        {
+            auto distance = GlobalUtils::getDistance(enemy->getMapPosition(), position);
+            if (distance < distanceMultiplier * (movepoints + enemy->getBaseMovementPoints()))
+            {
+                inRange = true;
+                break;
+            }
+        }
+        if (inRange)
+        {
+            ++i;
+        }
+        else
+        {
+            removeAt(i);
+        }
+    }
 }
 
 QmlVectorBuilding::QmlVectorBuilding()
@@ -116,7 +144,7 @@ void QmlVectorBuilding::randomize()
     });
 }
 
-qint32 QmlVectorBuilding::getBuildingCount(const QString & buildingId)
+qint32 QmlVectorBuilding::getBuildingCount(const QString buildingId)
 {
     qint32 count = 0;
     for (auto & building : m_Vector)
@@ -127,4 +155,27 @@ qint32 QmlVectorBuilding::getBuildingCount(const QString & buildingId)
         }
     }
     return count;
+}
+
+void QmlVectorBuilding::sortClosestToEnemy(const spQmlVectorUnit & pEnemyUnits)
+{
+    for (qint32 i2 = 0; i2 < m_Vector.size(); ++i2)
+    {
+        if (i2 == 0)
+        {
+            m_Vector[i2]->setSortValues({std::numeric_limits<qint32>::max()});
+        }
+        for (qint32 i = 0; i < pEnemyUnits->size(); ++i)
+        {
+            qint32 distance = GlobalUtils::getDistance(m_Vector[i2]->getPosition(), pEnemyUnits->at(i)->getMapPosition());
+            if (distance < m_Vector[i2]->getSortValues()[0])
+            {
+                m_Vector[i2]->setSortValues({distance});
+            }
+        }
+    }
+    std::sort(m_Vector.begin(), m_Vector.end(), [](const spBuilding& lhs, const spBuilding& rhs)
+    {
+        return lhs->getSortValues()[0] < rhs->getSortValues()[0];
+    });
 }

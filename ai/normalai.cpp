@@ -46,6 +46,7 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"MinSiloDamage", "General", &m_minSiloDamage, 7000.0f, 7000.0f, 7000.0f},
                   {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
+                  {"EnemyPruneRange", "General", &m_enemyPruneRange, 3.0f, 3.0f, 3.0f},
                   // CO Unit
                   {"CoUnitValue", "CoUnit", &m_coUnitValue, 6000.0f, 5000.0f, 20000.0f},
                   {"MinCoUnitScore", "CoUnit", &m_minCoUnitScore, 5000.0f, 3000.0f, 20000.0f},
@@ -201,6 +202,10 @@ void NormalAi::process()
     {
         AI_CONSOLE_PRINT("NormalAi::creating unit arrays()", GameConsole::eDEBUG);
         pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
+        if (m_aiStep < AISteps::moveToTargets)
+        {
+            pEnemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
+        }
         pEnemyUnits->randomize();
         pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
         pEnemyBuildings->randomize();
@@ -2232,6 +2237,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
                           spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("NormalAi::buildUnits()", GameConsole::eDEBUG);
+    pBuildings->sortClosestToEnemy(pEnemyUnits);
     if (m_aiStep < AISteps::buildUnits)
     {
         m_productionData.clear();

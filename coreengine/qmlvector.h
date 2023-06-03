@@ -64,7 +64,12 @@ public:
     {
         return m_Vector;
     }
-
+    /**
+     * @brief pruneEnemies
+     * @param pEnemyUnits
+     * @param distanceMultiplier
+     */
+    void pruneEnemies(const spQmlVectorUnit & pEnemyUnits, qint32 distanceMultiplier);
 public slots:
     inline Unit* at(qint32 i) const
     {
@@ -99,7 +104,7 @@ public slots:
      * @param unitId
      * @return
      */
-    qint32 getUnitCount(const QString & unitId);
+    qint32 getUnitCount(const QString unitId);
 private:
     std::vector<spUnit> m_Vector;
 };
@@ -118,7 +123,11 @@ public:
     {
         return m_Vector;
     }
-
+    /**
+     * @brief sortClosestToEnemy
+     * @param pEnemyUnits
+     */
+    void sortClosestToEnemy(const spQmlVectorUnit & pEnemyUnits);
 public slots:
     inline Building* at(qint32 i) const
     {
@@ -132,7 +141,7 @@ public slots:
     {
         return m_Vector.size();
     }
-    qint32 getBuildingCount(const QString & buildingId);
+    qint32 getBuildingCount(const QString buildingId);
     void remove()
     {
     }

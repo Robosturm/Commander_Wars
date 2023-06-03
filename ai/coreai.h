@@ -804,6 +804,7 @@ protected:
     bool m_missileTarget{false};
     double m_fuelResupply{0.33f};
     double m_ammoResupply{0.25f};
+    double m_enemyPruneRange{4.0};
 
     double m_minCoUnitScore{5000.0f};
     double m_coUnitValue{6000};

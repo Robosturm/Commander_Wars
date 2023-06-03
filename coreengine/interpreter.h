@@ -2,7 +2,7 @@
 #define INTERPRETER_H
 
 #include <QObject>
-#include <QQmlEngine>
+#include <QJSEngine>
 #include <QVector>
 
 #include "coreengine/gameconsole.h"
@@ -15,7 +15,7 @@ using spInterpreter = oxygine::intrusive_ptr<Interpreter>;
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
  */
-class Interpreter final : public QQmlEngine, public oxygine::ref_counter
+class Interpreter final : public QJSEngine, public oxygine::ref_counter
 {
     Q_OBJECT
 
@@ -162,7 +162,7 @@ public slots:
     void pushObject(const QString & name, QObject* object);
     inline QJSValue newQObject(QObject* object)
     {
-        return QQmlEngine::newQObject(object);
+        return QJSEngine::newQObject(object);
     }
     void deleteObject(const QString & name);
 

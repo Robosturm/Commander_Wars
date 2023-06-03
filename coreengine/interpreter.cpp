@@ -2,6 +2,7 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
+#include "coreengine/workerthread.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/terrainmanager.h"
@@ -11,7 +12,6 @@
 #include "resource_management/gamerulemanager.h"
 
 #include <QDir>
-#include <QQmlEngine>
 #include <QTextStream>
 #include <QThread>
 
@@ -19,7 +19,7 @@ spInterpreter Interpreter::m_pInstance{nullptr};
 QString Interpreter::m_runtimeData;
 
 Interpreter::Interpreter()
-    : QQmlEngine()
+    : QJSEngine(Mainapp::getInstance()->getWorker())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Interpreter");
@@ -61,8 +61,6 @@ void Interpreter::release()
 void Interpreter::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    setOutputWarningsToStandardError(false);
-    setIncubationController(nullptr);
 
     QJSValue globals = newQObject(GlobalUtils::getInstance());
     globalObject().setProperty("globals", globals);
@@ -206,7 +204,7 @@ void Interpreter::pushObject(const QString & name, QObject* object)
 
 void Interpreter::setCppOwnerShip(QObject* object)
 {
-    QQmlEngine::setObjectOwnership(object, QQmlEngine::ObjectOwnership::CppOwnership);
+    QJSEngine::setObjectOwnership(object, QJSEngine::ObjectOwnership::CppOwnership);
 }
 
 void Interpreter::cleanMemory()
