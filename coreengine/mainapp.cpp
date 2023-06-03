@@ -828,6 +828,8 @@ void Mainapp::createBaseDirs()
         "data/randommaps",
         "data/records",
         "data/customStyles",
+        "server/runningAutoMatches",
+        "server/preparingAutoMatches",
         "maps",
         "customTerrainImages",
         "resources",

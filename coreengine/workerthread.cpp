@@ -240,10 +240,9 @@ void WorkerThread::startSlaveGame()
 void WorkerThread::executeServerScript()
 {
     const char* const SCRIPTFILE = "serverScript.js";
-    CONSOLE_PRINT("MainServer::executeScript checking for script " + QString(SCRIPTFILE), GameConsole::eDEBUG);
     if (QFile::exists(SCRIPTFILE))
     {
-        CONSOLE_PRINT("Loading server script", GameConsole::eDEBUG);
+        CONSOLE_PRINT("WorkerThread::executeServerScript loading server script" + QString(SCRIPTFILE), GameConsole::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         if (pInterpreter->openScript(SCRIPTFILE, false))
         {

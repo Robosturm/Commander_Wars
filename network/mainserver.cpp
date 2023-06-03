@@ -44,6 +44,7 @@ const char* const MainServer::SQL_MINGAMES          = "minGames";
 const char* const MainServer::SQL_MAXGAMES          = "maxGames";
 const char* const MainServer::SQL_RUNNINGGAMES      = "runningGames";
 const char* const MainServer::SQL_MATCHHISTORY      = "matchHistory";
+const char* const MainServer::SQL_SIGNEDUP          = "signedUp";
 
 spMainServer MainServer::m_pInstance{nullptr};
 QSqlDatabase* MainServer::m_serverData{nullptr};
@@ -96,7 +97,8 @@ MainServer::MainServer()
     : QObject(),
       m_periodicExecutionTimer(this),
       m_pGameServer(spTCPServer::create(this)),
-      m_pSlaveServer(spTCPServer::create(this))
+      m_pSlaveServer(spTCPServer::create(this)),
+      m_matchMakingCoordinator(this)
 {
     CONSOLE_PRINT("Game server launched", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
@@ -284,6 +286,10 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         {
             onRequestServerVersion(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SERVERREQUESTAUTOMATCHINFO)
+        {
+            onRequestServerAutoMatchInfo(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in MainServer::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -340,7 +346,7 @@ void MainServer::receivedSlaveData(quint64 socketID, QByteArray data, NetworkInt
         }
         else if (messageType == NetworkCommands::SLAVEMULTIPLAYERGAMERESULT)
         {
-            onSlaveInfoGameResult(socketID, objData);
+            m_matchMakingCoordinator.onSlaveInfoGameResult(socketID, objData);
         }
         else
         {
@@ -357,11 +363,7 @@ void MainServer::exit()
 
 AutoMatchMaker* MainServer::getAutoMatchMaker(const QString & matchMaker)
 {
-    if (m_autoMatchMakers.contains(matchMaker))
-    {
-        return m_autoMatchMakers[matchMaker].get();
-    }
-    return nullptr;
+    return m_matchMakingCoordinator.getAutoMatchMaker(matchMaker);
 }
 
 void MainServer::onSlaveRelaunched(quint64 socketID, const QJsonObject & objData)
@@ -420,29 +422,6 @@ bool MainServer::informClientsAboutRelaunch(QVector<SuspendedSlaveInfo> & games,
     return false;
 }
 
-void MainServer::onSlaveInfoGameResult(quint64 socketID, const QJsonObject & objData)
-{
-    auto matchType = objData.value(JsonKeys::JSONKEY_MATCHTYPE).toString();
-    updatePlayerMatchData(objData);
-    if (!matchType.isEmpty())
-    {
-        if (m_autoMatchMakers.contains(matchType))
-        {
-            m_autoMatchMakers[matchType]->onNewMatchResultData(objData);
-        }
-        else
-        {
-            CONSOLE_PRINT("Unknown match type result received, maybe the auto match script got deleted while games were runnig: " + matchType, GameConsole::eERROR);
-        }
-    }
-    despawnSlave(socketID);
-}
-
-void MainServer::updatePlayerMatchData(const QJsonObject & objData)
-{
-
-}
-
 void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData)
 {
     bool runningGame = objData.value(JsonKeys::JSONKEY_RUNNINGGAME).toBool();
@@ -467,6 +446,17 @@ void MainServer::onSlaveInfoDespawning(quint64 socketID, const QJsonObject & obj
         m_runningLobbies.append(slaveInfo);
     }
     despawnSlave(socketID);
+}
+
+void MainServer::onRequestServerAutoMatchInfo(quint64 socketId, const QJsonObject & objData)
+{
+    QString command = QString(NetworkCommands::SERVERSENDAUTOMATCHINFO);
+    CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
+    QJsonObject data;
+    data.insert(JsonKeys::JSONKEY_COMMAND, command);
+    m_matchMakingCoordinator.getMatchMakingData(objData.value(JsonKeys::JSONKEY_PLAYERID).toString(), data);
+    QJsonDocument doc(data);
+    emit m_pGameServer->sig_sendData(socketId, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
 void MainServer::despawnSlave(quint64 socketID)
@@ -1058,6 +1048,7 @@ void MainServer::periodicTasks()
     cleanUpSuspendedGames(m_runningSlaves);
     cleanUpSuspendedGames(m_runningLobbies);
     executeScript();
+    m_matchMakingCoordinator.periodicTasks();
 }
 
 void MainServer::cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> & games)
@@ -1348,6 +1339,7 @@ void MainServer::createMatchData(const QString & match)
                                         SQL_MAXGAMES + " INTEGER, " +
                                         SQL_RUNNINGGAMES + " INTEGER," +
                                         SQL_METADATA + " TEXT," +
+                                        SQL_SIGNEDUP + " BOOL," +
                                         SQL_MATCHHISTORY + " TEXT)");
     if (sqlQueryFailed(query))
     {
@@ -1636,11 +1628,7 @@ void MainServer::serializeObject(QDataStream& stream) const
     {
         runningLobbies.serializeObject(stream);
     }
-    stream << static_cast<qint32>(m_autoMatchMakers.size());
-    for (auto & autoMatchMakers : m_autoMatchMakers)
-    {
-        autoMatchMakers->serializeObject(stream);
-    }
+    m_matchMakingCoordinator.serializeObject(stream);
 }
 
 void MainServer::deserializeObject(QDataStream& stream)
@@ -1662,12 +1650,9 @@ void MainServer::deserializeObject(QDataStream& stream)
         slaveInfo.deserializeObject(stream);
         m_runningLobbies.append(slaveInfo);
     }
-    stream >> size;
-    for (qint32 i = 0; i < size; ++i)
+    if (version > 2)
     {
-        spAutoMatchMaker matchMaker = spAutoMatchMaker::create("", this);
-        matchMaker->deserializeObject(stream);
-        m_autoMatchMakers.insert(matchMaker->getMatchName(), matchMaker);
+        m_matchMakingCoordinator.deserializeObject(stream);
     }
 }
 

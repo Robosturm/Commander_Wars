@@ -5,8 +5,8 @@ namespace JsonKeys
     const char* const JSONKEY_COMMAND = "command";
     const char* const JSONKEY_SLAVENAME = "slaveName";
     const char* const JSONKEY_SAVEFILE = "saveFile";
-    const char* const JSONKEY_GAMEDESCRIPTION = "gameDescription";
-    const char* const JSONKEY_MAPNAME = "mapName";
+    const char* const JSONKEY_DESCRIPTION = "description";
+    const char* const JSONKEY_NAME = "name";
     const char* const JSONKEY_HASPASSWORD = "hasPassword";
     const char* const JSONKEY_UUID = "uuid";
     const char* const JSONKEY_VERSION = "version";
@@ -51,5 +51,16 @@ namespace JsonKeys
     const char* const JSONKEY_MATCHCOUNT = "matchCount";
     const char* const JSONKEY_MATCHOBSERVERCOUNT = "observerCount";
     const char* const JSONKEY_MATCHMAXOBSERVERCOUNT = "maxObserverCount";
-
+    const char* const JSONKEY_RUNNINGAUTOMATCHES = "runningAutomatches";
+    const char* const JSONKEY_PREPARINGAUTOMATCHES = "preparingAutomatches";
+    const char* const JSONKEY_AUTOMATCHID = "automatchId";
+    const char* const JSONKEY_SIGNEDUP = "signedUp";
+    const char* const JSONKEY_PLAYERID = "playerId";
+    const char* const JSONKEY_SIGNUPCHANGEALLOWED = "signUpChangeAllowed";
+    const char* const JSONKEY_MMR = "mmr";
+    // bracket graph data
+    const char* const JSONKEY_BRACKETGRAPHINFO = "bracketGraphInfo";
+    const char* const JSONKEY_BRACKETGRAPHPREVIOUSMATCH = "bracketGraphPreviousMatch";
+    const char* const JSONKEY_BRACKETGRAPHWINNERS = "bracketGraphWinners";
+    const char* const JSONKEY_BRACKETGRAPHPLAYERS = "bracketGraphPlayers";
 }

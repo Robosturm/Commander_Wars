@@ -214,8 +214,8 @@ QJsonDocument Multiplayermenu::doSaveLobbyState(const QString & saveFile, const 
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, playerCount - openPlayerCount);
     data.insert(JsonKeys::JSONKEY_MAXPLAYERS, playerCount);
-    data.insert(JsonKeys::JSONKEY_MAPNAME, pMap->getMapName());
-    data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, pMap->getGameRules()->getDescription());
+    data.insert(JsonKeys::JSONKEY_NAME, pMap->getMapName());
+    data.insert(JsonKeys::JSONKEY_DESCRIPTION, pMap->getGameRules()->getDescription());
     data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
     data.insert(JsonKeys::JSONKEY_HASPASSWORD, pMap->getGameRules()->getPassword().getIsSet());
     data.insert(JsonKeys::JSONKEY_UUID, 0);
@@ -806,7 +806,7 @@ void Multiplayermenu::onSlaveConnectedToMaster(quint64 socketID)
 
 void Multiplayermenu::onServerRelaunchSlave(quint64 socketID, const QJsonObject & objData)
 {
-    QString savefile = objData.value(JsonKeys::JSONKEY_MAPNAME).toString();
+    QString savefile = objData.value(JsonKeys::JSONKEY_NAME).toString();
     if (QFile::exists(savefile))
     {
         bool runningGame = objData.value(JsonKeys::JSONKEY_RUNNINGGAME).toBool();
@@ -1516,7 +1516,7 @@ void Multiplayermenu::sendSlaveReady()
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_SLAVENAME, slavename);
-    data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, pMap->getGameRules()->getDescription());
+    data.insert(JsonKeys::JSONKEY_DESCRIPTION, pMap->getGameRules()->getDescription());
     if (pMap->getGameRules()->getPassword().isValidPassword(""))
     {
         data.insert(JsonKeys::JSONKEY_HASPASSWORD, false);

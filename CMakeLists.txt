@@ -561,6 +561,7 @@ set(${PROJECT_NAME}_SRCS
     network/automatchmaker.h network/automatchmaker.cpp
     network/networkgame.cpp network/networkgame.h
     network/rsacypherhandler.h network/rsacypherhandler.cpp
+    network/matchmakingcoordinator.h network/matchmakingcoordinator.cpp
     network/JsonKeys.h
 
     # game

@@ -1250,8 +1250,8 @@ bool GameMenue::doDespawnSlave()
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         data.insert(JsonKeys::JSONKEY_JOINEDPLAYERS, 0);
         data.insert(JsonKeys::JSONKEY_MAXPLAYERS, m_pMap->getPlayerCount());
-        data.insert(JsonKeys::JSONKEY_MAPNAME, m_pMap->getMapName());
-        data.insert(JsonKeys::JSONKEY_GAMEDESCRIPTION, m_pMap->getGameRules()->getDescription());
+        data.insert(JsonKeys::JSONKEY_NAME, m_pMap->getMapName());
+        data.insert(JsonKeys::JSONKEY_DESCRIPTION, m_pMap->getGameRules()->getDescription());
         data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
         data.insert(JsonKeys::JSONKEY_HASPASSWORD, m_pMap->getGameRules()->getPassword().getIsSet());
         data.insert(JsonKeys::JSONKEY_UUID, 0);

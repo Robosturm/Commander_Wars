@@ -67,7 +67,7 @@ void NetworkGame::slaveRunning(const QJsonObject & objData, spTCPServer & pGameS
 {
     if (!m_slaveRunning)
     {
-        QString description = objData.value(JsonKeys::JSONKEY_GAMEDESCRIPTION).toString();
+        QString description = objData.value(JsonKeys::JSONKEY_DESCRIPTION).toString();
         bool hasPassword = objData.value(JsonKeys::JSONKEY_HASPASSWORD).toBool();
         m_data.setDescription(description);
         m_data.setLocked(hasPassword);
@@ -189,7 +189,7 @@ void NetworkGame::onConnectToLocalServer(quint64 socketId, spTCPServer & pTcpSer
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        data.insert(JsonKeys::JSONKEY_MAPNAME, m_slaveRespawnFile);
+        data.insert(JsonKeys::JSONKEY_NAME, m_slaveRespawnFile);
         data.insert(JsonKeys::JSONKEY_RUNNINGGAME, m_runningGame);
         QJsonDocument doc(data);
         emit pTcpServer->sig_sendData(socketId, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);

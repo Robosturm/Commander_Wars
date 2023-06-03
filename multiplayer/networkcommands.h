@@ -185,6 +185,7 @@ namespace NetworkCommands
      * @brief SENDUSERNAME
      */
     const char* const SENDUSERNAME = "SENDUSERNAME";
+
     /*****************************************************************************************************************************/
     // dedicated server commands
     /*****************************************************************************************************************************/
@@ -296,4 +297,12 @@ namespace NetworkCommands
      * @brief ONLINEINFO
      */
     const char* const ONLINEINFO = "ONLINEINFO";
+    /**
+     * @brief SERVERREQUESTAUTOMATCHINFO
+     */
+    const char* const SERVERREQUESTAUTOMATCHINFO = "SERVERREQUESTAUTOMATCHINFO";
+    /**
+     * @brief SERVERSENDAUTOMATCHINFO
+     */
+    const char* const SERVERSENDAUTOMATCHINFO = "SERVERSENDAUTOMATCHINFO";
 }

@@ -18,7 +18,7 @@ class AutoMatchMaker : public QObject, public FileSerializable, public oxygine::
 {
     Q_OBJECT
 public:
-    explicit AutoMatchMaker(const QString & matchName, MainServer * mainServer);
+    explicit AutoMatchMaker(const QString & matchId, MainServer * mainServer);
     /**
      * @brief onNewMatchResultData
      * @param objData
@@ -45,17 +45,41 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 1;
+        return 2;
     }
     /**
      * @brief playerJoined
      * @param player
      */
     void playerJoined(const QString & player);
+    /**
+     * @brief getRunning
+     * @return
+     */
+    bool getRunning() const;
+    /**
+     * @brief setRunning
+     * @param newRunning
+     */
+    void setRunning(bool newRunning);
+    /**
+     * @brief getActiveMatch
+     * @return
+     */
+    bool getActiveMatch() const;
+    /**
+     * @brief setActiveMatch
+     * @param newActiveMatch
+     */
+    void setActiveMatch(bool newActiveMatch);
+
+    qint32 getNotActiveCounter() const;
+    void increaseNotActiveCounter();
 
 public slots:
+    bool getSignedUp(const QString & playerId);
     void createNewGame(const QString & players);
-    QString getMatchName() const;
+    QString getMatchId() const;
     void updateMmr(const QString & player1, const QString & player2, qint32 maxEloChange, GameEnums::GameResult gameResultForPlayer1);
     bool setMmr(const QString & player, qint32 mmr);
     qint32 getMmr(const QString & player);
@@ -85,11 +109,39 @@ public slots:
      * @param startMmr
      */
     bool doNewPlayerData(const QString & player, qint32 minGames, qint32 maxGames, const QString & metaData, qint32 startMmr = 750);
+    /**
+     * @brief getName
+     * @return
+     */
+    QString getName();
+    /**
+     * @brief getDescription
+     * @return
+     */
+    QString getDescription();
+    /**
+     * @brief getIsSignUpChangeAllowed
+     * @return
+     */
+    bool getIsSignUpChangeAllowed();
+    /**
+     * @brief getBracketGraphInfo
+     * @return
+     */
+    QJsonObject getBracketGraphInfo();
+
+    static QString getBracketGraphInfoId();
+    static QString getBracketGraphPreviousMatchId();
+    static QString getBracketGraphPreviousWinnersId();
+    static QString getBracketGraphPreviousPlayersId();
 private:
-    QString m_matchName;
+    QString m_matchId;
     MainServer & m_mainServer;
     quint64 m_matchCounter{0};
     ScriptVariables m_Variables;
+    bool m_running{false};
+    bool m_activeMatch{false};
+    qint32 m_notActiveCounter{0};
 };
 
 Q_DECLARE_INTERFACE(AutoMatchMaker, "AutoMatchMaker");

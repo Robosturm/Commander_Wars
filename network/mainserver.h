@@ -10,7 +10,7 @@
 #include "network/networkgamedata.h"
 #include "network/networkgame.h"
 #include "network/smtpmailsender.h"
-#include "network/automatchmaker.h"
+#include "network/matchmakingcoordinator.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -91,6 +91,7 @@ public:
     static const char* const SQL_MAXGAMES;
     static const char* const SQL_RUNNINGGAMES;
     static const char* const SQL_MATCHHISTORY;
+    static const char* const SQL_SIGNEDUP;
 
     static MainServer* getInstance();
     static bool exists();
@@ -130,7 +131,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 2;
+        return 3;
     }
     /**
      * @brief onSlaveInfoDespawning
@@ -188,6 +189,11 @@ public slots:
      * @param savefile
      */
     void despawnServer(const QString & savefile);
+    /**
+     * @brief despawnSlave
+     * @param socketID
+     */
+    void despawnSlave(quint64 socketID);
 
 private slots:
     /**
@@ -227,16 +233,6 @@ private:
      * @brief despawnRunningSlaves
      */
     void despawnRunningSlaves();
-    /**
-     * @brief despawnSlave
-     * @param socketID
-     */
-    void despawnSlave(quint64 socketID);
-    /**
-     * @brief updatePlayerMatchData
-     * @param objData
-     */
-    void updatePlayerMatchData(const QJsonObject & objData);
     /**
      * @brief startDatabase
      */
@@ -310,12 +306,6 @@ private:
      */
     void onSlaveReady(quint64 socketID, const QJsonObject & objData);
     /**
-     * @brief onSlaveInfoGameResult
-     * @param socketID
-     * @param objData
-     */
-    void onSlaveInfoGameResult(quint64 socketID, const QJsonObject & objData);
-    /**
      * @brief onSlaveRelaunched
      * @param socketID
      * @param objData
@@ -370,6 +360,12 @@ private:
      * @param stream
      */
     void onOpenPlayerCount(quint64 socketID, const QJsonObject & objData);
+    /**
+     * @brief onRequestServerAutoMatchInfo
+     * @param socketID
+     * @param objData
+     */
+    void onRequestServerAutoMatchInfo(quint64 socketID, const QJsonObject & objData);
     /**
      * @brief getNextFreeSlaveAddress
      * @param address
@@ -509,10 +505,6 @@ private:
      */
     QVector<SuspendedSlaveInfo> m_runningLobbies;
     /**
-     * @brief m_autoMatchMakers
-     */
-    QMap<QString, spAutoMatchMaker> m_autoMatchMakers;
-    /**
      * @brief m_lastUsedAddressIndex last used index in the m_slaveAddressOptions
      */
     qint32 m_lastUsedAddressIndex{0};
@@ -528,6 +520,8 @@ private:
      * @brief m_freeAddresses addresses of slaves that have been used and are now free again
      */
     QVector<SlaveAddress> m_freeAddresses;
+
+    MatchMakingCoordinator m_matchMakingCoordinator;
     /**
      * @brief m_serverData
      */
