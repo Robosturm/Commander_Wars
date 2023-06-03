@@ -1378,7 +1378,7 @@ void GameMenue::loadGameMenue()
 }
 
 void GameMenue::connectMap()
-{    
+{
     connect(m_pMap->getGameRules(), &GameRules::sigVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(m_pMap->getGameRules()->getRoundTimer(), &Timer::timeout, &m_actionPerformer, &ActionPerformer::nextTurnPlayerTimeout, Qt::QueuedConnection);
     connect(m_pMap.get(), &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
@@ -1748,9 +1748,12 @@ void GameMenue::updateGameInfo()
 void GameMenue::victory(qint32 team)
 {
     bool humanWin = false;
-    CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team), GameConsole::eDEBUG);
+    CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team) +
+                      " termination state=" + QString::number(m_terminated) +
+                      " remaining animations=" + QString::number(GameAnimationFactory::getAnimationCount()) +
+                      " replay=" + QString::number(m_isReplay), GameConsole::eDEBUG);
     // create victorys
-    if (team >= 0)
+    if (team >= 0 && m_terminated == 0)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
@@ -1779,7 +1782,8 @@ void GameMenue::victory(qint32 team)
         m_terminated = 1;
     }
     bool exit = GameAnimationFactory::getAnimationCount() == 0;
-    if (exit && !m_isReplay && m_terminated == 1)
+    if ((exit && !m_isReplay && m_terminated == 1) ||
+        Mainapp::getInstance()->getNoUi())
     {
         m_terminated = 2;
         if (m_pNetworkInterface.get() != nullptr)
@@ -1798,6 +1802,10 @@ void GameMenue::victory(qint32 team)
         auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface);
         oxygine::Stage::getStage()->addChild(window);
         oxygine::Actor::detach();
+    }
+    else
+    {
+        CONSOLE_PRINT("Waiting for animations getting finished", GameConsole::eDEBUG);
     }
 }
 

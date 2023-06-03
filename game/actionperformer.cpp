@@ -452,9 +452,11 @@ void ActionPerformer::actionPerformed()
                         }
                     }
                 }
-                else
+                else if (m_pMenu != nullptr)
                 {
-                    CONSOLE_PRINT("Game already won not finishing the action.", GameConsole::eDEBUG);
+                    auto winner = m_pMap->getGameRules()->getVictoryTeam();
+                    CONSOLE_PRINT("Game already won  retriggering victory for team " + QString::number(winner), GameConsole::eDEBUG);
+                    emit m_pMenu->sigVictory(winner);
                 }
             }
             else

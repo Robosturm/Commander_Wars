@@ -61,7 +61,31 @@ var Init =
         settings.saveSettings();
         // create random start values
         menu.createRandomInis(2, "resources/aidata/normal/normal", 16);
+        menu.enterSingleplayer();
         // start training on all cores
+        Init.startAllCores();
+    },
+
+    mapsSelection = function(menu)
+    {
+        menu.selectMap(Init.trainingFolder, Init.trainingMap);
+        menu.buttonNext();
+        menu.buttonNext();
+        var selection = menu.getPlayerSelection();
+        for (var i = 0; i < Init.playerCount; ++i)
+        {
+            selection.selectPlayerAi(0, Init.trainingAis[0][1]);
+        }
+        menu.startGame();
+    },
+
+    gameMenu = function(menu)
+    {
+        menu.exitGame();
+    },
+
+    onVictory = function(menu)
+    {
         Init.startAllCores();
     },
 

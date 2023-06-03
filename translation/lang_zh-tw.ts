@@ -6699,8 +6699,8 @@ Note: This may be caused by a defective mod.</source>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1435"/>
-        <location filename="../menue/gamemenue.cpp" line="2047"/>
-        <location filename="../menue/gamemenue.cpp" line="2084"/>
+        <location filename="../menue/gamemenue.cpp" line="2055"/>
+        <location filename="../menue/gamemenue.cpp" line="2092"/>
         <source>Save</source>
         <translation>存檔</translation>
     </message>
@@ -6715,72 +6715,72 @@ Note: This may be caused by a defective mod.</source>
         <translation>顯示聊天</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1896"/>
+        <location filename="../menue/gamemenue.cpp" line="1904"/>
         <source>Player</source>
         <translation>玩家</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1897"/>
+        <location filename="../menue/gamemenue.cpp" line="1905"/>
         <source>Produced</source>
         <translation>生產</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1898"/>
+        <location filename="../menue/gamemenue.cpp" line="1906"/>
         <source>Lost</source>
         <translation>失去</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1899"/>
+        <location filename="../menue/gamemenue.cpp" line="1907"/>
         <source>Killed</source>
         <translation>擊殺</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1900"/>
+        <location filename="../menue/gamemenue.cpp" line="1908"/>
         <source>Army Value</source>
         <translation>軍隊質量</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1901"/>
+        <location filename="../menue/gamemenue.cpp" line="1909"/>
         <source>Income</source>
         <translation>收入</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1902"/>
+        <location filename="../menue/gamemenue.cpp" line="1910"/>
         <source>Funds</source>
         <translation>資金</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1903"/>
+        <location filename="../menue/gamemenue.cpp" line="1911"/>
         <source>Bases</source>
         <translation>基地</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1929"/>
+        <location filename="../menue/gamemenue.cpp" line="1937"/>
         <source>Player </source>
         <translation>玩家 </translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1947"/>
+        <location filename="../menue/gamemenue.cpp" line="1955"/>
         <source>Neutral</source>
         <translation>自然</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2456"/>
+        <location filename="../menue/gamemenue.cpp" line="2464"/>
         <source>Do you want to exit the current game?</source>
         <translation>您要退出當前遊戲嗎?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2487"/>
+        <location filename="../menue/gamemenue.cpp" line="2495"/>
         <source>Do you want to surrender the current game?</source>
         <translation>是否要放棄當前遊戲?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2513"/>
+        <location filename="../menue/gamemenue.cpp" line="2521"/>
         <source>Nickname for the Unit:</source>
         <translation>單位暱稱:</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2690"/>
+        <location filename="../menue/gamemenue.cpp" line="2698"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
