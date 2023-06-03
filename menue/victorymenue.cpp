@@ -555,7 +555,8 @@ void VictoryMenue::multiplayerGameFinished()
         qint32 winnerTeam = m_pMap->getWinnerTeam();
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Human)
+            auto * player = m_pMap->getPlayer(i);
+            if (player->getControlType() == GameEnums::AiTypes_Human)
             {
                 GameEnums::GameResult result = GameEnums::GameResult_Draw;
                 if (winnerTeam >= 0)
@@ -570,7 +571,17 @@ void VictoryMenue::multiplayerGameFinished()
                     }
                 }
                 QJsonObject object;
-                object.insert(JsonKeys::JSONKEY_PLAYER, m_pMap->getPlayer(i)->getPlayerNameId());
+                object.insert(JsonKeys::JSONKEY_PLAYER, player->getPlayerNameId());
+                QJsonArray coInfo;
+                for (quint8 i = 0; i < player->getMaxCoCount(); ++i)
+                {
+                    CO* pCO = player->getCO(i);
+                    if (pCO != nullptr)
+                    {
+                        coInfo.append(pCO->getCoID());
+                    }
+                }
+                object.insert(JsonKeys::JSONKEY_COS, coInfo);
                 object.insert(JsonKeys::JSONKEY_GAMERESULT, result);
                 winnerInfo.append(object);
             }

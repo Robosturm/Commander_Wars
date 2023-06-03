@@ -10804,37 +10804,37 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="239"/>
-        <location filename="../menue/victorymenue.cpp" line="735"/>
+        <location filename="../menue/victorymenue.cpp" line="746"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="248"/>
-        <location filename="../menue/victorymenue.cpp" line="740"/>
+        <location filename="../menue/victorymenue.cpp" line="751"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="257"/>
-        <location filename="../menue/victorymenue.cpp" line="745"/>
+        <location filename="../menue/victorymenue.cpp" line="756"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="266"/>
-        <location filename="../menue/victorymenue.cpp" line="750"/>
+        <location filename="../menue/victorymenue.cpp" line="761"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="275"/>
-        <location filename="../menue/victorymenue.cpp" line="755"/>
+        <location filename="../menue/victorymenue.cpp" line="766"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="284"/>
-        <location filename="../menue/victorymenue.cpp" line="823"/>
+        <location filename="../menue/victorymenue.cpp" line="834"/>
         <source>Player Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10869,17 +10869,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="655"/>
+        <location filename="../menue/victorymenue.cpp" line="666"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="658"/>
+        <location filename="../menue/victorymenue.cpp" line="669"/>
         <source>Select which player&apos;s statistics you&apos;d like to see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="811"/>
+        <location filename="../menue/victorymenue.cpp" line="822"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>

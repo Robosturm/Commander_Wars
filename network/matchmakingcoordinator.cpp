@@ -65,7 +65,59 @@ void MatchMakingCoordinator::onSlaveInfoGameResult(quint64 socketID, const QJson
 
 void MatchMakingCoordinator::updatePlayerMatchData(const QJsonObject & objData)
 {
-
+    auto & database = m_mainServer->getDatabase();
+    QJsonArray resultInfo = objData.value(JsonKeys::JSONKEY_GAMERESULTARRAY).toArray();
+    for (const auto & entry : resultInfo)
+    {
+        QJsonObject data = entry.toObject();
+        QString player = data.value(JsonKeys::JSONKEY_PLAYER).toString();
+        if (!player.isEmpty())
+        {
+            GameEnums::GameResult result = static_cast<GameEnums::GameResult>(data.value(JsonKeys::JSONKEY_GAMERESULT).toInt());
+            QJsonArray coInfo = data.value(JsonKeys::JSONKEY_COS).toArray();
+            for (auto co : coInfo)
+            {
+                QString coId = co.toString();
+                QSqlQuery query = database.exec(QString("SELECT ") +
+                                                MainServer::SQL_GAMESLOST + ", " +
+                                                MainServer::SQL_GAMESWON + ", " +
+                                                MainServer::SQL_GAMESMADE + ", " +
+                                                MainServer::SQL_GAMESDRAW +
+                                                " from " + MainServer::SQL_TABLE_PLAYERDATA + player +
+                                                " WHERE " + MainServer::SQL_COID +
+                                                " = '" + coId + "';");
+                if (!MainServer::sqlQueryFailed(query) &&
+                    query.first())
+                {
+                    QString entryKey = "";
+                    switch (result)
+                    {
+                    case GameEnums::GameResult::GameResult_Lost:
+                    {
+                        entryKey = MainServer::SQL_GAMESLOST;
+                        break;
+                    }
+                    case GameEnums::GameResult::GameResult_Draw:
+                    {
+                        entryKey = MainServer::SQL_GAMESDRAW;
+                        break;
+                    }
+                    case GameEnums::GameResult::GameResult_Won:
+                    {
+                        entryKey = MainServer::SQL_GAMESWON;
+                        break;
+                    }
+                    }
+                    if (!entryKey.isEmpty())
+                    {
+                        database.exec(QString("UPDATE ") + MainServer::SQL_TABLE_PLAYERDATA + player + " SET " +
+                                      entryKey + " = " + QString::number(query.value(entryKey).toInt() + 1) + "  WHERE " +
+                                      MainServer::SQL_COID + " = '" + coId + "';");
+                    }
+                }
+            }
+        }
+    }
 }
 
 void MatchMakingCoordinator::getMatchMakingData(const QString & playerId, QJsonObject & objData)
