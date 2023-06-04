@@ -6,7 +6,8 @@
 #include <QLoggingCategory>
 #include <QDateTime>
 #include <QFontMetrics>
-#include <qobjectdefs.h>
+#include <QMetaMethod>
+#include <QMetaObject>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
