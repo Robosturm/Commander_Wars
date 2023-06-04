@@ -612,6 +612,11 @@ void VictoryMenue::despawnSlave()
     QCoreApplication::exit(ret);
 }
 
+GameMap* VictoryMenue::getMap()
+{
+    return m_pMap.get();
+}
+
 void VictoryMenue::recieveServerData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     if (service == NetworkInterface::NetworkSerives::ServerHostingJson)

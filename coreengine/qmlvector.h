@@ -66,10 +66,10 @@ public:
     }
     /**
      * @brief pruneEnemies
-     * @param pEnemyUnits
+     * @param pOwnUnits
      * @param distanceMultiplier
      */
-    void pruneEnemies(const spQmlVectorUnit & pEnemyUnits, qint32 distanceMultiplier);
+    void pruneEnemies(const spQmlVectorUnit & pOwnUnits, qint32 distanceMultiplier);
 public slots:
     inline Unit* at(qint32 i) const
     {
@@ -128,6 +128,12 @@ public:
      * @param pEnemyUnits
      */
     void sortClosestToEnemy(const spQmlVectorUnit & pEnemyUnits);
+    /**
+     * @brief pruneEnemieBuildings
+     * @param pOwnUnits
+     * @param distanceMultiplier
+     */
+    void pruneEnemieBuildings(const spQmlVectorUnit & pOwnUnits, qint32 distanceMultiplier);
 public slots:
     inline Building* at(qint32 i) const
     {

@@ -95,7 +95,7 @@ qint32 QmlVectorUnit::getUnitCount(const QString unitId)
     return count;
 }
 
-void QmlVectorUnit::pruneEnemies(const spQmlVectorUnit & pEnemyUnits, qint32 distanceMultiplier)
+void QmlVectorUnit::pruneEnemies(const spQmlVectorUnit & pOwnUnits, qint32 distanceMultiplier)
 {
     qint32 i = 0;
     while (i < m_Vector.size())
@@ -103,10 +103,10 @@ void QmlVectorUnit::pruneEnemies(const spQmlVectorUnit & pEnemyUnits, qint32 dis
         qint32 movepoints = m_Vector[i]->getBaseMovementPoints();
         QPoint position = m_Vector[i]->getMapPosition();
         bool inRange = false;
-        for (auto & enemy : pEnemyUnits->getVector())
+        for (auto & ownUnit : pOwnUnits->getVector())
         {
-            auto distance = GlobalUtils::getDistance(enemy->getMapPosition(), position);
-            if (distance < distanceMultiplier * (movepoints + enemy->getBaseMovementPoints()))
+            auto distance = GlobalUtils::getDistance(ownUnit->getMapPosition(), position);
+            if (distance < distanceMultiplier * (movepoints + ownUnit->getBaseMovementPoints()))
             {
                 inRange = true;
                 break;
@@ -178,4 +178,32 @@ void QmlVectorBuilding::sortClosestToEnemy(const spQmlVectorUnit & pEnemyUnits)
     {
         return lhs->getSortValues()[0] < rhs->getSortValues()[0];
     });
+}
+
+void QmlVectorBuilding::pruneEnemieBuildings(const spQmlVectorUnit & pOwnUnits, qint32 distanceMultiplier)
+{
+    qint32 i = 0;
+    while (i < m_Vector.size())
+    {
+        QPoint position = m_Vector[i]->getPosition();
+        bool inRange = false;
+        for (auto & ownUnit : pOwnUnits->getVector())
+        {
+            qint32 movepoints = ownUnit->getBaseMovementPoints();
+            auto distance = GlobalUtils::getDistance(ownUnit->getMapPosition(), position);
+            if (distance < distanceMultiplier * movepoints)
+            {
+                inRange = true;
+                break;
+            }
+        }
+        if (inRange)
+        {
+            ++i;
+        }
+        else
+        {
+            removeAt(i);
+        }
+    }
 }

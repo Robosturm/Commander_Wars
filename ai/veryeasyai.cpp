@@ -66,13 +66,8 @@ void VeryEasyAI::process()
     spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
     pUnits->randomize();
     spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
-    pEnemyUnits->randomize();
-    if (m_aiStep < AISteps::moveToTargets)
-    {
-        pEnemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
-    }
     spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
-    pEnemyBuildings->randomize();
+    prepareEnemieData(pUnits, pEnemyUnits, pEnemyBuildings);
     pBuildings->sortClosestToEnemy(pEnemyUnits);
 
     qint32 cost = 0;
@@ -141,6 +136,7 @@ bool VeryEasyAI::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & 
         {
             m_usedTransportSystem = true;
             m_aiStep = AISteps::moveUnits;
+            prepareEnemieData(pUnits, pEnemyUnits, pEnemyBuildings);
             return performActionSteps(pUnits, pEnemyUnits,  pBuildings, pEnemyBuildings);
         }
         else if (m_aiStep <= AISteps::loadUnits && loadUnits(pUnits)){}

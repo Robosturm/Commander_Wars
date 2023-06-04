@@ -81,6 +81,11 @@ public slots:
      * @brief finishGraph
      */
     void finishGraph();
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap* getMap();
 protected slots:
     /**
      * @brief onProgressTimerStart

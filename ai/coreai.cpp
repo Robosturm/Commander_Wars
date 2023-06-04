@@ -317,6 +317,19 @@ void CoreAI::nextAction()
     }
 }
 
+void CoreAI::prepareEnemieData(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
+{
+    pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
+    pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
+    if (!m_usedTransportSystem)
+    {
+        pEnemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
+        pEnemyBuildings->pruneEnemieBuildings(pUnits, m_enemyPruneRange);
+    }
+    pEnemyUnits->randomize();
+    pEnemyBuildings->randomize();
+}
+
 bool CoreAI::contains(std::vector<QVector3D>& points, const QPoint & point)
 {
     for (auto & pos : points)

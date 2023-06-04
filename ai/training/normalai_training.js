@@ -41,6 +41,7 @@ var Init =
     cos = ["CO_ANDY", "CO_JESS"],
     start = false,
     coreData = [],
+    map = null,
     // enum states for remote game triggering
     runNextBattle = 0,
     sleep = 1,
@@ -84,6 +85,7 @@ var Init =
 
     onVictory = function(menu)
     {
+        Init.map = menu.getMap()
         Init.startAllCores();
     },
 
@@ -388,7 +390,7 @@ var Init =
     {
         var ai = mutateCount % Init.topAis;
         GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
-        var dummyAi = map.getPlayer(0).getBaseGameInput();
+        var dummyAi = Init.map.getPlayer(0).getBaseGameInput();
         dummyAi.readIni("resources/aidata/normal/" + aiNames[ai]);
         dummyAi.randomizeIni("resources/aidata/normal/" + Init.trainingAis[i][0], Init.mutationChance, Init.mutationRate);
         ++mutateCount;

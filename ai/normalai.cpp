@@ -201,14 +201,7 @@ void NormalAi::process()
     else
     {
         AI_CONSOLE_PRINT("NormalAi::creating unit arrays()", GameConsole::eDEBUG);
-        pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
-        if (m_aiStep < AISteps::moveToTargets)
-        {
-            pEnemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
-        }
-        pEnemyUnits->randomize();
-        pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
-        pEnemyBuildings->randomize();
+        prepareEnemieData(pUnits, pEnemyUnits, pEnemyBuildings);
         updateAllUnitData(pUnits);
         if (useCOPower(pUnits, pEnemyUnits))
         {
@@ -328,6 +321,7 @@ bool NormalAi::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
             m_usedTransportSystem = true;
             m_aiStep = AISteps::moveUnits;
             m_aiFunctionStep = 0;
+            prepareEnemieData(pUnits, pEnemyUnits, pEnemyBuildings);
             for (auto & unit : m_OwnUnits)
             {
                 if (!unit.pUnit->getHasMoved())
@@ -1973,6 +1967,7 @@ void NormalAi::updateAllUnitData(spQmlVectorUnit & pUnits)
     AI_CONSOLE_PRINT("NormalAi::updateAllUnitData()", GameConsole::eDEBUG);
     bool initial = m_EnemyUnits.size() == 0;
     spQmlVectorUnit enemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
+    enemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
     rebuildIsland(pUnits);
     rebuildIsland(enemyUnits);
 
@@ -1990,6 +1985,7 @@ void NormalAi::updateAllUnitData(spQmlVectorUnit & pUnits)
         createUnitInfluenceMap();
     }
 }
+
 
 void NormalAi::createUnitInfluenceMap()
 {

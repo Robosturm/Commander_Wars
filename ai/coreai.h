@@ -584,6 +584,13 @@ public slots:
      */
     bool shareIslandWithEnemy(QmlVectorUnit* pUnits, QmlVectorBuilding * pBuildings, QmlVectorBuilding * pEnemyBuildings);
 protected:
+    /**
+     * @brief prepareEnemieData
+     * @param pUnits
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     */
+    void prepareEnemieData(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
     void sortUnitsFarFromEnemyFirst(std::vector<MoveUnitData> & pUnits, spQmlVectorUnit & pEnemyUnits);
 
     void addSelectedFieldData(spGameAction & pGameAction, const QPoint & point);
