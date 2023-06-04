@@ -358,11 +358,12 @@ var COREAI =
         var antiAirAirUnitCount = ai.getUnitCount(units, COREAI.antiAirAirUnits);
         var enemyJets = ai.getUnitCount(enemyUnits, COREAI.heavyAirUnits, 5);
         var enemyCopters = ai.getUnitCount(enemyUnits, COREAI.lightAirUnits, 5);
-        if (enemyJets > antiAirAirUnitCount)
+        if (((enemyJets > 0) && (antiAirAirUnitCount === 0)) ||
+            ((antiAirUnitCount > 0) && ((enemyJets / antiAirAirUnitCount) >= 2)))
         {
             system.addForcedProduction(COREAI.antiAirAirUnits);
         }
-        if (((enemyCopters > 0) && (antiAirUnitCount === 0) ) ||
+        if (((enemyCopters > 0) && (antiAirUnitCount === 0)) ||
             ((antiAirUnitCount > 0) && ((enemyCopters / antiAirUnitCount) > 2)))
         {
             system.addForcedProduction(antiAirUnits);
