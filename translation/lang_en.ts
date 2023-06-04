@@ -27865,7 +27865,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/zmonolith.js" line="100"/>
-        <source>Black Hole Monolith that can heal all own units for 2 HP in a 3 square area.</source>
+        <source>Black Hole Black Obelisk that can heal all own units for 2 HP in a 3 square area.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -27891,7 +27891,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/znest_center_laser_left.js" line="34"/>
-        <source>Nest of Dark Matter. Currently only a visual.</source>
+        <source>Nest of Dark Matter.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -27917,7 +27917,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/znest_center_laser_middle.js" line="34"/>
-        <source>Nest of Dark Matter. Currently only a visual.</source>
+        <source>Nest of Dark Matter.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -27943,7 +27943,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/znest_center_laser_right.js" line="34"/>
-        <source>Nest of Dark Matter. Currently only a visual.</source>
+        <source>Nest of Dark Matter.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -27982,7 +27982,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/znest_left_mortar.js" line="33"/>
-        <source>Nest of Dark Matter. Currently only a visual.</source>
+        <source>Nest of Dark Matter.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -27995,7 +27995,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/znest_nest_laser.js" line="58"/>
-        <source>Nest of Dark Matter. Currently only a visual.</source>
+        <source>Nest of Dark Matter.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

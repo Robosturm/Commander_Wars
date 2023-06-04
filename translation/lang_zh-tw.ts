@@ -30780,8 +30780,12 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/zmonolith.js" line="100"/>
+        <source>Black Hole Black Obelisk that can heal all own units for 2 HP in a 3 square area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Black Hole Monolith that can heal all own units for 2 HP in a 3 square area.</source>
-        <translation>黑洞巨石,可以在其周圍 3 格區域內治療所有己方單位 2 點生命值.</translation>
+        <translation type="vanished">黑洞巨石,可以在其周圍 3 格區域內治療所有己方單位 2 點生命值.</translation>
     </message>
 </context>
 <context>
@@ -30806,8 +30810,12 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/znest_center_laser_left.js" line="34"/>
+        <source>Nest of Dark Matter.</source>
+        <translation type="unfinished">黑暗物質的巢穴.</translation>
+    </message>
+    <message>
         <source>Nest of Dark Matter. Currently only a visual.</source>
-        <translation>黑暗物質的巢穴.目前只是視覺效果.</translation>
+        <translation type="vanished">黑暗物質的巢穴.目前只是視覺效果.</translation>
     </message>
 </context>
 <context>
@@ -30832,8 +30840,12 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/znest_center_laser_middle.js" line="34"/>
+        <source>Nest of Dark Matter.</source>
+        <translation type="unfinished">黑暗物質的巢穴.</translation>
+    </message>
+    <message>
         <source>Nest of Dark Matter. Currently only a visual.</source>
-        <translation>黑暗物質的巢穴.目前只是視覺效果.</translation>
+        <translation type="vanished">黑暗物質的巢穴.目前只是視覺效果.</translation>
     </message>
 </context>
 <context>
@@ -30858,8 +30870,12 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/znest_center_laser_right.js" line="34"/>
+        <source>Nest of Dark Matter.</source>
+        <translation type="unfinished">黑暗物質的巢穴.</translation>
+    </message>
+    <message>
         <source>Nest of Dark Matter. Currently only a visual.</source>
-        <translation>黑暗物質的巢穴.目前只是視覺效果.</translation>
+        <translation type="vanished">黑暗物質的巢穴.目前只是視覺效果.</translation>
     </message>
 </context>
 <context>
@@ -30898,8 +30914,12 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/znest_left_mortar.js" line="33"/>
+        <source>Nest of Dark Matter.</source>
+        <translation type="unfinished">黑暗物質的巢穴.</translation>
+    </message>
+    <message>
         <source>Nest of Dark Matter. Currently only a visual.</source>
-        <translation>黑暗物質的巢穴.目前只是視覺效果.</translation>
+        <translation type="vanished">黑暗物質的巢穴.目前只是視覺效果.</translation>
     </message>
 </context>
 <context>
@@ -30911,8 +30931,12 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../resources/scripts/building/znest_nest_laser.js" line="58"/>
+        <source>Nest of Dark Matter.</source>
+        <translation type="unfinished">黑暗物質的巢穴.</translation>
+    </message>
+    <message>
         <source>Nest of Dark Matter. Currently only a visual.</source>
-        <translation>黑暗物質的巢穴.目前只是視覺效果.</translation>
+        <translation type="vanished">黑暗物質的巢穴.目前只是視覺效果.</translation>
     </message>
 </context>
 <context>

@@ -55,7 +55,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Nest of Dark Matter. Currently only a visual.");
+        return qsTr("Nest of Dark Matter.");
     };
     this.getBuildingWidth = function()
     {

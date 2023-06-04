@@ -97,7 +97,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Black Hole Monolith that can heal all own units for 2 HP in a 3 square area.");
+        return qsTr("Black Hole Black Obelisk that can heal all own units for 2 HP in a 3 square area.");
     };
 }
 
