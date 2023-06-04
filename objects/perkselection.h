@@ -50,7 +50,7 @@ public slots:
      * @brief getPerks
      * @return
      */
-    const QStringList & getPerks() const;
+    QStringList getPerks() const;
     /**
      * @brief setPerks
      * @param perks

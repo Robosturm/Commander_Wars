@@ -53,9 +53,9 @@ public slots:
         infoStruct.singleValue = info;
         m_ZInformation.append(infoStruct);
     }
-    void addComplexZInformation(const QStringList & valueNames,
-                                const QVector<qint32> & ownUnitValues,
-                                const QVector<qint32> & enemyUnitValues,
+    void addComplexZInformation(const QStringList valueNames,
+                                const QVector<qint32> ownUnitValues,
+                                const QVector<qint32> enemyUnitValues,
                                 QColor enemyColor)
     {
         ZInformation infoStruct;
@@ -71,12 +71,12 @@ public slots:
     bool getAllFields() const;
     void setAllFields(bool value);
     QColor getColor() const;
-    void setColor(const QColor &Color);
+    void setColor(const QColor Color);
 
     QColor getZLabelColor() const;
-    void setZLabelColor(const QColor &ZLabelColor);
+    void setZLabelColor(const QColor ZLabelColor);
     QString getZLabelText() const;
-    void setZLabelText(const QString &ZLabelText);
+    void setZLabelText(const QString ZLabelText);
     /**
      * @brief remove
      */

@@ -2517,6 +2517,14 @@
     </message>
 </context>
 <context>
+    <name>DialogExtendMap</name>
+    <message>
+        <location filename="../objects/dialogs/editor/dialogextendmap.cpp" line="92"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DialogMessageBox</name>
     <message>
         <location filename="../objects/dialogs/dialogmessagebox.h" line="16"/>
@@ -3219,445 +3227,455 @@ Distributed: Units are spawned at the given rate.</source>
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="91"/>
+        <location filename="../menue/editormenue.cpp" line="92"/>
         <source>Menu</source>
         <translation>選單</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="93"/>
+        <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Saves a map to a give file.</source>
         <translation>儲存地圖.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="94"/>
+        <location filename="../menue/editormenue.cpp" line="95"/>
         <source>Loads a map to a give file.</source>
         <translation>讀取地圖.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="97"/>
+        <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Edit and create a script for any map.</source>
         <translation>編輯和創建腳本.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="98"/>
+        <location filename="../menue/editormenue.cpp" line="99"/>
         <source>Edit and create a campaign.</source>
         <translation>編輯和創建戰役.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="100"/>
+        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>Undo Ctrl+Z</source>
         <translation>復原 Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="100"/>
+        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>Undo the last map modification.</source>
         <translation>復原地圖的修改.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="101"/>
+        <location filename="../menue/editormenue.cpp" line="102"/>
         <source>Redo Ctrl+Y</source>
         <translation>重做 Ctrl+Y</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="101"/>
+        <location filename="../menue/editormenue.cpp" line="102"/>
         <source>Redo the last undo command.</source>
         <translation>重做上一個復原動作.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="102"/>
+        <location filename="../menue/editormenue.cpp" line="103"/>
         <source>Exits the editor</source>
         <translation>退出編輯器</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="105"/>
+        <location filename="../menue/editormenue.cpp" line="106"/>
         <source>Create a new map</source>
         <translation>建立新地圖</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="106"/>
+        <location filename="../menue/editormenue.cpp" line="107"/>
         <source>Edit the information for a map</source>
         <translation>編輯地圖信息</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="107"/>
+        <location filename="../menue/editormenue.cpp" line="108"/>
         <source>Resizes the map using left, top, right and bottom size changes.</source>
         <translation>使用左、上、右和下大小更改調整地圖大小.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="107"/>
+        <location filename="../menue/editormenue.cpp" line="108"/>
         <source>Resize map</source>
         <translation>變更地圖大小</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="108"/>
+        <location filename="../menue/editormenue.cpp" line="110"/>
         <source>Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed.</source>
         <translation>將地圖在 x 軸上翻轉.左半部分的地圖會被翻轉,而右半部分的地圖則會保持不變.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="109"/>
+        <location filename="../menue/editormenue.cpp" line="111"/>
         <source>Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed.</source>
         <translation>將地圖沿 y 軸翻轉,翻轉地圖的上半部分,將改變地圖的下半部分.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="110"/>
+        <location filename="../menue/editormenue.cpp" line="112"/>
         <source>Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed.</source>
         <translation>透過x軸翻轉和旋轉地圖.使用地圖的左半邊,右半邊的地圖也會被改變.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="110"/>
+        <location filename="../menue/editormenue.cpp" line="112"/>
         <source>Rotate map X</source>
         <translation>選轉地圖 X</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="111"/>
+        <location filename="../menue/editormenue.cpp" line="113"/>
         <source>Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed.</source>
         <translation>這個指令會將地圖在y軸上翻轉並旋轉,以地圖的上半部分為基礎,進行翻轉和旋轉操作,改變地圖的下半部分.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="112"/>
+        <location filename="../menue/editormenue.cpp" line="114"/>
         <source>Creates a new random map.</source>
         <translation>建立一個新隨機地圖.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="113"/>
+        <location filename="../menue/editormenue.cpp" line="115"/>
         <source>Shows or hides a grid layout.</source>
         <translation>顯示或隱藏標線層.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="114"/>
+        <location filename="../menue/editormenue.cpp" line="116"/>
         <source>Shows or hides the cross marking the middle of the map.</source>
         <translation>顯示或隱藏標示地圖中心的十字線.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="114"/>
+        <location filename="../menue/editormenue.cpp" line="116"/>
         <source>Toggle cross Strg+M</source>
         <translation>啟用標線 Strg+M</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="117"/>
+        <location filename="../menue/editormenue.cpp" line="119"/>
         <source>Place selection</source>
         <translation>放置選取物</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="118"/>
+        <location filename="../menue/editormenue.cpp" line="120"/>
         <source>Delete units</source>
         <translation>刪除單位</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="120"/>
+        <location filename="../menue/editormenue.cpp" line="122"/>
         <source>Edit terrain</source>
         <translation>編輯地形</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="121"/>
+        <location filename="../menue/editormenue.cpp" line="123"/>
         <source>Edit players</source>
         <translation>編輯玩家</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="122"/>
+        <location filename="../menue/editormenue.cpp" line="124"/>
         <source>Edit rules</source>
         <translation>編輯規則</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="137"/>
+        <location filename="../menue/editormenue.cpp" line="139"/>
         <source>Import AW4 Aw4</source>
         <translation>匯入 AW4 Aw4</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="137"/>
+        <location filename="../menue/editormenue.cpp" line="139"/>
         <source>Deletes the current map and imports an AW 4 map editor file.</source>
         <translation>刪除當前地圖並導入 AW 4 地圖編輯器文件.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="92"/>
+        <location filename="../menue/editormenue.cpp" line="93"/>
         <source>Shows the general information about the map.</source>
         <translation>顯示地圖的一般資訊.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="92"/>
+        <location filename="../menue/editormenue.cpp" line="93"/>
         <source>View map stats</source>
         <translation>檢視地圖狀態</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="93"/>
+        <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Save map</source>
         <translation>儲存地圖</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="94"/>
+        <location filename="../menue/editormenue.cpp" line="95"/>
         <source>Load map</source>
         <translation>讀取地圖</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="97"/>
+        <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Edit script</source>
         <translation>編輯腳本</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="98"/>
+        <location filename="../menue/editormenue.cpp" line="99"/>
         <source>Edit campaign</source>
         <translation>編輯戰役</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="102"/>
+        <location filename="../menue/editormenue.cpp" line="103"/>
         <source>Exit editor</source>
         <translation>退出編輯器</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="104"/>
+        <location filename="../menue/editormenue.cpp" line="105"/>
         <source>Map info</source>
         <translation>地圖信息</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="105"/>
+        <location filename="../menue/editormenue.cpp" line="106"/>
         <source>New map</source>
         <translation>新地圖</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="106"/>
+        <location filename="../menue/editormenue.cpp" line="107"/>
         <source>Edit map</source>
         <translation>編輯地圖</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="108"/>
+        <location filename="../menue/editormenue.cpp" line="109"/>
+        <source>Extend map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="109"/>
+        <source>Extends this map with another map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="110"/>
         <source>Flip map X</source>
         <translation>翻轉地圖 X 軸</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="109"/>
+        <location filename="../menue/editormenue.cpp" line="111"/>
         <source>Flip map Y</source>
         <translation>翻轉地圖 Y 軸</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="111"/>
+        <location filename="../menue/editormenue.cpp" line="113"/>
         <source>Rotate map Y</source>
         <translation>選轉地圖 Y 軸</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="112"/>
+        <location filename="../menue/editormenue.cpp" line="114"/>
         <source>Random map</source>
         <translation>隨機地圖</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="113"/>
+        <location filename="../menue/editormenue.cpp" line="115"/>
         <source>Toggle grid Strg+G</source>
         <translation>啟用標線Strg+G</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="116"/>
+        <location filename="../menue/editormenue.cpp" line="118"/>
         <source>Commands</source>
         <translation>指令</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="117"/>
+        <location filename="../menue/editormenue.cpp" line="119"/>
         <source>Selects the editor mode placing the current tile</source>
         <translation>選擇編輯模式以放置當前的地圖方塊</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="118"/>
+        <location filename="../menue/editormenue.cpp" line="120"/>
         <source>Selects the editor mode deleting units</source>
         <translation>選擇編輯器模式以刪除單位</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="119"/>
+        <location filename="../menue/editormenue.cpp" line="121"/>
         <source>Selects the editor mode modifying the stats of a unit</source>
         <translation>選擇編輯模式,修改單位的統計數據</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="119"/>
+        <location filename="../menue/editormenue.cpp" line="121"/>
         <source>Edit units</source>
         <translation>編輯單位</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="120"/>
+        <location filename="../menue/editormenue.cpp" line="122"/>
         <source>Selects the editor mode editing the style of a terrain or building</source>
         <translation>選擇編輯模式,以編輯地形或建築物的樣式</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="121"/>
+        <location filename="../menue/editormenue.cpp" line="123"/>
         <source>Edit the CO&apos;s and player start setup.</source>
         <translation>編輯CO和玩家起始設置.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="122"/>
+        <location filename="../menue/editormenue.cpp" line="124"/>
         <source>Selects the editor rules for the map.</source>
         <translation>選擇地圖的編輯規則.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="123"/>
+        <location filename="../menue/editormenue.cpp" line="125"/>
         <source>Changes the biome or palettes of an area.</source>
         <translation>更改地區的生物群系或調色板.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="123"/>
+        <location filename="../menue/editormenue.cpp" line="125"/>
         <source>Mass edit terrain</source>
         <translation>大規模編輯地形</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="125"/>
+        <location filename="../menue/editormenue.cpp" line="127"/>
         <source>Removes all players with no units or buildings from the map</source>
         <translation>將沒有單位或建築物的所有玩家從地圖中移除</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="125"/>
+        <location filename="../menue/editormenue.cpp" line="127"/>
         <source>Optimize players</source>
         <translation>優化玩家</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="128"/>
+        <location filename="../menue/editormenue.cpp" line="130"/>
         <source>Copy Ctrl+C</source>
         <translation>複製 Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="128"/>
+        <location filename="../menue/editormenue.cpp" line="130"/>
         <source>Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode</source>
         <translation>進入複製模式.按住左鍵並選擇要複製的區域.複製功能基於當前的放置模式</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="129"/>
+        <location filename="../menue/editormenue.cpp" line="131"/>
         <source>Paste Ctrl+V</source>
         <translation>貼上 Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="129"/>
+        <location filename="../menue/editormenue.cpp" line="131"/>
         <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
         <translation>粘貼當前選定的區域.根據當前放置模式進行操作.複製和粘貼選擇不能相交.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="130"/>
+        <location filename="../menue/editormenue.cpp" line="132"/>
         <source>Paste Ctrl+Shift+V</source>
         <translation>貼上 Ctrl+Shift+V</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="130"/>
+        <location filename="../menue/editormenue.cpp" line="132"/>
         <source>Paste the current selected area with all terrain, buildings, units. The copy and paste selection are not allowed to intersec.</source>
         <translation>粘貼當前選定區域的所有地形､建築和單位.複製和粘貼選擇不允許交叉.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="133"/>
+        <location filename="../menue/editormenue.cpp" line="135"/>
         <source>Import/Export</source>
         <translation>匯入/匯出</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="134"/>
+        <location filename="../menue/editormenue.cpp" line="136"/>
         <source>Import CoW Txt</source>
         <translation>匯入CoW 文件</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="134"/>
+        <location filename="../menue/editormenue.cpp" line="136"/>
         <source>Deletes the current map and imports an old Commander Wars Map from a file.</source>
         <translation>刪除目前的地圖,並從檔案中導入一個舊版&quot;指揮官之戰&quot;地圖.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="135"/>
+        <location filename="../menue/editormenue.cpp" line="137"/>
         <source>Import AWDS Aws</source>
         <translation>匯入 AWDS Aws</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="135"/>
+        <location filename="../menue/editormenue.cpp" line="137"/>
         <source>Deletes the current map and imports an AWS Map Editor from a file.</source>
         <translation>刪除目前的地圖並從檔案中匯入AWS地圖編輯器檔案.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="136"/>
+        <location filename="../menue/editormenue.cpp" line="138"/>
         <source>Export AWDS Aws</source>
         <translation>輸出 AWDS Aws</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="136"/>
+        <location filename="../menue/editormenue.cpp" line="138"/>
         <source>Exports the map to an AWS Map Editor file</source>
         <translation>將地圖匯出為 AWS 地圖編輯器文件</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="138"/>
+        <location filename="../menue/editormenue.cpp" line="140"/>
         <source>Import AW by Web</source>
         <translation>匯入 AW by Web</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="138"/>
+        <location filename="../menue/editormenue.cpp" line="140"/>
         <source>Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/</source>
         <translation>刪除當前地圖並從 https://awbw.amarriner.com/ 導入 Advance Wars by Web 地圖</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="464"/>
+        <location filename="../menue/editormenue.cpp" line="467"/>
         <source>Save</source>
         <translation>儲存</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="476"/>
+        <location filename="../menue/editormenue.cpp" line="479"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="498"/>
+        <location filename="../menue/editormenue.cpp" line="501"/>
         <source>Left: </source>
         <translation>左: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="502"/>
+        <location filename="../menue/editormenue.cpp" line="505"/>
         <source>Change of the map size on the left map border.</source>
         <translation>更改地圖尺寸,調整左邊地圖邊界.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="511"/>
+        <location filename="../menue/editormenue.cpp" line="514"/>
         <source>Top: </source>
         <translation>上: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="515"/>
+        <location filename="../menue/editormenue.cpp" line="518"/>
         <source>Change of the map size on the top map border.</source>
         <translation>更改地圖尺寸,調整上面地圖邊界.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="524"/>
+        <location filename="../menue/editormenue.cpp" line="527"/>
         <source>Right: </source>
         <translation>右: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="528"/>
+        <location filename="../menue/editormenue.cpp" line="531"/>
         <source>Change of the map size on the right map border.</source>
         <translation>更改地圖尺寸,調整右邊地圖邊界.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="537"/>
+        <location filename="../menue/editormenue.cpp" line="540"/>
         <source>Bottom: </source>
         <translation>下: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="541"/>
+        <location filename="../menue/editormenue.cpp" line="544"/>
         <source>Change of the map size on the bottom map border.</source>
         <translation>更改地圖尺寸,調整下面地圖邊界.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="583"/>
-        <location filename="../menue/editormenue.cpp" line="595"/>
-        <location filename="../menue/editormenue.cpp" line="619"/>
-        <location filename="../menue/editormenue.cpp" line="631"/>
+        <location filename="../menue/editormenue.cpp" line="586"/>
+        <location filename="../menue/editormenue.cpp" line="598"/>
+        <location filename="../menue/editormenue.cpp" line="622"/>
+        <location filename="../menue/editormenue.cpp" line="634"/>
         <source>Import</source>
         <translation>匯入</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="607"/>
+        <location filename="../menue/editormenue.cpp" line="610"/>
         <source>Export</source>
         <translation>匯出</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="645"/>
+        <location filename="../menue/editormenue.cpp" line="648"/>
         <source>Do you want to discard all current changes and create a new map?</source>
         <translation>您要放棄所有當前的更改並創建新地圖嗎?</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="666"/>
+        <location filename="../menue/editormenue.cpp" line="669"/>
         <source>Do you want to apply the map changes?</source>
         <translation>您要應用地圖更改嗎?</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="699"/>
+        <location filename="../menue/editormenue.cpp" line="716"/>
         <source>Do you want to create a random map and discard all current changes?</source>
         <translation>您要創建隨機地圖並放棄所有當前更改嗎?</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="752"/>
+        <location filename="../menue/editormenue.cpp" line="769"/>
         <source>Do you want to exit the map editor?</source>
         <translation>您想退出地圖編輯器嗎?</translation>
     </message>
@@ -3750,6 +3768,7 @@ Distributed: Units are spawned at the given rate.</source>
         <location filename="../resources/ui/gamepadInfoDialog.xml" line="148"/>
         <location filename="../resources/ui/game/allAdvancedPlayerChanges.xml" line="99"/>
         <location filename="../resources/ui/game/advancedPlayerChanges.xml" line="119"/>
+        <location filename="../resources/ui/editor/mapExtendDialog.xml" line="58"/>
         <location filename="../resources/ui/editor/mapEditDialog.xml" line="457"/>
         <location filename="../resources/ui/editor/mapEditBiomes.xml" line="156"/>
         <source>Ok</source>
@@ -5459,9 +5478,45 @@ Distributed: Units are spawned at the given rate.</source>
         <translation>從 exe 到與此地圖相關聯的腳本的相對路徑。</translation>
     </message>
     <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.xml" line="13"/>
+        <source>Map:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.xml" line="22"/>
+        <source>The relative path to the map with which the current map should be extended.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.xml" line="30"/>
         <location filename="../resources/ui/editor/mapEditDialog.xml" line="87"/>
         <source>Select File</source>
         <translation>選取檔案</translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.xml" line="31"/>
+        <source>Shows the map select dialog </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.xml" line="38"/>
+        <source>Direction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.xml" line="47"/>
+        <source>Direction in which the map will be added.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.xml" line="59"/>
+        <source>Closes the extend map dialog and applies the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.xml" line="67"/>
+        <source>Cancel the map extend dialog</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/ui/editor/mapEditDialog.xml" line="88"/>
@@ -5554,6 +5609,7 @@ Distributed: Units are spawned at the given rate.</source>
         <translation>關閉地圖對話框</translation>
     </message>
     <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.xml" line="66"/>
         <location filename="../resources/ui/editor/mapEditDialog.xml" line="465"/>
         <source>Cancel</source>
         <translation>取消</translation>
@@ -6443,9 +6499,9 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="70"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
-        <location filename="../game/gamemap.cpp" line="597"/>
-        <location filename="../game/gamemap.cpp" line="737"/>
-        <location filename="../game/gamemap.cpp" line="1636"/>
+        <location filename="../game/gamemap.cpp" line="600"/>
+        <location filename="../game/gamemap.cpp" line="740"/>
+        <location filename="../game/gamemap.cpp" line="1639"/>
         <source> of </source>
         <translation> 的 </translation>
     </message>
@@ -6460,7 +6516,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation>讀取圖像</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="436"/>
+        <location filename="../game/gamemap.cpp" line="439"/>
         <source>Tags
 
 </source>
@@ -6469,176 +6525,176 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="439"/>
+        <location filename="../game/gamemap.cpp" line="442"/>
         <source>Bases
 </source>
         <translation>基地
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="443"/>
+        <location filename="../game/gamemap.cpp" line="446"/>
         <source>Airports
 </source>
         <translation>機場
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="447"/>
+        <location filename="../game/gamemap.cpp" line="450"/>
         <source>Harbours
 </source>
         <translation>港口
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="451"/>
+        <location filename="../game/gamemap.cpp" line="454"/>
         <source>Towers
 </source>
         <translation>指揮塔
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="455"/>
+        <location filename="../game/gamemap.cpp" line="458"/>
         <source>Teleport
 </source>
         <translation>傳送器
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="459"/>
+        <location filename="../game/gamemap.cpp" line="462"/>
         <source>Mixed bases
 </source>
         <translation>混合基地
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="463"/>
+        <location filename="../game/gamemap.cpp" line="466"/>
         <source>Predeployed
 </source>
         <translation>預先部署
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="467"/>
+        <location filename="../game/gamemap.cpp" line="470"/>
         <source>Symetric
 </source>
         <translation>對稱
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="471"/>
+        <location filename="../game/gamemap.cpp" line="474"/>
         <source>PvP
 </source>
         <translation>PvP
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="475"/>
+        <location filename="../game/gamemap.cpp" line="478"/>
         <source>FTA
 </source>
         <translation>FTA
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="479"/>
+        <location filename="../game/gamemap.cpp" line="482"/>
         <source>Vs AI
 </source>
         <translation>Vs AI
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="483"/>
+        <location filename="../game/gamemap.cpp" line="486"/>
         <source>Team play
 </source>
         <translation>團隊遊戲
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="487"/>
+        <location filename="../game/gamemap.cpp" line="490"/>
         <source>Historical
 </source>
         <translation>經典的
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="491"/>
+        <location filename="../game/gamemap.cpp" line="494"/>
         <source>Low funds
 </source>
         <translation>低資金
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="495"/>
+        <location filename="../game/gamemap.cpp" line="498"/>
         <source>High funds
 </source>
         <translation>高資金
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="499"/>
+        <location filename="../game/gamemap.cpp" line="502"/>
         <source>Naval
 </source>
         <translation>海軍
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="503"/>
+        <location filename="../game/gamemap.cpp" line="506"/>
         <source>Ground
 </source>
         <translation>陸軍
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="507"/>
+        <location filename="../game/gamemap.cpp" line="510"/>
         <source>Air
 </source>
         <translation>空軍
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="511"/>
+        <location filename="../game/gamemap.cpp" line="514"/>
         <source>Scripted
 </source>
         <translation>已載入腳本
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="597"/>
-        <location filename="../game/gamemap.cpp" line="1636"/>
+        <location filename="../game/gamemap.cpp" line="600"/>
+        <location filename="../game/gamemap.cpp" line="1639"/>
         <source>Loading Map Row </source>
         <translation>加載地圖行 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="710"/>
+        <location filename="../game/gamemap.cpp" line="713"/>
         <source>Loading weather for snowy times</source>
         <translation>加載雪天天氣</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="737"/>
+        <location filename="../game/gamemap.cpp" line="740"/>
         <source>Synchronizing Map Row </source>
         <translation>同步地圖行 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1603"/>
+        <location filename="../game/gamemap.cpp" line="1606"/>
         <source>Loading Players</source>
         <translation>載入玩家</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1664"/>
+        <location filename="../game/gamemap.cpp" line="1667"/>
         <source>Loading Rules</source>
         <translation>載入規則</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1674"/>
+        <location filename="../game/gamemap.cpp" line="1677"/>
         <source>Loading Record</source>
         <translation>載入回放</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1682"/>
+        <location filename="../game/gamemap.cpp" line="1685"/>
         <source>Loading scripts</source>
         <translation>載入腳本</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1694"/>
+        <location filename="../game/gamemap.cpp" line="1697"/>
         <source>Loading Campaign</source>
         <translation>載入戰役</translation>
     </message>
@@ -8858,7 +8914,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="79"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="405"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="406"/>
         <source>Duplicate</source>
         <translation>副本</translation>
     </message>
@@ -8868,17 +8924,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation>事件</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="121"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation>滿足條件後應發生的新事件.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="124"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="125"/>
         <source>Add Event</source>
         <translation>加入事件</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="136"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="137"/>
         <source>Immediate Start: </source>
         <translation>立即開始: </translation>
     </message>
@@ -9063,46 +9119,51 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation>火山火焰</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="140"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="118"/>
+        <source>Extend map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="141"/>
         <source>If checked the game starts without being able to change rules, players or CO&apos;s.</source>
         <translation>如果勾選此項目,遊戲將在開始時禁止更改規則､玩家或CO.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="147"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="148"/>
         <source>Ok</source>
         <translation>確定</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="156"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="199"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="157"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="200"/>
         <source>Save</source>
         <translation>儲存</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="164"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="209"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="165"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="210"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="183"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="184"/>
         <source>Do you want to exit the script editor?</source>
         <translation>確定要退出腳本編輯器?</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="305"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="389"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="306"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="390"/>
         <source>Edit</source>
         <translation>編輯</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="312"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="397"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="313"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="398"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="320"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="321"/>
         <source>Select</source>
         <translation>選擇</translation>
     </message>
@@ -9629,6 +9690,54 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <location filename="../ingamescriptsupport/events/scripteventdialog.h" line="81"/>
         <source>Dialog: </source>
         <translation>對話: </translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventExtendMap</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventextendmap.cpp" line="8"/>
+        <source>Extend map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventextendmap.cpp" line="15"/>
+        <source>Map file with which the current map will be extended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventextendmap.cpp" line="18"/>
+        <source>Map file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventextendmap.cpp" line="22"/>
+        <source>North</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventextendmap.cpp" line="22"/>
+        <source>East</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventextendmap.cpp" line="22"/>
+        <source>South</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventextendmap.cpp" line="22"/>
+        <source>West</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventextendmap.cpp" line="24"/>
+        <source>Direction in which the map will be extended.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventextendmap.cpp" line="27"/>
+        <source>Direction: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10765,7 +10874,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Unit</name>
     <message>
-        <location filename="../game/unit.cpp" line="505"/>
+        <location filename="../game/unit.cpp" line="525"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
@@ -27714,6 +27823,29 @@ CO區域效果:
         <location filename="../resources/ui/menu/mainmenu.js" line="57"/>
         <source>Select Username</source>
         <translation>選擇使用者名稱</translation>
+    </message>
+</context>
+<context>
+    <name>mapExtendDialog</name>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.js" line="5"/>
+        <source>North</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.js" line="5"/>
+        <source>East</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.js" line="5"/>
+        <source>South</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/ui/editor/mapExtendDialog.js" line="5"/>
+        <source>West</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

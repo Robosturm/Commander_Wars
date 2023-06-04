@@ -173,7 +173,7 @@ public slots:
      * @brief setInputStep updates the input step
      * @param value
      */
-    void setInputStep(const qint32 &value);
+    void setInputStep(const qint32 value);
     /**
      * @brief perform executes this action
      */
@@ -190,7 +190,7 @@ public slots:
      * @param actionID id of the action we want to check
      * @return
      */
-    bool canBePerformed(const QString & actionID, bool emptyField = false, Player* pUsingPlayer = nullptr);
+    bool canBePerformed(const QString actionID, bool emptyField = false, Player* pUsingPlayer = nullptr);
     /**
      * @brief isFinalStep
      * @return true if we have all data to perform this action
@@ -201,7 +201,7 @@ public slots:
      * @param actionID id of the action we want to perform
      * @return true if we have all data to perform this action
      */
-    bool isFinalStep(const QString & actionID);
+    bool isFinalStep(const QString actionID);
     /**
      * @brief getTargetUnit the unit that will perform the action
      * @return
@@ -216,7 +216,7 @@ public slots:
      * @brief setMovepath sets the movepath for this unit
      * @param points
      */
-    void setMovepath(const QVector<QPoint> & points, qint32 fuelCost);
+    void setMovepath(const QVector<QPoint> points, qint32 fuelCost);
     /**
      * @brief getActionTarget the target action
      * @return
@@ -261,7 +261,7 @@ public slots:
      * @brief setCosts sets the costs of this actions
      * @param value
      */
-    void setCosts(const qint32 &value);
+    void setCosts(const qint32 value);
     /**
      * @brief getStepInputType
      * @return the input type used during this step
@@ -287,7 +287,7 @@ public slots:
      * @brief writeDataString adds a string to the action data
      * @param data
      */
-    void writeDataString(const QString & data)
+    void writeDataString(const QString data)
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
@@ -370,7 +370,7 @@ public slots:
      * @brief setMultiTurnPath
      * @param MultiTurnPath
      */
-    void setMultiTurnPath(const QVector<QPoint> &MultiTurnPath);
+    void setMultiTurnPath(const QVector<QPoint> multiTurnPath);
     /**
      * @brief reset
      */
@@ -390,7 +390,7 @@ public slots:
     /**
      * @brief revertLastInputStep
      */
-    void revertLastInputStep(const QString & stepType);
+    void revertLastInputStep(const QString stepType);
 protected:
     void printAction();
 private:

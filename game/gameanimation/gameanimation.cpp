@@ -90,7 +90,7 @@ void GameAnimation::stop()
     setVisible(false);
 }
 
-qint32 GameAnimation::getFontWidth(const QString & font, const QString & text) const
+qint32 GameAnimation::getFontWidth(const QString font, const QString text) const
 {
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getInstance()->getFont(font));
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;

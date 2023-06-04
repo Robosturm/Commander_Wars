@@ -106,7 +106,7 @@ private:
     DecisionTree m_GeneralBuildingTree;
     DecisionTree m_AirportBuildingTree;
     DecisionTree m_HarbourBuildingTree;
-    bool rebuildIslandMaps{true};
+    bool m_rebuildIslandMaps{true};
     double m_minSiloDamage{4000};
     double m_minDamage{-500};
     double m_ownUnitDamageDivider{4};

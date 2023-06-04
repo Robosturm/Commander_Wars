@@ -96,7 +96,7 @@ public slots:
         return &m_Variables;
     }
     QString getScriptFile() const;
-    void setScriptFile(const QString &value);
+    void setScriptFile(const QString value);
 
 private:
     bool m_victoryCalled{false};

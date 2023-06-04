@@ -280,6 +280,16 @@ public slots:
      */
     void showEditMap();
     /**
+     * @brief showExtendMap
+     */
+    void showExtendMap();
+    /**
+     * @brief extendMap
+     * @param mapFile
+     * @param direction
+     */
+    void extendMap(const QString & mapFile, GameEnums::Directions direction);
+    /**
      * @brief flipX
      */
     void flipX();

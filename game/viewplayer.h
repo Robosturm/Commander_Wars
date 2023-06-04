@@ -56,7 +56,7 @@ public slots:
      * @brief setViewType
      * @param ViewType
      */
-    void setViewType(const qint32 &ViewType);
+    void setViewType(const qint32 ViewType);
 private:
     qint32 m_ViewType{static_cast<qint32>(ViewType::CurrentTeam)};
     HumanPlayerInput m_input;

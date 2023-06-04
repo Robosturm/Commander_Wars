@@ -15,7 +15,7 @@ const QString CampaignMapData::getMapBackground() const
     return m_mapBackground;
 }
 
-void CampaignMapData::setMapBackground(const QString &newMapBackground)
+void CampaignMapData::setMapBackground(const QString newMapBackground)
 {
     m_mapBackground = newMapBackground;
 }
@@ -25,7 +25,7 @@ const QString CampaignMapData::getFolder() const
     return m_folder;
 }
 
-void CampaignMapData::setFolder(const QString &newFolder)
+void CampaignMapData::setFolder(const QString newFolder)
 {
     m_folder = newFolder;
 }
@@ -55,7 +55,7 @@ const QStringList CampaignMapData::getMapFilenames() const
     return m_mapFilenames;
 }
 
-void CampaignMapData::setMapFilenames(const QStringList &newMapFilenames)
+void CampaignMapData::setMapFilenames(const QStringList newMapFilenames)
 {
     m_mapFilenames = newMapFilenames;
 }
@@ -65,7 +65,7 @@ const QVector<QPointF> CampaignMapData::getOpenMapPositions() const
     return m_openMapPositions;
 }
 
-void CampaignMapData::setOpenMapPositions(const QVector<QPointF> &newOpenMapPositions)
+void CampaignMapData::setOpenMapPositions(const QVector<QPointF> newOpenMapPositions)
 {
     m_openMapPositions = newOpenMapPositions;
 }
@@ -75,7 +75,7 @@ const QVector<qint32> CampaignMapData::getNewMapPosition() const
     return m_newMapPosition;
 }
 
-void CampaignMapData::setNewMapPosition(const QVector<qint32> &newNewMapPosition)
+void CampaignMapData::setNewMapPosition(const QVector<qint32> newNewMapPosition)
 {
     m_newMapPosition = newNewMapPosition;
 }
@@ -95,7 +95,7 @@ const QVector<QPointF> CampaignMapData::getWonMapPositions() const
     return m_wonMapPositions;
 }
 
-void CampaignMapData::setWonMapPositions(const QVector<QPointF> &newWonMapPositions)
+void CampaignMapData::setWonMapPositions(const QVector<QPointF> newWonMapPositions)
 {
     m_wonMapPositions = newWonMapPositions;
 }

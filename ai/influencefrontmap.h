@@ -61,6 +61,7 @@ public:
     void calculateGlobalData();
     void setOwner(Player *newPOwner);
     void reset();
+    void clear();
 public slots:
     /**
      * @brief show for debugging purpose

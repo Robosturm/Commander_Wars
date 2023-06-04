@@ -88,7 +88,7 @@ public slots:
      * @param p2
      * @return
      */
-    static qint32 getDistance(const QPoint & p1, const QPoint & p2);
+    static qint32 getDistance(const QPoint p1, const QPoint p2);
     /**
      * @brief getDistance
      * @param x1
@@ -114,7 +114,7 @@ public slots:
      * @param filter
      * @return
      */
-    static QStringList getFiles(const QString & folder, const QStringList & filter);
+    static QStringList getFiles(const QString folder, const QStringList filter);
     /**
      * @brief importFilesFromDirectory
      * @param folder
@@ -141,7 +141,7 @@ public slots:
      * @param v2
      * @return
      */
-    static double distanceVector(const QVector<double>& v1, const QVector<double>& v2);
+    static double distanceVector(const QVector<double> v1, const QVector<double> v2);
     /**
      * @brief getRandomizedArray
      * @param min
@@ -156,7 +156,7 @@ public slots:
      * @param max
      * @return
      */
-    static QString getNextAutosavePath(const QString & path, const QString & ending, qint32 max);
+    static QString getNextAutosavePath(const QString path, const QString ending, qint32 max);
     /**
      * @brief sleepMs
      */

@@ -190,7 +190,7 @@ bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> chec
     return false;
 }
 
-void GameMap::applyPaletteToArea(const QRect& area, qint32 newPalette)
+void GameMap::applyPaletteToArea(const QRect area, qint32 newPalette)
 {
     applyToArea(area, [newPalette, this](qint32 x, qint32 y) {
         Terrain *pTerrain = getTerrain(x, y);
@@ -200,7 +200,7 @@ void GameMap::applyPaletteToArea(const QRect& area, qint32 newPalette)
     updateSprites();
 }
 
-void GameMap::applyBiomeToArea(const QRect& area, qint32 newBiome)
+void GameMap::applyBiomeToArea(const QRect area, qint32 newBiome)
 {
     auto* pInterpreter = Interpreter::getInstance();
     applyToArea(area, [pInterpreter, newBiome, this](qint32 x, qint32 y)
@@ -360,7 +360,7 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
     return pRet;
 }
 
-bool GameMap::isUnitInArea(const QRect& area, qint32 unitID)
+bool GameMap::isUnitInArea(const QRect area, qint32 unitID)
 {
     return isInArea(area, [=](Unit* pUnit)
     {
@@ -368,7 +368,7 @@ bool GameMap::isUnitInArea(const QRect& area, qint32 unitID)
     });
 }
 
-bool GameMap::isPlayerUnitInArea(const QRect& area, qint32 playerID)
+bool GameMap::isPlayerUnitInArea(const QRect area, qint32 playerID)
 {
     return isInArea(area, [=](Unit* pUnit)
     {
@@ -376,7 +376,7 @@ bool GameMap::isPlayerUnitInArea(const QRect& area, qint32 playerID)
     });
 }
 
-bool GameMap::isPlayersUnitInArea(const QRect& area, const QVector<qint32> & playerIDs)
+bool GameMap::isPlayersUnitInArea(const QRect area, const QVector<qint32> playerIDs)
 {
     return isInArea(area, [playerIDs](Unit* pUnit)
     {
@@ -394,7 +394,10 @@ GameMap::~GameMap()
         m_rowSprites[y]->detach();
         for (qint32 x = 0; x < m_fields[y].size(); ++x)
         {
-            m_fields[y].at(x)->detach();
+            if (m_fields[y][x].get() != nullptr)
+            {
+                m_fields[y][x]->detach();
+            }
         }
         m_fields[y].clear();
     }
@@ -810,7 +813,7 @@ void GameMap::clearMapMusic()
     setMapMusic("");
 }
 
-void GameMap::setMapMusic(const QString &mapMusic, qint32 startLoopMs, qint32 endLoopMs)
+void GameMap::setMapMusic(const QString mapMusic, qint32 startLoopMs, qint32 endLoopMs)
 {
     m_mapMusic = mapMusic;
     m_startLoopMs = startLoopMs;
@@ -828,7 +831,7 @@ void GameMap::setMapPath(const QString &mapPath)
     m_mapPath = mapPath;
 }
 
-void GameMap::setImagesize(const qint32 &imagesize)
+void GameMap::setImagesize(const qint32 imagesize)
 {
     m_imagesize = imagesize;
 }
@@ -838,7 +841,7 @@ void GameMap::removePlayer(qint32 index)
     m_players.removeAt(index);
 }
 
-Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range, bool ignoreMovement)
+Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner, qint32 range, bool ignoreMovement)
 {
     CONSOLE_PRINT("spawning Unit", GameConsole::eDEBUG);
     if (owner != nullptr)
@@ -984,7 +987,7 @@ qint32 GameMap::getMapHeight() const
     return m_fields.size();
 }
 
-qint32 GameMap::getBuildingCount(const QString & buildingID) const
+qint32 GameMap::getBuildingCount(const QString buildingID) const
 {
     qint32 ret = 0;
     qint32 width = getMapWidth();
@@ -1009,7 +1012,7 @@ qint32 GameMap::getBuildingCount(const QString & buildingID) const
     return ret;
 }
 
-qint32 GameMap::getTerrainCount(const QString & terrainId) const
+qint32 GameMap::getTerrainCount(const QString terrainId) const
 {
     qint32 ret = 0;
     qint32 width = getMapWidth();
@@ -1034,7 +1037,7 @@ qint32 GameMap::getTerrainCount(const QString & terrainId) const
     return ret;
 }
 
-qint32 GameMap::getPlayerBuildingCount(const QString & buildingID, Player* pPlayer) const
+qint32 GameMap::getPlayerBuildingCount(const QString buildingID, Player* pPlayer) const
 {
     qint32 ret = 0;
     qint32 width = getMapWidth();
@@ -1251,7 +1254,7 @@ void GameMap::zoomChanged()
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
-void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit, const QString & palette, bool changePalette, bool includeBaseTerrain)
+void GameMap::replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit, const QString palette, bool changePalette, bool includeBaseTerrain)
 {
     if (onMap(x, y))
     {
@@ -1314,7 +1317,7 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
     }
 }
 
-void GameMap::replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement, const QString & palette, bool changePalette, bool includeBaseTerrain)
+void GameMap::replaceTerrain(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement, const QString palette, bool changePalette, bool includeBaseTerrain)
 {
     replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain, true, palette, changePalette, includeBaseTerrain);
     if (checkPlacement)
@@ -1327,7 +1330,7 @@ void GameMap::replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool
     }
 }
 
-void GameMap::replaceBuilding(const QString & buildingID, qint32 x, qint32 y)
+void GameMap::replaceBuilding(const QString buildingID, qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
@@ -1362,7 +1365,7 @@ void GameMap::updateTerrain(qint32 x, qint32 y)
     }
 }
 
-bool GameMap::canBePlaced(const QString & terrainID, qint32 x, qint32 y)
+bool GameMap::canBePlaced(const QString terrainID, qint32 x, qint32 y)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "canBePlaced";
@@ -1740,7 +1743,7 @@ void GameMap::exitGame()
     emit signalExitGame();
 }
 
-void GameMap::showXmlFileDialog(const QString & xmlFile, bool saveSettings)
+void GameMap::showXmlFileDialog(const QString xmlFile, bool saveSettings)
 {
     emit sigShowXmlFileDialog(xmlFile, saveSettings);
 }
@@ -2049,7 +2052,7 @@ QString GameMap::getMapAuthor() const
     return m_headerInfo.m_mapAuthor;
 }
 
-void GameMap::setMapAuthor(const QString &value)
+void GameMap::setMapAuthor(const QString value)
 {
     m_headerInfo.m_mapAuthor = value;
 }
@@ -2398,7 +2401,7 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer, QString id)
     return getBuildingsListCount(pPlayer, ids);
 }
 
-QmlVectorBuilding* GameMap::getBuildingsListCount(Player* pPlayer, const QStringList & ids)
+QmlVectorBuilding* GameMap::getBuildingsListCount(Player* pPlayer, const QStringList ids)
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -2426,7 +2429,7 @@ QString GameMap::getMapName() const
     return m_headerInfo.m_mapName;
 }
 
-void GameMap::setMapName(const QString &value)
+void GameMap::setMapName(const QString value)
 {
     m_headerInfo.m_mapName = value;
 }

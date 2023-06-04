@@ -52,7 +52,7 @@ bool CO::isValid()
     return COSpriteManager::getInstance()->exists(m_coID);
 }
 
-qreal CO::getUnitBuildValue(const QString & unitID)
+qreal CO::getUnitBuildValue(const QString unitID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitBuildValue";
@@ -191,7 +191,7 @@ void CO::onUnitDeath(Unit* pUnit)
     }
 }
 
-void CO::setPowerFilled(const double &value)
+void CO::setPowerFilled(const double value)
 {
 
     if (m_pMap != nullptr &&
@@ -234,7 +234,7 @@ void CO::limitPowerbar(qreal previousValue)
     }
 }
 
-void CO::addPowerFilled(const double &value)
+void CO::addPowerFilled(const double value)
 {
     setPowerFilled(value + m_powerFilled);
 }
@@ -244,7 +244,7 @@ qint32 CO::getSuperpowerStars() const
     return m_superpowerStars;
 }
 
-void CO::setSuperpowerStars(const qint32 &value)
+void CO::setSuperpowerStars(const qint32 value)
 {        
     m_superpowerStars = value;
 }
@@ -276,7 +276,7 @@ qint32 CO::getPowerStars() const
     return m_powerStars;
 }
 
-void CO::setPowerStars(const qint32 &value)
+void CO::setPowerStars(const qint32 value)
 {
     m_powerStars = value;
 }
@@ -850,7 +850,7 @@ void CO::buildedUnit(Unit* pUnit)
     }
 }
 
-qint32 CO::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
+qint32 CO::getCostModifier(const QString id, qint32 baseCost, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCostModifier";
@@ -875,7 +875,7 @@ qint32 CO::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
     return ergValue;
 }
 
-qint32 CO::getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint position)
+qint32 CO::getEnemyCostModifier(const QString id, qint32 baseCost, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getEnemyCostModifier";
@@ -1135,7 +1135,7 @@ qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint at
     return ergValue;
 }
 
-qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
+qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString function)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
@@ -1326,7 +1326,7 @@ GameEnums::PowerMode CO::getPowerMode() const
     return m_PowerMode;
 }
 
-void CO::setPowerMode(const GameEnums::PowerMode &PowerMode)
+void CO::setPowerMode(const GameEnums::PowerMode PowerMode)
 {
     m_PowerMode = PowerMode;
 }
@@ -1667,7 +1667,7 @@ QStringList CO::getPerkList()
     return ret;
 }
 
-void CO::setPerkList(const QStringList & perks)
+void CO::setPerkList(const QStringList perks)
 {
     m_perkList.clear();
     m_perkList.append(m_coID);
@@ -1675,7 +1675,7 @@ void CO::setPerkList(const QStringList & perks)
     m_perkList.append(perks);
 }
 
-void CO::addPerk(const QString & perk)
+void CO::addPerk(const QString perk)
 {
     if (!m_perkList.contains(perk))
     {
@@ -1683,7 +1683,7 @@ void CO::addPerk(const QString & perk)
     }
 }
 
-void CO::removePerk(const QString & perk)
+void CO::removePerk(const QString perk)
 {
     m_perkList.removeAll(perk);
 }
@@ -1693,7 +1693,7 @@ qint32 CO::getPowerUsed() const
     return m_powerUsed;
 }
 
-void CO::setPowerUsed(const qint32 &value)
+void CO::setPowerUsed(const qint32 value)
 {
     m_powerUsed = value;
 }

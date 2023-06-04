@@ -129,7 +129,7 @@ qint32 UnitPathFindingSystem::getCosts(const std::vector<QPoint> & path)
     return totalCosts;
 }
 
-qint32 UnitPathFindingSystem::getCosts(const QVector<QPoint> & path)
+qint32 UnitPathFindingSystem::getCosts(const QVector<QPoint> path)
 {
     qint32 totalCosts = 0;
     for (qint32 i = path.size() - 2; i >= 0; i--)
@@ -277,7 +277,7 @@ std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(std::vect
     }
 }
 
-std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints)
+std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoint> & path, qint32 movepoints)
 {
     std::vector<QPoint> stdPath;
     stdPath.reserve(path.size());
@@ -288,7 +288,7 @@ std::vector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<Q
     return getClosestReachableMovePath(stdPath, movepoints);
 }
 
-QVector<QPoint> UnitPathFindingSystem::getJsClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints)
+QVector<QPoint> UnitPathFindingSystem::getJsClosestReachableMovePath(QVector<QPoint> path, qint32 movepoints)
 {
     auto stdPath = getClosestReachableMovePath(path, movepoints);
     QVector<QPoint> outPath;

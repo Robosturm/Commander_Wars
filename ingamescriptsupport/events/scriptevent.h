@@ -40,6 +40,7 @@ public:
     static const char* const EventPlaySound;
     static const char* const EventBuildingFireCounter;
     static const char* const EventVolcanFire;
+    static const char* const EventExtendMap;
 
 
     ENUM_CLASS EventType
@@ -65,6 +66,7 @@ public:
         PlayGameSound,
         BuildingFireCounter,
         VolcanFire,
+        ExtendMap,
     };
 
     static spScriptEvent createEvent(GameMap* pMap, EventType type);

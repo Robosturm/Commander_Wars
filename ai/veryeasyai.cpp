@@ -74,9 +74,9 @@ void VeryEasyAI::process()
     m_pPlayer->getSiloRockettarget(2, 3, cost);
     m_missileTarget = (cost >= m_minSiloDamage);
     // create island maps at the start of turn
-    if (rebuildIslandMaps)
+    if (m_rebuildIslandMaps)
     {
-        rebuildIslandMaps = false;
+        m_rebuildIslandMaps = false;
         // remove island maps of the last turn
         m_IslandMaps.clear();
     }
@@ -89,7 +89,7 @@ void VeryEasyAI::process()
     }
     else
     {
-        turnMode = GameEnums::AiTurnMode_DuringDay;
+        m_turnMode = GameEnums::AiTurnMode_DuringDay;
         if (useBuilding(pBuildings, pUnits)){}
         else if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
         else
@@ -100,12 +100,12 @@ void VeryEasyAI::process()
             else
             {
                 m_aiStep = AISteps::moveUnits;
-                turnMode = GameEnums::AiTurnMode_EndOfDay;
+                m_turnMode = GameEnums::AiTurnMode_EndOfDay;
                 if (useCOPower(pUnits, pEnemyUnits))
                 {
                     m_usedTransportSystem = false;
                     m_usedPredefinedAi = false;
-                    turnMode = GameEnums::AiTurnMode_DuringDay;
+                    m_turnMode = GameEnums::AiTurnMode_DuringDay;
                 }
                 else
                 {
@@ -154,8 +154,8 @@ bool VeryEasyAI::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & 
 
 void VeryEasyAI::finishTurn()
 {
-    turnMode = GameEnums::AiTurnMode_StartOfDay;
-    rebuildIslandMaps = true;
+    m_turnMode = GameEnums::AiTurnMode_StartOfDay;
+    m_rebuildIslandMaps = true;
     CoreAI::finishTurn();
 }
 
@@ -320,7 +320,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
             // attacing none unit targets may modify the islands for a unit -> rebuild all for the love of god
             if (m_pMap->getTerrain(static_cast<qint32>(target.x()), static_cast<qint32>(target.y()))->getUnit() == nullptr)
             {
-                rebuildIslandMaps = true;
+                m_rebuildIslandMaps = true;
             }
 
             if (pAction->isFinalStep() && pAction->canBePerformed())

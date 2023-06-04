@@ -213,7 +213,7 @@ QString GameScript::getScriptFile() const
     return m_scriptFile;
 }
 
-void GameScript::setScriptFile(const QString &value)
+void GameScript::setScriptFile(const QString value)
 {
     m_scriptFile = value;
 }

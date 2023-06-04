@@ -253,7 +253,7 @@ void GlobalUtils::setImageSize(qint32 value)
     GameMap::setImagesize(value);
 }
 
-qint32 GlobalUtils::getDistance(const QPoint & p1, const QPoint & p2)
+qint32 GlobalUtils::getDistance(const QPoint p1, const QPoint p2)
 {
     return qAbs(p1.x() - p2.x()) + qAbs(p1.y() - p2.y());
 }
@@ -291,7 +291,7 @@ void GlobalUtils::setUseSeed(bool useSeed)
     }
 }
 
-QStringList GlobalUtils::getFiles(const QString & folder, const QStringList & filter)
+QStringList GlobalUtils::getFiles(const QString folder, const QStringList filter)
 {
     QStringList ret;
 
@@ -357,7 +357,7 @@ double GlobalUtils::relu(double x)
     return 0;
 }
 
-double GlobalUtils::distanceVector(const QVector<double>& v1, const QVector<double>& v2)
+double GlobalUtils::distanceVector(const QVector<double> v1, const QVector<double> v2)
 {
     double d = 0;
     for (qint32 i = 0; i < v1.size(); i++)
@@ -391,7 +391,7 @@ QVector<qint32> GlobalUtils::getRandomizedArray(qint32 min, qint32 max)
     return ret;
 }
 
-QString GlobalUtils::getNextAutosavePath(const QString & path, const QString & ending, qint32 max)
+QString GlobalUtils::getNextAutosavePath(const QString path, const QString ending, qint32 max)
 {
     CONSOLE_PRINT("GlobalUtils::getNextAutosavePath", GameConsole::eDEBUG);
     QString finalPath = path + QString::number(1) + ending;

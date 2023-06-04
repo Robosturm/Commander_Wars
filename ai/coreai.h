@@ -226,6 +226,8 @@ public:
     }
     void addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost);
 
+    GameEnums::AiTurnMode getTurnMode() const;
+
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -233,6 +235,7 @@ signals:
      */
     void sigPerformAction(spGameAction pAction, bool fromAiPipe = false);
 public slots:
+    virtual void resetToTurnStart();
     /**
      * @brief getProductionSystem
      * @return
@@ -583,6 +586,10 @@ public slots:
      * @return
      */
     bool shareIslandWithEnemy(QmlVectorUnit* pUnits, QmlVectorBuilding * pBuildings, QmlVectorBuilding * pEnemyBuildings);
+    /**
+     * @brief resetMoveMap
+     */
+    void resetMoveMap();
 protected:
     /**
      * @brief prepareEnemieData
@@ -798,12 +805,11 @@ protected:
      * @return
      */
     static float getBaseDamage(const QString & weaponID, Unit* pDefender);
-
 protected:
     std::vector<spIslandMap> m_IslandMaps;
     double m_buildingValue{1.0f};
     double m_ownUnitValue{1.0f};
-    GameEnums::AiTurnMode turnMode{GameEnums::AiTurnMode_StartOfDay};
+    GameEnums::AiTurnMode m_turnMode{GameEnums::AiTurnMode_StartOfDay};
     AISteps m_aiStep{AISteps::moveUnits};
     qint32 m_aiFunctionStep{0};
     bool m_usedTransportSystem{false};

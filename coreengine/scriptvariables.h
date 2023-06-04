@@ -49,8 +49,8 @@ public slots:
      * @param id identifier for the variable
      * @return the created variables or the existing one if one was already created
      */
-    ScriptVariable* createVariable(const QString & id);
-    ScriptVariable* getVariable(const QString & id);
+    ScriptVariable* createVariable(const QString id);
+    ScriptVariable* getVariable(const QString id);
     /**
      * @brief clear deletes all variables hold by this object.
      */

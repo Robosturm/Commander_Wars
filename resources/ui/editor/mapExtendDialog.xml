@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getStageWidth() - 20</width>
+        <height>settings.getStageHeight() - 80</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>250</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Map:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>"MapTextbox"</Id>
+                <width>settings.getStageWidth() - 520</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The relative path to the map with which the current map should be extended.")</tooltip>
+                <startValue>currentMenu.getMapFile()</startValue>
+                <onEvent>currentMenu.setMapFile(input)</onEvent>
+            </Textbox>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Select File")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Shows the map select dialog ")</tooltip>
+                <onEvent>currentMenu.showSelectMap();</onEvent>
+            </Button>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>250</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Direction:")</text>
+                <font>"main"</font>
+                <fontSize>24</fontSize>
+            </Label>
+            <DropDownMenu>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>NewDirection</Id>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Direction in which the map will be added.")</tooltip>
+                <startValue>GameEnums.Directions_North</startValue>
+                <items>MapExtendingWithMap.getDirectionNames()</items>
+                <onEvent>MapExtendingWithMap.onDirectionChanged(input)</onEvent>
+            </DropDownMenu>
+        </childs>
+    </Panel>
+    <Button>
+        <x>settings.getStageWidth() - 180</x>
+        <y>settings.getStageHeight() - 60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Ok")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Closes the extend map dialog and applies the map.")</tooltip>
+        <onEvent>currentMenu.onOk();</onEvent>
+    </Button>
+    <Button>
+        <x>30</x>
+        <y>settings.getStageHeight() - 60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Cancel the map extend dialog")</tooltip>
+        <onEvent>currentMenu.cancel();</onEvent>
+    </Button>
+</ui>

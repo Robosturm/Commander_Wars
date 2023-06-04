@@ -129,7 +129,7 @@ public slots:
      * @brief setDamageFormula
      * @param newDamageFormula
      */
-    void setDamageFormula(const GameEnums::DamageFormula & newDamageFormula);
+    void setDamageFormula(const GameEnums::DamageFormula newDamageFormula);
     /**
      * @brief getMapPalette
      * @return
@@ -149,7 +149,7 @@ public slots:
      * @brief setMatchType
      * @param newMatchType
      */
-    void setMatchType(const QString & newMatchType);
+    void setMatchType(const QString newMatchType);
     /**
      * @brief reset
      */
@@ -216,7 +216,7 @@ public slots:
      * @brief setPowerGainZone
      * @param newPowerGainZone
      */
-    void setPowerGainZone(const GameEnums::PowerGainZone &newPowerGainZone);
+    void setPowerGainZone(const GameEnums::PowerGainZone newPowerGainZone);
     /**
      * @brief getPowerGainMode
      * @return
@@ -226,7 +226,7 @@ public slots:
      * @brief setPowerGainMode
      * @param newPowerGainMode
      */
-    void setPowerGainMode(const GameEnums::PowerGainMode &newPowerGainMode);
+    void setPowerGainMode(const GameEnums::PowerGainMode newPowerGainMode);
     /**
      * @brief getTransporterRefresh
      * @return
@@ -281,7 +281,7 @@ public slots:
      * @brief setTerrainDefense
      * @param terrainDefense
      */
-    void setTerrainDefense(const quint8 &terrainDefense);
+    void setTerrainDefense(const quint8 terrainDefense);
     /**
      * @brief getN_cosmeticModsAllowed
      * @return
@@ -311,7 +311,7 @@ public slots:
      * @brief setPassword
      * @param password
      */
-    void setPassword(const QString & password);
+    void setPassword(const QString password);
     /**
      * @brief getDescription
      * @return
@@ -321,7 +321,7 @@ public slots:
      * @brief setDescription
      * @param description
      */
-    void setDescription(const QString &description);
+    void setDescription(const QString description);
     /**
      * @brief getPowerGainSpeed
      * @return
@@ -341,7 +341,7 @@ public slots:
      * @brief setAllowedPerks
      * @param allowedPerks
      */
-    void setAllowedPerks(const QStringList &allowedPerks);
+    void setAllowedPerks(const QStringList allowedPerks);
     /**
      * @brief getAllowedActions
      * @return
@@ -351,7 +351,7 @@ public slots:
      * @brief setAllowedActions
      * @param allowedActions
      */
-    void setAllowedActions(const QStringList &allowedActions);
+    void setAllowedActions(const QStringList allowedActions);
     /**
      * @brief getTeamFacingUnits
      * @return
@@ -381,7 +381,7 @@ public slots:
      * @brief setMaxPerkCost
      * @param maxPerkCost
      */
-    void setMaxPerkCost(const qint32 &maxPerkCost);
+    void setMaxPerkCost(const qint32 maxPerkCost);
     /**
      * @brief getMaxPerkCount
      * @return
@@ -431,7 +431,7 @@ public slots:
      * @brief setCOBannlist
      * @param COBannlist
      */
-    void setCOBannlist(const QStringList &COBannlist);
+    void setCOBannlist(const QStringList COBannlist);
     /**
      * @brief getAiAttackTerrain
      * @return
@@ -458,16 +458,16 @@ public slots:
      */
     void checkVictory();
     qint32 getVictoryTeam();
-    void addVictoryRule(const QString & rule);
-    bool hasVictoryRule(const QString & rule);
-    void removeVictoryRule(const QString & rule);
+    void addVictoryRule(const QString rule);
+    bool hasVictoryRule(const QString rule);
+    void removeVictoryRule(const QString rule);
     /**
      * @brief hasGameRule
      * @param rule
      * @return
      */
-    bool hasGameRule(const QString & rule);
-    VictoryRule* getVictoryRule(const QString & rule);
+    bool hasGameRule(const QString rule);
+    VictoryRule* getVictoryRule(const QString rule);
     qint32 getVictoryRuleSize()
     {
         return m_VictoryRules.size();
@@ -477,9 +477,9 @@ public slots:
         return m_VictoryRules[index].get();
     }
 
-    void addGameRule(const QString & rule);
-    GameRule* getGameRule(const QString & rule);
-    void removeGameRule(const QString & rule);    
+    void addGameRule(const QString rule);
+    GameRule* getGameRule(const QString rule);
+    void removeGameRule(const QString rule);
     qint32 getGameRuleSize()
     {
         return m_GameRules.size();
@@ -494,7 +494,7 @@ public slots:
      * @param weatherId
      * @param weatherChance
      */
-    void addWeather(const QString & weatherId, qint32 weatherChance);
+    void addWeather(const QString weatherId, qint32 weatherChance);
     /**
      * @brief changeWeatherChance
      * @param weatherId
@@ -541,13 +541,13 @@ public slots:
      * @brief getCurrentWeather
      * @return
      */
-    Weather* getWeather(const QString & weatherId);
+    Weather* getWeather(const QString weatherId);
     /**
      * @brief getWeatherChance
      * @param index
      * @return
      */
-    qint32 getWeatherChance(const QString & weatherId);
+    qint32 getWeatherChance(const QString weatherId);
     /**
      * @brief getWeatherCount
      * @return
@@ -565,7 +565,7 @@ public slots:
      * @param weatherId
      * @param duration
      */
-    void changeWeather(const QString & weatherId, qint32 duration, qint32 startDay = 0);
+    void changeWeather(const QString weatherId, qint32 duration, qint32 startDay = 0);
     /**
      * @brief changeWeather changes the weather for n-days
      * @param weatherId
@@ -589,13 +589,13 @@ public slots:
     void setNoPower(bool NoPower);
 
     qint32 getUnitLimit() const;
-    void setUnitLimit(const qint32 &UnitLimit);
+    void setUnitLimit(const qint32 UnitLimit);
 
     bool getRandomWeather() const;
     void setRandomWeather(bool randomWeather);
 
     GameEnums::Fog getFogMode() const;
-    void setFogMode(const GameEnums::Fog &FogMode);
+    void setFogMode(const GameEnums::Fog FogMode);
     /**
      * @brief createFogVision
      */

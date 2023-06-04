@@ -278,7 +278,7 @@ void PerkSelection::setHiddenPerks(const QStringList &hiddenPerks)
     m_hiddenPerks = hiddenPerks;
 }
 
-const QStringList & PerkSelection::getPerks() const
+QStringList PerkSelection::getPerks() const
 {
     return m_perks;
 }

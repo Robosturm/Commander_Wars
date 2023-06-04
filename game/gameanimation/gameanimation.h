@@ -38,7 +38,7 @@ public slots:
      * @param text
      * @return
      */
-    qint32 getFontWidth(const QString & font, const QString & text) const;
+    qint32 getFontWidth(const QString font, const QString text) const;
     /**
      * @brief getMap
      * @return

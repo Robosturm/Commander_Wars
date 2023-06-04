@@ -111,6 +111,26 @@ Unit::ModdingFlags Unit::getModdingFlags() const
     return m_ModdingFlags;
 }
 
+bool Unit::setMapForExtending(GameMap * newMap)
+{
+    bool success = false;
+    m_pMap = newMap;
+    if (m_pOwner != nullptr)
+    {
+        auto id = m_pOwner->getPlayerID();
+        if (id < m_pMap->getPlayerCount())
+        {
+            setOwner(m_pMap->getPlayer(id));
+            success = true;
+        }
+        else
+        {
+            success = false;;
+        }
+    }
+    return success;
+}
+
 void Unit::applyMod()
 {
     if ((m_ModdingFlags & ModdingFlags::FlagAmmo1) == ModdingFlags::None)
@@ -221,7 +241,7 @@ void Unit::removeShineTween()
     }
 }
 
-void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)
+void Unit::loadSprite(const QString spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)
 {
     if (addPlayerColor)
     {
@@ -233,7 +253,7 @@ void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSp
     }
 }
 
-void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite, qint32 frameTime)
+void Unit::loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, bool flipSprite, qint32 frameTime)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -505,7 +525,7 @@ QString Unit::getUnitRangName(qint32 rang)
     return tr("Unknown");
 }
 
-void Unit::setUnitRank(const qint32 &UnitRank, bool force)
+void Unit::setUnitRank(const qint32 UnitRank, bool force)
 {
     if (m_pMap != nullptr)
     {
@@ -595,7 +615,7 @@ qint32 Unit::getVision(QPoint position)
     return points;
 }
 
-qint32 Unit::getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString &))
+qint32 Unit::getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString))
 {
 
     qint32 bonus = 0;
@@ -617,7 +637,7 @@ GameMap *Unit::getMap() const
     return m_pMap;
 }
 
-void Unit::setVision(const qint32 &value)
+void Unit::setVision(const qint32 value)
 {
     m_vision = value;
 }
@@ -670,7 +690,7 @@ qint32 Unit::getMaxRangeAtPosition(QPoint position)
     return points;
 }
 
-void Unit::setMaxRange(const qint32 &value)
+void Unit::setMaxRange(const qint32 value)
 {
     m_maxRange = value;
 }
@@ -730,7 +750,7 @@ qint32 Unit::getBonusMinRange(QPoint position)
     return rangeModifier;
 }
 
-void Unit::setMinRange(const qint32 &value)
+void Unit::setMinRange(const qint32 value)
 {
     m_minRange = value;
 }
@@ -1179,7 +1199,7 @@ void Unit::loadUnit(Unit* pUnit, qint32 index)
     }
 }
 
-void Unit::loadSpawnedUnit(const QString & unitId)
+void Unit::loadSpawnedUnit(const QString unitId)
 {
     CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, GameConsole::eDEBUG);
     spUnit pUnit = spUnit::create(unitId, m_pOwner, true, m_pMap);
@@ -1189,7 +1209,7 @@ void Unit::loadSpawnedUnit(const QString & unitId)
     }
 }
 
-Unit* Unit::spawnUnit(const QString & unitID)
+Unit* Unit::spawnUnit(const QString unitID)
 {
     CONSOLE_PRINT("Unit::spawnUnit " + unitID, GameConsole::eDEBUG);
 
@@ -1321,12 +1341,12 @@ bool Unit::isTransporter()
     return false;
 }
 
-void Unit::postAction(spGameAction & pAction)
+void Unit::postAction(GameAction * pAction)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "postAction";
     QJSValueList args({pInterpreter->newQObject(this),
-                       pInterpreter->newQObject(pAction.get()),
+                       pInterpreter->newQObject(pAction),
                        pInterpreter->newQObject(m_pMap)});
     pInterpreter->doFunction(m_UnitID, function1, args);
 }
@@ -2005,7 +2025,7 @@ qint32 Unit::getCapturePoints() const
     return m_capturePoints;
 }
 
-void Unit::setCapturePoints(const qint32 &value)
+void Unit::setCapturePoints(const qint32 value)
 {
     m_capturePoints = value;
     if (m_capturePoints < 0)
@@ -2032,7 +2052,7 @@ qint32 Unit::getBaseMovementPoints() const
     return m_baseMovementPoints;
 }
 
-void Unit::setBaseMovementPoints(const qint32 &value)
+void Unit::setBaseMovementPoints(const qint32 value)
 {
     m_baseMovementPoints = value;
 }
@@ -2117,7 +2137,7 @@ qint32 Unit::getMaxFuel() const
     return m_maxFuel;
 }
 
-void Unit::setMaxFuel(const qint32 &value)
+void Unit::setMaxFuel(const qint32 value)
 {
     m_maxFuel = value;
 }
@@ -2127,7 +2147,7 @@ qint32 Unit::getFuel() const
     return m_fuel;
 }
 
-void Unit::setFuel(const qint32 &value)
+void Unit::setFuel(const qint32 value)
 {
     if (m_maxFuel > 0)
     {
@@ -2152,7 +2172,7 @@ qint32 Unit::getMaxAmmo2() const
     return m_maxAmmo2;
 }
 
-void Unit::setMaxAmmo2(const qint32 &value)
+void Unit::setMaxAmmo2(const qint32 value)
 {
     m_maxAmmo2 = value;
 }
@@ -2179,12 +2199,12 @@ QString Unit::getWeapon2ID() const
     return m_weapon2ID;
 }
 
-void Unit::setWeapon2ID(const QString &value)
+void Unit::setWeapon2ID(const QString value)
 {
     m_weapon2ID = value;
 }
 
-void Unit::setAmmo2(const qint32 &value)
+void Unit::setAmmo2(const qint32 value)
 {
     m_ammo2 = value;
     if ((m_ammo2 < 0) && (m_maxAmmo2 > 0))
@@ -2230,7 +2250,7 @@ qint32 Unit::getMaxAmmo1() const
     return m_maxAmmo1;
 }
 
-void Unit::setMaxAmmo1(const qint32 &value)
+void Unit::setMaxAmmo1(const qint32 value)
 {
     m_maxAmmo1 = value;
 }
@@ -2240,7 +2260,7 @@ QString Unit::getWeapon1ID() const
     return m_weapon1ID;
 }
 
-void Unit::setWeapon1ID(const QString &value)
+void Unit::setWeapon1ID(const QString value)
 {
     m_weapon1ID = value;
 }
@@ -2250,7 +2270,7 @@ qint32 Unit::getAmmo1() const
     return m_ammo1;
 }
 
-void Unit::setAmmo1(const qint32 &value)
+void Unit::setAmmo1(const qint32 value)
 {
     m_ammo1 = value;
     if ((m_ammo1 < 0) && (m_maxAmmo1 > 0))
@@ -2314,7 +2334,7 @@ qint32 Unit::getHpRounded() const
     return GlobalUtils::roundUp(m_hp);
 }
 
-void Unit::setHp(const qreal &value)
+void Unit::setHp(const qreal value)
 {
     m_hp = GlobalUtils::roundFloor(value, FLOAT_PRECISION);
     if (m_hp > MAX_UNIT_HP)
@@ -2327,7 +2347,7 @@ void Unit::setHp(const qreal &value)
     }
 }
 
-void Unit::setVirtualHpValue(const qreal &value)
+void Unit::setVirtualHpValue(const qreal value)
 {
     m_virtualHp = GlobalUtils::roundFloor(value, FLOAT_PRECISION);
 }
@@ -2554,7 +2574,7 @@ QString Unit::getUnitDamageID()
     return m_UnitID;
 }
 
-qreal Unit::getUnitDamage(const QString & weaponID)
+qreal Unit::getUnitDamage(const QString weaponID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitDamage";
@@ -2812,7 +2832,7 @@ void Unit::moveUnitAction(GameAction* pAction)
     moveUnit(path);
 }
 
-void Unit::moveUnit(QVector<QPoint> & movePath)
+void Unit::moveUnit(QVector<QPoint> movePath)
 {
     if (movePath.size() > 1)
     {
@@ -2820,7 +2840,7 @@ void Unit::moveUnit(QVector<QPoint> & movePath)
     }
 }
 
-void Unit::createMoveVision(QVector<QPoint> & movePath)
+void Unit::createMoveVision(QVector<QPoint> movePath)
 {
     if (movePath.size() < 1)
     {
@@ -3011,7 +3031,7 @@ qint32 Unit::getCaptureRate(QPoint position)
     return getHpRounded() + modifier;
 }
 
-void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
+void Unit::loadIcon(const QString iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
 {
     if (iconID.isEmpty())
     {
@@ -3070,7 +3090,7 @@ UnitPathFindingSystem* Unit::createUnitPathFindingSystem(Player* pPlayer)
     return pPfs;
 }
 
-void Unit::unloadIconAndDuration(const QString & iconID)
+void Unit::unloadIconAndDuration(const QString iconID)
 {
     qint32 i = 0;
     while (i < m_IconDurations.size())
@@ -3087,7 +3107,7 @@ void Unit::unloadIconAndDuration(const QString & iconID)
     unloadIcon(iconID);
 }
 
-void Unit::unloadIcon(const QString & iconID)
+void Unit::unloadIcon(const QString iconID)
 {
     
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
@@ -3140,17 +3160,17 @@ QVector<QPoint> Unit::getAiMovePath() const
     return m_AiMovePath;
 }
 
-void Unit::setAiMovePath(const QVector<QPoint> &AiMovePath)
+void Unit::setAiMovePath(const QVector<QPoint> AiMovePath)
 {
     m_AiMovePath = AiMovePath;
 }
 
-void Unit::addAiMovePathPoint(const QPoint &point)
+void Unit::addAiMovePathPoint(const QPoint point)
 {
     m_AiMovePath.append(point);
 }
 
-void Unit::setAiMovePathPoint(qint32 index, const QPoint &point)
+void Unit::setAiMovePathPoint(qint32 index, const QPoint point)
 {
     if (index < m_AiMovePath.size() && index >= 0)
     {
@@ -3184,7 +3204,7 @@ QString Unit::getCustomName() const
     return m_customName;
 }
 
-void Unit::setCustomName(const QString &customName)
+void Unit::setCustomName(const QString customName)
 {
     m_customName = customName;
 }
@@ -3194,7 +3214,7 @@ qint32 Unit::getVisionHigh() const
     return m_VisionHigh;
 }
 
-void Unit::setVisionHigh(const qint32 &VisionHigh)
+void Unit::setVisionHigh(const qint32 VisionHigh)
 {
     m_VisionHigh = VisionHigh;
 }
@@ -3343,7 +3363,7 @@ void Unit::updateIconTweens()
     
 }
 
-void Unit::setMovementType(const QString &movementType)
+void Unit::setMovementType(const QString movementType)
 {
     m_MovementType = movementType;
 }
@@ -3389,7 +3409,7 @@ void Unit::modifyUnit(qint32 hpChange, qint32 ammo1Change, qint32 ammo2Change, q
     setFuel(getFuel() + fuelChange);
 }
 
-void Unit::setAiMode(const GameEnums::GameAi &AiMode)
+void Unit::setAiMode(const GameEnums::GameAi AiMode)
 {
     m_AiMode = AiMode;
     unloadIcon("defensive");
@@ -4100,7 +4120,7 @@ void Unit::showRanges()
     updateCustomRangeActors();
 }
 
-void Unit::showCustomRange(const QString & id, qint32 range, QColor color)
+void Unit::showCustomRange(const QString id, qint32 range, QColor color)
 {
     bool found = false;
     for (auto & customRangeInfo : m_customRangeInfo)
@@ -4131,7 +4151,7 @@ void Unit::showCustomRange(const QString & id, qint32 range, QColor color)
     }
 }
 
-void Unit::removeCustomRange(const QString & id)
+void Unit::removeCustomRange(const QString id)
 {
     for (qint32 i = 0; i < m_customRangeInfo.size(); ++i)
     {
@@ -4162,7 +4182,7 @@ void Unit::updateCustomRangeActors()
     }
 }
 
-void Unit::transformUnit(const QString & unitID)
+void Unit::transformUnit(const QString unitID)
 {
     for (auto & sprite : m_pUnitWaitSprites)
     {

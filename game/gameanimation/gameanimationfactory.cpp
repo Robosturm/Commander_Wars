@@ -95,7 +95,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(GameMap* pMap, U
     return createWalkingAnimationV2(pMap, pUnit, pAction->getMovePath());
 }
 
-GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> & movePath)
+GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> movePath)
 {
     CONSOLE_PRINT("Creating new walking animation", GameConsole::eDEBUG);
     spGameAnimationWalk pGameAnimationWalk = spGameAnimationWalk::create(pUnit, movePath, pMap);
@@ -125,7 +125,7 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QC
     return pGameAnimationPower.get();
 }
 
-GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pMap, const QString & text, const QString & coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
+GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pMap, const QString text, const QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
     CONSOLE_PRINT("Creating new dialog animation", GameConsole::eDEBUG);
     spGameAnimationDialog pGameAnimationDialog = spGameAnimationDialog::create(frameTime, pMap);

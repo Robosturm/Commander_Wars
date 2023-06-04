@@ -308,7 +308,7 @@ quint32 GameRecorder::getDestroyedUnits(qint32 player)
     return 0;
 }
 
-void GameRecorder::buildUnit(qint32 player, const QString & unitId, qint32 owner)
+void GameRecorder::buildUnit(qint32 player, const QString unitId, qint32 owner)
 {
     if (player >= 0 && player < m_deployedUnits.size())
     {
@@ -343,7 +343,7 @@ quint32 GameRecorder::getDeployLimit() const
     return m_deployLimit;
 }
 
-void GameRecorder::setDeployLimit(const quint32 &deployLimit)
+void GameRecorder::setDeployLimit(const quint32 deployLimit)
 {
     m_deployLimit = deployLimit;
 }
@@ -353,7 +353,7 @@ qint32 GameRecorder::getMapTime() const
     return m_mapTime;
 }
 
-void GameRecorder::setMapTime(const qint32 &mapTime)
+void GameRecorder::setMapTime(const qint32 mapTime)
 {
     m_mapTime = mapTime;
 }

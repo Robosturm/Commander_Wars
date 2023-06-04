@@ -20,6 +20,7 @@
 #include "ingamescriptsupport/events/scripteventplaysound.h"
 #include "ingamescriptsupport/events/scripteventbuildingfirecounter.h"
 #include "ingamescriptsupport/events/scripteventvolcanfire.h"
+#include "ingamescriptsupport/events/scripteventextendmap.h"
 
 #include "coreengine/interpreter.h"
 
@@ -44,6 +45,7 @@ const char* const ScriptEvent::EventCenterMap = "Center Map";
 const char* const ScriptEvent::EventPlaySound = "Play Sound";
 const char* const ScriptEvent::EventBuildingFireCounter = "BuildingFireCounter";
 const char* const ScriptEvent::EventVolcanFire = "VolcanFire";
+const char* const ScriptEvent::EventExtendMap = "ExtendMap";
 
 
 ScriptEvent::ScriptEvent(GameMap* pMap, EventType type)
@@ -140,6 +142,10 @@ spScriptEvent ScriptEvent::createReadEvent(GameMap* pMap, QTextStream& rStream, 
     else if (line.endsWith(EventVolcanFire))
     {
         ret = spScriptEventVolcanFire::create(pMap);
+    }
+    else if (line.endsWith(EventExtendMap))
+    {
+        ret = spScriptEventExtendMap::create(pMap);
     }
     if (ret.get() != nullptr)
     {
@@ -238,6 +244,10 @@ spScriptEvent ScriptEvent::createEvent(GameMap* pMap, EventType type)
         case EventType::VolcanFire:
         {
             return spScriptEventVolcanFire::create(pMap);
+        }
+        case EventType::ExtendMap:
+        {
+            return spScriptEventExtendMap::create(pMap);
         }
     }        
     return spScriptEvent();

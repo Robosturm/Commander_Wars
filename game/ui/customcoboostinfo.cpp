@@ -7,12 +7,12 @@ CustomCoBoostInfo::CustomCoBoostInfo()
     Interpreter::setCppOwnerShip(this);
 }
 
-const QString &CustomCoBoostInfo::getIconId() const
+const QString CustomCoBoostInfo::getIconId() const
 {
     return m_iconId;
 }
 
-void CustomCoBoostInfo::setIconId(const QString &newIconId)
+void CustomCoBoostInfo::setIconId(const QString newIconId)
 {
     m_iconId = newIconId;
 }
@@ -47,18 +47,18 @@ const QStringList &CustomCoBoostInfo::getBonusIcons() const
     return m_bonusIcons;
 }
 
-void CustomCoBoostInfo::addBonusIcon(const QString & id, const QString & value)
+void CustomCoBoostInfo::addBonusIcon(const QString id, const QString value)
 {
     m_bonusIcons.append(id);
     m_iconBonus.append(value);
 }
 
-const QString &CustomCoBoostInfo::getLink() const
+const QString CustomCoBoostInfo::getLink() const
 {
     return m_link;
 }
 
-void CustomCoBoostInfo::setLink(const QString &newLink)
+void CustomCoBoostInfo::setLink(const QString newLink)
 {
     m_link = newLink;
 }

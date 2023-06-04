@@ -98,7 +98,7 @@ public slots:
      * @param color
      * @return
      */
-    static GameAnimationDialog* createGameAnimationDialog(GameMap* pMap, const QString & text, const QString & coid, GameEnums::COMood mood, QColor color, quint32 frameTime = GameMap::frameTime);
+    static GameAnimationDialog* createGameAnimationDialog(GameMap* pMap, const QString text, const QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime = GameMap::frameTime);
     /**
      * @brief createWalkingAnimation creates a walking animation. This doesn't move the unit
      * @param pUnit the unit that will walk
@@ -113,7 +113,7 @@ public slots:
      * @param movePath
      * @return
      */
-    static GameAnimationWalk* createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> & movePath);
+    static GameAnimationWalk* createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> movePath);
     /**
      * @brief createGameAnimationCapture
      * @return

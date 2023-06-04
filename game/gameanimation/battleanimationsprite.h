@@ -204,7 +204,7 @@ public slots:
      * @brief setMaxUnitCount
      * @param value
      */
-    void setMaxUnitCount(const qint32 &value);
+    void setMaxUnitCount(const qint32 value);
     /**
      * @brief loadAnimation
      * @param animationType animation type we want to load
@@ -252,7 +252,7 @@ public slots:
      * @brief setHpRounded
      * @param value simulated hp for the sprite
      */
-    void setHpRounded(const qint32 &value);
+    void setHpRounded(const qint32 value);
     /**
      * @brief getUnitPositionOffset
      * @param unitIdx

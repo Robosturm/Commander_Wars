@@ -120,6 +120,11 @@ public:
     {
         m_sortValues = newSortValues;
     }
+    /**
+     * @brief setMapForExtending
+     * @param newMap
+     */
+    void setMapForExtending(GameMap * newMap);
 
 public slots:
     /**
@@ -233,13 +238,13 @@ public slots:
      * @param sprite the sprite id
      * @param addPlayerColor true for adding player color to the sprite
      */
-    void loadSprite(const QString & sprite, bool addPlayerColor, qint32 frameTime = 400, QPoint pos = QPoint(0, 0));
+    void loadSprite(const QString sprite, bool addPlayerColor, qint32 frameTime = 400, QPoint pos = QPoint(0, 0));
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400, QPoint pos = QPoint(0, 0), const QString & forcedPalette = "", bool forceNeutral = false);
+    void loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400, QPoint pos = QPoint(0, 0), const QString forcedPalette = "", bool forceNeutral = false);
     /**
      * @brief unloadSprites
      */
@@ -356,7 +361,7 @@ public slots:
      * @brief getCostReduction
      * @return
      */
-    qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
+    qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
     /**
      * @brief getOffensiveFieldBonus
      * @param pAttacker
@@ -486,7 +491,7 @@ public slots:
      * @param spriteID
      * @param mode
      */
-    void loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 100);
+    void loadWeatherOverlaySpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime = 100);
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     QVector<oxygine::spSprite> m_pWeatherOverlaySprites;

@@ -216,7 +216,7 @@ public slots:
      * @param player
      * @param unitId is optional to make it upwards compatible
      */
-    void buildUnit(qint32 player, const QString & unitId = "", qint32 owner = -1);
+    void buildUnit(qint32 player, const QString unitId = "", qint32 owner = -1);
     /**
      * @brief getBuildedUnits
      * @param player
@@ -237,7 +237,7 @@ public slots:
      * @brief setMapTime
      * @param mapTime
      */
-    void setMapTime(const qint32 &mapTime);
+    void setMapTime(const qint32 mapTime);
     /**
      * @brief getDeployLimit
      * @return
@@ -247,7 +247,7 @@ public slots:
      * @brief setDeployLimit
      * @param deployLimit
      */
-    void setDeployLimit(const quint32 &deployLimit);
+    void setDeployLimit(const quint32 deployLimit);
     /**
      * @brief logAttack
      * @param day

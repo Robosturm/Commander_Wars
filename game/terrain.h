@@ -129,6 +129,11 @@ public:
      * @return
      */
     qint32 getMapTerrainDrawPriority();
+    /**
+     * @brief setMapForExtending
+     * @param newMap
+     */
+    void setMapForExtending(GameMap * newMap);
 
 public slots:
     /**
@@ -140,14 +145,14 @@ public slots:
      * @brief setPalette
      * @param newPalette
      */
-    void setPalette(const QString & newPalette);
+    void setPalette(const QString newPalette);
 
     QString getDefaultPalette();
     /**
      * @brief setTerrainPalette
      * @param newPalette
      */
-    void setTerrainPalette(const QString & newPalette, bool includeBaseTerrain = true);
+    void setTerrainPalette(const QString newPalette, bool includeBaseTerrain = true);
     /**
      * @brief setTerrainPaletteGroup
      * @param newPaletteGroup
@@ -176,17 +181,17 @@ public slots:
      * @brief setCustomOverlays
      * @param newCustomOverlays
      */
-    void setCustomOverlays(const QStringList &newCustomOverlays, const QStringList & newPalettes = QStringList());
+    void setCustomOverlays(const QStringList newCustomOverlays, const QStringList newPalettes = QStringList());
     /**
      * @brief addCustomOverlay
      * @param newCustomOverlay
      */
-    void addCustomOverlay(const QString &customOverlay, const QString & palette = "");
+    void addCustomOverlay(const QString customOverlay, const QString palette = "");
     /**
      * @brief removeCustomOverlay
      * @param customOverlay
      */
-    void removeCustomOverlay(const QString &customOverlay);
+    void removeCustomOverlay(const QString customOverlay);
     /**
      * @brief setSpriteVisibility
      * @param value
@@ -201,7 +206,7 @@ public slots:
      * @brief setTerrainSpriteName only avaible for ingame editor
      * @return
      */
-    void setTerrainSpriteName(const QString &terrainSpriteName);
+    void setTerrainSpriteName(const QString terrainSpriteName);
     /**
      * @brief getShowInEditor
      * @param unitId
@@ -260,7 +265,7 @@ public slots:
     /**
      * @brief removeTerrainOverlay
      */
-    void removeTerrainOverlay(const QString & id);
+    void removeTerrainOverlay(const QString id);
     /**
      * @brief getVariables
      * @return
@@ -317,7 +322,7 @@ public slots:
      * @brief setTerrainDescription
      * @param terrainDescription
      */
-    void setTerrainDescription(const QString &terrainDescription);
+    void setTerrainDescription(const QString terrainDescription);
     /**
      * @brief getVisionHigh
      * @return
@@ -327,7 +332,7 @@ public slots:
      * @brief setVisionHigh
      * @param VisionHigh
      */
-    void setVisionHigh(const qint32 &VisionHigh);
+    void setVisionHigh(const qint32 VisionHigh);
     /**
      * @brief getTotalVisionHigh
      * @return
@@ -367,16 +372,16 @@ public slots:
     QString getTerrainID() const;
 
     QString getTerrainName() const;
-    void setTerrainName(const QString &value, bool customName = false);
+    void setTerrainName(const QString value, bool customName = false);
 
     qint32 getX() const;
-    void setX(const qint32 &value);
+    void setX(const qint32 value);
 
     qint32 getHp() const;
-    void setHp(const qint32 &value);
+    void setHp(const qint32 value);
 
     qint32 getY() const;
-    void setY(const qint32 &value);
+    void setY(const qint32 value);
     /**
      * @brief Terrain::getVision
      * @return
@@ -406,17 +411,17 @@ public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
      */
-    void createBaseTerrain(const QString & currentTerrainID, const QString & currentTerrainPalette = "");
+    void createBaseTerrain(const QString currentTerrainID, const QString currentTerrainPalette = "");
     /**
      * @brief loadBaseTerrain loads a base terrain with the given id
      * @param terrainID
      */
-    void loadBaseTerrain(const QString & terrainID, const QString & currentTerrainPalette = "");
+    void loadBaseTerrain(const QString terrainID, const QString currentTerrainPalette = "");
     /**
      * @brief loadBaseSprite loads the sprite for this terrain
      * @param spriteID
      */
-    void loadBaseSprite(const QString & spriteID, qint32 frameTime = 100, qint32 startFrame = -1, qint32 endFrame = -1);
+    void loadBaseSprite(const QString spriteID, qint32 frameTime = 100, qint32 startFrame = -1, qint32 endFrame = -1);
     /**
      * @brief getSurroundings returns a string containing the directions which fulfill the given rule
      * @param list the list as string split with ,
@@ -428,12 +433,12 @@ public slots:
      * @param inverted for flow direction
      * @return
      */
-    QString getSurroundings(const QString & list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1, bool inverted = false);
+    QString getSurroundings(const QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1, bool inverted = false);
     /**
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID
      */
-    void loadOverlaySprite(const QString & spriteID, qint32 startFrame = -1, qint32 endFrame = -1, const QString & palette = "", bool customOverlay = false);
+    void loadOverlaySprite(const QString spriteID, qint32 startFrame = -1, qint32 endFrame = -1, const QString palette = "", bool customOverlay = false);
     /**
      * @brief getBaseTerrainID finds the base terrain id of the real base terrain recursivly
      * @return the base terrainID
@@ -518,7 +523,7 @@ public slots:
      * @brief loadBuilding deletes the current building by loading the given building ID.
      * @param buildingID
      */
-    void loadBuilding(const QString & buildingID);
+    void loadBuilding(const QString buildingID);
     /**
      * @brief getDefense
      */
@@ -567,14 +572,14 @@ public slots:
      * @param spriteId
      * @return
      */
-    bool existsResAnim(const QString & spriteId) const;
+    bool existsResAnim(const QString spriteId) const;
     /**
      * @brief getFittingResAnim
      * @param spriteIdStart
      * @param spriteIdEnd
      * @return
      */
-    QString getFittingResAnim(const QString & spriteIdStart, const QString & spriteIdEnd) const;
+    QString getFittingResAnim(const QString spriteIdStart, const QString spriteIdEnd) const;
     /**
      * @brief updateFlowSprites
      * @param pPfs
@@ -604,13 +609,13 @@ public slots:
      * @param index
      * @return
      */
-    static QString getPaletteId(qint32 index, const QString & terrainId);
+    static QString getPaletteId(qint32 index, const QString terrainId);
     /**
      * @brief getPaletteName
      * @param id
      * @return
      */
-    static QString getPaletteName(const QString & id);
+    static QString getPaletteName(const QString id);
     /**
      * @brief getPaletteNameFromIndex
      * @param id
@@ -622,14 +627,14 @@ public slots:
      * @param direction
      * @return
      */
-    QString getNeighbourPalette(GameEnums::Directions direction, const QString & baseTerrainId = "");
+    QString getNeighbourPalette(GameEnums::Directions direction, const QString baseTerrainId = "");
     /**
      * @brief getNeighbourPalette
      * @param direction
      * @param baseTerrainId
      * @return
      */
-    QString getNeighbourDirectionsPalette(QString direction, const QString & baseTerrainId = "");
+    QString getNeighbourDirectionsPalette(QString direction, const QString baseTerrainId = "");
 protected:
     /**
      * @brief createBuildingDownStream

@@ -134,7 +134,7 @@ qint32 Viewplayer::getViewType() const
     return m_ViewType;
 }
 
-void Viewplayer::setViewType(const qint32 &ViewType)
+void Viewplayer::setViewType(const qint32 ViewType)
 {
     m_ViewType = ViewType;
 }

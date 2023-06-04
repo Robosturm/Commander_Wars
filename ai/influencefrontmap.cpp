@@ -234,6 +234,14 @@ qint32 InfluenceFrontMap::getIslandFromUnitId(const QString & unitId, std::map<Q
     return island;
 }
 
+void InfluenceFrontMap::clear()
+{
+    m_InfluenceMap.clear();
+    m_frontLines.clear();
+    m_info.clear();
+    reset();
+}
+
 void InfluenceFrontMap::reset()
 {
     AI_CONSOLE_PRINT("InfluenceFrontMap::reset()", GameConsole::eDEBUG);

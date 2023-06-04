@@ -48,6 +48,8 @@ var COREAI =
     airUnits : ["K_HELI", "DUSTER", "BOMBER", "ZCOUNIT_KIROV", "FIGHTER", "WATERPLANE"],
     stealthAirUnits : ["STEALTHBOMBER"],
     antiAirAirUnits : ["FIGHTER", "STEALTHBOMBER", "DUSTER"],
+    heavyAirUnits : ["BOMBER", "FIGHTER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
+    lightAirUnits : ["K_HELI", "DUSTER"],
     supplyUnits : ["APC"],
     minInfantryTransporterMapSize : 40 * 40,
     minApcResupplyDay : 15,
@@ -352,21 +354,18 @@ var COREAI =
         {
            antiAirUnits = antiAirUnits.concat(COREAI.antiAirSeaUnits);
         }
-        var anitAirUnitCount = ai.getUnitCount(units, antiAirUnits, 5);
-        var anitAirAirUnitCount = ai.getUnitCount(units, COREAI.antiAirAirUnits, 5);
-        var stealthBomberUnitCount = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, COREAI.stealthAirUnits, 18, 5);
-        var enemyAirUnits = ai.getEnemyUnitCountNearOwnUnits(units, enemyUnits, COREAI.airUnits, 18, 5);
-        if ((enemyAirUnits > 0 && anitAirUnitCount === 0) ||
-                (enemyAirUnits > 2 && anitAirUnitCount === 1) ||
-                (anitAirUnitCount > 0 && enemyAirUnits / anitAirUnitCount >= 3))
-        {
-            system.addForcedProduction(antiAirUnits);
-        }
-        if ((stealthBomberUnitCount > 0 && anitAirAirUnitCount === 0) ||
-            (stealthBomberUnitCount > 2 && anitAirAirUnitCount === 1) ||
-            (anitAirAirUnitCount > 0 && stealthBomberUnitCount / anitAirAirUnitCount >= 3))
+        var antiAirUnitCount = ai.getUnitCount(units, antiAirUnits);
+        var antiAirAirUnitCount = ai.getUnitCount(units, COREAI.antiAirAirUnits);
+        var enemyJets = ai.getUnitCount(enemyUnits, COREAI.heavyAirUnits, 5);
+        var enemyCopters = ai.getUnitCount(enemyUnits, COREAI.lightAirUnits, 5);
+        if (enemyJets > antiAirAirUnitCount)
         {
             system.addForcedProduction(COREAI.antiAirAirUnits);
+        }
+        if (((enemyCopters > 0) && (antiAirUnitCount === 0) ) ||
+            ((antiAirUnitCount > 0) && ((enemyCopters / antiAirUnitCount) > 2)))
+        {
+            system.addForcedProduction(antiAirUnits);
         }
     },
 

@@ -180,7 +180,7 @@ void HeavyAi::process()
     else
     {
         setupTurn(m_pBuildings);
-        turnMode = GameEnums::AiTurnMode_DuringDay;
+        m_turnMode = GameEnums::AiTurnMode_DuringDay;
         if (CoreAI::buildCOUnit(m_pUnits)){}
         // use core ai here for the start
         else if (flareType != FunctionType::JavaScript && CoreAI::moveFlares(m_pUnits)){}
@@ -216,7 +216,7 @@ void HeavyAi::process()
 void HeavyAi::endTurn()
 {
     m_aiStep = AISteps::moveUnits;
-    turnMode = GameEnums::AiTurnMode_EndOfDay;
+    m_turnMode = GameEnums::AiTurnMode_EndOfDay;
     m_pUnits.free();
     m_pEnemyUnits.free();
     m_usedPredefinedAi = false;
@@ -226,7 +226,7 @@ void HeavyAi::endTurn()
     else
     {
         // end the turn for the player
-        turnMode = GameEnums::AiTurnMode_StartOfDay;
+        m_turnMode = GameEnums::AiTurnMode_StartOfDay;
         finishTurn();
     }
 }

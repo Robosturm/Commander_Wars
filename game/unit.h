@@ -172,12 +172,35 @@ public:
     {
         return m_TransportUnits;
     }
-public slots:
+    /**
+     * @brief setMapForExtending
+     * @param newMap
+     */
+    bool setMapForExtending(GameMap * newMap);
+    /**
+     * @brief isStatusStealthedAndInvisible
+     * @param pOwner
+     * @return
+     */
+    bool isStatusStealthedAndInvisible(Player* pPlayer, bool & terrainHide);
+
+    // js invokable functions
+    /**
+     * @brief getX
+     * @return  x coordinates of this unit
+     */
+    Q_INVOKABLE qint32 getX() const;
+    /**
+     * @brief getY
+     * @return  y coordinates of this unit
+     */
+    Q_INVOKABLE qint32 getY() const;
     /**
      * @brief createUnitPathFindingSystem Note: the path finding system needs to be deleted by the caller using remove()
      * @return a path finding system that is explored for this unit using the given player information
      */
-    UnitPathFindingSystem* createUnitPathFindingSystem(Player* pPlayer);
+    Q_INVOKABLE UnitPathFindingSystem* createUnitPathFindingSystem(Player* pPlayer);
+public slots:
     /**
      * @brief getActionList
      * @return the string id list of actions this units can perform
@@ -213,7 +236,7 @@ public slots:
      * @brief setVirtualHpValue
      * @param value
      */
-    void setVirtualHpValue(const qreal &value);
+    void setVirtualHpValue(const qreal value);
     /**
      * @brief getVirtualHp
      * @return
@@ -228,7 +251,7 @@ public slots:
      * @brief transformUnit
      * @param unitID
      */
-    void transformUnit(const QString & unitID);
+    void transformUnit(const QString unitID);
     /**
      * @brief getCursorInfoRange
      * @return
@@ -248,18 +271,18 @@ public slots:
      * @brief setAiMovePath
      * @param AiMovePath
      */
-    void setAiMovePath(const QVector<QPoint> &AiMovePath);
+    void setAiMovePath(const QVector<QPoint> AiMovePath);
     /**
      * @brief addAiMovePathPoint
      * @param point
      */
-    void addAiMovePathPoint(const QPoint &point);
+    void addAiMovePathPoint(const QPoint point);
     /**
      * @brief setAiMovePathPoint
      * @param index
      * @param point
      */
-    void setAiMovePathPoint(qint32 index, const QPoint &point);
+    void setAiMovePathPoint(qint32 index, const QPoint point);
     /**
      * @brief removeLastAiMovePathPoint
      */
@@ -282,7 +305,7 @@ public slots:
      * @brief setCustomName
      * @param customName
      */
-    void setCustomName(const QString &customName);
+    void setCustomName(const QString customName);
     /**
      * @brief getVisionHigh
      * @return
@@ -292,7 +315,7 @@ public slots:
      * @brief setVisionHigh
      * @param VisionHigh
      */
-    void setVisionHigh(const qint32 &VisionHigh);
+    void setVisionHigh(const qint32 VisionHigh);
     /**
      * @brief getTotalVisionHigh
      * @return
@@ -325,7 +348,7 @@ public slots:
      * @param unitID
      * @return
      */
-    Unit* spawnUnit(const QString & unitID);
+    Unit* spawnUnit(const QString unitID);
     /**
      * @brief getAiMode
      * @return
@@ -335,7 +358,7 @@ public slots:
      * @brief setAiMode
      * @param AiMode
      */
-    void setAiMode(const GameEnums::GameAi &AiMode);
+    void setAiMode(const GameEnums::GameAi AiMode);
     /**
      * @brief getTransportHidden
      * @param pPlayer
@@ -412,7 +435,7 @@ public slots:
      * @brief setBaseMovementPoints the base movement points of this unit
      * @param value
      */
-    void setBaseMovementPoints(const qint32 &value);
+    void setBaseMovementPoints(const qint32 value);
     /**
      * @brief getBaseMovementCosts
      * @param x
@@ -427,43 +450,43 @@ public slots:
     qint32 getMovementCosts(qint32 x, qint32 y, qint32 curX = -1, qint32 curY = -1, bool trapChecking = false);
 
     qreal getHp() const;
-    void setHp(const qreal &value);
+    void setHp(const qreal value);
     qint32 getHpRounded() const;
 
     bool hasDirectWeapon();
 
     qint32 getAmmo1() const;
-    void setAmmo1(const qint32 &value);
+    void setAmmo1(const qint32 value);
     bool hasAmmo1() const;
     void reduceAmmo1(qint32 value);
     GameEnums::WeaponType getTypeOfWeapon1();
 
     qint32 getMaxAmmo1() const;
-    void setMaxAmmo1(const qint32 &value);
+    void setMaxAmmo1(const qint32 value);
 
     QString getWeapon1ID() const;
-    void setWeapon1ID(const QString &value);
+    void setWeapon1ID(const QString value);
 
     qint32 getAmmo2() const;
-    void setAmmo2(const qint32 &value);
+    void setAmmo2(const qint32 value);
     bool hasAmmo2() const;
     void reduceAmmo2(qint32 value);
     GameEnums::WeaponType getTypeOfWeapon2();
 
     qint32 getMaxAmmo2() const;
-    void setMaxAmmo2(const qint32 &value);
+    void setMaxAmmo2(const qint32 value);
 
     QString getWeapon2ID() const;
-    void setWeapon2ID(const QString &value);
+    void setWeapon2ID(const QString value);
 
     qint32 getFuel() const;
-    void setFuel(const qint32 &value);
+    void setFuel(const qint32 value);
 
     qint32 getMaxFuel() const;
-    void setMaxFuel(const qint32 &value);
+    void setMaxFuel(const qint32 value);
 
     qint32 getCapturePoints() const;
-    void setCapturePoints(const qint32 &value);
+    void setCapturePoints(const qint32 value);
     bool canCapture();
 
     qint32 getCosts() const;
@@ -471,24 +494,18 @@ public slots:
     qint32 getMinRange(QPoint position);
     qint32 getBonusMinRange(QPoint position);
     qint32 getBaseMinRange() const;
-    void setMinRange(const qint32 &value);
+    void setMinRange(const qint32 value);
 
     qint32 getMaxRange(QPoint position);
     qint32 getBaseMaxRange();
     qint32 getMaxRangeAtPosition(QPoint position);
     qint32 getBonusMaxRange(QPoint position);
-    void setMaxRange(const qint32 &value);
+    void setMaxRange(const qint32 value);
     /**
      * @brief isStealthed
      * @return combination of cloak and hidden
      */
     bool isStatusStealthed() const;
-    /**
-     * @brief isStatusStealthedAndInvisible
-     * @param pOwner
-     * @return
-     */
-    bool isStatusStealthedAndInvisible(Player* pPlayer, bool & terrainHide);
     bool getHidden() const;
     void setHidden(bool Hidden);
     /**
@@ -529,22 +546,22 @@ public slots:
      */
     qreal getBaseDamage(Unit* pEnemyUnit);
     qint32 getUnitRank() const;
-    void setUnitRank(const qint32 &UnitRank, bool force = false);
+    void setUnitRank(const qint32 UnitRank, bool force = false);
 
     qint32 getVision(QPoint position);
-    void setVision(const qint32 &value);
+    void setVision(const qint32 value);
     qint32 getBaseVision();
     /**
      * @brief loadSprites loads the given sprite
      * @param spriteID
      */
-    void loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite = true, qint32 frameTime = 150);
+    void loadSprite(const QString spriteID, bool addPlayerColor, bool flipSprite = true, qint32 frameTime = 150);
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite = true, qint32 frameTime = 150);
+    void loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, bool flipSprite = true, qint32 frameTime = 150);
     /**
      * @brief addShineTween
      */
@@ -572,7 +589,7 @@ public slots:
      * @brief setMovementType
      * @param Movementtype
      */
-    void setMovementType(const QString &movementType);;
+    void setMovementType(const QString movementType);;
     /**
      * @brief getLoadingPlace
      * @return
@@ -593,17 +610,7 @@ public slots:
      * @param weaponID
      * @return
      */
-    qreal getUnitDamage(const QString & weaponID);
-    /**
-     * @brief getX
-     * @return  x coordinates of this unit
-     */
-    qint32 getX() const;
-    /**
-     * @brief getY
-     * @return  y coordinates of this unit
-     */
-    qint32 getY() const;
+    qreal getUnitDamage(const QString weaponID);
     /**
      * @brief getMapPosition
      * @return
@@ -651,7 +658,7 @@ public slots:
      * @brief moveUnit moves the unit to the target path
      * @param movePath
      */
-    void moveUnit(QVector<QPoint> & movePath);
+    void moveUnit(QVector<QPoint> movePath);
     /**
      * @brief createMoveVisionAction
      * @param pAction
@@ -661,7 +668,7 @@ public slots:
      * @brief moveUnit moves the unit to the target path
      * @param movePath
      */
-    void createMoveVision(QVector<QPoint> & movePath);
+    void createMoveVision(QVector<QPoint> movePath);
     /**
      * @brief createMoveVisionFromAction
      * @param pAction
@@ -709,17 +716,17 @@ public slots:
      * @param duration number of days the icon will be shown on the unit
      * @param player the player on which the duration gets decreased
      */
-    void loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration = -1, qint32 player = -1);
+    void loadIcon(const QString iconID, qint32 x, qint32 y, qint32 duration = -1, qint32 player = -1);
     /**
      * @brief unloadIcon removes the given icon from this unit
      * @param iconID
      */
-    void unloadIcon(const QString & iconID);
+    void unloadIcon(const QString iconID);
     /**
      * @brief unloadIconAndDuration
      * @param iconID
      */
-    void unloadIconAndDuration(const QString & iconID);
+    void unloadIconAndDuration(const QString iconID);
     /**
      * @brief endOfTurn
      */
@@ -756,7 +763,7 @@ public slots:
      * @brief loadUnit adds a unit to the transport list
      * @param pUnit
      */
-    void loadSpawnedUnit(const QString & unitId);
+    void loadSpawnedUnit(const QString unitId);
     /**
      * @brief getLoadedUnit
      * @param index
@@ -797,7 +804,7 @@ public slots:
      * @brief postAction
      * @param pAction
      */
-    void postAction(spGameAction & pAction);
+    void postAction(GameAction * pAction);
     /**
      * @brief getBonusOffensive
      * @param position
@@ -929,12 +936,12 @@ public slots:
      * @param range
      * @param color
      */
-    void showCustomRange(const QString & id, qint32 range, QColor color = Qt::white);
+    void showCustomRange(const QString id, qint32 range, QColor color = Qt::white);
     /**
      * @brief removeCustomRange
      * @param id
      */
-    void removeCustomRange(const QString & id);
+    void removeCustomRange(const QString id);
     /**
      * @brief updateSprites reloads all sprites
      */
@@ -1128,7 +1135,7 @@ protected:
      * @param position
      * @return
      */
-    qint32 getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString &));
+    qint32 getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString));
 private:
     QVector<oxygine::spSprite> m_pUnitWaitSprites;
     QVector<oxygine::spSprite> m_pUnitSprites;

@@ -43,7 +43,7 @@ public slots:
      * @param scale
      * @param flippedX
      */
-    void loadCoSprite(const QString & coid, float offsetX, float offsetY, bool flippedX, float scale = 1.0f);
+    void loadCoSprite(const QString coid, float offsetX, float offsetY, bool flippedX, float scale = 1.0f);
     /**
      * @brief onFinished
      * @param skipping
@@ -63,12 +63,12 @@ public slots:
      * @brief setDialog
      * @param text
      */
-    void setDialog(const QString & text);
+    void setDialog(const QString text);
     /**
      * @brief setCO
      * @param coid
      */
-    void setCO(const QString & coid, GameEnums::COMood mood);
+    void setCO(const QString coid, GameEnums::COMood mood);
     /**
      * @brief setPlayerCO
      * @param player
@@ -90,7 +90,7 @@ public slots:
      * @brief loadBackground
      * @param file path relative to the Commander Wars.exe
      */
-    void loadBackground(const QString & file);
+    void loadBackground(const QString file);
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
     void startFinishTimer();

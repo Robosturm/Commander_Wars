@@ -4855,5 +4855,7 @@
         <file>resources/images/building/hq.png</file>
         <file>resources/images/building/hq+mask.png</file>
         <file>resources/images/building/hq+snow.png</file>
+        <file>resources/ui/editor/mapExtendDialog.xml</file>
+        <file>resources/ui/editor/mapExtendDialog.js</file>
     </qresource>
 </RCC>

@@ -99,7 +99,18 @@ public:
      * @param newMenu
      */
     void setMenu(GameMenue *newMenu);
-
+    /**
+     * @brief getCustomUnitGlobalBoost
+     * @param index
+     * @param info
+     */
+    void getCustomUnitGlobalBoost(qint32 index, CustomCoBoostInfo& info);
+    /**
+     * @brief getCustomUnitGlobalBoost
+     * @param index
+     * @param info
+     */
+    void getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info);
 public slots:
     /**
      * @brief getCoGroupModifier
@@ -129,7 +140,7 @@ public slots:
      * @param function
      * @return
      */
-    qint32 getCoBonus(QPoint position, Unit* pUnit, const QString & function);
+    qint32 getCoBonus(QPoint position, Unit* pUnit, const QString function);
     /**
      * @brief getCoRangeEnabled
      * @return
@@ -149,13 +160,13 @@ public slots:
      * @brief setPowerUsed
      * @param value
      */
-    void setPowerUsed(const qint32 &value);
+    void setPowerUsed(const qint32 value);
     /**
      * @brief getUnitBuildValue
      * @param unitID
      * @return
      */
-    qreal getUnitBuildValue(const QString & unitID);
+    qreal getUnitBuildValue(const QString unitID);
     /**
      * @brief getCOName
      * @return
@@ -397,7 +408,7 @@ public slots:
      * @brief setPowerStars stars needed to activate our power
      * @param value
      */
-    void setPowerStars(const qint32 &value);
+    void setPowerStars(const qint32 value);
     /**
      * @brief getSuperpowerStars stars needed to activate our super power
      * @return
@@ -407,7 +418,7 @@ public slots:
      * @brief setSuperpowerStars stars needed to activate our super power
      * @param value
      */
-    void setSuperpowerStars(const qint32 &value);
+    void setSuperpowerStars(const qint32 value);
     /**
      * @brief canUseSuperpower
      * @return
@@ -427,12 +438,12 @@ public slots:
      * @brief setPowerFilled
      * @param value
      */
-    void setPowerFilled(const double &value);
+    void setPowerFilled(const double value);
     /**
      * @brief addPowerFilled
      * @param value
      */
-    void addPowerFilled(const double &value);
+    void addPowerFilled(const double value);
     /**
      * @brief getCanMoveAndFire returns
      * @return
@@ -464,7 +475,7 @@ public slots:
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
+    qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
     /**
      * @brief getEnemyCostModifier
      * @param id
@@ -472,7 +483,7 @@ public slots:
      * @param position
      * @return
      */
-    qint32 getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint position);
+    qint32 getEnemyCostModifier(const QString id, qint32 baseCost, QPoint position);
     /**
      * @brief getCOArmy
      */
@@ -486,7 +497,7 @@ public slots:
      * @brief setPowerMode
      * @param PowerMode
      */
-    void setPowerMode(const GameEnums::PowerMode &PowerMode);
+    void setPowerMode(const GameEnums::PowerMode PowerMode);
     /**
      * @brief gainPower
      * @param fundsDamage
@@ -667,17 +678,17 @@ public slots:
      * @brief setPerkList
      * @param perks
      */
-    void setPerkList(const QStringList & perks);
+    void setPerkList(const QStringList perks);
     /**
      * @brief addPerk
      * @param perk
      */
-    void addPerk(const QString & perk);
+    void addPerk(const QString perk);
     /**
      * @brief addPerk
      * @param perk
      */
-    void removePerk(const QString & perk);
+    void removePerk(const QString perk);
     /**
      * @brief getBio
      * @return
@@ -763,13 +774,6 @@ public slots:
      */
     qint32 getCustomUnitGlobalBoostCount();
     /**
-     * @brief getCustomUnitGlobalBoost
-     * @param index
-     * @param info
-     */
-    void getCustomUnitGlobalBoost(qint32 index, CustomCoBoostInfo& info);
-
-    /**
      * @brief showDefaultUnitZoneBoost
      * @return
      */
@@ -779,12 +783,6 @@ public slots:
      * @return
      */
     qint32 getCustomUnitZoneBoostCount();
-    /**
-     * @brief getCustomUnitGlobalBoost
-     * @param index
-     * @param info
-     */
-    void getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info);
     /**
      * @brief getStarCost
      * @return

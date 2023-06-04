@@ -25,6 +25,7 @@
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/editor/dialogmodifyterrain.h"
 #include "objects/dialogs/editor/dialogviewmapstats.h"
+#include "objects/dialogs/editor/dialogextendmap.h"
 #include "objects/dialogs/customdialog.h"
 
 #include "objects/dialogs/dialogmessagebox.h"
@@ -105,6 +106,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("New map"),            "NEWMAP",       1, tr("Create a new map"));
     m_Topbar->addItem(tr("Edit map"),           "EDITMAP",      1, tr("Edit the information for a map"));
     m_Topbar->addItem(tr("Resize map"),         "RESIZEMAP",    1, tr("Resizes the map using left, top, right and bottom size changes."));
+    m_Topbar->addItem(tr("Extend map"),         "EXTENDMAP",    1, tr("Extends this map with another map"));
     m_Topbar->addItem(tr("Flip map X"),         "FLIPX",        1, tr("Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed."));
     m_Topbar->addItem(tr("Flip map Y"),         "FLIPY",        1, tr("Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed."));
     m_Topbar->addItem(tr("Rotate map X"),       "ROTATEX",      1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
@@ -368,10 +370,11 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("IMPORTCOWTXT",        &EditorMenue::showImportCoWTxTMap),
         MenuItem("IMPORTAWDSAWS",       &EditorMenue::showImportAwdsAws),
         MenuItem("EXPORTAWDSAWS",       &EditorMenue::showExportAwdsAws),
-        MenuItem("IMPORTAW4AW4",       &EditorMenue::showImportAwdsAw4),
+        MenuItem("IMPORTAW4AW4",        &EditorMenue::showImportAwdsAw4),
         MenuItem("IMPORTAWBYWEB",       &EditorMenue::showImportAwByWeb),
         MenuItem("NEWMAP",              &EditorMenue::showNewMap),
         MenuItem("EDITMAP",             &EditorMenue::showEditMap),
+        MenuItem("EXTENDMAP",           &EditorMenue::showExtendMap),
         MenuItem("FLIPX",               &EditorMenue::flipX),
         MenuItem("FLIPY",               &EditorMenue::flipY),
         MenuItem("ROTATEX",             &EditorMenue::rotateX),
@@ -668,6 +671,20 @@ void EditorMenue::showEditMap()
     connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     addChild(mapEditDialog);
     setFocused(false);
+}
+
+void EditorMenue::showExtendMap()
+{
+    spDialogExtendMap pDialogExtendMap = spDialogExtendMap::create();
+    connect(pDialogExtendMap.get(), &DialogExtendMap::sigOk, this, &EditorMenue::extendMap, Qt::QueuedConnection);
+    addChild(pDialogExtendMap);
+    setFocused(false);
+}
+
+void EditorMenue::extendMap(const QString & mapFile, GameEnums::Directions direction)
+{
+    m_pMap->extendMap(mapFile, direction);
+    setFocused(true);
 }
 
 void EditorMenue::flipX()

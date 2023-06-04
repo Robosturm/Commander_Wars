@@ -84,7 +84,7 @@ GameAnimationPower::~GameAnimationPower()
     m_pGameAnimationPower = nullptr;
 }
 
-void GameAnimationPower::createMovingText(const QString & font, const QString & text, qint32 delay, QPoint startPos, QPoint endPos, qint32 duration, QEasingCurve::Type easeType)
+void GameAnimationPower::createMovingText(const QString font, const QString text, qint32 delay, QPoint startPos, QPoint endPos, qint32 duration, QEasingCurve::Type easeType)
 {
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getInstance()->getFont(font));
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -103,7 +103,7 @@ void GameAnimationPower::createMovingText(const QString & font, const QString & 
     addChild(textField);
 }
 
-void GameAnimationPower::addMovingCoSprite(const QString & sprite, float scale, QPoint startPos, QPoint endPos, qint32 duration, qint32 delay, QEasingCurve::Type easeType)
+void GameAnimationPower::addMovingCoSprite(const QString sprite, float scale, QPoint startPos, QPoint endPos, qint32 duration, qint32 delay, QEasingCurve::Type easeType)
 {
     oxygine::ResAnim* pAnim = m_pCO->getResAnim(sprite);
     if (pAnim != nullptr)
@@ -122,7 +122,7 @@ void GameAnimationPower::addMovingCoSprite(const QString & sprite, float scale, 
     }
 }
 
-QPoint GameAnimationPower::getCoSpriteSize(const QString & sprite) const
+QPoint GameAnimationPower::getCoSpriteSize(const QString sprite) const
 {
     oxygine::ResAnim* pAnim = m_pCO->getResAnim(sprite);
     if (pAnim != nullptr)
@@ -140,7 +140,7 @@ void GameAnimationPower::setDuration(qint32 timeMs)
     m_endTimer.setInterval(static_cast<qint32>(static_cast<float>(timeMs) / Settings::getAnimationSpeed()));
 }
 
-void GameAnimationPower::createRotatingBackground(const QString & resAnim, const QColor & color, qint32 speedX)
+void GameAnimationPower::createRotatingBackground(const QString resAnim, const QColor color, qint32 speedX)
 {
     oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim(resAnim);    
     setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());

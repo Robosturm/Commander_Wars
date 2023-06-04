@@ -76,7 +76,7 @@ public:
      * @param heigth
      * @param playerCount
      */
-    void newMap(qint32 width, qint32 heigth, qint32 playerCount, const QString & baseTerrain = "PLAINS");
+    void newMap(qint32 width, qint32 heigth, qint32 playerCount, const QString baseTerrain = "PLAINS");
     /**
      * @brief changeMap
      * @param width
@@ -306,7 +306,20 @@ public:
 
     qint32 getReplayActionCount() const;
     void setReplayActionCount(qint32 newReplayActionCount);
-
+    /**
+     * @brief getField changes the coordinates into the given direction
+     * @param x x-coordinates
+     * @param y y-coordinates
+     * @param direction the suitable direction
+     */
+    static void getField(qint32& x, qint32& y, GameEnums::Directions direction);
+    /**
+     * @brief updateSpritesOfTiles
+     * @param points
+     * @param editor
+     * @param showLoadingScreen
+     */
+    void updateSpritesOfTiles(const QVector<QPoint> & points, bool editor = false, bool showLoadingScreen = false);
 signals:
     void signalExitGame();
     void sigSaveGame();
@@ -328,6 +341,11 @@ signals:
     void sigShowLoadSaveGame();
 public slots:
     /**
+     * @brief extendMap
+     * @param mapFile
+     */
+    void extendMap(const QString mapFile, GameEnums::Directions direction);
+    /**
      * @brief setIsHumanMatch
      * @param newIsHumanMatch
      */
@@ -337,13 +355,13 @@ public slots:
      * @param area
      * @param newPalette
      */
-    void applyPaletteToArea(const QRect& area, qint32 newPalette);
+    void applyPaletteToArea(const QRect area, qint32 newPalette);
     /**
      * @brief applyBiomeToArea
      * @param area
      * @param newBiome
      */
-    void applyBiomeToArea(const QRect& area, qint32 newBiome);
+    void applyBiomeToArea(const QRect area, qint32 newBiome);
     /**
      * @brief getMapTagsText
      * @return
@@ -363,7 +381,7 @@ public slots:
      * @brief setMapMusic
      * @param mapMusic
      */
-    void setMapMusic(const QString &mapMusic, qint32 startLoopMs = -1, qint32 endLoopMs = -1);
+    void setMapMusic(const QString mapMusic, qint32 startLoopMs = -1, qint32 endLoopMs = -1);
     /**
      * @brief clearMapMusic
      */
@@ -389,21 +407,21 @@ public slots:
      * @param unitID
      * @return
      */
-    bool isUnitInArea(const QRect& area, qint32 unitID);
+    bool isUnitInArea(const QRect area, qint32 unitID);
     /**
      * @brief isPlayerUnitInArea
      * @param area
      * @param unitID
      * @return
      */
-    bool isPlayerUnitInArea(const QRect& area, qint32 playerID);
+    bool isPlayerUnitInArea(const QRect area, qint32 playerID);
     /**
      * @brief isPlayersUnitInArea
      * @param area
      * @param unitID
      * @return
      */
-    bool isPlayersUnitInArea(const QRect& area, const QVector<qint32> & playerIDs);
+    bool isPlayersUnitInArea(const QRect area, const QVector<qint32> playerIDs);
     /**
      * @brief getUnit
      * @param uniqueID
@@ -436,7 +454,7 @@ public slots:
      * @brief setMapAuthor
      * @param value
      */
-    void setMapAuthor(const QString &value);
+    void setMapAuthor(const QString value);
     /**
      * @brief getMapDescription
      * @return
@@ -469,7 +487,7 @@ public slots:
     /**
      * @brief options
      */
-    void showXmlFileDialog(const QString & xmlFile, bool saveSettings = false);
+    void showXmlFileDialog(const QString xmlFile, bool saveSettings = false);
     /**
      * @brief saveGame
      */
@@ -519,20 +537,20 @@ public slots:
      * @param terrainId
      * @return
      */
-    qint32 getTerrainCount(const QString & terrainId) const;
+    qint32 getTerrainCount(const QString terrainId) const;
     /**
      * @brief getBuildingCount
      * @param buildingID
      * @return
      */
-    qint32 getBuildingCount(const QString & buildingID) const;
+    qint32 getBuildingCount(const QString buildingID) const;
     /**
      * @brief getPlayerBuildingCount
      * @param buildingID
      * @param pPlayer
      * @return
      */
-    qint32 getPlayerBuildingCount(const QString & buildingID, Player* pPlayer) const;
+    qint32 getPlayerBuildingCount(const QString buildingID, Player* pPlayer) const;
     /**
      * @brief getMapWidth
      * @return width of the map
@@ -552,7 +570,7 @@ public slots:
      * @param range the unit will be spawned on an empty field that can be crossed by the unit. This range is the test range where the game tries to spawn the unit. From 0 to anything
      * @return the spawned unit
      */
-    Unit* spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range = 0, bool ignoreMovement = false);
+    Unit* spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner, qint32 range = 0, bool ignoreMovement = false);
     /**
      * @brief refillAll refills all units ammo and fuel
      */
@@ -569,26 +587,6 @@ public slots:
      */
     void updateSprites(qint32 xInput = -1, qint32 yInput = -1, bool editor = false, bool showLoadingScreen = false, bool applyRulesPalette = false);
     /**
-     * @brief updateSpritesOfTiles
-     * @param points
-     * @param editor
-     * @param showLoadingScreen
-     */
-    void updateSpritesOfTiles(const QVector<QPoint> & points, bool editor = false, bool showLoadingScreen = false);
-    /**
-     * @brief updateTileSprites
-     * @param x
-     * @param y
-     * @param flowPoints
-     * @param editor
-     */
-    void updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor = false, bool applyRulesPalette = false);
-    /**
-     * @brief updateFlowTiles
-     * @param flowPoints
-     */
-    void updateFlowTiles(QVector<QPoint> & flowPoints, bool applyRulesPalette = false);
-    /**
      * @brief syncTerrainAnimations
      * @param showLoadingScreen
      */
@@ -602,13 +600,6 @@ public slots:
      * @brief syncUnitsAndBuildings
      */
     void syncUnitsAndBuildingAnimations();
-    /**
-     * @brief getField changes the coordinates into the given direction
-     * @param x x-coordinates
-     * @param y y-coordinates
-     * @param direction the suitable direction
-     */
-    static void getField(qint32& x, qint32& y, GameEnums::Directions direction);
     /**
      * @brief onMap returns if the given coordinates are on the map
      * @param x
@@ -651,7 +642,7 @@ public slots:
      * @param y position
      * @return true if this terrain can be placed
      */
-    bool canBePlaced(const QString & terrainID, qint32 x, qint32 y);
+    bool canBePlaced(const QString terrainID, qint32 x, qint32 y);
     /**
      * @brief updateTerrain updates the given fields around. So all terrains are placeable.
      * @param x
@@ -664,7 +655,7 @@ public slots:
      * @param x
      * @param y
      */
-    void replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true, const QString & palette = "", bool changePalette = false, bool includeBaseTerrain = true);
+    void replaceTerrain(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true);
     /**
      * @brief replaceTerrainOnly
      * @param terrainID
@@ -672,14 +663,14 @@ public slots:
      * @param y
      * @param useTerrainAsBaseTerrain
      */
-    void replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true, const QString & palette = "", bool changePalette = false, bool includeBaseTerrain = true);
+    void replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true);
     /**
      * @brief replaceBuilding
      * @param buildingID
      * @param x
      * @param y
      */
-    void replaceBuilding(const QString & buildingID, qint32 x, qint32 y);
+    void replaceBuilding(const QString buildingID, qint32 x, qint32 y);
     /**
      * @brief getPlayerCount
      * @return number of players on the map
@@ -718,7 +709,7 @@ public slots:
      * @brief setImagesize
      * @param imagesize
      */
-    static void setImagesize(const qint32 &imagesize);
+    static void setImagesize(const qint32 imagesize);
     /**
      * @brief nextTurn next players turn.
      */
@@ -784,7 +775,7 @@ public slots:
      * @param ids
      * @return
      */
-    QmlVectorBuilding* getBuildingsListCount(Player* pPlayer, const QStringList & ids);
+    QmlVectorBuilding* getBuildingsListCount(Player* pPlayer, const QStringList ids);
     /**
      * @brief importTxtMap imports a map in old CoW text-format
      */
@@ -817,7 +808,7 @@ public slots:
 
     void setMapNameFromFilename(QString filename);
     QString getMapName() const;
-    void setMapName(const QString &value);
+    void setMapName(const QString value);
 
     inline GameRules* getGameRules() const
     {
@@ -885,6 +876,19 @@ public slots:
 private slots:
     void zoomChanged();
 private:
+    /**
+     * @brief updateFlowTiles
+     * @param flowPoints
+     */
+    void updateFlowTiles(QVector<QPoint> & flowPoints, bool applyRulesPalette = false);
+    /**
+     * @brief updateTileSprites
+     * @param x
+     * @param y
+     * @param flowPoints
+     * @param editor
+     */
+    void updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor = false, bool applyRulesPalette = false);
     void loadMapData();
     QColor getGridColor();
     void updateMapFlags() const;

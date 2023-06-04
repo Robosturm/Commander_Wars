@@ -50,7 +50,6 @@ public:
     bool getExit() const;
     void setExit(bool newExit);
 
-
 signals:
     void sigActionPerformed();
     void sigAiProcesseSendAction(spGameAction pGameAction);
@@ -78,7 +77,7 @@ public slots:
      * @param previousPoint
      * @return
      */
-    bool isTrap(const QString & function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
+    bool isTrap(const QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
     /**
      * @brief finsihActionPerformed
      */
@@ -102,11 +101,6 @@ public slots:
      */
     bool getActionRunning() const;
     /**
-     * @brief doTrapping
-     * @param pGameAction
-     */
-    void doTrapping(spGameAction & pGameAction);    
-    /**
      * @brief getSyncCounter
      * @return
      */
@@ -118,6 +112,11 @@ public slots:
 
 protected:
     bool requiresForwarding(const spGameAction & pGameAction) const;
+    /**
+     * @brief doTrapping
+     * @param pGameAction
+     */
+    void doTrapping(spGameAction & pGameAction);
     void onTriggeringActionFinished();
 private:
     GameMenue* m_pMenu{nullptr};

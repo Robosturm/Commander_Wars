@@ -465,6 +465,7 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/editor/dialograndommap.cpp objects/dialogs/editor/dialograndommap.h
     objects/dialogs/editor/mapeditdialog.cpp objects/dialogs/editor/mapeditdialog.h
     objects/dialogs/editor/dialogviewmapstats.h objects/dialogs/editor/dialogviewmapstats.cpp
+    objects/dialogs/editor/dialogextendmap.h objects/dialogs/editor/dialogextendmap.cpp
     # objects dialogs rules
     objects/dialogs/rules/actionlistdialog.cpp objects/dialogs/rules/actionlistdialog.h
     objects/dialogs/rules/buildlistdialog.cpp objects/dialogs/rules/buildlistdialog.h
@@ -727,6 +728,7 @@ set(${PROJECT_NAME}_SRCS
     ingamescriptsupport/events/scripteventplaysound.cpp ingamescriptsupport/events/scripteventplaysound.h
     ingamescriptsupport/events/scripteventbuildingfirecounter.h ingamescriptsupport/events/scripteventbuildingfirecounter.cpp
     ingamescriptsupport/events/scripteventvolcanfire.h ingamescriptsupport/events/scripteventvolcanfire.cpp
+    ingamescriptsupport/events/scripteventextendmap.h ingamescriptsupport/events/scripteventextendmap.cpp
 
     # wiki stuff
     wiki/terraininfo.cpp wiki/terraininfo.h

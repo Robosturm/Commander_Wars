@@ -5,7 +5,90 @@
 #include "game/player.h"
 #include "game/co.h"
 
-void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, const QString & baseTerrain)
+#include "ai/coreai.h"
+
+void GameMap::extendMap(const QString mapFile, GameEnums::Directions direction)
+{
+    QString file = mapFile;
+    if (!QFile::exists(file))
+    {
+        file = oxygine::Resource::RCC_PREFIX_PATH + mapFile;
+    }
+    if (QFile::exists(file) &&
+        (direction == GameEnums::Directions_North ||
+         direction == GameEnums::Directions_South ||
+         direction == GameEnums::Directions_East ||
+         direction == GameEnums::Directions_West))
+    {
+        Mainapp::getInstance()->pauseRendering();
+        {
+            spGameMap pMap = spGameMap::create(file, true, false, false);
+            qint32 endWidth = 0;
+            qint32 endHeight = 0;
+            qint32 offsetX = 0;
+            qint32 offsetY = 0;
+            if (direction == GameEnums::Directions_North)
+            {
+                resizeMap(0, pMap->getMapHeight(), 0, 0);
+                endWidth = getMapWidth();
+                endHeight = pMap->getMapHeight();
+            }
+            else if (direction == GameEnums::Directions_South)
+            {
+                offsetY = getMapHeight();
+                resizeMap(0, 0, 0, pMap->getMapHeight());
+                endWidth = getMapWidth();
+                endHeight = pMap->getMapHeight();
+            }
+            else if (direction == GameEnums::Directions_East)
+            {
+                offsetX = getMapWidth();
+                resizeMap(0, 0, pMap->getMapWidth(), 0);
+                endWidth = pMap->getMapWidth();
+                endHeight = getMapHeight();
+            }
+            else if (direction == GameEnums::Directions_West)
+            {
+                resizeMap(pMap->getMapWidth(), 0, 0, 0);
+                endWidth = pMap->getMapWidth();
+                endHeight = getMapHeight();
+            }
+            for (qint32 y = 0; y < endHeight; ++y)
+            {
+                for (qint32 x = 0; x < endWidth; ++x)
+                {
+                    spTerrain pTerrain = pMap->m_fields[y][x];
+                    pMap->m_fields[y][x] = spTerrain();
+
+                    qint32 targetX = x + offsetX;
+                    qint32 targetY = y + offsetY;
+                    m_fields[targetY][targetX]->detach();
+                    pTerrain->setX(targetX);
+                    pTerrain->setY(targetY);
+                    m_fields[targetY][targetX] = pTerrain;
+                    m_rowSprites[targetY]->addChild(pTerrain);
+                    pTerrain->setPosition(targetX * m_imagesize, targetY * m_imagesize);
+                    pTerrain->setMapForExtending(this);
+                }
+            }
+        }
+        updateSprites(-1, -1, true);
+        for (qint32 i = 0; i < m_players.size(); ++i)
+        {
+            m_players[i]->loadVisionFields();
+            CoreAI* pAi = dynamic_cast<CoreAI*>(m_players[i]->getBaseGameInput());
+            if (pAi != nullptr)
+            {
+                pAi->resetToTurnStart();
+            }
+        }
+        m_Rules->resetFogSprites();
+        m_Rules->createWeatherSprites();
+        Mainapp::getInstance()->continueRendering();
+    }
+}
+
+void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, const QString baseTerrain)
 {
     Mainapp::getInstance()->pauseRendering();
     clearMap();

@@ -135,17 +135,17 @@ public slots:
      * @brief setUniqueIdentifier
      * @param newUniqueIdentifier
      */
-    void setUniqueIdentifier(const QString &newUniqueIdentifier);
+    void setUniqueIdentifier(const QString newUniqueIdentifier);
     /**
      * @brief setPlayerNameId
      * @param newDisplayName
      */
-    void setPlayerNameId(const QString &newDisplayName);
+    void setPlayerNameId(const QString newDisplayName);
     /**
      * @brief setControlType
      * @param newControlType
      */
-    void setControlType(const GameEnums::AiTypes &newControlType);
+    void setControlType(const GameEnums::AiTypes newControlType);
     /**
      * @brief getOnline
      * @return
@@ -191,7 +191,7 @@ public slots:
      * @brief setPlayerArmy
      * @param value
      */
-    void setPlayerArmy(const QString &value);
+    void setPlayerArmy(const QString value);
     /**
      * @brief getPlayerArmy
      * @return
@@ -217,7 +217,7 @@ public slots:
      * @param unitID
      * @return
      */
-    qreal getUnitBuildValue(const QString & unitID);
+    qreal getUnitBuildValue(const QString unitID);
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
      * @return
@@ -301,12 +301,12 @@ public slots:
      * @brief addFunds increases the money of this player by the given value
      * @param value
      */
-    void addFunds(const qint32 &value);
+    void addFunds(const qint32 value);
     /**
      * @brief setFunds
      * @param value
      */
-    void setFunds(const qint32 &value);
+    void setFunds(const qint32 value);
     /**
      * @brief earnMoney earns money based on the buildings the player has
      * @param modifier multiplier additionaly modifying the income
@@ -357,13 +357,13 @@ public slots:
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
+    qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
     /**
      * @brief getCosts
      * @param id
      * @return
      */
-    qint32 getCosts(const QString & id, QPoint position);
+    qint32 getCosts(const QString id, QPoint position);
     /**
      * @brief gainPowerstar
      * @param fundsDamage
@@ -401,13 +401,13 @@ public slots:
      * @brief getBuildings
      * @return
      */
-    QmlVectorBuilding* getBuildings(const QString & id = "");
+    QmlVectorBuilding* getBuildings(const QString id = "");
     /**
      * @brief getBuildingsListCount
      * @param ids
      * @return
      */
-    QmlVectorBuilding* getBuildingsListCount(const QStringList & ids);
+    QmlVectorBuilding* getBuildingsListCount(const QStringList ids);
     /**
      * @brief updateCORange
      */
@@ -480,7 +480,7 @@ public slots:
      * @param targetType
      * @return
      */
-    QPoint getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, qreal ownUnitValue = 1.2, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
+    QPoint getSiloRockettarget(qint32 radius, qint32 damage, qint32 highestDamage, qreal ownUnitValue = 1.2, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
     /**
      * @brief getRocketTargetDamage
      * @param x
@@ -520,33 +520,33 @@ public slots:
      * @brief getBuildingCount
      * @return
      */
-    qint32 getBuildingCount(const QString & buildingID = "");
+    qint32 getBuildingCount(const QString buildingID = "");
     /**
      * @brief getBuildingListCount
      * @param list
      * @param whitelist
      * @return
      */
-    qint32 getBuildingListCount(const QStringList & list, bool whitelist = true);
+    qint32 getBuildingListCount(const QStringList list, bool whitelist = true);
     /**
      * @brief getUnitCount
      * @return
      */
-    qint32 getUnitCount(const QString & unitID = "") const;
+    qint32 getUnitCount(const QString unitID = "") const;
     /**
      * @brief getUnitCount
      * @param pUnit
      * @param unitID
      * @return
      */
-    qint32 getUnitCount(Unit* pUnit, const QString & unitID) const;
+    qint32 getUnitCount(Unit* pUnit, const QString unitID) const;
     /**
      * @brief getEnemyBonus
      * @param position
      * @param pUnit
      * @return
      */
-    qint32 getCoBonus(QPoint position, Unit* pUnit, const QString & function);
+    qint32 getCoBonus(QPoint position, Unit* pUnit, const QString function);
     /**
      * @brief getTeam
      * @return
@@ -556,7 +556,7 @@ public slots:
      * @brief setTeam
      * @param value
      */
-    void setTeam(const qint32 &value);
+    void setTeam(const qint32 value);
     /**
      * @brief defeatPlayer defeats the player and removes him from further playing
      * @param pPLayer none nullptr will give all buildings to the selected player
@@ -647,13 +647,13 @@ public slots:
      * @brief setBuildList
      * @param BuildList
      */
-    void setBuildList(const QStringList & BuildList);
+    void setBuildList(const QStringList BuildList);
     /**
      * @brief changeBuildlist
      * @param unitID
      * @param remove
      */
-    void changeBuildlist(const QString& unitID, bool remove = false);
+    void changeBuildlist(const QString unitID, bool remove = false);
     /**
      * @brief getVariables
      * @return
@@ -686,7 +686,7 @@ private:
      * @param tablename
      * @return
      */
-    bool loadTableFromFile(const QString & tablename);
+    bool loadTableFromFile(const QString tablename);
     /**
      * @brief colorToTable
      * @param baseColor

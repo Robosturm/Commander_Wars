@@ -14,8 +14,8 @@ public:
     const QStringList &getIconBonus() const;
 
 public slots:
-    const QString &getIconId() const;
-    void setIconId(const QString &newIconId);
+    const QString getIconId() const;
+    void setIconId(const QString newIconId);
 
     qint32 getOffensiveBoost() const;
     void setOffensiveBoost(qint32 newOffensiveBoost);
@@ -23,10 +23,10 @@ public slots:
     qint32 getDefensiveBoost() const;
     void setDefensiveBoost(qint32 newDefensiveBoost);
 
-    void addBonusIcon(const QString & id, const QString & value);
+    void addBonusIcon(const QString id, const QString value);
 
-    const QString &getLink() const;
-    void setLink(const QString &newLink);
+    const QString getLink() const;
+    void setLink(const QString newLink);
 private:
     QString m_iconId;
     QString m_link;

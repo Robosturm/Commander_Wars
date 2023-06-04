@@ -55,7 +55,7 @@ GameEnums::DamageFormula GameRules::getDamageFormula() const
     return m_damageFormula;
 }
 
-void GameRules::setDamageFormula(const GameEnums::DamageFormula & newDamageFormula)
+void GameRules::setDamageFormula(const GameEnums::DamageFormula newDamageFormula)
 {
     m_damageFormula = newDamageFormula;
 }
@@ -197,7 +197,7 @@ void GameRules::onGameStart()
     }
 }
 
-void GameRules::addGameRule(const QString & rule)
+void GameRules::addGameRule(const QString rule)
 {
     bool found = false;
     for (qint32 i = 0; i < m_GameRules.size(); i++)
@@ -214,7 +214,7 @@ void GameRules::addGameRule(const QString & rule)
     }
 }
 
-GameRule* GameRules::getGameRule(const QString & rule)
+GameRule* GameRules::getGameRule(const QString rule)
 {
     for (qint32 i = 0; i < m_GameRules.size(); i++)
     {
@@ -243,7 +243,7 @@ void GameRules::addGameRule(spGameRule rule)
     }
 }
 
-bool GameRules::hasGameRule(const QString & rule)
+bool GameRules::hasGameRule(const QString rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -255,7 +255,7 @@ bool GameRules::hasGameRule(const QString & rule)
     return false;
 }
 
-void GameRules::removeGameRule(const QString & rule)
+void GameRules::removeGameRule(const QString rule)
 {
     for (qint32 i = 0; i < m_GameRules.size(); i++)
     {
@@ -267,7 +267,7 @@ void GameRules::removeGameRule(const QString & rule)
     }
 }
 
-bool GameRules::hasVictoryRule(const QString & rule)
+bool GameRules::hasVictoryRule(const QString rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -279,7 +279,7 @@ bool GameRules::hasVictoryRule(const QString & rule)
     return false;
 }
 
-void GameRules::addVictoryRule(const QString & rule)
+void GameRules::addVictoryRule(const QString rule)
 {
     bool found = false;
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
@@ -296,7 +296,7 @@ void GameRules::addVictoryRule(const QString & rule)
     }
 }
 
-VictoryRule* GameRules::getVictoryRule(const QString & rule)
+VictoryRule* GameRules::getVictoryRule(const QString rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -325,7 +325,7 @@ void GameRules::addVictoryRule(spVictoryRule rule)
     }
 }
 
-void GameRules::removeVictoryRule(const QString & rule)
+void GameRules::removeVictoryRule(const QString rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -439,7 +439,7 @@ void GameRules::checkVictory()
     }
 }
 
-void GameRules::addWeather(const QString & weatherId, qint32 weatherChance)
+void GameRules::addWeather(const QString weatherId, qint32 weatherChance)
 {
     bool found = false;
     for (qint32 i = 0; i < m_Weathers.size(); i++)
@@ -499,7 +499,7 @@ Weather* GameRules::getWeather(qint32 index)
     return nullptr;
 }
 
-Weather* GameRules::getWeather(const QString & weatherId)
+Weather* GameRules::getWeather(const QString weatherId)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
@@ -511,7 +511,7 @@ Weather* GameRules::getWeather(const QString & weatherId)
     return nullptr;
 }
 
-qint32 GameRules::getWeatherChance(const QString & weatherId)
+qint32 GameRules::getWeatherChance(const QString weatherId)
 {
     for (qint32 i = 0; i < m_WeatherChances.size(); i++)
     {
@@ -598,7 +598,7 @@ void GameRules::setStartWeather(qint32 index)
     m_StartWeather = index;
 }
 
-void GameRules::changeWeather(const QString & weatherId, qint32 duration, qint32 startDay)
+void GameRules::changeWeather(const QString weatherId, qint32 duration, qint32 startDay)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
@@ -778,7 +778,7 @@ qint32 GameRules::getUnitLimit() const
     return m_UnitLimit;
 }
 
-void GameRules::setUnitLimit(const qint32 &UnitLimit)
+void GameRules::setUnitLimit(const qint32 UnitLimit)
 {
     m_UnitLimit = UnitLimit;
 }
@@ -798,7 +798,7 @@ GameEnums::Fog GameRules::getFogMode() const
     return m_FogMode;
 }
 
-void GameRules::setFogMode(const GameEnums::Fog &FogMode)
+void GameRules::setFogMode(const GameEnums::Fog FogMode)
 {
     m_FogMode = FogMode;
 }
@@ -1142,7 +1142,7 @@ QString GameRules::getMatchType() const
     return m_matchType;
 }
 
-void GameRules::setMatchType(const QString & newMatchType)
+void GameRules::setMatchType(const QString newMatchType)
 {
     m_matchType = newMatchType;
 }
@@ -1192,7 +1192,7 @@ GameEnums::PowerGainMode GameRules::getPowerGainMode() const
     return m_powerGainMode;
 }
 
-void GameRules::setPowerGainMode(const GameEnums::PowerGainMode &newPowerGainMode)
+void GameRules::setPowerGainMode(const GameEnums::PowerGainMode newPowerGainMode)
 {
     m_powerGainMode = newPowerGainMode;
 }
@@ -1202,7 +1202,7 @@ GameEnums::PowerGainZone GameRules::getPowerGainZone() const
     return m_powerGainZone;
 }
 
-void GameRules::setPowerGainZone(const GameEnums::PowerGainZone &newPowerGainZone)
+void GameRules::setPowerGainZone(const GameEnums::PowerGainZone newPowerGainZone)
 {
     m_powerGainZone = newPowerGainZone;
 }
@@ -1277,7 +1277,7 @@ quint8 GameRules::getTerrainDefense() const
     return m_terrainDefense;
 }
 
-void GameRules::setTerrainDefense(const quint8 &terrainDefense)
+void GameRules::setTerrainDefense(const quint8 terrainDefense)
 {
     m_terrainDefense = terrainDefense;
 }
@@ -1307,7 +1307,7 @@ QString GameRules::getDescription() const
     return m_description;
 }
 
-void GameRules::setDescription(const QString &description)
+void GameRules::setDescription(const QString description)
 {
     m_description = description;
 }
@@ -1322,7 +1322,7 @@ QString GameRules::getPasswordText() const
     return m_password.getPasswordText();
 }
 
-void GameRules::setPassword(const QString & password)
+void GameRules::setPassword(const QString password)
 {
     m_password.setPassword(password);
 }
@@ -1342,7 +1342,7 @@ QStringList GameRules::getAllowedActions() const
     return m_allowedActions;
 }
 
-void GameRules::setAllowedActions(const QStringList &allowedActions)
+void GameRules::setAllowedActions(const QStringList allowedActions)
 {
     m_allowedActions = allowedActions;
     m_actionBannlistEdited = true;
@@ -1353,7 +1353,7 @@ QStringList GameRules::getAllowedPerks() const
     return m_allowedPerks;
 }
 
-void GameRules::setAllowedPerks(const QStringList &allowedPerks)
+void GameRules::setAllowedPerks(const QStringList allowedPerks)
 {
     m_allowedPerks = allowedPerks;
     m_perkBannlistEdited = true;
@@ -1384,7 +1384,7 @@ qint32 GameRules::getMaxPerkCost() const
     return m_maxPerkCost;
 }
 
-void GameRules::setMaxPerkCost(const qint32 &maxPerkCost)
+void GameRules::setMaxPerkCost(const qint32 maxPerkCost)
 {
     m_maxPerkCost = maxPerkCost;
 }
@@ -1434,7 +1434,7 @@ QStringList GameRules::getCOBannlist() const
     return m_COBannlist;
 }
 
-void GameRules::setCOBannlist(const QStringList &COBannlist)
+void GameRules::setCOBannlist(const QStringList COBannlist)
 {
     m_COBannlist = COBannlist;
     m_COBannlistEdited = true;

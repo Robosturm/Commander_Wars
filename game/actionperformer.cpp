@@ -346,7 +346,7 @@ void ActionPerformer::finishActionPerformed()
         Unit* pUnit = m_pCurrentAction->getMovementTarget();
         if (pUnit != nullptr)
         {
-            pUnit->postAction(m_pCurrentAction);
+            pUnit->postAction(m_pCurrentAction.get());
         }
         m_pMap->getCurrentPlayer()->postAction(m_pCurrentAction.get());
         m_pMap->getGameScript()->actionDone(m_pCurrentAction);
@@ -624,7 +624,7 @@ void ActionPerformer::doTrapping(spGameAction & pGameAction)
     }
 }
 
-bool ActionPerformer::isTrap(const QString & function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)
+bool ActionPerformer::isTrap(const QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)
 {
 
     Unit* pUnit = m_pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();

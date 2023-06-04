@@ -103,17 +103,22 @@ void CoreAI::init(GameMenue* pMenu)
         m_pMenu = pMenu;
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
         connect(this, &CoreAI::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
-        if (m_pMap != nullptr)
+        resetMoveMap();
+    }
+}
+
+void CoreAI::resetMoveMap()
+{
+    if (m_pMap != nullptr)
+    {
+        qint32 heigth = m_pMap->getMapHeight();
+        qint32 width = m_pMap->getMapWidth();
+        for (qint32 x = 0; x < width; x++)
         {
-            qint32 heigth = m_pMap->getMapHeight();
-            qint32 width = m_pMap->getMapWidth();
-            for (qint32 x = 0; x < width; x++)
+            m_MoveCostMap.push_back(std::vector<std::tuple<qint32, bool>>());
+            for (qint32 y = 0; y < heigth; y++)
             {
-                m_MoveCostMap.push_back(std::vector<std::tuple<qint32, bool>>());
-                for (qint32 y = 0; y < heigth; y++)
-                {
-                    m_MoveCostMap[x].push_back(std::tuple<qint32, bool>(0, false));
-                }
+                m_MoveCostMap[x].push_back(std::tuple<qint32, bool>(0, false));
             }
         }
     }
@@ -387,7 +392,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
     data.push_back(directUnits);
     data.push_back(pEnemyUnits->size());
     data.push_back(m_pPlayer->getFunds());
-    data.push_back(static_cast<float>(turnMode));
+    data.push_back(static_cast<float>(m_turnMode));
 
     for (quint8 i = 0; i <= 1; i++)
     {
@@ -410,7 +415,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
             data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
 
             GameEnums::PowerMode result = pCO->getAiUsePower(data[2], pUnits->size(), repairUnits, indirectUnits,
-                    directUnits, pEnemyUnits->size(), turnMode);
+                                                             directUnits, pEnemyUnits->size(), m_turnMode);
             if (result == GameEnums::PowerMode_Power)
             {
                 spGameAction pAction = spGameAction::create(ACTION_ACTIVATE_POWER_CO_0, m_pMap);
@@ -2224,6 +2229,17 @@ qint32 CoreAI::getIslandIndex(Unit* pUnit)
     return m_IslandMaps.size() - 1;
 }
 
+void CoreAI::resetToTurnStart()
+{
+    m_usedTransportSystem = false;
+    m_usedPredefinedAi = false;
+    m_turnMode = GameEnums::AiTurnMode_StartOfDay;
+    m_aiStep = AISteps::moveUnits;
+    m_aiFunctionStep = 0;
+    m_IslandMaps.clear();
+    resetMoveMap();
+}
+
 void CoreAI::finishTurn()
 {
     AI_CONSOLE_PRINT("CoreAI::finishTurn(()", GameConsole::eDEBUG);
@@ -2905,6 +2921,11 @@ QPointF CoreAI::getBaseDamage(Unit* pAttacker, Unit* pDefender)
 float CoreAI::getBaseDamage(const QString & weaponID, Unit* pDefender)
 {
     return WeaponManager::getInstance()->getBaseDamage(weaponID, pDefender);
+}
+
+GameEnums::AiTurnMode CoreAI::getTurnMode() const
+{
+    return m_turnMode;
 }
 
 void CoreAI::serializeObject(QDataStream& stream) const

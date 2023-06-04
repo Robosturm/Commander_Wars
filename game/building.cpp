@@ -90,6 +90,23 @@ QPoint Building::getOffset(Terrain* pTerrain)
     }
 }
 
+void Building::setMapForExtending(GameMap * newMap)
+{
+    m_pMap = newMap;
+    if (m_pOwner != nullptr)
+    {
+        auto id = m_pOwner->getPlayerID();
+        if (id < m_pMap->getPlayerCount())
+        {
+            setOwner(m_pMap->getPlayer(id));
+        }
+        else
+        {
+            m_pOwner = nullptr;
+        }
+    }
+}
+
 QStringList Building::getBaseTerrain()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -218,7 +235,7 @@ qint32 Building::getOwnerID()
     return -1;
 }
 
-void Building::loadSprite(const QString & spriteID, bool addPlayerColor, qint32 frameTime, QPoint pos)
+void Building::loadSprite(const QString spriteID, bool addPlayerColor, qint32 frameTime, QPoint pos)
 {
     if (addPlayerColor)
     {
@@ -230,7 +247,7 @@ void Building::loadSprite(const QString & spriteID, bool addPlayerColor, qint32 
     }
 }
 
-void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime, QPoint pos, const QString & forcedPalette, bool forceNeutral)
+void Building::loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime, QPoint pos, const QString forcedPalette, bool forceNeutral)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
@@ -349,7 +366,7 @@ void Building::onWeatherChanged(Weather* pWeather)
     pInterpreter->doFunction(m_BuildingID, function1, args);
 }
 
-void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime)
+void Building::loadWeatherOverlaySpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
@@ -877,7 +894,7 @@ qint32 Building::getPowerChargeBonus()
     }
 }
 
-qint32 Building::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
+qint32 Building::getCostModifier(const QString id, qint32 baseCost, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCostReduction";

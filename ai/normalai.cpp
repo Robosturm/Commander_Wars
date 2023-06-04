@@ -209,7 +209,7 @@ void NormalAi::process()
         }
         else
         {
-            turnMode = GameEnums::AiTurnMode_DuringDay;
+            m_turnMode = GameEnums::AiTurnMode_DuringDay;
             if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
             else
             {
@@ -227,16 +227,16 @@ void NormalAi::process()
                     }
                     clearUnitData();
                     m_IslandMaps.clear();
-                    turnMode = GameEnums::AiTurnMode_EndOfDay;
+                    m_turnMode = GameEnums::AiTurnMode_EndOfDay;
                     if (useCOPower(pUnits, pEnemyUnits))
                     {
                         m_usedTransportSystem = false;
                         m_usedPredefinedAi = false;
-                        turnMode = GameEnums::AiTurnMode_DuringDay;
+                        m_turnMode = GameEnums::AiTurnMode_DuringDay;
                     }
                     else
                     {
-                        turnMode = GameEnums::AiTurnMode_StartOfDay;
+                        m_turnMode = GameEnums::AiTurnMode_StartOfDay;
                         finishTurn();
                     }
                 }
@@ -283,6 +283,14 @@ void NormalAi::showFrontLines()
 void NormalAi::hideFrontMap()
 {
     m_InfluenceFrontMap.hide();
+}
+
+void NormalAi::resetToTurnStart()
+{
+    clearUnitData();
+    m_productionData.clear();
+    m_secondMoveRound = false;
+    CoreAI::resetToTurnStart();
 }
 
 void NormalAi::finishTurn()
@@ -1990,7 +1998,7 @@ void NormalAi::updateAllUnitData(spQmlVectorUnit & pUnits)
 void NormalAi::createUnitInfluenceMap()
 {
     // create influence map at the start of the turn
-    m_InfluenceFrontMap.reset();
+    m_InfluenceFrontMap.clear();
     m_InfluenceFrontMap.setOwner(m_pPlayer);
     m_InfluenceFrontMap.addBuildingInfluence();
     for (auto & unit : m_OwnUnits)

@@ -78,9 +78,9 @@ void GameAction::setSyncCounter(const qint64 &syncCounter)
     m_syncCounter = syncCounter;
 }
 
-void GameAction::setMultiTurnPath(const QVector<QPoint> &MultiTurnPath)
+void GameAction::setMultiTurnPath(const QVector<QPoint> multiTurnPath)
 {
-    m_MultiTurnPath = MultiTurnPath;
+    m_MultiTurnPath = multiTurnPath;
 }
 
 void GameAction::setTargetUnit(Unit *pTargetUnit)
@@ -198,7 +198,7 @@ Building* GameAction::getTargetBuilding()
     return nullptr;
 }
 
-void GameAction::setMovepath(const QVector<QPoint> & points, qint32 fuelCost)
+void GameAction::setMovepath(const QVector<QPoint> points, qint32 fuelCost)
 {
     m_Movepath = points;
     m_costs = fuelCost;
@@ -230,7 +230,7 @@ qint32 GameAction::getMovePathLength()
     return m_Movepath.size();
 }
 
-bool GameAction::canBePerformed(const QString & actionID, bool emptyField, Player* pUsingPlayer)
+bool GameAction::canBePerformed(const QString actionID, bool emptyField, Player* pUsingPlayer)
 {
     if (!actionID.isEmpty())
     {        
@@ -285,7 +285,7 @@ bool GameAction::isFinalStep()
     return isFinalStep(m_actionID);
 }
 
-bool GameAction::isFinalStep(const QString & actionID)
+bool GameAction::isFinalStep(const QString actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "isFinalStep";
@@ -495,7 +495,7 @@ qint32 GameAction::getCosts() const
     return m_costs;
 }
 
-void GameAction::setCosts(const qint32 &value)
+void GameAction::setCosts(const qint32 value)
 {
     m_costs = value;
 }
@@ -505,7 +505,7 @@ qint32 GameAction::getInputStep() const
     return m_inputStep;
 }
 
-void GameAction::setInputStep(const qint32 &value)
+void GameAction::setInputStep(const qint32 value)
 {
     m_inputStep = value;
 }
@@ -593,7 +593,7 @@ void GameAction::deserializeObject(QDataStream& stream)
     }
 }
 
-void GameAction::revertLastInputStep(const QString & stepType)
+void GameAction::revertLastInputStep(const QString stepType)
 {
     qint32 revertCount = 0;
     if (stepType == INPUTSTEP_FIELD)

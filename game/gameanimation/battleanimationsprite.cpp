@@ -319,7 +319,7 @@ bool BattleAnimationSprite::hasDyingAnimation()
     }
 }
 
-void BattleAnimationSprite::setMaxUnitCount(const qint32 &value)
+void BattleAnimationSprite::setMaxUnitCount(const qint32 value)
 {
     m_maxUnitCount = value;
 }
@@ -878,7 +878,7 @@ qint32 BattleAnimationSprite::getHpRounded() const
     return m_hpRounded;
 }
 
-void BattleAnimationSprite::setHpRounded(const qint32 &value)
+void BattleAnimationSprite::setHpRounded(const qint32 value)
 {
     m_hpRounded = value;
 }

@@ -61,7 +61,7 @@ QString Player::getPlayerNameId() const
     return m_playerNameId;
 }
 
-void Player::setPlayerNameId(const QString &newDisplayName)
+void Player::setPlayerNameId(const QString newDisplayName)
 {
     m_playerNameId = newDisplayName;
 }
@@ -71,12 +71,12 @@ const QString Player::getUniqueIdentifier() const
     return m_uniqueIdentifier;
 }
 
-void Player::setUniqueIdentifier(const QString &newUniqueIdentifier)
+void Player::setUniqueIdentifier(const QString newUniqueIdentifier)
 {
     m_uniqueIdentifier = newUniqueIdentifier;
 }
 
-qreal Player::getUnitBuildValue(const QString & unitID)
+qreal Player::getUnitBuildValue(const QString unitID)
 {
     qreal modifier = 0.0;
     for(auto & pCO : m_playerCOs)
@@ -211,7 +211,7 @@ bool Player::loadTable(qint32 table)
     return found;
 }
 
-bool Player::loadTableFromFile(const QString & tablename)
+bool Player::loadTableFromFile(const QString tablename)
 {
     CONSOLE_PRINT("Player::loadTableFromFile " + tablename, GameConsole::eDEBUG);
     bool found = false;
@@ -494,7 +494,7 @@ void Player::createTable(QColor baseColor)
 #endif
 }
 
-void Player::setPlayerArmy(const QString &value)
+void Player::setPlayerArmy(const QString value)
 {
     m_playerArmy = value;
 }
@@ -681,7 +681,7 @@ bool Player::isAlly(Player* pOwner)
 }
 
 
-void Player::setFunds(const qint32 &value)
+void Player::setFunds(const qint32 value)
 {
     m_funds = value;
     if (m_pMenu != nullptr)
@@ -690,7 +690,7 @@ void Player::setFunds(const qint32 &value)
     }
 }
 
-void Player::addFunds(const qint32 &value)
+void Player::addFunds(const qint32 value)
 {
     setFunds(m_funds + value);
 }
@@ -700,7 +700,7 @@ qint32 Player::getFunds() const
     return m_funds;
 }
 
-qint32 Player::getBuildingCount(const QString & buildingID)
+qint32 Player::getBuildingCount(const QString buildingID)
 {
     qint32 ret = 0;
     if (m_pMap != nullptr)
@@ -710,7 +710,7 @@ qint32 Player::getBuildingCount(const QString & buildingID)
     return ret;
 }
 
-qint32 Player::getBuildingListCount(const QStringList & list, bool whitelist)
+qint32 Player::getBuildingListCount(const QStringList list, bool whitelist)
 {
     qint32 ret = 0;
     
@@ -743,7 +743,7 @@ qint32 Player::getBuildingListCount(const QStringList & list, bool whitelist)
     return ret;
 }
 
-qint32 Player::getUnitCount(const QString & unitID) const
+qint32 Player::getUnitCount(const QString unitID) const
 {
     qint32 ret = 0;
     
@@ -768,7 +768,7 @@ qint32 Player::getUnitCount(const QString & unitID) const
     return ret;
 }
 
-qint32 Player::getUnitCount(Unit* pUnit, const QString & unitID) const
+qint32 Player::getUnitCount(Unit* pUnit, const QString unitID) const
 {
     qint32 ret = 0;
     for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
@@ -786,7 +786,7 @@ qint32 Player::getUnitCount(Unit* pUnit, const QString & unitID) const
     return ret;
 }
 
-qint32 Player::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
+qint32 Player::getCoBonus(QPoint position, Unit* pUnit, const QString function)
 {
     qint32 ret = 0;
     for(auto & pCO : m_playerCOs)
@@ -804,7 +804,7 @@ qint32 Player::getTeam() const
     return m_team;
 }
 
-void Player::setTeam(const qint32 &value)
+void Player::setTeam(const qint32 value)
 {
     m_team = value;
 }
@@ -966,7 +966,7 @@ void Player::earnMoney(qreal modifier)
     setFunds(m_funds + calcIncome(modifier));
 }
 
-qint32 Player::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
+qint32 Player::getCostModifier(const QString id, qint32 baseCost, QPoint position)
 {
     
     qint32 costModifier = 0;
@@ -1074,13 +1074,13 @@ QStringList Player::getTransportUnits(Unit* pUnit)
     return ret;
 }
 
-void Player::setBuildList(const QStringList & BuildList)
+void Player::setBuildList(const QStringList BuildList)
 {
     m_BuildList = BuildList;
     m_BuildlistChanged = true;
 }
 
-void Player::changeBuildlist(const QString& unitID, bool remove)
+void Player::changeBuildlist(const QString unitID, bool remove)
 {
     if (remove)
     {
@@ -1393,7 +1393,7 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
     }
 }
 
-qint32 Player::getCosts(const QString & id, QPoint position)
+qint32 Player::getCosts(const QString id, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue ret = pInterpreter->doFunction(id, "getBaseCost");
@@ -1706,12 +1706,12 @@ QmlVectorBuilding* Player::getEnemyBuildings()
     return ret;
 }
 
-QmlVectorBuilding* Player::getBuildings(const QString & id)
+QmlVectorBuilding* Player::getBuildings(const QString id)
 {
     return m_pMap->getBuildings(this, id);
 }
 
-QmlVectorBuilding* Player::getBuildingsListCount(const QStringList & ids)
+QmlVectorBuilding* Player::getBuildingsListCount(const QStringList ids)
 {
     return m_pMap->getBuildingsListCount(this, ids);
 }
@@ -1878,7 +1878,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, qreal ownUnitValue,
     }
 }
 
-QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, qreal ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
+QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 highestDamage, qreal ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
 {    
     spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
     highestDamage = -1;
@@ -2118,7 +2118,7 @@ GameEnums::AiTypes Player::getControlType() const
     return m_controlType;
 }
 
-void Player::setControlType(const GameEnums::AiTypes &newControlType)
+void Player::setControlType(const GameEnums::AiTypes newControlType)
 {
     m_controlType = newControlType;
 }

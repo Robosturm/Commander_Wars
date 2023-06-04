@@ -75,6 +75,11 @@ public:
      * @param files
      */
     void addDeveloperMaps(QString prefix, QString folder, QStringList & files);
+    /**
+     * @brief getCampaignMapData
+     * @param pCampaignMapData
+     */
+    void getCampaignMapData(CampaignMapData & pCampaignMapData);
 
 public slots:
     /**
@@ -124,11 +129,6 @@ public slots:
      * @return
      */
     bool getUsesCampaignMap();
-    /**
-     * @brief getCampaignMapData
-     * @param pCampaignMapData
-     */
-    void getCampaignMapData(CampaignMapData & pCampaignMapData);
 private:
     QString m_script;
     QString m_scriptFile;

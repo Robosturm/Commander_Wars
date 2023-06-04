@@ -114,7 +114,8 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
         tr("Center map"),
         tr("Play sound"),
         tr("Building fire counter"),
-        tr("Volcan fire")
+        tr("Volcan fire"),
+        tr("Extend map")
     };
     m_Events = spDropDownmenu::create(300, items);
     m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));
