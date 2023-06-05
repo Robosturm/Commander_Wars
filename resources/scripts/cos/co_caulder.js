@@ -247,7 +247,7 @@ var Constructor = function()
                             if ((unit !== null) &&
                                     (unit.getOwner() === counit.getOwner()))
                             {
-                                UNIT.repairUnit(unit, CO_CAULDER.coHealing, map);
+                                UNIT.repairUnit(unit, CO_CAULDER.d2dCoZoneHealing, map);
                                 delay = globals.randInt(135, 265);
                                 if (animations.length < 5)
                                 {
