@@ -54,16 +54,17 @@ public:
 public slots:
     virtual void nextAction() override;
     void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
+public:
     /**
      * @brief readIni
      * @param name
      */
-    virtual void readIni(QString name) override;
+    Q_INVOKABLE virtual void readIni(QString name) override;
+private:
     /**
      * @brief verifyActionStack
      */
     bool verifyActionStack();
-private:
     void onInvalidStack();
     void doNextAction();
 private:

@@ -118,35 +118,36 @@ public:
     virtual void resetToTurnStart() override;
 public slots:
     virtual void process() override;
+public:
     /*******************************************************************/
     // debugging section
     /*******************************************************************/
     /**
      * @brief toggleAiPause for debugging
      */
-    void toggleAiPause();
+    Q_INVOKABLE void toggleAiPause();
     /**
      * @brief showIslandMap
      * @param unitId
      */
-    void showIslandMap(QString unitId);
+    Q_INVOKABLE void showIslandMap(QString unitId);
     /**
      * @brief showIslandMap
      * @param unitId
      */
-    void hideIslandMap(QString unitId);
+    Q_INVOKABLE void hideIslandMap(QString unitId);
     /**
      * @brief showFrontMap for debugging visualization
      */
-    void showFrontMap();
+    Q_INVOKABLE void showFrontMap();
     /**
      * @brief showFrontLines for debugging visualization
      */
-    void showFrontLines();
+    Q_INVOKABLE void showFrontLines();
     /**
      * @brief hideFrontMap  for debugging visualization
      */
-    void hideFrontMap();
+    Q_INVOKABLE void hideFrontMap();
 protected:
     bool performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits,
                             spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);

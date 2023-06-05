@@ -10,10 +10,10 @@ class DummyAi final : public CoreAI
 public:
     explicit DummyAi(GameMap* pMap, GameEnums::AiTypes type);
     ~DummyAi() = default;
+public slots:
+    virtual void nextAction() override{};
     /**
      * @brief process empty impl
      */
     virtual void process() override {}
-public slots:
-    virtual void nextAction() override{};
 };

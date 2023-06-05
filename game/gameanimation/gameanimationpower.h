@@ -15,19 +15,18 @@ class GameAnimationPower final : public GameAnimation
 public:
     static spGameAnimationPower createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap);
     ~GameAnimationPower();
-
     virtual void restart() override;
     virtual void stop() override;
+    Q_INVOKABLE void createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop);
+    Q_INVOKABLE void createRotatingBackground(const QString resAnim, const QColor color, qint32 speedX = 3);
+    Q_INVOKABLE void setDuration(qint32 timeMs);
+    Q_INVOKABLE void createMovingText(const QString font, const QString text, qint32 delay, QPoint startPos, QPoint endPos, qint32 duration, QEasingCurve::Type easeType = QEasingCurve::Linear);
+    Q_INVOKABLE void addMovingCoSprite(const QString sprite, float scale, QPoint startPos, QPoint endPos, qint32 duration, qint32 delay = 0, QEasingCurve::Type easeType = QEasingCurve::Linear);
+    Q_INVOKABLE QPoint getCoSpriteSize(const QString sprite) const;
 signals:
     void sigRightClick();
 public slots:
     void rightClick();
-    void createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop);
-    void createRotatingBackground(const QString resAnim, const QColor color, qint32 speedX = 3);
-    void setDuration(qint32 timeMs);
-    void createMovingText(const QString font, const QString text, qint32 delay, QPoint startPos, QPoint endPos, qint32 duration, QEasingCurve::Type easeType = QEasingCurve::Linear);
-    void addMovingCoSprite(const QString sprite, float scale, QPoint startPos, QPoint endPos, qint32 duration, qint32 delay = 0, QEasingCurve::Type easeType = QEasingCurve::Linear);
-    QPoint getCoSpriteSize(const QString sprite) const;
 protected slots:
     virtual void start() override;
 private:

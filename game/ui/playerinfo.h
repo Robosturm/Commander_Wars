@@ -21,11 +21,10 @@ public:
     explicit PlayerInfo(GameMap* pMap);
     ~PlayerInfo() = default;
 
-public slots:
-    GameMap *getMap() const;
-    void updateData();
-    void setFlippedX(bool value);
-    bool getFlippedX() const;
+    Q_INVOKABLE GameMap *getMap() const;
+    Q_INVOKABLE void updateData();
+    Q_INVOKABLE void setFlippedX(bool value);
+    Q_INVOKABLE bool getFlippedX() const;
 private:
     void showTurnStartInfo(qint32 & yPos);
 private:

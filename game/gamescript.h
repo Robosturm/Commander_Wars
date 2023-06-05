@@ -81,22 +81,18 @@ public:
      * @param pMenu
      */
     void onGameLoaded(BaseGamemenu* pMenu);
-
-
-    QString getVictoryInfo();
-
-public slots:
-    GameMap *getMap() const;
+    Q_INVOKABLE QString getVictoryInfo();
+    Q_INVOKABLE GameMap *getMap() const;
     /**
      * @brief getVariables returns the enviroment variables of this game script
      * @return
      */
-    inline ScriptVariables* getVariables()
+    Q_INVOKABLE inline ScriptVariables* getVariables()
     {
         return &m_Variables;
     }
-    QString getScriptFile() const;
-    void setScriptFile(const QString value);
+    Q_INVOKABLE QString getScriptFile() const;
+    Q_INVOKABLE void setScriptFile(const QString value);
 
 private:
     bool m_victoryCalled{false};

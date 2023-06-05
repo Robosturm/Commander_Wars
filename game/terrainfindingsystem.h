@@ -46,23 +46,22 @@ public:
      * @return the exact costs needed to get onto the given field. -1 = unreachable
      */
     virtual qint32 getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 currentCost) override;
-public slots:
     /**
      * @brief killTerrainFindingSystem
      */
-    void killTerrainFindingSystem();
+    Q_INVOKABLE void killTerrainFindingSystem();
     /**
      * @brief getFlowData
      * @return
      */
-    TerrainFlowData* getFlowData();
+    Q_INVOKABLE TerrainFlowData* getFlowData();
     /**
      * @brief getDirection
      * @param cur
      * @param next
      * @return
      */
-    GameEnums::FlowDirections getDirection(QPoint cur, QPoint next) const;
+    Q_INVOKABLE GameEnums::FlowDirections getDirection(QPoint cur, QPoint next) const;
     /**
      * @brief TerrainFindingSystem::getDirection
      * @param cur
@@ -70,7 +69,7 @@ public slots:
      * @param previous
      * @return
      */
-    GameEnums::FlowDirections getDirection(QPoint cur, QPoint next, GameEnums::FlowDirections previous, bool flowDown) const;
+    Q_INVOKABLE GameEnums::FlowDirections getDirection(QPoint cur, QPoint next, GameEnums::FlowDirections previous, bool flowDown) const;
 private:
     void addStartFlows(const spQmlVectorPoint & circle, const qint32 size,
                        QVector<PositionFlowData> & flowList);

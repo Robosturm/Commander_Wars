@@ -17,13 +17,12 @@ public:
     ~GameAnimationNextDay() = default;
     virtual void restart() override;
     virtual void stop() override;
-
+    Q_INVOKABLE virtual bool onFinished(bool skipping) override;
 signals:
     void sigShowSaveAndExit();
     void sigRightClick();
 public slots:
     void rightClick();
-    virtual bool onFinished(bool skipping) override;
 private:
     QTimer m_endTimer;
     bool m_permanent;

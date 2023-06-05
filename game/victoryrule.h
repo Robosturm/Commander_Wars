@@ -52,27 +52,25 @@ public:
      * @brief init
      */
     void init();
-
-public slots:
     /**
      * @brief getMap
      * @return
      */
-    GameMap *getMap() const;
-    void setRuleValue(qint32 value, qint32 itemNumber);
-    qint32 getInfiniteValue(qint32 itemNumber = 0);
-    qint32 getDefaultValue(qint32 itemNumber = 0);
-    QStringList getRuleType();
-    QString getRuleName(qint32 itemNumber = 0);
-    qint32 getRuleValue(qint32 itemNumber);
-    QString getRuleDescription(qint32 itemNumber = 0);
-    qint32 getRuleProgress(Player* pPlayer);
-    QString getRuleID() const;
-    ScriptVariables* getVariables()
+    Q_INVOKABLE GameMap *getMap() const;
+    Q_INVOKABLE void setRuleValue(qint32 value, qint32 itemNumber);
+    Q_INVOKABLE qint32 getInfiniteValue(qint32 itemNumber = 0);
+    Q_INVOKABLE qint32 getDefaultValue(qint32 itemNumber = 0);
+    Q_INVOKABLE QStringList getRuleType();
+    Q_INVOKABLE QString getRuleName(qint32 itemNumber = 0);
+    Q_INVOKABLE qint32 getRuleValue(qint32 itemNumber);
+    Q_INVOKABLE QString getRuleDescription(qint32 itemNumber = 0);
+    Q_INVOKABLE qint32 getRuleProgress(Player* pPlayer);
+    Q_INVOKABLE QString getRuleID() const;
+    Q_INVOKABLE ScriptVariables* getVariables()
     {
         return &m_Variables;
     }
-    void checkDefeat();
+    Q_INVOKABLE void checkDefeat();
 private:
     QString m_RuleID;
     ScriptVariables m_Variables;

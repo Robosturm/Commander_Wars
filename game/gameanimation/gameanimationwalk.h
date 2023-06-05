@@ -19,26 +19,24 @@ class GameAnimationWalk final : public GameAnimation
 public:
     explicit GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath, GameMap* pMap);
     ~GameAnimationWalk() = default;
-
-public slots:
     /**
      * @brief loadSprite
      * @param spriteID the id of the sprite we want to create
      * @param addPlayerColor if the sprite should add some color
      * @param scaling scaling factor for the animation
      */
-    void loadSprite(const QString spriteID, bool addPlayerColor, float scaling);
+   Q_INVOKABLE void loadSprite(const QString spriteID, bool addPlayerColor, float scaling);
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      * @param scaling
      */
-    void loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, float scaling);
+    Q_INVOKABLE void loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, float scaling);
     /**
      * @brief onFinished called when the animation has finished
      */
-    virtual bool onFinished(bool skipping) override;
+    Q_INVOKABLE virtual bool onFinished(bool skipping) override;
 protected slots:
     virtual void start() override;
 protected:

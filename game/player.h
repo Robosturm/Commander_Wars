@@ -129,338 +129,336 @@ public:
     void setMenu(GameMenue *newMenu);
 
     void setIsOnline(bool newIsOnline);
-
-public slots:
     /**
      * @brief setUniqueIdentifier
      * @param newUniqueIdentifier
      */
-    void setUniqueIdentifier(const QString newUniqueIdentifier);
+    Q_INVOKABLE void setUniqueIdentifier(const QString newUniqueIdentifier);
     /**
      * @brief setPlayerNameId
      * @param newDisplayName
      */
-    void setPlayerNameId(const QString newDisplayName);
+    Q_INVOKABLE void setPlayerNameId(const QString newDisplayName);
     /**
      * @brief setControlType
      * @param newControlType
      */
-    void setControlType(const GameEnums::AiTypes newControlType);
+    Q_INVOKABLE void setControlType(const GameEnums::AiTypes newControlType);
     /**
      * @brief getOnline
      * @return
      */
-    bool getIsOnline() const;
+    Q_INVOKABLE bool getIsOnline() const;
     /**
      * @brief getCoGroupModifier
      * @param unitIds
      * @return
      */
-    qreal getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
+    Q_INVOKABLE qreal getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
     /**
      * @brief getControlType
      * @return this is the ai type set during game creation this may differ to the instanciated ai type during multiplayer matches
      */
-    GameEnums::AiTypes getControlType() const;
+    Q_INVOKABLE GameEnums::AiTypes getControlType() const;
     /**
      * @brief getDisplayName
      * @return
      */
-    QString getPlayerNameId() const;
+    Q_INVOKABLE QString getPlayerNameId() const;
     /**
      * @brief getUniqueIdentifier
      * @return
      */
-    const QString getUniqueIdentifier() const;
+    Q_INVOKABLE  QString getUniqueIdentifier() const;
     /**
      * @brief getMap
      * @return
      */
-    GameMap *getMap() const;
+    Q_INVOKABLE GameMap *getMap() const;
     /**
      * @brief onUnitDeath
      * @param pUnit
      */
-    void onUnitDeath(Unit* pUnit);
+    Q_INVOKABLE void onUnitDeath(Unit* pUnit);
     /**
      * @brief postAction
      * @param pAction
      */
-    void postAction(GameAction* pAction);
+    Q_INVOKABLE void postAction(GameAction* pAction);
     /**
      * @brief setPlayerArmy
      * @param value
      */
-    void setPlayerArmy(const QString value);
+    Q_INVOKABLE void setPlayerArmy(const QString value);
     /**
      * @brief getPlayerArmy
      * @return
      */
-    QString getPlayerArmy() const;
+    Q_INVOKABLE QString getPlayerArmy() const;
     /**
      * @brief getPlayerArmySelected
      * @return
      */
-    bool getPlayerArmySelected() const;
+    Q_INVOKABLE bool getPlayerArmySelected() const;
     /**
      * @brief setPlayerArmySelected
      * @param playerArmySelected
      */
-    void setPlayerArmySelected(bool playerArmySelected);
+    Q_INVOKABLE void setPlayerArmySelected(bool playerArmySelected);
     /**
      * @brief getFlipUnitSprites
      * @return
      */
-    bool getFlipUnitSprites() const;
+    Q_INVOKABLE bool getFlipUnitSprites() const;
     /**
      * @brief getUnitBuildValue
      * @param unitID
      * @return
      */
-    qreal getUnitBuildValue(const QString unitID);
+    Q_INVOKABLE qreal getUnitBuildValue(const QString unitID);
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
      * @return
      */
-    BaseGameInputIF* getBaseGameInput();
+    Q_INVOKABLE BaseGameInputIF* getBaseGameInput();
     /**
      * @brief getIsDefeated
      * @return
      */
-    bool getIsDefeated() const;
+    Q_INVOKABLE bool getIsDefeated() const;
     /**
      * @brief setIsDefeated if true defeats the player but doesn't remove units or buildings
      * @param value
      */
-    void setIsDefeated(bool value);
+    Q_INVOKABLE void setIsDefeated(bool value);
     /**
      * @brief swapCOs swaps co 0 and 1
      */
-    void swapCOs();
+    Q_INVOKABLE void swapCOs();
     /**
      * @brief getColor the color of this player
      * @return
      */
-    QColor getColor() const;
+    Q_INVOKABLE QColor getColor() const;
     /**
      * @brief setColor sets the color of this player. Note this want update existing sprites
      * @param Color
      */
-    void setColor(QColor Color, qint32 table = -1);
+    Q_INVOKABLE void setColor(QColor Color, qint32 table = -1);
     /**
      * @brief getPlayerID player id of this player from 0 to n
      * @return
      */
-    qint32 getPlayerID() const;
+    Q_INVOKABLE qint32 getPlayerID() const;
     /**
      * @brief getArmy the army string id of this player.
      * @return
      */
-    QString getArmy();
+    Q_INVOKABLE QString getArmy();
     /**
      * @brief isEnemy checks the alliance with this player
      * @param pPlayer the player we want to check if he's an enemy
      * @return the alliance of the player with us
      */
-    GameEnums::Alliance checkAlliance(Player* pPlayer);
+    Q_INVOKABLE GameEnums::Alliance checkAlliance(Player* pPlayer);
     /**
      * @brief isEnemyUnit checks if the given unit is an enemy
      * @param pUnit
      * @return
      */
-    bool isEnemyUnit(Unit* pUnit);
+    Q_INVOKABLE bool isEnemyUnit(Unit* pUnit);
     /**
      * @brief isEnemy
      * @param pOwner
      * @return
      */
-    bool isEnemy(Player* pOwner);
+    Q_INVOKABLE bool isEnemy(Player* pOwner);
     /**
      * @brief isPlayerIdEnemy
      * @param playerId
      */
-    bool isPlayerIdEnemy(qint32 playerId);
+    Q_INVOKABLE bool isPlayerIdEnemy(qint32 playerId);
     /**
      * @brief Player::isPlayerIdAlly
      * @param playerId
      * @return
      */
-    bool isPlayerIdAlly(qint32 playerId);
+    Q_INVOKABLE bool isPlayerIdAlly(qint32 playerId);
     /**
      * @brief isAlly
      * @param pOwner
      * @return
      */
-    bool isAlly(Player* pOwner);
+    Q_INVOKABLE bool isAlly(Player* pOwner);
     /**
      * @brief getFunds
      * @return
      */
-    qint32 getFunds() const;
+    Q_INVOKABLE qint32 getFunds() const;
     /**
      * @brief addFunds increases the money of this player by the given value
      * @param value
      */
-    void addFunds(const qint32 value);
+    Q_INVOKABLE void addFunds(const qint32 value);
     /**
      * @brief setFunds
      * @param value
      */
-    void setFunds(const qint32 value);
+    Q_INVOKABLE void setFunds(const qint32 value);
     /**
      * @brief earnMoney earns money based on the buildings the player has
      * @param modifier multiplier additionaly modifying the income
      */
-    void earnMoney(qreal modifier = 1.0f);
+    Q_INVOKABLE void earnMoney(qreal modifier = 1.0f);
     /**
      * @brief calcIncome
      * @param modifier
      * @return
      */
-    qint32 calcIncome(qreal modifier = 1.0f) const;
+    Q_INVOKABLE qint32 calcIncome(qreal modifier = 1.0f) const;
     /**
      * @brief calcArmyValue
      * @return
      */
-    qint32 calcArmyValue();
+    Q_INVOKABLE qint32 calcArmyValue();
     /**
      * @brief getBonusIncome
      * @param pBuilding
      * @param income
      * @return
      */
-    qint32 getIncomeReduction(Building* pBuilding, qint32 income);
+    Q_INVOKABLE qint32 getIncomeReduction(Building* pBuilding, qint32 income);
     /**
      * @brief getCO
      * @param id index of the co 0 or 1
      * @return pointer to the co
      */
-    CO* getCO(quint8 id);
+    Q_INVOKABLE CO* getCO(quint8 id);
     /**
      * @brief getMaxCoCount
      * @return
      */
-    qint32 getMaxCoCount() const;
+    Q_INVOKABLE qint32 getMaxCoCount() const;
     /**
      * @brief setCO
      * @param coId the co we want to load
      * @param id the index at which we want this co
      */
-    void setCO(QString coId, quint8 idx);
+    Q_INVOKABLE void setCO(QString coId, quint8 idx);
     /**
      * @brief getCoCount
      * @return
      */
-    qint32 getCoCount() const;
+    Q_INVOKABLE qint32 getCoCount() const;
     /**
      * @brief getCostModifier
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
+    Q_INVOKABLE qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
     /**
      * @brief getCosts
      * @param id
      * @return
      */
-    qint32 getCosts(const QString id, QPoint position);
+    Q_INVOKABLE qint32 getCosts(const QString id, QPoint position);
     /**
      * @brief gainPowerstar
      * @param fundsDamage
      */
-    void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack);
+    Q_INVOKABLE void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack);
     /**
      * @brief endOfTurn
      */
-    void endOfTurn();
+    Q_INVOKABLE void endOfTurn();
     /**
      * @brief startOfTurn
      */
-    void startOfTurn();
+    Q_INVOKABLE void startOfTurn();
     /**
      * @brief getUnits
      * @return
      */
-    QmlVectorUnit* getUnits();
+    Q_INVOKABLE QmlVectorUnit* getUnits();
     /**
      * @brief getEnemyUnits
      * @return
      */
-    QmlVectorUnit* getEnemyUnits();
+    Q_INVOKABLE QmlVectorUnit* getEnemyUnits();
     /**
      * @brief getEnemyBuildings
      * @return
      */
-    QmlVectorBuilding* getEnemyBuildings();
+    Q_INVOKABLE QmlVectorBuilding* getEnemyBuildings();
     /**
      * @brief getEnemyCount
      * @return
      */
-    qint32 getEnemyCount();
+    Q_INVOKABLE qint32 getEnemyCount();
     /**
      * @brief getBuildings
      * @return
      */
-    QmlVectorBuilding* getBuildings(const QString id = "");
+    Q_INVOKABLE QmlVectorBuilding* getBuildings(const QString id = "");
     /**
      * @brief getBuildingsListCount
      * @param ids
      * @return
      */
-    QmlVectorBuilding* getBuildingsListCount(const QStringList ids);
+    Q_INVOKABLE QmlVectorBuilding* getBuildingsListCount(const QStringList ids);
     /**
      * @brief updateCORange
      */
-    void updateVisualCORange();
+    Q_INVOKABLE void updateVisualCORange();
     /**
      * @brief getMovementcostModifier
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getMovementcostModifier(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getMovementcostModifier(Unit* pUnit, QPoint position);
     /**
      * @brief getEnemyBonusLuck
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getBonusLuck(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getBonusLuck(Unit* pUnit, QPoint position);
     /**
      * @brief getEnemyBonusLuck
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getEnemyBonusLuck(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getEnemyBonusLuck(Unit* pUnit, QPoint position);
     /**
      * @brief getEnemyBonusLuck
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getBonusMisfortune(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getBonusMisfortune(Unit* pUnit, QPoint position);
     /**
      * @brief getEnemyBonusLuck
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getEnemyBonusMisfortune(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getEnemyBonusMisfortune(Unit* pUnit, QPoint position);
     /**
      * @brief getWeatherMovementCostModifier
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getWeatherMovementCostModifier(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getWeatherMovementCostModifier(Unit* pUnit, QPoint position);
     /**
      * @brief getBonusMovementpoints
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getBonusMovementpoints(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getBonusMovementpoints(Unit* pUnit, QPoint position);
     /**
      * @brief getRockettarget finds the most valuable target for damaging units in a diamond.
      * If multiple targets with the same value are found.
@@ -470,7 +468,7 @@ public slots:
      * @param ownUnitValue value of own or allied units compared to enemy ones.
      * @return -1, -1 for no target found
      */
-    QPoint getRockettarget(qint32 radius, qint32 damage, qreal ownUnitValue = 1.2, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
+    Q_INVOKABLE QPoint getRockettarget(qint32 radius, qint32 damage, qreal ownUnitValue = 1.2, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
     /**
      * @brief getSiloRockettarget
      * @param radius
@@ -480,7 +478,7 @@ public slots:
      * @param targetType
      * @return
      */
-    QPoint getSiloRockettarget(qint32 radius, qint32 damage, qint32 highestDamage, qreal ownUnitValue = 1.2, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
+    Q_INVOKABLE QPoint getSiloRockettarget(qint32 radius, qint32 damage, qint32 highestDamage, qreal ownUnitValue = 1.2, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
     /**
      * @brief getRocketTargetDamage
      * @param x
@@ -491,107 +489,107 @@ public slots:
      * @param targetType
      * @return
      */
-    qint32 getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, qreal ownUnitValue, GameEnums::RocketTarget targetType, bool ignoreStealthed);
+    Q_INVOKABLE qint32 getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, qreal ownUnitValue, GameEnums::RocketTarget targetType, bool ignoreStealthed);
     /**
      * @brief defineArmy defines our army sprites based on the current co at position 0
      */
-    void defineArmy();
+    Q_INVOKABLE void defineArmy();
     /**
      * @brief getFundsModifier
      * @return
      */
-    qreal getFundsModifier() const;
+    Q_INVOKABLE qreal getFundsModifier() const;
     /**
      * @brief getPowerChargeBonus
      * @return
      */
-    qint32 getPowerChargeBonus() const;
+    Q_INVOKABLE qint32 getPowerChargeBonus() const;
     /**
      * @brief setFundsModifier
      * @param value
      */
-    void setFundsModifier(qreal value);
+    Q_INVOKABLE void setFundsModifier(qreal value);
     /**
      * @brief calculatePlayerStrength
      * @return
      */
-    qint32 calculatePlayerStrength() const;
+    Q_INVOKABLE qint32 calculatePlayerStrength() const;
     /**
      * @brief getBuildingCount
      * @return
      */
-    qint32 getBuildingCount(const QString buildingID = "");
+    Q_INVOKABLE qint32 getBuildingCount(const QString buildingID = "");
     /**
      * @brief getBuildingListCount
      * @param list
      * @param whitelist
      * @return
      */
-    qint32 getBuildingListCount(const QStringList list, bool whitelist = true);
+    Q_INVOKABLE qint32 getBuildingListCount(const QStringList list, bool whitelist = true);
     /**
      * @brief getUnitCount
      * @return
      */
-    qint32 getUnitCount(const QString unitID = "") const;
+    Q_INVOKABLE qint32 getUnitCount(const QString unitID = "") const;
     /**
      * @brief getUnitCount
      * @param pUnit
      * @param unitID
      * @return
      */
-    qint32 getUnitCount(Unit* pUnit, const QString unitID) const;
+    Q_INVOKABLE qint32 getUnitCount(Unit* pUnit, const QString unitID) const;
     /**
      * @brief getEnemyBonus
      * @param position
      * @param pUnit
      * @return
      */
-    qint32 getCoBonus(QPoint position, Unit* pUnit, const QString function);
+    Q_INVOKABLE qint32 getCoBonus(QPoint position, Unit* pUnit, const QString function);
     /**
      * @brief getTeam
      * @return
      */
-    qint32 getTeam() const;
+    Q_INVOKABLE qint32 getTeam() const;
     /**
      * @brief setTeam
      * @param value
      */
-    void setTeam(const qint32 value);
+    Q_INVOKABLE void setTeam(const qint32 value);
     /**
      * @brief defeatPlayer defeats the player and removes him from further playing
      * @param pPLayer none nullptr will give all buildings to the selected player
      * @param units if units is true the player will also get the controll of the given player
      */
-    void defeatPlayer(Player* pPlayer, bool units = false);
+    Q_INVOKABLE void defeatPlayer(Player* pPlayer, bool units = false);
     /**
      * @brief postBattleActions
      * @param pAttacker
      * @param pDefender
      */
-    void postBattleActions(Unit* pAttacker, qreal atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction);
+    Q_INVOKABLE void postBattleActions(Unit* pAttacker, qreal atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction);
     /**
      * @brief updatePlayerVision updates the current vision of this player.
      * @brief reduces the timer for vision created for several turns
      */
-    void updatePlayerVision(bool reduceTimer = false);
+    Q_INVOKABLE void updatePlayerVision(bool reduceTimer = false);
     /**
      * @brief addVisionField
      * @param x
      * @param y
      * @param duration
      */
-    void addVisionField(qint32 x, qint32 y, qint32 duration = 1, bool directView = false);
+    Q_INVOKABLE void addVisionField(qint32 x, qint32 y, qint32 duration = 1, bool directView = false);
     /**
      * @brief getFieldVisible
      * @param x
      * @param y
      */
-    virtual bool getFieldVisible(qint32 x, qint32 y);
+    Q_INVOKABLE virtual bool getFieldVisible(qint32 x, qint32 y);
     /**
      * @brief getFieldVisibleLoaded
      * @return
      */
-    inline bool getFieldVisibleLoaded()
+    Q_INVOKABLE inline bool getFieldVisibleLoaded()
     {
         return m_FogVisionFields.size() > 0;
     }
@@ -601,64 +599,64 @@ public slots:
      * @param y
      * @return
      */
-    virtual GameEnums::VisionType getFieldVisibleType(qint32 x, qint32 y) const;
+    Q_INVOKABLE virtual GameEnums::VisionType getFieldVisibleType(qint32 x, qint32 y) const;
     /**
      * @brief getFieldDirectVisible
      * @param x
      * @param y
      * @return if true a stealthed unit will be made visible by this players view
      */
-    virtual bool getFieldDirectVisible(qint32 x, qint32 y);
+    Q_INVOKABLE virtual bool getFieldDirectVisible(qint32 x, qint32 y);
     /**
      * @brief loadVisionFields
      */
-    void loadVisionFields();
+    Q_INVOKABLE void loadVisionFields();
     /**
      * @brief loadCOMusic
      */
-    void loadCOMusic();
+    Q_INVOKABLE void loadCOMusic();
     /**
      * @brief buildedUnit called after a unit was created do whatever you want with this information
      * @param pUnit
      */
-    void buildedUnit(Unit* pUnit);
+    Q_INVOKABLE void buildedUnit(Unit* pUnit);
     /**
      * @brief getWeatherImmune
      * @return
      */
-    bool getWeatherImmune();
+    Q_INVOKABLE bool getWeatherImmune();
     /**
      * @brief getBuildList
      * @return
      */
-    QStringList getBuildList() const;
+    Q_INVOKABLE QStringList getBuildList() const;
     /**
      * @brief getCOUnits
      * @return
      */
-    QStringList getCOUnits(Building* pBuilding);
+    Q_INVOKABLE QStringList getCOUnits(Building* pBuilding);
     /**
      * @brief getTransportUnits
      * @param pUnit
      * @return
      */
-    QStringList getTransportUnits(Unit* pUnit);
+    Q_INVOKABLE QStringList getTransportUnits(Unit* pUnit);
     /**
      * @brief setBuildList
      * @param BuildList
      */
-    void setBuildList(const QStringList BuildList);
+    Q_INVOKABLE void setBuildList(const QStringList BuildList);
     /**
      * @brief changeBuildlist
      * @param unitID
      * @param remove
      */
-    void changeBuildlist(const QString unitID, bool remove = false);
+    Q_INVOKABLE void changeBuildlist(const QString unitID, bool remove = false);
     /**
      * @brief getVariables
      * @return
      */
-    inline ScriptVariables* getVariables()
+    Q_INVOKABLE inline ScriptVariables* getVariables()
     {
         return &m_Variables;
     }
@@ -667,13 +665,13 @@ public slots:
      * @param pUnit
      * @return
      */
-    qreal getEnemyRepairCostModifier(Unit* pUnit);
+    Q_INVOKABLE qreal getEnemyRepairCostModifier(Unit* pUnit);
     /**
      * @brief getBonusRepairCostModifier
      * @param pUnit
      * @return
      */
-    qreal getRepairCostModifier(Unit* pUnit);
+    Q_INVOKABLE qreal getRepairCostModifier(Unit* pUnit);
 private:
     /**
      * @brief loadTable

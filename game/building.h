@@ -125,150 +125,148 @@ public:
      * @param newMap
      */
     void setMapForExtending(GameMap * newMap);
-
-public slots:
     /**
      * @brief getBuildingGroup
      * @return
      */
-    qint32 getBuildingGroup();
+    Q_INVOKABLE qint32 getBuildingGroup();
     /**
      * @brief usesMapLayer
      * @return
      */
-    bool usesMapLayer();
+    Q_INVOKABLE bool usesMapLayer();
     /**
      * @brief getShowInEditor
      * @param unitId
      * @return if the given building should be shown in the editor
      */
-    static bool getShowInEditor(QString building);
+    Q_INVOKABLE static bool getShowInEditor(QString building);
     /**
      * @brief getImageSize
      * @return the size of an field in pixel
      */
-    static qint32 getImageSize();
+    Q_INVOKABLE static qint32 getImageSize();
     /**
      * @brief getPMap
      * @return
      */
-    GameMap *getMap() const;
+    Q_INVOKABLE GameMap *getMap() const;
     /**
      * @brief getBuildingName
      * @return
      */
-    QString getBuildingName() const;
+    Q_INVOKABLE QString getBuildingName() const;
     /**
      * @brief setBuildingName
      * @param BuildingName
      */
-    void setBuildingName(const QString &BuildingName);
+    Q_INVOKABLE void setBuildingName(const QString &BuildingName);
     /**
      * @brief getVisionHide
      * @return
      */
-    bool getVisionHide();
+    Q_INVOKABLE bool getVisionHide();
     /**
      * @brief getVisionHigh
      * @return
      */
-    qint32 getVisionHigh() const;
+    Q_INVOKABLE qint32 getVisionHigh() const;
     /**
      * @brief setVisionHigh
      * @param VisionHigh
      */
-    void setVisionHigh(qint32 VisionHigh);
+    Q_INVOKABLE void setVisionHigh(qint32 VisionHigh);
     /**
      * @brief getTotalVisionHigh
      * @return
      */
-    qint32 getTotalVisionHigh();
+    Q_INVOKABLE qint32 getTotalVisionHigh();
     /**
      * @brief getBaseTerrain
      * @return
      */
-    QStringList getBaseTerrain();
+    Q_INVOKABLE QStringList getBaseTerrain();
     /**
      * @brief getNeutralLoaded
      * @return
      */
-    bool getNeutralLoaded() const;
+    Q_INVOKABLE bool getNeutralLoaded() const;
     /**
      * @brief getDescription
      * @return
      */
-    QString getDescription();
+    Q_INVOKABLE QString getDescription();
     /**
      * @brief getVision
      * @return
      */
-    qint32 getVision();
+    Q_INVOKABLE qint32 getVision();
     /**
      * @brief setAlwaysVisble if true the owner is always visible else the owner gets hidden during fog of war
      * @param value
      */
-    bool getAlwaysVisble() const;
+    Q_INVOKABLE bool getAlwaysVisble() const;
     /**
      * @brief setAlwaysVisble if true the owner is always visible else the owner gets hidden during fog of war
      * @param value
      */
-    void setAlwaysVisble(bool value);
+    Q_INVOKABLE void setAlwaysVisble(bool value);
     /**
      * @brief getName
      * @return
      */
-    QString getName();
+    Q_INVOKABLE QString getName();
     /**
      * @brief setOwner changes the owner ship of this building
      * @param pOwner
      */
-    void setOwner(Player* pOwner);
+    Q_INVOKABLE void setOwner(Player* pOwner);
     /**
      * @brief getMinimapIcon
      * @return
      */
-    QString getMinimapIcon();
+    Q_INVOKABLE QString getMinimapIcon();
     /**
      * @brief setUnitOwner the building gets owned by the owner of this unit
      * @param pUnit
      */
-    void setUnitOwner(Unit* pUnit);
+    Q_INVOKABLE void setUnitOwner(Unit* pUnit);
     /**
      * @brief loadSprite loads a sprite for this building
      * @param sprite the sprite id
      * @param addPlayerColor true for adding player color to the sprite
      */
-    void loadSprite(const QString sprite, bool addPlayerColor, qint32 frameTime = 400, QPoint pos = QPoint(0, 0));
+    Q_INVOKABLE void loadSprite(const QString sprite, bool addPlayerColor, qint32 frameTime = 400, QPoint pos = QPoint(0, 0));
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400, QPoint pos = QPoint(0, 0), const QString forcedPalette = "", bool forceNeutral = false);
+    Q_INVOKABLE void loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400, QPoint pos = QPoint(0, 0), const QString forcedPalette = "", bool forceNeutral = false);
     /**
      * @brief unloadSprites
      */
-    void unloadSprites();
+    Q_INVOKABLE void unloadSprites();
     /**
      * @brief updatePlayerColor
      * @param visible
      */
-    void updatePlayerColor(bool visible);
+    Q_INVOKABLE void updatePlayerColor(bool visible);
     /**
      * @brief getOwnerID
      * @return the player owner index of this building
      */
-    qint32 getOwnerID();
+    Q_INVOKABLE qint32 getOwnerID();
     /**
      * @brief getOwner
      * @return the pointer to the owner of this building
      */
-    Player* getOwner();
+    Q_INVOKABLE Player* getOwner();
     /**
      * @brief getBuildingID
      * @return the string if of this building
      */
-    inline QString getBuildingID() const
+    Q_INVOKABLE inline QString getBuildingID() const
     {
         return m_BuildingID;
     }
@@ -276,92 +274,92 @@ public slots:
      * @brief getX
      * @return  x coordinates of this unit
      */
-    qint32 getX() const;
+    Q_INVOKABLE qint32 getX() const;
     /**
      * @brief getY
      * @return  y coordinates of this unit
      */
-    qint32 getY() const;
+    Q_INVOKABLE qint32 getY() const;
     /**
      * @brief getPosition
      * @return
      */
-    QPoint getPosition() const
+    Q_INVOKABLE QPoint getPosition() const
     {
         return QPoint(Building::getX(), Building::getY());
     }
 
-    qint32 getHp() const;
-    void setHp(const qint32 &Hp);
+    Q_INVOKABLE qint32 getHp() const;
+    Q_INVOKABLE void setHp(const qint32 &Hp);
     /**
      * @brief isEnemyBuilding
      * @param pPlayer
      * @return
      */
-    bool isEnemyBuilding(Player* pPlayer);
+    Q_INVOKABLE bool isEnemyBuilding(Player* pPlayer);
     /**
      * @brief getFireCount should be 0 for beeing able to fire and 1 for one turn left before firing again. Else the AI may do weird moves
      * @return
      */
-    qint32 getFireCount() const;
+    Q_INVOKABLE qint32 getFireCount() const;
     /**
      * @brief setFireCount  should be 0 for beeing able to fire and 1 for one turn left before firing again. Else the AI may do weird moves
      * @param value
      */
-    void setFireCount(const qint32 &value);
+    Q_INVOKABLE void setFireCount(const qint32 &value);
     /**
      * @brief getBaseIncome
      * @return base income generated by this building
      */
-    quint32 getBaseIncome() const;
+    Q_INVOKABLE quint32 getBaseIncome() const;
     /**
      * @brief Building::getIncome
      * @return
      */
-    qint32 getIncome();
+    Q_INVOKABLE qint32 getIncome();
     /**
      * @brief getActionList
      * @return list of actions that can be performed by this building e.g building units.
      */
-    QStringList getActionList();
+    Q_INVOKABLE QStringList getActionList();
     /**
      * @brief getConstructionList
      * @return
      */
-    QStringList getConstructionList();
+    Q_INVOKABLE QStringList getConstructionList();
     /**
      * @brief getRepairTypes
      * @return
      */
-    QVector<qint32> getRepairTypes();
+    Q_INVOKABLE QVector<qint32> getRepairTypes();
     /**
      * @brief endOfTurn
      */
-    void endOfTurn();
+    Q_INVOKABLE void endOfTurn();
     /**
      * @brief startOfTurn
      */
-    void startOfTurn();
+    Q_INVOKABLE void startOfTurn();
     /**
      * @brief getTerrain
      * @return
      */
-    Terrain* getTerrain();
+    Q_INVOKABLE Terrain* getTerrain();
     /**
      * @brief getOffensiveBonus
      * @return
      */
-    qint32 getOffensiveBonus();
+    Q_INVOKABLE qint32 getOffensiveBonus();
     /**
      * @brief getPowerChargeBonus
      * @return
      */
-    qint32 getPowerChargeBonus();
+    Q_INVOKABLE qint32 getPowerChargeBonus();
     /**
      * @brief getCostReduction
      * @return
      */
-    qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
+    Q_INVOKABLE qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
     /**
      * @brief getOffensiveFieldBonus
      * @param pAttacker
@@ -371,7 +369,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
+    Q_INVOKABLE qint32 getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDeffensiveFieldBonus
      * @param pAttacker
@@ -381,17 +379,17 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
+    Q_INVOKABLE qint32 getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDefensiveBonus
      * @return
      */
-    qint32 getDefensiveBonus();
+    Q_INVOKABLE qint32 getDefensiveBonus();
     /**
      * @brief getVariables
      * @return
      */
-    inline ScriptVariables* getVariables()
+    Q_INVOKABLE inline ScriptVariables* getVariables()
     {
         return &m_Variables;
     }
@@ -399,99 +397,99 @@ public slots:
      * @brief getVision
      * @return
      */
-    qint32 getVisionBonus();
+    Q_INVOKABLE qint32 getVisionBonus();
     /**
      * @brief getBuildingWidth
      * @return
      */
-    qint32 getBuildingWidth();
+    Q_INVOKABLE qint32 getBuildingWidth();
     /**
      * @brief getBuildingHeigth
      * @return
      */
-    qint32 getBuildingHeigth();
+    Q_INVOKABLE qint32 getBuildingHeigth();
     /**
      * @brief getIsAttackable
      * @return
      */
-    bool getIsAttackable(qint32 x, qint32 y);
+    Q_INVOKABLE bool getIsAttackable(qint32 x, qint32 y);
     /**
      * @brief getActionTargetFields
      * @return
      */
-    QmlVectorPoint* getActionTargetFields();
+    Q_INVOKABLE QmlVectorPoint* getActionTargetFields();
     /**
      * @brief getActionTargetOffset
      * @return
      */
-    QPoint getActionTargetOffset();
+    Q_INVOKABLE QPoint getActionTargetOffset();
     /**
      * @brief getTerrainAnimationBase
      * @return
      */
-    QString getTerrainAnimationBase();
+    Q_INVOKABLE QString getTerrainAnimationBase();
     /**
      * @brief getTerrainAnimationForeground
      * @return
      */
-    QString getTerrainAnimationForeground();
+    Q_INVOKABLE QString getTerrainAnimationForeground();
     /**
      * @brief getTerrainAnimationBackground
      * @return
      */
-    QString getTerrainAnimationBackground();
+    Q_INVOKABLE QString getTerrainAnimationBackground();
     /**
      * @brief getTerrainAnimationMoveSpeed
      * @return
      */
-    float getTerrainAnimationMoveSpeed();
+    Q_INVOKABLE float getTerrainAnimationMoveSpeed();
     /**
      * @brief canRepair
      * @param pUnit
      * @return
      */
-    bool canRepair(Unit* pUnit);
+    Q_INVOKABLE bool canRepair(Unit* pUnit);
     /**
      * @brief isCaptureOrMissileBuilding
      * @return
      */
-    bool isCaptureOrMissileBuilding(bool hasSiloTarget);
+    Q_INVOKABLE bool isCaptureOrMissileBuilding(bool hasSiloTarget);
     /**
      * @brief isCaptureBuilding
      * @return
      */
-    bool isCaptureBuilding();
+    Q_INVOKABLE bool isCaptureBuilding();
     /**
      * @brief isMissile
      * @return
      */
-    bool isMissile();
+    Q_INVOKABLE bool isMissile();
     /**
      * @brief isProductionBuilding
      * @return
      */
-    bool isProductionBuilding();
+    Q_INVOKABLE bool isProductionBuilding();
     /**
      * @brief getDamage
      * @param pUnit
      * @return
      */
-    qreal getDamage(Unit* pUnit);
+    Q_INVOKABLE qreal getDamage(Unit* pUnit);
     /**
      * @brief getBuildingTargets
      * @return
      */
-    GameEnums::BuildingTarget getBuildingTargets();
+    Q_INVOKABLE GameEnums::BuildingTarget getBuildingTargets();
     /**
      * @brief onWeatherChanged
      */
-    void onWeatherChanged(Weather* pWeather);
+    Q_INVOKABLE void onWeatherChanged(Weather* pWeather);
     /**
      * @brief loadWeatherOverlaySpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadWeatherOverlaySpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime = 100);
+    Q_INVOKABLE void loadWeatherOverlaySpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime = 100);
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     QVector<oxygine::spSprite> m_pWeatherOverlaySprites;

@@ -35,6 +35,7 @@ public slots:
      * @param event
      */
     void keyInput(oxygine::KeyEvent event);
+public:
     /**
      * @brief loadCoSprite
      * @param coid
@@ -43,54 +44,54 @@ public slots:
      * @param scale
      * @param flippedX
      */
-    void loadCoSprite(const QString coid, float offsetX, float offsetY, bool flippedX, float scale = 1.0f);
+    Q_INVOKABLE void loadCoSprite(const QString coid, float offsetX, float offsetY, bool flippedX, float scale = 1.0f);
     /**
      * @brief onFinished
      * @param skipping
      * @return
      */
-    virtual bool onFinished(bool skipping) override;
+    Q_INVOKABLE virtual bool onFinished(bool skipping) override;
     /**
      * @brief setPositionTop wether dialog appears on top or bottom of the game
      * @param value
      */
-    void setPositionTop(bool value);
+    Q_INVOKABLE void setPositionTop(bool value);
     /**
      * @brief setColor
      */
-    void setColor(QColor color);
+    Q_INVOKABLE void setColor(QColor color);
     /**
      * @brief setDialog
      * @param text
      */
-    void setDialog(const QString text);
+    Q_INVOKABLE void setDialog(const QString text);
     /**
      * @brief setCO
      * @param coid
      */
-    void setCO(const QString coid, GameEnums::COMood mood);
+    Q_INVOKABLE void setCO(const QString coid, GameEnums::COMood mood);
     /**
      * @brief setPlayerCO
      * @param player
      * @param co
      * @param mood
      */
-    void setPlayerCO(qint32 player, quint8 co, GameEnums::COMood mood);
+    Q_INVOKABLE void setPlayerCO(qint32 player, quint8 co, GameEnums::COMood mood);
     /**
      * @brief setFinishDelay sets if the dialog disappears automatically if all text was displayed -1 for infinite
      * @param value
      */
-    void setFinishDelay(qint32 valueMs);
+    Q_INVOKABLE void setFinishDelay(qint32 valueMs);
     /**
      * @brief setTextSpeed
      * @param speed
      */
-    void setTextSpeed(qint32 speed);
+    Q_INVOKABLE void setTextSpeed(qint32 speed);
     /**
      * @brief loadBackground
      * @param file path relative to the Commander Wars.exe
      */
-    void loadBackground(const QString file);
+    Q_INVOKABLE void loadBackground(const QString file);
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
     void startFinishTimer();

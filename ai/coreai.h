@@ -225,77 +225,8 @@ public:
         return 10;
     }
     void addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost);
-
     GameEnums::AiTurnMode getTurnMode() const;
 
-signals:
-    /**
-     * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
-     * @param pAction
-     */
-    void sigPerformAction(spGameAction pAction, bool fromAiPipe = false);
-public slots:
-    virtual void resetToTurnStart();
-    /**
-     * @brief getProductionSystem
-     * @return
-     */
-    SimpleProductionSystem* getSimpleProductionSystem();
-    /**
-     * @brief getAiName
-     * @return
-     */
-    QString getAiName() const;
-    /**
-     * @brief getVariables
-     * @return
-     */
-    inline ScriptVariables* getVariables()
-    {
-        return &m_Variables;
-    }
-    /**
-     * @brief createTargetedPfs
-     * @param pUnit
-     * @param targets
-     * @return
-     */
-    TargetedUnitPathFindingSystem* createTargetedPfs(Unit* pUnit, const QVector<QVector3D> & targets);
-    /**
-     * @brief process
-     */
-    virtual void process() = 0;
-    /**
-     * @brief loadIni
-     * @param file
-     */
-    void loadIni(QString file);
-    /**
-     * @brief readIni
-     * @param name
-     */
-    virtual void readIni(QString name);
-    /**
-     * @brief saveIni
-     * @param name
-     */
-    void saveIni(QString name) const;
-    /**
-     * @brief randomizeIni
-     */
-    void randomizeIni(QString name, float chance, float mutationRate = 0.1f);
-    /**
-     * @brief setInitValue changes an ini-file loaded parameter to the given value if the name doesn't exist nothing happens
-     * @param name
-     * @param newValue
-     */
-    void setInitValue(QString name, double newValue);
-    /**
-     * @brief getInitValue gets the current value of an ini-file loaded parameter if the name doesn't exist returns 0.
-     * @param name
-     * @return
-     */
-    double getInitValue(QString name) const;
     /**
      * @brief useCOPower
      * @param pUnits
@@ -304,22 +235,9 @@ public slots:
      */
     bool useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits);
     /**
-     * @brief calcBuildingDamage
-     * @param pUnit
-     * @param pBuilding
-     * @return
-     */
-    float calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Building* pBuilding) const;
-    /**
      * @brief createMovementMap
      */
     void createMovementMap(spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
-    /**
-     * @brief addMovementMap
-     * @param pBuilding
-     * @param damage
-     */
-    void addMovementMap(Building* pBuilding, float damage);
     /**
      * @brief useBuilding
      * @param pBuildings
@@ -332,12 +250,6 @@ public slots:
      * @param pEnemyUnits
      */
     bool moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits);
-    /**
-     * @brief moveFlares
-     * @param pUnits
-     * @return
-     */
-    bool moveFlares(spQmlVectorUnit & pUnits);
     /**
      * @brief moveBlackBombs
      * @param pUnits
@@ -352,9 +264,11 @@ public slots:
      */
     bool moveSupport(CoreAI::AISteps step, spQmlVectorUnit & pUnits, bool useTransporters);
     /**
-     * @brief nextAction
+     * @brief moveFlares
+     * @param pUnits
+     * @return
      */
-    virtual void nextAction();
+    bool moveFlares(spQmlVectorUnit & pUnits);
     /**
      * @brief calcUnitDamage
      * @param pUnit
@@ -430,20 +344,106 @@ public slots:
      * @param targets
      */
     void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
+signals:
+    /**
+     * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
+     * @param pAction
+     */
+    void sigPerformAction(spGameAction pAction, bool fromAiPipe = false);
+public slots:
+    /**
+     * @brief process
+     */
+    virtual void process() = 0;
+public:
+    /**
+     * @brief nextAction
+     */
+    Q_INVOKABLE virtual void nextAction();
+    Q_INVOKABLE virtual void resetToTurnStart();
+    /**
+     * @brief getProductionSystem
+     * @return
+     */
+    Q_INVOKABLE SimpleProductionSystem* getSimpleProductionSystem();
+    /**
+     * @brief getAiName
+     * @return
+     */
+    Q_INVOKABLE QString getAiName() const;
+    /**
+     * @brief getVariables
+     * @return
+     */
+    Q_INVOKABLE inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
+    /**
+     * @brief createTargetedPfs
+     * @param pUnit
+     * @param targets
+     * @return
+     */
+    Q_INVOKABLE TargetedUnitPathFindingSystem* createTargetedPfs(Unit* pUnit, const QVector<QVector3D> & targets);
+    /**
+     * @brief loadIni
+     * @param file
+     */
+    Q_INVOKABLE void loadIni(QString file);
+    /**
+     * @brief readIni
+     * @param name
+     */
+    Q_INVOKABLE virtual void readIni(QString name);
+    /**
+     * @brief saveIni
+     * @param name
+     */
+    Q_INVOKABLE void saveIni(QString name) const;
+    /**
+     * @brief randomizeIni
+     */
+    Q_INVOKABLE void randomizeIni(QString name, float chance, float mutationRate = 0.1f);
+    /**
+     * @brief setInitValue changes an ini-file loaded parameter to the given value if the name doesn't exist nothing happens
+     * @param name
+     * @param newValue
+     */
+    Q_INVOKABLE void setInitValue(QString name, double newValue);
+    /**
+     * @brief getInitValue gets the current value of an ini-file loaded parameter if the name doesn't exist returns 0.
+     * @param name
+     * @return
+     */
+    Q_INVOKABLE double getInitValue(QString name) const;
+    /**
+     * @brief calcBuildingDamage
+     * @param pUnit
+     * @param pBuilding
+     * @return
+     */
+    Q_INVOKABLE float calcBuildingDamage(Unit* pUnit, const QPoint newPosition, Building* pBuilding) const;
+    /**
+     * @brief addMovementMap
+     * @param pBuilding
+     * @param damage
+     */
+    Q_INVOKABLE void addMovementMap(Building* pBuilding, float damage);
     /**
      * @brief onSameIsland checks if unit1 can reach unit 2. This may be vice versa but isn't checked here
      * @param pUnit1
      * @param pUnit2
      * @return
      */
-    bool onSameIsland(Unit* pUnit1, Unit* pUnit2) const;
+    Q_INVOKABLE bool onSameIsland(Unit* pUnit1, Unit* pUnit2) const;
     /**
      * @brief onSameIsland checks if unit1 can reach the building. This may be vice versa but isn't checked here
      * @param pUnit1
      * @param pBuilding
      * @return
      */
-    bool onSameIsland(Unit* pUnit1, Building* pBuilding) const;
+    Q_INVOKABLE bool onSameIsland(Unit* pUnit1, Building* pBuilding) const;
     /**
      * @brief onSameIsland
      * @param movemnetType
@@ -453,7 +453,7 @@ public slots:
      * @param y1
      * @return
      */
-    bool onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
+    Q_INVOKABLE bool onSameIsland(const QString movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
     /**
      * @brief onSameIsland
      * @param islandIdx
@@ -463,13 +463,13 @@ public slots:
      * @param y1
      * @return
      */
-    bool onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
+    Q_INVOKABLE bool onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
     /**
      * @brief getIsland
      * @param pUnit1
      * @return
      */
-    qint32 getIsland(Unit* pUnit);
+    Q_INVOKABLE qint32 getIsland(Unit* pUnit);
     /**
      * @brief getIslandSize
      * @param pUnit
@@ -477,71 +477,71 @@ public slots:
      * @param y
      * @return
      */
-    qint32 getIslandSize(Unit* pUnit, qint32 x, qint32 y) const;
+    Q_INVOKABLE qint32 getIslandSize(Unit* pUnit, qint32 x, qint32 y) const;
     /**
      * @brief getIslandIndex
      * @param pUnit1
      * @return
      */
-    qint32 getIslandIndex(Unit* pUnit);
+    Q_INVOKABLE qint32 getIslandIndex(Unit* pUnit);
     /**
      * @brief isUnloadTerrain
      * @param pUnit
      * @param pTerrain
      * @return
      */
-    bool isUnloadTerrain(Unit* pUnit, Terrain* pTerrain);
+    Q_INVOKABLE bool isUnloadTerrain(Unit* pUnit, Terrain* pTerrain);
     /**
      * @brief isLoadingTerrain
      * @param pTransporter
      * @param pTerrain
      * @return
      */
-    bool isLoadingTerrain(Unit* pTransporter, Terrain* pTerrain);
+    Q_INVOKABLE bool isLoadingTerrain(Unit* pTransporter, Terrain* pTerrain);
     /**
      * @brief createIslandMap
      * @param movementType
      * @param unitID
      */
-    void createIslandMap(const QString & movementType, const QString & unitID);
+    Q_INVOKABLE void createIslandMap(const QString movementType, const QString unitID);
     /**
      * @brief needsRefuel
      * @param pUnit
      * @return
      */
-    bool needsRefuel(const Unit* pUnit) const;
+    Q_INVOKABLE bool needsRefuel(const Unit* pUnit) const;
     /**
      * @brief isRefuelUnit
      * @param actionList
      * @return
      */
-    bool isRefuelUnit(const QStringList & actionList) const;
+    Q_INVOKABLE bool isRefuelUnit(const QStringList actionList) const;
     /**
      * @brief isMoveableBuilding
      * @param pBuilding
      * @return
      */
-    bool isMoveableTile(Building* pBuilding) const;
+    Q_INVOKABLE bool isMoveableTile(Building* pBuilding) const;
     /**
      * @brief getAiCoUnitMultiplier
      * @param pCO
      * @param pUnit
      * @return
      */
-    float getAiCoUnitMultiplier(CO* pCO, Unit* pUnit);
+    Q_INVOKABLE float getAiCoUnitMultiplier(CO* pCO, Unit* pUnit);
     /**
      * @brief getAiCoBuildRatioModifier
      * @param pCO
      * @return
      */
-    float getAiCoBuildRatioModifier();
+    Q_INVOKABLE float getAiCoBuildRatioModifier();
     /**
      * @brief getUnitCount
      * @param pUnits
      * @param unitIds
      * @return
      */
-    qint32 getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp = 0.0f, qint32 minFuel = 0);
+    Q_INVOKABLE qint32 getUnitCount(QmlVectorUnit * pUnits, const QStringList unitIds, float minHp = 0.0f, qint32 minFuel = 0);
     /**
      * @brief getEnemyUnitCountNearOwnUnits
      * @param pUnits
@@ -551,14 +551,14 @@ public slots:
      * @param minHp
      * @return
      */
-    qint32 getEnemyUnitCountNearOwnUnits(QmlVectorUnit * pUnits, QmlVectorUnit * pEnemyUnits, const QStringList & unitIds, qint32 distance, float minHp = 0.0f);
+    Q_INVOKABLE qint32 getEnemyUnitCountNearOwnUnits(QmlVectorUnit * pUnits, QmlVectorUnit * pEnemyUnits, const QStringList unitIds, qint32 distance, float minHp = 0.0f);
     /**
      * @brief getBuildingCountsOnEnemyIslands
      * @param pUnits
      * @param pEnemyBuildings
      * @return
      */
-    qint32 getBuildingCountsOnEnemyIslands(QmlVectorUnit * pUnits, QmlVectorBuilding * pEnemyBuildings);
+    Q_INVOKABLE qint32 getBuildingCountsOnEnemyIslands(QmlVectorUnit * pUnits, QmlVectorBuilding * pEnemyBuildings);
     /**
      * @brief hasTargets checks if a unit has anything to do on this island
      * @param transporterMovement movement points of the transporting unit
@@ -568,7 +568,7 @@ public slots:
      * @param pEnemyBuildings
      * @return
      */
-    bool hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings,
+    Q_INVOKABLE bool hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings,
                     qint32 loadingIslandIdx, qint32 loadingIsland, bool allowFastUnit = true, bool onlyTrueIslands = false, bool useEnemyProductionBuildings = false);
     /**
      * @brief CoreAI::getIdleUnitCount
@@ -577,7 +577,7 @@ public slots:
      * @param pEnemyBuildings
      * @return
      */
-    qint32 getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
+    Q_INVOKABLE qint32 getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
     /**
      * @brief shareIslandWithEnemy
      * @param pUnits
@@ -585,11 +585,11 @@ public slots:
      * @param pEnemyBuildings
      * @return
      */
-    bool shareIslandWithEnemy(QmlVectorUnit* pUnits, QmlVectorBuilding * pBuildings, QmlVectorBuilding * pEnemyBuildings);
+    Q_INVOKABLE bool shareIslandWithEnemy(QmlVectorUnit* pUnits, QmlVectorBuilding * pBuildings, QmlVectorBuilding * pEnemyBuildings);
     /**
      * @brief resetMoveMap
      */
-    void resetMoveMap();
+    Q_INVOKABLE void resetMoveMap();
 protected:
     /**
      * @brief prepareEnemieData

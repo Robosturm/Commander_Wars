@@ -75,34 +75,32 @@ public:
     void initialize();
     bool buildUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings, bool & executed);
     void onNewBuildQueue(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings);
-
-public slots:
-    bool getInit() const;
-    bool getEnabled() const;
-    void setEnabled(bool newEnabled);
+    Q_INVOKABLE bool getInit() const;
+    Q_INVOKABLE bool getEnabled() const;
+    Q_INVOKABLE void setEnabled(bool newEnabled);
     /**
      * @brief getVariables
      * @return
      */
-    inline ScriptVariables* getVariables()
+    Q_INVOKABLE inline ScriptVariables* getVariables()
     {
         return &m_Variables;
     }
-    void resetBuildDistribution();
-    void resetForcedProduction();
-    void resetInitialProduction();
-    bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode, qreal minAverageIslandSize = 0.025);
-    void addInitialProduction(const QStringList & unitIds, qint32 count);
-    void addForcedProduction(const QStringList & unitId, qint32 x = -1, qint32 y = -1);
-    void addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, qreal distribution, qint32 buildMode, const QString & guardCondition = "", qreal maxUnitDistribution = 1.0);
+    Q_INVOKABLE void resetBuildDistribution();
+    Q_INVOKABLE void resetForcedProduction();
+    Q_INVOKABLE void resetInitialProduction();
+    Q_INVOKABLE bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode, qreal minAverageIslandSize = 0.025);
+    Q_INVOKABLE void addInitialProduction(const QStringList unitIds, qint32 count);
+    Q_INVOKABLE void addForcedProduction(const QStringList unitId, qint32 x = -1, qint32 y = -1);
+    Q_INVOKABLE void addItemToBuildDistribution(const QString group, const QStringList unitIds, const QVector<qint32> chance, qreal distribution, qint32 buildMode, const QString guardCondition = "", qreal maxUnitDistribution = 1.0);
     /**
      * @brief getDummyUnit creates a dummy unit to calculate values not only one dummy unit will be alive at all time.
      * @param unitId
      * @return
      */
-    Unit* getDummyUnit(const QString & unitId);
-    qint32 getProductionFromList(const QStringList & unitIds, QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, qint32 minBuildMode, qint32 maxBuildMode, const QVector<bool> & enableList = QVector<bool>());
-    void updateIslandSizeForBuildings(QmlVectorBuilding* pBuildings);
+    Q_INVOKABLE Unit* getDummyUnit(const QString unitId);
+    Q_INVOKABLE qint32 getProductionFromList(const QStringList unitIds, QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, qint32 minBuildMode, qint32 maxBuildMode, const QVector<bool> enableList = QVector<bool>());
+    Q_INVOKABLE void updateIslandSizeForBuildings(QmlVectorBuilding* pBuildings);
 private:
     bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize);
     bool buildUnit(qint32 x, qint32 y, QString unitId);

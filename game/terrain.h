@@ -135,142 +135,140 @@ public:
      */
     void setMapForExtending(GameMap * newMap);
 
-public slots:
     /**
      * @brief getPalette
      * @return
      */
-    QString getPalette() const;
+    Q_INVOKABLE QString getPalette() const;
     /**
      * @brief setPalette
      * @param newPalette
      */
-    void setPalette(const QString newPalette);
-
-    QString getDefaultPalette();
+    Q_INVOKABLE void setPalette(const QString newPalette);
+    Q_INVOKABLE QString getDefaultPalette();
     /**
      * @brief setTerrainPalette
      * @param newPalette
      */
-    void setTerrainPalette(const QString newPalette, bool includeBaseTerrain = true);
+    Q_INVOKABLE void setTerrainPalette(const QString newPalette, bool includeBaseTerrain = true);
     /**
      * @brief setTerrainPaletteGroup
      * @param newPaletteGroup
      */
-    void setTerrainPaletteGroup(qint32 newPaletteGroup);
+    Q_INVOKABLE void setTerrainPaletteGroup(qint32 newPaletteGroup);
     /**
      * @brief resetTerrainOverlayPalettes
      */
-    void resetTerrainOverlayPalettes();
+    Q_INVOKABLE void resetTerrainOverlayPalettes();
     /**
      * @brief getFixedOverlaySprites
      * @return
      */
-    bool getFixedOverlaySprites() const;
+    Q_INVOKABLE bool getFixedOverlaySprites() const;
     /**
      * @brief setFixedOverlaySprites
      * @param newFixedOverlaySprites
      */
-    void setFixedOverlaySprites(bool newFixedOverlaySprites);
+    Q_INVOKABLE void setFixedOverlaySprites(bool newFixedOverlaySprites);
     /**
      * @brief getCustomOverlays
      * @return
      */
-    QStringList getCustomOverlays() const;
+    Q_INVOKABLE QStringList getCustomOverlays() const;
     /**
      * @brief setCustomOverlays
      * @param newCustomOverlays
      */
-    void setCustomOverlays(const QStringList newCustomOverlays, const QStringList newPalettes = QStringList());
+    Q_INVOKABLE void setCustomOverlays(const QStringList newCustomOverlays, const QStringList newPalettes = QStringList());
     /**
      * @brief addCustomOverlay
      * @param newCustomOverlay
      */
-    void addCustomOverlay(const QString customOverlay, const QString palette = "");
+    Q_INVOKABLE void addCustomOverlay(const QString customOverlay, const QString palette = "");
     /**
      * @brief removeCustomOverlay
      * @param customOverlay
      */
-    void removeCustomOverlay(const QString customOverlay);
+    Q_INVOKABLE void removeCustomOverlay(const QString customOverlay);
     /**
      * @brief setSpriteVisibility
      * @param value
      */
-    void setSpriteVisibility(bool value);
+    Q_INVOKABLE void setSpriteVisibility(bool value);
     /**
      * @brief setFixedSprite only avaible for ingame editor
      * @return
      */
-    void setFixedSprite(bool FixedSprite);
+    Q_INVOKABLE void setFixedSprite(bool FixedSprite);
     /**
      * @brief setTerrainSpriteName only avaible for ingame editor
      * @return
      */
-    void setTerrainSpriteName(const QString terrainSpriteName);
+    Q_INVOKABLE void setTerrainSpriteName(const QString terrainSpriteName);
     /**
      * @brief getShowInEditor
      * @param unitId
      * @return if the given terrain should be shown in the editor
      */
-    static bool getShowInEditor(QString terrainId);
+    Q_INVOKABLE static bool getShowInEditor(QString terrainId);
     /**
      * @brief getMap
      * @return
      */
-    GameMap *getMap() const;
+    Q_INVOKABLE GameMap *getMap() const;
     /**
      * @brief getHasFlowDirection
      * @return
      */
-    bool getHasFlowDirection() const;
+    Q_INVOKABLE bool getHasFlowDirection() const;
     /**
      * @brief getTileHasFlowDirection
      * @return
      */
-    bool getTileHasFlowDirection() const;
+    Q_INVOKABLE bool getTileHasFlowDirection() const;
     /**
      * @brief setHasFlowDirection
      * @param newHasFlowDirection
      */
-    void setHasFlowDirection(bool newHasFlowDirection);
+    Q_INVOKABLE void setHasFlowDirection(bool newHasFlowDirection);
     /**
      * @brief getWeatherOverlaySpeed
      * @return
      */
-    QPoint getWeatherOverlaySpeed();
+    Q_INVOKABLE QPoint getWeatherOverlaySpeed();
     /**
      * @brief getWeatherOverlayId
      * @return
      */
-    QString getWeatherOverlayId();
+    Q_INVOKABLE QString getWeatherOverlayId();
     /**
      * @brief getFixedSprite only avaible for ingame editor
      * @return
      */
-    bool getFixedSprite() const;
+    Q_INVOKABLE bool getFixedSprite() const;
     /**
      * @brief getTerrainSpriteName only avaible for ingame editor
      * @return
      */
-    QString getTerrainSpriteName() const;
+    Q_INVOKABLE QString getTerrainSpriteName() const;
     /**
      * @brief createTerrainFindingSystem Note: the path finding system needs to be deleted by the caller using killTerrainFindingSystem()
      * @return a path finding system that contains all connect terrains of the same type
      */
-    TerrainFindingSystem* createTerrainFindingSystem();
+    Q_INVOKABLE TerrainFindingSystem* createTerrainFindingSystem();
     /**
      * @brief addTerrainOverlay
      */
-    void addTerrainOverlay(QString id, qint32 x, qint32 y, QColor color = Qt::white, qint32 duration = -1, float scale = 1.0f);
+    Q_INVOKABLE void addTerrainOverlay(QString id, qint32 x, qint32 y, QColor color = Qt::white, qint32 duration = -1, float scale = 1.0f);
     /**
      * @brief removeTerrainOverlay
      */
-    void removeTerrainOverlay(const QString id);
+    Q_INVOKABLE void removeTerrainOverlay(const QString id);
     /**
      * @brief getVariables
      * @return
      */
-    inline ScriptVariables* getVariables()
+    Q_INVOKABLE inline ScriptVariables* getVariables()
     {
         return &m_Variables;
     }
@@ -278,7 +276,7 @@ public slots:
      * @brief getAnimationVariables
      * @return
      */
-    ScriptVariables* getAnimationVariables();
+    Q_INVOKABLE ScriptVariables* getAnimationVariables();
     /**
      * @brief getOffensiveBonus
      * @param pAttacker
@@ -288,7 +286,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
+    Q_INVOKABLE qint32 getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDeffensiveBonus
      * @param pAttacker
@@ -298,130 +296,126 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode);
+    Q_INVOKABLE qint32 getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief startOfTurn
      */
-    void startOfTurn();
+    Q_INVOKABLE void startOfTurn();
     /**
      * @brief getHasStartOfTurn
      * @return
      */
-    bool getHasStartOfTurn() const;
+    Q_INVOKABLE bool getHasStartOfTurn() const;
     /**
      * @brief setHasStartOfTurn
      * @param hasStartOfTurn
      */
-    void setHasStartOfTurn(bool hasStartOfTurn);
+    Q_INVOKABLE void setHasStartOfTurn(bool hasStartOfTurn);
     /**
      * @brief getTerrainDescription
      * @return
      */
-    QString getTerrainDescription() const;
+    Q_INVOKABLE QString getTerrainDescription() const;
     /**
      * @brief setTerrainDescription
      * @param terrainDescription
      */
-    void setTerrainDescription(const QString terrainDescription);
+    Q_INVOKABLE void setTerrainDescription(const QString terrainDescription);
     /**
      * @brief getVisionHigh
      * @return
      */
-    qint32 getVisionHigh() const;
+    Q_INVOKABLE qint32 getVisionHigh() const;
     /**
      * @brief setVisionHigh
      * @param VisionHigh
      */
-    void setVisionHigh(const qint32 VisionHigh);
+    Q_INVOKABLE void setVisionHigh(const qint32 VisionHigh);
     /**
      * @brief getTotalVisionHigh
      * @return
      */
-    qint32 getTotalVisionHigh();
+    Q_INVOKABLE qint32 getTotalVisionHigh();
     /**
      * @brief getTerrainGroup
      * @return
      */
-    qint32 getTerrainGroup();
+    Q_INVOKABLE qint32 getTerrainGroup();
     /**
      * @brief getDescription
      * @return
      */
-    QString getDescription();
+    Q_INVOKABLE QString getDescription();
     /**
      * @brief loadSprites loads all sprites we won't to show. Updates all sprite data
      */
-    void loadSprites();
+    Q_INVOKABLE void loadSprites();
     /**
      * @brief unloadSprites
      */
-    void unloadSprites();
+    Q_INVOKABLE void unloadSprites();
     /**
      * @brief loadBaseTerrainSprites
      */
-    void loadBaseTerrainSprites();
+    Q_INVOKABLE void loadBaseTerrainSprites();
     /**
      * @brief getMinimapIcon
      * @return
      */
-    QString getMinimapIcon();
+    Q_INVOKABLE QString getMinimapIcon();
     /**
      * @brief getTerrainID
      * @return
      */
-    QString getTerrainID() const;
-
-    QString getTerrainName() const;
-    void setTerrainName(const QString value, bool customName = false);
-
-    qint32 getX() const;
-    void setX(const qint32 value);
-
-    qint32 getHp() const;
-    void setHp(const qint32 value);
-
-    qint32 getY() const;
-    void setY(const qint32 value);
+    Q_INVOKABLE QString getTerrainID() const;
+    Q_INVOKABLE QString getTerrainName() const;
+    Q_INVOKABLE void setTerrainName(const QString value, bool customName = false);
+    Q_INVOKABLE qint32 getX() const;
+    Q_INVOKABLE void setX(const qint32 value);
+    Q_INVOKABLE qint32 getHp() const;
+    Q_INVOKABLE void setHp(const qint32 value);
+    Q_INVOKABLE qint32 getY() const;
+    Q_INVOKABLE void setY(const qint32 value);
     /**
      * @brief Terrain::getVision
      * @return
      */
-    qint32 getVision(Player* pPlayer);
+    Q_INVOKABLE qint32 getVision(Player* pPlayer);
     /**
      * @brief getBonusVision
      * @param pUnit
      * @return
      */
-    qint32 getBonusVision(Unit* pUnit);
+    Q_INVOKABLE qint32 getBonusVision(Unit* pUnit);
     /**
      * @brief isLoadingTile
      * @return
      */
-    bool isLoadingTile();
+    Q_INVOKABLE bool isLoadingTile();
     /**
      * @brief getUnit the unit on this terrain
      * @return
      */
-    Unit* getUnit() const;
+    Q_INVOKABLE Unit* getUnit() const;
     /**
      * @brief getBuilding the building on this terrain
      * @return
      */
-    Building* getBuilding() const;
+    Q_INVOKABLE Building* getBuilding() const;
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
      */
-    void createBaseTerrain(const QString currentTerrainID, const QString currentTerrainPalette = "");
+    Q_INVOKABLE void createBaseTerrain(const QString currentTerrainID, const QString currentTerrainPalette = "");
     /**
      * @brief loadBaseTerrain loads a base terrain with the given id
      * @param terrainID
      */
-    void loadBaseTerrain(const QString terrainID, const QString currentTerrainPalette = "");
+    Q_INVOKABLE void loadBaseTerrain(const QString terrainID, const QString currentTerrainPalette = "");
     /**
      * @brief loadBaseSprite loads the sprite for this terrain
      * @param spriteID
      */
-    void loadBaseSprite(const QString spriteID, qint32 frameTime = 100, qint32 startFrame = -1, qint32 endFrame = -1);
+    Q_INVOKABLE void loadBaseSprite(const QString spriteID, qint32 frameTime = 100, qint32 startFrame = -1, qint32 endFrame = -1);
     /**
      * @brief getSurroundings returns a string containing the directions which fulfill the given rule
      * @param list the list as string split with ,
@@ -433,17 +427,17 @@ public slots:
      * @param inverted for flow direction
      * @return
      */
-    QString getSurroundings(const QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1, bool inverted = false);
+    Q_INVOKABLE QString getSurroundings(const QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1, bool inverted = false);
     /**
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID
      */
-    void loadOverlaySprite(const QString spriteID, qint32 startFrame = -1, qint32 endFrame = -1, const QString palette = "", bool customOverlay = false);
+    Q_INVOKABLE void loadOverlaySprite(const QString spriteID, qint32 startFrame = -1, qint32 endFrame = -1, const QString palette = "", bool customOverlay = false);
     /**
      * @brief getBaseTerrainID finds the base terrain id of the real base terrain recursivly
      * @return the base terrainID
      */
-    inline QString getBaseTerrainID()
+    Q_INVOKABLE inline QString getBaseTerrainID()
     {
         if (m_pBaseTerrain.get() != nullptr)
         {
@@ -459,7 +453,7 @@ public slots:
      * @param count maximum recursion
      * @return
      */
-    inline QString getBaseTerrainIDOfLevel(qint32 count)
+    Q_INVOKABLE inline QString getBaseTerrainIDOfLevel(qint32 count)
     {
         if (m_pBaseTerrain.get() != nullptr &&
            ((count > 0) || (count < 0)))
@@ -471,7 +465,7 @@ public slots:
             return m_terrainID;
         }
     }
-    Terrain* getBaseTerrain(QString terrainId, bool returnNullIfNotFound = false)
+    Q_INVOKABLE Terrain* getBaseTerrain(QString terrainId, bool returnNullIfNotFound = false)
     {
         if (m_pBaseTerrain.get() != nullptr)
         {
@@ -493,7 +487,7 @@ public slots:
             return nullptr;
         }
     }
-    Terrain* getNextBaseTerrain()
+    Q_INVOKABLE Terrain* getNextBaseTerrain()
     {
         return m_pBaseTerrain.get();
     }
@@ -502,94 +496,94 @@ public slots:
      * @brief getID the overall id of this terrain either terrain id or building id
      * @return
      */
-    QString getID();
+    Q_INVOKABLE QString getID();
     /**
      * @brief getFirerangeModifier
      * @param pUnit
      * @return
      */
-    qint32 getFirerangeModifier(Unit* pUnit);    
+    Q_INVOKABLE qint32 getFirerangeModifier(Unit* pUnit);
     /**
      * @brief getFirerangeModifier
      * @param pUnit
      * @return
      */
-    qint32 getMinFirerangeModifier(Unit* pUnit);
+    Q_INVOKABLE qint32 getMinFirerangeModifier(Unit* pUnit);
     /**
      * @brief removeBuilding
      */
-    void removeBuilding();
+    Q_INVOKABLE void removeBuilding();
     /**
      * @brief loadBuilding deletes the current building by loading the given building ID.
      * @param buildingID
      */
-    void loadBuilding(const QString buildingID);
+    Q_INVOKABLE void loadBuilding(const QString buildingID);
     /**
      * @brief getDefense
      */
-    qint32 getDefense(Unit* pUnit);
+    Q_INVOKABLE qint32 getDefense(Unit* pUnit);
     /**
      * @brief getDefense
      */
-    qint32 getBaseDefense();
+    Q_INVOKABLE qint32 getBaseDefense();
     /**
      * @brief getVisionHide
      * @return
      */
-    bool getVisionHide(Player* pPlayer);
+    Q_INVOKABLE bool getVisionHide(Player* pPlayer);
     /**
      * @brief getTerrainAnimationBase
      * @return
      */
-    QString getTerrainAnimationBase();
+    Q_INVOKABLE QString getTerrainAnimationBase();
     /**
      * @brief getTerrainAnimationForeground
      * @return
      */
-    QString getTerrainAnimationForeground();
+    Q_INVOKABLE QString getTerrainAnimationForeground();
     /**
      * @brief getTerrainAnimationBackground
      * @return
      */
-    QString getTerrainAnimationBackground();
+    Q_INVOKABLE QString getTerrainAnimationBackground();
     /**
      * @brief getTerrainAnimationMoveSpeed
      * @return
      */
-    float getTerrainAnimationMoveSpeed();
+    Q_INVOKABLE float getTerrainAnimationMoveSpeed();
     /**
      * @brief getTerrainSprites
      * @return
      */
-    QStringList getTerrainSprites();
+    Q_INVOKABLE QStringList getTerrainSprites();
     /**
      * @brief getOverlayTerrainSprites
      * @return
      */
-    QStringList getOverlayTerrainSprites();
+    Q_INVOKABLE QStringList getOverlayTerrainSprites();
     /**
      * @brief existsResAnim
      * @param spriteId
      * @return
      */
-    bool existsResAnim(const QString spriteId) const;
+    Q_INVOKABLE bool existsResAnim(const QString spriteId) const;
     /**
      * @brief getFittingResAnim
      * @param spriteIdStart
      * @param spriteIdEnd
      * @return
      */
-    QString getFittingResAnim(const QString spriteIdStart, const QString spriteIdEnd) const;
+    Q_INVOKABLE QString getFittingResAnim(const QString spriteIdStart, const QString spriteIdEnd) const;
     /**
      * @brief updateFlowSprites
      * @param pPfs
      */
-    void updateFlowSprites(TerrainFindingSystem* pPfs, bool applyRulesPalette = false);
+    Q_INVOKABLE void updateFlowSprites(TerrainFindingSystem* pPfs, bool applyRulesPalette = false);
     /**
      * @brief getFlowTiles
      * @return
      */
-    QStringList getFlowTiles();
+    Q_INVOKABLE QStringList getFlowTiles();
     /**
      * @brief getMovementcostModifier
      * @param x
@@ -598,43 +592,43 @@ public slots:
      * @param curY
      * @return
      */
-    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);
+    Q_INVOKABLE qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);
     /**
      * @brief getPaletteNames
      * @return
      */
-    static QStringList getPaletteNames();
+    Q_INVOKABLE static QStringList getPaletteNames();
     /**
      * @brief getPaletteId
      * @param index
      * @return
      */
-    static QString getPaletteId(qint32 index, const QString terrainId);
+    Q_INVOKABLE static QString getPaletteId(qint32 index, const QString terrainId);
     /**
      * @brief getPaletteName
      * @param id
      * @return
      */
-    static QString getPaletteName(const QString id);
+    Q_INVOKABLE static QString getPaletteName(const QString id);
     /**
      * @brief getPaletteNameFromIndex
      * @param id
      * @return
      */
-    static QString getPaletteNameFromIndex(qint32 id);
+    Q_INVOKABLE static QString getPaletteNameFromIndex(qint32 id);
     /**
      * @brief getNeighbourPalette
      * @param direction
      * @return
      */
-    QString getNeighbourPalette(GameEnums::Directions direction, const QString baseTerrainId = "");
+    Q_INVOKABLE QString getNeighbourPalette(GameEnums::Directions direction, const QString baseTerrainId = "");
     /**
      * @brief getNeighbourPalette
      * @param direction
      * @param baseTerrainId
      * @return
      */
-    QString getNeighbourDirectionsPalette(QString direction, const QString baseTerrainId = "");
+    Q_INVOKABLE QString getNeighbourDirectionsPalette(QString direction, const QString baseTerrainId = "");
 protected:
     /**
      * @brief createBuildingDownStream

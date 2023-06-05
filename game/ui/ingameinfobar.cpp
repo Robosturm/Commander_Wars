@@ -1000,7 +1000,7 @@ void IngameInfoBar::syncMinimapPosition()
     }
 }
 
-const GameMap *IngameInfoBar::getMap() const
+GameMap *IngameInfoBar::getMap() const
 {
     return m_pMap;
 }

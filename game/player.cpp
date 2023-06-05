@@ -66,7 +66,7 @@ void Player::setPlayerNameId(const QString newDisplayName)
     m_playerNameId = newDisplayName;
 }
 
-const QString Player::getUniqueIdentifier() const
+QString Player::getUniqueIdentifier() const
 {
     return m_uniqueIdentifier;
 }

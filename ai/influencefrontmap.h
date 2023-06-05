@@ -27,12 +27,10 @@ public:
     void increaseInfluence(qint32 player, qint32 value);
 
     const std::vector<qint32> &getFrontOwners() const;
-
-public slots:
-    QStringList getFrontMovetype() const;
-    qint32 getHighestInfluence() const;
-    qint32 getOwnInfluence() const;
-    qint32 getEnemyInfluence() const;
+    Q_INVOKABLE QStringList getFrontMovetype() const;
+    Q_INVOKABLE qint32 getHighestInfluence() const;
+    Q_INVOKABLE qint32 getOwnInfluence() const;
+    Q_INVOKABLE qint32 getEnemyInfluence() const;
 
 private:
     friend class InfluenceFrontMap;

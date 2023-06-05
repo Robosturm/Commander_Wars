@@ -80,42 +80,40 @@ public:
      * @param pCampaignMapData
      */
     void getCampaignMapData(CampaignMapData & pCampaignMapData);
-
-public slots:
     /**
      * @brief getAllowArmyCustomization if true you can change the army style and color for each player
      * @return
      */
-    bool getAllowArmyCustomization(GameMap* pMap);
+    Q_INVOKABLE bool getAllowArmyCustomization(GameMap* pMap);
     /**
      * @brief mapFiniished
      */
-    void mapFinished(GameMap* pMap, bool result);
+    Q_INVOKABLE void mapFinished(GameMap* pMap, bool result);
     /**
      * @brief getCampaignFinished
      * @return
      */
-    bool getCampaignFinished();
+    Q_INVOKABLE bool getCampaignFinished();
     /**
      * @brief getAuthor
      * @return
      */
-    QString getAuthor();
+    Q_INVOKABLE QString getAuthor();
     /**
      * @brief getName
      * @return
      */
-    QString getName();
+    Q_INVOKABLE QString getName();
     /**
      * @brief getDescription
      * @return
      */
-    QString getDescription();
+    Q_INVOKABLE QString getDescription();
     /**
      * @brief getVariables returns the enviroment variables of this game script
      * @return
      */
-    inline ScriptVariables* getVariables()
+    Q_INVOKABLE inline ScriptVariables* getVariables()
     {
         return &m_Variables;
     }
@@ -123,12 +121,12 @@ public slots:
      * @brief getAutoSelectPlayerColors
      * @return
      */
-    bool getAutoSelectPlayerColors(GameMap* pMap);
+    Q_INVOKABLE bool getAutoSelectPlayerColors(GameMap* pMap);
     /**
      * @brief getUsesCampaignMap
      * @return
      */
-    bool getUsesCampaignMap();
+    Q_INVOKABLE bool getUsesCampaignMap();
 private:
     QString m_script;
     QString m_scriptFile;

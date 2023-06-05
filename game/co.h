@@ -111,28 +111,34 @@ public:
      * @param info
      */
     void getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info);
-public slots:
+    /**
+     * @brief getCoUnitBonus
+     * @param pUnit
+     * @param bonus
+     * @return
+     */
+    qreal getAiCoUnitBonus(Unit* pUnit, bool & valid);
     /**
      * @brief getCoGroupModifier
      * @param unitIds
      * @return
      */
-    qreal getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
+    Q_INVOKABLE qreal getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system);
     /**
      * @brief getGlobalCoZone
      * @return
      */
-    bool getGlobalCoZone() const;
+    Q_INVOKABLE bool getGlobalCoZone() const;
     /**
      * @brief setGlobalCoZone if set to true all units are always inside the co-zone
      * @param newGlobalCoZone
      */
-    void setGlobalCoZone(bool newGlobalCoZone);
+    Q_INVOKABLE void setGlobalCoZone(bool newGlobalCoZone);
     /**
      * @brief getMap
      * @return
      */
-    GameMap *getMap() const;
+    Q_INVOKABLE GameMap *getMap() const;
     /**
      * @brief getCoBonus
      * @param position
@@ -140,217 +146,216 @@ public slots:
      * @param function
      * @return
      */
-    qint32 getCoBonus(QPoint position, Unit* pUnit, const QString function);
+    Q_INVOKABLE qint32 getCoBonus(QPoint position, Unit* pUnit, const QString function);
     /**
      * @brief getCoRangeEnabled
      * @return
      */
-    bool getCoRangeEnabled() const;
+    Q_INVOKABLE bool getCoRangeEnabled() const;
     /**
      * @brief setCoRangeEnabled
      * @param coRangeEnabled
      */
-    void setCoRangeEnabled(bool coRangeEnabled);
+    Q_INVOKABLE void setCoRangeEnabled(bool coRangeEnabled);
     /**
      * @brief getPowerUsed
      * @return
      */
-    qint32 getPowerUsed() const;
+    Q_INVOKABLE qint32 getPowerUsed() const;
     /**
      * @brief setPowerUsed
      * @param value
      */
-    void setPowerUsed(const qint32 value);
+    Q_INVOKABLE void setPowerUsed(const qint32 value);
     /**
      * @brief getUnitBuildValue
      * @param unitID
      * @return
      */
-    qreal getUnitBuildValue(const QString unitID);
+    Q_INVOKABLE qreal getUnitBuildValue(const QString unitID);
     /**
      * @brief getCOName
      * @return
      */
-    QString getCOName();
+    Q_INVOKABLE QString getCOName();
     /**
      * @brief getCOUnits
      * @param pBuilding
      * @return
      */
-    QStringList getCOUnits(Building* pBuilding);
+    Q_INVOKABLE QStringList getCOUnits(Building* pBuilding);
     /**
      * @brief getTransportUnits
      * @param pUnit
      * @return
      */
-    QStringList getTransportUnits(Unit* pUnit);
+    Q_INVOKABLE QStringList getTransportUnits(Unit* pUnit);
     /**
      * @brief getMovementpointModifier the bonus movementpoints of this co
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getMovementpointModifier(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getMovementpointModifier(Unit* pUnit, QPoint position);
     /**
      * @brief buildedUnit called after a unit was created do whatever you want with this information
      * @param pUnit
      */
-    void buildedUnit(Unit* pUnit);
+    Q_INVOKABLE void buildedUnit(Unit* pUnit);
     /**
      * @brief getFirerangeModifier the bonus firerange of this co
      * @param pUnit the unit we want to get the bonus points from
      * @return
      */
-    qint32 getFirerangeModifier(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getFirerangeModifier(Unit* pUnit, QPoint position);
     /**
      * @brief getMinFirerangeModifier
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getMinFirerangeModifier(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getMinFirerangeModifier(Unit* pUnit, QPoint position);
     /**
      * @brief getHpHidden
      * @param pUnit
      * @param position
      * @return
      */
-    bool getHpHidden(Unit* pUnit, QPoint position);
+    Q_INVOKABLE bool getHpHidden(Unit* pUnit, QPoint position);
     /**
      * @brief getRankInfoHidden
      * @param pUnit
      * @param position
      * @return
      */
-    bool getRankInfoHidden(Unit* pUnit, QPoint position);
+    Q_INVOKABLE bool getRankInfoHidden(Unit* pUnit, QPoint position);
     /**
      * @brief getPerfectHpView
      * @param pUnit
      * @param position
      * @return
      */
-    bool getPerfectHpView(Unit* pUnit, QPoint position);
+    Q_INVOKABLE bool getPerfectHpView(Unit* pUnit, QPoint position);
     /**
      * @brief getMovementcostModifier
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getMovementcostModifier(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getMovementcostModifier(Unit* pUnit, QPoint position);
     /**
      * @brief getAttackHpBonus
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getAttackHpBonus(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getAttackHpBonus(Unit* pUnit, QPoint position);
     /**
      * @brief getBonusLuck
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getBonusLuck(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getBonusLuck(Unit* pUnit, QPoint position);
     /**
      * @brief getBonusLuck
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getEnemyBonusLuck(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getEnemyBonusLuck(Unit* pUnit, QPoint position);
     /**
      * @brief getBonusMisfortune
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getBonusMisfortune(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getBonusMisfortune(Unit* pUnit, QPoint position);
     /**
      * @brief getEnemyBonusMisfortune
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getEnemyBonusMisfortune(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getEnemyBonusMisfortune(Unit* pUnit, QPoint position);
     /**
      * @brief getEnemyRepairCostModifier
      * @param pUnit
      * @return
      */
-    qreal getEnemyRepairCostModifier(Unit* pUnit);
+    Q_INVOKABLE qreal getEnemyRepairCostModifier(Unit* pUnit);
     /**
      * @brief getRepairCostModifier
      * @param pUnit
      * @return
      */
-    qreal getRepairCostModifier(Unit* pUnit);
+    Q_INVOKABLE qreal getRepairCostModifier(Unit* pUnit);
     /**
      * @brief getTerrainDefenseModifier the bonus defense of this co for a terrain
      * @param pUnit the unit we want to get the bonus points from
      * @return
      */
-    qint32 getTerrainDefenseModifier(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getTerrainDefenseModifier(Unit* pUnit, QPoint position);
     /**
      * @brief getFirstStrike
      * @param pUnit
      * @param position
      * @return
      */
-    bool getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDefender, QPoint attackerPosition);
+    Q_INVOKABLE bool getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDefender, QPoint attackerPosition);
     /**
      * @brief getVisionrangeModifier the bonus defense of this co for a terrain
      * @param pUnit the unit we want to get the bonus points from
      * @return
      */
-    qint32 getVisionrangeModifier(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getVisionrangeModifier(Unit* pUnit, QPoint position);
     /**
      * @brief getEnemyTerrainDefenseModifier
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getEnemyTerrainDefenseModifier(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getEnemyTerrainDefenseModifier(Unit* pUnit, QPoint position);
     /**
      * @brief activatePower called when the power is activated
      */
-    void activatePower();
+    Q_INVOKABLE void activatePower();
     /**
      * @brief activateSuperpower called when the super power is activated
      */
-    void activateSuperpower(GameEnums::PowerMode powerMode);
+    Q_INVOKABLE void activateSuperpower(GameEnums::PowerMode powerMode);
     /**
      * @brief addUnitShine
      */
-    void addUnitShines();
+    Q_INVOKABLE void addUnitShines();
     /**
      * @brief getOffensiveBonus
      * @param pAttacker the attacking unit our unit
      * @param pDefender the defending unit the unit we attack
      * @return
      */
-    qint32 getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
+    Q_INVOKABLE qint32 getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getOffensiveReduction
      * @param pAttacker the attacking unit our unit
      * @param pDefender the defending unit the unit we attack
      * @return
      */
-    qint32 getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
+    Q_INVOKABLE qint32 getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDeffensiveBonus the deffensive bonus of our unit
      * @param pAttacker the unit attacking us
      * @param pDefender our unit that gets attacked
      * @return bonus
      */
-    qint32 getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
+    Q_INVOKABLE qint32 getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDeffensiveBonus the deffensive bonus of our unit
      * @param pAttacker the unit attacking us
      * @param pDefender our unit that gets attacked
      * @return bonus
      */
-    qint32 getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode);
-
+    Q_INVOKABLE qint32 getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDamageReduction
      * @param damage
@@ -362,8 +367,8 @@ public slots:
      * @param isDefender
      * @return
      */
-    qreal getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
-                             Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
+    Q_INVOKABLE qreal getDamageReduction(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+                                         Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getTrueDamage
      * @param damage
@@ -374,8 +379,8 @@ public slots:
      * @param isDefender
      * @return
      */
-    qreal getTrueDamage(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
-                        Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
+    Q_INVOKABLE qreal getTrueDamage(GameAction* pAction, qreal damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+                                    Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief canCounterAttack
      * @param pAction
@@ -386,96 +391,96 @@ public slots:
      * @param luckMode
      * @return
      */
-    GameEnums::CounterAttackMode canCounterAttack(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode);
+    Q_INVOKABLE GameEnums::CounterAttackMode canCounterAttack(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getMovementFuelCostModifier
      * @param pUnit
      * @param fuelCost
      * @return
      */
-    qint32 getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost);
+    Q_INVOKABLE qint32 getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost);
     /**
      * @brief getCoID our co id
      * @return
      */
-    QString getCoID() const;
+    Q_INVOKABLE QString getCoID() const;
     /**
      * @brief getPowerStars stars needed to activate our power
      * @return
      */
-    qint32 getPowerStars() const;
+    Q_INVOKABLE qint32 getPowerStars() const;
     /**
      * @brief setPowerStars stars needed to activate our power
      * @param value
      */
-    void setPowerStars(const qint32 value);
+    Q_INVOKABLE void setPowerStars(const qint32 value);
     /**
      * @brief getSuperpowerStars stars needed to activate our super power
      * @return
      */
-    qint32 getSuperpowerStars() const;
+    Q_INVOKABLE qint32 getSuperpowerStars() const;
     /**
      * @brief setSuperpowerStars stars needed to activate our super power
      * @param value
      */
-    void setSuperpowerStars(const qint32 value);
+    Q_INVOKABLE void setSuperpowerStars(const qint32 value);
     /**
      * @brief canUseSuperpower
      * @return
      */
-    bool canUseSuperpower() const;
+    Q_INVOKABLE bool canUseSuperpower() const;
     /**
      * @brief canUsePower
      * @return
      */
-    bool canUsePower() const;
+    Q_INVOKABLE bool canUsePower() const;
     /**
      * @brief getPowerFilled
      * @return
      */
-    double getPowerFilled() const;
+    Q_INVOKABLE double getPowerFilled() const;
     /**
      * @brief setPowerFilled
      * @param value
      */
-    void setPowerFilled(const double value);
+    Q_INVOKABLE void setPowerFilled(const double value);
     /**
      * @brief addPowerFilled
      * @param value
      */
-    void addPowerFilled(const double value);
+    Q_INVOKABLE void addPowerFilled(const double value);
     /**
      * @brief getCanMoveAndFire returns
      * @return
      */
-    bool getCanMoveAndFire(Unit* pUnit, QPoint position);
+    Q_INVOKABLE bool getCanMoveAndFire(Unit* pUnit, QPoint position);
     /**
      * @brief getRepairBonus
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getRepairBonus(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getRepairBonus(Unit* pUnit, QPoint position);
     /**
      * @brief canBeRepaired
      * @param pUnit
      * @param position
      * @return
      */
-    bool canBeRepaired(Unit* pUnit, QPoint position);
+    Q_INVOKABLE bool canBeRepaired(Unit* pUnit, QPoint position);
     /**
      * @brief getCaptureBonus
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getCaptureBonus(Unit* pUnit, QPoint position);
+    Q_INVOKABLE qint32 getCaptureBonus(Unit* pUnit, QPoint position);
     /**
      * @brief getCostModifier
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
+    Q_INVOKABLE qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
     /**
      * @brief getEnemyCostModifier
      * @param id
@@ -483,45 +488,45 @@ public slots:
      * @param position
      * @return
      */
-    qint32 getEnemyCostModifier(const QString id, qint32 baseCost, QPoint position);
+    Q_INVOKABLE qint32 getEnemyCostModifier(const QString id, qint32 baseCost, QPoint position);
     /**
      * @brief getCOArmy
      */
-    QString getCOArmy();
+    Q_INVOKABLE QString getCOArmy();
     /**
      * @brief getPowerMode
      * @return
      */
-    GameEnums::PowerMode getPowerMode() const;
+    Q_INVOKABLE GameEnums::PowerMode getPowerMode() const;
     /**
      * @brief setPowerMode
      * @param PowerMode
      */
-    void setPowerMode(const GameEnums::PowerMode PowerMode);
+    Q_INVOKABLE void setPowerMode(const GameEnums::PowerMode PowerMode);
     /**
      * @brief gainPower
      * @param fundsDamage
      * @param position
      */
-    void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack);
+    Q_INVOKABLE void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack);
     /**
      * @brief endOfTurn
      */
-    void endOfTurn();
+    Q_INVOKABLE void endOfTurn();
     /**
      * @brief startOfTurn called at the start of our turn
      */
-    void startOfTurn();
+    Q_INVOKABLE void startOfTurn();
     /**
      * @brief onUnitDeath
      * @param pUnit
      */
-    void onUnitDeath(Unit* pUnit);
+    Q_INVOKABLE void onUnitDeath(Unit* pUnit);
     /**
      * @brief getPlayer
      * @return
      */
-    inline Player* getOwner()
+    Q_INVOKABLE inline Player* getOwner()
     {
         return m_pOwner;
     }
@@ -529,31 +534,31 @@ public slots:
      * @brief getCOUnit
      * @return
      */
-    Unit* getCOUnit();
+    Q_INVOKABLE Unit* getCOUnit();
     /**
      * @brief setCOUnit
      * @param pUnit
      * @return
      */
-    void setCOUnit(Unit* pUnit);
+    Q_INVOKABLE void setCOUnit(Unit* pUnit);
     /**
      * @brief getActionModifierList
      * @param pUnit
      * @return
      */
-    QStringList getActionModifierList(Unit* pUnit);
+    Q_INVOKABLE QStringList getActionModifierList(Unit* pUnit);
     /**
      * @brief getCORange
      * @return
      */
-    qint32 getCORange();
+    Q_INVOKABLE qint32 getCORange();
     /**
      * @brief inCORange
      * @param position
      * @param pUnit
      * @return
      */
-    bool inCORange(QPoint position, Unit* pUnit);
+    Q_INVOKABLE bool inCORange(QPoint position, Unit* pUnit);
     /**
      * @brief getFuelCostModifier
      * @param pUnit
@@ -561,86 +566,86 @@ public slots:
      * @param costs
      * @return
      */
-    qint32 getFuelCostModifier(Unit* pUnit, QPoint position, qint32 costs);
+    Q_INVOKABLE qint32 getFuelCostModifier(Unit* pUnit, QPoint position, qint32 costs);
     /**
      * @brief getBuildingActions
      * @param pBuilding
      * @return
      */
-    QStringList getAdditionalBuildingActions(Building* pBuilding);
+    Q_INVOKABLE QStringList getAdditionalBuildingActions(Building* pBuilding);
     /**
      * @brief getBonusIncome
      * @param pBuilding
      * @param income
      * @return
      */
-    qint32 getBonusIncome(Building* pBuilding, qint32 income);
+    Q_INVOKABLE qint32 getBonusIncome(Building* pBuilding, qint32 income);
     /**
      * @brief getIncomeReduction
      * @param pBuilding
      * @param income
      * @return
      */
-    qint32 getIncomeReduction(Building* pBuilding, qint32 income);
+    Q_INVOKABLE qint32 getIncomeReduction(Building* pBuilding, qint32 income);
     /**
      * @brief getPowerChargeBonus
      * @return
      */
-    qint32 getPowerChargeBonus();
+    Q_INVOKABLE qint32 getPowerChargeBonus();
     /**
      * @brief getPerfectVision
      * @return
      */
-    bool getPerfectVision();
+    Q_INVOKABLE bool getPerfectVision();
     /**
      * @brief getWeatherImmune
      * @return
      */
-    bool getWeatherImmune();
+    Q_INVOKABLE bool getWeatherImmune();
     /**
      * @brief postBattleActions
      * @param pAttacker
      * @param atkDamage
      * @param pDefender
      */
-    void postBattleActions(Unit* pAttacker, qreal atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction);
+    Q_INVOKABLE void postBattleActions(Unit* pAttacker, qreal atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction);
     /**
      * @brief getVariables
      * @return
      */
-    inline ScriptVariables* getVariables()
+    Q_INVOKABLE inline ScriptVariables* getVariables()
     {
         return &m_Variables;
     }
     /**
      * @brief loadCOMusic
      */
-    void loadCOMusic();
+    Q_INVOKABLE void loadCOMusic();
     /**
      * @brief createPowerSentence
      * @return
      */
-    GameAnimationDialog* createPowerSentence();
+    Q_INVOKABLE GameAnimationDialog* createPowerSentence();
     /**
      * @brief getDefeatSentence
      * @return
      */
-    QString getDefeatSentence();
+    Q_INVOKABLE QString getDefeatSentence();
     /**
      * @brief getVictorySentence
      * @return
      */
-    QString getVictorySentence();
+    Q_INVOKABLE QString getVictorySentence();
     /**
      * @brief createPowerScreen
      * @return
      */
-    GameAnimationPower* createPowerScreen(GameEnums::PowerMode powerMode, quint32 frameTime = 100);
+    Q_INVOKABLE GameAnimationPower* createPowerScreen(GameEnums::PowerMode powerMode, quint32 frameTime = 100);
     /**
      * @brief getIsCO0
      * @return
      */
-    bool getIsCO0();
+    Q_INVOKABLE bool getIsCO0();
     /**
      * @brief getAiUsePower
      * @param powerSurplus
@@ -652,108 +657,101 @@ public slots:
      * @param turnMode
      * @return
      */
-    GameEnums::PowerMode getAiUsePower(double powerSurplus, qint32 unitCount, qint32 repairUnits,
-                                       qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
-                                       GameEnums::AiTurnMode turnMode);
-    /**
-     * @brief getCoUnitBonus
-     * @param pUnit
-     * @param bonus
-     * @return
-     */
-    qreal getAiCoUnitBonus(Unit* pUnit, bool & valid);
+    Q_INVOKABLE GameEnums::PowerMode getAiUsePower(double powerSurplus, qint32 unitCount, qint32 repairUnits,
+                                                   qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
+                                                   GameEnums::AiTurnMode turnMode);
     /**
      * @brief getAiCoBuildRatioModifier
      * @param pUnit
      * @param valid
      * @return
      */
-    qreal getAiCoBuildRatioModifier();
+    Q_INVOKABLE qreal getAiCoBuildRatioModifier();
     /**
      * @brief getPerkList
      * @return
      */
-    QStringList getPerkList();
+    Q_INVOKABLE QStringList getPerkList();
     /**
      * @brief setPerkList
      * @param perks
      */
-    void setPerkList(const QStringList perks);
+    Q_INVOKABLE void setPerkList(const QStringList perks);
     /**
      * @brief addPerk
      * @param perk
      */
-    void addPerk(const QString perk);
+    Q_INVOKABLE void addPerk(const QString perk);
     /**
      * @brief addPerk
      * @param perk
      */
-    void removePerk(const QString perk);
+    Q_INVOKABLE void removePerk(const QString perk);
     /**
      * @brief getBio
      * @return
      */
-    QString getBio();
+    Q_INVOKABLE QString getBio();
     /**
      * @brief getLongBio
      * @return
      */
-    QString getLongBio();
+    Q_INVOKABLE QString getLongBio();
     /**
      * @brief getHits
      * @return
      */
-    QString getHits();
+    Q_INVOKABLE QString getHits();
     /**
      * @brief getMiss
      * @return
      */
-    QString getMiss();
+    Q_INVOKABLE QString getMiss();
     /**
      * @brief getCODescription
      * @return
      */
-    QString getCODescription();
+    Q_INVOKABLE QString getCODescription();
     /**
      * @brief getLongCODescription
      * @return
      */
-    QString getLongCODescription();
+    Q_INVOKABLE QString getLongCODescription();
     /**
      * @brief getPowerDescription
      * @return
      */
-    QString getPowerDescription();
+    Q_INVOKABLE QString getPowerDescription();
     /**
      * @brief getPowerName
      * @return
      */
-    QString getPowerName();
+    Q_INVOKABLE QString getPowerName();
     /**
      * @brief getSuperPowerDescription
      * @return
      */
-    QString getSuperPowerDescription();
+    Q_INVOKABLE QString getSuperPowerDescription();
     /**
      * @brief getSuperPowerName
      * @return
      */
-    QString getSuperPowerName();
+    Q_INVOKABLE QString getSuperPowerName();
     /**
      * @brief postAction
      * @param pAction
      */
-    void postAction(GameAction* pAction);
+    Q_INVOKABLE void postAction(GameAction* pAction);
     /**
      * @brief setCoStyleFromUserdata
      */
-    void setCoStyleFromUserdata();
+    Q_INVOKABLE void setCoStyleFromUserdata();
     /**
      * @brief setCoStyle
      * @param file path to the co style relative to the commander wars exe
      * @param style index in the related predefined styles
      */
-    void setCoStyle(QString file, qint32 style);
+    Q_INVOKABLE void setCoStyle(QString file, qint32 style);
     /**
      * @brief postAction
      * @param pAction
@@ -762,32 +760,32 @@ public slots:
      * @brief getActiveCoStyle
      * @param coid
      */
-    QString getActiveCoStyle();
+    Q_INVOKABLE QString getActiveCoStyle();
     /**
      * @brief showDefaultUnitGlobalBoost
      * @return
      */
-    bool showDefaultUnitGlobalBoost();
+    Q_INVOKABLE bool showDefaultUnitGlobalBoost();
     /**
      * @brief getCustomUnitGlobalBoostCount
      * @return
      */
-    qint32 getCustomUnitGlobalBoostCount();
+    Q_INVOKABLE qint32 getCustomUnitGlobalBoostCount();
     /**
      * @brief showDefaultUnitZoneBoost
      * @return
      */
-    bool showDefaultUnitZoneBoost();
+    Q_INVOKABLE bool showDefaultUnitZoneBoost();
     /**
      * @brief getCustomUnitZoneBoostCount
      * @return
      */
-    qint32 getCustomUnitZoneBoostCount();
+    Q_INVOKABLE qint32 getCustomUnitZoneBoostCount();
     /**
      * @brief getStarCost
      * @return
      */
-    qreal getStarCost();
+    Q_INVOKABLE qreal getStarCost();
 protected:
     void limitPowerbar(qreal previousValue);
 

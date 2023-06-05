@@ -48,18 +48,18 @@ public:
 
 signals:
     void sigCursorMoved(qint32 x, qint32 y);
-public slots:
+public:
     /**
      * @brief getMap
      * @return
      */
-    GameMap *getMap() const;
+    Q_INVOKABLE GameMap *getMap() const;
     /**
      * @brief updatePosition calculates the cursor point based on the mouse x and y coordinates
      * @param mousePosX
      * @param mousePosY
      */
-    void updatePosition(qint32 mousePosX, qint32 mousePosY);
+    Q_INVOKABLE void updatePosition(qint32 mousePosX, qint32 mousePosY);
 
 private:
     void createOuterLeftRightOutline(qint32 range, QColor color);

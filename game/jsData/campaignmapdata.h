@@ -11,34 +11,24 @@ class CampaignMapData final : public QObject
 public:
     explicit CampaignMapData();
     ~CampaignMapData() = default;
-
-public slots:
-    const QString getMapBackground() const;
-    void setMapBackground(const QString newMapBackground);
-
-    const QString getFolder() const;
-    void setFolder(const QString newFolder);
-
-    qint32 getMapWidth() const;
-    void setMapWidth(qint32 newMapWidth);
-
-    qint32 getMapHeight() const;
-    void setMapHeight(qint32 newMapHeight);
-
-    const QStringList getMapFilenames() const;
-    void setMapFilenames(const QStringList newMapFilenames);
-
-    const QVector<QPointF> getOpenMapPositions() const;
-    void setOpenMapPositions(const QVector<QPointF> newOpenMapPositions);
-
-    const QVector<qint32> getNewMapPosition() const;
-    void setNewMapPosition(const QVector<qint32> newNewMapPosition);
-
-    qint32 getNewlyWonMap() const;
-    void setNewlyWonMap(qint32 newNewlyWonMap);
-
-    const QVector<QPointF> getWonMapPositions() const;
-    void setWonMapPositions(const QVector<QPointF> newWonMapPositions);
+    Q_INVOKABLE const QString getMapBackground() const;
+    Q_INVOKABLE void setMapBackground(const QString newMapBackground);
+    Q_INVOKABLE const QString getFolder() const;
+    Q_INVOKABLE void setFolder(const QString newFolder);
+    Q_INVOKABLE qint32 getMapWidth() const;
+    Q_INVOKABLE void setMapWidth(qint32 newMapWidth);
+    Q_INVOKABLE qint32 getMapHeight() const;
+    Q_INVOKABLE void setMapHeight(qint32 newMapHeight);
+    Q_INVOKABLE const QStringList getMapFilenames() const;
+    Q_INVOKABLE void setMapFilenames(const QStringList newMapFilenames);
+    Q_INVOKABLE const QVector<QPointF> getOpenMapPositions() const;
+    Q_INVOKABLE void setOpenMapPositions(const QVector<QPointF> newOpenMapPositions);
+    Q_INVOKABLE const QVector<qint32> getNewMapPosition() const;
+    Q_INVOKABLE void setNewMapPosition(const QVector<qint32> newNewMapPosition);
+    Q_INVOKABLE qint32 getNewlyWonMap() const;
+    Q_INVOKABLE void setNewlyWonMap(qint32 newNewlyWonMap);
+    Q_INVOKABLE const QVector<QPointF> getWonMapPositions() const;
+    Q_INVOKABLE void setWonMapPositions(const QVector<QPointF> newWonMapPositions);
 
 private:
     QString m_mapBackground;

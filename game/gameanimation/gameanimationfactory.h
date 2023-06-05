@@ -60,13 +60,18 @@ signals:
     void animationsFinished();
 public slots:
     /**
+     * @brief removeAllAnimations removes all animations and calls onFinished of them and emits animationFinished
+     */
+    static void finishAllAnimationsWithEmitFinished();
+public:
+    /**
      * @brief createAnimation creates an animation and returns it
      * @param x in map coordinates
      * @param y in map coordinates
      * @param frameTime in ms
      * @return
      */
-    static GameAnimation* createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
+    Q_INVOKABLE static GameAnimation* createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
     /**
      * @brief createBattleAnimation
      * @param pAtkTerrain
@@ -79,8 +84,8 @@ public slots:
      * @param defEndHp
      * @return
      */
-    static GameAnimation* createBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
-                                                Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage);
+    Q_INVOKABLE static GameAnimation* createBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
+                                                            Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage);
     /**
      * @brief createAnimationPower
      * @param color
@@ -89,7 +94,7 @@ public slots:
      * @param frameTime
      * @return
      */
-    static GameAnimationPower* createAnimationPower(GameMap* pMap, QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime = GameMap::frameTime);
+    Q_INVOKABLE static GameAnimationPower* createAnimationPower(GameMap* pMap, QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime = GameMap::frameTime);
     /**
      * @brief createGameAnimationDialog
      * @param text
@@ -98,14 +103,14 @@ public slots:
      * @param color
      * @return
      */
-    static GameAnimationDialog* createGameAnimationDialog(GameMap* pMap, const QString text, const QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime = GameMap::frameTime);
+    Q_INVOKABLE static GameAnimationDialog* createGameAnimationDialog(GameMap* pMap, const QString text, const QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime = GameMap::frameTime);
     /**
      * @brief createWalkingAnimation creates a walking animation. This doesn't move the unit
      * @param pUnit the unit that will walk
      * @param movePath the path the unit will walk
      * @return
      */
-    static GameAnimationWalk* createWalkingAnimation(GameMap* pMap, Unit* pUnit, GameAction* pAction);
+    Q_INVOKABLE static GameAnimationWalk* createWalkingAnimation(GameMap* pMap, Unit* pUnit, GameAction* pAction);
     /**
      * @brief GameAnimationFactory::createWalkingAnimation
      * @param pMap
@@ -113,87 +118,83 @@ public slots:
      * @param movePath
      * @return
      */
-    static GameAnimationWalk* createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> movePath);
+    Q_INVOKABLE static GameAnimationWalk* createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> movePath);
     /**
      * @brief createGameAnimationCapture
      * @return
      */
-    static GameAnimationCapture* createGameAnimationCapture(GameMap* pMap, qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints);
+    Q_INVOKABLE static GameAnimationCapture* createGameAnimationCapture(GameMap* pMap, qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints);
     /**
      * @brief createGameAnimationNextDay
      * @param pPlayer
      * @param frameTime
      * @return
      */
-    static GameAnimationNextDay* createGameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime = GameMap::frameTime, quint32 uptimeMs = 2000);
+    Q_INVOKABLE static GameAnimationNextDay* createGameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime = GameMap::frameTime, quint32 uptimeMs = 2000);
     /**
      * @brief getAnimationCount
      * @return the current amount of running animations
      */
-    static qint32 getAnimationCount();
+    Q_INVOKABLE static qint32 getAnimationCount();
     /**
      * @brief getAnimation
      * @param index
      * @return
      */
-    static GameAnimation* getAnimation(qint32 index);
+    Q_INVOKABLE static GameAnimation* getAnimation(qint32 index);
     /**
      * @brief removeAnimation deletes the given animation
      * @param pAnimation pointer of the animation
      */
-    static void removeAnimation(GameAnimation* pAnimation, bool skipping = false);
+    Q_INVOKABLE static void removeAnimation(GameAnimation* pAnimation, bool skipping = false);
     /**
      * @brief removeAllAnimations removes all animations and calls onFinished of them
      */
-    static void finishAllAnimations();
-    /**
-     * @brief removeAllAnimations removes all animations and calls onFinished of them and emits animationFinished
-     */
-    static void finishAllAnimationsWithEmitFinished();
+    Q_INVOKABLE static void finishAllAnimations();
     /**
      * @brief skipAllAnimations
      */
-     static void skipAllAnimations();
+    Q_INVOKABLE static void skipAllAnimations();
     /**
      * @brief shouldSkipDialog
      * @param pDialogAnimation
      * @return
      */
-     static bool shouldSkipDialog(GameAnimationDialog* pDialogAnimation);
+    Q_INVOKABLE static bool shouldSkipDialog(GameAnimationDialog* pDialogAnimation);
     /**
      * @brief shouldSkipCapture
      * @param pGameAnimationCapture
      * @return
      */
-     static bool shouldSkipCapture(GameAnimationCapture* pGameAnimationCapture);
+    Q_INVOKABLE static bool shouldSkipCapture(GameAnimationCapture* pGameAnimationCapture);
     /**
      * @brief shouldSkipBattleAnimation
      * @param pBattleAnimation
      * @return
      */
-     static bool shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation);
+    Q_INVOKABLE static bool shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation);
     /**
      * @brief shouldSkipOtherAnimation
      * @param pBattleAnimation
      * @return
      */
-     static bool shouldSkipOtherAnimation(GameAnimation* pBattleAnimation);
-     /**
+    Q_INVOKABLE static bool shouldSkipOtherAnimation(GameAnimation* pBattleAnimation);
+    /**
       * @brief shouldSkipDay2Day
       * @param pGameAnimationNextDay
       * @return
       */
-     static bool shouldSkipDay2Day(GameAnimationNextDay* pGameAnimationNextDay);
-     /**
+    Q_INVOKABLE static bool shouldSkipDay2Day(GameAnimationNextDay* pGameAnimationNextDay);
+    /**
       * @brief shouldSkipMovement
       * @param pGameAnimationNextDay
       * @return
       */
-     static bool shouldSkipMovement(GameAnimationWalk* pGameAnimationWalk);
-     /**
+    Q_INVOKABLE static bool shouldSkipMovement(GameAnimationWalk* pGameAnimationWalk);
+    /**
       * @brief printActiveAnimations
       */
-     static void printActiveAnimations();
+    Q_INVOKABLE static void printActiveAnimations();
 private:
     friend class oxygine::intrusive_ptr<GameAnimationFactory>;
     explicit GameAnimationFactory();

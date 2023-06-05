@@ -132,162 +132,160 @@ public:
      * @param newMapHash
      */
     void setMapHash(const QByteArray & newMapHash);
-
-public slots:
     /**
      * @brief getMap
      * @return
      */
-    GameMap *getMap() const;
+    Q_INVOKABLE GameMap *getMap() const;
     /**
      * @brief getPlayer
      * @return
      */
-    qint32 getPlayer() const;
+    Q_INVOKABLE qint32 getPlayer() const;
     /**
      * @brief setPlayer
      * @param player
      */
-    void setPlayer(qint32 player);
+    Q_INVOKABLE void setPlayer(qint32 player);
     /**
      * @brief getSeed
      * @return
      */
-    quint32 getSeed() const;
+    Q_INVOKABLE quint32 getSeed() const;
     /**
      * @brief setActionID sets the action id for this action
      * @param actionID
      */
-    void setActionID(QString actionID);
+    Q_INVOKABLE void setActionID(QString actionID);
     /**
      * @brief getActionID
      * @return
      */
-    QString getActionID();
+    Q_INVOKABLE QString getActionID();
     /**
      * @brief getInputStep step the ai or player performs for adding info to this action
      * @return
      */
-    qint32 getInputStep() const;
+    Q_INVOKABLE qint32 getInputStep() const;
     /**
      * @brief setInputStep updates the input step
      * @param value
      */
-    void setInputStep(const qint32 value);
+    Q_INVOKABLE void setInputStep(const qint32 value);
     /**
      * @brief perform executes this action
      */
-    void perform();
+    Q_INVOKABLE void perform();
     /**
      * @brief canBePerformed checks if this action can be performed
      * @param x
      * @param y
      * @return
      */
-    bool canBePerformed();
+    Q_INVOKABLE bool canBePerformed();
     /**
      * @brief canBePerformed checks if this action can be performed
      * @param actionID id of the action we want to check
      * @return
      */
-    bool canBePerformed(const QString actionID, bool emptyField = false, Player* pUsingPlayer = nullptr);
+    Q_INVOKABLE bool canBePerformed(const QString actionID, bool emptyField = false, Player* pUsingPlayer = nullptr);
     /**
      * @brief isFinalStep
      * @return true if we have all data to perform this action
      */
-    bool isFinalStep();
+    Q_INVOKABLE bool isFinalStep();
     /**
      * @brief isFinalStep
      * @param actionID id of the action we want to perform
      * @return true if we have all data to perform this action
      */
-    bool isFinalStep(const QString actionID);
+    Q_INVOKABLE bool isFinalStep(const QString actionID);
     /**
      * @brief getTargetUnit the unit that will perform the action
      * @return
      */
-    Unit* getTargetUnit();
+    Q_INVOKABLE Unit* getTargetUnit();
     /**
      * @brief getTargetBuilding the building that will perform the action
      * @return
      */
-    Building* getTargetBuilding();
+    Q_INVOKABLE Building* getTargetBuilding();
     /**
      * @brief setMovepath sets the movepath for this unit
      * @param points
      */
-    void setMovepath(const QVector<QPoint> points, qint32 fuelCost);
+    Q_INVOKABLE void setMovepath(const QVector<QPoint> points, qint32 fuelCost);
     /**
      * @brief getActionTarget the target action
      * @return
      */
-    QPoint getActionTarget();
+    Q_INVOKABLE QPoint getActionTarget();
     /**
      * @brief getTarget the field or unit with which we want to perform the action
      * @return
      */
-    QPoint getTarget();
+    Q_INVOKABLE QPoint getTarget();
     /**
      * @brief getMovePath
      * @return the move path
      */
-    QVector<QPoint> getMovePath();
+    Q_INVOKABLE QVector<QPoint> getMovePath();
     /**
      * @brief getMovePathLength
      * @return
      */
-    qint32 getMovePathLength();
+    Q_INVOKABLE qint32 getMovePathLength();
     /**
      * @brief getMovementTarget the unit on the final movement field
      * @return
      */
-    Unit* getMovementTarget();
+    Q_INVOKABLE Unit* getMovementTarget();
     /**
      * @brief getMovementBuilding the building on the final movement field
      * @return
      */
-    Building* getMovementBuilding();
+    Q_INVOKABLE Building* getMovementBuilding();
     /**
      * @brief getMovementTerrain the terrain on the final movement field
      * @return
      */
-    Terrain* getMovementTerrain();
+    Q_INVOKABLE Terrain* getMovementTerrain();
     /**
      * @brief getCosts gets the costs of this actions
      * @return
      */
-    qint32 getCosts() const;
+    Q_INVOKABLE qint32 getCosts() const;
     /**
      * @brief setCosts sets the costs of this actions
      * @param value
      */
-    void setCosts(const qint32 value);
+    Q_INVOKABLE void setCosts(const qint32 value);
     /**
      * @brief getStepInputType
      * @return the input type used during this step
      */
-    QString getStepInputType();
+    Q_INVOKABLE QString getStepInputType();
     /**
      * @brief getRequiresEmptyField
      * @return
      */
-    bool getRequiresEmptyField();
+    Q_INVOKABLE bool getRequiresEmptyField();
     /**
      * @brief getMenuStepData
      * @return the data needed to create an input menu. the data needs to be deleted by the caller
      */
-    MenuData* getJsMenuStepData();
+    Q_INVOKABLE MenuData* getJsMenuStepData();
     /**
      * @brief getMarkedFieldStepData
      * @return
      */
-    MarkedFieldData* getJMarkedFieldStepData();
+    Q_INVOKABLE MarkedFieldData* getJMarkedFieldStepData();
     /************** reading and writing data to the action buffer *****************/
     /**
      * @brief writeDataString adds a string to the action data
      * @param data
      */
-    void writeDataString(const QString data)
+    Q_INVOKABLE void writeDataString(const QString data)
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
@@ -297,7 +295,7 @@ public slots:
      * @brief readDataString
      * @return reads a string from the action data
      */
-    QString readDataString()
+    Q_INVOKABLE QString readDataString()
     {
         QString data;
         m_actionData >> data;
@@ -307,7 +305,7 @@ public slots:
      * @brief writeDataInt32 adds a int32 to the action data
      * @param data
      */
-    void writeDataInt32(qint32 data)
+    Q_INVOKABLE void writeDataInt32(qint32 data)
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
@@ -317,7 +315,7 @@ public slots:
      * @brief readDataInt32
      * @return reads a int32 from the action data
      */
-    qint32 readDataInt32()
+    Q_INVOKABLE qint32 readDataInt32()
     {
         qint32 data;
         m_actionData >> data;
@@ -327,7 +325,7 @@ public slots:
      * @brief writeDataFloat adds a float to the action data
      * @param data
      */
-    void writeDataFloat(float data)
+    Q_INVOKABLE void writeDataFloat(float data)
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
@@ -337,7 +335,7 @@ public slots:
      * @brief readDataFloat
      * @return reads a float from the action data
      */
-    float readDataFloat()
+    Q_INVOKABLE float readDataFloat()
     {
         float data;
         m_actionData >> data;
@@ -346,7 +344,7 @@ public slots:
     /**
      * @brief startReading starts the reading of the buffer
      */
-    void startReading()
+    Q_INVOKABLE void startReading()
     {
         // go to start again
         m_buffer.seek(0);
@@ -355,42 +353,42 @@ public slots:
      * @brief getIsLocal
      * @return
      */
-    bool getIsLocal() const;
+    Q_INVOKABLE bool getIsLocal() const;
     /**
      * @brief setIsLocal
      * @param value
      */
-    void setIsLocal(bool value);
+    Q_INVOKABLE void setIsLocal(bool value);
     /**
      * @brief getMultiTurnPath
      * @return
      */
-    QVector<QPoint> getMultiTurnPath() const;
+    Q_INVOKABLE QVector<QPoint> getMultiTurnPath() const;
     /**
      * @brief setMultiTurnPath
      * @param MultiTurnPath
      */
-    void setMultiTurnPath(const QVector<QPoint> multiTurnPath);
+    Q_INVOKABLE void setMultiTurnPath(const QVector<QPoint> multiTurnPath);
     /**
      * @brief reset
      */
-    void reset();
+    Q_INVOKABLE void reset();
     /**
      * @brief getPerformingUnit returns the unit performing unit mainly useful in case of post actions where the unit already moved or got loaded etc.
      * @return
      */
-    Unit* getPerformingUnit()
+    Q_INVOKABLE Unit* getPerformingUnit()
     {
         return m_perfomingUnit.get();
     }
-    qint32 getVariableCount() const
+    Q_INVOKABLE qint32 getVariableCount() const
     {
         return m_storedDataTypes.size();
     }
     /**
      * @brief revertLastInputStep
      */
-    void revertLastInputStep(const QString stepType);
+    Q_INVOKABLE void revertLastInputStep(const QString stepType);
 protected:
     void printAction();
 private:

@@ -339,58 +339,58 @@ signals:
     void sigShowDamageCalculator();
     void sigShowMovementPlanner();
     void sigShowLoadSaveGame();
-public slots:
+public:
     /**
      * @brief extendMap
      * @param mapFile
      */
-    void extendMap(const QString mapFile, GameEnums::Directions direction);
+    Q_INVOKABLE void extendMap(const QString mapFile, GameEnums::Directions direction);
     /**
      * @brief setIsHumanMatch
      * @param newIsHumanMatch
      */
-    void setIsHumanMatch(bool newIsHumanMatch);
+    Q_INVOKABLE void setIsHumanMatch(bool newIsHumanMatch);
     /**
      * @brief applyPaletteToArea
      * @param area
      * @param newPalette
      */
-    void applyPaletteToArea(const QRect area, qint32 newPalette);
+    Q_INVOKABLE void applyPaletteToArea(const QRect area, qint32 newPalette);
     /**
      * @brief applyBiomeToArea
      * @param area
      * @param newBiome
      */
-    void applyBiomeToArea(const QRect area, qint32 newBiome);
+    Q_INVOKABLE void applyBiomeToArea(const QRect area, qint32 newBiome);
     /**
      * @brief getMapTagsText
      * @return
      */
-    QString getMapTagsText();
+    Q_INVOKABLE QString getMapTagsText();
     /**
      * @brief getIsHumanMatch
      * @return
      */
-    bool getIsHumanMatch() const;
+    Q_INVOKABLE bool getIsHumanMatch() const;
     /**
      * @brief getMapMusic
      * @return
      */
-    QString getMapMusic() const;
+    Q_INVOKABLE QString getMapMusic() const;
     /**
      * @brief setMapMusic
      * @param mapMusic
      */
-    void setMapMusic(const QString mapMusic, qint32 startLoopMs = -1, qint32 endLoopMs = -1);
+    Q_INVOKABLE void setMapMusic(const QString mapMusic, qint32 startLoopMs = -1, qint32 endLoopMs = -1);
     /**
      * @brief clearMapMusic
      */
-    void clearMapMusic();
+    Q_INVOKABLE void clearMapMusic();
     /**
      * @brief getFrameTime
      * @return
      */
-    static qint32 getFrameTime();
+    Q_INVOKABLE static qint32 getFrameTime();
     /**
      * @brief getVisionCircle
      * @param x
@@ -400,167 +400,167 @@ public slots:
      * @param visionHigh
      * @return
      */
-    QmlVectorPoint* getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh);
+    Q_INVOKABLE QmlVectorPoint* getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh);
     /**
      * @brief isUnitInArea
      * @param area
      * @param unitID
      * @return
      */
-    bool isUnitInArea(const QRect area, qint32 unitID);
+    Q_INVOKABLE bool isUnitInArea(const QRect area, qint32 unitID);
     /**
      * @brief isPlayerUnitInArea
      * @param area
      * @param unitID
      * @return
      */
-    bool isPlayerUnitInArea(const QRect area, qint32 playerID);
+    Q_INVOKABLE bool isPlayerUnitInArea(const QRect area, qint32 playerID);
     /**
      * @brief isPlayersUnitInArea
      * @param area
      * @param unitID
      * @return
      */
-    bool isPlayersUnitInArea(const QRect area, const QVector<qint32> playerIDs);
+    Q_INVOKABLE bool isPlayersUnitInArea(const QRect area, const QVector<qint32> playerIDs);
     /**
      * @brief getUnit
      * @param uniqueID
      * @return
      */
-    Unit* getUnit(qint32 uniqueID);
+    Q_INVOKABLE Unit* getUnit(qint32 uniqueID);
     /**
      * @brief getUnit
      * @param pUnit the transporting unit
      * @param uniqueID the unit it should transport
      * @return the found unit
      */
-    Unit* getUnitFromTansportUnit(Unit* pUnit, qint32 uniqueID);
+    Q_INVOKABLE Unit* getUnitFromTansportUnit(Unit* pUnit, qint32 uniqueID);
     /**
      * @brief getGameScript
      * @return
      */
-    GameScript* getGameScript();
+    Q_INVOKABLE GameScript* getGameScript();
     /**
      * @brief getCampaign
      * @return
      */
-    Campaign* getCampaign();
+    Q_INVOKABLE Campaign* getCampaign();
     /**
      * @brief getMapAuthor
      * @return
      */
-    QString getMapAuthor() const;
+    Q_INVOKABLE QString getMapAuthor() const;
     /**
      * @brief setMapAuthor
      * @param value
      */
-    void setMapAuthor(const QString value);
+    Q_INVOKABLE void setMapAuthor(const QString value);
     /**
      * @brief getMapDescription
      * @return
      */
-    QString getMapDescription() const;
+    Q_INVOKABLE QString getMapDescription() const;
     /**
      * @brief setMapDescription
      * @param value
      */
-    void setMapDescription(const QString &value);
+    Q_INVOKABLE void setMapDescription(const QString &value);
     /**
      * @brief getAllUnitIDs
      * @return
      */
-    QStringList getAllUnitIDs();
+    Q_INVOKABLE QStringList getAllUnitIDs();
     /**
      * @brief getGameRecorder
      * @return
      */
-    GameRecorder* getGameRecorder();
+    Q_INVOKABLE GameRecorder* getGameRecorder();
     /**
      * @brief getCurrentDay
      * @return
      */
-    qint32 getCurrentDay() const;
+    Q_INVOKABLE qint32 getCurrentDay() const;
     /**
      * @brief exitGame
      */
-    void exitGame();
+    Q_INVOKABLE void exitGame();
     /**
      * @brief options
      */
-    void showXmlFileDialog(const QString xmlFile, bool saveSettings = false);
+    Q_INVOKABLE void showXmlFileDialog(const QString xmlFile, bool saveSettings = false);
     /**
      * @brief saveGame
      */
-    void saveGame();
+    Q_INVOKABLE void saveGame();
     /**
      * @brief loadGame
      */
-    void loadGame();
+    Q_INVOKABLE void loadGame();
     /**
      * @brief victoryInfo
      */
-    void victoryInfo();
+    Q_INVOKABLE void victoryInfo();
     /**
      * @brief showCOInfo
      */
-    void showCOInfo();
+    Q_INVOKABLE void showCOInfo();
     /**
      * @brief showGameInfo
      */
-    void showGameInfo(qint32 player);
+    Q_INVOKABLE void showGameInfo(qint32 player);
     /**
      * @brief showAttackLog
      */
-    void showAttackLog(qint32 player);
+    Q_INVOKABLE void showAttackLog(qint32 player);
     /**
      * @brief showUnitInfo
      */
-    void showUnitInfo(qint32 player);
+    Q_INVOKABLE void showUnitInfo(qint32 player);
     /**
      * @brief showWiki
      */
-    void showWiki();
+    Q_INVOKABLE void showWiki();
     /**
      * @brief showRules
      */
-    void showRules();
+    Q_INVOKABLE void showRules();
     /**
      * @brief showUnitStatistics
      */
-    void showUnitStatistics(qint32 player);
+    Q_INVOKABLE void showUnitStatistics(qint32 player);
     /**
      * @brief showMovementPlanner
      */
-    void showMovementPlanner();
+    Q_INVOKABLE void showMovementPlanner();
     /**
      * @brief getTerrainCount
      * @param terrainId
      * @return
      */
-    qint32 getTerrainCount(const QString terrainId) const;
+    Q_INVOKABLE qint32 getTerrainCount(const QString terrainId) const;
     /**
      * @brief getBuildingCount
      * @param buildingID
      * @return
      */
-    qint32 getBuildingCount(const QString buildingID) const;
+    Q_INVOKABLE qint32 getBuildingCount(const QString buildingID) const;
     /**
      * @brief getPlayerBuildingCount
      * @param buildingID
      * @param pPlayer
      * @return
      */
-    qint32 getPlayerBuildingCount(const QString buildingID, Player* pPlayer) const;
+    Q_INVOKABLE qint32 getPlayerBuildingCount(const QString buildingID, Player* pPlayer) const;
     /**
      * @brief getMapWidth
      * @return width of the map
      */
-    qint32 getMapWidth() const;
+    Q_INVOKABLE qint32 getMapWidth() const;
     /**
      * @brief getMapHeight
      * @return height of the map
      */
-    qint32 getMapHeight() const;
+    Q_INVOKABLE qint32 getMapHeight() const;
     /**
      * @brief spawnUnit
      * @param x coordinates starting at 0
@@ -570,71 +570,71 @@ public slots:
      * @param range the unit will be spawned on an empty field that can be crossed by the unit. This range is the test range where the game tries to spawn the unit. From 0 to anything
      * @return the spawned unit
      */
-    Unit* spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner, qint32 range = 0, bool ignoreMovement = false);
+    Q_INVOKABLE Unit* spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner, qint32 range = 0, bool ignoreMovement = false);
     /**
      * @brief refillAll refills all units ammo and fuel
      */
-    void refillAll();
+    Q_INVOKABLE void refillAll();
     /**
      * @brief refillTransportedUnits
      * @param pUnit
      */
-    void refillTransportedUnits(Unit* pUnit);
+    Q_INVOKABLE void refillTransportedUnits(Unit* pUnit);
     /**
      * @brief updateTerrainSprites updates the terrain sprites refreshes them to fit the current map
      * @param xInput around given coordinates -1 whole map
      * @param yInput around given coordinates -1 whole map
      */
-    void updateSprites(qint32 xInput = -1, qint32 yInput = -1, bool editor = false, bool showLoadingScreen = false, bool applyRulesPalette = false);
+    Q_INVOKABLE void updateSprites(qint32 xInput = -1, qint32 yInput = -1, bool editor = false, bool showLoadingScreen = false, bool applyRulesPalette = false);
     /**
      * @brief syncTerrainAnimations
      * @param showLoadingScreen
      */
-    void syncTerrainAnimations(bool showLoadingScreen = false);
+    Q_INVOKABLE void syncTerrainAnimations(bool showLoadingScreen = false);
     /**
      * @brief finishUpdateSprites
      * @param showLoadingScreen
      */
-    void finishUpdateSprites(bool showLoadingScreen);
+    Q_INVOKABLE void finishUpdateSprites(bool showLoadingScreen);
     /**
      * @brief syncUnitsAndBuildings
      */
-    void syncUnitsAndBuildingAnimations();
+    Q_INVOKABLE void syncUnitsAndBuildingAnimations();
     /**
      * @brief onMap returns if the given coordinates are on the map
      * @param x
      * @param y
      * @return true if it's still on the map
      */
-    bool onMap(qint32 x, qint32 y) const;
+    Q_INVOKABLE bool onMap(qint32 x, qint32 y) const;
     /**
      * @brief centerMap centers the view point to the given location
      * @param x
      * @param y
      */
-    void centerMap(qint32 x, qint32 y, bool updateMinimapPosition = true);
+    Q_INVOKABLE void centerMap(qint32 x, qint32 y, bool updateMinimapPosition = true);
     /**
      * @brief getCenteredPosition
      * @return
      */
-    QPoint getCenteredPosition() const;
+    Q_INVOKABLE QPoint getCenteredPosition() const;
     /**
      * @brief zoom zooms into or out of the map :)
      * @param zoom
      */
-    void setZoom(qint32 zoom);
-    inline float getZoom() const
+    Q_INVOKABLE void setZoom(qint32 zoom);
+    Q_INVOKABLE inline float getZoom() const
     {
         return getScaleX();
     }
-    void moveMap(qint32 x, qint32 y);
+    Q_INVOKABLE void moveMap(qint32 x, qint32 y);
     /**
      * @brief getTerrain only use this for js scripts
      * @param x
      * @param y
      * @return the real pointer to the given terrain
      */
-    Terrain* getTerrain(qint32 x, qint32 y) const;
+    Q_INVOKABLE Terrain* getTerrain(qint32 x, qint32 y) const;
     /**
      * @brief canBePlaced
      * @param terrainID the terrain id you want to place
@@ -642,20 +642,20 @@ public slots:
      * @param y position
      * @return true if this terrain can be placed
      */
-    bool canBePlaced(const QString terrainID, qint32 x, qint32 y);
+    Q_INVOKABLE bool canBePlaced(const QString terrainID, qint32 x, qint32 y);
     /**
      * @brief updateTerrain updates the given fields around. So all terrains are placeable.
      * @param x
      * @param y
      */
-    void updateTerrain(qint32 x, qint32 y);
+    Q_INVOKABLE void updateTerrain(qint32 x, qint32 y);
     /**
      * @brief replaceTerrain
      * @param terrainID
      * @param x
      * @param y
      */
-    void replaceTerrain(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true);
+    Q_INVOKABLE void replaceTerrain(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true);
     /**
      * @brief replaceTerrainOnly
      * @param terrainID
@@ -663,19 +663,19 @@ public slots:
      * @param y
      * @param useTerrainAsBaseTerrain
      */
-    void replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true);
+    Q_INVOKABLE void replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true, const QString palette = "", bool changePalette = false, bool includeBaseTerrain = true);
     /**
      * @brief replaceBuilding
      * @param buildingID
      * @param x
      * @param y
      */
-    void replaceBuilding(const QString buildingID, qint32 x, qint32 y);
+    Q_INVOKABLE void replaceBuilding(const QString buildingID, qint32 x, qint32 y);
     /**
      * @brief getPlayerCount
      * @return number of players on the map
      */
-    qint32 getPlayerCount() const
+    Q_INVOKABLE qint32 getPlayerCount() const
     {
         return m_players.size();
     }
@@ -684,195 +684,193 @@ public slots:
      * @param player player index in the vector
      * @return pointer to the player
      */
-    Player* getPlayer(qint32 player);
+    Q_INVOKABLE Player* getPlayer(qint32 player);
     /**
      * @brief getCurrentPlayer the current player
      * @return
      */
-    Player* getCurrentPlayer() const;
+    Q_INVOKABLE Player* getCurrentPlayer() const;
     /**
      * @brief getCurrentViewPlayer
      * @return
      */
-    Player* getCurrentViewPlayer() const;
+    Q_INVOKABLE Player* getCurrentViewPlayer() const;
     /**
      * @brief setCurrentPlayer changes the current player to this one
      * @param player
      */
-    void setCurrentPlayer(qint32 player);
+    Q_INVOKABLE void setCurrentPlayer(qint32 player);
     /**
      * @brief getImageSize
      * @return the size of an field in pixel
      */
-    static qint32 getImageSize();
+    Q_INVOKABLE static qint32 getImageSize();
     /**
      * @brief setImagesize
      * @param imagesize
      */
-    static void setImagesize(const qint32 imagesize);
+    Q_INVOKABLE static void setImagesize(const qint32 imagesize);
     /**
      * @brief nextTurn next players turn.
      */
-    void nextTurn(quint32 dayToDayUptimeMs = 2000);    
+    Q_INVOKABLE void nextTurn(quint32 dayToDayUptimeMs = 2000);
     /**
      * @brief enableUnits makes all units of the given player movable again
      * @param pPlayer
      */
-    void enableUnits(Player* pPlayer);
+    Q_INVOKABLE void enableUnits(Player* pPlayer);
     /**
      * @brief endOfTurn
      * @param pPlayer
      */
-    void endOfTurn(Player* pPlayer);
+    Q_INVOKABLE void endOfTurn(Player* pPlayer);
     /**
      * @brief endOfTurnPlayer
      * @param pPlayer
      */
-    void endOfTurnPlayer(Player* pPlayer);
+    Q_INVOKABLE void endOfTurnPlayer(Player* pPlayer);
     /**
      * @brief startOfTurn calls all start of turn calls of each unit and building owned by this player
      * @param pPlayer
      */
-    void startOfTurn(Player* pPlayer);
+    Q_INVOKABLE void startOfTurn(Player* pPlayer);
     /**
      * @brief startOfTurnNeutral
      */
-    void startOfTurnNeutral();
+    Q_INVOKABLE void startOfTurnNeutral();
     /**
      * @brief startOfTurnPlayer
      * @param pPlayer
      */
-    void startOfTurnPlayer(Player* pPlayer);
+    Q_INVOKABLE void startOfTurnPlayer(Player* pPlayer);
     /**
      * @brief centerOnPlayer
      * @param pPlayer
      */
-    void centerOnPlayer(Player* pPlayer);
+    Q_INVOKABLE void centerOnPlayer(Player* pPlayer);
     /**
      * @brief nextPlayer next player
      */
-    bool nextPlayer();
+    Q_INVOKABLE bool nextPlayer();
     /**
      * @brief checkFuel checks fuel of the unit and if it's negative kills it.
      * @param pPlayer
      */
-    void checkFuel(Player* pPlayer);
+    Q_INVOKABLE void checkFuel(Player* pPlayer);
     /**
      * @brief getUnits
      * @param pPlayer
      * @return
      */
-    QmlVectorUnit* getUnits(Player* pPlayer);
+    Q_INVOKABLE QmlVectorUnit* getUnits(Player* pPlayer);
     /**
      * @brief getBuildings
      * @param pPlayer
      * @return
      */
-    QmlVectorBuilding* getBuildings(Player* pPlayer, QString id = "");
+    Q_INVOKABLE QmlVectorBuilding* getBuildings(Player* pPlayer, QString id = "");
     /**
      * @brief getBuildingsListCount
      * @param pPlayer
      * @param ids
      * @return
      */
-    QmlVectorBuilding* getBuildingsListCount(Player* pPlayer, const QStringList ids);
+    Q_INVOKABLE QmlVectorBuilding* getBuildingsListCount(Player* pPlayer, const QStringList ids);
     /**
      * @brief importTxtMap imports a map in old CoW text-format
      */
-    void importTxtMap(QString file);
+    Q_INVOKABLE void importTxtMap(QString file);
     /**
      * @brief importAWDSMap
      * @param file
      */
-    void importAWDSMap(QString file, EditorMenue* pMenu);
+    Q_INVOKABLE void importAWDSMap(QString file, EditorMenue* pMenu);
     /**
      * @brief exportAWDSMap
      * @param file
      */
-    void exportAWDSMap(QString file);
+    Q_INVOKABLE void exportAWDSMap(QString file);
     /**
      * @brief importAW4Map
      * @param file
      */
-    void importAW4Map(QString file, EditorMenue* pMenu);
+    Q_INVOKABLE void importAW4Map(QString file, EditorMenue* pMenu);
     /**
      * @brief importAWByWebMap
      * @param file
      */
-    void importAWByWebMap(QString file, EditorMenue* pMenu);
+    Q_INVOKABLE void importAWByWebMap(QString file, EditorMenue* pMenu);
     /**
      * @brief exportAW4Map
      * @param file
      */
-    void exportAW4Map(QString file);
-
-    void setMapNameFromFilename(QString filename);
-    QString getMapName() const;
-    void setMapName(const QString value);
-
-    inline GameRules* getGameRules() const
+    Q_INVOKABLE void exportAW4Map(QString file);
+    Q_INVOKABLE void setMapNameFromFilename(QString filename);
+    Q_INVOKABLE QString getMapName() const;
+    Q_INVOKABLE void setMapName(const QString value);
+    Q_INVOKABLE inline GameRules* getGameRules() const
     {
         return m_Rules.get();
     }
     /**
      * @brief updateUnitIcons
      */
-    void updateUnitIcons();
+    Q_INVOKABLE void updateUnitIcons();
     /**
      * @brief getWinnerTeam
      * @return -1 for no winner
      */
-    qint32 getWinnerTeam();
+    Q_INVOKABLE qint32 getWinnerTeam();
     /**
      * @brief surrenderGame the current player surrenders the game
      */
-    void surrenderGame();
+    Q_INVOKABLE void surrenderGame();
     /**
      * @brief nicknameUnit
      * @param x
      * @param y
      */
-    void nicknameUnit(qint32 x, qint32 y);
+    Q_INVOKABLE void nicknameUnit(qint32 x, qint32 y);
     /**
      * qbrief killDeadUnits
      */
-    void killDeadUnits();
+    Q_INVOKABLE void killDeadUnits();
     /**
      * @brief addScreenshake
      */
-    void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
+    Q_INVOKABLE void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
     /**
      * @brief showGrid
      */
-    void showGrid(bool show);
+    Q_INVOKABLE void showGrid(bool show);
     /**
      * @brief showMiddleCrossGrid
      */
-    void showMiddleCrossGrid(bool show);
+    Q_INVOKABLE void showMiddleCrossGrid(bool show);
     /**
      * @brief getMapFlags
      * @return
      */
-    GameEnums::MapFilterFlags getMapFlags() const;
+    Q_INVOKABLE GameEnums::MapFilterFlags getMapFlags() const;
     /**
      * @brief hasMapFlags
      * @param flags
      * @return
      */
-    bool hasMapFlags(GameEnums::MapFilterFlags flags) const;
+    Q_INVOKABLE bool hasMapFlags(GameEnums::MapFilterFlags flags) const;
     /**
      * @brief setMapFlags
      * @param flags
      */
-    void setMapFlags(GameEnums::MapFilterFlags flags);
+    Q_INVOKABLE void setMapFlags(GameEnums::MapFilterFlags flags);
     /**
      * @brief onWeatherChanged
      */
-    void onWeatherChanged(Weather* pWeather);
+    Q_INVOKABLE void onWeatherChanged(Weather* pWeather);
     /**
      * @brief showDamageCalculator
      */
-    void showDamageCalculator();
+    Q_INVOKABLE void showDamageCalculator();
 private slots:
     void zoomChanged();
 private:

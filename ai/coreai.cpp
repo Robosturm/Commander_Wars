@@ -461,7 +461,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
     return false;
 }
 
-float CoreAI::calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Building* pBuilding) const
+float CoreAI::calcBuildingDamage(Unit* pUnit, const QPoint newPosition, Building* pBuilding) const
 {
     float counterDamage = 0.0f;
     GameEnums::BuildingTarget targets = pBuilding->getBuildingTargets();
@@ -1142,7 +1142,7 @@ std::vector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & p
     return transportUnits;
 }
 
-qint32 CoreAI::getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList & unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
+qint32 CoreAI::getIdleUnitCount(QmlVectorUnit* pUnits, const QStringList unitIds, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings)
 {
     qint32 count = 0;
     for (auto & pUnit : pUnits->getVector())
@@ -2104,7 +2104,7 @@ bool CoreAI::needsRefuel(const Unit *pUnit) const
     return false;
 }
 
-bool CoreAI::isRefuelUnit(const QStringList & actionList) const
+bool CoreAI::isRefuelUnit(const QStringList actionList) const
 {
     return actionList.contains(ACTION_SUPPORTALL_RATION) ||
            actionList.contains(ACTION_SUPPORTALL_RATION_MONEY) ||
@@ -2113,7 +2113,7 @@ bool CoreAI::isRefuelUnit(const QStringList & actionList) const
            actionList.contains(ACTION_SUPPORTSINGLE_SUPPLY);
 }
 
-void CoreAI::createIslandMap(const QString & movementType, const QString & unitID)
+void CoreAI::createIslandMap(const QString movementType, const QString unitID)
 {
     bool found = false;
 
@@ -2171,7 +2171,7 @@ bool CoreAI::onSameIsland(Unit* pUnit1, Building* pBuilding) const
     return false;
 }
 
-bool CoreAI::onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const
+bool CoreAI::onSameIsland(const QString movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const
 {
     for (auto i = 0; i < m_IslandMaps.size(); i++)
     {
@@ -2557,7 +2557,7 @@ float CoreAI::getAiCoBuildRatioModifier()
     return multiplier;
 }
 
-qint32 CoreAI::getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds, float minHp, qint32 minFuel)
+qint32 CoreAI::getUnitCount(QmlVectorUnit * pUnits, const QStringList unitIds, float minHp, qint32 minFuel)
 {
     qint32 count = 0;
     for (auto & pUnit : pUnits->getVector())
@@ -2582,7 +2582,7 @@ qint32 CoreAI::getUnitCount(QmlVectorUnit * pUnits, const QStringList & unitIds,
     return count;
 }
 
-qint32 CoreAI::getEnemyUnitCountNearOwnUnits(QmlVectorUnit * pUnits, QmlVectorUnit * pEnemyUnits, const QStringList & unitIds, qint32 distance, float minHp)
+qint32 CoreAI::getEnemyUnitCountNearOwnUnits(QmlVectorUnit * pUnits, QmlVectorUnit * pEnemyUnits, const QStringList unitIds, qint32 distance, float minHp)
 {
     qint32 count = 0;
     for (auto & pUnit : pEnemyUnits->getVector())

@@ -52,16 +52,15 @@ public:
      * @brief init
      */
     void init();
-public slots:    
-    void setRuleValue(qint32 value, qint32 itemNumber);
-    qint32 getInfiniteValue(qint32 itemNumber = 0);
-    qint32 getDefaultValue(qint32 itemNumber = 0);
-    QStringList getRuleType();
-    QString getRuleName(qint32 itemNumber = 0);
-    qint32 getRuleValue(qint32 itemNumber);
-    QString getRuleDescription(qint32 itemNumber = 0);
-    QString getRuleID() const;
-    ScriptVariables* getVariables()
+    Q_INVOKABLE void setRuleValue(qint32 value, qint32 itemNumber);
+    Q_INVOKABLE qint32 getInfiniteValue(qint32 itemNumber = 0);
+    Q_INVOKABLE qint32 getDefaultValue(qint32 itemNumber = 0);
+    Q_INVOKABLE QStringList getRuleType();
+    Q_INVOKABLE QString getRuleName(qint32 itemNumber = 0);
+    Q_INVOKABLE qint32 getRuleValue(qint32 itemNumber);
+    Q_INVOKABLE QString getRuleDescription(qint32 itemNumber = 0);
+    Q_INVOKABLE QString getRuleID() const;
+    Q_INVOKABLE ScriptVariables* getVariables()
     {
         return &m_Variables;
     }

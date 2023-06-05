@@ -29,9 +29,8 @@ public:
     void updateTerrainInfo(qint32 x, qint32 y, bool update);
     oxygine::spBox9Sprite getDetailedViewBox() const;
     void setMap(GameMap *newMap);
-
+    Q_INVOKABLE GameMap *getMap() const;
 public slots:
-    const GameMap *getMap() const;
     void updateMinimap();
     void updatePlayerInfo();
     void updateCursorInfo(qint32 x, qint32 y);

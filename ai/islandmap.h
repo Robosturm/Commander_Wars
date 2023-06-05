@@ -16,17 +16,21 @@ class IslandMap final : public QObject, public oxygine::ref_counter
 public:
     explicit IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QString movementType = "");
     ~IslandMap() = default;
-
-
-public slots:
+    /**
+     * @brief getValueOnIsland
+     * @param island
+     * @param ownValue
+     * @param enemyValue
+     */
+    void getValueOnIsland(qint32 island, qint32 &ownValue, qint32 & enemyValue);
     /**
      * @brief show for debugging purpose
      */
-    void show();
+    Q_INVOKABLE void show();
     /**
      * @brief hide for debugging purpose
      */
-    void hide();
+    Q_INVOKABLE void hide();
     /**
      * @brief sameIsland
      * @param x1
@@ -35,7 +39,7 @@ public slots:
      * @param y2
      * @return
      */
-    inline bool sameIsland(qint32 x1, qint32 y1,
+    Q_INVOKABLE inline bool sameIsland(qint32 x1, qint32 y1,
                            qint32 x2, qint32 y2) const
     {
         return (m_Islands[x1][y1] > UNKNOWN &&
@@ -47,7 +51,7 @@ public slots:
      * @param y
      * @return the island for this point -1 means not reachable
      */
-    inline qint32 getIsland(qint32 x, qint32 y) const
+    Q_INVOKABLE inline qint32 getIsland(qint32 x, qint32 y) const
     {
         return m_Islands[x][y];
     }
@@ -56,19 +60,12 @@ public slots:
      * @param island
      * @return
      */
-    qint32 getIslandSize(qint32 island) const;
+    Q_INVOKABLE qint32 getIslandSize(qint32 island) const;
     /**
      * @brief getMovementType
      * @return
      */
-    QString getMovementType() const;
-    /**
-     * @brief getValueOnIsland
-     * @param island
-     * @param ownValue
-     * @param enemyValue
-     */
-    void getValueOnIsland(qint32 island, qint32 &ownValue, qint32 & enemyValue);
+    Q_INVOKABLE QString getMovementType() const;
 private:
     std::vector<std::vector<qint32>> m_Islands;
     QString m_MovementType;

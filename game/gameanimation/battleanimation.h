@@ -57,23 +57,21 @@ public:
     /**
      * @brief onFinished called when the animation is finished
      */
-    virtual bool onFinished(bool skipping) override;
-
-public slots:
+    Q_INVOKABLE virtual bool onFinished(bool skipping) override;
     /**
      * @brief stopSound
      */
-    void stopSound(bool forceStop = false);
+    Q_INVOKABLE void stopSound(bool forceStop = false);
     /**
      * @brief getPAtkUnit
      * @return
      */
-    Unit *getAtkUnit() const;
+    Q_INVOKABLE Unit *getAtkUnit() const;
     /**
      * @brief getPDefUnit
      * @return
      */
-    Unit *getDefUnit() const;
+    Q_INVOKABLE Unit *getDefUnit() const;
     /**
      * @brief addScreenshake
      * @param startIntensity
@@ -81,7 +79,7 @@ public slots:
      * @param durationMs
      * @param shakePauseMs
      */
-    void addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
+    Q_INVOKABLE void addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
 private:
     /**
      * @brief getIsRight

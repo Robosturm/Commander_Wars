@@ -24,19 +24,29 @@ public:
      * @brief show
      */
     void show();
+    /**
+     * @brief getMap
+     * @return
+     */
+    Q_INVOKABLE GameMap* getMap() const;
+    /**
+     * @brief getPlanner
+     * @return
+     */
+    Q_INVOKABLE MovementPlanner* getPlanner() const;
+    /**
+     * @brief getVariables
+     * @return
+     */
+    Q_INVOKABLE inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
 public slots:
     /**
      * @brief hide
      */
     void hide();
-    /**
-     * @brief getVariables
-     * @return
-     */
-    inline ScriptVariables* getVariables()
-    {
-        return &m_Variables;
-    }
     /**
      * @brief addSprite
      * @param name
@@ -52,16 +62,6 @@ public slots:
      * @brief onMenuInputDone
      */
     void onMenuInputDone();
-    /**
-     * @brief getMap
-     * @return
-     */
-    GameMap* getMap() const;
-    /**
-     * @brief getPlanner
-     * @return
-     */
-    MovementPlanner* getPlanner() const;
 private:
     QString m_addIn;
     ScriptVariables m_Variables;
