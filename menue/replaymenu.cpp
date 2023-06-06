@@ -529,7 +529,7 @@ void ReplayMenu::showConfig()
     spCheckbox pCheckbox = spCheckbox::create();
     pCheckbox->setTooltipText(tr("If active: walk, capture power animations, and so on will be shown."));
     pCheckbox->setChecked(Settings::getInstance()->getOverworldAnimations());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance()->getInstance(), &Settings::getInstance()->setOverworldAnimations, Qt::QueuedConnection);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::getInstance()->setOverworldAnimations, Qt::QueuedConnection);
     pCheckbox->setPosition(width - 130, y);
     pPanel->addItem(pCheckbox);
     y += pTextfield->getHeight() + 10;

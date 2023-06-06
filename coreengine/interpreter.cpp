@@ -71,7 +71,7 @@ void Interpreter::init()
     globalObject().setProperty("console", console);
     QJSValue fontManager = newQObject(FontManager::getInstance());
     globalObject().setProperty("FontManager", fontManager);
-    QJSValue settings = newQObject(Settings::getInstance()->getInstance());
+    QJSValue settings = newQObject(Settings::getInstance());
     globalObject().setProperty("settings", settings);
     QJSValue userdata = newQObject(Userdata::getInstance());
     globalObject().setProperty("userdata", userdata);
