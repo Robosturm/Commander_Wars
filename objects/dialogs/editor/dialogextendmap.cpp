@@ -88,7 +88,7 @@ void DialogExtendMap::showSelectMap()
 {
     QStringList wildcards;
     wildcards.append("*.map");
-    QString path = Settings::getUserPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogExtendMap::mapFileChanged, Qt::QueuedConnection);

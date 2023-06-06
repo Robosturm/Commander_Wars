@@ -38,13 +38,13 @@ LobbyMenu::LobbyMenu()
     CONSOLE_PRINT("Entering Lobby Menue", GameConsole::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
-    if (!Settings::getServer())
+    if (!Settings::getInstance()->getServer())
     {
         m_pTCPClient = spTCPClient::create(nullptr);
         m_pTCPClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         connect(m_pTCPClient.get(), &TCPClient::sigConnected, this, &LobbyMenu::connected, Qt::QueuedConnection);
-        emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort(), Settings::getSecondaryServerAdress());
+        emit m_pTCPClient->sig_connect(Settings::getInstance()->getServerAdress(), Settings::getInstance()->getServerPort(), Settings::getInstance()->getSecondaryServerAdress());
     }
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -185,7 +185,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigRequestUpdateGames, this, &LobbyMenu::requestUpdateGames, Qt::QueuedConnection);
 
     qint32 height = m_pButtonHostOnServer->getY() - 270 - 10 - m_pButtonSwapOpenGamesMode->getScaledHeight();
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         height = m_pButtonHostOnServer->getY() - 20 - m_pButtonSwapOpenGamesMode->getScaledHeight();
     }
@@ -199,7 +199,7 @@ LobbyMenu::LobbyMenu()
     addChild(m_gamesview);
 
     spNetworkInterface pInterface = m_pTCPClient;
-    if (Settings::getServer())
+    if (Settings::getInstance()->getServer())
     {
         pInterface = spNetworkInterface(MainServer::getInstance()->getGameServer());
     }
@@ -258,7 +258,7 @@ LobbyMenu::LobbyMenu()
 
     spChat pChat = spChat::create(pInterface, QSize(oxygine::Stage::getStage()->getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat, nullptr);
     pChat->setPosition(10, y);
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         pChat->setVisible(false);
     }
@@ -310,7 +310,7 @@ void LobbyMenu::requestUserUpdateGames()
         data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTUSERGAMES);
         data.insert(JsonKeys::JSONKEY_MATCHSTARTINDEX, m_gameIndex);
         data.insert(JsonKeys::JSONKEY_MATCHCOUNT, REQUEST_COUNT);
-        data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+        data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
         QJsonDocument doc(data);
         emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
@@ -324,7 +324,7 @@ void LobbyMenu::requestObserverUpdateGames()
         data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTOBSERVEGAMES);
         data.insert(JsonKeys::JSONKEY_MATCHSTARTINDEX, m_gameIndex);
         data.insert(JsonKeys::JSONKEY_MATCHCOUNT, REQUEST_COUNT);
-        data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+        data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
         QJsonDocument doc(data);
         emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
@@ -365,7 +365,7 @@ void LobbyMenu::hostLocal()
 {    
     CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", "", Settings::getGamePort(), "", Multiplayermenu::NetworkMode::Host));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", "", Settings::getInstance()->getGamePort(), "", Multiplayermenu::NetworkMode::Host));
     oxygine::Actor::detach();
 }
 
@@ -466,7 +466,7 @@ void LobbyMenu::join(QString adress, QString password)
 {    
     CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Client));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getInstance()->getGamePort(), password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();
 }
 
@@ -481,7 +481,7 @@ void LobbyMenu::observe(QString adress, QString password)
 {
     CONSOLE_PRINT("Leaving Lobby Menue to observe game by adress", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getGamePort(), password, Multiplayermenu::NetworkMode::Observer));
+    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getInstance()->getGamePort(), password, Multiplayermenu::NetworkMode::Observer));
     oxygine::Actor::detach();
 }
 
@@ -662,7 +662,7 @@ void LobbyMenu::updateGamesView()
         QColor textColor = FontManager::getFontColor();
         if (game.getRunningGame())
         {
-            if (Settings::getUsername() == game.getCurrentPlayer() ||
+            if (Settings::getInstance()->getUsername() == game.getCurrentPlayer() ||
                 game.getCurrentPlayer().isEmpty())
             {
                 textColor = QColor(0, 255, 0);
@@ -677,7 +677,7 @@ void LobbyMenu::updateGamesView()
         QString modString;
         for (const auto & mod : mods)
         {
-            modString.append(Settings::getModName(mod) + "; ");
+            modString.append(Settings::getInstance()->getModName(mod) + "; ");
         }
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(modString, widths[3], textColor)));
         item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spLockTableItem::create(game.getLocked(), widths[4])));
@@ -725,7 +725,7 @@ void LobbyMenu::checkVersionAndShowInfo(const QJsonObject & objData)
     if (version == Mainapp::getGameVersion())
     {
         CONSOLE_PRINT("LobbyMenu::connected", GameConsole::eDEBUG);
-        QString password = Settings::getServerPassword();
+        QString password = Settings::getInstance()->getServerPassword();
         spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
         addChild(pDialog);
         if (!password.isEmpty())
@@ -801,7 +801,7 @@ void LobbyMenu::setServerRequestNewPassword(bool newServerRequestNewPassword)
     m_serverRequestNewPassword = newServerRequestNewPassword;
 }
 
-bool LobbyMenu::isValidEmailAdress(const QString & emailAdress)
+bool LobbyMenu::isValidEmailAdress(const QString emailAdress)
 {
     static const QRegularExpression regex("(?:[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+)*|\""
                                           "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]"
@@ -815,14 +815,14 @@ bool LobbyMenu::isValidEmailAdress(const QString & emailAdress)
     return match.hasMatch() && match.capturedLength() == emailAdress.length();
 }
 
-bool LobbyMenu::isValidPassword(const QString & password)
+bool LobbyMenu::isValidPassword(const QString password)
 {
     static const QRegularExpression regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
     auto match = regex.match(password);
     return match.hasMatch();
 }
 
-void LobbyMenu::createServerAccount(const QString & password, const QString & emailAdress)
+void LobbyMenu::createServerAccount(const QString password, const QString emailAdress)
 {
     m_serverPassword.setPassword(password);
     m_serverEmailAdress = emailAdress;
@@ -831,7 +831,7 @@ void LobbyMenu::createServerAccount(const QString & password, const QString & em
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::CreateAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::deleteServerAccount(const QString & password, const QString & emailAdress)
+void LobbyMenu::deleteServerAccount(const QString password, const QString emailAdress)
 {
     m_serverPassword.setPassword(password);
     m_serverEmailAdress = emailAdress;
@@ -846,7 +846,7 @@ void LobbyMenu::onPublicKeyCreateAccount(quint64 socketID, const QJsonObject & o
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
     data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -858,7 +858,7 @@ void LobbyMenu::onPublicKeyDeleteAccount(quint64 socketID, const QJsonObject & o
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
     data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -869,7 +869,7 @@ void LobbyMenu::onPublicKeyLoginAccount(quint64 socketID, const QJsonObject & ob
     auto & cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -880,7 +880,7 @@ void LobbyMenu::onPublicKeyResetAccount(quint64 socketID, const QJsonObject & ob
     auto & cypher = Mainapp::getInstance()->getCypher();
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_EMAILADRESS, m_serverEmailAdress);
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
@@ -893,13 +893,13 @@ void LobbyMenu::onPublicKeyChangePassword(quint64 socketID, const QJsonObject & 
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(m_serverPassword.getHash()));
     data.insert(JsonKeys::JSONKEY_OLDPASSWORD, cypher.toJsonArray(m_oldServerPassword.getHash()));
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     emit m_pTCPClient->sig_sendData(socketID, cypher.getEncryptedMessage(publicKey, action, doc.toJson(QJsonDocument::Compact)).toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::loginToServerAccount(const QString & password)
+void LobbyMenu::loginToServerAccount(const QString password)
 {
     m_serverPassword.setPassword(password);
     Mainapp* pApp = Mainapp::getInstance();
@@ -907,7 +907,7 @@ void LobbyMenu::loginToServerAccount(const QString & password)
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::LoginAccount), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::resetPasswordOnServerAccount(const QString & emailAdress)
+void LobbyMenu::resetPasswordOnServerAccount(const QString emailAdress)
 {
     m_serverEmailAdress = emailAdress;
     Mainapp* pApp = Mainapp::getInstance();
@@ -915,7 +915,7 @@ void LobbyMenu::resetPasswordOnServerAccount(const QString & emailAdress)
     emit m_pTCPClient->sig_sendData(0, cypher.getRequestKeyMessage(NetworkCommands::PublicKeyActions::ResetPassword), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
 
-void LobbyMenu::changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress)
+void LobbyMenu::changePasswordOnServerAccount(const QString oldEmailAdress, const QString newEmailAdress)
 {
     m_oldServerPassword.setPassword(oldEmailAdress);
     m_serverPassword.setPassword(newEmailAdress);

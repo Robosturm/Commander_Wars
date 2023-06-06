@@ -22,7 +22,7 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     m_pClipActor->addChild(colorField);
 
     m_Colorfield = oxygine::spColorRectSprite::create();
-    if (!Settings::getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice())
     {
         m_Colorfield->addClickListener([this](oxygine::Event* event)
         {

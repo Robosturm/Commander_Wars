@@ -20,7 +20,7 @@
 GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
     : GameAnimation (frameTime, pMap),
       m_finishTimer(this),
-      m_textSpeed(100 / Settings::getDialogAnimationSpeed())
+      m_textSpeed(100 / Settings::getInstance()->getDialogAnimationSpeed())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationDialog");
@@ -109,8 +109,8 @@ void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
         {
             // for debugging
             Qt::Key cur = event.getKey();
-            if (cur == Settings::getKey_confirm() ||
-                cur == Settings::getKey_confirm2())
+            if (cur == Settings::getInstance()->getKey_confirm() ||
+                cur == Settings::getInstance()->getKey_confirm2())
             {
                 nextDialogStep();
             }
@@ -305,7 +305,7 @@ void GameAnimationDialog::setFinishDelay(qint32 valueMs)
 
 void GameAnimationDialog::setTextSpeed(qint32 speed)
 {
-    m_textSpeed = speed / Settings::getAnimationSpeed();
+    m_textSpeed = speed / Settings::getInstance()->getAnimationSpeed();
 }
 
 void GameAnimationDialog::restart()
@@ -326,9 +326,9 @@ void GameAnimationDialog::loadBackground(const QString file)
     if (!file.isEmpty())
     {
         QImage img;
-        if (QFile::exists(Settings::getUserPath() + file))
+        if (QFile::exists(Settings::getInstance()->getUserPath() + file))
         {
-            img = QImage(Settings::getUserPath() + file);
+            img = QImage(Settings::getInstance()->getUserPath() + file);
         }
         else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + file))
         {

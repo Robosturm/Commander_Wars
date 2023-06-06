@@ -38,7 +38,7 @@
 #include "resource_management/fontmanager.h"
 
 Multiplayermenu::Multiplayermenu(const QString & address, const QString & secondaryAddress, quint16 port, const QString & password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
       m_password(password)
@@ -64,7 +64,7 @@ Multiplayermenu::Multiplayermenu(const QString & address, const QString & second
 }
 
 Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Password * password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(true),
       m_password(*password)
@@ -74,7 +74,7 @@ Multiplayermenu::Multiplayermenu(const QString & address, quint16 port, const Pa
 }
 
 Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, const QString & password, NetworkMode networkMode)
-    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
+    : MapSelectionMapsMenue(spMapSelectionView::create(QStringList({".map", ".jsm"})), Settings::getInstance()->getSmallScreenDevice() ? oxygine::Stage::getStage()->getHeight() - 80 : oxygine::Stage::getStage()->getHeight() - 230),
       m_networkMode(networkMode),
       m_local(false),
       m_password(password)
@@ -162,7 +162,7 @@ void Multiplayermenu::init()
 void Multiplayermenu::despawnSlave()
 {
     const auto multiplier = 0.001f;
-    std::chrono::milliseconds ms = Settings::getSlaveDespawnTime();
+    std::chrono::milliseconds ms = Settings::getInstance()->getSlaveDespawnTime();
     auto elapsed = m_slaveDespawnElapseTimer.elapsed();
     CONSOLE_PRINT("Multiplayermenu::despawnSlave elapsed seconds " + QString::number(elapsed * multiplier) + " target time " + QString::number(ms.count() * multiplier), GameConsole::eDEBUG);
     if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
@@ -172,7 +172,7 @@ void Multiplayermenu::despawnSlave()
             CONSOLE_PRINT("Killing slave cause server didn't respond", GameConsole::eERROR);
             QCoreApplication::exit(-10);
         }
-        else if (doDespawnSlave(Settings::getSlaveServerName()))
+        else if (doDespawnSlave(Settings::getInstance()->getSlaveServerName()))
         {
         }
         else
@@ -216,13 +216,13 @@ QJsonDocument Multiplayermenu::doSaveLobbyState(const QString & saveFile, const 
     data.insert(JsonKeys::JSONKEY_MAXPLAYERS, playerCount);
     data.insert(JsonKeys::JSONKEY_NAME, pMap->getMapName());
     data.insert(JsonKeys::JSONKEY_DESCRIPTION, pMap->getGameRules()->getDescription());
-    data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+    data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getInstance()->getSlaveServerName());
     data.insert(JsonKeys::JSONKEY_HASPASSWORD, pMap->getGameRules()->getPassword().getIsSet());
     data.insert(JsonKeys::JSONKEY_UUID, 0);
     data.insert(JsonKeys::JSONKEY_SAVEFILE, saveFile);
     data.insert(JsonKeys::JSONKEY_RUNNINGGAME, false);
     data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, "");
-    auto activeMods = Settings::getActiveMods();
+    auto activeMods = Settings::getInstance()->getActiveMods();
     QJsonObject mods;
     for (qint32 i = 0; i < activeMods.size(); ++i)
     {
@@ -310,7 +310,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
 {
     QStringList wildcards;
     wildcards.append("*.msav");
-    QString path = Settings::getUserPath() + "savegames";
+    QString path = Settings::getInstance()->getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Multiplayermenu::loadSaveGame, Qt::QueuedConnection);
@@ -416,7 +416,7 @@ void Multiplayermenu::recieveServerData(quint64 socketID, QByteArray data, Netwo
         }
         else if (messageType == NetworkCommands::SLAVEFORCEDESPAWN)
         {
-            doDespawnSlave(Settings::getSlaveServerName());
+            doDespawnSlave(Settings::getInstance()->getSlaveServerName());
         }
         else
         {
@@ -630,7 +630,7 @@ void Multiplayermenu::sendUsername(quint64 socketID, const QJsonObject & objData
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
     emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
@@ -641,10 +641,10 @@ void Multiplayermenu::sendLoginData(quint64 socketID, const QJsonObject & objDat
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::VERIFYLOGINDATA);
     Password serverPassword;
-    QString password = Settings::getServerPassword();
+    QString password = Settings::getInstance()->getServerPassword();
     serverPassword.setPassword(password);
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(serverPassword.getHash()));
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     // send map data to client and make sure password message is crypted
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     QJsonDocument doc(data);
@@ -725,10 +725,10 @@ void Multiplayermenu::sendMapInfoUpdate(quint64 socketID, const QJsonObject & ob
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << command;
     stream << Mainapp::getGameVersion();
-    QStringList mods = Settings::getMods();
-    QStringList versions = Settings::getActiveModVersions();
+    QStringList mods = Settings::getInstance()->getMods();
+    QStringList versions = Settings::getInstance()->getActiveModVersions();
     bool filter = m_pMapSelectionView->getCurrentMap()->getGameRules()->getCosmeticModsAllowed();
-    Settings::filterCosmeticMods(mods, versions, filter);
+    Settings::getInstance()->filterCosmeticMods(mods, versions, filter);
     stream << filter;
     stream << static_cast<qint32>(mods.size());
     for (qint32 i = 0; i < mods.size(); i++)
@@ -796,7 +796,7 @@ void Multiplayermenu::onSlaveConnectedToMaster(quint64 socketID)
     spTCPClient pSlaveMasterConnection = Mainapp::getSlaveClient();
     QString command = NetworkCommands::SLAVEREADY;
     QJsonObject data;
-    QString slavename = Settings::getSlaveServerName();
+    QString slavename = Settings::getInstance()->getSlaveServerName();
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_SLAVENAME, slavename);
     QJsonDocument doc(data);
@@ -870,7 +870,7 @@ void Multiplayermenu::sendSlaveRelaunched(quint64 socketID)
 {
     QString command = NetworkCommands::SLAVERELAUNCHED;
     QJsonObject data;
-    QString slavename = Settings::getSlaveServerName();
+    QString slavename = Settings::getInstance()->getSlaveServerName();
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
     data.insert(JsonKeys::JSONKEY_SLAVENAME, slavename);
     QJsonDocument doc(data);
@@ -916,7 +916,7 @@ void Multiplayermenu::receiveCurrentGameState(QDataStream & stream, quint64 sock
             QByteArray sendData;
             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
             sendStream << command;
-            sendStream << Settings::getUsername();
+            sendStream << Settings::getInstance()->getUsername();
             emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
         }
     }
@@ -1163,9 +1163,9 @@ void Multiplayermenu::verifyGameData(QDataStream & stream, quint64 socketID)
 
 bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & versions, QStringList & myMods, QStringList & myVersions, bool filter)
 {
-    myVersions = Settings::getActiveModVersions();
-    myMods = Settings::getMods();
-    Settings::filterCosmeticMods(myMods, myVersions, filter);
+    myVersions = Settings::getInstance()->getActiveModVersions();
+    myMods = Settings::getInstance()->getMods();
+    Settings::getInstance()->filterCosmeticMods(myMods, myVersions, filter);
     bool sameMods = true;
     if (myMods.size() != mods.size())
     {
@@ -1328,12 +1328,12 @@ void Multiplayermenu::handleVersionMissmatch(const QStringList & mods, const QSt
         QString hostModsInfo;
         for (qint32 i = 0; i < mods.size(); ++i)
         {
-            hostModsInfo += Settings::getModName(mods[i]) + " " + versions[i] + "\n";
+            hostModsInfo += Settings::getInstance()->getModName(mods[i]) + " " + versions[i] + "\n";
         }
         QString myModsInfo;
         for (qint32 i = 0; i < myMods.size(); ++i)
         {
-            myModsInfo += Settings::getModName(myMods[i]) + " " + myVersions[i]  + "\n";
+            myModsInfo += Settings::getInstance()->getModName(myMods[i]) + " " + myVersions[i]  + "\n";
         }
         pDialogMessageBox = spDialogMessageBox::create(tr("Host has different mods. Leaving the game again.\nHost mods:\n") + hostModsInfo + "\nYour Mods:\n" + myModsInfo);
     }
@@ -1510,7 +1510,7 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
 void Multiplayermenu::sendSlaveReady()
 {
     QString command = QString(NetworkCommands::GAMERUNNINGONSERVER);
-    QString slavename = Settings::getSlaveServerName();
+    QString slavename = Settings::getInstance()->getSlaveServerName();
     CONSOLE_PRINT("Sending command " + command + " for slave " + slavename, GameConsole::eDEBUG);
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
     QJsonObject data;
@@ -1658,7 +1658,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
     QString path = "maps";
     QStringList filter;
     filter << "*" + fileName;
-    QDirIterator dirIter(Settings::getUserPath() + path, filter, QDir::Files, QDirIterator::Subdirectories);
+    QDirIterator dirIter(Settings::getInstance()->getUserPath() + path, filter, QDir::Files, QDirIterator::Subdirectories);
     bool found = findAndLoadMap(dirIter, hash, m_saveGame);
     if (!found)
     {
@@ -1672,9 +1672,9 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             QFile scriptFile;
             QByteArray myHashArray;
             // check real drive and virt drive for script
-            if (QFile::exists(Settings::getUserPath() + scriptFileName))
+            if (QFile::exists(Settings::getInstance()->getUserPath() + scriptFileName))
             {
-                scriptFile.setFileName(Settings::getUserPath() + scriptFileName);
+                scriptFile.setFileName(Settings::getInstance()->getUserPath() + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
                 QCryptographicHash myHash(QCryptographicHash::Sha512);
                 while (!scriptFile.atEnd())
@@ -1876,7 +1876,7 @@ void Multiplayermenu::buttonNext()
             m_pPlayerSelection->attachNetworkInterface(m_pNetworkInterface);
             createChat();
             connectNetworkSlots();
-            emit m_pNetworkInterface->sig_connect("", Settings::getGamePort(), "");
+            emit m_pNetworkInterface->sig_connect("", Settings::getInstance()->getGamePort(), "");
             MapSelectionMapsMenue::buttonNext();
         }
         else
@@ -1924,9 +1924,9 @@ void Multiplayermenu::startGameOnServer()
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << command;
-    QStringList myVersions = Settings::getActiveModVersions();
-    QStringList myMods = Settings::getMods();
-    Settings::filterCosmeticMods(myMods, myVersions, pMap->getGameRules()->getCosmeticModsAllowed());
+    QStringList myVersions = Settings::getInstance()->getActiveModVersions();
+    QStringList myMods = Settings::getInstance()->getMods();
+    Settings::getInstance()->filterCosmeticMods(myMods, myVersions, pMap->getGameRules()->getCosmeticModsAllowed());
     Filesupport::writeVectorList(sendStream, myMods);
     QImage img;
     pApp->saveMapAsImage(m_pMapSelectionView->getMinimap(), img);
@@ -1954,7 +1954,7 @@ void Multiplayermenu::createChat()
     {
         m_Chat->detach();
     }
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_Chat = spChat::create(m_pNetworkInterface,
                                 QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 90),

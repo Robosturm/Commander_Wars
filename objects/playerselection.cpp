@@ -421,7 +421,7 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
         {
             for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                auto bannlist = Settings::getDefaultBannlist();
+                auto bannlist = Settings::getInstance()->getDefaultBannlist();
                 if (!bannlist.isEmpty())
                 {
                     auto unitList = Filesupport::readList(bannlist, "");
@@ -1158,7 +1158,7 @@ void PlayerSelection::selectAI(qint32 player)
     {
         if (!Mainapp::getSlave())
         {
-            name = Settings::getUsername();
+            name = Settings::getInstance()->getUsername();
         }
     }
     else
@@ -1447,7 +1447,7 @@ void PlayerSelection::sendOpenPlayerCount()
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getInstance()->getSlaveServerName());
         data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, getOpenPlayerCount());
         data.insert(JsonKeys::JSONKEY_USERNAMES, getUserNames());
         data.insert(JsonKeys::JSONKEY_ONLINEINFO, getOnlineInfo());
@@ -1594,7 +1594,7 @@ void PlayerSelection::sendPlayerRequest(quint64 socketID, qint32 player, GameEnu
     sendStream << command;
     // request player smaller 0 for any (the first avaible on the server :)
     sendStream << static_cast<qint32>(player);
-    sendStream << Settings::getUsername();
+    sendStream << Settings::getInstance()->getUsername();
     sendStream << static_cast<qint32>(aiType);
     emit m_pNetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
@@ -1751,7 +1751,7 @@ void PlayerSelection::remoteChangePlayerOwner(quint64 socketID, const QString & 
 
 bool PlayerSelection::joinAllowed(quint64 socketId, QString username, GameEnums::AiTypes eAiType)
 {
-    bool joinAllowed = (Settings::getUsername() != username) || getIsServerGame() || eAiType == GameEnums::AiTypes_Open;
+    bool joinAllowed = (Settings::getInstance()->getUsername() != username) || getIsServerGame() || eAiType == GameEnums::AiTypes_Open;
     if (eAiType != GameEnums::AiTypes_Open && joinAllowed)
     {
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)

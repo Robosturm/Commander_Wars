@@ -216,10 +216,10 @@ bool Player::loadTableFromFile(const QString tablename)
     CONSOLE_PRINT("Player::loadTableFromFile " + tablename, GameConsole::eDEBUG);
     bool found = false;
     QStringList searchPaths;
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
     {
-        searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/images/colortables/");
-        searchPaths.append(oxygine::Resource::RCC_PREFIX_PATH + Settings::getMods().at(i) + "/images/colortables/");
+        searchPaths.append(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + "/images/colortables/");
+        searchPaths.append(oxygine::Resource::RCC_PREFIX_PATH + Settings::getInstance()->getMods().at(i) + "/images/colortables/");
     }
     searchPaths.append("resources/images/colortables/");
     searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/images/colortables/");
@@ -387,12 +387,12 @@ bool Player::colorToTableInTable(QColor baseColor)
     CONSOLE_PRINT("Player::colorToTableInTable", GameConsole::eDEBUG);
     bool found = false;
     QStringList searchPaths;
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
     {
-        searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/images/colortables/");
-        searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/images/colortables/");
+        searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getInstance()->getMods().at(i) + "/images/colortables/");
+        searchPaths.append(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + "/images/colortables/");
     }
-    searchPaths.append(Settings::getUserPath() + "resources/images/colortables/");
+    searchPaths.append(Settings::getInstance()->getUserPath() + "resources/images/colortables/");
     searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/images/colortables/");
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
@@ -529,10 +529,10 @@ oxygine::spResAnim Player::getNeutralTableAnim()
     {
         m_neutralTableAnim = oxygine::spSingleResAnim::create();
         QStringList searchPaths;
-        for (qint32 i = 0; i < Settings::getMods().size(); i++)
+        for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
         {
-            searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/images/colortables/");
-            searchPaths.append(oxygine::Resource::RCC_PREFIX_PATH + Settings::getMods().at(i) + "/images/colortables/");
+            searchPaths.append(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + "/images/colortables/");
+            searchPaths.append(oxygine::Resource::RCC_PREFIX_PATH + Settings::getInstance()->getMods().at(i) + "/images/colortables/");
         }
         searchPaths.append("resources/images/colortables/");
         searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/images/colortables/");

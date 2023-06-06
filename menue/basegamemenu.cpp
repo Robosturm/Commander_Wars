@@ -223,7 +223,7 @@ void BaseGamemenu::connectMapCursor()
     });
     m_pMap->addEventListener(oxygine::TouchEvent::OVER, [pApp](oxygine::Event *)->void
     {
-        if (!Settings::getShowCursor())
+        if (!Settings::getInstance()->getShowCursor())
         {
             QCursor cursor = pApp->cursor();
             cursor.setShape(Qt::CursorShape::ArrowCursor);
@@ -254,7 +254,7 @@ void BaseGamemenu::autoScroll(QPoint cursorPosition)
     Mainapp* pApp = Mainapp::getInstance();
     if (QApplication::focusWindow() == pApp &&
         m_Focused &&
-        Settings::getAutoScrolling())
+        Settings::getInstance()->getAutoScrolling())
     {
         
         if (m_pMap.get() != nullptr &&
@@ -326,19 +326,19 @@ void BaseGamemenu::keyInput(oxygine::KeyEvent event)
     {
         // for debugging
         Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_confirm() ||
-            cur == Settings::getKey_confirm2())
+        if (cur == Settings::getInstance()->getKey_confirm() ||
+            cur == Settings::getInstance()->getKey_confirm2())
         {
             emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
             m_lastMapPoint = mapPoint;
         }
-        else if (cur == Settings::getKey_cancel() ||
-                 cur == Settings::getKey_cancel2())
+        else if (cur == Settings::getInstance()->getKey_cancel() ||
+                 cur == Settings::getInstance()->getKey_cancel2())
         {
             emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
             m_lastMapPoint = mapPoint;
         }
-        else if (cur == Settings::getKey_mapshot())
+        else if (cur == Settings::getInstance()->getKey_mapshot())
         {
             emit Mainapp::getInstance()->sigDoMapshot(this);
         }
@@ -355,13 +355,13 @@ void BaseGamemenu::keyUp(oxygine::KeyEvent event)
     {
         // for debugging
         Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_confirm() ||
-            cur == Settings::getKey_confirm2())
+        if (cur == Settings::getInstance()->getKey_confirm() ||
+            cur == Settings::getInstance()->getKey_confirm2())
         {
             emit sigLeftClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         }
-        else if (cur == Settings::getKey_cancel() ||
-                 cur == Settings::getKey_cancel2())
+        else if (cur == Settings::getInstance()->getKey_cancel() ||
+                 cur == Settings::getInstance()->getKey_cancel2())
         {
             emit sigRightClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         }
@@ -418,7 +418,7 @@ void BaseGamemenu::calcNewMousePosition(qint32 x, qint32 y)
             mousePosY += moveY;
         }
 #ifdef GRAPHICSUPPORT
-        if (Settings::getAutoMoveCursor())
+        if (Settings::getInstance()->getAutoMoveCursor())
         {
             QPoint curPos = pApp->mapPosToGlobal(QPoint(mousePosX, mousePosY));
             pApp->cursor().setPos(curPos);

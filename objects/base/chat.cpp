@@ -182,7 +182,7 @@ void Chat::sendData(QString message)
     if (!message.isEmpty())
     {
         QJsonObject data;
-        data.insert(JsonKeys::JSONKEY_ChatSender, Settings::getUsername());
+        data.insert(JsonKeys::JSONKEY_ChatSender, Settings::getInstance()->getUsername());
         QString text;
         QString target;
         if (message.startsWith("@") &&

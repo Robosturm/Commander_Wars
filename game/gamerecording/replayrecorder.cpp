@@ -38,7 +38,7 @@ ReplayRecorder::~ReplayRecorder()
 
 void ReplayRecorder::startRecording(const QString & file)
 {    
-    if (Settings::getRecord() && m_pMap != nullptr && !Settings::getAiSlave())
+    if (Settings::getInstance()->getRecord() && m_pMap != nullptr && !Settings::getInstance()->getAiSlave())
     {
         QString fileName = file;
         if (fileName.isEmpty())
@@ -62,7 +62,7 @@ void ReplayRecorder::startRecording(const QString & file)
         {
             m_stream << static_cast<qint8>(data.at(i));
         }
-        QStringList mods = Settings::getMods();
+        QStringList mods = Settings::getInstance()->getMods();
         Filesupport::writeVectorList(m_stream, mods);
         m_countPos = m_recordFile.pos();
         m_stream << m_count;
@@ -207,7 +207,7 @@ bool ReplayRecorder::validRecord(QByteArray & envData)
         m_countPos = m_recordFile.pos();
         m_stream >> m_count;
         envData = qUncompress(envData);
-        success = m_mods == Settings::getMods();
+        success = m_mods == Settings::getInstance()->getMods();
     }
     return success;
 }

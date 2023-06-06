@@ -20,7 +20,7 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePa
 #endif
     Interpreter::setCppOwnerShip(this);
     m_pUnit->setUnitVisible(false, nullptr);
-    m_frameTime = static_cast<quint32>(GameMap::frameTime / Settings::getWalkAnimationSpeed());
+    m_frameTime = static_cast<quint32>(GameMap::frameTime / Settings::getInstance()->getWalkAnimationSpeed());
 }
 
 void GameAnimationWalk::start()
@@ -42,7 +42,7 @@ void GameAnimationWalk::start()
         AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         for (auto & data : m_SoundData)
         {
-            pAudioThread->playSound(data.soundFile, data.loops, data.delayMs / Settings::getWalkAnimationSpeed(), data.volume);
+            pAudioThread->playSound(data.soundFile, data.loops, data.delayMs / Settings::getInstance()->getWalkAnimationSpeed(), data.volume);
         }
     }
 }

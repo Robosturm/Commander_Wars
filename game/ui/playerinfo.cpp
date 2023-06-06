@@ -42,10 +42,10 @@ void PlayerInfo::updateData()
     qint32 currentPlayer = playerIdx;
     qint32 count = m_pMap->getPlayerCount();
     qint32 maxCount = count;
-    if (Settings::getShowCoCount() > 0 &&
-        Settings::getShowCoCount() < m_pMap->getPlayerCount())
+    if (Settings::getInstance()->getShowCoCount() > 0 &&
+        Settings::getInstance()->getShowCoCount() < m_pMap->getPlayerCount())
     {
-        maxCount = Settings::getShowCoCount();
+        maxCount = Settings::getInstance()->getShowCoCount();
     }
     qint32 playerShown = 0;
     bool hasShownTurnStartInfo = false;

@@ -98,10 +98,10 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
     QString baseName = NeuralNetworkPath + netName + m_aiName + NeuralNetworkFileEnding;
     QStringList searchFiles;
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
     {
-        searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + baseName);
-        searchFiles.append(Settings::getUserPath() + Settings::getMods().at(i) + baseName);
+        searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getInstance()->getMods().at(i) + baseName);
+        searchFiles.append(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + baseName);
     }
     searchFiles.append("resources/" + baseName);
     searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "/resources/" + baseName);

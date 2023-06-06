@@ -137,19 +137,19 @@ void RessourceManagement<TClass>::loadRessources(QString resPath)
         {
             oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + "resources/" + resPath);
         }
-        if (QFile::exists(Settings::getUserPath() + "resources/" + resPath))
+        if (QFile::exists(Settings::getInstance()->getUserPath() + "resources/" + resPath))
         {
-            oxygine::Resources::loadXML(Settings::getUserPath() + "resources/" + resPath);
+            oxygine::Resources::loadXML(Settings::getInstance()->getUserPath() + "resources/" + resPath);
         }
-        for (qint32 i = 0; i < Settings::getMods().size(); i++)
+        for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
         {
-            if (QFile::exists(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + resPath))
+            if (QFile::exists(QString(RCC_PREFIX_PATH) + Settings::getInstance()->getMods().at(i) + resPath))
             {
-                oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + resPath);
+                oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + Settings::getInstance()->getMods().at(i) + resPath);
             }
-            if (QFile::exists(Settings::getUserPath() + Settings::getMods().at(i) + resPath))
+            if (QFile::exists(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + resPath))
             {
-                oxygine::Resources::loadXML(Settings::getUserPath() + Settings::getMods().at(i) + resPath);
+                oxygine::Resources::loadXML(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + resPath);
             }
         }
     }
@@ -218,12 +218,12 @@ QStringList RessourceManagement<TClass>::getSearchPaths()
     if (!m_scriptPath.isEmpty())
     {
         searchPaths.append(QString(RCC_PREFIX_PATH) + "resources/" + m_scriptPath);
-        searchPaths.append(Settings::getUserPath() + "resources/" + m_scriptPath);
+        searchPaths.append(Settings::getInstance()->getUserPath() + "resources/" + m_scriptPath);
         // make sure to overwrite existing js stuff
-        for (qint32 i = 0; i < Settings::getMods().size(); i++)
+        for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
         {
-            searchPaths.append(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/" + m_scriptPath);
-            searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/" + m_scriptPath);
+            searchPaths.append(QString(RCC_PREFIX_PATH) + Settings::getInstance()->getMods().at(i) + "/" + m_scriptPath);
+            searchPaths.append(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + "/" + m_scriptPath);
         }
     }
     return searchPaths;

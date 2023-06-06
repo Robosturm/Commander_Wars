@@ -74,9 +74,9 @@ void GameScript::init()
         {
             file.setFileName(m_scriptFile);
         }
-        else if (QFile::exists(Settings::getUserPath() + m_scriptFile))
+        else if (QFile::exists(Settings::getInstance()->getUserPath() + m_scriptFile))
         {
-            file.setFileName(Settings::getUserPath() + m_scriptFile);
+            file.setFileName(Settings::getInstance()->getUserPath() + m_scriptFile);
         }
         else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_scriptFile))
         {

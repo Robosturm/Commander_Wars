@@ -190,7 +190,7 @@ namespace oxygine
         TouchEvent* te = safeCast<TouchEvent*>(event);
 
         if (te->mouseButton == MouseButton_Middle ||
-            Settings::getSmallScreenDevice())
+            Settings::getInstance()->getSmallScreenDevice())
         {
             timeMS tm = Clock::getTimeMS();
             switch (te->type)

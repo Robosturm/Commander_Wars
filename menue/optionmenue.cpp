@@ -152,7 +152,7 @@ void OptionMenue::onEnter()
 void OptionMenue::exitMenue()
 {    
     // save changed settings :)
-    Settings::saveSettings();
+    Settings::getInstance()->saveSettings();
     if (m_restartNeeded)
     {
         spDialogMessageBox pMessage = spDialogMessageBox::create(tr("Some changes need a restart of the game. The game will restart. Press Ok to restart."), true);
@@ -187,8 +187,8 @@ quint8 OptionMenue::getSupportedScreenCount()
 
 void OptionMenue::changeScreenSize(QSize size)
 {
-    Settings::setWidth(size.width());
-    Settings::setHeight(size.height());
+    Settings::getInstance()->setWidth(size.width());
+    Settings::getInstance()->setHeight(size.height());
     emit sigChangeScreenSize(size.width(), size.height());
     emit sigReloadSettings();
 }
@@ -260,11 +260,11 @@ void OptionMenue::showMods()
     pLabel->setY(y);
     m_ModSelector->addChild(pLabel);
     QStringList tags;
-    QStringList currentMods = Settings::getMods();
+    QStringList currentMods = Settings::getInstance()->getMods();
     qint32 width = 0;
     qint32 mods = 0;
     style.multiline = false;
-    QStringList availableMods = Settings::getAvailableMods();
+    QStringList availableMods = Settings::getInstance()->getAvailableMods();
     for (const auto & mod : qAsConst(availableMods))
     {
         QString name;
@@ -276,7 +276,7 @@ void OptionMenue::showMods()
         bool isComsetic = false;
         QStringList modTags;
         QString thumbnail;
-        Settings::getModInfos(mod, name, description, version,
+        Settings::getInstance()->getModInfos(mod, name, description, version,
                               compatibleMods, incompatibleMods, requiredMods, isComsetic,
                               modTags, thumbnail);
         for (const auto & tag : qAsConst(modTags))
@@ -308,11 +308,11 @@ void OptionMenue::showMods()
         {
             if (checked)
             {
-                Settings::addMod(mod);
+                Settings::getInstance()->addMod(mod);
             }
             else
             {
-                Settings::removeMod(mod);
+                Settings::getInstance()->removeMod(mod);
             }
             m_restartNeeded = true;
             emit sigUpdateModCheckboxes();
@@ -360,7 +360,7 @@ void OptionMenue::showMods()
 
 void OptionMenue::updateModSelection()
 {
-    QStringList currentMods = Settings::getMods();
+    QStringList currentMods = Settings::getInstance()->getMods();
     qint32 index = 0;
     bool set = false;
     for (const auto & gameMode : qAsConst(m_gamemodeMods))
@@ -401,9 +401,9 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
     if (!thumbnail.isEmpty())
     {
         QImage img;
-        if (QFile::exists(Settings::getUserPath() + thumbnail))
+        if (QFile::exists(Settings::getInstance()->getUserPath() + thumbnail))
         {
-            img = QImage(Settings::getUserPath() + thumbnail);
+            img = QImage(Settings::getInstance()->getUserPath() + thumbnail);
         }
         else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + thumbnail))
         {
@@ -435,17 +435,17 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
     QString modInfo = "\n\n" + tr("Compatible Mods:\n");
     for (const auto & mod : compatibleMods)
     {
-        modInfo += Settings::getModName(mod) + "\n";
+        modInfo += Settings::getInstance()->getModName(mod) + "\n";
     }
     modInfo += "\n" + tr("Incompatible Mods:\n");
     for (const auto & mod : incompatibleMods)
     {
-        modInfo += Settings::getModName(mod) + "\n";
+        modInfo += Settings::getInstance()->getModName(mod) + "\n";
     }
     modInfo += "\n" + tr("Required Mods:\n");
     for (const auto & mod : requiredMods)
     {
-        modInfo += Settings::getModName(mod) + "\n";
+        modInfo += Settings::getInstance()->getModName(mod) + "\n";
     }
     modInfo += "\n" + tr("Tags:\n");
     for (const auto & tag : modTags)
@@ -468,11 +468,11 @@ void OptionMenue::selectMods(qint32 item)
         addList = m_gamemodeMods[item - 1].m_enableMods;
         for (auto & removeMod : removeList)
         {
-            Settings::removeMod(removeMod);
+            Settings::getInstance()->removeMod(removeMod);
         }
         for (auto & addMod : addList)
         {
-            Settings::addMod(addMod);
+            Settings::getInstance()->addMod(addMod);
         }
         CONSOLE_PRINT("Marking restart cause mods changed.", GameConsole::eDEBUG);
         m_restartNeeded = true;
@@ -482,8 +482,8 @@ void OptionMenue::selectMods(qint32 item)
 
 void OptionMenue::updateModCheckboxes()
 {
-    const auto availableMods = Settings::getAvailableMods();
-    const auto mods = Settings::getActiveMods();
+    const auto availableMods = Settings::getInstance()->getAvailableMods();
+    const auto mods = Settings::getInstance()->getActiveMods();
     for (auto & checkbox : m_ModCheckboxes)
     {
         checkbox->setEnabled(true);
@@ -499,7 +499,7 @@ void OptionMenue::updateModCheckboxes()
         QStringList tags;
         QString thumbnail;
         bool isComsetic = false;
-        Settings::getModInfos(mod, name, description, version,
+        Settings::getInstance()->getModInfos(mod, name, description, version,
                               compatibleMods, incompatibleMods, requiredMods, isComsetic, tags, thumbnail);
         qint32 i2 = 0;
         for (const auto & checkBoxMod : qAsConst(availableMods))
@@ -523,7 +523,7 @@ void OptionMenue::updateModCheckboxes()
         QStringList tags;
         QString thumbnail;
         bool isComsetic = false;
-        Settings::getModInfos(mod, name, description, version,
+        Settings::getInstance()->getModInfos(mod, name, description, version,
                               compatibleMods, incompatibleMods, requiredMods, isComsetic, tags, thumbnail);
         for (const auto & incompatibleMod : qAsConst(incompatibleMods))
         {
@@ -542,7 +542,7 @@ void OptionMenue::updateModCheckboxes()
                     if (m_ModCheckboxes[i]->getChecked())
                     {
                         m_ModCheckboxes[i]->setChecked(false);
-                        Settings::removeMod(mod);
+                        Settings::getInstance()->removeMod(mod);
                     }
                     m_ModCheckboxes[i]->setEnabled(false);
                     break;
@@ -556,7 +556,7 @@ void OptionMenue::updateModCheckboxes()
 
 void OptionMenue::updateModFilter(QString tag)
 {
-    const auto mods = Settings::getAvailableMods();
+    const auto mods = Settings::getInstance()->getAvailableMods();
     qint32 visibleCounter = 0;
     for (qint32 i = 0; i < m_ModBoxes.size(); ++i)
     {
@@ -569,7 +569,7 @@ void OptionMenue::updateModFilter(QString tag)
         QStringList tags;
         QString thumbnail;
         bool isComsetic = false;
-        Settings::getModInfos(mods[i], name, description, version,
+        Settings::getInstance()->getModInfos(mods[i], name, description, version,
                               compatibleMods, incompatibleMods, requiredMods, isComsetic, tags, thumbnail);
 
 
@@ -611,7 +611,7 @@ void OptionMenue::showResetBox()
 
 void OptionMenue::onReset()
 {
-    Settings::resetSettings();
+    Settings::getInstance()->resetSettings();
     m_restartNeeded = true;
     reloadSettings();
 }
@@ -623,7 +623,7 @@ void OptionMenue::markRestartNeeded()
 
 void OptionMenue::changeGameScale(qreal gameScale)
 {
-    Settings::setGameScale(gameScale);
+    Settings::getInstance()->setGameScale(gameScale);
     Mainapp::getInstance()->initStage();
     reloadSettings();
 }

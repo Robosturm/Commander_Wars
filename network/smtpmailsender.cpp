@@ -20,7 +20,7 @@ bool SmtpMailSender::connectToServer(SmtpClient & client)
     client.connectToHost();
     if (client.waitForReadyConnected())
     {
-        client.login(Settings::getMailServerUsername(), Settings::getMailServerPassword(), static_cast<SmtpClient::AuthMethod>(Settings::getMailServerAuthMethod()));
+        client.login(Settings::getInstance()->getMailServerUsername(), Settings::getInstance()->getMailServerPassword(), static_cast<SmtpClient::AuthMethod>(Settings::getInstance()->getMailServerAuthMethod()));
         if (client.waitForAuthenticated())
         {
             success = true;
@@ -40,13 +40,13 @@ bool SmtpMailSender::connectToServer(SmtpClient & client)
 
 void SmtpMailSender::sendMail(quint64 socketId, const QString subject, const QString content, const QString receiverAddress, const QString username, NetworkCommands::PublicKeyActions action)
 {
-    SmtpClient client(Settings::getMailServerAddress(), Settings::getMailServerPort(), static_cast<SmtpClient::ConnectionType>(Settings::getMailServerConnectionType()));
+    SmtpClient client(Settings::getInstance()->getMailServerAddress(), Settings::getInstance()->getMailServerPort(), static_cast<SmtpClient::ConnectionType>(Settings::getInstance()->getMailServerConnectionType()));
     bool result = false;
     if (connectToServer(client))
     {
         CONSOLE_PRINT("Sending mail to " + receiverAddress , GameConsole::eDEBUG);
         MimeMessage message;
-        EmailAddress sender(Settings::getMailServerSendAddress(), "Commander Wars Server Crew");
+        EmailAddress sender(Settings::getInstance()->getMailServerSendAddress(), "Commander Wars Server Crew");
         message.setSender(sender);
         EmailAddress to(receiverAddress, username);
         message.addRecipient(to);

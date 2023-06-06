@@ -24,7 +24,7 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
     setObjectName("GameAnimationCapture");
 #endif
     Interpreter::setCppOwnerShip(this);
-    m_frameTime = GameMap::frameTime / Settings::getCaptureAnimationSpeed();
+    m_frameTime = GameMap::frameTime / Settings::getInstance()->getCaptureAnimationSpeed();
 }
 
 void GameAnimationCapture::addBuildingSprite(const QString spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode)
@@ -47,7 +47,7 @@ void GameAnimationCapture::addBuildingSprite(const QString spriteID, Player* sta
             m_buildingResAnim = oxygine::spSingleResAnim::create();
             m_captureBuildingResAnim = oxygine::spSingleResAnim::create();
         }
-        QString path = Settings::getUserPath() + pAnim->getResPath();
+        QString path = Settings::getInstance()->getUserPath() + pAnim->getResPath();
         if (!QFile::exists(path))
         {
             path = oxygine::Resource::RCC_PREFIX_PATH + pAnim->getResPath();

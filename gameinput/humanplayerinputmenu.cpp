@@ -29,7 +29,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
     setObjectName("HumanPlayerInputMenu");
 #endif
     Interpreter::setCppOwnerShip(this);
-    setScale(Settings::getIngameMenuScaling());
+    setScale(Settings::getInstance()->getIngameMenuScaling());
     connect(Mainapp::getInstance(), &Mainapp::sigKeyDown, this, &HumanPlayerInputMenu::keyInput, Qt::QueuedConnection);
     qint32 width = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMenuFont32());
@@ -72,12 +72,12 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
         m_Cursor->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         qint32 x = 0;
         qint32 xCount = 0;
-        m_maxXCount = Settings::getMenuItemRowCount();
+        m_maxXCount = Settings::getInstance()->getMenuItemRowCount();
         if ((oxygine::Stage::getStage()->getWidth() - 120) / width < m_maxXCount)
         {
             m_maxXCount = (oxygine::Stage::getStage()->getWidth() - 120) / width;
         }
-        m_rowCount = Settings::getMenuItemCount();
+        m_rowCount = Settings::getInstance()->getMenuItemCount();
         if ((oxygine::Stage::getStage()->getHeight() - 60) / m_itemHeigth < m_rowCount)
         {
             m_rowCount = (oxygine::Stage::getStage()->getHeight() - 60) / m_itemHeigth;
@@ -433,8 +433,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             float max = m_ItemActors.size() - m_rowCount * m_maxXCount;
             float value = 1.0f / max;
             qint32 endItemCount = m_startItem + m_rowCount * m_columnCount;
-            if (cur == Settings::getKey_up() ||
-                cur == Settings::getKey_up2())
+            if (cur == Settings::getInstance()->getKey_up() ||
+                cur == Settings::getInstance()->getKey_up2())
             {
                 Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction > m_startItem)
@@ -458,8 +458,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     m_currentAction = m_ActionIDs.size() - 1;
                 }
             }
-            else if (cur == Settings::getKey_down() ||
-                     cur == Settings::getKey_down2())
+            else if (cur == Settings::getInstance()->getKey_down() ||
+                     cur == Settings::getInstance()->getKey_down2())
             {
                 Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction < endItemCount - 1)
@@ -483,8 +483,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     m_currentAction = 0;
                 }
             }
-            if (cur == Settings::getKey_left() ||
-                cur == Settings::getKey_left2())
+            if (cur == Settings::getInstance()->getKey_left() ||
+                cur == Settings::getInstance()->getKey_left2())
             {
                 Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction - m_rowCount >= m_startItem)
@@ -500,8 +500,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     m_currentAction = m_ActionIDs.size() - 1;
                 }
             }
-            else if (cur == Settings::getKey_right() ||
-                     cur == Settings::getKey_right2())
+            else if (cur == Settings::getInstance()->getKey_right() ||
+                     cur == Settings::getInstance()->getKey_right2())
             {
                 Mainapp::getInstance()->getAudioManager()->playSound("switchmenu.wav");
                 if (m_currentAction + m_rowCount < endItemCount)
@@ -513,8 +513,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     m_currentAction = m_startItem;
                 }
             }
-            else if (cur == Settings::getKey_confirm() ||
-                     cur == Settings::getKey_confirm2())
+            else if (cur == Settings::getInstance()->getKey_confirm() ||
+                     cur == Settings::getInstance()->getKey_confirm2())
             {
                 if (!event.getContinousPress())
                 {
@@ -536,16 +536,16 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     }
                 }
             }
-            else if (cur == Settings::getKey_cancel() ||
-                     cur == Settings::getKey_cancel2())
+            else if (cur == Settings::getInstance()->getKey_cancel() ||
+                     cur == Settings::getInstance()->getKey_cancel2())
             {
                 if (!event.getContinousPress())
                 {
                     emit sigCanceled(0, 0);
                 }
             }
-            else if (cur == Settings::getKey_information() ||
-                     cur == Settings::getKey_information2())
+            else if (cur == Settings::getInstance()->getKey_information() ||
+                     cur == Settings::getInstance()->getKey_information2())
             {
                 if (!event.getContinousPress())
                 {
@@ -590,7 +590,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
 void HumanPlayerInputMenu::moveMouseToItem(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    if (pApp->hasCursor() && Settings::getAutoMoveCursor())
+    if (pApp->hasCursor() && Settings::getInstance()->getAutoMoveCursor())
     {
 #ifdef GRAPHICSUPPORT
         QPoint pos = local2stage();

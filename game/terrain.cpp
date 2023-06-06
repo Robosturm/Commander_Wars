@@ -670,9 +670,9 @@ void Terrain::loadBaseSprite(const QString spriteID, qint32 frameTime, qint32 st
         {
             img = QImage(m_terrainSpriteName);
         }
-        else if (QFile::exists(Settings::getUserPath() + m_terrainSpriteName))
+        else if (QFile::exists(Settings::getInstance()->getUserPath() + m_terrainSpriteName))
         {
-            img = QImage(Settings::getUserPath() + m_terrainSpriteName);
+            img = QImage(Settings::getInstance()->getUserPath() + m_terrainSpriteName);
         }
         else
         {
@@ -702,7 +702,7 @@ bool Terrain::customSpriteExists() const
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(m_terrainSpriteName, oxygine::error_policy::ep_ignore_error);
     return pAnim != nullptr ||
                     QFile::exists(m_terrainSpriteName) ||
-                    QFile::exists(Settings::getUserPath() + m_terrainSpriteName) ||
+                    QFile::exists(Settings::getInstance()->getUserPath() + m_terrainSpriteName) ||
                     QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
 }
 

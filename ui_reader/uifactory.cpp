@@ -156,9 +156,9 @@ void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
         m_creationCount = 0;
         QStringList uiFiles;
         // make sure to overwrite existing js stuff
-        for (qint32 i = Settings::getMods().size() - 1; i >= 0; --i)
+        for (qint32 i = Settings::getInstance()->getMods().size() - 1; i >= 0; --i)
         {
-            uiFiles.append(Settings::getMods().at(i) + "/" + uiXml);
+            uiFiles.append(Settings::getInstance()->getMods().at(i) + "/" + uiXml);
         }
         uiFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/" + uiXml);
         uiFiles.append("resources/" + uiXml);

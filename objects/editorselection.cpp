@@ -232,7 +232,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
     // select terrains view
     updateTerrainView();
 
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         setX(oxygine::Stage::getStage()->getWidth() - 1);
         addChild(spMoveInButton::create(this, getScaledWidth()));
@@ -947,28 +947,28 @@ void EditorSelection::selectUnit(QString unitID)
 
 void EditorSelection::KeyInput(Qt::Key cur)
 {
-    if (cur == Settings::getKey_EditorPlaceTerrain())
+    if (cur == Settings::getInstance()->getKey_EditorPlaceTerrain())
     {
         oxygine::TouchEvent event(oxygine::TouchEvent::CLICK, false);
         event.target = m_pSpriteTerrainMode;
         event.currentTarget = m_pSpriteTerrainMode;
         m_pSpriteTerrainMode->dispatchEvent(&event);
     }
-    else if (cur  == Settings::getKey_EditorPlaceBuilding())
+    else if (cur  == Settings::getInstance()->getKey_EditorPlaceBuilding())
     {
         oxygine::TouchEvent event(oxygine::TouchEvent::CLICK, false);
         event.target = m_pSpriteBuildingMode;
         event.currentTarget = m_pSpriteBuildingMode;
         m_pSpriteBuildingMode->dispatchEvent(&event);
     }
-    else if (cur  == Settings::getKey_EditorPlaceUnit())
+    else if (cur  == Settings::getInstance()->getKey_EditorPlaceUnit())
     {
         oxygine::TouchEvent event(oxygine::TouchEvent::CLICK, false);
         event.target = m_pSpriteUnitMode;
         event.currentTarget = m_pSpriteUnitMode;
         m_pSpriteUnitMode->dispatchEvent(&event);
     }
-    else if (cur  == Settings::getKey_EditorNextTeam())
+    else if (cur  == Settings::getInstance()->getKey_EditorNextTeam())
     {
         
         qint32 player = 0;
@@ -986,7 +986,7 @@ void EditorSelection::KeyInput(Qt::Key cur)
         }
         changeSelectedPlayer(player);
     }
-    else if (cur  == Settings::getKey_EditorPreviousTeam())
+    else if (cur  == Settings::getInstance()->getKey_EditorPreviousTeam())
     {
         
         qint32 player = 0;
@@ -1000,12 +1000,12 @@ void EditorSelection::KeyInput(Qt::Key cur)
         }
         changeSelectedPlayer(player);
     }
-    else if (cur == Settings::getKey_EditorSelectionLeft())
+    else if (cur == Settings::getInstance()->getKey_EditorSelectionLeft())
     {
         qint32 item = m_selectedItem - 1;
         changeSelection(item);
     }
-    else if (cur == Settings::getKey_EditorSelectionRight())
+    else if (cur == Settings::getInstance()->getKey_EditorSelectionRight())
     {
         qint32 item = m_selectedItem + 1;
         changeSelection(item);

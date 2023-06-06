@@ -56,7 +56,7 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
         {
             myHash.addData(trainingFile.readLine().trimmed());
         }
-        myHash.addData(Settings::getModString().toUtf8());
+        myHash.addData(Settings::getInstance()->getModString().toUtf8());
         hash = myHash.result();
         trainingFile.close();
         bool needsTraining = true;
@@ -299,12 +299,12 @@ void DecisionTree::getTrainingData(QString file, std::vector<std::vector<float>>
 
     readTrainingFile(stream, questionsFound, types, readQuestions, trainingData, questions);
 
-    QStringList mods = Settings::getMods();
+    QStringList mods = Settings::getInstance()->getMods();
     QStringList fullMods;
     for(const QString & mod : qAsConst(mods))
     {
         fullMods.append(oxygine::Resource::RCC_PREFIX_PATH + mod);
-        fullMods.append(Settings::getUserPath() + mod);
+        fullMods.append(Settings::getInstance()->getUserPath() + mod);
     }
     for (qint32 i = 0; i < fullMods.size(); i++)
     {

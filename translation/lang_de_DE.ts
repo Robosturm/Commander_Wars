@@ -10191,7 +10191,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="1947"/>
+        <location filename="../coreengine/settings.cpp" line="1946"/>
         <source>Default device</source>
         <translation>Default Gerät</translation>
     </message>

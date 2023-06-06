@@ -59,7 +59,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
         if (pAnim != nullptr)
         {
             m_CO->setResAnim(pAnim);
-            if (Settings::getSmallScreenDevice())
+            if (Settings::getInstance()->getSmallScreenDevice())
             {
                 m_CO->setScale(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 60) / static_cast<float>(pAnim->getHeight()));
             }
@@ -81,7 +81,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
         {
             m_CO = oxygine::spSprite::create();
             m_CO->setResAnim(pAnim);
-            if (Settings::getSmallScreenDevice())
+            if (Settings::getInstance()->getSmallScreenDevice())
             {
                 m_CO->setScale(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 60) / static_cast<float>(pAnim->getHeight()));
             }
@@ -115,7 +115,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     if (!m_permanent)
     {
         m_endTimer.setSingleShot(true);
-        m_endTimer.setInterval(static_cast<qint32>(static_cast<float>(uptimeMs) / Settings::getAnimationSpeed()));
+        m_endTimer.setInterval(static_cast<qint32>(static_cast<float>(uptimeMs) / Settings::getInstance()->getAnimationSpeed()));
         connect(&m_endTimer, &QTimer::timeout, this, [this]()
         {
             emitFinished();

@@ -54,7 +54,7 @@ EditorMenue::EditorMenue()
 #endif
     Mainapp* pApp = Mainapp::getInstance();
     qint32 selectionWidth = oxygine::Stage::getStage()->getWidth() / 4;
-    bool smallScreen = Settings::getSmallScreenDevice();
+    bool smallScreen = Settings::getInstance()->getSmallScreenDevice();
     Interpreter::setCppOwnerShip(this);
     registerAtInterpreter();
     if (smallScreen)
@@ -93,7 +93,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("View map stats"),     "VIEWMAPSTATS", 0, tr("Shows the general information about the map."));
     m_Topbar->addItem(tr("Save map"),           "SAVEMAP",      0, tr("Saves a map to a give file."));
     m_Topbar->addItem(tr("Load map"),           "LOADMAP",      0, tr("Loads a map to a give file."));
-    if (!Settings::getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice())
     {
         m_Topbar->addItem(tr("Edit script"),    "EDITSCRIPT",   0, tr("Edit and create a script for any map."));
         m_Topbar->addItem(tr("Edit campaign"),  "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
@@ -117,7 +117,7 @@ EditorMenue::EditorMenue()
 
     m_Topbar->addGroup(tr("Commands"));
     m_Topbar->addItem(tr("Place selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
-    m_Topbar->addItem(tr("Delete units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2, tr("Selects the editor mode deleting units"));
+    m_Topbar->addItem(tr("Delete units") + " - " + SelectKey::getKeycodeText(Settings::getInstance()->getKey_cancel()), "DELETEUNITS", 2, tr("Selects the editor mode deleting units"));
     m_Topbar->addItem(tr("Edit units"), "EDITUNITS", 2, tr("Selects the editor mode modifying the stats of a unit"));
     m_Topbar->addItem(tr("Edit terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain or building"));
     m_Topbar->addItem(tr("Edit players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
@@ -125,7 +125,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Mass edit terrain"), "EDITBIOMES", 2, tr("Changes the biome or palettes of an area."));
 
     m_Topbar->addItem(tr("Optimize players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
-    if (!Settings::getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice())
     {
         m_Topbar->addItem(tr("Copy Ctrl+C"), "COPY", 2, tr("Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode"));
         m_Topbar->addItem(tr("Paste Ctrl+V"), "PASTE", 2, tr("Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec."));
@@ -148,7 +148,7 @@ EditorMenue::EditorMenue()
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    if (!Settings::getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice())
     {
         m_xyTextInfo = spLabel::create(180);
         m_xyTextInfo->setStyle(style);
@@ -463,7 +463,7 @@ void EditorMenue::showSaveMap()
 {
     QStringList wildcards;
     wildcards.append("*.map");
-    QString path = Settings::getUserPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
@@ -475,7 +475,7 @@ void EditorMenue::showLoadMap()
 {
     QStringList wildcards;
     wildcards.append("*.map");
-    QString path = Settings::getUserPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
@@ -582,7 +582,7 @@ void EditorMenue::showImportCoWTxTMap()
 {
     QStringList wildcards;
     wildcards.append("*.txt");
-    QString path = Settings::getUserPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
@@ -594,7 +594,7 @@ void EditorMenue::showImportAwdsAws()
 {
     QStringList wildcards;
     wildcards.append("*.aws");
-    QString path = Settings::getUserPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
@@ -606,7 +606,7 @@ void EditorMenue::showExportAwdsAws()
 {
     QStringList wildcards;
     wildcards.append("*.aws");
-    QString path = Settings::getUserPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Export"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
@@ -618,7 +618,7 @@ void EditorMenue::showImportAwdsAw4()
 {
     QStringList wildcards;
     wildcards.append("*.aw4");
-    QString path = Settings::getUserPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAW4Aw4Map, Qt::QueuedConnection);
@@ -630,7 +630,7 @@ void EditorMenue::showImportAwByWeb()
 {
     QStringList wildcards;
     wildcards.append("*.txt");
-    QString path = Settings::getUserPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Import"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);
@@ -641,7 +641,7 @@ void EditorMenue::showImportAwByWeb()
 void EditorMenue::showNewMap()
 {
     MapEditDialog::MapEditInfo info;
-    info.author = Settings::getUsername();
+    info.author = Settings::getInstance()->getUsername();
     info.mapWidth = 20;
     info.mapHeigth = 20;
     info.playerCount = 4;
@@ -943,8 +943,8 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     }
                 }
             }
-            else if (cur == Settings::getKey_information() ||
-                     cur == Settings::getKey_information2())
+            else if (cur == Settings::getInstance()->getKey_information() ||
+                     cur == Settings::getInstance()->getKey_information2())
             {
                 
                 if (m_pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
@@ -959,8 +959,8 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     setFocused(false);
                 }
             }
-            else if (cur == Settings::getKey_cancel() ||
-                     cur == Settings::getKey_cancel2())
+            else if (cur == Settings::getInstance()->getKey_cancel() ||
+                     cur == Settings::getInstance()->getKey_cancel2())
             {
                 if (m_EditorMode == EditorModes::RemoveUnits)
                 {
@@ -971,8 +971,8 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                     m_EditorMode = EditorModes::RemoveUnits;
                 }
             }
-            else if (cur == Settings::getKey_confirm() ||
-                     cur == Settings::getKey_confirm2())
+            else if (cur == Settings::getInstance()->getKey_confirm() ||
+                     cur == Settings::getInstance()->getKey_confirm2())
             {
                 m_placingState.active = true;
             }
@@ -1588,7 +1588,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     {
         m_pMap->updateSpritesOfTiles(points, true);
     }
-    if (Settings::getSyncAnimations())
+    if (Settings::getInstance()->getSyncAnimations())
     {
         m_pMap->syncUnitsAndBuildingAnimations();
     }
@@ -1664,7 +1664,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
     {
         pApp->getAudioManager()->playSound("impossible.wav");
     }
-    if (Settings::getSyncAnimations())
+    if (Settings::getInstance()->getSyncAnimations())
     {
         m_pMap->syncUnitsAndBuildingAnimations();
     }
@@ -1675,7 +1675,7 @@ void EditorMenue::saveMap(QString filename)
     CONSOLE_PRINT("EditorMenue::saveMap " + filename, GameConsole::eDEBUG);
     if (filename.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
     {
-        filename.replace(oxygine::Resource::RCC_PREFIX_PATH, Settings::getUserPath());
+        filename.replace(oxygine::Resource::RCC_PREFIX_PATH, Settings::getInstance()->getUserPath());
     }
     if (filename.endsWith(".map"))
     {

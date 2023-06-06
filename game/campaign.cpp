@@ -67,10 +67,10 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
         files.removeAt(0);
         for (qint32 i = 0; i < files.size(); ++i)
         {
-            if (QFile::exists(Settings::getUserPath() + folder + files[i]))
+            if (QFile::exists(Settings::getInstance()->getUserPath() + folder + files[i]))
             {
-                files[i] = Settings::getUserPath() + folder + files[i];
-                CONSOLE_PRINT("adding campaign map: " + Settings::getUserPath() + folder + files[i], GameConsole::eDEBUG);
+                files[i] = Settings::getInstance()->getUserPath() + folder + files[i];
+                CONSOLE_PRINT("adding campaign map: " + Settings::getInstance()->getUserPath() + folder + files[i], GameConsole::eDEBUG);
             }
             else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + folder + files[i]))
             {
@@ -78,7 +78,7 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
                 files[i] = oxygine::Resource::RCC_PREFIX_PATH + folder + files[i];
             }
         }
-        addDeveloperMaps(Settings::getUserPath(), folder, files);
+        addDeveloperMaps(Settings::getInstance()->getUserPath(), folder, files);
         addDeveloperMaps(oxygine::Resource::RCC_PREFIX_PATH, folder, files);
     }
     return CampaignMapInfo(folder, files);

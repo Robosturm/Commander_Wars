@@ -250,10 +250,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             changeScreenMode(getScreenMode());
 #ifdef UPDATESUPPORT
             GameUpdater::cleanUpOldArtifacts();
-            QString updateStep = Settings::getUpdateStep();
+            QString updateStep = Settings::getInstance()->getUpdateStep();
             if (!getSlave())
             {
-                if ((!getGameVersion().endsWith("dev") && Settings::getAutomaticUpdates()) ||
+                if ((!getGameVersion().endsWith("dev") && Settings::getInstance()->getAutomaticUpdates()) ||
                     updateStep == GameUpdater::MODE_FORCE ||
                     updateStep == GameUpdater::MODE_INSTALL)
                 {
@@ -408,7 +408,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             if (!m_noUi)
             {
                 // refresh timer cycle before using it.
-                Settings::setFramesPerSecond(Settings::getFramesPerSecond());
+                Settings::getInstance()->setFramesPerSecond(Settings::getInstance()->getFramesPerSecond());
                 m_Timer.start(m_timerCycle, this);
             }
             GameConsole::getInstance()->moveToThread(Mainapp::getWorkerthread());
@@ -421,10 +421,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::Finalizing:
         {
             CONSOLE_PRINT("Finalizing boot", GameConsole::eDEBUG);
-            if (Settings::getAiSlave())
+            if (Settings::getInstance()->getAiSlave())
             {
                 CONSOLE_PRINT("Running as ai slave", GameConsole::eDEBUG);
-                Settings::setAutoSavingCycle(0);
+                Settings::getInstance()->setAutoSavingCycle(0);
                 emit m_aiProcessPipe->sigPipeReady();
             }
             else
@@ -433,14 +433,14 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 {
                     m_gamepad.init();
                 }
-                if (Settings::getSpawnAiProcess())
+                if (Settings::getInstance()->getSpawnAiProcess())
                 {
                     const char* const prefix = "--";
                     const QString program = QCoreApplication::applicationFilePath();
                     QStringList args({QString(prefix) + CommandLineParser::ARG_NOUI, // comment out for debugging
                                       QString(prefix) + CommandLineParser::ARG_NOAUDIO,
                                       QString(prefix) + CommandLineParser::ARG_MODS,
-                                      Settings::getConfigString(Settings::getActiveMods()),
+                                      Settings::getInstance()->getConfigString(Settings::getInstance()->getActiveMods()),
                                       QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS,
                                       "0",
                                       QString(prefix) + CommandLineParser::ARG_AISLAVE});
@@ -449,7 +449,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                     m_aiSubProcess->start(program, args);
                 }
                 // only launch the server if the rest is ready for it ;)
-                if (Settings::getServer() && !m_slave)
+                if (Settings::getInstance()->getServer() && !m_slave)
                 {
                     MainServer::getInstance();
                     m_GameServerThread->start(QThread::Priority::NormalPriority);
@@ -508,7 +508,7 @@ void Mainapp::changeScreen(quint8 screen)
     if (screen >= screens.size())
     {
         screen = 0;
-        Settings::setScreen(screen);
+        Settings::getInstance()->setScreen(screen);
     }
     setScreen(screens[screen]);
 #endif
@@ -521,7 +521,7 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
     {
         return;
     }
-    changeScreen(Settings::getScreen());
+    changeScreen(Settings::getInstance()->getScreen());
     CONSOLE_PRINT("Changing screen mode to " + QString::number(static_cast<qint32>(mode)), GameConsole::eDEBUG);
     hide();
     auto screens = QApplication::screens();
@@ -531,33 +531,33 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
         {
             setWindowState(Qt::WindowState::WindowNoState);
             setFlag(Qt::FramelessWindowHint);
-            QScreen* screen = screens[Settings::getScreen()];
+            QScreen* screen = screens[Settings::getInstance()->getScreen()];
             QRect screenSize = screen->availableGeometry();
             setPosition(screenSize.x(), screenSize.y());
-            Settings::setFullscreen(false);
-            Settings::setBorderless(true);
+            Settings::getInstance()->setFullscreen(false);
+            Settings::getInstance()->setBorderless(true);
             setWidth(screenSize.width());
-            Settings::setWidth(screenSize.width());
+            Settings::getInstance()->setWidth(screenSize.width());
             setHeight(screenSize.height());
-            Settings::setHeight(screenSize.height());
+            Settings::getInstance()->setHeight(screenSize.height());
             show();
             break;
         }
         case Settings::ScreenModes::FullScreen:
         {
-            Settings::setFullscreen(true);
-            Settings::setBorderless(false);
+            Settings::getInstance()->setFullscreen(true);
+            Settings::getInstance()->setBorderless(false);
 #ifdef ANDROID
             showMaximized();
             // set window info
-            Settings::setWidth(width());
-            Settings::setHeight(height());
+            Settings::getInstance()->setWidth(width());
+            Settings::getInstance()->setHeight(height());
 #else
-            QScreen* screen = screens[Settings::getScreen()];
+            QScreen* screen = screens[Settings::getInstance()->getScreen()];
             QRect screenSize = screen->geometry();
             // set window info
-            Settings::setWidth(screenSize.width());
-            Settings::setHeight(screenSize.height());
+            Settings::getInstance()->setWidth(screenSize.width());
+            Settings::getInstance()->setHeight(screenSize.height());
             setPosition(screenSize.x(), screenSize.y());
             setGeometry(screenSize);
             showFullScreen();
@@ -568,25 +568,25 @@ void Mainapp::changeScreenMode(Settings::ScreenModes mode)
         {
             setWindowState(Qt::WindowState::WindowNoState);
             setFlag(Qt::FramelessWindowHint, false);
-            Settings::setFullscreen(false);
-            Settings::setBorderless(false);
+            Settings::getInstance()->setFullscreen(false);
+            Settings::getInstance()->setBorderless(false);
             QScreen* screen = QApplication::primaryScreen();
             QRect screenSize = screen->availableGeometry();
-            if (screenSize.width() < Settings::getWidth())
+            if (screenSize.width() < Settings::getInstance()->getWidth())
             {
                 setWidth(screenSize.width());
-                Settings::setWidth(screenSize.width());
+                Settings::getInstance()->setWidth(screenSize.width());
             }
-            if (screenSize.height() < Settings::getHeight())
+            if (screenSize.height() < Settings::getInstance()->getHeight())
             {
                 setHeight(screenSize.height());
-                Settings::setHeight(screenSize.height());
+                Settings::getInstance()->setHeight(screenSize.height());
             }
             showNormal();
         }
     }
     // change screen size after changing the border flags
-    changeScreenSize(Settings::getWidth(), Settings::getHeight());
+    changeScreenSize(Settings::getInstance()->getWidth(), Settings::getInstance()->getHeight());
 #endif
 }
 
@@ -602,9 +602,9 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
     setMinimumSize(QSize(width, heigth));
     setMaximumSize(QSize(width, heigth));
 
-    Settings::setWidth(width);
-    Settings::setHeight(heigth);
-    Settings::saveSettings();
+    Settings::getInstance()->setWidth(width);
+    Settings::getInstance()->setHeight(heigth);
+    Settings::getInstance()->saveSettings();
     initStage();
     emit sigWindowLayoutChanged();
     emit sigChangePosition(QPoint(-1, -1), true);
@@ -636,11 +636,11 @@ void Mainapp::changePosition(QPoint pos, bool invert)
 
 Settings::ScreenModes Mainapp::getScreenMode()
 {
-    if (Settings::getFullscreen())
+    if (Settings::getInstance()->getFullscreen())
     {
         return Settings::ScreenModes::FullScreen;
     }
-    else if (Settings::getBorderless())
+    else if (Settings::getInstance()->getBorderless())
     {
         return Settings::ScreenModes::Borderless;
     }
@@ -655,11 +655,11 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
     if (m_startUpStep >= StartupPhase::Finalizing)
     {
         Qt::Key cur = static_cast<Qt::Key>(event->key());
-        if (cur == Settings::getKeyConsole())
+        if (cur == Settings::getInstance()->getKeyConsole())
         {
             emit GameConsole::getInstance()->sigToggleView();
         }
-        else if (cur == Settings::getKey_screenshot())
+        else if (cur == Settings::getInstance()->getKey_screenshot())
         {
             doScreenshot();
         }
@@ -783,11 +783,11 @@ void Mainapp::setNoAudio()
 void Mainapp::actAsSlave()
 {
     setSlave(true);
-    Settings::setServer(false);
-    Settings::setUsername("Server");
+    Settings::getInstance()->setServer(false);
+    Settings::getInstance()->setUsername("Server");
     m_slaveClient = spTCPClient::create(nullptr);
     m_slaveClient->moveToThread(getInstance()->getNetworkThread());
-    CONSOLE_PRINT("Running as slave with name : " + Settings::getSlaveServerName(), GameConsole::eDEBUG);
+    CONSOLE_PRINT("Running as slave with name : " + Settings::getInstance()->getSlaveServerName(), GameConsole::eDEBUG);
 }
 
 void Mainapp::onActiveChanged()
@@ -810,7 +810,7 @@ QString Mainapp::qsTr(const char* const text)
 
 void Mainapp::createBaseDirs()
 {
-    QString userPath = Settings::getUserPath();
+    QString userPath = Settings::getInstance()->getUserPath();
     CONSOLE_PRINT("Creating base dirs in " + userPath, GameConsole::eDEBUG);
     if (!userPath.isEmpty())
     {

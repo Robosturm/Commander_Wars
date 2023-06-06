@@ -342,7 +342,7 @@ void ScriptEventGeneric::showSelectFile(QString filter, QString startFolder, QSt
 {    
     QStringList wildcards;
     wildcards.append(filter);
-    QString path = Settings::getUserPath() + startFolder;
+    QString path = Settings::getInstance()->getUserPath() + startFolder;
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, currentFile, false, tr("Select"));
     Textbox* pBox = pTextbox.get();
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, [=](QString id)

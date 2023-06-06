@@ -405,7 +405,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         }
         else if (!m_pMenu->getFocused() && isCurrentPlayer(m_pPlayer))
         {
-            if (m_CurrentMenu.get() != nullptr && Settings::getSimpleDeselect())
+            if (m_CurrentMenu.get() != nullptr && Settings::getInstance()->getSimpleDeselect())
             {
                 Mainapp::getInstance()->getAudioManager()->playSound("cancel.wav");
                 cancelActionInput();
@@ -416,7 +416,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         {
             if (m_pMarkedFieldData.get() != nullptr &&
                 (!m_pMarkedFieldData->getShowZData() ||
-                 (!Settings::getTouchScreen() ||
+                 (!Settings::getInstance()->getTouchScreen() ||
                   (m_lastClickPoint.x() == x &&
                    m_lastClickPoint.y() == y))))
             {
@@ -501,7 +501,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     {
                         std::chrono::milliseconds time = std::chrono::milliseconds(m_doubleClickTime.elapsed());
                         if ((time < std::chrono::milliseconds(1000) && m_doubleClickTime.isValid())
-                            || !Settings::getTouchScreen())
+                            || !Settings::getInstance()->getTouchScreen())
                         {
                             actions = getEmptyActionList();
                             possibleActions.clear();
@@ -847,7 +847,7 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     if ((isCurrentPlayer(pUnit->getOwner())) &&
         pUnit->getActionList().contains(CoreAI::ACTION_WAIT))
     {
-        qint32 points = pUnit->getMovementpoints(QPoint(x, y)) * static_cast<qint32>(Settings::getMultiTurnCounter());
+        qint32 points = pUnit->getMovementpoints(QPoint(x, y)) * static_cast<qint32>(Settings::getInstance()->getMultiTurnCounter());
         if (pUnit->getFuel() < points)
         {
             points = pUnit->getFuel();
@@ -896,7 +896,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
     if (pAnim != nullptr)
     {
-        if (pAnim->getTotalFrames() > 1 && !Settings::getStaticMarkedFields())
+        if (pAnim->getTotalFrames() > 1 && !Settings::getInstance()->getStaticMarkedFields())
         {
             float initFrame = 0;
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), oxygine::timeMS(static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime)), -1);
@@ -1485,25 +1485,25 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
         bool canInput = inputAllowed();
         // for debugging
         Qt::Key cur = event.getKey();
-        if ((cur == Settings::getKey_next() ||
-             cur == Settings::getKey_next2()) &&
+        if ((cur == Settings::getInstance()->getKey_next() ||
+             cur == Settings::getInstance()->getKey_next2()) &&
             canInput)
         {
             gotoNext();
         }
-        else if ((cur == Settings::getKey_previous() ||
-                  cur == Settings::getKey_previous2()) &&
+        else if ((cur == Settings::getInstance()->getKey_previous() ||
+                  cur == Settings::getInstance()->getKey_previous2()) &&
                  canInput)
         {
             gotoPrevious();
         }
-        else if (cur == Settings::getKey_ShowAttackFields() ||
-                 cur == Settings::getKey_ShowAttackFields2())
+        else if (cur == Settings::getInstance()->getKey_ShowAttackFields() ||
+                 cur == Settings::getInstance()->getKey_ShowAttackFields2())
         {
             showSelectedUnitAttackableFields(true);
         }
-        else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
-                 cur == Settings::getKey_ShowIndirectAttackFields2())
+        else if (cur == Settings::getInstance()->getKey_ShowIndirectAttackFields() ||
+                 cur == Settings::getInstance()->getKey_ShowIndirectAttackFields2())
         {
             showSelectedUnitAttackableFields(false);
         }
@@ -1618,7 +1618,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, std::vector<QPoint> & u
 
 void HumanPlayerInput::nextMarkedField()
 {
-    bool center = Settings::getCenterOnMarkedField();
+    bool center = Settings::getInstance()->getCenterOnMarkedField();
     if (m_pMenu != nullptr)
     {
         qint32 width = m_pMap->getMapWidth();
@@ -1694,7 +1694,7 @@ void HumanPlayerInput::previousMarkedField()
         qint32 x = startX - 1;
         qint32 y = startY;
         bool found = false;
-        bool center = Settings::getCenterOnMarkedField();
+        bool center = Settings::getInstance()->getCenterOnMarkedField();
         while (y  >= 0 && !found)
         {
             while (x >= 0 && !found)
@@ -1761,7 +1761,7 @@ void HumanPlayerInput::nextSelectOption()
         qint32 x = startX + 1;
         qint32 y = startY;
         bool found = false;
-        bool center = Settings::getCenterOnMarkedField();
+        bool center = Settings::getInstance()->getCenterOnMarkedField();
         if (m_pMap->onMap(startX, startY))
         {
             while (y  < heigth && !found)
@@ -1869,7 +1869,7 @@ void HumanPlayerInput::previousSelectOption()
         qint32 x = startX - 1;
         qint32 y = startY;
         bool found = false;
-        bool center = Settings::getCenterOnMarkedField();
+        bool center = Settings::getInstance()->getCenterOnMarkedField();
         if (m_pMap->onMap(startX, startY))
         {
             while (y  >= 0 && !found)
@@ -1971,12 +1971,12 @@ void HumanPlayerInput::autoEndTurn()
     if (m_pPlayer != nullptr &&
         m_pMap != nullptr &&
         isCurrentPlayer(m_pPlayer) &&
-        !Settings::getAiSlave())
+        !Settings::getInstance()->getAiSlave())
     {
         CONSOLE_PRINT("HumanPlayerInput::autoEndTurn", GameConsole::eDEBUG);
         CO* pCO0 = m_pPlayer->getCO(0);
         CO* pCO1 = m_pPlayer->getCO(1);
-        if (Settings::getAutoEndTurn() &&
+        if (Settings::getInstance()->getAutoEndTurn() &&
             GameAnimationFactory::getAnimationCount() == 0 &&
             (pCO0 == nullptr || (!pCO0->canUsePower() && !pCO0->canUseSuperpower())) &&
             (pCO1 == nullptr || (!pCO1->canUsePower() && !pCO1->canUseSuperpower())))
@@ -2040,10 +2040,10 @@ void HumanPlayerInput::centerCameraOnAction(GameAction* pAction)
         (m_pMap->getCurrentPlayer() == m_pPlayer ||
          m_pPlayer == nullptr))
     {
-        if (Settings::getAutoCamera() && pAction == nullptr &&
+        if (Settings::getInstance()->getAutoCamera() && pAction == nullptr &&
             m_lastMapView.x() != std::numeric_limits<qint32>::min())
         {
-            switch (Settings::getAutoFocusing())
+            switch (Settings::getInstance()->getAutoFocusing())
             {
                 case GameEnums::AutoFocusing_Owned:
                 {

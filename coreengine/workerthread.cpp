@@ -60,7 +60,7 @@ void WorkerThread::start()
     // it will add itself to the current stage
     oxygine::Stage::getStage()->addChild(pConsole);
     Interpreter* pInterpreter = Interpreter::createInstance();
-    Settings::setLanguage(Settings::getLanguage());
+    Settings::getInstance()->setLanguage(Settings::getInstance()->getLanguage());
     pConsole->init();
     UiFactory::getInstance();
     // load General-Base Scripts
@@ -68,10 +68,10 @@ void WorkerThread::start()
     searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/general");
     searchPaths.append("resources/scripts/general");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
     {
-        searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/scripts/general");
-        searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/scripts/general");
+        searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getInstance()->getMods().at(i) + "/scripts/general");
+        searchPaths.append(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + "/scripts/general");
     }
     for (auto & path : searchPaths)
     {
@@ -132,7 +132,7 @@ void WorkerThread::start()
     pAchievementManager->loadAll();
     Player::getNeutralTableAnim();
     pInterpreter->doFunction("Global", "finalizeLoading");
-    if(!Settings::getAiSlave())
+    if(!Settings::getInstance()->getAiSlave())
     {
         if (pApp->getSlave())
         {

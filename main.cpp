@@ -33,12 +33,12 @@ int main(qint32 argc, char* argv[])
     Mainapp window;
     window.setTitle("Commander Wars");
     {
-        Settings* pSettings = Settings::getInstance();
+        Settings* pSettings = Settings::getInstance()->getInstance();
         auto & parser = window.getParser();
         parser.parseArgsPhaseOne(app);
         GameConsole::getInstance();
         pSettings->setup();
-        Settings::loadSettings();
+        Settings::getInstance()->loadSettings();
         parser.parseArgsPhaseTwo();
     }
     window.createBaseDirs();
@@ -47,19 +47,19 @@ int main(qint32 argc, char* argv[])
     MetaTypeRegister::registerInterfaceData();
     /*************************************************************************************************/
     // show window according to window mode
-    window.setPosition(Settings::getX(), Settings::getY());
-    if (Settings::getSmallScreenDevice())
+    window.setPosition(Settings::getInstance()->getX(), Settings::getInstance()->getY());
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         // force a resolution reset
-        window.changeScreenMode(Settings::ScreenModes::FullScreen);
+        window.changeScreenMode(Settings::getInstance()->ScreenModes::FullScreen);
     }
     // show as normal borderless
     window.changeScreenMode(window.getScreenMode());
-    window.setBrightness(Settings::getBrightness());
-    window.setGamma(Settings::getGamma());
-    if (window.getScreenMode() != Settings::ScreenModes::Window)
+    window.setBrightness(Settings::getInstance()->getBrightness());
+    window.setGamma(Settings::getInstance()->getGamma());
+    if (window.getScreenMode() != Settings::getInstance()->ScreenModes::Window)
     {
-        window.setPosition(Settings::getX(), Settings::getY());
+        window.setPosition(Settings::getInstance()->getX(), Settings::getInstance()->getY());
     }
 #ifdef GRAPHICSUPPORT
     if (window.getNoUi())
@@ -73,12 +73,12 @@ int main(qint32 argc, char* argv[])
     /*************************************************************************************************/
     // shutting down
     bool slave = window.getSlave();
-    Settings::setX(window.x());
-    Settings::setY(window.y());
+    Settings::getInstance()->setX(window.x());
+    Settings::getInstance()->setY(window.y());
     window.setShuttingDown(true);
     Userdata::getInstance()->release();
     CONSOLE_PRINT("Saving settings", GameConsole::eDEBUG);
-    Settings::saveSettings();
+    Settings::getInstance()->saveSettings();
     // give os time to save the settings
     for (qint32 i = 0; i < 150; ++i)
     {

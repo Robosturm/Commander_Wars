@@ -142,12 +142,12 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     }
     if (m_parser.isSet(m_userPath))
     {
-        Settings::setUserPath(m_parser.value(m_userPath));
+        Settings::getInstance()->setUserPath(m_parser.value(m_userPath));
     }
     if (m_parser.isSet(m_slaveName))
     {
         QString value = m_parser.value(m_slaveName);
-        Settings::setSlaveServerName(value);
+        Settings::getInstance()->setSlaveServerName(value);
     }
     if (m_parser.isSet(m_slave))
     {
@@ -159,20 +159,20 @@ void CommandLineParser::parseArgsPhaseOne(QCoreApplication & app)
     }
     if (m_parser.isSet(m_spawnAiProcess))
     {
-        Settings::setSpawnAiProcess(m_parser.value(m_spawnAiProcess) == "1");
+        Settings::getInstance()->setSpawnAiProcess(m_parser.value(m_spawnAiProcess) == "1");
     }
-    if (m_parser.isSet(m_aiSlave) && !Settings::getSpawnAiProcess())
+    if (m_parser.isSet(m_aiSlave) && !Settings::getInstance()->getSpawnAiProcess())
     {
-        Settings::setAiSlave(true);
+        Settings::getInstance()->setAiSlave(true);
     }
     if (m_parser.isSet(m_server))
     {
-        Settings::setServer(m_parser.value(m_server) == "1");
+        Settings::getInstance()->setServer(m_parser.value(m_server) == "1");
     }
     if (m_parser.isSet(m_update))
     {
         QString value = m_parser.value(m_update);
-        Settings::setUpdateStep(value);
+        Settings::getInstance()->setUpdateStep(value);
     }
 }
 
@@ -205,21 +205,21 @@ void CommandLineParser::parseArgsPhaseTwo()
     Mainapp* pApp = Mainapp::getInstance();
     if (m_parser.isSet(m_spawnAiProcess))
     {
-        Settings::setSpawnAiProcess(m_parser.value(m_spawnAiProcess) == "1");
+        Settings::getInstance()->setSpawnAiProcess(m_parser.value(m_spawnAiProcess) == "1");
     }
-    if (m_parser.isSet(m_aiSlave) && !Settings::getSpawnAiProcess())
+    if (m_parser.isSet(m_aiSlave) && !Settings::getInstance()->getSpawnAiProcess())
     {
-        Settings::setAiSlave(true);
+        Settings::getInstance()->setAiSlave(true);
     }
     if (m_parser.isSet(m_slaveName))
     {
         QString value = m_parser.value(m_slaveName);
-        Settings::setSlaveServerName(value);
+        Settings::getInstance()->setSlaveServerName(value);
     }
     if (m_parser.isSet(m_update))
     {
         QString value = m_parser.value(m_update);
-        Settings::setUpdateStep(value);
+        Settings::getInstance()->setUpdateStep(value);
     }
 #ifdef GRAPHICSUPPORT
     if (m_parser.isSet(m_noUi))
@@ -252,12 +252,12 @@ void CommandLineParser::parseArgsPhaseTwo()
                 }
             }
             CONSOLE_PRINT("Using injected mod list: " + mods, GameConsole::eDEBUG);
-            Settings::setActiveMods(modList);
+            Settings::getInstance()->setActiveMods(modList);
         }
         else
         {
             CONSOLE_PRINT("Using no mods", GameConsole::eDEBUG);
-            Settings::setActiveMods(QStringList());
+            Settings::getInstance()->setActiveMods(QStringList());
         }
     }
     if (m_parser.isSet(m_iniScript))
@@ -266,58 +266,58 @@ void CommandLineParser::parseArgsPhaseTwo()
     }
     if (m_parser.isSet(m_server))
     {
-        Settings::setServer(m_parser.value(m_server) == "1");
+        Settings::getInstance()->setServer(m_parser.value(m_server) == "1");
     }
     if (m_parser.isSet(m_serverSlaveHostOptions))
     {
-        Settings::setSlaveHostOptions(m_parser.value(m_serverSlaveHostOptions));
+        Settings::getInstance()->setSlaveHostOptions(m_parser.value(m_serverSlaveHostOptions));
     }
     if (m_parser.isSet(m_serverListenAddress))
     {
-        Settings::setServerListenAdress(m_parser.value(m_serverListenAddress));
+        Settings::getInstance()->setServerListenAdress(m_parser.value(m_serverListenAddress));
     }
     if (m_parser.isSet(m_serverSecondaryListenAddress))
     {
-        Settings::setServerSecondaryListenAdress(m_parser.value(m_serverSecondaryListenAddress));
+        Settings::getInstance()->setServerSecondaryListenAdress(m_parser.value(m_serverSecondaryListenAddress));
     }
     if (m_parser.isSet(m_serverListenPort))
     {
         bool ok = false;
-        Settings::setServerPort(m_parser.value(m_serverListenPort).toInt(&ok));
+        Settings::getInstance()->setServerPort(m_parser.value(m_serverListenPort).toInt(&ok));
     }
     if (m_parser.isSet(m_serverSlaveListenAddress))
     {
         QString value = m_parser.value(m_serverSlaveListenAddress);
         CONSOLE_PRINT("Using slave listen adress " + value, GameConsole::eDEBUG);
-        Settings::setSlaveListenAdress(value);
+        Settings::getInstance()->setSlaveListenAdress(value);
     }
     if (m_parser.isSet(m_serverSlaveListenPort))
     {
         QString value = m_parser.value(m_serverSlaveListenPort);
         CONSOLE_PRINT("Using slave listen port " + value, GameConsole::eDEBUG);
         bool ok = false;
-        Settings::setSlaveServerPort(value.toInt(&ok));
+        Settings::getInstance()->setSlaveServerPort(value.toInt(&ok));
     }
     if (m_parser.isSet(m_serverSlaveDespawnTime))
     {
         QString value = m_parser.value(m_serverSlaveDespawnTime);
         CONSOLE_PRINT("Using slave despawn time adress " + value, GameConsole::eDEBUG);
-        Settings::setSlaveDespawnTime(std::chrono::seconds(value.toInt()));
+        Settings::getInstance()->setSlaveDespawnTime(std::chrono::seconds(value.toInt()));
     }
     if (m_parser.isSet(m_serverSuspendedDespawnTime))
     {
         QString value = m_parser.value(m_serverSuspendedDespawnTime);
         CONSOLE_PRINT("Using suspended despawn time adress " + value, GameConsole::eDEBUG);
-        Settings::setSuspendedDespawnTime(std::chrono::seconds(value.toInt()));
+        Settings::getInstance()->setSuspendedDespawnTime(std::chrono::seconds(value.toInt()));
     }
     if (m_parser.isSet(m_mailServerAddress))
     {
-        Settings::setMailServerAddress(m_parser.value(m_mailServerAddress));
+        Settings::getInstance()->setMailServerAddress(m_parser.value(m_mailServerAddress));
     }
     if (m_parser.isSet(m_mailServerPort))
     {
         bool ok = false;
-        Settings::setMailServerPort(m_parser.value(m_mailServerPort).toInt(&ok));
+        Settings::getInstance()->setMailServerPort(m_parser.value(m_mailServerPort).toInt(&ok));
     }
     if (m_parser.isSet(m_mailServerConnectionType))
     {
@@ -335,19 +335,19 @@ void CommandLineParser::parseArgsPhaseTwo()
         {
             value = SmtpClient::TcpConnection;
         }
-        Settings::setMailServerAuthMethod(static_cast<qint32>(value));
+        Settings::getInstance()->setMailServerAuthMethod(static_cast<qint32>(value));
     }
     if (m_parser.isSet(m_mailServerUsername))
     {
-        Settings::setMailServerUsername(m_parser.value(m_mailServerUsername));
+        Settings::getInstance()->setMailServerUsername(m_parser.value(m_mailServerUsername));
     }
     if (m_parser.isSet(m_mailServerPassword))
     {
-        Settings::setMailServerPassword(m_parser.value(m_mailServerPassword));
+        Settings::getInstance()->setMailServerPassword(m_parser.value(m_mailServerPassword));
     }
     if (m_parser.isSet(m_mailServerSendAddress))
     {
-        Settings::setMailServerSendAddress(m_parser.value(m_mailServerSendAddress));
+        Settings::getInstance()->setMailServerSendAddress(m_parser.value(m_mailServerSendAddress));
     }
     if (m_parser.isSet(m_mailServerAuthMethod))
     {
@@ -361,7 +361,7 @@ void CommandLineParser::parseArgsPhaseTwo()
         {
             value = SmtpClient::AuthPlain;
         }
-        Settings::setMailServerAuthMethod(static_cast<qint32>(value));
+        Settings::getInstance()->setMailServerAuthMethod(static_cast<qint32>(value));
     }
     if (m_parser.isSet(m_debugLevel))
     {

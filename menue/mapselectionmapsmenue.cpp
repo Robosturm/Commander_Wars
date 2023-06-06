@@ -252,7 +252,7 @@ void MapSelectionMapsMenue::buttonNext()
                     else
                     {
                         hideMapSelection();
-                        loadRules(Settings::getDefaultRuleset());
+                        loadRules(Settings::getInstance()->getDefaultRuleset());
                         showRuleSelection();
                         m_MapSelectionStep = MapSelectionStep::selectRules;
                     }
@@ -469,7 +469,7 @@ void MapSelectionMapsMenue::showLoadRules()
     
     QStringList wildcards;
     wildcards.append("*.grl");
-    QString path = Settings::getUserPath() + "data/gamerules";
+    QString path = Settings::getInstance()->getUserPath() + "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::loadRules, Qt::QueuedConnection);
@@ -480,7 +480,7 @@ void MapSelectionMapsMenue::showSaveRules()
 {    
     QStringList wildcards;
     wildcards.append("*.grl");
-    QString path = Settings::getUserPath() + "data/gamerules";
+    QString path = Settings::getInstance()->getUserPath() + "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveRules, Qt::QueuedConnection);
@@ -519,7 +519,7 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         addChild(pMessageBox);
         connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
         {
-            Settings::setDefaultRuleset(filename);
+            Settings::getInstance()->setDefaultRuleset(filename);
         }, Qt::QueuedConnection);
     }
 }
@@ -528,7 +528,7 @@ void MapSelectionMapsMenue::showSaveMap()
 {    
     QStringList wildcards;
     wildcards.append("*.map");
-    QString path = Settings::getUserPath() + "maps/";
+    QString path = Settings::getInstance()->getUserPath() + "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);

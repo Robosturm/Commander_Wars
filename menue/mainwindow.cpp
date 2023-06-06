@@ -79,7 +79,7 @@ Mainwindow::Mainwindow(const QString & initialView)
         UiFactory::getInstance().createUi(initialView, this);
     }
 
-    if (Settings::getUsername().isEmpty())
+    if (Settings::getInstance()->getUsername().isEmpty())
     {
         CONSOLE_PRINT("Showing initial username selection", GameConsole::eDEBUG);
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Select Username"), false, "");
@@ -102,7 +102,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     connect(this, &Mainwindow::sigVersionClicked, this, &Mainwindow::versionClicked, Qt::QueuedConnection);
     addChild(pTextfield);
 
-    if (!Settings::getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice())
     {
         // import
         oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), 170, tr("Imports all data from an other Commander Wars release to the current release."));
@@ -123,7 +123,7 @@ Mainwindow::Mainwindow(const QString & initialView)
 
 void Mainwindow::import()
 {
-    QString path = Settings::getUserPath();
+    QString path = Settings::getInstance()->getUserPath();
     spFolderDialog folderDialog = spFolderDialog::create(path);
     addChild(folderDialog);
     connect(folderDialog.get(), &FolderDialog::sigFolderSelected, this, &Mainwindow::importFromDirectory, Qt::QueuedConnection);
@@ -153,7 +153,7 @@ void Mainwindow::importFromDirectory(QString folder)
     filter.clear();
     filter << "Commander_Wars.ini";
     GlobalUtils::importFilesFromDirectory(folder + "/", "", filter, true);
-    Settings::loadSettings();
+    Settings::getInstance()->loadSettings();
     pLoadingScreen->setProgress("Importing userdata", 90);
     filter.clear();
     filter << "*.dat";
@@ -164,14 +164,14 @@ void Mainwindow::importFromDirectory(QString folder)
 
 void Mainwindow::changeUsername(QString name)
 {
-    Settings::setUsername(name);
+    Settings::getInstance()->setUsername(name);
     Userdata::getInstance()->changeUser();
-    Settings::saveSettings();
+    Settings::getInstance()->saveSettings();
 }
 
 bool Mainwindow::isValidSavegame()
 {
-    QString lastSaveGame = Settings::getLastSaveGame();
+    QString lastSaveGame = Settings::getInstance()->getLastSaveGame();
     if (!QFile::exists(lastSaveGame) ||
         !lastSaveGame.endsWith(".sav"))
     {
@@ -265,7 +265,7 @@ void Mainwindow::enterLoadGame()
 {    
     QStringList wildcards;
     wildcards.append("*.sav");
-    QString path = Settings::getUserPath() + "savegames";
+    QString path = Settings::getInstance()->getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
@@ -275,7 +275,7 @@ void Mainwindow::enterLoadCampaign()
 {    
     QStringList wildcards;
     wildcards.append("*.camp");
-    QString path = Settings::getUserPath() + "savegames";
+    QString path = Settings::getInstance()->getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);
@@ -312,7 +312,7 @@ void Mainwindow::enterReplayGame()
     Mainapp::getInstance()->pauseRendering();
     QStringList wildcards;
     wildcards.append("*.rec");
-    QString path = Settings::getUserPath() + "data/records";
+    QString path = Settings::getInstance()->getUserPath() + "data/records";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);
@@ -321,7 +321,7 @@ void Mainwindow::enterReplayGame()
 
 void Mainwindow::lastSaveGame()
 {
-    loadGame(Settings::getLastSaveGame());
+    loadGame(Settings::getInstance()->getLastSaveGame());
 }
 
 void Mainwindow::loadGame(QString filename)

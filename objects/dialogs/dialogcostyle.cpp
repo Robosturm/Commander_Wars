@@ -81,7 +81,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pDeleteButton->setEnabled(false);
 
     qint32 heigth = oxygine::Stage::getStage()->getHeight() - 320;
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         heigth = oxygine::Stage::getStage()->getHeight() - 100;
     }
@@ -97,7 +97,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
         pixelSize = 2;
     }
     qint32 colorSelectorWidth = 0;
-    if (!Settings::getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice())
     {
         m_pColorSelector = spColorSelector::create(Qt::white, pixelSize);
         m_pColorSelector->setPosition(30, 30);
@@ -136,7 +136,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
         }
     }
 
-    if (!Settings::getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice())
     {
         oxygine::spTextField textField = oxygine::spTextField::create();
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -153,7 +153,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     QSize size2(oxygine::Stage::getStage()->getWidth() - 60, 100);
     m_pPixelPanel = spPanel::create(true, size2, size2);
     m_pPixelPanel->setPosition(30, oxygine::Stage::getStage()->getHeight() - 175);
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_pPixelPanel->setVisible(false);
     }
@@ -221,7 +221,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         m_ResFilePath = filePath + style;
         CONSOLE_PRINT("Using res file path: " + m_ResFilePath, GameConsole::eDEBUG);
         loadAltsForStyle();
-        if (!Settings::getSmallScreenDevice())
+        if (!Settings::getInstance()->getSmallScreenDevice())
         {
             m_pPixelPanel->clearContent();
             m_Pixels.clear();
@@ -274,7 +274,7 @@ void DialogCOStyle::loadAltsForStyle()
     QFile file(m_ResFilePath + "+table.png");
     if (!file.exists())
     {
-        file.setFileName(Settings::getUserPath() + m_ResFilePath + "+table.png");
+        file.setFileName(Settings::getInstance()->getUserPath() + m_ResFilePath + "+table.png");
         if (!file.exists())
         {
             file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + m_ResFilePath + "+table.png");
@@ -296,9 +296,9 @@ void DialogCOStyle::loadAltsForStyle()
     {
         m_useColorBox = true;
         QImage src;
-        if (QFile::exists(Settings::getUserPath() + m_ResFilePath + "+nrm.png"))
+        if (QFile::exists(Settings::getInstance()->getUserPath() + m_ResFilePath + "+nrm.png"))
         {
-            src = QImage(Settings::getUserPath() + m_ResFilePath + "+nrm.png");
+            src = QImage(Settings::getInstance()->getUserPath() + m_ResFilePath + "+nrm.png");
         }
         else
         {
@@ -326,7 +326,7 @@ void DialogCOStyle::loadAltsForStyle()
 
     m_pPredefinedStyles = spDropDownmenu::create(200, items);
     m_pSpriteBox->addChild(m_pPredefinedStyles);
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_pPredefinedStyles->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_pPredefinedStyles->getScaledWidth() / 2,
                                          oxygine::Stage::getStage()->getHeight() - 10 - m_pOkButton->getScaledHeight());
@@ -349,7 +349,7 @@ void DialogCOStyle::loadAltsForStyle()
             m_pDeleteButton->setEnabled(false);
         }
 
-        if (!Settings::getSmallScreenDevice())
+        if (!Settings::getInstance()->getSmallScreenDevice())
         {
             for (qint32 i = 0; i < m_maskTable.width(); i++)
             {

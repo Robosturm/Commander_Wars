@@ -122,9 +122,9 @@ namespace oxygine
     {
         if (oxygine::Stage::getStage().get() != nullptr)
         {
-            auto ratio = Settings::getGameScale();
-            auto width = Settings::getWidth();
-            auto heigth = Settings::getHeight();
+            auto ratio = Settings::getInstance()->getGameScale();
+            auto width = Settings::getInstance()->getWidth();
+            auto heigth = Settings::getInstance()->getHeight();
             oxygine::Stage::getStage()->init(QSize(width / ratio, heigth / ratio), ratio);
         }
     }
@@ -297,7 +297,7 @@ namespace oxygine
 
     bool GameWindow::sameTouchpoint(const QPointF & pos1, const QPointF & pos2) const
     {
-        return qAbs(pos1.x() - pos2.x()) + qAbs(pos1.y() - pos2.y()) <= Settings::getTouchPointSensitivity();
+        return qAbs(pos1.x() - pos2.x()) + qAbs(pos1.y() - pos2.y()) <= Settings::getInstance()->getTouchPointSensitivity();
     }
 
     void GameWindow::setTimerCycle(qint32 newTimerCycle)

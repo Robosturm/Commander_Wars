@@ -364,7 +364,7 @@ void BuildListDialog::doSaveBannlist(QString filename)
     addChild(pMessageBox);
     connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
     {
-        Settings::setDefaultBannlist(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING);
+        Settings::getInstance()->setDefaultBannlist(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING);
     }, Qt::QueuedConnection);
     updatePredefinedList();
 }

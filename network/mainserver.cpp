@@ -69,8 +69,8 @@ void MainServer::initDatabase()
     {
         static QSqlDatabase database = QSqlDatabase::addDatabase(DRIVER);
         m_serverData = &database;
-        QString path = Settings::getUserPath() + "/commanderWars.db";
-        if (Settings::getUserPath().isEmpty())
+        QString path = Settings::getInstance()->getUserPath() + "/commanderWars.db";
+        if (Settings::getInstance()->getUserPath().isEmpty())
         {
             path = QCoreApplication::applicationDirPath() + "/commanderWars.db";
         }
@@ -131,8 +131,8 @@ MainServer::MainServer()
         connect(&m_mailSender, &SmtpMailSender::sigMailResult, this, &MainServer::onMailSendResult, Qt::QueuedConnection);
         restoreServer();
         CONSOLE_PRINT("Starting tcp server and listening to new clients.", GameConsole::eDEBUG);
-        emit m_pGameServer->sig_connect(Settings::getServerListenAdress(), Settings::getServerPort(), Settings::getServerSecondaryListenAdress());
-        emit m_pSlaveServer->sig_connect(Settings::getSlaveListenAdress(), Settings::getSlaveServerPort(), "");
+        emit m_pGameServer->sig_connect(Settings::getInstance()->getServerListenAdress(), Settings::getInstance()->getServerPort(), Settings::getInstance()->getServerSecondaryListenAdress());
+        emit m_pSlaveServer->sig_connect(Settings::getInstance()->getSlaveListenAdress(), Settings::getInstance()->getSlaveServerPort(), "");
     }
     moveToThread(Mainapp::getGameServerThread());
 }
@@ -210,10 +210,10 @@ bool MainServer::sqlQueryFailed(const QSqlQuery & query)
 
 void MainServer::parseSlaveAddressOptions()
 {
-    QStringList addressOptions = Settings::getSlaveHostOptions().split(";");
+    QStringList addressOptions = Settings::getInstance()->getSlaveHostOptions().split(";");
     if (addressOptions.size() == 0)
     {
-        CONSOLE_PRINT("Slave host option: " + Settings::getSlaveHostOptions() + " contains no valid slave spawn options. Server will be unusable.", GameConsole::eWARNING);
+        CONSOLE_PRINT("Slave host option: " + Settings::getInstance()->getSlaveHostOptions() + " contains no valid slave spawn options. Server will be unusable.", GameConsole::eWARNING);
     }
     else
     {
@@ -817,7 +817,7 @@ bool MainServer::tryJoinSuspendedGame(quint64 socketID, const QString & slave, Q
     return found;
 }
 
-void MainServer::startRemoteGame(const QString & initScript, const QString & id)
+void MainServer::startRemoteGame(const QString initScript, const QString id)
 {
     emit sigStartRemoteGame(initScript, id);
 }
@@ -826,7 +826,7 @@ void MainServer::slotStartRemoteGame(QString initScript, QString id)
 {
     QByteArray sendData;
     QByteArray minimapData;
-    spawnSlave(initScript, Settings::getMods(), id, 0, sendData, minimapData, true);
+    spawnSlave(initScript, Settings::getInstance()->getMods(), id, 0, sendData, minimapData, true);
 }
 
 void MainServer::disconnected(qint64 socketId)
@@ -882,9 +882,9 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo)
                           QString(prefix) + CommandLineParser::ARG_SLAVEPORT,
                           QString::number(slavePort),
                           QString(prefix) + CommandLineParser::ARG_MASTERADDRESS,
-                          Settings::getSlaveListenAdress(),
+                          Settings::getInstance()->getSlaveListenAdress(),
                           QString(prefix) + CommandLineParser::ARG_MASTERPORT,
-                          QString::number(Settings::getSlaveServerPort()),
+                          QString::number(Settings::getInstance()->getSlaveServerPort()),
                           QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS,
                           "0"});
         if (!slaveSecondaryAddress.isEmpty())
@@ -893,7 +893,7 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo)
         }
         if (slaveInfo.game.getMods().length() > 0)
         {
-            args << QString(prefix) + CommandLineParser::ARG_MODS << Settings::getConfigString(slaveInfo.game.getMods());
+            args << QString(prefix) + CommandLineParser::ARG_MODS << Settings::getInstance()->getConfigString(slaveInfo.game.getMods());
         }
         if (createLogs)
         {
@@ -966,9 +966,9 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
                           QString(prefix) + CommandLineParser::ARG_SLAVEPORT,
                           QString::number(slavePort),
                           QString(prefix) + CommandLineParser::ARG_MASTERADDRESS,
-                          Settings::getSlaveListenAdress(),
+                          Settings::getInstance()->getSlaveListenAdress(),
                           QString(prefix) + CommandLineParser::ARG_MASTERPORT,
-                          QString::number(Settings::getSlaveServerPort()),
+                          QString::number(Settings::getInstance()->getSlaveServerPort()),
                           QString(prefix) + CommandLineParser::ARG_SPAWNAIPROCESS,
                           "0"});
         if (!slaveSecondaryAddress.isEmpty())
@@ -977,7 +977,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         }
         if (mods.length() > 0)
         {
-            args << QString(prefix) + CommandLineParser::ARG_MODS << Settings::getConfigString(mods);
+            args << QString(prefix) + CommandLineParser::ARG_MODS << Settings::getInstance()->getConfigString(mods);
         }
         if (!initScript.isEmpty())
         {
@@ -1027,7 +1027,7 @@ bool MainServer::validHostRequest(QStringList mods)
     for (auto & mod : mods)
     {
         if (!QFile::exists(mod + "/mod.txt") &&
-            !QFile::exists(Settings::getUserPath() + mod + "/mod.txt") &&
+            !QFile::exists(Settings::getInstance()->getUserPath() + mod + "/mod.txt") &&
             !QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + mod + "/mod.txt"))
         {
             return false;
@@ -1054,7 +1054,7 @@ void MainServer::periodicTasks()
 void MainServer::cleanUpSuspendedGames(QVector<SuspendedSlaveInfo> & games)
 {
     qint32 i = 0;
-    std::chrono::milliseconds ms = Settings::getSuspendedDespawnTime();
+    std::chrono::milliseconds ms = Settings::getInstance()->getSuspendedDespawnTime();
     while (i < games.size())
     {
         auto & game = games[i];
@@ -1587,7 +1587,7 @@ QSqlQuery MainServer::getAllUsers(QSqlDatabase & database, bool & success)
     return query;
 }
 
-void MainServer::despawnServer(const QString & savefile)
+void MainServer::despawnServer(const QString savefile)
 {
     m_despawning = true;
     m_despawningSavefile = savefile;

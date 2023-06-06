@@ -408,7 +408,7 @@ void GameConsole::version()
 
 void GameConsole::logActions(bool log)
 {
-    Settings::setLogActions(log);
+    Settings::getInstance()->setLogActions(log);
 }
 
 void GameConsole::extractResources()
@@ -1500,7 +1500,7 @@ bool GameConsole::doHandleEvent(QEvent *event)
     {
         QKeyEvent* inputEvent = static_cast<QKeyEvent*>(event);
         Qt::Key cur = static_cast<Qt::Key>(inputEvent->key());
-        if (cur == Settings::getKeyConsole())
+        if (cur == Settings::getInstance()->getKeyConsole())
         {
             toggleView();
             ret = true;
@@ -1583,24 +1583,24 @@ void GameConsole::messageOutput(QtMsgType type, const QMessageLogContext &contex
     if (!file.isOpen())
     {
         QString date = QDateTime::currentDateTime().toString("dd-MM-yyyy-hh-mm-ss");
-        if (Settings::getServer())
+        if (Settings::getInstance()->getServer())
         {
-            file.setFileName((Settings::getUserPath() + "console-" + date + ".log"));
+            file.setFileName((Settings::getInstance()->getUserPath() + "console-" + date + ".log"));
         }
         else
         {
-            file.setFileName((Settings::getUserPath() + "console" + Settings::getUpdateStep()+ ".log"));
+            file.setFileName((Settings::getInstance()->getUserPath() + "console" + Settings::getInstance()->getUpdateStep()+ ".log"));
         }
-        if (Settings::getAiSlave())
+        if (Settings::getInstance()->getAiSlave())
         {
-            file.setFileName(Settings::getUserPath() + "consoleAiSlave.log");
+            file.setFileName(Settings::getInstance()->getUserPath() + "consoleAiSlave.log");
             file.open(QIODevice::WriteOnly);
         }
         Mainapp* pApp = Mainapp::getInstance();
         if (pApp->getSlave() && pApp->getCreateSlaveLogs())
         {
-            QString slaveName = Settings::getSlaveServerName();
-            file.setFileName(Settings::getUserPath() + slaveName + "-" + date + ".log");
+            QString slaveName = Settings::getInstance()->getSlaveServerName();
+            file.setFileName(Settings::getInstance()->getUserPath() + slaveName + "-" + date + ".log");
             file.open(QIODevice::WriteOnly);
         }
         else if (!pApp->getSlave())

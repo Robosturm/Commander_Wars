@@ -93,9 +93,9 @@ void AudioManager::initAudio()
         if (Mainapp::getInstance()->isAudioThread())
         {
             CONSOLE_PRINT_MODULE("AudioThread::initAudio", GameConsole::eDEBUG, GameConsole::eAudio);
-            const auto& value = Settings::getAudioOutput();
+            const auto value = Settings::getInstance()->getAudioOutput();
             if (value.typeId() == QMetaType::QString &&
-                value.toString() == Settings::DEFAULT_AUDIODEVICE)
+                value.toString() == Settings::getInstance()->DEFAULT_AUDIODEVICE)
             {
                 const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
                 m_audioOutput.setDevice(defaultDeviceInfo);
@@ -106,7 +106,7 @@ void AudioManager::initAudio()
             }
             m_audioOutput.setDevice(m_audioDevice);
             createPlayer();
-            SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
+            SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getInstance()->getMusicVolume())));
             m_positionChangedTimer.setInterval(1);
             m_positionChangedTimer.setSingleShot(false);
             connect(&m_positionChangedTimer, &QTimer::timeout, this, [this]()
@@ -134,7 +134,7 @@ void AudioManager::createSoundCache()
             QStringList searchFolders;
             searchFolders.append("resources/sounds/");
             searchFolders.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/sounds/");
-            QStringList mods = Settings::getMods();
+            QStringList mods = Settings::getInstance()->getMods();
             for (const auto & mod : qAsConst(mods))
             {
                 searchFolders.append(mod + "/sounds/");
@@ -343,7 +343,7 @@ void AudioManager::SlotClearPlayList()
 void AudioManager::SlotPlayMusic(qint32 file)
 {
 #ifdef AUDIOSUPPORT
-    if (!m_noAudio && !Settings::getMuted())
+    if (!m_noAudio && !Settings::getInstance()->getMuted())
     {
         if (file >= 0 && file < m_PlayListdata.size())
         {
@@ -378,7 +378,7 @@ void AudioManager::loadMediaForFile(QString filePath)
 void AudioManager::SlotPlayRandom()
 {
 #ifdef AUDIOSUPPORT
-    if (!m_noAudio && !Settings::getMuted())
+    if (!m_noAudio && !Settings::getInstance()->getMuted())
     {
         CONSOLE_PRINT_MODULE("AudioThread::SlotPlayRandom", GameConsole::eDEBUG, GameConsole::eAudio);
         qint32 size = m_PlayListdata.size();
@@ -435,9 +435,9 @@ void AudioManager::SlotSetVolume(qint32 value)
     if (!m_noAudio)
     {
         qreal sound = (static_cast<qreal>(value) / 100.0 *
-                       static_cast<qreal>(Settings::getTotalVolume()) / 100.0);
+                       static_cast<qreal>(Settings::getInstance()->getTotalVolume()) / 100.0);
         qreal volume = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
-        if (Settings::getMuted())
+        if (Settings::getInstance()->getMuted())
         {
             volume = 0.0f;
             m_player->m_player.stop();
@@ -464,7 +464,7 @@ void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoi
         currentPath = file;
         if (!QFile::exists(currentPath))
         {
-            currentPath = Settings::getUserPath() + file;
+            currentPath = Settings::getInstance()->getUserPath() + file;
             if (!QFile::exists(currentPath))
             {
                 CONSOLE_PRINT_MODULE("Unable to locate music file: " + currentPath + " using compiled path.", GameConsole::eDEBUG, GameConsole::eAudio);
@@ -536,10 +536,10 @@ void AudioManager::SlotLoadFolder(QString folder)
 {
 #ifdef AUDIOSUPPORT
     QStringList loadedSounds;
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
     {
-        loadMusicFolder(Settings::getUserPath() + "/" + Settings::getMods().at(i) + "/" + folder, loadedSounds);
-        loadMusicFolder(QString(oxygine::Resource::RCC_PREFIX_PATH) +  "/" + Settings::getMods().at(i) + "/" + folder, loadedSounds);
+        loadMusicFolder(Settings::getInstance()->getUserPath() + "/" + Settings::getInstance()->getMods().at(i) + "/" + folder, loadedSounds);
+        loadMusicFolder(QString(oxygine::Resource::RCC_PREFIX_PATH) +  "/" + Settings::getInstance()->getMods().at(i) + "/" + folder, loadedSounds);
     }
     if (m_loadBaseGameFolders)
     {
@@ -652,12 +652,12 @@ void AudioManager::reportReplayError(QMediaPlayer::Error error, const QString &e
 void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float volume, bool stopOldestSound, qint32 duration)
 {
 #ifdef AUDIOSUPPORT
-    if (Settings::getMuted() || m_noAudio)
+    if (Settings::getInstance()->getMuted() || m_noAudio)
     {
         return;
     }
-    qreal sound = (static_cast<qreal>(Settings::getSoundVolume()) / 100.0 *
-                   static_cast<qreal>(Settings::getTotalVolume()) / 100.0) * volume;
+    qreal sound = (static_cast<qreal>(Settings::getInstance()->getSoundVolume()) / 100.0 *
+                   static_cast<qreal>(Settings::getInstance()->getTotalVolume()) / 100.0) * volume;
     sound = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
     if (sound > 0)
     {

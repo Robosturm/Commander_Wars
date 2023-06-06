@@ -100,11 +100,11 @@ void WikiDatabase::load()
 
     // load general wiki page
     QStringList searchPaths;
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
     {
-        searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/scripts/wiki");
+        searchPaths.append(Settings::getInstance()->getUserPath() + Settings::getInstance()->getMods().at(i) + "/scripts/wiki");
     }
-    searchPaths.append(Settings::getUserPath() + "resources/scripts/wiki");
+    searchPaths.append(Settings::getInstance()->getUserPath() + "resources/scripts/wiki");
     searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/wiki");
     for (auto & path : searchPaths)
     {

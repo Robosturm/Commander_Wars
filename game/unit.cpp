@@ -2157,7 +2157,7 @@ void Unit::setFuel(const qint32 value)
     {
         m_fuel = m_maxFuel;
     }
-    if (m_maxFuel > 0 && static_cast<qreal>(m_fuel) / static_cast<qreal>(m_maxFuel) <= Settings::getSupplyWarning())
+    if (m_maxFuel > 0 && static_cast<qreal>(m_fuel) / static_cast<qreal>(m_maxFuel) <= Settings::getInstance()->getSupplyWarning())
     {
         loadIcon("fuel", GameMap::getImageSize() / 2, 0);
     }
@@ -2219,7 +2219,7 @@ void Unit::setAmmo2(const qint32 value)
     {
         m_ammo2 = m_maxAmmo2;
     }
-    if (m_maxAmmo2 > 0 && static_cast<qreal>(m_ammo2) / static_cast<qreal>(m_maxAmmo2) <= Settings::getSupplyWarning())
+    if (m_maxAmmo2 > 0 && static_cast<qreal>(m_ammo2) / static_cast<qreal>(m_maxAmmo2) <= Settings::getInstance()->getSupplyWarning())
     {
         if (m_weapon2ID.isEmpty())
         {
@@ -2286,7 +2286,7 @@ void Unit::setAmmo1(const qint32 value)
         m_ammo1 = m_maxAmmo1;
     }
 
-    if (m_maxAmmo1 > 0 && static_cast<qreal>(m_ammo1) / static_cast<qreal>(m_maxAmmo1) <= Settings::getSupplyWarning())
+    if (m_maxAmmo1 > 0 && static_cast<qreal>(m_ammo1) / static_cast<qreal>(m_maxAmmo1) <= Settings::getInstance()->getSupplyWarning())
     {
         if (m_weapon1ID.isEmpty())
         {

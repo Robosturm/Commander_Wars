@@ -17,7 +17,7 @@ FontManager::FontManager()
     QStringList searchFolders;
     searchFolders.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/fonts/");
     searchFolders.append("resources/fonts/");
-    QStringList mods = Settings::getMods();
+    QStringList mods = Settings::getInstance()->getMods();
     for (const auto & mod : qAsConst(mods))
     {
         searchFolders.append(mod + "/fonts/");

@@ -16,7 +16,7 @@ const char* const ROOT = "::::";
 
 FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool isSaveDialog, QString startFile, bool preview, QString acceptButtonName)
     : m_preview(preview),
-      m_pathPrefix(Settings::getUserPath()),
+      m_pathPrefix(Settings::getInstance()->getUserPath()),
       m_isSaveDialog(isSaveDialog)
 {
 #ifdef GRAPHICSUPPORT
@@ -79,7 +79,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
     {
         if (m_isSaveDialog &&
             (QFile::exists(m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText()) ||
-             QFile::exists(Settings::getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText())))
+             QFile::exists(Settings::getInstance()->getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText())))
         {
             emit sigShowOverwriteWarning();
         }
@@ -184,7 +184,7 @@ void FileDialog::showFolder(QString folder)
     m_Items.clear();
     m_ResAnims.clear();
 
-    QDir dir(Settings::getUserPath() + folder);
+    QDir dir(Settings::getInstance()->getUserPath() + folder);
     QDir virtDir(oxygine::Resource::RCC_PREFIX_PATH + folder);
     if (!dir.exists() && !virtDir.exists())
     {
@@ -281,7 +281,7 @@ void FileDialog::showFolder(QString folder)
                 }
                 else
                 {
-                    m_pathPrefix = Settings::getUserPath();
+                    m_pathPrefix = Settings::getInstance()->getUserPath();
                 }
                 pCurrentFile->setCurrentText(file);
             });
@@ -343,9 +343,9 @@ void FileDialog::deleteItem()
     {
         QFile::remove(m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText());
     }
-    else if (QFile::exists(Settings::getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText()))
+    else if (QFile::exists(Settings::getInstance()->getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText()))
     {
-        QFile::remove(Settings::getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText());
+        QFile::remove(Settings::getInstance()->getUserPath() + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText());
     }
     showFolder(m_CurrentFolder->getCurrentText());
     m_focused = true;

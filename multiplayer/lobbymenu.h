@@ -32,6 +32,20 @@ public:
 
     explicit LobbyMenu();
     ~LobbyMenu() = default;
+    Q_INVOKABLE bool getServerRequestNewPassword() const;
+    Q_INVOKABLE void setServerRequestNewPassword(bool newServerRequestNewPassword);
+    Q_INVOKABLE void onLogin();
+    Q_INVOKABLE bool isValidEmailAdress(const QString emailAdress);
+    Q_INVOKABLE bool isValidPassword(const QString password);
+    Q_INVOKABLE void leaveServer();
+    Q_INVOKABLE void createServerAccount(const QString password, const QString emailAdress);
+    Q_INVOKABLE void deleteServerAccount(const QString password, const QString emailAdress);
+    Q_INVOKABLE void loginToServerAccount(const QString password);
+    Q_INVOKABLE void resetPasswordOnServerAccount(const QString emailAdress);
+    Q_INVOKABLE void changePasswordOnServerAccount(const QString oldEmailAdress, const QString newEmailAdress);
+    Q_INVOKABLE void enableServerButtons(bool enable);
+    Q_INVOKABLE void requestObserverUpdateGames();
+    Q_INVOKABLE void showContactingServer();
 signals:
     void sigExitMenue();
     void sigHostServer();
@@ -44,7 +58,6 @@ signals:
     void sigRequestUpdateGames();
     void sigServerResponded();
     void sigOther();
-
     void sigShowNextStep();
     void sigShowPreviousStep();
     void sigShowStart();
@@ -52,10 +65,7 @@ signals:
 
 public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
-
-    bool getServerRequestNewPassword() const;
-    void setServerRequestNewPassword(bool newServerRequestNewPassword);
-    void exitMenue();    
+    void exitMenue();
     void hostLocal();
     void hostServer();
     void joinGame();
@@ -69,21 +79,9 @@ public slots:
     void observeGame();
     void observeGamePassword(QString password);
     void connected(quint64 socket);
-    void onLogin();
-    bool isValidEmailAdress(const QString & emailAdress);
-    bool isValidPassword(const QString & password);
-    void leaveServer();
-    void createServerAccount(const QString & password, const QString & emailAdress);
-    void deleteServerAccount(const QString & password, const QString & emailAdress);
-    void loginToServerAccount(const QString & password);
-    void resetPasswordOnServerAccount(const QString & emailAdress);
-    void changePasswordOnServerAccount(const QString & oldEmailAdress, const QString & newEmailAdress);
-    void enableServerButtons(bool enable);
     void requestUpdateGames();
-    void requestObserverUpdateGames();
-    void showContactingServer();
     void cancelWaitingForServer();
-    void showNextStep();
+    void showNextStep();    
     void showPreviousStep();
     void showStart();
     void showEnd();

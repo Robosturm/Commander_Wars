@@ -24,15 +24,16 @@ using spSettings = QScopedPointer<Settings>;
 
 class Settings final : public QObject, public oxygine::ref_counter
 {
+    Q_OBJECT
 public:
     static const char* const DEFAULT_AUDIODEVICE;
+
 private:
-    Q_OBJECT
     struct ValueBase
     {
         ValueBase(const char* const group, const char* const name)
             : m_group(group),
-              m_name(name)
+            m_name(name)
         {
         }
         virtual void readValue(QSettings & settings) = 0;
@@ -56,11 +57,11 @@ private:
     {
         Value(const char* const group, const char* const name, TType* value, TType defaultValue, TType minValue, TType maxValue, bool excludeFromReset = false)
             : ValueBase(group, name),
-              m_defaultValue{defaultValue},
-              m_value{value},
-              m_minValue{minValue},
-              m_maxValue{maxValue},
-              m_excludeFromReset{excludeFromReset}
+            m_defaultValue{defaultValue},
+            m_value{value},
+            m_minValue{minValue},
+            m_maxValue{maxValue},
+            m_excludeFromReset{excludeFromReset}
         {
         }
         virtual void readValue(QSettings & settings) override
@@ -195,7 +196,7 @@ private:
             }
             else if constexpr (std::is_same<TType, QStringList>::value)
             {
-                settings.setValue(m_name, Settings::getConfigString(*m_value));
+                settings.setValue(m_name, Settings::getInstance()->getConfigString(*m_value));
             }
             else
             {
@@ -222,8 +223,8 @@ private:
     {
         AudioDeviceValue(const char* const group, const char* const name, QVariant* value, QString defaultValue)
             : ValueBase(group, name),
-              m_value{value},
-              m_defaultValue{defaultValue}
+            m_value{value},
+            m_defaultValue{defaultValue}
         {
         }
         virtual void readValue(QSettings & settings) override
@@ -235,9 +236,9 @@ private:
             }
             const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
             QString description = settings.value(m_name, m_defaultValue).toString();
-            if (description == DEFAULT_AUDIODEVICE)
+            if (description == Settings::getInstance()->DEFAULT_AUDIODEVICE)
             {
-                *m_value = QVariant(DEFAULT_AUDIODEVICE);
+                *m_value = QVariant(Settings::getInstance()->DEFAULT_AUDIODEVICE);
             }
             else
             {
@@ -261,9 +262,9 @@ private:
         {
             settings.beginGroup(m_group);
             if (m_value->typeId() == QMetaType::QString &&
-                m_value->toString() == DEFAULT_AUDIODEVICE)
+                m_value->toString() == Settings::getInstance()->DEFAULT_AUDIODEVICE)
             {
-                settings.setValue(m_name, DEFAULT_AUDIODEVICE);
+                settings.setValue(m_name, Settings::getInstance()->DEFAULT_AUDIODEVICE);
             }
             else
             {
@@ -274,13 +275,14 @@ private:
         }
         virtual void resetValue() override
         {
-            *m_value = QVariant(Settings::DEFAULT_AUDIODEVICE);
+            *m_value = QVariant(Settings::getInstance()->DEFAULT_AUDIODEVICE);
         }
     private:
         QVariant* m_value;
         QString m_defaultValue;
     };
 #endif
+
 public:
     enum class ScreenModes
     {
@@ -291,605 +293,468 @@ public:
 
     ~Settings() = default;
     static Settings* getInstance();
+
     void setup();
-    static QString getActiveUserPath();
-    static void loadSettings();
-    static void resetSettings();
-
-    static void setLastSaveGame(const QString &LastSaveGame);
-
-    static void setUpdateStep(const QString &newUpdateStep);
-
-
-    static void setAiSlave(bool newAiSlave);
-
-    static void setPipeUuid(const QString & newPipeUuid);
-
-public slots:
-    static void saveSettings();
-
-    static float getGameScale();
-    static void setGameScale(float newGameScale);
-
-    static float getIngameMenuScaling();
-    static void setIngameMenuScaling(float newIngameMenuScaling);
-
-    static quint8 getScreen();
-    static void setScreen(quint8 newScreen);
-
-    static QString getLastSaveGame();
-    static QString getUpdateStep();
-    static bool getAiSlave();
-    static QString getPipeUuid();
-
-    static void setSpawnAiProcess(bool newSpawnAiProcess);
-    static bool getSpawnAiProcess();
-
-    static bool getAutomaticUpdates();
-    static void setAutomaticUpdates(bool newAutomaticUpdates);
-
-    static QString getServerAdress();
-    static void setServerAdress(const QString &ServerAdress);
-
-    static QString getSecondaryServerAdress();
-    static void setSecondaryServerAdress(const QString &newSecondaryServerAdress);
-
-    static quint16 getServerPort();
-    static void setServerPort(const quint16 &ServerPort);
-
-    static QString getServerPassword();
-    static void setServerPassword(const QString &newServerPassword);
-
-    static QString getMailServerSendAddress();
-    static void setMailServerSendAddress(const QString &newMailServerSendAddress);
-
-    static qint32 getMailServerAuthMethod();
-    static void setMailServerAuthMethod(qint32 newMailServerAuthMethod);
-
-    static QString getMailServerAddress();
-    static void setMailServerAddress(const QString &newMailServerAddress);
-
-    static quint16 getMailServerPort();
-    static void setMailServerPort(quint16 newMailServerPort);
-
-    static qint32 getMailServerConnectionType();
-    static void setMailServerConnectionType(qint32 newMailServerConnectionType);
-
-    static QString getMailServerUsername();
-    static void setMailServerUsername(QString newMailServerUsername);
-
-    static QString getMailServerPassword();
-    static void setMailServerPassword(QString newMailServerPassword);
-
-    static const std::chrono::seconds &getSlaveDespawnTime();
-    static void setSlaveDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
-
-    static const std::chrono::seconds &getSuspendedDespawnTime();
-    static void setSuspendedDespawnTime(const std::chrono::seconds &newSlaveDespawnTime);
-
-    static QString getDefaultBannlist();
-    static void setDefaultBannlist(const QString &newDefaultBannlist);
-
-    static bool getDay2dayScreen();
-    static void setDay2dayScreen(bool newDay2dayScreen);
-
-    static bool getMovementAnimations();
-    static void setMovementAnimations(bool newMovementAnimations);
-
-    static bool getCaptureAnimation();
-    static void setCaptureAnimation(bool newCaptureAnimation);
-
-    static QString getSlaveListenAdress();
-    static void setSlaveListenAdress(const QString &newSlaveListenAdress);
-
-    static qint32 getPauseAfterAction();
-    static void setPauseAfterAction(qint32 newPauseAfterAction);
-
-    static QString getServerListenAdress();
-    static void setServerListenAdress(const QString &newServerListenAdress);
-
-    static QString getServerSecondaryListenAdress();
-    static void setServerSecondaryListenAdress(const QString &newServerSecondaryListenAdress);
-
-    static quint16 getSlaveServerPort();
-    static void setSlaveServerPort(quint16 newSlaveServerPort);
-
-    static QString getSlaveHostOptions();
-    static void setSlaveHostOptions(const QString &newSlaveHostOptions);
-
-    static Qt::Key getKey_mapshot();
-    static void setKey_mapshot(Qt::Key newKey_mapshot);
-
-    static qint32 getFramesPerSecond();
-    static void setFramesPerSecond(qint32 newFramesPerSecond);
-
-    static bool getMuted();
-    static void setMuted(bool newMuted);
-
-    static float getSupplyWarning();
-    static void setSupplyWarning(float newSupplyWarning);
-
-    static bool getGamepadEnabled();
-    static void setGamepadEnabled(bool newGamepadEnabled);
-
-    static float getGamepadSensitivity();
-    static void setGamepadSensitivity(float newGamepadSensitivity);
-
-    static QString getDefaultRuleset();
-    static void setDefaultRuleset(const QString &newDefaultRuleset);
-
-    static bool getUseCoMinis();
-    static void setUseCoMinis(bool newUseCoMinis);
-
-    static bool getOverworldAnimations();
-    static void setOverworldAnimations(bool newOverworldAnimations);
-
-    static qint32 getTouchPointSensitivity();
-    static void setTouchPointSensitivity(qint32 newTouchPointSensitivity);
-
-    static const QVariant &getAudioOutput();
-    static void setAudioOutput(const QVariant &newAudioOutput);
-
-    static bool getAutoMoveCursor();
-    static void setAutoMoveCursor(bool newAutoMoveCursor);
-
-    static bool getShowDetailedBattleForcast();
-    static void setShowDetailedBattleForcast(bool newShowDetailedBattleForcast);
-
-    static QString getUserPath();
-    static void setUserPath(const QString &newUserPath);
-
-    static bool getTouchScreen();
-    static void setTouchScreen(bool newTouchScreen);
-
-    static bool hasSmallScreen();
-    static bool getSmallScreenDevice();
-    static void setSmallScreenDevice(bool newSmallScreenDevice);
-
-    static qint32 getMenuItemRowCount();
-    static void setMenuItemRowCount(qint32 newMenuItemRowCount);
-
-    static bool getSimpleDeselect();
-    static void setSimpleDeselect(bool newSimpleDeselect);
-
-    static QStringList getActiveModVersions();
-    static QStringList getActiveMods();
-    static void setActiveMods(const QStringList &activeMods);
-
-    static QString getSlaveServerName();
-    static void setSlaveServerName(const QString &slaveServerName);
-
-    static bool getSyncAnimations();
-    static void setSyncAnimations(bool syncAnimations);
-
-    static bool getCenterOnMarkedField();
-    static void setCenterOnMarkedField(bool centerOnMarkedField);
-
-    static bool getDialogAnimation();
-    static void setDialogAnimation(bool dialogAnimation);
-
-    static float getGamma();
-    static void setGamma(float gamma);
-
-    static GameEnums::COInfoPosition getCoInfoPosition();
-    static void setCoInfoPosition(const GameEnums::COInfoPosition &value);
-
-    static float getBrightness();
-    static void setBrightness(float brightness);
-
-    static Qt::Key getKey_screenshot();
-    static void setKey_screenshot(const Qt::Key &key_screenshot);
-
-    static GameEnums::AutoFocusing getAutoFocusing();
-    static void setAutoFocusing(const GameEnums::AutoFocusing &autoFocusing);
-
-    static Qt::Key getKey_EditorPlaceTerrain();
-    static void setKey_EditorPlaceTerrain(const Qt::Key &key_EditorPlaceTerrain);
-
-    static Qt::Key getKey_EditorPlaceBuilding();
-    static void setKey_EditorPlaceBuilding(const Qt::Key &key_EditorPlaceBuilding);
-
-    static Qt::Key getKey_EditorPlaceUnit();
-    static void setKey_EditorPlaceUnit(const Qt::Key &key_EditorPlaceUnit);
-
-    static Qt::Key getKey_EditorNextTeam();
-    static void setKey_EditorNextTeam(const Qt::Key &key_EditorNextTeam);
-
-    static Qt::Key getKey_EditorPreviousTeam();
-    static void setKey_EditorPreviousTeam(const Qt::Key &key_EditorPreviousTeam);
-
-    static Qt::Key getKey_EditorSelectionRight();
-    static void setKey_EditorSelectionRight(const Qt::Key &key_EditorSelectionRight);
-
-    static Qt::Key getKey_EditorSelectionLeft();
-    static void setKey_EditorSelectionLeft(const Qt::Key &key_EditorSelectionLeft);
-
-    static Qt::Key getKey_ShowAttackFields2();
-    static void setKey_ShowAttackFields2(const Qt::Key &key_ShowAttackFields2);
-
-    static Qt::Key getKey_ShowIndirectAttackFields2();
-    static void setKey_ShowIndirectAttackFields2(const Qt::Key &key_ShowIndirectAttackFields2);
-
-    static Qt::Key getKey_up2();
-    static void setKey_up2(const Qt::Key &key_up2);
-
-    static Qt::Key getKey_down2();
-    static void setKey_down2(const Qt::Key &key_down2);
-
-    static Qt::Key getKey_right2();
-    static void setKey_right2(const Qt::Key &key_right2);
-
-    static Qt::Key getKey_left2();
-    static void setKey_left2(const Qt::Key &key_left2);
-
-    static Qt::Key getKey_confirm2();
-    static void setKey_confirm2(const Qt::Key &key_confirm2);
-
-    static Qt::Key getKey_cancel2();
-    static void setKey_cancel2(const Qt::Key &key_cancel2);
-
-    static Qt::Key getKey_next2();
-    static void setKey_next2(const Qt::Key &key_next2);
-
-    static Qt::Key getKey_previous2();
-    static void setKey_previous2(const Qt::Key &key_previous2);
-
-    static Qt::Key getKey_information2();
-    static void setKey_information2(const Qt::Key &key_information2);
-
-    static Qt::Key getKey_moveMapUp2();
-    static void setKey_moveMapUp2(const Qt::Key &key_moveMapUp2);
-
-    static Qt::Key getKey_moveMapDown2();
-    static void setKey_moveMapDown2(const Qt::Key &key_moveMapDown2);
-
-    static Qt::Key getKey_moveMapRight2();
-    static void setKey_moveMapRight2(const Qt::Key &key_moveMapRight2);
-
-    static Qt::Key getKey_moveMapLeft2();
-    static void setKey_moveMapLeft2(const Qt::Key &key_moveMapLeft2);
-
-    static Qt::Key getKey_MapZoomOut2();
-    static void setKey_MapZoomOut2(const Qt::Key &key_MapZoomOut2);
-
-    static Qt::Key getKey_MapZoomIn2();
-    static void setKey_MapZoomIn2(const Qt::Key &key_MapZoomIn2);
-
-    static bool getAutoCamera();
-    static void setAutoCamera(bool autoCamera);
-
-    static bool getAutoScrolling();
-    static void setAutoScrolling(bool autoScrolling);
-
-    static bool getLogActions();
-    static void setLogActions(bool LogActions);
-
-    static bool getShowIngameCoordinates();
-    static void setShowIngameCoordinates(bool showIngameCoordinates);
-
-    static quint32 getWalkAnimationSpeedValue();
-    static void setWalkAnimationSpeed(const quint32 &value);
-    static float getWalkAnimationSpeed();
-
-    static qint32 getShowCoCount();
-    static void setShowCoCount(const qint32 &showCoCount);
-
-    static std::chrono::seconds getAutoSavingCylceTime();
-    static void setAutoSavingCylceTime(const std::chrono::seconds &value);
-    static quint64 getAutoSavingCylceTimeRaw();
-    static void setAutoSavingCylceTimeRaw(const quint32 &value);
-
-    static qint32 getAutoSavingCycle();
-    static void setAutoSavingCycle(const qint32 &value);
-
-    static Qt::Key getKey_ShowIndirectAttackFields();
-    static void setKey_ShowIndirectAttackFields(const Qt::Key &key_ShowIndirectAttackFields);
-
-    static Qt::Key getKey_ShowAttackFields();
-    static void setKey_ShowAttackFields(const Qt::Key &key_ShowAttackFields);
-
-    static QString getLanguage();
-    static void setLanguage(const QString &language);
-
-    static bool getRecord();
-    static void setRecord(bool record);
-
-    static bool getStaticMarkedFields();
-    static void setStaticMarkedFields(bool StaticMarkedFields);
-
-    static qint32 getMenuItemCount();
-    static void setMenuItemCount(const qint32 &MenuItemCount);
-
-    static QString getModString();
-    static void filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter);
-    static QString getConfigString(QStringList mods);
-
-    static quint32 getMultiTurnCounter();
-    static void setMultiTurnCounter(const quint32 &value);
-
-    static bool getShowCursor();
-    static void setShowCursor(bool ShowCursor);
-
-    static bool getAutoEndTurn();
-    static void setAutoEndTurn(bool AutoEndTurn);
-
-    static GameEnums::BattleAnimationType getBattleAnimationType();
-    static void setBattleAnimationType(const GameEnums::BattleAnimationType &value);
-
-    static void setUsername(const QString &Username);
-    static QString getUsername();
-    static void setX(const qint32 &x);
-    inline static qint32 getX()
+    QString getActiveUserPath();
+
+    void setLastSaveGame(const QString &LastSaveGame);
+
+    void setUpdateStep(const QString &newUpdateStep);
+
+
+    void setAiSlave(bool newAiSlave);
+
+    void setPipeUuid(const QString & newPipeUuid);
+
+    const QVariant getAudioOutput();
+    void setAudioOutput(const QVariant newAudioOutput);
+    void setAutoSavingCylceTime(const std::chrono::seconds value);
+    void getModInfos(QString mod, QString & name, QString & description, QString & version,
+                            QStringList & compatibleMods, QStringList & incompatibleMods,
+                            QStringList & requiredMods, bool & isCosmetic,
+                            QStringList & tags, QString & thumbnail);
+
+    Q_INVOKABLE void loadSettings();
+    Q_INVOKABLE void resetSettings();
+    Q_INVOKABLE void saveSettings();
+    Q_INVOKABLE float getGameScale();
+    Q_INVOKABLE void setGameScale(float newGameScale);
+    Q_INVOKABLE float getIngameMenuScaling();
+    Q_INVOKABLE void setIngameMenuScaling(float newIngameMenuScaling);
+    Q_INVOKABLE quint8 getScreen();
+    Q_INVOKABLE void setScreen(quint8 newScreen);
+    Q_INVOKABLE QString getLastSaveGame();
+    Q_INVOKABLE QString getUpdateStep();
+    Q_INVOKABLE bool getAiSlave();
+    Q_INVOKABLE QString getPipeUuid();
+    Q_INVOKABLE void setSpawnAiProcess(bool newSpawnAiProcess);
+    Q_INVOKABLE bool getSpawnAiProcess();
+    Q_INVOKABLE bool getAutomaticUpdates();
+    Q_INVOKABLE void setAutomaticUpdates(bool newAutomaticUpdates);
+    Q_INVOKABLE QString getServerAdress();
+    Q_INVOKABLE void setServerAdress(const QString ServerAdress);
+    Q_INVOKABLE QString getSecondaryServerAdress();
+    Q_INVOKABLE void setSecondaryServerAdress(const QString newSecondaryServerAdress);
+    Q_INVOKABLE quint16 getServerPort();
+    Q_INVOKABLE void setServerPort(const quint16 ServerPort);
+    Q_INVOKABLE QString getServerPassword();
+    Q_INVOKABLE void setServerPassword(const QString newServerPassword);
+    Q_INVOKABLE QString getMailServerSendAddress();
+    Q_INVOKABLE void setMailServerSendAddress(const QString newMailServerSendAddress);
+    Q_INVOKABLE qint32 getMailServerAuthMethod();
+    Q_INVOKABLE void setMailServerAuthMethod(qint32 newMailServerAuthMethod);
+    Q_INVOKABLE QString getMailServerAddress();
+    Q_INVOKABLE void setMailServerAddress(const QString newMailServerAddress);
+    Q_INVOKABLE quint16 getMailServerPort();
+    Q_INVOKABLE void setMailServerPort(quint16 newMailServerPort);
+    Q_INVOKABLE qint32 getMailServerConnectionType();
+    Q_INVOKABLE void setMailServerConnectionType(qint32 newMailServerConnectionType);
+    Q_INVOKABLE QString getMailServerUsername();
+    Q_INVOKABLE void setMailServerUsername(QString newMailServerUsername);
+    Q_INVOKABLE QString getMailServerPassword();
+    Q_INVOKABLE void setMailServerPassword(QString newMailServerPassword);
+    Q_INVOKABLE const std::chrono::seconds &getSlaveDespawnTime();
+    Q_INVOKABLE void setSlaveDespawnTime(const std::chrono::seconds newSlaveDespawnTime);
+    Q_INVOKABLE const std::chrono::seconds &getSuspendedDespawnTime();
+    Q_INVOKABLE void setSuspendedDespawnTime(const std::chrono::seconds newSlaveDespawnTime);
+    Q_INVOKABLE QString getDefaultBannlist();
+    Q_INVOKABLE void setDefaultBannlist(const QString newDefaultBannlist);
+    Q_INVOKABLE bool getDay2dayScreen();
+    Q_INVOKABLE void setDay2dayScreen(bool newDay2dayScreen);
+    Q_INVOKABLE bool getMovementAnimations();
+    Q_INVOKABLE void setMovementAnimations(bool newMovementAnimations);
+    Q_INVOKABLE bool getCaptureAnimation();
+    Q_INVOKABLE void setCaptureAnimation(bool newCaptureAnimation);
+    Q_INVOKABLE QString getSlaveListenAdress();
+    Q_INVOKABLE void setSlaveListenAdress(const QString newSlaveListenAdress);
+    Q_INVOKABLE qint32 getPauseAfterAction();
+    Q_INVOKABLE void setPauseAfterAction(qint32 newPauseAfterAction);
+    Q_INVOKABLE QString getServerListenAdress();
+    Q_INVOKABLE void setServerListenAdress(const QString newServerListenAdress);
+    Q_INVOKABLE QString getServerSecondaryListenAdress();
+    Q_INVOKABLE void setServerSecondaryListenAdress(const QString newServerSecondaryListenAdress);
+    Q_INVOKABLE quint16 getSlaveServerPort();
+    Q_INVOKABLE void setSlaveServerPort(quint16 newSlaveServerPort);
+    Q_INVOKABLE QString getSlaveHostOptions();
+    Q_INVOKABLE void setSlaveHostOptions(const QString newSlaveHostOptions);
+    Q_INVOKABLE Qt::Key getKey_mapshot();
+    Q_INVOKABLE void setKey_mapshot(Qt::Key newKey_mapshot);
+    Q_INVOKABLE qint32 getFramesPerSecond();
+    Q_INVOKABLE void setFramesPerSecond(qint32 newFramesPerSecond);
+    Q_INVOKABLE bool getMuted();
+    Q_INVOKABLE void setMuted(bool newMuted);
+    Q_INVOKABLE float getSupplyWarning();
+    Q_INVOKABLE void setSupplyWarning(float newSupplyWarning);
+    Q_INVOKABLE bool getGamepadEnabled();
+    Q_INVOKABLE void setGamepadEnabled(bool newGamepadEnabled);
+    Q_INVOKABLE float getGamepadSensitivity();
+    Q_INVOKABLE void setGamepadSensitivity(float newGamepadSensitivity);
+    Q_INVOKABLE QString getDefaultRuleset();
+    Q_INVOKABLE void setDefaultRuleset(const QString newDefaultRuleset);
+    Q_INVOKABLE bool getUseCoMinis();
+    Q_INVOKABLE void setUseCoMinis(bool newUseCoMinis);
+    Q_INVOKABLE bool getOverworldAnimations();
+    Q_INVOKABLE void setOverworldAnimations(bool newOverworldAnimations);
+    Q_INVOKABLE qint32 getTouchPointSensitivity();
+    Q_INVOKABLE void setTouchPointSensitivity(qint32 newTouchPointSensitivity);
+    Q_INVOKABLE bool getAutoMoveCursor();
+    Q_INVOKABLE void setAutoMoveCursor(bool newAutoMoveCursor);
+    Q_INVOKABLE bool getShowDetailedBattleForcast();
+    Q_INVOKABLE void setShowDetailedBattleForcast(bool newShowDetailedBattleForcast);
+    Q_INVOKABLE QString getUserPath();
+    Q_INVOKABLE void setUserPath(const QString newUserPath);
+    Q_INVOKABLE bool getTouchScreen();
+    Q_INVOKABLE void setTouchScreen(bool newTouchScreen);
+    Q_INVOKABLE bool hasSmallScreen();
+    Q_INVOKABLE bool getSmallScreenDevice();
+    Q_INVOKABLE void setSmallScreenDevice(bool newSmallScreenDevice);
+    Q_INVOKABLE qint32 getMenuItemRowCount();
+    Q_INVOKABLE void setMenuItemRowCount(qint32 newMenuItemRowCount);
+    Q_INVOKABLE bool getSimpleDeselect();
+    Q_INVOKABLE void setSimpleDeselect(bool newSimpleDeselect);
+    Q_INVOKABLE QStringList getActiveModVersions();
+    Q_INVOKABLE QStringList getActiveMods();
+    Q_INVOKABLE void setActiveMods(const QStringList activeMods);
+    Q_INVOKABLE QString getSlaveServerName();
+    Q_INVOKABLE void setSlaveServerName(const QString slaveServerName);
+    Q_INVOKABLE bool getSyncAnimations();
+    Q_INVOKABLE void setSyncAnimations(bool syncAnimations);
+    Q_INVOKABLE bool getCenterOnMarkedField();
+    Q_INVOKABLE void setCenterOnMarkedField(bool centerOnMarkedField);
+    Q_INVOKABLE bool getDialogAnimation();
+    Q_INVOKABLE void setDialogAnimation(bool dialogAnimation);
+    Q_INVOKABLE float getGamma();
+    Q_INVOKABLE void setGamma(float gamma);
+    Q_INVOKABLE GameEnums::COInfoPosition getCoInfoPosition();
+    Q_INVOKABLE void setCoInfoPosition(const GameEnums::COInfoPosition value);
+    Q_INVOKABLE float getBrightness();
+    Q_INVOKABLE void setBrightness(float brightness);
+    Q_INVOKABLE Qt::Key getKey_screenshot();
+    Q_INVOKABLE void setKey_screenshot(const Qt::Key key_screenshot);
+    Q_INVOKABLE GameEnums::AutoFocusing getAutoFocusing();
+    Q_INVOKABLE void setAutoFocusing(const GameEnums::AutoFocusing autoFocusing);
+    Q_INVOKABLE Qt::Key getKey_EditorPlaceTerrain();
+    Q_INVOKABLE void setKey_EditorPlaceTerrain(const Qt::Key key_EditorPlaceTerrain);
+    Q_INVOKABLE Qt::Key getKey_EditorPlaceBuilding();
+    Q_INVOKABLE void setKey_EditorPlaceBuilding(const Qt::Key key_EditorPlaceBuilding);
+    Q_INVOKABLE Qt::Key getKey_EditorPlaceUnit();
+    Q_INVOKABLE void setKey_EditorPlaceUnit(const Qt::Key key_EditorPlaceUnit);
+    Q_INVOKABLE Qt::Key getKey_EditorNextTeam();
+    Q_INVOKABLE void setKey_EditorNextTeam(const Qt::Key key_EditorNextTeam);
+    Q_INVOKABLE Qt::Key getKey_EditorPreviousTeam();
+    Q_INVOKABLE void setKey_EditorPreviousTeam(const Qt::Key key_EditorPreviousTeam);
+    Q_INVOKABLE Qt::Key getKey_EditorSelectionRight();
+    Q_INVOKABLE void setKey_EditorSelectionRight(const Qt::Key key_EditorSelectionRight);
+    Q_INVOKABLE Qt::Key getKey_EditorSelectionLeft();
+    Q_INVOKABLE void setKey_EditorSelectionLeft(const Qt::Key key_EditorSelectionLeft);
+    Q_INVOKABLE Qt::Key getKey_ShowAttackFields2();
+    Q_INVOKABLE void setKey_ShowAttackFields2(const Qt::Key key_ShowAttackFields2);
+    Q_INVOKABLE Qt::Key getKey_ShowIndirectAttackFields2();
+    Q_INVOKABLE void setKey_ShowIndirectAttackFields2(const Qt::Key key_ShowIndirectAttackFields2);
+    Q_INVOKABLE Qt::Key getKey_up2();
+    Q_INVOKABLE void setKey_up2(const Qt::Key key_up2);
+    Q_INVOKABLE Qt::Key getKey_down2();
+    Q_INVOKABLE void setKey_down2(const Qt::Key key_down2);
+    Q_INVOKABLE Qt::Key getKey_right2();
+    Q_INVOKABLE void setKey_right2(const Qt::Key key_right2);
+    Q_INVOKABLE Qt::Key getKey_left2();
+    Q_INVOKABLE void setKey_left2(const Qt::Key key_left2);
+    Q_INVOKABLE Qt::Key getKey_confirm2();
+    Q_INVOKABLE void setKey_confirm2(const Qt::Key key_confirm2);
+    Q_INVOKABLE Qt::Key getKey_cancel2();
+    Q_INVOKABLE void setKey_cancel2(const Qt::Key key_cancel2);
+    Q_INVOKABLE Qt::Key getKey_next2();
+    Q_INVOKABLE void setKey_next2(const Qt::Key key_next2);
+    Q_INVOKABLE Qt::Key getKey_previous2();
+    Q_INVOKABLE void setKey_previous2(const Qt::Key key_previous2);
+    Q_INVOKABLE Qt::Key getKey_information2();
+    Q_INVOKABLE void setKey_information2(const Qt::Key key_information2);
+    Q_INVOKABLE Qt::Key getKey_moveMapUp2();
+    Q_INVOKABLE void setKey_moveMapUp2(const Qt::Key key_moveMapUp2);
+    Q_INVOKABLE Qt::Key getKey_moveMapDown2();
+    Q_INVOKABLE void setKey_moveMapDown2(const Qt::Key key_moveMapDown2);
+    Q_INVOKABLE Qt::Key getKey_moveMapRight2();
+    Q_INVOKABLE void setKey_moveMapRight2(const Qt::Key key_moveMapRight2);
+    Q_INVOKABLE Qt::Key getKey_moveMapLeft2();
+    Q_INVOKABLE void setKey_moveMapLeft2(const Qt::Key key_moveMapLeft2);
+    Q_INVOKABLE Qt::Key getKey_MapZoomOut2();
+    Q_INVOKABLE void setKey_MapZoomOut2(const Qt::Key key_MapZoomOut2);
+    Q_INVOKABLE Qt::Key getKey_MapZoomIn2();
+    Q_INVOKABLE void setKey_MapZoomIn2(const Qt::Key key_MapZoomIn2);
+    Q_INVOKABLE bool getAutoCamera();
+    Q_INVOKABLE void setAutoCamera(bool autoCamera);
+    Q_INVOKABLE bool getAutoScrolling();
+    Q_INVOKABLE void setAutoScrolling(bool autoScrolling);
+    Q_INVOKABLE bool getLogActions();
+    Q_INVOKABLE void setLogActions(bool LogActions);
+    Q_INVOKABLE bool getShowIngameCoordinates();
+    Q_INVOKABLE void setShowIngameCoordinates(bool showIngameCoordinates);
+    Q_INVOKABLE quint32 getWalkAnimationSpeedValue();
+    Q_INVOKABLE void setWalkAnimationSpeed(const quint32 value);
+    Q_INVOKABLE float getWalkAnimationSpeed();
+    Q_INVOKABLE qint32 getShowCoCount();
+    Q_INVOKABLE void setShowCoCount(const qint32 showCoCount);
+    Q_INVOKABLE std::chrono::seconds getAutoSavingCylceTime();
+    Q_INVOKABLE quint64 getAutoSavingCylceTimeRaw();
+    Q_INVOKABLE void setAutoSavingCylceTimeRaw(const quint32 value);
+    Q_INVOKABLE qint32 getAutoSavingCycle();
+    Q_INVOKABLE void setAutoSavingCycle(const qint32 value);
+    Q_INVOKABLE Qt::Key getKey_ShowIndirectAttackFields();
+    Q_INVOKABLE void setKey_ShowIndirectAttackFields(const Qt::Key key_ShowIndirectAttackFields);
+    Q_INVOKABLE Qt::Key getKey_ShowAttackFields();
+    Q_INVOKABLE void setKey_ShowAttackFields(const Qt::Key key_ShowAttackFields);
+    Q_INVOKABLE QString getLanguage();
+    Q_INVOKABLE void setLanguage(const QString language);
+    Q_INVOKABLE bool getRecord();
+    Q_INVOKABLE void setRecord(bool record);
+    Q_INVOKABLE bool getStaticMarkedFields();
+    Q_INVOKABLE void setStaticMarkedFields(bool staticMarkedFields);
+    Q_INVOKABLE qint32 getMenuItemCount();
+    Q_INVOKABLE void setMenuItemCount(const qint32 MenuItemCount);
+    Q_INVOKABLE QString getModString();
+    Q_INVOKABLE void filterCosmeticMods(QStringList mods, QStringList versions, bool filter);
+    Q_INVOKABLE QString getConfigString(QStringList mods);
+    Q_INVOKABLE quint32 getMultiTurnCounter();
+    Q_INVOKABLE void setMultiTurnCounter(const quint32 value);
+    Q_INVOKABLE bool getShowCursor();
+    Q_INVOKABLE void setShowCursor(bool ShowCursor);
+    Q_INVOKABLE bool getAutoEndTurn();
+    Q_INVOKABLE void setAutoEndTurn(bool AutoEndTurn);
+    Q_INVOKABLE GameEnums::BattleAnimationType getBattleAnimationType();
+    Q_INVOKABLE void setBattleAnimationType(const GameEnums::BattleAnimationType value);
+    Q_INVOKABLE void setUsername(const QString Username);
+    Q_INVOKABLE QString getUsername();
+    Q_INVOKABLE void setX(const qint32 x);
+    Q_INVOKABLE inline qint32 getX()
     {
         return m_pInstance->m_x;
     }
-    static void setY(const qint32 &y);
-    inline static qint32 getY()
+    Q_INVOKABLE void setY(const qint32 y);
+    Q_INVOKABLE inline qint32 getY()
     {
         return m_pInstance->m_y;
     }
-    inline static qint32 getWidth()
+    Q_INVOKABLE inline qint32 getWidth()
     {
         return m_pInstance->m_width;
     }
-    inline static qint32 getHeight()
+    Q_INVOKABLE inline qint32 getHeight()
     {
         return m_pInstance->m_height;
     }
-    static qint32 getStageWidth();
-    static qint32 getStageHeight();
-
-    inline static bool getBorderless()
+    Q_INVOKABLE qint32 getStageWidth();
+    Q_INVOKABLE qint32 getStageHeight();
+    Q_INVOKABLE inline bool getBorderless()
     {
         return m_pInstance->m_borderless;
     }
-
-    inline static bool getFullscreen()
+    Q_INVOKABLE inline bool getFullscreen()
     {
         return m_pInstance->m_fullscreen;
     }
-
-    static inline Qt::Key getKeyConsole()
+    Q_INVOKABLE inline Qt::Key getKeyConsole()
     {
         return m_pInstance->m_key_console;
     }
-
-    static inline void setTotalVolume(qint32 value)
+    Q_INVOKABLE inline void setTotalVolume(qint32 value)
     {
         m_pInstance->m_TotalVolume = value;
     }
-    static inline qint32 getTotalVolume()
+    Q_INVOKABLE inline qint32 getTotalVolume()
     {
         return m_pInstance->m_TotalVolume;
     }
-
-    static inline void setMusicVolume(qint32 value)
+    Q_INVOKABLE inline void setMusicVolume(qint32 value)
     {
         m_pInstance->m_MusicVolume = value;
     }
-    static inline qint32 getMusicVolume()
+    Q_INVOKABLE inline qint32 getMusicVolume()
     {
         return m_pInstance->m_MusicVolume;
     }
-
-    static inline void setSoundVolume(qint32 value)
+    Q_INVOKABLE inline void setSoundVolume(qint32 value)
     {
         m_pInstance->m_SoundVolume = value;
     }
-    static inline qint32 getSoundVolume()
+    Q_INVOKABLE inline qint32 getSoundVolume()
     {
         return m_pInstance->m_SoundVolume;
     }
-
-    static inline quint16 getGamePort()
+    Q_INVOKABLE inline quint16 getGamePort()
     {
         return m_pInstance->m_GamePort;
     }
-    static inline void setGamePort(quint16 value)
+    Q_INVOKABLE inline void setGamePort(quint16 value)
     {
         m_pInstance->m_GamePort = value;
     }
-    static void setServer(bool Server);
-    static inline bool getServer()
+    Q_INVOKABLE void setServer(bool Server);
+    Q_INVOKABLE inline bool getServer()
     {
         return m_pInstance->m_Server;
     }
-    static inline QStringList getMods()
+    Q_INVOKABLE inline QStringList getMods()
     {
         return m_pInstance->m_activeMods;
     }
-    static void addMod(QString mod)
+    Q_INVOKABLE void addMod(QString mod)
     {
         if (!m_pInstance->m_activeMods.contains(mod))
         {
             m_pInstance->m_activeMods.append(mod);
         }
     }
-    static void removeMod(QString mod)
+    Q_INVOKABLE void removeMod(QString mod)
     {
         if (m_pInstance->m_activeMods.contains(mod))
         {
             m_pInstance->m_activeMods.removeOne(mod);
         }
     }
-    static float getMouseSensitivity();
-    static void setMouseSensitivity(float value);
-
-    static GameEnums::BattleAnimationMode getBattleAnimationMode();
-    static void setBattleAnimationMode(GameEnums::BattleAnimationMode value);
-
-    static void setFullscreen(bool fullscreen);
-
-    static void setBorderless(bool borderless);
-
-    static void setWidth(const qint32 &width);
-    static void setHeight(const qint32 &height);
-
-    static float getAnimationSpeedValue();
-    static float getAnimationSpeed();
-    static void setAnimationSpeed(const quint32 &value);
-
-    static float getBattleAnimationSpeedValue();
-    static float getBattleAnimationSpeed();
-    static void setBattleAnimationSpeed(const quint32 &value);
-
-    static float getDialogAnimationSpeedValue();
-    static float getDialogAnimationSpeed();
-    static void setDialogAnimationSpeed(const quint32 &value);
-
-    static float getCaptureAnimationSpeedValue();
-    static float getCaptureAnimationSpeed();
-    static void setCaptureAnimationSpeed(const quint32 &value);
-
-    static Qt::Key getKey_up();
-    static void setKey_up(const Qt::Key &key_up);
-
-    static Qt::Key getKey_down();
-    static void setKey_down(const Qt::Key &key_down);
-
-    static Qt::Key getKey_right();
-    static void setKey_right(const Qt::Key &key_right);
-
-    static Qt::Key getKey_left();
-    static void setKey_left(const Qt::Key &key_left);
-
-    static Qt::Key getKey_confirm();
-    static void setKey_confirm(const Qt::Key &key_confirm);
-
-    static Qt::Key getKey_cancel();
-    static void setKey_cancel(const Qt::Key &key_cancel);
-
-    static Qt::Key getKey_next();
-    static void setKey_next(const Qt::Key &key_next);
-
-    static Qt::Key getKey_previous();
-    static void setKey_previous(const Qt::Key &key_previous);
-
-    static Qt::Key getKey_quicksave1();
-    static void setKey_quicksave1(const Qt::Key &key_quicksave1);
-
-    static Qt::Key getKey_quicksave2();
-    static void setKey_quicksave2(const Qt::Key &key_quicksave2);
-
-    static Qt::Key getKey_quickload1();
-    static void setKey_quickload1(const Qt::Key &key_quickload1);
-
-    static Qt::Key getKey_quickload2();
-    static void setKey_quickload2(const Qt::Key &key_quickload2);
-
-    static Qt::Key getKey_moveMapUp();
-    static void setKey_moveMapUp(const Qt::Key &key_moveMapUp);
-
-    static Qt::Key getKey_moveMapDown();
-    static void setKey_moveMapDown(const Qt::Key &key_moveMapDown);
-
-    static Qt::Key getKey_moveMapRight();
-    static void setKey_moveMapRight(const Qt::Key &key_moveMapRight);
-
-    static Qt::Key getKey_moveMapLeft();
-    static void setKey_moveMapLeft(const Qt::Key &key_moveMapLeft);
-
-    static Qt::Key getKey_information();
-    static void setKey_information(const Qt::Key &key_information);
-
-    static Qt::Key getKey_MapZoomOut();
-    static void setKey_MapZoomOut(const Qt::Key &key_MapZoomOut);
-
-    static Qt::Key getKey_MapZoomIn();
-    static void setKey_MapZoomIn(const Qt::Key &key_MapZoomIn);
-
-    static Qt::Key getKey_Escape();
-    static void setKey_Escape(const Qt::Key &key_Escape);
-
-    static void getModInfos(QString mod, QString & name, QString & description, QString & version,
-                            QStringList & compatibleMods, QStringList & incompatibleMods,
-                            QStringList & requiredMods, bool & isCosmetic,
-                            QStringList & tags, QString & thumbnail);
+    Q_INVOKABLE float getMouseSensitivity();
+    Q_INVOKABLE void setMouseSensitivity(float value);
+    Q_INVOKABLE GameEnums::BattleAnimationMode getBattleAnimationMode();
+    Q_INVOKABLE void setBattleAnimationMode(GameEnums::BattleAnimationMode value);
+    Q_INVOKABLE void setFullscreen(bool fullscreen);
+    Q_INVOKABLE void setBorderless(bool borderless);
+    Q_INVOKABLE void setWidth(const qint32 width);
+    Q_INVOKABLE void setHeight(const qint32 height);
+    Q_INVOKABLE float getAnimationSpeedValue();
+    Q_INVOKABLE float getAnimationSpeed();
+    Q_INVOKABLE void setAnimationSpeed(const quint32 value);
+    Q_INVOKABLE float getBattleAnimationSpeedValue();
+    Q_INVOKABLE float getBattleAnimationSpeed();
+    Q_INVOKABLE void setBattleAnimationSpeed(const quint32 value);
+    Q_INVOKABLE float getDialogAnimationSpeedValue();
+    Q_INVOKABLE float getDialogAnimationSpeed();
+    Q_INVOKABLE void setDialogAnimationSpeed(const quint32 value);
+    Q_INVOKABLE float getCaptureAnimationSpeedValue();
+    Q_INVOKABLE float getCaptureAnimationSpeed();
+    Q_INVOKABLE void setCaptureAnimationSpeed(const quint32 value);
+    Q_INVOKABLE Qt::Key getKey_up();
+    Q_INVOKABLE void setKey_up(const Qt::Key key_up);
+    Q_INVOKABLE Qt::Key getKey_down();
+    Q_INVOKABLE void setKey_down(const Qt::Key key_down);
+    Q_INVOKABLE Qt::Key getKey_right();
+    Q_INVOKABLE void setKey_right(const Qt::Key key_right);
+    Q_INVOKABLE Qt::Key getKey_left();
+    Q_INVOKABLE void setKey_left(const Qt::Key key_left);
+    Q_INVOKABLE Qt::Key getKey_confirm();
+    Q_INVOKABLE void setKey_confirm(const Qt::Key key_confirm);
+    Q_INVOKABLE Qt::Key getKey_cancel();
+    Q_INVOKABLE void setKey_cancel(const Qt::Key key_cancel);
+    Q_INVOKABLE Qt::Key getKey_next();
+    Q_INVOKABLE void setKey_next(const Qt::Key key_next);
+    Q_INVOKABLE Qt::Key getKey_previous();
+    Q_INVOKABLE void setKey_previous(const Qt::Key key_previous);
+    Q_INVOKABLE Qt::Key getKey_quicksave1();
+    Q_INVOKABLE void setKey_quicksave1(const Qt::Key key_quicksave1);
+    Q_INVOKABLE Qt::Key getKey_quicksave2();
+    Q_INVOKABLE void setKey_quicksave2(const Qt::Key key_quicksave2);
+    Q_INVOKABLE Qt::Key getKey_quickload1();
+    Q_INVOKABLE void setKey_quickload1(const Qt::Key key_quickload1);
+    Q_INVOKABLE Qt::Key getKey_quickload2();
+    Q_INVOKABLE void setKey_quickload2(const Qt::Key key_quickload2);
+    Q_INVOKABLE Qt::Key getKey_moveMapUp();
+    Q_INVOKABLE void setKey_moveMapUp(const Qt::Key key_moveMapUp);
+    Q_INVOKABLE Qt::Key getKey_moveMapDown();
+    Q_INVOKABLE void setKey_moveMapDown(const Qt::Key key_moveMapDown);
+    Q_INVOKABLE Qt::Key getKey_moveMapRight();
+    Q_INVOKABLE void setKey_moveMapRight(const Qt::Key key_moveMapRight);
+    Q_INVOKABLE Qt::Key getKey_moveMapLeft();
+    Q_INVOKABLE void setKey_moveMapLeft(const Qt::Key key_moveMapLeft);
+    Q_INVOKABLE Qt::Key getKey_information();
+    Q_INVOKABLE void setKey_information(const Qt::Key key_information);
+    Q_INVOKABLE Qt::Key getKey_MapZoomOut();
+    Q_INVOKABLE void setKey_MapZoomOut(const Qt::Key key_MapZoomOut);
+    Q_INVOKABLE Qt::Key getKey_MapZoomIn();
+    Q_INVOKABLE void setKey_MapZoomIn(const Qt::Key key_MapZoomIn);
+    Q_INVOKABLE Qt::Key getKey_Escape();
+    Q_INVOKABLE void setKey_Escape(const Qt::Key key_Escape);
     /**
      * @brief getAvailableMods
      * @return
      */
-    static QStringList getAvailableMods();
+    Q_INVOKABLE QStringList getAvailableMods();
     /**
      * @brief getModName
      * @param mod
      * @return
      */
-    static QString getModName(QString mod);
+    Q_INVOKABLE QString getModName(QString mod);
     /**
      * @brief getIsCosmetic
      * @param mod
      * @return
      */
-    static bool getIsCosmetic(QString mod);
+    Q_INVOKABLE bool getIsCosmetic(QString mod);
     /**
      * @brief getAudioDevices
      * @return
      */
-    static QStringList getAudioDevices();
+    Q_INVOKABLE QStringList getAudioDevices();
     /**
      * @brief getCurrentDevice
      * @return
      */
-    static qint32 getCurrentDevice();
+    Q_INVOKABLE qint32 getCurrentDevice();
     /**
      * @brief setAudioDevice
      * @param value
      */
-    static void setAudioDevice(qint32 value);
+    Q_INVOKABLE void setAudioDevice(qint32 value);
     /**
      * @brief getScreenSize
      * @return
      */
-    static QSize getScreenSize();
+    Q_INVOKABLE QSize getScreenSize();
     /**
      * @brief getScreenMode
      * @return
      */
-    static qint32 getScreenMode();
+    Q_INVOKABLE qint32 getScreenMode();
     /**
      * @brief setScreenMode
      * @param value
      */
-    static void setScreenMode(qint32 value);
+    Q_INVOKABLE void setScreenMode(qint32 value);
     /**
      * @brief changeBrightness
      * @param value
      */
-    static void changeBrightness(qint32 value);
+    Q_INVOKABLE void changeBrightness(qint32 value);
     /**
      * @brief changeGamma
      * @param value
      */
-    static void changeGamma(float value);
+    Q_INVOKABLE void changeGamma(float value);
     /**
      * @brief isGamepadSupported
      * @return
      */
-    static bool isGamepadSupported();
+    Q_INVOKABLE bool isGamepadSupported();
     /**
      * @brief getLanguageNames
      * @return
      */
-    static QStringList getLanguageNames();
+    Q_INVOKABLE QStringList getLanguageNames();
     /**
      * @brief getLanguageIds
      * @return
      */
-    static QStringList getLanguageIds();
+    Q_INVOKABLE QStringList getLanguageIds();
     /**
      * @brief getCurrentLanguageIndex
      * @return
      */
-    static qint32 getCurrentLanguageIndex();
+    Q_INVOKABLE qint32 getCurrentLanguageIndex();
 private:
     friend class oxygine::intrusive_ptr<Settings>;
     explicit Settings();
 
 private:
-    QVector<ValueBase*> m_SettingValues;
-
     // setting variables
+    QVector<ValueBase*> m_SettingValues;
     qint32 m_x{0};
     qint32 m_y{0};
     qint32 m_width{1024};

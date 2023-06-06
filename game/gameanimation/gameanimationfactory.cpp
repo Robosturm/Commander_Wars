@@ -182,7 +182,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
                                            atkDamage, pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY(), pAtkUnit->getUnitID(), pAtkUnit->getOwner()->getPlayerID(), (atkEndHp <= 0),
                                            defDamage, pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), pDefUnit->getUnitID(), pDefUnit->getOwner()->getPlayerID(), (defEndHp <= 0),
                                            pDefUnit->getOwner()->getFieldVisible(pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY()));
-        auto battleViewMode = Settings::getBattleAnimationType();
+        auto battleViewMode = Settings::getInstance()->getBattleAnimationType();
         if (battleViewMode == GameEnums::BattleAnimationType_Overworld)
         {
             pRet = spGameAnimation(createOverworldBattleAnimation(pMap, pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
@@ -445,26 +445,26 @@ void GameAnimationFactory::printActiveAnimations()
 
 bool GameAnimationFactory::shouldSkipDialog(GameAnimationDialog* pDialogAnimation)
 {
-    bool dialogEnabled = Settings::getDialogAnimation();
+    bool dialogEnabled = Settings::getInstance()->getDialogAnimation();
     return pDialogAnimation != nullptr && !dialogEnabled;
 }
 
 bool GameAnimationFactory::shouldSkipCapture(GameAnimationCapture* pGameAnimationCapture)
 {
-    bool captureEnabled = Settings::getCaptureAnimation();
+    bool captureEnabled = Settings::getInstance()->getCaptureAnimation();
     return pGameAnimationCapture != nullptr && !captureEnabled;
 }
 
 bool GameAnimationFactory::shouldSkipDay2Day(GameAnimationNextDay* pGameAnimationNextDay)
 {
-    bool day2dayEnabled = Settings::getDay2dayScreen();
+    bool day2dayEnabled = Settings::getInstance()->getDay2dayScreen();
     return pGameAnimationNextDay != nullptr && !day2dayEnabled;
 }
 
 
 bool GameAnimationFactory::shouldSkipMovement(GameAnimationWalk* pGameAnimationWalk)
 {
-    bool movementEnabled = Settings::getMovementAnimations();
+    bool movementEnabled = Settings::getInstance()->getMovementAnimations();
     return pGameAnimationWalk != nullptr && !movementEnabled;
 }
 
@@ -474,7 +474,7 @@ bool GameAnimationFactory::shouldSkipBattleAnimation(BattleAnimation* pBattleAni
     if (pBattleAnimation != nullptr)
     {
         GameMap* pMap = pBattleAnimation->getMap();
-        GameEnums::BattleAnimationMode animMode = Settings::getBattleAnimationMode();
+        GameEnums::BattleAnimationMode animMode = Settings::getInstance()->getBattleAnimationMode();
         Unit* pAtkUnit = pBattleAnimation->getAtkUnit();
         Unit* pDefUnit = pBattleAnimation->getDefUnit();
         if (animMode == GameEnums::BattleAnimationMode_Own)
@@ -535,5 +535,5 @@ bool GameAnimationFactory::shouldSkipBattleAnimation(BattleAnimation* pBattleAni
 
 bool GameAnimationFactory::shouldSkipOtherAnimation(GameAnimation* pBattleAnimation)
 {
-    return !Settings::getOverworldAnimations();
+    return !Settings::getInstance()->getOverworldAnimations();
 }

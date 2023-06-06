@@ -66,9 +66,9 @@ namespace oxygine
             qint32 columns = 0;
             qint32 rows = 0;
             QImage img;
-            if (QFile::exists(Settings::getUserPath() + walker.getPath("file")))
+            if (QFile::exists(Settings::getInstance()->getUserPath() + walker.getPath("file")))
             {
-                img = QImage(Settings::getUserPath() + walker.getPath("file"));
+                img = QImage(Settings::getInstance()->getUserPath() + walker.getPath("file"));
             }
             else if (QFile::exists(RCC_PREFIX_PATH + walker.getPath("file")))
             {

@@ -94,7 +94,7 @@ DialogRandomMap::DialogRandomMap(const QString & confirmMessage)
     m_MapAuthor = spTextbox::create(m_GeneratorFile->getWidth());
     m_MapAuthor->setTooltipText(tr("Selects the author of the new map."));
     m_MapAuthor->setPosition(text->getX() + LABEL_WIDTH, text->getY());
-    m_MapAuthor->setCurrentText(Settings::getUsername());
+    m_MapAuthor->setCurrentText(Settings::getInstance()->getUsername());
     m_pPanel->addItem(m_MapAuthor);
     y += text->getHeight() + 10;
 
@@ -398,7 +398,7 @@ void DialogRandomMap::showGeneratorSelection()
 {    
     QStringList wildcards;
     wildcards.append("*.js");
-    QString path = Settings::getUserPath() + "data/randomMaps";
+    QString path = Settings::getInstance()->getUserPath() + "data/randomMaps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);    
@@ -411,7 +411,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
     QFile file(filename);
     if (!file.exists())
     {
-        file.setFileName(Settings::getUserPath() + filename);
+        file.setFileName(Settings::getInstance()->getUserPath() + filename);
         if (!file.exists())
         {
             file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + filename);

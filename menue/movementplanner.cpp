@@ -403,8 +403,8 @@ void MovementPlanner::keyInput(oxygine::KeyEvent event)
         Qt::Key cur = event.getKey();
         if (m_Focused)
         {
-            if (cur == Settings::getKey_information() ||
-                     cur == Settings::getKey_information2())
+            if (cur == Settings::getInstance()->getKey_information() ||
+                     cur == Settings::getInstance()->getKey_information2())
             {
 
                 Player* pPlayer = m_pMap->getCurrentViewPlayer();

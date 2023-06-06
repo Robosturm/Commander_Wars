@@ -118,7 +118,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
             m_pMap->getGameRules()->pauseRoundTime();
             if (!pGameAction->getIsLocal() &&
                 baseGameInput != nullptr &&
-                !Settings::getAiSlave() &&
+                !Settings::getInstance()->getAiSlave() &&
                 baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi)
             {
                 pGameAction = doMultiTurnMovement(pGameAction);
@@ -216,7 +216,7 @@ spGameAction ActionPerformer::doMultiTurnMovement(spGameAction pGameAction)
 {
     if (m_pMenu != nullptr &&
         m_pMenu->getGameStarted() &&
-        !Settings::getAiSlave() &&
+        !Settings::getInstance()->getAiSlave() &&
         pGameAction.get() != nullptr &&
         (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
          pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
@@ -377,7 +377,7 @@ void ActionPerformer::actionPerformed()
             {
                 finishActionPerformed();
             }
-            if (Settings::getSyncAnimations())
+            if (Settings::getInstance()->getSyncAnimations())
             {
                 m_pMap->syncUnitsAndBuildingAnimations();
             }
@@ -435,7 +435,7 @@ void ActionPerformer::actionPerformed()
                             m_pMap->getGameRules()->resumeRoundTime();
                         }
                         if (m_noTimeOut &&
-                            !Settings::getAiSlave())
+                            !Settings::getInstance()->getAiSlave())
                         {
                             onTriggeringActionFinished();
                             spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
@@ -445,7 +445,7 @@ void ActionPerformer::actionPerformed()
                         else
                         {
                             CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
-                            quint32 delay = Settings::getPauseAfterAction();
+                            quint32 delay = Settings::getInstance()->getPauseAfterAction();
                             if (delay == 0)
                             {
                                 onTriggeringActionFinished();
@@ -500,7 +500,7 @@ void ActionPerformer::nextTurnPlayerTimeout()
 {
     auto* input = m_pMap->getCurrentPlayer()->getBaseGameInput();
     if (input != nullptr &&
-        !Settings::getAiSlave())
+        !Settings::getInstance()->getAiSlave())
     {
         if (input->getAiType() == GameEnums::AiTypes_Human)
         {

@@ -94,7 +94,7 @@ CampaignEditor::CampaignEditor()
     m_Author = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 500);
     m_Author->setTooltipText(tr("Name of the author shown in the map selection screen."));
     m_Author->setPosition(300, y);
-    m_Author->setCurrentText(Settings::getUsername());
+    m_Author->setCurrentText(Settings::getInstance()->getUsername());
     pSpriteBox->addChild(m_Author);
     y += pText->getHeight() + 10;
 
@@ -182,7 +182,7 @@ void CampaignEditor::showAddCampaign()
 {    
     QStringList wildcards;
     wildcards.append("*.map");
-    QString path = Settings::getUserPath() + m_CampaignFolder->getCurrentText();
+    QString path = Settings::getInstance()->getUserPath() + m_CampaignFolder->getCurrentText();
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Add"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);    
@@ -192,7 +192,7 @@ void CampaignEditor::showSaveCampaign()
 {    
     QStringList wildcards;
     wildcards.append("*.jsm");
-    QString path = Settings::getUserPath() + "maps/";
+    QString path = Settings::getInstance()->getUserPath() + "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, m_Name->getCurrentText(), false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);    
@@ -202,7 +202,7 @@ void CampaignEditor::showLoadCampaign()
 {    
     QStringList wildcards;
     wildcards.append("*.jsm");
-    QString path = Settings::getUserPath() + "maps/";
+    QString path = Settings::getInstance()->getUserPath() + "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);    
@@ -235,7 +235,7 @@ QString CampaignEditor::getMapName(QString filename)
 
 void CampaignEditor::showSelectFolder()
 {    
-    QString path = Settings::getUserPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFolderDialog folderDialog = spFolderDialog::create(path);
     addChild(folderDialog);
     connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, &CampaignEditor::selectFolder, Qt::QueuedConnection);    

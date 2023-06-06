@@ -12,7 +12,7 @@ QByteArray Filesupport::getHash(const QStringList & filter, const QStringList & 
     QCryptographicHash myHash(QCryptographicHash::Sha512);
     QStringList fullList;
 
-    QString userPath = Settings::getUserPath();
+    QString userPath = Settings::getInstance()->getUserPath();
     for (const auto & folder : qAsConst(folders))
     {
         fullList.append(oxygine::Resource::RCC_PREFIX_PATH + folder);

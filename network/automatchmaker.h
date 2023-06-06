@@ -75,28 +75,31 @@ public:
 
     qint32 getNotActiveCounter() const;
     void increaseNotActiveCounter();
-
-public slots:
-    bool getSignedUp(const QString & playerId);
-    void createNewGame(const QString & players);
-    QString getMatchId() const;
-    void updateMmr(const QString & player1, const QString & player2, qint32 maxEloChange, GameEnums::GameResult gameResultForPlayer1);
-    bool setMmr(const QString & player, qint32 mmr);
-    qint32 getMmr(const QString & player);
-    bool setMatchHistoryData(const QString & player, QString historyData);
-    QString getMatchHistoryData(const QString & player);
-    bool setMatchMetaData(const QString & player, QString metaData);
-    QString getMatchMetaData(const QString & player);
-    QStringList getOpponentsForPlayer(const QString & player, qint32 playerCount, qint32 mmrSearchStepRange);
-    qint32 getRunningGames(const QString & player);
-    bool setRunningGames(const QString & player, qint32 count);
-    qint32 getMinGames(const QString & player);
-    qint32 getMaxGames(const QString & player);
+    /**
+     * @brief getBracketGraphInfo
+     * @return
+     */
+    QJsonObject getBracketGraphInfo();
+    Q_INVOKABLE bool getSignedUp(const QString  playerId);
+    Q_INVOKABLE void createNewGame(const QString players);
+    Q_INVOKABLE QString getMatchId() const;
+    Q_INVOKABLE void updateMmr(const QString player1, const QString player2, qint32 maxEloChange, GameEnums::GameResult gameResultForPlayer1);
+    Q_INVOKABLE bool setMmr(const QString player, qint32 mmr);
+    Q_INVOKABLE qint32 getMmr(const QString player);
+    Q_INVOKABLE bool setMatchHistoryData(const QString player, QString historyData);
+    Q_INVOKABLE QString getMatchHistoryData(const QString player);
+    Q_INVOKABLE bool setMatchMetaData(const QString player, QString metaData);
+    Q_INVOKABLE QString getMatchMetaData(const QString player);
+    Q_INVOKABLE QStringList getOpponentsForPlayer(const QString player, qint32 playerCount, qint32 mmrSearchStepRange);
+    Q_INVOKABLE qint32 getRunningGames(const QString player);
+    Q_INVOKABLE bool setRunningGames(const QString player, qint32 count);
+    Q_INVOKABLE qint32 getMinGames(const QString player);
+    Q_INVOKABLE qint32 getMaxGames(const QString player);
     /**
      * @brief getVariables
      * @return
      */
-    inline ScriptVariables* getVariables()
+    Q_INVOKABLE inline ScriptVariables* getVariables()
     {
         return &m_Variables;
     }
@@ -108,32 +111,26 @@ public slots:
      * @param metaData
      * @param startMmr
      */
-    bool doNewPlayerData(const QString & player, qint32 minGames, qint32 maxGames, const QString & metaData, qint32 startMmr = 750);
+    Q_INVOKABLE bool doNewPlayerData(const QString & player, qint32 minGames, qint32 maxGames, const QString & metaData, qint32 startMmr = 750);
     /**
      * @brief getName
      * @return
      */
-    QString getName();
+    Q_INVOKABLE QString getName();
     /**
      * @brief getDescription
      * @return
      */
-    QString getDescription();
+    Q_INVOKABLE QString getDescription();
     /**
      * @brief getIsSignUpChangeAllowed
      * @return
      */
-    bool getIsSignUpChangeAllowed();
-    /**
-     * @brief getBracketGraphInfo
-     * @return
-     */
-    QJsonObject getBracketGraphInfo();
-
-    static QString getBracketGraphInfoId();
-    static QString getBracketGraphPreviousMatchId();
-    static QString getBracketGraphPreviousWinnersId();
-    static QString getBracketGraphPreviousPlayersId();
+    Q_INVOKABLE bool getIsSignUpChangeAllowed();
+    Q_INVOKABLE static QString getBracketGraphInfoId();
+    Q_INVOKABLE static QString getBracketGraphPreviousMatchId();
+    Q_INVOKABLE static QString getBracketGraphPreviousWinnersId();
+    Q_INVOKABLE static QString getBracketGraphPreviousPlayersId();
 private:
     QString m_matchId;
     MainServer & m_mainServer;

@@ -65,10 +65,10 @@ void Wikipage::keyInput(oxygine::KeyEvent event)
     {
         // for debugging
         Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_information() ||
-            cur == Settings::getKey_information2() ||
-            cur == Settings::getKey_cancel() ||
-            cur == Settings::getKey_cancel2())
+        if (cur == Settings::getInstance()->getKey_information() ||
+            cur == Settings::getInstance()->getKey_information2() ||
+            cur == Settings::getInstance()->getKey_cancel() ||
+            cur == Settings::getInstance()->getKey_cancel2())
         {
             emit sigFinished();
         }

@@ -1048,7 +1048,7 @@ void GameMap::importAWByWebMap(QString file, EditorMenue* pMenu)
         QStringList list = file.split("/");
         m_headerInfo.m_mapName = list[list.size() - 1].remove(list[list.size() - 1].lastIndexOf("."), list[list.size() - 1].size());
         m_headerInfo.m_mapDescription = "";
-        m_headerInfo.m_mapAuthor = Settings::getUsername();
+        m_headerInfo.m_mapAuthor = Settings::getInstance()->getUsername();
     }
     pMenu->optimizePlayers();
     // update the whole fucking map

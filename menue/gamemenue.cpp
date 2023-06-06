@@ -152,7 +152,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
     {
         startDespawnTimer();
     }
-    if (Settings::getAutoSavingCycle() > 0)
+    if (Settings::getInstance()->getAutoSavingCycle() > 0)
     {
         m_enabledAutosaving = true;
     }
@@ -174,7 +174,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
     loadHandling();
     loadGameMenue();
     loadUIButtons();
-    if (Settings::getAutoSavingCycle() > 0)
+    if (Settings::getInstance()->getAutoSavingCycle() > 0)
     {
         m_enabledAutosaving = true;
     }
@@ -457,7 +457,7 @@ void GameMenue::sendUsername(quint64 socketID, const QJsonObject & objData)
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, command);
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     QJsonDocument doc(data);
     emit m_pNetworkInterface->sig_sendData(socketID, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
 }
@@ -508,10 +508,10 @@ void GameMenue::sendLoginData(quint64 socketID, const QJsonObject & objData, Net
     QJsonObject data;
     data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::VERIFYLOGINDATA);
     Password serverPassword;
-    QString password = Settings::getServerPassword();
+    QString password = Settings::getInstance()->getServerPassword();
     serverPassword.setPassword(password);
     data.insert(JsonKeys::JSONKEY_PASSWORD, cypher.toJsonArray(serverPassword.getHash()));
-    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getUsername());
+    data.insert(JsonKeys::JSONKEY_USERNAME, Settings::getInstance()->getUsername());
     // send map data to client and make sure password message is crypted
     QString publicKey = objData.value(JsonKeys::JSONKEY_PUBLICKEY).toString();
     QJsonDocument doc(data);
@@ -580,10 +580,10 @@ void GameMenue::sendVerifyGameData(quint64 socketID)
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << command;
     stream << Mainapp::getGameVersion();
-    QStringList mods = Settings::getMods();
-    QStringList versions = Settings::getActiveModVersions();
+    QStringList mods = Settings::getInstance()->getMods();
+    QStringList versions = Settings::getInstance()->getActiveModVersions();
     bool filter = m_pMap->getGameRules()->getCosmeticModsAllowed();
-    Settings::filterCosmeticMods(mods, versions, filter);
+    Settings::getInstance()->filterCosmeticMods(mods, versions, filter);
     stream << filter;
     stream << static_cast<qint32>(mods.size());
     for (qint32 i = 0; i < mods.size(); i++)
@@ -1038,7 +1038,7 @@ void GameMenue::sendOpenPlayerCount()
         CONSOLE_PRINT("GameMenue sending command " + command + " current player " + playerId + " with control type=" + QString::number(currentControlType), GameConsole::eDEBUG);
         QJsonObject data;
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
-        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getInstance()->getSlaveServerName());
         data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, openPlayerCount);
         if (currentControlType == GameEnums::AiTypes_Human)
         {
@@ -1203,7 +1203,7 @@ void GameMenue::startDespawnTimer()
 void GameMenue::despawnSlave()
 {
     const auto multiplier = 0.001f;
-    std::chrono::milliseconds ms = Settings::getSlaveDespawnTime();
+    std::chrono::milliseconds ms = Settings::getInstance()->getSlaveDespawnTime();
     auto elapsed = m_slaveDespawnElapseTimer.elapsed();
     CONSOLE_PRINT("GameMenue::despawnSlave elapsed seconds " + QString::number(elapsed * multiplier) + " target time " + QString::number(ms.count() * multiplier), GameConsole::eDEBUG);
     if (m_slaveDespawnElapseTimer.hasExpired(ms.count()))
@@ -1252,7 +1252,7 @@ bool GameMenue::doDespawnSlave()
         data.insert(JsonKeys::JSONKEY_MAXPLAYERS, m_pMap->getPlayerCount());
         data.insert(JsonKeys::JSONKEY_NAME, m_pMap->getMapName());
         data.insert(JsonKeys::JSONKEY_DESCRIPTION, m_pMap->getGameRules()->getDescription());
-        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getInstance()->getSlaveServerName());
         data.insert(JsonKeys::JSONKEY_HASPASSWORD, m_pMap->getGameRules()->getPassword().getIsSet());
         data.insert(JsonKeys::JSONKEY_UUID, 0);
         data.insert(JsonKeys::JSONKEY_SAVEFILE, saveFile);
@@ -1265,7 +1265,7 @@ bool GameMenue::doDespawnSlave()
         {
             data.insert(JsonKeys::JSONKEY_CURRENTPLAYER, "");
         }
-        auto activeMods = Settings::getActiveMods();
+        auto activeMods = Settings::getInstance()->getActiveMods();
         QJsonObject mods;
         for (qint32 i = 0; i < activeMods.size(); ++i)
         {
@@ -1341,7 +1341,7 @@ void GameMenue::loadGameMenue()
     m_IngameInfoBar = spIngameInfoBar::create(this, m_pMap.get());
     m_IngameInfoBar->updateMinimap();
     addChild(m_IngameInfoBar);
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_IngameInfoBar->setX(oxygine::Stage::getStage()->getWidth() - 1);
         auto moveButton = spMoveInButton::create(m_IngameInfoBar.get(), m_IngameInfoBar->getScaledWidth());
@@ -1461,7 +1461,7 @@ void GameMenue::loadUIButtons()
     m_XYButtonBox->addChild(m_xyTextInfo);
     m_XYButtonBox->setSize(200, 50);
     m_XYButtonBox->setPosition((oxygine::Stage::getStage()->getWidth() - m_IngameInfoBar->getScaledWidth()) - m_XYButtonBox->getScaledWidth(), 0);
-    m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates() && !Settings::getSmallScreenDevice());
+    m_XYButtonBox->setVisible(Settings::getInstance()->getShowIngameCoordinates() && !Settings::getInstance()->getSmallScreenDevice());
     addChild(m_XYButtonBox);
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
@@ -1606,7 +1606,7 @@ void GameMenue::autoScroll(QPoint cursorPosition)
     Mainapp* pApp = Mainapp::getInstance();
     if (QGuiApplication::focusWindow() == pApp &&
         m_Focused &&
-        Settings::getAutoScrolling())
+        Settings::getInstance()->getAutoScrolling())
     {
         
         if (m_pMap.get() != nullptr && m_IngameInfoBar.get() != nullptr &&
@@ -1661,7 +1661,7 @@ void GameMenue::doPlayerInfoFlipping()
     bool flip = m_pPlayerinfo->getFlippedX();
     qint32 screenWidth = m_IngameInfoBar->getX();
     const qint32 diff = screenWidth / 8;
-    if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Left)
+    if (Settings::getInstance()->getCoInfoPosition() == GameEnums::COInfoPosition_Left)
     {
         m_pPlayerinfo->setX(0);
         flip = false;
@@ -1670,7 +1670,7 @@ void GameMenue::doPlayerInfoFlipping()
             m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());
         }
     }
-    else if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Right)
+    else if (Settings::getInstance()->getCoInfoPosition() == GameEnums::COInfoPosition_Right)
     {
         flip = true;
         m_pPlayerinfo->setX(screenWidth);
@@ -1679,7 +1679,7 @@ void GameMenue::doPlayerInfoFlipping()
             m_XYButtonBox->setX(0);
         }
     }
-    else if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Flipping)
+    else if (Settings::getInstance()->getCoInfoPosition() == GameEnums::COInfoPosition_Flipping)
     {
         if ((pos.x() < (screenWidth) / 2 - diff))
         {
@@ -1891,7 +1891,7 @@ void GameMenue::showXmlFileDialog(const QString xmlFile, bool saveSettings)
     {
         if (saveSettings)
         {
-            Settings::saveSettings();
+            Settings::getInstance()->saveSettings();
         }
         m_Focused = true;
     });
@@ -2051,7 +2051,7 @@ void GameMenue::saveGame()
 {    
     QStringList wildcards;
     wildcards.append("*" + getSaveFileEnding());
-    QString path = Settings::getUserPath() + "savegames";
+    QString path = Settings::getInstance()->getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, [this](QString filename)
@@ -2088,7 +2088,7 @@ void GameMenue::showSaveAndExitGame()
     {
         wildcards.append("*.sav");
     }
-    QString path = Settings::getUserPath() + "savegames";
+    QString path = Settings::getInstance()->getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, true, m_pMap->getMapName(), false, tr("Save"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
@@ -2107,10 +2107,10 @@ void GameMenue::victoryInfo()
 
 void GameMenue::autoSaveMap()
 {
-    if (Settings::getAutoSavingCycle() > 0)
+    if (Settings::getInstance()->getAutoSavingCycle() > 0)
     {
         CONSOLE_PRINT("GameMenue::autoSaveMap()", GameConsole::eDEBUG);
-        QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + m_pMap->getMapName() + "_autosave_", getSaveFileEnding(), Settings::getAutoSavingCycle());
+        QString path = GlobalUtils::getNextAutosavePath(Settings::getInstance()->getUserPath() + "savegames/" + m_pMap->getMapName() + "_autosave_", getSaveFileEnding(), Settings::getInstance()->getAutoSavingCycle());
         saveMap(path, false);
     }
 }
@@ -2146,7 +2146,7 @@ void GameMenue::saveMapAndExit(QString filename)
 
 void GameMenue::doSaveMap()
 {
-    if (Settings::getAiSlave())
+    if (Settings::getInstance()->getAiSlave())
     {
         CONSOLE_PRINT("Ignoring saving request as ai slave", GameConsole::eDEBUG);
     }
@@ -2163,7 +2163,7 @@ void GameMenue::doSaveMap()
                 m_pMap->setReplayActionCount(m_ReplayRecorder.getCount());
                 m_pMap->serializeObject(stream);
                 file.close();
-                Settings::setLastSaveGame(m_saveFile);
+                Settings::getInstance()->setLastSaveGame(m_saveFile);
             }
             m_saveMap = false;
             m_saveFile = "";
@@ -2352,7 +2352,7 @@ void GameMenue::sendGameStartedToServer()
         QString command = QString(NetworkCommands::SLAVEGAMESTARTED);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
-        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getSlaveServerName());
+        data.insert(JsonKeys::JSONKEY_SLAVENAME, Settings::getInstance()->getSlaveServerName());
         data.insert(JsonKeys::JSONKEY_COMMAND, command);
         QJsonArray usernames;
         qint32 count = m_pMap->getPlayerCount();
@@ -2385,21 +2385,21 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
         Qt::Key cur = event.getKey();
         if (m_Focused && m_pNetworkInterface.get() == nullptr)
         {
-            if (cur == Settings::getKey_quicksave1())
+            if (cur == Settings::getInstance()->getKey_quicksave1())
             {
-                saveMap(Settings::getUserPath() + "savegames/quicksave1.sav");
+                saveMap(Settings::getInstance()->getUserPath() + "savegames/quicksave1.sav");
             }
-            else if (cur == Settings::getKey_quicksave2())
+            else if (cur == Settings::getInstance()->getKey_quicksave2())
             {
-                saveMap(Settings::getUserPath() + "savegames/quicksave2.sav");
+                saveMap(Settings::getInstance()->getUserPath() + "savegames/quicksave2.sav");
             }
-            else if (cur == Settings::getKey_quickload1())
+            else if (cur == Settings::getInstance()->getKey_quickload1())
             {
-                emit sigLoadSaveGame(Settings::getUserPath() + "savegames/quicksave1.sav");
+                emit sigLoadSaveGame(Settings::getInstance()->getUserPath() + "savegames/quicksave1.sav");
             }
-            else if (cur == Settings::getKey_quickload2())
+            else if (cur == Settings::getInstance()->getKey_quickload2())
             {
-                emit sigLoadSaveGame(Settings::getUserPath() + "savegames/quicksave2.sav");
+                emit sigLoadSaveGame(Settings::getInstance()->getUserPath() + "savegames/quicksave2.sav");
             }
             else
             {
@@ -2416,12 +2416,12 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
 
 void GameMenue::keyInputAll(Qt::Key cur)
 {
-    if (cur == Settings::getKey_Escape())
+    if (cur == Settings::getInstance()->getKey_Escape())
     {
         emit sigShowExitGame();
     }
-    else if (cur == Settings::getKey_information() ||
-             cur == Settings::getKey_information2())
+    else if (cur == Settings::getInstance()->getKey_information() ||
+             cur == Settings::getInstance()->getKey_information2())
     {
         
         Player* pPlayer = m_pMap->getCurrentViewPlayer();
@@ -2694,7 +2694,7 @@ void GameMenue::showLoadSaveGame()
 {
     QStringList wildcards;
     wildcards.append("*.sav");
-    QString path = Settings::getUserPath() + "savegames";
+    QString path = Settings::getInstance()->getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::loadSaveGame, Qt::QueuedConnection);

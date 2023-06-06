@@ -50,7 +50,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     setObjectName("GameMap");
 #endif
     Interpreter::setCppOwnerShip(this);
-    m_headerInfo.m_mapAuthor = Settings::getUsername();
+    m_headerInfo.m_mapAuthor = Settings::getInstance()->getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
     m_loaded = true;
@@ -793,8 +793,8 @@ void GameMap::killDeadUnits()
 
 void GameMap::addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
-    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
-                                                  oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
+    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getInstance()->getAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
+                                                  oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getInstance()->getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getInstance()->getAnimationSpeed())));
     oxygine::Stage::getStage()->addTween(tween);
 }
 
@@ -1859,7 +1859,7 @@ void GameMap::startGame()
             CONSOLE_PRINT("Player " + QString::number(i) + " uses ai " + QString::number(m_players[i]->getBaseGameInput()->getAiType()), GameConsole::eDEBUG);
         }
     }
-    QStringList mods = Settings::getMods();
+    QStringList mods = Settings::getInstance()->getMods();
     Interpreter* pInterpreter = Interpreter::getInstance();
     for (const auto& mod : mods)
     {
@@ -1869,7 +1869,7 @@ void GameMap::startGame()
             pInterpreter->doFunction("MapStart", "gameStart");
         }
     }
-    if (Settings::getSyncAnimations())
+    if (Settings::getInstance()->getSyncAnimations())
     {
         syncUnitsAndBuildingAnimations();
     }

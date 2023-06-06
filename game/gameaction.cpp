@@ -90,7 +90,7 @@ void GameAction::setTargetUnit(Unit *pTargetUnit)
 
 void GameAction::perform()
 {
-    if (Settings::getLogActions())
+    if (Settings::getInstance()->getLogActions())
     {
         printAction();
     }

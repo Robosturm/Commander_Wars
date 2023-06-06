@@ -56,7 +56,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     constexpr qint32 buildingInfoHeight = 135;
     QSize size(oxygine::Stage::getStage()->getWidth() - width - 80,
                oxygine::Stage::getStage()->getHeight() / 2 - buildingInfoHeight);
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         size.setHeight(oxygine::Stage::getStage()->getHeight() - buildingInfoHeight - 15);
     }
@@ -64,7 +64,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     m_MinimapPanel->setPosition(width + 50, 10);
     m_MinimapPanel->addItem(m_pMinimap);
     addChild(m_MinimapPanel);
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         size = QSize(oxygine::Stage::getStage()->getWidth() - 100, oxygine::Stage::getStage()->getHeight() - 60);
     }
@@ -78,7 +78,7 @@ MapSelectionView::MapSelectionView(QStringList filter, qint32 mapInfoHeight)
     }
     // map info text
     m_MapInfo = spPanel::create(true, size, size);
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_MapInfo->setPosition(oxygine::Stage::getStage()->getWidth() - 1, 10);
         m_MapInfo->addChild(spMoveInButton::create(m_MapInfo.get(), m_MapInfo->getScaledWidth()));

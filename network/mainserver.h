@@ -139,21 +139,42 @@ public:
      * @param objData
      */
     void onSlaveInfoDespawning(quint64 socketID, const QJsonObject & objData);
-signals:
-    void sigRemoveGame(NetworkGame* pGame);
-    void sigStartRemoteGame(QString initScript, QString id);
-    void sigExecuteServerScript();
-public slots:
+    /**
+     * @brief startRemoteGame used for ai training and to move data from one thread context to this one
+     * @param map
+     * @param configuration
+     */
+    Q_INVOKABLE void startRemoteGame(const QString initScript, const QString id);
+    /**
+     * @brief createRandomPassword
+     * @return
+     */
+    Q_INVOKABLE QString createRandomPassword() const;
+    /**
+     * @brief despawnServer
+     * @param savefile
+     */
+    Q_INVOKABLE void despawnServer(const QString savefile);
+    /**
+     * @brief despawnSlave
+     * @param socketID
+     */
+    Q_INVOKABLE void despawnSlave(quint64 socketID);
     /**
      * @brief getAutoMatchMaker
      * @param matchMaker
      * @return
      */
-    AutoMatchMaker* getAutoMatchMaker(const QString & matchMaker);
+    Q_INVOKABLE AutoMatchMaker* getAutoMatchMaker(const QString & matchMaker);
     /**
      * @brief exit
      */
-    void exit();
+    Q_INVOKABLE void exit();
+signals:
+    void sigRemoveGame(NetworkGame* pGame);
+    void sigStartRemoteGame(QString initScript, QString id);
+    void sigExecuteServerScript();
+public slots:
     /**
      * @brief recieveData we received data from
      * @param socketID
@@ -173,27 +194,6 @@ public slots:
      * @param socketId
      */
     void playerJoined(qint64 socketId);
-    /**
-     * @brief startRemoteGame used for ai training and to move data from one thread context to this one
-     * @param map
-     * @param configuration
-     */
-    void startRemoteGame(const QString & initScript, const QString & id);
-    /**
-     * @brief createRandomPassword
-     * @return
-     */
-    QString createRandomPassword() const;
-    /**
-     * @brief despawnServer
-     * @param savefile
-     */
-    void despawnServer(const QString & savefile);
-    /**
-     * @brief despawnSlave
-     * @param socketID
-     */
-    void despawnSlave(quint64 socketID);
 
 private slots:
     /**

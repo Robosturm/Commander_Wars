@@ -98,7 +98,7 @@ void FolderDialog::showFolder(QString folder)
     folder = QDir(folder).absolutePath();
     folder = GlobalUtils::makePathRelative(folder);
     m_Items.clear();
-    QDir dir(Settings::getUserPath() + folder);
+    QDir dir(Settings::getInstance()->getUserPath() + folder);
     QDir virtDir(oxygine::Resource::RCC_PREFIX_PATH + folder);
     if (!dir.exists() && !virtDir.exists())
     {

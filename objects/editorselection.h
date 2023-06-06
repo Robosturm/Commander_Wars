@@ -82,6 +82,14 @@ public:
      * @param event
      */
     void KeyInput(Qt::Key cur);
+    /**
+    * @brief getActivePalette
+    * @return
+    */
+    Q_INVOKABLE qint32 getActivePalette() const;
+    Q_INVOKABLE void selectTerrain(QString terrainID);
+    Q_INVOKABLE void selectBuilding(QString buildingID);
+    Q_INVOKABLE void selectUnit(QString unitID);
 
 signals:
     void sigUpdateSelectedPlayer();
@@ -93,23 +101,12 @@ signals:
     void sigChangeScrollValue(qint32 dir);
     void sigPaletteChanged(qint32 newPalette);
 public slots:
-    /**
-    * @brief getActivePalette
-    * @return
-    */
-    qint32 getActivePalette() const;
-    void selectTerrain(QString terrainID);
-    void selectBuilding(QString buildingID);
-    void selectUnit(QString unitID);
     void updateSelectedPlayer();
     void changeSelectedPlayer(qint32 player);
-
     void updateTerrainView();
     void updateBuildingView();
     void updateUnitView();
-
     void changeScrollValue(qint32 dir);
-
     void onPaletteChanged(qint32 newPalette);
 private:
     /**

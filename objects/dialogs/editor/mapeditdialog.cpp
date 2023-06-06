@@ -205,7 +205,7 @@ void MapEditDialog::showSelectScript()
 {    
     QStringList wildcards;
     wildcards.append("*.js");
-    QString path = Settings::getUserPath() + "maps";
+    QString path = Settings::getInstance()->getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapEditDialog::scriptFileChanged, Qt::QueuedConnection);    

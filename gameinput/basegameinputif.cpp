@@ -107,8 +107,8 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
         }
         case GameEnums::AiTypes_VeryEasy:
         {
-            if (Settings::getSpawnAiProcess() &&
-                !Settings::getAiSlave())
+            if (Settings::getInstance()->getSpawnAiProcess() &&
+                !Settings::getInstance()->getAiSlave())
             {
                 ret = spDummyAi::create(pMap, type);
             }
@@ -120,8 +120,8 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
         }
         case GameEnums::AiTypes_Normal:
         {
-            if (Settings::getSpawnAiProcess() &&
-                !Settings::getAiSlave())
+            if (Settings::getInstance()->getSpawnAiProcess() &&
+                !Settings::getInstance()->getAiSlave())
             {
                 ret = spDummyAi::create(pMap, type);
             }
@@ -133,8 +133,8 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
         }
         case GameEnums::AiTypes_NormalOffensive:
         {
-            if (Settings::getSpawnAiProcess() &&
-                !Settings::getAiSlave())
+            if (Settings::getInstance()->getSpawnAiProcess() &&
+                !Settings::getInstance()->getAiSlave())
             {
                 ret = spDummyAi::create(pMap, type);
             }
@@ -146,8 +146,8 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
         }
         case GameEnums::AiTypes_NormalDefensive:
         {
-            if (Settings::getSpawnAiProcess() &&
-                !Settings::getAiSlave())
+            if (Settings::getInstance()->getSpawnAiProcess() &&
+                !Settings::getInstance()->getAiSlave())
             {
                 ret = spDummyAi::create(pMap, type);
             }
@@ -175,8 +175,8 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
         }
         default: // heavy ai case
         {
-            if (Settings::getSpawnAiProcess() &&
-                !Settings::getAiSlave())
+            if (Settings::getInstance()->getSpawnAiProcess() &&
+                !Settings::getInstance()->getAiSlave())
             {
                 ret = spDummyAi::create(pMap, type);
             }
@@ -238,7 +238,7 @@ bool BaseGameInputIF::getProcessing() const
 
 void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
 {
-    if (Settings::getAutoCamera())
+    if (Settings::getInstance()->getAutoCamera())
     {
         if ((m_pMap != nullptr && m_pMap->getCurrentPlayer() == m_pPlayer) ||
             m_pPlayer == nullptr)

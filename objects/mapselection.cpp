@@ -15,7 +15,7 @@
 
 MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QStringList & filter)
     : m_filter(filter),
-      m_currentFolder(Settings::getUserPath() + "maps"),
+      m_currentFolder(Settings::getInstance()->getUserPath() + "maps"),
       m_itemChangedTimer(this)
 {
 #ifdef GRAPHICSUPPORT
@@ -298,7 +298,7 @@ void MapSelection::changeFolder(QString folder)
     QString newFolder = folder;
     if (newFolder == "")
     {
-        newFolder = Settings::getUserPath() + "maps";
+        newFolder = Settings::getInstance()->getUserPath() + "maps";
     }
     else if (newFolder == "..")
     {

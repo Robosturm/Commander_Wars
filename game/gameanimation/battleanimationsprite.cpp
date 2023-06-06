@@ -196,8 +196,8 @@ qint32 BattleAnimationSprite::loadDyingFadeOutAnimation(qint32 fadeoutTime)
             for (auto & sprite : sprites)
             {
                 oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenAlpha(0),
-                                                              oxygine::timeMS(fadeoutTime  / static_cast<qint32>(Settings::getBattleAnimationSpeed())), 1, false,
-                                                              oxygine::timeMS(count * frameDelay / static_cast<qint32>(Settings::getBattleAnimationSpeed())));
+                                                              oxygine::timeMS(fadeoutTime  / static_cast<qint32>(Settings::getInstance()->getBattleAnimationSpeed())), 1, false,
+                                                              oxygine::timeMS(count * frameDelay / static_cast<qint32>(Settings::getInstance()->getBattleAnimationSpeed())));
                 sprite->addTween(tween);
             }
             loadSound("dying_fadeout.wav", 1, count * frameDelay);
@@ -614,7 +614,7 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
         {
             startFrame = pAnim->getColumns() - 1;
         }
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS((frames - startFrame + 1) * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS((frames - startFrame + 1) * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getInstance()->getBattleAnimationSpeed())));
         pSprite->addTween(tween);
         if (deleteAfter && moveTime <= 0)
         {
@@ -676,7 +676,7 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
             {
                 endX = xPos - movement.x();
             }
-            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(QPoint(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(QPoint(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getInstance()->getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getInstance()->getBattleAnimationSpeed())));
             if (deleteAfter)
             {
                 moveTween->addDoneCallback([this](oxygine::Event * pEvent)
@@ -695,13 +695,13 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
                 {
                     rotation = -rotation;
                 }
-                oxygine::spTween rotationTween = oxygine::createTween(oxygine::Actor::TweenRotation(rotation / 360.0f * 2.0f * M_PI), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+                oxygine::spTween rotationTween = oxygine::createTween(oxygine::Actor::TweenRotation(rotation / 360.0f * 2.0f * M_PI), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getInstance()->getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getInstance()->getBattleAnimationSpeed())));
                 pSprite->addTween(rotationTween);
             }
         }
         if (showDelay > 0)
         {
-            oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.96f, 1.0f), oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())), 1);
+            oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.96f, 1.0f), oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getInstance()->getBattleAnimationSpeed())), 1);
             pSprite->addTween(visibileTween);
         }
     }
@@ -781,7 +781,7 @@ void BattleAnimationSprite::addMoveTweenToLastLoadedSprites(qint32 deltaX, qint3
                 qint64 time = moveTime;
                 if (scaleWithAnimationSpeed)
                 {
-                    time /= Settings::getBattleAnimationSpeed();
+                    time /= Settings::getInstance()->getBattleAnimationSpeed();
                 }
                 oxygine::spTween moveTween;
                 if (-1 < deltaX && deltaX < 1)
@@ -831,8 +831,8 @@ void BattleAnimationSprite::loadColorOverlayForLastLoadedFrame(QColor color, qin
             {
                 // add impact image
                 oxygine::ColorRectSprite::TweenColor tweenColor2(color);
-                oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(static_cast<qint64>(time / Settings::getBattleAnimationSpeed())), loops, true,
-                                                                    oxygine::timeMS(static_cast<qint64>((showDelayMs + m_nextFrameTimer.interval() * (i - m_maxUnitCount)) / Settings::getBattleAnimationSpeed())));
+                oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(static_cast<qint64>(time / Settings::getInstance()->getBattleAnimationSpeed())), loops, true,
+                                                                    oxygine::timeMS(static_cast<qint64>((showDelayMs + m_nextFrameTimer.interval() * (i - m_maxUnitCount)) / Settings::getInstance()->getBattleAnimationSpeed())));
                 sprite->addTween(colorTween2);
             }
         }
@@ -858,8 +858,8 @@ void BattleAnimationSprite::addUnitshakeToLastLoadedFrame(qint32 startIntensity,
             for (auto & sprite : (*frame)[i - 1])
             {
                 // add impact image
-                oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getBattleAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
-                                                                               oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getBattleAnimationSpeed())));
+                oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getInstance()->getBattleAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
+                                                                               oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getInstance()->getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getInstance()->getBattleAnimationSpeed())));
                 sprite->addTween(tween);
             }
         }
@@ -893,7 +893,7 @@ void BattleAnimationSprite::loadSound(QString file, qint32 loops, qint32 delay, 
         data.sound = file;
         data.loops = loops;
         m_Sounds.append(data);
-        pAudio->playSound(file, loops, delay / static_cast<qint32>(Settings::getBattleAnimationSpeed()), volume, stopOldestSound);
+        pAudio->playSound(file, loops, delay / static_cast<qint32>(Settings::getInstance()->getBattleAnimationSpeed()), volume, stopOldestSound);
     }
 }
 
@@ -905,7 +905,7 @@ void BattleAnimationSprite::stopSound(bool forceStop)
     while (i < m_Sounds.size())
     {
         if (m_Sounds[i].loops < 0 || forceStop ||
-            Settings::getBattleAnimationSpeedValue() > 10)
+            Settings::getInstance()->getBattleAnimationSpeedValue() > 10)
         {
             pAudio->stopSound(m_Sounds[i].sound);
             m_Sounds.removeAt(i);
@@ -919,7 +919,7 @@ void BattleAnimationSprite::stopSound(bool forceStop)
 
 void BattleAnimationSprite::setUnitFrameDelay(qint32 delay)
 {
-    m_nextFrameTimer.setInterval(delay / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    m_nextFrameTimer.setInterval(delay / static_cast<qint32>(Settings::getInstance()->getBattleAnimationSpeed()));
 }
 
 void BattleAnimationSprite::startNextFrame()
@@ -1115,23 +1115,23 @@ void BattleAnimationSprite::addScreenshake(qint32 startIntensity, float decay, q
     auto pOwner = dynamic_cast<BattleAnimation*>(getParent());
     if (pOwner != nullptr)
     {
-        pOwner->addScreenshake(startIntensity, decay * Settings::getAnimationSpeed() / Settings::getBattleAnimationSpeed(),
-                               durationMs  * Settings::getAnimationSpeed() / Settings::getBattleAnimationSpeed(),
-                               delayMs  * Settings::getAnimationSpeed() / Settings::getBattleAnimationSpeed(), shakePauseMs);
+        pOwner->addScreenshake(startIntensity, decay * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(),
+                               durationMs  * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(),
+                               delayMs  * Settings::getInstance()->getAnimationSpeed() / Settings::getInstance()->getBattleAnimationSpeed(), shakePauseMs);
     }
 }
 
 void BattleAnimationSprite::addSpriteScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
-    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getBattleAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
-                                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getBattleAnimationSpeed())));
+    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getInstance()->getBattleAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
+                                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getInstance()->getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getInstance()->getBattleAnimationSpeed())));
     getParent()->addTween(tween);
 }
 
 void BattleAnimationSprite::addSpriteShakeY(qint32 startIntensity, float startPercent, float endPercent, qint32 durationMs, qint32 delayMs, qint32 loops)
 {
     oxygine::spTween tween = oxygine::createTween(TweenShakeY(startIntensity, startPercent, endPercent),
-                                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getBattleAnimationSpeed())), loops, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getBattleAnimationSpeed())));
+                                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getInstance()->getBattleAnimationSpeed())), loops, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getInstance()->getBattleAnimationSpeed())));
     getParent()->addTween(tween);
 }
 

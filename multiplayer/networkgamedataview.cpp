@@ -130,7 +130,7 @@ QString NetworkGameDataView::getModName(qint32 mod) const
     auto & info = m_data.getMods();
     if (mod >= 0 && mod < info.size())
     {
-        return Settings::getModName(info[mod]);
+        return Settings::getInstance()->getModName(info[mod]);
     }
     return tr("Unknown");
 }

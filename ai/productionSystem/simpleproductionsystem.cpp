@@ -383,8 +383,10 @@ qint32 SimpleProductionSystem::getProductionFromList(const QStringList unitIds, 
     {
         updateActiveProductionSystem(pBuildings);
     }
+    constexpr qint32 minBaseCost = 0;
+    constexpr qint32 maxBaseCost = -1;
     std::vector<CurrentBuildDistribution> buildDistribution;
-    getBuildDistribution(buildDistribution, pUnits, minBuildMode, maxBuildMode);
+    getBuildDistribution(buildDistribution, pUnits, minBuildMode, maxBuildMode, minBaseCost, maxBaseCost);
     qint32 index = -1;
     for (auto & item : buildDistribution)
     {

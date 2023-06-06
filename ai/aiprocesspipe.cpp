@@ -35,7 +35,7 @@ AiProcessPipe::AiProcessPipe()
 
 AiProcessPipe::~AiProcessPipe()
 {
-    if (Settings::getAiSlave())
+    if (Settings::getInstance()->getAiSlave())
     {
         m_animationSkipper.restoreAnimationSettings();
     }
@@ -43,14 +43,14 @@ AiProcessPipe::~AiProcessPipe()
 
 void AiProcessPipe::startPipe()
 {
-    QString pipeName = PIPENAME + Settings::getPipeUuid();
-    if (Settings::getAiSlave())
+    QString pipeName = PIPENAME + Settings::getInstance()->getPipeUuid();
+    if (Settings::getInstance()->getAiSlave())
     {
         m_animationSkipper.startSeeking();
         m_pClient = spLocalClient::create(this);
         m_pActiveConnection = m_pClient.get();
     }
-    else if (Settings::getSpawnAiProcess())
+    else if (Settings::getInstance()->getSpawnAiProcess())
     {
         m_pServer = spLocalServer::create(this);
         m_pActiveConnection = m_pServer.get();
@@ -77,8 +77,8 @@ void AiProcessPipe::onConnected(quint64 socket)
 void AiProcessPipe::onGameStarted(GameMenue* pMenu)
 {
     if (m_pActiveConnection != nullptr &&
-        Settings::getSpawnAiProcess() &&
-        !Settings::getAiSlave())
+        Settings::getInstance()->getSpawnAiProcess() &&
+        !Settings::getInstance()->getAiSlave())
     {
         CONSOLE_PRINT("AI-Pipe waiting for ready", GameConsole::eDEBUG);
         while (m_pipeState != PipeState::Ready)
@@ -118,8 +118,8 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
 void AiProcessPipe::onQuitGame()
 {
     if (m_pActiveConnection != nullptr &&
-        Settings::getSpawnAiProcess() &&
-        !Settings::getAiSlave())
+        Settings::getInstance()->getSpawnAiProcess() &&
+        !Settings::getInstance()->getAiSlave())
     {
         QMutexLocker locker(&m_ActionMutex);
         m_pipeState = PipeState::Ready;

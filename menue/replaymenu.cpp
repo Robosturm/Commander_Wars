@@ -163,7 +163,7 @@ void ReplayMenu::loadUIButtons()
     m_taskBar = oxygine::spBox9Sprite::create();
     m_taskBar->setResAnim(pAnim);
     qint32 width = oxygine::Stage::getStage()->getWidth();
-    if (!Settings::getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice())
     {
         width += -m_IngameInfoBar->getWidth() - m_IngameInfoBar->getDetailedViewBox()->getScaledWidth();
     }
@@ -263,7 +263,7 @@ void ReplayMenu::loadUIButtons()
     pButtonBox->setPosition((oxygine::Stage::getStage()->getWidth() - m_IngameInfoBar->getScaledWidth()) - pButtonBox->getScaledWidth(), 0);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_XYButtonBox = pButtonBox;
-    m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates());
+    m_XYButtonBox->setVisible(Settings::getInstance()->getShowIngameCoordinates());
     addChild(pButtonBox);
 }
 
@@ -528,8 +528,8 @@ void ReplayMenu::showConfig()
     pPanel->addItem(pTextfield);
     spCheckbox pCheckbox = spCheckbox::create();
     pCheckbox->setTooltipText(tr("If active: walk, capture power animations, and so on will be shown."));
-    pCheckbox->setChecked(Settings::getOverworldAnimations());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setOverworldAnimations, Qt::QueuedConnection);
+    pCheckbox->setChecked(Settings::getInstance()->getOverworldAnimations());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance()->getInstance(), &Settings::getInstance()->setOverworldAnimations, Qt::QueuedConnection);
     pCheckbox->setPosition(width - 130, y);
     pPanel->addItem(pCheckbox);
     y += pTextfield->getHeight() + 10;
@@ -541,13 +541,13 @@ void ReplayMenu::showConfig()
     pPanel->addItem(pTextfield);
     QStringList items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy")};
     spDropDownmenu pAnimationMode = spDropDownmenu::create(450, items);
-    pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationMode()));
+    pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getBattleAnimationMode()));
     pAnimationMode->setPosition(width - 130, y);
     pAnimationMode->setTooltipText(tr("Select which in-game animations are played."));
     pPanel->addItem(pAnimationMode);
     connect(pAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        Settings::setBattleAnimationMode(static_cast<GameEnums::BattleAnimationMode>(value));
+        Settings::getInstance()->setBattleAnimationMode(static_cast<GameEnums::BattleAnimationMode>(value));
     });
     y += pTextfield->getHeight() + 10;
 
@@ -559,12 +559,12 @@ void ReplayMenu::showConfig()
     items = {tr("Detailed"), tr("Overworld")};
     spDropDownmenu pBattleAnimationMode = spDropDownmenu::create(450, items);
     pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played during combat."));
-    pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationType()));
+    pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getBattleAnimationType()));
     pBattleAnimationMode->setPosition(width - 130, y);
     pPanel->addItem(pBattleAnimationMode);
     connect(pBattleAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        Settings::setBattleAnimationType(static_cast<GameEnums::BattleAnimationType>(value));
+        Settings::getInstance()->setBattleAnimationType(static_cast<GameEnums::BattleAnimationType>(value));
     });
     y += pTextfield->getHeight() + 10;
 
@@ -576,12 +576,12 @@ void ReplayMenu::showConfig()
     items = {tr("off"), tr("on")};
     spDropDownmenu pDialogAnimationMode = spDropDownmenu::create(450, items);
     pDialogAnimationMode->setTooltipText(tr("Selects if capture animations are shown or not."));
-    pDialogAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getDialogAnimation()));
+    pDialogAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getDialogAnimation()));
     pDialogAnimationMode->setPosition(width - 130, y);
     pPanel->addItem(pDialogAnimationMode);
     connect(pDialogAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        Settings::setDialogAnimation(value);
+        Settings::getInstance()->setDialogAnimation(value);
     });
     y += pTextfield->getHeight() + 10;
 
@@ -593,12 +593,12 @@ void ReplayMenu::showConfig()
     items = {tr("off"), tr("on")};
     spDropDownmenu pCaptureAnimationMode = spDropDownmenu::create(450, items);
     pCaptureAnimationMode->setTooltipText(tr("Selects if the dialogs are shown or not."));
-    pCaptureAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getCaptureAnimation()));
+    pCaptureAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getCaptureAnimation()));
     pCaptureAnimationMode->setPosition(width - 130, y);
     pPanel->addItem(pCaptureAnimationMode);
     connect(pCaptureAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        Settings::setCaptureAnimation(value);
+        Settings::getInstance()->setCaptureAnimation(value);
     });
     y += pTextfield->getHeight() + 10;
 
@@ -610,12 +610,12 @@ void ReplayMenu::showConfig()
     items = {tr("off"), tr("on")};
     spDropDownmenu pDay2DayMode = spDropDownmenu::create(450, items);
     pDay2DayMode->setTooltipText(tr("Selects if the day to day screen gets skipped or not. Note on fog of war maps the screen is still shown."));
-    pDay2DayMode->setCurrentItem(static_cast<qint32>(Settings::getDay2dayScreen()));
+    pDay2DayMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getDay2dayScreen()));
     pDay2DayMode->setPosition(width - 130, y);
     pPanel->addItem(pDay2DayMode);
     connect(pDay2DayMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        Settings::setDay2dayScreen(value);
+        Settings::getInstance()->setDay2dayScreen(value);
     });
     y += pTextfield->getHeight() + 10;
 
@@ -627,12 +627,12 @@ void ReplayMenu::showConfig()
     items = {tr("off"), tr("on")};
     spDropDownmenu pMovementAnimationMode = spDropDownmenu::create(450, items);
     pMovementAnimationMode->setTooltipText(tr("Selects if movement animations get shown or not."));
-    pMovementAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getMovementAnimations()));
+    pMovementAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getMovementAnimations()));
     pMovementAnimationMode->setPosition(width - 130, y);
     pPanel->addItem(pMovementAnimationMode);
     connect(pMovementAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        Settings::setMovementAnimations(value);
+        Settings::getInstance()->setMovementAnimations(value);
     });
     y += pTextfield->getHeight() + 10;
 
@@ -644,11 +644,11 @@ void ReplayMenu::showConfig()
     spSlider pAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Note: This does not include capture or battle animations."));
     pAnimationSpeed->setPosition(width - 130, y);
-    pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getAnimationSpeedValue()));
+    pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getAnimationSpeedValue()));
     pPanel->addItem(pAnimationSpeed);
     connect(pAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
-        Settings::setAnimationSpeed(static_cast<quint32>(value));
+        Settings::getInstance()->setAnimationSpeed(static_cast<quint32>(value));
     });
     y += pTextfield->getHeight() + 10;
 
@@ -660,11 +660,11 @@ void ReplayMenu::showConfig()
     spSlider pWalkSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pWalkSpeed->setTooltipText(tr("Selects the speed at which units walk across the map."));
     pWalkSpeed->setPosition(width - 130, y);
-    pWalkSpeed->setCurrentValue(static_cast<qint32>(Settings::getWalkAnimationSpeedValue()));
+    pWalkSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getWalkAnimationSpeedValue()));
     pPanel->addItem(pWalkSpeed);
     connect(pWalkSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
-        Settings::setWalkAnimationSpeed(static_cast<quint32>(value));
+        Settings::getInstance()->setWalkAnimationSpeed(static_cast<quint32>(value));
     });
     y += pTextfield->getHeight() + 10;
 
@@ -676,11 +676,11 @@ void ReplayMenu::showConfig()
     spSlider pBattleAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pBattleAnimationSpeed->setTooltipText(tr("Selects the speed at which battle animations are played."));
     pBattleAnimationSpeed->setPosition(width - 130, y);
-    pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getBattleAnimationSpeedValue()));
+    pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getBattleAnimationSpeedValue()));
     pPanel->addItem(pBattleAnimationSpeed);
     connect(pBattleAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
-        Settings::setBattleAnimationSpeed(static_cast<quint32>(value));
+        Settings::getInstance()->setBattleAnimationSpeed(static_cast<quint32>(value));
     });
     y += pTextfield->getHeight() + 10;
 
@@ -692,11 +692,11 @@ void ReplayMenu::showConfig()
     spSlider pCaptureAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pCaptureAnimationSpeed->setTooltipText(tr("Selects the speed at which capture animations are played."));
     pCaptureAnimationSpeed->setPosition(width - 130, y);
-    pCaptureAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getCaptureAnimationSpeedValue()));
+    pCaptureAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getCaptureAnimationSpeedValue()));
     pPanel->addItem(pCaptureAnimationSpeed);
     connect(pCaptureAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
-        Settings::setCaptureAnimationSpeed(static_cast<quint32>(value));
+        Settings::getInstance()->setCaptureAnimationSpeed(static_cast<quint32>(value));
     });
     y += pTextfield->getHeight() + 10;
 
@@ -708,11 +708,11 @@ void ReplayMenu::showConfig()
     spSlider pDialogAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pDialogAnimationSpeed->setTooltipText(tr("Selects the speed at which dialog animations are played."));
     pDialogAnimationSpeed->setPosition(width - 130, y);
-    pDialogAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getDialogAnimationSpeedValue()));
+    pDialogAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getDialogAnimationSpeedValue()));
     pPanel->addItem(pDialogAnimationSpeed);
     connect(pDialogAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
-        Settings::setDialogAnimationSpeed(static_cast<quint32>(value));
+        Settings::getInstance()->setDialogAnimationSpeed(static_cast<quint32>(value));
     });
     y += pTextfield->getHeight() + 10;
 
@@ -753,8 +753,8 @@ void ReplayMenu::keyInput(oxygine::KeyEvent event)
         Qt::Key cur = event.getKey();
         if (m_Focused)
         {
-            if (cur == Settings::getKey_information() ||
-                     cur == Settings::getKey_information2())
+            if (cur == Settings::getInstance()->getKey_information() ||
+                     cur == Settings::getInstance()->getKey_information2())
             {
 
                 Player* pPlayer = m_pMap->getCurrentViewPlayer();

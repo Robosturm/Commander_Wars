@@ -37,7 +37,7 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     }
     qint32 baseYSize = maxSize.height();
     qint32 startY = m_ArmyBannerPanel->getScaledHeight();
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         auto moveInButton = spMoveInButton::create(m_ArmyBannerPanel.get(), m_ArmyBannerPanel->getScaledHeight(), 1, -1, 2.0f, true);
         m_ArmyBannerPanel->setY(-m_ArmyBannerPanel->getScaledHeight() - getY() + 1);
@@ -53,7 +53,7 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     addChild(m_CoFieldPanel);
 
     qint32 width = (maxSize.width() - m_CoFieldPanel->getScaledWidth());
-    if (!Settings::getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice())
     {
         width /= 2;
     }
@@ -105,7 +105,7 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     }
     m_pCurrentCO->setScale(scale);
     pPanelbox->addChild(m_pCurrentCO);
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         pPanelbox->setVisible(false);
     }

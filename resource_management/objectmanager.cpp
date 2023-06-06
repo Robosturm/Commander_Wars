@@ -33,7 +33,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
     if (width < 0)
     {
         width = textField->getTextRect().width() + 10;
-        if (!Settings::getSmallScreenDevice())
+        if (!Settings::getInstance()->getSmallScreenDevice())
         {
             if (width < 180)
             {

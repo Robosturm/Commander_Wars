@@ -95,8 +95,8 @@ void GameAnimationPower::createMovingText(const QString font, const QString text
     textField->setStyle(headline);
     textField->setHtmlText(text);
     m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
-    oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), oxygine::timeMS(1), 1, false, oxygine::timeMS(static_cast<qint32>(static_cast<float>(delay) / Settings::getAnimationSpeed())));
-    oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenPosition(endPos), oxygine::timeMS(static_cast<qint32>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
+    oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), oxygine::timeMS(1), 1, false, oxygine::timeMS(static_cast<qint32>(static_cast<float>(delay) / Settings::getInstance()->getAnimationSpeed())));
+    oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenPosition(endPos), oxygine::timeMS(static_cast<qint32>(static_cast<float>(duration) / Settings::getInstance()->getAnimationSpeed())), 1, false, oxygine::timeMS(0), easeType);
     m_lastCreatedTweenQueue->add(tween3);
     m_lastCreatedTweenQueue->add(tween4);
     textField->addTween(m_lastCreatedTweenQueue);
@@ -114,8 +114,8 @@ void GameAnimationPower::addMovingCoSprite(const QString sprite, float scale, QP
         pSprite->setSize(pAnim->getWidth(), pAnim->getHeight());
         pSprite->setPosition(startPos.x(), startPos.y());
         m_lastCreatedTweenQueue = oxygine::spTweenQueue::create();
-        oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(endPos), oxygine::timeMS(static_cast<qint32>(static_cast<float>(duration) / Settings::getAnimationSpeed())), 1, false,
-                                                       oxygine::timeMS(static_cast<qint32>(static_cast<float>(delay) / Settings::getAnimationSpeed())), easeType);
+        oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(endPos), oxygine::timeMS(static_cast<qint32>(static_cast<float>(duration) / Settings::getInstance()->getAnimationSpeed())), 1, false,
+                                                       oxygine::timeMS(static_cast<qint32>(static_cast<float>(delay) / Settings::getInstance()->getAnimationSpeed())), easeType);
         m_lastCreatedTweenQueue->add(tween1);
         pSprite->addTween(m_lastCreatedTweenQueue);
         addChild(pSprite);
@@ -137,7 +137,7 @@ QPoint GameAnimationPower::getCoSpriteSize(const QString sprite) const
 
 void GameAnimationPower::setDuration(qint32 timeMs)
 {
-    m_endTimer.setInterval(static_cast<qint32>(static_cast<float>(timeMs) / Settings::getAnimationSpeed()));
+    m_endTimer.setInterval(static_cast<qint32>(static_cast<float>(timeMs) / Settings::getInstance()->getAnimationSpeed()));
 }
 
 void GameAnimationPower::createRotatingBackground(const QString resAnim, const QColor color, qint32 speedX)
@@ -173,7 +173,7 @@ void GameAnimationPower::createRotatingBackground(const QString resAnim, const Q
 
 void GameAnimationPower::createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop)
 {
-    if (!Settings::getSmallScreenDevice())
+    if (!Settings::getInstance()->getSmallScreenDevice())
     {
         QString description;
         switch (powerMode)

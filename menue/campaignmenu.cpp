@@ -109,7 +109,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
     m_pSlidingActor->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(m_pSlidingActor);
     m_campaignBackground = oxygine::spSingleResAnim::create();
-    QString path = Settings::getUserPath() + m_campaignData.getMapBackground();
+    QString path = Settings::getInstance()->getUserPath() + m_campaignData.getMapBackground();
     if (!QFile::exists(path))
     {
         path = oxygine::Resource::RCC_PREFIX_PATH + m_campaignData.getMapBackground();
@@ -342,7 +342,7 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
         file = files[index];
         if (!QFile::exists(dir + "/" + file))
         {
-            dir = Settings::getUserPath() + folder;
+            dir = Settings::getInstance()->getUserPath() + folder;
             if (!QFile::exists(dir + "/" + file))
             {
                 dir = oxygine::Resource::RCC_PREFIX_PATH + folder;
@@ -451,7 +451,7 @@ void CampaignMenu::mapSelectionItemClicked(QString item)
     QFileInfo info = QFileInfo(item);
     if (!info.exists())
     {
-        info = QFileInfo(Settings::getUserPath() + item);
+        info = QFileInfo(Settings::getInstance()->getUserPath() + item);
         if (!info.exists())
         {
             info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
@@ -468,7 +468,7 @@ void CampaignMenu::mapSelectionItemChanged(QString item)
     QFileInfo info = QFileInfo(item);
     if (!info.exists())
     {
-        info = QFileInfo(Settings::getUserPath() + item);
+        info = QFileInfo(Settings::getInstance()->getUserPath() + item);
         if (!info.exists())
         {
             info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
@@ -512,7 +512,7 @@ void CampaignMenu::showSaveCampaign()
 {
     QStringList wildcards;
     wildcards.append("*.camp");
-    QString path = Settings::getUserPath() + "savegames";
+    QString path = Settings::getInstance()->getUserPath() + "savegames";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);    
@@ -532,10 +532,10 @@ void CampaignMenu::saveCampaign(QString filename)
 
 void CampaignMenu::autosave()
 {
-    if (Settings::getAutoSavingCycle() > 0)
+    if (Settings::getInstance()->getAutoSavingCycle() > 0)
     {
         CONSOLE_PRINT("CampaignMenu::autosave()", GameConsole::eDEBUG);
-        QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + m_pMapSelectionView->getCurrentCampaign()->getName() + "_autosave_", ".camp", Settings::getAutoSavingCycle());
+        QString path = GlobalUtils::getNextAutosavePath(Settings::getInstance()->getUserPath() + "savegames/" + m_pMapSelectionView->getCurrentCampaign()->getName() + "_autosave_", ".camp", Settings::getInstance()->getAutoSavingCycle());
         saveCampaign(path);
     }
 }

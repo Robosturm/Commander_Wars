@@ -781,7 +781,7 @@ void BattleAnimation::nextAnimatinStep()
             if (remainingDuration > 0)
             {
 
-                m_battleTimer.start(remainingDuration / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+                m_battleTimer.start(remainingDuration / static_cast<qint32>(Settings::getInstance()->getBattleAnimationSpeed()));
                 break;
             }
             else
@@ -882,17 +882,17 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     if (endHp < 0.0f)
     {
         endHp = 0.0f;
-        oxygine::spTween visibleTween = oxygine::createTween(TweenToggleVisibility(0, 0.9), oxygine::timeMS(1), 1, false, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+        oxygine::spTween visibleTween = oxygine::createTween(TweenToggleVisibility(0, 0.9), oxygine::timeMS(1), 1, false, oxygine::timeMS(static_cast<qint64>(800 / Settings::getInstance()->getBattleAnimationSpeed())));
         pHealthbar->addTween(visibleTween);
     }
     oxygine::VStyleActor::TweenColor tweenColor(getHealthBarColor(endHp));
     TweenChangeNumberText tweenChangeNumber(GlobalUtils::roundUp(startHp), GlobalUtils::roundUp(endHp));
 
-    oxygine::spTween colorTween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+    oxygine::spTween colorTween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(800 / Settings::getInstance()->getBattleAnimationSpeed())));
     pHealthbar->addTween(colorTween);
-    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth((spriteWidth -  healthBarSize) * endHp / Unit::MAX_UNIT_HP + MIN_HEALTHBAR_WIDTH), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth((spriteWidth -  healthBarSize) * endHp / Unit::MAX_UNIT_HP + MIN_HEALTHBAR_WIDTH), oxygine::timeMS(static_cast<qint64>(800 / Settings::getInstance()->getBattleAnimationSpeed())));
     pHealthbar->addTween(posTween);
-    oxygine::spTween numberTween = oxygine::createTween(tweenChangeNumber, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+    oxygine::spTween numberTween = oxygine::createTween(tweenChangeNumber, oxygine::timeMS(static_cast<qint64>(800 / Settings::getInstance()->getBattleAnimationSpeed())));
     pHealthtext->addTween(numberTween);
 
     if (m_currentState <= AnimationProgress::AttackerImpact)
@@ -960,12 +960,12 @@ void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite & pSprit
 void BattleAnimation::startBattleTimer(qint32 duration)
 {
     CONSOLE_PRINT("Starting battle timer with base duration: " + QString::number(duration), GameConsole::eDEBUG);
-    m_battleTimer.start(duration / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    m_battleTimer.start(duration / static_cast<qint32>(Settings::getInstance()->getBattleAnimationSpeed()));
 }
 
 void BattleAnimation::addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
-    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getBattleAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
-                                                  oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getBattleAnimationSpeed())));
+    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getInstance()->getBattleAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
+                                                  oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getInstance()->getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getInstance()->getBattleAnimationSpeed())));
     addTween(tween);
 }

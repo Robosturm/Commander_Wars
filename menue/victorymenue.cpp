@@ -88,7 +88,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     {
         m_pGraphBackground->setResAnim(pAnim);
         qint32 widthCount = 0;
-        if (Settings::getSmallScreenDevice())
+        if (Settings::getInstance()->getSmallScreenDevice())
         {
             widthCount = (oxygine::Stage::getStage()->getWidth() - 110) / static_cast<qint32>(pAnim->getWidth());
         }
@@ -97,7 +97,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
             widthCount = (oxygine::Stage::getStage()->getWidth() - 310) / static_cast<qint32>(pAnim->getWidth());
         }
         qint32 heigthCount = 0;
-        if (Settings::getSmallScreenDevice())
+        if (Settings::getInstance()->getSmallScreenDevice())
         {
             heigthCount = (oxygine::Stage::getStage()->getHeight() - 50) / static_cast<qint32>(pAnim->getHeight());
         }
@@ -112,7 +112,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
         m_pGraphBackground->setColor(255, 255, 255, 200);
         m_pGraphBackground->setGuides(0, pAnim->getWidth(), 0, pAnim->getHeight());
     }
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_pGraphBackground->setPosition(oxygine::Stage::getStage()->getWidth() - 10 - m_pGraphBackground->getScaledWidth(), 10);
     }
@@ -225,7 +225,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     connect(&m_ProgressTimer, &QTimer::timeout, this, &VictoryMenue::updateGraph, Qt::QueuedConnection);
     spPanel panel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - pButtonExit->getScaledWidth() - 30, 105), QSize(oxygine::Stage::getStage()->getWidth() - pButtonExit->getX() - 20, 40));
 
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         panel->setPosition(10, oxygine::Stage::getStage()->getHeight() - 1);
         auto moveInButton = spMoveInButton::create(panel.get(), panel->getScaledHeight(), -1, -1, 2.0f, true);
@@ -312,7 +312,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     m_Textfield = oxygine::spTextField::create();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     m_Textfield->setStyle(headerStyle);
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_Textfield->setVisible(false);
     }
@@ -320,7 +320,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
 
     m_PlayerSelectPanel = spPanel::create(true, QSize(200, m_pGraphBackground->getScaledHeight()), QSize(200, 100));
     m_PlayerSelectPanel->setPosition(5, m_pGraphBackground->getY());
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_PlayerSelectPanel->setX(-m_PlayerSelectPanel->getScaledWidth() + 1);
         auto moveButton = spMoveInButton::create(m_PlayerSelectPanel.get(), m_PlayerSelectPanel->getScaledWidth(), 1, -1);
@@ -519,7 +519,7 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
     connect(this, &VictoryMenue::sigFinishCurrentGraph, this, &VictoryMenue::finishGraph, Qt::QueuedConnection);
     pApp->continueRendering();
     Mainapp::getAiProcessPipe().onQuitGame();
-    if (Settings::getAiSlave())
+    if (Settings::getInstance()->getAiSlave())
     {
         connect(this, &VictoryMenue::sigQuitOnAiPipe, this, &VictoryMenue::quitOnAiPipe, Qt::QueuedConnection);
         emit sigQuitOnAiPipe();
@@ -651,7 +651,7 @@ void VictoryMenue::createStatisticsView()
     
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_statisticsBox = oxygine::spBox9Sprite::create();
-    if (Settings::getSmallScreenDevice())
+    if (Settings::getInstance()->getSmallScreenDevice())
     {
         m_statisticsBox->setSize(oxygine::Stage::getStage()->getWidth() - 10, oxygine::Stage::getStage()->getHeight() - 110);
         m_statisticsBox->setPosition(5, 10);
@@ -727,7 +727,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
     {
         m_ProgressTimer.stop();
         m_ProgressTimer.start(getStepTime());
-        if (!Settings::getSmallScreenDevice())
+        if (!Settings::getInstance()->getSmallScreenDevice())
         {
             m_PlayerSelectPanel->setVisible(true);
         }
@@ -1215,7 +1215,7 @@ void VictoryMenue::showPlayerStatistic(qint32 player)
     if (player >= 0 && player < data.size())
     {
         const auto & playerdata = data[player];
-        if (Settings::getSmallScreenDevice())
+        if (Settings::getInstance()->getSmallScreenDevice())
         {
             m_statisticsView = spUnitStatisticView::create(playerdata, oxygine::Stage::getStage()->getWidth() - 30, oxygine::Stage::getStage()->getHeight() - 180, m_pMap->getPlayer(player), m_pMap.get());
         }
