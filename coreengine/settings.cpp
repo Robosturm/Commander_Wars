@@ -229,7 +229,7 @@ void Settings::setMailServerAddress(const QString newMailServerAddress)
     m_mailServerAddress = newMailServerAddress;
 }
 
-const std::chrono::seconds &Settings::getSuspendedDespawnTime()
+const std::chrono::seconds Settings::getSuspendedDespawnTime()
 {
     return m_suspendedDespawnTime;
 }
@@ -239,7 +239,7 @@ void Settings::setSuspendedDespawnTime(const std::chrono::seconds newSlaveDespaw
     m_suspendedDespawnTime = newSlaveDespawnTime;
 }
 
-const std::chrono::seconds &Settings::getSlaveDespawnTime()
+const std::chrono::seconds Settings::getSlaveDespawnTime()
 {
     return m_slaveDespawnTime;
 }
