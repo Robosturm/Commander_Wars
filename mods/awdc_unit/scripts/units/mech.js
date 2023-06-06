@@ -15,3 +15,7 @@ MECH.init = function(unit)
     unit.setMaxRange(1);
     unit.setVision(2);
 };
+MECH.getBaseCost = function()
+{
+    return 2500;
+};
