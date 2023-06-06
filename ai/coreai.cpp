@@ -249,15 +249,8 @@ void CoreAI::randomizeIni(QString name, float chance, float mutationRate)
             }
             else
             {
-                qint32 rand = GlobalUtils::randInt(0, 1);
-                if (rand == 0)
-                {
-                    *entry.m_value -= *entry.m_value * mutationRate;
-                }
-                else
-                {
-                    *entry.m_value += *entry.m_value * mutationRate;
-                }
+                auto rand = GlobalUtils::randInt(-mutationRate, mutationRate);
+                *entry.m_value += (entry.m_maxValue - entry.m_minValue)  * rand;
             }
         }
         if (*entry.m_value < entry.m_minValue)

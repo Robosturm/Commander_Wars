@@ -48,7 +48,7 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
                   {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
                   {"MinHpDamage", "General", &m_minHpDamage, -2.0f, -10.0f, 10.0f},
-                  {"EnemyPruneRange", "General", &m_enemyPruneRange, 3.0f, 3.0f, 3.0f},
+                  {"EnemyPruneRange", "General", &m_enemyPruneRange, 3.0f, 1.0f, 5.0f},
                 };
     
     if (m_pMap != nullptr &&
@@ -645,6 +645,8 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("VeryEasyAI::buildUnits()", GameConsole::eDEBUG);
+    pEnemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
+    pBuildings->sortClosestToEnemy(pEnemyUnits);
     if (m_aiStep < AISteps::buildUnits)
     {
         m_productionSystem.onNewBuildQueue(pBuildings.get(), pUnits.get(), pEnemyUnits.get(), pEnemyBuildings.get());

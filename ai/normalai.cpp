@@ -46,7 +46,7 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"MinSiloDamage", "General", &m_minSiloDamage, 7000.0f, 7000.0f, 7000.0f},
                   {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
-                  {"EnemyPruneRange", "General", &m_enemyPruneRange, 3.0f, 3.0f, 3.0f},
+                  {"EnemyPruneRange", "General", &m_enemyPruneRange, 3.0f, 1.0f, 5.0f},
                   // CO Unit
                   {"CoUnitValue", "CoUnit", &m_coUnitValue, 6000.0f, 5000.0f, 20000.0f},
                   {"MinCoUnitScore", "CoUnit", &m_minCoUnitScore, 5000.0f, 3000.0f, 20000.0f},
@@ -63,7 +63,6 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"NoMoveAttackHp", "Moving", &m_noMoveAttackHp, 3.5f, 1.0f, 10.0f},
                   {"MinTerrainDamage", "Moving", &m_minTerrainDamage, 20.0f, 20.0f, 20.0f},
                   {"InfluenceUnitRange", "Moving", &m_influenceUnitRange, 1.75f, 1.0f, 5.0f},
-
 
                   // Attacking
                   {"OwnIndirectAttackValue", "Attacking", &m_ownIndirectAttackValue, 2.0f, 0.1f, 10.0f},
@@ -2241,6 +2240,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
                           spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("NormalAi::buildUnits()", GameConsole::eDEBUG);
+    pEnemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
     pBuildings->sortClosestToEnemy(pEnemyUnits);
     if (m_aiStep < AISteps::buildUnits)
     {
