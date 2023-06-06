@@ -33,7 +33,7 @@ int main(qint32 argc, char* argv[])
     Mainapp window;
     window.setTitle("Commander Wars");
     {
-        Settings* pSettings = Settings::getInstance()->getInstance();
+        Settings* pSettings = Settings::getInstance();
         auto & parser = window.getParser();
         parser.parseArgsPhaseOne(app);
         GameConsole::getInstance();
@@ -51,13 +51,13 @@ int main(qint32 argc, char* argv[])
     if (Settings::getInstance()->getSmallScreenDevice())
     {
         // force a resolution reset
-        window.changeScreenMode(Settings::getInstance()->ScreenModes::FullScreen);
+        window.changeScreenMode(Settings::ScreenModes::FullScreen);
     }
     // show as normal borderless
     window.changeScreenMode(window.getScreenMode());
     window.setBrightness(Settings::getInstance()->getBrightness());
     window.setGamma(Settings::getInstance()->getGamma());
-    if (window.getScreenMode() != Settings::getInstance()->ScreenModes::Window)
+    if (window.getScreenMode() != Settings::ScreenModes::Window)
     {
         window.setPosition(Settings::getInstance()->getX(), Settings::getInstance()->getY());
     }
