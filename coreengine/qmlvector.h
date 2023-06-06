@@ -25,25 +25,23 @@ public:
     {
         return m_Vector;
     }
-
-public slots:
-    inline QPoint at(qint32 i) const
+    Q_INVOKABLE inline QPoint at(qint32 i) const
     {
         return m_Vector[i];
     }
-    inline void append(QPoint t)
+    Q_INVOKABLE inline void append(QPoint t)
     {
         m_Vector.push_back(t);
     }
-    inline qint32 size() const
+    Q_INVOKABLE inline qint32 size() const
     {
         return m_Vector.size();
     }
-    bool contains(QPoint pos)
+    Q_INVOKABLE bool contains(QPoint pos)
     {
         return GlobalUtils::contains(m_Vector, pos);
     }
-    void remove()
+    Q_INVOKABLE void remove()
     {
     }
 private:
@@ -70,41 +68,41 @@ public:
      * @param distanceMultiplier
      */
     void pruneEnemies(const spQmlVectorUnit & pOwnUnits, qint32 distanceMultiplier);
-public slots:
-    inline Unit* at(qint32 i) const
+
+    Q_INVOKABLE inline Unit* at(qint32 i) const
     {
         return m_Vector[i].get();
     }
-    inline void append(Unit* t)
+    Q_INVOKABLE inline void append(Unit* t)
     {
         m_Vector.push_back(spUnit(t));
     }
-    inline qint32 size() const
+    Q_INVOKABLE inline qint32 size() const
     {
         return m_Vector.size();
     }
-    void remove()
+    Q_INVOKABLE void remove()
     {
     }
-    void removeAt(qint32 i)
+    Q_INVOKABLE void removeAt(qint32 i)
     {
         m_Vector.erase(m_Vector.cbegin() + i);
     }
-    void randomize();
+    Q_INVOKABLE void randomize();
     /**
      * @brief sortExpensive most expensive units are sorted in first
      */
-    void sortExpensive();
+    Q_INVOKABLE void sortExpensive();
     /**
      * @brief sortShortestMovementRange
      */
-    void sortShortestMovementRange(bool infantriesLast);
+    Q_INVOKABLE void sortShortestMovementRange(bool infantriesLast);
     /**
      * @brief QmlVectorUnit::getUnitCount
      * @param unitId
      * @return
      */
-    qint32 getUnitCount(const QString unitId);
+    Q_INVOKABLE qint32 getUnitCount(const QString unitId);
 private:
     std::vector<spUnit> m_Vector;
 };
@@ -134,28 +132,28 @@ public:
      * @param distanceMultiplier
      */
     void pruneEnemieBuildings(const spQmlVectorUnit & pOwnUnits, qint32 distanceMultiplier);
-public slots:
-    inline Building* at(qint32 i) const
+
+    Q_INVOKABLE inline Building* at(qint32 i) const
     {
         return m_Vector[i].get();
     }
-    inline void append(Building* t)
+    Q_INVOKABLE inline void append(Building* t)
     {
         m_Vector.push_back(spBuilding(t));
     }
-    inline qint32 size() const
+    Q_INVOKABLE inline qint32 size() const
     {
         return m_Vector.size();
     }
-    qint32 getBuildingCount(const QString buildingId);
-    void remove()
+    Q_INVOKABLE qint32 getBuildingCount(const QString buildingId);
+    Q_INVOKABLE void remove()
     {
     }
-    void removeAt(qint32 i)
+    Q_INVOKABLE void removeAt(qint32 i)
     {
         m_Vector.erase(m_Vector.cbegin() + i);
     }
-    void randomize();
+    Q_INVOKABLE void randomize();
 private:
     std::vector<spBuilding> m_Vector;
 };

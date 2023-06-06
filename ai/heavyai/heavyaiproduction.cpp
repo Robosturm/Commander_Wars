@@ -264,16 +264,6 @@ void HeavyAi::updateUnitBuildData(UnitBuildData &unitData, std::vector<double> &
     }
 }
 
-const QString &HeavyAi::getAiName() const
-{
-    return m_aiName;
-}
-
-void HeavyAi::setAiName(const QString &newAiName)
-{
-    m_aiName = newAiName;
-}
-
 void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBuildData & data, const std::vector<Unit*> & immuneUnits, qint32 movementPoints)
 {
     

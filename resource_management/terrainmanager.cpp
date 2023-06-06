@@ -26,13 +26,13 @@ qint32 TerrainManager::getTerrainGroup(qint32 i)
     return 0;
 }
 
-QString TerrainManager::getName(const QString & id)
+QString TerrainManager::getName(const QString id)
 {
     spTerrain pTerrain = Terrain::createTerrain(id, -1, -1, "", nullptr);
     return pTerrain->getTerrainName();
 }
 
-QString TerrainManager::getFittingResAnim(const QString & spriteIdStart, const QString & spriteIdEnd) const
+QString TerrainManager::getFittingResAnim(const QString spriteIdStart, const QString spriteIdEnd) const
 {
     QString ret;
     const auto & keys = m_resourcesMap.keys();

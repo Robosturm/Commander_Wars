@@ -56,7 +56,7 @@ void Slider::slotSpinBoxValueChanged(qreal currentValuevalue)
     emit sliderValueChanged(static_cast<qint32>(value));
 }
 
-void Slider::setCurrentValue(const qint32 &CurrentValue)
+void Slider::setCurrentValue(const qint32 CurrentValue)
 {    
     qint32 value = CurrentValue;
     if (value < m_minValue)

@@ -79,6 +79,31 @@ namespace oxygine
         void setShuttingDown(bool newShuttingDown);
         void initStage();
         bool hasCursor() const;
+        bool isMainThread() const
+        {
+            return QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr;
+        }
+        virtual void launchGame() override;
+        /**
+         * @brief getBrightness
+         * @return
+         */
+        Q_INVOKABLE float getBrightness() const;
+        /**
+         * @brief setBrightness
+         * @param brightness
+         */
+        Q_INVOKABLE void setBrightness(float brightness);
+        /**
+         * @brief getGamma
+         * @return
+         */
+        Q_INVOKABLE float getGamma() const;
+        /**
+         * @brief setGamma
+         * @param gamma
+         */
+        Q_INVOKABLE void setGamma(float gamma);
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor);
         void sigLoadRessources();
@@ -90,33 +115,6 @@ namespace oxygine
         void sigStartUpdateTimer();
         void sigQuit(qint32 exitCode);
         void sigShowKeyboard(bool visible);
-    public slots:
-        /**
-         * @brief getBrightness
-         * @return
-         */
-        float getBrightness() const;
-        /**
-         * @brief setBrightness
-         * @param brightness
-         */
-        void setBrightness(float brightness);
-        /**
-         * @brief getGamma
-         * @return
-         */
-        float getGamma() const;
-        /**
-         * @brief setGamma
-         * @param gamma
-         */
-        void setGamma(float gamma);
-
-        bool isMainThread() const
-        {
-            return QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr;
-        }
-        virtual void launchGame() override;
 
     protected slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor);

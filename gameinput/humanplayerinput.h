@@ -160,6 +160,16 @@ public:
      * @return
      */
     virtual Player* getPerformingPlayer(Player*) const;
+    Q_INVOKABLE void markedFieldSelected(QPoint point);
+    Q_INVOKABLE virtual QStringList getEmptyActionList();
+    Q_INVOKABLE QStringList getViewplayerActionList();
+    Q_INVOKABLE void syncMarkedFields();
+    Q_INVOKABLE bool inputAllowed();
+    Q_INVOKABLE void gotoNext();
+    Q_INVOKABLE void gotoPrevious();
+    Q_INVOKABLE void performBasicAction(QString action);
+    Q_INVOKABLE void showInfoMenu(qint32 x, qint32 y);
+
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -173,18 +183,10 @@ public slots:
     virtual void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
     void keyDown(oxygine::KeyEvent event);
-    void menuItemSelected(const QString & itemID, qint32 cost);
-    void markedFieldSelected(QPoint point);
-    virtual QStringList getEmptyActionList();
-    QStringList getViewplayerActionList();
+    void menuItemSelected(const QString itemID, qint32 cost);
     virtual void autoEndTurn();
-    void syncMarkedFields();
     void nextTurn();
-    bool inputAllowed();
-    void gotoNext();
-    void gotoPrevious();
-    void performBasicAction(QString action);
-    void showInfoMenu(qint32 x, qint32 y);
+
 protected slots:
     void zoomChanged(float zoom);
 protected:

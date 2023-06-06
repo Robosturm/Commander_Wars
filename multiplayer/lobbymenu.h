@@ -51,6 +51,8 @@ signals:
     void sigShowEnd();
 
 public slots:
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+
     bool getServerRequestNewPassword() const;
     void setServerRequestNewPassword(bool newServerRequestNewPassword);
     void exitMenue();    
@@ -60,7 +62,6 @@ public slots:
     void joinGamePassword(QString password);
     void join(QString adress, QString password);
     void joinAdress();
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     void updateGamesView();
     void selectGame();
     void observe(QString adress, QString password);

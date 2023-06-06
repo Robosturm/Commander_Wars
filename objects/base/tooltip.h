@@ -15,18 +15,16 @@ class Tooltip : public FocusableObject
 public:
     explicit Tooltip();
     virtual ~Tooltip();
+    Q_INVOKABLE QString getTooltipText() const;
+    Q_INVOKABLE void setTooltipText(const QString tooltipText);
 signals:
     void sigHideTooltip();
     void sigStartTooltip();
     void sigStopTooltip();
     void sigStartHoveredTimer();
 public slots:
-    QString getTooltipText() const;
-    void setTooltipText(const QString &tooltipText);
-
     void restartTooltiptimer();
     void stopTooltiptimer();
-
     void showTooltip();
     void hideTooltip();
     void disableTooltip();

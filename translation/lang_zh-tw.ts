@@ -1246,7 +1246,7 @@
 <context>
     <name>ActionPerformer</name>
     <message>
-        <location filename="../game/actionperformer.cpp" line="53"/>
+        <location filename="../game/actionperformer.cpp" line="59"/>
         <source>Waiting for Players/Observers to join...</source>
         <translation>等待玩家/觀察者加入...</translation>
     </message>
@@ -2862,12 +2862,12 @@ This is immediately applied.</source>
 <context>
     <name>DialogPassword</name>
     <message>
-        <location filename="../multiplayer/dialogpassword.cpp" line="39"/>
+        <location filename="../multiplayer/dialogpassword.cpp" line="38"/>
         <source>Ok</source>
         <translation>確定</translation>
     </message>
     <message>
-        <location filename="../multiplayer/dialogpassword.cpp" line="55"/>
+        <location filename="../multiplayer/dialogpassword.cpp" line="54"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -2875,17 +2875,17 @@ This is immediately applied.</source>
 <context>
     <name>DialogPasswordAndAdress</name>
     <message>
-        <location filename="../multiplayer/dialogpasswordandadress.cpp" line="40"/>
+        <location filename="../multiplayer/dialogpasswordandadress.cpp" line="39"/>
         <source>Password</source>
         <translation>密碼</translation>
     </message>
     <message>
-        <location filename="../multiplayer/dialogpasswordandadress.cpp" line="52"/>
+        <location filename="../multiplayer/dialogpasswordandadress.cpp" line="51"/>
         <source>Ok</source>
         <translation>確定</translation>
     </message>
     <message>
-        <location filename="../multiplayer/dialogpasswordandadress.cpp" line="66"/>
+        <location filename="../multiplayer/dialogpasswordandadress.cpp" line="65"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>

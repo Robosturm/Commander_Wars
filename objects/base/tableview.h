@@ -18,11 +18,11 @@ public:
     explicit TableView(const QVector<qint32> & widths, const QVector<QStringList> & data, const QVector<QStringList> & tooltips, const QStringList & header, bool selectable = false);
     ~TableView() = default;
     const QStringList & getItem(qint32 i) const;
+    Q_INVOKABLE void setCurrentItem(qint32 i);
+    Q_INVOKABLE qint32 getCurrentItem() const;
 signals:
     void sigItemClicked();
-public slots:
-    void setCurrentItem(qint32 i);
-    qint32 getCurrentItem() const;
+
 private:
     void addRow(qint32 i, qint32 i2, qint32 x, bool selectable, const QVector<QStringList> & tooltips);
 private:

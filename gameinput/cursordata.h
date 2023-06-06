@@ -15,18 +15,15 @@ public:
     explicit CursorData();
     ~CursorData() = default;
 
-public slots:
-    QString getCursor() const;
-    void setCursor(const QString &value);
+    Q_INVOKABLE QString getCursor() const;
+    Q_INVOKABLE void setCursor(const QString value);
+    Q_INVOKABLE qint32 getXOffset() const;
+    Q_INVOKABLE void setXOffset(const qint32 value);
+    Q_INVOKABLE qint32 getYOffset() const;
+    Q_INVOKABLE void setYOffset(const qint32 value);
+    Q_INVOKABLE float getScale() const;
+    Q_INVOKABLE void setScale(const float value);
 
-    qint32 getXOffset() const;
-    void setXOffset(const qint32 &value);
-
-    qint32 getYOffset() const;
-    void setYOffset(const qint32 &value);
-
-    float getScale() const;
-    void setScale(const float &value);
 private:
     QString m_cursor{"cursor+default"};
     qint32 m_xOffset{0};

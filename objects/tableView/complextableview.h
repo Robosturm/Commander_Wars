@@ -48,13 +48,13 @@ public:
 
     const QVector<qint32> & getWidths() const;
     const Item & getItem(qint32 i) const;
+    Q_INVOKABLE void setCurrentItem(qint32 i);
+    Q_INVOKABLE qint32 getCurrentItem() const;
+    Q_INVOKABLE void sortItems(qint32 column, bool up);
 signals:
     void sigItemClicked();
     void sigSortItems(qint32 column, bool up);
-public slots:
-    void setCurrentItem(qint32 i);
-    qint32 getCurrentItem() const;
-    void sortItems(qint32 column, bool up);
+
 private:
     void createItems();
     void updateItemPositions();

@@ -23,6 +23,9 @@ public:
     }
     static bool handleEvent(QEvent *event);
     static void handleInputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
+    Q_INVOKABLE bool getSubComponent() const;
+    Q_INVOKABLE void setSubComponent(bool subComponent);
+    Q_INVOKABLE bool getFocused() const;
 signals:
     void sigFocusedLost();
     void sigFocused();
@@ -41,9 +44,6 @@ protected:
 protected slots:
     virtual void looseFocusInternal();
 public slots:
-    bool getSubComponent() const;
-    void setSubComponent(bool subComponent);
-    bool getFocused() const;
     virtual void focusedLost(){}
 private slots:
     void focusedInternal();

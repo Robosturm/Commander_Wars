@@ -1426,11 +1426,14 @@ void PlayerSelection::playerAccessDenied()
 qint32 PlayerSelection::getOpenPlayerCount()
 {
     qint32 openPlayerCount = 0;
-    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    if (m_pMap != nullptr)
     {
-        if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Open)
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
         {
-            ++openPlayerCount;
+            if (m_pMap->getPlayer(i)->getControlType() == GameEnums::AiTypes_Open)
+            {
+                ++openPlayerCount;
+            }
         }
     }
     return openPlayerCount;

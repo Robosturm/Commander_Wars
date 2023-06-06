@@ -28,43 +28,43 @@ public:
     void updatePerksView(CO* pCO);
     qint32 getPerkScore(const QStringList & perks) const;
     qint32 getPerkScore(const QString & perk) const;
-signals:
-    void sigUpdatePerkCount();
-    void sigViewPerkUpdate();
-public slots:
     /**
      * @brief getHiddenPerks
      * @return
      */
-    QStringList getHiddenPerks() const;
+    Q_INVOKABLE QStringList getHiddenPerks() const;
     /**
      * @brief setHiddenPerks
      * @param hiddenPerks
      */
-    void setHiddenPerks(const QStringList &hiddenPerks);
+    Q_INVOKABLE void setHiddenPerks(const QStringList hiddenPerks);
     /**
      * @brief updatePerkCount
      */
-    void updatePerkCount();
+    Q_INVOKABLE void updatePerkCount();
     /**
      * @brief getPerks
      * @return
      */
-    QStringList getPerks() const;
+    Q_INVOKABLE QStringList getPerks() const;
     /**
      * @brief setPerks
      * @param perks
      */
-    void setPerks(const QStringList &perks);
+    Q_INVOKABLE void setPerks(const QStringList perks);
     /**
      * @brief toggleAll
      * @param toggle
      */
-    void toggleAll(bool toggle);
+    Q_INVOKABLE void toggleAll(bool toggle);
     /**
      * @brief selectRandomPerks
      */
-    void selectRandomPerks(bool fill);
+    Q_INVOKABLE void selectRandomPerks(bool fill);
+
+signals:
+    void sigUpdatePerkCount();
+    void sigViewPerkUpdate();
 private:
     QVector<PerkGroup> getPerksGrouped();
     bool getPerkEnabled(QString perkId);

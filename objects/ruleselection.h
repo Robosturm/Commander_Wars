@@ -21,26 +21,25 @@ public:
     explicit RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enabled = true);
     ~RuleSelection() = default;
     Mode getMode() const;
+    Q_INVOKABLE bool getRuleChangeEabled() const;
+    Q_INVOKABLE bool getShowAdvanced() const;
+    Q_INVOKABLE void setShowAdvanced(bool newShowAdvanced);
+    Q_INVOKABLE void showRuleSelection();
+    Q_INVOKABLE bool getIsMultiplayerMode();
+    Q_INVOKABLE bool getIsEditorMode();
+    // slots for changing the rules
+    Q_INVOKABLE GameMap *getMap() const;
+    Q_INVOKABLE void startWeatherChanged(qint32 value);
+    Q_INVOKABLE void weatherChancesChanged(const QString id);
+    Q_INVOKABLE void showCOBannlist();
+    Q_INVOKABLE void showPerkBannlist();
+    Q_INVOKABLE void showActionBannlist();
+    Q_INVOKABLE void showSelectScript();
+    Q_INVOKABLE void scriptFileChanged(const QString file);
 
 signals:
     void sigSizeChanged();
     void sigShowRuleSelection();
-public slots:
-    bool getRuleChangeEabled() const;
-    bool getShowAdvanced() const;
-    void setShowAdvanced(bool newShowAdvanced);
-    void showRuleSelection();
-    bool getIsMultiplayerMode();
-    bool getIsEditorMode();
-    // slots for changing the rules
-    GameMap *getMap() const;
-    void startWeatherChanged(qint32 value);
-    void weatherChancesChanged(const QString & id);
-    void showCOBannlist();
-    void showPerkBannlist();
-    void showActionBannlist();
-    void showSelectScript();
-    void scriptFileChanged(const QString & file);
 
 private:    
     Mode m_mode;

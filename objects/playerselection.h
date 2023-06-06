@@ -83,127 +83,128 @@ signals :
          * don't own a player
          */
     void sigDisconnect();
-public slots:
+public:
     /**
-         * @brief getOpenPlayerCount
-         * @return
-         */
-    qint32 getOpenPlayerCount();
+     * @brief getOpenPlayerCount
+     * @return
+     */
+    Q_INVOKABLE qint32 getOpenPlayerCount();
     /**
      * @brief hasLockedPlayersInCaseOfDisconnect
      * @return
      */
-    bool hasLockedPlayersInCaseOfDisconnect() const;
+    Q_INVOKABLE bool hasLockedPlayersInCaseOfDisconnect() const;
     /**
      * @brief setLockedAiControl
      * @param player
      * @param value
      */
-    void setLockedAiControl(qint32 player, bool value);
+    Q_INVOKABLE void setLockedAiControl(qint32 player, bool value);
     /**
      * @brief getLockedAiControl
      * @param player
      * @return
      */
-    bool getLockedAiControl(qint32 player);
-    bool hasNetworkInterface() const;
-    bool getIsServerNetworkInterface() const;
-    bool getIsObserverNetworkInterface() const;
-    bool isNotServerChangeable(Player* pPlayer) const;
+    Q_INVOKABLE bool getLockedAiControl(qint32 player);
+    Q_INVOKABLE bool hasNetworkInterface() const;
+    Q_INVOKABLE bool getIsServerNetworkInterface() const;
+    Q_INVOKABLE bool getIsObserverNetworkInterface() const;
+    Q_INVOKABLE bool isNotServerChangeable(Player* pPlayer) const;
     /**
      * @brief getSaveGame
      * @return
      */
-    bool getSaveGame() const;
-    bool isOpenPlayer(qint32 player);
-    bool isClosedPlayer(qint32 player);
-    bool hasOpenPlayer();
-    bool hasHumanPlayer();
-    QString getPlayerAiName(qint32 player);
-    void setPlayerAiName(qint32 player, QString name);
-    GameEnums::AiTypes getPlayerAiType(qint32 player);
-    bool getIsServerGame() const;
-    void setIsServerGame(bool isServerGame);
-    bool getIsCampaign() const;
-    bool getIsArmyCustomizationAllowed();
-    void updateCOData(qint32 playerIdx);
-    bool getReady(qint32 playerIdx);
-    bool getPlayerReady();
-    void setPlayerReady(bool value);
-    QStringList getDefaultAiNames() const;
-    QStringList getAiNames() const;
-    QString getNameFromAiType(GameEnums::AiTypes aiType) const;
-    QStringList getTeamNames() const;
-    QStringList getDropDownColorNames() const;
+    Q_INVOKABLE bool getSaveGame() const;
+    Q_INVOKABLE bool isOpenPlayer(qint32 player);
+    Q_INVOKABLE bool isClosedPlayer(qint32 player);
+    Q_INVOKABLE bool hasOpenPlayer();
+    Q_INVOKABLE bool hasHumanPlayer();
+    Q_INVOKABLE QString getPlayerAiName(qint32 player);
+    Q_INVOKABLE void setPlayerAiName(qint32 player, QString name);
+    Q_INVOKABLE GameEnums::AiTypes getPlayerAiType(qint32 player);
+    Q_INVOKABLE bool getIsServerGame() const;
+    Q_INVOKABLE void setIsServerGame(bool isServerGame);
+    Q_INVOKABLE bool getIsCampaign() const;
+    Q_INVOKABLE bool getIsArmyCustomizationAllowed();
+    Q_INVOKABLE void updateCOData(qint32 playerIdx);
+    Q_INVOKABLE bool getReady(qint32 playerIdx);
+    Q_INVOKABLE bool getPlayerReady();
+    Q_INVOKABLE void setPlayerReady(bool value);
+    Q_INVOKABLE QStringList getDefaultAiNames() const;
+    Q_INVOKABLE QStringList getAiNames() const;
+    Q_INVOKABLE QString getNameFromAiType(GameEnums::AiTypes aiType) const;
+    Q_INVOKABLE QStringList getTeamNames() const;
+    Q_INVOKABLE QStringList getDropDownColorNames() const;
     /**
      * @brief getSelectableArmies
      * @return
      */
-    QStringList getSelectableArmies() const;
+    Q_INVOKABLE QStringList getSelectableArmies() const;
     /**
      * @brief getStartColorName
      * @param player
      * @return
      */
-    QString getStartColorName(qint32 player);
+    Q_INVOKABLE QString getStartColorName(qint32 player);
     // slots for automation
     /**
      * @brief selectPlayerAi
      * @param player
      * @param eAiType
      */
-    void selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType);
+    Q_INVOKABLE void selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType);
     /**
      * @brief forcePlayerAi forces player ai only for
      * @param player
      * @param eAiType
      */
-    void forcePlayerAi(qint32 player, GameEnums::AiTypes eAiType);
+    Q_INVOKABLE void forcePlayerAi(qint32 player, GameEnums::AiTypes eAiType);
     // slots for changing player data
-    void allPlayerIncomeChanged(float value);
-    void playerIncomeChanged(float value, qint32 playerIdx);
-    void allPlayerStartFundsChanged(float value);
-    void playerStartFundsChanged(float value, qint32 playerIdx);
-    void playerTeamChanged(qint32 value, qint32 playerIdx);
-    void playerColorChanged(QColor displayColor, qint32 playerIdx, qint32 item);
-    void selectedArmyChanged(qint32 player, QString army);
-    void showSelectCO(qint32 player, quint8 co);
-    void playerCO1Changed(QString coid, qint32 playerIdx);
-    void updateCO1Sprite(QString coid, qint32 playerIdx);
-    void playerCO2Changed(QString coid, qint32 playerIdx);
-    void updateCO2Sprite(QString coid, qint32 playerIdx);
-    void slotCOsRandom(qint32 mode);
-    void slotCOsDelete(qint32 mode);
-    void slotShowAllBuildList();
-    void slotShowPlayerBuildList(qint32 player);
-    void slotChangeAllBuildList(qint32, QStringList buildList);
-    void slotChangePlayerBuildList(qint32 player, QStringList buildList);
-    void selectAI(qint32 player);
-    GameMap *getMap() const;
+    Q_INVOKABLE void allPlayerIncomeChanged(float value);
+    Q_INVOKABLE void playerIncomeChanged(float value, qint32 playerIdx);
+    Q_INVOKABLE void allPlayerStartFundsChanged(float value);
+    Q_INVOKABLE void playerStartFundsChanged(float value, qint32 playerIdx);
+    Q_INVOKABLE void playerTeamChanged(qint32 value, qint32 playerIdx);
+    Q_INVOKABLE void playerColorChanged(QColor displayColor, qint32 playerIdx, qint32 item);
+    Q_INVOKABLE void selectedArmyChanged(qint32 player, QString army);
+    Q_INVOKABLE void showSelectCO(qint32 player, quint8 co);
+    Q_INVOKABLE void playerCO1Changed(QString coid, qint32 playerIdx);
+    Q_INVOKABLE void updateCO1Sprite(QString coid, qint32 playerIdx);
+    Q_INVOKABLE void playerCO2Changed(QString coid, qint32 playerIdx);
+    Q_INVOKABLE void updateCO2Sprite(QString coid, qint32 playerIdx);
+    Q_INVOKABLE void slotCOsRandom(qint32 mode);
+    Q_INVOKABLE void slotCOsDelete(qint32 mode);
+    Q_INVOKABLE void slotShowAllBuildList();
+    Q_INVOKABLE void slotShowPlayerBuildList(qint32 player);
+    Q_INVOKABLE void slotChangeAllBuildList(qint32, QStringList buildList);
+    Q_INVOKABLE void slotChangePlayerBuildList(qint32 player, QStringList buildList);
+    Q_INVOKABLE void selectAI(qint32 player);
+    Q_INVOKABLE GameMap *getMap() const;
     /**
      * @brief changeTeams
      */
-    void changeAllTeams(qint32 value);
+    Q_INVOKABLE void changeAllTeams(qint32 value);
     /**
      * @brief showSelectCOPerks
      * @param player
      */
-    void showSelectCOPerks(qint32 player);
-    // network stuff
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
-    void disconnected(quint64 socketID);
+    Q_INVOKABLE void showSelectCOPerks(qint32 player);
     /**
      * @brief updatePlayerData updates the visual player data when data has been changed via network
      * @param player the player that has changed
      */
-    void updatePlayerData(qint32 player);
-    void setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QString name);
+    Q_INVOKABLE void updatePlayerData(qint32 player);
+    Q_INVOKABLE void setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QString name);
+public slots:
     /**
      * @brief recievePlayerReady
      * @param socketID
      * @param stream
      */
     void recievePlayerReady(quint64 socketID, QDataStream& stream);
+protected slots:
+    void disconnected(quint64 socketID);
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 protected:
     /**
      * @brief createAi

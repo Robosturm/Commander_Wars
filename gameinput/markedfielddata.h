@@ -34,26 +34,25 @@ public:
     {
         return &m_ZInformation;
     }
-public slots:
-    QVector<QPoint> getJsPoints()
+    Q_INVOKABLE QVector<QPoint> getJsPoints()
     {
         return m_MarkedFields;
     }
-    void addPoint(QPoint point)
+    Q_INVOKABLE void addPoint(QPoint point)
     {
         m_MarkedFields.append(point);
     }
-    void addPointXY(qint32 x, qint32 y)
+    Q_INVOKABLE void addPointXY(qint32 x, qint32 y)
     {
         m_MarkedFields.append(QPoint(x, y));
     }
-    void addZInformation(qint32 info)
+    Q_INVOKABLE void addZInformation(qint32 info)
     {
         ZInformation infoStruct;
         infoStruct.singleValue = info;
         m_ZInformation.append(infoStruct);
     }
-    void addComplexZInformation(const QStringList valueNames,
+    Q_INVOKABLE void addComplexZInformation(const QStringList valueNames,
                                 const QVector<qint32> ownUnitValues,
                                 const QVector<qint32> enemyUnitValues,
                                 QColor enemyColor)
@@ -65,22 +64,20 @@ public slots:
         infoStruct.enemyColor = enemyColor;
         m_ZInformation.append(infoStruct);
     }
-    bool getShowZData() const;
-    void setShowZData(bool value);
-
-    bool getAllFields() const;
-    void setAllFields(bool value);
-    QColor getColor() const;
-    void setColor(const QColor Color);
-
-    QColor getZLabelColor() const;
-    void setZLabelColor(const QColor ZLabelColor);
-    QString getZLabelText() const;
-    void setZLabelText(const QString ZLabelText);
+    Q_INVOKABLE bool getShowZData() const;
+    Q_INVOKABLE void setShowZData(bool value);
+    Q_INVOKABLE bool getAllFields() const;
+    Q_INVOKABLE void setAllFields(bool value);
+    Q_INVOKABLE QColor getColor() const;
+    Q_INVOKABLE void setColor(const QColor Color);
+    Q_INVOKABLE QColor getZLabelColor() const;
+    Q_INVOKABLE void setZLabelColor(const QColor ZLabelColor);
+    Q_INVOKABLE QString getZLabelText() const;
+    Q_INVOKABLE void setZLabelText(const QString ZLabelText);
     /**
      * @brief remove
      */
-    void remove()
+    Q_INVOKABLE void remove()
     {
     }
 private:

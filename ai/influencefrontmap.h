@@ -60,31 +60,30 @@ public:
     void setOwner(Player *newPOwner);
     void reset();
     void clear();
-public slots:
     /**
      * @brief show for debugging purpose
      */
-    void show();
+    Q_INVOKABLE void show();
     /**
      * @brief showFrontline
      */
-    void showFrontlines();
+    Q_INVOKABLE void showFrontlines();
     /**
      * @brief showPfs
      * @param pPfs
      */
-    void showPfs(UnitPathFindingSystem* pPfs);
+    Q_INVOKABLE void showPfs(UnitPathFindingSystem* pPfs);
     /**
      * @brief hide for debugging purpose
      */
-    void hide();
+    Q_INVOKABLE void hide();
     /**
      * @brief getInfluenceInfo
      * @param x
      * @param y
      * @return
      */
-    const InfluenceInfo * getInfluenceInfo(qint32 x, qint32 y) const
+    Q_INVOKABLE const InfluenceInfo * getInfluenceInfo(qint32 x, qint32 y) const
     {
         return &(m_InfluenceMap[x][y]);
     }
@@ -92,8 +91,8 @@ public slots:
      * @brief getTotalHighestInfluence
      * @return
      */
-    qint32 getTotalHighestInfluence() const;
-    Player *getOwner() const;
+    Q_INVOKABLE qint32 getTotalHighestInfluence() const;
+    Q_INVOKABLE Player *getOwner() const;
 
 private:
     /**

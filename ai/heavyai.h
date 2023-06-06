@@ -181,12 +181,6 @@ public:
 
     void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize = 1);
 
-public slots:
-    /**
-     * @brief process
-     */
-    virtual void process() override;
-
     /*******************************************************************/
     // processing section for js scripts use the following functions
     /*******************************************************************/
@@ -194,14 +188,14 @@ public slots:
      * @brief getInfluenceFrontMap
      * @return
      */
-    InfluenceFrontMap* getInfluenceFrontMap();
+    Q_INVOKABLE InfluenceFrontMap* getInfluenceFrontMap();
     /**
      * @brief addCustomTarget
      * @param x
      * @param y
      * @param priority
      */
-    void addCustomTarget(qint32 x, qint32 y, qint32 priority);
+    Q_INVOKABLE void addCustomTarget(qint32 x, qint32 y, qint32 priority);
     /*******************************************************************/
     // training section
     /*******************************************************************/
@@ -209,7 +203,7 @@ public slots:
      * @brief getMaxNeuralNetworks amount of neural networks owned by the heavy ai
      * @return
      */
-    qint32 getMaxNeuralNetworks()
+    Q_INVOKABLE qint32 getMaxNeuralNetworks()
     {
         return static_cast<qint32>(NeuralNetworksMax);
     }
@@ -217,25 +211,25 @@ public slots:
      * @brief saveNeuralNetwork saves the network under the given name
      * @param network
      */
-    void saveNeuralNetwork(qint32 network);
+    Q_INVOKABLE void saveNeuralNetwork(qint32 network);
     /**
      * @brief getNeuralNetworkName
      * @param network
      * @return
      */
-    QString getNeuralNetworkName(qint32 network);
+    Q_INVOKABLE QString getNeuralNetworkName(qint32 network);
     /**
      * @brief mutateNeuralNetwork
      * @param network
      * @param mutationChance
      * @return
      */
-    void mutateNeuralNetwork(qint32 network, double mutationChance, double mutationRate = 0.1f);
+    Q_INVOKABLE void mutateNeuralNetwork(qint32 network, double mutationChance, double mutationRate = 0.1f);
     /**
      * @brief getMinActionScore
      * @return
      */
-    double getMinActionScore() const;
+    Q_INVOKABLE double getMinActionScore() const;
     /**
      * @brief setMinActionScore
      * @param newMinActionScore
@@ -248,59 +242,55 @@ public slots:
      */
     void setDisabled(qint32 network, bool disabled);
     /**
-     * @brief getAiName
-     * @return
-     */
-    const QString &getAiName() const;
-    /**
-     * @brief setAiName
-     * @param newAiName
-     */
-    void setAiName(const QString &newAiName);
-    /**
      * @brief loadNeuralNetworks
      */
-    void loadNeuralNetworks(GameEnums::AiTypes aiType);
+    Q_INVOKABLE void loadNeuralNetworks(GameEnums::AiTypes aiType);
     /**
      * @brief combineAi
      * @param aisToUse
      */
-    void combineAi(QStringList aisToUse);
+    Q_INVOKABLE void combineAi(QStringList aisToUse);
     /*******************************************************************/
     // debugging section
     /*******************************************************************/
     /**
      * @brief toggleAiPause for debugging
      */
-    void toggleAiPause();
+    Q_INVOKABLE void toggleAiPause();
     /**
      * @brief showFrontMap for debugging visualization
      */
-    void showFrontMap();
+    Q_INVOKABLE void showFrontMap();
     /**
      * @brief showFrontLines for debugging visualization
      */
-    void showFrontLines();
+    Q_INVOKABLE void showFrontLines();
     /**
      * @brief hideFrontMap  for debugging visualization
      */
-    void hideFrontMap();
+    Q_INVOKABLE void hideFrontMap();
     /**
      * @brief showUnitPfs
      * @param enemy
      * @param index
      */
-    void showUnitPfs(bool enemy, qint32 index);
+    Q_INVOKABLE void showUnitPfs(bool enemy, qint32 index);
     /**
      * @brief showIslandMap
      * @param unitId
      */
-    void showIslandMap(QString unitId);
+    Q_INVOKABLE void showIslandMap(QString unitId);
     /**
      * @brief showIslandMap
      * @param unitId
      */
-    void hideIslandMap(QString unitId);
+    Q_INVOKABLE void hideIslandMap(QString unitId);
+public slots:
+    /**
+     * @brief process
+     */
+    virtual void process() override;
+
 protected:
     /**
      * @brief scoreActions

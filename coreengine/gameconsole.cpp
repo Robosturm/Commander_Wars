@@ -446,7 +446,6 @@ void GameConsole::extractResources()
 
 void GameConsole::memoryUsage()
 {
-    Mainapp* pApp = Mainapp::getInstance();
     CONSOLE_PRINT("C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), GameConsole::eINFO);
     CONSOLE_PRINT("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), GameConsole::eINFO);
     CONSOLE_PRINT("Materials cached=" + QString::number(oxygine::MaterialCache::mc().getSize()), GameConsole::eINFO);

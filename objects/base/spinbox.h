@@ -29,27 +29,26 @@ public:
 
     virtual void update(const oxygine::UpdateState& us) override;
     virtual void setEnabled(bool value) override;
-signals:
-    void sigValueChanged(qreal value);
-public slots:
-    virtual void focusedLost() override;
     /**
      * @brief getCurrentValue
      * @return the current value of the spin box
      */
-    qreal getCurrentValue();
-    QString getUnit() const;
-    void setUnit(const QString &unit);
+    Q_INVOKABLE qreal getCurrentValue();
+    Q_INVOKABLE QString getUnit() const;
+    Q_INVOKABLE void setUnit(const QString &unit);
     /**
      * @brief setCurrentValue changes the value of this spin box
      * @param text
      */
-    void setCurrentValue(qreal value);
-    qreal getSpinSpeed() const;
-    void setSpinSpeed(qreal SpinSpeed);
-
-    qreal getInfinityValue() const;
-    void setInfinityValue(qreal InfinityValue);
+    Q_INVOKABLE void setCurrentValue(qreal value);
+    Q_INVOKABLE qreal getSpinSpeed() const;
+    Q_INVOKABLE void setSpinSpeed(qreal SpinSpeed);
+    Q_INVOKABLE qreal getInfinityValue() const;
+    Q_INVOKABLE void setInfinityValue(qreal InfinityValue);
+signals:
+    void sigValueChanged(qreal value);
+public slots:
+    virtual void focusedLost() override;
 protected:
     /**
      * @brief checkInput checks if the input is correct and updates it if needed and returns the value is valid

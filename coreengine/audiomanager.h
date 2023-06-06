@@ -50,7 +50,16 @@ private:
 public:
     explicit AudioManager(bool noAudio);
     ~AudioManager() = default;
-
+    /**
+     * @brief getLoadBaseGameFolders
+     * @return
+     */
+    Q_INVOKABLE bool getLoadBaseGameFolders() const;
+    /**
+     * @brief setLoadBaseGameFolders
+     * @param loadBaseGameFolders
+     */
+    Q_INVOKABLE void setLoadBaseGameFolders(bool loadBaseGameFolders);
 signals:
     void sigCreateSoundCache();
     void sigInitAudio();
@@ -81,16 +90,6 @@ public slots:
      * @brief stopAudio
      */
     void stopAudio();
-    /**
-     * @brief getLoadBaseGameFolders
-     * @return
-     */
-    bool getLoadBaseGameFolders() const;
-    /**
-     * @brief setLoadBaseGameFolders
-     * @param loadBaseGameFolders
-     */
-    void setLoadBaseGameFolders(bool loadBaseGameFolders);
     /**
      * @brief playMusic
      * @param File the music file to be played

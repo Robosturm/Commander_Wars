@@ -37,6 +37,12 @@ public:
      * @param value
      */
     virtual void setEnabled(bool value) override;
+    Q_INVOKABLE float getScrollspeed() const;
+    Q_INVOKABLE void setScrollspeed(float Scrollspeed);
+    Q_INVOKABLE float getScrollvalue() const;
+    Q_INVOKABLE void setScrollvalue(float Scrollvalue);
+    Q_INVOKABLE bool getSliding() const;
+    Q_INVOKABLE void setSliding(bool sliding);
 signals:
     /**
      * @brief sigScrollValueChanged emitted when the scroll value changes between 0.0f and 1.0f
@@ -60,13 +66,6 @@ signals:
 public slots:
     void changeScrollValue(float value);
     virtual void focusedLost() override;
-    float getScrollspeed() const;
-    void setScrollspeed(float Scrollspeed);
-
-    float getScrollvalue() const;
-    void setScrollvalue(float Scrollvalue);
-    bool getSliding() const;
-    void setSliding(bool sliding);
 private:
     void scroll(oxygine::Event* pEvent);
 private:

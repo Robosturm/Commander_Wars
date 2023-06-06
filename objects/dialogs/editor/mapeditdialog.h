@@ -28,37 +28,35 @@ public:
     };
     explicit MapEditDialog(MapEditInfo info, const QString & confirmMessage);
     ~MapEditDialog();
-
+    Q_INVOKABLE void setMapName(QString name);
+    Q_INVOKABLE QString getMapName() const;
+    Q_INVOKABLE void setMapAuthor(QString name);
+    Q_INVOKABLE QString getMapAuthor() const;
+    Q_INVOKABLE void setMapDescription(QString name);
+    Q_INVOKABLE QString getMapDescription() const;
+    Q_INVOKABLE void setMapScript(QString name);
+    Q_INVOKABLE QString getMapScript() const;
+    Q_INVOKABLE void setMapWidth(qint32 value);
+    Q_INVOKABLE qint32 getMapWidth() const;
+    Q_INVOKABLE void setMapHeight(qint32 value);
+    Q_INVOKABLE qint32 getMapHeight() const;
+    Q_INVOKABLE void setMapPlayerCount(qint32 value);
+    Q_INVOKABLE qint32 getMapPlayerCount() const;
+    Q_INVOKABLE void setMapTurnLimit(qint32 value);
+    Q_INVOKABLE qint32 getMapTurnLimit() const;
+    Q_INVOKABLE void setMapDeployLimit(qint32 value);
+    Q_INVOKABLE qint32 getMapDeployLimit() const;
+    Q_INVOKABLE void setMapFlag(GameEnums::MapFilterFlags flag, bool value);
+    Q_INVOKABLE bool getMapFlag(GameEnums::MapFilterFlags flag) const;
+    Q_INVOKABLE void cancel();
+    Q_INVOKABLE void finished();
+    Q_INVOKABLE void showSelectScript();
 signals:
     void editFinished(MapEditDialog::MapEditInfo info);
     void sigCanceled();
 public slots:
-    void showSelectScript();
-
-    void setMapName(QString name);
-    QString getMapName() const;
-    void setMapAuthor(QString name);
-    QString getMapAuthor() const;
-    void setMapDescription(QString name);
-    QString getMapDescription() const;
-    void setMapScript(QString name);
-    QString getMapScript() const;
-    void setMapWidth(qint32 value);
-    qint32 getMapWidth() const;
-    void setMapHeight(qint32 value);
-    qint32 getMapHeight() const;
-    void setMapPlayerCount(qint32 value);
-    qint32 getMapPlayerCount() const;
-    void setMapTurnLimit(qint32 value);
-    qint32 getMapTurnLimit() const;
-    void setMapDeployLimit(qint32 value);
-    qint32 getMapDeployLimit() const;
-    void setMapFlag(GameEnums::MapFilterFlags flag, bool value);
-    bool getMapFlag(GameEnums::MapFilterFlags flag) const;
-
-    void cancel();
-    void finished();
     void onConfirm();
+
 private slots:
     void scriptFileChanged(QString file);
     void remove();

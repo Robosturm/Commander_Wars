@@ -12,37 +12,36 @@ public:
      * @param i
      * @return
      */
-    qint32 getTerrainGroup(qint32 i);
+    Q_INVOKABLE qint32 getTerrainGroup(qint32 i);
     /**
      * @brief getTerrainGroup
      * @param id
      * @return
      */
-    qint32 getTerrainGroup(QString id);
+    Q_INVOKABLE qint32 getTerrainGroup(QString id);
     /**
      * @brief getTerrainGroupName
      * @param group
      * @return
      */
-    QString getTerrainGroupName(qint32 group);
+    Q_INVOKABLE QString getTerrainGroupName(qint32 group);
     /**
      * @brief getName
      * @param id
      * @return
      */
-    QString getName(const QString & id);
-public slots:
-    void removeRessource(QString id);
+    Q_INVOKABLE QString getName(const QString id);
+    Q_INVOKABLE void removeRessource(QString id);
     /**
      * @brief getTerrainsSorted
      * @return
      */
-    QStringList getTerrainsSorted();
+    Q_INVOKABLE QStringList getTerrainsSorted();
     /**
      * @brief getCount
      * @return
      */
-    qint32 getTerrainCount()
+    Q_INVOKABLE qint32 getTerrainCount()
     {
         return m_loadedRessources.size();
     }
@@ -52,7 +51,7 @@ public slots:
      * @param spriteIdEnd
      * @return
      */
-    QString getFittingResAnim(const QString & spriteIdStart, const QString & spriteIdEnd) const;
+    Q_INVOKABLE QString getFittingResAnim(const QString spriteIdStart, const QString spriteIdEnd) const;
 protected:
     friend RessourceManagement<TerrainManager>;
     TerrainManager();

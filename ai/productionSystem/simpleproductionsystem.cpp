@@ -243,8 +243,13 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString group, con
     }
 }
 
-bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode, qreal minAverageIslandSize)
+bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode,
+                                           qreal minAverageIslandSize, qint32 minBaseCost, qint32 maxBaseCost)
 {
+    if (maxBaseCost < 0)
+    {
+        maxBaseCost = m_owner->getPlayer()->getFunds();
+    }
     bool success = false;
     GameMap* pMap = m_owner->getMap();
     for (qint32 i = 0; i < m_initialProduction.size(); ++i)
@@ -323,7 +328,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
     if (!success)
     {
         std::vector<CurrentBuildDistribution> buildDistribution;
-        getBuildDistribution(buildDistribution, pUnits, minBuildMode, maxBuildMode);
+        getBuildDistribution(buildDistribution, pUnits, minBuildMode, maxBuildMode, minBaseCost, maxBaseCost);
         // try building the unit group which has the highest gap
         for (auto & item : buildDistribution)
         {            
@@ -430,7 +435,8 @@ qint32 SimpleProductionSystem::getProductionFromList(const QStringList unitIds, 
     return index;
 }
 
-void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode)
+void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits,
+                                                  qint32 minBuildMode, qint32 maxBuildMode, qint32 minBaseCost, qint32 maxBaseCost)
 {
     QMap<QString, qreal> unitCounts;
     for (auto & unit : pUnits->getVector())
@@ -493,6 +499,32 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
             return lhs.distribution.distribution / totalDistributionCount - lhs.currentValue > rhs.distribution.distribution / totalDistributionCount - rhs.currentValue;
         }
     });
+    QJSValueList args({pInterpreter->newQObject(m_owner->getMap())});
+    for (auto & item : buildDistribution)
+    {
+        qint32 i = 0;
+        while(i < item.distribution.unitIds.size())
+        {
+            qint32 baseCost = -1;
+            QJSValue erg = pInterpreter->doFunction(item.distribution.unitIds[i], "getBaseCost", args);
+            if (erg.isNumber())
+            {
+                baseCost = erg.toNumber();
+            }
+            if (baseCost >= minBaseCost ||
+                baseCost <= maxBaseCost)
+            {
+                ++i;
+            }
+            else
+            {
+                item.distribution.totalChance -= item.distribution.chance[i];
+                item.distribution.unitIds.removeAt(i);
+                item.distribution.chance.removeAt(i);
+            }
+        }
+    }
+
     CONSOLE_PRINT("Created builddistribution minMode=" + QString::number(minBuildMode) + " maxMode=" + QString::number(maxBuildMode) + " found items=" + QString::number(buildDistribution.size()), GameConsole::eDEBUG);
 }
 
@@ -526,7 +558,7 @@ bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString un
 bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
 {
     Building* pBuilding = m_owner->getMap()->getTerrain(x, y)->getBuilding();
-    if (pBuilding->isProductionBuilding() &&
+    if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS) &&
         pBuilding->getTerrain()->getUnit() == nullptr)
     {
         spGameAction pAction = spGameAction::create(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());

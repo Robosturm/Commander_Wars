@@ -147,7 +147,7 @@ void RuleSelection::startWeatherChanged(qint32 value)
     m_pMap->getGameRules()->setStartWeather(value);
 }
 
-void RuleSelection::weatherChancesChanged(const QString & id)
+void RuleSelection::weatherChancesChanged(const QString id)
 {
     Multislider* pWeatherSlider = getCastedObject<Multislider>(id);
     for (qint32 i = 0; i < m_pMap->getGameRules()->getWeatherCount(); i++)
@@ -189,7 +189,7 @@ void RuleSelection::showSelectScript()
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelection::scriptFileChanged, Qt::QueuedConnection);
 }
 
-void RuleSelection::scriptFileChanged(const QString & file)
+void RuleSelection::scriptFileChanged(const QString file)
 {
     Textbox* pTextbox = getCastedObject<Textbox>("ScriptTextbox");
     pTextbox->setCurrentText(GlobalUtils::makePathRelative(file));

@@ -12,9 +12,8 @@ class Checkbox final : public Tooltip
 public:
     explicit Checkbox();
     ~Checkbox() = default;
-public slots:
-    bool getChecked() const;
-    void setChecked(bool Checked);
+    Q_INVOKABLE bool getChecked() const;
+    Q_INVOKABLE void setChecked(bool Checked);
 signals:
     void checkChanged(bool value);
 

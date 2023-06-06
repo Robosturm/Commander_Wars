@@ -146,7 +146,7 @@ QString MapSelectionFilterDialog::getMapAuthor() const
     return m_mapFilter->getMapAuthor();
 }
 
-void MapSelectionFilterDialog::setMapAuthor(const QString &newMapAuthor)
+void MapSelectionFilterDialog::setMapAuthor(const QString newMapAuthor)
 {
     m_mapFilter->setMapAuthor(newMapAuthor);
 }
@@ -156,7 +156,7 @@ QString MapSelectionFilterDialog::getMapName() const
     return m_mapFilter->getMapName();
 }
 
-void MapSelectionFilterDialog::setMapName(const QString &newMapName)
+void MapSelectionFilterDialog::setMapName(const QString newMapName)
 {
     m_mapFilter->setMapName(newMapName);
 }

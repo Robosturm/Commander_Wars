@@ -40,30 +40,29 @@ public:
     {
         return 1;
     }
-public slots:
     /**
      * @brief addSpecialEvent
      * @param player
      * @param day
      * @param event
      */
-    void addSpecialEvent(qint32 player, qint32 day, GameEnums::GameRecord_SpecialEvents event);
+    Q_INVOKABLE void addSpecialEvent(qint32 player, qint32 day, GameEnums::GameRecord_SpecialEvents event);
     /**
      * @brief addPlayerRecord
      * @param player
      */
-    void addPlayerRecord(qint32 player, qint32 day);
+    Q_INVOKABLE void addPlayerRecord(qint32 player, qint32 day);
     /**
      * @brief getPlayerRecord
      * @param player
      * @return
      */
-    PlayerRecord* getPlayerRecord(qint32 player);
-    qint32 getEventRecordCount()
+    Q_INVOKABLE PlayerRecord* getPlayerRecord(qint32 player);
+    Q_INVOKABLE qint32 getEventRecordCount()
     {
         return m_SpecialEvents.size();
     }
-    SpecialEvent* getSpecialEvent(qint32 index);
+    Q_INVOKABLE SpecialEvent* getSpecialEvent(qint32 index);
 
 private:
     QVector<spSpecialEvent> m_SpecialEvents;

@@ -37,53 +37,51 @@ public:
     bool getProcessing() const;
     void setProcessing(bool newProcessing);
 
-public slots:
     /**
      * @brief getAiType
      * @return
      */
-    GameEnums::AiTypes getAiType() const;
+    Q_INVOKABLE GameEnums::AiTypes getAiType() const;
     /**
      * @brief getEnableNeutralTerrainAttack
      * @return
      */
-    bool getEnableNeutralTerrainAttack() const;
+    Q_INVOKABLE bool getEnableNeutralTerrainAttack() const;
     /**
      * @brief setEnableNeutralTerrainAttack
      * @param value
      */
-    void setEnableNeutralTerrainAttack(bool value);
+    Q_INVOKABLE void setEnableNeutralTerrainAttack(bool value);
     /**
      * @brief setUnitBuildValue only applies to Normal AI and better
      * @param unitID unit to alter the building score
      * @param value score modification value. value <= 0 means won't be produced. value means 1.0 normal chance. value 2.0 means doubled score mostlikely AI will only build this unit
      */
-    void setUnitBuildValue(QString unitID, float value);
+    Q_INVOKABLE void setUnitBuildValue(QString unitID, float value);
     /**
      * @brief getUnitBuildValue only applies to Normal AI and better
      * @param unitID unit to alter the building score
      * @return value score modification value. value <= 0 means won't be produced. value means 1.0 normal chance. value 2.0 means doubled score mostlikely AI will only build this unit
      */
-    float getUnitBuildValue(QString unitID);
+    Q_INVOKABLE float getUnitBuildValue(QString unitID);
     /**
      * @brief setMoveCostMapValue
      * @param x
      * @param y
      */
-    void setMoveCostMapValue(qint32 x, qint32 y, qint32 value);
+    Q_INVOKABLE void setMoveCostMapValue(qint32 x, qint32 y, qint32 value);
     /**
      * @brief getMoveCostMapValue
      * @param x
      * @param y
      * @return
      */
-    qint32 getMoveCostMapValue(qint32 x, qint32 y);
-
-    Player* getPlayer()
+    Q_INVOKABLE qint32 getMoveCostMapValue(qint32 x, qint32 y);
+    Q_INVOKABLE Player* getPlayer()
     {
         return m_pPlayer;
     }
-    GameMap* getMap()
+    Q_INVOKABLE GameMap* getMap()
     {
         return m_pMap;
     }

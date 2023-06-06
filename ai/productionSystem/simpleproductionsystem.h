@@ -89,7 +89,8 @@ public:
     Q_INVOKABLE void resetBuildDistribution();
     Q_INVOKABLE void resetForcedProduction();
     Q_INVOKABLE void resetInitialProduction();
-    Q_INVOKABLE bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode, qreal minAverageIslandSize = 0.025);
+    Q_INVOKABLE bool buildNextUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode,
+                                   qreal minAverageIslandSize = 0.025, qint32 minBaseCost = 0, qint32 maxBaseCost = -1);
     Q_INVOKABLE void addInitialProduction(const QStringList unitIds, qint32 count);
     Q_INVOKABLE void addForcedProduction(const QStringList unitId, qint32 x = -1, qint32 y = -1);
     Q_INVOKABLE void addItemToBuildDistribution(const QString group, const QStringList unitIds, const QVector<qint32> chance, qreal distribution, qint32 buildMode, const QString guardCondition = "", qreal maxUnitDistribution = 1.0);
@@ -104,7 +105,8 @@ public:
 private:
     bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize);
     bool buildUnit(qint32 x, qint32 y, QString unitId);
-    void getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits, qint32 minBuildMode, qint32 maxBuildMode);
+    void getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits,
+                              qint32 minBuildMode, qint32 maxBuildMode, qint32 minBaseCost, qint32 maxBaseCost);
     void updateActiveProductionSystem(QmlVectorBuilding* pBuildings);
 private:
     CoreAI * m_owner{nullptr};

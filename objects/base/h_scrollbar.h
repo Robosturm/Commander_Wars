@@ -31,7 +31,9 @@ public:
 
     virtual void update(const oxygine::UpdateState&) override;
     virtual void setHeight(qint32 h) override;
-
+    Q_INVOKABLE void setScrollvalue(float Scrollvalue);
+    Q_INVOKABLE bool getSliding() const;
+    Q_INVOKABLE void setSliding(bool sliding);
 signals:
     /**
      * @brief sigScrollValueChanged emitted when the scroll value changes between 0.0f and 1.0f
@@ -45,9 +47,6 @@ signals:
     void sigChangeScrollValue(float value);
 public slots:
     void changeScrollValue(float value);
-    void setScrollvalue(float Scrollvalue);
-    bool getSliding() const;
-    void setSliding(bool sliding);
 private:
     void scroll(oxygine::Event* pEvent);
 private:

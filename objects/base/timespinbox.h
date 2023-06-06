@@ -22,22 +22,22 @@ public:
     virtual void update(const oxygine::UpdateState& us) override;
 
     virtual void setEnabled(bool value) override;
-signals:
-    void sigValueChanged(qint32 value);
-public slots:
-    virtual void focusedLost() override;
     /**
      * @brief getCurrentValue
      * @return the current value of the spin box
      */
-    qint32 getCurrentValue();
+    Q_INVOKABLE qint32 getCurrentValue();
     /**
      * @brief setCurrentValue changes the value of this spin box
      * @param text
      */
-    void setCurrentValue(qint32 value);
-    qint32 getSpinSpeed() const;
-    void setSpinSpeed(qint32 SpinSpeed);
+    Q_INVOKABLE void setCurrentValue(qint32 value);
+    Q_INVOKABLE qint32 getSpinSpeed() const;
+    Q_INVOKABLE void setSpinSpeed(qint32 SpinSpeed);
+signals:
+    void sigValueChanged(qint32 value);
+public slots:
+    virtual void focusedLost() override;
 protected:
     /**
      * @brief checkInput checks if the input is correct and updates it if needed and returns the value is valid

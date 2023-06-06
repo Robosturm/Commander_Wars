@@ -13,23 +13,19 @@ class DialogExtendMap final : public CreatedGui
 public:
     explicit DialogExtendMap();
     ~DialogExtendMap() = default;
-
+    Q_INVOKABLE QString getMapFile() const;
+    Q_INVOKABLE void setMapFile(const QString newMapFile);
+    Q_INVOKABLE GameEnums::Directions getDirection() const;
+    Q_INVOKABLE void setDirection(const GameEnums::Directions newDirection);
+    Q_INVOKABLE void cancel();
+    Q_INVOKABLE void mapFileChanged(QString file);
+    Q_INVOKABLE void showSelectMap();
+    Q_INVOKABLE void onOk();
 signals:
     void sigOk(const QString mapFile, GameEnums::Directions direction);
     void sigCanceled();
     void sigRemove();
-public slots:
-    void onOk();
 
-    QString getMapFile() const;
-    void setMapFile(const QString & newMapFile);
-
-    GameEnums::Directions getDirection() const;
-    void setDirection(const GameEnums::Directions & newDirection);
-
-    void cancel();
-    void mapFileChanged(QString file);
-    void showSelectMap();
 private slots:
     void remove();
 private:

@@ -31,6 +31,24 @@ public:
      * @param itemcount
      */
     void changeItemCount(qint32 itemcount);
+    /**
+     * @brief setCurrentItem
+     * @param index
+     */
+    Q_INVOKABLE virtual void setCurrentItem(qint32 index) = 0;
+    /**
+     * @brief getItemCount
+     * @return
+     */
+    Q_INVOKABLE inline qint32 getItemCount()
+    {
+        return m_Items.size();
+    }
+    /**
+     * @brief getCurrentItem index of the current item
+     * @return
+     */
+    Q_INVOKABLE qint32 getCurrentItem() const;
 signals:
     void sigItemChangedInternal(qint32 item);
 
@@ -41,24 +59,6 @@ public slots:
     void showDropDown();
     void hideDropDown();
     virtual void focusedLost() override;
-    /**
-     * @brief getCurrentItem index of the current item
-     * @return
-     */
-    qint32 getCurrentItem() const;
-    /**
-     * @brief setCurrentItem
-     * @param index
-     */
-    virtual void setCurrentItem(qint32 index) = 0;
-    /**
-     * @brief getItemCount
-     * @return
-     */
-    inline qint32 getItemCount()
-    {
-        return m_Items.size();
-    }
 protected:
     const QSize& addDropDownItem(oxygine::spActor item, qint32 id);
 protected:

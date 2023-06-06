@@ -16,23 +16,23 @@ public:
     };
     explicit TextInput();
     virtual ~TextInput();
-signals:
-    void sigSetText(const QString text);
-public slots:
-    QString getCurrentText() const;
+    Q_INVOKABLE QString getCurrentText() const;
     /**
      * @brief setCurrentText changes the text of this textbox
      * @param text
      */
-    void setCurrentText(const QString & text);
-    qint32 getCursorPosition() const;
-    void setCursorPosition(qint32 position);
+    Q_INVOKABLE void setCurrentText(const QString & text);
+    Q_INVOKABLE qint32 getCursorPosition() const;
+    Q_INVOKABLE void setCursorPosition(qint32 position);
+signals:
+    void sigSetText(const QString text);
+public slots:
     virtual void focusedLost() override;
 
-    static qint32 getClickedLinePosition(qint32 x, const QString & line, const QFont & font);
 private slots:
     void editFinished();
 protected:
+    static qint32 getClickedLinePosition(qint32 x, const QString & line, const QFont & font);
     virtual bool doHandleEvent(QEvent *event) override;
     virtual bool onEditFinished() = 0;
     virtual void focused() override;

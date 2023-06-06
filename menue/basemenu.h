@@ -14,9 +14,8 @@ class Basemenu : public CreatedGui
 public:
     explicit Basemenu();
     virtual ~Basemenu() = default;
-public slots:
-    bool getFocused() const;
-    virtual void setFocused(bool Focused);
+   Q_INVOKABLE bool getFocused() const;
+   Q_INVOKABLE  virtual void setFocused(bool Focused);
 protected slots:
     virtual void onEnter() = 0;
 protected:

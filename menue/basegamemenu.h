@@ -40,6 +40,9 @@ public:
      */
     virtual Player* getCurrentViewPlayer() const;
     void registerAtInterpreter(QString name = "game");
+    Q_INVOKABLE GameMap* getMap() const;
+    Q_INVOKABLE void centerMapOnCursor();
+    Q_INVOKABLE void changeBackground(QString background);
 signals:
     void sigMouseWheel(qint32 direction);
     void sigRightClick(qint32 x, qint32 y);
@@ -50,9 +53,6 @@ signals:
     void sigLeftClickUp(qint32 x, qint32 y);
     void sigMouseMove(qint32 x, qint32 y);
 public slots:
-    GameMap* getMap() const;
-    void centerMapOnCursor();
-    void changeBackground(QString background);
     virtual void setFocused(bool Focused) override;
 protected slots:
     virtual void keyInput(oxygine::KeyEvent event);

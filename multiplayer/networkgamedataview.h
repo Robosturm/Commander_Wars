@@ -21,18 +21,17 @@ public:
     virtual oxygine::spActor loadCustomId(const QString & item, qint32 x, qint32 y, bool enabled, bool visible, float scale,
                                           const QString & id, const QString & tooltip, const QString & onEvent,
                                           UiFactory* pFactoty, CreatedGui* pMenu, qint32 loopIdx, qint32 & scaledWidth, qint32 & scaledHeight) override;
-public slots:
-    void close();
-    QString getMapName() const;
-    QString getDescription() const;
-    qint32 getPlayers() const;
-    qint32 getMaxPlayers() const;
-    QString getPlayerName(qint32 player);
-    bool getPlayerIsOnline(qint32 player);
-    qint32 getModCount() const;
-    QString getModName(qint32 mod) const;
-    qint32 getObservers() const;
-    qint32 getMaxObservers() const;
+    Q_INVOKABLE void close();
+    Q_INVOKABLE QString getMapName() const;
+    Q_INVOKABLE QString getDescription() const;
+    Q_INVOKABLE qint32 getPlayers() const;
+    Q_INVOKABLE qint32 getMaxPlayers() const;
+    Q_INVOKABLE QString getPlayerName(qint32 player);
+    Q_INVOKABLE bool getPlayerIsOnline(qint32 player);
+    Q_INVOKABLE qint32 getModCount() const;
+    Q_INVOKABLE QString getModName(qint32 mod) const;
+    Q_INVOKABLE qint32 getObservers() const;
+    Q_INVOKABLE qint32 getMaxObservers() const;
 private:
     void getMinimapImage(QImage & img, NetworkGameData & data);
 private:

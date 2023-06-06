@@ -42,26 +42,26 @@ public:
     {
         return &m_Variables;
     }
-public slots:
     /**
      * @brief hide
      */
-    void hide();
+    Q_INVOKABLE void hide();
     /**
      * @brief addSprite
      * @param name
      * @param x
      * @param y
      */
-    void addSprite(QString spriteID, qint32 x, qint32 y, float offsetX = 0, float offsetY = 0, QColor color = Qt::white, qint32 frameTime = 150);
+    Q_INVOKABLE void addSprite(QString spriteID, qint32 x, qint32 y, float offsetX = 0, float offsetY = 0, QColor color = Qt::white, qint32 frameTime = 150);
     /**
      * @brief removeAllSprites
      */
-    void removeAllSprites();
+    Q_INVOKABLE void removeAllSprites();
     /**
      * @brief onMenuInputDone
      */
-    void onMenuInputDone();
+    Q_INVOKABLE void onMenuInputDone();
+
 private:
     QString m_addIn;
     ScriptVariables m_Variables;

@@ -49,12 +49,6 @@ public:
     void setActionRunning(bool newActionRunning);
     bool getExit() const;
     void setExit(bool newExit);
-
-signals:
-    void sigActionPerformed();
-    void sigAiProcesseSendAction(spGameAction pGameAction);
-
-public slots:
     /**
      * @brief centerMapOnAction
      * @param pGameAction
@@ -109,6 +103,9 @@ public slots:
      * @brief nextTurnPlayerTimeout
      */
     void nextTurnPlayerTimeout();
+signals:
+    void sigActionPerformed();
+    void sigAiProcesseSendAction(spGameAction pGameAction);
 
 protected:
     bool requiresForwarding(const spGameAction & pGameAction) const;

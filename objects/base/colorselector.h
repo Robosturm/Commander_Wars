@@ -19,12 +19,11 @@ class ColorSelector final : public QObject, public oxygine::Actor
 public:
     explicit ColorSelector(QColor color, qint32 pixelSize);
     ~ColorSelector() = default;
+    Q_INVOKABLE void selecetedColorChanged(QColor color);
+    Q_INVOKABLE QColor getCurrentColor() const;
 
 signals:
     void sigSelecetedColorChanged(QColor color);
-public slots:
-    void selecetedColorChanged(QColor color);
-    QColor getCurrentColor() const;
 private:
     oxygine::spActor m_ColorDialog;
     spSpinBox m_SpinBoxRed;

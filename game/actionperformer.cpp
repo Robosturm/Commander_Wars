@@ -32,7 +32,10 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
     auto mapHash = m_pMap->getMapHash();
     if (m_exit)
     {
-        emit m_pMenu->sigVictory(-1);
+        if (m_pMenu != nullptr)
+        {
+            emit m_pMenu->sigVictory(-1);
+        }
         return;
     }
     else if (m_actionRunning)
@@ -46,7 +49,10 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
     }
     m_actionRunning = true;
     bool autosave = true;
-    m_pMenu->setSaveAllowed(false);
+    if (m_pMenu != nullptr)
+    {
+        m_pMenu->setSaveAllowed(false);
+    }
     if (m_multiplayerSyncData.m_waitingForSyncFinished && m_pMenu != nullptr)
     {
         m_multiplayerSyncData.m_postSyncAction = pGameAction;

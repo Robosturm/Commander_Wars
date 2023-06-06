@@ -26,12 +26,11 @@ public:
         return m_iconList;
     }
 
-public slots:
     /**
      * @brief getActionIDs
      * @return
      */
-    QStringList getActionIDs()
+    Q_INVOKABLE QStringList getActionIDs()
     {
         return m_actionIDs;
     }
@@ -39,7 +38,7 @@ public slots:
      * @brief getCostList
      * @return
      */
-    QVector<qint32> getCostList()
+    Q_INVOKABLE QVector<qint32> getCostList()
     {
         return m_costList;
     }
@@ -47,7 +46,7 @@ public slots:
      * @brief getEnabledList
      * @return
      */
-    QVector<bool> getEnabledList()
+    Q_INVOKABLE QVector<bool> getEnabledList()
     {
         return m_enabledList;
     }
@@ -55,7 +54,7 @@ public slots:
      * @brief getMap
      * @return
      */
-    GameMap *getMap() const;
+    Q_INVOKABLE GameMap *getMap() const;
     /**
      * @brief addData adds data to a later shown menu
      * @param text the text shown in the menu
@@ -64,7 +63,7 @@ public slots:
      * @param costs the costs given to the action when executing the given action
      * @param enabled if the menu item is selectable or not
      */
-    void addData(QString text, QString actionID, QString icon, qint32 costs = 0, bool enabled = true);
+    Q_INVOKABLE void addData(QString text, QString actionID, QString icon, qint32 costs = 0, bool enabled = true);
     /**
      * @brief addData adds data to a later shown menu
      * @param text the text shown in the menu
@@ -73,16 +72,16 @@ public slots:
      * @param costs the costs given to the action when executing the given action
      * @param enabled if the menu item is selectable or not
      */
-    void addUnitData(QString text, QString actionID, Unit* pIcon, qint32 costs = 0, bool enabled = true);
+    Q_INVOKABLE void addUnitData(QString text, QString actionID, Unit* pIcon, qint32 costs = 0, bool enabled = true);
     /**
      * @brief validData verifies if the menu data is valid. In case of wrongly used javascript implementation
      * @return
      */
-    bool validData();
+    Q_INVOKABLE bool validData();
     /**
      * @brief remove
      */
-    void remove()
+    Q_INVOKABLE void remove()
     {
     }
 private:

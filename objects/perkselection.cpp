@@ -273,7 +273,7 @@ QStringList PerkSelection::getHiddenPerks() const
     return m_hiddenPerks;
 }
 
-void PerkSelection::setHiddenPerks(const QStringList &hiddenPerks)
+void PerkSelection::setHiddenPerks(const QStringList hiddenPerks)
 {
     m_hiddenPerks = hiddenPerks;
 }
@@ -283,7 +283,7 @@ QStringList PerkSelection::getPerks() const
     return m_perks;
 }
 
-void PerkSelection::setPerks(const QStringList &perks)
+void PerkSelection::setPerks(const QStringList perks)
 {
     m_perks = perks;
     if (!m_banning)

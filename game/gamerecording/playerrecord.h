@@ -37,14 +37,13 @@ public:
     {
         return 1;
     }
-public slots:
-    qint32 getDay() const;
-    qint32 getOwner() const;
-    qint32 getFunds() const;
-    qint32 getIncome() const;
-    qint32 getBuildings() const;
-    qint32 getUnits() const;
-    qint32 getPlayerStrength() const;
+    Q_INVOKABLE qint32 getDay() const;
+    Q_INVOKABLE qint32 getOwner() const;
+    Q_INVOKABLE qint32 getFunds() const;
+    Q_INVOKABLE qint32 getIncome() const;
+    Q_INVOKABLE qint32 getBuildings() const;
+    Q_INVOKABLE qint32 getUnits() const;
+    Q_INVOKABLE qint32 getPlayerStrength() const;
 private:
     qint32 m_Day{-1};
     qint32 m_Player{-1};

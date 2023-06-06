@@ -377,8 +377,8 @@ void GameRecorder::addSpecialEvent(qint32 player, GameEnums::GameRecord_SpecialE
 }
 
 void GameRecorder::logAttack(qint32 day,
-                             qint32 attackerDamage, qint32 attackerX, qint32 attackerY, const QString & attackerID, qint32 attackerOwnerID, bool attackerKilled,
-                             qint32 defenderDamage, qint32 defenderX, qint32 defenderY, const QString & defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker)
+                             qint32 attackerDamage, qint32 attackerX, qint32 attackerY, const QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
+                             qint32 defenderDamage, qint32 defenderX, qint32 defenderY, const QString defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker)
 {
     m_Attackreports.append(spAttackReport::create());
     m_Attackreports[m_Attackreports.size() - 1]->day = day;

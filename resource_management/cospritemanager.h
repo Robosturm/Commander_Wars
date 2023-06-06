@@ -17,13 +17,13 @@ public:
      * @param id
      * @return
      */
-    QStringList getCOStyles(const QString & id);
+    Q_INVOKABLE QStringList getCOStyles(const QString & id);
     /**
      * @brief getCOStyles
      * @param position
      * @return
      */
-    QStringList getCOStyles(qint32 position);
+    Q_INVOKABLE QStringList getCOStyles(qint32 position);
     /**
      * @brief getResAnim
      * @param id
@@ -40,19 +40,16 @@ public:
      * @return
      */
     QVector<CoGroup> getCoGroups(QStringList & coids);
-signals:
-    void sigLoadResAnim(const QString coid, const QString file, QImage colorTable, QImage maskTable, bool useColorBox);
-public slots:
     /**
      * @brief getSpriteCOIDs
      * @return
      */
-    QStringList getSpriteCOIDs();
+    Q_INVOKABLE QStringList getSpriteCOIDs();
     /**
      * @brief getCoIds
      * @return
      */
-    QStringList getCoIds()
+    Q_INVOKABLE QStringList getCoIds()
     {
         return m_loadedRessources;
     }
@@ -63,18 +60,22 @@ public slots:
      * @param colorTable
      * @param maskTable
      */
-    void loadResAnim(const QString coid, const QString file, QImage colorTable, QImage maskTable, bool useColorBox);
+    Q_INVOKABLE void loadResAnim(const QString coid, const QString file, QImage colorTable, QImage maskTable, bool useColorBox);
     /**
      * @brief removeRessource
      * @param id
      */
-    void removeRessource(const QString & id);
+    Q_INVOKABLE void removeRessource(const QString id);
     /**
      * @brief getArmyList
      * @param coids
      * @return
      */
-    QStringList getArmyList(const QStringList & coids) const;
+    Q_INVOKABLE QStringList getArmyList(const QStringList coids) const;
+
+signals:
+    void sigLoadResAnim(const QString coid, const QString file, QImage colorTable, QImage maskTable, bool useColorBox);
+
 protected:
     friend RessourceManagement<COSpriteManager>;
     COSpriteManager();

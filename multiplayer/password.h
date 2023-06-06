@@ -52,12 +52,11 @@ public:
     {
         return m_passwordHash;
     }
-
-public slots:
-    void setPassword(const QString & password);
-    bool isValidPassword(const QString & password) const;
     bool areEqualPassword(const Password & password) const;
-    bool getIsSet() const;
+
+    Q_INVOKABLE void setPassword(const QString password);
+    Q_INVOKABLE bool isValidPassword(const QString password) const;
+    Q_INVOKABLE bool getIsSet() const;
 private:
     QByteArray m_passwordHash;
     QString m_password;

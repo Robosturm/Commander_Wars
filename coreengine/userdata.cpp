@@ -33,12 +33,12 @@ Userdata::Userdata()
     Interpreter::setCppOwnerShip(this);
 }
 
-const QString &Userdata::getUniqueIdentifier() const
+QString Userdata::getUniqueIdentifier() const
 {
     return m_uniqueIdentifier;
 }
 
-void Userdata::setUniqueIdentifier(const QString &newUniqueIdentifier)
+void Userdata::setUniqueIdentifier(const QString newUniqueIdentifier)
 {
     m_uniqueIdentifier = newUniqueIdentifier;
 }
@@ -441,7 +441,7 @@ void Userdata::unlockAllShopItems(bool bought)
     storeUser();
 }
 
-ScriptVariableFile* Userdata::getScriptVariableFile(const QString & filename)
+ScriptVariableFile* Userdata::getScriptVariableFile(const QString filename)
 {
     for (const auto & variableFile : m_scriptVariableFiles)
     {

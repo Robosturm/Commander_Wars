@@ -43,7 +43,7 @@ QString DialogExtendMap::getMapFile() const
     return m_mapFile;
 }
 
-void DialogExtendMap::setMapFile(const QString & newMapFile)
+void DialogExtendMap::setMapFile(const QString newMapFile)
 {
     m_mapFile = newMapFile;
 }
@@ -53,7 +53,7 @@ GameEnums::Directions DialogExtendMap::getDirection() const
     return m_direction;
 }
 
-void DialogExtendMap::setDirection(const GameEnums::Directions & newDirection)
+void DialogExtendMap::setDirection(const GameEnums::Directions newDirection)
 {
     m_direction = newDirection;
 }

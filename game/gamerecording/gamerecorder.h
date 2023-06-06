@@ -151,14 +151,18 @@ public:
      * @return
      */
     const QVector<PlayerData> & getPlayerDataRecords() const;
-
-public slots:
+    /**
+     * @brief getAttackLog
+     * @param player
+     * @return
+     */
+    QVector<spAttackReport> getAttackLog(qint32 player);
     /**
      * @brief getDayRecord
      * @param index
      * @return
      */
-    DayToDayRecord* getDayRecord(qint32 index)
+    Q_INVOKABLE DayToDayRecord* getDayRecord(qint32 index)
     {
         if (index >= 0 && index < m_Record.size())
         {
@@ -171,83 +175,83 @@ public slots:
      * @param player
      * @return a vector containing the score values for the player. X = speed Y = power width = technique height = rang
      */
-    QRect getScoreValues(qint32 player);
+    Q_INVOKABLE QRect getScoreValues(qint32 player);
     /**
      * @brief newDay
      */
-    void newDay();
+    Q_INVOKABLE void newDay();
     /**
      * @brief updatePlayerData
      * @param player
      */
-    void updatePlayerData(qint32 player);
+    Q_INVOKABLE void updatePlayerData(qint32 player);
     /**
      * @brief addSpecialEvent
      * @param player
      * @param event
      */
-    void addSpecialEvent(qint32 player, GameEnums::GameRecord_SpecialEvents event);
+    Q_INVOKABLE void addSpecialEvent(qint32 player, GameEnums::GameRecord_SpecialEvents event);
     /**
      * @brief lostUnit
      * @param player
      * @param unitId is optional to make it upwards compatible
      */
-    void lostUnit(qint32 player, QString unitId = "", qint32 owner = -1);
+    Q_INVOKABLE void lostUnit(qint32 player, QString unitId = "", qint32 owner = -1);
     /**
      * @brief getLostUnits
      * @param player
      * @return
      */
-    quint32 getLostUnits(qint32 player);
+    Q_INVOKABLE quint32 getLostUnits(qint32 player);
     /**
      * @brief destroyedUnit
      * @param player
      * @param unitId is optional to make it upwards compatible
      */
-    void destroyedUnit(qint32 player, QString unitId = "", qint32 owner = -1);
+    Q_INVOKABLE void destroyedUnit(qint32 player, QString unitId = "", qint32 owner = -1);
     /**
      * @brief getDestroyedUnits
      * @param player
      * @return
      */
-    quint32 getDestroyedUnits(qint32 player);
+    Q_INVOKABLE quint32 getDestroyedUnits(qint32 player);
     /**
      * @brief buildUnit
      * @param player
      * @param unitId is optional to make it upwards compatible
      */
-    void buildUnit(qint32 player, const QString unitId = "", qint32 owner = -1);
+    Q_INVOKABLE void buildUnit(qint32 player, const QString unitId = "", qint32 owner = -1);
     /**
      * @brief getBuildedUnits
      * @param player
      * @return
      */
-    quint32 getBuildedUnits(qint32 player);
+    Q_INVOKABLE quint32 getBuildedUnits(qint32 player);
     /**
      * @brief attacked
      * @param damage
      */
-    void attacked(qint32 player, qreal damage);
+    Q_INVOKABLE void attacked(qint32 player, qreal damage);
     /**
      * @brief getMapTime
      * @return
      */
-    qint32 getMapTime() const;
+    Q_INVOKABLE qint32 getMapTime() const;
     /**
      * @brief setMapTime
      * @param mapTime
      */
-    void setMapTime(const qint32 mapTime);
+    Q_INVOKABLE void setMapTime(const qint32 mapTime);
     /**
      * @brief getDeployLimit
      * @return
      */
-    quint32 getDeployLimit() const;
+    Q_INVOKABLE quint32 getDeployLimit() const;
     /**
      * @brief setDeployLimit
      * @param deployLimit
      */
-    void setDeployLimit(const quint32 deployLimit);
+    Q_INVOKABLE void setDeployLimit(const quint32 deployLimit);
     /**
      * @brief logAttack
      * @param day
@@ -262,15 +266,9 @@ public slots:
      * @param defenderID
      * @param defenderOwnerID
      */
-    void logAttack(qint32 day,
-                   qint32 attackerDamage, qint32 attackerX, qint32 attackerY, const QString & attackerID, qint32 attackerOwnerID, bool attackerKilled,
-                   qint32 defenderDamage, qint32 defenderX, qint32 defenderY, const QString & defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker = true);
-    /**
-     * @brief getAttackLog
-     * @param player
-     * @return
-     */
-    QVector<spAttackReport> getAttackLog(qint32 player);
+    Q_INVOKABLE void logAttack(qint32 day,
+                   qint32 attackerDamage, qint32 attackerX, qint32 attackerY, const QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
+                   qint32 defenderDamage, qint32 defenderX, qint32 defenderY, const QString defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker = true);
 private:
     void saveUnitVector(QDataStream& pStream, const QVector<UnitData> & data) const;
     void loadUnitVector(QDataStream& pStream, QVector<UnitData> & data);

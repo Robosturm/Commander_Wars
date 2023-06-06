@@ -132,7 +132,7 @@ QString Tooltip::getTooltipText() const
 #endif
 }
 
-void Tooltip::setTooltipText(const QString &tooltipText)
+void Tooltip::setTooltipText(const QString tooltipText)
 {
 #ifdef GRAPHICSUPPORT
     m_tooltipText = tooltipText;

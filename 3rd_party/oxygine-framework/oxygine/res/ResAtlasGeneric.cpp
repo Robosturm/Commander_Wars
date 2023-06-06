@@ -94,17 +94,6 @@ namespace oxygine
             {
                 scaleFactor = 1.0f;
             }
-            bool maskExtend = true;
-            if (child_node.hasAttribute("maskExtend"))
-            {
-                QVariant varMaskExtend = QVariant(child_node.attribute("maskExtend"));
-                if (varMaskExtend.typeId() == QMetaType::QString &&
-                    !varMaskExtend.isNull() &&
-                    child_node.hasAttribute("maskExtend"))
-                {
-                    maskExtend = varMaskExtend.toBool();
-                }
-            }
             quint32 linearFilter = m_linearFilter;
             if (child_node.hasAttribute("linearFilter"))
             {

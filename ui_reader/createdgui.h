@@ -31,26 +31,26 @@ public:
 signals:
     void sigOnUpdate();
     void sigFinished();
-public slots:
-    virtual void setEnabled(bool value) override;
-    void resetUi();
-    void loadXml(QString xmlFile);
-    void setObjectEnabled(const QString id, bool value);
-    void showFileDialog(const QStringList & wildcards, const QString & startFolder, bool isSaveDialog, const QString & jsObject, const QString & jsCallback, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
-    void showFolderDialog(const QString & startFolder, const QString & jsObject, const QString & jsCallback);
-    void showTextInputDialog(const QString & text, bool showCancel, const QString & startInput, const QString & jsObject, const QString & jsCallback);    
-    QObject* getObject(const QString & id);
-    void restart();
-    qint32 getUiWidth() const;
-    qint32 getUiHeight() const;    
-    void createSubUi(const QString & uiXml, CreatedGui* pBaseUi);
-    void exit();
-    CreatedGui* getUiParent();
+public:
+    Q_INVOKABLE virtual void setEnabled(bool value) override;
+    Q_INVOKABLE void resetUi();
+    Q_INVOKABLE void loadXml(QString xmlFile);
+    Q_INVOKABLE void setObjectEnabled(const QString id, bool value);
+    Q_INVOKABLE void showFileDialog(const QStringList wildcards, const QString startFolder, bool isSaveDialog, const QString jsObject, const QString jsCallback, QString startFile = "", bool preview = false, QString acceptButtonName = tr("Ok"));
+    Q_INVOKABLE void showFolderDialog(const QString startFolder, const QString jsObject, const QString jsCallback);
+    Q_INVOKABLE void showTextInputDialog(const QString text, bool showCancel, const QString startInput, const QString jsObject, const QString jsCallback);
+    Q_INVOKABLE QObject* getObject(const QString id);
+    Q_INVOKABLE void restart();
+    Q_INVOKABLE qint32 getUiWidth() const;
+    Q_INVOKABLE qint32 getUiHeight() const;
+    Q_INVOKABLE void createSubUi(const QString uiXml, CreatedGui* pBaseUi);
+    Q_INVOKABLE void exit();
+    Q_INVOKABLE CreatedGui* getUiParent();
     /**
      * @brief getVariables
      * @return
      */
-    inline ScriptVariables* getVariables()
+    Q_INVOKABLE inline ScriptVariables* getVariables()
     {
         return &m_Variables;
     }

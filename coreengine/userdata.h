@@ -151,28 +151,27 @@ public:
      */
     void release();
 
-public slots:
     /**
      * @brief getCredtis
      * @return
      */
-    qint32 getCredtis() const;
+    Q_INVOKABLE qint32 getCredtis() const;
     /**
      * @brief setCredtis
      * @param credtis
      */
-    void setCredtis(const qint32 &credtis);
+    Q_INVOKABLE void setCredtis(const qint32 &credtis);
     /**
      * @brief addCredtis
      * @param credtis
      */
-    void addCredtis(const qint32 &credtis);
+    Q_INVOKABLE void addCredtis(const qint32 &credtis);
     /**
      * @brief addAchievement
      * @param id
      * @param value
      */
-    void increaseAchievement(QString id, qint32 value);
+    Q_INVOKABLE void increaseAchievement(QString id, qint32 value);
     /**
      * @brief addAchievement
      * @param id
@@ -182,23 +181,23 @@ public slots:
      * @param icon
      * @param hide
      */
-    void addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide = false, QString group = "Unknown");
+    Q_INVOKABLE void addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide = false, QString group = "Unknown");
     /**
      * @brief deleteAchievement
      * @param id
      */
-    void deleteAchievement(QString id);
+    Q_INVOKABLE void deleteAchievement(QString id);
     /**
      * @brief achieved
      * @param id
      * @return
      */
-    bool achieved(QString id);
+    Q_INVOKABLE bool achieved(QString id);
     /**
      * @brief getActiveCoStyle
      * @param coid
      */
-    QString getActiveCoStyle(QString coid);
+    Q_INVOKABLE QString getActiveCoStyle(QString coid);
     /**
      * @brief addShopItem adds an item to the shop list
      * @param itemType what sort of item it's used to disable the item and for showing an icon in the shop
@@ -207,27 +206,27 @@ public slots:
      * @param price for the item to be bought
      * @param buyable if the item is buyable right from the start
      */
-    void addShopItem(GameEnums::ShopItemType itemType, QString key, QString name, qint32 price, bool buyable = false);
+    Q_INVOKABLE void addShopItem(GameEnums::ShopItemType itemType, QString key, QString name, qint32 price, bool buyable = false);
     /**
      * @brief removeShopItem
      * @param itemType
      * @param key
      */
-    void removeShopItem(GameEnums::ShopItemType itemType, QString key);
+    Q_INVOKABLE void removeShopItem(GameEnums::ShopItemType itemType, QString key);
     /**
      * @brief setShopItemBuyable changes if an item can be bought in the shop or not
      * @param itemType
      * @param key
      * @param buyable
      */
-    void setShopItemBuyable(GameEnums::ShopItemType itemType, QString key, bool buyable);
+    Q_INVOKABLE void setShopItemBuyable(GameEnums::ShopItemType itemType, QString key, bool buyable);
     /**
      * @brief setShopItemBought changes if the item has been bought already can be used to enabe items by progress in a campaign or map.
      * @param itemType
      * @param key
      * @param bought
      */
-    void setShopItemBought(GameEnums::ShopItemType itemType, QString key, bool bought);
+    Q_INVOKABLE void setShopItemBought(GameEnums::ShopItemType itemType, QString key, bool bought);
     /**
      * @brief unlockAllShopItems (little cheat for testing and for people who don't wanna grind)
      * @param bought if true the items get bought as well
@@ -239,23 +238,23 @@ public slots:
      * @param bought
      * @return
      */
-    QStringList getShopItemsList(GameEnums::ShopItemType type, bool bought);
+    Q_INVOKABLE QStringList getShopItemsList(GameEnums::ShopItemType type, bool bought);
     /**
      * @brief getScriptVariableFile
      * @param filename
      * @return
      */
-    ScriptVariableFile* getScriptVariableFile(const QString & filename);
+    Q_INVOKABLE ScriptVariableFile* getScriptVariableFile(const QString filename);
     /**
      * @brief getUniqueIdentifier
      * @return
      */
-    const QString &getUniqueIdentifier() const;
+    Q_INVOKABLE QString getUniqueIdentifier() const;
     /**
      * @brief setUniqueIdentifier
      * @param newUniqueIdentifier
      */
-    void setUniqueIdentifier(const QString &newUniqueIdentifier);
+    Q_INVOKABLE void setUniqueIdentifier(const QString newUniqueIdentifier);
 private:
     void showAchieved();
     void reset();

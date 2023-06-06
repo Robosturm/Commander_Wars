@@ -17,12 +17,12 @@ public:
     ~Slider() = default;
 
     virtual void setEnabled(bool value) override;
+    Q_INVOKABLE qint32 getCurrentValue() const;
+    Q_INVOKABLE void setCurrentValue(const qint32 CurrentValue);
 signals:
     void sliderValueChanged(qint32 value);
 public slots:
     void slotSliderValueChanged(float value);
-    qint32 getCurrentValue() const;
-    void setCurrentValue(const qint32 &CurrentValue);
 private slots:
     void slotSpinBoxValueChanged(qreal currentValuevalue);
 private:

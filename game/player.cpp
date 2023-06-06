@@ -248,132 +248,132 @@ bool Player::colorToTable(QColor baseColor)
     bool found = colorToTableInTable(baseColor);
     if (!found)
     {
-        if (baseColor == QColor("#ff5a00") ||
-            baseColor == QColor("#f85800") ||
-            baseColor == QColor("#f00008"))
+        if (baseColor == QColor(0xff, 0x5a, 0x00) ||
+            baseColor == QColor(0xf8, 0x58, 0x00) ||
+            baseColor == QColor(0xf0, 0x00, 0x08))
         {
             loadTableFromFile("orange_star");
             found = true;
         }
-        else if (baseColor == QColor("#0068e8") ||
-                 baseColor == QColor("#0098f8"))
+        else if (baseColor == QColor(0x00, 0x68, 0xe8) ||
+                 baseColor == QColor(0x00, 0x98, 0xf8))
         {
             loadTableFromFile("blue_moon");
             found = true;
         }
-        else if (baseColor == QColor("#00c010") ||
-                 baseColor == QColor("#00c010"))
+        else if (baseColor == QColor(0x00, 0xc0, 0x10) ||
+                 baseColor == QColor(0x00, 0xc0, 0x10))
         {
             loadTableFromFile("green_earth");
             found = true;
         }
-        else if (baseColor == QColor("#f8c000") ||
-                 baseColor == QColor("#d08000"))
+        else if (baseColor == QColor(0xf8, 0xc0, 0x00) ||
+                 baseColor == QColor(0xd0, 0x80, 0x00))
         {
             loadTableFromFile("yellow_comet");
             found = true;
         }
-        else if (baseColor == QColor("#5f11b7") ||
-                 baseColor == QColor("#6038a0"))
+        else if (baseColor == QColor(0x5f, 0x11, 0xb7) ||
+                 baseColor == QColor(0x60, 0x38, 0xa0))
         {
             loadTableFromFile("black_hole");
             found = true;
         }
-        else if (baseColor == QColor("#2d2dd5") ||
-                 baseColor == QColor("#483d8b") ||
-                 baseColor == QColor("#5c5c5c") ||
-                 baseColor == QColor("#5c5663"))
+        else if (baseColor == QColor(0x2d, 0x2d, 0xd5) ||
+                 baseColor == QColor(0x48, 0x3d, 0x8b) ||
+                 baseColor == QColor(0x5c, 0x5c, 0x5c) ||
+                 baseColor == QColor(0x5c, 0x56, 0x63))
         {
             loadTableFromFile("bolt_guard");
             found = true;
         }
         else if (baseColor == QColor("lightsteelblue") ||
-                 baseColor == QColor("#797b78"))
+                 baseColor == QColor(0x79, 0x7b, 0x78))
         {
             loadTableFromFile("metal_army");
             found = true;
         }
         else if (baseColor == QColor("coral") ||
-                 baseColor == QColor("#e88613"))
+                 baseColor == QColor(0xe8, 0x86, 0x13))
         {
             loadTableFromFile("amber_corona");
             found = true;
         }
         else if (baseColor == QColor("peru") ||
-                 baseColor == QColor("#bc8248"))
+                 baseColor == QColor(0xbc, 0x82, 0x48))
         {
             loadTableFromFile("brown_desert");
             found = true;
         }
         else if (baseColor == QColor("goldenrod") ||
-                 baseColor == QColor("#808000") ||
-                 baseColor == QColor("#bf901c"))
+                 baseColor == QColor(0x80, 0x80, 0x00) ||
+                 baseColor == QColor(0xbf, 0x90, 0x1c))
         {
             loadTableFromFile("golden_sun");
             found = true;
         }
         else if (baseColor == QColor("magenta") ||
-                 baseColor == QColor("#ff33cc"))
+                 baseColor == QColor(0xff, 0x33, 0xcc))
         {
             loadTableFromFile("pink_frontier");
             found = true;
         }
         else if (baseColor == QColor("teal") ||
-                 baseColor == QColor("#17a195"))
+                 baseColor == QColor(0x17, 0xa1, 0x95))
         {
             loadTableFromFile("teal_isle");
             found = true;
         }
         else if (baseColor == QColor("purple") ||
-                 baseColor == QColor("#800080"))
+                 baseColor == QColor(0x80, 0x00, 0x80))
         {
             loadTableFromFile("dark_matter");
             found = true;
         }
         else if (baseColor == QColor("#cyan") ||
-                 baseColor == QColor("#00ffff") ||
-                 baseColor == QColor("#01cbff"))
+                 baseColor == QColor(0x00, 0xff, 0xff) ||
+                 baseColor == QColor(0x01, 0xcb, 0xff))
         {
             loadTableFromFile("cyan");
             found = true;
         }
-        else if (baseColor == QColor("#00FF00") ||
-                 baseColor == QColor("#006400"))
+        else if (baseColor == QColor(0x00, 0xFF, 0x00) ||
+                 baseColor == QColor(0x00, 0x64, 0x00))
         {
             loadTableFromFile("dark_green");
             found = true;
         }
-        else if (baseColor == QColor("#FF0000"))
+        else if (baseColor == QColor(0xFF, 0x00, 0x00))
         {
             loadTableFromFile("red");
             found = true;
         }
         else if (baseColor == QColor("firebrick") ||
-                 baseColor == QColor("#c4443d"))
+                 baseColor == QColor(0xc4, 0x44, 0x3d))
         {
             loadTableFromFile("red_fire");
             found = true;
         }
-        else if (baseColor == QColor("#FFFF00") ||
-                 baseColor == QColor("#a29db9"))
+        else if (baseColor == QColor(0xFF, 0xFF, 0x00) ||
+                 baseColor == QColor(0xa2, 0x9d, 0xb9))
         {
             loadTableFromFile("light_grey");
             found = true;
         }
         else if (baseColor == QColor("#olive") ||
-                 baseColor == QColor("#617c0e"))
+                 baseColor == QColor(0x61, 0x7c, 0x0e))
         {
             loadTableFromFile("olive");
             found = true;
         }
-        else if (baseColor == QColor("#0000FF") ||
-                 baseColor == QColor("#2342ba"))
+        else if (baseColor == QColor(0x00, 0x00, 0xFF) ||
+                 baseColor == QColor(0x23, 0x42, 0xba))
         {
             loadTableFromFile("cobalt_ice");
             found = true;
         }
         else if (baseColor == QColor("silver") ||
-                 baseColor == QColor("#85927b"))
+                 baseColor == QColor(0x85, 0x92, 0x7b))
         {
             loadTableFromFile("silver");
             found = true;

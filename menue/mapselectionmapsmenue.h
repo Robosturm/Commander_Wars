@@ -37,6 +37,7 @@ public:
     virtual void showRuleSelection();
     void hidePlayerSelection();
     virtual void showPlayerSelection(bool relaunchedLobby = false);
+    Q_INVOKABLE PlayerSelection* getPlayerSelection() const;
 signals:
     void sigButtonBack();
     void sigButtonNext();
@@ -66,6 +67,17 @@ public slots:
      * @brief showRandomMap
      */
     void showRandomMap();
+    void showLoadRules();
+    void showSaveRules();
+    void loadRules(QString filename);
+    void saveRules(QString filename);
+    void showSaveMap();
+    void saveMap(QString filename);
+    void selectMap(QString folder, QString filename);
+    void showMapFilter();
+protected slots:
+    virtual void onEnter() override;
+    void ruleSelectionSizeChanged();
     /**
      * @brief selectRandomMap
      */
@@ -82,18 +94,6 @@ public slots:
                          QVector<float> unitDistribution,
                          bool unitsDistributed,
                          bool mirrored);
-    void showLoadRules();
-    void showSaveRules();
-    void loadRules(QString filename);
-    void saveRules(QString filename);
-    void showSaveMap();
-    void saveMap(QString filename);
-    void selectMap(QString folder, QString filename);
-    PlayerSelection* getPlayerSelection() const;
-    void showMapFilter();
-protected slots:
-    virtual void onEnter() override;
-    void ruleSelectionSizeChanged();
 protected:
 
     // buttons

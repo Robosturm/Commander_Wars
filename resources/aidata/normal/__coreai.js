@@ -51,6 +51,11 @@ var COREAI =
     heavyAirUnits : ["BOMBER", "FIGHTER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
     lightAirUnits : ["K_HELI", "DUSTER"],
     supplyUnits : ["APC"],
+    antiTankUnits : ["ANTITANKCANNON", "NEOTANK", "MEGATANK"],
+    mediumTankUnits : ["HEAVY_TANK", "NEOTANK"],
+    antiMediumTankBuildUnits : ["HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "NEOTANK", "BOMBER"],
+    heavyTankUnits : ["NEOTANK", "MEGATANK"],
+    bomberUnits : ["BOMBER"],
     minInfantryTransporterMapSize : 40 * 40,
     minApcResupplyDay : 15,
     minInfTransporterDay : 3,
@@ -370,6 +375,25 @@ var COREAI =
         }
     },
 
+    forcedAntiTankProduction : function(system, ai, units, enemyUnits)
+    {
+        var antiTankUnitCount = ai.getUnitCount(units, COREAI.antiTankUnits, 5);
+        var mediumTankUnitCount = ai.getUnitCount(units, COREAI.mediumTankUnits, 5);
+        var bomberUnitCount = ai.getUnitCount(units, COREAI.bomberUnits, 5);
+        var enemyHeavyTankCount = ai.getUnitCount(enemyUnits, COREAI.heavyTankUnits, 5);
+        var enemyMediumTankCount = ai.getUnitCount(enemyUnits, COREAI.mediumTankUnits, 5);
+        if (enemyHeavyTankCount > antiTankUnitCount + bomberUnitCount)
+        {
+            var antiTankUnits = COREAI.antiTankUnits;
+            antiTankUnits = antiTankUnits.concat(COREAI.bomberUnits);
+            system.addForcedProduction(antiTankUnits);
+        }
+        if (enemyMediumTankCount > (mediumTankUnitCount + bomberUnitCount))
+        {
+            system.addForcedProduction(COREAI.antiMediumTankBuildUnits);
+        }
+    },
+
     fundsModes : [[0,     0, 0, 0],
                   [2, 12000, 0, 1],
                   [3, 7000,  0, 1],
@@ -387,6 +411,12 @@ var COREAI =
         var funds = player.getFunds();
         var minMode = 0;
         var maxMode = 0;
+        // units need to be inside the given base cost range.
+        // can be used to force the ai to build only cheap units aka reducing base skipping or
+        // into forcing the ai to build units in a certain range e.g. spaming light units
+        // Note: forced and initial production ignore this check
+        var minBaseCost = 0;
+        var maxBaseCost = -1; // negativ values get set to the income
         for (var i = COREAI.fundsModes.length - 1; i >= 0; --i)
         {
             if (turn >= COREAI.fundsModes[i][0] &&
@@ -397,7 +427,7 @@ var COREAI =
                 break;
             }
         }
-        return system.buildNextUnit(buildings, units, minMode, maxMode, COREAI.minAverageIslandSize);
+        return system.buildNextUnit(buildings, units, minMode, maxMode, COREAI.minAverageIslandSize, minBaseCost, maxBaseCost);
     },
 
     getFactoryMenuItem : function(ai, action, ids, costs, enabled, units, buildings, owner, map)

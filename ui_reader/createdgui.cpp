@@ -73,7 +73,7 @@ void CreatedGui::setObjectEnabled(const QString id, bool value)
     }
 }
 
-void CreatedGui::showFileDialog(const QStringList & wildcards, const QString & startFolder, bool isSaveDialog, const QString & jsObject, const QString & jsCallback, QString startFile, bool preview, QString acceptButtonName)
+void CreatedGui::showFileDialog(const QStringList wildcards, const QString startFolder, bool isSaveDialog, const QString jsObject, const QString jsCallback, QString startFile, bool preview, QString acceptButtonName)
 {
     spFileDialog fileDialog = spFileDialog::create(startFolder, wildcards, isSaveDialog, startFile, preview, acceptButtonName);
     addChild(fileDialog);
@@ -86,7 +86,7 @@ void CreatedGui::showFileDialog(const QStringList & wildcards, const QString & s
     }, Qt::QueuedConnection);
 }
 
-void CreatedGui::showFolderDialog(const QString & startFolder, const QString & jsObject, const QString & jsCallback)
+void CreatedGui::showFolderDialog(const QString startFolder, const QString jsObject, const QString jsCallback)
 {
     spFolderDialog folderDialog = spFolderDialog::create(startFolder);
     addChild(folderDialog);
@@ -99,7 +99,7 @@ void CreatedGui::showFolderDialog(const QString & startFolder, const QString & j
     }, Qt::QueuedConnection);
 }
 
-void CreatedGui::showTextInputDialog(const QString & text, bool showCancel, const QString & startInput, const QString & jsObject, const QString & jsCallback)
+void CreatedGui::showTextInputDialog(const QString text, bool showCancel, const QString startInput, const QString jsObject, const QString jsCallback)
 {
     spDialogTextInput pDialogTextInput = spDialogTextInput::create(text, showCancel, startInput);
     addChild(pDialogTextInput);
@@ -112,7 +112,7 @@ void CreatedGui::showTextInputDialog(const QString & text, bool showCancel, cons
     }, Qt::QueuedConnection);
 }
 
-QObject* CreatedGui::getObject(const QString & id)
+QObject* CreatedGui::getObject(const QString id)
 {
     for (auto & item : m_factoryUiItem)
     {
@@ -136,7 +136,7 @@ qint32 CreatedGui::getUiHeight() const
     return getHeight();
 }
 
-void CreatedGui::createSubUi(const QString & uiXml, CreatedGui* pBaseUi)
+void CreatedGui::createSubUi(const QString uiXml, CreatedGui* pBaseUi)
 {
     spCreatedGui pUi = spCreatedGui::create();
     pUi->m_pBaseUi = pBaseUi;
