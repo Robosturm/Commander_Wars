@@ -26,7 +26,7 @@ GameUpdater::GameUpdater()
       m_downloadFile(DOWNLOADTARGET),
       m_zipReader(&m_downloadFile)
 {
-    QString mode = Settings::getUpdateStep();
+    QString mode = Settings::getInstance()->getUpdateStep();
     if (mode == MODE_INSTALL)
     {
         install();
