@@ -234,6 +234,10 @@ var Init =
                 var ai = Init.coreData[coreIndex][2][i];
                 if (ai !== winnerAi)
                 {
+                    Init.battleData[winnerAi][ai] += 3;
+                }
+                else if (winnerAi < 0)
+                {
                     Init.battleData[winnerAi][ai] += 1;
                 }
             }
