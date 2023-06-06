@@ -313,6 +313,10 @@ public:
                             QStringList & compatibleMods, QStringList & incompatibleMods,
                             QStringList & requiredMods, bool & isCosmetic,
                             QStringList & tags, QString & thumbnail);
+    const std::chrono::seconds getSlaveDespawnTime();
+    void setSlaveDespawnTime(const std::chrono::seconds newSlaveDespawnTime);
+    const std::chrono::seconds getSuspendedDespawnTime();
+    void setSuspendedDespawnTime(const std::chrono::seconds newSlaveDespawnTime);
 
     Q_INVOKABLE void loadSettings();
     Q_INVOKABLE void resetSettings();
@@ -353,10 +357,6 @@ public:
     Q_INVOKABLE void setMailServerUsername(QString newMailServerUsername);
     Q_INVOKABLE QString getMailServerPassword();
     Q_INVOKABLE void setMailServerPassword(QString newMailServerPassword);
-    Q_INVOKABLE const std::chrono::seconds &getSlaveDespawnTime();
-    Q_INVOKABLE void setSlaveDespawnTime(const std::chrono::seconds newSlaveDespawnTime);
-    Q_INVOKABLE const std::chrono::seconds &getSuspendedDespawnTime();
-    Q_INVOKABLE void setSuspendedDespawnTime(const std::chrono::seconds newSlaveDespawnTime);
     Q_INVOKABLE QString getDefaultBannlist();
     Q_INVOKABLE void setDefaultBannlist(const QString newDefaultBannlist);
     Q_INVOKABLE bool getDay2dayScreen();
