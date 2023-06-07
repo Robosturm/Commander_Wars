@@ -58,13 +58,13 @@ qint32 Userdata::getCredtis() const
     return m_credtis;
 }
 
-void Userdata::setCredtis(const qint32 &credtis)
+void Userdata::setCredtis(const qint32 credtis)
 {
     m_credtis = credtis;
     storeUser();
 }
 
-void Userdata::addCredtis(const qint32 &credtis)
+void Userdata::addCredtis(const qint32 credtis)
 {
     m_credtis += credtis;
     storeUser();

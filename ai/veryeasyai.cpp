@@ -645,7 +645,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("VeryEasyAI::buildUnits()", GameConsole::eDEBUG);
-    pEnemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
+    pEnemyUnits->pruneEnemies(pUnits.get(), m_enemyPruneRange);
     pBuildings->sortClosestToEnemy(pEnemyUnits);
     if (m_aiStep < AISteps::buildUnits)
     {

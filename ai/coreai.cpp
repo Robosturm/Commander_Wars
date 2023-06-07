@@ -58,7 +58,6 @@ const char* const CoreAI::ACTION_BLACKHOLEFACTORY_DOOR2 = "ACTION_BLACKHOLEFACTO
 const char* const CoreAI::ACTION_BLACKHOLEFACTORY_DOOR3 = "ACTION_BLACKHOLEFACTORY_DOOR3";
 const char* const CoreAI::ACTION_NEST_FACTORY_DOOR = "ACTION_NEST_FACTORY_DOOR";
 
-
 const char* const CoreAI::UNIT_INFANTRY = "INFANTRY";
 const char* const CoreAI::BUILDING_HQ = "HQ";
 
@@ -321,7 +320,7 @@ void CoreAI::prepareEnemieData(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnem
     pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
     if (!m_usedTransportSystem)
     {
-        pEnemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
+        pEnemyUnits->pruneEnemies(pUnits.get(), m_enemyPruneRange);
         pEnemyBuildings->pruneEnemieBuildings(pUnits, m_enemyPruneRange);
     }
     pEnemyUnits->randomize();

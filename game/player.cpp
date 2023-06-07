@@ -680,7 +680,6 @@ bool Player::isAlly(Player* pOwner)
     return (checkAlliance(pOwner) == GameEnums::Alliance_Friend);
 }
 
-
 void Player::setFunds(const qint32 value)
 {
     m_funds = value;
@@ -1707,8 +1706,7 @@ QVector<spUnit> Player::getSpEnemyUnits()
 }
 
 QmlVectorBuilding* Player::getEnemyBuildings()
-{
-    
+{    
     QmlVectorBuilding* ret = new QmlVectorBuilding();
     if (m_pMap)
     {

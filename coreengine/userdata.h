@@ -160,12 +160,12 @@ public:
      * @brief setCredtis
      * @param credtis
      */
-    Q_INVOKABLE void setCredtis(const qint32 &credtis);
+    Q_INVOKABLE void setCredtis(const qint32 credtis);
     /**
      * @brief addCredtis
      * @param credtis
      */
-    Q_INVOKABLE void addCredtis(const qint32 &credtis);
+    Q_INVOKABLE void addCredtis(const qint32 credtis);
     /**
      * @brief addAchievement
      * @param id

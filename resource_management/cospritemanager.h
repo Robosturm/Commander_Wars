@@ -17,7 +17,7 @@ public:
      * @param id
      * @return
      */
-    Q_INVOKABLE QStringList getCOStyles(const QString & id);
+    Q_INVOKABLE QStringList getCOStyles(const QString id);
     /**
      * @brief getCOStyles
      * @param position

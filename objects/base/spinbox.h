@@ -35,7 +35,7 @@ public:
      */
     Q_INVOKABLE qreal getCurrentValue();
     Q_INVOKABLE QString getUnit() const;
-    Q_INVOKABLE void setUnit(const QString &unit);
+    Q_INVOKABLE void setUnit(const QString unit);
     /**
      * @brief setCurrentValue changes the value of this spin box
      * @param text

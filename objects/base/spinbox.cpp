@@ -128,7 +128,7 @@ QString SpinBox::getUnit() const
     return m_unit;
 }
 
-void SpinBox::setUnit(const QString &unit)
+void SpinBox::setUnit(const QString unit)
 {
     m_unit = unit;
 }

@@ -69,7 +69,7 @@ QString TextInput::getCurrentText() const
     }
 }
 
-void TextInput::setCurrentText(const QString & text)
+void TextInput::setCurrentText(const QString text)
 {
     if (m_lineEdit != nullptr)
     {

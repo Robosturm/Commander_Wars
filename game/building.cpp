@@ -1106,7 +1106,7 @@ QString Building::getBuildingName() const
     return m_BuildingName;
 }
 
-void Building::setBuildingName(const QString &BuildingName)
+void Building::setBuildingName(const QString BuildingName)
 {
     m_BuildingName = BuildingName;
 }

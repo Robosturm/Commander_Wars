@@ -96,7 +96,7 @@ qint32 QmlVectorUnit::getUnitCount(const QString unitId)
     return count;
 }
 
-void QmlVectorUnit::pruneEnemies(const spQmlVectorUnit & pOwnUnits, qint32 distanceMultiplier)
+void QmlVectorUnit::pruneEnemies(const QmlVectorUnit * pOwnUnits, double distanceMultiplier)
 {
     qint32 i = 0;
     while (i < m_Vector.size())

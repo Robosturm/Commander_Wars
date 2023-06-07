@@ -21,7 +21,7 @@ public:
      * @brief setCurrentText changes the text of this textbox
      * @param text
      */
-    Q_INVOKABLE void setCurrentText(const QString & text);
+    Q_INVOKABLE void setCurrentText(const QString text);
     Q_INVOKABLE qint32 getCursorPosition() const;
     Q_INVOKABLE void setCursorPosition(qint32 position);
 signals:

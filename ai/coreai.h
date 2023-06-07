@@ -344,6 +344,14 @@ public:
      * @param targets
      */
     void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, std::vector<QVector3D>& targets, qint32 distanceModifier = 1);
+    /**
+     * @brief createTargetedPfs
+     * @param pUnit
+     * @param targets
+     * @return
+     */
+    TargetedUnitPathFindingSystem* createTargetedPfs(Unit* pUnit, const QVector<QVector3D> & targets);
+
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -379,13 +387,6 @@ public:
     {
         return &m_Variables;
     }
-    /**
-     * @brief createTargetedPfs
-     * @param pUnit
-     * @param targets
-     * @return
-     */
-    Q_INVOKABLE TargetedUnitPathFindingSystem* createTargetedPfs(Unit* pUnit, const QVector<QVector3D> & targets);
     /**
      * @brief loadIni
      * @param file
@@ -817,7 +818,7 @@ protected:
     bool m_missileTarget{false};
     double m_fuelResupply{0.33f};
     double m_ammoResupply{0.25f};
-    double m_enemyPruneRange{4.0};
+    double m_enemyPruneRange{3.0};
 
     double m_minCoUnitScore{5000.0f};
     double m_coUnitValue{6000};

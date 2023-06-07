@@ -41,7 +41,7 @@ QStringList COSpriteManager::getSpriteCOIDs()
     return ret;
 }
 
-QStringList COSpriteManager::getCOStyles(const QString & id)
+QStringList COSpriteManager::getCOStyles(const QString id)
 {
     for (qint32 i = 0; i < m_loadedRessources.size(); i++)
     {

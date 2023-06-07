@@ -385,6 +385,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
     qint32 cost = 0;
     QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
     bool fireSilos = hasMissileTarget();
+
     for (qint32 i = 0; i < m_OwnUnits.size(); ++i)
     {
         QCoreApplication::processEvents();
@@ -1974,7 +1975,7 @@ void NormalAi::updateAllUnitData(spQmlVectorUnit & pUnits)
     AI_CONSOLE_PRINT("NormalAi::updateAllUnitData()", GameConsole::eDEBUG);
     bool initial = m_EnemyUnits.size() == 0;
     spQmlVectorUnit enemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
-    enemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
+    enemyUnits->pruneEnemies(pUnits.get(), m_enemyPruneRange);
     rebuildIsland(pUnits);
     rebuildIsland(enemyUnits);
 
@@ -2240,7 +2241,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
                           spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("NormalAi::buildUnits()", GameConsole::eDEBUG);
-    pEnemyUnits->pruneEnemies(pUnits, m_enemyPruneRange);
+    pEnemyUnits->pruneEnemies(pUnits.get(), m_enemyPruneRange);
     pBuildings->sortClosestToEnemy(pEnemyUnits);
     if (m_aiStep < AISteps::buildUnits)
     {

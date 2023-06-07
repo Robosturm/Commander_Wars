@@ -160,7 +160,7 @@ public:
      * @brief setBuildingName
      * @param BuildingName
      */
-    Q_INVOKABLE void setBuildingName(const QString &BuildingName);
+    Q_INVOKABLE void setBuildingName(const QString BuildingName);
     /**
      * @brief getVisionHide
      * @return

@@ -361,7 +361,7 @@ void MainServer::exit()
     QCoreApplication::exit(0);
 }
 
-AutoMatchMaker* MainServer::getAutoMatchMaker(const QString & matchMaker)
+AutoMatchMaker* MainServer::getAutoMatchMaker(const QString matchMaker)
 {
     return m_matchMakingCoordinator.getAutoMatchMaker(matchMaker);
 }

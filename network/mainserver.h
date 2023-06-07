@@ -165,7 +165,7 @@ public:
      * @param matchMaker
      * @return
      */
-    Q_INVOKABLE AutoMatchMaker* getAutoMatchMaker(const QString & matchMaker);
+    Q_INVOKABLE AutoMatchMaker* getAutoMatchMaker(const QString matchMaker);
     /**
      * @brief exit
      */
