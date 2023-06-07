@@ -1631,8 +1631,7 @@ qint32 Player::getEnemyCount()
 }
 
 QmlVectorUnit* Player::getEnemyUnits()
-{
-    
+{    
     QmlVectorUnit* ret = new QmlVectorUnit();
     if (m_pMap)
     {
@@ -1646,6 +1645,32 @@ QmlVectorUnit* Player::getEnemyUnits()
                 if (pUnit != nullptr)
                 {
                     if ((isEnemyUnit(pUnit)))
+                    {
+                        ret->append(pUnit);
+                    }
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+QmlVectorUnit* Player::getAlliedUnits()
+{
+    QmlVectorUnit* ret = new QmlVectorUnit();
+    if (m_pMap)
+    {
+        qint32 heigth = m_pMap->getMapHeight();
+        qint32 width = m_pMap->getMapWidth();
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            for (qint32 x = 0; x < width; x++)
+            {
+                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr)
+                {
+                    if (pUnit->getOwner() != this &&
+                        isAlly(pUnit->getOwner()))
                     {
                         ret->append(pUnit);
                     }

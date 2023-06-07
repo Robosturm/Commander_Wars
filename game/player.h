@@ -386,6 +386,11 @@ public:
      */
     Q_INVOKABLE QmlVectorUnit* getEnemyUnits();
     /**
+     * @brief getAlliedUnits
+     * @return
+     */
+    Q_INVOKABLE QmlVectorUnit* getAlliedUnits();
+    /**
      * @brief getEnemyBuildings
      * @return
      */
