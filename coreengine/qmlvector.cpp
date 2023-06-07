@@ -157,6 +157,19 @@ qint32 QmlVectorBuilding::getBuildingCount(const QString buildingId)
     return count;
 }
 
+qint32 QmlVectorBuilding::getBuildingGroupCount(const QStringList buildingIds)
+{
+    qint32 count = 0;
+    for (auto & building : m_Vector)
+    {
+        if (buildingIds.contains(building->getBuildingID()))
+        {
+            ++count;
+        }
+    }
+    return count;
+}
+
 void QmlVectorBuilding::sortClosestToEnemy(const spQmlVectorUnit & pEnemyUnits)
 {
     for (qint32 i2 = 0; i2 < m_Vector.size(); ++i2)

@@ -3,9 +3,9 @@ var COREAI =
     infantryGroup : ["INFANTRY_GROUP",  ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE", "ZCOUNIT_PARTISAN", "ZCOUNIT_COMMANDO", "ZCOUNIT_RANGER", "ZCOUNIT_AT_CYCLE"],
                                         [70,         10,     20,       30,          10,                 30,                 10,               10],
                                         40, 0, "", 0.4],
-    lightTankGroup : ["LIGHT_TANK_GROUP",   ["RECON", "FLARE", "LIGHT_TANK", "ARTILLERY", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK", "ZCOUNIT_SMUGGLER", "ZCOUNIT_AUTO_TANK", "FLAK"],
-                                            [3,       3,       100,           20,          20,                 20,                 20,                 50,                   1],
-                                            50, 1, "", 1.0],
+    lightTankGroup : ["LIGHT_TANK_GROUP",   ["LIGHT_TANK", "ARTILLERY", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK", "ZCOUNIT_SMUGGLER", "ZCOUNIT_AUTO_TANK", "FLAK"],
+                                            [100,           20,          20,                 20,                 20,                 50,                   1],
+                                             50, 1, "", 1.0],
     mediumTankGroup : ["MEDIUM_TANK_GROUP", ["ANTITANKCANNON", "HEAVY_TANK", "ROCKETTHROWER", "ZCOUNIT_CRYSTAL_TANK", "ZCOUNIT_NEOSPIDER_TANK", "ZCOUNIT_ROYAL_GUARD", "ZCOUNIT_TANK_HUNTER"],
                                             [30,               70,           10,              40,                     40,                       40,                    40],
                                             20, 2, "", 1.0],
@@ -56,6 +56,12 @@ var COREAI =
     antiMediumTankBuildUnits : ["HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "HEAVY_TANK", "NEOTANK", "BOMBER"],
     heavyTankUnits : ["NEOTANK", "MEGATANK"],
     bomberUnits : ["BOMBER"],
+    groundScoutUnits = ["RECON", "FLARE"],
+    productionBuildings = ["FACTORY", "AIRPORT", "AMPHIBIOUSFACTORY", "HARBOUR"],
+    targetProductionCount = 4,
+    groundScoutGroupSize = 7,
+    minGroundScoutDay : 4,
+    groundScoutDayDifference : 4,
     minInfantryTransporterMapSize : 40 * 40,
     minApcResupplyDay : 15,
     minInfTransporterDay : 3,
@@ -65,6 +71,25 @@ var COREAI =
     minAverageIslandSize : 0.025,
     counterUnitBalance : 2,
     counterUnitMinHp : 5,
+
+    getGroundModifier : function(system)
+    {
+        var variables = system.getVariables();
+        var variableNavalBattle = variables.createVariable("NAVALBATTLE");
+        var naval = variableNavalBattle.readDataInt32();
+        var groundModifer = 1;
+        if (naval > 0)
+        {
+            groundModifer *= 1 / naval;
+        }
+        var variableAirBattle = variables.createVariable("AIRBATTLE");
+        var air = variableAirBattle.readDataInt32();
+        if (air > 0)
+        {
+            groundModifer *= 1 / air;
+        }
+        return groundModifer;
+    },
 
     initializeSimpleProductionSystem : function(system, ai, map, groupDistribution, buildInitialInfantry = true)
     {
@@ -83,21 +108,7 @@ var COREAI =
                                           COREAI.infantryGroup[4],                                                       // build mode used to detect if the group is enabled or not to the army distribution
                                           COREAI.infantryGroup[5],                                                       // custom condition to enable/disable group removing it to the army distribution
                                           COREAI.infantryGroup[6]);
-        var variables = system.getVariables();
-        var variableNavalBattle = variables.createVariable("NAVALBATTLE");
-        var naval = variableNavalBattle.readDataInt32();
-        var groundModifer = 1;
-        if (naval > 0)
-        {
-            groundModifer *= 1 / naval;
-        }
-        var variableAirBattle = variables.createVariable("AIRBATTLE");
-        var air = variableAirBattle.readDataInt32();
-        if (air > 0)
-        {
-            groundModifer *= 1 / air;
-        }
-
+        var groundModifer = COREAI.getGroundModifier(system);
         COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.lightTankGroup, groundModifer * groupDistribution[1] * player.getCoGroupModifier(COREAI.lightTankGroup[1], system));
         COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.mediumTankGroup, groundModifer * groupDistribution[2] * player.getCoGroupModifier(COREAI.mediumTankGroup[1], system));
         COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyTankGroup, groundModifer * groupDistribution[3] * player.getCoGroupModifier(COREAI.heavyTankGroup[1], system));
@@ -208,8 +219,37 @@ var COREAI =
     {
         system.resetForcedProduction();
         COREAI.forceAntiAirProduction(system, ai, units, enemyUnits);
+        COREAI.forcedAntiTankProduction(system, ai, units, enemyUnits);
+        COREAI.forceScoutProduction(system, ai, units);
         COREAI.forceTransporterProduction(system, ai, buildings, units, enemyUnits, enemyBuildings, groupDistribution);
         COREAI.forceApcProduction(system, ai, units);
+    },
+
+    forceScoutProduction : function(system, ai, units)
+    {
+        // on fog of war maps maintain COREAI.groundScoutGroupSize% scout units
+        var map = ai.getMap();
+        var turn = map.getCurrentDay();
+        var fogMode = map.getGameRules().getFogMode();
+        var scoutUnitCount = ai.getUnitCount(units, COREAI.groundScoutUnits, COREAI.groundScoutUnits);
+        var unitCount = units.size();
+        var variables = system.getVariables();
+        var variableLastGroundScoutDay = variables.createVariable("LASTGROUNDSCOUTDAY");
+        var lastGroundScoutDay = variableLastGroundScoutDay.readDataInt32();
+        var groundModifer = COREAI.getGroundModifier(system);
+        if (turn >= COREAI.minGroundScoutDay &&
+            COREAI.groundScoutDayDifference + lastGroundScoutDay <= turn)
+        {
+            if (fogMode === GameEnums.Fog_OfWar ||
+                fogMode === GameEnums.Fog_OfShroud)
+            {
+                if (scoutUnitCount * 100 / unitCount < COREAI.groundScoutGroupSize * groundModifer)
+                {
+                    system.addForcedProduction(COREAI.scoutUnitCount);
+                    variableLastGroundScoutDay.writeDataInt32(turn);
+                }
+            }
+        }
     },
 
     forceTransporterProduction  : function(system, ai, buildings, units, enemyUnits, enemyBuildings, groupDistribution)
@@ -421,10 +461,19 @@ var COREAI =
         // Note: forced and initial production ignore this check
         var minBaseCost = 0;
         var maxBaseCost = -1; // negativ values get set to the income
+        var productionCount = buildings.getBuildingGroupCount(COREAI.productionBuildings);
+        if (productionCount > COREAI.targetProductionCount)
+        {
+            productionCount = COREAI.targetProductionCount;
+        }
+        if (productionCount > 0)
+        {
+            maxBaseCost = funds / productionCount;
+        }
         for (var i = COREAI.fundsModes.length - 1; i >= 0; --i)
         {
             if (turn >= COREAI.fundsModes[i][0] &&
-                funds >= COREAI.fundsModes[i][1])
+                maxBaseCost >= COREAI.fundsModes[i][1])
             {
                 minMode = COREAI.fundsModes[i][2];
                 maxMode = COREAI.fundsModes[i][3];
