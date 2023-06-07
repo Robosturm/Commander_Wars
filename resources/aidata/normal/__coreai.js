@@ -2,9 +2,9 @@ var COREAI =
         {
     infantryGroup : ["INFANTRY_GROUP",  ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE", "ZCOUNIT_PARTISAN", "ZCOUNIT_COMMANDO", "ZCOUNIT_RANGER", "ZCOUNIT_AT_CYCLE"],
                                         [70,         10,     20,       30,          10,                 30,                 10,               10],
-                                        40, 0, "", 0.4],
-    lightTankGroup : ["LIGHT_TANK_GROUP",   ["LIGHT_TANK", "ARTILLERY", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK", "ZCOUNIT_SMUGGLER", "ZCOUNIT_AUTO_TANK", "FLAK"],
-                                            [100,           20,          20,                 20,                 20,                 50,                   1],
+                                        40, 0, "", 0.5],
+    lightTankGroup : ["LIGHT_TANK_GROUP",   ["LIGHT_TANK", "ARTILLERY", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK", "ZCOUNIT_SMUGGLER", "ZCOUNIT_AUTO_TANK"],
+                                            [100,           20,          20,                 20,                 20,                 50,],
                                              50, 1, "", 1.0],
     mediumTankGroup : ["MEDIUM_TANK_GROUP", ["ANTITANKCANNON", "HEAVY_TANK", "ROCKETTHROWER", "ZCOUNIT_CRYSTAL_TANK", "ZCOUNIT_NEOSPIDER_TANK", "ZCOUNIT_ROYAL_GUARD", "ZCOUNIT_TANK_HUNTER"],
                                             [30,               70,           10,              40,                     40,                       40,                    40],
@@ -59,6 +59,7 @@ var COREAI =
     groundScoutUnits = ["RECON", "FLARE"],
     productionBuildings = ["FACTORY", "AIRPORT", "AMPHIBIOUSFACTORY", "HARBOUR"],
     targetProductionCount = 4,
+    minMaxFundsPerFactory = 9000,
     groundScoutGroupSize = 7,
     minGroundScoutDay : 4,
     groundScoutDayDifference : 4,
@@ -69,7 +70,7 @@ var COREAI =
     tankTransporterDayDifference : 3,
     transporterRatio : 0.04,
     minAverageIslandSize : 0.025,
-    counterUnitBalance : 2,
+    counterUnitBalance : 3,
     counterUnitMinHp : 5,
 
     getGroundModifier : function(system)
@@ -114,6 +115,10 @@ var COREAI =
         COREAI.addItemToBuildDistribution(system, ai, co1, co2, directIndirectRatio, COREAI.heavyTankGroup, groundModifer * groupDistribution[3] * player.getCoGroupModifier(COREAI.heavyTankGroup[1], system));
         COREAI.initAirForceDistribution(system, ai, player, co1, co2, directIndirectRatio, groupDistribution);
         COREAI.initAmphibiousDistribution(system, ai, player, co1, co2, directIndirectRatio, groupDistribution);
+
+        var variables = system.getVariables();
+        var variableNavalBattle = variables.createVariable("NAVALBATTLE");
+        var naval = variableNavalBattle.readDataInt32();
         if (naval > 0)
         {
             COREAI.initNavalForceDistribution(system, ai, player, co1, co2, directIndirectRatio, groupDistribution);
@@ -406,12 +411,12 @@ var COREAI =
         var enemyJets = ai.getUnitCount(enemyUnits, COREAI.heavyAirUnits, COREAI.counterUnitMinHp);
         var enemyCopters = ai.getUnitCount(enemyUnits, COREAI.lightAirUnits, COREAI.counterUnitMinHp);
         if (((enemyJets > 0) && (antiAirAirUnitCount === 0)) ||
-            ((antiAirUnitCount > 0) && ((enemyJets / antiAirAirUnitCount) >= COREAI.counterUnitBalance)))
+            ((antiAirUnitCount > 0) && ((enemyJets / antiAirAirUnitCount) > COREAI.counterUnitBalance)))
         {
             system.addForcedProduction(COREAI.antiAirAirUnits);
         }
         if (((enemyCopters > 0) && (antiAirUnitCount === 0)) ||
-            ((antiAirUnitCount > 0) && ((enemyCopters / antiAirUnitCount) >= COREAI.counterUnitBalance)))
+            ((antiAirUnitCount > 0) && ((enemyCopters / antiAirUnitCount) > COREAI.counterUnitBalance)))
         {
             system.addForcedProduction(antiAirUnits);
         }
@@ -425,14 +430,14 @@ var COREAI =
         var enemyHeavyTankCount = ai.getUnitCount(enemyUnits, COREAI.heavyTankUnits, COREAI.counterUnitMinHp);
         var enemyMediumTankCount = ai.getUnitCount(enemyUnits, COREAI.mediumTankUnits, COREAI.counterUnitMinHp);
         if (((enemyHeavyTankCount > 0) && (antiTankUnitCount + bomberUnitCount === 0)) ||
-            ((antiTankUnitCount + bomberUnitCount > 0) && ((enemyHeavyTankCount / antiTankUnitCount + bomberUnitCount) >= COREAI.counterUnitBalance)))
+            ((antiTankUnitCount + bomberUnitCount > 0) && ((enemyHeavyTankCount / antiTankUnitCount + bomberUnitCount) > COREAI.counterUnitBalance)))
         {
             var antiTankUnits = COREAI.antiTankUnits;
             antiTankUnits = antiTankUnits.concat(COREAI.bomberUnits);
             system.addForcedProduction(antiTankUnits);
         }
         if (((enemyMediumTankCount > 0) && (mediumTankUnitCount + bomberUnitCount === 0)) ||
-            ((mediumTankUnitCount + bomberUnitCount > 0) && ((enemyMediumTankCount / mediumTankUnitCount + bomberUnitCount) >= COREAI.counterUnitBalance)))
+            ((mediumTankUnitCount + bomberUnitCount > 0) && ((enemyMediumTankCount / mediumTankUnitCount + bomberUnitCount) > COREAI.counterUnitBalance)))
         {
             system.addForcedProduction(COREAI.antiMediumTankBuildUnits);
         }
@@ -461,7 +466,7 @@ var COREAI =
         // Note: forced and initial production ignore this check
         var minBaseCost = 0;
         var maxBaseCost = -1; // negativ values get set to the income
-        var productionCount = buildings.getBuildingGroupCount(COREAI.productionBuildings);
+        var productionCount = buildings.getBuildingGroupCount(COREAI.productionBuildings, true);
         if (productionCount > COREAI.targetProductionCount)
         {
             productionCount = COREAI.targetProductionCount;
@@ -469,6 +474,10 @@ var COREAI =
         if (productionCount > 0)
         {
             maxBaseCost = funds / productionCount;
+        }
+        if (maxBaseCost < COREAI.minMaxFundsPerFactory)
+        {
+            maxBaseCost = COREAI.minMaxFundsPerFactory;
         }
         for (var i = COREAI.fundsModes.length - 1; i >= 0; --i)
         {

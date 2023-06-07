@@ -146,7 +146,7 @@ public:
         return m_Vector.size();
     }
     Q_INVOKABLE qint32 getBuildingCount(const QString buildingId);
-    Q_INVOKABLE qint32 getBuildingGroupCount(const QStringList buildingIds);
+    Q_INVOKABLE qint32 getBuildingGroupCount(const QStringList buildingIds, bool onlyEmpty);
     Q_INVOKABLE void remove()
     {
     }

@@ -1,6 +1,7 @@
 #include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/interpreter.h"
+#include "game/terrain.h"
 
 #include "ai/coreai.h"
 
@@ -157,12 +158,14 @@ qint32 QmlVectorBuilding::getBuildingCount(const QString buildingId)
     return count;
 }
 
-qint32 QmlVectorBuilding::getBuildingGroupCount(const QStringList buildingIds)
+qint32 QmlVectorBuilding::getBuildingGroupCount(const QStringList buildingIds, bool onlyEmpty)
 {
     qint32 count = 0;
     for (auto & building : m_Vector)
     {
-        if (buildingIds.contains(building->getBuildingID()))
+        if ((!onlyEmpty ||
+            (onlyEmpty && building->getTerrain()->getUnit() == nullptr)) &&
+            buildingIds.contains(building->getBuildingID()))
         {
             ++count;
         }
