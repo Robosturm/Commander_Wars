@@ -316,11 +316,19 @@ void GameConsole::update(const oxygine::UpdateState& us)
             QString drawText;
             qint32 i = m_output.size() - 1;
             qint32 currentHeight = 0;
-            qint32 width = m_text->getWidth();
             while (i >= 0 && currentHeight < screenheight - lineHeight * 3)
             {
-                drawText.prepend("> " + m_output[i] + "\n");
-                currentHeight = metrics.boundingRect(0, 0, width, screenheight, 0, drawText).height();
+                QString testDrawText = ("> " + m_output[i] + "\n") + drawText;
+                qint32 nextHeight = testDrawText.split("\n").size() * lineHeight;
+                if (nextHeight > screenheight - lineHeight * 3)
+                {
+                    break;
+                }
+                else
+                {
+                    drawText = testDrawText;
+                    currentHeight = nextHeight;
+                }
                 --i;
             }
             m_text->setHtmlText(drawText);
