@@ -17,7 +17,7 @@ class MovementPlannerAddIn final : public CreatedGui
     Q_OBJECT
 public:
     explicit MovementPlannerAddIn(QString addIn, GameMap* pMap, MovementPlanner* pPlanner);
-    ~MovementPlannerAddIn() = default;
+   virtual ~MovementPlannerAddIn() = default;
 
     QString getAddIn() const;
     /**

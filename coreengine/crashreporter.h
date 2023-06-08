@@ -9,7 +9,7 @@ class QProcess;
 class CrashReporter final
 {
 public:
-    ~CrashReporter() = default;
+   virtual ~CrashReporter() = default;
     /// Function signature for a callback after the log is written.
     /// @param log
     using logWrittenCallback = void (*)(const QString & log);

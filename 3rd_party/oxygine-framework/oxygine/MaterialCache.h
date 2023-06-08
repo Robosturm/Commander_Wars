@@ -23,7 +23,7 @@ namespace oxygine
     class MaterialCache final
     {
     public:
-        ~MaterialCache() = default;
+       virtual ~MaterialCache() = default;
         spMaterial cache(const Material& other)
         {
             return clone_(other);

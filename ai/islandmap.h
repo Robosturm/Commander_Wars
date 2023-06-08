@@ -15,7 +15,7 @@ class IslandMap final : public QObject, public oxygine::ref_counter
     static constexpr qint32 UNKNOWN = -1;
 public:
     explicit IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QString movementType = "");
-    ~IslandMap() = default;
+   virtual ~IslandMap() = default;
     /**
      * @brief getValueOnIsland
      * @param island

@@ -49,7 +49,7 @@ public:
         bool scriptVariableDisableActive{false};
     };
     explicit CampaignEditor();
-    ~CampaignEditor() = default;
+   virtual ~CampaignEditor() = default;
 signals:
     /**
      * @brief sigFinished

@@ -9,7 +9,7 @@ namespace oxygine
     {
     public:
         explicit AnimationFrame() = default;
-        ~AnimationFrame() = default;
+       virtual ~AnimationFrame() = default;
         void init(ResAnim* rs, short column, short row, const spTexture& texture,
                    const QRectF& srcRect, const QRect& destRect, const QSize& frame_size);
         /**ResAnim should be valid!*/

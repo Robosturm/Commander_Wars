@@ -10,6 +10,7 @@
 #include "multiplayer/dialogpasswordandadress.h"
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/networkgamedataview.h"
+#include "multiplayer/dialogotherlobbyinfo.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
@@ -74,12 +75,12 @@ LobbyMenu::LobbyMenu()
 
     m_pOtherButton = ObjectManager::createButton(tr("Other"));
     addChild(m_pOtherButton);
-    m_pOtherButton->setPosition(10, pButtonExit->getY() - pButtonExit->getScaledHeight() - 10);
+    m_pOtherButton->setPosition(10, pButtonExit->getY() - m_pOtherButton->getScaledHeight());
     m_pOtherButton->addEventListener(oxygine::TouchEvent::CLICK, [this](oxygine::Event * )->void
     {
         emit sigOther();
     });
-    connect(this, &LobbyMenu::sigOther, this, &LobbyMenu::showOther, Qt::QueuedConnection);
+    connect(this, &LobbyMenu::sigOther, this, &LobbyMenu::requestOtherData, Qt::QueuedConnection);
     m_pOtherButton->setEnabled(false);
 
     oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Direct Host"), 220);
@@ -610,6 +611,10 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             handleAccountMessage(socketID, objData);
         }
+        else if (messageType == NetworkCommands::SERVERSENDAUTOMATCHINFO)
+        {
+            onShowOther(socketID, objData);
+        }
         else
         {
             CONSOLE_PRINT("Unknown command in LobbyMenu::recieveData " + messageType + " received", GameConsole::eDEBUG);
@@ -959,8 +964,19 @@ void LobbyMenu::showEnd()
     requestUserUpdateGames();
 }
 
-void LobbyMenu::showOther()
+void LobbyMenu::requestOtherData()
 {
-    spCustomDialog pDialog = spCustomDialog::create("", "resources/ui/multiplayer/lobbyOther.xml", this, tr("Close"));
+    if (m_pTCPClient.get() != nullptr)
+    {
+        QJsonObject data;
+        data.insert(JsonKeys::JSONKEY_COMMAND, NetworkCommands::SERVERREQUESTAUTOMATCHINFO);
+        QJsonDocument doc(data);
+        emit m_pTCPClient->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
+    }
+}
+
+void LobbyMenu::onShowOther(quint64 socketID, const QJsonObject & objData)
+{
+    spDialogOtherLobbyInfo pDialog = spDialogOtherLobbyInfo::create(this, objData);
     addChild(pDialog);
 }

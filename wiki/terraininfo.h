@@ -17,7 +17,7 @@ class TerrainInfo final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width);
-    ~TerrainInfo() = default;
+   virtual ~TerrainInfo() = default;
 signals:
     /**
      * @brief sigShowLink

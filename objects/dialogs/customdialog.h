@@ -7,12 +7,12 @@
 class CustomDialog;
 using spCustomDialog = oxygine::intrusive_ptr<CustomDialog>;
 
-class CustomDialog final : public CreatedGui
+class CustomDialog : public CreatedGui
 {
     Q_OBJECT
 public:
-    CustomDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu, const QString & confirmText = "");
-    ~CustomDialog();
+    explicit CustomDialog(const QString & jsName, const QString & uiXml, Basemenu* pBaseMenu, const QString & confirmText = "");
+    virtual ~CustomDialog();
 
 public slots:
     /**

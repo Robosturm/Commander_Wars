@@ -19,7 +19,7 @@ namespace oxygine
     {
     public:
         explicit PointerState();
-        ~PointerState() = default;
+       virtual ~PointerState() = default;
 
         void init(pointer_index pointerIndex);
         bool isPressed(MouseButton mb = MouseButton_Touch) const;

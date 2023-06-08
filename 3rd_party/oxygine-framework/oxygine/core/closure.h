@@ -63,7 +63,7 @@ namespace oxygine
     {
     public:
         explicit OwnedClosure() = default;
-        ~OwnedClosure() = default;
+        virtual ~OwnedClosure() = default;
         template<class TClass>
         explicit OwnedClosure(TClass* pOwner, TRet(TClass::*callback)(TArgs...))
             : Closure<TRet, TArgs...>(pOwner, callback),

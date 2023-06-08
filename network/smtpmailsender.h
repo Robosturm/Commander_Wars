@@ -10,7 +10,7 @@ class SmtpMailSender final : public QObject
     Q_OBJECT
 public:
     explicit SmtpMailSender(QObject *parent = nullptr);
-    ~SmtpMailSender() = default;
+   virtual ~SmtpMailSender() = default;
 
 signals:
     void sigSendMail(quint64 socketId, const QString subject, const QString content, const QString receiverAddress, const QString username, NetworkCommands::PublicKeyActions action);

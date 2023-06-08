@@ -11,7 +11,7 @@ class DefaultWikipage final : public Wikipage
     Q_OBJECT
 public:
     explicit DefaultWikipage(QString item);
-    ~DefaultWikipage() = default;
+   virtual ~DefaultWikipage() = default;
 };
 
 #endif // DEFAULTWIKIPAGE_H

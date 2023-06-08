@@ -86,7 +86,7 @@ public:
 
 protected:
     explicit RessourceManagement(QString resPath, QString scriptPath, bool raiseErrors = true);
-    ~RessourceManagement() = default;
+   virtual ~RessourceManagement() = default;
     void loadRessources(QString resPath);
     void loadAll(QStringList& list);
     void reset(QStringList& list);

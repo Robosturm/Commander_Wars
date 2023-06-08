@@ -23,7 +23,7 @@ class DialogRandomMap final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogRandomMap(const QString & confirmMessage);
-    ~DialogRandomMap() = default;
+   virtual ~DialogRandomMap() = default;
 signals:
     void sigFinished(QString mapName, QString author, QString description,
                      qint32 width, qint32 heigth, qint32 playerCount,

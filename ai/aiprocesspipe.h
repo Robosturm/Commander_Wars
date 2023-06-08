@@ -28,7 +28,7 @@ public:
         Ingame,
     };
     explicit AiProcessPipe();
-    ~AiProcessPipe();
+   virtual ~AiProcessPipe();
 
     void onGameStarted(GameMenue* pMenu);
     void onQuitGame();

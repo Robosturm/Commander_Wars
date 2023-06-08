@@ -21,7 +21,7 @@ public:
         explicit Question();
         Question(float value, qint32 index, GameEnums::AIQuestionType QuestionType = GameEnums::AIQuestionType_Equal);
         Question(float minValue, float maxValue, qint32 index, GameEnums::AIQuestionType QuestionType = GameEnums::AIQuestionType_Between);
-        ~Question() = default;
+       virtual ~Question() = default;
 
         virtual void serializeObject(QDataStream& pStream) const override;
         virtual void deserializeObject(QDataStream& pStream)  override;

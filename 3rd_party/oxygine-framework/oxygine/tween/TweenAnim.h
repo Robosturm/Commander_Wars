@@ -19,7 +19,7 @@ namespace oxygine
         explicit TweenAnim(const ResAnim* resAnim, float initFrame, qint32 row);
         /**Frames mode. Play animation in interval [start, end]*/
         explicit TweenAnim(const ResAnim* resAnim, qint32 startFrame, qint32 endFrame);        
-        ~TweenAnim() = default;
+       virtual ~TweenAnim() = default;
 
         void init(Sprite& actor);
         void done(Sprite&)

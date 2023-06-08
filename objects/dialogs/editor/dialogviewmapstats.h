@@ -12,7 +12,7 @@ class DialogViewMapStats final : public CreatedGui
     Q_OBJECT
 public:
     explicit DialogViewMapStats(GameMap* pMap);
-    ~DialogViewMapStats();
+   virtual ~DialogViewMapStats();
     void init();
 signals:
     void sigClosed();

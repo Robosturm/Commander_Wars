@@ -10,7 +10,7 @@ namespace oxygine
         Q_OBJECT
     public:
         WindowBase() = default;
-        ~WindowBase() = default;
+       virtual ~WindowBase() = default;
         void redrawUi();
     public slots:
         virtual void initializeGL() override;

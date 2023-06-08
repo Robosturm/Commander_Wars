@@ -21,7 +21,7 @@ class PlayerSelection final : public CreatedGui, public FileSerializable
     Q_OBJECT
 public:
     explicit PlayerSelection(qint32 width, qint32 heigth);
-    ~PlayerSelection() = default;
+   virtual ~PlayerSelection() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

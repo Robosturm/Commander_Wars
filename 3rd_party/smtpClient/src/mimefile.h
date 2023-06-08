@@ -31,7 +31,7 @@ public:
     /* [1] Constructors and Destructors */
 
     MimeFile(QFile *f);
-    ~MimeFile();
+   virtual ~MimeFile();
 
     /* [1] --- */
 

@@ -22,7 +22,7 @@ class COSelection final : public QObject, public oxygine::Actor
     static constexpr float scale = 1.5f;
 public:
     explicit COSelection(QPoint Position, QSize maxSize, QStringList coids = {});
-    ~COSelection() = default;
+   virtual ~COSelection() = default;
     const QStringList &getCoids() const;
 
 signals:

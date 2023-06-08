@@ -10,7 +10,7 @@ public:
     /* [1] Constructors and Destructors */
 
     MimeByteArrayAttachment(const QString& name, const QByteArray &content);
-    ~MimeByteArrayAttachment();
+   virtual ~MimeByteArrayAttachment();
 
     /* [1] --- */
 

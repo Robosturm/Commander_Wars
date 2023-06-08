@@ -29,7 +29,7 @@ public:
     /* [1] Constructors and Destructors */
 
     MimeInlineFile(QFile *f);
-    ~MimeInlineFile();
+   virtual ~MimeInlineFile();
 
     /* [1] --- */
 

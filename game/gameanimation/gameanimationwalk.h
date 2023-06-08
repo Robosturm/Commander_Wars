@@ -18,7 +18,7 @@ class GameAnimationWalk final : public GameAnimation
     Q_OBJECT
 public:
     explicit GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath, GameMap* pMap);
-    ~GameAnimationWalk() = default;
+   virtual ~GameAnimationWalk() = default;
     /**
      * @brief loadSprite
      * @param spriteID the id of the sprite we want to create

@@ -43,7 +43,7 @@ public:
     /* [1] Constructors and Destructors */
     MimeMultiPart(const MultiPartType type = Related);
 
-    ~MimeMultiPart();
+   virtual ~MimeMultiPart();
 
     /* [1] --- */
 

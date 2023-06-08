@@ -31,7 +31,7 @@ public:
     };
 
     explicit LobbyMenu();
-    ~LobbyMenu() = default;
+   virtual ~LobbyMenu() = default;
     Q_INVOKABLE bool getServerRequestNewPassword() const;
     Q_INVOKABLE void setServerRequestNewPassword(bool newServerRequestNewPassword);
     Q_INVOKABLE void onLogin();
@@ -85,10 +85,11 @@ public slots:
     void showPreviousStep();
     void showStart();
     void showEnd();
-    void showOther();
+    void requestOtherData();
 protected slots:
     virtual void onEnter() override;
 private:
+    void onShowOther(quint64 socketID, const QJsonObject & objData);
     void updateGameData(const QJsonObject & objData);
     void joinSlaveGame(const QJsonObject & objData);
     void checkVersionAndShowInfo(const QJsonObject & objData);

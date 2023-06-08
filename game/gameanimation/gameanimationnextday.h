@@ -14,7 +14,7 @@ class GameAnimationNextDay final : public GameAnimation
     Q_OBJECT
 public:
     explicit GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs = 2000);
-    ~GameAnimationNextDay() = default;
+   virtual ~GameAnimationNextDay() = default;
     virtual void restart() override;
     virtual void stop() override;
     Q_INVOKABLE virtual bool onFinished(bool skipping) override;

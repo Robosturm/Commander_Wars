@@ -13,7 +13,7 @@ namespace oxygine
     class Texture final : public ref_counter
     {
     public:
-        ~Texture();
+       virtual ~Texture();
         void init(const QImage & image);
 
         qint32 getWidth() const

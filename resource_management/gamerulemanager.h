@@ -117,7 +117,7 @@ public slots:
 protected:
     friend RessourceManagement<GameRuleManager>;
     GameRuleManager();
-    ~GameRuleManager() = default;
+   virtual ~GameRuleManager() = default;
 
 private:
     QStringList m_loadedWeather;

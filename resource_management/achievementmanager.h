@@ -22,7 +22,7 @@ protected:
     AchievementManager();
 
 private:
-    ~AchievementManager() = default;
+   virtual ~AchievementManager() = default;
 };
 
 #endif // ACHIEVEMENTMANAGER_H

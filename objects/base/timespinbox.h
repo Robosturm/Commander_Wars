@@ -18,7 +18,7 @@ class TimeSpinBox final : public TextInput
     Q_OBJECT
 public:
     explicit TimeSpinBox(qint32 width);
-    ~TimeSpinBox() = default;
+   virtual ~TimeSpinBox() = default;
     virtual void update(const oxygine::UpdateState& us) override;
 
     virtual void setEnabled(bool value) override;

@@ -12,6 +12,6 @@ public:
     static void saveMapAsImage(QString filename, BaseGamemenu& menu);
     static void saveMapAsImage(Minimap* pMinimap, QImage & img);
     GamemapImageSaver() = delete;
-    ~GamemapImageSaver() = delete;
+   virtual ~GamemapImageSaver() = delete;
 };
 

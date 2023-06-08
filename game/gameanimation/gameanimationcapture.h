@@ -15,7 +15,7 @@ class GameAnimationCapture final : public GameAnimation
     Q_OBJECT
 public:
     explicit GameAnimationCapture(qint32 startPoints, qint32 endPoints, qint32 maxPoints, GameMap* pMap);
-    ~GameAnimationCapture() = default;
+   virtual ~GameAnimationCapture() = default;
     /**
      * @brief addBackgroundSprite adds a background sprite with no functionality. Besides looking pretty.
      * @param spriteID string id of the sprite in the res file

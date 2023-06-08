@@ -17,7 +17,7 @@ class DropDownmenu final : public DropDownmenuBase
     Q_OBJECT
 public:
     explicit DropDownmenu(qint32 width, const QStringList & items);
-    ~DropDownmenu() = default;
+   virtual ~DropDownmenu() = default;
 signals:
     void sigItemChanged(qint32 item);
 public slots:

@@ -113,7 +113,7 @@ public:
     };
 
     explicit NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType, QString jsName);
-    ~NormalAi() = default;
+   virtual ~NormalAi() = default;
 
     virtual void resetToTurnStart() override;
 public slots:

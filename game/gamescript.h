@@ -23,7 +23,7 @@ public:
     static const char* const m_scriptName;
 
     explicit GameScript(GameMap* pMap);
-    ~GameScript();
+   virtual ~GameScript();
     /**
      * @brief serialize stores the object
      * @param pStream

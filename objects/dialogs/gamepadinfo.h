@@ -13,7 +13,7 @@ class GamepadInfo final : public CreatedGui
     Q_OBJECT
 public:
     explicit GamepadInfo();
-    ~GamepadInfo();
+   virtual ~GamepadInfo();
 public slots:
     void remove();
 };

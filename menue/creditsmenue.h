@@ -15,7 +15,7 @@ class CreditsMenue final : public Basemenu
     Q_OBJECT
 public:
     explicit CreditsMenue();
-    ~CreditsMenue() = default;
+   virtual ~CreditsMenue() = default;
     virtual void doUpdate(const oxygine::UpdateState&) override;
 signals:
     void sigExitMenue();

@@ -16,7 +16,7 @@ class FieldInfo final : public Wikipage
     Q_OBJECT
 public:
     explicit FieldInfo(Terrain* pTerrain, Unit* pUnit);
-    ~FieldInfo() = default;
+   virtual ~FieldInfo() = default;
 };
 
 #endif // FIELDINFO_H

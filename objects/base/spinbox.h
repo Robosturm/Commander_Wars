@@ -25,7 +25,7 @@ public:
     };
 
     explicit SpinBox(qint32 width, qreal min = 0, qreal max = 100, Mode mode = Mode::Int);
-    ~SpinBox() = default;
+   virtual ~SpinBox() = default;
 
     virtual void update(const oxygine::UpdateState& us) override;
     virtual void setEnabled(bool value) override;

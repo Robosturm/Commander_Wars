@@ -10,7 +10,7 @@ protected:
     friend RessourceManagement<BattleAnimationManager>;
     BattleAnimationManager();
 private:
-    ~BattleAnimationManager() = default;
+   virtual ~BattleAnimationManager() = default;
 };
 
 #endif // BATTLEANIMATIONMANAGER_H

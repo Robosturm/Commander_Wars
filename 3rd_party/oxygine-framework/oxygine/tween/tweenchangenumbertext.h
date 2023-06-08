@@ -8,7 +8,7 @@ public:
     using TActor = oxygine::TextField;
 
     explicit TweenChangeNumberText(qint32 startNumber, qint32 endNumber);
-    ~TweenChangeNumberText() = default;
+   virtual ~TweenChangeNumberText() = default;
     void update(oxygine::TextField & actor, float p, const oxygine::UpdateState& us);
 
     void init(oxygine::TextField&);

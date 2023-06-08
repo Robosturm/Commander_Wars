@@ -23,7 +23,7 @@ namespace oxygine
         {
         }
 
-        ~intrusive_ptr()
+       virtual ~intrusive_ptr()
         {
             if (m_pPointer != nullptr)
             {

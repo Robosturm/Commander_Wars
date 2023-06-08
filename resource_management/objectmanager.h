@@ -14,7 +14,7 @@ protected:
     friend RessourceManagement<ObjectManager>;
     ObjectManager();
 private:
-    ~ObjectManager() = default;
+   virtual ~ObjectManager() = default;
 };
 
 

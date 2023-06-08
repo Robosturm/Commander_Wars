@@ -19,7 +19,7 @@ class OptionMenue final : public Basemenu
     Q_OBJECT
 public:
     explicit OptionMenue(const QString & xmlFile);
-    ~OptionMenue() = default;
+   virtual ~OptionMenue() = default;
 signals:
     void sigExitMenue();
     void sigChangeScreenSize(qint32 width, qint32 heigth);

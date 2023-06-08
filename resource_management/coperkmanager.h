@@ -54,7 +54,7 @@ protected:
     friend RessourceManagement<COPerkManager>;
     COPerkManager();
 private:
-    ~COPerkManager() = default;
+   virtual ~COPerkManager() = default;
 };
 
 Q_DECLARE_INTERFACE(COPerkManager, "COPerkManager");

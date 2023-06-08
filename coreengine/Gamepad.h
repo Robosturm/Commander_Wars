@@ -40,7 +40,7 @@ public:
     };
 
     explicit Gamepad(qint32 gamepadId);
-    ~Gamepad() = default;
+   virtual ~Gamepad() = default;
 
     void init();
     DeviceState getDeviceState() const;

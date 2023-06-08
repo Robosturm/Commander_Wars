@@ -17,7 +17,7 @@ class RxTask final : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId);
-    ~RxTask() = default;
+   virtual ~RxTask() = default;
     void swapNetworkInterface(NetworkInterface* pCommIF)
     {
         m_pIF = pCommIF;

@@ -20,7 +20,7 @@ class DialogCOStyle final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogCOStyle(QString coid);
-    ~DialogCOStyle() = default;
+   virtual ~DialogCOStyle() = default;
 
     void addCOStyle(QString style, bool select);
 signals:

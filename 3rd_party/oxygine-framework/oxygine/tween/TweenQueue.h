@@ -16,7 +16,7 @@ namespace oxygine
             EVENT_LOOP_END = sysEventID('T', 'L', 'E'),
         };
         explicit TweenQueue() = default;
-        ~TweenQueue() = default;
+       virtual ~TweenQueue() = default;
         /*Add tween to Queue, returns added tween*/
         spTween add(spTween t);
         virtual void complete(timeMS deltaTime) override;

@@ -17,7 +17,7 @@ class PlayerSelectionDialog final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit PlayerSelectionDialog(GameMap* pMap);
-    ~PlayerSelectionDialog() = default;
+   virtual ~PlayerSelectionDialog() = default;
 signals:
     void sigPlayersChanged();
 private slots:

@@ -177,7 +177,7 @@ public:
     };
 
     explicit HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType);
-    ~HeavyAi() = default;
+   virtual ~HeavyAi() = default;
 
     void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize = 1);
 

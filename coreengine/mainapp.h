@@ -99,7 +99,7 @@ public:
     };
 
     explicit Mainapp();
-    ~Mainapp();
+   virtual ~Mainapp();
     virtual void shutdown() override;
     static inline Mainapp* getInstance()
     {

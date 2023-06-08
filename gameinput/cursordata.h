@@ -13,7 +13,7 @@ class CursorData final : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit CursorData();
-    ~CursorData() = default;
+   virtual ~CursorData() = default;
 
     Q_INVOKABLE QString getCursor() const;
     Q_INVOKABLE void setCursor(const QString value);

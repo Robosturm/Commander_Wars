@@ -20,7 +20,7 @@ class Shopmenu final : public Basemenu
     Q_OBJECT
 public:
     explicit Shopmenu();
-    ~Shopmenu() = default;
+   virtual ~Shopmenu() = default;
 signals:
     void sigExitMenue();
     void sigUpdateItemCosts(qint32 costChange);

@@ -28,7 +28,7 @@ public:
 
     };
     Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> & parameters);
-    ~Layer() = default;
+   virtual ~Layer() = default;
     /**
      * @brief extend
      * @param count

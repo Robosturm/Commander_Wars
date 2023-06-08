@@ -39,7 +39,7 @@ protected:
 #endif
     }
 private:
-    ~WeaponManager() = default;
+   virtual ~WeaponManager() = default;
 };
 
 #endif // WEAPONMANAGER_H

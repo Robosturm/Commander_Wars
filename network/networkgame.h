@@ -22,7 +22,7 @@ class NetworkGame final : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit NetworkGame(QObject* pParent, const QString & serverName);
-    ~NetworkGame();
+   virtual ~NetworkGame();
     QByteArray getDataBuffer() const;
     void setDataBuffer(const QByteArray &dataBuffer);
 

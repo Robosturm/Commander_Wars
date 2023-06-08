@@ -10,7 +10,7 @@ class WorkerThread final : public QObject
     Q_OBJECT
 public:
     explicit WorkerThread();
-    ~WorkerThread() = default;
+   virtual ~WorkerThread() = default;
     bool getStarted() const;
 signals:
     void sigStart();

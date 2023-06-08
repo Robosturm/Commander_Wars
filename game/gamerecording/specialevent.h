@@ -18,7 +18,7 @@ class SpecialEvent final : public QObject, public FileSerializable, public oxygi
 public:
     explicit SpecialEvent();
     explicit SpecialEvent(qint32 player, qint32 day, GameEnums::GameRecord_SpecialEvents event);
-    ~SpecialEvent() = default;
+   virtual ~SpecialEvent() = default;
     qint32 getOwner() const;
     qint32 getDay() const;
     GameEnums::GameRecord_SpecialEvents getEvent() const;

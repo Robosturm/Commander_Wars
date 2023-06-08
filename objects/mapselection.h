@@ -20,7 +20,7 @@ class MapSelection final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit MapSelection(qint32 heigth, qint32 width, QString folder, const QStringList & filter);
-    ~MapSelection() = default;
+   virtual ~MapSelection() = default;
 
     QString getCurrentFolder()
     {

@@ -19,7 +19,7 @@ namespace oxygine
             return *m_instance.get();
         };
 
-        ~Input() = default;
+       virtual ~Input() = default;
         void cleanup();
         void multiTouchEnabled(bool en);
         /**index should be in range [1, MAX_TOUCHES]*/

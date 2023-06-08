@@ -11,7 +11,7 @@ class VictoryRulePopup final : public CloseablePopUp
 {
 public:
     VictoryRulePopup(GameMap* pMap, QString rule, qint32 width, qint32 heigth);
-    ~VictoryRulePopup();
+   virtual ~VictoryRulePopup();
     static bool exists(QString rule)
     {
         return m_popUps.contains(rule);

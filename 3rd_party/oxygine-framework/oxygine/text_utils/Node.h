@@ -113,7 +113,7 @@ namespace oxygine
         {
         public:
             explicit DivNode(QDomElement& reader);
-            ~DivNode() = default;
+           virtual ~DivNode() = default;
             virtual void resize(Aligner& rd) override;
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
         private:

@@ -15,7 +15,7 @@ class GlobalUtils final : public QObject
 {
     Q_OBJECT
 public:
-    ~GlobalUtils() = default;
+   virtual ~GlobalUtils() = default;
     static GlobalUtils* getInstance()
     {
         return m_pInstace.get();

@@ -54,7 +54,7 @@ public:
         BuildingLayer = 2,
     };
     static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap, const QString & currentTerrainPalette = "");
-    ~Terrain();
+   virtual ~Terrain();
 
     void init();
     /**

@@ -69,7 +69,7 @@ public:
      */
     explicit GameMap(QString map, bool onlyLoad, bool fast, bool savegame);
     void loadMap(QString map, bool onlyLoad, bool fast, bool savegame);
-    ~GameMap();
+   virtual ~GameMap();
     /**
      * @brief newMap
      * @param width

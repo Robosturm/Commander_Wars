@@ -31,7 +31,7 @@ public:
     /* [1] Constructors and Destructors */
 
     MimeAttachment(QFile* file);
-    ~MimeAttachment();
+   virtual ~MimeAttachment();
 
     /* [1] --- */
 

@@ -28,7 +28,7 @@ public:
     };
 
     Neuron(qint32 id_neuron, Layer* layer, ActivationFunction function = ActivationFunction::LINEAR, bool is_bias = false);
-    ~Neuron() = default;
+   virtual ~Neuron() = default;
 
     void trigger();
     double output();

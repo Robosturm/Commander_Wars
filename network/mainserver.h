@@ -98,7 +98,7 @@ public:
     static void initDatabase();
     static GameEnums::LoginError verifyLoginData(const QString & username, const QByteArray & password);
     void release();
-    ~MainServer();
+   virtual ~MainServer();
 
     inline TCPServer* getGameServer()
     {

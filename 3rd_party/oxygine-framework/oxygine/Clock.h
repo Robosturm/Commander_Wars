@@ -11,7 +11,7 @@ namespace oxygine
     {
     public:
         explicit Clock() = default;
-        ~Clock() = default;
+        virtual ~Clock() = default;
         timeMS getTime() const;
         void pause();
         void resume();

@@ -7,7 +7,7 @@ class CustomCoBoostInfo final : public QObject
     Q_OBJECT
 public:
     explicit CustomCoBoostInfo();
-    ~CustomCoBoostInfo() = default;
+   virtual ~CustomCoBoostInfo() = default;
     const QStringList &getBonusIcons() const;
     const QStringList &getIconBonus() const;
     Q_INVOKABLE const QString getIconId() const;

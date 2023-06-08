@@ -105,7 +105,7 @@ public:
 
     SmtpClient(const QString & host = "localhost", int port = 25, ConnectionType ct = TcpConnection);
 
-    ~SmtpClient();
+   virtual ~SmtpClient();
 
     /* [1] --- */
 

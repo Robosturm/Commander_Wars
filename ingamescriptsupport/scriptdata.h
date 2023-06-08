@@ -27,7 +27,7 @@ public:
     static const char* const variables;
 
     explicit ScriptData(GameMap* pMap);
-    ~ScriptData() = default;
+   virtual ~ScriptData() = default;
     /**
      * @brief readScript
      * @param rStream

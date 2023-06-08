@@ -21,7 +21,7 @@ class ScriptEditor final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit ScriptEditor(GameMap* pMap);
-    ~ScriptEditor() = default;
+   virtual ~ScriptEditor() = default;
 signals:
     /**
      * @brief sigSaveScript

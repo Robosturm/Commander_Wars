@@ -14,7 +14,7 @@ public:
     explicit Password();
     explicit Password(QString password);
     explicit Password(const Password & password);
-    ~Password() = default;
+   virtual ~Password() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

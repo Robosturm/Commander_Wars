@@ -14,7 +14,7 @@ class RandomMapGenerator final
 {
 public:
     RandomMapGenerator() = delete;
-    ~RandomMapGenerator() = delete;
+   virtual ~RandomMapGenerator() = delete;
 
     enum class MirrorMode
     {

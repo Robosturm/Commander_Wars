@@ -12,7 +12,7 @@ class ScriptVariableFile final : public QObject, public FileSerializable, public
         Q_OBJECT
     public:
         explicit ScriptVariableFile(const QString & filename);
-        ~ScriptVariableFile() = default;
+       virtual ~ScriptVariableFile() = default;
         /**
          * @brief serialize stores the object
          * @param pStream

@@ -194,7 +194,7 @@ namespace oxygine
             : m_property(property)
         {
         }
-        ~TweenT() = default;
+       virtual ~TweenT() = default;
 
         virtual void _update(Actor& actor, const UpdateState& us) override
         {

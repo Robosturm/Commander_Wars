@@ -11,5 +11,5 @@ class ActionWikipage final : public Wikipage
     Q_OBJECT
 public:
     explicit ActionWikipage(const PageData * item);
-    ~ActionWikipage() = default;
+   virtual ~ActionWikipage() = default;
 };

@@ -13,7 +13,7 @@ namespace oxygine
             static void setDefaultTouchThreshold(float val);
 
             explicit SlidingActorNoClipRect();
-            ~SlidingActorNoClipRect();
+           virtual ~SlidingActorNoClipRect();
 
             spActor getContent() const
             {

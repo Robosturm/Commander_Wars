@@ -41,7 +41,7 @@ public:
     /* [1] Constructors and Destructors */
 
     MimeMessage(bool createAutoMimeContent = true);
-    ~MimeMessage();
+   virtual ~MimeMessage();
 
     /* [1] --- */
 

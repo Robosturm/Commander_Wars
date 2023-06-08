@@ -19,7 +19,7 @@ public:
         Multiplayer,
     };
     explicit RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enabled = true);
-    ~RuleSelection() = default;
+   virtual ~RuleSelection() = default;
     Mode getMode() const;
     Q_INVOKABLE bool getRuleChangeEabled() const;
     Q_INVOKABLE bool getShowAdvanced() const;

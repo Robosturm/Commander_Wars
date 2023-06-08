@@ -18,7 +18,7 @@ class Topbar final : public FocusableObject
     Q_OBJECT
 public:
     explicit Topbar(qint32 x, qint32 width);
-    ~Topbar() = default;
+   virtual ~Topbar() = default;
     /**
      * @brief addItem adds an item to the bar
      * @param text the text shown for this item
