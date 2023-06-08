@@ -1451,8 +1451,11 @@ void PlayerSelection::sendOpenPlayerCount()
         data.insert(JsonKeys::JSONKEY_OPENPLAYERCOUNT, getOpenPlayerCount());
         data.insert(JsonKeys::JSONKEY_USERNAMES, getUserNames());
         data.insert(JsonKeys::JSONKEY_ONLINEINFO, getOnlineInfo());
-        data.insert(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT, m_pMap->getGameRules()->getObserverList().size());
-        data.insert(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT, m_pMap->getGameRules()->getMultiplayerObserver());
+        if (m_pMap != nullptr)
+        {
+            data.insert(JsonKeys::JSONKEY_MATCHOBSERVERCOUNT, m_pMap->getGameRules()->getObserverList().size());
+            data.insert(JsonKeys::JSONKEY_MATCHMAXOBSERVERCOUNT, m_pMap->getGameRules()->getMultiplayerObserver());
+        }
         QJsonDocument doc(data);
         emit Mainapp::getSlaveClient()->sig_sendData(0, doc.toJson(QJsonDocument::Compact), NetworkInterface::NetworkSerives::ServerHostingJson, false);
     }
@@ -1461,12 +1464,15 @@ void PlayerSelection::sendOpenPlayerCount()
 QJsonArray PlayerSelection::getOnlineInfo()
 {
     QJsonArray onlineInfo;
-    for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+    if (m_pMap != nullptr)
     {
-        auto* pPlayer = m_pMap->getPlayer(i);
-        bool isOnline = pPlayer->getSocketId() != 0;
-        pPlayer->setIsOnline(isOnline);
-        onlineInfo.append(isOnline);
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); ++i)
+        {
+            auto* pPlayer = m_pMap->getPlayer(i);
+            bool isOnline = pPlayer->getSocketId() != 0;
+            pPlayer->setIsOnline(isOnline);
+            onlineInfo.append(isOnline);
+        }
     }
     return onlineInfo;
 }
