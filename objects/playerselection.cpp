@@ -1474,19 +1474,22 @@ QJsonArray PlayerSelection::getOnlineInfo()
 QJsonArray PlayerSelection::getUserNames()
 {
     QJsonArray usernames;
-    qint32 count = m_pMap->getPlayerCount();
-    for (qint32 i = 0; i < count; ++i)
+    if (m_pMap != nullptr)
     {
-        Player* pPlayer = m_pMap->getPlayer(i);
-        if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
+        qint32 count = m_pMap->getPlayerCount();
+        for (qint32 i = 0; i < count; ++i)
         {
-            CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
-            usernames.append(pPlayer->getPlayerNameId());
-        }
-        else
-        {
-            CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
-            usernames.append(pPlayer->getPlayerNameId());
+            Player* pPlayer = m_pMap->getPlayer(i);
+            if (pPlayer->getControlType() == GameEnums::AiTypes_Human)
+            {
+                CONSOLE_PRINT("Adding human player " + pPlayer->getPlayerNameId() + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+                usernames.append(pPlayer->getPlayerNameId());
+            }
+            else
+            {
+                CONSOLE_PRINT("Player is ai controlled " + QString::number(pPlayer->getControlType()) + " to usernames for player " + QString::number(i), GameConsole::eDEBUG);
+                usernames.append(pPlayer->getPlayerNameId());
+            }
         }
     }
     return usernames;
@@ -2050,35 +2053,36 @@ void PlayerSelection::disconnected(quint64 socketID)
     if (m_pNetworkInterface.get() != nullptr &&
         m_pNetworkInterface->getIsServer())
     {
-        CONSOLE_PRINT("Reopening players for socket " + QString::number(socketID) + " after disconnecting", GameConsole::eLogLevels::eDEBUG);
-        // handle disconnect of clients here
-        for (qint32 i = 0; i < m_playerSockets.size(); i++)
-        {
-            // this player has disconnect reopen him
-            if (m_playerSockets[i] == socketID &&
-                m_pMap->getPlayer(i)->getControlType() != GameEnums::AiTypes_Open)
-            {
-                if (m_lockedInCaseOfDisconnect[i])
-                {
-                    m_pMap->getPlayer(i)->setSocketId(0);
-                }
-                else
-                {
-                    // reopen all players
-                    m_pMap->getPlayer(i)->setControlType(GameEnums::AiTypes_Open);
-                    m_pMap->getPlayer(i)->setPlayerNameId("");
-                    DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
-                    if (pDropDownmenu != nullptr)
-                    {
-                        pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
-                    }
-                    selectAI(i);
-                }
-            }
-        }
-        CONSOLE_PRINT("Removing socket " + QString::number(socketID) + " from observer list", GameConsole::eLogLevels::eDEBUG);
         if (m_pMap != nullptr)
         {
+            CONSOLE_PRINT("Reopening players for socket " + QString::number(socketID) + " after disconnecting", GameConsole::eLogLevels::eDEBUG);
+            // handle disconnect of clients here
+            for (qint32 i = 0; i < m_playerSockets.size(); i++)
+            {
+                // this player has disconnect reopen him
+                if (m_playerSockets[i] == socketID &&
+                    m_pMap->getPlayer(i)->getControlType() != GameEnums::AiTypes_Open)
+                {
+                    if (m_lockedInCaseOfDisconnect[i])
+                    {
+                        m_pMap->getPlayer(i)->setSocketId(0);
+                    }
+                    else
+                    {
+                        // reopen all players
+                        m_pMap->getPlayer(i)->setControlType(GameEnums::AiTypes_Open);
+                        m_pMap->getPlayer(i)->setPlayerNameId("");
+                        DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_AI_PREFIX + QString::number(i));
+                        if (pDropDownmenu != nullptr)
+                        {
+                            pDropDownmenu->setCurrentItem(pDropDownmenu->getItemCount() - 1);
+                        }
+                        selectAI(i);
+                    }
+                }
+            }
+            CONSOLE_PRINT("Removing socket " + QString::number(socketID) + " from observer list", GameConsole::eLogLevels::eDEBUG);
+
             auto* gameRules = m_pMap->getGameRules();
             auto & observer = gameRules->getObserverList();
             observer.removeAll(socketID);
