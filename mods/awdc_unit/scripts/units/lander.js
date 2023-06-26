@@ -17,3 +17,7 @@ LANDER.getMovementType = function()
 {
     return "MOVE_BOAT";
 };
+LANDER.getBaseCost = function()
+{
+    return 10000;
+};
