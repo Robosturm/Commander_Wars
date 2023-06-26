@@ -34,6 +34,7 @@ public:
     {
         QStringList unitIds;
         QVector<qint32> chance;
+        QVector<spUnit> units;
         qint32 totalChance;
         qreal distribution;
         qreal maxUnitDistribution;

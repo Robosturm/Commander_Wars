@@ -218,6 +218,7 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString group, con
                 {
                     item.unitIds.append(unitIds[i]);
                     item.chance.append(chance[i]);
+                    item.units.append(spUnit::create(unitIds[i], m_owner->getPlayer(), false, m_owner->getMap()));
                 }
             }
             item.distribution = distribution;
@@ -229,6 +230,10 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString group, con
         {
             BuildDistribution item;
             item.unitIds = unitIds;
+            for (auto & unitId : unitIds)
+            {
+                item.units.append(spUnit::create(unitId, m_owner->getPlayer(), false, m_owner->getMap()));
+            }
             item.maxUnitDistribution = maxUnitDistribution;
             item.distribution = distribution;
             item.buildMode = buildMode;
@@ -501,20 +506,14 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
             return lhs.distribution.distribution / totalDistributionCount - lhs.currentValue > rhs.distribution.distribution / totalDistributionCount - rhs.currentValue;
         }
     });
-    QJSValueList args({pInterpreter->newQObject(m_owner->getMap())});
     for (auto & item : buildDistribution)
     {
         qint32 i = 0;
         while(i < item.distribution.unitIds.size())
         {
-            qint32 baseCost = -1;
-            QJSValue erg = pInterpreter->doFunction(item.distribution.unitIds[i], "getBaseCost", args);
-            if (erg.isNumber())
-            {
-                baseCost = erg.toNumber();
-            }
-            if (baseCost >= minBaseCost ||
-                baseCost <= maxBaseCost)
+            qint32 cost = item.distribution.units[i]->getUnitCosts();
+            if (cost >= minBaseCost ||
+                cost <= maxBaseCost)
             {
                 ++i;
             }

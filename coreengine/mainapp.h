@@ -72,34 +72,34 @@ public:
      * @brief The ZOrder enum for z-order of actors directly attached to the game map or the menu
      */
     ENUM_CLASS ZOrder
-    {
-        Background = std::numeric_limits<qint32>::min(),
-        Map,
-        Terrain,
-        // gap for stacking the terrain sprites
+        {
+            Background = std::numeric_limits<qint32>::min(),
+            Map,
+            Terrain,
+            // gap for stacking the terrain sprites
 
-        CORange = std::numeric_limits<qint32>::max() - 200,
-        GridLayout,
-        FogFields,
-        MarkedFields,
-        Units,
-        MoveArrow,
-        Weather,
-        Cursor,
-        Animation,
-        Objects,
-        FocusedObjects = Objects + 2,
-        AnimationFullScreen,
-        DropDownList,
-        Dialogs,
-        Tooltip,
-        Loadingscreen,
-        Achievement,
-        Console,
-    };
+            CORange = std::numeric_limits<qint32>::max() - 200,
+            GridLayout,
+            FogFields,
+            MarkedFields,
+            Units,
+            MoveArrow,
+            Weather,
+            Cursor,
+            Animation,
+            Objects,
+            FocusedObjects = Objects + 2,
+            AnimationFullScreen,
+            DropDownList,
+            Dialogs,
+            Tooltip,
+            Loadingscreen,
+            Achievement,
+            Console,
+        };
 
     explicit Mainapp();
-   virtual ~Mainapp();
+    virtual ~Mainapp();
     virtual void shutdown() override;
     static inline Mainapp* getInstance()
     {

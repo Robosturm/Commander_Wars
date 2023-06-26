@@ -58,8 +58,9 @@ var COREAI =
     bomberUnits : ["BOMBER"],
     groundScoutUnits = ["RECON", "FLARE"],
     productionBuildings = ["FACTORY", "AIRPORT", "AMPHIBIOUSFACTORY", "HARBOUR"],
-    targetProductionCount = 4,
-    minMaxFundsPerFactory = 9000,
+    targetProductionCount = 3,
+    minMaxFundsPerFactory = 10000,
+    minMaxFundsOvercharge = 7000,
     groundScoutGroupSize = 7,
     minGroundScoutDay : 4,
     groundScoutDayDifference : 4,
@@ -225,6 +226,9 @@ var COREAI =
     {
         system.resetForcedProduction();
         // get all allied units and remove units that are far away from our enemy units
+        var variables = system.getVariables();
+        var variableTurnProducedUnits = variables.createVariable("TURNPRODUCEDUNITS");
+        variableTurnProducedUnits.writeDataInt32(0);
         var owner = ai.getPlayer();
         var alliedUnits = owner.getAlliedUnits();
         alliedUnits.pruneEnemies(units, COREAI.pruneRange);
@@ -481,18 +485,32 @@ var COREAI =
         // Note: forced and initial production ignore this check
         var minBaseCost = 0;
         var maxBaseCost = -1; // negativ values get set to the income
+        // try to build an average unit of the given count if possible starting to base skip if more buildings are available
         var productionCount = buildings.getBuildingGroupCount(COREAI.productionBuildings, true);
-        if (productionCount > COREAI.targetProductionCount)
+        var variables = system.getVariables();
+        var variableTurnProducedUnits = variables.createVariable("TURNPRODUCEDUNITS");
+        var turnProducedUnits = variableTurnProducedUnits.readDataInt32();
+        variableTurnProducedUnits.writeDataInt32(turnProducedUnits + 1);
+        if (productionCount > COREAI.targetProductionCount - turnProducedUnits)
         {
-            productionCount = COREAI.targetProductionCount;
+            productionCount = COREAI.targetProductionCount - turnProducedUnits;
+        }
+        if (productionCount < 0)
+        {
+            productionCount = 0;
         }
         if (productionCount > 0)
         {
             maxBaseCost = funds / productionCount;
         }
+        // modify max base cost to not remove to many units and allow to build single expensive units if the income allow it
         if (maxBaseCost < COREAI.minMaxFundsPerFactory)
         {
             maxBaseCost = COREAI.minMaxFundsPerFactory;
+        }
+        else if (maxBaseCost > COREAI.minMaxFundsOvercharge)
+        {
+            maxBaseCost += (maxBaseCost - COREAI.minMaxFundsOvercharge) * (productionCount - 1);
         }
         for (var i = COREAI.fundsModes.length - 1; i >= 0; --i)
         {

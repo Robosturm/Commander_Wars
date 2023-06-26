@@ -12,148 +12,150 @@
 
 namespace oxygine
 {
-    class GameWindow : public WindowBase
-    {
-        Q_OBJECT
-    public:
-        explicit GameWindow();
-        virtual ~GameWindow() = default;
+class GameWindow : public WindowBase
+{
+    Q_OBJECT
+public:
+    explicit GameWindow();
+    virtual ~GameWindow() = default;
 
-        static GameWindow* getWindow();
-        bool isReady2Render();
-        /**
+    static GameWindow* getWindow();
+    bool isReady2Render();
+    /**
          * @brief quitGame quits this game
          */
-        void quitGame()
-        {
-            m_quit = true;
-        }
-        void loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32  rows, float scaleFactor);
-        virtual bool isWorker() = 0;
-        /**
+    void quitGame()
+    {
+        m_quit = true;
+    }
+    void loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32  rows, float scaleFactor);
+    virtual bool isWorker() = 0;
+    /**
          * @brief isWorkerRunning
          * @return
          */
-        virtual bool isWorkerRunning() = 0;
-        /**
+    virtual bool isWorkerRunning() = 0;
+    /**
          * @brief isEvenScale
          * @param width1
          * @param width2
          * @return
          */
-        static bool isEvenScale(qint32 width1, qint32 width2);
-        /**
+    static bool isEvenScale(qint32 width1, qint32 width2);
+    /**
          * @brief pauseRendering
          */
-        void pauseRendering()
+    void pauseRendering()
+    {
+        if (!isWorker())
         {
-            if (!isWorker())
-            {
-                oxygine::handleErrorPolicy(oxygine::ep_show_error, "pauseRendering not started by worker thread");
-            }
-            if (m_pausedCounter == 0)
-            {
-                m_pauseMutex.lock();
-            }
-            ++m_pausedCounter;
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "pauseRendering not started by worker thread");
         }
-        /**
+        if (m_pausedCounter == 0)
+        {
+            m_pauseMutex.lock();
+        }
+        ++m_pausedCounter;
+    }
+    /**
          * @brief continueRendering
          */
-        void continueRendering()
+    void continueRendering()
+    {
+        if (!isWorker())
         {
-            if (!isWorker())
-            {
-                oxygine::handleErrorPolicy(oxygine::ep_show_error, "continueRendering not started by worker thread");
-            }
-            --m_pausedCounter;
-            if (m_pausedCounter == 0)
-            {
-                m_pauseMutex.unlock();
-            }
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "continueRendering not started by worker thread");
         }
-        virtual void shutdown();
-        void setTimerCycle(qint32 newTimerCycle);
-        qint32 getTimerCycle() const;
-        bool getShuttingDown() const;
-        void setShuttingDown(bool newShuttingDown);
-        void initStage();
-        bool hasCursor() const;
-        bool isMainThread() const
+        --m_pausedCounter;
+        if (m_pausedCounter == 0)
         {
-            return QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr;
+            m_pauseMutex.unlock();
         }
-        virtual void launchGame() override;
-        /**
+    }
+    virtual void shutdown();
+    void setTimerCycle(qint32 newTimerCycle);
+    qint32 getTimerCycle() const;
+    bool getShuttingDown() const;
+    void setShuttingDown(bool newShuttingDown);
+    void initStage();
+    bool hasCursor() const;
+    bool isMainThread() const
+    {
+        return QThread::currentThread() == m_pMainThread || m_pMainThread == nullptr;
+    }
+    virtual void launchGame() override;
+    /**
          * @brief getBrightness
          * @return
          */
-        Q_INVOKABLE float getBrightness() const;
-        /**
+    Q_INVOKABLE float getBrightness() const;
+    /**
          * @brief setBrightness
          * @param brightness
          */
-        Q_INVOKABLE void setBrightness(float brightness);
-        /**
+    Q_INVOKABLE void setBrightness(float brightness);
+    /**
          * @brief getGamma
          * @return
          */
-        Q_INVOKABLE float getGamma() const;
-        /**
+    Q_INVOKABLE float getGamma() const;
+    /**
          * @brief setGamma
          * @param gamma
          */
-        Q_INVOKABLE void setGamma(float gamma);
-    signals:
-        void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor);
-        void sigLoadRessources();
-        void sigMousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
-        void sigMouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
-        void sigWheelEvent(qint32 x, qint32 y);
-        void sigMouseMoveEvent(qint32 x, qint32 y);
-        void sigStopUpdateTimer();
-        void sigStartUpdateTimer();
-        void sigQuit(qint32 exitCode);
-        void sigShowKeyboard(bool visible);
+    Q_INVOKABLE void setGamma(float gamma);
+    QThread * getMainThread() const;
 
-    protected slots:
-        void loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor);
-        virtual void loadRessources(){}
+signals:
+    void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor);
+    void sigLoadRessources();
+    void sigMousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
+    void sigMouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
+    void sigWheelEvent(qint32 x, qint32 y);
+    void sigMouseMoveEvent(qint32 x, qint32 y);
+    void sigStopUpdateTimer();
+    void sigStartUpdateTimer();
+    void sigQuit(qint32 exitCode);
+    void sigShowKeyboard(bool visible);
 
-        void quitApp();
-        virtual void onQuit() = 0;
-        void quit(qint32 exitCode);
-        void showKeyboard(bool visible);
-    protected:
-        virtual void registerResourceTypes();
-        // input events
-        virtual void mousePressEvent(QMouseEvent *event) override;
-        virtual void mouseReleaseEvent(QMouseEvent *event) override;
-        virtual void wheelEvent(QWheelEvent *event) override;
-        virtual void mouseMoveEvent(QMouseEvent *event)override;        
-        virtual void touchEvent(QTouchEvent *event) override;
-        virtual void updateData() override;
+protected slots:
+    void loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor);
+    virtual void loadRessources(){}
 
-        void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
-        bool sameTouchpoint(const QPointF & pos1, const QPointF & pos2) const;
+    void quitApp();
+    virtual void onQuit() = 0;
+    void quit(qint32 exitCode);
+    void showKeyboard(bool visible);
+protected:
+    virtual void registerResourceTypes();
+    // input events
+    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void mouseReleaseEvent(QMouseEvent *event) override;
+    virtual void wheelEvent(QWheelEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event)override;
+    virtual void touchEvent(QTouchEvent *event) override;
+    virtual void updateData() override;
 
-    protected:
-        QBasicTimer m_Timer;
-        qint32 m_timerCycle{1};
-        QElapsedTimer m_pressDownTime;
-        bool m_pressDownTimeRunning{false};
+    void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
+    bool sameTouchpoint(const QPointF & pos1, const QPointF & pos2) const;
 
-        // touch handling
-        bool m_longPressSent{false};
-        bool m_touchMousePressSent{false};
-        float m_lastZoomValue{1.0f};
+protected:
+    QBasicTimer m_Timer;
+    qint32 m_timerCycle{1};
+    QElapsedTimer m_pressDownTime;
+    bool m_pressDownTimeRunning{false};
 
-        static GameWindow* m_window;
-        float m_brightness{0.0f};
-        float m_gamma{1.0f};
+    // touch handling
+    bool m_longPressSent{false};
+    bool m_touchMousePressSent{false};
+    float m_lastZoomValue{1.0f};
 
-        bool m_shuttingDown{false};
-        bool m_launched{false};
-        QThread* m_pMainThread{nullptr};
-    };
+    static GameWindow* m_window;
+    float m_brightness{0.0f};
+    float m_gamma{1.0f};
+
+    bool m_shuttingDown{false};
+    bool m_launched{false};
+    QThread* m_pMainThread{nullptr};
+};
 }

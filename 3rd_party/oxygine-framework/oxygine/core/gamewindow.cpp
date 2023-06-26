@@ -300,6 +300,11 @@ namespace oxygine
         return qAbs(pos1.x() - pos2.x()) + qAbs(pos1.y() - pos2.y()) <= Settings::getInstance()->getTouchPointSensitivity();
     }
 
+    QThread * GameWindow::getMainThread() const
+    {
+        return m_pMainThread;
+    }
+
     void GameWindow::setTimerCycle(qint32 newTimerCycle)
     {
         m_timerCycle = newTimerCycle;
