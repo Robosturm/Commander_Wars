@@ -658,7 +658,8 @@ void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints
     {
         flowPoints.append(QPoint(x, y));
     }
-    if (!m_fields[y][x]->getHasFlowDirection())
+    if (!m_fields[y][x]->getHasFlowDirection() ||
+        m_fields[y][x]->getFixedSprite())
     {
         if (applyRulesPalette)
         {
