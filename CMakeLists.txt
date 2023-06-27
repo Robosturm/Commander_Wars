@@ -76,6 +76,11 @@ endif()
 # the binaries
 get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
+if(NOT DEFINED QT_VERSION)
+    find_program(QMAKE_EXE NAMES qmake)
+    execute_process(COMMAND ${QMAKE_EXE} -query QT_VERSION OUTPUT_VARIABLE QT_VERSION)
+endif()
+message("Qt-Version: ${QT_VERSION}")
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
@@ -1014,7 +1019,9 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/../plugins/sqldrivers/qsqlite.so
     )
 
-    set(LibNameEnd ".so.6")
+    set(LibNameEnd ".so.${QT_VERSION}")
+    set(LibNameEnd1 ".so.6")
+    set(LibNameEnd2 ".so")
     set(${PROJECT_NAME}_INSTALL_OS_LIBS
         ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd}
@@ -1024,6 +1031,24 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
         ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd}
+
+        ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd1}
+        ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd1}
+        ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd1}
+        ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd1}
+        ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd1}
+        ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd1}
+        ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd1}
+        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd1}
+
+        ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd2}
+        ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd2}
+        ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd2}
+        ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd2}
+        ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd2}
+        ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd2}
+        ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd2}
+        ${QT_BIN_DIR}/${LibNameStart}Sql${LibNameEnd2}
     )
 
     if (GRAPHICSUPPORT)
