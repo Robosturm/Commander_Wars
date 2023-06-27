@@ -20,6 +20,7 @@
         <image file="oilrig+mask.png" />
         <image file="radar+mask.png" />
         <image file="tower+mask.png" />
+		<image file="field_base+mask.png" />
 		
         <!-- soldier -->
         <image file="soldier+ac+mask.png" cols = "5" />

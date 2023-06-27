@@ -16,8 +16,7 @@ var Constructor = function()
             var constructionList = building.getConstructionList();
             var co = unit.getOwner().getCO(0);
             if (((constructionList.indexOf(unit.getUnitID()) >= 0) ||
-                 (building.getBuildingID() === "HQ") ||
-                 (building.getBuildingID() === "FORTHQ")) &&
+                 BUILDING.isHq(building)) &&
                 (unit.getUnitCosts() / 2 <= unit.getOwner().getFunds()) &&
                 (co !== null) && (co.getCOUnit() === null) &&
                 (unit.getUnitRank() >= GameEnums.UnitRank_None) &&

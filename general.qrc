@@ -2065,5 +2065,6 @@
         <file>ai/training/normalai_training.js</file>
         <file>ai/training/situation_training.js</file>
         <file>templates/serverscript/matchMaking/tournee.js</file>
+        <file>resources/scripts/building/field_base.js</file>
     </qresource>
 </RCC>

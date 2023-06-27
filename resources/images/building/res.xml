@@ -128,6 +128,11 @@
         <image file="forthq.png" cols = "2" />
         <image file="forthq+mask.png" />
         <image file="forthq+neutral.png" />
+		<!-- FIELD BASE -->		
+		<image file="field_base+mask.png" cols = "2" />	
+		<image file="field_base.png" cols = "2" />
+		<image file="field_base+neutral.png" />	
+		<image file="field_base+shade.png" />	
         <!-- gate -->
         <image file="gate+e+w.png" />
         <image file="gate+e+w+mask.png" />

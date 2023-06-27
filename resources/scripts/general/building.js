@@ -419,5 +419,11 @@ var BUILDING =
     getBuildingsSorted : function()
     {
 
-    }
+    },
+
+    hqIds = ["HQ", "FORTHQ", "FIELD_BASE"],
+    isHq : function(building)
+    {
+        return BUILDING.hqIds.includes(building.getBuildingID());
+    },
 };

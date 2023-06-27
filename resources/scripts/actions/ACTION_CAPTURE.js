@@ -44,11 +44,13 @@ var Constructor = function()
         return false;
     };
 
+    this.capturableBuildings = ["AIRPORT", "FACTORY", "HARBOUR", "HQ", "LABOR", "MINE",
+                                "PIPESTATION", "RADAR", "TOWER", "TOWN", "TEMPORARY_AIRPORT",
+                                "TEMPORARY_HARBOUR", "OILRIG", "POWERPLANT", "AMPHIBIOUSFACTORY",
+                                "FIELD_BASE"]
     this.getCapturableBuildings = function()
     {
-        return ["AIRPORT", "FACTORY", "HARBOUR", "HQ", "LABOR", "MINE",
-                "PIPESTATION", "RADAR", "TOWER", "TOWN", "TEMPORARY_AIRPORT",
-                "TEMPORARY_HARBOUR", "OILRIG", "POWERPLANT", "AMPHIBIOUSFACTORY"];
+        return ACTION_CAPTURE.capturableBuildings;
     };
 
     this.getActionText = function(map)

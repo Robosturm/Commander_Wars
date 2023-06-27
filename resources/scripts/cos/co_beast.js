@@ -245,14 +245,13 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-        var buildingId = building.getBuildingID();
-        if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ" ||
-            buildingId === "FORTHQ")
-        {
-            return ["ZCOUNIT_AT_CYCLE"];
-        }
+            var buildingId = building.getBuildingID();
+            if (buildingId === "FACTORY" ||
+                buildingId === "TOWN" ||
+                BUILDING.isHq(building))
+            {
+                return ["ZCOUNIT_AT_CYCLE"];
+            }
         }
         return [];
     };
