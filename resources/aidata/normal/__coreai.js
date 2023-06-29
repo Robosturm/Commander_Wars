@@ -214,7 +214,7 @@ var COREAI =
                 }
                 coModifier += mod / baseValue;
             }
-            chances[i] *= unitRatioModifier * coModifier;
+            chances[i] *= unitRatioModifier * coModifier * ai.getUnitBuildValue(group[1][i]);
         }
         system.addItemToBuildDistribution(group[0],                         // group name
                                           group[1],                         // units build by the group
