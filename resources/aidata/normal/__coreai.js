@@ -75,7 +75,12 @@ var COREAI =
     transporterRatio : 0.04,
     minAverageIslandSize : 0.025,
     pruneRange : 3,
-    counterUnitBalance : 3,
+    copterCounterUnitBalance : 2.5,
+    airCounterUnitBalance : 3,
+    mediumTankCounterUnitBalance : 3,
+    heavyTankCounterUnitBalance : 3,
+    navyCounterUnitBalance : 3,
+    subCounterUnitBalance : 3,
     counterUnitMinHp : 5,
 
     getGroundModifier : function(system)
@@ -431,12 +436,12 @@ var COREAI =
         var enemyJets = ai.getUnitCount(enemyUnits, COREAI.heavyAirUnits, COREAI.counterUnitMinHp);
         var enemyCopters = ai.getUnitCount(enemyUnits, COREAI.lightAirUnits, COREAI.counterUnitMinHp);
         if (((enemyJets > 0) && (antiAirAirUnitCount === 0)) ||
-            ((antiAirUnitCount > 0) && ((enemyJets / antiAirAirUnitCount) > COREAI.counterUnitBalance)))
+            ((antiAirUnitCount > 0) && ((enemyJets / antiAirAirUnitCount) > COREAI.copterCounterUnitBalance)))
         {
             system.addForcedProduction(COREAI.antiAirAirUnits);
         }
         if (((enemyCopters > 0) && (antiAirUnitCount === 0)) ||
-            ((antiAirUnitCount > 0) && ((enemyCopters / antiAirUnitCount) > COREAI.counterUnitBalance)))
+            ((antiAirUnitCount > 0) && ((enemyCopters / antiAirUnitCount) > COREAI.airCounterUnitBalance)))
         {
             system.addForcedProduction(antiAirUnits);
         }
@@ -455,14 +460,14 @@ var COREAI =
         var enemyHeavyTankCount = ai.getUnitCount(enemyUnits, COREAI.heavyTankUnits, COREAI.counterUnitMinHp);
         var enemyMediumTankCount = ai.getUnitCount(enemyUnits, COREAI.mediumTankUnits, COREAI.counterUnitMinHp);
         if (((enemyHeavyTankCount > 0) && (antiTankUnitCount + bomberUnitCount === 0)) ||
-            ((antiTankUnitCount + bomberUnitCount > 0) && (enemyHeavyTankCount / (antiTankUnitCount + bomberUnitCount) > COREAI.counterUnitBalance)))
+            ((antiTankUnitCount + bomberUnitCount > 0) && (enemyHeavyTankCount / (antiTankUnitCount + bomberUnitCount) > COREAI.mediumTankCounterUnitBalance)))
         {
             var antiTankUnits = COREAI.antiTankUnits;
             antiTankUnits = antiTankUnits.concat(COREAI.bomberUnits);
             system.addForcedProduction(antiTankUnits);
         }
         if (((enemyMediumTankCount > 0) && (mediumTankUnitCount + bomberUnitCount === 0)) ||
-            ((mediumTankUnitCount + bomberUnitCount > 0) && (enemyMediumTankCount / (mediumTankUnitCount + bomberUnitCount) > COREAI.counterUnitBalance)))
+            ((mediumTankUnitCount + bomberUnitCount > 0) && (enemyMediumTankCount / (mediumTankUnitCount + bomberUnitCount) > COREAI.heavyTankCounterUnitBalance)))
         {
             system.addForcedProduction(COREAI.antiMediumTankBuildUnits);
         }
@@ -476,12 +481,12 @@ var COREAI =
         var enemyHeavyNavalCount = ai.getUnitCount(enemyUnits, COREAI.heavyNavalGroup[1]);
 
         if (((enemyHeavyNavalCount > 0) && (antiHeavyNavalUnitCount === 0)) ||
-            (antiHeavyNavalUnitCount > 0 && (enemyHeavyNavalCount / antiHeavyNavalUnitCount > COREAI.counterUnitBalance)))
+            (antiHeavyNavalUnitCount > 0 && (enemyHeavyNavalCount / antiHeavyNavalUnitCount > COREAI.navyCounterUnitBalance)))
         {
             system.addForcedProduction(COREAI.antiHeavyNavalUnits);
         }
         if (((enemySubmarineCount > 0) && (antiSubmarineUnitCount === 0)) ||
-            (antiSubmarineUnitCount > 0 && (enemySubmarineCount / antiSubmarineUnitCount > COREAI.counterUnitBalance)))
+            (antiSubmarineUnitCount > 0 && (enemySubmarineCount / antiSubmarineUnitCount > COREAI.subCounterUnitBalance)))
         {
             system.addForcedProduction(COREAI.antiSubmarineUnits);
         }
