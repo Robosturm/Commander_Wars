@@ -151,7 +151,6 @@ var Constructor = function()
                 var damage = 0;
                 var explosionRange = CO_NANA.d2dExplosionRange;
                 var friendlyFire = true;
-                var i = 0;
                 var defX = defender.getX();
                 var defY = defender.getY();
                 var unit = null;
@@ -166,11 +165,9 @@ var Constructor = function()
                     friendlyFire = false;
                     break;
                 case GameEnums.PowerMode_Power:
-                    friendlyFire = false;
-                    damage = CO_NANA.d2dCoZoneExplosionDamage; //if it's a direct it'll go below, otherwise just give quick indirect splash
-                    if (attacker.getBaseMaxRange() === 1 && damage > 0)
+                    if (attacker.getBaseMaxRange() === 1)
                     {
-						damage = CO_NANA.powerExplosionDamage;
+                        damage = CO_NANA.powerExplosionDamage;
                         var width = map.getMapWidth();
                         var heigth = map.getMapHeight();
                         var maxRange = width;
@@ -180,18 +177,18 @@ var Constructor = function()
                         }
                         var found = false;
                         // deal direct chain damage to nearest enemy
-                        for (var curRange = 1; curRange < maxRange; curRange++)
+                        for (var curRange = 1; curRange < maxRange; ++curRange)
                         {
                             var directCircle = globals.getCircle(curRange, curRange);
                             var size = directCircle.size();
-                            for (i = 0; i < size; i++)
+                            for (var i = 0; i < size; i++)
                             {
                                 point = directCircle.at(i);
                                 if (map.onMap(defX + point.x, defY + point.y))
                                 {
                                     unit = map.getTerrain(defX + point.x, defY + point.y).getUnit();
                                     if (unit !== null &&
-                                            owner.isEnemyUnit(unit))
+                                        owner.isEnemyUnit(unit))
                                     {
                                         hp = unit.getHpRounded();
                                         if (hp - damage <= 0.1)
@@ -213,8 +210,10 @@ var Constructor = function()
                                 break;
                             }
                         }
-						damage = CO_NANA.d2dCoZoneExplosionDamage; //re-enable indirect splash but don't buff it
                     }
+                    // indirect damage setup
+                    friendlyFire = false;
+                    damage = CO_NANA.d2dExplosionDamage;
                     break;
                 default:
                     if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
@@ -225,7 +224,6 @@ var Constructor = function()
                     {
                         damage = CO_NANA.d2dExplosionDamage;
                     }
-
                     break;
                 }
 
@@ -233,7 +231,7 @@ var Constructor = function()
                 if (attacker.getBaseMaxRange() > 1 && damage > 0)
                 {
                     var circle = globals.getCircle(1, explosionRange);
-                    for (i = 0; i < circle.size(); i++)
+                    for (var i = 0; i < circle.size(); i++)
                     {
                         point = circle.at(i);
                         if (map.onMap(defX + point.x, defY + point.y))
@@ -313,9 +311,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                    buildingId === "TOWN" ||
-                    buildingId === "HQ" ||
-                    buildingId === "FORTHQ")
+                buildingId === "TOWN" ||
+                BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_SIEGE_CANNON"];
             }

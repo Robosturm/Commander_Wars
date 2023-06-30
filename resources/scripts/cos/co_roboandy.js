@@ -233,7 +233,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        defender.setHp(0.01);
+                        defender.setHp(0.00001);
                     }
                 }
                 else if (gotAttacked && defender.getOwner() === co.getOwner() && defender.getHp() <= 0)
@@ -245,7 +245,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        attacker.setHp(0.01);
+                        attacker.setHp(0.1);
                     }
                 }
             }
@@ -261,9 +261,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                    buildingId === "TOWN" ||
-                    buildingId === "HQ" ||
-                    buildingId === "FORTHQ")
+                buildingId === "TOWN" ||
+                BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_AT_CYCLE"];
             }

@@ -232,8 +232,7 @@ var Constructor = function()
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
                     buildingId === "TOWN" ||
-                    buildingId === "HQ" ||
-                    buildingId === "FORTHQ")
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_INTEL_TRUCK"];
             }

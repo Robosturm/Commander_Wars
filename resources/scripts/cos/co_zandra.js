@@ -33,7 +33,7 @@ var Constructor = function()
         }
     };
 
-    this.sandstormDamage = 2;
+    this.superPowerSandstormDamage = 2;
 
     this.powerSandstormBonus = 55;
     this.powerSandstormRangeBonus = 1;
@@ -70,7 +70,7 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         map.getGameRules().changeWeather("WEATHER_SANDSTORM", map.getPlayerCount() * 1);
         powerNameAnimation.queueAnimation(animation2);
-        CO_ZANDRA.zandraDamage(co, CO_ZANDRA.sandstormDamage, animation2, map);
+        CO_ZANDRA.zandraDamage(co, CO_ZANDRA.superPowerSandstormDamage, animation2, map);
     };
 
     this.zandraDamage = function(co, value, animation2, map)
@@ -273,7 +273,7 @@ var Constructor = function()
     this.getSuperPowerDescription = function(co)
     {
         var text = qsTr("A massive gust front changes the weather to a Sandstorm and deals -%2 HP of damage to all enemy units. Zandra's indirect units gain +%0 range. Her units gain +%3% firepower and +%4% defence. Her units gain a total of +%1% firepower while the weather is a Sandstorm.");
-        text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.sandstormDamage, CO_ZANDRA.powerOffBonus, CO_ZANDRA.powerDefBonus]);
+        text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.superPowerSandstormDamage, CO_ZANDRA.powerOffBonus, CO_ZANDRA.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
