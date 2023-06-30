@@ -167,10 +167,10 @@ var Constructor = function()
                     break;
                 case GameEnums.PowerMode_Power:
                     friendlyFire = false;
-                    damage = CO_NANA.d2dExplosionDamage;
+                    damage = CO_NANA.d2dCoZoneExplosionDamage; //if it's a direct it'll go below, otherwise just give quick indirect splash
                     if (attacker.getBaseMaxRange() === 1 && damage > 0)
                     {
-                        damage = CO_NANA.powerExplosionDamage;
+						damage = CO_NANA.powerExplosionDamage;
                         var width = map.getMapWidth();
                         var heigth = map.getMapHeight();
                         var maxRange = width;
@@ -213,6 +213,7 @@ var Constructor = function()
                                 break;
                             }
                         }
+						damage = CO_NANA.d2dCoZoneExplosionDamage; //re-enable indirect splash but don't buff it
                     }
                     break;
                 default:
@@ -312,8 +313,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_SIEGE_CANNON"];
             }
@@ -341,20 +343,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Indirect attacks deal one HP of damage to all nearby units, no matter their allegiance.");
+        return qsTr("Indirect attacks deal damage to all nearby units, no matter their allegiance.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
-               qsTr("\nGlobal Effect: \nIndirect attacks deal %0 HP of damage to all nearby units, no matter their allegiance.") +
-               qsTr("\n\nCO Zone Effect: \nIndirect attacks deal %1 HP of damage to all nearby units, no matter their allegiance.");
-        text = replaceTextArgs(text, [CO_NANA.d2dExplosionDamage, CO_NANA.d2dCoZoneExplosionDamage]);
+               qsTr("\nGlobal Effect: \nAttacks made by Nana's indirect units deal -%0 HP of damage to all adjacent units, no matter their allegiance.") +
+               qsTr("\n\nCO Zone Effect: \nNana's units gain +%2% firepower and +%3% defence. Attacks made by her indirect units deal -%1 HP of damage to all adjacent units, no matter their allegiance.");
+        text = replaceTextArgs(text, [CO_NANA.d2dExplosionDamage, CO_NANA.d2dCoZoneExplosionDamage, CO_NANA.d2dCoZoneOffBonus, CO_NANA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Direct attacks deal %0 HP of damage to the nearest enemy unit. Nana's units are no longer affected by collateral damage.");
-        text = replaceTextArgs(text, [CO_NANA.powerExplosionDamage]);
+        var text = qsTr("Nana's units gain +%2% firepower and +%3% defence. Attacks made by her direct combat units deal -%0 HP of damage to the nearest enemy unit. Attacks made by her indirect units deal -%1 HP of splash damage to all adjacent units, except for her own.");
+        text = replaceTextArgs(text, [CO_NANA.powerExplosionDamage, CO_NANA.d2dCoZoneExplosionDamage, CO_NANA.powerOffBonus, CO_NANA.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -363,8 +365,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Indirect attacks deal %0 HP of damage to all units within a blast radius of %1. Nana's units are no longer affected by collateral damage.");
-        text = replaceTextArgs(text, [CO_NANA.superPowerExplosionDamage, CO_NANA.superPowerExplosionRange]);
+        var text = qsTr("Nana's units gain +%2% firepower and +%3% defence. Attacks made by her indirect units deal -%0 HP of splash damage to all units, except for her own, in a %1-space radius from the target.");
+        text = replaceTextArgs(text, [CO_NANA.superPowerExplosionDamage, CO_NANA.superPowerExplosionRange, CO_NANA.powerOffBonus, CO_NANA.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -374,11 +376,10 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Let's go, boys!"),
-                qsTr("You made me mad!"),
+                qsTr("You've made me mad!"),
                 qsTr("Stop annoying me!"),
                 qsTr("I'm gonna kick your butt!"),
-                qsTr("A battle with me is a greater honor than you deserve!"),
-                qsTr("I want to end this fast!"),
+                qsTr("I wanna end this fast!"),
                 qsTr("Don't be such a meanie!")];
     };
     this.getVictorySentences = function(co)
@@ -390,7 +391,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Now I'm mad..."),
-                qsTr("This should have been easy!")];
+                qsTr("This should've been easy!")];
     };
     this.getName = function()
     {

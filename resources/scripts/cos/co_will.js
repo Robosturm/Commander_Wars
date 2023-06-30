@@ -253,8 +253,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_HOT_TANK"];
             }
@@ -277,20 +278,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("His direct ground units are slightly stronger.");
+        return qsTr("His direct ground units are stronger.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
-               qsTr("\nGlobal Effect:\nDirect ground units have %0% increased firepower.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Ground Units have %1% increased firepower and other units gain %2% firepower. All units gain %3% defence.");
-        text = replaceTextArgs(text, [CO_WILL.d2dOffBonus, CO_WILL.d2dCoZoneOffBonus, CO_WILL.d2dCoZoneBaseBonus, CO_WILL.d2dCoZoneOffBonus]);
+               qsTr("\nGlobal Effect:\nWill's direct ground units have +%0% firepower.") +
+               qsTr("\n\nCO Zone Effect: \nWill's direct ground units gain +%1% firepower. His other units gain +%2% firepower. All of his units gain +%3% defence.");
+        text = replaceTextArgs(text, [CO_WILL.d2dOffBonus, CO_WILL.d2dCoZoneOffBonus, CO_WILL.d2dCoZoneBaseBonus, CO_WILL.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Boost movement of ground units by %0 and increases the firepower of direct ground units by %1%.");
-        text = replaceTextArgs(text, [CO_WILL.powerMovementBonus, CO_WILL.powerOffBonus]);
+        var text = qsTr("Will's ground units gain +%0 movement. His ground direct units gain +%1% firepower. His other units gain +%2% firepower. All of his units gain +%3% defence.");
+        text = replaceTextArgs(text, [CO_WILL.powerMovementBonus, CO_WILL.powerOffBonus, CO_WILL.powerOffBaseBonus, CO_WILL.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -299,8 +300,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Boost movement of ground units by %0 and increases the firepower of direct ground units by %1%.");
-        text = replaceTextArgs(text, [CO_WILL.superPowerMovementBonus, CO_WILL.superPowerOffBonus]);
+        var text = qsTr("Will's ground units gain +%0 movement. His ground direct units gain +%1% firepower. His other units gain +%2% firepower. All of his units gain +%3% defence.");
+        text = replaceTextArgs(text, [CO_WILL.superPowerMovementBonus, CO_WILL.superPowerOffBonus, CO_WILL.powerOffBaseBonus, CO_WILL.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -310,20 +311,20 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("This is our chance to win. Prepare to move out."),
-                qsTr("The captain saved my life. I need to take care of it."),
+                qsTr("The captain saved my life. I will not waste it."),
                 qsTr("I'll never give up..."),
-                qsTr("There's no time. Now or never...")];
+                qsTr("There's no time. It's now or never...")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("I did it!"),
-                qsTr("I'll never give up..."),
+                qsTr("I'll never give up!"),
                 qsTr("Is everyone okay?")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Never give up hope."),
-                qsTr("I can't remember anything")];
+        return [qsTr("Never give up hope..."),
+                qsTr("I can't remember anything...")];
     };
     this.getName = function()
     {

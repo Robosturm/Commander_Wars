@@ -257,7 +257,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A Teal Isle Commander. Destructive, egotistical and extremely vain.");
+        return qsTr("A Teal Isle Commander. Destructive, egotistical, and extremely vain.");
     };
     this.getHits = function(co)
     {
@@ -273,15 +273,15 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nKirov\n\nGlobal Effect: \nAir Units have %0% increased firepower and %1% increased defense.") +
-                   qsTr("\n\nCO Zone Effect: \nAir Units have %2% increased firepower and %3% increased defense.");
-        text = replaceTextArgs(text, [CO_WAYLON.d2dOffBonus, CO_WAYLON.d2dDefBonus, CO_WAYLON.d2dCoZoneOffBonus, CO_WAYLON.d2dCoZoneDefBonus]);
+        var text = qsTr("\nSpecial Unit:\nKirov\n\nGlobal Effect: \nWaylon's air units have +%0% firepower and +%1% defence.") +
+                   qsTr("\n\nCO Zone Effect: \nWaylon's air units gain +%2% firepower and +%3% defence. His other units gain +%4% firepower and +%5% defence.");
+        text = replaceTextArgs(text, [CO_WAYLON.d2dOffBonus, CO_WAYLON.d2dDefBonus, CO_WAYLON.d2dCoZoneOffBonus, CO_WAYLON.d2dCoZoneDefBonus, CO_WAYLON.d2dCoZoneOffBaseBonus, CO_WAYLON.d2dCoZoneDefBaseBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Air units get increased firepower by %0% and increased defense by %1%.");
-        text = replaceTextArgs(text, [CO_WAYLON.powerOffBonus, CO_WAYLON.powerDefBonus]);
+        var text = qsTr("Waylon's air units gain +%0% firepower and +%1% defence. His other units gain +%2% firepower and +%3% defence.");
+        text = replaceTextArgs(text, [CO_WAYLON.powerOffBonus, CO_WAYLON.powerDefBonus, CO_WAYLON.powerBaseOffBonus, CO_WAYLON.powerDefBaseBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -290,8 +290,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Air units get increased firepower by %0% and increased defense by %1%.");
-        text = replaceTextArgs(text, [CO_WAYLON.superPowerOffBonus, CO_WAYLON.superPowerDefBonus]);
+        var text = qsTr("Waylon's air units gain +%0% firepower and +%1% defence. His other units gain +%2% firepower and +%3% defence.");
+        text = replaceTextArgs(text, [CO_WAYLON.superPowerOffBonus, CO_WAYLON.superPowerDefBonus, CO_WAYLON.powerBaseOffBonus, CO_WAYLON.powerDefBaseBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -300,10 +300,10 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("I'm over here! C'mon give me your best shot."),
+        return [qsTr("I'm over here! C'mon, give me your best shot."),
                 qsTr("You think you can get the better of me? You've got a lot to learn."),
                 qsTr("Woo-hoo!"),
-                qsTr("All i want is total air supremacy! Then i'll pick off your forces.")];
+                qsTr("All I want is total air supremacy! Then I'll pick off your forces.")];
     };
     this.getVictorySentences = function(co)
     {
@@ -314,7 +314,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("This is not the freedom I want!"),
-                qsTr("The eagle has landed.")];
+                qsTr("The eagle has landed...")];
     };
     this.getName = function()
     {

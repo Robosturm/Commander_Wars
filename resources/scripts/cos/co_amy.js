@@ -287,7 +287,7 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("Quantum Theory");
+        return qsTr("Quantum theory");
     };
     this.getMiss = function(co)
     {
@@ -295,19 +295,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("She can command hovercraft units at optimal level. Reefs pose no problem for Amy's units.");
+        return qsTr("She can command hovercraft units at an optimal level. Reefs pose no problem for Amy's units.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units and Hovercrafts have %0 extra movement and gain %1% firepower.") +
-                   qsTr("\n\nCO Zone Effect: \nHovercrafts gain %2% firepower.");
-        text = replaceTextArgs(text, [CO_AMY.d2dMovementBonus, CO_AMY.d2dHoverCraftBoost, CO_AMY.d2dCoZoneHoverCraftBoost]);
+        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units. Her hovercraft have +%0 movement and gain +%1% firepower.") +
+                   qsTr("\n\nCO Zone Effect: \nAmy's hovercraft gain +%2% firepower. All of her other units gain +%3% firepower. All of her units gain +%4% defense.");
+        text = replaceTextArgs(text, [CO_AMY.d2dMovementBonus, CO_AMY.d2dHoverCraftBoost, CO_AMY.d2dCoZoneHoverCraftBoost, CO_AMY.d2dCoZoneOffBonus, CO_AMY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("All hovercraft units gain %0% firepower along with one extra movement and %1% defence. Hovercrafts also receive a %2% reduction in deployment costs. All other units gain %1% firepower and %3% defence");
-        text = replaceTextArgs(text, [CO_AMY.powerHoverCraftBoost, CO_AMY.powerDefBonus, CO_AMY.powerCostReduction * 100, CO_AMY.powerOffBonus]);
+        var text = qsTr("All of Amy's hovercraft units gain +%4 movement, +%0% firepower, and a -%2% reduction in deployment costs. All of her other units gain +%1% firepower. Her units gain +%3% defence.");
+        text = replaceTextArgs(text, [CO_AMY.powerHoverCraftBoost, CO_AMY.powerOffBonus, CO_AMY.powerCostReduction * 100, CO_AMY.powerOffBonus, CO_AMY.powerMovementBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -316,7 +316,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("All hovercraft units gain %0% firepower. Her defense rises to an astonishing %1%. Additionally, she takes no counter-attack damage when attacking an enemy. All other units gain %2% firepower");
+        var text = qsTr("All of Amy's hovercraft units gain +%0% firepower. All of her other units gain +%2% firepower. All of her units gain an astonishing +%1% defence and take no counterattack damage when attacking an enemy.");
         text = replaceTextArgs(text, [CO_AMY.powerHoverCraftBoost, CO_AMY.superPowerDeffensiveBonus, CO_AMY.powerOffBonus]);
         return text;
     };
@@ -328,7 +328,7 @@ var Constructor = function()
     {
         return [qsTr("Try all you might, my magnetic shields will prove to be impenetrable!"),
                 qsTr("Quantum physics... allow me to show you its true potential."),
-                qsTr("I will show you exactly what splitting an atom feels like."),
+                qsTr("I will show you exactly what splitting an atom feels like!"),
                 qsTr("Allow me to demonstrate the power of my hovercraft!"),
                 qsTr("Perhaps if you valued science more, you would not be in this predicament!"),
                 qsTr("Science has gotten me this far, let's see just how far it will take me.")];
@@ -342,7 +342,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("How can this be?! All of my calculations were flawless!"),
-                qsTr("It seems I need to do more experimentations.")];
+                qsTr("It seems I need to do more research.")];
     };
     this.getName = function()
     {

@@ -296,8 +296,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_LOGIC_TRUCK"];
             }
@@ -307,7 +308,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Dark founder of the Dark Matter Cooperation. He's the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn't care if people die.");
+        return qsTr("Founder of the Dark Matter Cooperation. He's the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn't care if people die.");
     };
     this.getHits = function(co)
     {
@@ -319,54 +320,57 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("As the leader of dark matter his troops have special armor and armor piercing weapons.");
+        return qsTr("As the leader of dark matter, his troops have special armor, as well as armor piercing weapons.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
-                   qsTr("\nGlobal Effect: \nDamage against his troops is reduced by %0%. Troops deal %1% true damage if the base damage is at least %2%.") +
-                   qsTr("\n\nCO Zone Effect: \nDamage against his troops is reduced by %3%. Troops deal %4% true damage if the base damage is at least %5%.");
-        text = replaceTextArgs(text, [CO_YUKIO.d2dTrueDefenseBonus, CO_YUKIO.d2dTrueDamageBonus, CO_YUKIO.d2dMinTrueDamage,
-                                      CO_YUKIO.d2dCoZoneTrueDefenseBonus, CO_YUKIO.d2dCoZoneTrueDamageBonus, CO_YUKIO.d2dCoZoneMinTrueDamage]);
+                   qsTr("\nGlobal Effect: \nEnemy attacks deal -%0% damage to Yukio's units. If an attack from Yukio's units would deal at least %2 HP damage, they deal an additional defense-ignoring -%1 HP of damage.") +
+                   qsTr("\n\nCO Zone Effect: \nEnemy attacks deal -%3% damage to Yukio's units. If an attack from Yukio's units would deal at least %5 HP damage, they deal an additional defense-ignoring -%4 HP of damage.");
+        text = replaceTextArgs(text, [CO_YUKIO.d2dTrueDefenseBonus, CO_YUKIO.d2dTrueDamageBonus/10, CO_YUKIO.d2dMinTrueDamage/10,
+                                      CO_YUKIO.d2dCoZoneTrueDefenseBonus, CO_YUKIO.d2dCoZoneTrueDamageBonus/10, CO_YUKIO.d2dCoZoneMinTrueDamage/10]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("A small army spawns and fights for Yukio.");
+        var text = qsTr("A small army deploys to fight for Yukio. A random 40% of his owned buildings, if empty, will randomly deploy either a Light Tank, Anti Air, or Artillery, ready to move. Enemy attacks deal -%0% damage to Yukio's units. If an attack from Yukio's units would deal at least %1 HP damage, they deal an additional defense-ignoring -%2 HP of damage. Yukio's units also gain +%3% firepower and +%4% defence.");
+		text = replaceTextArgs(text, [CO_YUKIO.powerTrueDefenseBonus, CO_YUKIO.powerMinTrueDamage/10, CO_YUKIO.powerTrueDamageBonus/10,
+                                      CO_YUKIO.powerOffBonus, CO_YUKIO.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Invasion");
+        return qsTr("Dark Assault");
     };
     this.getSuperPowerDescription = function(co)
     {
-         var text =  qsTr("An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing %0 Hp to half of the enemy troops is launched.");
-        text = replaceTextArgs(text, [CO_YUKIO.superPowerBombDamage]);
+         var text =  qsTr("A large army deploys to fight for Yukio. A random 70% of his owned buildings, if empty, will randomly deploy either a Light Tank, Anti Air, Artillery, Heavy Tank, or Battle Copter, ready to move. In order to support the invasion, a bombardment is launched dealing -%0 HP of damage to a random 50% of all enemies. Enemy attacks deal -%1% damage to Yukio's units. If an attack from Yukio's units would deal at least %2 HP damage, they deal an additional defense-ignoring -%3 HP of damage. Yukio's units also gain +%4% firepower and +%5% defence.");
+        text = replaceTextArgs(text, [CO_YUKIO.superPowerBombDamage, CO_YUKIO.powerTrueDefenseBonus, CO_YUKIO.powerMinTrueDamage/10, CO_YUKIO.powerTrueDamageBonus/10,
+                                      CO_YUKIO.powerOffBonus, CO_YUKIO.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Ground-Air-Invasion");
+        return qsTr("Total Invasion");
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("I show you, what true power means."),
-                qsTr("I'm the evil that destroys you."),
-                qsTr("Your weapons are the rubbish of my factories."),
-                qsTr("The victory is mine!  Alea iacta est!"),
-                qsTr("My troops are behind you."),
-                qsTr("I'll become the ruler of the world.")];
+        return [qsTr("I'll show you what true power means."),
+                qsTr("Me? I'm the evil that destroys you."),
+                qsTr("Your weapons are the rubbish my factories dispose of."),
+                qsTr("Victory is mine!  Alea iacta est!"),
+                qsTr("I'll become the ruler of this world!")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Investment...Profits...great. Continue."),
+        return [qsTr("Investment... Profits... Perfect. Continue."),
                 qsTr("War is just another tool to make profit."),
-                qsTr("Give me all your money and your lifes.")];
+                qsTr("Give me all your money and your lives.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Even with this loss I made profit..."),
-                qsTr("I lost but I got your money to build a new army.")];
+        return [qsTr("Even with this loss, I made profit..."),
+                qsTr("I lost, but with all of this money I just will build a better army!")];
     };
     this.getName = function()
     {

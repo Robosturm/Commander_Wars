@@ -151,7 +151,7 @@ var Constructor = function()
         {
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                return CO_SASHA.d2dCoZoneDefBonus;
+                return CO_SASHA.powerOffBonus;
             }
             else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
@@ -209,8 +209,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_LOGIC_TRUCK"];
             }
@@ -221,7 +222,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Colin's older sister. Normally ladylike, but becomes daring when she gets angry. Dominatrix");
+        return qsTr("Colin's older sister. Normally ladylike, but becomes daring when she gets angry.");
     };
     this.getHits = function(co)
     {
@@ -233,20 +234,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Being the heir to a vast fortune, she gets an additional 10% funds from allied properties.");
+        return qsTr("Being the heir to a vast fortune, she gets additional funds from allied properties.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
-               qsTr("\nGlobal Effect: \nShe gets additional %0% funds from allied properties and a flat %1% on top.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional %2% firepower and %1% defense.");
+               qsTr("\nGlobal Effect: \nSasha's properties produce an additional +%0% funding, as well as an additional flat +%1 funds.") +
+               qsTr("\n\nCO Zone Effect: \nSasha's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_SASHA.d2dPercentIncomeBonus * 100, CO_SASHA.d2dFlatIncomeBonus, CO_SASHA.d2dCoZoneOffBonus, CO_SASHA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Decrease the enemy's CO power gauge by 1 star per %0 funds.");
-        text = replaceTextArgs(text, [CO_SASHA.powerFundsPerReduction]);
+        var text = qsTr("All enemies lose one CO Power charge star for every %0 funds Sasha currently has. Sasha's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_SASHA.powerFundsPerReduction, CO_SASHA.powerOffBonus, CO_SASHA.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -255,8 +256,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Earns %0% funds of the damage inflicted on a foe.");
-        text = replaceTextArgs(text, [CO_SASHA.superPowerIncomeBonus * 100]);
+        var text = qsTr("Sasha's units gain +%1% firepower and +%2% defence. For this turn, Sasha receives %0% of all combat damage dealt to enemies as funds.");
+        text = replaceTextArgs(text, [CO_SASHA.superPowerIncomeBonus * 100, CO_SASHA.powerOffBonus, CO_SASHA.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -270,7 +271,7 @@ var Constructor = function()
                 qsTr("I'll keep fighting until peace is restored."),
                 qsTr("I will not back down."),
                 qsTr("I'll show you my true strength."),
-                qsTr("You've made me very, very...upset.")];
+                qsTr("You've made me very, very... upset.")];
     };
     this.getVictorySentences = function(co)
     {

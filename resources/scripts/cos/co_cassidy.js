@@ -250,16 +250,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits gain %0% firepower when attacking units with equal or less health.") +
-                qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower when attacking units with equal or less health.");
-        text = replaceTextArgs(text, [CO_CASSIDY.d2dOffBonus, CO_CASSIDY.d2dCoZoneBonus]);
+        var text = qsTr("\nGlobal Effect: \nCassidy's units gain +%0% firepower when attacking units with equal or less health.") +
+                qsTr("\n\nCO Zone Effect: \nCassidy's units gain +%1% firepower when attacking units with equal or less health and +%2% firepower otherwise. Her units gain +%3% defence.");
+        text = replaceTextArgs(text, [CO_CASSIDY.d2dOffBonus, CO_CASSIDY.d2dCoZoneBonus, CO_CASSIDY.d2dCoZoneOffBonus, CO_CASSIDY.d2dCoZoneDefBonus]);
         return text;
 
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("All of Cassidy's units now gain %0% firepower for attacking units with equal or less health.");
-        text = replaceTextArgs(text, [CO_CASSIDY.powerBonus]);
+        var text = qsTr("Cassidy's units gain +%0% firepower when attacking units with equal or less health and +%1% firepower otherwise. Her units gain +%2% defence.");
+        text = replaceTextArgs(text, [CO_CASSIDY.powerBonus, CO_CASSIDY.powerOffBonus, CO_CASSIDY.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -268,8 +268,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("All enemies suffer %0 HP of damage. Firepower is greatly increased by %1% when attacking a unit with equal or less health.");
-        text = replaceTextArgs(text, [CO_CASSIDY.superPowerDamage, CO_CASSIDY.superPowerBonus]);
+        var text = qsTr("All enemy units suffer -%0 HP of damage. Cassidy's units gain +%1% firepower when attacking units with equal or less health and +%2% firepower otherwise. Her units gain +%3% defence.");
+        text = replaceTextArgs(text, [CO_CASSIDY.superPowerDamage, CO_CASSIDY.superPowerBonus, CO_CASSIDY.powerOffBonus, CO_CASSIDY.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -289,7 +289,7 @@ var Constructor = function()
     {
         return [qsTr("You better hope we do not meet again."),
                 qsTr("I love this job!"),
-                qsTr("I wished the battle had lasted a little longer. Oh well.")];
+                qsTr("I wish the battle had lasted a little longer. Oh well.")];
     };
     this.getDefeatSentences = function(co)
     {

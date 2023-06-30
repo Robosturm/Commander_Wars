@@ -243,7 +243,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("He may be a pompous braggart, but his tactical prowess has earned him the respect of his peers and the admiration of his people. Old Man Winter");
+        return qsTr("He may be a pompous braggart, but his tactical prowess has earned him the respect of his peers, the admiration of his people, and the nickname 'Old Man Winter'.");
     };
     this.getHits = function(co)
     {
@@ -255,19 +255,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Winter poses no problem for Olaf or his troops. Snow causes his firepower to rise, and his troops can move through it without any penalties.");
+        return qsTr("Winter poses no problem for Olaf or his troops. Snow causes his firepower to rise, and his troops can move through it without any penalties. Rain, however, slows him down.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nWinter poses no problem for Olaf or his troops. Firepower is increased by %0% during snow.") +
-                qsTr("\n\nCO Zone Effect: \nFirepower is increased by %1% during snow.");
-        text = replaceTextArgs(text, [CO_OLAF.d2dOffBonus, CO_OLAF.d2dCoZoneOffBonus]);
+        var text = qsTr("\nGlobal Effect: \nOlaf's units have +%0% firepower if the weather is Snow. If the weather is Rain, his units' movement costs are increased by 1 in all terrain but roads and shoals.") +
+                qsTr("\n\nCO Zone Effect: \nOlaf's units gain +%2% firepower and +%3% defence. His units gain a total of +%1% firepower if the weather is Snow.");
+        text = replaceTextArgs(text, [CO_OLAF.d2dOffBonus, CO_OLAF.d2dCoZoneOffBonus, CO_OLAF.d2dCoZoneBaseOffBonus, CO_OLAF.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Causes snow to fall for %0 day, causing his firepower to rise by %1%.");
-        text = replaceTextArgs(text, [CO_OLAF.powerSnowDays, CO_OLAF.superPowerOffBonus]);
+        var text = qsTr("Changes the weather to Snow. Olaf's units gain +%1% firepower and +%2% defence. His units gain a total of +%0% firepower while the weather is Snow.");
+        text = replaceTextArgs(text, [CO_OLAF.superPowerOffBonus, CO_OLAF.powerOffBonus, CO_OLAF.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -276,8 +276,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("A mighty blizzard causes %0 HP of damage to all enemy troops and changes the weather to snow %2 day. The snow will also cause his firepower to rise by %1.");
-        text = replaceTextArgs(text, [CO_OLAF.superPowerDamage, CO_OLAF.superPowerOffBonus, CO_OLAF.powerSnowDays]);
+        var text = qsTr("A mighty blizzard changes the weather to Snow and deals -%0 HP of damage to all enemy units. Olaf's units gain +%2% firepower and +%3% defence. His units gain a total of +%1% firepower while the weather is Snow.");
+        text = replaceTextArgs(text, [CO_OLAF.superPowerDamage, CO_OLAF.superPowerOffBonus, CO_OLAF.powerOffBonus, CO_OLAF.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -286,7 +286,7 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Oho ho ho.  Do you think your pitiful troops can stand the cold?"),
+        return [qsTr("Oho ho ho. Do you think your pitiful troops can stand the cold?"),
                 qsTr("Neither man nor machine can withstand the fury of nature!"),
                 qsTr("You're going to regret challenging me!"),
                 qsTr("Let the winds of war bring snow!"),

@@ -231,7 +231,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        attacker.setHp(0.00001);
+                        attacker.setHp(0.01);
                     }
                 }
             }
@@ -245,13 +245,14 @@ var Constructor = function()
     {
         if (CO.isActive(co))
         {
-            var buildingId = building.getBuildingID();
-            if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
-            {
-                return ["ZCOUNIT_AT_CYCLE"];
-            }
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ" ||
+            buildingId === "FORTHQ")
+        {
+            return ["ZCOUNIT_AT_CYCLE"];
+        }
         }
         return [];
     };
@@ -259,32 +260,32 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A bandit working for Caulder. Believes there is no law but The Beast's Law. Driven by rage and greed.");
+        return qsTr("A bandit working for Caulder. Believes that there is no law but 'The Beast's Law'. Driven by rage and greed.");
     };
     this.getHits = function(co)
     {
-        return qsTr("Looting, Robbing and Killing");
+        return qsTr("Looting, robbing, and killing");
     };
     this.getMiss = function(co)
     {
-        return qsTr("Duty and Honor");
+        return qsTr("Duty and honor");
     };
     this.getCODescription = function(co)
     {
-        return qsTr("His units have the potential for high firepower, but their reckless tendencies often get them hurt.");
+        return qsTr("His units have high firepower, but their reckless tendencies often get them hurt.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
-                   qsTr("\nGlobal Effect: \nUnits gain %1% firepower when attacking but also receive %1 HP of extra damage in recoil.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower when attacking but also receive %3 HP of extra damage in recoil.");
-        text = replaceTextArgs(text, [CO_BEAST.d2dOffBonus, CO_BEAST.d2dSelfDamage, CO_BEAST.d2dCoZoneOffBonus, CO_BEAST.d2dCoZoneSelfDamage]);
+                   qsTr("\nGlobal Effect: \nThe Beast's units gain +%0% firepower when attacking but also receive -%1 HP of extra damage in recoil.") +
+                   qsTr("\n\nCO Zone Effect: \nThe Beast's units gain +%2% firepower when attacking and +%4% defence, but also receive -%3 HP of extra damage after attacking. His units gain +%5% firepower when not attacking.");
+        text = replaceTextArgs(text, [CO_BEAST.d2dOffBonus, CO_BEAST.d2dSelfDamage, CO_BEAST.d2dCoZoneOffBonus, CO_BEAST.d2dCoZoneSelfDamage, CO_BEAST.d2dCoZoneDefBonus, CO_BEAST.d2dCoZoneBaseOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Restores %0 HP to all units.");
-        text = replaceTextArgs(text, [CO_BEAST.powerHeal]);
+        var text = qsTr("Restores %0 HP to all of The Beast's units. His units get +%1% firepower while attacking and +%2% defense, but also receive -%3 HP of extra damage after attacking.");
+        text = replaceTextArgs(text, [CO_BEAST.powerHeal, CO_BEAST.powerOffBonus, CO_BEAST.powerDefBonus, CO_BEAST.powerSelfDamage]);
         return text;
     };
     this.getPowerName = function(co)
@@ -293,13 +294,13 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Restores %0 HP to all units. Units movement is increases by %1 space.");
-        text = replaceTextArgs(text, [CO_BEAST.superPowerHeal, CO_BEAST.superPowerMovementBonus]);
+        var text = qsTr("Restores %0 HP to all of The Beast's units. His units get +%1 movement, +%2% firepower while attacking, and +%3% defense, but also receive -%4 HP of extra damage after attacking.");
+        text = replaceTextArgs(text, [CO_BEAST.superPowerHeal, CO_BEAST.superPowerMovementBonus, CO_BEAST.powerOffBonus, CO_BEAST.powerDefBonus, CO_BEAST.powerSelfDamage]);
         return text;
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Beast's Law");
+        return qsTr("The Beast's Law");
     };
     this.getPowerSentences = function(co)
     {
@@ -313,7 +314,7 @@ var Constructor = function()
     {
         return [qsTr("Gwar har har har!"),
                 qsTr("You can't stand up to The Beast!"),
-                qsTr("There's no law like the Beast's law!")];
+                qsTr("There's no law like The Beast's law!")];
     };
     this.getDefeatSentences = function(co)
     {

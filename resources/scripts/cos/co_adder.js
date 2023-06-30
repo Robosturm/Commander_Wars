@@ -215,8 +215,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_HOT_TANK"];
             }
@@ -231,11 +232,11 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("His own Face");
+        return qsTr("His own face");
     };
     this.getMiss = function(co)
     {
-        return qsTr("Dirty Things");
+        return qsTr("Dirty things");
     };
     this.getCODescription = function(co)
     {
@@ -244,14 +245,14 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
-                   qsTr("\nGlobal Effect: \nPower charge is increased by %1%.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
+                   qsTr("\nGlobal Effect: \nAdder's power charge is increased by %1%.") +
+                   qsTr("\n\nCO Zone Effect: \nAdder's units gain +%0% firepower and +%0% defence.");
         text = replaceTextArgs(text, [CO_ADDER.d2dCoZoneBonus, CO_ADDER.d2dPowerChargeBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Movement range for all units is increased by %0 space and firepower by %1% and defence by %2%.");
+        var text = qsTr("All of Adder's units receive +%0 movement, +%1% firepower, and +%2% defence.");
         text = replaceTextArgs(text, [CO_ADDER.powerMovement, CO_ADDER.powerOffBonus, CO_ADDER.powerDefBonus]);
         return text;
     };
@@ -261,7 +262,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Movement range for all units is increased by %0 spaces and firepower by %1% and defence by %2%");
+        var text = qsTr("All of Adder's units receive +%0 movement, +%1% firepower, and +%2% defence.");
         text = replaceTextArgs(text, [CO_ADDER.superPowerMovement, CO_ADDER.powerOffBonus, CO_ADDER.powerDefBonus]);
         return text;
     };
@@ -293,6 +294,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Hssss! Today was... unlucky. A bad day. Nothing more."),
+				qsTr("So much for 'Adder time'."),
                 qsTr("It's the blasted weather! That was the problem! Hssss!")];
     };
     this.getName = function()

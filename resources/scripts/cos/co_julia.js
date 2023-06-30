@@ -157,9 +157,13 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    baseDamage = 80;
+                    baseDamage = CO_JULIA.d2dCoZoneOffBonus;
                     fixedDamage = true;
                 }
+				else
+				{
+					return CO_JULIA.d2dOffBonus;
+				}
                 break;
             }
             if (fixedDamage)
@@ -197,8 +201,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_PARTISAN"];
             }
@@ -226,22 +231,22 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nPartisan\n");
-        if (CO_JULIA.d2dOffBonus > 0)
+        if (CO_JULIA.d2dOffBonus >= 0)
         {
-            text +=  qsTr("\nGlobal Effect: \nNo Effects.");
+            text +=  qsTr("\nGlobal Effect: \nNone.");
         }
         else
         {
-            text +=  qsTr("\nGlobal Effect: \nUnits have %1 firepower but the firepower is unaffected by loss of HP.");
+            text +=  qsTr("\nGlobal Effect: \nJulia's units have %1 firepower.");
         }
-        text += qsTr("\n\nCO Zone Effect: \nUnits have %0 firepower but the firepower is unaffected by loss of HP.");
-        text = replaceTextArgs(text, [CO_JULIA.d2dCoZoneOffBonus, CO_JULIA.d2dOffBonus]);
+        text += qsTr("\n\nCO Zone Effect: \nJulia's units have %0% firepower and +%2% defence. Their firepower is unaffected by loss of HP.");
+        text = replaceTextArgs(text, [(CO_JULIA.d2dCoZoneOffBonus-100), CO_JULIA.d2dOffBonus, CO_JULIA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("%0% of enemy units can't move next turn and all units are unaffected by loss of HP but get %1% firepower.");
-        text = replaceTextArgs(text, [CO_JULIA.powerStunChance * 100, CO_JULIA.powerOffBonus]);
+        var text = qsTr("A random %0% of enemy units can't move next turn. Julia's units have %1% firepower and +%2% defence. Their firepower is unaffected by loss of HP.");
+        text = replaceTextArgs(text, [CO_JULIA.powerStunChance * 100, (CO_JULIA.powerOffBonus-100), CO_JULIA.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -250,8 +255,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("%0% of enemy units can't move next turn and all units are unaffected by loss of HP but get %1% firepower.");
-        text = replaceTextArgs(text, [CO_JULIA.superPowerStunChance * 100, CO_JULIA.powerOffBonus]);
+        var text = qsTr("%0% of enemy units can't move next turn. Julia's units have %1% firepower and +%2% defence. Their firepower is unaffected by loss of HP.");
+        text = replaceTextArgs(text, [CO_JULIA.superPowerStunChance * 100, (CO_JULIA.powerOffBonus-100), CO_JULIA.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -260,7 +265,7 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Your defeat is tomorrow's headline."),
+        return [qsTr("Your defeat will be tomorrow's headline."),
                 qsTr("Start the presses!"),
                 qsTr("I don't receive the news. I make the news."),
                 qsTr("I am the only voice of the people."),
@@ -275,7 +280,7 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("The news will still call this a victory."),
+        return [qsTr("The news will still call this a victory for us."),
                 qsTr("I will change the news...")];
     };
     this.getName = function()

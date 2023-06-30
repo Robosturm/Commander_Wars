@@ -154,6 +154,7 @@ var Constructor = function()
     {
         return "OS";
     };
+
     this.superPowerHeal = 5;
     this.superPowerOffBonus = 30;
     this.superPowerMovementBonus = 1;
@@ -166,7 +167,7 @@ var Constructor = function()
     this.d2dCoZoneDefBonus = 20;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
@@ -188,7 +189,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+                                 defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
@@ -198,7 +199,7 @@ var Constructor = function()
             }
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
-                return CO_ANDY.d2dCoZoneOffBonus;
+                return CO_ANDY.d2dCoZoneDefBonus;
             }
         }
         return 0;
@@ -208,7 +209,7 @@ var Constructor = function()
         if (CO.isActive(co))
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 return CO_ANDY.superPowerMovementBonus;
             }
@@ -222,8 +223,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_REPAIR_TANK"];
             }
@@ -250,19 +252,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("<r>No straignths or weaknesses.</r>");
+        return qsTr("No real weaknesses or strengths. Ready to fight wherever and whenever.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nSpecial Unit:\nRepair Tank</r>" +
-                        "<r>\n\nGlobal Effect: \nNo abilities</r>" +
-                        "<r>\n\nCO Zone Effect: \nUnits gain </r><div c='#55ff00'>+%0%</div><r> firepower and </r><div c='#55ff00'>+%1</div><r> defence.</r>");
+        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n") +
+                   qsTr("\nGlobal Effect: \nNone.") +
+                   qsTr("\n\nCO Zone Effect: \nAndy's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_ANDY.d2dCoZoneOffBonus, CO_ANDY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("<r>Restores </r><div c='#55ff00'>+%0 HP</div><r> to all units. firepower and defense increases by </r><div c='#55ff00'>+%0%</div><r>.</r>");
+        var text = qsTr("Restores +%0 HP to all of Andy's units. His units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_ANDY.powerHeal, CO_ANDY.powerOffBonus, CO_ANDY.powerDefBonus]);
         return text;
     };
@@ -272,8 +274,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("<r>Restores </r><div c='#55ff00'>+%0 HP</div><r> to all units. Firepower rises by </r><div c='#55ff00'>+%1%</div><r> and defense by </r><div c='#55ff00'>+%2%</div><r>. All units gain </r><div c='#55ff00'>+%3 movement</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_ANDY.superPowerHeal, CO_ANDY.superPowerOffBonus, CO_ANDY.powerDefBonus, CO_ANDY.superPowerMovementBonus]);
+        var text = qsTr("Restores +%0 HP to all of Andy's units. His units gain +%2 movement, +%1% firepower, and +%3% defence.");
+        text = replaceTextArgs(text, [CO_ANDY.superPowerHeal, CO_ANDY.superPowerOffBonus, CO_ANDY.superPowerMovementBonus, CO_ANDY.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -286,14 +288,14 @@ var Constructor = function()
                 qsTr("I'm not giving up!"),
                 qsTr("Time to roll up my sleeves!"),
                 qsTr("I haven't even cranked the engine yet!"),
-                qsTr("Pass me my wrench!!"),
+                qsTr("Pass me my wrench!"),
                 qsTr("It's time for a tune-up!"),
                 qsTr("Never give up, and never lose! I'm on my way!"),
                 qsTr("I'm not worried! I can fix anything!")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("We won! Wooooooohooo!"),
+        return [qsTr("We won! Woohoo!"),
                 qsTr("I can fix anything!"),
                 qsTr("I did it! Did you see that!?")];
     };

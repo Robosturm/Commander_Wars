@@ -236,8 +236,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_CHAPERON"];
             }
@@ -260,21 +261,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Units possess superior defenses vs. indirect attacks and Comtowers have a higher impact.");
+        return qsTr("His units possess superior defences against indirect attacks. Communications Towers also grant his units defence.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nChaperon\n") +
-                qsTr("\nGlobal Effect: \nUnits have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.") +
-                qsTr("\n\nCO Zone Effect: \nUnits have %3% increased defense against indirect units. Units gain additional %4% firepower and %5% defense per Comtower.");
+                qsTr("\nGlobal Effect: \nJavier's units gain +%0% defence against indirect units. His units gain an additional +%1% firepower and +%2% defence per Communications Tower he owns.") +
+                qsTr("\n\nCO Zone Effect: \nJavier's units gain +%6% firepower and +%7% defence. His units gain +%3% defence against indirect units. They gain an additional +%4% firepower and +%5% defence per Communications Tower he owns.");
         text = replaceTextArgs(text, [CO_JAVIER.d2dIndirectDefBonus, CO_JAVIER.d2dTowerOffBonus, CO_JAVIER.d2dTowerDefBonus,
-                                      CO_JAVIER.d2dCoZoneIndirectDefBonus, CO_JAVIER.d2dCoZoneTowerOffBonus, CO_JAVIER.d2dCoZoneTowerDefBonus]);
+                                      CO_JAVIER.d2dCoZoneIndirectDefBonus, CO_JAVIER.d2dCoZoneTowerOffBonus, CO_JAVIER.d2dCoZoneTowerDefBonus, CO_JAVIER.d2dCoZoneOffBonus, CO_JAVIER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Units have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.");
-        text = replaceTextArgs(text, [CO_JAVIER.powerIndirectDefBonus, CO_JAVIER.powerTowerOffBonus, CO_JAVIER.powerTowerDefBonus]);
+        var text = qsTr("Javier's units gain +%3% firepower and +%4% defence. His units gain +%0% defence against indirect units. They gain an additional +%1% firepower and +%2% defence per Communications Tower he owns.");
+        text = replaceTextArgs(text, [CO_JAVIER.powerIndirectDefBonus, CO_JAVIER.powerTowerOffBonus, CO_JAVIER.powerTowerDefBonus, CO_JAVIER.powerOffBonus, CO_JAVIER.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -283,8 +284,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Units have %0% increased defense against indirect units. Units gain additional %1% firepower and %2% defense per Comtower.");
-        text = replaceTextArgs(text, [CO_JAVIER.superPowerIndirectDefBonus, CO_JAVIER.superPowerTowerOffBonus, CO_JAVIER.superPowerTowerDefBonus]);
+        var text = qsTr("Javier's units gain +%3% firepower and +%4% defence. His units gain +%0% defence against indirect units. They gain an additional +%1% firepower and +%2% defence per Communications Tower he owns.");
+        text = replaceTextArgs(text, [CO_JAVIER.superPowerIndirectDefBonus, CO_JAVIER.superPowerTowerOffBonus, CO_JAVIER.superPowerTowerDefBonus, CO_JAVIER.powerOffBonus, CO_JAVIER.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -293,7 +294,7 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Away put your weapons! You shall not be needing them where you are going!"),
+        return [qsTr("Put away your weapons! You shall not be needing them where you are going!"),
                 qsTr("Charge into the toothy maw! For now is the time for a glorious hindspanking!"),
                 qsTr("Mighty spire of communication, imbue my blade with stabby might!"),
                 qsTr("Your maidenfolk shall soon howl great lamentations!"),
@@ -304,7 +305,7 @@ var Constructor = function()
     {
         return [qsTr("No sharpness can penetrate my steely hide!"),
                 qsTr("Consider your hindquarters righteously spanked!"),
-                qsTr("You still live for. Javier is masterful but merciful!")];
+                qsTr("You still live, for Javier is masterful but merciful!")];
     };
     this.getDefeatSentences = function(co)
     {

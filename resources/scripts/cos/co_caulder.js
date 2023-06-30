@@ -331,8 +331,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_CRYSTAL_TANK"];
             }
@@ -359,15 +360,15 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n") +
-                   qsTr("\nGlobal Effect: \nUnits have %0% firepower and %1% defense. They also heal %2 HP each turn.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %3% firepower and %4% defense. They also heal %5HP each turn.");
+                   qsTr("\nGlobal Effect: \nCaulder's units gain +%0% firepower and +%1% defense. They also repair +%2 HP at the start of his turn.") +
+                   qsTr("\n\nCO Zone Effect: \nCaulder's units gain +%3% firepower and +%4% defense. They also repair +%5 HP at the start of his turn.");
         text = replaceTextArgs(text, [CO_CAULDER.d2dOffBonus, CO_CAULDER.d2dDefBonus, CO_CAULDER.d2dHealing,
                                       CO_CAULDER.d2dCoZoneOffBonus, CO_CAULDER.d2dCoZoneDefBonus, CO_CAULDER.d2dCoZoneHealing]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("All of his units gain %0 HP and have %1% increased firepower and defense.");
+        var text = qsTr("All of Caulder's units restore +%0 HP and gain +%1% firepower and +%1% defense.");
         text = replaceTextArgs(text, [CO_CAULDER.powerHeal, CO_CAULDER.powerBonus]);
         return text;
     };
@@ -377,7 +378,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("All his units heal %0 HP while gaining %1% increased firepower and defense.");
+        var text = qsTr("All of Caulder's units restore +%0 HP and gain +%1% firepower and +%1% defense.");
         text = replaceTextArgs(text, [CO_CAULDER.superPowerHeal, CO_CAULDER.superPowerBonus]);
         return text;
     };

@@ -302,15 +302,15 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits with %0 HP or less deal maximum luck damage.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %1% and defence by %2%.");
+        var text = qsTr("\nGlobal Effect: \nXavier's units with %0 HP or less deal maximum luck damage.") +
+                   qsTr("\n\nCO Zone Effect: \nXavier's units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_XAVIER.d2dMinLuckHp, CO_XAVIER.d2dCoZoneFirepowerBonus, CO_XAVIER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text =  qsTr("Increases luck damage to %0% and firepower by %1% and defence by %2%.");
-        text = replaceTextArgs(text, [CO_XAVIER.luckDamage, CO_XAVIER.powerFirepowerBonus, CO_XAVIER.powerDefBonus]);
+        var text =  qsTr("Xavier's units gain +%0 luck, +%1% firepower, and +%2% defence.");
+        text = replaceTextArgs(text, [CO_XAVIER.powerLuckDamage, CO_XAVIER.powerFirepowerBonus, CO_XAVIER.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -319,7 +319,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-         var text =  qsTr("Units gain %0% firepower for each own unit nearby the attacked unit and in addition a bonus firepower of %1% and defence of %2%..");
+         var text =  qsTr("Xavier's units gain +%1% firepower and +%2% defence. When his units attack, they gain an additional +%0% firepower for each of his other units adjacent to the attacked unit.");
         text = replaceTextArgs(text, [CO_XAVIER.superpowerBonus, CO_XAVIER.powerFirepowerBonus, CO_XAVIER.powerDefBonus]);
         return text;
     };
@@ -330,7 +330,7 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("You know, the laws of physics are made to be broken. Observe."),
-                qsTr("You might say I'm a rather.. twisted individual."),
+                qsTr("You might say I'm a rather...twisted individual."),
                 qsTr("Reality is only trivial. Watch and learn."),
                 qsTr("Allow me to reprimand, for your atrocious command."),
                 qsTr("I'm sure you'll get quite a scare out of this!"),
@@ -338,13 +338,13 @@ var Constructor = function()
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("... I must return to my work now."),
+        return [qsTr("I must return to my own work now."),
                 qsTr("See, this is reality. You never stood a chance."),
                 qsTr("You are intellectually inferior to me. Simple as that.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("That's not my reality."),
+        return [qsTr("This is not my reality."),
                 qsTr("You were supposed to be intellectually inferior to me.")];
     };
     this.getName = function()

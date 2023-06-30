@@ -153,7 +153,7 @@ var Constructor = function()
     this.powerDirectMalus = -10;
     this.powerInfMalus = 10;
     this.powerDefBonus = 10;
-    this.powerOffBonus = 10;
+    this.powerOtherOffBonus = 10;
 
     this.d2dFirerangeBonus = 1;
     this.d2dOffBonus = 0;
@@ -163,7 +163,7 @@ var Constructor = function()
     this.d2dCoZoneOffBonus = 30;
     this.d2dCoZoneDirectMalus = -10;
     this.d2dCoZoneInfMalus = 10;
-    this.d2dCoZoneOffBonus = 10;
+    this.d2dCoZoneOtherOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -189,7 +189,7 @@ var Constructor = function()
                 {
                     return CO_GRIT.superPowerInfMalus;
                 }
-                return CO_GRIT.powerOffBonus;
+                return CO_GRIT.powerOtherOffBonus;
             }
             case GameEnums.PowerMode_Power:
             {
@@ -206,7 +206,7 @@ var Constructor = function()
                 {
                     return CO_GRIT.powerInfMalus;
                 }
-                return CO_GRIT.powerOffBonus;
+                return CO_GRIT.powerOtherOffBonus;
             }
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
@@ -224,7 +224,7 @@ var Constructor = function()
                     {
                         return CO_GRIT.d2dCoZoneInfMalus;
                     }
-                    return CO_GRIT.d2dCoZoneOffBonus;
+                    return CO_GRIT.d2dCoZoneOtherOffBonus;
                 }
                 else
                 {
@@ -321,8 +321,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_SIEGE_CANNON"];
             }
@@ -345,20 +346,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Indirect-combat units cause more damage and have increased firerange. Weak in non-infantry direct combat.");
+        return qsTr("Indirect-combat units have more firepower and have increased range. Weak in non-footsoldier direct combat.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
-               qsTr("\nGlobal Effect: \nIndirect units have %0 increased firerange and %1% firepower and non-infantry direct units have %2% reduced firepower. Infantry units have %3% reduced firepower.") +
-               qsTr("\n\nCO Zone Effect: \nIndirect units have an %4% offensive bonus.");
-        text = replaceTextArgs(text, [CO_GRIT.d2dFirerangeBonus, CO_GRIT.d2dOffBonus, CO_GRIT.d2dDirectMalus, CO_GRIT.d2dInfMalus, CO_GRIT.d2dCoZoneOffBonus]);
+               qsTr("\nGlobal Effect: \nGrit's indirect units gain +%0 range and +%1% firepower. His non-footsoldier direct units have %2% firepower. His footsoldier units have -%3% firepower.") +
+               qsTr("\n\nCO Zone Effect: \nGrit's indirect units gain +%4% firepower. His non-footsoldier direct units have %5% firepower. His footsoldier units gain +%6% firepower. All of his units gain +%7% defence.");
+        text = replaceTextArgs(text, [CO_GRIT.d2dFirerangeBonus, CO_GRIT.d2dOffBonus, CO_GRIT.d2dDirectMalus, CO_GRIT.d2dInfMalus, CO_GRIT.d2dCoZoneOffBonus, CO_GRIT.d2dCoZoneDirectMalus, CO_GRIT.d2dCoZoneInfMalus, CO_GRIT.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Increases range of indirect units by %0 spaces. Firepower of these units also rise by %1%.");
-        text = replaceTextArgs(text, [CO_GRIT.powerFirerangeBonus, CO_GRIT.powerOffBonus]);
+        var text = qsTr("Grit's indirect units gain +%0 range and +%1% firepower. His non-footsoldier direct units have %2% firepower. His footsoldier units gain +%3% firepower. All of his units gain +%4% defence.");
+        text = replaceTextArgs(text, [CO_GRIT.powerFirerangeBonus, CO_GRIT.powerOffBonus, CO_GRIT.powerDirectMalus, CO_GRIT.powerInfMalus, CO_GRIT.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -367,8 +368,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Increases range of indirect units by %0 spaces. Firepower of these units greatly rise by %1%.");
-        text = replaceTextArgs(text, [CO_GRIT.superPowerFirerangeBonus, CO_GRIT.superPowerOffBonus]);
+        var text = qsTr("Grit's indirect units gain +%0 range and +%1% firepower. His non-footsoldier direct units have %2% firepower. His footsoldier units gain +%3% firepower. All of his units gain +%4% defence.");
+        text = replaceTextArgs(text, [CO_GRIT.superPowerFirerangeBonus, CO_GRIT.superPowerOffBonus, CO_GRIT.superPowerDirectMalus, CO_GRIT.superPowerInfMalus, CO_GRIT.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

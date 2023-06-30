@@ -231,8 +231,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_INTEL_TRUCK"];
             }
@@ -243,7 +244,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Kanbei's cool and collected daughter who likes to plan before acting. She excels in gathering information. Sees All, Knows All");
+        return qsTr("Kanbei's cool and collected daughter who likes to plan before acting. She excels in gathering information.");
     };
     this.getHits = function(co)
     {
@@ -255,20 +256,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. However, she suffers from chronic bad luck.");
+        return qsTr("Keeps HP intel hidden from foes and reduces enemy terrain defensive cover. However, she suffers from chronic bad luck.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
-            qsTr("\nGlobal Effect: \nKeeps HP intel hidden from foes. Units have increased vision by %4. Reduces enemy terrain defensive cover by %0. Her misfortune is increased by %1. Units have %5% increased firepower during counter attacks.") +
-            qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower and %3% defense.");
-        text = replaceTextArgs(text, [CO_SONJA.d2dEnemyTerrainDefenseModifier, CO_SONJA.d2dBonusMisfortune, CO_SONJA.d2dCoZoneOffBonus, CO_SONJA.d2dBonusMisfortune, CO_SONJA.d2dVisionBonus, CO_SONJA.d2dCounterAttackBonus]);
+        var text = qsTr("\nSpecial Unit:\nIntel Truck\n") +
+            qsTr("\nGlobal Effect: \nSonja's units gain +%4 vision, +%1 misfortune, and their HP is hidden from enemies. Enemies lose -%0 terrain star from all terrain.") +
+            qsTr("\n\nCO Zone Effect: \nSonja's units gain +%2% firepower and +%3% defence.");
+        text = replaceTextArgs(text, [CO_SONJA.d2dEnemyTerrainDefenseModifier, CO_SONJA.d2dBonusMisfortune, CO_SONJA.d2dCoZoneOffBonus, CO_SONJA.d2dCoZoneDefBonus, CO_SONJA.d2dVisionBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Reduces enemy terrain defensive cover by %0. Units have increased vision by %1. Allows all units to see into woods and reefs.");
-        text = replaceTextArgs(text, [CO_SONJA.powerEnemyTerrainDefenseModifier, CO_SONJA.powerVisionBonus]);
+        var text = qsTr("Sonja's units gain +%0 vision, +%1% firepower, +%2% defence, and can see into hidden locations. Enemies lose -%3 terrain stars from all terrain.");
+        text = replaceTextArgs(text, [CO_SONJA.powerVisionBonus, CO_SONJA.powerOffBonus, CO_SONJA.powerDefBonus, CO_SONJA.powerEnemyTerrainDefenseModifier]);
         return text;
     };
     this.getPowerName = function(co)
@@ -277,8 +278,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Reduces enemy terrain defensive cover by %0. Units have increased vision by %1. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.");
-        text = replaceTextArgs(text, [CO_SONJA.superPowerEnemyTerrainDefenseModifier, CO_SONJA.powerVisionBonus]);
+        var text = qsTr("Sonja's units gain +%0 vision, +%1% firepower, and +%2% defence. They can see into hidden locations and strike first, even during counterattacks. Enemies lose -%3 terrain stars from all terrain.");
+        text = replaceTextArgs(text, [CO_SONJA.powerVisionBonus, CO_SONJA.powerOffBonus, CO_SONJA.powerDefBonus, CO_SONJA.superPowerEnemyTerrainDefenseModifier]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -289,7 +290,7 @@ var Constructor = function()
     {
         return [qsTr("I see right through your plans!"),
                 qsTr("I'll show you there's more to combat than power alone!"),
-                qsTr("Number of enemy troops...location... Got it! This is so easy!"),
+                qsTr("Number of enemy troops... location... Got it! This is so easy!"),
                 qsTr("Get me some fresh intel, stat!"),
                 qsTr("You can't hide from me!"),
                 qsTr("Just like I planned...")];
@@ -297,12 +298,12 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("My strategy was merely better... That is all."),
-                qsTr("I must review my strategy."),
                 qsTr("Perfect planning wins the day!")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("... I'm sorry, Father... I've broken my promise..."),
+        return [qsTr("I'm sorry, Father... I've broken my promise..."),
+				qsTr("I must review my strategy again..."),
                 qsTr("I have learned much from this...")];
     };
     this.getName = function()

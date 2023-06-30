@@ -242,8 +242,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_AT_CYCLE"];
             }
@@ -254,7 +255,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("The strongman of the Black Hole army. Promoted form private by Hawke, who was impressed by his natural ability.");
+        return qsTr("The strongman of the Black Hole Army. Promoted from private by Hawke, who was impressed by his natural ability.");
     };
     this.getHits = function(co)
     {
@@ -266,21 +267,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("High firepower, but he relies solely on strength. His shoddy technique sometimes reduces the damage his units deal.");
+        return qsTr("He relies solely on his strength at the cost of his shoddy technique. Has greater than average luck, but also has misfortune.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
-               qsTr("\nGlobal Effect: \nUnits have %0% more Luck and %1% Misfortune.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %0% more Luck and %1% Misfortune.");
+               qsTr("\nGlobal Effect: \nFlak's units gain +%0 luck and +%1 misfortune.") +
+               qsTr("\n\nCO Zone Effect: \nFlak's units gain +%2 luck, +%3 misfortune, +%4% firepower, and +%5% defence.");
         text = replaceTextArgs(text, [CO_FLAK.d2dBonusLuck, CO_FLAK.d2dBonusMissfortune,
-                                      CO_FLAK.d2dCoZoneBonusLuck, CO_FLAK.d2dCoZoneBonusMissfortune]);
+                                      CO_FLAK.d2dCoZoneBonusLuck, CO_FLAK.d2dCoZoneBonusMissfortune, CO_FLAK.d2dCoZoneOffBonus, CO_FLAK.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Units have %0% more Luck and %1% Misfortune.");
-        text = replaceTextArgs(text, [CO_FLAK.powerBonusLuck, CO_FLAK.powerBonusMissfortune]);
+        var text = qsTr("Flak's units gain +%0 luck, +%1 misfortune, +%2% firepower, and +%3% defence.");
+        text = replaceTextArgs(text, [CO_FLAK.powerBonusLuck, CO_FLAK.powerBonusMissfortune, CO_FLAK.powerOffBonus, CO_FLAK.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -289,8 +290,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Units have %0% more Luck and %1% Misfortune.");
-        text = replaceTextArgs(text, [CO_FLAK.superPowerBonusLuck, CO_FLAK.superPowerBonusMissfortune]);
+        var text = qsTr("Flak's units gain +%0 luck, +%1 misfortune, +%2% firepower, and +%3% defence.");
+        text = replaceTextArgs(text, [CO_FLAK.superPowerBonusLuck, CO_FLAK.superPowerBonusMissfortune, CO_FLAK.powerOffBonus, CO_FLAK.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -309,13 +310,12 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("What was that? A waste of my time!"),
-                qsTr("Graaa! Blaarrgggg! Smaaarrgggghhh!!"),
                 qsTr("Enough weaklings footing around!")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("I-I don't believe it... They were... stronger than me?"),
-                qsTr("Grrr... I wanna smash your face in!!!")];
+                qsTr("Grrr... I wanna smash your face in!")];
     };
     this.getName = function()
     {

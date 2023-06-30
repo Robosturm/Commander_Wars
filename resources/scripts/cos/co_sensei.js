@@ -298,8 +298,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_COMMANDO"];
             }
@@ -310,7 +311,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A former paratrooper rumored to have been quite the commander in his day. Cranky Paratrooper");
+        return qsTr("A former Yellow Comet paratrooper rumored to have been quite the commander in his day.");
     };
     this.getHits = function(co)
     {
@@ -322,21 +323,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Copters have incredibly high firepower, but naval units are weaker. Foot soldiers have increased firepower.");
+        return qsTr("His copters have incredibly high firepower, but his naval units are weaker.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nCommando\n") +
-            qsTr("\nGlobal Effect: \nCopters have increased firepower by %0% and infantry gain %1% firepower and Naval Units loose %2% firepower and ground units %3% firepower. Transport units gain %6 movement points") +
-            qsTr("\n\nCO Zone Effect: \nCopters have firepower %4% and infantries gain firepower %5%.");
-        text = replaceTextArgs(text, [CO_SENSEI.d2dHeliOffBonus, CO_SENSEI.d2dInfOffBonus, CO_SENSEI.d2dNavalOffBonus, CO_SENSEI.d2dGroundBonus,
-                                      CO_SENSEI.d2dCoZoneHeliOffBonus, CO_SENSEI.d2dCoZoneInfOffBonus, CO_SENSEI.d2dTransporterMovementBonus]);
+            qsTr("\nGlobal Effect: \nSensei's copters gain +%0% firepower and his footsoldiers gain +%1% firepower. His naval units have %2% firepower and ground units gain +%3% firepower. His non-comabt transport units gain +%4 movement.") +
+            qsTr("\n\nCO Zone Effect: \nSensei's copters gain +%5% firepower and his footsoldiers gain +%6% firepower. His naval units have -%7% firepower and ground units gain +%8% firepower. All of his units gain +%9% defence.");
+        text = replaceTextArgs(text, [CO_SENSEI.d2dHeliOffBonus, CO_SENSEI.d2dInfOffBonus, CO_SENSEI.d2dNavalOffBonus, CO_SENSEI.d2dGroundBonus, CO_SENSEI.d2dTransporterMovementBonus, CO_SENSEI.d2dCoZoneHeliOffBonus, CO_SENSEI.d2dCoZoneInfOffBonus, CO_SENSEI.d2dCoZoneNavalOffBonus, CO_SENSEI.d2dCoZoneGroundBonus, CO_SENSEI.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Copter firepower increases. Infantry units with %0 HP appear in all his cities, ready to be moved.");
-        text = replaceTextArgs(text, [CO_SENSEI.powerSpawnHp]);
+        var text = qsTr("Infantry units with %1 HP appear in all of Sensei's unoccupied cities, ready to be moved. Sensei's copters gain +%0% firepower and his footsoldiers gain +%2% firepower. His naval units have -%3% firepower and ground units gain +%4% firepower. All of his units gain +%5% defence.");
+        text = replaceTextArgs(text, [CO_SENSEI.powerHeliOffBonus, CO_SENSEI.powerSpawnHp, CO_SENSEI.powerInfOffBonus, CO_SENSEI.powerNavalOffBonus, CO_SENSEI.powerGroundBonus, CO_SENSEI.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -345,8 +345,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Copter firepower increases. Mech units with %0 HP appear in all his cities, ready to be moved.");
-        text = replaceTextArgs(text, [CO_SENSEI.powerSpawnHp]);
+        var text = qsTr("Mech units with %1 HP appear in all of Sensei's unoccupied cities, ready to be moved. Sensei's copters gain +%0% firepower and his footsoldiers gain +%2% firepower. His naval units have -%3% firepower and ground units gain +%4% firepower. All of his units gain +%5% defence.");
+        text = replaceTextArgs(text, [CO_SENSEI.superPowerHeliOffBonus, CO_SENSEI.powerSpawnHp, CO_SENSEI.superPowerInfOffBonus, CO_SENSEI.powerNavalOffBonus, CO_SENSEI.powerGroundBonus, CO_SENSEI.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -360,7 +360,9 @@ var Constructor = function()
                 qsTr("Paratroopers! Prepare to jump!"),
                 qsTr("Ha ha hah!  This will be a crushing victory!"),
                 qsTr("See what experience can do for you!?"),
+				qsTr("Now you've gone and made me mad. You ought to learn to respect your elders, young man!"),
                 qsTr("Ha ha! I didn't get old for nothing!")];
+				//adding that Sensei line because it's even more hilarious when an opposing CO is female :)
     };
     this.getVictorySentences = function(co)
     {
@@ -370,7 +372,7 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Hah ha! We were defeated fair and square. Score one for the young 'uns."),
+        return [qsTr("Ha ha! We were defeated fair and square. Score one for the young 'uns."),
                 qsTr("Eh? The battle's over? When did that happen?")];
     };
     this.getName = function()

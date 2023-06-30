@@ -132,9 +132,8 @@ var Constructor = function()
     this.superPowerTerrainDefenseModifier = 1;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
-    this.powerTerrainBonus = 10;
 
-    this.d2dTerrainBonus = 0;
+    this.d2dTerrainBonus = 10;
     this.d2dCoZoneTerrainBonus = 10;
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
@@ -156,7 +155,7 @@ var Constructor = function()
                     case GameEnums.PowerMode_Power:
                         if (attacker.useTerrainDefense())
                         {
-                            return terrainDefense * CO_LASH.powerTerrainBonus + CO_LASH.powerOffBonus;
+                            return terrainDefense * CO_LASH.d2dTerrainBonus + CO_LASH.powerOffBonus;
                         }
                         return CO_LASH.powerOffBonus;
                     default:
@@ -233,8 +232,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_NEOSPIDER_TANK"];
             }
@@ -249,7 +249,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("The wunderkind of the Black Hole forces. She's small but fierce. Designed most of Black Hole's recent weaponry.");
+        return qsTr("The wunderkind of the Black Hole forces. Small but fierce. Designed most of Black Hole's recent weaponry.");
     };
     this.getHits = function(co)
     {
@@ -257,7 +257,7 @@ var Constructor = function()
     };
     this.getMiss = function(co)
     {
-        return qsTr("Not getting it");
+        return qsTr("Not getting her way");
     };
     this.getCODescription = function(co)
     {
@@ -265,14 +265,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n\nGlobal Effect: \nUnits gain %0% increased firepower per defense star.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain %1% increased firepower per defense star.");
-        text = replaceTextArgs(text, [CO_LASH.d2dTerrainBonus, CO_LASH.d2dCoZoneTerrainBonus]);
+        var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n\nGlobal Effect: \nLash's units gain +%0% firepower per terrain star.") +
+               qsTr("\n\nCO Zone Effect: \nLash's units gain +%1% firepower and +%2% defense.");
+        text = replaceTextArgs(text, [CO_LASH.d2dTerrainBonus, CO_LASH.d2dCoZoneOffBonus, CO_LASH.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("All units' movements are unhindered by terrain.");
+        var text = qsTr("Lash's units gain +%0% firepower and +%1% defence. Their movements are unhindered by terrain.");
+        text = replaceTextArgs(text, [CO_LASH.powerOffBonus, CO_LASH.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -280,8 +282,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Terrain stars get multiplied by %0. Additionally, all units movements are unhindered by terrain.");
-        text = replaceTextArgs(text, [CO_LASH.superPowerTerrainDefenseModifier + 1]);
+        var text = qsTr("Terrain stars are multiplied by %0 for all of Lash's units. They gain +%1% firepower and +%2% defence, and their movements are unhindered by terrain.");
+        text = replaceTextArgs(text, [CO_LASH.superPowerTerrainDefenseModifier + 1, CO_LASH.powerOffBonus, CO_LASH.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -290,9 +292,9 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Ooh!  You're so annoying!  I'm gonna have to get rid of you now!"),
+        return [qsTr("Ooh! You're so annoying! I'm gonna have to get rid of you now!"),
                 qsTr("You're no fun... I don't like you at all!"),
-                qsTr("I've had enough!  I'm bored now!"),
+                qsTr("I've had enough! I'm bored now!"),
                 qsTr("Oooo, you're driving me nuts!"),
                 qsTr("You want to match wits with me? You're so silly!"),
                 qsTr("Tee hee! C'mon! Let's play!")];

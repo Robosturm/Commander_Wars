@@ -184,7 +184,7 @@ var Constructor = function()
                 {
                     return CO_RATTIGAN.superPowerOffBonus + count * CO_RATTIGAN.powerMultiplier;
                 }
-                return CO_RATTIGAN.superPowerOffBonus;
+                return CO_RATTIGAN.powerBaseOffBonus;
             case GameEnums.PowerMode_Power:
                 if (count > 0)
                 {
@@ -289,8 +289,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_AUTO_TANK"];
             }
@@ -301,7 +302,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A dutiful CO of the Yellow Comet army addled by a childhood phobia. Blames Sensei for Yellow Comet's lack of former glory.");
+        return qsTr("A dutiful CO of the Yellow Comet Army addled by a childhood phobia. Blames Sensei for Yellow Comet's lack of former glory.");
     };
     this.getHits = function(co)
     {
@@ -318,15 +319,15 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
-               qsTr("\nGlobal Effect: \nUnits have increased firepower against large regiments of units by %0% and reduced firepower by %1% against lone units.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %2% against large regiments of units.");
-        text = replaceTextArgs(text, [CO_RATTIGAN.d2dOffBonus, CO_RATTIGAN.d2dOffMalus ,CO_RATTIGAN.d2dCoZoneOffBonus]);
+               qsTr("\nGlobal Effect: \nRattigan's units gain +%0% firepower when engaging enemies that have another enemy unit within a 2-space range. They have %1% firepower against enemy units that are otherwise alone.") +
+               qsTr("\n\nCO Zone Effect: \nRattigan's units gain +%2% firepower when engaging enemies that have another enemy unit within a 2-space range. They have +%3% firepower against enemy units that are otherwise alone. All of his units gain +%4% defence.");
+		text = replaceTextArgs(text, [CO_RATTIGAN.d2dOffBonus, CO_RATTIGAN.d2dOffMalus, CO_RATTIGAN.d2dCoZoneOffBonus, CO_RATTIGAN.d2dCoZoneOffMalus, CO_RATTIGAN.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Receives a %0% firepower boost and gain %1% per nearby enemy unit. Movement is increased by %2 space.");
-        text = replaceTextArgs(text, [CO_RATTIGAN.powerOffBonus, CO_RATTIGAN.powerMultiplier, CO_RATTIGAN.powerMovementPoints]);
+        var text = qsTr("Rattigan's units gain +%0 movement and +%2% defence. When attacking enemy units that are not alone, they gain +%3% firepower plus an extra +%4% firepower for each enemy unit within a 2-space radius. Otherwise, they gain +%1% firepower.");
+		text = replaceTextArgs(text, [CO_RATTIGAN.powerMovementPoints, CO_RATTIGAN.powerBaseOffBonus, CO_RATTIGAN.powerBaseDefBonus, CO_RATTIGAN.powerOffBonus, CO_RATTIGAN.powerMultiplier]);
         return text;
     };
     this.getPowerName = function(co)
@@ -335,8 +336,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Receives a %0% firepower boost and %1% defense boost and gain %2% per nearby enemy unit. Enemy units suffer %3 HP of damage.");
-        text = replaceTextArgs(text, [CO_RATTIGAN.superPowerOffBonus, CO_RATTIGAN.superPowerDefBonus, CO_RATTIGAN.powerMultiplier, CO_RATTIGAN.superPowerDamage]);
+		var text = qsTr("Rattigan calls in a surprise attack that deals -%0 HP of damage to all enemy units. When attacking enemy units that are not alone, Rattigan's units gain +%1% defence, +%2% firepower, and an extra +%3% firepower for each enemy unit within a 2-space radius. Otherwise, they gain +%4% firepower and +%5% defence.");
+		text = replaceTextArgs(text, [CO_RATTIGAN.superPowerDamage, CO_RATTIGAN.superPowerDefBonus, CO_RATTIGAN.superPowerOffBonus, CO_RATTIGAN.powerMultiplier, CO_RATTIGAN.powerBaseOffBonus, CO_RATTIGAN.powerBaseDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -345,23 +346,23 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("All those enemy men... heh, perfect!"),
+        return [qsTr("All those enemy troops... heh, perfect!"),
                 qsTr("G-gah! They're everywhere!"),
                 qsTr("Hrumph! This'll learn yeh!"),
                 qsTr("Heh, could Sensei do THIS?"),
                 qsTr("Who the heck taught you to fight?"),
-                qsTr("Stay on your toes! I'm talking to you!!")];
+                qsTr("Stay on your toes! I'm talking to you!")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("With all of those troops, you'd think they'd last longer..."),
-                qsTr("A-aughk!! Uhm… I mean… congratulations, men."),
+                qsTr("A-aughk!! Uhm... I mean... Congratulations, men."),
                 qsTr("With Yellow Comet on the line, I can't lose.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("What? You had enough troops..."),
-                qsTr("Sensei that's your fault!")];
+        return [qsTr("What? You had more than enough troops..."),
+                qsTr("Sensei! This is all your fault!")];
     };
     this.getName = function()
     {

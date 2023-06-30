@@ -280,8 +280,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_INTEL_TRUCK"];
             }
@@ -296,28 +297,28 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("Precise Information");
+        return qsTr("Precise information");
     };
     this.getMiss = function(co)
     {
-        return qsTr("Unknown Variables");
+        return qsTr("Unknown variables");
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Conrad is so focused on being precise that it leaves no room for lucky strikes and units have weaker counter strength. However, units are good at assisting one another with information.");
+        return qsTr("Conrad is so focused on being precise that it leaves no room for lucky strikes and his units have weaker counter strength. However, units are good at assisting one another with information.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
-               qsTr("\nGlobal Effect: \nConrad's units gain %0% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain. Counter attacks are %1% weaker and units deal always average luck damage.") +
-               qsTr("\n\nCO Zone Effect: \nConrad's units gain %2% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain.");
-        text = replaceTextArgs(text, [CO_CONRAD.d2dVisionMultiplier, CO_CONRAD.d2dCounterDamageBonus, CO_CONRAD.d2dCoZoneVisionMultiplier]);
+               qsTr("\nGlobal Effect: \nConrad's units gain +%0% firepower when attacking an enemy unit for each of his own units that can see it, which includes enhanced vision from terrain. His units always deal average luck damage and their counterattacks are %1% weaker.") +
+               qsTr("\n\nCO Zone Effect: \nConrad's units gain +%3% firepower and +%4% defence. They also gain an additional +%2% firepower when attacking an enemy unit for each of his own units that can see it, which includes enhanced vision from terrain.");
+        text = replaceTextArgs(text, [CO_CONRAD.d2dVisionMultiplier, CO_CONRAD.d2dCounterDamageBonus, CO_CONRAD.d2dCoZoneVisionMultiplier, CO_CONRAD.d2dCoZoneOffBonus, CO_CONRAD.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Unit vision is extended by %0. Conrad's units gain %1% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain.");
-        text = replaceTextArgs(text, [CO_CONRAD.powerBonusVisionRange, CO_CONRAD.powerVisionMultiplier]);
+        var text = qsTr("All of Conrad's units gain +%0 vision, +%2% firepower, and +%3% defence. They also gain an additional +%1% firepower when attacking an enemy unit for each of his own units that can see it, which includes enhanced vision from terrain.");
+        text = replaceTextArgs(text, [CO_CONRAD.powerBonusVisionRange, CO_CONRAD.powerVisionMultiplier, CO_CONRAD.powerOffBonus, CO_CONRAD.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -326,8 +327,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Conrad's very first attack of the turn deals +%0% luck damage. For the entire turn, all percent damage that exceeds the enemy's current health is carried over to the next engagement. Conrad's units gain %1% firepower when attacking an enemy unit for each own unit which can see it, including enhanced vision from terrain.");
-        text = replaceTextArgs(text, [CO_CONRAD.superPowerBonusLuckDamage, CO_CONRAD.powerVisionMultiplier]);
+        var text = qsTr("Conrad's next attack this turn deals +%0% luck damage. For the rest of the turn, all combat damage that exceeds the enemy's current health is carried over to the next engagement. Conrad's units gain +%2% firepower and +%3% defence. They also gain an additional +%1% firepower when attacking an enemy unit for each of his own units that can see it, which includes enhanced vision from terrain.");
+        text = replaceTextArgs(text, [CO_CONRAD.superPowerBonusLuckDamage, CO_CONRAD.powerVisionMultiplier, CO_CONRAD.powerOffBonus, CO_CONRAD.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -336,7 +337,7 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("You might be more experienced, but that doesn't mean I can't teach you a thing or two!"),
+        return [qsTr("You might be more experienced, but I'll still teach you a thing or two!"),
                 qsTr("I won't go down that easily! This battle isn't even close to being finished!"),
                 qsTr("You have a 0.1% chance of surviving this battle with me."),
                 qsTr("My attack plan is perfect! I don't need luck!"),
@@ -347,12 +348,12 @@ var Constructor = function()
     {
         return [qsTr("Solid tactics get solid results!"),
                 qsTr("That was as easy as I expected it to be. Numbers don't lie."),
-                qsTr("Either I'm getting better, or you guys are getting worse!")];
+                qsTr("Either I'm getting better, or you guys are getting far worse!")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("I obviously have more to learn."),
-                qsTr("Dis I miscalculate?... Impossible!")];
+                qsTr("Did I miscalculate...? Impossible!")];
     };
     this.getName = function()
     {

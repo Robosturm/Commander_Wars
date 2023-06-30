@@ -248,8 +248,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_ROYAL_GUARD"];
             }
@@ -271,23 +272,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Peter's units plow through enemy direct-combat units with ease. However, thicker terrain weakens his attacks.");
+        return qsTr("Peter's units hit enemy direct-combat units harder. However, enemies in thicker terrain resist his attacks.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRoyal Guard\n") +
-                   qsTr("\nGlobal Effect: \nDirect Units have %0 increased firepower and loose additional %1 firepower per terrain star.") +
-                   qsTr("\n\nCO Zone Effect: \nDirect Units have %0 increased firepower and loose additional %1 firepower per terrain star.");
-        text = replaceTextArgs(text, [CO_PETER.d2dOffBonus, CO_PETER.d2dTerrainMalus,
-                                      CO_PETER.d2dCoZoneOffBonus, CO_PETER.d2dTerrainMalus]);
-
-
+                   qsTr("\nGlobal Effect: \nPeter's units gain +%0% firepower against enemy direct units. Peter's units lose -%1% firepower for each terrain star the enemy has.") +
+                   qsTr("\n\nCO Zone Effect: \nPeter's units gain +%3% firepower and +%4% defence. They gain an additional +%2% firepower against enemy direct units.");
+		text = replaceTextArgs(text, [CO_PETER.d2dOffBonus, CO_PETER.d2dTerrainMalus, CO_PETER.d2dCoZoneOffBonus, CO_PETER.d2dCoZoneBaseOffBonus, CO_PETER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Firepower is greatly increased against enemy direct-combat units by %0%.");
-        text = replaceTextArgs(text, [CO_PETER.powerOffBonus]);
+		var text = qsTr("Peter's units gain +%0% firepower and +%1% defence. They gain an additional +%2% firepower against enemy direct units.");
+		text = replaceTextArgs(text, [CO_PETER.powerBaseOffBonus, CO_PETER.powerDefBonus, CO_PETER.powerOffBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -296,8 +294,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Enemy units not on a property suffer %0 HP of damage. Firepower is greatly increased against enemy direct-combat units by %1%.");
-        text = replaceTextArgs(text, [CO_PETER.superPowerDamage, CO_PETER.superPowerOffBonus]);
+        var text = qsTr("Peter commands an assault that deals -%0 HP of damage to all enemy units not on a property. His units gain +%1% firepower and +%2% defence. They gain an additional +%3% firepower against enemy direct units.");
+		text = replaceTextArgs(text, [CO_PETER.superPowerDamage, CO_PETER.powerBaseOffBonus, CO_PETER.powerDefBonus, CO_PETER.superPowerOffBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -311,7 +309,7 @@ var Constructor = function()
                 qsTr("It's time to tear through their tanks."),
                 qsTr("Bogged down? Me? Ha! You seriously overestimate yourself."),
                 qsTr("I've been down there with the grunts... I know what's feasible and what's not."),
-                qsTr("I may not be unbeatable, but you're obviously not either.")];
+                qsTr("I may not be unbeatable, but what you've got is pathetic.")];
     };
     this.getVictorySentences = function(co)
     {
@@ -322,7 +320,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Your tanks were better than mine."),
-                qsTr("You're never to old to learn some new moves.")];
+                qsTr("You're never too old to learn some new moves.")];
     };
     this.getName = function()
     {

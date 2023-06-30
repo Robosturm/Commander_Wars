@@ -183,8 +183,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_CRYSTAL_TANK"];
             }
@@ -198,7 +199,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Mastermind of the Omega war. Immortal Evil");
+        return qsTr("Former commander-in-chief of the Bolt Guard forces. A mysterious old man who has been alive for a very, very long time. Mastermind of the Omega war.");
     };
     this.getHits = function(co)
     {
@@ -210,18 +211,18 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("All units have superior firepower and defense.");
+        return qsTr("His CO-Zone is more potent than most.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect:\nFirepower is increased by %0% and defence by %1%.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %2% and increased defense by %3%.");
+        var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect:\nVon Bolt's units have +%0% firepower and +%1% defence.") +
+               qsTr("\n\nCO Zone Effect: \nVon Bolt's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_VON_BOLT.d2dOffBonus, CO_VON_BOLT.d2dDefBonus, CO_VON_BOLT.d2dCoZoneOffBonus, CO_VON_BOLT.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Fires shock waves that disables electrical systems and all forces in range of %0 become paralyzed. Affected units suffer %1 HP of damage. Firepower rises by %2% and defense %3%.");
+        var text = qsTr("Fires a small shock wave, targeting the largest accumulation of enemy funds in a %0-space radius, dealing -%1 HP of damage to all affected units. Affected units are paralyzed and cannot move on their next turn. Von Bolt's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_VON_BOLT.powerRange, CO_VON_BOLT.powerDamage, CO_VON_BOLT.powerOffBonus, CO_VON_BOLT.powerDefBonus]);
         return text;
     };
@@ -231,7 +232,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Fires shock waves that disables electrical systems and all forces in rangeof %0 become paralyzed. Affected units suffer %1 HP of damage.  Firepower rises by %2% and defense %3%.");
+        var text = qsTr("Fires a massive laser array, targeting the largest accumulation of enemy funds in a %0-space radius, dealing -%1 HP of damage to all affected units. Affected units are paralyzed and cannot move on their next turn. Von Bolt's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_VON_BOLT.superPowerRange, CO_VON_BOLT.superPowerDamage, CO_VON_BOLT.powerOffBonus, CO_VON_BOLT.powerDefBonus]);
         return text;
     };
@@ -243,21 +244,21 @@ var Constructor = function()
     {
         return [qsTr("No matter how powerful...hhh...you are, you're...hhh...still a worm on a hook..."),
                 qsTr("Well...hhh...let me have a taste...hhh...of your soul."),
-                qsTr("Hheh heh heh... Stop panicking... it's...hhh...almost over..."),
-                qsTr("Hheh heh heh. The darkness rises..."),
+                qsTr("Heh heh heh... Stop panicking... it's...hhh...almost over..."),
+                qsTr("Heh heh heh... The darkness rises."),
                 qsTr("The sweet scent of destruction...hhh...it makes me...hhh...feel young!"),
-                qsTr("Hold still...hhh...I'm going to...hhhhh...suck the marrow from your bones.")];
+                qsTr("Hold still...hhh...I'm going to...hhh...suck the marrow from your bones.")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Predator...prey...hhh... I hunt them all..."),
-                qsTr("Hehh hhh hhh... Pathetic."),
+        return [qsTr("Predator...prey...hhh...I hunt them all..."),
+                qsTr("Heh heh heh... Pathetic."),
                 qsTr("Even death...hhh...fears me...")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("What? Why are you Youth so strong?"),
-                qsTr("Nooo...I want to live forever.")];
+        return [qsTr("What? Why are you...hhh...youth so strong?"),
+                qsTr("Nooo...hhh...I want to...hhh...live forever...")];
     };
     this.getName = function()
     {

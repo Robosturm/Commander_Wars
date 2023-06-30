@@ -217,8 +217,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_ROYAL_GUARD"];
             }
@@ -241,19 +242,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("All units have high offensive and defensive capabilities, but are expensive to deploy.");
+        return qsTr("All of his units have high offensive and defensive capabilities, but are expensive to deploy.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRoyal Guard\n") +
-                qsTr("\nGlobal Effect: \nUnits have %0% stronger firepower and defense, but are %1% more expensive.") +
-                qsTr("\n\nCO Zone Effect: \nUnits have %2% stronger firepower and defense.");
+                qsTr("\nGlobal Effect: \nKanbei's units gain +%0% firepower, +%0% defence, and have a +%1% increase in deployment costs.") +
+                qsTr("\n\nCO Zone Effect: \nKanbei's units gain +%2% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_KANBEI.d2dBonus, CO_KANBEI.d2dCostIncrease , CO_KANBEI.d2dcoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Increases firepower to %0% and defence to %0% of all units.");
+        var text = qsTr("Kanbei's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_KANBEI.powerOffBonus, CO_KANBEI.powerDefBonus]);
         return text;
     };
@@ -263,7 +264,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text =  qsTr("Greatly strengthens offensive to %0% and defensive to %1% of all units  and counter attacks are %2% stronger.");
+        var text =  qsTr("Kanbei's units gain +%0% firepower and +%1% defence. Their counterattacks gain a ridiculous +%2% firepower.");
         text = replaceTextArgs(text, [CO_KANBEI.superPowerOffBonus, CO_KANBEI.superPowerDefBonus, CO_KANBEI.superPowerCounterBonus]);
         return text;
     };
@@ -274,10 +275,10 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Who shall taste my wrath?"),
-                qsTr("Observe the heart of a true Samurai."),
-                qsTr("Your numbers mean nothing!  Nothing can stop me!"),
-                qsTr("My mind is honed for battle.  That is the essence of a samurai!"),
-                qsTr("True Samurai don't know the meaning of retreat."),
+                qsTr("Observe the heart of a true samurai."),
+                qsTr("Your numbers mean nothing! Nothing can stop me!"),
+                qsTr("My mind is honed for battle. That is the essence of a samurai!"),
+                qsTr("True samurai don't know the meaning of retreat."),
                 qsTr("I hope you thoroughly enjoy the taste of my sword!")];
     };
     this.getVictorySentences = function(co)

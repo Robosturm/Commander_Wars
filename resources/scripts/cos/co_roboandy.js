@@ -233,7 +233,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        defender.setHp(0.00001);
+                        defender.setHp(0.01);
                     }
                 }
                 else if (gotAttacked && defender.getOwner() === co.getOwner() && defender.getHp() <= 0)
@@ -245,7 +245,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        attacker.setHp(0.00001);
+                        attacker.setHp(0.01);
                     }
                 }
             }
@@ -261,8 +261,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_AT_CYCLE"];
             }
@@ -273,11 +274,11 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.");
+        return qsTr("Lash was asked by the Black Hole Army to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers, so she fixed the problem by putting it in an experimental duplicate of Andy from Orange Star.");
     };
     this.getHits = function(co)
     {
-        return qsTr("Puppet Shows");
+        return qsTr("Puppet shows");
     };
     this.getMiss = function(co)
     {
@@ -285,20 +286,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("He gets firepower for his powermeter, but his firepower may also drop drastically.");
+        return qsTr("His units gain firepower for his power meter, but he also gains misfortune the more power charge he has.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
-               qsTr("\nGlobal Effect: \nUnits gain %0% firepower and %1% misfortune per star.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain %2% firepower and %3% misfortune per star.");
-        text = replaceTextArgs(text, [CO_ROBOANDY.d2dOffBonus, CO_ROBOANDY.d2dOffMissfortuneBonus, CO_ROBOANDY.d2dCoZoneOffBonus, CO_ROBOANDY.d2dCoZoneMissfortuneBonus]);
+               qsTr("\nGlobal Effect: \nRobo-Andy's units gain +%0% firepower and +%1 misfortune per CO Power charge star.") +
+               qsTr("\n\nCO Zone Effect: \nRobo-Andy's units gain +%2% firepower and +%3% defence. They gain an additional +%4% firepower and +%5 misfortune per CO Power charge star.");
+        text = replaceTextArgs(text, [CO_ROBOANDY.d2dOffBonus, CO_ROBOANDY.d2dOffMissfortuneBonus, CO_ROBOANDY.d2dCoZoneOffBaseBonus, CO_ROBOANDY.d2dCoZoneDefBonus, CO_ROBOANDY.d2dCoZoneOffBonus, CO_ROBOANDY.d2dCoZoneMissfortuneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("His units heal %0 HP after any attack or counter-attack, and deal %1 HP damage to the offender if they are destroyed.");
-        text = replaceTextArgs(text, [CO_ROBOANDY.powerHeal, CO_ROBOANDY.powerDamage]);
+        var text = qsTr("Robo-Andy's units gain +%0% firepower and +%1% defence. His units heal +%2 HP after any attack or counterattack, and deal -%3 HP of damage to their attacker if they are destroyed.");
+        text = replaceTextArgs(text, [CO_ROBOANDY.powerOffBonus, CO_ROBOANDY.powerDefBonus, CO_ROBOANDY.powerHeal, CO_ROBOANDY.powerDamage]);
         return text;
     };
     this.getPowerName = function(co)
@@ -307,8 +308,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("His units heal %0 HP after any attack or counter-attack, and deal %1 HP damage to the offender if they are destroyed.");
-        text = replaceTextArgs(text, [CO_ROBOANDY.superPowerHeal, CO_ROBOANDY.superPowerDamage]);
+        var text = qsTr("Robo-Andy's units gain +%0% firepower and +%1% defence. His units heal +%2 HP after any attack or counterattack, and deal -%3 HP of damage to their attacker if they are destroyed.");
+        text = replaceTextArgs(text, [CO_ROBOANDY.powerOffBonus, CO_ROBOANDY.powerDefBonus, CO_ROBOANDY.superPowerHeal, CO_ROBOANDY.superPowerDamage]);
         return text;
     };
     this.getSuperPowerName = function(co)

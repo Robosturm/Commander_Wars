@@ -217,8 +217,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_CRYSTAL_TANK"];
             }
@@ -232,7 +233,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A former Yellow Comet CO that started a rebellion, when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.");
+        return qsTr("A former Yellow Comet CO that started a rebellion when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.");
     };
     this.getHits = function(co)
     {
@@ -248,15 +249,15 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nUnits have %0% lifesteal.") +
-            qsTr("\n\nCO Zone Effect: \nUnits have %1% lifesteal.");
-        text = replaceTextArgs(text, [CO_SABAKI.d2dHeal * 100, CO_SABAKI.d2dCoZoneHeal * 100]);
+        var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nSabaki's units restore %0% of the damage they deal to their own HP.") +
+            qsTr("\n\nCO Zone Effect: \nSabaki's units gain +%1% firepower, +%2% defence, and restore %3% of the damage they deal to their own HP.");
+        text = replaceTextArgs(text, [CO_SABAKI.d2dHeal * 100, CO_SABAKI.d2dCoZoneOffBonus, CO_SABAKI.d2dCoZoneDefBonus, CO_SABAKI.d2dCoZoneHeal * 100]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Units have %0% lifesteal.");
-        text = replaceTextArgs(text, [CO_SABAKI.powerHeal * 100]);
+        var text = qsTr("Sabaki's units gain +%0% firepower, +%1% defence, and restore %2% of the damage they deal to their own HP.");
+        text = replaceTextArgs(text, [CO_SABAKI.powerOffBonus, CO_SABAKI.powerDefBonus, CO_SABAKI.powerHeal * 100]);
         return text;
     };
     this.getPowerName = function(co)
@@ -265,8 +266,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Units have %0% lifesteal.");
-        text = replaceTextArgs(text, [CO_SABAKI.superPowerHeal * 100]);
+        var text = qsTr("Sabaki's units gain +%0% firepower, +%1% defence, and restore %2% of the damage they deal to their own HP.");
+        text = replaceTextArgs(text, [CO_SABAKI.powerOffBonus, CO_SABAKI.powerDefBonus, CO_SABAKI.superPowerHeal * 100]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -285,13 +286,13 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("My army acts like a well-oiled machine."),
-				qsTr("Nothing's more satisfying than killing an enemy with their own gun."),
+				qsTr("Nothing's more satisfying than defeating an enemy with their own guns."),
 				qsTr("Your army just fell apart out there.")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("The revolution isn't over."),
-				qsTr("Even by healing my troops.. I couldn't win.")];
+				qsTr("Even by healing my troops... I couldn't win.")];
     };
     this.getName = function()
     {

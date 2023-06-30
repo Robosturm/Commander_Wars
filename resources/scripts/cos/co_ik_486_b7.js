@@ -283,8 +283,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_CHAPERON"];
             }
@@ -295,7 +296,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("One of Lash latest invented robots. He likes to stay at the same place and defend it against anything that comes to him.");
+        return qsTr("One of Lash's latest inventions. He likes to stay at the same place and defend it against anything that comes to him.");
     };
     this.getHits = function(co)
     {
@@ -307,21 +308,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("His direct units can do indirect attacks when they don't move. However they lose a fraction of firepower when doing so.");
+        return qsTr("His direct units can do indirect attacks when they don't move. However, they lose a fraction of firepower when doing so.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nChaperon\n") +
-               qsTr("\nGlobal Effect: \nDirect Units gain an additional firerange of %0 when they don't move. However firepower is reduced by %1% in doing so.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Units gain an additional firerange of %2 when they don't move. However firepower is reduced by %3% in doing so.");
+               qsTr("\nGlobal Effect: \nIK-486-B7's direct units gain +%0 range when they don't move. They have -%1% firepower when making an indirect attack.") +
+               qsTr("\n\nCO Zone Effect: \nIK-486-B7's units gain +%4% firepower and +%5% defence. His direct units gain +%2 range when they don't move and have a total of %3% firepower when making an indirect attack.");
         text = replaceTextArgs(text, [CO_IK_486_B7.d2dFirerangeBonus, CO_IK_486_B7.d2dOffMalus,
-                                      CO_IK_486_B7.d2dCoZoneFirerangeBonus, CO_IK_486_B7.d2dCoZoneOffMalus]);
+                                      CO_IK_486_B7.d2dCoZoneFirerangeBonus, CO_IK_486_B7.d2dCoZoneOffMalus, CO_IK_486_B7.d2dCoZoneOffBonus, CO_IK_486_B7.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("The defense of his direct units raises by %0 and their firerange is increased by %1% when they don't move and firepower is reduced by %2%");
-        text = replaceTextArgs(text, [CO_IK_486_B7.powerDirectDefBonus, CO_IK_486_B7.powerFirerangeBonus, CO_IK_486_B7.powerOffMalus]);
+        var text = qsTr("IK-486-B7's direct units gain +%3% firepower and +%0% defence. They gain +%1 range when they don't move and have a total of -%2% firepower when making an indirect attack. His other units gain +%3% firepower and +%4% defence.");
+        text = replaceTextArgs(text, [CO_IK_486_B7.powerDirectDefBonus, CO_IK_486_B7.powerFirerangeBonus, CO_IK_486_B7.powerOffMalus, CO_IK_486_B7.powerOffBonus, CO_IK_486_B7.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -330,8 +331,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("The defense of his direct units raises by %0 and their firerange is increased by %1% when they don't move and firepower is reduced by %2%");
-        text = replaceTextArgs(text, [CO_IK_486_B7.superPowerDirectDefBonus, CO_IK_486_B7.superPowerFirerangeBonus, CO_IK_486_B7.superPowerOffMalus]);
+        var text = qsTr("IK-486-B7's direct units gain +%3% firepower and +%0% defence. They gain +%1 range when they don't move and have a total of -%2% firepower when making an indirect attack. His other units gain +%3% firepower and +%4% defence.");
+        text = replaceTextArgs(text, [CO_IK_486_B7.superPowerDirectDefBonus, CO_IK_486_B7.superPowerFirerangeBonus, CO_IK_486_B7.superPowerOffMalus, CO_IK_486_B7.powerOffBonus, CO_IK_486_B7.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -341,22 +342,20 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Direct attack!"),
-                qsTr("Function attacking not found use function defending instead!"),
+                qsTr("Attacking protocol not found. Reverting to defensive function."),
                 qsTr("My fortress is unbeatable."),
-                qsTr("Make ready to defend yourself!"),
-                qsTr("You are too near to my defence position."),
-                qsTr("Go to the shortage other their.")];
+                qsTr("Defend yourself!"),
+                qsTr("You are too close.")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Fools don't attack my fortress."),
-                qsTr("Robots rule the world."),
-                qsTr("Do function 'Be Happy'")];
+        return [qsTr("Fools. Don't attack my fortress."),
+                qsTr("Robots rule the world.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("You have destroyed my fortress?"),
-                qsTr("Tilt! Tilt! Selfdestruction...")];
+        return [qsTr("You destroyed my fortress?! How?"),
+                qsTr("Tilt! Tilt! Selfdestruction imminent...")];
     };
     this.getName = function()
     {

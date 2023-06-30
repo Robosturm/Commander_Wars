@@ -181,22 +181,22 @@ var Constructor = function()
     };
     this.getMiss = function(co)
     {
-        return qsTr("Stupid weak people");
+        return qsTr("Stupid, weak people");
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Her co unit is strong, weak outside of that she gets no bonuses.");
+        return qsTr("Her CO unit is very strong, however her CO-Zone range is tiny.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits have %0% increased firepower and %1% increased  defense.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %2% increased firepower and %3% increased  defense.");
+        var text = qsTr("\nGlobal Effect: \nTabitha's units have +%0% firepower and +%1% defence.") +
+               qsTr("\n\nCO Zone Effect: \nTabitha's units gain +%2% firepower and +%3% defence");
         text = replaceTextArgs(text, [CO_TABITHA.d2dOffBonus, CO_TABITHA.d2dDefBonus, CO_TABITHA.d2dCoZoneDefBonus, CO_TABITHA.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("A small attack from the great owl that deals %0 HP of damage to all affected units. Also increases the firepower of all units by %1% and defense by %2%.");
+        var text = qsTr("A small attack from the Great Owl targets the largest accumulation of enemy funds in a 2-space radius, which deals -%0 HP of damage to all affected units. Tabitha's units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_TABITHA.powerDamage, CO_TABITHA.powerOffBonus, CO_TABITHA.powerDefBonus]);
         return text;
     };
@@ -206,7 +206,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("A small attack from the great owl that deals %0 HP of damage to all affected units. Also increases the firepower of all units by %1% and defense by %2%.");
+        var text = qsTr("An attack from the Great Owl targets the largest accumulation of enemy funds in a 2-space radius, which deals -%0 HP of damage to all affected units. Tabitha's units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_TABITHA.superPowerDamage, CO_TABITHA.superPowerOffBonus, CO_TABITHA.superPowerDefBonus]);
         return text;
     };
@@ -218,7 +218,7 @@ var Constructor = function()
     {
         return [qsTr("Input enemy's coordinates... And now let's enjoy the show!"),
                 qsTr("Isn't this so much fun?"),
-                qsTr("I hope you don't think i'm picking on you."),
+                qsTr("I hope you don't think I'm only picking on you."),
                 qsTr("Can you really be this weak? At least try to put up a fight.")];
     };
     this.getVictorySentences = function(co)
@@ -229,8 +229,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("I'm not stronger?"),
-                qsTr("I had no breakfast that's the problem.")];
+        return [qsTr("I'm not... stronger?"),
+                qsTr("I had no breakfast! That was the problem.")];
     };
     this.getName = function()
     {

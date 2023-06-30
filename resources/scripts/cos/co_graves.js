@@ -235,31 +235,33 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A former assassin dissatisfied with where Wars World is headed. Secretly aids Hawke's cause and overtly aids Dark Matter. No one knows where his true loyalties lie.");
+        return qsTr("A former assassin, dissatisfied with where Wars World is headed. Secretly aids Hawke's cause and overtly aids Dark Matter. No one knows where his true loyalties lie.");
     };
     this.getHits = function(co)
     {
-        return qsTr("Mystery Novels");
+        return qsTr("Mystery novels");
     };
     this.getMiss = function(co)
     {
-        return qsTr("Romance Novels");
+        return qsTr("Romance novels");
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Enemy units reduced to %0 or less HP by Graves' units become paralyzed.");
+        var text = qsTr("Enemy units reduced to %0 or less HP by Graves' units become paralyzed and cannot move on their next turn.");
+		text = replaceTextArgs(text, [CO_GRAVES.d2dStunLevel]);
+        return text;
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nEnemy units reduced to %0 or less HP by Graves' units become paralyzed.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %1% more offensive and %2% defensive bonus.");
+        var text = qsTr("\nGlobal Effect: \nEnemy units reduced to %0 or less HP by Graves' units become paralyzed and cannot move on their next turn.") +
+               qsTr("\n\nCO Zone Effect: \nGraves' units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_GRAVES.d2dStunLevel, CO_GRAVES.d2dCoZoneOffBonus, CO_GRAVES.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Enemy units suffer %0 HP of damage. Enemy units with %1 or less HP become paralyzed.");
-        text = replaceTextArgs(text, [CO_GRAVES.powerDamage, CO_GRAVES.powerStunLevel]);
+        var text = qsTr("Enemy units suffer -%0 HP of damage. Graves' units gain +%1% firepower and +%2% defence. For the rest of the turn, any enemy units reduced to %3 or less HP will become paralyzed and cannot move on their next turn.");
+        text = replaceTextArgs(text, [CO_GRAVES.powerDamage, CO_GRAVES.powerOffBonus, CO_GRAVES.powerDefBonus, CO_GRAVES.powerStunLevel]);
         return text;
     };
     this.getPowerName = function(co)
@@ -268,8 +270,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Enemy units suffer %0 HP of damage. Enemy units with %1 or less HP become paralyzed.");
-        text = replaceTextArgs(text, [CO_GRAVES.superPowerDamage, CO_GRAVES.superPowerStunLevel]);
+        var text = qsTr("Enemy units suffer -%0 HP of damage. Graves' units gain +%1% firepower and +%2% defence. For the rest of the turn, any enemy units reduced to %3 or less HP will become paralyzed and cannot move on their next turn.");
+        text = replaceTextArgs(text, [CO_GRAVES.superPowerDamage, CO_GRAVES.powerOffBonus, CO_GRAVES.powerDefBonus, CO_GRAVES.superPowerStunLevel]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -282,19 +284,19 @@ var Constructor = function()
                 qsTr("Do you desire death that greatly?"),
                 qsTr("You must give everything if you want to win."),
                 qsTr("You are ill prepared to face me."),
-                qsTr("A valiant effort. But futile, nonetheless."),
+                qsTr("A valiant effort, but futile nonetheless."),
                 qsTr("Prepare yourself.")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("That was it? ...I overestimated you."),
-                qsTr("Such a victory was... so rudely forced"),
+        return [qsTr("That was it? I overestimated you."),
+                qsTr("Such a victory was... so rudely forced."),
                 qsTr("Lives could have been spared had you just accepted your fate.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Not planned but still not the end."),
-                qsTr("It seems that i underestimate your strength.")];
+        return [qsTr("Not as planned, but still not the end."),
+                qsTr("It seems that I underestimated your strength.")];
     };
     this.getName = function()
     {

@@ -234,23 +234,23 @@ var Constructor = function()
     };
     this.getMiss = function(co)
     {
-        return qsTr("Broken \"Toys\"");
+        return qsTr("Broken \"toys\"");
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Her troops are immune to all weather effects");
+        return qsTr("Her troops are immune to all weather effects.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nHer troops are immune to all weather effects." +
-                        "\n\nCO Zone Effect: \n%0% increased firepower and %1% defense.");
+        var text = qsTr("\nGlobal Effect: \nPenny's units are immune to all weather effects." +
+                        "\n\nCO Zone Effect: \nPenny's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_PENNY.d2dCoZoneOffBonus, CO_PENNY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Changes the weather to a random one for %0 days.");
-        text = replaceTextArgs(text, [CO_PENNY.powerDayChanges]);
+        var text = qsTr("Changes the weather to a random one for %0 days. Penny's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_PENNY.powerDayChanges, CO_PENNY.powerOffBonus, CO_PENNY.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -259,13 +259,13 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Changes the weather to a random for %4 days and she gets a firepower boost for this turn.\n" +
-                    "During rain she gets additionally %0 improved vision.\n" +
-                    "During mist she gets additionally %1 improved vision.\n" +
-                    "During snow she gets additionally %2 improved movement.\n" +
-                    "During sandstorm she gets additionally %3 improved firerange for her indirects.\n");
+        var text = qsTr("Changes the weather to a random for %4 days. Penny's units gain +%5% firepower and +%6% defence.\n" +
+                    "During Rain, Penny's units gain +%0 vision and can see into hidden locations.\n" +
+                    "During Mist, Penny's units gain +%1 vision and can see into hidden locations.\n" +
+                    "During Snow, Penny's units gain +%2 movement.\n" +
+                    "During a Sandstorm, Penny's indirect units gain +%3 range.\n");
         text = replaceTextArgs(text, [CO_PENNY.superPowerRainVisionBonus, CO_PENNY.superPowerMistVisionBonus,
-                                      CO_PENNY.superPowerMovementPointBonus, CO_PENNY.superPowerFirerangeModifier, CO_PENNY.powerDayChanges]);
+                                      CO_PENNY.superPowerMovementPointBonus, CO_PENNY.superPowerFirerangeModifier, CO_PENNY.powerDayChanges, CO_PENNY.superPowerOffBonus, CO_PENNY.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -275,7 +275,7 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Tee he he!!!"),
-                qsTr("Nice weather we're having"),
+                qsTr("Nice weather we're having!"),
                 qsTr("Giggle")];
     };
     this.getVictorySentences = function(co)
@@ -286,7 +286,7 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Mr. Bear we lost our toys."),
+        return [qsTr("Mr. Bear? We lost our toys..."),
                 qsTr("You don't get Mr. Bear. He's mine!")];
     };
     this.getName = function()

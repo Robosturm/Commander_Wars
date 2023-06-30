@@ -303,7 +303,7 @@ var Constructor = function()
             for (var i = 0; i < pointsX.length; i++)
             {
                 if (pointsX[i] === posX &&
-                        pointsX[i] === posX)
+                        pointsY[i] === posY)
                 {
                     // apply capture bonus and remove it from the list
                     applyBonus = true;
@@ -345,8 +345,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_AT_CYCLE"];
             }
@@ -357,7 +358,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A ruthless commander recruited into the Amber Corona army.");
+        return qsTr("A ruthless commander recruited into the Amber Corona Army.");
     };
     this.getHits = function(co)
     {
@@ -369,20 +370,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Attacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.");
+        return qsTr("Attacked enemy units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a one-time capture bonus for that property.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
-               qsTr("\nGlobal Effect: \nAttacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus of %0 for that property.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain firepower %1% and defense %2.");
-        text = replaceTextArgs(text, [CO_MARY.d2dCaptureBonus, CO_MARY.d2dCoZoneOffBonus, CO_MARY.d2dCoZoneDefBonus]);
+               qsTr("\nGlobal Effect: \nAttacked enemy units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a one-time capture bonus of +%0% for that property.") +
+               qsTr("\n\nCO Zone Effect: \nMary's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_MARY.d2dCaptureBonus*10, CO_MARY.d2dCoZoneOffBonus, CO_MARY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Deployment and repairs from properties are disabled and she gets an offensive bonus of %0%.");
-        text = replaceTextArgs(text, [CO_MARY.powerOffBonus]);
+        var text = qsTr("Enemy units cannot repair from properties on their next turn and enemies cannot deploy any units from properties. Mary's units gain +%0% firepower and +%1% defence.");
+        text = replaceTextArgs(text, [CO_MARY.powerOffBonus, CO_MARY.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -391,8 +392,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Terrain stars now reduces the foe's defense by %2% and Mary's capture bonus is greatly increased by %0. All units gain %1% firepower.");
-        text = replaceTextArgs(text, [CO_MARY.superPowerCaptureBonus ,CO_MARY.superPowerOffBonus, CO_MARY.superPowerDefenseReduction]);
+        var text = qsTr("Terrain stars will reduce enemy defence by -%2% per star. Mary's one-time capture bonus after destroying a unit on a property is increased to +%0% for this turn. Her units gain +%1% firepower and +%3% defence.");
+        text = replaceTextArgs(text, [CO_MARY.superPowerCaptureBonus*10,CO_MARY.superPowerOffBonus, CO_MARY.superPowerDefenseReduction, CO_MARY.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -401,23 +402,23 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Keep marching guys, the victory is close!"),
-                qsTr("No pain! NO GLORY!"),
-                qsTr("A drop of blood is a drop of effort...you must be proud of your troops."),
-                qsTr("People call me Bloody Mary....and no, you can't drink me."),
-                qsTr("We will fight until your last soldier is dead!"),
-                qsTr("I am a soldier, I fight where I am told, and I win where I fight.")];
+        return [qsTr("Keep marching on, soldiers, victory is close!"),
+                qsTr("No pain, NO GLORY!"),
+                qsTr("A drop of blood is a drop of effort... You must be proud of your troops."),
+                qsTr("People call me Bloody Mary.... and no, you can't drink me."),
+                qsTr("We will fight until every single one of your troops are no more!"),
+                qsTr("I am a soldier. I fight where I am told, and I win where I fight!")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Heh, looks like all my effort paid off in the end"),
+        return [qsTr("Hah! Looks like all my effort paid off in the end."),
                 qsTr("Let's go, people. Let's have a drink to celebrate this victory."),
-                qsTr("All right troops, now you can rest, your job here is done.")];
+                qsTr("All right troops, you can rest now. Your job here is done.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("You were better.... This time"),
-                qsTr("That is impossible. I need a drink now.")];
+        return [qsTr("You were better than me... this time."),
+                qsTr("There is no way I actually lost. I need a drink now.")];
     };
     this.getName = function()
     {

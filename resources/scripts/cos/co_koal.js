@@ -248,8 +248,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_HOT_TANK"];
             }
@@ -260,7 +261,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A commander of the Black Hole army who is always planning his next destructive act.Endless March");
+        return qsTr("A commander of the Bolt Guard Army who is always planning his next destructive act.");
     };
     this.getHits = function(co)
     {
@@ -272,20 +273,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("A master of road-based battles. Firepower of all units increased on roads.");
+        return qsTr("A master of road-based battles. Firepower of all his units are increased on roads.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
-               qsTr("\nGlobal Effect: \nUnits gain increased %0% firepower on street.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain increased %1% firepower on street.");
-        text = replaceTextArgs(text, [CO_KOAL.d2dOffBonus, CO_KOAL.d2dCoZoneOffBonus]);
+               qsTr("\nGlobal Effect: \nKoal's units gain +%0% firepower on streets and bridges.") +
+               qsTr("\n\nCO Zone Effect: \nKoal's units gain +%2% firepower and +%3% defence. They gain a total of +%1% firepower on streets and bridges.");
+        text = replaceTextArgs(text, [CO_KOAL.d2dOffBonus, CO_KOAL.d2dCoZoneOffBonus, CO_KOAL.d2dCoZoneBaseOffBonus, CO_KOAL.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Movement range for all units is increased by %0 space. Units have %1% more firepower on roads.");
-        text = replaceTextArgs(text, [CO_KOAL.powerMovementBonus, CO_KOAL.powerOffBonus]);
+        var text = qsTr("Koal's units gain +%0 movement, +%2% firepower, and +%3% defence. They gain a total of +%1% firepower on streets and bridges.");
+        text = replaceTextArgs(text, [CO_KOAL.powerMovementBonus, CO_KOAL.powerOffBonus, CO_KOAL.powerBaseOffBonus, CO_KOAL.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -294,8 +295,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Movement range for all units is increased by %0 space. Units have %1% more firepower on roads.");
-        text = replaceTextArgs(text, [CO_KOAL.superPowerMovementBonus, CO_KOAL.superPowerOffBonus]);
+        var text = qsTr("Koal's units gain +%0 movement, +%2% firepower, and +%3% defence. They gain a total of +%1% firepower on streets and bridges.");
+        text = replaceTextArgs(text, [CO_KOAL.superPowerMovementBonus, CO_KOAL.superPowerOffBonus, CO_KOAL.powerBaseOffBonus, CO_KOAL.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -314,13 +315,13 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("I have no equal on the field of war!"),
-                qsTr("Wallow in your shame, swine! Wallow, I say"),
+                qsTr("Wallow in your shame, swine! Wallow, I say!"),
                 qsTr("Victory is no accident.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("He! He! He!...??? What?"),
-                qsTr("One time you win and another time you loose.")];
+        return [qsTr("Heh heh heh... Wait, what? I lost?"),
+                qsTr("Sometimes you win, sometimes you lose...")];
     };
     this.getName = function()
     {

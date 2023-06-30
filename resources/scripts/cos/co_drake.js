@@ -339,7 +339,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A big hearted former pirate who hates fighting. Also a great surfer.");
+        return qsTr("A big-hearted former pirate who hates fighting. Also a great surfer.");
     };
     this.getHits = function(co)
     {
@@ -351,21 +351,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Naval units have superior firepower, but air units have reduced firepower.");
+        return qsTr("He has superior naval units, but his air units have reduced firepower.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nMissile Submarine\n\n" +
-                    "Global Effect: \nNaval units have %0 more movement point and have %1% firepower and %2% defence. Air units suffer from %3% reduced firepower." +
-                    "\n\nCO Zone Effect: \nNaval units have increased %4% firepower and %5% defence.");
+                    "Global Effect: \nDrake's naval units gain +%0 movement, +%1% firepower, and +%2% defence. His air units have %3% firepower." +
+                    "\n\nCO Zone Effect: \nDrake's naval units gain +%4% firepower and +%5% defence. His air units have -%6% firepower and gain +%7% defence. All of his other units gain +%8% firepower and +%7% defence.");
         text = replaceTextArgs(text, [CO_DRAKE.d2dNavalMovementPoints, CO_DRAKE.d2dNavalOffBonus, CO_DRAKE.d2dNavalDefBonus, CO_DRAKE.d2dAirOffBonus,
-                                      CO_DRAKE.d2dCoZoneNavalOffBonus, CO_DRAKE.d2dCoZoneNavalDefBonus]);
+                                      CO_DRAKE.d2dCoZoneNavalOffBonus, CO_DRAKE.d2dCoZoneNavalDefBonus, CO_DRAKE.d2dCoZoneAirOffBonus, CO_DRAKE.d2dCoZoneDefBonus, CO_DRAKE.d2dCoZoneOtherOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Causes a tidal wave that does %0 HP of damage to all enemy units and halves their fuel.");
-        text = replaceTextArgs(text, [CO_DRAKE.powerDamage]);
+        var text = qsTr("Causes a tidal wave that deals -%0 HP of damage to all enemy units and halves their fuel. Drake's naval units gain +%1% firepower and +%2% defence. His air units have -%3% firepower and gain +%4% defence. All of his other units gain +%5% firepower and +%4% defence.");
+        text = replaceTextArgs(text, [CO_DRAKE.powerDamage, CO_DRAKE.powerNavalOffBonus, CO_DRAKE.powerNavalDefBonus, CO_DRAKE.powerAirOffBonus, CO_DRAKE.powerDefBonus, CO_DRAKE.powerOtherOffBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -374,8 +374,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Causes a giant tidal wave that does %0 HP of damage to all enemy units and halves their fuel and weather changes to rain.");
-        text = replaceTextArgs(text, [CO_DRAKE.superPowerDamage]);
+        var text = qsTr("Changes weather to Rain. Causes a giant tidal wave that deals -%0 HP of damage to all enemy units and halves their fuel. Drake's naval units gain +%1% firepower and +%2% defence. His air units have -%3% firepower and gain +%4% defence. All of his other units gain +%5% firepower and +%4% defence.");
+        text = replaceTextArgs(text, [CO_DRAKE.superPowerDamage, CO_DRAKE.superPowerNavalOffBonus, CO_DRAKE.powerNavalDefBonus, CO_DRAKE.superPowerAirOffBonus, CO_DRAKE.powerDefBonus, CO_DRAKE.superPowerOtherOffBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

@@ -66,11 +66,11 @@ var Constructor = function()
         return "OS";
     };
 
-    this.powerCostReduction = -0.5;
+    this.powerCostReduction = 0.5;
     this.powerOffBonus = 10;
     this.powerDefBonus = 10;
 
-    this.d2dCostReduction = -0.1;
+    this.d2dCostReduction = 0.1;
 
     this.d2dCoZoneOffBonus = 10;
     this.d2dCoZoneDefBonus = 10;
@@ -84,11 +84,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return baseCost * CO_HACHI.powerCostReduction;
+                return -baseCost * CO_HACHI.powerCostReduction;
             default:
                 break;
             }
-            return baseCost * CO_HACHI.d2dCostReduction;
+            return -baseCost * CO_HACHI.d2dCostReduction;
         }
         return 0;
     };
@@ -164,8 +164,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_SMUGGLER"];
             }
@@ -193,15 +194,15 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nSmuggler\n") +
-               qsTr("\nGlobal Effect: \nUnits are %0% cheaper") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %1% more firepower and %2% defense.");
+               qsTr("\nGlobal Effect: \nHachi's units have a -%0% reduction in deployment costs.") +
+               qsTr("\n\nCO Zone Effect: \nHachi's units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_HACHI.d2dCostReduction * 100, CO_HACHI.d2dCoZoneOffBonus, CO_HACHI.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Speaks with such authority that he obtains %0% lower deployment costs.");
-        text = replaceTextArgs(text, [CO_HACHI.powerCostReduction * 100]);
+        var text = qsTr("Speaks with commanding authority. Hachi's units have a -%0% reduction in deployment costs and gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_HACHI.powerCostReduction * 100, CO_HACHI.powerOffBonus, CO_HACHI.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -210,8 +211,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("The cost of Hachi's units reduces by %0% and can deploy ground units from</r><div c='#00ff00'>Cities</div><r>. Units have +%1% firepower and defense.");
-        text = replaceTextArgs(text, [CO_HACHI.powerCostReduction * 100, CO_HACHI.powerOffBonus]);
+        var text = qsTr("Merchant pals gather from around the globe, allowing Hachi to deploy ground units from any of his own cities. His units have a -%0% reduction in deployment costs and gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_HACHI.powerCostReduction * 100, CO_HACHI.powerOffBonus, CO_HACHI.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

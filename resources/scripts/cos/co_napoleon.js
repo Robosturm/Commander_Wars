@@ -281,8 +281,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_IRON_SHIELD_GENERATOR"];
             }
@@ -301,7 +302,7 @@ var Constructor = function()
     };
     this.getMiss = function(co)
     {
-        return qsTr("Horror Movies");
+        return qsTr("Horror movies");
     };
     this.getCODescription = function(co)
     {
@@ -310,16 +311,16 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nIron Shield Generator\n\n" +
-                    "Global Effect: \nDefense is increased by %0% and by %1% against indirect units and offense by %2%." +
-                    "\n\nCO Zone Effect: \nDefense is increased by %3% and by %4% against indirect units and offense by %5%.");
+                    "Global Effect: \nNapoleon's units have +%2% firepower, +%0% defence against direct units, and +%1% defence against indirect units." +
+                    "\n\nCO Zone Effect: \nNapoleon's units gain +%5% firepower, +%3% defence against direct units, and +%4% defence against indirect units.");
         text = replaceTextArgs(text, [CO_NAPOLEON.d2dDefBonus, CO_NAPOLEON.d2dIndirectDefBonus, CO_NAPOLEON.d2dOffBonus,
                                       CO_NAPOLEON.d2dCoZoneDefBonus, CO_NAPOLEON.d2dCoZoneIndirectDefBonus, CO_NAPOLEON.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Units cannot take damage that is more than %0% of their current HP in a single attack.");
-        text = replaceTextArgs(text, [CO_NAPOLEON.powerDefReduction * 100]);
+        var text = qsTr("Napoleon's units gain +%1% firepower, +%2% defence against direct units, and +%3% defence against indirect units. They cannot take damage that is more than %0% of their current HP in a single attack.");
+        text = replaceTextArgs(text, [CO_NAPOLEON.powerDefReduction * 100, CO_NAPOLEON.powerOffBonus, CO_NAPOLEON.powerDefBonus, CO_NAPOLEON.powerIndirectDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -328,8 +329,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Units fight as though they were %0 HP stronger and inflict extra damage by %1% based on their terrain cover. Defense is increased by %2% and by %3% against indirect units");
-        text = replaceTextArgs(text, [CO_NAPOLEON.superPowerHpBonus, CO_NAPOLEON.superPowerTerrainBonus, CO_NAPOLEON.superPowerDefBonus, CO_NAPOLEON.superPowerIndirectDefBonus]);
+        var text = qsTr("Napoleon's units gain +%4% firepower, +%2% defence against direct units, and +%3% defence against indirect units. His units fight as though they were +%0 HP stronger and and gain +%1% firepower per terrain star.");
+        text = replaceTextArgs(text, [CO_NAPOLEON.superPowerHpBonus, CO_NAPOLEON.superPowerTerrainBonus, CO_NAPOLEON.superPowerDefBonus, CO_NAPOLEON.superPowerIndirectDefBonus, CO_NAPOLEON.powerOffBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -338,23 +339,23 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Me and what army, you ask? I have many more soldiers than you think."),
+        return [qsTr("Me and what army, you ask? I have more soldiers than you could possibly imagine."),
                 qsTr("Size does not matter in a battle of wills."),
                 qsTr("I can take any attack. You would be wrong to test that statement."),
-                qsTr("You can give up now and avoid further bloodshed.  Either way, though, my troops simply won't die."),
-                qsTr("My casualties are not dead, but simply waiting to fight again."),
-                qsTr("I need not worry about attrition.  On the other hand, you do.")];
+                qsTr("You can give up now and avoid further bloodshed. Either way, my troops will never die."),
+                qsTr("My 'casualties' are not dead, but simply waiting to fight again."),
+                qsTr("I need not worry about attrition. On the other hand, you do.")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("The survival of the Metal Army is assured."),
-                qsTr("My casualties are recovering. Yours are not so lucky."),
+                qsTr("My 'casualties' are recovering. Yours are not so lucky."),
                 qsTr("Why were you so confident? Success is earned, not granted.")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Our losses are unacceptable. I will fix that."),
-                qsTr("Stand aside; I will deal with them.")];
+                qsTr("Stand aside. I will deal with them myself.")];
     };
     this.getName = function()
     {

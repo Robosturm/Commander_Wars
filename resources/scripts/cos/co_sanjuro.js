@@ -389,8 +389,9 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    buildingId === "HQ" ||
+                    buildingId === "FORTHQ")
             {
                 return ["ZCOUNIT_SMUGGLER"];
             }
@@ -401,7 +402,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A respected mercenary from Golden Sun. Once he accepts a job, he sees it through to the end no matter how difficult or dangerous it becomes.");
+        return qsTr("A respected mercenary from Golden Sun. Once he accepts a job, he sees it through to the end, no matter how difficult or dangerous it becomes.");
     };
     this.getHits = function(co)
     {
@@ -417,18 +418,18 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
+		//HOW THE HELL DOES SANJURO WORK AAAAAAA
         var text =  qsTr("\nSpecial Unit:\nSmuggler\n" +
-                         "\nGlobal Effect: \nFor each %0% difference between income and funds at the start of the turn. His troops gain %1% firepower per %0% percent and cost %2% more if the funds are greater than the current funds. " +
-                         "Otherwise he looses %1% firepower per %0% percent and his troops cost %2% less. This effect stacks up to %5 times." +
-                         "\n\nCO Zone Effect: \nGains %3% firepower and %4% defense.");
-        text = replaceTextArgs(text, [CO_SANJURO.d2dExceedBonus * 100, CO_SANJURO.d2dOffModifier, CO_SANJURO.d2dCostModifier * 100, CO_SANJURO.d2dCoZoneOffBonus, CO_SANJURO.d2dCoZoneDefBonus, CO_SANJURO.d2dMaxBonus]);
+                         "\nGlobal Effect: \nSanjuro calculates the difference between his pre-income funds and his income at the start of each day. \nIf his current funds are higher than the income, his units gain firepower and have an increased deployment cost proportional to the surplus, up to +%0%. \nIf his current funds are lower than the income, his units lose firepower and have a reduced deployment cost proportional to the difference, up to -%0%." +
+                         "\n\nCO Zone Effect: \nSanjuro's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_SANJURO.d2dMaxBonus, CO_SANJURO.d2dCoZoneOffBonus, CO_SANJURO.d2dCoZoneDefBonus]);
         return text;
     };
 
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("When his units take combat damage, he receives %0% of the damage value in funds.");
-        text = replaceTextArgs(text, [CO_SANJURO.powerRefund * 100]);
+        var text = qsTr("Sanjuro's units gain +%0% firepower and +%1% defence. When his units take combat damage, he receives %2% of that damage value in funds.");
+        text = replaceTextArgs(text, [CO_SANJURO.powerOffBonus, CO_SANJURO.powerDefBonus, CO_SANJURO.powerRefund * 100]);
         return text;
     };
     this.getPowerName = function(co)
@@ -437,8 +438,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text =  qsTr("When a unit is built, units of the same type receive a %0% firepower and %1% defense boost are unhindered by terrain, and production costs for that unit type are reduced by %2%.");
-        text = replaceTextArgs(text, [CO_SANJURO.superPowerOffBonus, CO_SANJURO.superPowerDefBonus, CO_SANJURO.superPowerCostReduction * 100]);
+        var text =  qsTr("When Sanjuro builds a unit this turn, his units of the same type gain +%0% firepower, +%1% defence, a -%2% reduction in deployment costs, and their movements are unhindered by terrain. Otherwise, his units gain +%3% firepower and +%4% defence.");
+        text = replaceTextArgs(text, [CO_SANJURO.superPowerOffBonus, CO_SANJURO.superPowerDefBonus, CO_SANJURO.superPowerCostReduction * 100, CO_SANJURO.powerOffBonus, CO_SANJURO.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -457,13 +458,13 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("I have a reputation to keep, you know."),
-                qsTr("Another job well done...where's the next fight?"),
+                qsTr("Another job well done. Where's the next fight?"),
                 qsTr("Did you expect anything less from a hardened mercenary?")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("For this I get too less money"),
-                qsTr("Now, I know how the Romans felt like.")];
+        return [qsTr("I'm not going to get paid for this, am I?"),
+                qsTr("Now I know how the Romans felt like.")];
     };
     this.getName = function()
     {

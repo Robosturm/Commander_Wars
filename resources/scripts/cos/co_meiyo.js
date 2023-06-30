@@ -290,31 +290,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Firepower rises the higher a rank of a unit is. However unexperienced units are weaker.");
+        return qsTr("Her units get even stronger as they rank up, however, unexperienced units are weaker.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnit Ranks are more effective.\n" +
-                    "Soldier have %0% firepower and defence.\n" +
-                    "Experienced have %1% firepower and defence.\n" +
-                    "Veteran have %2% firepower and defence.\n" +
-                    "Elite have %3% firepower and defence.\n" +
-                    "\n\nCO Zone Effect: \nUnit Ranks are way more effective.\n" +
-                    "Soldier have %4% firepower and defence.\n" +
-                    "Experienced have %5% firepower and defence.\n" +
-                    "Veteran have %6% firepower and defence.\n" +
-                    "Elite have %7% firepower and defence.\n");
+        var text = qsTr("\nGlobal Effect: \nMeiyo's Soldier-rank units have %0% firepower and defence. \nHer Experienced-rank units gain +%1% firepower and defence. \nHer Veteran-rank units gain +%2% firepower and defence. \nHer Elite-rank units gain +%3% firepower and defence." +
+                    "\n\nCO Zone Effect: \nMeiyo's Soldier-rank units gain +%4% firepower and defence. \nHer Experienced-rank units gain +%5% firepower and defence. \nHer Veteran-rank units gain +%6% firepower and defence. \nHer Elite-rank units gain +%7% firepower and defence.");
         text = replaceTextArgs(text, [CO_MEIYO.d2dSoldier, CO_MEIYO.d2dExperienced, CO_MEIYO.d2dVeteran, CO_MEIYO.d2dElite,
                                       CO_MEIYO.d2dCoZoneSoldier, CO_MEIYO.d2dCoZoneExperienced, CO_MEIYO.d2dCoZoneVeteran, CO_MEIYO.d2dCoZoneElite]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Units with a higher rank have even higher defence and offense.\n" +
-                    "Soldier have %0% firepower and defence.\n" +
-                    "Experienced have %1% firepower and defence.\n" +
-                    "Veteran have %2% firepower and defence.\n" +
-                    "Elite have %3% firepower and defence.");
+        var text = qsTr("Meiyo's Soldier-rank units gain +%0% firepower and defence. \nHer Experienced-rank units gain +%1% firepower and defence. \nHer Veteran-rank units gain +%2% firepower and defence. \nHer Elite-rank units gain +%3% firepower and defence.");
         text = replaceTextArgs(text, [CO_MEIYO.powerSoldier, CO_MEIYO.powerExperienced, CO_MEIYO.powerVeteran, CO_MEIYO.powerElite]);
         return text;
     };
@@ -324,11 +312,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Units with a higher rank have even higher defence and offense. All units gain two ranks.\n" +
-                    "Soldier have %0% firepower and defence.\n" +
-                    "Experienced have %1% firepower and defence.\n" +
-                    "Veteran have %2% firepower and defence.\n" +
-                    "Elite have %3% firepower and defence.");
+        var text = qsTr("All of Meiyo's units gain two ranks. \nHer Soldier-rank units gain +%0% firepower and defence. \nHer Experienced-rank units gain +%1% firepower and defence. \nHer Veteran-rank units gain +%2% firepower and defence. \nHer Elite-rank units gain +%3% firepower and defence.");
         text = replaceTextArgs(text, [CO_MEIYO.powerSoldier, CO_MEIYO.powerExperienced, CO_MEIYO.powerVeteran, CO_MEIYO.powerElite]);
         return text;
     };
@@ -351,8 +335,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("You getting better recruit."),
-                qsTr("Tsss! Some recruits have one! A catastrophe.")];
+        return [qsTr("You're getting better, recruit."),
+                qsTr("What a disaster! All I had was a bunch of rookies!")];
     };
     this.getName = function()
     {
