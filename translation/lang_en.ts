@@ -19387,27 +19387,27 @@ Units near Mountains gain %1% additional firepower.</source>
 <context>
     <name>co_nana</name>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="332"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="331"/>
         <source>The lovable, cute, and amazingly talented granddaughter of Hachi. Known to be incredibly scary when angry.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="336"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="335"/>
         <source>Artemis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="340"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="339"/>
         <source>Ozzy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="344"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="343"/>
         <source>Indirect attacks deal one HP of damage to all nearby units, no matter their allegiance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="348"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="347"/>
         <source>
 Special Unit:
 Siege Cannon
@@ -19415,19 +19415,19 @@ Siege Cannon
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="362"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="361"/>
         <source>Chain Reaction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="349"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="348"/>
         <source>
 Global Effect: 
 Indirect attacks deal %0 HP of damage to all nearby units, no matter their allegiance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="350"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="349"/>
         <source>
 
 CO Zone Effect: 
@@ -19435,82 +19435,82 @@ Indirect attacks deal %1 HP of damage to all nearby units, no matter their alleg
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="356"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="355"/>
         <source>Direct attacks deal %0 HP of damage to the nearest enemy unit. Nana&apos;s units are no longer affected by collateral damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="366"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="365"/>
         <source>Indirect attacks deal %0 HP of damage to all units within a blast radius of %1. Nana&apos;s units are no longer affected by collateral damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="372"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="371"/>
         <source>Explosive Tantrum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="376"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="375"/>
         <source>Let&apos;s go, boys!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="377"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="376"/>
         <source>You made me mad!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="378"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="377"/>
         <source>Stop annoying me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="379"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="378"/>
         <source>I&apos;m gonna kick your butt!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="380"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="379"/>
         <source>A battle with me is a greater honor than you deserve!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="381"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="380"/>
         <source>I want to end this fast!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="382"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="381"/>
         <source>Don&apos;t be such a meanie!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="386"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="385"/>
         <source>Aww, you put up a good fight though!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="387"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="386"/>
         <source>Hehe! You&apos;re funny!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="388"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="387"/>
         <source>You look so cute when you lose!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="392"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="391"/>
         <source>Now I&apos;m mad...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="393"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="392"/>
         <source>This should have been easy!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="397"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="396"/>
         <source>Nana</source>
         <translation type="unfinished"></translation>
     </message>

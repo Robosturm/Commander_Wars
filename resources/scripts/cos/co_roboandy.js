@@ -245,7 +245,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        attacker.setHp(0.00001);
+                        attacker.setHp(0.1);
                     }
                 }
             }

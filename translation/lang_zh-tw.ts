@@ -21159,27 +21159,27 @@ CO區域效果:
 <context>
     <name>co_nana</name>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="332"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="331"/>
         <source>The lovable, cute, and amazingly talented granddaughter of Hachi. Known to be incredibly scary when angry.</source>
         <translation>可愛､可人､天賦異稟的八智孫女.當她生氣時非常可怕.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="336"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="335"/>
         <source>Artemis</source>
         <translation>Artemis</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="340"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="339"/>
         <source>Ozzy</source>
         <translation>Ozzy</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="344"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="343"/>
         <source>Indirect attacks deal one HP of damage to all nearby units, no matter their allegiance.</source>
         <translation>間接攻擊對所有鄰近的單位造成1點傷害,無論其所屬.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="348"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="347"/>
         <source>
 Special Unit:
 Siege Cannon
@@ -21212,7 +21212,7 @@ CO區域效果:
         <translation type="vanished">直接攻擊會對最近的敵軍造成一點傷害.Nana的部隊不再受到附帶傷害的影響.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="362"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="361"/>
         <source>Chain Reaction</source>
         <translation>連鎖效應</translation>
     </message>
@@ -21221,7 +21221,7 @@ CO區域效果:
         <translation type="vanished">間接攻擊對大範圍內所有單位造成2點傷害. Nana的部隊不再受到附帶傷害的影響.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="349"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="348"/>
         <source>
 Global Effect: 
 Indirect attacks deal %0 HP of damage to all nearby units, no matter their allegiance.</source>
@@ -21230,7 +21230,7 @@ Indirect attacks deal %0 HP of damage to all nearby units, no matter their alleg
 間接攻擊對所有附近的單位造成 %0 點傷害,不論它們的陣營如何.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="350"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="349"/>
         <source>
 
 CO Zone Effect: 
@@ -21241,83 +21241,83 @@ CO區域效果:
 間接攻擊對所有附近的單位造成 %1 點傷害,不論它們的陣營如何.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="356"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="355"/>
         <source>Direct attacks deal %0 HP of damage to the nearest enemy unit. Nana&apos;s units are no longer affected by collateral damage.</source>
         <translation>直接攻擊對最近的敵方單位造成 %0 點傷害.納娜的單位不再受到附帶傷害的影響.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="366"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="365"/>
         <source>Indirect attacks deal %0 HP of damage to all units within a blast radius of %1. Nana&apos;s units are no longer affected by collateral damage.</source>
         <translation>間接攻擊對於爆炸範圍內所有單位造成 %0 點傷害.
 該範圍的半徑為 %1.納娜的單位不再受到附帶傷害的影響.</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="372"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="371"/>
         <source>Explosive Tantrum</source>
         <translation>暴躁狂暴</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="376"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="375"/>
         <source>Let&apos;s go, boys!</source>
         <translation>走吧,孩子們!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="377"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="376"/>
         <source>You made me mad!</source>
         <translation>你讓我生氣!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="378"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="377"/>
         <source>Stop annoying me!</source>
         <translation>別煩我了!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="379"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="378"/>
         <source>I&apos;m gonna kick your butt!</source>
         <translation>我要踢你的屁股!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="380"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="379"/>
         <source>A battle with me is a greater honor than you deserve!</source>
         <translation>與我一戰是你應得的更大榮譽!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="381"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="380"/>
         <source>I want to end this fast!</source>
         <translation>我要快點結束這一切!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="382"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="381"/>
         <source>Don&apos;t be such a meanie!</source>
         <translation>別這麼小氣!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="386"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="385"/>
         <source>Aww, you put up a good fight though!</source>
         <translation>哇,不過你打得很好!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="387"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="386"/>
         <source>Hehe! You&apos;re funny!</source>
         <translation>呵呵!你好搞笑!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="388"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="387"/>
         <source>You look so cute when you lose!</source>
         <translation>你輸的樣子好可愛!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="392"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="391"/>
         <source>Now I&apos;m mad...</source>
         <translation>現在我瘋了...</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="393"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="392"/>
         <source>This should have been easy!</source>
         <translation>這應該很容易!</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_nana.js" line="397"/>
+        <location filename="../resources/scripts/cos/co_nana.js" line="396"/>
         <source>Nana</source>
         <translation>Nana</translation>
     </message>

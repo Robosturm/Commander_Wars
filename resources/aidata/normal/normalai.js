@@ -11,6 +11,11 @@ var NORMALAI =
 //        return false; // in case the core implementation should take care of this
 //    },
 
+    getHighPrioBuildings : function(ai)
+    {
+        return COREAI.getHighPrioBuildings(ai);
+    },
+
     buildingMenuFunctions : [["ZBLACKHOLE_FACTORY", COREAI.getFactoryMenuItem],
                              ["ZBLACKHOLE_FACTORYWASTE", COREAI.getFactoryMenuItem],
                              ["ZBLACKHOLE_FACTORYSNOW", COREAI.getFactoryMenuItem],

@@ -70,7 +70,7 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         map.getGameRules().changeWeather("WEATHER_SANDSTORM", map.getPlayerCount() * 1);
         powerNameAnimation.queueAnimation(animation2);
-        CO_ZANDRA.zandraDamage(co, CO_ZANDRA.sandstormDamage, animation2, map);
+        CO_ZANDRA.zandraDamage(co, CO_ZANDRA.superPowerSandstormDamage, animation2, map);
     };
 
     this.zandraDamage = function(co, value, animation2, map)
@@ -273,7 +273,7 @@ var Constructor = function()
     this.getSuperPowerDescription = function(co)
     {
         var text = qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 HP damage to enemies.");
-        text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.sandstormDamage]);
+        text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.superPowerSandstormDamage]);
         return text;
     };
     this.getSuperPowerName = function(co)

@@ -1,5 +1,11 @@
 var COREAI =
         {
+    highPrioBuildings = ["FACTORY"],
+    getHighPrioBuildings : function(ai)
+    {
+        return COREAI.highPrioBuildings;
+    },
+
     infantryGroup : ["INFANTRY_GROUP",  ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE", "ZCOUNIT_PARTISAN", "ZCOUNIT_COMMANDO", "ZCOUNIT_RANGER", "ZCOUNIT_AT_CYCLE"],
                                         [70,         10,     20,       30,          10,                 30,                 10,               10],
                                         40, 0, "", 0.5],
