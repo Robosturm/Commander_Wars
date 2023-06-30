@@ -23,6 +23,11 @@ QmlVectorUnit::QmlVectorUnit()
     Interpreter::getInstance()->trackJsObject(this);
 }
 
+void QmlVectorUnit::clone(QmlVectorUnit* source)
+{
+    m_Vector = source->m_Vector;
+}
+
 void QmlVectorUnit::randomize()
 {
     for (auto & unit : m_Vector)
@@ -131,6 +136,11 @@ QmlVectorBuilding::QmlVectorBuilding()
 #endif
     Interpreter::setCppOwnerShip(this);
     Interpreter::getInstance()->trackJsObject(this);
+}
+
+void QmlVectorBuilding::clone(QmlVectorBuilding * source)
+{
+    m_Vector = source->m_Vector;
 }
 
 void QmlVectorBuilding::randomize()

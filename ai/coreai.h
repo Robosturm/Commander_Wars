@@ -544,6 +544,15 @@ public:
      */
     Q_INVOKABLE qint32 getUnitCount(QmlVectorUnit * pUnits, const QStringList unitIds, float minHp = 0.0f, qint32 minFuel = 0);
     /**
+     * @brief getFilteredUnits
+     * @param pUnits
+     * @param unitIds
+     * @param minHp
+     * @param minFuel
+     * @return
+     */
+    Q_INVOKABLE QmlVectorUnit* getFilteredUnits(QmlVectorUnit * pUnits, const QStringList unitIds, float minHp = 0.0f, qint32 minFuel = 0);
+    /**
      * @brief getEnemyUnitCountNearOwnUnits
      * @param pUnits
      * @param pEnemyUnits

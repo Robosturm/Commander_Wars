@@ -8,12 +8,11 @@
 #include <map>
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/qmlvector.h"
 #include "game/unit.h"
 
 class Building;
 class CoreAI;
-class QmlVectorUnit;
-class QmlVectorBuilding;
 
 class SimpleProductionSystem final : public QObject, public FileSerializable
 {
@@ -29,6 +28,7 @@ public:
         qint32 x{-1};
         qint32 y{-1};
         QStringList unitIds;
+        spQmlVectorUnit targets;
     };
     struct BuildDistribution
     {
@@ -94,6 +94,7 @@ public:
                                    qreal minAverageIslandSize = 0.025, qint32 minBaseCost = 0, qint32 maxBaseCost = -1);
     Q_INVOKABLE void addInitialProduction(const QStringList unitIds, qint32 count);
     Q_INVOKABLE void addForcedProduction(const QStringList unitId, qint32 x = -1, qint32 y = -1);
+    Q_INVOKABLE void addForcedProductionCloseToTargets(const QStringList unitIds, QmlVectorUnit* targets);
     Q_INVOKABLE void addItemToBuildDistribution(const QString group, const QStringList unitIds, const QVector<qint32> chance, qreal distribution, qint32 buildMode, const QString guardCondition = "", qreal maxUnitDistribution = 1.0);
     /**
      * @brief getDummyUnit creates a dummy unit to calculate values not only one dummy unit will be alive at all time.
@@ -105,6 +106,7 @@ public:
     Q_INVOKABLE void updateIslandSizeForBuildings(QmlVectorBuilding* pBuildings);
 private:
     bool buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize);
+    bool buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits);
     bool buildUnit(qint32 x, qint32 y, QString unitId);
     void getBuildDistribution(std::vector<CurrentBuildDistribution> & buildDistribution, QmlVectorUnit* pUnits,
                               qint32 minBuildMode, qint32 maxBuildMode, qint32 minBaseCost, qint32 maxBaseCost);
