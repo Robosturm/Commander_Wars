@@ -2574,6 +2574,21 @@ qint32 CoreAI::getUnitCount(QmlVectorUnit * pUnits, const QStringList unitIds, f
     return count;
 }
 
+QmlVectorUnit* CoreAI::getFilteredUnits(QmlVectorUnit * pUnits, const QStringList unitIds, float minHp, qint32 minFuel)
+{
+    QmlVectorUnit* ret = new QmlVectorUnit();
+    for (auto & pUnit : pUnits->getVector())
+    {
+        if (pUnit->getHp() >= minHp &&
+            pUnit->getFuel() >= minFuel &&
+            (unitIds.length() == 0 || unitIds.contains(pUnit->getUnitID())))
+        {
+            ret->append(pUnit.get());
+        }
+    }
+    return ret;
+}
+
 qint32 CoreAI::getEnemyUnitCountNearOwnUnits(QmlVectorUnit * pUnits, QmlVectorUnit * pEnemyUnits, const QStringList unitIds, qint32 distance, float minHp)
 {
     qint32 count = 0;

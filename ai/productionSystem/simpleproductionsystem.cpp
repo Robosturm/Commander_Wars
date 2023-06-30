@@ -4,7 +4,6 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/qmlvector.h"
 
 SimpleProductionSystem::SimpleProductionSystem(CoreAI * owner)
     : m_owner(owner)
@@ -192,6 +191,15 @@ void SimpleProductionSystem::addForcedProduction(const QStringList unitIds, qint
     m_forcedProduction.push_back(item);
 }
 
+void SimpleProductionSystem::addForcedProductionCloseToTargets(const QStringList unitIds, QmlVectorUnit* targets)
+{
+    ForcedProduction item;
+    item.unitIds = unitIds;
+    item.targets = spQmlVectorUnit::create();
+    item.targets->clone(targets);
+    m_forcedProduction.push_back(item);
+}
+
 void SimpleProductionSystem::addInitialProduction(const QStringList unitIds, qint32 count)
 {
     InitialProduction item;
@@ -316,7 +324,14 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
             {
                 for (auto & unitId : forcedProduction.unitIds)
                 {
-                    success = buildUnit(pBuildings, unitId, minAverageIslandSize);
+                    if (forcedProduction.targets.get() != nullptr)
+                    {
+                        success = buildUnitCloseTo(pBuildings, unitId, minAverageIslandSize, forcedProduction.targets);
+                    }
+                    else
+                    {
+                        success = buildUnit(pBuildings, unitId, minAverageIslandSize);
+                    }
                     if (success)
                     {
                         break;
@@ -532,6 +547,31 @@ void SimpleProductionSystem::getBuildDistribution(std::vector<CurrentBuildDistri
 bool SimpleProductionSystem::getInit() const
 {
     return m_init;
+}
+
+bool SimpleProductionSystem::buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits)
+{
+    bool success = false;
+    spQmlVectorBuilding buildings = spQmlVectorBuilding::create();
+    buildings->clone(pBuildings);
+    buildings->sortClosestToEnemy(pUnits);
+    for (auto & pBuilding : buildings->getVector())
+    {
+        auto & item = m_averageMoverange[pBuilding.get()];
+        if (item.averageValue * minAverageIslandSize <= item.islandSizes[unitId])
+        {
+            success = buildUnit(pBuilding->getX(), pBuilding->getY(), unitId);
+            if (success)
+            {
+                break;
+            }
+        }
+    }
+    if (!success)
+    {
+        CONSOLE_PRINT("Unable to build " + unitId, GameConsole::eDEBUG);
+    }
+    return success;
 }
 
 bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize)

@@ -273,7 +273,7 @@ protected:
      * @param pUnits
      * @return
      */
-    bool captureBuildings(spQmlVectorUnit & pUnits);
+    bool captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief joinCaptureBuildings
      * @param pUnits
@@ -467,7 +467,7 @@ protected:
      * @param data
      * @param enemy
      */
-    void createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint32 moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always = false);
+    void createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, double moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always = false);
     /**
      * @brief createUnitInfluenceMap
      */

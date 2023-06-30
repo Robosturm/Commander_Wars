@@ -20,7 +20,7 @@ class QmlVectorPoint final : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit QmlVectorPoint();
-   virtual ~QmlVectorPoint() = default;
+    virtual ~QmlVectorPoint() = default;
     const std::vector<QPoint> & getVector() const
     {
         return m_Vector;
@@ -57,7 +57,8 @@ class QmlVectorUnit final : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit QmlVectorUnit();
-   virtual ~QmlVectorUnit() = default;
+    virtual ~QmlVectorUnit() = default;
+    void clone(QmlVectorUnit* source);
     const std::vector<spUnit> & getVector() const
     {
         return m_Vector;
@@ -116,7 +117,8 @@ class QmlVectorBuilding final : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit QmlVectorBuilding();
-   virtual ~QmlVectorBuilding() = default;
+    virtual ~QmlVectorBuilding() = default;
+    void clone(QmlVectorBuilding * source);
     const std::vector<spBuilding> & getVector() const
     {
         return m_Vector;

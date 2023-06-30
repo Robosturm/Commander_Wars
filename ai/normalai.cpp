@@ -308,7 +308,7 @@ bool NormalAi::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
     else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveFlares(pUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
-    else if (m_aiStep <= AISteps::moveUnits && captureBuildings(pUnits)){}
+    else if (m_aiStep <= AISteps::moveUnits && captureBuildings(pUnits,  pBuildings, pEnemyBuildings)){}
     else if (m_aiStep <= AISteps::moveUnits && joinCaptureBuildings(pUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && moveSupport(AISteps::moveUnits, pUnits, false)){}
     // indirect units
@@ -378,10 +378,31 @@ bool NormalAi::isUsingUnit(Unit* pUnit)
     return true;
 }
 
-bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
+bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("NormalAi::captureBuildings()", GameConsole::eDEBUG);
-    std::vector<QVector3D> captureBuildings;
+    struct CaptureInfo
+    {
+        CaptureInfo(qint32 x, qint32 y, qint32 unitIdx, bool farAway)
+            : m_x(x),
+            m_y(y),
+            m_unitIdx(unitIdx),
+            m_farAway(farAway)
+        {
+        }
+        qint32 m_x;
+        qint32 m_y;
+        qint32 m_unitIdx;
+        bool m_farAway{false};
+    };
+
+    QStringList highPrioBuildings;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args({pInterpreter->newQObject(this)});
+    auto erg = pInterpreter->doFunction(getAiName(), "getHighPrioBuildings", args);
+    highPrioBuildings = erg.toVariant().toStringList();
+
+    std::vector<CaptureInfo> captureBuildings;
     qint32 cost = 0;
     QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
     bool fireSilos = hasMissileTarget();
@@ -412,21 +433,39 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                 {
                     GameAction action(ACTION_CAPTURE, m_pMap);
                     action.setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                    auto targets = unitData.pUnitPfs->getAllNodePointsFast(unitData.movementPoints + 1);
+                    auto targets = unitData.pUnitPfs->getAllNodePointsFast();
                     for (auto & target : targets)
                     {
                         action.setActionID(ACTION_CAPTURE);
                         action.setMovepath(QVector<QPoint>(1, target), 0);
-                        if (action.canBePerformed())
+                        if (unitData.pUnitPfs->getTargetCosts(target.x(), target.y()) < unitData.movementPoints + 1)
                         {
-                            captureBuildings.push_back(QVector3D(target.x(), target.y(), i));
+                            if (action.canBePerformed())
+                            {
+                                captureBuildings.push_back(CaptureInfo(target.x(), target.y(), i, false));
+                            }
+                            else
+                            {
+                                action.setActionID(ACTION_MISSILE);
+                                if (action.canBePerformed() && fireSilos)
+                                {
+                                    captureBuildings.push_back(CaptureInfo(target.x(), target.y(), i, false));
+                                }
+                            }
                         }
                         else
                         {
-                            action.setActionID(ACTION_MISSILE);
-                            if (action.canBePerformed() && fireSilos)
+                            Terrain* pTerrain = m_pMap->getTerrain(target.x(), target.y());
+                            auto* pBuilding = pTerrain->getBuilding();
+                            if (pBuilding != nullptr &&
+                                pBuilding->getOwner() == nullptr &&
+                                highPrioBuildings.contains(pBuilding->getBuildingID()) &&
+                                pTerrain->getUnit() == nullptr)
                             {
-                                captureBuildings.push_back(QVector3D(target.x(), target.y(), i));
+                                if (action.canBePerformed())
+                                {
+                                    captureBuildings.push_back(CaptureInfo(target.x(), target.y(), i, true));
+                                }
                             }
                         }
                     }
@@ -447,10 +486,10 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                     unitData.actions.contains(ACTION_CAPTURE) &&
                     pUnit->getAiMode() == GameEnums::GameAi_Normal)
                 {
-                    std::vector<QVector3D> captures;
+                    std::vector<CaptureInfo> captures;
                     for (auto & building : captureBuildings)
                     {
-                        if (static_cast<qint32>(building.z()) == i)
+                        if (building.m_unitIdx == i)
                         {
                             captures.push_back(building);
                         }
@@ -469,56 +508,74 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                         {
                             qint32 prio = -1;
                             // check if we have a building only we can capture and capture it
-                            for (qint32 i2 = 0; i2 < captures.size(); i2++)
+                            qint32 i2 = 0;
+                            while (i2 < captures.size())
                             {
                                 qint32 captureCount = 0;
                                 for (auto & buildingPos2 : captureBuildings)
                                 {
-                                    if (static_cast<qint32>(buildingPos2.x()) == static_cast<qint32>(captures[i2].x()) &&
-                                        static_cast<qint32>(buildingPos2.y()) == static_cast<qint32>(captures[i2].y()))
+                                    if (buildingPos2.m_x == captures[i2].m_x &&
+                                        buildingPos2.m_y == captures[i2].m_y)
                                     {
-                                        captureCount++;
-                                    }
-                                }
-                                bool isProductionBuilding = m_pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding()->isProductionBuilding();
-                                if ((captureCount == 1 && perform == false) ||
-                                    (captureCount == 1 && perform == true && isProductionBuilding))
-                                {
-                                    Building* pBuilding = m_pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding();
-                                    qint32 testPrio = std::numeric_limits<qint32>::min();
-                                    if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
-                                    {
-                                        testPrio = std::numeric_limits<qint32>::max();
-                                    }
-                                    else if (pBuilding->isProductionBuilding())
-                                    {
-                                        testPrio = pBuilding->getConstructionList().size();
-                                    }
-                                    if (!perform)
-                                    {
-                                        prio = testPrio;
-                                        targetIndex = i2;
-                                    }
-                                    else
-                                    {
-                                        if (testPrio > prio)
+                                        if (buildingPos2.m_farAway == captures[i2].m_farAway ||
+                                            (buildingPos2.m_farAway == true && captures[i2].m_farAway == false))
                                         {
-                                            targetIndex = i2;
-                                            prio = testPrio;
+                                            ++captureCount;
+                                        }
+                                        else
+                                        {
+                                            --captureCount;
                                         }
                                     }
-                                    perform = true;
+                                }
+                                if (captureCount <= 0)
+                                {
+                                    captures.erase(captures.cbegin() + i2);
+                                }
+                                else
+                                {
+                                    bool isProductionBuilding = m_pMap->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding()->isProductionBuilding();
+                                    if ((captureCount == 1 && perform == false) ||
+                                        (captureCount == 1 && perform == true && isProductionBuilding))
+                                    {
+                                        Building* pBuilding = m_pMap->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding();
+                                        qint32 testPrio = std::numeric_limits<qint32>::min();
+                                        if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
+                                        {
+                                            testPrio = std::numeric_limits<qint32>::max();
+                                        }
+                                        else if (pBuilding->isProductionBuilding())
+                                        {
+                                            testPrio = pBuilding->getConstructionList().size();
+                                        }
+                                        if (!perform)
+                                        {
+                                            prio = testPrio;
+                                            targetIndex = i2;
+                                        }
+                                        else
+                                        {
+                                            if (testPrio > prio)
+                                            {
+                                                targetIndex = i2;
+                                                prio = testPrio;
+                                            }
+                                        }
+                                        perform = true;
+                                    }
+                                    ++i2;
                                 }
                             }
                             // if not we can select a target from the list
-                            if (!perform)
+                            if (!perform &&
+                                captures.size() > 0)
                             {
                                 prio = -1;
                                 targetIndex = 0;
                                 // priorities production buildings over over captures
                                 for (qint32 i2 = 0; i2 < captures.size(); i2++)
                                 {
-                                    Building* pBuilding = m_pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding();
+                                    Building* pBuilding = m_pMap->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding();
                                     qint32 testPrio = std::numeric_limits<qint32>::min();
                                     if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
                                     {
@@ -542,25 +599,53 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
                     if (perform)
                     {
                         ++unitData.nextAiStep;
-                        spGameAction pAction = spGameAction::create(ACTION_CAPTURE, m_pMap);
-                        pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                        auto path = unitData.pUnitPfs->getPathFast(static_cast<qint32>(captures[targetIndex].x()), static_cast<qint32>(captures[targetIndex].y()));
-                        pAction->setMovepath(path, unitData.pUnitPfs->getCosts(path));
-                        m_updatePoints.push_back(pUnit->getPosition());
-                        m_updatePoints.push_back(pAction->getActionTarget());
-                        if (pAction->canBePerformed())
+                        if (captures[targetIndex].m_farAway)
                         {
-                            emit sigPerformAction(pAction);
-                            return true;
+                            spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                            pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                            std::vector<QVector3D> targets;
+                            targets.push_back(QVector3D(captures[targetIndex].m_x, captures[targetIndex].m_y, 1));
+                            std::vector<QVector3D> transporterTargets;
+                            if (moveUnit(pAction, &unitData, pUnits, unitData.actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
+                            {
+                                return true;
+                            }
                         }
                         else
                         {
-                            CoreAI::addSelectedFieldData(pAction, rocketTarget);
-                            pAction->setActionID(ACTION_MISSILE);
+                            spGameAction pAction = spGameAction::create(ACTION_CAPTURE, m_pMap);
+                            pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                            auto path = unitData.pUnitPfs->getPathFast(captures[targetIndex].m_x, captures[targetIndex].m_y);
+                            pAction->setMovepath(path, unitData.pUnitPfs->getCosts(path));
+                            m_updatePoints.push_back(pUnit->getPosition());
+                            m_updatePoints.push_back(pAction->getActionTarget());
                             if (pAction->canBePerformed())
                             {
                                 emit sigPerformAction(pAction);
                                 return true;
+                            }
+                            else
+                            {
+                                CoreAI::addSelectedFieldData(pAction, rocketTarget);
+                                pAction->setActionID(ACTION_MISSILE);
+                                if (pAction->canBePerformed())
+                                {
+                                    emit sigPerformAction(pAction);
+                                    return true;
+                                }
+                            }
+                        }
+                        qint32 i2 = 0;
+                        while (i2 < captureBuildings.size())
+                        {
+                            if (captureBuildings[i2].m_x == captures[targetIndex].m_x &&
+                                captureBuildings[i2].m_y == captures[targetIndex].m_y)
+                            {
+                                captureBuildings.erase(captureBuildings.cbegin() + i2);
+                            }
+                            else
+                            {
+                                ++i2;
                             }
                         }
                     }
@@ -2095,7 +2180,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
     }
 }
 
-void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, qint32 moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always)
+void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, double moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always)
 {
     QPoint pos = pUnit->Unit::getPosition();
     data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
