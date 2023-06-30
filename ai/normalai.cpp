@@ -383,10 +383,17 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
     AI_CONSOLE_PRINT("NormalAi::captureBuildings()", GameConsole::eDEBUG);
     struct CaptureInfo
     {
-        qint32 x;
-        qint32 y;
-        qint32 unitIdx;
-        bool farAway{false};
+        CaptureInfo(qint32 x, qint32 y, qint32 unitIdx, bool farAway)
+            : m_x(x),
+            m_y(y),
+            m_unitIdx(unitIdx),
+            m_farAway(farAway)
+        {
+        }
+        qint32 m_x;
+        qint32 m_y;
+        qint32 m_unitIdx;
+        bool m_farAway{false};
     };
 
     QStringList highPrioBuildings;
@@ -482,7 +489,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
                     std::vector<CaptureInfo> captures;
                     for (auto & building : captureBuildings)
                     {
-                        if (building.unitIdx == i)
+                        if (building.m_unitIdx == i)
                         {
                             captures.push_back(building);
                         }
@@ -507,11 +514,11 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
                                 qint32 captureCount = 0;
                                 for (auto & buildingPos2 : captureBuildings)
                                 {
-                                    if (buildingPos2.x == captures[i2].x &&
-                                        buildingPos2.y == captures[i2].y)
+                                    if (buildingPos2.m_x == captures[i2].m_x &&
+                                        buildingPos2.m_y == captures[i2].m_y)
                                     {
-                                        if (buildingPos2.farAway == captures[i2].farAway ||
-                                            (buildingPos2.farAway == true && captures[i2].farAway == false))
+                                        if (buildingPos2.m_farAway == captures[i2].m_farAway ||
+                                            (buildingPos2.m_farAway == true && captures[i2].m_farAway == false))
                                         {
                                             ++captureCount;
                                         }
@@ -527,11 +534,11 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
                                 }
                                 else
                                 {
-                                    bool isProductionBuilding = m_pMap->getTerrain(captures[i2].x, captures[i2].y)->getBuilding()->isProductionBuilding();
+                                    bool isProductionBuilding = m_pMap->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding()->isProductionBuilding();
                                     if ((captureCount == 1 && perform == false) ||
                                         (captureCount == 1 && perform == true && isProductionBuilding))
                                     {
-                                        Building* pBuilding = m_pMap->getTerrain(captures[i2].x, captures[i2].y)->getBuilding();
+                                        Building* pBuilding = m_pMap->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding();
                                         qint32 testPrio = std::numeric_limits<qint32>::min();
                                         if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
                                         {
@@ -568,7 +575,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
                                 // priorities production buildings over over captures
                                 for (qint32 i2 = 0; i2 < captures.size(); i2++)
                                 {
-                                    Building* pBuilding = m_pMap->getTerrain(captures[i2].x, captures[i2].y)->getBuilding();
+                                    Building* pBuilding = m_pMap->getTerrain(captures[i2].m_x, captures[i2].m_y)->getBuilding();
                                     qint32 testPrio = std::numeric_limits<qint32>::min();
                                     if (pBuilding->getBuildingID() == CoreAI::BUILDING_HQ)
                                     {
@@ -592,12 +599,12 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
                     if (perform)
                     {
                         ++unitData.nextAiStep;
-                        if (captures[targetIndex].farAway)
+                        if (captures[targetIndex].m_farAway)
                         {
                             spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
                             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                             std::vector<QVector3D> targets;
-                            targets.push_back(QVector3D(captures[targetIndex].x, captures[targetIndex].y, 1));
+                            targets.push_back(QVector3D(captures[targetIndex].m_x, captures[targetIndex].m_y, 1));
                             std::vector<QVector3D> transporterTargets;
                             if (moveUnit(pAction, &unitData, pUnits, unitData.actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
                             {
@@ -608,7 +615,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
                         {
                             spGameAction pAction = spGameAction::create(ACTION_CAPTURE, m_pMap);
                             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                            auto path = unitData.pUnitPfs->getPathFast(captures[targetIndex].x, captures[targetIndex].y);
+                            auto path = unitData.pUnitPfs->getPathFast(captures[targetIndex].m_x, captures[targetIndex].m_y);
                             pAction->setMovepath(path, unitData.pUnitPfs->getCosts(path));
                             m_updatePoints.push_back(pUnit->getPosition());
                             m_updatePoints.push_back(pAction->getActionTarget());
@@ -631,8 +638,8 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
                         qint32 i2 = 0;
                         while (i2 < captureBuildings.size())
                         {
-                            if (captureBuildings[i2].x == captures[targetIndex].x &&
-                                captureBuildings[i2].y == captures[targetIndex].y)
+                            if (captureBuildings[i2].m_x == captures[targetIndex].m_x &&
+                                captureBuildings[i2].m_y == captures[targetIndex].m_y)
                             {
                                 captureBuildings.erase(captureBuildings.cbegin() + i2);
                             }
