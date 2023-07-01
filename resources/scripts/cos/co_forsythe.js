@@ -229,14 +229,14 @@ var Constructor = function()
     {
         var text = qsTr("\nSpecial Unit:\nChaperon\n") +
                qsTr("\nGlobal Effect: \nForsythe's units have +%0% firepower and +%1% defence.") +
-               qsTr("\n\nCO Zone Effect: \nForsythe's units have +%2% firepower and +%3% defence.");
+               qsTr("\n\nCO Zone Effect: \nForsythe's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_FORSYTHE.d2dOffBonus, CO_FORSYTHE.d2dDefBonus,
                                       CO_FORSYTHE.d2dCoZoneOffBonus, CO_FORSYTHE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Forsythe's units have +%0% firepower and +%1% defence.");
+        var text = qsTr("Forsythe's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_FORSYTHE.powerOffBonus, CO_FORSYTHE.powerDefBonus]);
         return text;
     };
@@ -246,7 +246,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Forsythe's units have +%0% firepower and +%1% defence.");
+        var text = qsTr("Forsythe's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_FORSYTHE.superPowerOffBonus, CO_FORSYTHE.superPowerDefBonus]);
         return text;
     };

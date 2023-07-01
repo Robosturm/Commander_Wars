@@ -325,9 +325,9 @@ var Constructor = function()
     {
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
                    qsTr("\nGlobal Effect: \nEnemy attacks deal -%0% damage to Yukio's units. If an attack from Yukio's units would deal at least %2 HP damage, they deal an additional defense-ignoring -%1 HP of damage.") +
-                   qsTr("\n\nCO Zone Effect: \nEnemy attacks deal -%3% damage to Yukio's units. If an attack from Yukio's units would deal at least %5 HP damage, they deal an additional defense-ignoring -%4 HP of damage.");
+                   qsTr("\n\nCO Zone Effect: \nEnemy attacks deal -%3% damage to Yukio's units. If an attack from Yukio's units would deal at least %5 HP damage, they deal an additional defense-ignoring -%4 HP of damage. Yukio's units also gain +%5% firepower and +%6% defence.");
         text = replaceTextArgs(text, [CO_YUKIO.d2dTrueDefenseBonus, CO_YUKIO.d2dTrueDamageBonus/10, CO_YUKIO.d2dMinTrueDamage/10,
-                                      CO_YUKIO.d2dCoZoneTrueDefenseBonus, CO_YUKIO.d2dCoZoneTrueDamageBonus/10, CO_YUKIO.d2dCoZoneMinTrueDamage/10]);
+                                      CO_YUKIO.d2dCoZoneTrueDefenseBonus, CO_YUKIO.d2dCoZoneTrueDamageBonus/10, CO_YUKIO.d2dCoZoneMinTrueDamage/10, CO_YUKIO.d2dCoZoneOffBonus, CO_YUKIO.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
