@@ -111,7 +111,7 @@ var Constructor = function()
 
         // reduce enemy funds
         var player = co.getOwner();
-        var enemyCount = player.getEnemyCount()
+        var enemyCount = player.getEnemyCount();
         var playerCounter = map.getPlayerCount();
         var playerCosts = costs / enemyCount;
         for (var i2 = 0; i2 < playerCounter; i2++)
@@ -278,8 +278,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_SMUGGLER"];
             }
@@ -290,7 +290,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("This CO joined the military and rose through the ranks, not quickly enough. Currently is a sub-commander.");
+        return qsTr("Varlot joined the military and rose through the ranks, slowly but surely. Currently is a sub-commander, but is hoping to be promoted really soon.");
     };
     this.getHits = function(co)
     {
@@ -302,20 +302,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Varlot reduces the income from a property he captures by an amount proportional to its Capture Points.");
+        return qsTr("When Varlot begins to capture an enemy property, he reduces the funding the enemy receives from it.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nSmuggler\n") +
-            qsTr("\nGlobal Effect: \nIncome from enemies is reduced for buildings he captures. Units gain firepower by %0 and defence by %1.") +
-            qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %2 and defence by %3.");
+            qsTr("\nGlobal Effect: \nWhile Varlot captures an enemy property, the enemy's income for that property is reduced by how far the capture has completed. Varlot's units have +%0% firepower and +%1% defence.") +
+            qsTr("\n\nCO Zone Effect: \nVarlot's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_VARLOT.d2dOffBonus , CO_VARLOT.d2dDefBonus, CO_VARLOT.d2dCoZoneOffBonus, CO_VARLOT.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("His troops get a %0 capture bonus. Varlot also gains %1 fraction of the enemy income.");
-        text = replaceTextArgs(text, [CO_VARLOT.powerCaptureBonus, CO_VARLOT.powerIncome]);
+        var text = qsTr("Varlot's units gain +%0% firepower, +%1% defence, and a +%2% capture bonus. Varlot gains funds equal to %3% of the total income for all enemies.");
+        text = replaceTextArgs(text, [CO_VARLOT.powerOffBonus, CO_VARLOT.powerDefBonus, CO_VARLOT.powerCaptureBonus*10, CO_VARLOT.powerIncome]);
         return text;
     };
     this.getPowerName = function(co)
@@ -324,8 +324,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("All units are healed for %0 HP, gaining %1% firepower for each point over 10HP they'd be healed. The enemy pays for these repairs.");
-        text = replaceTextArgs(text, [CO_VARLOT.superPowerHeal, CO_VARLOT.superPowerOverhealOffBonus]);
+        var text = qsTr("Varlot's units gain +%2% firepower and +%3% defence. Varlot's units repair for +%0 HP, gaining an additional +%1% firepower for each point over 10HP they would have been healed. The enemy pays for the repairs, splitting the cost evenly if there are multiple.");
+        text = replaceTextArgs(text, [CO_VARLOT.superPowerHeal, CO_VARLOT.superPowerOverhealOffBonus, CO_VARLOT.powerOffBonus, CO_VARLOT.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -349,8 +349,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("I won't get demoted for this lost!"),
-                qsTr("Retreat!!!")];
+        return [qsTr("I won't get demoted for this loss!"),
+                qsTr("Retreat! Retreat!")];
     };
     this.getName = function()
     {

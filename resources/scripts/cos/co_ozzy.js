@@ -213,8 +213,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_IRON_SHIELD_GENERATOR"];
             }
@@ -229,7 +229,7 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("Mind Games");
+        return qsTr("Mind games");
     };
     this.getMiss = function(co)
     {
@@ -242,15 +242,15 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nIron Shield Generator\n") +
-            qsTr("\nGlobal Effect: \nDefense is increased by %0%.") +
-            qsTr("\n\nCO Zone Effect: \nDefense is increased by %1%.");
-        text = replaceTextArgs(text, [CO_OZZY.d2dDefBonus, CO_OZZY.d2dCoZoneDefBonus]);
+            qsTr("\nGlobal Effect: \nOzzy's units have +%0% defence.") +
+            qsTr("\n\nCO Zone Effect: \nOzzy's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_OZZY.d2dDefBonus, CO_OZZY.d2dCoZoneOffBonus, CO_OZZY.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Units gain a %0% defense boost and gain additional %1% defence counterattacks.");
-        text = replaceTextArgs(text, [CO_OZZY.powerDefBonus, CO_OZZY.powerAtkDefBonus]);
+        var text = qsTr("Ozzy's units gain +%0% firepower and +%1% defence. While attacking, they gain an additional +%2% defence from counterattacks.");
+        text = replaceTextArgs(text, [CO_OZZY.powerOffBonus, CO_OZZY.powerDefBonus, CO_OZZY.powerAtkDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -259,8 +259,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Defense rises by %0%. Counterattack strength is increased by %1%.");
-        text = replaceTextArgs(text, [CO_OZZY.superPowerDefBonus, CO_OZZY.superPowerOffCounterBonus]);
+        var text = qsTr("Ozzy's units gain +%0% firepower and +%1% defence. Their counterattacks gain a total of +%2% firepower.");
+        text = replaceTextArgs(text, [CO_OZZY.powerOffBonus, CO_OZZY.superPowerDefBonus, CO_OZZY.superPowerOffCounterBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -270,9 +270,9 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("IT'S BEEN A LONG TIME SINCE I ROCK 'N ROLLED, MMM-HMM!"),
-                qsTr("So when're you gunna start fighting?"),
-                qsTr("Time to unleash the MAGIC...the SPANISH CASTLE magic..."),
-                qsTr("Jet Black, Johnny B...Killer Queen...Dizzy Lizzy, 'n Major Tom..."),
+                qsTr("So... when're you gunna start fighting?"),
+                qsTr("Time to unleash the MAGIC... the SPANISH CASTLE magic..."),
+                qsTr("Jet Black, Johnny B... Killer Queen... Dizzy Lizzy, 'n Major Tom..."),
                 qsTr("Let's crank up the gain a little bit, shall we?"),
                 qsTr("You're still there? Guess I'd better start trying.")];
     };

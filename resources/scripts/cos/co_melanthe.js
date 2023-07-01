@@ -303,8 +303,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_NEOSPIDER_TANK"];
             }
@@ -315,7 +315,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A genius scientist that harbors a great hatred for mankind. Believes plants to be a superior life forms.");
+        return qsTr("A genius scientist that harbors a great hatred for mankind. Believes plants to be superior life forms.");
     };
     this.getHits = function(co)
     {
@@ -327,21 +327,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Effects of natural terrain are increased by one star and firepower is increased on natural terrain. Units are repaired by 1 HP less on Buildings.");
+        return qsTr("Her units get more terrain stars and firepower on natural, non-manmade terrain, however her units cannot be repaired as quickly on buildings.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
-               qsTr("\nGlobal Effect: \nUnits gain an additional %0% firepower on natural terrain and increased terrain defence by %1 stars and repairs are reduced by %2.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain an additional %3% firepower on natural terrain and increased terrain defence by %4 stars.");
-        text = replaceTextArgs(text, [CO_MELANTHE.d2dOffBonus, CO_MELANTHE.d2dTerrainBonus, CO_MELANTHE.d2dRepairBonus,
-                                      CO_MELANTHE.d2dCoZoneOffBonus, CO_MELANTHE.d2dCoZoneTerrainBonus]);
+               qsTr("\nGlobal Effect: \nMelanthe's units gain +%0% firepower and +%1 extra terrain stars on natural terrain. Repairs to her units on buildings is reduced to +%2 HP per turn.") +
+               qsTr("\n\nCO Zone Effect: \nMelanthe's units gain +%5% firepower and +%6% defence. Her units gain a total of +%3% firepower and gain +%4 extra terrain stars while on natural terrain.");
+        text = replaceTextArgs(text, [CO_MELANTHE.d2dOffBonus, CO_MELANTHE.d2dTerrainBonus, 2+CO_MELANTHE.d2dRepairBonus,
+                                      CO_MELANTHE.d2dCoZoneOffBonus, CO_MELANTHE.d2dCoZoneTerrainBonus, CO_MELANTHE.d2dCoZoneBaseOffBonus, CO_MELANTHE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Units on natural terrain restore %0 HP of health. Units gain an additional %1% firepower on natural terrain and increased terrain defence by %2 stars.");
-        text = replaceTextArgs(text, [CO_MELANTHE.powerHeal, CO_MELANTHE.powerOffBonus, CO_MELANTHE.powerTerrainBonus]);
+        var text = qsTr("Melanthe's units gain +%3% firepower and +%4% defence. Her units on natural terrain restore +%0 HP of health. Her units gain a total of +%1% firepower and gain +%2 extra terrain stars while on natural terrain.");
+        text = replaceTextArgs(text, [CO_MELANTHE.powerHeal, CO_MELANTHE.powerOffBonus, CO_MELANTHE.powerTerrainBonus, CO_MELANTHE.powerBaseOffBonus, CO_MELANTHE.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -350,8 +350,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Enemies on natural terrain suffer %0 HP of damage. In addition, units on natural terrain restore %1 HP of health. Units gain an additional %2% firepower on natural terrain and increased terrain defence by %3 stars.");
-        text = replaceTextArgs(text, [CO_MELANTHE.superPowerDamage, CO_MELANTHE.superPowerHeal, CO_MELANTHE.powerOffBonus, CO_MELANTHE.powerTerrainBonus]);
+        var text = qsTr("Melanthe's units gain +%4% firepower and +%5% defence. Enemy units on natural terrain suffer -%0 HP of damage while Melanthe's units on natural terrain restore +%1 HP of health. Her units gain a total of +%2% firepower and gain +%3 extra terrain stars while on natural terrain.");
+        text = replaceTextArgs(text, [CO_MELANTHE.superPowerDamage, CO_MELANTHE.superPowerHeal, CO_MELANTHE.powerOffBonus, CO_MELANTHE.powerTerrainBonus, CO_MELANTHE.powerBaseOffBonus, CO_MELANTHE.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -370,13 +370,13 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("The seeds of success have been sown."),
-				qsTr("The enemy was a lawn, and I its mower."),
+				qsTr("The enemy was a lawn, and I was its mower."),
 				qsTr("Now that... that was fun.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("What? Humans have defeated the almighty Nature."),
-				qsTr("Nobody destroys the Nature. Next time...")];
+        return [qsTr("What? Humans... getting the better of nature?"),
+				qsTr("Nobody destroys nature, nobody! Next time...")];
     };
     this.getName = function()
     {

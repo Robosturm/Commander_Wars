@@ -199,8 +199,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_CHAPERON"];
             }
@@ -211,7 +211,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free, to live in peace.");
+        return qsTr("A Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free so they can live in peace.");
     };
     this.getHits = function(co)
     {
@@ -223,20 +223,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("He has a large CO-Zone which boosts both offensive and defensive bonus.");
+        return qsTr("His CO-Zone is very large and boosts both offensive and defensive stats.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nChaperon\n") +
-               qsTr("\nGlobal Effect: \nUnits have %0% offensive and %1% defensive bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %2% offensive and %3% defensive bonus.");
+               qsTr("\nGlobal Effect: \nForsythe's units have +%0% firepower and +%1% defence.") +
+               qsTr("\n\nCO Zone Effect: \nForsythe's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_FORSYTHE.d2dOffBonus, CO_FORSYTHE.d2dDefBonus,
                                       CO_FORSYTHE.d2dCoZoneOffBonus, CO_FORSYTHE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Increases offensive by %0% and defensive by %1%.");
+        var text = qsTr("Forsythe's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_FORSYTHE.powerOffBonus, CO_FORSYTHE.powerDefBonus]);
         return text;
     };
@@ -246,7 +246,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Increases offensive by %0% and defensive by %1%.");
+        var text = qsTr("Forsythe's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_FORSYTHE.superPowerOffBonus, CO_FORSYTHE.superPowerDefBonus]);
         return text;
     };
@@ -256,19 +256,18 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("I am a soldier not a killer."),
+        return [qsTr("I am a soldier, not a killer."),
                 qsTr("We fight here to free our people."),
-                qsTr("Even in war there are rules, which should not be broken...")];
+                qsTr("Even in war, there are rules which should never be broken.")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("I have beaten you 20 years ago and I beaten you now."),
-                qsTr("I am a soldier not a killer."),
+        return [qsTr("I am a soldier, not a killer."),
                 qsTr("Death before dishonour.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("We'll fought young man."),
+        return [qsTr("Well fought, young soldier."),
                 qsTr("Great fight. Take your victory with honor.")];
     };
     this.getName = function()

@@ -326,8 +326,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_INTEL_TRUCK"];
             }
@@ -338,11 +338,11 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Commander of the Capitol Guard of Teal Islands. He excels in survival and sheer tenacity. The Long Standing Guardian");
+        return qsTr("Commander of the Capital Guard of Teal Islands. He excels in survival and sheer tenacity. Nicknamed 'The Long Standing Guardian'.");
     };
     this.getHits = function(co)
     {
-        return qsTr("Tongue Twisters");
+        return qsTr("Tongue twisters");
     };
     this.getMiss = function(co)
     {
@@ -350,19 +350,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Using Teal Isles intelligence division, Walter can view units' HP more accurately than other COs.");
+        return qsTr("Using Teal Isles' intelligence division, Walter can view units' HP more accurately than other COs.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
-            qsTr("\nGlobal Effect: \nNo bonus.") +
-            qsTr("\n\nCO Zone Effect: \nUnits gain additional %0% firepower and %1% defence.");
+            qsTr("\nGlobal Effect: \nWalter can see the exact, unrounded HP of all units.") +
+            qsTr("\n\nCO Zone Effect: \nWalter's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_WALTER.d2dCoZoneOffBonus, CO_WALTER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Enemies take additional damage when they attack and units gain  additional %0% firepower and %1% defence.");
+        var text = qsTr("Walter's units reflect all damage dealt to them when attacked. This reflected damage occurs even if Walter's unit is destroyed, and can destroy enemy units. Walter's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_WALTER.powerOffBonus, CO_WALTER.powerDefBonus]);
         return text;
     };
@@ -372,7 +372,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Massively reduces the ammo from enemy units and deals %0 HP damage to them. Hides his units HP from enemies. Units gain  additional %0% firepower and %1% defence.");
+        var text = qsTr("Enemy units lose 80% of their max ammo and suffer -%0 HP damage. Walter's units gain +%1% firepower, +%2% defence, and their HP is hidden from enemies. ");
         text = replaceTextArgs(text, [CO_WALTER.superPowerDamage, CO_WALTER.powerOffBonus, CO_WALTER.powerDefBonus]);
         return text;
     };
@@ -383,7 +383,7 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Greater opponents have burnt out against me."),
-                qsTr("For the Isles sake, I will endure you!"),
+                qsTr("For the Isles' sake, I will endure you!"),
                 qsTr("I am the most stalwart foe that you will ever face!"),
                 qsTr("Morale is the key to victory, but you seem rather....ill equipped."),
                 qsTr("A battle does not determine who is right. It determines who is left. Me, of course."),
@@ -392,13 +392,13 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("Another battle has been won. Teal Isles is safe for now."),
-                qsTr("You have been outwitted, outmatched and outmaneuvered."),
+                qsTr("You have been outwitted, outmatched, and outmaneuvered."),
                 qsTr("Hah, yet again I have stood the test of time!")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("That wasn't the best idea to take fight."),
-                qsTr("I got detected too early..")];
+        return [qsTr("That wasn't the best fight to take."),
+                qsTr("They spotted me too early...")];
     };
     this.getName = function()
     {

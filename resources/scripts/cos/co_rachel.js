@@ -255,11 +255,11 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Brings a breath of fresh air to her troops. Strives to follow in the footsteps of her older sister, Nell. Led the Allied Nations during the Omega war. Rocket Girl");
+        return qsTr("Nicknamed 'The Rocket Girl', she brings a breath of fresh air to her troops. Strives to follow in the footsteps of her older sister, Nell. Led the Allied Nations during the Omega war.");
     };
     this.getHits = function(co)
     {
-        return qsTr("Hard Work");
+        return qsTr("Hard work");
     };
     this.getMiss = function(co)
     {
@@ -267,19 +267,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Extra healing from proporties.");
+        return qsTr("Her troops are quite hardworking, and they increase repairs by one on properties.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nGlobal Effect: \nRachel's units repair by </r><div c='#55ff00'>+%0</div><r> on porporties.</r>") +
-               qsTr("<r>\n\nCO Zone Effect: \nRachel's firepower and defense increase by </r><div c='#55ff00'>+%0%</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_RACHEL.d2dRepairBonus, CO_RACHEL.d2dCoZoneOffBonus]);
+        var text = qsTr("\nGlobal Effect: \nRachel's units repair an additional +%0 HP per day on properties.") +
+               qsTr("\n\nCO Zone Effect: \nRachel's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_RACHEL.d2dRepairBonus, CO_RACHEL.d2dCoZoneOffBonus, CO_RACHEL.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("<r>Rachel's units may deal up to </r><div c='#55ff00'>+%0%</div><r> luck damage. Firepower and defense increase by </r><div c='#55ff00'>+%1%</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_RACHEL.powerLuckDamage, CO_RACHEL.powerOffBonus]);
+        var text = qsTr("Rachel's units gain +%0 luck, +%1% firepower, and +%2% defence.");
+        text = replaceTextArgs(text, [CO_RACHEL.powerLuckDamage, CO_RACHEL.powerOffBonus, CO_RACHEL.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -288,9 +288,10 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("<r>Launches three missiles from Orange Star HQ dealing %0 HP of damage. Firepower and defense increase by </r><div c='#55ff00'>+%1%</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_RACHEL.superPowerDamage, CO_RACHEL.powerOffBonus]);
+        var text = qsTr("Rachel launches three missiles from Orange Star HQ in Omega Land. The missiles deal -%0 HP of damage to all units in a 2-space radius and target the enemy's greatest accumulation of footsoldier HP, then unit HP, then unit value. Rachel's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_RACHEL.superPowerDamage, CO_RACHEL.powerOffBonus, CO_RACHEL.powerDefBonus]);
         return text;
+
     };
     this.getSuperPowerName = function(co)
     {
@@ -313,7 +314,7 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("You beat me! Hmmm... Not bad!"),
+        return [qsTr("You beat me? Hmmm... Not bad!"),
                 qsTr("You've got to be kidding me!")];
     };
     this.getName = function()

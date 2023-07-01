@@ -342,8 +342,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_SIEGE_CANNON"];
             }
@@ -366,20 +366,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Direct units gain additional firepower against enemy units which may come under fire from indirect units.");
+        return qsTr("Direct units gain additional firepower against enemy units which are in range of indirect units.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
-               qsTr("\nGlobal Effect: \nDirect Units gain additional %0% firepower for each indirect unit that can attack the defending unit.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Units gain additional %1% firepower for each indirect unit that can attack the defending unit.");
-        text = replaceTextArgs(text, [CO_SMITAN.d2dOffBonus, CO_SMITAN.d2dCoZoneOffBonus]);
+               qsTr("\nGlobal Effect: \nWhen attacking an enemy unit, Smitan's direct units gain +%0% firepower for each indirect unit in range of the target.") +
+               qsTr("\n\nCO Zone Effect: \nSmitan's units gain +%1% firepower and +%2% defence. When attacking an enemy unit, Smitan's direct units gain an additional +%3% firepower for each indirect unit in range of the target.");
+		text = replaceTextArgs(text, [CO_SMITAN.d2dOffBonus, CO_SMITAN.d2dCoZoneBaseOffBonus, CO_SMITAN.d2dCoZoneDefBonus, CO_SMITAN.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Increases the range of indirect units by %0 space. Indirect units can move after firing. Direct Units gain additional %1% firepower for each indirect unit that can attack the defending unit.");
-        text = replaceTextArgs(text, [CO_SMITAN.powerFirerangeModifier, CO_SMITAN.powerOffBonus]);
+        var text = qsTr("Smitan's units gain +%0% firepower and +%1% defence. Smitan's indirect units gain +%2 range and can move after firing. When attacking an enemy unit, Smitan's direct units gain an additional +%3% firepower for each indirect unit in range of the target.");
+		text = replaceTextArgs(text, [CO_SMITAN.powerBaseOffBonus, CO_SMITAN.powerDefBonus, CO_SMITAN.powerFirerangeModifier, CO_SMITAN.powerOffBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -388,8 +388,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Increases the range of indirect units by %2 spaces. Indirect units can fire twice and move after firing. Direct Units gain additional %1% firepower for each indirect unit that can attack the defending unit.");
-        text = replaceTextArgs(text, [CO_SMITAN.superPowerFirerangeModifier, CO_SMITAN.superPowerOffBonus]);
+        var text = qsTr("Smitan's units gain +%0% firepower and +%1% defence. Smitan's indirect units gain +%2 range, can attack twice, and can move after firing. When attacking an enemy unit, Smitan's direct units gain an additional +%3% firepower for each indirect unit in range of the target.");
+		text = replaceTextArgs(text, [CO_SMITAN.powerBaseOffBonus, CO_SMITAN.powerDefBonus, CO_SMITAN.superPowerFirerangeModifier, CO_SMITAN.superPowerOffBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -399,11 +399,11 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Whites of their eyes? Pahaha!"),
-                qsTr("It's over! Get used to it!!"),
-                qsTr("Fire, you idiots!!"),
-                qsTr("What're you waiting for?! SHOOT them!!"),
-                qsTr("'Calm before the storm'? ... Nonsense."),
-                qsTr("No more games! All units, full power!!")];
+                qsTr("It's over! Get used to it!"),
+                qsTr("Fire, you idiots! FIRE!"),
+                qsTr("What're you waiting for?! SHOOT them!"),
+                qsTr("'Calm before the storm'? Nonsense."),
+                qsTr("No more games! All units, full power!")];
     };
     this.getVictorySentences = function(co)
     {
@@ -412,8 +412,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Grah! Ha! Ha. Ooh! What i lost"),
-                qsTr("This and that! And what...i've lost?")];
+        return [qsTr("Grah hah hah! Ooh! ...What? What do y'mean, 'I lost'?"),
+                qsTr("Take this! And that! And... What, I lost?")];
     };
     this.getName = function()
     {

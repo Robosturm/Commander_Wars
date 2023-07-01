@@ -406,8 +406,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_REPAIR_TANK"];
             }
@@ -430,19 +430,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Units heal at half the normal rate on owned properties, but units still heal while standing next to them.");
+        return qsTr("Units heal at half the normal rate on owned properties, but will be able to heal while adjacent to them.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRepair Tank\n") +
-                   qsTr("\nGlobal Effect: \nUnits heal only %0 HP while on an owned property, however, units will still heal from any owned property within %1 space of a unit by %2 HP. This effect stacks with each additional nearby property.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
-        text = replaceTextArgs(text, [CO_ALEXIS.d2dHealMalus, CO_ALEXIS.d2dHealBonus,  CO_ALEXIS.d2dHealBonus, CO_ALEXIS.d2dCoZoneBonus]);
+                   qsTr("\nGlobal Effect: \nAlexis' units heal only +%0 HP while on an owned property, however, her units will heal from any owned property for +%2 HP if they're with within %1 space. This effect stacks with each additional nearby property.") +
+                   qsTr("\n\nCO Zone Effect: \nAlexis' units gain +%3% firepower and +%3% defence.");
+        text = replaceTextArgs(text, [CO_ALEXIS.d2dHealMalus, CO_ALEXIS.d2dHealRadius,  CO_ALEXIS.d2dHealBonus, CO_ALEXIS.d2dCoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text =  qsTr("Units within %0 spaces of any owned properties receive %1% firepower bonus and restore %2 HP per nearby property. All other units gain %3% firepower and %4% defence.");
+        var text =  qsTr("Alexis' units restore +%2 HP for each of her nearby properties within %0 spaces. Her units receive a +%1% firepower bonus while near one of her properties and +%3% firepower otherwise. All of her units gain +%4% defence.");
         text = replaceTextArgs(text, [CO_ALEXIS.powerRadius, CO_ALEXIS.powerOffBonus,  CO_ALEXIS.powerHeal, CO_ALEXIS.powerOffBaseBonus, CO_ALEXIS.powerDefBonus]);
         return text;
     };
@@ -452,7 +452,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Units within %0 spaces of any owned properties receive %1% firepower bonuses and restore %2 HP per nearby property. Enemies within %3 spaces of their own properties suffer %4 HP of damage per nearby property. All other units gain %5% firepower and %6% defence.");
+		var text =  qsTr("Enemy units suffer -%4 HP of damage for each of their owned properties within %3 space. Alexis' units restore +%2 HP for each of her nearby properties within %0 spaces. Her units receive a +%1% firepower bonus while near one of her properties and +%5% firepower otherwise. All of her units gain +%6% defence.");
         text = replaceTextArgs(text, [CO_ALEXIS.superPowerHealRadius, CO_ALEXIS.superPowerOffBonus,  CO_ALEXIS.superPowerHeal,  CO_ALEXIS.superPowerDamageRadius,  CO_ALEXIS.superPowerDamage, CO_ALEXIS.powerOffBaseBonus, CO_ALEXIS.powerDefBonus]);
         return text;
     };
@@ -478,7 +478,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("My crystals failed me."),
-                qsTr("My diamonds shattered?")];
+                qsTr("My diamonds... shattered?")];
     };
     this.getName = function()
     {

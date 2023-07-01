@@ -363,23 +363,23 @@ var Constructor = function()
     };
     this.getMiss = function(co)
     {
-        return qsTr("Percent Error");
+        return qsTr("Percent error");
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose more firepower the less HP they have compared to other co's.");
+        return qsTr("Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose even more firepower the less HP they have.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits lose %0 more firepower per lost HP.") +
-                   qsTr("\n\nCO Zone Effect: \nAn attacking unit instantly kills an enemy unit if a max luck roll would kill them. A unit gains a 1 turn %1% defense boost by killing an enemy unit. Units gain %2% firepower and %3% defence.");
+        var text = qsTr("\nGlobal Effect: \nAdam's units lose %0% more firepower per lost HP.") +
+                   qsTr("\n\nCO Zone Effect: \nAdam's attacking units instantly kill an enemy unit if a max luck roll would kill them. His units gain a one-turn %1% defence boost by killing an enemy unit. His units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_ADAM.d2dPowerMalus, CO_ADAM.d2dDefDestroyedBonus, CO_ADAM.d2dCoZoneOffBonus, CO_ADAM.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("All of Adam's units gains a %0% firepower boost and %1 movement range. Whenever Adam destroys a unit, the next unit gains %2 bonus firepower.");
-        text = replaceTextArgs(text, [CO_ADAM.powerBaseBonus, CO_ADAM.powerMovementBonus, CO_ADAM.powerDestroyedBonus]);
+        var text = qsTr("All of Adam's units gain +%1 movement, +%3% defence, and a base of +%0% firepower when attacking. Whenever Adam destroys a unit, the next unit gains an additional +%2% bonus firepower when attacking.");
+        text = replaceTextArgs(text, [CO_ADAM.powerBaseBonus, CO_ADAM.powerMovementBonus, CO_ADAM.powerDestroyedBonus, CO_ADAM.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -388,8 +388,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Adams units gain %1% firepower. Each time Adam destroys an enemy unit, the attacking unit can move again. However, each kill reduces that units firepower by %0%. Conversely, after killing a unit, using a unit that has not been used for that turn will give it additional %1% firepower.");
-        text = replaceTextArgs(text, [CO_ADAM.superPowerOffMalus, CO_ADAM.superPowerOffBaseBonus, CO_ADAM.superPowerOffDestroyedBonus]);
+        var text = qsTr("Adam's units gain a base of +%1% firepower and +%3% defence. Each time Adam attacks and destroys an enemy unit, the attacking unit can move again. However, each kill reduces that unit's firepower by +%0% until next turn. Conversely, after killing a unit, using a unit that has not been used for that turn will give it an additional %2% firepower.");
+        text = replaceTextArgs(text, [CO_ADAM.superPowerOffMalus, CO_ADAM.superPowerOffBaseBonus, CO_ADAM.superPowerOffDestroyedBonus, CO_ADAM.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

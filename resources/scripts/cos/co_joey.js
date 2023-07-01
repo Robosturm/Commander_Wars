@@ -318,20 +318,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Joey likes to live on the edge. Units are stronger when engaging stronger units, but firepower is reduced when engaging a weaker unit.");
+        return qsTr("Joey likes to live on the edge. His units are stronger when engaging stronger units, but firepower is reduced when engaging a weaker unit.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.");
+        var text = qsTr("\nGlobal Effect: \nJoey's units gain +%0% firepower when engaging stronger units, but have %1% firepower when engaging a weaker unit.") +
+               qsTr("\n\nCO Zone Effect: \nJoey's units gain +%4% firepower. They gain a total of +%2% firepower when engaging a stronger unit, but have -%3% firepower when engaging a weaker unit.");
         text = replaceTextArgs(text, [CO_JOEY.d2dOffBonus, CO_JOEY.d2dOffMalus,
-                                      CO_JOEY.d2dCoZoneOffBonus, CO_JOEY.d2dCoZoneOffMalus]);
+                                      CO_JOEY.d2dCoZoneOffBonus, CO_JOEY.d2dCoZoneOffMalus, CO_JOEY.d2dCoZoneBaseOffBonus, CO_JOEY]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Units receive %0% firepower and %1% defence boost when fighting a stronger unit.");
-        text = replaceTextArgs(text, [CO_JOEY.powerOffBonus, CO_JOEY.powerDefBonus]);
+        var text = qsTr("Joey's units gain +%2% firepower and +%3% defence. They gain a total of +%0% firepower and +%1% defence when engaging a stronger unit, but have -%4% firepower when engaging a weaker unit.");
+        text = replaceTextArgs(text, [CO_JOEY.powerOffBonus, CO_JOEY.powerDefBonus, CO_JOEY.powerBaseOffBonus, CO_JOEY.powerBaseDefBonus, CO_JOEY.powerOffMalus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -340,8 +340,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Deployment costs drops by %0% and units get first strike when fighting a stronger unit. Units gain %0% firepower when engaging stronger units, but firepower is reduced by %1% when fighting a weaker unit.");
-        text = replaceTextArgs(text, [CO_JOEY.superPowerCostReduction * 100, CO_JOEY.powerDefBonus, CO_JOEY.superPowerOffBonus, CO_JOEY.superPowerOffMalus]);
+        var text = qsTr("Joey's units gain +%3% firepower, +%4% defence, and a -%0% reduction in deployment costs. When engaging a stronger unit, they gain a total of +%1% firepower and strike first, even during counterattacks. His units have -%2% firepower when engaging a weaker unit.");
+        text = replaceTextArgs(text, [CO_JOEY.superPowerCostReduction * 100, CO_JOEY.superPowerOffBonus, CO_JOEY.superPowerOffMalus, CO_JOEY.superPowerBaseOffBonus, CO_JOEY.superPowerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -353,7 +353,7 @@ var Constructor = function()
         return [qsTr("I feel a bit dirty for doing this..."),
                 qsTr("I gave you a chance, but you didn't want it."),
                 qsTr("You gotta live life on the edge!"),
-                qsTr("You were never too good."),
+                qsTr("You were never that good."),
                 qsTr("You're going to be feeling edgy about this..."),
                 qsTr("C'mon, give the little guys a chance!"),
                 qsTr("What's a little risk taking going to hurt?")];
@@ -361,13 +361,13 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("Heh, good game."),
-                qsTr("Power isn't everything y'know..."),
+                qsTr("Power isn't everything, y'know."),
                 qsTr("Big risk, big reward!")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("This was to risky..."),
-                qsTr("I thought my risk was calculated but man i'm bad at math!")];
+        return [qsTr("This was too risky..."),
+                qsTr("I thought my risk was calculated, but man I'm bad at math!")];
     };
     this.getName = function()
     {

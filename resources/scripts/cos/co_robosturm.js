@@ -267,8 +267,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_TANK_HUNTER"];
             }
@@ -283,7 +283,7 @@ var Constructor = function()
 
     this.getBio = function(co)
     {
-        return qsTr("Black Hole was in need of new strong CO's so Lash invented a second Sturm. But he doesn't accept any orders and formed his own Army.");
+        return qsTr("After Sturm's second defeat, Black Hole was in need of new, strong CO's, so Lash invented a second, mechanical Sturm. That quickly proved to be a bad idea after he refused to take orders from humans and formed his own army.");
     };
     this.getHits = function(co)
     {
@@ -291,28 +291,28 @@ var Constructor = function()
     };
     this.getMiss = function(co)
     {
-        return qsTr("Livings");
+        return qsTr("Humans");
     };
     this.getCODescription = function(co)
     {
-        var text = qsTr("His troops can move %0 point more, but they have weaker firepower and higher defense capabilities.");
+        var text = qsTr("His troops gain +%0 movement and higher defense capabilities, but have lower firepower.");
         text = replaceTextArgs(text, [CO_ROBOSTURM.d2dMovementPoints]);
         return text;
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
-               qsTr("\nGlobal Effect: \nUnits gain %0 additional movement point and have %1% reduced firepower and %2% increased defense.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain %3% defense and have %4% reduced firepower.");
+               qsTr("\nGlobal Effect: \nRobo-Sturm's units gain +%0 movement, +%2% defence, and have %1% firepower.") +
+               qsTr("\n\nCO Zone Effect: \nRobo-Sturm's units gain +%3% defense and have %4% firepower.");
         text = replaceTextArgs(text, [CO_ROBOSTURM.d2dMovementPoints, CO_ROBOSTURM.d2dOffBonus, CO_ROBOSTURM.d2dDefBonus,
                                       CO_ROBOSTURM.d2dCoZoneDefBonus, CO_ROBOSTURM.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Enemy loses %0% of their ammo, take %1 HP damage, his troops can move %2 point more and their defense rises by %3%.");
+        var text = qsTr("A wave of mechanical energy deals -%1 HP of damage to all enemy units and causes them to lose -%0% of their maximum ammo. Robo-Sturm's units gain +%2 movement, +%3% defence, and have -%4% firepower.");
         text = replaceTextArgs(text, [CO_ROBOSTURM.powerAmmoLoose * 100, CO_ROBOSTURM.powerDamage, CO_ROBOSTURM.powerMovementPoints,
-                                      CO_ROBOSTURM.powerDefBonus]);
+                                      CO_ROBOSTURM.powerDefBonus, CO_ROBOSTURM.powerOffBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -321,9 +321,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Enemy loses %0% of their ammo, take %1 HP damage, his troops can move %2 point more and their defense rises by %3%.");
+        var text = qsTr("A massive storm of electric energy deals -%1 HP of damage to all enemy units and causes them to lose -%0% of their maximum ammo. Robo-Sturm's units gain +%2 movement, +%3% defence, and have -%4% firepower.");
         text = replaceTextArgs(text, [CO_ROBOSTURM.powerAmmoLoose * 100, CO_ROBOSTURM.superPowerDamage, CO_ROBOSTURM.superPowerMovementPoints,
-                                      CO_ROBOSTURM.superPowerDefBonus]);
+                                      CO_ROBOSTURM.superPowerDefBonus, CO_ROBOSTURM.powerOffBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -333,22 +333,23 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("System Runtime. Error! No more enemies found!"),
-                qsTr("...Sturm is coming...you have no chance..."),
-                qsTr("Order analyzed! Destroy enemies."),
-                qsTr("Nobody can kill a Robot."),
+                qsTr("Sturm is coming. You have no chance."),
+                qsTr("Order analysed! Destroy enemies."),
+                qsTr("No human can kill a robot."),
                 qsTr("This is a war of a new time!"),
-                qsTr("Humans beware the power of machines coming to your country.")];
+				qsTr("Machines will take over this country!"),
+                qsTr("The age of man is over.")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr(".........."),
-                qsTr("...Enemy destroyed! Country conquered."),
+        return [qsTr("Victory obtained. Analysing combat logs..."),
+                qsTr("Enemy destroyed! Country conquered."),
                 qsTr("Robots are stronger than human beings.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("No Program found for this Situation."),
-                qsTr("Inaccurate attack! This situation is impossible.")];
+        return [qsTr("Error! No program found for this situation!"),
+                qsTr("Inaccurate attack! This situation is impossible!")];
     };
     this.getName = function()
     {

@@ -287,8 +287,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_SIEGE_CANNON"];
             }
@@ -299,7 +299,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Brown Desert Army soldier. A man of few words but a consummate professional");
+        return qsTr("Brown Desert Army soldier. A man of few words, but a consummate professional.");
     };
     this.getHits = function(co)
     {
@@ -311,21 +311,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Indirect-combat units and sea units cause more damage and have increased firerange.");
+        return qsTr("Indirect-combat units and naval units have increased firepower.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nSiege Cannon\n") +
-               qsTr("\nGlobal Effect: \nIndirect and Sea Units have %0% offensive and %1% defensive bonus.") +
-               qsTr("\n\nCO Zone Effect: \nIndirect and Sea Units have %2% offensive and %3% defensive bonus.");
+               qsTr("\nGlobal Effect: \nGage's indirect and naval units have +%0% firepower and +%1% defence.") +
+               qsTr("\n\nCO Zone Effect: \nGage's indirect and naval units have +%2% firepower and +%3% defence. His other units have +%4% firepower and +%5% defence.");
         text = replaceTextArgs(text, [CO_GAGE.d2dOffBonus, CO_GAGE.d2dDefBonus,
-                                      CO_GAGE.d2dCoZoneOffBonus, CO_GAGE.d2dCoZoneDefBonus]);
+                                      CO_GAGE.d2dCoZoneOffBonus, CO_GAGE.d2dCoZoneDefBonus, CO_GAGE.d2dCoZoneBaseOffBonus, CO_GAGE.d2dCoZoneBaseDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Increases range of indirect units by %0 spaces. Indirect and Sea Units have %0% offensive and %1% defensive bonus.");
-        text = replaceTextArgs(text, [CO_GAGE.powerFirerangeBonus, CO_GAGE.powerOffBonus, CO_GAGE.powerDefBonus]);
+        var text = qsTr("Gage's indirect units gain +%0 range. His indirect and naval units have +%1% firepower and +%2% defence. His other units have +%3% firepower and +%4% defence.");
+        text = replaceTextArgs(text, [CO_GAGE.powerFirerangeBonus, CO_GAGE.powerOffBonus, CO_GAGE.powerDefBonus, CO_GAGE.powerBaseOffBonus, CO_GAGE.powerBaseDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -334,31 +334,30 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Increases range of indirect units by %0 spaces. Indirect and Sea Units have %0% offensive and %1% defensive bonus.");
-        text = replaceTextArgs(text, [CO_GAGE.superPowerFirerangeBonus, CO_GAGE.superPowerOffBonus, CO_GAGE.superPowerDefBonus]);
+        var text = qsTr("Gage's indirect units gain +%0 range. His indirect and naval units have +%1% firepower and +%2% defence. His other units have +%3% firepower and +%4% defence.");
+        text = replaceTextArgs(text, [CO_GAGE.superPowerFirerangeBonus, CO_GAGE.superPowerOffBonus, CO_GAGE.superPowerDefBonus, CO_GAGE.powerBaseOffBonus, CO_GAGE.powerBaseDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Snipershot");
+        return qsTr("Sniper's Shot");
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Our business is war. We should no emotions let us distract from our task."),
-                qsTr("At this distance it should be with'n firerange..."),
+        return [qsTr("Our business is war. Emotions will not distract us from our task."),
+                qsTr("At this distance it should be within firing range..."),
                 qsTr("Prepare to open fire!"),
-                qsTr("It is not my job to think about that.")];
+                qsTr("My job is to fight, not think.")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Now let us prepare for the next battle."),
-                qsTr("I have carried out my duties"),
-                qsTr("It is not my job to think about that.")];
+        return [qsTr("Now, let us prepare for the next battle."),
+                qsTr("I have carried out my duties.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Missed shot!"),
-                qsTr("What i didn't hit you?")];
+        return [qsTr("I missed the shot!"),
+                qsTr("What? I didn't hit you?!")];
     };
     this.getName = function()
     {

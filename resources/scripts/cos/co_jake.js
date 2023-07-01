@@ -2,7 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
         return ["+alt"];
     };
 
@@ -152,7 +151,7 @@ var Constructor = function()
     this.d2dCoZonePlainsBonus = 70;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
@@ -202,7 +201,7 @@ var Constructor = function()
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
-    {
+    {        
         if (CO.isActive(co))
         {
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -226,7 +225,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
                 if (unit.getBaseMaxRange() > 1 &&
-                        unit.getUnitType() === GameEnums.UnitType_Ground)
+                    unit.getUnitType() === GameEnums.UnitType_Ground)
                 {
                     return CO_JAKE.powerFirerangeBonus;
                 }
@@ -245,7 +244,7 @@ var Constructor = function()
                     co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 if (unit.getUnitType() === GameEnums.UnitType_Ground &&
-                        unit.getBaseMaxRange() === 1)
+                    unit.getBaseMaxRange() === 1)
                 {
                     return CO_JAKE.superPowerMovementBonus;
                 }
@@ -264,8 +263,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_TANK_HUNTER"];
             }
@@ -287,20 +286,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Ground units have increased firepower on plains.");
+        return qsTr("Fights well in the open. Firepower of all units is increased on plains.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nSpecial Unit:\nTank Hunter\n</r>") +
-                qsTr("<r>\n\nGlobal Effect: \nJakes's units gain </r><div c='#55ff00'>+%0%</div><r> firepower on plains terrain.</r>") +
-                qsTr("<r>\n\nCO Zone Effect: \nJakes's units gain </r><div c='#55ff00'>+%1%</div><r> firepower on plains terrain and gain </r><div c='#55ff00'>+%2%</div><r> firepower and deffense overall.</r>");
-        text = replaceTextArgs(text, [CO_JAKE.d2dPlainsBonus, CO_JAKE.d2dCoZonePlainsBonus, CO_JAKE.d2dCoZoneOffBonus]);
+        var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
+               qsTr("\nGlobal Effect: \nJake's units have +%0% firepower on plains.") +
+               qsTr("\n\nCO Zone Effect: \nJake's units gain +%2% firepower and +%3% defence. Their firepower rises to +%1% on plains.");
+        text = replaceTextArgs(text, [CO_JAKE.d2dPlainsBonus, CO_JAKE.d2dCoZonePlainsBonus, CO_JAKE.d2dCoZoneOffBonus, CO_JAKE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("<r>Jake's plains terrain firepower bonus becomes </r><div c='#55ff00'>+%0%</div><r> and deffense becomes </r><div c='#55ff00'>+%1%</div><r>. His ground indirect-combat units gain </r><div c='#55ff00'>+%2</div><r> range.</r>");
-        text = replaceTextArgs(text, [CO_JAKE.powerPlainsBonus, CO_JAKE.powerDefBonus, CO_JAKE.powerFirerangeBonus]);
+        var text = qsTr("Jake's units gain +%2% firepower and +%3% defence. Their firepower rises to +%0% on plains. His ground indirect units gain +%1 range.");
+        text = replaceTextArgs(text, [CO_JAKE.powerPlainsBonus, CO_JAKE.powerFirerangeBonus, CO_JAKE.powerOffBonus, CO_JAKE.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -309,8 +308,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("<r>Jake's plains terrain firepower bonus becomes </r><div c='#55ff00'>+%0%</div><r> and deffense becomes </r><div c='#55ff00'>+%1%</div><r>. His ground indirect-combat units gain </r><div c='#55ff00'>+%2</div><r> range and all his ground vehicle units gain </r><div c='#55ff00'>+%3 movement</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_JAKE.superPowerPlainsBonus, CO_JAKE.powerDefBonus, CO_JAKE.powerFirerangeBonus, CO_JAKE.superPowerMovementBonus]);
+        var text = qsTr("Jake's units gain +%3% firepower and +%4% defence. Their firepower rises to a massive +%0% on plains. His ground indirect units gain +%1 range. His ground direct units gain +%2 movement.");
+        text = replaceTextArgs(text, [CO_JAKE.superPowerPlainsBonus, CO_JAKE.powerFirerangeBonus, CO_JAKE.superPowerMovementBonus, CO_JAKE.powerOffBonus, CO_JAKE.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -324,7 +323,7 @@ var Constructor = function()
                 qsTr("Prepare for a subpoena of pain! Yeah, that's lawyer style!"),
                 qsTr("This is how I roll!"),
                 qsTr("Wassup now?!"),
-                qsTr("Here...have a taste!")];
+                qsTr("Here... have a taste!")];
     };
     this.getVictorySentences = function(co)
     {

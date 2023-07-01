@@ -201,8 +201,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_AT_CYCLE"];
             }
@@ -225,20 +225,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Firepower of all units is increased, thanks to his daredevil nature, but their defenses are reduced.");
+        return qsTr("Firepower of all units is increased, thanks to his daredevil nature, but their defences are reduced.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
-               qsTr("\nGlobal Effect: \nUnits have %0% reduced defense and %1% increased firepower.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %2% increased firepower bonus.");
-        text = replaceTextArgs(text, [CO_GRIMM.d2dDefBonus, CO_GRIMM.d2dOffBonus, CO_GRIMM.d2dCoZoneOffBonus]);
+               qsTr("\nGlobal Effect: \nGrimm's units gain +%1% firepower and have %0% defence.") +
+               qsTr("\n\nCO Zone Effect: \nGrimm's units gain +%2% firepower and have -%3% defence.");
+        text = replaceTextArgs(text, [CO_GRIMM.d2dDefBonus, CO_GRIMM.d2dOffBonus, CO_GRIMM.d2dCoZoneOffBonus, CO_GRIMM.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Increases the attack of all units by %0%.");
-        text = replaceTextArgs(text, [CO_GRIMM.powerOffBonus]);
+        var text = qsTr("Grimm's units gain +%0% firepower and have -%1% defence.");
+        text = replaceTextArgs(text, [CO_GRIMM.powerOffBonus, CO_GRIMM.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -247,8 +247,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Greatly increases the attack of all units by %0%.");
-        text = replaceTextArgs(text, [CO_GRIMM.superPowerOffBonus]);
+        var text = qsTr("Grimm's units gain a tremendous +%0% firepower and have -%1% defence.");
+        text = replaceTextArgs(text, [CO_GRIMM.superPowerOffBonus, CO_GRIMM.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -258,10 +258,10 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Things are lookin' Grimm for you! Harrrrr!"),
-                qsTr("You're about to enter a world of pain!!"),
+                qsTr("You're about to enter a world of pain!"),
                 qsTr("Outta the way! I got crushin' to do!"),
-                qsTr("Oooh, yeah!!|Gwar har har!! Go cry like a little girl!!"),
-                qsTr("What a pencil neck!!")];
+                qsTr("Oooh, yeah! Gwar har har! Go cry like a little girl!"),
+                qsTr("What a pencil neck!")];
     };
     this.getVictorySentences = function(co)
     {

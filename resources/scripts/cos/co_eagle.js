@@ -208,22 +208,36 @@ var Constructor = function()
             }
             case GameEnums.PowerMode_Power:
             {
-                if (attacker.getUnitType() === GameEnums.UnitType_Air)
-                {
-                    return CO_EAGLE.powerAirOffBonus;
-                }
-                else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
-                {
-                    return CO_EAGLE.powerNavalOffBonus;
-                }
-                else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
-                {
-                    return CO_EAGLE.powerInfOffBonus;
-                }
-                else
-                {
-                    return CO_EAGLE.powerOtherOffBonus;
-                }
+				if (CO_EAGLE.powerRefresh)
+				{
+					if (attacker.getUnitType() === GameEnums.UnitType_Air)
+					{
+						return CO_EAGLE.powerAirOffBonus;
+					}
+					else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
+					{
+						return CO_EAGLE.powerNavalOffBonus;
+					}
+					else if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+					{
+						return CO_EAGLE.powerInfOffBonus;
+					}
+					else
+					{
+						return CO_EAGLE.powerOtherOffBonus;
+					}
+				}
+				else
+				{
+					if (attacker.getUnitType() === GameEnums.UnitType_Air)
+					{
+						return 0-CO_EAGLE.powerAirOffBonus; //variable is negative and the power should make it positive
+					}
+					else
+					{
+						return 0;
+					}
+				}
             }
             default:
             {
@@ -343,7 +357,7 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("Lucky goggles");
+        return qsTr("His lucky goggles");
     };
     this.getMiss = function(co)
     {
@@ -351,29 +365,29 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Air units use less fuel and have superior firepower. Naval units have weaker firepower.");
+        return qsTr("He has superior air units that also use less fuel, however, his naval units are weaker.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nKirov\n") +
-                qsTr("\nGlobal Effect: \nAir units gain %0% firepower and %1% defence and use %2 less fuel, but sea units have %3% less firepower.") +
-                qsTr("\n\nCO Zone Effect: \nAir units are gain %0% firepower and %1% defence.");
+                qsTr("\nGlobal Effect: \nEagle's air units gain +%0% firepower, +%1% defence, and use %2 less fuel per day, but his naval units have %3% firepower.") +
+                qsTr("\n\nCO Zone Effect: \nEagle's air units gain +%4% firepower and +%5% defence. His naval units have -%6% firepower and +%7% defence. All of his other units gain +%8% firepower and +%7% defence.");
         text = replaceTextArgs(text, [CO_EAGLE.d2dAirOffBonus, CO_EAGLE.d2dAirDefBonus, CO_EAGLE.d2dFuelModifier, CO_EAGLE.d2dNavalOffBonus,
-                                      CO_EAGLE.d2dCoZoneAirOffBonus, CO_EAGLE.d2dCoZoneDefBonus]);
+                                      CO_EAGLE.d2dCoZoneAirOffBonus, CO_EAGLE.d2dCoZoneDefBonus, CO_EAGLE.d2dCoZoneNavalOffBonus, CO_EAGLE.d2dCoZoneDefBonus, CO_EAGLE.d2dCoZoneOtherOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
         if (CO_EAGLE.powerRefresh)
         {
-            var text = qsTr("All non-infantry units that have already carried out orders may move again. Air units are gain %0% firepower and %1% defence and sea units have %2% less firepower and ground units have %3% less firepower.");
-            text = replaceTextArgs(text, [CO_EAGLE.powerAirOffBonus, CO_EAGLE.powerAirDefBonus, CO_EAGLE.powerNavalOffBonus, CO_EAGLE.powerOtherOffBonus]);
+            var text = qsTr("All of Eagle's non-footsoldier units that have already carried out orders this turn may move again. His air units have %0% firepower and gain +%1% defence. His naval units have %2% firepower and gain +%4% defence. All of his other units have %3% firepower and gain +%4% defence.");
+            text = replaceTextArgs(text, [CO_EAGLE.powerAirOffBonus, CO_EAGLE.powerAirDefBonus, CO_EAGLE.powerNavalOffBonus, CO_EAGLE.powerOtherOffBonus, CO_EAGLE.powerDefBonus]);
             return text;
         }
         else
         {
-            var text = qsTr("Air units gain %0% firepower and %1% defence");
-            text = replaceTextArgs(text, [CO_EAGLE.powerAirOffBonus, CO_EAGLE.powerAirDefBonus]);
+            var text = qsTr("Eagle's air units gain +%0% firepower and +%1% defence. His other units gain +%2% defence.");
+            text = replaceTextArgs(text, [(0-CO_EAGLE.powerAirOffBonus), CO_EAGLE.powerAirDefBonus, CO_EAGLE.powerDefBonus]);
             return text;
         }
     };
@@ -383,8 +397,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("All non-infantry units that have already carried out orders may move again. Air units are gain %0% firepower and %1% defence and sea units have %2% less firepower and ground units have %3% less firepower.");
-        text = replaceTextArgs(text, [CO_EAGLE.superPowerAirOffBonus, CO_EAGLE.superPowerAirDefBonus, CO_EAGLE.superPowerNavalOffBonus, CO_EAGLE.superPowerOtherOffBonus]);
+        var text = qsTr("All of Eagle's non-footsoldier units that have already carried out orders this turn may move again. His air units gain +%0% firepower and +%1% defence. His naval units have -%2% firepower and gain +%4% defence. All of his other units gain +%3% firepower and +%4% defence.");
+        text = replaceTextArgs(text, [CO_EAGLE.superPowerAirOffBonus, CO_EAGLE.superPowerAirDefBonus, CO_EAGLE.superPowerNavalOffBonus, CO_EAGLE.superPowerOtherOffBonus, CO_EAGLE.superPowerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -398,7 +412,7 @@ var Constructor = function()
                 qsTr("Do you think you can keep up?"),
                 qsTr("The Eagle soars above you!"),
                 qsTr("I have no interest in underlings. Begone!"),
-                qsTr("I've caught you with your guard down!")];
+                qsTr("Aha! I've caught you with your guard down!")];
     };
     this.getVictorySentences = function(co)
     {

@@ -255,25 +255,25 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain %0% additional firepower and %1% defense.");
+        var text = qsTr("\nGlobal Effect: \nNone.") +
+               qsTr("\n\nCO Zone Effect: \nMina's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_MINA.d2dCoZoneOffBonus, CO_MINA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Unit's may take unexpectedly less damage up to %0%.");
-        text = replaceTextArgs(text, [CO_MINA.powerDamageReduction]);
+        var text = qsTr("Mina's units will randomly block up to %0% of combat damage. Her units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_MINA.powerDamageReduction, CO_MINA.powerOffBonus, CO_MINA.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Potent of Misfortune");
+        return qsTr("Portent of Adversity");
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Most expensive enemy units suffer %0 HP of damage.");
-        text = replaceTextArgs(text, [CO_MINA.superPowerDamage])
+        var text = qsTr("The most expensive 20% of enemy units suffer -%0 HP of damage. Mina's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_MINA.superPowerDamage, CO_MINA.powerOffBonus, CO_MINA.powerDefBonus])
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -282,10 +282,10 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Enemy is in range. Activating counter-measures..."),
+        return [qsTr("The enemy is in range. Activating counter-measures..."),
                 qsTr("You're done hurting my troops!"),
                 qsTr("You shouldn't have ticked me off."),
-                qsTr("Let me show you something I learned fighting Black Hole."),
+                qsTr("Let me show you something I learned while fighting Black Hole."),
                 qsTr("You want to storm my defenses? I am the storm!"),
                 qsTr("I once let someone I loved get hurt. I'm not making that mistake again!"),
                 qsTr("Let me show you why they call it girl power.")];
@@ -293,13 +293,13 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("You'll never hurt my friends again."),
-                qsTr("Well done girls. Let's go home."),
+                qsTr("Well done, girls. Let's go home."),
                 qsTr("They paid the price for their aggression.")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("I hate losing like this."),
-                qsTr("No, I need to be stronger than this.")];
+                qsTr("No. I need to be stronger than this.")];
     };
     this.getName = function()
     {

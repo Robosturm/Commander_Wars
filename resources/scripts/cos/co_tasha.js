@@ -290,7 +290,7 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("Her brother John, Revenge");
+        return qsTr("Her brother John, revenge");
     };
     this.getMiss = function(co)
     {
@@ -298,20 +298,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Air units have higher firepower and defense.");
+        return qsTr("She possesses superior air units.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nKirov\n") +
-               qsTr("\nGlobal Effect: \nAir Units have %0% increased firepower and %1% increased defense.") +
-               qsTr("\n\nCO Zone Effect: \nAir Units have %2% increased firepower and %3% increased defense.");
-        text = replaceTextArgs(text, [CO_TASHA.d2dOffBonus , CO_TASHA.d2dDeffBonus, CO_TASHA.d2dCoZoneOffBonus, CO_TASHA.d2dCoZoneDeffBonus]);
+               qsTr("\nGlobal Effect: \nTasha's air units have +%0% firepower and +%1% defence.") +
+               qsTr("\n\nCO Zone Effect: \nTasha's air units gain +%2% firepower and +%3% defence. Her other units gain +%4% firepower and +%5% defence.");
+        text = replaceTextArgs(text, [CO_TASHA.d2dOffBonus , CO_TASHA.d2dDeffBonus, CO_TASHA.d2dCoZoneOffBonus, CO_TASHA.d2dCoZoneDeffBonus, CO_TASHA.d2dCoZoneBaseOffBonus, CO_TASHA.d2dCoZoneBaseDeffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Air units have increased firepower by %0 and defense by %1. All units can move %2 space farther.");
-        text = replaceTextArgs(text, [CO_TASHA.powerOffBonus , CO_TASHA.powerDefBonus, CO_TASHA.powerMovementBonus]);
+        var text = qsTr("Tasha's air units gain +%0% firepower and +%1% defence. Her other units gain +%2% firepower and +%3% defence. All of her units gain +%4 movement.");
+        text = replaceTextArgs(text, [CO_TASHA.powerOffBonus , CO_TASHA.powerDefBonus, CO_TASHA.powerBaseOffBonus, CO_TASHA.powerBaseDefBonus, CO_TASHA.powerMovementBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -321,8 +321,8 @@ var Constructor = function()
     this.getSuperPowerDescription = function(co)
     {
 
-        var text = qsTr("Air units have increased firepower by %0 and defense by %1. All units can move %2 space farther.");
-        text = replaceTextArgs(text, [CO_TASHA.superPowerOffBonus , CO_TASHA.superPowerDefBonus, CO_TASHA.superPowerMovementBonus]);
+        var text = qsTr("Tasha's air units gain +%0% firepower and +%1% defence. Her other units gain +%2% firepower and +%3% defence. All of her units gain +%4 movement.");
+        text = replaceTextArgs(text, [CO_TASHA.superPowerOffBonus , CO_TASHA.superPowerDefBonus, CO_TASHA.powerBaseOffBonus, CO_TASHA.powerBaseDefBonus, CO_TASHA.superPowerMovementBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -331,9 +331,9 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("All units follow my lead."),
+        return [qsTr("All units! Follow my lead!"),
                 qsTr("The time for revenge is at hand!"),
-                qsTr("I will fight on, even if it costs my life!"),
+                qsTr("I will fight on, even if it costs me my life!"),
                 qsTr("I will have my revenge!")];
     };
     this.getVictorySentences = function(co)
@@ -344,8 +344,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("This is not the end. I will fight for John."),
-                qsTr("Next time... Next time i will avenge you John...")];
+        return [qsTr("This is not the end. I will fight for John!"),
+                qsTr("Next time... Next time I will avenge you John...")];
     };
     this.getName = function()
     {

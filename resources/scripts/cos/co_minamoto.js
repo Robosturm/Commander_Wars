@@ -311,8 +311,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_NEOSPIDER_TANK"];
             }
@@ -326,7 +326,7 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("Rice Cakes");
+        return qsTr("Rice cakes");
     };
     this.getMiss = function(co)
     {
@@ -339,15 +339,15 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
-               qsTr("\nGlobal Effect: \nUnits near Mountains gain %0% additional firepower.") +
-               qsTr("\n\nCO Zone Effect: \nUnits near Mountains gain %1% additional firepower.");
-        text = replaceTextArgs(text, [CO_MINAMOTO.d2dOffBonus, CO_MINAMOTO.d2dCoZoneOffBonus]);
+               qsTr("\nGlobal Effect: \nMinamoto's units within two spaces of mountains gain +%0% firepower.") +
+               qsTr("\n\nCO Zone Effect: \nMinamoto's units gain +%1% firepower and +%2% defence. His units within two spaces of mountains gain a total of +%3% firepower.");
+        text = replaceTextArgs(text, [CO_MINAMOTO.d2dOffBonus, CO_MINAMOTO.d2dCoZoneBaseOffBonus, CO_MINAMOTO.d2dCoZoneDefBonus, CO_MINAMOTO.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Direct units blow enemies %0 fields away when dealing %1 HP damage. Units near Mountains gain %2% additional firepower.");
-        text = replaceTextArgs(text, [CO_MINAMOTO.powerBlowRange, CO_MINAMOTO.powerBlowHp, CO_MINAMOTO.powerOffBonus]);
+        var text = qsTr("Minamoto's units gain +%3% firepower and +%4% defence. His units within two spaces of mountains gain a total of +%2% firepower. Nonlethal attacks made by Minamoto's direct combat units that deal at least %1 HP of damage blow the defender a maximum of %0 spaces away.");
+        text = replaceTextArgs(text, [CO_MINAMOTO.powerBlowRange, CO_MINAMOTO.powerBlowHp, CO_MINAMOTO.powerOffBonus, CO_MINAMOTO.powerBaseOffBonus, CO_MINAMOTO.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -356,13 +356,13 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Unit movement is increased by %0. Direct units blow enemies %1 fields away when dealing %2 HP damage. Units near Mountains gain %3% additional firepower.");
-        text = replaceTextArgs(text, [CO_MINAMOTO.superPowerMovementPoints, CO_MINAMOTO.superPowerBlowRange, CO_MINAMOTO.superPowerBlowHp, CO_MINAMOTO.superPowerOffBonus]);
+        var text = qsTr("Minamoto's units gain +%0 movement, +%4% firepower, and +%5% defence. His units within two spaces of mountains gain a total of +%3% firepower. Nonlethal attacks made by Minamoto's direct combat units that deal at least %2 HP of damage blow the defender a maximum of %1 spaces away.");
+        text = replaceTextArgs(text, [CO_MINAMOTO.superPowerMovementPoints, CO_MINAMOTO.superPowerBlowRange, CO_MINAMOTO.superPowerBlowHp, CO_MINAMOTO.superPowerOffBonus, CO_MINAMOTO.powerBaseOffBonus, CO_MINAMOTO.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Storm Blades");
+        return qsTr("Storm Slash");
     };
     this.getPowerSentences = function(co)
     {

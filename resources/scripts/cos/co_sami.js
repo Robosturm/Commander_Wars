@@ -2,7 +2,6 @@ var Constructor = function()
 {
     this.getCOStyles = function()
     {
-        // string array containing the endings of the alternate co style
         return ["+alt", "+alt2", "+alt3"];
     };
 
@@ -164,7 +163,7 @@ var Constructor = function()
     this.d2dTransporterMovementPoints = 1;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-      defender, defPosX, defPosY, isDefender, action, luckmode, map)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
@@ -215,17 +214,20 @@ var Constructor = function()
                 return CO_SAMI.d2dDirectOffBonus;
             }
         }
-        return CO_SAMI.d2dDirectOffBonus;
+        return 0;
     };
-
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                return CO_SAMI.powerDefBonus + CO_SAMI.d2dInfDefBonus;
+				if (defender.getUnitType() === GameEnums.UnitType_Infantry)
+				{
+					return CO_SAMI.powerDefBonus + CO_SAMI.d2dInfDefBonus;
+				}
+				return CO_SAMI.powerDefBonus;
             }            
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
@@ -236,7 +238,7 @@ var Constructor = function()
                 return CO_SAMI.d2dInfDefBonus;
             }
         }
-        return CO_SAMI.d2dDefBonus;
+        return 0;
     };
     this.getCaptureBonus = function(co, unit, posX, posY, map)
     {
@@ -325,8 +327,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_COMMANDO"];
             }
@@ -337,7 +339,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A strong-willed Orange Star special forces captain who loves long hair. Despite having short hair. Whatever, IS.");
+        return qsTr("A strong-willed Orange Star special forces captain who loves long hair, despite having short hair for some reason.");
     };
     this.getHits = function(co)
     {
@@ -349,20 +351,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("<r>strong infantry units that can capture faster, weak direct combat units.</r>");
+        return qsTr("As an infantry specialist, her footsoldiers do more damage and capture faster. Her other direct-combat units have weaker firepower.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nSpecial Unit:\nCommando</r>" +
-                        "<r>\n\nGlobal Effect: \nSami's transport units gain </r><div c='#55ff00'>+%0 movement</div><r> and her foot soldier units gain </r><div c='#55ff00'>+%1%</div><r> firepower and capture at </r><div c='#55ff00'>%2</div><r> times the normal rate. Her other direct-combat units deal </r><div c='#ff2626'>%3%</div><r> less damage.</r>" +
-                        "<r>\n\nCO Zone Effect: \nSami's foot soldiers firepower increases by </r><div c='#55ff00'>+%4%</div><r> while all other units gain </r><div c='#55ff00'>+%5%</div><r> firepower and </r><div c='#55ff00'>+%6%</div><r> defense.</r>");
-        text = replaceTextArgs(text, [CO_SAMI.d2dTransporterMovementPoints, CO_SAMI.d2dInfOffBonus, CO_SAMI.d2dCaptureMultiplier * 100, CO_SAMI.d2dDirectOffBonus, CO_SAMI.d2dCoZoneOffBonus, CO_SAMI.d2dCoZoneBaseOffBonus, CO_SAMI.d2dCoZoneDefBonus]);
+        var text = qsTr("\nSpecial Unit:\nCommando\n") +
+               qsTr("\nGlobal Effect: \nSami's footsoldiers gain +%2% firepower, +%3% defence, and a +%1% capture bonus. Her non-combat transporter units have +%0 movement. Her other direct-combat units have %4% firepower.") +
+               qsTr("\n\nCO Zone Effect: \nSami's footsoldiers gain +%5% firepower. Her other direct units have -%6% firepower. Her indirect units gain +%7% firepower. All of her units gain +%8% defence.");
+        text = replaceTextArgs(text, [CO_SAMI.d2dTransporterMovementPoints, CO_SAMI.d2dCaptureMultiplier * 100, CO_SAMI.d2dInfOffBonus, CO_SAMI.d2dInfDefBonus, CO_SAMI.d2dDirectOffBonus, CO_SAMI.d2dCoZoneOffBonus, CO_SAMI.d2dCoZoneBaseOffBonus+CO_SAMI.d2dDirectOffBonus, CO_SAMI.d2dCoZoneBaseOffBonus, CO_SAMI.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("<r>Sami's Infantry gain </r><div c='#55ff00'>+%0 movement</div><r> and their firepower increases by </r><div c='#55ff00'>+%1%</div><r> while all other units gain </r><div c='#55ff00'>+%2%</div><r> firepower and </r><div c='#55ff00'>+%3%</div><r> defense.</r>");
-        text = replaceTextArgs(text, [CO_SAMI.powerMovementPoints, CO_SAMI.powerOffBonus, CO_SAMI.powerBaseOffBonus, CO_SAMI.d2dCoZoneDefBonus]);
+        var text = qsTr("Sami's footsoldiers gain +%0 movement and +%1% firepower. Her other direct units have -%2% firepower. Her indirect units gain +%3% firepower. All of her units gain +%4% defence.");
+        text = replaceTextArgs(text, [CO_SAMI.powerMovementPoints, CO_SAMI.powerOffBonus, CO_SAMI.powerBaseOffBonus+CO_SAMI.d2dDirectOffBonus, CO_SAMI.powerBaseOffBonus, CO_SAMI.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -371,11 +373,10 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("<r>Sami's foot soldiers gain a capture </r><div c='#55ff00'>%0</div><r> capture rate, gain </r><div c='#55ff00'>+%1 movement</div><r> and their firepower increases by </r><div c='#55ff00'>+%2%</div><r> while all other units gain </r><div c='#55ff00'>+%3%</div><r> firepower and </r><div c='#55ff00'>+%4%</div><r> defense.</r>");
-        text = replaceTextArgs(text, [CO_SAMI.superpowerCaptureMultiplier * 100, CO_SAMI.superpowerMovementPoints, CO_SAMI.superPowerOffBonus, CO_SAMI.powerBaseOffBonus, CO_SAMI.d2dCoZoneDefBonus]);
+        var text = qsTr("Sami's footsoldiers gain +%1 movement, +%2% firepower, and an outrageous +%0% capture bonus. Her other direct units have -%3% firepower. Her indirect units gain +%4% firepower. All of her units gain +%5% defence.");
+        text = replaceTextArgs(text, [CO_SAMI.superpowerCaptureMultiplier * 100, CO_SAMI.superpowerMovementPoints, CO_SAMI.superPowerOffBonus, CO_SAMI.powerBaseOffBonus+CO_SAMI.d2dDirectOffBonus, CO_SAMI.powerBaseOffBonus, CO_SAMI.powerDefBonus]);
         return text;
     };
-
     this.getSuperPowerName = function(co)
     {
         return qsTr("Victory March");
@@ -383,22 +384,22 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("You're not bad!  Now it's my turn!"),
-            qsTr("All right!  Time to end this!"),
-            qsTr("Infantry... Assault!"),
-            qsTr("Ready or not, here I come!"),
-            qsTr("All right, it's make-or-break time!"),
-            qsTr("Move out, grunts!")];
+                qsTr("All right!  Time to end this!"),
+                qsTr("Infantry... Assault!"),
+                qsTr("Ready or not, here I come!"),
+                qsTr("All right, it's make-or-break time!"),
+                qsTr("Move out, grunts!")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Mission accomplished! Awaiting orders!"),
-            qsTr("Commandos always complete their mission."),
-            qsTr("Score one for the grunts!")];
+        return [qsTr("Mission accomplished! Awaiting further orders!"),
+                qsTr("Commandos always complete their mission."),
+                qsTr("Score one for the grunts!")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Things would be easier if we had more infantry units..."),
-            qsTr("Next time's for real. I won't lose focus.")];
+                qsTr("Next time's for real. I won't lose focus.")];
     };
     this.getName = function()
     {
