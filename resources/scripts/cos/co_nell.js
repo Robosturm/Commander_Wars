@@ -206,7 +206,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("Rachel's older sister and supreme commander of the Orange Star army, Nell is an able commanding officer with a superb sense of fashion.");
+        return qsTr("Rachel's older sister and supreme commander of the Orange Star Army, Nell is an able commanding officer with a superb sense of fashion.");
     };
     this.getHits = function(co)
     {
@@ -218,19 +218,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("<r>Luck boost from powers.</r>");
+        return qsTr("Can strike with more force than expected. She's the first to tell you she was born lucky.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nGlobal Effect: \nUnits have %0% luck.</r>" +
-                        "<r>\n\nCO Zone Effect: \nNell's units can inflict up to </r><div c='#55ff00'>+%1%</div><r> luck damage instead of the standard %0%. attack and defense raises by </r><div c='#55ff00'>+%2%</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_NELL.d2dLuckBonus, CO_NELL.d2dCoZoneLuckBonus, CO_NELL.d2dCoZoneOffBonus]);
+        var text = qsTr("\nGlobal Effect: \nNell's units have +%0 luck.") +
+               qsTr("\n\nCO Zone Effect: \nNell's units have +%1 luck, +%2% firepower, and +%3% defence.");
+        text = replaceTextArgs(text, [CO_NELL.d2dLuckBonus, CO_NELL.d2dCoZoneLuckBonus, CO_NELL.d2dCoZoneOffBonus, CO_NELL.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("<r>Nell's luck damage increases up to </r><div c='#55ff00'>+%0%</div><r> and all units attack and defense raises by </r><div c='#55ff00'>+%1%</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_NELL.powerLuckBonus, CO_NELL.powerOffBonus]);
+        var text = qsTr("Nell's units have +%0 luck, +%1% firepower, and +%2% defence. Lucky!");
+        text = replaceTextArgs(text, [CO_NELL.powerLuckBonus, CO_NELL.powerOffBonus, CO_NELL.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -239,8 +239,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("<r>Nell's luck damage increases up to </r><div c='#55ff00'>+%0%</div><r> and all units attack and defense raises by </r><div c='#55ff00'>+%1%</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_NELL.superPowerLuckBonus, CO_NELL.powerOffBonus]);
+        var text = qsTr("Nell's units have +%0 luck, +%1% firepower, and +%2% defence. Very lucky!");
+        text = replaceTextArgs(text, [CO_NELL.superPowerLuckBonus, CO_NELL.powerOffBonus, CO_NELL.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -259,7 +259,7 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("Did I go too far?"),
-                qsTr("Lady luck was with me!"),
+                qsTr("Lady Luck was with me!"),
                 qsTr("...And that's how it's done.")];
     };
     this.getDefeatSentences = function(co)

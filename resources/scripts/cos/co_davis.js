@@ -336,33 +336,33 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("He is a coward who always sides with the winning side.");
+        return qsTr("He is a coward who always allies with the winning side.");
     };
     this.getHits = function(co)
     {
-        return qsTr("Side with the winning side");
+        return qsTr("Allying with the winning side");
     };
     this.getMiss = function(co)
     {
-        return qsTr("Side with the losing side");
+        return qsTr("Being on the losing side");
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Gains luck and missfortune based on the amount of troops on the field.");
+        return qsTr("Gains luck and misfortune based on the amount of troops on the field.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nNone\n") +
-               qsTr("\nGlobal Effect: \nIf Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.") +
-               qsTr("\n\nCO Zone Effect: \nIf Davis and his allies controls more units than his enemies. He gains %4% luck per unit up to a maximum of %5%. Else he gains %6% missfortune per unit up to a maximum of %7%.");
+               qsTr("\nGlobal Effect: \nIf Davis and his allies control more units than his enemies, his units gain +%0 luck per unit up to a maximum of +%1. Otherwise, his units gain +%2 misfortune per unit up to a maximum of +%3.") +
+               qsTr("\n\nCO Zone Effect: \nDavis' units gain +%8% firepower and +%9% defence. If Davis and his allies control more units than his enemies, his units gain +%4 luck per unit up to a maximum of +%5. Otherwise, his units gain +%6 misfortune per unit up to a maximum of +%7.");
         text = replaceTextArgs(text, [CO_DAVIS.d2dLuckPerUnit, CO_DAVIS.d2dMaxLuck, CO_DAVIS.d2dMissFortunePerUnit, CO_DAVIS.d2dMaxMissFortune,
-                                      CO_DAVIS.d2dCoZoneLuckPerUnit, CO_DAVIS.d2dCoZoneMaxLuck, CO_DAVIS.d2dCoZoneMissFortunePerUnit, CO_DAVIS.d2dCoZoneMaxMissFortune]);
+                                      CO_DAVIS.d2dCoZoneLuckPerUnit, CO_DAVIS.d2dCoZoneMaxLuck, CO_DAVIS.d2dCoZoneMissFortunePerUnit, CO_DAVIS.d2dCoZoneMaxMissFortune, CO_DAVIS.d2dCoZoneOffBonus, CO_DAVIS.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("If Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.");
-        text = replaceTextArgs(text, [CO_DAVIS.powerLuckPerUnit, CO_DAVIS.powerMaxLuck, CO_DAVIS.powerMissFortunePerUnit, CO_DAVIS.powerMaxMissFortune]);
+        var text = qsTr("Davis' units gain +%4% firepower and +%5% defence. If Davis and his allies control more units than his enemies, his units gain +%0 luck per unit up to a maximum of +%1. Otherwise, his units gain +%2 misfortune per unit up to a maximum of +%3.");
+        text = replaceTextArgs(text, [CO_DAVIS.powerLuckPerUnit, CO_DAVIS.powerMaxLuck, CO_DAVIS.powerMissFortunePerUnit, CO_DAVIS.powerMaxMissFortune, CO_DAVIS.powerOffBonus, CO_DAVIS.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -371,13 +371,13 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("If Davis and his allies controls more units than his enemies. He gains %0% luck per unit up to a maximum of %1%. Else he gains %2% missfortune per unit up to a maximum of %3%.");
-        text = replaceTextArgs(text, [CO_DAVIS.superPowerLuckPerUnit, CO_DAVIS.superPowerMaxLuck, CO_DAVIS.superPowerMissFortunePerUnit, CO_DAVIS.superPowerMaxMissFortune]);
+        var text = qsTr("Davis' units gain +%4% firepower and +%5% defence. If Davis and his allies control more units than his enemies, his units gain +%0 luck per unit up to a maximum of +%1. Otherwise, his units gain +%2 misfortune per unit up to a maximum of +%3.");
+        text = replaceTextArgs(text, [CO_DAVIS.superPowerLuckPerUnit, CO_DAVIS.superPowerMaxLuck, CO_DAVIS.superPowerMissFortunePerUnit, CO_DAVIS.superPowerMaxMissFortune, CO_DAVIS.powerOffBonus, CO_DAVIS.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("The stronger Side");
+        return qsTr("The Stronger Side");
     };
     this.getPowerSentences = function(co)
     {
@@ -387,14 +387,14 @@ var Constructor = function()
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("That's why i sided with them!"),
-                qsTr("The stronger side always wins!!"),
+        return [qsTr("That's why I allied with them!"),
+                qsTr("The stronger side always wins!"),
                 qsTr("I joined the correct side!")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("I-I don't believe it... They were... stronger than me?"),
-                qsTr("I-I'll join you and do whatever you want!!!")];
+                qsTr("I-I'll join you and do whatever you want! Promise!")];
     };
     this.getName = function()
     {

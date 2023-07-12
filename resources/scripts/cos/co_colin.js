@@ -139,7 +139,7 @@ var Constructor = function()
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                var bonus = attacker.getOwner().getFunds() / 1000 * CO_COLIN.superPowerOffBonus - CO_COLIN.powerOffBonus;
+                var bonus = attacker.getOwner().getFunds() / 1000 * CO_COLIN.superPowerOffBonus + CO_COLIN.powerOffBonus;
                 return bonus;
             case GameEnums.PowerMode_Power:
                 return CO_COLIN.powerOffBonus;
@@ -180,8 +180,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_LOGIC_TRUCK"];
             }
@@ -203,20 +203,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("The heir to a vast fortune who can purchase units at bargain-basement prices. Troops are low firepower stems from his lack of confidence.");
+        return qsTr("The heir to a vast fortune who can purchase units at bargain-basement prices. His troops' low firepower stems from his lack of confidence.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
-                qsTr("\nGlobal Effect: \nUnits are %0% cheaper and have %1% less firepower.") +
-                qsTr("\n\nCO Zone Effect: \nUnits have only %2% weaker firepower.");
-        text = replaceTextArgs(text, [CO_COLIN.d2dCostModifier, CO_COLIN.d2dOffBonus, CO_COLIN.d2dCoZoneOffBonus]);
+                qsTr("\nGlobal Effect: \nColin's units have a %0% reduction in deployment costs and have %1% firepower.") +
+                qsTr("\n\nCO Zone Effect: \nColin's units have %2% firepower and gain +%3% defence.");
+        text = replaceTextArgs(text, [CO_COLIN.d2dCostModifier, CO_COLIN.d2dOffBonus, CO_COLIN.d2dCoZoneOffBonus, CO_COLIN.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Increases current funds by %0%.");
-        text = replaceTextArgs(text, [CO_COLIN.powerFundsMultiplier * 100]);
+        var text = qsTr("Colin boosts his deployment funds by +%0%. His units have %1% firepower and gain +%2% defence.");
+        text = replaceTextArgs(text, [CO_COLIN.powerFundsMultiplier * 100, CO_COLIN.powerOffBonus, CO_COLIN.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -225,8 +225,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Uses wealth to increase the strength of units. He gains %0% firepower per 1000 funds.");
-        text = replaceTextArgs(text, [CO_COLIN.superPowerOffBonus]);
+        var text = qsTr("Colin uses wealth to increase the strength of units. His units start with %1% firepower, but gain +%0% firepower per 1000 funds he has. His units gain +%2% defence.");
+        text = replaceTextArgs(text, [CO_COLIN.superPowerOffBonus, CO_COLIN.powerOffBonus, CO_COLIN.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -237,21 +237,21 @@ var Constructor = function()
     {
         return [qsTr("Let me show you the power of money!"),
                 qsTr("This is not a drill... I won't give up so easily!"),
-                qsTr("People of Blue Moon!  I need your help!"),
+                qsTr("People of Blue Moon! I need your help!"),
                 qsTr("I'll give it everything I've got!"),
                 qsTr("You're not getting away with this!"),
                 qsTr("I'll show you what I can do!")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("I w-won! Whew!"),
-                qsTr("I'll win if I try my best!"),
+        return [qsTr("I-I won! Whew!"),
+                qsTr("I won because I tried my best!"),
                 qsTr("Whew... I won! I really won!")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("If only Commander Olaf were here..."),
-                qsTr("Wait till I tell my sis! Then you'll be sorry!")];
+                qsTr("Wait 'til I tell my sis! Then you'll be sorry!")];
     };
     this.getName = function()
     {

@@ -313,8 +313,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_TANK_HUNTER"];
             }
@@ -324,7 +324,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A gallant tank-driving commander who excels at analyzing information. Often argues with Eagle.");
+        return qsTr("A gallant tank-driving commander who excels at analysing information. Often argues with Eagle.");
     };
     this.getHits = function(co)
     {
@@ -336,21 +336,22 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Vehicular units have superior firepower. Air and naval units are comparatively weak.");
+        return qsTr("Ground vehicles have increased firepower. Air and naval units are comparatively weak.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
-               qsTr("\nGlobal Effect: \nInfantry units get %0% firepower. Air and Sea Units get %1% firepower and Ground Units have increased firepower by %2%.") +
-               qsTr("\n\nCO Zone Effect: \nInfantry units get %3% firepower. Air and Sea Units get %4% firepower and Ground Units have increased firepower by %5%.");
+               qsTr("\nGlobal Effect: \nJess' ground vehicles gain +%2% firepower. Her footsoldier units gain +%0% firepower. Her air and naval units have %1% firepower.") +
+               qsTr("\n\nCO Zone Effect: \nJess' ground vehicles gain +%5% firepower. Her footsoldier units gain +%3% firepower. Her air and naval units have -%4% firepower.");
         text = replaceTextArgs(text, [CO_JESS.d2dInfBonus, CO_JESS.d2dNavalAirBonus, CO_JESS.d2dGroundBonus,
                                       CO_JESS.d2dCoZoneInfBonus, CO_JESS.d2dCoZoneNavalAirBonus, CO_JESS.d2dCoZoneGroundBonus]);
         return text;
     };
+	//technically these power descriptions are wrong with regards to inf but there's no practical difference and it's wordy enough as is
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Infantry units get %0% firepower. Air and Sea Units get %1% firepower and Ground Units have increased firepower by %2%. Movement range of vehicles increases by %3 space. All units' fuel and ammunition supplies are replenished.");
-        text = replaceTextArgs(text, [CO_JESS.powerInfBonus, CO_JESS.powerNavalAirBonus, CO_JESS.powerGroundBonus, CO_JESS.powerMovementBonus]);
+        var text = qsTr("Jess' ground vehicles gain +%3 movement and +%2% firepower. Her air and naval units have -%1% firepower. Her other units gain +%0% firepower. All of her units replenish all fuel and ammunition and gain +%4% defence.");
+        text = replaceTextArgs(text, [CO_JESS.powerOffBonus, CO_JESS.powerNavalAirBonus, CO_JESS.powerGroundBonus, CO_JESS.powerMovementBonus, CO_JESS.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -359,8 +360,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Infantry units get %0% firepower. Air and Sea Units get %1% firepower and Ground Units have increased firepower by %2%. Movement range of vehicles increases by %3 spaces. All units' fuel and ammunition supplies are replenished.");
-        text = replaceTextArgs(text, [CO_JESS.superPowerInfBonus, CO_JESS.superPowerNavalAirBonus, CO_JESS.superPowerGroundBonus, CO_JESS.superPowerMovementBonus]);
+        var text = qsTr("Jess' ground vehicles gain +%3 movement and +%2% firepower. Her air and naval units have -%1% firepower. Her other units gain +%0% firepower. All of her units replenish all fuel and ammunition and gain +%4% defence."); 
+        text = replaceTextArgs(text, [CO_JESS.powerOffBonus, CO_JESS.superPowerNavalAirBonus, CO_JESS.superPowerGroundBonus, CO_JESS.superPowerMovementBonus, CO_JESS.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -369,7 +370,7 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Battle should never be taken lightly. I always give 100%! Always!!!"),
+        return [qsTr("Battle should never be taken lightly. I always give 100%! Always!"),
                 qsTr("I won't let this chance pass me by!"),
                 qsTr("Weakness has no place on the battlefield!"),
                 qsTr("Here's my chance..."),
@@ -385,7 +386,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("This is looking grim..."),
-                qsTr("It was inevitable under these conditions.")];
+                qsTr("The conditions were too poor. It was inevitable...")];
     };
     this.getName = function()
     {

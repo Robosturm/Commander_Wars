@@ -213,8 +213,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_PARTISAN"];
             }
@@ -243,13 +243,13 @@ var Constructor = function()
     {
         var text = qsTr("\nSpecial Unit:\nPartisan\n") +
                    qsTr("\nGlobal Effect: \nBuildings that Alexander owns put up a fight when being captured by enemy soldiers. Each building recovers %0 capture point each day while under siege.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and defence.");
+                   qsTr("\n\nCO Zone Effect: \nAlexander's units gain +%1% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_ALEXANDER.d2dRevoltPoints, CO_ALEXANDER.d2dCoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Alexander's charisma and brilliant speech wins over the people. Alexander's troops capture at a %0% faster rate, while enemy captures are forced to restart entirely. They also gain %1% firepower and %2% defence.");
+        var text = qsTr("Alexander's charisma and brilliant speech wins over the people. Alexander's troops have a +%0% capture bonus, while enemy captures are forced to restart entirely. Alexander's units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_ALEXANDER.powerCaptureBonus, CO_ALEXANDER.powerOffBonus, CO_ALEXANDER.powerDefBonus]);
         return text;
     };
@@ -259,7 +259,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Enemies receive no income for this turn, and half of their current funds are diverted to Alexander. They also gain %0% firepower and %1% defence.");
+        var text = qsTr("Enemies receive no income for this turn, and half of their current funds are diverted to Alexander. Alexander's units gain +%0% firepower and +%1% defence.");
         text = replaceTextArgs(text, [CO_ALEXANDER.powerOffBonus, CO_ALEXANDER.powerDefBonus]);
         return text;
     };
@@ -274,7 +274,7 @@ var Constructor = function()
                 qsTr("The people will rally under my cause!"),
                 qsTr("Now we shall see where their loyalties truly belong."),
                 qsTr("Perhaps this will get you to consider a peaceful resolution!"),
-                qsTr("You can only win a war if your people support you, allow me to demonstrate!")];
+                qsTr("You can only win a war if your people support you. Allow me to demonstrate!")];
     };
     this.getVictorySentences = function(co)
     {

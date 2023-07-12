@@ -239,7 +239,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.");
+        return qsTr("A youthful CO that will protect her village at all costs. She is skilled in dealing with sandstorms.");
     };
     this.getHits = function(co)
     {
@@ -251,19 +251,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Zandra's units are unaffected by sandstorms and are fighting better during them.");
+        return qsTr("Zandra's units are unaffected by sandstorms and fight better during them.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms and gain %0% firepower during sandstorm.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits get %1% firepower during sandstorm and %2% firepower otherwise. All units also gain %3% defence.");
+        var text = qsTr("\nGlobal Effect: \nZandra's units are unaffected by sandstorms and gain +%0% firepower during a sandstorm.") +
+                   qsTr("\n\nCO Zone Effect: \nZandra's units gain +%1% firepower during a sandstorm and +%2% firepower otherwise. All her units gain +%3% defence.");
         text = replaceTextArgs(text, [CO_ZANDRA.d2dSandStormBonus, CO_ZANDRA.d2dCoZoneSandStormBonus, CO_ZANDRA.d2dCoZoneOffBonus, CO_ZANDRA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%.");
-        text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus]);
+        var text = qsTr("Changes the weather to a Sandstorm. Zandra's indirect units gain +%0 range. Her units gain +%2% firepower and +%3% defence. Her units gain a total of +%1% firepower while the weather is a Sandstorm.");
+        text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.powerOffBonus, CO_ZANDRA.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -272,8 +272,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Causes sandstorm to fall for one day. Increasing the firerange of indirects by %0 and increasing her firepower by %1%. Also deals %2 HP damage to enemies.");
-        text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.superPowerSandstormDamage]);
+        var text = qsTr("A massive gust front changes the weather to a Sandstorm and deals -%2 HP of damage to all enemy units. Zandra's indirect units gain +%0 range. Her units gain +%3% firepower and +%4% defence. Her units gain a total of +%1% firepower while the weather is a Sandstorm.");
+        text = replaceTextArgs(text, [CO_ZANDRA.powerSandstormRangeBonus , CO_ZANDRA.powerSandstormBonus, CO_ZANDRA.superPowerSandstormDamage, CO_ZANDRA.powerOffBonus, CO_ZANDRA.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -283,7 +283,7 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("It's high time that you felt the wrath of the desert winds."),
-                qsTr("I feel the power coming in, on the far winds."),
+                qsTr("I feel the power coming in, on the far winds!"),
                 qsTr("You'll regret challenging me."),
                 qsTr("Come, father of the four winds!"),
                 qsTr("Your eyes will fill with sand, as you scan this wasted land..."),
@@ -297,8 +297,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("I only lost because of the Snow around here."),
-                qsTr("What? I can't lose. We have a Global Heating.")];
+        return [qsTr("I only lost because of the snow around here."),
+                qsTr("What? I can't lose. Not while the globe is heating up!")];
     };
     this.getName = function()
     {

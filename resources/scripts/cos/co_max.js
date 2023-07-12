@@ -147,13 +147,13 @@ var Constructor = function()
     this.d2dCoZoneOffBonus = 45;
     this.d2dCoZoneIndirectOffBonus = 0;
     this.d2dCoZoneOtherOffBonus = 10;
-    this.d2dIndirectFirerangeMalus = -1;
+    this.d2dIndirectFirerangeMalus = 1;
     this.d2dOffBonus = 15;
     this.d2dIndirectOffBonus = -10;
     this.d2dOtherOffBonus = 0;
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (CO.isActive(co))
         {
@@ -161,65 +161,65 @@ var Constructor = function()
             var isIndirect = (attacker.getBaseMaxRange() > 1);
             switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-            {
-                if (isDirect)
-                {
-                    return CO_MAX.superPowerOffBonus;
-                }
-                else if (isIndirect)
-                {
-                    return CO_MAX.powerIndirectOffBonus;
-                }
-                return CO_MAX.powerOtherBonus;
-            }
-            case GameEnums.PowerMode_Power:
-            {
-                if (isDirect)
-                {
-                    return CO.powerOffBonus;
-                }
-                else if (isIndirect)
-                {
-                    return CO_MAX.powerIndirectOffBonus;
-                }
-                return CO_MAX.powerOtherBonus;
-            }
-            default:
-            {
-                var inCoZone = co.inCORange(Qt.point(atkPosX, atkPosY), attacker);
-                if (inCoZone)
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
                 {
                     if (isDirect)
                     {
-                        return CO_MAX.d2dCoZoneOffBonus;
+                        return CO_MAX.superPowerOffBonus;
                     }
                     else if (isIndirect)
                     {
-                        return CO_MAX.d2dCoZoneIndirectOffBonus;
+                        return CO_MAX.powerIndirectOffBonus;
                     }
-                    else
-                    {
-                        return CO_MAX.d2dCoZoneOtherOffBonus;
-                    }
+                    return CO_MAX.powerOtherBonus;
                 }
-                else
+                case GameEnums.PowerMode_Power:
                 {
                     if (isDirect)
                     {
-                        return CO_MAX.d2dOffBonus;
+                        return CO.powerOffBonus;
                     }
                     else if (isIndirect)
                     {
-                        return CO_MAX.d2dIndirectOffBonus;
+                        return CO_MAX.powerIndirectOffBonus;
+                    }
+                    return CO_MAX.powerOtherBonus;
+                }
+                default:
+                {
+                    var inCoZone = co.inCORange(Qt.point(atkPosX, atkPosY), attacker);
+                    if (inCoZone)
+                    {
+                        if (isDirect)
+                        {
+                            return CO_MAX.d2dCoZoneOffBonus;
+                        }
+                        else if (isIndirect)
+                        {
+                            return CO_MAX.d2dCoZoneIndirectOffBonus;
+                        }
+                        else
+                        {
+                            return CO_MAX.d2dCoZoneOtherOffBonus;
+                        }
                     }
                     else
                     {
-                        return CO_MAX.d2dOtherOffBonus;
+                        if (isDirect)
+                        {
+                            return CO_MAX.d2dOffBonus;
+                        }
+                        else if (isIndirect)
+                        {
+                            return CO_MAX.d2dIndirectOffBonus;
+                        }
+                        else
+                        {
+                            return CO_MAX.d2dOtherOffBonus;
+                        }
                     }
                 }
-            }
             }
         }
         return 0;
@@ -246,7 +246,7 @@ var Constructor = function()
         {
             if (unit.getBaseMaxRange() > 1)
             {
-                return CO_MAX.d2dIndirectFirerangeMalus;
+                return -CO_MAX.d2dIndirectFirerangeMalus;
             }
         }
         return 0;
@@ -283,7 +283,7 @@ var Constructor = function()
     this.getAiCoUnitBonus = function(co, unit, map)
     {
         if (unit.getBaseMaxRange() === 1 &&
-                unit.getUnitType() !== GameEnums.UnitType_Infantry)
+            unit.getUnitType() !== GameEnums.UnitType_Infantry)
         {
             return 3;
         }
@@ -305,8 +305,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_TANK_HUNTER"];
             }
@@ -320,7 +320,7 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("Weight Training");
+        return qsTr("Weight training");
     };
     this.getMiss = function(co)
     {
@@ -328,20 +328,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("<r>Strong non-infantry direct-combat units, weaker indirect-combat units.</r>");
+        return qsTr("Non-footsoldier direct combat units are tops.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("<r>\n\nSpecial Unit:\nTank Hunter</r>" +
-                        "<r>\n\nGlobal Effect: \nMax's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0%</div><r> firepower and his indirect-combat units have </r><div c='#ff2626'>-%1%</div><r> firepower and </r><div c='#ff2626'>-%2 range</div><r> penalty.</r>" +
-                        "<r>\n\nCO Zone Effect: \nMax's non-infantry direct-combat units firepower raises by </r><div c='#55ff00'>+%3%</div><r> and all others gain </r><div c='#55ff00'>+%4%</div><r> firepower and all units defense raises by </r><div c='#55ff00'>+%5%</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectOffBonus, CO_MAX.d2dIndirectFirerangeMalus, CO_MAX.d2dCoZoneOffBonus, CO_MAX.d2dCoZoneOtherOffBonus, CO_MAX.d2dCoZoneDefBonus]);
+        var text = qsTr("\nSpecial Unit:\nTank Hunter\n") +
+            qsTr("\nGlobal Effect: \nMax's non-footsoldier direct combat units gain +%0% firepower. His indirect combat units lose -%1 range and have %2% firepower.") +
+            qsTr("\n\nCO Zone Effect: \nMax's non-footsoldier direct combat units gain +%3% firepower. His indirect combat units have -%5% firepower. His footsoldiers gain +%4% firepower. All of his units gain +%6% defence.");
+        text = replaceTextArgs(text, [CO_MAX.d2dOffBonus, CO_MAX.d2dIndirectFirerangeMalus, CO_MAX.d2dIndirectOffBonus,
+                                      CO_MAX.d2dCoZoneOffBonus, CO_MAX.d2dCoZoneOtherOffBonus, CO_MAX.d2dCoZoneIndirectOffBonus, CO_MAX.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("<r>Max's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0 movement</div><r> and raise their firepower by </r><div c='#55ff00'>+%1%</div><r> and all other units firepower raises by </r><div c='#55ff00'>+%2%</div><r>. All units defense raises by </r><div c='#55ff00'>+%3%</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_MAX.powerMovementBonus, CO_MAX.powerOffBonus, CO_MAX.powerOtherBonus, CO_MAX.powerDefBonus]);
+        var text =  qsTr("Max's non-footsoldier direct combat units gain +%1 movement and +%0% firepower. His indirect combat units have -%4% firepower. His footsoldiers gain +%2% firepower. All of his units gain +%3% defence.");
+        text = replaceTextArgs(text, [CO_MAX.powerOffBonus, CO_MAX.powerMovementBonus, CO_MAX.powerOtherBonus, CO_MAX.powerDefBonus, CO_MAX.powerIndirectOffBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -350,11 +351,10 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("<r>Max's non-infantry direct-combat units gain </r><div c='#55ff00'>+%0 movement</div><r> and raise their firepower by </r><div c='#55ff00'>+%1%</div><r> and all other units firepower raises by </r><div c='#55ff00'>+%2%</div><r>. All units defense raises by </r><div c='#55ff00'>+%3%</div><r>.</r>");
-        text = replaceTextArgs(text, [CO_MAX.superpowerMovementBonus, CO_MAX.superPowerOffBonus, CO_MAX.powerOtherBonus, CO_MAX.powerDefBonus]);
+        var text = qsTr("Max's non-footsoldier direct combat units gain +%1 movement and +%0% firepower. His indirect combat units have -%4% firepower. His footsoldiers gain +%3% firepower. All of his units gain +%2% defence.");
+        text = replaceTextArgs(text, [CO_MAX.superPowerOffBonus, CO_MAX.superpowerMovementBonus, CO_MAX.powerDefBonus, CO_MAX.powerOtherBonus, CO_MAX.powerIndirectOffBonus]);
         return text;
     };
-
     this.getSuperPowerName = function(co)
     {
         return qsTr("Max Blast");
@@ -363,9 +363,9 @@ var Constructor = function()
     {
         return [qsTr("Roll, tanks, roll!"),
                 qsTr("Now you're gonna get hurt!"),
-                qsTr("Hey!  Give up while you still can!"),
-                qsTr("Wanna test might?  I won't lose!"),
-                qsTr("That's enough!  Get outta the road!"),
+                qsTr("Hey! Give up while you still can!"),
+                qsTr("Wanna test might? I won't lose!"),
+                qsTr("That's enough! Get outta the road!"),
                 qsTr("Alright, the gloves are comin' off.")];
     };
     this.getVictorySentences = function(co)

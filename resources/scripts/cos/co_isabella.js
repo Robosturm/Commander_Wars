@@ -256,37 +256,37 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Her units are slightly stronger.");
+        return qsTr("She has no real weaknesses or strengths.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits have %0% firepower and %1% defense bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %2% firepower and %3% defense bonus.");
+        var text = qsTr("\nGlobal Effect: \nIsabella's units have +%0% firepower and +%1% defence.") +
+               qsTr("\n\nCO Zone Effect: \nIsabella's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_ISABELLA.d2dOffBonus, CO_ISABELLA.d2dDefBonus,
                                       CO_ISABELLA.d2dCoZoneOffBonus, CO_ISABELLA.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Units have %0% firepower and %1% defense bonus. Increases her movement range by %2 and indirect firerange by %3.");
+        var text = qsTr("Isabella's units gain +%2 movement, +%0% firepower, and +%1% defence. Her indirect units gain +%3 range.");
         text = replaceTextArgs(text, [CO_ISABELLA.powerOffBonus, CO_ISABELLA.powerDefBonus,
                                       CO_ISABELLA.powerMovementBonus, CO_ISABELLA.powerFirerangeBonus]);
         return text;
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Deep Strike");
+        return qsTr("Initial Strike");
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Units have %0% firepower and %1% defense bonus. Increases her movement range by %2 and indirect firerange by %3.");
+        var text = qsTr("Isabella's units gain +%2 movement, +%0% firepower, and +%1% defence. Her indirect units gain +%3 range.");
         text = replaceTextArgs(text, [CO_ISABELLA.superPowerOffBonus, CO_ISABELLA.superPowerDefBonus,
                                       CO_ISABELLA.superPowerMovementBonus, CO_ISABELLA.superPowerFirerangeBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Overlord");
+        return qsTr("Deep Strike");
     };
     this.getPowerSentences = function(co)
     {
@@ -297,13 +297,13 @@ var Constructor = function()
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("I am starting to remember..."),
-                qsTr("The enemy have been taken care of.")];
+        return [qsTr("I'm starting to remember..."),
+                qsTr("The enemy has been taken care of.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Still no peace for me and Will."),
-                qsTr("I can't remember anything")];
+        return [qsTr("There's still no peace for me and Will..."),
+                qsTr("I can't remember anything...")];
     };
     this.getName = function()
     {

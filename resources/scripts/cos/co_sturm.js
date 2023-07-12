@@ -205,7 +205,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("The original commander of the Black Hole army. A mysterious invader from another world. Mastermind of the Cosmo and Macro wars. Enigma");
+        return qsTr("The original commander of the Black Hole Army. A mysterious invader from another world. Mastermind of the Cosmo and Macro wars.");
     };
     this.getHits = function(co)
     {
@@ -217,28 +217,28 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("His troops are not affected by terrain only snow can stop him.");
+        return qsTr("His superior troops are not affected by terrain. Only snow can stop him.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nHis troops are not affected by terrain except snow and have %0% firepower and %1% defence.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits have increased firepower by %2% and defence by %3%.");
+        var text = qsTr("\nGlobal Effect: \nSturm's units are unhindered by terrain unless the weather is Snow. They gain +%0% firepower and +%1% defence.") +
+                   qsTr("\n\nCO Zone Effect: \nSturm's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_STURM.d2dOffBonus, CO_STURM.d2dDefBonus, CO_STURM.d2dCoZoneOffBonus, CO_STURM.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("A small Meteor fall from space and deal %0 HP of damage to all affected units. Firepower is increased by %1% and defence is increased by %2%.");
+        var text = qsTr("A meteor falls from space onto the largest accumulation of enemy funds in a 2-space radius, dealing -%0 HP of damage to all affected units. Sturm's units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_STURM.powerDamage, CO_STURM.powerOffBonus, CO_STURM.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Meteor");
+        return qsTr("Meteor Slam");
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Pulls a giant meteor from space, which deals %0 HP of damage to all affected units. Firepower is increased by %1% and defence is increased by %2%.");
+        var text = qsTr("A massive meteor falls from space onto the largest accumulation of enemy funds in a 2-space radius, dealing -%0 HP of damage to all affected units. Sturm's units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_STURM.superPowerDamage, CO_STURM.superPowerOffBonus, CO_STURM.superPowerDefBonus]);
         return text;
     };
@@ -252,12 +252,12 @@ var Constructor = function()
                 qsTr("You will tremble before my power!"),
                 qsTr("Fear is all you have left..."),
                 qsTr("You shall not survive!"),
-                qsTr("Burning earth!!!"),
+                qsTr("Burning earth!"),
                 qsTr("Such power... I regret crushing it.")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Who would have thought you could oppose me?"),
+        return [qsTr("What foolish worm thinks they can oppose me?"),
                 qsTr("My name is Sturm. Hear it and tremble."),
                 qsTr("This is but a taste of my power!")];
     };

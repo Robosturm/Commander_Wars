@@ -287,8 +287,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_PARTISAN"];
             }
@@ -311,20 +311,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("An upper-crust CO who excels at urban warfare. Firepower of all units increased on properties.");
+        return qsTr("An upper-crust CO who excels at urban warfare. Firepower of all units is increased on buildings.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nPartisan\n") +
-               qsTr("\nGlobal Effect: \nUnits on buildings have %0% increased firepower.") +
-               qsTr("\n\nCO Zone Effect: \nUnits on buildings have %1% increased firepower.");
-        text = replaceTextArgs(text, [CO_KINDLE.d2dOffBonus, CO_KINDLE.d2dCoZoneOffBonus]);
+               qsTr("\nGlobal Effect: \nKindle's units on buildings gain +%0% firepower.") +
+               qsTr("\n\nCO Zone Effect: \nKindle's units gain +%2% firepower and +%3% defence. Her units on buildings gain a total of +%1% firepower.");
+        text = replaceTextArgs(text, [CO_KINDLE.d2dOffBonus, CO_KINDLE.d2dCoZoneOffBonus, CO_KINDLE.d2dCoZoneBaseOffBonus, CO_KINDLE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Inflicts %0 HP of damage to enemy units on properties and increases firepower of all units on a property by %1%.");
-        text = replaceTextArgs(text, [CO_KINDLE.powerDamage, CO_KINDLE.powerOffBonus]);
+        var text = qsTr("Deals -%0 HP of damage to enemy units on buildings. Kindle's units gain +%2% firepower and +%3% defence. Her units on buildings gain a total of +%1% firepower.");
+        text = replaceTextArgs(text, [CO_KINDLE.powerDamage, CO_KINDLE.powerOffBonus, CO_KINDLE.powerBaseOffBonus, CO_KINDLE.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -333,8 +333,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("She gains %0% firepower per building she controls and greatly increases firepower of all units on a property by %1%.");
-        text = replaceTextArgs(text, [CO_KINDLE.superPowerOffMultiplier, CO_KINDLE.superPowerOffBonus]);
+        var text = qsTr("Kindle's units gain a base of +%0% firepower and +%1% defence. Her units gain a bonus of +%2% firepower per property she owns and an additional +%3% firepower if they are on buildings.");
+        text = replaceTextArgs(text, [CO_KINDLE.powerBaseOffBonus, CO_KINDLE.powerDefBonus, CO_KINDLE.superPowerOffMultiplier, CO_KINDLE.superPowerOffBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -345,7 +345,7 @@ var Constructor = function()
     {
         return [qsTr("So, you want to see me get serious? Very well! You asked for it!"),
                 qsTr("Even the prettiest rose has thorns!"),
-                qsTr("I am Kindle, Gorgeous AND Clever!"),
+                qsTr("I am Kindle, gorgeous AND clever!"),
                 qsTr("Let us play a more dangerous game, shall we? I grow weary of this."),
                 qsTr("Aha ha ha! Beg for mercy, rat!"),
                 qsTr("Still putting up a fight? Unbelievable!")];
@@ -359,7 +359,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Losing to you corn-fed country folk is enough to give me frown lines."),
-                qsTr("That was a bit of a disappointment.")];
+                qsTr("That was a disappointment.")];
     };
     this.getName = function()
     {

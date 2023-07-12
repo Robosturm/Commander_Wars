@@ -277,8 +277,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_AUTO_TANK"];
             }
@@ -311,15 +311,15 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
-               qsTr("\nGlobal Effect: \nUnits have %0% increased firepower and %1% luck.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %2% increased firepower and %3% luck.");
-        text = replaceTextArgs(text, [CO_EPOCH.d2dOffBonus, CO_EPOCH.d2dLuckBonus,
-                                      CO_EPOCH.d2dCoZoneOffBonus, CO_EPOCH.d2dCoZoneLuckBonus]);
+               qsTr("\nGlobal Effect: \nEpoch's units gain +%0% firepower, +%1% defence, and +%2 luck.") +
+               qsTr("\n\nCO Zone Effect: \nEpoch's units gain +%3% firepower, +%4% defence, and +%5 luck.");
+        text = replaceTextArgs(text, [CO_EPOCH.d2dOffBonus, CO_EPOCH.d2dDefBonus, CO_EPOCH.d2dLuckBonus,
+                                      CO_EPOCH.d2dCoZoneOffBonus, CO_EPOCH.d2dCoZoneDefBonus, CO_EPOCH.d2dCoZoneLuckBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Firepower is increased by %0% and defence by %1% and luck raises by %2% and unit HP is hidden from opponents.");
+        var text = qsTr("Epoch's units gain +%0% firepower, +%1% defence, and +%2 luck. Their HP is hidden from opponents.");
         text = replaceTextArgs(text, [CO_EPOCH.powerOffBonus, CO_EPOCH.powerDefBonus, CO_EPOCH.powerLuckBonus]);
         return text;
     };
@@ -329,7 +329,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Direct combat units gain %0 movement and indirect combat units receive %1 extra range. Firepower is increased by %2% and defence by %3% and luck raises by %4%. And hides HP from opponents.");
+        var text = qsTr("Epoch's direct combat units gain +%0 movement and its indirect combat units have +%1 range. All of its units gain +%2% firepower, +%3% defence, and +%4 luck. Their HP is hidden from opponents.");
         text = replaceTextArgs(text, [CO_EPOCH.superPowerMovementBonus, CO_EPOCH.superPowerFirerangeBonus,
                                       CO_EPOCH.superPowerOffBonus, CO_EPOCH.superPowerDefBonus, CO_EPOCH.superPowerLuckBonus]);
         return text;
@@ -343,19 +343,20 @@ var Constructor = function()
         return [qsTr("Error: Overcharged. Initiate safety mode."),
                 qsTr("Power surge detected."),
                 qsTr("Overload! Release energy!"),
-                qsTr("System Over. Overload equals very yes."),
+                qsTr("System Error. this.getOverloaded() === true"),
                 qsTr("Blackout!"),
                 qsTr("Register your firmware for continued use!")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Epoch Succesful. Upgrade irrelevant"),
-                qsTr("Test Completed. Anaylsing battle log..."),
-                qsTr("Victory recorded in database and filed under category 'insulting'")];
+        return [qsTr("Epoch successful. Upgrade irrelevant."),
+                qsTr("Test completed. Analysing battle log..."),
+                qsTr("Victory recorded in database. Filing under tag category 'Insulting'.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Noooo... No upgrade please.")];
+        return [qsTr("Noooo... Don't upgrade me, please!"),
+				qsTr("Postpone update! POSTPONE UPDATE! NOOOOOOO!!!")];
     };
     this.getName = function()
     {

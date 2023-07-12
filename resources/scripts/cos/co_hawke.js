@@ -219,11 +219,11 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A commander of the Black Hole army who will stop at nothing to achieve his goals.");
+        return qsTr("A commander of the Black Hole Army who will stop at nothing to achieve his goals.");
     };
     this.getHits = function(co)
     {
-        return qsTr("Black Coffee");
+        return qsTr("Black coffee");
     };
     this.getMiss = function(co)
     {
@@ -231,20 +231,20 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("All units possess superior firepower. However, his CO power gauge is longer than it should be.");
+        return qsTr("His CO-Zone provides a more potent firepower bonus. However, his CO power gauge is longer than average.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits have %0% more firepower and %1% defense.") +
-            qsTr("\n\nCO Zone Effect: \nUnits have %2% more firepower and %3% defense.");
+        var text = qsTr("\nGlobal Effect: \nHawke's units gain +%0% firepower and +%1% defence.") +
+            qsTr("\n\nCO Zone Effect: \nHawke's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_HAWKE.d2dOffBonus, CO_HAWKE.d2dDefBonus,
                                       CO_HAWKE.d2dCoZoneOffBonus, CO_HAWKE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("All enemy units suffer %0 HP of damage. In addition, all allied units recover %0 HP.");
-        text = replaceTextArgs(text, [CO_HAWKE.powerDamage]);
+        var text = qsTr("A wave of dark energy deals -%0 HP of damage to all enemy units and restores +%0 HP to all of Hawke's units. Hawke's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_HAWKE.powerDamage, CO_HAWKE.powerOffBonus, CO_HAWKE.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -253,8 +253,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("All enemy units suffer %0 HP of damage. In addition, all allied units recover %0 HP.");
-        text = replaceTextArgs(text, [CO_HAWKE.superPowerDamage]);
+        var text = qsTr("A storm of dark energy deals -%0 HP of damage to all enemy units and restores +%0 HP to all of Hawke's units. Hawke's units gain +%1% firepower and +%2% defence.");
+        text = replaceTextArgs(text, [CO_HAWKE.superPowerDamage, CO_HAWKE.superPowerOffBonus, CO_HAWKE.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -272,14 +272,13 @@ var Constructor = function()
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Will you sacrifice all? Then perhaps you can win."),
-                qsTr("Sad...you were no match for me."),
+        return [qsTr("Sad... You were no match for me."),
                 qsTr("There is no chance.  My victory was assured.")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("That's it then. We shall withdraw."),
-                qsTr("... This is one situation I never expected myself to be in.")];
+                qsTr("...This is one situation I never expected myself to be in.")];
     };
     this.getName = function()
     {

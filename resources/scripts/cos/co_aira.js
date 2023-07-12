@@ -273,7 +273,7 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("Cool Breezes");
+        return qsTr("Cool breezes");
     };
     this.getMiss = function(co)
     {
@@ -281,18 +281,18 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Aira never felt a need to specialize, so all units are average.");
+        return qsTr("Aira never felt a need to specialize, so all of her units are average.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nNo bonus.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
+        var text = qsTr("\nGlobal Effect: \nNone.") +
+                   qsTr("\n\nCO Zone Effect: \nAira's units gain +%0% firepower and +%0% defence.");
         text = replaceTextArgs(text, [CO_AIRA.d2dCoZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Enemies expend an additional %0 times more fuel when they move for their next turn and the weather changes to sun. Her units also gain %1% firepower and %2% defence.");
+        var text = qsTr("Changes the weather to Sun. All enemies spend an additional %0 times more fuel when they move for the next turn. Aira's units gain +%1% firepower and +%2% defence.");
         text = replaceTextArgs(text, [CO_AIRA.powerFuelIncrease, CO_AIRA.powerOffBonus, CO_AIRA.powerDefBonus]);
         return text;
     };
@@ -302,7 +302,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("The cheapest enemy ground and sea units suffer %0 HP of damage while all enemy air units suffer %0 HP of damage. All enemy units need %1 additional movement cost to traverse terrain and the weather changes to sun. Her units also gain %2% firepower and %3% defence.");
+        var text = qsTr("Changes the weather to Sun. All enemy air units and the cheapest 50% of all enemy units suffer -%0 HP of damage. All terrain costs are increased by %1 for all enemies. Aira's units gain +%2% firepower and +%3% defence.");
         text = replaceTextArgs(text, [CO_AIRA.superPowerDamage, CO_AIRA.superPowerMovementCostIncrease, CO_AIRA.powerOffBonus, CO_AIRA.powerDefBonus]);
         return text;
     };

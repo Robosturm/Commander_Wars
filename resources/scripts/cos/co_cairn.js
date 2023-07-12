@@ -412,8 +412,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_RANGER"];
             }
@@ -440,22 +440,22 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        var text = qsTr("Wilderness grant her units additional terrain stars. On-property firepower of her units is reduced.");
+        var text = qsTr("Wilderness grants her units additional terrain stars, however, urban terrain reduces her units' firepower.");
         return text;
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRanger\n") +
-                   qsTr("\nGlobal Effect: \nWilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.") +
-                   qsTr("\n\nCO Zone Effect: \nWilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.");
-        text = replaceTextArgs(text, [CO_CAIRN.d2dTerrainBonus, CO_CAIRN.d2dBuildingMalus, CO_CAIRN.d2dCoZoneTerrainBonus, CO_CAIRN.d2dBuildingMalus]);
+                   qsTr("\nGlobal Effect: \nWilderness grants her units an additional +%0 terrain stars. Urban terrain reduces her units' firepower by %1%.") +
+                   qsTr("\n\nCO Zone Effect: \nWilderness grants her units an additional +%2 terrain stars. Urban terrain reduces her units' firepower by %1%. All of her units gain +%3% firepower and +%4% defence.");
+        text = replaceTextArgs(text, [CO_CAIRN.d2dTerrainBonus, CO_CAIRN.d2dBuildingMalus, CO_CAIRN.d2dCoZoneTerrainBonus, CO_CAIRN.d2dCoZoneOffBonus, CO_CAIRN.d2dCoZoneDefBonus]);
         return text;
     };
 
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Wilderness movement cost is reduced by %0. Unit indirect range is increased by %1 and vision is increased by %2 in wilderness.");
-        text = replaceTextArgs(text, [CO_CAIRN.powerMovementCostReduction, CO_CAIRN.powerFirerangeBonus, CO_CAIRN.powerVisionrangeModifier]);
+        var text = qsTr("Wilderness movement cost is reduced for Cairn's units by %0. Her indirect units receive +%1 range while in wilderness. All of her units in wilderness receive +%2 bonus terrain stars and +%3 vision. All of her units gain +%4% firepower and +%5% defence.");
+        text = replaceTextArgs(text, [(0-CO_CAIRN.powerMovementCostReduction), CO_CAIRN.powerFirerangeBonus, CO_CAIRN.powerTerrainBonus, CO_CAIRN.powerVisionrangeModifier, CO_CAIRN.powerOffBonus, CO_CAIRN.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -464,8 +464,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Each wilderness tile crossed restores %0 HP. Increases her firepower by %0% and lower enemy defense by %1% for each wilderness terrain star.");
-        text = replaceTextArgs(text, [CO_CAIRN.superPowerHeal, CO_CAIRN.superPowerOffBonus, CO_CAIRN.superPowerDefenseReduction]);
+        var text = qsTr("Cairn's units restore +%0 HP for each wilderness tile they pass this turn. Her units on wilderness tiles gain +%1% firepower per terrain star. Enemy units on wilderness tiles lose -%2% defence per terrain star. Cairn's units gain +%3% firepower and +%4% defence.");
+        text = replaceTextArgs(text, [CO_CAIRN.superPowerHeal, CO_CAIRN.superPowerOffBonus, CO_CAIRN.superPowerDefenseReduction, CO_CAIRN.powerOffBonus, CO_CAIRN.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)

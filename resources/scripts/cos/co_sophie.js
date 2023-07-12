@@ -291,8 +291,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_COMMANDO"];
             }
@@ -307,11 +307,11 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("Mail Call");
+        return qsTr("Mail call");
     };
     this.getMiss = function(co)
     {
-        return qsTr("Mess Hall");
+        return qsTr("The mess hall");
     };
     this.getCODescription = function(co)
     {
@@ -320,14 +320,16 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nCommando\n") +
-                qsTr("\nGlobal Effect: \nEnemy counterattacks deal %0% less damage.") +
-                qsTr("\n\nCO Zone Effect: \nEnemy counterattacks deal %1% less damage. Units gain %2% firepower and %3% defense.");
+                qsTr("\nGlobal Effect: \nEnemy counterattacks deal -%0% damage to Sophie's units.") +
+                qsTr("\n\nCO Zone Effect: \nSophie's units gain +%2% firepower and +%3% defence. Enemy counterattacks deal -%1% damage to her units.");
         text = replaceTextArgs(text, [CO_SOPHIE.d2dDefenderDamageReduction * 100, CO_SOPHIE.d2dCoZoneDefenderDamageReduction * 100, CO_SOPHIE.d2dCoZoneOffBonus, CO_SOPHIE.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Enemy counterattacks deal no damage to Sophie's units.");
+        var text = qsTr("Sophie's units gain +%0% firepower and +%1% defence. Enemy counterattacks deal no damage to her units.");
+		text = replaceTextArgs(text, [CO_SOPHIE.powerOffBonus, CO_SOPHIE.powerDefBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -335,8 +337,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Sophie's units strike twice when ordered to attack. However, firepower of the second attack is reduced by %0%");
-        text = replaceTextArgs(text, [CO_SOPHIE.superPowerSecondAttackOffMalus]);
+        var text = qsTr("Sophie's units gain +%0% firepower and +%1% defence. Her units fire twice when attacking, however, the firepower of the second attack is reduced to -%2%. Enemy counterattacks deal -%3% damage to her units.");
+        text = replaceTextArgs(text, [CO_SOPHIE.powerOffBonus, CO_SOPHIE.powerDefBonus, CO_SOPHIE.superPowerSecondAttackOffMalus, CO_SOPHIE.superPowerDefenderDamageReduction*100]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -345,10 +347,10 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Get your butts in gear troops! The bad guys are not going to wait all day for us!"),
-                qsTr("Give'em lead men!"),
+        return [qsTr("Get your butts in gear, troops! They're not going to wait all day for us!"),
+                qsTr("Give'em lead, men!"),
                 qsTr("It's time to prove that we are made of the right stuff!"),
-                qsTr("War ain't no picnic soldier! You have to put in 110% if you want to survive!"),
+                qsTr("War ain't no picnic, soldier! You have to put in 110% if you want to survive!"),
                 qsTr("All right, move out and try not to get yourselves killed!"),
                 qsTr("I expect nothing but the best!")];
     };
@@ -361,7 +363,7 @@ var Constructor = function()
     this.getDefeatSentences = function(co)
     {
         return [qsTr("I thought my troops would be tougher."),
-                qsTr("My Soldiers lost. I can't be proud of them.")];
+                qsTr("My soldiers lost. I can't be proud of them.")];
     };
     this.getName = function()
     {

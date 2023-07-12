@@ -206,8 +206,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_REPAIR_TANK"];
             }
@@ -222,15 +222,15 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("He has faith in the goodness of humanity. Feels strong duty to help anyone who is in trouble.");
+        return qsTr("He has faith in the goodness of humanity and feels a strong duty to help anyone who is in trouble.");
     };
     this.getHits = function(co)
     {
-        return qsTr("Helping Others");
+        return qsTr("Helping others");
     };
     this.getMiss = function(co)
     {
-        return qsTr("Abandoning Others");
+        return qsTr("Abandoning others");
     };
     this.getCODescription = function(co)
     {
@@ -238,15 +238,15 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nUnits gain %0% defense.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %1% defense.");
-        text = replaceTextArgs(text, [CO_BRENNER.d2dDefBonus, CO_BRENNER.d2dCoZoneDefBonus]);
+        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nBrenner's units gain +%0% defence.") +
+                   qsTr("\n\nCO Zone Effect: \nBrenner's units gain +%2% firepower and +%1% defence.");
+        text = replaceTextArgs(text, [CO_BRENNER.d2dDefBonus, CO_BRENNER.d2dCoZoneDefBonus, CO_BRENNER.d2dCoZoneOffBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Heals %0 hp to all of his units and increases their defence by %1%.");
-        text = replaceTextArgs(text, [CO_BRENNER.powerHeal, CO_BRENNER.powerDefBonus]);
+        var text = qsTr("Restores +%0 HP to all of Brenner's units. His units gain +%2% firepower and +%1% defence.");
+        text = replaceTextArgs(text, [CO_BRENNER.powerHeal, CO_BRENNER.powerDefBonus, CO_BRENNER.powerOffBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -255,17 +255,17 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Heals %0 hp to all of his units and increases their defence by %1%.");
-        text = replaceTextArgs(text, [CO_BRENNER.superPowerHeal, CO_BRENNER.superPowerDefBonus]);
+        var text = qsTr("Restores +%0 HP to all of Brenner's units. His units gain +%2% firepower and +%1% defence.");
+        text = replaceTextArgs(text, [CO_BRENNER.superPowerHeal, CO_BRENNER.superPowerDefBonus, CO_BRENNER.powerOffBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Lifeline");
+        return qsTr("First Aid");
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("I want everyone to get out here alive! Move!"),
+        return [qsTr("I want everyone to get out of here alive! Move!"),
                 qsTr("It's time to go on the offensive!"),
                 qsTr("Never give up!"),
                 qsTr("Where there is life, there is hope!")];

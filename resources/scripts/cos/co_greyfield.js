@@ -315,21 +315,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Copter, seaplanes and sea units have higher firepower and defense.");
+        return qsTr("Copter, seaplanes and sea units are superior.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nMissile Submarine\n") +
-               qsTr("\nGlobal Effect: \nSea Units and copters have %0% offensive and %1% defensive bonus.") +
-               qsTr("\n\nCO Zone Effect: \nSea Units and copters have %2% offensive and %3% defensive bonus.");
+               qsTr("\nGlobal Effect: \nGreyfield's copters and naval units gain +%0% firepower and +%1% defence.") +
+               qsTr("\n\nCO Zone Effect: \nGreyfield's copters and naval units gain +%2% firepower and +%3% defence. His other units gain +%4% firepower and +%5% defence.");
         text = replaceTextArgs(text, [CO_GREYFIELD.d2dOffBonus, CO_GREYFIELD.d2dDefBonus,
-                                      CO_GREYFIELD.d2dCoZoneOffBonus, CO_GREYFIELD.d2dCoZoneDefBonus]);
+                                      CO_GREYFIELD.d2dCoZoneOffBonus, CO_GREYFIELD.d2dCoZoneDefBonus, CO_GREYFIELD.d2dCoZoneBaseOffBonus, CO_GREYFIELD.d2dCoZoneBaseDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("All units get resupplied and his copter, seaplanes and sea units have %0% higher firepower and %1% defense.");
-        text = replaceTextArgs(text, [CO_GREYFIELD.powerOffBonus, CO_GREYFIELD.powerDefBonus]);
+        var text = qsTr("Greyfield's copters and naval units gain +%0% firepower and +%1% defence. His other units gain +%2% firepower and +%3% defence. All of his units replenish all fuel and ammunition.");
+        text = replaceTextArgs(text, [CO_GREYFIELD.powerOffBonus, CO_GREYFIELD.powerDefBonus, CO_GREYFIELD.powerBaseOffBonus, CO_GREYFIELD.powerBaseDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -338,8 +338,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("All units get resupplied and his copter, seaplanes and sea units have %0% higher firepower and %1% defense and increase movement range by %2.");
-        text = replaceTextArgs(text, [CO_GREYFIELD.superPowerOffBonus, CO_GREYFIELD.superPowerDefBonus, CO_GREYFIELD.superPowerMovementBonus]);
+        var text = qsTr("Greyfield's copters and naval units gain +%0% firepower, +%1% defence, and +%2 movement. His other units gain +%3% firepower and +%4% defence. All of his units replenish all fuel and ammunition.");
+        text = replaceTextArgs(text, [CO_GREYFIELD.superPowerOffBonus, CO_GREYFIELD.superPowerDefBonus, CO_GREYFIELD.superPowerMovementBonus, CO_GREYFIELD.powerBaseOffBonus, CO_GREYFIELD.powerBaseDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -361,8 +361,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Nooo... this is not the end of Teal Isles!"),
-                qsTr("What? My army has been crushed.")];
+        return [qsTr("Nooo... This is not the end of Teal Isles!"),
+                qsTr("What? My army has been crushed...")];
     };
     this.getName = function()
     {

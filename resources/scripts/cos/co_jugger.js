@@ -222,7 +222,7 @@ var Constructor = function()
         {
             if (co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                return CO_JUGGER.powerOffBonus;
+                return CO_JUGGER.powerDefBonus;
             }
             else if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
@@ -242,8 +242,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_AUTO_TANK"];
             }
@@ -254,7 +254,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A robot-like commander in the Bolt Guard army. No one knows his true identity!");
+        return qsTr("A robot-like commander in the Bolt Guard Army. No one knows his true identity!");
     };
     this.getHits = function(co)
     {
@@ -266,21 +266,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Units may suddenly deal more damage than expected, but their firepower is inherently low.");
+        return qsTr("His units are wildly unpredictable. He has great luck, but also a lot of misfortune.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nAuto Tank\n") +
-               qsTr("\nGlobal Effect: \nUnits have %0% more Luck and %1% Misfortune.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %2% more Luck and %3% Misfortune.");
+               qsTr("\nGlobal Effect: \nJugger's units gain +%0 luck and +%1 misfortune.") +
+               qsTr("\n\nCO Zone Effect: \nJugger's units gain +%4% firepower, +%5% defence, +%2 luck, and +%3 misfortune.");
         text = replaceTextArgs(text, [CO_JUGGER.d2dBonusLuck, CO_JUGGER.d2dBonusMissfortune,
-                                      CO_JUGGER.d2dCoZoneBonusLuck, CO_JUGGER.d2dCoZoneBonusMissfortune]);
+                                      CO_JUGGER.d2dCoZoneBonusLuck, CO_JUGGER.d2dCoZoneBonusMissfortune, CO_JUGGER.d2dCoZoneOffBonus, CO_JUGGER.d2dCoZoneDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Units have %0% more Luck and %1% Misfortune.");
-        text = replaceTextArgs(text, [CO_JUGGER.powerBonusLuck, CO_JUGGER.powerBonusMissfortune]);
+        var text = qsTr("Jugger's units gain +%2% firepower, +%3% defence, +%0 luck, and +%1 misfortune.");
+        text = replaceTextArgs(text, [CO_JUGGER.powerBonusLuck, CO_JUGGER.powerBonusMissfortune, CO_JUGGER.powerOffBonus, CO_JUGGER.powerDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
@@ -289,8 +289,8 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Units have %0% more Luck and %1% Misfortune.");
-        text = replaceTextArgs(text, [CO_JUGGER.superPowerBonusLuck, CO_JUGGER.superPowerBonusMissfortune]);
+        var text = qsTr("Jugger's units gain +%2% firepower, +%3% defence, +%0 luck, and +%1 misfortune.");
+        text = replaceTextArgs(text, [CO_JUGGER.superPowerBonusLuck, CO_JUGGER.superPowerBonusMissfortune, CO_JUGGER.powerOffBonus, CO_JUGGER.powerDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -308,9 +308,9 @@ var Constructor = function()
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Victory; downloading party hat."),
+        return [qsTr("Victory. Downloading party hat."),
                 qsTr("Victory dance initiated."),
-                qsTr("Jugger; superior. Enemy; lame.")];
+                qsTr("Jugger: Superior. Enemy: Lame.")];
     };
     this.getDefeatSentences = function(co)
     {

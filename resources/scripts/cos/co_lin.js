@@ -280,8 +280,8 @@ var Constructor = function()
         {
             var buildingId = building.getBuildingID();
             if (buildingId === "FACTORY" ||
-                buildingId === "TOWN" ||
-                BUILDING.isHq(building))
+                    buildingId === "TOWN" ||
+                    BUILDING.isHq(building))
             {
                 return ["ZCOUNIT_INTEL_TRUCK"];
             }
@@ -292,7 +292,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("In battle the clearest thinker wins. A calm commander of Amber Corona.");
+        return qsTr("A calm commander of Amber Corona. Believes that in battle, the clearest thinker wins.");
     };
     this.getHits = function(co)
     {
@@ -304,33 +304,33 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Her ground units are very strong. Other units have normal power.");
+        return qsTr("Her ground units are strong. Other units have normal power.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nIntel truck\n") +
-               qsTr("\nGlobal Effect: \nGround Units gain %0% firepower and %1% defense.") +
-               qsTr("\n\nCO Zone Effect: \nGround Units gain %2% firepower and %3% defense.");
+               qsTr("\nGlobal Effect: \nLin's ground units gain +%0% firepower and +%1% defence.") +
+               qsTr("\n\nCO Zone Effect: \nLin's ground units gain +%2% firepower and +%3% defence. Her other units gain +%4% firepower and +%5% defence.");
         text = replaceTextArgs(text, [CO_LIN.d2dOffBonus, CO_LIN.d2dDefBonus,
-                                      CO_LIN.d2dCoZoneOffBonus, CO_LIN.d2dCoZoneDefBonus]);
+                                      CO_LIN.d2dCoZoneOffBonus, CO_LIN.d2dCoZoneDefBonus, CO_LIN.d2dCoZoneBaseOffBonus, CO_LIN.d2dCoZoneBaseDefBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("Increases vision range by %0 and allows her to view into hidden places. Ground Units gain %1% firepower and %2% defense.");
+        var text = qsTr("Lin's ground units gain +%2% firepower and +%2% defence. Her other units gain +%3% firepower and +%4% defence. All of her units gain +%0 vision and can see into hidden locations.");
         text = replaceTextArgs(text, [CO_LIN.powerVisionRange,
-                                      CO_LIN.powerOffBonus, CO_LIN.powerDefBonus]);
+                                      CO_LIN.powerOffBonus, CO_LIN.powerDefBonus, CO_LIN.powerBaseOffBonus, CO_LIN.powerBaseDefBonus]);
         return text;
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Scout");
+        return qsTr("Preliminary Scout");
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Increases vision range by %0 and allows her to view into hidden places. Ground Units gain %1% firepower and %2% defense.");
+        var text = qsTr("Lin's ground units gain +%2% firepower and +%2% defence. Her other units gain +%3% firepower and +%4% defence. All of her units gain +%0 vision and can see into hidden locations.");
         text = replaceTextArgs(text, [CO_LIN.superPowerVisionRange,
-                                      CO_LIN.superPowerOffBonus, CO_LIN.superPowerDefBonus]);
+                                      CO_LIN.superPowerOffBonus, CO_LIN.superPowerDefBonus, CO_LIN.superPowerBaseOffBonus, CO_LIN.superPowerBaseDefBonus]);
         return text;
     };
     this.getSuperPowerName = function(co)
@@ -342,7 +342,7 @@ var Constructor = function()
         return [qsTr("Begin search and destroy operations. Bring the fight to them."),
                 qsTr("It's not about firepower. The force with the most information wins."),
                 qsTr("I see enemies in the vicinity."),
-                qsTr("All units move out. Discipline must be maintain")];
+                qsTr("All units, move out!")];
     };
     this.getVictorySentences = function(co)
     {
@@ -351,8 +351,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("We had not enough intel."),
-                qsTr("Next time I am better prepared.")];
+        return [qsTr("We didn't have enough intel."),
+                qsTr("Next time, I will be better prepared.")];
     };
     this.getName = function()
     {
