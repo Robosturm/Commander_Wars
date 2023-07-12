@@ -64,7 +64,7 @@ var Constructor = function()
                                 ["REAF", 3],
                                 ["WASTE",  1],
                                 ["WASTE_PATH", 1],
-                                ["WASTE_FOREST", 1],
+                                ["WASTE_FOREST", 2],
                                 ["WASTE_WASTELAND", 1],
                                 ["WASTE_RUIN", 1],
                                 ["WASTE_DESTROYEDWELD", 1],

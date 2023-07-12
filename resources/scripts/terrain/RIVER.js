@@ -174,9 +174,11 @@ var Constructor = function()
             return "back_" + weatherModifier + "river+" + rand.toString();
         }
     };
+
+    this.flowTiles = ["RIVER", "BRIDGE", "BRIDGE1", "BRIDGE2"];
     this.getFlowTiles = function()
     {
-        return ["RIVER", "BRIDGE", "BRIDGE1", "BRIDGE2"];
+        return RIVER.FlowTiles;
     };
     this.updateFlowSprites = function(terrain, pPfs, map, applyRulesPalette)
     {
