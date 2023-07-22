@@ -15,6 +15,7 @@
 #include "objects/dialogs/filedialog.h"
 #include "objects/base/label.h"
 #include "objects/base/checkbox.h"
+#include "objects/base/slider.h"
 
 DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
     : m_pTerrain(pTerrain),
@@ -88,7 +89,7 @@ void DialogModifyTerrain::load()
     pLabel->setHtmlText(tr("Name:"));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    spTextbox pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getScaledWidth());
+    spTextbox pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 115 - pLabel->getScaledWidth());
     pTextbox->setTooltipText(tr("Custom Name of the Terrain. Empty name equals the default name."));
     pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
     pTextbox->setCurrentText(m_pTerrain->getTerrainName());
@@ -103,7 +104,7 @@ void DialogModifyTerrain::load()
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Description:"));
     pLabel->setPosition(10, y);
-    pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getScaledWidth());
+    pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 115 - pLabel->getScaledWidth());
     pTextbox->setTooltipText(tr("Custom Description of the Terrain. Empty description equals the default description."));
     pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
     pTextbox->setCurrentText(m_pTerrain->getTerrainDescription());
@@ -111,6 +112,26 @@ void DialogModifyTerrain::load()
     m_pPanel->addItem(pTextbox);
     m_pPanel->addItem(pLabel);
     y += pLabel->getHeight() + 10;
+
+    if (m_pTerrain->getHp() > 0)
+    {
+        pLabel = spLabel::create(190);
+        pLabel->setStyle(style);
+        pLabel->setHtmlText(tr("HP:"));
+        pLabel->setPosition(10, y);
+        spSlider pSlider = spSlider::create(oxygine::Stage::getStage()->getWidth() - 100 - 200 - pLabel->getScaledWidth(), 1, 9999, tr("HP"), 200);
+        pSlider->setTooltipText(tr("Selects the HP of the current terraub. This is immediately applied."));
+        pSlider->setPosition(200 + 20 + pLabel->getX(), y);
+        pSlider->setCurrentValue(m_pTerrain->getHp());
+        connect(pSlider.get(), &Slider::sliderValueChanged, this, [this](qint32 value)
+        {
+            m_pTerrain->setHp(value);
+        });
+        m_pPanel->addItem(pSlider);
+
+        m_pPanel->addItem(pLabel);
+        y += pLabel->getHeight() + 10;
+    }
 
     pLabel = spLabel::create(190);
     pLabel->setStyle(style);
@@ -137,20 +158,20 @@ void DialogModifyTerrain::load()
     m_pPanel->addItem(pDropDownmenu);
     y += pLabel->getHeight() + 10;
 
-    spLabel pTextfield = spLabel::create(180);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Terrain Style"));
-    pTextfield->setPosition(10, y);
-    m_pPanel->addItem(pTextfield);
-    m_pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pTextfield->getScaledWidth());
+    pLabel = spLabel::create(190);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Terrain Style"));
+    pLabel->setPosition(10, y);
+    m_pPanel->addItem(pLabel);
+    m_pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 115 - pLabel->getScaledWidth());
     m_pTextbox->setTooltipText(tr("Current select terrain image or terrain path or empty for default selection."));
-    m_pTextbox->setPosition(200 + 20 + pTextfield->getX(), y);
+    m_pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
     connect(m_pTextbox.get(), &Textbox::sigTextChanged, this, [this](QString text)
     {
         emit sigLoadCustomSprite(text);
     });
     m_pPanel->addItem(m_pTextbox);
-    y += pTextfield->getHeight() + 20;
+    y += pLabel->getHeight() + 20;
 
     oxygine::spButton pButtonDefault = pObjectManager->createButton(tr("Default"), 250);
     pButtonDefault->setPosition(10, y);

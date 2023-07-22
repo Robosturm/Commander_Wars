@@ -2,7 +2,7 @@
 
 #include "coreengine/interpreter.h"
 
-Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
+Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit, qint32 spinBoxWidth)
     : V_Scrollbar (width - 90, (width - 90) * 100 / 10),
       m_minValue(minValue),
       m_maxValue(maxValue),
@@ -15,7 +15,7 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
 
     V_Scrollbar::setScrollspeed( width / (maxValue - minValue));
 
-    m_spinBox = spSpinBox::create(150, minValue, maxValue);
+    m_spinBox = spSpinBox::create(spinBoxWidth, minValue, maxValue);
     m_spinBox->setUnit(" " + unit);
     m_spinBox->setInfinityValue(std::numeric_limits<qreal>::lowest());
     addChild(m_spinBox);
