@@ -58,7 +58,7 @@ var Constructor = function()
     {
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog(mapmap);
+            gameScript.initDialog(map);
         }
         else if (turn === 1 && player === 1)
         {
