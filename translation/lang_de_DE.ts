@@ -27694,6 +27694,14 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
 </context>
 <context>
+    <name>weather_dummy</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_dummy.js" line="6"/>
+        <source>Dummy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>weather_mist</name>
     <message>
         <location filename="../resources/scripts/gamerules/weather/weather_mist.js" line="6"/>

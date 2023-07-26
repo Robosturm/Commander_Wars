@@ -27,8 +27,6 @@ GameRules::GameRules(GameMap* pMap)
 
 void GameRules::resetArrays()
 {
-    m_WeatherChances.clear();
-    m_Weathers.clear();
     m_WeatherDays.clear();
     m_WeatherSprites.clear();
     m_VictoryRules.clear();
@@ -74,6 +72,8 @@ void GameRules::reset()
 {
     CONSOLE_PRINT("GameRules::reset", GameConsole::eDEBUG);
     resetArrays();
+    m_WeatherChances.clear();
+    m_Weathers.clear();
 
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     if (getWeatherCount() != pGameRuleManager->getWeatherCount())
