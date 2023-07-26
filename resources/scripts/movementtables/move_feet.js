@@ -66,6 +66,7 @@ var Constructor = function()
                                 ["WASTE_MOUNTAIN", 2],
                                 ["WASTE_WASTELAND", 1],
                                 ["WASTE_RUIN", 1],
+                                ["WASTE_DESTROYEDWELD", 1],
                                 ["CREEPER", 1],
                                 ["TELEPORTTILE", 0],
                                 ["ZGATE_E_W", 1],

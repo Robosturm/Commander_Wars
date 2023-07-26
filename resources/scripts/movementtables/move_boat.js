@@ -13,8 +13,6 @@ var Constructor = function()
                                 ["ROUGH_SEA", 2],
                                 ["REAF", 2],
                                 ["TELEPORTTILE", 0],
-                                ["ZGATE_E_W", 1],
-                                ["ZGATE_N_S", 1],
                                 ["OILRIG", 1],];
 
     this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
