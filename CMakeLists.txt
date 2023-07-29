@@ -95,14 +95,14 @@ endif()
 if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     message("Using local pre-compiled openssl version from path: ${OPENSSL_LIB_PATH}")
     set(OPENSSL_LIBS
-        ${OPENSSL_LIB_PATH}/libcrypto_${ANDROID_ABI}.a
-        ${OPENSSL_LIB_PATH}/libssl_${ANDROID_ABI}.a
+        ${OPENSSL_LIB_PATH}/libcrypto.a
+        ${OPENSSL_LIB_PATH}/libssl.a
     CACHE INTERNAL "")
     include_directories(${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL libs:" ${OPENSSL_LIBS})
 else()
-    message("Using openssl package with root-dor ${OPENSSL_ROOT_DIR}")
+    message("Using openssl package with root-dir ${OPENSSL_ROOT_DIR}")
     find_package(OpenSSL REQUIRED)
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL All-Libs:" ${OPENSSL_LIBRARIES})
