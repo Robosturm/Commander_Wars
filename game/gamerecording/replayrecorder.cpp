@@ -22,6 +22,7 @@ ReplayRecorder::ReplayRecorder(GameMap* pMap)
     setObjectName("ReplayRecorder");
 #endif
     Interpreter::setCppOwnerShip(this);
+    m_stream.setVersion(QDataStream::Version::Qt_6_5);
 }
 
 ReplayRecorder::~ReplayRecorder()

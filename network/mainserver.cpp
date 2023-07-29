@@ -191,6 +191,7 @@ void MainServer::restoreServer()
     {
         QFile file(savefile);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         file.open(QIODevice::ReadOnly);
         deserializeObject(stream);
     }
@@ -298,6 +299,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
     else if (service == NetworkInterface::NetworkSerives::ServerHosting)
     {
         QDataStream stream(&data, QIODevice::ReadOnly);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         QString messageType;
         stream >> messageType;
         CONSOLE_PRINT("Network hosting client server command received: " + messageType, GameConsole::eDEBUG);
@@ -1611,6 +1613,7 @@ void MainServer::doDespawnServer()
         QFile file(m_despawningSavefile);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         serializeObject(stream);
     }
 }

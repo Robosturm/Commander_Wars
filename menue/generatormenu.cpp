@@ -51,6 +51,7 @@ bool GeneratorMenu::loadVariablesFromFile(const QString & file)
     {
         QFile fileObj(file);
         QDataStream stream(&fileObj);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         fileObj.open(QIODevice::ReadOnly);
         m_Variables.deserializeObject(stream);
         fileObj.close();
@@ -64,6 +65,7 @@ void GeneratorMenu::writeVariablesToFile(const QString & file) const
     createDir(file);
     QFile fileObj(file);
     QDataStream stream(&fileObj);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
     fileObj.open(QIODevice::WriteOnly);
     m_Variables.serializeObject(stream);
     fileObj.close();
@@ -74,6 +76,7 @@ void GeneratorMenu::writeDataToFile(const QString & file, const QString & data) 
     createDir(file);
     QFile fileObj(file);
     QDataStream stream(&fileObj);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
     fileObj.open(QIODevice::WriteOnly);
     stream << data;
     fileObj.close();

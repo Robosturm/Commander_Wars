@@ -473,6 +473,7 @@ void GameConsole::resetMapsGameRules(const QString & folder)
         QFile file(filePath);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         pMap->serializeObject(stream);
         file.close();
     }

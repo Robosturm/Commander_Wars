@@ -525,6 +525,7 @@ void CampaignMenu::saveCampaign(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
         file.close();
     }   

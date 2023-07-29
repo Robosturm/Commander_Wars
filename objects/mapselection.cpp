@@ -441,6 +441,7 @@ void MapSelection::updateSelection(qint32 startIndex)
                 QFile file(fullFilename);
                 file.open(QIODevice::ReadOnly);
                 QDataStream pStream(&file);
+                pStream.setVersion(QDataStream::Version::Qt_6_5);
                 GameMap::MapHeaderInfo headerInfo;
                 QString mapNameEnding = "";
                 bool matches = true;

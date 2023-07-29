@@ -142,6 +142,7 @@ void ActionPerformer::performAction(spGameAction pGameAction, bool fromAiPipe)
                 CONSOLE_PRINT("Sending action to other players with sync counter " + QString::number(m_syncCounter), GameConsole::eDEBUG);
                 QByteArray data;
                 QDataStream stream(&data, QIODevice::WriteOnly);
+                stream.setVersion(QDataStream::Version::Qt_6_5);
                 stream << m_pMap->getCurrentPlayer()->getPlayerID();
                 pGameAction->serializeObject(stream);
                 emit m_pMenu->getNetworkInterface()->sig_sendData(0, data, NetworkInterface::NetworkSerives::Game, true);

@@ -290,6 +290,7 @@ void Mainwindow::loadCampaign(QString filename)
         {
             spCampaign pCampaign = spCampaign::create();
             QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
             file.open(QIODevice::ReadOnly);
             pCampaign->deserializeObject(stream);
             spCampaignMenu pMenu = spCampaignMenu::create(pCampaign, false);

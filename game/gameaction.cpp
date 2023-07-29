@@ -20,6 +20,7 @@ GameAction::GameAction(GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAction");
 #endif
+    m_actionData.setVersion(QDataStream::Version::Qt_6_5);
     Interpreter::setCppOwnerShip(this);
     m_buffer.open(QIODevice::ReadWrite);
     m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
@@ -33,6 +34,7 @@ GameAction::GameAction(const QString & actionID, GameMap* pMap)
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAction");
 #endif
+    m_actionData.setVersion(QDataStream::Version::Qt_6_5);
     Interpreter::setCppOwnerShip(this);
     m_buffer.open(QIODevice::ReadWrite);
     m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());

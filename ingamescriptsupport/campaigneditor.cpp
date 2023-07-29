@@ -228,6 +228,7 @@ QString CampaignEditor::getMapName(QString filename)
     QFile file(filename);
     file.open(QIODevice::ReadOnly);
     QDataStream stream(&file);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
     QString ret = GameMap::readMapName(stream);
     file.close();
     return ret;

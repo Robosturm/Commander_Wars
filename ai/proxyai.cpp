@@ -92,6 +92,7 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
     if (service == NetworkInterface::NetworkSerives::Game)
     {
         QDataStream stream(data);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         qint32 player = 0;
         stream >> player;
         if (m_pPlayer->getPlayerID() == player)

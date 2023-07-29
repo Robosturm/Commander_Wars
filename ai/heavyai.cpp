@@ -113,6 +113,7 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
             QFile file(searchFiles[i]);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
             network->deserializeObject(stream);
             qint32 inputSize = network->getInputSize();
             if (inputSize > inputVectorSize)
@@ -142,6 +143,7 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
         QFile file("resources/" + baseName);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         network->serializeObject(stream);
     }
 }

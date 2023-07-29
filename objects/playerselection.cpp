@@ -709,6 +709,7 @@ void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << command;
         sendStream << player;
         sendStream << army;
@@ -795,6 +796,7 @@ void PlayerSelection::playerDataChanged()
         
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << command;
         for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
@@ -823,6 +825,7 @@ void PlayerSelection::playerColorChanged(QColor displayColor, qint32 playerIdx, 
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << command;
         sendStream << playerIdx;
         sendStream << displayColor;
@@ -1031,6 +1034,7 @@ void PlayerSelection::updateCOData(qint32 playerIdx)
         Player* pPlayer = m_pMap->getPlayer(playerIdx);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << command;
         sendStream << playerIdx;
         CO* pCO = pPlayer->getCO(0);
@@ -1316,6 +1320,7 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
     {
         QDataStream stream(&data, QIODevice::ReadOnly);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         QString messageType;
         stream >> messageType;
         CONSOLE_PRINT("Network Command PlayerSelection::recieveData: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
@@ -1541,6 +1546,7 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
             CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
             stream << command;
             emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
         }
@@ -1555,6 +1561,7 @@ void PlayerSelection::sendPlayerReady(quint64 socketID)
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
         auto playerCount = m_pMap->getPlayerCount();
         sendStream << command;
         sendStream << static_cast<qint32>(m_pMap->getPlayerCount());
@@ -1600,6 +1607,7 @@ void PlayerSelection::sendPlayerRequest(quint64 socketID, qint32 player, GameEnu
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+    sendStream.setVersion(QDataStream::Version::Qt_6_5);
     sendStream << command;
     // request player smaller 0 for any (the first avaible on the server :)
     sendStream << static_cast<qint32>(player);
@@ -1671,6 +1679,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
                 QString command = NetworkCommands::PLAYERACCESSDENIED;
                 QByteArray accessDenied;
                 QDataStream sendStream(&accessDenied, QIODevice::WriteOnly);
+                sendStream.setVersion(QDataStream::Version::Qt_6_5);
                 sendStream << command;
                 emit m_pNetworkInterface->sig_sendData(socketID, accessDenied, NetworkInterface::NetworkSerives::Multiplayer, false);
             }
@@ -1919,6 +1928,7 @@ void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketI
     QString command = QString(NetworkCommands::PLAYERCHANGED);
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QDataStream sendStream(&data, QIODevice::WriteOnly);
+    sendStream.setVersion(QDataStream::Version::Qt_6_5);
     sendStream << command;
     sendStream << clientRequest;
     sendStream << socketId;

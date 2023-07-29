@@ -101,6 +101,7 @@ void Filesupport::storeList(const QString & file, const QStringList & items, con
     QFile dataFile(folder + file + LIST_FILENAME_ENDING);
     dataFile.open(QIODevice::WriteOnly);
     QDataStream stream(&dataFile);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
     stream << file;
     stream << static_cast<qint32>(items.size());
     for (qint32 i = 0; i < items.size(); i++)
@@ -122,6 +123,7 @@ Filesupport::StringList Filesupport::readList(const QString & file)
     {
         dataFile.open(QIODevice::ReadOnly);
         QDataStream stream(&dataFile);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         stream >> ret.name;
         qint32 size = 0;
         stream >> size;

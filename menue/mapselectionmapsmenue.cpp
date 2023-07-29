@@ -497,6 +497,7 @@ void MapSelectionMapsMenue::loadRules(QString filename)
             QFile file(filename);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
             pMap->getGameRules()->deserializeObject(stream);
             file.close();
             hideRuleSelection();
@@ -512,6 +513,7 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         pMap->getGameRules()->serializeObject(stream);
         file.close();
@@ -548,6 +550,7 @@ void MapSelectionMapsMenue::saveMap(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         pMap->serializeObject(stream);
         file.close();

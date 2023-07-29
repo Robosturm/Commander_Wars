@@ -92,6 +92,7 @@ void GameMap::loadMap(QString map, bool onlyLoad, bool fast, bool savegame)
     if (file.open(QIODevice::ReadOnly))
     {
         QDataStream pStream(&file);
+        pStream.setVersion(QDataStream::Version::Qt_6_5);
         deserializer(pStream, fast);
         setMapNameFromFilename(map);
         m_loaded = true;
@@ -1519,6 +1520,7 @@ QByteArray GameMap::getMapHash()
     QByteArray data;
     {
         QDataStream stream(&data, QIODevice::WriteOnly);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         serializeObject(stream, true);
     }
     myHash.addData(data);

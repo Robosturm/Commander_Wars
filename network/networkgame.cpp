@@ -169,6 +169,7 @@ void NetworkGame::onConnectToLocalServer(quint64 socketId, spTCPServer & pTcpSer
     {
         m_data.setSlaveName(m_serverName);
         QDataStream stream(&m_dataBuffer, QIODevice::ReadOnly);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         QString messageType;
         stream >> messageType;
         QStringList mods;

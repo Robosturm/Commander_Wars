@@ -99,6 +99,7 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         auto seed = GlobalUtils::getSeed();
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         stream << command;
         stream << seed;
         m_pMap->serializeObject(stream);
@@ -130,6 +131,7 @@ void AiProcessPipe::onQuitGame()
         CONSOLE_PRINT("AI-Pipe sending command " + command, GameConsole::eDEBUG);
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         stream << command;
         emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
     }
@@ -151,6 +153,7 @@ void AiProcessPipe::recieveData(quint64, QByteArray data, NetworkInterface::Netw
     if (service == NetworkInterface::NetworkSerives::AiPipe)
     {
         QDataStream stream(&data, QIODevice::ReadOnly);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         QString messageType;
         stream >> messageType;
         CONSOLE_PRINT("AI-Pipe command received: " + messageType, GameConsole::eDEBUG);
@@ -197,6 +200,7 @@ void AiProcessPipe::sendActionToSlave(spGameAction pAction)
         CONSOLE_PRINT("AI-Pipe sending command " + command + " action=" + pAction->getActionID(), GameConsole::eDEBUG);
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         stream << command;
         pAction->serializeObject(stream);
         emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
@@ -211,6 +215,7 @@ void AiProcessPipe::sendActionToMaster(spGameAction pAction)
         CONSOLE_PRINT("AI-Pipe sending command " + command + " action=" + pAction->getActionID() + " with sync counter " + QString::number(pAction->getSyncCounter()), GameConsole::eDEBUG);
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         stream << command;
         pAction->serializeObject(stream);
         emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
@@ -271,6 +276,7 @@ void AiProcessPipe::onStartGame(QDataStream & stream)
         CONSOLE_PRINT("AI-Pipe sending command " + command +  " current player=" + QString::number(m_pMap->getCurrentPlayer()->getPlayerID()), GameConsole::eDEBUG);
         QByteArray data;
         QDataStream outStream(&data, QIODevice::WriteOnly);
+        outStream.setVersion(QDataStream::Version::Qt_6_5);
         outStream << command;
         emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
         connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);
@@ -302,6 +308,7 @@ void AiProcessPipe::pipeReady()
     CONSOLE_PRINT("AI-Pipe sending command " + command, GameConsole::eDEBUG);
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
     stream << command;
     emit m_pActiveConnection->sig_sendData(0, data, NetworkInterface::NetworkSerives::AiPipe, false);
 }

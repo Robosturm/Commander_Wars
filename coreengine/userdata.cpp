@@ -81,6 +81,7 @@ void Userdata::storeUser()
             QFile user(Settings::getInstance()->getUserPath() + Settings::getInstance()->getUsername() + ".dat");
             user.open(QIODevice::WriteOnly | QIODevice::Truncate);
             QDataStream pStream(&user);
+            pStream.setVersion(QDataStream::Version::Qt_6_5);
             Userdata::serializeObject(pStream);
             user.close();
         }
@@ -96,6 +97,7 @@ void Userdata::changeUser()
         CONSOLE_PRINT("Userdata::changeUser", GameConsole::eDEBUG);
         user.open(QIODevice::ReadOnly);
         QDataStream pStream(&user);
+        pStream.setVersion(QDataStream::Version::Qt_6_5);
         Userdata::deserializeObject(pStream);
         user.close();
     }
@@ -456,6 +458,7 @@ ScriptVariableFile* Userdata::getScriptVariableFile(const QString filename)
     {
         file.open(QIODevice::ReadOnly);
         QDataStream pStream(&file);
+        pStream.setVersion(QDataStream::Version::Qt_6_5);
         pScriptVariableFile->deserializeObject(pStream);
     }
     m_scriptVariableFiles.append(pScriptVariableFile);

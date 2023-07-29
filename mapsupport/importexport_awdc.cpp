@@ -21,6 +21,7 @@ void GameMap::importAW4Map(QString file, EditorMenue* pMenu)
         QFile data(file);
         data.open(QFile::ReadOnly);
         QDataStream stream(&data);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         stream >> sign;
         stream >> sign;
         qint32 width = sign;

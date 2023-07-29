@@ -24,6 +24,7 @@ DamageCalculator::DamageCalculator(GameMap * pMap)
     QBuffer buffer;
     buffer.open(QIODevice::ReadWrite);
     QDataStream stream(&buffer);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
     pMap->getGameRules()->serializeObject(stream);
     buffer.seek(0);
     m_map.getGameRules()->deserializeObject(stream);

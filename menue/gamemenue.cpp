@@ -233,6 +233,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
     {
         QDataStream stream(&data, QIODevice::ReadOnly);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         QString messageType;
         stream >> messageType;
         CONSOLE_PRINT("Local Network command in GameMenue::recieveData received: " + messageType + " for socket " + QString::number(socketID), GameConsole::eDEBUG);
@@ -270,6 +271,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+                    sendStream.setVersion(QDataStream::Version::Qt_6_5);
                     sendStream << command;
                     quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
                     GlobalUtils::seed(seed);
@@ -578,6 +580,7 @@ void GameMenue::sendVerifyGameData(quint64 socketID)
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
     stream << command;
     stream << Mainapp::getGameVersion();
     QStringList mods = Settings::getInstance()->getMods();
@@ -611,6 +614,7 @@ void GameMenue::doResyncGame()
             CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
             stream << command;
             Filesupport::writeByteArray(stream, m_pMap->getMapHash());
             emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
@@ -774,6 +778,7 @@ void GameMenue::startGameSync(quint64 socketID)
     QString command = NetworkCommands::WAITFORPLAYERJOINSYNCFINISHED;
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+    sendStream.setVersion(QDataStream::Version::Qt_6_5);
     sendStream << command;
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
@@ -807,6 +812,7 @@ void GameMenue::waitForPlayerJoinSyncFinished(QDataStream & stream, quint64 sock
         QString command = NetworkCommands::WAITINGFORPLAYERJOINSYNCFINISHED;
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << command;
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
@@ -849,6 +855,7 @@ void GameMenue::syncPointReached()
         QString command = NetworkCommands::SENDCURRENTGAMESTATE;
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Version::Qt_6_5);
         sendStream << command;
         m_pMap->serializeObject(sendStream);
         auto syncCounter = m_actionPerformer.getSyncCounter();
@@ -964,6 +971,7 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
     QString command = NetworkCommands::RECEIVEPLAYERCONTROLLEDINFO;
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+    sendStream.setVersion(QDataStream::Version::Qt_6_5);
     sendStream << command;
     sendStream << static_cast<qint32>(playerAis.size());
     for (qint32 i = 0; i < playerAis.size(); ++i)
@@ -1072,6 +1080,7 @@ void GameMenue::continueAfterSyncGame()
             QString command = NetworkCommands::PLAYERJOINEDFINISHED;
             QByteArray sendData;
             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream.setVersion(QDataStream::Version::Qt_6_5);
             sendStream << command;
             CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
             emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
@@ -1110,6 +1119,7 @@ void GameMenue::sendRequestJoinReason(quint64 socketID)
     CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
     stream << command;
     emit m_pNetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
@@ -2160,6 +2170,7 @@ void GameMenue::doSaveMap()
                 QFile file(m_saveFile);
                 file.open(QIODevice::WriteOnly | QIODevice::Truncate);
                 QDataStream stream(&file);
+                stream.setVersion(QDataStream::Version::Qt_6_5);
                 m_pMap->setReplayActionCount(m_ReplayRecorder.getCount());
                 m_pMap->serializeObject(stream);
                 file.close();

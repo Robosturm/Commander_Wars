@@ -19,6 +19,7 @@ void GameMap::importAWDSMap(QString file, EditorMenue* pMenu)
         QFile data(file);
         data.open(QFile::ReadOnly);
         QDataStream stream(&data);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         for (qint32 i = 0; i < 10; i++)
         {
             stream >> sign;
@@ -1633,6 +1634,7 @@ void GameMap::exportAWDSMap(QString file)
         QFile data(file);
         data.open(QFile::WriteOnly);
         QDataStream stream(&data);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         stream << static_cast<uchar>(4 * 16 + 1);
         stream << static_cast<uchar>(5 * 16 + 7);
         stream << static_cast<uchar>(5 * 16 + 3);

@@ -54,6 +54,7 @@ void HeavyAi::saveNeuralNetwork(qint32 network)
         QFile file(QString("resources/") + NeuralNetworkPath + NeuralNetworkNames[network] + m_aiName + NeuralNetworkFileEnding);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         m_neuralNetworks[network]->serializeObject(stream);
     }
     else

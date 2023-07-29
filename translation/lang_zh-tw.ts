@@ -1698,124 +1698,124 @@
         <translation>增加</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="274"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="275"/>
         <source>Enable Maps</source>
         <translation>啟用地圖</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="282"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="283"/>
         <source>Disable Maps</source>
         <translation>停用地圖</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="290"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="291"/>
         <source>Variables</source>
         <translation>變數</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="298"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="299"/>
         <source>Remove Map</source>
         <translation>移除地圖</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="309"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="310"/>
         <source>Last Map</source>
         <translation>最終關卡</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="315"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="316"/>
         <source>All maps marked as last map need to be won in order to finish the campaign.</source>
         <translation>所有被標記為&quot;最終關卡&quot;的地圖都需要贏得,才能完成整個戰役.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="760"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="761"/>
         <source>Number of maps that disable this map again. When they are one this map is made unplayable. Can be used to make a map no longer playable after a Victory.</source>
         <translation>禁用此地圖的地圖數量.當這個值為1時,此地圖將無法再次遊玩.可以用來使地圖在勝利後不能再次遊玩.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="967"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="968"/>
         <source>If checked and if the disable variable has been fullfiled this map can&apos;t be played.</source>
         <translation>如果勾選了並且已經達成了停用變數的條件,這張地圖將無法再被玩家選擇.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="686"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="687"/>
         <source>Enable Map Count:</source>
         <translation>啟用地圖計數:</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="690"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="691"/>
         <source>Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map.</source>
         <translation>需要贏得的導致此地圖的地圖數量,以便能夠玩此地圖.可以較小,因此多個遊戲路徑導致此地圖.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="712"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="713"/>
         <source>If checked this map leads to the selected map. Also see &quot;Enable Map Count&quot;</source>
         <translation>如果勾選了這個選項,則此地圖將引導到所選的地圖.另請參閱“啟用地圖計數”</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="756"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="757"/>
         <source>Disable Map Count:</source>
         <translation>停用地圖計數:</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="780"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="781"/>
         <source>If checked this map disables the selected map. Also see &quot;Disable Map Count&quot;</source>
         <translation>若勾選此選項，此地圖將會使選定的地圖停用.請參考&quot;停用地圖計數&quot;</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="830"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="831"/>
         <source>Enable Variable</source>
         <translation>啟用變數</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="837"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="913"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="838"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="914"/>
         <source>Variable: </source>
         <translation>變數: </translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="841"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="917"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="842"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="918"/>
         <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation>變數的名稱應該命名為何?請避免使用以&quot;variable&quot;開頭的名稱,此名稱已被系統使用.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="854"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="930"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="855"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="931"/>
         <source>Compare: </source>
         <translation>比較: </translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="860"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="934"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="861"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="935"/>
         <source>The way how the variable gets compared with the constant. variable compare value </source>
         <translation>變數與常數的比較方式.例如:變數大於常數､變數等於常數等 </translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="872"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="946"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="873"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="947"/>
         <source>Value: </source>
         <translation>值: </translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="876"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="950"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="877"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="951"/>
         <source>The value that the variable gets checked against.</source>
         <translation>變數需要與之比較的常數值.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="889"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="963"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="890"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="964"/>
         <source>Use Variable: </source>
         <translation>使用變數: </translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="893"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="894"/>
         <source>If checked the enable variable needs to fullfil the condition to allow this map to be playable.</source>
         <translation>如果選中,啟用變量需要滿足條件才能讓此地圖可遊玩.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="906"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="907"/>
         <source>Disable Variable</source>
         <translation>停用變數</translation>
     </message>
@@ -2281,112 +2281,112 @@
 <context>
     <name>DamageCalculator</name>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="47"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="48"/>
         <source>Damage calculator</source>
         <translation>傷害計算器</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="90"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="91"/>
         <source>Calculate</source>
         <translation>計算器</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="151"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="152"/>
         <source>CO for the player.</source>
         <translation>玩家的CO.</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="156"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="157"/>
         <source>Power level of the co.</source>
         <translation>CO的能力等級.</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="162"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="163"/>
         <source>Zone</source>
         <translation>區域</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="167"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="168"/>
         <source>If the unit is in the co-zone of this co.</source>
         <translation>如果單位在該CO的CO區域.</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="186"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="187"/>
         <source>Unit to be used.</source>
         <translation>要使用的單位.</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="213"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="214"/>
         <source>Terrain the unit is currently sitting on.</source>
         <translation>該單位目前所在的地形.</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="239"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="240"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediately applied.</source>
         <translation>這個指令可以選擇單位的階級,CO階級可以用最高階替代,並立即生效.</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="247"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="248"/>
         <source>HP:</source>
         <translation>HP:</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="251"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="252"/>
         <source>HP of the unit.</source>
         <translation>單位的HP.</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="257"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="258"/>
         <source>Towers:</source>
         <translation>指揮塔:</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="261"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="262"/>
         <source>Amount of towers owned by the player.</source>
         <translation>玩家擁有的指揮塔.</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="267"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="268"/>
         <source>Towns:</source>
         <translation>城鎮:</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="271"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="272"/>
         <source>Amount of towns owned by the player.</source>
         <translation>玩家擁有的城鎮.</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="277"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="278"/>
         <source>Funds:</source>
         <translation>資金:</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="281"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="282"/>
         <source>Amount of funds owned by the player.</source>
         <translation>玩家擁有的資金.</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="291"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="292"/>
         <source>Battle</source>
         <translation>戰鬥</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="297"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="298"/>
         <source>Min:</source>
         <translation>最小:</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="301"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="302"/>
         <source>Avg:</source>
         <translation>平均:</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="305"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="306"/>
         <source>Max:</source>
         <translation>最大:</translation>
     </message>
     <message>
-        <location filename="../game/ui/damagecalculator.cpp" line="326"/>
+        <location filename="../game/ui/damagecalculator.cpp" line="327"/>
         <source>Post battle</source>
         <translation>戰後</translation>
     </message>
@@ -3620,85 +3620,85 @@ Distributed: Units are spawned at the given rate.</source>
         <translation>刪除當前地圖並從 https://awbw.amarriner.com/ 導入 Advance Wars by Web 地圖</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="467"/>
+        <location filename="../menue/editormenue.cpp" line="470"/>
         <source>Save</source>
         <translation>儲存</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="479"/>
+        <location filename="../menue/editormenue.cpp" line="482"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="501"/>
+        <location filename="../menue/editormenue.cpp" line="504"/>
         <source>Left: </source>
         <translation>左: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="505"/>
+        <location filename="../menue/editormenue.cpp" line="508"/>
         <source>Change of the map size on the left map border.</source>
         <translation>更改地圖尺寸,調整左邊地圖邊界.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="514"/>
+        <location filename="../menue/editormenue.cpp" line="517"/>
         <source>Top: </source>
         <translation>上: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="518"/>
+        <location filename="../menue/editormenue.cpp" line="521"/>
         <source>Change of the map size on the top map border.</source>
         <translation>更改地圖尺寸,調整上面地圖邊界.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="527"/>
+        <location filename="../menue/editormenue.cpp" line="530"/>
         <source>Right: </source>
         <translation>右: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="531"/>
+        <location filename="../menue/editormenue.cpp" line="534"/>
         <source>Change of the map size on the right map border.</source>
         <translation>更改地圖尺寸,調整右邊地圖邊界.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="540"/>
+        <location filename="../menue/editormenue.cpp" line="543"/>
         <source>Bottom: </source>
         <translation>下: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="544"/>
+        <location filename="../menue/editormenue.cpp" line="547"/>
         <source>Change of the map size on the bottom map border.</source>
         <translation>更改地圖尺寸,調整下面地圖邊界.</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="586"/>
-        <location filename="../menue/editormenue.cpp" line="598"/>
-        <location filename="../menue/editormenue.cpp" line="622"/>
-        <location filename="../menue/editormenue.cpp" line="634"/>
+        <location filename="../menue/editormenue.cpp" line="589"/>
+        <location filename="../menue/editormenue.cpp" line="601"/>
+        <location filename="../menue/editormenue.cpp" line="625"/>
+        <location filename="../menue/editormenue.cpp" line="637"/>
         <source>Import</source>
         <translation>匯入</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="610"/>
+        <location filename="../menue/editormenue.cpp" line="613"/>
         <source>Export</source>
         <translation>匯出</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="648"/>
+        <location filename="../menue/editormenue.cpp" line="651"/>
         <source>Do you want to discard all current changes and create a new map?</source>
         <translation>您要放棄所有當前的更改並創建新地圖嗎?</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="669"/>
+        <location filename="../menue/editormenue.cpp" line="672"/>
         <source>Do you want to apply the map changes?</source>
         <translation>您要應用地圖更改嗎?</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="716"/>
+        <location filename="../menue/editormenue.cpp" line="719"/>
         <source>Do you want to create a random map and discard all current changes?</source>
         <translation>您要創建隨機地圖並放棄所有當前更改嗎?</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="769"/>
+        <location filename="../menue/editormenue.cpp" line="772"/>
         <source>Do you want to exit the map editor?</source>
         <translation>您想退出地圖編輯器嗎?</translation>
     </message>
@@ -6522,9 +6522,9 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="70"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="87"/>
-        <location filename="../game/gamemap.cpp" line="600"/>
-        <location filename="../game/gamemap.cpp" line="741"/>
-        <location filename="../game/gamemap.cpp" line="1640"/>
+        <location filename="../game/gamemap.cpp" line="601"/>
+        <location filename="../game/gamemap.cpp" line="742"/>
+        <location filename="../game/gamemap.cpp" line="1642"/>
         <source> of </source>
         <translation> 的 </translation>
     </message>
@@ -6539,7 +6539,7 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation>讀取圖像</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="439"/>
+        <location filename="../game/gamemap.cpp" line="440"/>
         <source>Tags
 
 </source>
@@ -6548,176 +6548,176 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="442"/>
+        <location filename="../game/gamemap.cpp" line="443"/>
         <source>Bases
 </source>
         <translation>基地
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="446"/>
+        <location filename="../game/gamemap.cpp" line="447"/>
         <source>Airports
 </source>
         <translation>機場
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="450"/>
+        <location filename="../game/gamemap.cpp" line="451"/>
         <source>Harbours
 </source>
         <translation>港口
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="454"/>
+        <location filename="../game/gamemap.cpp" line="455"/>
         <source>Towers
 </source>
         <translation>指揮塔
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="458"/>
+        <location filename="../game/gamemap.cpp" line="459"/>
         <source>Teleport
 </source>
         <translation>傳送器
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="462"/>
+        <location filename="../game/gamemap.cpp" line="463"/>
         <source>Mixed bases
 </source>
         <translation>混合基地
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="466"/>
+        <location filename="../game/gamemap.cpp" line="467"/>
         <source>Predeployed
 </source>
         <translation>預先部署
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="470"/>
+        <location filename="../game/gamemap.cpp" line="471"/>
         <source>Symetric
 </source>
         <translation>對稱
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="474"/>
+        <location filename="../game/gamemap.cpp" line="475"/>
         <source>PvP
 </source>
         <translation>PvP
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="478"/>
+        <location filename="../game/gamemap.cpp" line="479"/>
         <source>FTA
 </source>
         <translation>FTA
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="482"/>
+        <location filename="../game/gamemap.cpp" line="483"/>
         <source>Vs AI
 </source>
         <translation>Vs AI
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="486"/>
+        <location filename="../game/gamemap.cpp" line="487"/>
         <source>Team play
 </source>
         <translation>團隊遊戲
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="490"/>
+        <location filename="../game/gamemap.cpp" line="491"/>
         <source>Historical
 </source>
         <translation>經典的
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="494"/>
+        <location filename="../game/gamemap.cpp" line="495"/>
         <source>Low funds
 </source>
         <translation>低資金
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="498"/>
+        <location filename="../game/gamemap.cpp" line="499"/>
         <source>High funds
 </source>
         <translation>高資金
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="502"/>
+        <location filename="../game/gamemap.cpp" line="503"/>
         <source>Naval
 </source>
         <translation>海軍
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="506"/>
+        <location filename="../game/gamemap.cpp" line="507"/>
         <source>Ground
 </source>
         <translation>陸軍
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="510"/>
+        <location filename="../game/gamemap.cpp" line="511"/>
         <source>Air
 </source>
         <translation>空軍
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="514"/>
+        <location filename="../game/gamemap.cpp" line="515"/>
         <source>Scripted
 </source>
         <translation>已載入腳本
 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="600"/>
-        <location filename="../game/gamemap.cpp" line="1640"/>
+        <location filename="../game/gamemap.cpp" line="601"/>
+        <location filename="../game/gamemap.cpp" line="1642"/>
         <source>Loading Map Row </source>
         <translation>加載地圖行 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="714"/>
+        <location filename="../game/gamemap.cpp" line="715"/>
         <source>Loading weather for snowy times</source>
         <translation>加載雪天天氣</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="741"/>
+        <location filename="../game/gamemap.cpp" line="742"/>
         <source>Synchronizing Map Row </source>
         <translation>同步地圖行 </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1607"/>
+        <location filename="../game/gamemap.cpp" line="1609"/>
         <source>Loading Players</source>
         <translation>載入玩家</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1668"/>
+        <location filename="../game/gamemap.cpp" line="1670"/>
         <source>Loading Rules</source>
         <translation>載入規則</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1678"/>
+        <location filename="../game/gamemap.cpp" line="1680"/>
         <source>Loading Record</source>
         <translation>載入回放</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1686"/>
+        <location filename="../game/gamemap.cpp" line="1688"/>
         <source>Loading scripts</source>
         <translation>載入腳本</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1698"/>
+        <location filename="../game/gamemap.cpp" line="1700"/>
         <source>Loading Campaign</source>
         <translation>載入戰役</translation>
     </message>
@@ -6730,136 +6730,136 @@ Warning this may lead to desynced games or crashes if one of the mods is not a p
         <translation>等待玩家</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="443"/>
+        <location filename="../menue/gamemenue.cpp" line="445"/>
         <source>Connection failed.Reason: Invalid login data.</source>
         <translation>連接失敗.原因:登錄數據無效.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="444"/>
+        <location filename="../menue/gamemenue.cpp" line="446"/>
         <source>Connection failed.Reason: No more observers available.</source>
         <translation>連接失敗.原因:沒有更多可用的觀察者.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="445"/>
+        <location filename="../menue/gamemenue.cpp" line="447"/>
         <source>Connection failed.Reason: No valid player available.</source>
         <translation>連接失敗.原因:沒有可用的有效玩家.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="446"/>
+        <location filename="../menue/gamemenue.cpp" line="448"/>
         <source>Connection failed.Reason: Invalid connection.</source>
         <translation>連接失敗.原因:無效連接.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="654"/>
+        <location filename="../menue/gamemenue.cpp" line="658"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart or try to resync with the server.
 Note: This may be caused by a defective mod.</source>
         <translation>遊戲不同步,無法繼續進行.遊戲已停止.您可以保存遊戲並重新啟動,或嘗試與服務器重新同步.
 備註:這可能是由於有缺陷的模組引起的.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="654"/>
+        <location filename="../menue/gamemenue.cpp" line="658"/>
         <source>Resync</source>
         <translation>重新同步</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="654"/>
+        <location filename="../menue/gamemenue.cpp" line="658"/>
         <source>Ok</source>
         <translation>確定</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1155"/>
+        <location filename="../menue/gamemenue.cpp" line="1165"/>
         <source>The host has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation>主機已從遊戲中斷開連線!遊戲將停止.您可以保存遊戲,重新載入地圖以繼續遊戲.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1178"/>
+        <location filename="../menue/gamemenue.cpp" line="1188"/>
         <source>A client has disconnected from the game. The client may reconnect to the game.</source>
         <translation>客戶端已與遊戲斷開連接.客戶端可能會重新連接到遊戲.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1435"/>
-        <location filename="../menue/gamemenue.cpp" line="2055"/>
-        <location filename="../menue/gamemenue.cpp" line="2092"/>
+        <location filename="../menue/gamemenue.cpp" line="1445"/>
+        <location filename="../menue/gamemenue.cpp" line="2065"/>
+        <location filename="../menue/gamemenue.cpp" line="2102"/>
         <source>Save</source>
         <translation>存檔</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1443"/>
+        <location filename="../menue/gamemenue.cpp" line="1453"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1478"/>
+        <location filename="../menue/gamemenue.cpp" line="1488"/>
         <source>Show Chat</source>
         <translation>顯示聊天</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1904"/>
+        <location filename="../menue/gamemenue.cpp" line="1914"/>
         <source>Player</source>
         <translation>玩家</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1905"/>
+        <location filename="../menue/gamemenue.cpp" line="1915"/>
         <source>Produced</source>
         <translation>生產</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1906"/>
+        <location filename="../menue/gamemenue.cpp" line="1916"/>
         <source>Lost</source>
         <translation>失去</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1907"/>
+        <location filename="../menue/gamemenue.cpp" line="1917"/>
         <source>Killed</source>
         <translation>擊殺</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1908"/>
+        <location filename="../menue/gamemenue.cpp" line="1918"/>
         <source>Army Value</source>
         <translation>軍隊質量</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1909"/>
+        <location filename="../menue/gamemenue.cpp" line="1919"/>
         <source>Income</source>
         <translation>收入</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1910"/>
+        <location filename="../menue/gamemenue.cpp" line="1920"/>
         <source>Funds</source>
         <translation>資金</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1911"/>
+        <location filename="../menue/gamemenue.cpp" line="1921"/>
         <source>Bases</source>
         <translation>基地</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1937"/>
+        <location filename="../menue/gamemenue.cpp" line="1947"/>
         <source>Player </source>
         <translation>玩家 </translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1955"/>
+        <location filename="../menue/gamemenue.cpp" line="1965"/>
         <source>Neutral</source>
         <translation>自然</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2464"/>
+        <location filename="../menue/gamemenue.cpp" line="2475"/>
         <source>Do you want to exit the current game?</source>
         <translation>您要退出當前遊戲嗎?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2495"/>
+        <location filename="../menue/gamemenue.cpp" line="2506"/>
         <source>Do you want to surrender the current game?</source>
         <translation>是否要放棄當前遊戲?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2521"/>
+        <location filename="../menue/gamemenue.cpp" line="2532"/>
         <source>Nickname for the Unit:</source>
         <translation>單位暱稱:</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="2698"/>
+        <location filename="../menue/gamemenue.cpp" line="2709"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
@@ -7285,12 +7285,12 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../menue/mainwindow.cpp" line="269"/>
         <location filename="../menue/mainwindow.cpp" line="279"/>
-        <location filename="../menue/mainwindow.cpp" line="316"/>
+        <location filename="../menue/mainwindow.cpp" line="317"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="434"/>
+        <location filename="../menue/mainwindow.cpp" line="435"/>
         <source>Do you want to enable all current items in the shop?</source>
         <translation>您要啟用商店中的所有當前商品嗎?</translation>
     </message>
@@ -7334,7 +7334,7 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="115"/>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="484"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="532"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="534"/>
         <source>Save</source>
         <translation>儲存</translation>
     </message>
@@ -7349,17 +7349,17 @@ Note: This may be caused by a defective mod.</source>
         <translation>開始遊戲</translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="518"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="520"/>
         <source>Do you want to make the saved ruleset the default ruleset?</source>
         <translation>您是否要將已保存的規則集設為默認的規則集?</translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="518"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="520"/>
         <source>Yes</source>
         <translation>是</translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="518"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="520"/>
         <source>No</source>
         <translation>否</translation>
     </message>
@@ -7425,7 +7425,7 @@ Note: This may be caused by a defective mod.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="115"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2072"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2097"/>
         <source>Ready</source>
         <translation>準備好了</translation>
     </message>
@@ -7440,32 +7440,32 @@ Note: This may be caused by a defective mod.</source>
         <translation>讀取存檔</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="300"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="301"/>
         <source>Host Adress: </source>
         <translation>主機地址: </translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="531"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="534"/>
         <source>Server doesn&apos;t have the given mods installed.</source>
         <translation>服務器沒有安裝給定的模組.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="290"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="291"/>
         <source>Please use one of the following IP-Addresses to connect to this Host. Not all IP-Addresses</source>
         <translation>請使用以下其中一個 IP 位址連接到此主機.並非所有 IP 位址都可用</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="291"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="292"/>
         <source> may work for each client depending on their network settings. Please use CMD and the ping command to verify if an IP-Address will work</source>
         <translation> 每個客戶端的網路設置可能對不是所有IP地址都有效.請使用CMD和ping命令來驗證IP地址是否有效</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="538"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="541"/>
         <source>Server doesn&apos;t have any more slots for players.</source>
         <translation>伺服器已經沒有空位可以容納更多玩家.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="314"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="315"/>
         <source>Load</source>
         <translation>讀取</translation>
     </message>
@@ -7475,75 +7475,75 @@ Note: This may be caused by a defective mod.</source>
         <translation>準備好 + 退出</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="267"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="268"/>
         <source>Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?
 Note: You won&apos;t be able to change any rules when reentering the lobby later.</source>
         <translation>你是否要退出遊戲大廳並標記自己為準備好在所有玩家準備好後開始遊戲?
 注意:重新進入大廳後,您將無法更改任何規則.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="271"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="272"/>
         <source>Do you want to exit the game lobby and mark yourself as ready to start the game as soon as all players are ready?</source>
         <translation>你想退出遊戲大廳並標記自己已準備好在所有玩家準備就緒時開始遊戲嗎?</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="606"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="609"/>
         <source>Connection failed. Reason: Invalid username password.</source>
         <translation>連線失敗.原因:無效的使用者名稱或密碼.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="607"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="610"/>
         <source>Connection failed. Reason: No more observers available.</source>
         <translation>連接失敗.原因:觀察者數量已滿.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="608"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="611"/>
         <source>Connection failed. Reason: No more players available.</source>
         <translation>連線失敗.原因:沒有更多玩家可用.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="609"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="612"/>
         <source>Connection failed. Reason: Invalid connection.</source>
         <translation>連線失敗.原因:連線無效.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="610"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="613"/>
         <source>Connection failed. Reason: Invalid username.</source>
         <translation>連線失敗.原因:無效的使用者名稱.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="611"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="614"/>
         <source>Connection failed. Reason: Password outdated.</source>
         <translation>連線失敗.原因:無效的使用者名稱.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="612"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="615"/>
         <source>Connection failed. Reason: Server failed to access database.</source>
         <translation>連接失敗.原因:服務器無法訪問數據庫.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="613"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="616"/>
         <source>Connection failed. Reason: Player with same username already connected to the game.</source>
         <translation>連接失敗.原因:具有相同用戶名的玩家已經連接到遊戲.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="929"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1081"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="935"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1091"/>
         <source>Wrong password entered for joining the game.</source>
         <translation>加入遊戲輸入的密碼錯誤.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1320"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1335"/>
         <source>Host has a different version of a mod or the game resource folder has been modified by one of the games.</source>
         <translation>主機有不同版本的模組或遊戲資源文件夾已被其中一個遊戲修改.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1324"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1339"/>
         <source>Host has a different game version. Leaving the game again.</source>
         <translation>主機有不同的遊戲版本.再次離開遊戲.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1338"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1353"/>
         <source>Host has different mods. Leaving the game again.
 Host mods:
 </source>
@@ -7552,32 +7552,32 @@ Host mods:
 </translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1342"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1357"/>
         <source>Failed to join game due to unknown verification failure.</source>
         <translation>由於未知的驗證失敗,無法加入遊.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1442"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1460"/>
         <source>Unable to download script file from host.</source>
         <translation>無法從主機下載腳本文件.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1453"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1471"/>
         <source>Unable to download map file from host.</source>
         <translation>無法從主機下載地圖文件.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1860"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1883"/>
         <source>Informing server</source>
         <translation>通知服務器</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1943"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1967"/>
         <source>Launching game on server</source>
         <translation>在服務器上啟動遊戲</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="2068"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="2093"/>
         <source>Not Ready</source>
         <translation>沒有準備好</translation>
     </message>
@@ -7897,51 +7897,51 @@ Host mods:
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1261"/>
+        <location filename="../objects/playerselection.cpp" line="1265"/>
         <source>Closed</source>
         <translation>關閉</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1295"/>
+        <location filename="../objects/playerselection.cpp" line="1299"/>
         <source>Team</source>
         <translation>隊伍</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1419"/>
+        <location filename="../objects/playerselection.cpp" line="1424"/>
         <source>Connection failed.Reason: No more players available or user is already in the game.</source>
         <translation>連線失敗.原因:沒有更多的玩家可用,或使用者已經在遊戲中.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1249"/>
-        <location filename="../objects/playerselection.cpp" line="1270"/>
-        <location filename="../objects/playerselection.cpp" line="1284"/>
+        <location filename="../objects/playerselection.cpp" line="1253"/>
+        <location filename="../objects/playerselection.cpp" line="1274"/>
+        <location filename="../objects/playerselection.cpp" line="1288"/>
         <source>Human</source>
         <translation>人類</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1249"/>
+        <location filename="../objects/playerselection.cpp" line="1253"/>
         <source>Very Easy</source>
         <translation>非常簡單</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1249"/>
+        <location filename="../objects/playerselection.cpp" line="1253"/>
         <source>Normal</source>
         <translation>普通</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1249"/>
+        <location filename="../objects/playerselection.cpp" line="1253"/>
         <source>Normal Off.</source>
         <translation>普通Off.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1249"/>
+        <location filename="../objects/playerselection.cpp" line="1253"/>
         <source>Normal Def.</source>
         <translation>普通Def.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="1273"/>
-        <location filename="../objects/playerselection.cpp" line="1280"/>
+        <location filename="../objects/playerselection.cpp" line="1277"/>
         <location filename="../objects/playerselection.cpp" line="1284"/>
+        <location filename="../objects/playerselection.cpp" line="1288"/>
         <source>Open</source>
         <translation>開啟</translation>
     </message>
@@ -33241,14 +33241,6 @@ Fullscreen  - Animations are upscaled based on the resolution
         <location filename="../resources/scripts/gamerules/weather/weather_1sun.js" line="6"/>
         <source>Sun</source>
         <translation>陽光</translation>
-    </message>
-</context>
-<context>
-    <name>weather_dummy</name>
-    <message>
-        <location filename="../resources/scripts/gamerules/weather/weather_dummy.js" line="6"/>
-        <source>Dummy</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

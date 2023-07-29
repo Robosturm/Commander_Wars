@@ -22,6 +22,7 @@ GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
     setObjectName("GameAnimation");
 #endif
     Interpreter::setCppOwnerShip(this);
+    m_actionData.setVersion(QDataStream::Version::Qt_6_5);
     if (m_frameTime <= 0)
     {
         m_frameTime = 1;

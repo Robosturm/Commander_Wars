@@ -107,6 +107,7 @@ void RuleSelectionDialog::loadRules(QString filename)
             QFile file(filename);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
             m_pMap->getGameRules()->deserializeObject(stream);
             file.close();
             auto mode = m_pRuleSelection->getMode();
@@ -126,6 +127,7 @@ void RuleSelectionDialog::saveRules(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         
         m_pMap->getGameRules()->serializeObject(stream);
         file.close();

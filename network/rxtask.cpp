@@ -10,6 +10,7 @@ RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, b
       m_pStream(m_pSocket),
       m_useReceivedId(useReceivedId)
 {
+    m_pStream.setVersion(QDataStream::Version::Qt_6_5);
     Interpreter::setCppOwnerShip(this);
 }
 

@@ -263,6 +263,7 @@ void EditorMenue::createTempFile(bool cleanUp)
     QFile file("temp/temp" + QString::number(m_tempCounter) + ".tmp");
     file.open(QIODevice::WriteOnly);
     QDataStream stream(&file);
+    stream.setVersion(QDataStream::Version::Qt_6_5);
     
     m_pMap->serializeObject(stream);
     file.close();
@@ -311,6 +312,7 @@ void EditorMenue::editorUndo()
             m_tempCounter -= 2;
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
             m_pMap->deserializeObject(stream);
             file.close();
             
@@ -335,6 +337,7 @@ void EditorMenue::editorRedo()
     {
         file.open(QIODevice::ReadOnly);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         m_pMap->deserializeObject(stream);
         file.close();
         
@@ -1682,6 +1685,7 @@ void EditorMenue::saveMap(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         
         m_pMap->serializeObject(stream);
         file.close();
@@ -1701,6 +1705,7 @@ void EditorMenue::loadMap(QString filename)
             QFile file(filename);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
             m_pMap->deserializeObject(stream);
             file.close();
             
@@ -2161,6 +2166,7 @@ void EditorMenue::autosave()
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
+        stream.setVersion(QDataStream::Version::Qt_6_5);
         
         m_pMap->serializeObject(stream);
         file.close();

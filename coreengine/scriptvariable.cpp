@@ -9,6 +9,7 @@ ScriptVariable::ScriptVariable(QString id)
     setObjectName("ScriptVariable");
 #endif
     Interpreter::setCppOwnerShip(this);
+    m_actionData.setVersion(QDataStream::Version::Qt_6_5);
     m_buffer.open(QIODevice::ReadWrite);
 }
 
@@ -18,6 +19,7 @@ ScriptVariable::ScriptVariable()
     setObjectName("ScriptVariable");
 #endif
     Interpreter::setCppOwnerShip(this);
+    m_actionData.setVersion(QDataStream::Version::Qt_6_5);
     m_buffer.open(QIODevice::ReadWrite);
 }
 

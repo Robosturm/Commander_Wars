@@ -64,6 +64,7 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
         {
             file.open(QIODevice::ReadOnly | QIODevice::Truncate);
             QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
             QByteArray currentHash;
             for (qint32 i = 0; i < hash.size(); i++)
             {
@@ -89,6 +90,7 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
             // store trained tree for next use.
             file.open(QIODevice::WriteOnly | QIODevice::Truncate);
             QDataStream stream(&file);
+            stream.setVersion(QDataStream::Version::Qt_6_5);
             for (qint32 i = 0; i < hash.size(); i++)
             {
                 stream << static_cast<qint8>(hash[i]);
