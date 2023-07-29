@@ -20,7 +20,7 @@ jobs:
             COMPILER_VERSION: 'win64_mingw'
             target: 'desktop'
             qtPath: 'mingw_64'
-            installerCommands1: 'choco install openssl --force -y --install-arguments="\'/DIR=C:/openSsl/'"'
+            installerCommands1: 'choco install openssl --force -y --install-arguments="\'/DIR=C:/openSsl/\'"'
             installerCommands2: ''
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/openSsl/"'
           - buildTarget: windows-server # test build to check if the server configuration compiles as well
@@ -28,7 +28,7 @@ jobs:
             COMPILER_VERSION: 'win64_mingw'
             target: 'desktop'
             qtPath: 'mingw_64'
-            installerCommands1: 'choco install openssl --force -y --install-arguments="\'/DIR=C:/openSsl/'"'
+            installerCommands1: 'choco install openssl --force -y --install-arguments="\'/DIR=C:/openSsl/\'"'
             installerCommands2: ''
             cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/openSsl/OpenSSL" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF'
           - buildTarget: ubuntu-desktop
