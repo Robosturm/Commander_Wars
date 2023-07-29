@@ -2,9 +2,10 @@ name: Commnader_Wars
 on: [push]
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.5.1'
+  QT_Version: '6.5.2'
   workspace: 'D:/a/Commander_Wars/Commander_Wars'
   JAVA_PATH: 'C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/11.0.20-8/x64/'
+  ANDROID_OPEN_SSL_TAG: master'
   
 jobs:
   install:
@@ -21,7 +22,7 @@ jobs:
             qtPath: 'mingw_64'
             installerCommands1: 'choco install openssl'
             installerCommands2: ''
-            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64"'
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL"'
           - buildTarget: windows-server # test build to check if the server configuration compiles as well
             os: windows-latest
             COMPILER_VERSION: 'win64_mingw'
@@ -29,7 +30,7 @@ jobs:
             qtPath: 'mingw_64'
             installerCommands1: 'choco install openssl'
             installerCommands2: ''
-            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL-Win64" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF'
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/Program Files/OpenSSL" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF'
           - buildTarget: ubuntu-desktop
             os: ubuntu-latest
             COMPILER_VERSION: ''
@@ -58,6 +59,7 @@ jobs:
             installerCommands1: ''
             installerCommands2: ''
             cmakeOptions: ''
+            openSslabiPath: 'android_openssl/ssl_3/armeabi-v7a'
           - buildTarget: android-arm64_v8a
             os: windows-latest
             COMPILER_VERSION: 'android_arm64_v8a'
@@ -70,6 +72,7 @@ jobs:
             installerCommands1: ''
             installerCommands2: ''
             cmakeOptions: ''
+            openSslabiPath: 'android_openssl/ssl_3/arm64-v8a'
         
     runs-on: ${{matrix.os}}
     defaults:
@@ -82,7 +85,7 @@ jobs:
       uses: actions/checkout@v3
       with:
           repository: 'KDAB/android_openssl'
-          ref: '1.1.1l_1.0.2u'
+          ref: ${{env.ANDROID_OPEN_SSL_TAG}}
           path: 'android_openssl'
 
     - name: Checkout source code
@@ -155,7 +158,7 @@ jobs:
         -DQT_HOST_PATH="${{github.workspace}}/qt/Qt/${{env.QT_Version}}/${{matrix.qtCoreToolsPath}}" \
         -DANDROID_SDK_ROOT="${ANDROID_SDK_ROOT}" \
         -DCMAKE_CXX_FLAGS_INIT:STRING="" \
-        -DOPENSSL_LIB_PATH="${{github.workspace}}/android_openssl/static/lib/multiabi" \
+        -DOPENSSL_LIB_PATH="${{github.workspace}}/${{matrix.openSslabiPath}}" \
         -DOPENSSL_INCLUDE_DIR="${{github.workspace}}/android_openssl/static/include" \
         -DOPENSSL_USE_STATIC_LIBS=ON \
         -DPRECOMPILEDOPENSSL=ON \
