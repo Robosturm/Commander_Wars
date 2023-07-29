@@ -49,7 +49,7 @@ jobs:
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Win10_x64.zip' 
-            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/openSsl/"'
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON"'
           - buildTarget: windows-server
             os: windows-latest
             COMPILER_VERSION: 'win64_mingw'
@@ -59,7 +59,7 @@ jobs:
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Win10_x64_Server.zip' 
-            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" "-DOPENSSL_ROOT_DIR=C:/openSsl/" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF'
+            cmakeOptions: '"-DCMAKE_GENERATOR:STRING=MinGW Makefiles" -DOPENSSL_LIB_PATH="C:/openSsl/bin" -DOPENSSL_INCLUDE_DIR="C:/openSsl/include" -DOPENSSL_USE_STATIC_LIBS="ON" -DPRECOMPILEDOPENSSL="ON" -DGRAPHICSUPPORT=OFF -DAUDIOSUPPORT=OFF -DUPDATESUPPORT=OFF'
           - buildTarget: ubuntu-desktop
             os: ubuntu-latest
             COMPILER_VERSION: ''

@@ -93,10 +93,19 @@ endif()
 ###################################################################################
 
 if(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    message("Using local pre-compiled openssl version from path: ${OPENSSL_LIB_PATH}")
+    message("Using local pre-compiled openssl version from path: ${OPENSSL_LIB_PATH} for android")
     set(OPENSSL_LIBS
         ${OPENSSL_LIB_PATH}/libcrypto.a
         ${OPENSSL_LIB_PATH}/libssl.a
+    CACHE INTERNAL "")
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
+    message ("OpenSsL libs:" ${OPENSSL_LIBS})
+elseif(PRECOMPILEDOPENSSL AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    message("Using local pre-compiled openssl version from path: ${OPENSSL_LIB_PATH} for windows")
+    set(OPENSSL_LIBS
+        ${OPENSSL_LIB_PATH}/libcrypto-3-x64.dll
+        ${OPENSSL_LIB_PATH}/libssl-3-x64.dll
     CACHE INTERNAL "")
     include_directories(${OPENSSL_INCLUDE_DIR})
     message ("OpenSsL Include directories:" ${OPENSSL_INCLUDE_DIR})
@@ -1117,6 +1126,7 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_SQL_LIBS}        DESTINATION     "sqldrivers"    OPTIONAL)
     install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION     "/"             OPTIONAL)
     install(FILES xinput1_3.dll                                 DESTINATION     "/"             OPTIONAL)
+    install(FILES ${OPENSSL_LIBS}                               DESTINATION     "/"             OPTIONAL)
 
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
@@ -1135,6 +1145,7 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     install(DIRECTORY ${QT_BIN_DIR}/../plugins/multimedia       DESTINATION "lib/${PROJECT_NAME_LOWER}"                              OPTIONAL)
     install(FILES "icon.png"                                    DESTINATION "share/pixmaps"       RENAME "${PROJECT_NAME_LOWER}.png" OPTIONAL)
     install(FILES "Commander_Wars.desktop"                      DESTINATION "share/applications"  RENAME "${PROJECT_NAME}.desktop"   OPTIONAL)
+    install(FILES ${OPENSSL_LIBS}                               DESTINATION "/"                                                      OPTIONAL)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/android-build/build/outputs/apk/debug/android-build-debug.apk"

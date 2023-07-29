@@ -60,6 +60,7 @@ void TCPServer::connectTCP(QString primaryAdress, quint16 port, QString secondar
 
 void TCPServer::disconnectTCP()
 {
+    CONSOLE_PRINT("Server disconnectTCP for all clients", GameConsole::eLogLevels::eDEBUG);
     for (auto & pTcpServer : m_pTCPServer)
     {
         if (pTcpServer != nullptr)
