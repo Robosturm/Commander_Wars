@@ -5035,5 +5035,24 @@
         <file>resources/images/building/field_base+shade.png</file>
         <file>resources/images/building/field_base.png</file>
         <file>resources/images/building/Field_Basemk2.png</file>
+        <file>resources/images/co/ac/co_mary+mini.png</file>
+        <file>resources/images/co/ac/co_ozzy+mini.png</file>
+        <file>resources/images/co/ac/co_sabaki+mini.png</file>
+        <file>resources/images/co/ac/co_sophie+mini.png</file>
+        <file>resources/images/co/bd/co_adam+mini.png</file>
+        <file>resources/images/co/bd/co_forsythe+mini.png</file>
+        <file>resources/images/co/bd/co_tasha+mini.png</file>
+        <file>resources/images/co/bd/co_zandra+mini.png</file>
+        <file>resources/images/co/bm/co_alexander+mini.png</file>
+        <file>resources/images/co/dm/co_graves+mini.png</file>
+        <file>resources/images/co/dm/co_julia+mini.png</file>
+        <file>resources/images/co/dm/co_melanthe+mini.png</file>
+        <file>resources/images/co/dm/co_varlot+mini.png</file>
+        <file>resources/images/co/dm/co_yukio+mini.png</file>
+        <file>resources/images/co/ge/co_peter+alt+mini.png</file>
+        <file>resources/images/co/ge/co_peter+mini.png</file>
+        <file>resources/images/co/ge/co_smitan+mini.png</file>
+        <file>resources/images/co/yc/co_rattigan+mini.png</file>
+        <file>resources/images/co/bm/co_alexander+alt+mini.png</file>
     </qresource>
 </RCC>
