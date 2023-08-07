@@ -133,7 +133,7 @@ var Constructor = function()
         }
         else if (turn === 10 && player === 2)
         {
-            map.spawnUnit(8, 6, "NEOTANK", map.getPlayer(2), 0);
+            map.spawnUnit(26, 6, "NEOTANK", map.getPlayer(2), 0);
         }
         else if (turn === 11 && player === 2)
         {
