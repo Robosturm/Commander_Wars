@@ -193,7 +193,7 @@ var Constructor = function()
                     qsTr("Uh-oh! When did they arrive here at the factory? Are we in trouble?"),
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
-                    qsTr("ou're a reckless little thing, aren't you? How do you plan on explaining this to Hawke?"),
+                    qsTr("You're a reckless little thing, aren't you? How do you plan on explaining this to Hawke?"),
                     "co_adder", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Flak! The factory's too close to those silos! What happens if it gets hit with a missile?"),
