@@ -158,16 +158,16 @@ var Constructor = function()
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("But I'm worried. If anything ever happened to you, I don't know what I would do. I knew it! You should be in the rear. It's much safer there. "),
-                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    "co_kanbei", GameEnums.COMood_Sad, PLAYER.getDefaultColor(3));
         var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Ooh! I am a Yellow Comet CO! I can handle this responsibility! I'll prove it to you! "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    "co_sonja", GameEnums.COMood_Sad, PLAYER.getDefaultColor(3));
         var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("But, Sonja... I... "),
-                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    "co_kanbei", GameEnums.COMood_Sad, PLAYER.getDefaultColor(3));
         var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Wait! Father, look at that! "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    "co_sonja", GameEnums.COMood_Sad, PLAYER.getDefaultColor(3));
         var dialog12 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Hm? That... That's... "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
@@ -210,7 +210,7 @@ var Constructor = function()
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog25 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Heh heh... It seems that this terrain has our friends in a quandary. Not that it matters. Whatever they decide to do, they can only fail. "),
-                    "co_adder", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    "co_adder", GameEnums.COMood_Happy, PLAYER.getDefaultColor(4));
         var dialog26 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("CO Adder of the Black Hole Army, I presume. I should have known Black Hole was behind this! "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
