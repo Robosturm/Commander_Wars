@@ -136,6 +136,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
             CONSOLE_PRINT("GameMenue starting game directly forced by creation flag", GameConsole::eDEBUG);
             startGame();
         }
+        CONSOLE_PRINT("GameMenue creating chat", GameConsole::eDEBUG);
         m_pChat = spChat::create(pNetworkInterface, QSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight() - 100), NetworkInterface::NetworkSerives::GameChat, this);
         m_pChat->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);

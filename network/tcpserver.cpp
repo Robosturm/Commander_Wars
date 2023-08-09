@@ -153,6 +153,7 @@ void TCPServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface:
 
 void TCPServer::pauseListening()
 {
+    CONSOLE_PRINT("TCPServer pauseListening" + QString::number(m_idCounter), GameConsole::eLogLevels::eDEBUG);
     for (auto & pTcpServer : m_pTCPServer)
     {
         if (pTcpServer != nullptr)
@@ -164,6 +165,7 @@ void TCPServer::pauseListening()
 
 void TCPServer::continueListening()
 {
+    CONSOLE_PRINT("TCPServer continueListening" + QString::number(m_idCounter), GameConsole::eLogLevels::eDEBUG);
     for (auto & pTcpServer : m_pTCPServer)
     {
         if (pTcpServer != nullptr)

@@ -2191,6 +2191,7 @@ void Multiplayermenu::countdown()
             m_onEnterTimer.stop();
             auto window = spGameMenue::create(pMap, m_saveGame, m_pNetworkInterface, false);
             oxygine::Stage::getStage()->addChild(window);
+            CONSOLE_PRINT("Suspending thread shortly before informing slaves to launch game.", GameConsole::eDEBUG);
             QThread::msleep(200);
             CONSOLE_PRINT("Sending init game to clients", GameConsole::eDEBUG);
             emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
