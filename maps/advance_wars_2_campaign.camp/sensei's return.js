@@ -17,7 +17,7 @@ var Constructor = function()
                         "co_adder", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
             var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Sensei! You did it! You are victorious! "),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        "co_sonja", GameEnums.COMood_Happy, PLAYER.getDefaultColor(3));
             var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr(" Hm? I am? Oh, that's nice. "),
                         "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
@@ -93,13 +93,13 @@ var Constructor = function()
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("So quickly? Excellent... Heh heh. Our plans are moving right on schedule, eh? Even so, what a beautiful sea. Gazing upon it fills me with an overwhelming desire to see it all...... destroyed! "),
-                    "co_adder", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    "co_adder", GameEnums.COMood_Happy, PLAYER.getDefaultColor(4));
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("We're under attack! It's Yellow Comet!"),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("So much for 'me time' and tender thoughts... Send out the order for reinforcements! Prepare for battle! "),
-                    "co_adder", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    "co_adder", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
         var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("This is difficult terrain... The land routes are so narrow. Even if we move in numbers, we're sure to take heavy casualties. "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
@@ -114,7 +114,7 @@ var Constructor = function()
                     "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("What have we here? Have they run out of beds in Yellow Comet's infirmaries? "),
-                    "co_adder", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    "co_adder", GameEnums.COMood_Happy, PLAYER.getDefaultColor(4));
         var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("So you're the Black Hole, eh? What do you want here? "),
                     "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
@@ -132,7 +132,7 @@ var Constructor = function()
                     "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog16 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" You're quite the orator. Still, you're a bit long in the tooth to challenge me. Since you're so tired, I'll make this quick and finish you in 10 days! "),
-                    "co_adder", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    "co_adder", GameEnums.COMood_Happy, PLAYER.getDefaultColor(4));
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);
