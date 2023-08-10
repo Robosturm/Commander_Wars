@@ -70,11 +70,18 @@ namespace oxygine
         //initialize projection and view matrix
         const float width = viewport.width();
         const float height = viewport.height();
-        QMatrix4x4 viewProjection(2.0f / width, 0, 0, -1,
-                                  0, -2.0f / height, 0, 1,
-                                  0, 0, 1, 0,
-                                  0, 0, 0, 1);
-        return viewProjection;
+        if (width > 0 && height > 0)
+        {
+            QMatrix4x4 viewProjection(2.0f / width, 0, 0, -1,
+                                      0, -2.0f / height, 0, 1,
+                                      0, 0, 1, 0,
+                                      0, 0, 0, 1);
+            return viewProjection;
+        }
+        else
+        {
+            return QMatrix4x4();
+        }
     }
 
     void Stage::cleanup()

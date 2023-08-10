@@ -1169,7 +1169,7 @@ QPoint GameMap::getCenteredPosition() const
 {
     qint32 x = 0;
     qint32 y = 0;
-    if (m_pMenu != nullptr)
+    if (m_pMenu != nullptr && m_imagesize > 0)
     {
         oxygine::spSlidingActorNoClipRect pMapSliding = m_pMenu->getMapSliding();
         oxygine::spActor pMapSlidingActor = m_pMenu->getMapSlidingActor();

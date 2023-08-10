@@ -59,10 +59,14 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
     addEventListener(oxygine::TouchEvent::WHEEL_DIR, [this](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
-        if (pTouchEvent != nullptr)
+        auto width = getContentWidth();
+        auto height = getContentHeigth();
+        if (pTouchEvent != nullptr &&
+            width > 0 &&
+            height > 0)
         {
-            emit m_HScrollbar->sigChangeScrollValue(static_cast<float>(-pTouchEvent->wheelDirection.y()) / static_cast<float>(getContentHeigth()));
-            emit m_VScrollbar->sigChangeScrollValue(static_cast<float>(-pTouchEvent->wheelDirection.x()) / static_cast<float>(getContentWidth()));
+            emit m_HScrollbar->sigChangeScrollValue(static_cast<float>(-pTouchEvent->wheelDirection.y()) / static_cast<float>(height));
+            emit m_VScrollbar->sigChangeScrollValue(static_cast<float>(-pTouchEvent->wheelDirection.x()) / static_cast<float>(width));
             if (m_stopMouseWheel)
             {
                 pTouchEvent->stopPropagation();
@@ -124,18 +128,20 @@ void Panel::scrolledX(float value)
 
 void Panel::doUpdate(const oxygine::UpdateState& us)
 {
+    auto div = m_ContentRect->getScaledWidth() - m_SlidingActor->getScaledWidth();
     if (m_VScrollbar->getVisible())
     {
-        float value = static_cast<float>(m_ContentRect->getX()) / -static_cast<float>(m_ContentRect->getScaledWidth() - m_SlidingActor->getScaledWidth());
+        float value = static_cast<float>(m_ContentRect->getX()) / -static_cast<float>(div);
         m_VScrollbar->setScrollvalue(value);
     }
     else
     {
         m_ContentRect->setX(0);
     }
-    if (m_HScrollbar->getVisible())
+    div = m_ContentRect->getScaledHeight() - m_SlidingActor->getScaledHeight();
+    if (m_HScrollbar->getVisible() && div > 0)
     {
-        float value = static_cast<float>(m_ContentRect->getY()) / -static_cast<float>(m_ContentRect->getScaledHeight() - m_SlidingActor->getScaledHeight());
+        float value = static_cast<float>(m_ContentRect->getY()) / -static_cast<float>(div);
         m_HScrollbar->setScrollvalue(value);
     }
     else

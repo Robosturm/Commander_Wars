@@ -1,6 +1,5 @@
 #include "coreengine/Gamepad.h"
 #include "coreengine/mainapp.h"
-#include "coreengine/workerthread.h"
 #include "coreengine/interpreter.h"
 
 #include <QDateTime>

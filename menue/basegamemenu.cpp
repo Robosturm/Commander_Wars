@@ -111,7 +111,9 @@ void BaseGamemenu::changeBackground(QString background)
 {
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim(background);
-    if (pBackground != nullptr)
+    if (pBackground != nullptr &&
+        pBackground->getHeight() > 0 &&
+        pBackground->getWidth() > 0)
     {
         m_backgroundSprite->setResAnim(pBackground);
         // background should be last to draw

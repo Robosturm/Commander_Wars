@@ -200,7 +200,7 @@ namespace oxygine
             };
             auto now = Clock::getTimeMS();
             auto goneTime = now - m_lastStepTime;
-            if (goneTime > m_speed)
+            if (goneTime > m_speed && m_speed > timeMS(0))
             {
                 m_lastStepTime = now - timeMS(goneTime.count() % m_speed.count());
                 m_step += goneTime.count() / m_speed.count();

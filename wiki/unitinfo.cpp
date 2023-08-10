@@ -328,14 +328,20 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
 
         qint32 buildingWidth = pBuilding->getBuildingWidth();
         qint32 buildingHeigth = pBuilding->getBuildingHeigth();
-        pBuilding->setScaleX(1.0f / static_cast<float>(buildingWidth));
-        pBuilding->setScaleY(1.0f / static_cast<float>(buildingHeigth));
+        if (buildingWidth > 0 && buildingHeigth > 0)
+        {
+            pBuilding->setScaleX(1.0f / static_cast<float>(buildingWidth));
+            pBuilding->setScaleY(1.0f / static_cast<float>(buildingHeigth));
+        }
         pBuilding->updateBuildingSprites(false);
 
         pTerrain->loadSprites();
         pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
-        pTerrain->setScaleX(1.0f / pBuilding->getScaleX());
-        pTerrain->setScaleY(1.0f / pBuilding->getScaleY());
+        if (pBuilding->getScaleX() > 0 && pBuilding->getScaleY() > 0)
+        {
+            pTerrain->setScaleX(1.0f / pBuilding->getScaleX());
+            pTerrain->setScaleY(1.0f / pBuilding->getScaleY());
+        }
         if (buildingWidth > 1)
         {
             pTerrain->oxygine::Actor::setX(-GameMap::getImageSize() * (buildingWidth - 1));
@@ -345,8 +351,11 @@ UnitInfo::UnitInfo(spUnit pUnit, qint32 width)
             pTerrain->oxygine::Actor::setY(-GameMap::getImageSize() * (buildingHeigth - 1));
         }
         pBuilding->addChild(pTerrain);
-        pBuilding->oxygine::Actor::setX(x + GameMap::getImageSize() * (buildingWidth - 1) / (buildingWidth));
-        pBuilding->oxygine::Actor::setY(y + GameMap::getImageSize() * (buildingHeigth - 1) / (buildingHeigth));
+        if (buildingWidth > 0 && buildingHeigth > 0)
+        {
+            pBuilding->oxygine::Actor::setX(x + GameMap::getImageSize() * (buildingWidth - 1) / (buildingWidth));
+            pBuilding->oxygine::Actor::setY(y + GameMap::getImageSize() * (buildingHeigth - 1) / (buildingHeigth));
+        }
 
         pBuilding->addClickListener([this, pBuildingSpriteManager, i](oxygine::Event*)
         {

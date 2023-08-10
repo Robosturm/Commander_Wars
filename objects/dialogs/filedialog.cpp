@@ -293,8 +293,14 @@ void FileDialog::showFolder(QString folder)
                 m_ResAnims.append(pAnim);
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
                 pSprite->setResAnim(pAnim.get());
-                pSprite->setScaleX(30.0f / static_cast<float>(pAnim->getWidth()));
-                pSprite->setScaleY(30.0f / static_cast<float>(pAnim->getHeight()));
+                if (pAnim-> getWidth() > 0)
+                {
+                    pSprite->setScaleX(30.0f / static_cast<float>(pAnim->getWidth()));
+                }
+                if (pAnim->getHeight() > 0)
+                {
+                    pSprite->setScaleY(30.0f / static_cast<float>(pAnim->getHeight()));
+                }
                 pSprite->setPosition(8, 5);
                 pBox->addChild(pSprite);
                 textField->setX(53);

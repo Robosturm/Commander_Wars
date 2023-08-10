@@ -48,7 +48,7 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
         m_Slider.append(spSlider::create(width, 0, 100));
         m_Slider[i]->setX(sliderX);
         m_Slider[i]->setY(i * 40);
-        if (values.size() != texts.size())
+        if (values.size() != texts.size() && texts.size() > 0)
         {
             m_Slider[i]->setCurrentValue(100.0f / texts.size());
         }

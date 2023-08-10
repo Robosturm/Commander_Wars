@@ -26,7 +26,9 @@ Wikimenu::Wikimenu()
     oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("wikimenu");
-    if (pBackground != nullptr)
+    if (pBackground != nullptr &&
+        pBackground->getWidth() > 0 &&
+        pBackground->getHeight() > 0)
     {
         sprite->setResAnim(pBackground);
         // background should be last to draw

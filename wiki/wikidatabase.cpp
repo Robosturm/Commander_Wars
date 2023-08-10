@@ -317,7 +317,7 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
     {
         pAnim = ShopLoader::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     }
-    if (pAnim != nullptr)
+    if (pAnim != nullptr && pAnim->getWidth() > 0)
     {
         pSprite->setResAnim(pAnim);
         pSprite->setScale(static_cast<float>(size) / static_cast<float>(pAnim->getWidth()));
@@ -338,7 +338,10 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
                 pFinalIconPlayer = pPlayer.get();
             }
             spUnit pUnit = spUnit::create(file, pFinalIconPlayer, false, pMap);
-            pUnit->setScale(static_cast<float>(size) / static_cast<float>(GameMap::getImageSize()));
+            if (GameMap::getImageSize() > 0)
+            {
+                pUnit->setScale(static_cast<float>(size) / static_cast<float>(GameMap::getImageSize()));
+            }
             pUnit->setOwner(nullptr);
             pSprite = pUnit;
         }
@@ -361,7 +364,10 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
         else if (pTerrainManager->exists(file))
         {
             spTerrain pTerrain = Terrain::createTerrain(file, -10, -10, "", pMap);
-            pTerrain->setScale(static_cast<float>(size) / static_cast<float>(GameMap::getImageSize()));
+            if (GameMap::getImageSize() > 0)
+            {
+                pTerrain->setScale(static_cast<float>(size) / static_cast<float>(GameMap::getImageSize()));
+            }
             pTerrain->loadSprites();
             return pTerrain;
         }

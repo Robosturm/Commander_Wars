@@ -105,7 +105,7 @@ void PerkSelection::updatePerksView(CO* pCO)
 
             spTooltip pSprite = spTooltip::create();
             pSprite->setResAnim(pAnim);
-            if (pAnim != nullptr)
+            if (pAnim != nullptr && pAnim->getWidth() > 0)
             {
                 pSprite->setScale(static_cast<float>(GameMap::getImageSize() * 2) / static_cast<float>(pAnim->getWidth()));
             }

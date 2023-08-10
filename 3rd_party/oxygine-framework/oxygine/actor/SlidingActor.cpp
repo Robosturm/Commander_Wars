@@ -277,7 +277,11 @@ namespace oxygine
 
                         QPoint dr = pos - old->pos;
 
-                        QPoint ns = (dr * 1000.0f) / v.count();
+                        QPoint ns = dr;
+                        if (v.count() > 0)
+                        {
+                            ns = (dr * 1000.0f) / v.count();
+                        }
 
                         if (m_speed.x() * ns.x() + m_speed.y() * ns.y() < 0)
                         {

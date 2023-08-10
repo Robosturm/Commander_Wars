@@ -4,16 +4,18 @@
 
 Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit, qint32 spinBoxWidth)
     : V_Scrollbar (width - 90, (width - 90) * 100 / 10),
-      m_minValue(minValue),
-      m_maxValue(maxValue),
-      m_Unit(unit)
+    m_minValue(minValue),
+    m_maxValue(maxValue),
+    m_Unit(unit)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Slider");
 #endif
     Interpreter::setCppOwnerShip(this);
-
-    V_Scrollbar::setScrollspeed( width / (maxValue - minValue));
+    if (maxValue - minValue > 0)
+    {
+        V_Scrollbar::setScrollspeed( width / (maxValue - minValue));
+    }
 
     m_spinBox = spSpinBox::create(spinBoxWidth, minValue, maxValue);
     m_spinBox->setUnit(" " + unit);
@@ -51,7 +53,11 @@ void Slider::slotSpinBoxValueChanged(qreal currentValuevalue)
     {
         // all fine do nothing
     }
-    float scrollValue = static_cast<float>(value - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
+    float scrollValue = 0.0f;
+    if (m_maxValue - m_minValue > 0)
+    {
+        scrollValue = static_cast<float>(value - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
+    }
     V_Scrollbar::setScrollvalue(scrollValue);
     emit sliderValueChanged(static_cast<qint32>(value));
 }
@@ -72,7 +78,11 @@ void Slider::setCurrentValue(const qint32 CurrentValue)
         // all fine do nothing
     }
     m_spinBox->setCurrentValue(value);
-    float scrollValue = static_cast<float>(value - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
+    float scrollValue = 0.0f;
+    if (m_maxValue - m_minValue > 0)
+    {
+        scrollValue = static_cast<float>(value - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
+    }
     V_Scrollbar::setScrollvalue(scrollValue);    
 }
 

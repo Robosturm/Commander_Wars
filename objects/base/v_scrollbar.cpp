@@ -108,7 +108,10 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     m_slider->setResAnim(pAnim);
 
     qint32 sliderWidth = 50;
-    sliderWidth = ((width - m_slider->getScaledWidth() - 20 - 20) * width) / contentWidth;
+    if (contentWidth > 0)
+    {
+        sliderWidth = ((width - m_slider->getScaledWidth() - 20 - 20) * width) / contentWidth;
+    }
     if (sliderWidth < 11)
     {
         sliderWidth = 11;
@@ -202,9 +205,10 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
             }
             m_slider->setX(x);
             // calc scroll value :)
-            if (m_Width - m_slider->getScaledWidth() - 20 - 20 > 0)
+            auto div = m_Width - m_slider->getScaledWidth() - 20 - 20;
+            if (div > 0)
             {
-                m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(m_Width - m_slider->getScaledWidth() - 20 - 20);
+                m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(div);
             }
             else
             {
@@ -279,7 +283,7 @@ void V_Scrollbar::update(const oxygine::UpdateState& us)
     {
         if (m_ScrollTimer.elapsed() > 250)
         {
-            if (m_ContentWidth > m_Width)
+            if (m_ContentWidth > m_Width && m_ContentWidth > 0)
             {
                 m_speedCounter++;
                 if (m_speedCounter % 8 == 0)

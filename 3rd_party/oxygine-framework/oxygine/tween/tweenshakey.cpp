@@ -11,6 +11,7 @@ TweenShakeY::TweenShakeY(qint32 startIntensity, float start, float end)
 void TweenShakeY::update(oxygine::Actor& actor, float percentDone, const oxygine::UpdateState& us)
 {
     float y = 0;
+    auto div = m_startFraction - m_endFracrtion;
     if (percentDone < m_endFracrtion)
     {
         y = 0;
@@ -19,7 +20,7 @@ void TweenShakeY::update(oxygine::Actor& actor, float percentDone, const oxygine
     {
         y = m_intensity;
     }
-    else if (m_startFraction > m_endFracrtion)
+    else if (m_startFraction > m_endFracrtion && div > 0)
     {
         y = m_intensity * (percentDone - m_endFracrtion) / (m_startFraction - m_endFracrtion);
     }

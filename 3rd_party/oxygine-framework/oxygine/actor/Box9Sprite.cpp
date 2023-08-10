@@ -153,13 +153,19 @@ namespace oxygine
         auto srcFrameRect = m_frame.getSrcRect();
 
         m_guidesX[0] = srcFrameRect.left(); // these guides contains floats from 0.0 to 1.0, compared to original guides which contain floats in px
-        m_guidesX[1] = lerp<float>(srcFrameRect.left(), srcFrameRect.right(), m_guideX[0] / static_cast<float>(frameWidth));
-        m_guidesX[2] = lerp<float>(srcFrameRect.left(), srcFrameRect.right(), m_guideX[1] / static_cast<float>(frameWidth));
+        if (frameWidth > 0)
+        {
+            m_guidesX[1] = lerp<float>(srcFrameRect.left(), srcFrameRect.right(), m_guideX[0] / static_cast<float>(frameWidth));
+            m_guidesX[2] = lerp<float>(srcFrameRect.left(), srcFrameRect.right(), m_guideX[1] / static_cast<float>(frameWidth));
+        }
         m_guidesX[3] = srcFrameRect.right();
 
         m_guidesY[0] = srcFrameRect.top();
-        m_guidesY[1] = lerp<float>(srcFrameRect.top(), srcFrameRect.bottom(), m_guideY[0] / static_cast<float>(frameHeight));
-        m_guidesY[2] = lerp<float>(srcFrameRect.top(), srcFrameRect.bottom(), m_guideY[1] / static_cast<float>(frameHeight));
+        if (frameHeight > 0)
+        {
+            m_guidesY[1] = lerp<float>(srcFrameRect.top(), srcFrameRect.bottom(), m_guideY[0] / static_cast<float>(frameHeight));
+            m_guidesY[2] = lerp<float>(srcFrameRect.top(), srcFrameRect.bottom(), m_guideY[1] / static_cast<float>(frameHeight));
+        }
         m_guidesY[3] = srcFrameRect.bottom();
 
         // filling X axis

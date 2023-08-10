@@ -54,7 +54,11 @@ namespace oxygine
         {
             return false;
         }
-        QPointF pos = localPosition * pAnim->getAppliedScale() / pAnim->getScaleFactor();
+        QPointF pos = localPosition * pAnim->getAppliedScale();
+        if (pAnim->getScaleFactor() > 0.0f)
+        {
+            pos /= pAnim->getScaleFactor();
+        }
         QPoint lp = pos.toPoint();
         return m_frame.getHits(lp);
 #else

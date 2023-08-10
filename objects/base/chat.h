@@ -22,7 +22,7 @@ class Chat final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode, BaseGamemenu* pMenu);
-   virtual ~Chat() = default;
+   ~Chat() = default;
     /**
      * @brief setVisible
      * @param vis

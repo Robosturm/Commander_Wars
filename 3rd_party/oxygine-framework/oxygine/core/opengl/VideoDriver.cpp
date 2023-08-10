@@ -108,8 +108,16 @@ namespace oxygine
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glGetIntegerv(GL_VIEWPORT, vp);
         qreal ratio = window->devicePixelRatio();
-        r = QRect(vp[0] / ratio, vp[1] / ratio,
-                 vp[2] / ratio, vp[3] / ratio);
+        if (ratio > 0)
+        {
+                r = QRect(vp[0] / ratio, vp[1] / ratio,
+                          vp[2] / ratio, vp[3] / ratio);
+        }
+        else
+        {
+                r = QRect(vp[0], vp[1],
+                          vp[2], vp[3]);
+        }
     }
 
     void VideoDriver::setScissorRect(const QRect* rect)
@@ -137,8 +145,16 @@ namespace oxygine
         qreal ratio = window->devicePixelRatio();
         window->glGetIntegerv(GL_SCISSOR_BOX, box);
         active = scrTest ? true : false;
-        return QRect(box[0] / ratio, box[1] / ratio,
-                box[2] / ratio, box[3] / ratio);
+        if (ratio > 0)
+        {
+            return QRect(box[0] / ratio, box[1] / ratio,
+                         box[2] / ratio, box[3] / ratio);
+        }
+        else
+        {
+            return QRect(box[0], box[1],
+                         box[2], box[3]);
+        }
     }
 
     void VideoDriver::setRenderTarget(spTexture & rt)

@@ -2364,46 +2364,49 @@ bool PlayerSelection::getPlayerReady()
 }
 
 void PlayerSelection::changeAllTeams(qint32 value)
-{    
-    qint32 playersPerTeam = m_pMap->getPlayerCount() / value;
-    qint32 freePlayer = m_pMap->getPlayerCount() - value * playersPerTeam;
-    qint32 upCountPlayers = playersPerTeam / 2;
-    qint32 player = 0;
-    for (qint32 team = 0; team < value; ++team)
+{
+    if (value > 0)
     {
-        for (qint32 i = 0; i < playersPerTeam - upCountPlayers; ++i)
+        qint32 playersPerTeam = m_pMap->getPlayerCount() / value;
+        qint32 freePlayer = m_pMap->getPlayerCount() - value * playersPerTeam;
+        qint32 upCountPlayers = playersPerTeam / 2;
+        qint32 player = 0;
+        for (qint32 team = 0; team < value; ++team)
         {
-            DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
-            if (pDropDownmenu != nullptr)
+            for (qint32 i = 0; i < playersPerTeam - upCountPlayers; ++i)
             {
-                pDropDownmenu->setCurrentItem(team);
+                DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+                if (pDropDownmenu != nullptr)
+                {
+                    pDropDownmenu->setCurrentItem(team);
+                }
+                playerTeamChanged(team, player);
+                ++player;
             }
-            playerTeamChanged(team, player);
-            ++player;
         }
-    }
-    for (qint32 team = value - 1; team >= 0; --team)
-    {
-        for (qint32 i = 0; i < upCountPlayers; ++i)
+        for (qint32 team = value - 1; team >= 0; --team)
         {
-            DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
-            if (pDropDownmenu != nullptr)
+            for (qint32 i = 0; i < upCountPlayers; ++i)
             {
-                pDropDownmenu->setCurrentItem(team);
+                DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+                if (pDropDownmenu != nullptr)
+                {
+                    pDropDownmenu->setCurrentItem(team);
+                }
+                playerTeamChanged(team, player);
+                ++player;
             }
-            playerTeamChanged(team, player);
-            ++player;
-        }
-        if (freePlayer > 0)
-        {
-            --freePlayer;
-            DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
-            if (pDropDownmenu != nullptr)
+            if (freePlayer > 0)
             {
-                pDropDownmenu->setCurrentItem(team);
+                --freePlayer;
+                DropDownmenu* pDropDownmenu = getCastedObject<DropDownmenu>(OBJECT_TEAM_PREFIX + QString::number(player));
+                if (pDropDownmenu != nullptr)
+                {
+                    pDropDownmenu->setCurrentItem(team);
+                }
+                playerTeamChanged(team, player);
+                ++player;
             }
-            playerTeamChanged(team, player);
-            ++player;
         }
     }
 }

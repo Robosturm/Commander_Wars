@@ -19,7 +19,11 @@ namespace oxygine
     void ResAnim::init(spTexture & texture, const QSize& originalSize, qint32 columns, qint32 rows, float scaleFactor)
     {
         m_scaleFactor = scaleFactor;
-        if (!texture)
+        if (!texture ||
+            columns <= 0 ||
+            rows <= 0 ||
+            originalSize.width() <= 0 ||
+            originalSize.height() <= 0)
         {
             return;
         }

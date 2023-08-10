@@ -45,7 +45,9 @@ void LoadingScreen::show()
         // load background
         oxygine::spSprite sprite = oxygine::spSprite::create();
         addChild(sprite);
-        if (pBackground != nullptr)
+        if (pBackground != nullptr &&
+            pBackground->getWidth() > 0 &&
+            pBackground->getHeight() > 0)
         {
             sprite->setResAnim(pBackground);
             // background should be last to draw

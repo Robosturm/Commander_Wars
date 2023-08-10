@@ -75,9 +75,12 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     oxygine::spTextField pTextField = oxygine::spTextField::create();
     pTextField->setPosition(14, 1);
     pTextField->setStyle(blackStyle);
-    pTextField->setScale(1.0f / m_HitSprite->getScaleX());
     pTextField->setHtmlText(tr("Hit"));
-    m_HitSprite->setWidth(pTextField->getTextRect().width() / m_HitSprite->getScaleX() + 21);
+    if (m_HitSprite->getScaleX() > 0)
+    {
+        pTextField->setScale(1.0f / m_HitSprite->getScaleX());
+        m_HitSprite->setWidth(pTextField->getTextRect().width() / m_HitSprite->getScaleX() + 21);
+    }
     m_HitSprite->addChild(pTextField);
     addChild(m_HitSprite);
     m_HitText = oxygine::spTextField::create();
@@ -93,9 +96,12 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     pTextField = oxygine::spTextField::create();
     pTextField->setPosition(14, 1);
     pTextField->setStyle(blackStyle);
-    pTextField->setScale(1.0f / m_MissSprite->getScaleX());
     pTextField->setHtmlText(tr("Miss"));
-    m_MissSprite->setWidth(pTextField->getTextRect().width() / m_MissSprite->getScaleX()  + 21);
+    if (m_MissSprite->getScaleX() > 0)
+    {
+        pTextField->setScale(1.0f / m_MissSprite->getScaleX());
+        m_MissSprite->setWidth(pTextField->getTextRect().width() / m_MissSprite->getScaleX()  + 21);
+    }
     m_MissSprite->addChild(pTextField);
     addChild(m_MissSprite);
     m_MissText = oxygine::spTextField::create();
@@ -229,7 +235,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         }
         auto* pResAnim = pGameManager->getResAnim("icon_" + pCO->getCOArmy().toLower(), oxygine::ep_ignore_error);
         m_pCurrentCoFaction->setResAnim(pResAnim);
-        if (pResAnim != nullptr)
+        if (pResAnim != nullptr && pResAnim->getWidth() > 0)
         {
             m_pCurrentCoFaction->setScale(36.0f / static_cast<float>(pResAnim->getWidth()));
         }
@@ -638,7 +644,7 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
             oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
             oxygine::spSprite pSprite = oxygine::spSprite::create();
             pSprite->setResAnim(pAnim);
-            if (pAnim != nullptr)
+            if (pAnim != nullptr && pAnim->getWidth() > 0)
             {
                 pSprite->setScale(static_cast<float>(GameMap::getImageSize() * 2) / static_cast<float>(pAnim->getWidth()));
             }
@@ -706,14 +712,20 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     pStartBox->setResAnim(pStartAnim);
     pStartBox->setSize((static_cast<qint32>(width * divider) + 1), 8 * scale);
     pStartBox->setPosition(5 +  GameMap::getImageSize(), y);
-    pStartBox->setScale(1.0f / scale);
+    if (scale > 0)
+    {
+        pStartBox->setScale(1.0f / scale);
+    }
     pActor->addChild(pStartBox);
 
     oxygine::spBox9Sprite pEndBox = oxygine::spBox9Sprite::create();
     pEndBox->setResAnim(pEndAnim);
     pEndBox->setSize((static_cast<qint32>(width * (1.0f - divider)) + 2), 8 * scale);
     pEndBox->setPosition(5 +  GameMap::getImageSize() + pStartBox->getScaledWidth(), y);
-    pEndBox->setScale(1.0f / scale);
+    if (scale > 0)
+    {
+        pEndBox->setScale(1.0f / scale);
+    }
     pActor->addChild(pEndBox);
 }
 

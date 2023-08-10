@@ -148,8 +148,8 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         CONSOLE_PRINT("GameMenue starting game directly cause it's a single player game.", GameConsole::eDEBUG);
         startGame();
     }
-    if (m_pNetworkInterface.get() != nullptr &&
-        Mainapp::getSlave())
+    CONSOLE_PRINT("Finalizing GameMenue creation", GameConsole::eDEBUG);
+    if (Mainapp::getSlave())
     {
         startDespawnTimer();
     }
@@ -1968,7 +1968,11 @@ void GameMenue::showGameInfo(qint32 player)
 
         spGenericBox pGenericBox = spGenericBox::create();
         QSize size(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() - 80);
-        qint32 width = (oxygine::Stage::getStage()->getWidth() - 20) / header.size();
+        qint32 width = 0;
+        if (header.size() > 0)
+        {
+            width = (oxygine::Stage::getStage()->getWidth() - 20) / header.size();
+        }
         if (width < 150)
         {
             width = 150;

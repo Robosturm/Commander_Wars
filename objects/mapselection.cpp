@@ -83,7 +83,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder, const QS
     addChild(pBackground);
 
     m_itemCount = 1;
-    if (pAnim != nullptr)
+    if (pAnim != nullptr && m_itemHeigth > 0)
     {
         m_itemCount = (heigth - 25 - 2 * static_cast<qint32>(pAnim->getHeight()) - arrowHeigth * 2) / m_itemHeigth;
     }

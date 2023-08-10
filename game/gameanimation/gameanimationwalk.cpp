@@ -40,9 +40,13 @@ void GameAnimationWalk::start()
         m_previousAnimation.free();
         doPreAnimationCall();
         AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
-        for (auto & data : m_SoundData)
+        auto speed = Settings::getInstance()->getWalkAnimationSpeed();
+        if (speed > 0)
         {
-            pAudioThread->playSound(data.soundFile, data.loops, data.delayMs / Settings::getInstance()->getWalkAnimationSpeed(), data.volume);
+            for (auto & data : m_SoundData)
+            {
+                pAudioThread->playSound(data.soundFile, data.loops, data.delayMs / speed, data.volume);
+            }
         }
     }
 }
