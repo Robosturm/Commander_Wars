@@ -260,23 +260,8 @@ var Init =
         currentMenu.enterSingleplayer(filter);
     },
     mapsSelection = function(menu)
-    {
-        if (Init.coTestStep < 3)
-        {
-            var ids = coSpriteManager.getCoIds();
-            var co = ids[Init.currentCoTest]
-            GameConsole.print("Testing co " + co + " testing co step " + Init.coTestStep.toString(), 0);
-            menu.selectMap("maps/test/", "co_test.map");
-            menu.buttonNext();
-            menu.buttonNext();
-            var selection = menu.getPlayerSelection();
-            selection.selectPlayerAi(0, 0);
-            selection.selectPlayerAi(1, 2);
-            selection.playerCO1Changed(co, 0);
-            Init.currentCoTest += 1;
-            menu.startGame();
-        }
-        else if (Init.playTest === 0)
+    {        
+        if (Init.playTest === 0)
         {
             GameConsole.print("Testing ingame menus", 0);
             menu.selectMap("maps/2_player/", "Agitated.map");
@@ -291,6 +276,21 @@ var Init =
             selection.playerCO2Changed("CO_RANDOM", 1);
             menu.startGame();
             ++Init.step;
+        }
+        else if (Init.coTestStep < 3 && Init.playTest === 4)
+        {
+            var ids = coSpriteManager.getCoIds();
+            var co = ids[Init.currentCoTest]
+            GameConsole.print("Testing co " + co + " testing co step " + Init.coTestStep.toString(), 0);
+            menu.selectMap("maps/test/", "co_test.map");
+            menu.buttonNext();
+            menu.buttonNext();
+            var selection = menu.getPlayerSelection();
+            selection.selectPlayerAi(0, 0);
+            selection.selectPlayerAi(1, 2);
+            selection.playerCO1Changed(co, 0);
+            Init.currentCoTest += 1;
+            menu.startGame();
         }
         else
         {
@@ -314,26 +314,7 @@ var Init =
     },
     gameMenu = function(menu)
     {
-        if (Init.coTestStep < 3)
-        {
-            if (Init.coTestStep === 1)
-            {
-                menu.getMap().getPlayer(0).getCO(0).activatePower();
-            }
-            else if (Init.coTestStep === 2)
-            {
-                menu.getMap().getPlayer(0).getCO(0).activateSuperpower(GameEnums.PowerMode_Superpower);
-            }
-            menu.getMap().setIsHumanMatch(false);
-            menu.changeAiForPlayer(0, GameEnums.AiTypes_Normal);
-            var ids = coSpriteManager.getCoIds();
-            if (Init.currentCoTest >= ids.length)
-            {
-                Init.coTestStep += 1;
-                Init.currentCoTest = 0;
-            }
-        }
-        else if (Init.playTest === 0)
+        if (Init.playTest === 0)
         {
             GameConsole.print("Showing all ingame menus", 0);
             menu.victoryInfo();
@@ -355,6 +336,25 @@ var Init =
             wikiView.showPage("PLAINS");
             wikiView.showPage("HQ");
             menu.exitGameDelayed();
+        }
+        else if (Init.coTestStep < 3 && Init.playTest === 4)
+        {
+            if (Init.coTestStep === 1)
+            {
+                menu.getMap().getPlayer(0).getCO(0).activatePower();
+            }
+            else if (Init.coTestStep === 2)
+            {
+                menu.getMap().getPlayer(0).getCO(0).activateSuperpower(GameEnums.PowerMode_Superpower);
+            }
+            menu.getMap().setIsHumanMatch(false);
+            menu.changeAiForPlayer(0, GameEnums.AiTypes_Normal);
+            var ids = coSpriteManager.getCoIds();
+            if (Init.currentCoTest >= ids.length)
+            {
+                Init.coTestStep += 1;
+                Init.currentCoTest = 0;
+            }
         }
     },
     onVictory = function(menu)
