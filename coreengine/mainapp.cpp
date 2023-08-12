@@ -241,6 +241,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             BackgroundManager::getInstance();
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
+
             pLoadingScreen->setProgress(tr("Checking for new version..."), step  * stepProgress);
             redrawUi();
             break;
@@ -795,6 +796,10 @@ void Mainapp::onActiveChanged()
     if (!isActive())
     {
         FocusableObject::looseFocus();
+    }
+    if (m_AudioManager.get() != nullptr)
+    {
+        emit m_AudioManager->sigSetMuteInternal(!isActive());
     }
 }
 

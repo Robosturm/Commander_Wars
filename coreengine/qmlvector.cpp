@@ -193,10 +193,6 @@ void QmlVectorBuilding::sortClosestToEnemy(const spQmlVectorUnit & pEnemyUnits)
         }
         if (pEnemyUnits->size() > 0)
         {
-            m_Vector[i2]->setSortValues({1});
-        }
-        else
-        {
             for (qint32 i = 0; i < pEnemyUnits->size(); ++i)
             {
                 qint32 distance = GlobalUtils::getDistance(m_Vector[i2]->getPosition(), pEnemyUnits->at(i)->getMapPosition());
@@ -205,6 +201,10 @@ void QmlVectorBuilding::sortClosestToEnemy(const spQmlVectorUnit & pEnemyUnits)
                     m_Vector[i2]->setSortValues({distance});
                 }
             }
+        }
+        else
+        {
+            m_Vector[i2]->setSortValues({1});
         }
     }
     std::sort(m_Vector.begin(), m_Vector.end(), [](const spBuilding& lhs, const spBuilding& rhs)

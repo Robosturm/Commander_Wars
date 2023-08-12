@@ -41,6 +41,7 @@ AudioManager::AudioManager(bool noAudio)
         connect(this, &AudioManager::sigStopAllSounds,     this, &AudioManager::SlotStopAllSounds, Qt::QueuedConnection);
         connect(this, &AudioManager::sigChangeAudioDevice, this, &AudioManager::SlotChangeAudioDevice, Qt::QueuedConnection);
         connect(this, &AudioManager::sigLoadNextAudioFile, this, &AudioManager::loadNextAudioFile, Qt::QueuedConnection);
+        connect(this, &AudioManager::sigSetMuteInternal,   this, &AudioManager::slotSetMuteInternal, Qt::QueuedConnection);
 
         // sync startup and stop signals and slots
         connect(this, &AudioManager::sigInitAudio,         this, &AudioManager::initAudio, Qt::BlockingQueuedConnection);
@@ -455,6 +456,19 @@ void AudioManager::SlotSetVolume(qint32 value)
 #endif
 }
 
+void AudioManager::slotSetMuteInternal(bool value)
+{
+    m_internalMuted = value;
+    m_audioOutput.setMuted(m_internalMuted);
+    for (auto & soundEffect : m_soundEffectData)
+    {
+        if (!soundEffect.sound.isNull())
+        {
+            soundEffect.sound->setMuted(m_internalMuted);
+        }
+    }
+}
+
 void AudioManager::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
 {
 #ifdef AUDIOSUPPORT
@@ -652,7 +666,7 @@ void AudioManager::reportReplayError(QMediaPlayer::Error error, const QString &e
 void AudioManager::SlotPlaySound(QString file, qint32 loops, qint32 delay, float volume, bool stopOldestSound, qint32 duration)
 {
 #ifdef AUDIOSUPPORT
-    if (Settings::getInstance()->getMuted() || m_noAudio)
+    if (Settings::getInstance()->getMuted() || m_noAudio || m_internalMuted)
     {
         return;
     }

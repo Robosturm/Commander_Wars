@@ -76,6 +76,7 @@ signals:
     void sigChangeAudioDevice(const QVariant value);
     void sigLoadNextAudioFile();
     void sigStopAudio();
+    void sigSetMuteInternal(bool value);
 
 public slots:
     /**
@@ -161,6 +162,7 @@ protected slots:
     void SlotStopSound(QString file);
     void SlotStopAllSounds();
     void SlotChangeAudioDevice(const QVariant value);
+    void slotSetMuteInternal(bool value);
     /**
      * @brief loadNextAudioFile
      * @param playerIndex
@@ -495,6 +497,7 @@ private:
 #endif
     bool m_loadBaseGameFolders{true};
     bool m_noAudio{false};
+    bool m_internalMuted{false};
 };
 
 Q_DECLARE_INTERFACE(AudioManager, "AudioManager");

@@ -247,6 +247,7 @@ public:
     static void setTrainingSession(bool newTrainingSession);
 
 public slots:
+    void onActiveChanged();
     /**
      * @brief createBaseDirs
      */
@@ -269,10 +270,6 @@ public slots:
      * @param log
      */
     static void showCrashReport(const QString & log);
-    /**
-     * @brief onActiveChanged
-     */
-    void onActiveChanged();
     /**
      * @brief doScreenshot
      */
