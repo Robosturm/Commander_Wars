@@ -40,6 +40,19 @@ void SimpleProductionSystem::initialize()
             m_init = erg.toBool();
         }
     }
+    else
+    {
+        for (auto & item : m_buildDistribution)
+        {
+            if (item.second.units.length() == 0)
+            {
+                for (auto & unitId : item.second.unitIds)
+                {
+                    item.second.units.append(spUnit::create(unitId, m_owner->getPlayer(), false, m_owner->getMap()));
+                }
+            }
+        }
+    }
 }
 
 bool SimpleProductionSystem::buildUnit(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits, QmlVectorUnit * pEnemyUnits, QmlVectorBuilding * pEnemyBuildings, bool & executed)
@@ -697,7 +710,6 @@ void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
             qint32 chance;
             pStream >> chance;
             item.chance.push_back(chance);
-            item.units.append(spUnit::create(id, m_owner->getPlayer(), false, m_owner->getMap()));
         }
         pStream >> item.totalChance;
         pStream >> item.distribution;
