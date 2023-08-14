@@ -166,10 +166,11 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
     QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
     bool fireSilos = (cost >= m_minSiloDamage);
 
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         if (!pUnit->getHasMoved() &&
             pUnit->getAiMode() == GameEnums::GameAi_Normal)
         {
@@ -245,9 +246,10 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
 bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit & pUnits)
 {
     AI_CONSOLE_PRINT("VeryEasyAI::fireWithIndirectUnits()", GameConsole::eDEBUG);
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & pUnit : pUnits->getVector())
     {
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() > 1 &&
             (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
@@ -265,9 +267,10 @@ bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit & pUnits)
 bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit & pUnits)
 {
     AI_CONSOLE_PRINT("VeryEasyAI::fireWithDirectUnits()", GameConsole::eDEBUG);
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & pUnit : pUnits->getVector())
     {
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() == 1 &&
             (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
@@ -343,11 +346,12 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
         createMovementMap(pBuildings, pEnemyBuildings);
     }
     m_aiStep = AISteps::moveToTargets;
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
         QStringList actions = pUnit->getActionList();
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         constexpr qint32 AVERAGE_TRANSPORTER_MOVEMENT = 7;
         bool canCapture = actions.contains(ACTION_CAPTURE);
         qint32 loadingIslandIdx = getIslandIndex(pUnit);
@@ -406,9 +410,10 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
 {
     AI_CONSOLE_PRINT("VeryEasyAI::moveTransporters()", GameConsole::eDEBUG);
     m_aiStep = AISteps::moveTransporters;
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & spUnit : pUnits->getVector())
     {
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         Unit* pUnit = spUnit.get();
         // can we use the unit?
         if (!pUnit->getHasMoved() &&
@@ -488,9 +493,10 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit & pUnits)
 {
     AI_CONSOLE_PRINT("VeryEasyAI::loadUnits()", GameConsole::eDEBUG);
     m_aiStep = AISteps::loadUnits;
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & pUnit : pUnits->getVector())
     {
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         // can we use the unit?
         if (!pUnit->getHasMoved() &&
             (pUnit->getLoadingPlace() == 0 || (pUnit->getLoadedUnitCount() > 0  && m_usedTransportSystem)))
@@ -673,9 +679,10 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
         qint32 indirectUnits = 0;
         qint32 directUnits = 0;
         qint32 transporterUnits = 0;
+        Interpreter* pInterpreter = Interpreter::getInstance();
         for (auto & pUnit : pUnits->getVector())
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             if (pUnit->getActionList().contains(ACTION_CAPTURE))
             {
                 infantryUnits++;
@@ -712,7 +719,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
         for (qint32 i = 0; i < m_maxTreeDecisionTries; i++)
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             if (i == 0 || m_pPlayer->getFunds() >= m_minAllBuildingFunds)
             {
                 for (auto & pBuilding : pBuildings->getVector())

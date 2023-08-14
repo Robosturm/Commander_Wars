@@ -153,7 +153,6 @@ var Init =
         for (i = 0; i < length; ++i)
         {
             wikiView.showPage(ids[i]);
-            globals.sleepMs(1000);
             wikiView.hideLastPage();
         }
         // test unit's
@@ -162,7 +161,6 @@ var Init =
         for (i = 0; i < length; ++i)
         {
             wikiView.showPage(ids[i]);
-            globals.sleepMs(1000);
             wikiView.hideLastPage();
         }
         // test terrain's
@@ -171,7 +169,6 @@ var Init =
         for (i = 0; i < length; ++i)
         {
             wikiView.showPage(ids[i]);
-            globals.sleepMs(1000);
             wikiView.hideLastPage();
         }
         // test building's
@@ -180,7 +177,6 @@ var Init =
         for (i = 0; i < length; ++i)
         {
             wikiView.showPage(ids[i]);
-            globals.sleepMs(1000);
             wikiView.hideLastPage();
         }
         // test perk's
@@ -189,7 +185,6 @@ var Init =
         for (i = 0; i < length; ++i)
         {
             wikiView.showPage(ids[i]);
-            globals.sleepMs(1000);
             wikiView.hideLastPage();
         }
         menu.exitMenue();

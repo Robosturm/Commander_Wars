@@ -81,9 +81,10 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         !Settings::getInstance()->getAiSlave())
     {
         CONSOLE_PRINT("AI-Pipe waiting for ready", GameConsole::eDEBUG);
+        Interpreter* pInterpreter = Interpreter::getInstance();
         while (m_pipeState != PipeState::Ready)
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             QThread::msleep(10);
         }
         m_ActionBuffer.clear();
@@ -110,7 +111,7 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         while (m_pipeState != PipeState::Ingame)
         {
             QThread::msleep(10);
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
         }
         CONSOLE_PRINT("AI-Pipe continue starting the game", GameConsole::eDEBUG);
     }

@@ -189,7 +189,8 @@ void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 void WorkerThread::showMainwindow()
 {
     CONSOLE_PRINT("WorkerThread::showMainwindow", GameConsole::eDEBUG);
-    QCoreApplication::processEvents();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->threadProcessEvents();
     QThread::msleep(5);
 
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
@@ -209,12 +210,13 @@ void WorkerThread::onQuit()
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     UiFactory::shutdown();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     if (oxygine::Stage::getStage())
     {
         oxygine::Stage::getStage()->cleanup();
         for (qint32 i = 0; i < 20; ++i)
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
         }
     }
     GameAnimationFactory::getInstance()->release();
@@ -222,7 +224,7 @@ void WorkerThread::onQuit()
     Player::releaseStaticData();
     Mainapp::getAiProcessPipe().quit();
     GameConsole::getInstance()->release();
-    QCoreApplication::processEvents();
+    pInterpreter->threadProcessEvents();
     Interpreter::release();
     for (qint32 i = 0; i < 20; ++i)
     {

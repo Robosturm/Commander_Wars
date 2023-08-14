@@ -697,6 +697,7 @@ void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
             qint32 chance;
             pStream >> chance;
             item.chance.push_back(chance);
+            item.units.append(spUnit::create(id, m_owner->getPlayer(), false, m_owner->getMap()));
         }
         pStream >> item.totalChance;
         pStream >> item.distribution;

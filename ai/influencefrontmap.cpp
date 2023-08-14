@@ -174,6 +174,7 @@ void InfluenceFrontMap::addBuildingInfluence()
         }
     }
     float fullInfluenceRange = 6;
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 x = 0; x < width; x++)
     {
         for (qint32 y = 0; y < heigth; y++)
@@ -181,7 +182,7 @@ void InfluenceFrontMap::addBuildingInfluence()
             QPoint curPos(x, y);
             for (qint32 building = 0; building < buildingPositions.size(); building++)
             {
-                QCoreApplication::processEvents();
+                pInterpreter->threadProcessEvents();
                 QPoint pos = buildingPositions[building];
                 float buildSize = static_cast<float>(buildLists[building].size());
                 qint32 owner = buildingOwners[building];
@@ -273,7 +274,8 @@ void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPf
 {
     if (pUnit->hasWeapons() || pUnit->getLoadedUnitCount() > 0)
     {
-        QCoreApplication::processEvents();
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->threadProcessEvents();
         qint32 value = pUnit->getCoUnitValue();
         qint32 owner = pUnit->getOwner()->getPlayerID();
         auto points = pPfs->getAllNodePointsFast();

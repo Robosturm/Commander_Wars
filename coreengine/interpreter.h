@@ -72,6 +72,12 @@ public:
         return jsArray;
     }
 
+    void threadProcessEvents()
+    {
+        Q_ASSERT(m_inJsCall == 0);
+        QCoreApplication::processEvents();
+    }
+
 signals:
     void sigNetworkGameFinished(qint32 value, QString id);
 public slots:

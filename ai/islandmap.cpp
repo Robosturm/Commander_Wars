@@ -39,6 +39,7 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QStr
         }
         qint32 currentIsland = 0;
 
+        Interpreter* pInterpreter = Interpreter::getInstance();
         for (qint32 x = 0; x < width; x++)
         {
             for (qint32 y = 0; y < heigth; y++)
@@ -47,7 +48,7 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QStr
                 {                    
                     if (pUnit->canMoveOver(x, y))
                     {
-                        QCoreApplication::processEvents();
+                        pInterpreter->threadProcessEvents();
                         UnitPathFindingSystem pfs(m_pMap, pUnit.get());
                         pfs.setMovepoints(-2);
                         pfs.setFast(true);

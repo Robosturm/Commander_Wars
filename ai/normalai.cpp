@@ -409,7 +409,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
 
     for (qint32 i = 0; i < m_OwnUnits.size(); ++i)
     {
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         auto & unitData = m_OwnUnits[i];
         if (unitData.nextAiStep <= m_aiFunctionStep)
         {
@@ -475,12 +475,13 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
     }
     if (captureBuildings.size() > 0)
     {
+        Interpreter* pInterpreter = Interpreter::getInstance();
         for (qint32 i = 0; i < m_OwnUnits.size(); ++i)
         {
             auto & unitData = m_OwnUnits[i];
             if (unitData.nextAiStep <= m_aiFunctionStep)
             {
-                QCoreApplication::processEvents();
+                pInterpreter->threadProcessEvents();
                 Unit* pUnit = unitData.pUnit.get();
                 if (!pUnit->getHasMoved() &&
                     unitData.actions.contains(ACTION_CAPTURE) &&
@@ -660,11 +661,12 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
 bool NormalAi::joinCaptureBuildings(spQmlVectorUnit & pUnits)
 {
     AI_CONSOLE_PRINT("NormalAi::joinCaptureBuildings()", GameConsole::eDEBUG);
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & unitData : m_OwnUnits)
     {
         if (unitData.nextAiStep <= m_aiFunctionStep)
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             Unit* pUnit = unitData.pUnit.get();
             ++unitData.nextAiStep;
             if (!pUnit->getHasMoved() &&
@@ -703,11 +705,12 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
                              spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
     AI_CONSOLE_PRINT("NormalAi::fireWithUnits()", GameConsole::eDEBUG);
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & unitData : m_OwnUnits)
     {
         if (unitData.nextAiStep <= m_aiFunctionStep)
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             Unit* pUnit = unitData.pUnit.get();
             ++unitData.nextAiStep;
             if (!pUnit->getHasMoved() &&
@@ -759,11 +762,12 @@ bool NormalAi::refillUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
         createMovementMap(pBuildings, pEnemyBuildings);
     }
     m_aiStep = AISteps::moveToTargets;
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & unitData : m_OwnUnits)
     {
         if (unitData.nextAiStep <= m_aiFunctionStep)
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             Unit* pUnit = unitData.pUnit.get();
             // can we use the unit?
             if (isUsingUnit(pUnit) &&
@@ -930,11 +934,12 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
                          qint32 minfireRange, qint32 maxfireRange, bool supportUnits)
 {
     AI_CONSOLE_PRINT("NormalAi::moveUnits()", GameConsole::eDEBUG);
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & unitData : m_OwnUnits)
     {
         if (unitData.nextAiStep <= m_aiFunctionStep)
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             Unit* pUnit = unitData.pUnit.get();
             ++unitData.nextAiStep;
             constexpr qint32 AVERAGE_TRANSPORTER_MOVEMENT = 7;
@@ -1011,11 +1016,12 @@ bool NormalAi::loadUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
 {
     AI_CONSOLE_PRINT("NormalAi::loadUnits()", GameConsole::eDEBUG);
     m_aiStep = AISteps::loadUnits;
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & unitData : m_OwnUnits)
     {
         if (unitData.nextAiStep <= m_aiFunctionStep)
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             Unit* pUnit = unitData.pUnit.get();
             ++unitData.nextAiStep;
             // can we use the unit?
@@ -1049,11 +1055,12 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
 {
     AI_CONSOLE_PRINT("NormalAi::moveTransporters()", GameConsole::eDEBUG);
     m_aiStep = AISteps::moveTransporters;
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & unitData : m_OwnUnits)
     {
         if (unitData.nextAiStep <= m_aiFunctionStep)
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             Unit* pUnit = unitData.pUnit.get();
             ++unitData.nextAiStep;
             // can we use the unit?
@@ -1285,11 +1292,12 @@ bool NormalAi::repairUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
 {
     AI_CONSOLE_PRINT("NormalAi::repairUnits()", GameConsole::eDEBUG);
     m_aiStep = AISteps::moveUnits;
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & unitData : m_OwnUnits)
     {
         if (unitData.nextAiStep <= m_aiFunctionStep)
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             Unit* pUnit = unitData.pUnit.get();
             ++unitData.nextAiStep;
             // can we use the unit?
@@ -1853,7 +1861,8 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
                                        bool ignoreOutOfVisionRange)
 {
     AI_CONSOLE_PRINT("NormalAi calculateCounterDamage", GameConsole::eDEBUG);
-    QCoreApplication::processEvents();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->threadProcessEvents();
     Unit* pUnit = curUnitData.pUnit.get();
     std::map<QString, qint32> unitDamageData;
     float counterDamage = 0;
@@ -2086,14 +2095,15 @@ void NormalAi::createUnitInfluenceMap()
     m_InfluenceFrontMap.clear();
     m_InfluenceFrontMap.setOwner(m_pPlayer);
     m_InfluenceFrontMap.addBuildingInfluence();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & unit : m_OwnUnits)
     {
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         m_InfluenceFrontMap.addUnitInfluence(unit.pUnit.get(), unit.pUnitPfs.get(), unit.movementPoints);
     }
     for (auto & unit : m_EnemyUnits)
     {
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         m_InfluenceFrontMap.addUnitInfluence(unit.pUnit.get(), unit.pUnitPfs.get(), unit.movementPoints);
     }
     m_InfluenceFrontMap.updateOwners();
@@ -2105,10 +2115,11 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
     AI_CONSOLE_PRINT("NormalAi::updateEnemyData", GameConsole::eDEBUG);
     if (pUnitData.size() == 0)
     {
+        Interpreter* pInterpreter = Interpreter::getInstance();
         pUnitData.reserve(pUnits->size());
         for (auto & pUnit : pUnits->getVector())
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             MoveUnitData data;
             createUnitData(pUnit.get(), data, enemy, m_influenceUnitRange, otherUnitData, !enemy);
             pUnitData.push_back(data);
@@ -2132,10 +2143,11 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
     }
     if (!enemy && m_aiStep >= AISteps::moveTransporters)
     {
+        Interpreter* pInterpreter = Interpreter::getInstance();
         pUnitData.reserve(pUnits->size());
         for (auto & pUnit : pUnits->getVector())
         {
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             bool found = false;
             for (auto & unitData : pUnitData)
             {
@@ -2153,6 +2165,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
             }
         }
     }
+    Interpreter* pInterpreter = Interpreter::getInstance();
     std::vector<qint32> updated;
     for (auto point : m_updatePoints)
     {
@@ -2160,7 +2173,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
         {
             if (!GlobalUtils::contains(updated, i2))
             {
-                QCoreApplication::processEvents();
+                pInterpreter->threadProcessEvents();
                 auto & unitData = pUnitData[i2];
                 Unit* pUnit = unitData.pUnit.get();
                 if (pUnit != nullptr &&
@@ -2464,9 +2477,10 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
         variance = m_maxDayScoreVariancer;
     }
     spQmlVectorPoint pFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         Building* pBuilding = pBuildings->at(i);
         if (pBuilding->isProductionBuilding() &&
             pBuilding->getTerrain()->getUnit() == nullptr)
@@ -2484,7 +2498,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
                     auto & buildingData = m_productionData[index];
                     for (qint32 i2 = 0; i2 < pData->getActionIDs().size(); i2++)
                     {
-                        QCoreApplication::processEvents();
+                        pInterpreter->threadProcessEvents();
                         if (enableList[i2])
                         {
                             float score = 0.0f;
@@ -2707,7 +2721,8 @@ void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuild
                                    spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                    std::vector<NotAttackableData> & attackCount, std::vector<float> & buildData, const QStringList & buildList)
 {
-    QCoreApplication::processEvents();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->threadProcessEvents();
     AI_CONSOLE_PRINT("NormalAi::createUnitBuildData()", GameConsole::eDEBUG);
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     Unit dummy(unitBuildData.unitId, m_pPlayer, false, m_pMap);
@@ -3215,9 +3230,10 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
         }
     }
     qint32 i = 0;
+    Interpreter* pInterpreter = Interpreter::getInstance();
     while ( i < loadingUnits.size())
     {
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         if (canTransportToEnemy(&dummy, loadingUnits[i], pEnemyUnits, pEnemyBuildings))
         {
             qint32 transporter = 0;

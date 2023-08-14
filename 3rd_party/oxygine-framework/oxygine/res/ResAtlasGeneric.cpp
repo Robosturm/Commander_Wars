@@ -5,7 +5,6 @@
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 
-#include "spritingsupport/spritecreator.h"
 #include "coreengine/gameconsole.h"
 #include "coreengine/settings.h"
 

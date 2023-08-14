@@ -18,10 +18,11 @@
 bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
 {
     CONSOLE_PRINT("moveFlares()", GameConsole::eDEBUG);
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         if (!pUnit->getHasMoved())
         {
             if (pUnit->getActionList().contains(ACTION_FLARE))
@@ -59,10 +60,11 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
     {
         targets.push_back(QVector3D(pUnit->Unit::getX(), pUnit->Unit::getY(), 1));
     }
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (auto & spUnit : pUnits->getVector())
     {
         Unit* pUnit = spUnit.get();
-        QCoreApplication::processEvents();
+        pInterpreter->threadProcessEvents();
         if (!pUnit->getHasMoved())
         {
             if (pUnit->getActionList().contains(ACTION_HOELLIUM_WAIT))
@@ -114,10 +116,11 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                 }
             }
         }
+        Interpreter* pInterpreter = Interpreter::getInstance();
         for (auto & spUnit : pUnits->getVector())
         {
             Unit* pUnit = spUnit.get();
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             if (!pUnit->getHasMoved())
             {
                 if (pUnit->getActionList().contains(ACTION_EXPLODE))
@@ -192,10 +195,11 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
         std::vector<QVector3D> unitTargets;
         std::vector<QPoint> unitPos;
         spQmlVectorPoint unitFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+        Interpreter* pInterpreter = Interpreter::getInstance();
         for (auto & spUnit : pUnits->getVector())
         {
             Unit* pUnit = spUnit.get();
-            QCoreApplication::processEvents();
+            pInterpreter->threadProcessEvents();
             if (pUnit->getHpRounded() < Unit::MAX_UNIT_HP && pUnit->getUnitCosts() / Unit::MAX_UNIT_HP <= m_pPlayer->getFunds())
             {
                 for (auto & field : unitFields->getVector())
@@ -285,7 +289,8 @@ bool CoreAI::processPredefinedAi()
         pEnemyUnits->randomize();
         spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
         pEnemyBuildings->randomize();
-        QCoreApplication::processEvents();
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->threadProcessEvents();
         for (auto & spUnit : pUnits->getVector())
         {
             Unit* pUnit = spUnit.get();
