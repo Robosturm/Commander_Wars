@@ -130,7 +130,7 @@ public slots:
 protected:
     friend RessourceManagement<FontManager>;
     explicit FontManager();
-   virtual ~FontManager() = default;
+    ~FontManager() = default;
 
 private:
     static FontManager* m_pInstance;

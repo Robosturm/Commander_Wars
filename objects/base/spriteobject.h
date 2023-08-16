@@ -3,7 +3,7 @@
 #include "objects/base/tooltip.h"
 
 class SpriteObject;
-using spSpriteObject = oxygine::intrusive_ptr<SpriteObject>;
+using spSpriteObject = std::shared_ptr<SpriteObject>;
 
 class SpriteObject final : public Tooltip
 {

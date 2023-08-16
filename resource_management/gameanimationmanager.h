@@ -10,7 +10,7 @@ protected:
     friend RessourceManagement<GameAnimationManager>;
     GameAnimationManager();
 private:
-   virtual ~GameAnimationManager() = default;
+    ~GameAnimationManager() = default;
 };
 
 #endif // GAMEANIMATIONMANAGER_H

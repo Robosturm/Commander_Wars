@@ -5,7 +5,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 class MoveInButton;
-using spMoveInButton = oxygine::intrusive_ptr<MoveInButton>;
+using spMoveInButton = std::shared_ptr<MoveInButton>;
 
 class MoveInButton final : public QObject, public oxygine::Actor
 {

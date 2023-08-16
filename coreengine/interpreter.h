@@ -8,14 +8,12 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/mainapp.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 class Interpreter;
-using spInterpreter = oxygine::intrusive_ptr<Interpreter>;
+using spInterpreter = std::shared_ptr<Interpreter>;
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
  */
-class Interpreter final : public QJSEngine, public oxygine::ref_counter
+class Interpreter final : public QJSEngine
 {
     Q_OBJECT
 
@@ -28,7 +26,7 @@ public:
     {
         if (m_pInstance.get() == nullptr)
         {
-            m_pInstance = spInterpreter::create();
+            m_pInstance = MemoryManagement::create<Interpreter>();
             m_pInstance->init();
         }
         else
@@ -210,12 +208,12 @@ public slots:
         }
         return false;
     }
-    void trackJsObject(oxygine::ref_counter* pObj);
+    void trackJsObject(std::shared_ptr<QObject> & pObj);
 
 private slots:
     void networkGameFinished(qint32 value, QString id);
 private:
-    friend class oxygine::intrusive_ptr<Interpreter>;
+    friend class MemoryManagement;
     explicit Interpreter();    
     /**
      * @brief init
@@ -234,7 +232,7 @@ private:
     static spInterpreter m_pInstance;
     static QString m_runtimeData;
     qint32 m_inJsCall{0};
-    std::vector<oxygine::intrusive_ptr<oxygine::ref_counter>> m_jsObjects;
+    std::vector<std::shared_ptr<QObject>> m_jsObjects;
 };
 
 #endif // INTERPRETER_H

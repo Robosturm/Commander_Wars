@@ -42,7 +42,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
     CONSOLE_PRINT("Entering Map Selection Menue", GameConsole::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("mapselectionmenu");
     if (pBackground != nullptr)
@@ -150,12 +150,12 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(spMapSelectionView pMapSelectionVie
     {
         heigth = oxygine::Stage::getStage()->getHeight() - 40 * 2;
     }
-    m_pPlayerSelection = spPlayerSelection::create(oxygine::Stage::getStage()->getWidth() - 20, heigth);
+    m_pPlayerSelection = MemoryManagement::create<PlayerSelection>(oxygine::Stage::getStage()->getWidth() - 20, heigth);
     m_pPlayerSelection->setPosition(10, yPos);
     addChild(m_pPlayerSelection);
 
     QSize size(oxygine::Stage::getStage()->getWidth() - 20, oxygine::Stage::getStage()->getHeight() - 40 * 2);
-    m_pRuleSelection = spPanel::create(true,  size, size);
+    m_pRuleSelection = MemoryManagement::create<Panel>(true,  size, size);
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
     if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
@@ -207,11 +207,11 @@ void MapSelectionMapsMenue::buttonBack()
                 m_onEnterTimer.stop();
                 if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                 {
-                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
+                    oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(m_pMapSelectionView->getCurrentCampaign(), true));
                 }
                 else
                 {
-                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), false));
+                    oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(m_pMapSelectionView->getCurrentCampaign(), false));
                 }
                 oxygine::Actor::detach();
             }
@@ -266,11 +266,11 @@ void MapSelectionMapsMenue::buttonNext()
                         m_onEnterTimer.stop();
                         if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                         {
-                            oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentLoadedCampaign(), true));
+                            oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(m_pMapSelectionView->getCurrentLoadedCampaign(), true));
                         }
                         else
                         {
-                            oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentLoadedCampaign(), false));
+                            oxygine::Stage::getStage()->addChild(MemoryManagement::create<CampaignMenu>(m_pMapSelectionView->getCurrentLoadedCampaign(), false));
                         }
                         oxygine::Actor::detach();
                     }
@@ -297,7 +297,7 @@ void MapSelectionMapsMenue::exitMenu()
 {
     CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    spMainwindow window = spMainwindow::create("ui/menu/mainsinglemenu.xml");
+    spMainwindow window = MemoryManagement::create<Mainwindow>("ui/menu/mainsinglemenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -345,7 +345,7 @@ void MapSelectionMapsMenue::hideRuleSelection()
     m_pRuleSelection->setVisible(false);
     m_pButtonSaveRules->setVisible(false);
     m_pButtonLoadRules->setVisible(false);
-    m_pRuleSelectionView.free();
+    m_pRuleSelectionView.reset();
     m_pRuleSelection->clearContent();    
 }
 
@@ -356,7 +356,7 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
     spGameMap pMap = m_pMapSelectionView->getCurrentMap();
-    m_pRuleSelectionView = spRuleSelection::create(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, RuleSelection::Mode::Singleplayer);
+    m_pRuleSelectionView = MemoryManagement::create<RuleSelection>(pMap.get(), oxygine::Stage::getStage()->getWidth() - 80, RuleSelection::Mode::Singleplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &MapSelectionMapsMenue::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getScaledHeight() + 60);
@@ -402,7 +402,7 @@ void MapSelectionMapsMenue::startGame()
     // start game
     CONSOLE_PRINT("Leaving Map Selection Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    spGameMenue window = spGameMenue::create(pMap, false, spNetworkInterface(), false);
+    spGameMenue window = MemoryManagement::create<GameMenue>(pMap, false, spNetworkInterface(), false);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -426,7 +426,7 @@ void MapSelectionMapsMenue::defeatClosedPlayers()
 
 void MapSelectionMapsMenue::showRandomMap()
 {
-    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create("");
+    spDialogRandomMap pDialogRandomMap = MemoryManagement::create<DialogRandomMap>("");
     addChild(pDialogRandomMap);
     connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &MapSelectionMapsMenue::selectRandomMap, Qt::QueuedConnection);
 }
@@ -446,7 +446,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
                                             bool mirrored)
 {
     
-    spGameMap pMap = spGameMap::create(width, heigth, playerCount);
+    spGameMap pMap = MemoryManagement::create<GameMap>(width, heigth, playerCount);
     RandomMapGenerator::randomMap(pMap.get(), width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize,
                         startBaseSize / 100.0f,
@@ -470,7 +470,7 @@ void MapSelectionMapsMenue::showLoadRules()
     QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getInstance()->getUserPath() + "data/gamerules";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::loadRules, Qt::QueuedConnection);
     
@@ -481,7 +481,7 @@ void MapSelectionMapsMenue::showSaveRules()
     QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getInstance()->getUserPath() + "data/gamerules";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveRules, Qt::QueuedConnection);
 }
@@ -517,7 +517,7 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         spGameMap pMap = m_pMapSelectionView->getCurrentMap();
         pMap->getGameRules()->serializeObject(stream);
         file.close();
-        spDialogMessageBox pMessageBox = spDialogMessageBox::create(tr("Do you want to make the saved ruleset the default ruleset?"), true, tr("Yes"), tr("No"));
+        spDialogMessageBox pMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Do you want to make the saved ruleset the default ruleset?"), true, tr("Yes"), tr("No"));
         addChild(pMessageBox);
         connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
         {
@@ -531,14 +531,14 @@ void MapSelectionMapsMenue::showSaveMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getInstance()->getUserPath() + "maps/";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);
 }
 
 void MapSelectionMapsMenue::showMapFilter()
 {
-    spMapSelectionFilterDialog mapSelectionFilterDialog = spMapSelectionFilterDialog::create(m_pMapSelectionView->getMapSelection()->getMapFilter());
+    spMapSelectionFilterDialog mapSelectionFilterDialog = MemoryManagement::create<MapSelectionFilterDialog>(m_pMapSelectionView->getMapSelection()->getMapFilter());
     addChild(mapSelectionFilterDialog);
     connect(mapSelectionFilterDialog.get(), &MapSelectionFilterDialog::sigFinished, m_pMapSelectionView->getMapSelection(), &MapSelection::filterChanged, Qt::QueuedConnection);
 }

@@ -7,7 +7,7 @@
 #include "game/player.h"
 
 class GameAnimationNextDay;
-using spGameAnimationNextDay = oxygine::intrusive_ptr<GameAnimationNextDay>;
+using spGameAnimationNextDay = std::shared_ptr<GameAnimationNextDay>;
 
 class GameAnimationNextDay final : public GameAnimation
 {

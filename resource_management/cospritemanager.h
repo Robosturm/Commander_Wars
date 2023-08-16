@@ -79,13 +79,13 @@ signals:
 protected:
     friend RessourceManagement<COSpriteManager>;
     COSpriteManager();
-   virtual ~COSpriteManager() = default;
+    ~COSpriteManager() = default;
 private:
     struct CoSprite
     {
         CoSprite(QString spriteId, oxygine::spResAnim sprite)
             : m_spriteId(spriteId),
-              m_sprite(sprite)
+            m_sprite(sprite)
         {
         }
         QString m_spriteId;

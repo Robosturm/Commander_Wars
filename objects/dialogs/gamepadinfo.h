@@ -2,11 +2,10 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "ui_reader/createdgui.h"
 
 class GamepadInfo;
-using spGamepadInfo = oxygine::intrusive_ptr<GamepadInfo>;
+using spGamepadInfo = std::shared_ptr<GamepadInfo>;
 
 class GamepadInfo final : public CreatedGui
 {

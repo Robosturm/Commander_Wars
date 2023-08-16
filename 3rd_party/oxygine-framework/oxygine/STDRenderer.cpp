@@ -8,7 +8,7 @@
 #include <QTextStream>
 
 class STDRenderer;
-using spSTDRenderer = oxygine::intrusive_ptr<STDRenderer>;
+using spSTDRenderer = std::shared_ptr<STDRenderer>;
 
 namespace oxygine
 {
@@ -18,12 +18,12 @@ namespace oxygine
     spTexture STDRenderer::white{nullptr};
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
-    QScopedPointer<UberShaderProgram> STDRenderer::m_uberShader;
+    std::shared_ptr<UberShaderProgram> STDRenderer::m_uberShader;
 
     RenderStateCache& rsCache()
     {
-        static QScopedPointer<RenderStateCache> r;
-        if (r.isNull())
+        static std::shared_ptr<RenderStateCache> r;
+        if (r.get() == nullptr)
         {
             r.reset(new RenderStateCache());
         }
@@ -55,7 +55,7 @@ namespace oxygine
     {
         for (qint32 i = 0; i < MAX_TEXTURES; ++i)
         {
-            m_textures[i].free();
+            m_textures[i].reset();
         }
     }
 
@@ -143,18 +143,18 @@ namespace oxygine
     void STDRenderer::release()
     {
         indices16.clear();
-        if (!m_uberShader.isNull())
+        if (m_uberShader.get() != nullptr)
         {
             m_uberShader->release();
-            m_uberShader.reset(nullptr);
+            m_uberShader.reset();
         }
         if (white)
         {
             white->release();
         }
-        white.free();
-        instance.free();
-        current.free();
+        white.reset();
+        instance.reset();
+        current.reset();
     }
 
     void STDRenderer::reset()
@@ -164,9 +164,9 @@ namespace oxygine
         {
             white->release();
         }
-        white.free();
+        white.reset();
         m_uberShader->release();
-        m_uberShader.reset(nullptr);
+        m_uberShader.reset();
     }
 
     bool STDRenderer::isReady()
@@ -250,7 +250,7 @@ namespace oxygine
         if (m_prevRT)
         {
             m_driver->setRenderTarget(m_prevRT);
-            m_prevRT.free();
+            m_prevRT.reset();
         }
 
     }

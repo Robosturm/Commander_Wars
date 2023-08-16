@@ -5,7 +5,7 @@
 #include "objects/coselection.h"
 
 class COStyleMenu;
-using spCOStyleMenu = oxygine::intrusive_ptr<COStyleMenu>;
+using spCOStyleMenu = std::shared_ptr<COStyleMenu>;
 
 class COStyleMenu final : public Basemenu
 {

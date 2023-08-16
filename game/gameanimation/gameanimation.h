@@ -16,7 +16,7 @@
 class Player;
 class GameMap;
 class GameAnimation;
-using spGameAnimation = oxygine::intrusive_ptr<GameAnimation>;
+using spGameAnimation = std::shared_ptr<GameAnimation>;
 
 class GameAnimation : public QObject, public oxygine::Sprite
 {

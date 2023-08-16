@@ -14,7 +14,7 @@
 
 class DropDownmenu;
 class PlayerSelection;
-using spPlayerSelection = oxygine::intrusive_ptr<PlayerSelection>;
+using spPlayerSelection = std::shared_ptr<PlayerSelection>;
 
 class PlayerSelection final : public CreatedGui, public FileSerializable
 {

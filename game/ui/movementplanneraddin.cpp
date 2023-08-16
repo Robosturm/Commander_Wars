@@ -37,7 +37,7 @@ void MovementPlannerAddIn::addSprite(QString spriteID, qint32 x, qint32 y, float
     }
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);

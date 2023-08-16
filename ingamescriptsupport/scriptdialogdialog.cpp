@@ -22,7 +22,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
 {
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    m_pSpriteBox = oxygine::spBox9Sprite::create();
+    m_pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -32,7 +32,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     QSize size(oxygine::Stage::getStage()->getWidth() - 80, oxygine::Stage::getStage()->getHeight() - 120);
-    m_Panel = spPanel::create(true, size, size);
+    m_Panel = MemoryManagement::create<Panel>(true, size, size);
     m_Panel->setPosition(30, 30);
     m_pSpriteBox->addChild(m_Panel);
 
@@ -116,7 +116,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     qint32 y = i * 40;
     qint32 boxWidth = panelWidth - 800;
     qint32 posX = panelWidth - 800;
-    spTextbox pTextbox = spTextbox::create(boxWidth);
+    spTextbox pTextbox = MemoryManagement::create<Textbox>(boxWidth);
     pTextbox->setTooltipText(tr("The text the CO should talk."));
     pTextbox->setPosition(0, y);
     pTextbox->setCurrentText(pDialog->text);
@@ -127,7 +127,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
         pPtrDialog->text = text;
     });
     QStringList moods = {tr("Normal"), tr("Happy"), tr("Sad")};
-    spDropDownmenu moodMenu = spDropDownmenu::create(150, moods);
+    spDropDownmenu moodMenu = MemoryManagement::create<DropDownmenu>(150, moods);
     moodMenu->setTooltipText(tr("The CO Mood/Icon that will be used for the dialog."));
     moodMenu->setPosition(posX, y);
     moodMenu->setCurrentItem(static_cast<qint32>(pDialog->mood));
@@ -174,14 +174,14 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
         {
             pAnim = COSpriteManager::getInstance()->getResAnim(id + "+info");
         }
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pAnim);
         pSprite->setScale(static_cast<float>(pAnim->getWidth()) / 32.0f);
         pSprite->setSize(pAnim->getSize());
         return pSprite;
     };
 
-    spDropDownmenuSprite coidsMenu = spDropDownmenuSprite::create(150, ids, creator);
+    spDropDownmenuSprite coidsMenu = MemoryManagement::create<DropDownmenuSprite>(150, ids, creator);
     coidsMenu->setTooltipText(tr("The ID of the CO that should talk.\nNote: CO 1 and CO 2 represent the CO of the current Player."));
     coidsMenu->setPosition(posX + 150, y);
     coidsMenu->setCurrentItem(pDialog->coid);
@@ -221,7 +221,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
         dialogIndex = i;
         emit sigShowChangeBackground();
     });
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setPosition(posX + 630, y + 5);
     items.append(pSprite);
     m_backgrounds.append(pSprite);
@@ -263,7 +263,7 @@ void ScriptDialogDialog::showChangeBackground()
         folder = file.path();
         fileName = file.fileName();
     }
-    spFileDialog pFileDialog = spFileDialog::create(folder, QStringList(1, "*.png"), false, fileName, true, tr("Load"));
+    spFileDialog pFileDialog = MemoryManagement::create<FileDialog>(folder, QStringList(1, "*.png"), false, fileName, true, tr("Load"));
     addChild(pFileDialog);
     connect(pFileDialog.get(), &FileDialog::sigFileSelected, this, &ScriptDialogDialog::setCurrentDialogBackground, Qt::QueuedConnection);
     
@@ -304,7 +304,7 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
         {
             image = QImage(oxygine::Resource::RCC_PREFIX_PATH + filename);
         }
-        oxygine::spResAnim pAnim = oxygine::spSingleResAnim::create();
+        oxygine::spResAnim pAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         m_backgroundAnims[index] = pAnim;
         Mainapp::getInstance()->loadResAnim(pAnim, image, 1, 1, 1);
         m_backgrounds[index]->setResAnim(pAnim.get());

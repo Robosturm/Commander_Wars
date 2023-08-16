@@ -12,7 +12,7 @@
 #include "objects/base/label.h"
 
 class EditorMenue;
-using spEditorMenue = oxygine::intrusive_ptr<EditorMenue>;
+using spEditorMenue = std::shared_ptr<EditorMenue>;
 
 class EditorMenue final : public BaseGamemenu
 {
@@ -415,8 +415,8 @@ private:
     qint32 m_tempCounter{0};
 
     QRect m_copyRect{-1, -1, 0, 0};
-    oxygine::spActor m_copyRectActor{oxygine::spActor::create()};
-    oxygine::spActor m_cursorActor{oxygine::spActor::create()};
+    oxygine::spActor m_copyRectActor{MemoryManagement::create<oxygine::Actor>()};
+    oxygine::spActor m_cursorActor{MemoryManagement::create<oxygine::Actor>()};
     bool m_gridVisible{false};
     bool m_middleCrossGridVisible{false};
     QTimer m_autosaveTimer;

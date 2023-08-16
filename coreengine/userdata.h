@@ -6,16 +6,14 @@
 #include <QVector>
 #include <QMap>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariablefile.h"
 #include "game/GameEnums.h"
 
 class Userdata;
-using spUserdata = oxygine::intrusive_ptr<Userdata>;
+using spUserdata = std::shared_ptr<Userdata>;
 
-class Userdata final : public QObject, public FileSerializable, public oxygine::ref_counter
+class Userdata final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -259,7 +257,7 @@ private:
     void showAchieved();
     void reset();
 private:
-    friend class oxygine::intrusive_ptr<Userdata>;
+    friend class MemoryManagement;
     explicit Userdata();
 private:
     static spUserdata m_pInstance;

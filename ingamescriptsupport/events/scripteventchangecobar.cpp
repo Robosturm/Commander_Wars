@@ -75,7 +75,7 @@ void ScriptEventChangeCOBar::setPlayer(const qint32 &value)
 
 void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -83,12 +83,12 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = spSpinBox::create(300, 1, 9999);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, 1, 9999);
     spinBox->setTooltipText(tr("Player who earns CO-Power Stars."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
@@ -99,12 +99,12 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("CO: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, 1, 2);
+    spinBox = MemoryManagement::create<SpinBox>(300, 1, 2);
     spinBox->setTooltipText(tr("CO who earns CO-Power Stars."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(co + 1);
@@ -116,12 +116,12 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
 
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Stars: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, -100, 100, SpinBox::Mode::Float);
+    spinBox = MemoryManagement::create<SpinBox>(300, -100, 100, SpinBox::Mode::Float);
     spinBox->setTooltipText(tr("The amount of Stars that will be changed."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(stars);

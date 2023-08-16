@@ -67,7 +67,7 @@ void ScriptConditionVictory::writeCondition(QTextStream& rStream)
 
 void ScriptConditionVictory::showEditCondition(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -75,12 +75,12 @@ void ScriptConditionVictory::showEditCondition(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Team: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = spSpinBox::create(300, 1, 9999);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, 1, 9999);
     spinBox->setTooltipText(tr("Team that has to win the game to executed the events."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(team + 1);

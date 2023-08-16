@@ -7,7 +7,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 class FocusableObject;
-using spFocusableObject = oxygine::intrusive_ptr<FocusableObject>;
+using spFocusableObject = std::shared_ptr<FocusableObject>;
 
 class FocusableObject : public QObject, public oxygine::Sprite
 {

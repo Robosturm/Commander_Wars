@@ -3,12 +3,10 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 class CursorData;
-using spCursorData = oxygine::intrusive_ptr<CursorData>;
+using spCursorData = std::shared_ptr<CursorData>;
 
-class CursorData final : public QObject, public oxygine::ref_counter
+class CursorData final : public QObject
 {
     Q_OBJECT
 public:

@@ -11,7 +11,7 @@
 #include "objects/base/panel.h"
 
 class ScriptDialogDialog;
-using spScriptDialogDialog = oxygine::intrusive_ptr<ScriptDialogDialog>;
+using spScriptDialogDialog = std::shared_ptr<ScriptDialogDialog>;
 
 class ScriptDialogDialog final : public QObject, public oxygine::Actor
 {

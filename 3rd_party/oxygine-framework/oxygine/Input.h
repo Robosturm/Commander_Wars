@@ -1,5 +1,4 @@
 #pragma once
-#include <QScopedPointer>
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
@@ -12,7 +11,7 @@ namespace oxygine
     public:
         static Input & getInstance()
         {
-            if (m_instance.isNull())
+            if (m_instance.get() == nullptr)
             {
                 m_instance.reset(new Input());
             }
@@ -33,7 +32,7 @@ namespace oxygine
     private:
         explicit Input();
     private:
-        static QScopedPointer<Input> m_instance;
+        static std::shared_ptr<Input> m_instance;
         PointerState m_pointers[MAX_TOUCHES];
         PointerState m_pointerMouse;
         qint64 m_ids[MAX_TOUCHES + 1];

@@ -30,13 +30,13 @@ COStyleMenu::COStyleMenu()
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
 
-    m_pPlayer = spPlayer::create(nullptr);
+    m_pPlayer = MemoryManagement::create<Player>(nullptr);
     m_pPlayer->init();
 
     CONSOLE_PRINT("Entering Co Style Menue", GameConsole::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("costylemenu");
     if (pBackground != nullptr)
@@ -89,7 +89,7 @@ COStyleMenu::COStyleMenu()
     {
         bannList.removeAll(item);
     }
-    m_COSelection = spCOSelection::create(QPoint(0, 0), QSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight() - 50), bannList);
+    m_COSelection = MemoryManagement::create<COSelection>(QPoint(0, 0), QSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight() - 50), bannList);
     m_COSelection->colorChanged(QColor(248, 88, 0));
     addChild(m_COSelection);
     connect(m_COSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged, Qt::QueuedConnection);
@@ -112,7 +112,7 @@ void COStyleMenu::onEnter()
 void COStyleMenu::exitMenue()
 {    
     CONSOLE_PRINT("Leaving CO Style Menue", GameConsole::eDEBUG);
-    auto window = spMainwindow::create("ui/menu/playermenu.xml");
+    auto window = MemoryManagement::create<Mainwindow>("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -121,7 +121,7 @@ void COStyleMenu::reloadMenue()
 {
     CONSOLE_PRINT("Leaving CO Style Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    auto window = spCOStyleMenu::create();
+    auto window = MemoryManagement::create<COStyleMenu>();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -135,7 +135,7 @@ void COStyleMenu::editCOStyle()
 {    
     if (!m_currentCOID.isEmpty())
     {
-        spDialogCOStyle pDialogCOStyle = spDialogCOStyle::create(m_currentCOID);
+        spDialogCOStyle pDialogCOStyle = MemoryManagement::create<DialogCOStyle>(m_currentCOID);
         addChild(pDialogCOStyle);
         connect(pDialogCOStyle.get(), &DialogCOStyle::sigFinished, this, &COStyleMenu::reloadMenue, Qt::QueuedConnection);
     }
@@ -144,7 +144,7 @@ void COStyleMenu::editCOStyle()
 void COStyleMenu::showCOInfo()
 {
     QString coid = m_currentCOID;
-    spCO co = spCO::create(coid, m_pPlayer.get(), nullptr);
+    spCO co = MemoryManagement::create<CO>(coid, m_pPlayer.get(), nullptr);
 
     auto* pPtrPlayer = m_pPlayer.get();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -186,7 +186,7 @@ void COStyleMenu::showCOInfo()
     outCoids.removeAll(CO::CO_RANDOM);
     outCoids.removeDuplicates();
 
-    addChild(spCOInfoDialog::create(co, m_pPlayer, [pPtrPlayer, outCoids](spCO& pCurrentCO, spPlayer&, qint32 direction)
+    addChild(MemoryManagement::create<COInfoDialog>(co, m_pPlayer, [pPtrPlayer, outCoids](spCO& pCurrentCO, spPlayer&, qint32 direction)
     {
         qint32 index = outCoids.indexOf(pCurrentCO->getCoID());
         index += direction;
@@ -203,6 +203,6 @@ void COStyleMenu::showCOInfo()
         {
             coid = outCoids[index];
         }
-        pCurrentCO = spCO::create(coid, pPtrPlayer, nullptr);
+        pCurrentCO = MemoryManagement::create<CO>(coid, pPtrPlayer, nullptr);
     }, false));
 }

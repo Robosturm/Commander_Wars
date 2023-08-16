@@ -13,7 +13,7 @@
 #include "menue/basemenu.h"
 
 class CampaignMenu;
-using spCampaignMenu = oxygine::intrusive_ptr<CampaignMenu>;
+using spCampaignMenu = std::shared_ptr<CampaignMenu>;
 
 class CampaignMenu final : public Basemenu
 {

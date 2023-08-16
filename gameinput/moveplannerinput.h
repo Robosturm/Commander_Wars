@@ -3,7 +3,7 @@
 #include "gameinput/humanplayerinput.h"
 
 class MoveplannerInput;
-using spMoveplannerInput = oxygine::intrusive_ptr<MoveplannerInput>;
+using spMoveplannerInput = std::shared_ptr<MoveplannerInput>;
 
 class MoveplannerInput final : public HumanPlayerInput
 {

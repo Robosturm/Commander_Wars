@@ -17,7 +17,7 @@
 #include "objects/dialogs/dialogconnecting.h"
 
 class Multiplayermenu;
-using spMultiplayermenu = oxygine::intrusive_ptr<Multiplayermenu>;
+using spMultiplayermenu = std::shared_ptr<Multiplayermenu>;
 
 class Multiplayermenu final : public MapSelectionMapsMenue
 {

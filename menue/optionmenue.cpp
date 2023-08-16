@@ -85,7 +85,7 @@ OptionMenue::OptionMenue(const QString & xmlFile)
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("optionmenu");
     if (pBackground != nullptr)
@@ -155,7 +155,7 @@ void OptionMenue::exitMenue()
     Settings::getInstance()->saveSettings();
     if (m_restartNeeded)
     {
-        spDialogMessageBox pMessage = spDialogMessageBox::create(tr("Some changes need a restart of the game. The game will restart. Press Ok to restart."), true);
+        spDialogMessageBox pMessage = MemoryManagement::create<DialogMessageBox>(tr("Some changes need a restart of the game. The game will restart. Press Ok to restart."), true);
         connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::restart, Qt::QueuedConnection);
         addChild(pMessage);
     }
@@ -163,7 +163,7 @@ void OptionMenue::exitMenue()
     {
         CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
         m_onEnterTimer.stop();
-        auto window = spMainwindow::create("ui/menu/mainoptionmenu.xml");
+        auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainoptionmenu.xml");
         oxygine::Stage::getStage()->addChild(window);
         oxygine::Actor::detach();
     }
@@ -173,7 +173,7 @@ void OptionMenue::reloadSettings()
 {    
     CONSOLE_PRINT("Leaving Option Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    spOptionMenue newMenu = spOptionMenue::create(m_xmlFile);
+    spOptionMenue newMenu = MemoryManagement::create<OptionMenue>(m_xmlFile);
     // carry over restart flag
     newMenu->m_restartNeeded = m_restartNeeded;
     oxygine::Stage::getStage()->addChild(newMenu);
@@ -197,20 +197,20 @@ void OptionMenue::loadModPanels()
 {
     m_ModBoxes.clear();
     m_ModCheckboxes.clear();
-    m_ModSelector = oxygine::spActor::create();
+    m_ModSelector = MemoryManagement::create<oxygine::Actor>();
     m_ModSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_ModSelector->setPosition(10, 10);
     QSize size(oxygine::Stage::getStage()->getWidth() - 20,
                oxygine::Stage::getStage()->getHeight() - 70);
     size.setWidth(oxygine::Stage::getStage()->getWidth() - 60);
     size.setHeight(size.height() - 50);
-    m_pMods = spPanel::create(true,  size - QSize(0, 50), size);
+    m_pMods = MemoryManagement::create<Panel>(true,  size - QSize(0, 50), size);
     m_pMods->setPosition(10, 110);
     m_ModSelector->addChild(m_pMods);
     size.setHeight(size.height() + 70);
-    m_pModDescription = spPanel::create(true,  size, size, "panel");
+    m_pModDescription = MemoryManagement::create<Panel>(true,  size, size, "panel");
     m_pModDescription->setPosition(oxygine::Stage::getStage()->getWidth() - 1, 25);
-    auto moveInButton = spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth() + 10);
+    auto moveInButton = MemoryManagement::create<MoveInButton>(m_pModDescription.get(), m_pModDescription->getScaledWidth() + 10);
     m_pModDescription->addChild(moveInButton);
     connect(this, &OptionMenue::sigUpdateModFilter, this, &OptionMenue::updateModFilter, Qt::QueuedConnection);
     connect(this, &OptionMenue::sigLoadModInfo, this, &OptionMenue::loadModInfo, Qt::QueuedConnection);
@@ -227,16 +227,16 @@ void OptionMenue::showMods()
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
-    m_ModDescriptionText = oxygine::spTextField::create();
+    m_ModDescriptionText = MemoryManagement::create<oxygine::TextField>();
     m_ModDescriptionText->setStyle(style);
     m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 70, 500);
     m_ModDescriptionText->setX(10);
-    m_modThumbnail = oxygine::spSprite::create();
+    m_modThumbnail = MemoryManagement::create<oxygine::Sprite>();
     m_modThumbnail->setPosition(10, 10);
     m_pModDescription->addItem(m_modThumbnail);
     m_pModDescription->addItem(m_ModDescriptionText);
 
-    spLabel pLabel = spLabel::create(260, true);
+    spLabel pLabel = MemoryManagement::create<Label>(260, true);
     style.multiline = false;
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Advance Wars Game:"));
@@ -246,14 +246,14 @@ void OptionMenue::showMods()
                             tr("Commander Wars"),
                             tr("Advance Wars DS"),
                             tr("Advance Wars 4")};
-    m_pModSelection = spDropDownmenu::create(300, versions);
+    m_pModSelection = MemoryManagement::create<DropDownmenu>(300, versions);
     m_pModSelection->setTooltipText(tr("Select an Advance Wars Game preset to enable mods to mimic a specific Advance Wars Game."));
     m_pModSelection->setX(260);
     connect(m_pModSelection.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::selectMods, Qt::QueuedConnection);
     m_ModSelector->addChild(m_pModSelection);
     updateModSelection();
     y += pLabel->getHeight() + 10;
-    pLabel = spLabel::create(260, true);
+    pLabel = MemoryManagement::create<Label>(260, true);
     style.multiline = false;
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Tag Filter:"));
@@ -287,15 +287,15 @@ void OptionMenue::showMods()
             }
         }
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
-        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+        oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
         pBox->setResAnim(pAnim);
 
-        spCheckbox modCheck = spCheckbox::create();
+        spCheckbox modCheck = MemoryManagement::create<Checkbox>();
         m_ModCheckboxes.append(modCheck);
         modCheck->setPosition(10, 5);
         pBox->addChild(modCheck);
 
-        spLabel pTextfield = spLabel::create(oxygine::Stage::getStage()->getWidth() - 190);
+        spLabel pTextfield = MemoryManagement::create<Label>(oxygine::Stage::getStage()->getWidth() - 190);
         pTextfield->setStyle(style);
         pTextfield->setHtmlText(name);
         pTextfield->setPosition(50, 5);
@@ -339,7 +339,7 @@ void OptionMenue::showMods()
 
     tags.sort();
     tags.push_front(tr("All"));
-    spDropDownmenu pTagSelection = spDropDownmenu::create(300, tags);
+    spDropDownmenu pTagSelection = MemoryManagement::create<DropDownmenu>(300, tags);
     pTagSelection->setTooltipText(tr("Filters mods by given tags."));
     pTagSelection->setPosition(260, y);
     connect(pTagSelection.get(), &DropDownmenu::sigItemChanged, this, [this, tags](qint32 value)
@@ -414,7 +414,7 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "unable to locate thumbnail for mod " + name);
         }
         m_modThumbnail->setVisible(true);
-        m_modThumbnailAnim = oxygine::spSingleResAnim::create();
+        m_modThumbnailAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         Mainapp::getInstance()->loadResAnim(m_modThumbnailAnim, img, 1, 1, 1.0f);
         m_modThumbnail->setResAnim(m_modThumbnailAnim.get());
         if (m_modThumbnailAnim->getWidth() > m_pModDescription->getContentWidth() - 60)
@@ -598,13 +598,13 @@ void OptionMenue::restart()
 
 void OptionMenue::showGamepadInfo()
 {
-    spGamepadInfo pGamepadInfo = spGamepadInfo::create();
+    spGamepadInfo pGamepadInfo = MemoryManagement::create<GamepadInfo>();
     addChild(pGamepadInfo);
 }
 
 void OptionMenue::showResetBox()
 {
-    spDialogMessageBox pMessage = spDialogMessageBox::create(tr("This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu."), true);
+    spDialogMessageBox pMessage = MemoryManagement::create<DialogMessageBox>(tr("This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu."), true);
     connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::onReset, Qt::QueuedConnection);
     addChild(pMessage);
 }

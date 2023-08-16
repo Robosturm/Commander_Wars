@@ -11,7 +11,7 @@
 #include "objects/base/focusableobject.h"
 
 class Topbar;
-using spTopbar = oxygine::intrusive_ptr<Topbar>;
+using spTopbar = std::shared_ptr<Topbar>;
 
 class Topbar final : public FocusableObject
 {

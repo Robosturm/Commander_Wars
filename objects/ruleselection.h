@@ -6,7 +6,7 @@
 
 class GameMap;
 class RuleSelection;
-using spRuleSelection = oxygine::intrusive_ptr<RuleSelection>;
+using spRuleSelection = std::shared_ptr<RuleSelection>;
 
 class RuleSelection final : public CreatedGui
 {

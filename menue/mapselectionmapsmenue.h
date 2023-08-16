@@ -15,7 +15,7 @@
 
 class GameMap;
 class MapSelectionMapsMenue;
-using spMapSelectionMapsMenue = oxygine::intrusive_ptr<MapSelectionMapsMenue>;
+using spMapSelectionMapsMenue = std::shared_ptr<MapSelectionMapsMenue>;
 
 class MapSelectionMapsMenue : public Basemenu
 {

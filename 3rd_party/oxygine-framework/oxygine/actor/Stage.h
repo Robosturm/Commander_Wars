@@ -6,7 +6,7 @@
 namespace oxygine
 {
     class Stage;
-    using spStage = intrusive_ptr<Stage>;
+    using spStage = std::shared_ptr<Stage>;
     class Stage final : public Actor
     {
     public:

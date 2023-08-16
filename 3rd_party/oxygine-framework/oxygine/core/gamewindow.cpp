@@ -54,8 +54,8 @@ namespace oxygine
         rsCache().setDriver(nullptr);
         MaterialCache::mc().clear();
         STDRenderer::release();
-        RenderDelegate::instance.free();
-        VideoDriver::instance.free();
+        RenderDelegate::instance.reset();
+        VideoDriver::instance.reset();
         Material::null = spMaterial();
         Material::current = spMaterial();
         Input::getInstance().cleanup();
@@ -136,7 +136,7 @@ namespace oxygine
             m_launched = true;
             registerResourceTypes();
             // Create the stage. Stage is a root node for all updateable and drawable objects
-            oxygine::Stage::setStage(oxygine::spStage::create());
+            oxygine::Stage::setStage(MemoryManagement::create<oxygine::Stage>());
             initStage();
             emit sigLoadRessources();
         }

@@ -7,7 +7,7 @@
 namespace oxygine
 {
     class SingleResAnim;
-    using spSingleResAnim = intrusive_ptr<SingleResAnim>;
+using spSingleResAnim = std::shared_ptr<SingleResAnim>;
     class SingleResAnim final : public QObject, public ResAnim
     {
         Q_OBJECT

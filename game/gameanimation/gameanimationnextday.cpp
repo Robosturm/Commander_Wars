@@ -29,7 +29,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     Interpreter::setCppOwnerShip(this);
     setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("nextday");
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     if (pAnim != nullptr)
     {
@@ -51,7 +51,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     addChild(pSprite);
 
     CO* pCO = pPlayer->getCO(0);
-    oxygine::spSprite m_CO = oxygine::spSprite::create();
+    oxygine::spSprite m_CO = MemoryManagement::create<oxygine::Sprite>();
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+nrm";
@@ -79,7 +79,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
         oxygine::ResAnim* pAnim = pCO->getResAnim(resAnim);
         if (pAnim != nullptr)
         {
-            m_CO = oxygine::spSprite::create();
+            m_CO = MemoryManagement::create<oxygine::Sprite>();
             m_CO->setResAnim(pAnim);
             if (Settings::getInstance()->getSmallScreenDevice())
             {
@@ -98,7 +98,7 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getMainFont72());
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
-    oxygine::spTextField textField = oxygine::spTextField::create();
+    oxygine::spTextField textField = MemoryManagement::create<oxygine::TextField>();
     
     if (m_pMap != nullptr)
     {

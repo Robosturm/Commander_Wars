@@ -15,7 +15,7 @@ class QKeyEvent;
 class Interpreter;
 
 class GameConsole;
-using spConsole = oxygine::intrusive_ptr<GameConsole>;
+using spConsole = std::shared_ptr<GameConsole>;
 
 class GameConsole final : public TextInput
 {
@@ -248,7 +248,7 @@ protected slots:
 protected:
     virtual bool onEditFinished() override;
 private:
-    friend class oxygine::intrusive_ptr<GameConsole>;
+    friend class MemoryManagement;
     explicit GameConsole();
 
 private:

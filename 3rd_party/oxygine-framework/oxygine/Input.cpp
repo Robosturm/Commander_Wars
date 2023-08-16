@@ -3,7 +3,7 @@
 
 namespace oxygine
 {
-    QScopedPointer<Input> Input::m_instance;
+    std::shared_ptr<Input> Input::m_instance;
 
     Input::Input()
     {

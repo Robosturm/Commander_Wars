@@ -3,18 +3,16 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "network/NetworkInterface.h"
 
 class QIODevice;
 class TxTask;
-using spTxTask = oxygine::intrusive_ptr<TxTask>;
+using spTxTask = std::shared_ptr<TxTask>;
 
 /**
  * @brief The TXTask class
  */
-class TxTask final : public QObject, public oxygine::ref_counter
+class TxTask final : public QObject
 {
     Q_OBJECT
 public:

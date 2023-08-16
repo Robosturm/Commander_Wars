@@ -5,7 +5,7 @@
 namespace oxygine
 {
     class ClipRectActor;
-    using spClipRectActor = intrusive_ptr<ClipRectActor>;
+    using spClipRectActor = std::shared_ptr<ClipRectActor>;
     /**
     ClipRectActor clips all out of bound children. Rotation is not supported
     */

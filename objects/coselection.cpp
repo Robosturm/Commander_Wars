@@ -28,7 +28,7 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     oxygine::spSprite pSprite;
     m_Armies = pCOSpriteManager->getArmyList(m_Coids);
 
-    m_ArmyBannerPanel = spPanel::create(true, QSize(maxSize.width(),  75 * scale + 22), QSize(m_Armies.size() * 20 * scale + 40, 53 * scale + 22));
+    m_ArmyBannerPanel = MemoryManagement::create<Panel>(true, QSize(maxSize.width(),  75 * scale + 22), QSize(m_Armies.size() * 20 * scale + 40, 53 * scale + 22));
     m_ArmyBannerPanel->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects) + 1);
     addChild(m_ArmyBannerPanel);
     for (qint32 i = 0; i < m_Armies.size(); i++)
@@ -39,15 +39,16 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     qint32 startY = m_ArmyBannerPanel->getScaledHeight();
     if (Settings::getInstance()->getSmallScreenDevice())
     {
-        auto moveInButton = spMoveInButton::create(m_ArmyBannerPanel.get(), m_ArmyBannerPanel->getScaledHeight(), 1, -1, 2.0f, true);
+        auto moveInButton = MemoryManagement::create<MoveInButton>(m_ArmyBannerPanel.get(), m_ArmyBannerPanel->getScaledHeight(), 1, -1, 2.0f, true);
         m_ArmyBannerPanel->setY(-m_ArmyBannerPanel->getScaledHeight() - getY() + 1);
+        m_ArmyBannerPanel->addChild(moveInButton);
         startY = 0;
     }
     else
     {
         baseYSize -= m_ArmyBannerPanel->getScaledHeight();
     }
-    m_CoFieldPanel = spPanel::create(true, QSize(51 * 3 * scale + 80, baseYSize), QSize(51 * 3 * scale + 80, baseYSize));
+    m_CoFieldPanel = MemoryManagement::create<Panel>(true, QSize(51 * 3 * scale + 80, baseYSize), QSize(51 * 3 * scale + 80, baseYSize));
     m_CoFieldPanel->setY(startY);
 
     addChild(m_CoFieldPanel);
@@ -57,7 +58,7 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     {
         width /= 2;
     }
-    m_CoDescription = spPanel::create(true, QSize(width, baseYSize), QSize(width, baseYSize));
+    m_CoDescription = MemoryManagement::create<Panel>(true, QSize(width, baseYSize), QSize(width, baseYSize));
     m_CoDescription->setPosition(m_CoFieldPanel->getScaledWidth(), startY);
     addChild(m_CoDescription);
 
@@ -81,21 +82,21 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     }
 
     pAnim = pObjectManager->getResAnim("co_cursor");
-    m_Cursor = oxygine::spSprite::create();
+    m_Cursor = MemoryManagement::create<oxygine::Sprite>();
     m_Cursor->setResAnim(pAnim);
     m_Cursor->setPosition(5, 7);
     m_Cursor->setPriority(1);
     m_Cursor->setScale(scale);
     m_CoFieldPanel->addItem(m_Cursor);
 
-    oxygine::spBox9Sprite pPanelbox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pPanelbox = MemoryManagement::create<oxygine::Box9Sprite>();
     pAnim = pObjectManager->getResAnim("panel");
     pPanelbox->setResAnim(pAnim);
     pPanelbox->setX(m_CoDescription->getX() + m_CoDescription->getScaledWidth());
     pPanelbox->setY(startY);
     pPanelbox->setSize(width, baseYSize);
 
-    m_pCurrentCO = oxygine::spSprite::create();
+    m_pCurrentCO = MemoryManagement::create<oxygine::Sprite>();
     m_pCurrentCO->setPosition(10, 10);
     float scale = (width - 20) / 208.0f;
     float scale2 = (maxSize.height() - m_ArmyBannerPanel->getScaledHeight() - 20) / 352.0f;
@@ -116,7 +117,7 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    m_COName = spLabel::create(m_CoDescription->getScaledWidth());
+    m_COName = MemoryManagement::create<Label>(m_CoDescription->getScaledWidth());
     m_COName->setStyle(headerStyle);
     m_COName->setSize(width, 55);
     m_COName->setPosition(10, 10);
@@ -126,24 +127,24 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    m_COPower = spLabel::create(m_CoDescription->getScaledWidth());
+    m_COPower = MemoryManagement::create<Label>(m_CoDescription->getScaledWidth());
     m_COPower->setStyle(style);
     m_COPower->setPosition(10, 70);
     m_CoDescription->addItem(m_COPower);
-    m_COSuperpower = spLabel::create(m_CoDescription->getScaledWidth());
+    m_COSuperpower = MemoryManagement::create<Label>(m_CoDescription->getScaledWidth());
     m_COSuperpower->setStyle(style);
     m_COSuperpower->setPosition(10, 100);
     m_CoDescription->addItem(m_COSuperpower);
 
     style.multiline = true;
 
-    m_COBio = oxygine::spTextField::create();
+    m_COBio = MemoryManagement::create<oxygine::TextField>();
     m_COBio->setStyle(style);
     m_COBio->setSize(width, 20);
     m_COBio->setPosition(10, 150);
     m_CoDescription->addItem(m_COBio);
 
-    m_CODesc = oxygine::spTextField::create();
+    m_CODesc = MemoryManagement::create<oxygine::TextField>();
     m_CODesc->setStyle(style);
     m_CODesc->setSize(width, 48);
     m_CODesc->setX(10);
@@ -157,10 +158,10 @@ void COSelection::loadArmy(QString army, qint32& bannerX, qint32& y, qint32 i)
     oxygine::ResAnim* pAnim = pGameManager->getResAnim(army);
     if (pAnim != nullptr)
     {
-        oxygine::spClipRectActor pRect = oxygine::spClipRectActor::create();
+        oxygine::spClipRectActor pRect = MemoryManagement::create<oxygine::ClipRectActor>();
         pRect->setPosition(bannerX, 0);
         pRect->setSize(pAnim->getWidth() * scale, pAnim->getHeight() * scale);
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pAnim);
         pSprite->setScale(scale);
         if (i != 0)
@@ -290,26 +291,26 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = nullptr;
     oxygine::spSprite pSprite;
-    oxygine::spActor actor = oxygine::spActor::create();
+    oxygine::spActor actor = MemoryManagement::create<oxygine::Actor>();
     if (COArmy == army && !coid.isEmpty())
     {
         QString resAnim = coid.toLower() + "+face";
         pAnim = pCOSpriteManager->getResAnim(resAnim);        
-        pSprite = oxygine::spSprite::create();
+        pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pAnim);
         actor->addChild(pSprite);
     }
     else
     {
         pAnim = pCOSpriteManager->getResAnim("no_co+face");
-        pSprite = oxygine::spSprite::create();
+        pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pAnim);
         actor->addChild(pSprite);
         coid = "";
     }
     pSprite->setScale(scale);
     pAnim = pObjectManager->getResAnim("co_background");
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setScale(scale);
     actor->addChild(pSprite);

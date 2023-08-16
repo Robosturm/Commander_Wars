@@ -13,7 +13,7 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
 {
     Interpreter::setCppOwnerShip(this);
 
-    m_pButton = oxygine::spButton::create();
+    m_pButton = MemoryManagement::create<oxygine::Button>();
     if (m_useY)
     {
         m_pButton->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
@@ -90,8 +90,6 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
             setY(startOffset);
         }
     }
-
-    pParent->addChild(spMoveInButton(this, true));
 }
 
 void MoveInButton::addMoveTween()

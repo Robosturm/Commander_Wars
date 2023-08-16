@@ -9,5 +9,5 @@ protected:
     friend RessourceManagement<UiManager>;
     UiManager();
 private:
-   virtual ~UiManager() = default;
+    ~UiManager() = default;
 };

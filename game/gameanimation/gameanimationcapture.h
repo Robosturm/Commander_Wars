@@ -8,7 +8,7 @@
 #include "game/player.h"
 
 class GameAnimationCapture;
-using spGameAnimationCapture = oxygine::intrusive_ptr<GameAnimationCapture>;
+using spGameAnimationCapture = std::shared_ptr<GameAnimationCapture>;
 
 class GameAnimationCapture final : public GameAnimation
 {

@@ -16,7 +16,7 @@
 #include "objects/base/dropdownmenu.h"
 
 class DialogRandomMap;
-using spDialogRandomMap = oxygine::intrusive_ptr<DialogRandomMap>;
+using spDialogRandomMap = std::shared_ptr<DialogRandomMap>;
 
 class DialogRandomMap final : public QObject, public oxygine::Actor
 {

@@ -49,7 +49,7 @@ void ScriptVariables::deserializeObject(QDataStream& pStream)
     m_Variables.clear();
     for (qint32 i = 0; i < size; i++)
     {
-        spScriptVariable pVar = spScriptVariable::create();
+        spScriptVariable pVar = MemoryManagement::create<ScriptVariable>();
         pVar->deserializeObject(pStream);
         m_Variables.append(pVar);
     }
@@ -60,7 +60,7 @@ ScriptVariable* ScriptVariables::createVariable(const QString id)
     spScriptVariable pVar = spScriptVariable(getVariable(id));
     if (pVar.get() == nullptr)
     {
-        pVar = spScriptVariable::create(id);
+        pVar = MemoryManagement::create<ScriptVariable>(id);
         m_Variables.append(pVar);
     }
     return pVar.get();

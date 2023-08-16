@@ -14,7 +14,7 @@
 
 class GameMap;
 class ScriptEditor;
-using spScriptEditor = oxygine::intrusive_ptr<ScriptEditor>;
+using spScriptEditor = std::shared_ptr<ScriptEditor>;
 
 class ScriptEditor final : public QObject, public oxygine::Actor
 {

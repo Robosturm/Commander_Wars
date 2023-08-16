@@ -10,7 +10,7 @@ protected:
     friend RessourceManagement<BackgroundManager>;
     BackgroundManager();
 private:
-   virtual ~BackgroundManager() = default;
+    ~BackgroundManager() = default;
 };
 
 #endif // BACKGROUNDMANAGER_H

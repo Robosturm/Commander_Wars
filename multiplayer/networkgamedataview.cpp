@@ -21,7 +21,7 @@ NetworkGameDataView::NetworkGameDataView(NetworkGameData & data)
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -32,7 +32,7 @@ NetworkGameDataView::NetworkGameDataView(NetworkGameData & data)
 
     QImage img;
     getMinimapImage(img, data);
-    m_minimapImage = oxygine::spSingleResAnim::create();
+    m_minimapImage = MemoryManagement::create<oxygine::SingleResAnim>();
     Mainapp::getInstance()->loadResAnim(m_minimapImage, img, 1, 1, 1);
     UiFactory::getInstance().createUi("ui/multiplayer/networkGameDataView.xml", this);
 }

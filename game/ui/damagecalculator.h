@@ -3,8 +3,6 @@
 #include <QObject>
 #include <QPoint>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "game/gamemap.h"
 
 #include "objects/base/dropdownmenusprite.h"
@@ -14,7 +12,7 @@
 #include "objects/base/closeablepopup.h"
 
 class DamageCalculator;
-using spDamageCalculator = oxygine::intrusive_ptr<DamageCalculator>;
+using spDamageCalculator = std::shared_ptr<DamageCalculator>;
 
 class DamageCalculator final : public CloseablePopUp
 {

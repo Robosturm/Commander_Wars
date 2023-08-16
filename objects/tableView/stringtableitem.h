@@ -4,7 +4,7 @@
 #include <QObject>
 
 class StringTableItem;
-using spStringTableItem = oxygine::intrusive_ptr<StringTableItem>;
+using spStringTableItem = std::shared_ptr<StringTableItem>;
 
 class StringTableItem final : public BaseTableItem
 {

@@ -1,7 +1,6 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include <vector>
 
 namespace oxygine
@@ -24,8 +23,8 @@ namespace oxygine
     };
 
     class EventDispatcher;
-    using spEventDispatcher = intrusive_ptr<EventDispatcher>;
-    class EventDispatcher : public IClosureOwner, public ref_counter
+    using spEventDispatcher = std::shared_ptr<EventDispatcher>;
+    class EventDispatcher : public IClosureOwner
     {
     public:
         explicit EventDispatcher() = default;

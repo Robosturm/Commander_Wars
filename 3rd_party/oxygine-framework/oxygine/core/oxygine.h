@@ -1,7 +1,6 @@
 #pragma once
 #include <QString>
 #include <atomic>
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 /**main oxygine namespace*/
 namespace oxygine
@@ -39,19 +38,21 @@ namespace oxygine
     }
 
     template<class T, class U>
-    intrusive_ptr<T> safeSpCast(intrusive_ptr<U> const& p)
+    std::shared_ptr<T> safeSpCast(std::shared_ptr<U> const& p)
     {
         if (!p)
         {
-            return intrusive_ptr<T>();
+            return std::shared_ptr<T>();
         }
 #ifdef OXYGINE_DEBUG_SAFECAST
-        intrusive_ptr<T> t = intrusive_ptr<T>(dynamic_cast<T*>(p.get()));
+        std::shared_ptr<T> t = std::dynamic_pointer_cast(p);
         if (t.get() == nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "safeSpCast can't cast pointer");
         }
+        return t;
+#else
+        return std::static_pointer_cast(p);
 #endif
-        return intrusive_ptr<T>(static_cast<T*>(p.get()));
     }
 }

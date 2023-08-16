@@ -1,16 +1,14 @@
 #pragma once
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "ai/decisiontree/decisionquestion.h"
 
 #include "coreengine/fileserializable.h"
 
 class DecisionNode;
-using spDecisionNode = oxygine::intrusive_ptr<DecisionNode>;
+using spDecisionNode = std::shared_ptr<DecisionNode>;
 
-class DecisionNode : public QObject, public FileSerializable, public oxygine::ref_counter
+class DecisionNode : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

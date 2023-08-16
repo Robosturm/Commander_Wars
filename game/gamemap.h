@@ -20,14 +20,14 @@
 #include "coreengine/qmlvector.h"
 
 class GameAction;
-using spGameAction = oxygine::intrusive_ptr<GameAction>;
+using spGameAction = std::shared_ptr<GameAction>;
 
 class GameMap;
-using spGameMap = oxygine::intrusive_ptr<GameMap>;
+using spGameMap = std::shared_ptr<GameMap>;
 
 class EditorMenue;
 class BaseGamemenu;
-using spBaseGamemenu = oxygine::intrusive_ptr<BaseGamemenu>;
+using spBaseGamemenu = std::shared_ptr<BaseGamemenu>;
 
 class GameMap final : public QObject, public FileSerializable, public oxygine::Actor
 {
@@ -905,8 +905,8 @@ private:
     qint32 m_currentDay{0};
     spGameRules m_Rules;
     spCampaign m_Campaign;
-    spGameRecorder m_Recorder{spGameRecorder::create(this)};
-    spGameScript m_GameScript{spGameScript::create(this)};
+    spGameRecorder m_Recorder{MemoryManagement::create<GameRecorder>(this)};
+    spGameScript m_GameScript{MemoryManagement::create<GameScript>(this)};
     static const char* const m_GameAnimationFactory;
     bool m_loaded{false};
     QString m_mapMusic;

@@ -7,7 +7,7 @@ namespace oxygine
     {
         for (auto & sprite : m_sprites)
         {
-            sprite = spSprite::create();
+            sprite = MemoryManagement::create<Sprite>();
             addChild(sprite);
         }
     }

@@ -16,7 +16,7 @@
 ScriptEventSpawnUnit::ScriptEventSpawnUnit(GameMap* pMap)
     : ScriptEvent(pMap, ScriptEvent::EventType::spawnUnit)
 {
-    m_dropDownPlayer = spPlayer::create(m_pMap);
+    m_dropDownPlayer = MemoryManagement::create<Player>(m_pMap);
     m_dropDownPlayer->init();
 }
 
@@ -99,43 +99,43 @@ void ScriptEventSpawnUnit::setRadius(const qint32 &value)
 
 void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
     qint32 width = 300;
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = spSpinBox::create(300, 0, 9999);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, 0, 9999);
     spinBox->setTooltipText(tr("X Location at which the unit gets spawned."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(x);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventSpawnUnit::setX, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, 0, 9999);
+    spinBox = MemoryManagement::create<SpinBox>(300, 0, 9999);
     spinBox->setTooltipText(tr("Y Location at which the unit gets spawned."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(y);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventSpawnUnit::setY, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, 1, 9999);
+    spinBox = MemoryManagement::create<SpinBox>(300, 1, 9999);
     spinBox->setTooltipText(tr("Player for which the unit gets spawned."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(player + 1);
@@ -146,7 +146,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Unit: "));
     pText->setPosition(30, 150);
@@ -166,11 +166,11 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     Player* pPlayer = m_dropDownPlayer.get();
     auto creator = [this, pPlayer](QString id)
     {
-        spUnit pSprite = spUnit::create(id, pPlayer, false, m_pMap);
+        spUnit pSprite = MemoryManagement::create<Unit>(id, pPlayer, false, m_pMap);
         pSprite->setOwner(nullptr);
         return pSprite;
     };
-    spDropDownmenuSprite pMenu = spDropDownmenuSprite::create(105, items, creator, 30);
+    spDropDownmenuSprite pMenu = MemoryManagement::create<DropDownmenuSprite>(105, items, creator, 30);
     pMenu->setTooltipText(tr("Unit which gets spawned."));
     pMenu->setPosition(width, 150);
     pMenu->setCurrentItem(currentItem);
@@ -181,12 +181,12 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
         unitID = pPtrMenu->getCurrentItemText();
     });
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Spawn Radius: "));
     pText->setPosition(30, 190);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, 0, 9999);
+    spinBox = MemoryManagement::create<SpinBox>(300, 0, 9999);
     spinBox->setTooltipText(tr("Radius around the given location at which the unit gets tried to be spawned, if either the field is blocked or the unit can't move over the given field."));
     spinBox->setPosition(width, 190);
     spinBox->setCurrentValue(radius);

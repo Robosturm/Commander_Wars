@@ -419,9 +419,9 @@ void CommandLineParser::startSlaveGame() const
     {
         MainServer::initDatabase();
         // init multiplayer menu
-        spTCPServer pServer = spTCPServer::create(nullptr);
+        spTCPServer pServer = MemoryManagement::create<TCPServer>(nullptr);
         pServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", Multiplayermenu::NetworkMode::Host);
+        spMultiplayermenu pMenu = MemoryManagement::create<Multiplayermenu>(pServer, "", Multiplayermenu::NetworkMode::Host);
         pMenu->connectNetworkSlots();
         oxygine::Stage::getStage()->addChild(pMenu);
         emit pServer->sig_connect(slaveAddress, slavePort, secondarySlaveAddress);

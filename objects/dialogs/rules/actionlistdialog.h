@@ -11,7 +11,7 @@
 
 class GameMap;
 class ActionListDialog;
-using spActionListDialog = oxygine::intrusive_ptr<ActionListDialog>;
+using spActionListDialog = std::shared_ptr<ActionListDialog>;
 
 class ActionListDialog final : public QObject, public oxygine::Actor
 {

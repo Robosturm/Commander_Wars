@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
 class ScriptEventPlaySound;
-using spScriptEventPlaySound = oxygine::intrusive_ptr<ScriptEventPlaySound>;
+using spScriptEventPlaySound = std::shared_ptr<ScriptEventPlaySound>;
 
 class ScriptEventPlaySound final : public ScriptEventGeneric
 {

@@ -6,7 +6,7 @@
 #include "ui_reader/createdgui.h"
 
 class MapSelectionFilterDialog;
-using spMapSelectionFilterDialog = oxygine::intrusive_ptr<MapSelectionFilterDialog>;
+using spMapSelectionFilterDialog = std::shared_ptr<MapSelectionFilterDialog>;
 
 class MapSelectionFilterDialog final : public CreatedGui
 {

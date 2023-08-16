@@ -410,7 +410,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
                                                              directUnits, pEnemyUnits->size(), m_turnMode);
             if (result == GameEnums::PowerMode_Power)
             {
-                spGameAction pAction = spGameAction::create(ACTION_ACTIVATE_POWER_CO_0, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_ACTIVATE_POWER_CO_0, m_pMap);
                 if (i == 1)
                 {
                     pAction->setActionID(ACTION_ACTIVATE_POWER_CO_1);
@@ -423,7 +423,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
             }
             else if (result == GameEnums::PowerMode_Superpower)
             {
-                spGameAction pAction = spGameAction::create(ACTION_ACTIVATE_SUPERPOWER_CO_0, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_ACTIVATE_SUPERPOWER_CO_0, m_pMap);
                 if (i == 1)
                 {
                     pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_1);
@@ -837,7 +837,7 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
             }
             if (target.x() >= 0 && target.y() >= 0)
             {
-                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 auto path = turnPfs.getPathFast(target.x(), target.y());
                 pAction->setMovepath(path, turnPfs.getCosts(path));
@@ -1283,7 +1283,7 @@ void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUni
         {
             for (auto & pUnit : pUnits->getVector())
             {
-                if (pUnit != pCurrentUnit)
+                if (pUnit.get() != pCurrentUnit)
                 {
                     for (auto & field : unitFields->getVector())
                     {
@@ -1441,7 +1441,7 @@ void CoreAI::appendSupplyTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std::vec
 {
     for (auto & pSupplyUnit : pUnits->getVector())
     {
-        if (pSupplyUnit != pUnit)
+        if (pSupplyUnit.get() != pUnit)
         {
             if ((pSupplyUnit->hasAmmo1() && static_cast<float>(pSupplyUnit->getAmmo1()) / static_cast<float>(pSupplyUnit->getMaxAmmo1())  < 0.5f) ||
                 (pSupplyUnit->hasAmmo2() && static_cast<float>(pSupplyUnit->getAmmo2()) / static_cast<float>(pSupplyUnit->getMaxAmmo2())  < 0.5f) ||
@@ -1457,7 +1457,7 @@ void CoreAI::appendTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUnits, std
 {
     for (auto & pTransporterUnit : pUnits->getVector())
     {
-        if (pTransporterUnit != pUnit)
+        if (pTransporterUnit.get() != pUnit)
         {
             if (pTransporterUnit->canTransportUnit(pUnit))
             {
@@ -1478,7 +1478,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
     bool missileTarget = hasMissileTarget();
     for (auto & pTransporterUnit : pUnits->getVector())
     {
-        if (pTransporterUnit != pUnit)
+        if (pTransporterUnit.get() != pUnit)
         {
             // assuming unit transporter only have space for one unit
             if (pTransporterUnit->canTransportUnit(pUnit) &&
@@ -2119,7 +2119,7 @@ void CoreAI::createIslandMap(const QString movementType, const QString unitID)
     }
     if (!found)
     {
-        m_IslandMaps.push_back(spIslandMap::create(m_pMap, unitID, m_pPlayer));
+        m_IslandMaps.push_back(MemoryManagement::create<IslandMap>(m_pMap, unitID, m_pPlayer));
     }
 }
 
@@ -2190,7 +2190,7 @@ qint32 CoreAI::getIsland(Unit* pUnit)
             return island->getIsland(pUnit->Unit::getX(), pUnit->Unit::getY());
         }
     }
-    m_IslandMaps.push_back(spIslandMap::create(m_pMap, pUnit->getUnitID(), m_pPlayer, movementType));
+    m_IslandMaps.push_back(MemoryManagement::create<IslandMap>(m_pMap, pUnit->getUnitID(), m_pPlayer, movementType));
     return m_IslandMaps.size() - 1;
 }
 
@@ -2217,7 +2217,7 @@ qint32 CoreAI::getIslandIndex(Unit* pUnit)
             return i;
         }
     }
-    m_IslandMaps.push_back(spIslandMap::create(m_pMap, pUnit->getUnitID(), m_pPlayer, movementType));
+    m_IslandMaps.push_back(MemoryManagement::create<IslandMap>(m_pMap, pUnit->getUnitID(), m_pPlayer, movementType));
     return m_IslandMaps.size() - 1;
 }
 
@@ -2237,7 +2237,7 @@ void CoreAI::finishTurn()
     AI_CONSOLE_PRINT("CoreAI::finishTurn(()", GameConsole::eDEBUG);
     m_usedTransportSystem = false;
     m_usedPredefinedAi = false;
-    spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER, m_pMap);
+    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_NEXT_PLAYER, m_pMap);
     CO* pCO0 = m_pPlayer->getCO(0);
     CO* pCO1 = m_pPlayer->getCO(1);
     if (pCO0 != nullptr &&
@@ -2284,7 +2284,7 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
             {
                 if (action != ACTION_BUILD_UNITS)
                 {
-                    spGameAction pAction = spGameAction::create(action, m_pMap);
+                    spGameAction pAction = MemoryManagement::create<GameAction>(action, m_pMap);
                     pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
                     if (pAction->canBePerformed())
                     {
@@ -2680,7 +2680,7 @@ void CoreAI::GetOwnUnitCounts(std::vector<MoveUnitData> & units, spQmlVectorUnit
 bool CoreAI::buildCOUnit(spQmlVectorUnit & pUnits)
 {
     AI_CONSOLE_PRINT("CoreAI::buildCOUnit", GameConsole::eDEBUG);
-    spGameAction pAction = spGameAction::create(m_pMap);
+    spGameAction pAction = MemoryManagement::create<GameAction>(m_pMap);
     for (quint8 i2 = 0; i2 < 2; i2++)
     {
         if (i2 == 0)

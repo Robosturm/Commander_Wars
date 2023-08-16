@@ -2,7 +2,6 @@
 #define CRASHREPORTER_H
 
 #include <QString>
-#include <QScopedPointer>
 
 class QProcess;
 
@@ -25,7 +24,7 @@ private:
     static void setOsSignalHandler();
     CrashReporter() = default;
 private:
-    static QScopedPointer<CrashReporter> m_instance;
+    static std::shared_ptr<CrashReporter> m_instance;
     QString sCrashReportDirPath;             // log file path
     QString sProgramName;                    // the full path to the executable (which we need to resolve symbols)
     logWrittenCallback sLogWrittenCallback{nullptr};  // function to call after we've written the log file

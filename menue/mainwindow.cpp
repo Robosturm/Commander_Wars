@@ -51,7 +51,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     CONSOLE_PRINT("Entering Main Menue", GameConsole::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("mainmenu");
     if (pBackground != nullptr)
@@ -82,7 +82,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     if (Settings::getInstance()->getUsername().isEmpty())
     {
         CONSOLE_PRINT("Showing initial username selection", GameConsole::eDEBUG);
-        spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Select Username"), false, "");
+        spDialogTextInput pDialogTextInput = MemoryManagement::create<DialogTextInput>(tr("Select Username"), false, "");
         addChild(pDialogTextInput);
         connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, this, &Mainwindow::changeUsername, Qt::QueuedConnection);
     }
@@ -91,7 +91,7 @@ Mainwindow::Mainwindow(const QString & initialView)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     style.color = Qt::black;
-    spLabel pTextfield = spLabel::create(300);
+    spLabel pTextfield = MemoryManagement::create<Label>(300);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(Mainapp::getGameVersion());
     pTextfield->setPosition(oxygine::Stage::getStage()->getWidth() - 10 - pTextfield->getTextRect().width(), oxygine::Stage::getStage()->getHeight() - 10 - pTextfield->getTextRect().height());
@@ -124,7 +124,7 @@ Mainwindow::Mainwindow(const QString & initialView)
 void Mainwindow::import()
 {
     QString path = Settings::getInstance()->getUserPath();
-    spFolderDialog folderDialog = spFolderDialog::create(path);
+    spFolderDialog folderDialog = MemoryManagement::create<FolderDialog>(path);
     addChild(folderDialog);
     connect(folderDialog.get(), &FolderDialog::sigFolderSelected, this, &Mainwindow::importFromDirectory, Qt::QueuedConnection);
 }
@@ -183,8 +183,8 @@ bool Mainwindow::isValidSavegame()
 void Mainwindow::enterSingleplayer(const QStringList & filter)
 {    
     Mainapp::getInstance()->pauseRendering();
-    auto view = spMapSelectionView::create(filter);
-    auto window = spMapSelectionMapsMenue::create(view);
+    auto view = MemoryManagement::create<MapSelectionView>(filter);
+    auto window = MemoryManagement::create<MapSelectionMapsMenue>(view);
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -193,7 +193,7 @@ void Mainwindow::enterSingleplayer(const QStringList & filter)
 void Mainwindow::enterMultiplayer()
 {
     Mainapp::getInstance()->pauseRendering();
-    oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
+    oxygine::Stage::getStage()->addChild(MemoryManagement::create<LobbyMenu>());
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
 }
@@ -201,7 +201,7 @@ void Mainwindow::enterMultiplayer()
 void Mainwindow::enterEditor()
 {
     Mainapp::getInstance()->pauseRendering();
-    auto window = spEditorMenue::create();
+    auto window = MemoryManagement::create<EditorMenue>();
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -210,7 +210,7 @@ void Mainwindow::enterEditor()
 void Mainwindow::enterOptionmenue(const QString & xmlFile)
 {
     Mainapp::getInstance()->pauseRendering();
-    auto window = spOptionMenue::create(xmlFile);
+    auto window = MemoryManagement::create<OptionMenue>(xmlFile);
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -219,7 +219,7 @@ void Mainwindow::enterOptionmenue(const QString & xmlFile)
 void Mainwindow::enterWikimenue()
 {
     Mainapp::getInstance()->pauseRendering();
-    auto window = spWikimenu::create();
+    auto window = MemoryManagement::create<Wikimenu>();
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -228,7 +228,7 @@ void Mainwindow::enterWikimenue()
 void Mainwindow::enterCreditsmenue()
 {
     Mainapp::getInstance()->pauseRendering();
-    auto window = spCreditsMenue::create();
+    auto window = MemoryManagement::create<CreditsMenue>();
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -237,7 +237,7 @@ void Mainwindow::enterCreditsmenue()
 void Mainwindow::enterGeneratorMenu(const QString & generatorUi)
 {
     Mainapp::getInstance()->pauseRendering();
-    auto window = spGeneratorMenu::create(generatorUi);
+    auto window = MemoryManagement::create<GeneratorMenu>(generatorUi);
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -246,7 +246,7 @@ void Mainwindow::enterGeneratorMenu(const QString & generatorUi)
 void Mainwindow::enterAchievementmenue()
 {    
     Mainapp::getInstance()->pauseRendering();
-    auto window = spAchievementmenu::create();
+    auto window = MemoryManagement::create<Achievementmenu>();
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -255,7 +255,7 @@ void Mainwindow::enterAchievementmenue()
 void Mainwindow::enterShopMenu()
 {
     Mainapp::getInstance()->pauseRendering();
-    auto window = spShopmenu::create();
+    auto window = MemoryManagement::create<Shopmenu>();
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -266,7 +266,7 @@ void Mainwindow::enterLoadGame()
     QStringList wildcards;
     wildcards.append("*.sav");
     QString path = Settings::getInstance()->getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
+    spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
 }
@@ -276,7 +276,7 @@ void Mainwindow::enterLoadCampaign()
     QStringList wildcards;
     wildcards.append("*.camp");
     QString path = Settings::getInstance()->getUserPath() + "savegames";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
+    spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);
 }
@@ -288,12 +288,12 @@ void Mainwindow::loadCampaign(QString filename)
         QFile file(filename);
         if (file.exists())
         {
-            spCampaign pCampaign = spCampaign::create();
+            spCampaign pCampaign = MemoryManagement::create<Campaign>();
             QDataStream stream(&file);
             stream.setVersion(QDataStream::Version::Qt_6_5);
             file.open(QIODevice::ReadOnly);
             pCampaign->deserializeObject(stream);
-            spCampaignMenu pMenu = spCampaignMenu::create(pCampaign, false);
+            spCampaignMenu pMenu = MemoryManagement::create<CampaignMenu>(pCampaign, false);
             oxygine::Stage::getStage()->addChild(pMenu);
             leaveMenue();
         }
@@ -314,7 +314,7 @@ void Mainwindow::enterReplayGame()
     QStringList wildcards;
     wildcards.append("*.rec");
     QString path = Settings::getInstance()->getUserPath() + "data/records";
-    spFileDialog saveDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
+    spFileDialog saveDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);
     Mainapp::getInstance()->continueRendering();
@@ -332,7 +332,7 @@ void Mainwindow::loadGame(QString filename)
         QFile file(filename);
         if (file.exists())
         {
-            spGameMenue pMenu = spGameMenue::create(filename, true);
+            spGameMenue pMenu = MemoryManagement::create<GameMenue>(filename, true);
             oxygine::Stage::getStage()->addChild(pMenu);
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioManager()->clearPlayList();
@@ -360,7 +360,7 @@ void Mainwindow::replayGame(QString filename)
             CONSOLE_PRINT("Leaving Main Menue", GameConsole::eDEBUG);
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioManager()->clearPlayList();
-            spReplayMenu pMenu = spReplayMenu::create(filename);
+            spReplayMenu pMenu = MemoryManagement::create<ReplayMenu>(filename);
             oxygine::Stage::getStage()->addChild(pMenu);
             if (!pMenu->getValid())
             {
@@ -389,7 +389,7 @@ void Mainwindow::leaveMenue()
 void Mainwindow::enterCOStyleMenu()
 {
     Mainapp::getInstance()->pauseRendering();
-    auto window = spCOStyleMenu::create();
+    auto window = MemoryManagement::create<COStyleMenu>();
     oxygine::Stage::getStage()->addChild(window);
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -432,7 +432,7 @@ void Mainwindow::versionClicked()
     if (m_cheatCounter >= 10)
     {
         m_cheatCounter = 0;
-        spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("Do you want to enable all current items in the shop?"), true);
+        spDialogMessageBox pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Do you want to enable all current items in the shop?"), true);
         connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Mainwindow::unlockAllShopItems, Qt::QueuedConnection);
         addChild(pDialogMessageBox);
     }

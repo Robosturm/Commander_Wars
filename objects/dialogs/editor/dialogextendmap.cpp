@@ -20,7 +20,7 @@ DialogExtendMap::DialogExtendMap()
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -74,7 +74,7 @@ void DialogExtendMap::mapFileChanged(QString file)
     file = GlobalUtils::makePathRelative(file);
     for (auto & item : m_factoryUiItem)
     {
-        spTextbox pText = oxygine::dynamic_pointer_cast<Textbox>(item);
+        spTextbox pText = std::dynamic_pointer_cast<Textbox>(item);
         if (pText.get() != nullptr &&
             pText->objectName() == "MapTextbox")
         {
@@ -89,7 +89,7 @@ void DialogExtendMap::showSelectMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getInstance()->getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogExtendMap::mapFileChanged, Qt::QueuedConnection);
 }

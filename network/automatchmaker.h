@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QSqlQuery>
-#include <3rd_party/oxygine-framework/oxygine/core/ref_counter.h>
 
 #include "game/GameEnums.h"
 
@@ -12,9 +11,9 @@
 
 class MainServer;
 class AutoMatchMaker;
-using spAutoMatchMaker = oxygine::intrusive_ptr<AutoMatchMaker>;
+using spAutoMatchMaker = std::shared_ptr<AutoMatchMaker>;
 
-class AutoMatchMaker : public QObject, public FileSerializable, public oxygine::ref_counter
+class AutoMatchMaker : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

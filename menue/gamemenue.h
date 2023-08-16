@@ -20,10 +20,10 @@
 
 class WikiView;
 class GameMenue;
-using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
+using spGameMenue = std::shared_ptr<GameMenue>;
 
 class MovementPlanner;
-using spMovementPlanner = oxygine::intrusive_ptr<MovementPlanner>;
+using spMovementPlanner = std::shared_ptr<MovementPlanner>;
 
 /**
  * @brief The GameMenue class handles the game

@@ -21,7 +21,7 @@
 #include "ingamescriptsupport/genericbox.h"
 
 ReplayMenu::ReplayMenu(QString filename)
-    : GameMenue(spGameMap::create(1, 1, 2), true)
+    : GameMenue(MemoryManagement::create<GameMap>(1, 1, 2), true)
 {
     Interpreter::setCppOwnerShip(this);
 #ifdef GRAPHICSUPPORT
@@ -42,7 +42,7 @@ ReplayMenu::ReplayMenu(QString filename)
     m_valid = m_ReplayRecorder.loadRecord(filename);
     if (m_valid)
     {
-        m_Viewplayer = spViewplayer::create(this, m_pMap.get());
+        m_Viewplayer = MemoryManagement::create<Viewplayer>(this, m_pMap.get());
         // store animation modes
         m_storedAnimationSettings.storeAnimationSettings();
         
@@ -51,7 +51,7 @@ ReplayMenu::ReplayMenu(QString filename)
         m_pMap->registerMapAtInterpreter();
         m_pMap->updateSprites();
         loadUIButtons();
-        m_HumanInput = spHumanPlayerInput::create(m_pMap.get());
+        m_HumanInput = MemoryManagement::create<HumanPlayerInput>(m_pMap.get());
         m_HumanInput->init(this);
         m_gameStarted = true;
         CONSOLE_PRINT("emitting sigActionPerformed()", GameConsole::eDEBUG);
@@ -77,7 +77,7 @@ void ReplayMenu::showRecordInvalid()
     {
         modList += mod + "\n";
     }
-    spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:") + "\n" +
+    spDialogMessageBox pExit = MemoryManagement::create<DialogMessageBox>(tr("The current active mods or the current record are invalid or damaged! Exiting the Replay now. Mods used in the Replay:") + "\n" +
                                                           modList, false);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     addChild(pExit);
@@ -94,7 +94,7 @@ void ReplayMenu::exitReplay()
     Interpreter::reloadInterpreter(Interpreter::getInstance()->getRuntimeData());
     CONSOLE_PRINT("Leaving Replay Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface, true);
+    auto window = MemoryManagement::create<VictoryMenue>(m_pMap, m_pNetworkInterface, true);
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -138,7 +138,7 @@ void ReplayMenu::nextReplayAction()
 void ReplayMenu::showExitGame()
 {    
     m_Focused = false;
-    spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the current replay?"), true);
+    spDialogMessageBox pExit = MemoryManagement::create<DialogMessageBox>(tr("Do you want to exit the current replay?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     connect(pExit.get(), &DialogMessageBox::sigCancel, this, [this]()
     {
@@ -160,7 +160,7 @@ void ReplayMenu::loadUIButtons()
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    m_taskBar = oxygine::spBox9Sprite::create();
+    m_taskBar = MemoryManagement::create<oxygine::Box9Sprite>();
     m_taskBar->setResAnim(pAnim);
     qint32 width = oxygine::Stage::getStage()->getWidth();
     if (!Settings::getInstance()->getSmallScreenDevice())
@@ -238,7 +238,7 @@ void ReplayMenu::loadUIButtons()
     {
         content = exitGame->getX() + 80;
     }
-    m_progressBar = spV_Scrollbar::create(m_configButton->getX() - 10, content);
+    m_progressBar = MemoryManagement::create<V_Scrollbar>(m_configButton->getX() - 10, content);
     connect(m_progressBar.get(), &V_Scrollbar::sigScrollValueChanged, this, &ReplayMenu::seekChanged, Qt::QueuedConnection);
     connect(m_progressBar.get(), &V_Scrollbar::sigStartEditValue, this, &ReplayMenu::startSeeking, Qt::QueuedConnection);
     connect(m_progressBar.get(), &V_Scrollbar::sigEndEditValue, this, &ReplayMenu::seekRecord, Qt::QueuedConnection);
@@ -246,15 +246,16 @@ void ReplayMenu::loadUIButtons()
     m_progressBar->setPosition(8, y);
     m_progressBar->setScrollspeed((m_configButton->getX() - 10) / m_ReplayRecorder.getDayFromPosition(m_ReplayRecorder.getRecordSize() - 1));
     m_taskBar->addChild(m_progressBar);
-    spMoveInButton::create(m_taskBar.get(), m_taskBar->getScaledHeight(),
+    auto moveButton = MemoryManagement::create<MoveInButton>(m_taskBar.get(), m_taskBar->getScaledHeight(),
                            -1, -1, 2.0f, true);
+    m_taskBar->addChild(moveButton);
 
     pAnim = pObjectManager->getResAnim("panel");
-    oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pButtonBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pButtonBox->setResAnim(pAnim);
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    m_xyTextInfo = spLabel::create(180);
+    m_xyTextInfo = MemoryManagement::create<Label>(180);
     m_xyTextInfo->setStyle(style);
     m_xyTextInfo->setHtmlText("X: 0 Y: 0");
     m_xyTextInfo->setPosition(8, 8);
@@ -286,11 +287,11 @@ void ReplayMenu::loadSeekUi()
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    oxygine::spBox9Sprite pDayBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pDayBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pDayBox->setResAnim(pAnim);
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    m_seekDayLabel = spLabel::create(140);
+    m_seekDayLabel = MemoryManagement::create<Label>(140);
     m_seekDayLabel->setStyle(style);
     m_seekDayLabel->setHtmlText(tr("Day: "));
     m_seekDayLabel->setPosition(8, 8);
@@ -460,13 +461,13 @@ void ReplayMenu::showConfig()
         swapPlay();
     }
 
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
+    spPanel pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
                                      QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110));
     pPanel->setPosition(30, 30);
     pBox->addChild(pPanel);
@@ -494,12 +495,12 @@ void ReplayMenu::showConfig()
             teamNames.append(tr("Team ") + QString::number(team + 1));
         }
     }
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Teamview:"));
     pText->setPosition(10, y);
     pPanel->addItem(pText);
-    spDropDownmenu dropDown = spDropDownmenu::create(300, teamNames);
+    spDropDownmenu dropDown = MemoryManagement::create<DropDownmenu>(300, teamNames);
     dropDown->setPosition(width - 130, y);
     pPanel->addItem(dropDown);
 
@@ -514,19 +515,19 @@ void ReplayMenu::showConfig()
     connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, &ReplayMenu::setViewTeam, Qt::QueuedConnection);
     y += pText->getHeight() + 10;
 
-    spLabel pTextfield = spLabel::create(800);
+    spLabel pTextfield = MemoryManagement::create<Label>(800);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Gameplay Settings"));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 140);
+    pTextfield = MemoryManagement::create<Label>(width - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Overworld Animations: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spCheckbox pCheckbox = spCheckbox::create();
+    spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
     pCheckbox->setTooltipText(tr("If active: walk, capture power animations, and so on will be shown."));
     pCheckbox->setChecked(Settings::getInstance()->getOverworldAnimations());
     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setOverworldAnimations, Qt::QueuedConnection);
@@ -534,13 +535,13 @@ void ReplayMenu::showConfig()
     pPanel->addItem(pCheckbox);
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 10);
+    pTextfield = MemoryManagement::create<Label>(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Battle Animations: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     QStringList items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy")};
-    spDropDownmenu pAnimationMode = spDropDownmenu::create(450, items);
+    spDropDownmenu pAnimationMode = MemoryManagement::create<DropDownmenu>(450, items);
     pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getBattleAnimationMode()));
     pAnimationMode->setPosition(width - 130, y);
     pAnimationMode->setTooltipText(tr("Select which in-game animations are played."));
@@ -551,13 +552,13 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 10);
+    pTextfield = MemoryManagement::create<Label>(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Battle Animations: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     items = {tr("Detailed"), tr("Overworld")};
-    spDropDownmenu pBattleAnimationMode = spDropDownmenu::create(450, items);
+    spDropDownmenu pBattleAnimationMode = MemoryManagement::create<DropDownmenu>(450, items);
     pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played during combat."));
     pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getBattleAnimationType()));
     pBattleAnimationMode->setPosition(width - 130, y);
@@ -568,13 +569,13 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 140);
+    pTextfield = MemoryManagement::create<Label>(width - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Dialogs: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     items = {tr("off"), tr("on")};
-    spDropDownmenu pDialogAnimationMode = spDropDownmenu::create(450, items);
+    spDropDownmenu pDialogAnimationMode = MemoryManagement::create<DropDownmenu>(450, items);
     pDialogAnimationMode->setTooltipText(tr("Selects if capture animations are shown or not."));
     pDialogAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getDialogAnimation()));
     pDialogAnimationMode->setPosition(width - 130, y);
@@ -585,13 +586,13 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 140);
+    pTextfield = MemoryManagement::create<Label>(width - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Capture: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     items = {tr("off"), tr("on")};
-    spDropDownmenu pCaptureAnimationMode = spDropDownmenu::create(450, items);
+    spDropDownmenu pCaptureAnimationMode = MemoryManagement::create<DropDownmenu>(450, items);
     pCaptureAnimationMode->setTooltipText(tr("Selects if the dialogs are shown or not."));
     pCaptureAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getCaptureAnimation()));
     pCaptureAnimationMode->setPosition(width - 130, y);
@@ -602,13 +603,13 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 140);
+    pTextfield = MemoryManagement::create<Label>(width - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Day 2 Day: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     items = {tr("off"), tr("on")};
-    spDropDownmenu pDay2DayMode = spDropDownmenu::create(450, items);
+    spDropDownmenu pDay2DayMode = MemoryManagement::create<DropDownmenu>(450, items);
     pDay2DayMode->setTooltipText(tr("Selects if the day to day screen gets skipped or not. Note on fog of war maps the screen is still shown."));
     pDay2DayMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getDay2dayScreen()));
     pDay2DayMode->setPosition(width - 130, y);
@@ -619,13 +620,13 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 140);
+    pTextfield = MemoryManagement::create<Label>(width - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Movement: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     items = {tr("off"), tr("on")};
-    spDropDownmenu pMovementAnimationMode = spDropDownmenu::create(450, items);
+    spDropDownmenu pMovementAnimationMode = MemoryManagement::create<DropDownmenu>(450, items);
     pMovementAnimationMode->setTooltipText(tr("Selects if movement animations get shown or not."));
     pMovementAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getInstance()->getMovementAnimations()));
     pMovementAnimationMode->setPosition(width - 130, y);
@@ -636,12 +637,12 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 10);
+    pTextfield = MemoryManagement::create<Label>(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Animation Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
+    spSlider pAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Note: This does not include capture or battle animations."));
     pAnimationSpeed->setPosition(width - 130, y);
     pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getAnimationSpeedValue()));
@@ -652,12 +653,12 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 10);
+    pTextfield = MemoryManagement::create<Label>(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Walk Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pWalkSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
+    spSlider pWalkSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pWalkSpeed->setTooltipText(tr("Selects the speed at which units walk across the map."));
     pWalkSpeed->setPosition(width - 130, y);
     pWalkSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getWalkAnimationSpeedValue()));
@@ -668,12 +669,12 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 10);
+    pTextfield = MemoryManagement::create<Label>(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Battle Anim. Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pBattleAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
+    spSlider pBattleAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pBattleAnimationSpeed->setTooltipText(tr("Selects the speed at which battle animations are played."));
     pBattleAnimationSpeed->setPosition(width - 130, y);
     pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getBattleAnimationSpeedValue()));
@@ -684,12 +685,12 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 140);
+    pTextfield = MemoryManagement::create<Label>(width - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Capture Anim. Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pCaptureAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
+    spSlider pCaptureAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pCaptureAnimationSpeed->setTooltipText(tr("Selects the speed at which capture animations are played."));
     pCaptureAnimationSpeed->setPosition(width - 130, y);
     pCaptureAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getCaptureAnimationSpeedValue()));
@@ -700,12 +701,12 @@ void ReplayMenu::showConfig()
     });
     y += pTextfield->getHeight() + 10;
 
-    pTextfield = spLabel::create(width - 140);
+    pTextfield = MemoryManagement::create<Label>(width - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Dialog Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    spSlider pDialogAnimationSpeed = spSlider::create(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
+    spSlider pDialogAnimationSpeed = MemoryManagement::create<Slider>(oxygine::Stage::getStage()->getWidth() - 40 - width, 1, 100, "");
     pDialogAnimationSpeed->setTooltipText(tr("Selects the speed at which dialog animations are played."));
     pDialogAnimationSpeed->setPosition(width - 130, y);
     pDialogAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getInstance()->getDialogAnimationSpeedValue()));
@@ -768,7 +769,7 @@ void ReplayMenu::keyInput(oxygine::KeyEvent event)
                     {
                         pUnit = nullptr;
                     }
-                    spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pUnit);
+                    spFieldInfo fieldinfo = MemoryManagement::create<FieldInfo>(pTerrain, pUnit);
                     addChild(fieldinfo);
                     connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
                     {

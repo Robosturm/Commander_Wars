@@ -13,7 +13,7 @@
 #include "objects/base/label.h"
 
 class COSelection;
-using spCOSelection = oxygine::intrusive_ptr<COSelection>;
+using spCOSelection = std::shared_ptr<COSelection>;
 
 class COSelection final : public QObject, public oxygine::Actor
 {

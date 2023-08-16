@@ -254,7 +254,7 @@ void Building::loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, 
     if (pAnim != nullptr)
     {
         TerrainManager* pTerrainManager = TerrainManager::getInstance();
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);
@@ -372,7 +372,7 @@ void Building::loadWeatherOverlaySpriteV2(const QString spriteID, GameEnums::Rec
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);

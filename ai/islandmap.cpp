@@ -31,7 +31,7 @@ IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QStr
         {
             m_Islands.push_back(std::vector<qint32>(heigth, UNKNOWN));
         }
-        spUnit pUnit = spUnit::create(unitID, pOwner, false, pMap);
+        spUnit pUnit = MemoryManagement::create<Unit>(unitID, pOwner, false, pMap);
         pUnit->setIgnoreUnitCollision(true);
         if (m_MovementType.isEmpty())
         {
@@ -130,7 +130,7 @@ void IslandMap::show()
         {
             if (m_Islands[x][y] > UNKNOWN)
             {
-                oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+                oxygine::spColorRectSprite sprite = MemoryManagement::create<oxygine::ColorRectSprite>();
                 sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
                 QColor color = Qt::red;
                 color.setAlphaF(0.5f);

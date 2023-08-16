@@ -7,7 +7,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 class RotatingSprite;
-using spRotatingSprite = oxygine::intrusive_ptr<RotatingSprite>;
+using spRotatingSprite = std::shared_ptr<RotatingSprite>;
 
 class RotatingSprite final : public oxygine::Actor
 {

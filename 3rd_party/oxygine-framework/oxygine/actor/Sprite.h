@@ -9,7 +9,7 @@
 namespace oxygine
 {
     class Sprite;
-    using spSprite = intrusive_ptr<Sprite>;
+using spSprite = std::shared_ptr<Sprite>;
     class Sprite : public VStyleActor
     {
     public:

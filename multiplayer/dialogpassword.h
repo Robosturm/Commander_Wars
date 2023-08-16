@@ -8,7 +8,7 @@
 #include "objects/base/passwordbox.h"
 
 class DialogPassword;
-using spDialogPassword = oxygine::intrusive_ptr<DialogPassword>;
+using spDialogPassword = std::shared_ptr<DialogPassword>;
 
 class DialogPassword final : public QObject, public oxygine::Actor
 {

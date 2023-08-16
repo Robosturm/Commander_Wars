@@ -7,7 +7,7 @@
 
 class GameMap;
 class Cursor;
-using spCursor = oxygine::intrusive_ptr<Cursor>;
+using spCursor = std::shared_ptr<Cursor>;
 
 /**
  * @brief The Cursor class is the ingame cursor for the map

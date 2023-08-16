@@ -25,14 +25,14 @@
 
 class BaseGamemenu;
 class WorkerThread;
-using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
+using spWorkerThread = std::shared_ptr<WorkerThread>;
 class AudioManager;
-using spAudioManager = oxygine::intrusive_ptr<AudioManager>;
-using spAudioThread = oxygine::intrusive_ptr<AudioManager>;
+using spAudioManager = std::shared_ptr<AudioManager>;
+using spAudioThread = std::shared_ptr<AudioManager>;
 class TCPClient;
-using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
+using spTCPClient = std::shared_ptr<TCPClient>;
 class AiProcessPipe;
-using spAiProcessPipe = oxygine::intrusive_ptr<AiProcessPipe>;
+using spAiProcessPipe = std::shared_ptr<AiProcessPipe>;
 class Minimap;
 
 class Mainapp final : public oxygine::GameWindow
@@ -328,11 +328,11 @@ private:
     static bool m_slave;
     static bool m_trainingSession;
     QMutex m_crashMutex;
-    QScopedPointer<QThread> m_Workerthread;
-    QScopedPointer<QThread> m_Networkthread;
-    QScopedPointer<QThread> m_GameServerThread;
-    QScopedPointer<QThread> m_audioThread;
-    QScopedPointer<QProcess> m_aiSubProcess;
+    std::shared_ptr<QThread> m_Workerthread;
+    std::shared_ptr<QThread> m_Networkthread;
+    std::shared_ptr<QThread> m_GameServerThread;
+    std::shared_ptr<QThread> m_audioThread;
+    std::shared_ptr<QProcess> m_aiSubProcess;
     WorkerThread* m_Worker;
     spAudioManager m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;

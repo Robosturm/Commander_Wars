@@ -12,7 +12,7 @@
 #include "game/gamemap.h"
 
 class BattleAnimationSprite;
-using spBattleAnimationSprite = oxygine::intrusive_ptr<BattleAnimationSprite>;
+using spBattleAnimationSprite = std::shared_ptr<BattleAnimationSprite>;
 
 class BattleAnimationSprite final : public QObject, public oxygine::Sprite
 {

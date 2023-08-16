@@ -9,7 +9,7 @@
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenuColor;
-using spDropDownmenuColor = oxygine::intrusive_ptr<DropDownmenuColor>;
+using spDropDownmenuColor = std::shared_ptr<DropDownmenuColor>;
 
 class DropDownmenuColor final : public DropDownmenuBase
 {

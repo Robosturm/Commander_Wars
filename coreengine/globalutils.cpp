@@ -12,7 +12,7 @@
 
 static constexpr double DOUBLE_EPSILON = 0.5;
 static constexpr float FLOAT_EPSILON = 0.5f;
-QScopedPointer<GlobalUtils> GlobalUtils::m_pInstace;
+std::shared_ptr<GlobalUtils> GlobalUtils::m_pInstace;
 
 GlobalUtils::GlobalUtils()
 {

@@ -42,7 +42,7 @@ RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enable
         if (pRule.get() == nullptr && m_ruleChangeEabled)
         {
             CONSOLE_PRINT("Creating default ruleset for " + ruleID, GameConsole::eDEBUG);
-            pRule = spVictoryRule::create(ruleID, m_pMap);
+            pRule = MemoryManagement::create<VictoryRule>(ruleID, m_pMap);
             QStringList types = pRule->getRuleType();
             for (qint32 i2 = 0; i2 < types.size(); i2++)
             {
@@ -72,7 +72,7 @@ RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enable
         spGameRule pRule = spGameRule(m_pMap->getGameRules()->getGameRule(ruleID));
         if (pRule.get() == nullptr)
         {
-            pRule = spGameRule::create(ruleID);
+            pRule = MemoryManagement::create<GameRule>(ruleID);
             QStringList types = pRule->getRuleType();
             for (qint32 i2 = 0; i2 < types.size(); i2++)
             {
@@ -158,22 +158,22 @@ void RuleSelection::weatherChancesChanged(const QString id)
 
 void RuleSelection::showCOBannlist()
 {
-    spCOBannListDialog pBannlist = spCOBannListDialog::create(m_pMap->getGameRules()->getCOBannlist());
+    spCOBannListDialog pBannlist = MemoryManagement::create<COBannListDialog>(m_pMap->getGameRules()->getCOBannlist());
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &COBannListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
     
 }
 
 void RuleSelection::showPerkBannlist()
-{    
-    spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(m_pMap, nullptr, true, QStringList());
+{
+    spPerkSelectionDialog pBannlist = MemoryManagement::create<PerkSelectionDialog>(m_pMap, nullptr, true, QStringList());
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &PerkSelectionDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
 }
 
 void RuleSelection::showActionBannlist()
-{    
-    spActionListDialog pBannlist = spActionListDialog::create(m_pMap->getGameRules()->getAllowedActions(), m_pMap);
+{
+    spActionListDialog pBannlist = MemoryManagement::create<ActionListDialog>(m_pMap->getGameRules()->getAllowedActions(), m_pMap);
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &ActionListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);
     
@@ -184,7 +184,7 @@ void RuleSelection::showSelectScript()
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getInstance()->getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     oxygine::Stage::getStage()->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelection::scriptFileChanged, Qt::QueuedConnection);
 }

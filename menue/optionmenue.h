@@ -12,7 +12,7 @@
 #include "menue/basemenu.h"
 
 class OptionMenue;
-using spOptionMenue = oxygine::intrusive_ptr<OptionMenue>;
+using spOptionMenue = std::shared_ptr<OptionMenue>;
 
 class OptionMenue final : public Basemenu
 {

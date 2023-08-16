@@ -1,12 +1,11 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 
 namespace oxygine
 {
     class RenderDelegate;
-    using spRenderDelegate = oxygine::intrusive_ptr<RenderDelegate>;
-    class RenderDelegate final : public oxygine::ref_counter
+    using spRenderDelegate = std::shared_ptr<RenderDelegate>;
+    class RenderDelegate final
     {
     public:
         static spRenderDelegate instance;

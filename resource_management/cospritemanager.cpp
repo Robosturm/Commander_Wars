@@ -79,8 +79,8 @@ void COSpriteManager::loadResAnim(const QString coid, const QString file, QImage
     oxygine::spResAnim pAnim;
     for (qint32 i = 0; i < m_Ressources.size(); i++)
     {
-        pCOAnim.free();
-        pAnim.free();
+        pCOAnim.reset();
+        pAnim.reset();
         if (coidLower+ "+nrm" == m_Ressources[i].m_spriteId)
         {
             pAnim = oxygine::spResAnim(oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error));
@@ -113,8 +113,8 @@ void COSpriteManager::loadResAnim(const QString coid, const QString file, QImage
             }
         }
     }
-    pAnim.free();
-    pCOAnim.free();
+    pAnim.reset();
+    pCOAnim.reset();
     if (!faceFound)
     {
         pAnim = oxygine::spResAnim(oxygine::Resources::getResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error));
@@ -127,8 +127,8 @@ void COSpriteManager::loadResAnim(const QString coid, const QString file, QImage
             }
         }
     }
-    pAnim.free();
-    pCOAnim.free();
+    pAnim.reset();
+    pCOAnim.reset();
     if (!infoFound)
     {
         pAnim = oxygine::spResAnim(oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error));
@@ -141,8 +141,8 @@ void COSpriteManager::loadResAnim(const QString coid, const QString file, QImage
             }
         }
     }
-    pAnim.free();
-    pCOAnim.free();
+    pAnim.reset();
+    pCOAnim.reset();
     if (!nrmFound)
     {
         oxygine::spResAnim pAnim = oxygine::spResAnim(oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error));
@@ -155,8 +155,8 @@ void COSpriteManager::loadResAnim(const QString coid, const QString file, QImage
             }
         }
     }
-    pAnim.free();
-    pCOAnim.free();
+    pAnim.reset();
+    pCOAnim.reset();
     if (!miniFound)
     {
         oxygine::spResAnim pAnim = oxygine::spResAnim(oxygine::Resources::getResAnim(filename + "+mini", oxygine::error_policy::ep_ignore_error));

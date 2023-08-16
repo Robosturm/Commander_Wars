@@ -17,7 +17,7 @@ namespace oxygine
     {
         removeChildren();
         m_drag.destroy();
-        m_content.free();
+        m_content.reset();
     }
 
     SlidingActorNoClipRect::~SlidingActorNoClipRect()
@@ -73,7 +73,7 @@ namespace oxygine
         {
             m_prev[i].tm = timeMS(0);
         }
-        m_holded.free();
+        m_holded.reset();
         m_finger = 0;
         m_speed = QPoint(0, 0);
 
@@ -225,7 +225,7 @@ namespace oxygine
                         m_finger = 0;
                         auto pos = m_content->getPosition();
 
-                        m_holded.free();
+                        m_holded.reset();
 
                         const iter* old = 0;
                         const iter* mid = 0;
@@ -334,7 +334,7 @@ namespace oxygine
                                 act = spActor(act->getParent());
                             }
 
-                            m_holded.free();
+                            m_holded.reset();
                         }
                     }
                     break;

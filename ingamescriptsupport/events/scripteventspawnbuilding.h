@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
 class ScriptEventSpawnBuilding;
-using spScriptEventSpawnBuilding = oxygine::intrusive_ptr<ScriptEventSpawnBuilding>;
+using spScriptEventSpawnBuilding = std::shared_ptr<ScriptEventSpawnBuilding>;
 
 class ScriptEventSpawnBuilding final : public ScriptEventGeneric
 {

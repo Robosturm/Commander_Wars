@@ -68,7 +68,7 @@ void PlayerInfo::updateData()
         if (!pPlayer->getIsDefeated())
         {
             playerShown++;
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
             oxygine::ResAnim* pAnim = nullptr;
             if (pPlayer->getCO(1) == nullptr)
             {
@@ -100,7 +100,7 @@ void PlayerInfo::updateData()
                 {
                     pAnim = pCOSpriteManager->getResAnim("no_co+info");
                 }
-                pSprite = oxygine::spSprite::create();
+                pSprite = MemoryManagement::create<oxygine::Sprite>();
                 pSprite->setResAnim(pAnim);
                 pSprite->setWidth(pAnim->getWidth());
                 pSprite->setY(yPos);
@@ -121,7 +121,7 @@ void PlayerInfo::updateData()
 
                 // online info
                 qint32 coWidth = pSprite->getScaledWidth();
-                pSprite = oxygine::spSprite::create();
+                pSprite = MemoryManagement::create<oxygine::Sprite>();
                 if (pPlayer->getIsOnline())
                 {
                     pAnim = pGameManager->getResAnim("online");
@@ -142,7 +142,7 @@ void PlayerInfo::updateData()
 
                 if (pCO != nullptr)
                 {
-                    spCoPowermeter pCoPowermeter = spCoPowermeter::create(m_pMap, pCO);
+                    spCoPowermeter pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, pCO);
                     pCoPowermeter->setY(pSprite->getY() + 3);
                     pCoPowermeter->setFlippedX(m_flippedX);
                     if (m_flippedX)
@@ -161,10 +161,10 @@ void PlayerInfo::updateData()
                 {
                     pCO = pPlayer->getCO(1);
                     pAnim = pCO->getResAnim(QString(pCO->getCoID() + "+info").toLower());
-                    pSprite = oxygine::spSprite::create();
+                    pSprite = MemoryManagement::create<oxygine::Sprite>();
                     pSprite->setResAnim(pAnim);
                     pSprite->setY(yPos + 62);
-                    spCoPowermeter pCoPowermeter = spCoPowermeter::create(m_pMap, pCO);
+                    spCoPowermeter pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, pCO);
                     pCoPowermeter->setY(pSprite->getY() + 3);
                     pCoPowermeter->setFlippedX(m_flippedX);
                     pCoPowermeter->drawPowerMeter();
@@ -190,7 +190,7 @@ void PlayerInfo::updateData()
                     addChild(pSprite);
                 }
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("fundsInfo24"));
-                oxygine::spTextField Text = oxygine::spTextField::create();
+                oxygine::spTextField Text = MemoryManagement::create<oxygine::TextField>();
                 Text->setStyle(style);
                 QString number = QString::number(pPlayer->getFunds());
                 if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
@@ -236,7 +236,7 @@ void PlayerInfo::showTurnStartInfo(qint32 & yPos)
     if (pAnim != nullptr && pPlayer != nullptr)
     {
         qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pAnim);
         pSprite->setColorTable(pPlayer->getColorTableAnim(), true);
         pSprite->setY(yPos);
@@ -249,7 +249,7 @@ void PlayerInfo::showTurnStartInfo(qint32 & yPos)
         if (m_pMap->getGameRules()->getWeatherPrediction())
         {
             qint32 x = 2;
-            pSprite = oxygine::spSprite::create();
+            pSprite = MemoryManagement::create<oxygine::Sprite>();
             Weather* pWeather = m_pMap->getGameRules()->getWeatherAtDay(1, 0);
             if (pWeather != nullptr)
             {
@@ -274,7 +274,7 @@ void PlayerInfo::showTurnStartInfo(qint32 & yPos)
             }
 
             oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("nextDayInfo16"));
-            oxygine::spTextField pText = oxygine::spTextField::create();
+            oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
             pText->setStyle(style);
             QString number = QString::number(m_pMap->getCurrentDay() + 1);
             pText->setHtmlText(tr("Next day ") + number);

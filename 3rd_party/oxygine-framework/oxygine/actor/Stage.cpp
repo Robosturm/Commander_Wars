@@ -12,7 +12,7 @@ namespace oxygine
     Stage::Stage()
         : m_statUpdate(0)
     {
-        spClock clock = spClock::create();
+        spClock clock = MemoryManagement::create<Clock>();
         setClock(clock);
         m_stage = this;
     }
@@ -88,7 +88,7 @@ namespace oxygine
     {
         removeChildren();
         instance->detach();
-        instance.free();
+        instance.reset();
     }
 
     void Stage::updateStage()

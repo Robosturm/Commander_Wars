@@ -5,16 +5,14 @@
 #include <QVector>
 #include <QString>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/fileserializable.h"
 
 #include "game/GameEnums.h"
 
 class Question;
-using spQuestion = oxygine::intrusive_ptr<Question>;
+using spQuestion = std::shared_ptr<Question>;
 
-class Question final : public QObject, public FileSerializable, public oxygine::ref_counter
+class Question final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

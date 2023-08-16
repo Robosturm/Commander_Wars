@@ -11,7 +11,7 @@
 class QTcpSocket;
 
 class TCPClient;
-using spTCPClient = oxygine::intrusive_ptr<TCPClient>;
+using spTCPClient = std::shared_ptr<TCPClient>;
 
 class TCPClient final : public NetworkInterface
 {

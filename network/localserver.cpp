@@ -84,12 +84,12 @@ void LocalServer::onConnect()
         connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
         // Start RX-Task
-        spRxTask pRXTask = spRxTask::create(nextSocket, m_idCounter, this, true);
+        spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket, m_idCounter, this, true);
         m_pRXTasks.append(pRXTask);
         connect(nextSocket, &QLocalSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
         // start TX-Task
-        spTxTask pTXTask = spTxTask::create(nextSocket, m_idCounter, this, true);
+        spTxTask pTXTask = MemoryManagement::create<TxTask>(nextSocket, m_idCounter, this, true);
         m_pTXTasks.append(pTXTask);
         connect(this, &LocalServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
         quint64 socket = m_idCounter;

@@ -55,7 +55,7 @@ namespace oxygine
                 }
                 else
                 {
-                    m_current.free();
+                    m_current.reset();
                 }
             }
 

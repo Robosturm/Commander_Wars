@@ -10,7 +10,7 @@
 #include "objects/base/spinbox.h"
 
 class ColorSelector;
-using spColorSelector = oxygine::intrusive_ptr<ColorSelector>;
+using spColorSelector = std::shared_ptr<ColorSelector>;
 
 class ColorSelector final : public QObject, public oxygine::Actor
 {

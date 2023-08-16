@@ -230,7 +230,7 @@ spGameAction ReplayRecorder::nextAction()
             seekToNextType(Type::Action, success);
             if (success)
             {
-                spGameAction pAction = spGameAction::create(m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(m_pMap);
                 pAction->deserializeObject(m_stream);
                 return pAction;
             }

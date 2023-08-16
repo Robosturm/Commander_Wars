@@ -9,7 +9,7 @@
 class QTcpServer;
 
 class TCPServer;
-using spTCPServer = oxygine::intrusive_ptr<TCPServer>;
+using spTCPServer = std::shared_ptr<TCPServer>;
 
 class TCPServer final : public NetworkInterface
 {

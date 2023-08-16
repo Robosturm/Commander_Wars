@@ -7,7 +7,7 @@
 
 class LobbyMenu;
 class DialogOtherLobbyInfo;
-using spDialogOtherLobbyInfo = oxygine::intrusive_ptr<DialogOtherLobbyInfo>;
+using spDialogOtherLobbyInfo = std::shared_ptr<DialogOtherLobbyInfo>;
 
 class DialogOtherLobbyInfo final : public CustomDialog
 {

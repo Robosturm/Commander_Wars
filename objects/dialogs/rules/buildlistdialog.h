@@ -11,7 +11,7 @@
 
 class GameMap;
 class BuildListDialog;
-using spBuildListDialog = oxygine::intrusive_ptr<BuildListDialog>;
+using spBuildListDialog = std::shared_ptr<BuildListDialog>;
 
 class BuildListDialog final : public QObject, public oxygine::Actor
 {

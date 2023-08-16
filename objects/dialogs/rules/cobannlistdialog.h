@@ -10,7 +10,7 @@
 #include "objects/base/dropdownmenu.h"
 
 class COBannListDialog;
-using spCOBannListDialog = oxygine::intrusive_ptr<COBannListDialog>;
+using spCOBannListDialog = std::shared_ptr<COBannListDialog>;
 
 class COBannListDialog final : public QObject, public oxygine::Actor
 {

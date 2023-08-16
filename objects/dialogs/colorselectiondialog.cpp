@@ -15,7 +15,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color, bool showUnitPreview)
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -40,7 +40,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color, bool showUnitPreview)
     });
     qint32 pixelSize = (oxygine::Stage::getStage()->getHeight() - 220) / 256;
     // add spin boxes for red green and blue
-    m_pColorSelector = spColorSelector::create(color, pixelSize);
+    m_pColorSelector = MemoryManagement::create<ColorSelector>(color, pixelSize);
     m_pColorSelector->setY(30);
     m_pColorSelector->setX(oxygine::Stage::getStage()->getWidth() / 2 - m_pColorSelector->getScaledWidth() / 2);
     pSpriteBox->addChild(m_pColorSelector);
@@ -48,13 +48,13 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color, bool showUnitPreview)
     {
         constexpr float scale = 2.0f;
         connect(m_pColorSelector.get(), &ColorSelector::sigSelecetedColorChanged, this, &ColorSelectionDialog::selecetedColorChanged, Qt::QueuedConnection);
-        m_pPlayer = spPlayer::create(nullptr);
+        m_pPlayer = MemoryManagement::create<Player>(nullptr);
         m_pPlayer->setColor(color);
-        m_pBuilding = spBuilding::create("TOWN", nullptr);
+        m_pBuilding = MemoryManagement::create<Building>("TOWN", nullptr);
         m_pBuilding->setOwner(m_pPlayer.get());
         m_pBuilding->setScale(scale);
         m_pBuilding->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - GameMap::getImageSize() * scale - 5, oxygine::Stage::getStage()->getHeight() -  GameMap::getImageSize() * scale - 5);
-        m_pUnit = spUnit::create("INFANTRY", m_pPlayer.get(), false, nullptr);
+        m_pUnit = MemoryManagement::create<Unit>("INFANTRY", m_pPlayer.get(), false, nullptr);
         m_pUnit->setScale(scale);
         m_pUnit->setPosition(oxygine::Stage::getStage()->getWidth() / 2 + 5, oxygine::Stage::getStage()->getHeight() -  GameMap::getImageSize() * scale - 5);
         pSpriteBox->addChild(m_pUnit);

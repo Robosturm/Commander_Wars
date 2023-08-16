@@ -7,7 +7,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 class DialogMessageBox;
-using spDialogMessageBox = oxygine::intrusive_ptr<DialogMessageBox>;
+using spDialogMessageBox = std::shared_ptr<DialogMessageBox>;
 
 class DialogMessageBox final : public QObject, public oxygine::Actor
 {

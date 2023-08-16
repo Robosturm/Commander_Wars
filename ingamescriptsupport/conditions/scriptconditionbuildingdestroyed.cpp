@@ -96,19 +96,19 @@ void ScriptConditionBuildingDestroyed::writePostCondition(QTextStream& rStream)
 
 void ScriptConditionBuildingDestroyed::showEditCondition(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.multiline = false;
 
     qint32 width = 300;
 
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = spSpinBox::create(300, 0, 99999);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, 0, 99999);
     spinBox->setTooltipText(tr("X Location of the Building that has to be destroyed."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_x);
@@ -119,12 +119,12 @@ void ScriptConditionBuildingDestroyed::showEditCondition(spScriptEditor pScriptE
     });
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, 0, 99999);
+    spinBox = MemoryManagement::create<SpinBox>(300, 0, 99999);
     spinBox->setTooltipText(tr("Y Location of the Building that has to be destroyed."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_y);

@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
 class ScriptEventChangePlayerTeam;
-using spScriptEventChangePlayerTeam = oxygine::intrusive_ptr<ScriptEventChangePlayerTeam>;
+using spScriptEventChangePlayerTeam = std::shared_ptr<ScriptEventChangePlayerTeam>;
 
 class ScriptEventChangePlayerTeam final : public ScriptEventGeneric
 {

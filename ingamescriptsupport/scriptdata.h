@@ -4,15 +4,13 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "conditions/scriptcondition.h"
 
 class GameMap;
 class ScriptData;
-using spScriptData = oxygine::intrusive_ptr<ScriptData>;
+using spScriptData = std::shared_ptr<ScriptData>;
 
-class ScriptData final : public QObject, public oxygine::ref_counter
+class ScriptData final : public QObject
 {
     Q_OBJECT
 public:

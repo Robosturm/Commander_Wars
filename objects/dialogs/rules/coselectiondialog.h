@@ -11,7 +11,7 @@
 
 class GameMap;
 class COSelectionDialog;
-using spCOSelectionDialog = oxygine::intrusive_ptr<COSelectionDialog>;
+using spCOSelectionDialog = std::shared_ptr<COSelectionDialog>;
 
 
 class COSelectionDialog final : public QObject, public oxygine::Actor

@@ -13,7 +13,7 @@ LockTableItem::LockTableItem(bool locked, qint32 itemWidth, QObject *parent)
 #endif
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (locked)
     {
         pSprite->setResAnim(pObjectManager->getResAnim("lock"));

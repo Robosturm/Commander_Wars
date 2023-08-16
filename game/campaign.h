@@ -6,14 +6,12 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 class GameMap;
 class CampaignMapData;
 class Campaign;
-using spCampaign = oxygine::intrusive_ptr<Campaign>;
+using spCampaign = std::shared_ptr<Campaign>;
 
-class Campaign final : public QObject, public FileSerializable, public oxygine::ref_counter
+class Campaign final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

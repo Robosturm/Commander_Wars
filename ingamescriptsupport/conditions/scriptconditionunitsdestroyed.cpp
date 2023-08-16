@@ -115,7 +115,7 @@ void ScriptConditionUnitsDestroyed::writePostCondition(QTextStream& rStream)
 
 void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -123,12 +123,12 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
 
     qint32 width = 300;
 
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Count: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = spSpinBox::create(300, 1, 99999);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, 1, 99999);
     spinBox->setTooltipText(tr("Amount of units that has to be killed."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_count);
@@ -139,13 +139,13 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
     });
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     spinBox->setTooltipText(tr("Player who has to kill the units."));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, 1, 99999);
+    spinBox = MemoryManagement::create<SpinBox>(300, 1, 99999);
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this,

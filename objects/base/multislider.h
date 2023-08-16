@@ -12,7 +12,7 @@
 #include "objects/base/tooltip.h"
 
 class Multislider;
-using spMultislider = oxygine::intrusive_ptr<Multislider>;
+using spMultislider = std::shared_ptr<Multislider>;
 
 class Multislider final : public Tooltip
 {

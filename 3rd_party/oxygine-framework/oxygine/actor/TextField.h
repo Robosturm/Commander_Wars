@@ -7,7 +7,7 @@
 namespace oxygine
 {
     class TextField;
-    using spTextField = intrusive_ptr<TextField>;
+    using spTextField = std::shared_ptr<TextField>;
     class TextField : public Actor
     {
     public:

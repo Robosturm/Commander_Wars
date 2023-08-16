@@ -5,7 +5,7 @@
 namespace oxygine
 {
     class ColorRectSprite;
-    using spColorRectSprite = intrusive_ptr<ColorRectSprite>;
+    using spColorRectSprite = std::shared_ptr<ColorRectSprite>;
     class ColorRectSprite final : public Sprite
     {
     public:

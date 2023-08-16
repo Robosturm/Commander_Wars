@@ -52,7 +52,7 @@ protected:
     friend RessourceManagement<UnitSpriteManager>;
     UnitSpriteManager();
 private:
-   virtual ~UnitSpriteManager() = default;
+    ~UnitSpriteManager() = default;
 };
 
 Q_DECLARE_INTERFACE(UnitSpriteManager, "UnitSpriteManager");

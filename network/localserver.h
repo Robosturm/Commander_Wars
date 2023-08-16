@@ -9,7 +9,7 @@
 #include "network/NetworkInterface.h"
 
 class LocalServer;
-using spLocalServer = oxygine::intrusive_ptr<LocalServer>;
+using spLocalServer = std::shared_ptr<LocalServer>;
 
 /**
  * @brief The LocalServer class for connecting a local pipe to the hosted game

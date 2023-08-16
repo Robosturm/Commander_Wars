@@ -15,7 +15,7 @@
 
 BaseGameInputIF::BaseGameInputIF(GameMap* pMap, GameEnums::AiTypes aiType)
     : m_AiType(aiType),
-      m_pMap(pMap)
+    m_pMap(pMap)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("BaseGameInputIF");
@@ -100,94 +100,94 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameMap* pMap, GameEnums::AiTypes ty
     spBaseGameInputIF ret;
     switch (type)
     {
-        case GameEnums::AiTypes_Human:
+    case GameEnums::AiTypes_Human:
+    {
+        ret = MemoryManagement::create<HumanPlayerInput>(pMap);
+        break;
+    }
+    case GameEnums::AiTypes_VeryEasy:
+    {
+        if (Settings::getInstance()->getSpawnAiProcess() &&
+            !Settings::getInstance()->getAiSlave())
         {
-            ret = spHumanPlayerInput::create(pMap);
-            break;
+            ret = MemoryManagement::create<DummyAi>(pMap, type);
         }
-        case GameEnums::AiTypes_VeryEasy:
+        else
         {
-            if (Settings::getInstance()->getSpawnAiProcess() &&
-                !Settings::getInstance()->getAiSlave())
-            {
-                ret = spDummyAi::create(pMap, type);
-            }
-            else
-            {
-                ret = spVeryEasyAI::create(pMap);
-            }
-            break;
+            ret = MemoryManagement::create<VeryEasyAI>(pMap);
         }
-        case GameEnums::AiTypes_Normal:
+        break;
+    }
+    case GameEnums::AiTypes_Normal:
+    {
+        if (Settings::getInstance()->getSpawnAiProcess() &&
+            !Settings::getInstance()->getAiSlave())
         {
-            if (Settings::getInstance()->getSpawnAiProcess() &&
-                !Settings::getInstance()->getAiSlave())
-            {
-                ret = spDummyAi::create(pMap, type);
-            }
-            else
-            {
-                ret = spNormalAi::create(pMap, "normal.ini", type, "NORMALAI");
-            }
-            break;
+            ret = MemoryManagement::create<DummyAi>(pMap, type);
         }
-        case GameEnums::AiTypes_NormalOffensive:
+        else
         {
-            if (Settings::getInstance()->getSpawnAiProcess() &&
-                !Settings::getInstance()->getAiSlave())
-            {
-                ret = spDummyAi::create(pMap, type);
-            }
-            else
-            {
-                ret = spNormalAi::create(pMap, "normalOffensive.ini", type, "NORMALAIOFFENSIVE");
-            }
-            break;
+            ret = MemoryManagement::create<NormalAi>(pMap, "normal.ini", type, "NORMALAI");
         }
-        case GameEnums::AiTypes_NormalDefensive:
+        break;
+    }
+    case GameEnums::AiTypes_NormalOffensive:
+    {
+        if (Settings::getInstance()->getSpawnAiProcess() &&
+            !Settings::getInstance()->getAiSlave())
         {
-            if (Settings::getInstance()->getSpawnAiProcess() &&
-                !Settings::getInstance()->getAiSlave())
-            {
-                ret = spDummyAi::create(pMap, type);
-            }
-            else
-            {
-                ret = spNormalAi::create(pMap, "normalDefensive.ini", type, "NORMALAIDEFENSIVE");
-            }
-            break;
+            ret = MemoryManagement::create<DummyAi>(pMap, type);
         }
-        case GameEnums::AiTypes_ProxyAi:
+        else
         {
-            ret = spProxyAi::create(pMap);
-            break;
+            ret = MemoryManagement::create<NormalAi>(pMap, "normalOffensive.ini", type, "NORMALAIOFFENSIVE");
         }
-        case GameEnums::AiTypes_DummyAi:
+        break;
+    }
+    case GameEnums::AiTypes_NormalDefensive:
+    {
+        if (Settings::getInstance()->getSpawnAiProcess() &&
+            !Settings::getInstance()->getAiSlave())
         {
-            ret = spDummyAi::create(pMap, type);
-            break;
+            ret = MemoryManagement::create<DummyAi>(pMap, type);
         }
-        case GameEnums::AiTypes_Open:
-        case GameEnums::AiTypes_Closed:
+        else
         {
-            ret.free();
-            break;
+            ret = MemoryManagement::create<NormalAi>(pMap, "normalDefensive.ini", type, "NORMALAIDEFENSIVE");
         }
-        default: // heavy ai case
+        break;
+    }
+    case GameEnums::AiTypes_ProxyAi:
+    {
+        ret = MemoryManagement::create<ProxyAi>(pMap);
+        break;
+    }
+    case GameEnums::AiTypes_DummyAi:
+    {
+        ret = MemoryManagement::create<DummyAi>(pMap, type);
+        break;
+    }
+    case GameEnums::AiTypes_Open:
+    case GameEnums::AiTypes_Closed:
+    {
+        ret.reset();
+        break;
+    }
+    default: // heavy ai case
+    {
+        if (Settings::getInstance()->getSpawnAiProcess() &&
+            !Settings::getInstance()->getAiSlave())
         {
-            if (Settings::getInstance()->getSpawnAiProcess() &&
-                !Settings::getInstance()->getAiSlave())
-            {
-                ret = spDummyAi::create(pMap, type);
-            }
-            else
-            {
-                GameManager* pGameManager = GameManager::getInstance();
-                QString id = pGameManager->getHeavyAiID(static_cast<qint32>(type) - GameEnums::AiTypes_Heavy);
-                ret = spHeavyAi::create(pMap, id, type);
-            }
-            break;
+            ret = MemoryManagement::create<DummyAi>(pMap, type);
         }
+        else
+        {
+            GameManager* pGameManager = GameManager::getInstance();
+            QString id = pGameManager->getHeavyAiID(static_cast<qint32>(type) - GameEnums::AiTypes_Heavy);
+            ret = MemoryManagement::create<HeavyAi>(pMap, id, type);
+        }
+        break;
+    }
     }
     return ret;
 }

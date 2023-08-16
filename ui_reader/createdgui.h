@@ -7,7 +7,7 @@
 
 class UiFactory;
 class CreatedGui;
-using spCreatedGui = oxygine::intrusive_ptr<CreatedGui>;
+using spCreatedGui = std::shared_ptr<CreatedGui>;
 
 class CreatedGui : public QObject, public oxygine::Actor
 {

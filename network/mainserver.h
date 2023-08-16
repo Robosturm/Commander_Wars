@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QProcess>
-#include <QScopedPointer>
 
 #include "network/tcpserver.h"
 #include "network/networkgamedata.h"
@@ -16,17 +15,15 @@
 
 #include "multiplayer/networkcommands.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "game/GameEnums.h"
 
 class MainServer;
-using spMainServer = oxygine::intrusive_ptr<MainServer>;
+using spMainServer = std::shared_ptr<MainServer>;
 
 /**
  * @brief The MainServer class handling the server and it's data.
  */
-class MainServer final : public QObject, public oxygine::ref_counter, public FileSerializable
+class MainServer final : public QObject, public FileSerializable
 {
     Q_OBJECT
     struct AddressInfo
@@ -455,14 +452,14 @@ private:
     QSqlQuery getAllUsers(QSqlDatabase & database, bool & success);
 private:
     class InternNetworkGame;
-    using spInternNetworkGame = oxygine::intrusive_ptr<InternNetworkGame>;
+    using spInternNetworkGame = std::shared_ptr<InternNetworkGame>;
     /**
      * @brief The InternNetworkGame class information about the process running a slave game
      */
-    class InternNetworkGame : public oxygine::ref_counter
+    class InternNetworkGame final
     {
     public:
-        QScopedPointer<QProcess> process;
+        std::shared_ptr<QProcess> process;
         spNetworkGame game;
         QString slaveName;
     };

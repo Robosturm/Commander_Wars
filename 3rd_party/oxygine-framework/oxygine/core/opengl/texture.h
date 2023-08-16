@@ -1,6 +1,5 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 
 #include <QOpenGLShader>
 
@@ -9,8 +8,8 @@
 namespace oxygine
 {
 class Texture;
-using spTexture = intrusive_ptr<Texture>;
-class Texture final : public QObject, public ref_counter
+using spTexture = std::shared_ptr<Texture>;
+class Texture final : public QObject
 {
     Q_OBJECT
 public:
@@ -50,7 +49,7 @@ public:
     }
 protected:
     friend class VideoDriver;
-    friend class intrusive_ptr<Texture>;
+    friend class MemoryManagement;
     explicit Texture();
     GLuint createTexture();
 private:

@@ -50,13 +50,13 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     createHealthbar(pAtkUnit, atkStartHp, pDefUnit, defStartHp);
 
     // load attacker sprite
-    m_pAttackerAnimation = spBattleAnimationSprite::create(pMap, pAtkUnit, pAtkTerrain, BattleAnimationSprite::standingAnimation,
+    m_pAttackerAnimation = MemoryManagement::create<BattleAnimationSprite>(pMap, pAtkUnit, pAtkTerrain, BattleAnimationSprite::standingAnimation,
                                                            GlobalUtils::roundUp(atkStartHp));
     m_pAttackerAnimation->setDyingStartHp(atkStartHp);
     m_pAttackerAnimation->setDyingEndHp(atkEndHp);
     m_pAttackerAnimation->setFireHp(atkStartHp);
     // load defender sprite
-    m_pDefenderAnimation = spBattleAnimationSprite::create(pMap, pDefUnit, pDefTerrain, BattleAnimationSprite::standingAnimation,
+    m_pDefenderAnimation = MemoryManagement::create<BattleAnimationSprite>(pMap, pDefUnit, pDefTerrain, BattleAnimationSprite::standingAnimation,
                                                            GlobalUtils::roundUp(defStartHp));
     m_pDefenderAnimation->setDyingStartHp(defStartHp);
     m_pDefenderAnimation->setDyingEndHp(defEndHp);
@@ -104,7 +104,7 @@ void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
 {
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("battle_back+mask", oxygine::ep_ignore_error);
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityBack);
     pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
@@ -114,27 +114,27 @@ void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
     {
         setSize(pAnim->getSize());
     }
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityBack);
     addChild(pSprite);
 
-    oxygine::spClipRectActor pAttackerClipRect = oxygine::spClipRectActor::create();
+    oxygine::spClipRectActor pAttackerClipRect = MemoryManagement::create<oxygine::ClipRectActor>();
     pAttackerClipRect->setSize(127, 192);
     setSpritePosition(pAttackerClipRect, pAtkUnit, pDefUnit);
-    m_pAttackerSprite = oxygine::spActor::create();
+    m_pAttackerSprite = MemoryManagement::create<oxygine::Actor>();
     pAttackerClipRect->addChild(m_pAttackerSprite);
     addChild(pAttackerClipRect);
 
-    oxygine::spClipRectActor pDefenderClipRect = oxygine::spClipRectActor::create();
+    oxygine::spClipRectActor pDefenderClipRect = MemoryManagement::create<oxygine::ClipRectActor>();
     pDefenderClipRect->setSize(127, 192);
     setSpritePosition(pDefenderClipRect, pDefUnit, pAtkUnit);
-    m_pDefenderSprite = oxygine::spActor::create();
+    m_pDefenderSprite = MemoryManagement::create<oxygine::Actor>();
     pDefenderClipRect->addChild(m_pDefenderSprite);
     addChild(pDefenderClipRect);
 
     pAnim = pGameManager->getResAnim("battle_front");
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityFront);
     addChild(pSprite);
@@ -142,7 +142,7 @@ void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
     pAnim = pGameManager->getResAnim("battle_front+mask", oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        pSprite = oxygine::spSprite::create();
+        pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(priorityFront);
         pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
@@ -162,7 +162,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     /*********************************************************************************************/
     // co on the left upper corner
     /*********************************************************************************************/
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(-35, -30);
@@ -175,13 +175,13 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
     }
     addChild(pSprite);
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(-35, -30);
     addChild(pSprite);
 
-    m_AtkCO0.coSprite = oxygine::spSprite::create();
+    m_AtkCO0.coSprite = MemoryManagement::create<oxygine::Sprite>();
     float coScale = 22.0f / 24.0f;
     if (pCO != nullptr)
     {
@@ -205,7 +205,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     /*********************************************************************************************/
     // co on the left lower corner
     /*********************************************************************************************/
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(-35, getHeight() - 45);
@@ -218,13 +218,13 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
     }
     addChild(pSprite);
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(-35, getHeight() - 45);
     addChild(pSprite);
 
-    m_AtkCO1.coSprite = oxygine::spSprite::create();
+    m_AtkCO1.coSprite = MemoryManagement::create<oxygine::Sprite>();
     pCO = pPlayer->getCO(1);
     if (pCO != nullptr)
     {
@@ -248,7 +248,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     /*********************************************************************************************/
     // co on the right upper corner
     /*********************************************************************************************/
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(getWidth() - 45, -30);
@@ -262,14 +262,14 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     }
     addChild(pSprite);
     pPlayer = pDefUnit->getOwner();
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(getWidth() - 45, -30);
     addChild(pSprite);
 
     pCO = pPlayer->getCO(0);
-    m_DefCO0.coSprite = oxygine::spSprite::create();
+    m_DefCO0.coSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
@@ -292,7 +292,7 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     /*********************************************************************************************/
     // co on the right lower corner
     /*********************************************************************************************/
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(getWidth() - 45, getHeight() - 45);
@@ -305,14 +305,14 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
         pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
     }
     addChild(pSprite);
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(getWidth() - 45, getHeight() - 45);
     addChild(pSprite);
 
     pCO = pPlayer->getCO(1);
-    m_DefCO1.coSprite = oxygine::spSprite::create();
+    m_DefCO1.coSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
@@ -340,7 +340,7 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
     // create co info front image
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("co_front");
     oxygine::ResAnim* pAnimMask = pGameManager->getResAnim("co_front+mask", oxygine::ep_ignore_error);
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(-35, -30);
@@ -353,13 +353,13 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
         pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
     }
     addChild(pSprite);
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(-35, -30);
     addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(-35, getHeight() - 45);
@@ -373,13 +373,13 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
     }
     addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(-35, getHeight() - 45);
     addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(getWidth() - 45, - 30);
@@ -392,13 +392,13 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
         pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
     }
     addChild(pSprite);
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(getWidth() - 45, - 30);
     addChild(pSprite);
 
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(getWidth() - 45, getHeight() - 45);
@@ -411,7 +411,7 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
         pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
     }
     addChild(pSprite);
-    pSprite = oxygine::spSprite::create();
+    pSprite = MemoryManagement::create<oxygine::Sprite>();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(getWidth() - 45, getHeight() - 45);
@@ -423,10 +423,10 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
     // create health bar
     auto* pAnim = GameManager::getInstance()->getResAnim("healthbar");
     oxygine::TextStyle style(FontManager::getFont("battleHpFont16"));
-    m_HealthBar0 = oxygine::spBox9Sprite::create();
+    m_HealthBar0 = MemoryManagement::create<oxygine::Box9Sprite>();
     m_HealthBar0->setResAnim(pAnim);
     m_HealthBar0->setSize((spriteWidth - healthBarSize) * atkStartHp / Unit::MAX_UNIT_HP + MIN_HEALTHBAR_WIDTH, 9);
-    m_hpInfo0 = oxygine::spTextField::create();
+    m_hpInfo0 = MemoryManagement::create<oxygine::TextField>();
     m_hpInfo0->setStyle(style);
     if (getIsLeft(pAtkUnit, pDefUnit))
     {
@@ -442,10 +442,10 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
     m_hpInfo0->setText(QString::number(GlobalUtils::roundUp(atkStartHp)));
     addChild(m_HealthBar0);
     addChild(m_hpInfo0);
-    m_HealthBar1 = oxygine::spBox9Sprite::create();
+    m_HealthBar1 = MemoryManagement::create<oxygine::Box9Sprite>();
     m_HealthBar1->setResAnim(pAnim);
     m_HealthBar1->setSize((spriteWidth - healthBarSize) * defStartHp / Unit::MAX_UNIT_HP + MIN_HEALTHBAR_WIDTH, 9);
-    m_hpInfo1 = oxygine::spTextField::create();
+    m_hpInfo1 = MemoryManagement::create<oxygine::TextField>();
     m_hpInfo1->setStyle(style);
     if (getIsLeft(pDefUnit, pAtkUnit))
     {
@@ -508,7 +508,7 @@ void BattleAnimation::setSpriteFlipped(oxygine::spSprite pSprite, Unit* pUnit1, 
 
 oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefender)
 {
-    oxygine::spSprite ret = oxygine::spSprite::create();
+    oxygine::spSprite ret = MemoryManagement::create<oxygine::Sprite>();
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnimBase = nullptr;
     oxygine::ResAnim* pAnimFore = nullptr;
@@ -517,17 +517,17 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefende
     pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground(pDefender), oxygine::ep_ignore_error);
     pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground(pDefender), oxygine::ep_ignore_error);
     float speed = pUnit->getTerrainAnimationMoveSpeed();
-    oxygine::spSlidingSprite pSprite = oxygine::spSlidingSprite::create();
+    oxygine::spSlidingSprite pSprite = MemoryManagement::create<oxygine::SlidingSprite>();
     pSprite->setSize(spriteWidth, spriteHeigth);
     pSprite->setResAnim(pAnimBase);
     pSprite->setSpeedX(speed);
     ret->addChild(pSprite);
-    pSprite = oxygine::spSlidingSprite::create();
+    pSprite = MemoryManagement::create<oxygine::SlidingSprite>();
     pSprite->setSize(spriteWidth, spriteHeigth);
     pSprite->setResAnim(pAnimBack);
     pSprite->setSpeedX(speed);
     ret->addChild(pSprite);
-    pSprite = oxygine::spSlidingSprite::create();
+    pSprite = MemoryManagement::create<oxygine::SlidingSprite>();
     pSprite->setSize(spriteWidth, spriteHeigth);
     pSprite->setResAnim(pAnimFore);
     ret->addChild(pSprite);
@@ -541,7 +541,7 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefende
         float defenseX = startDefenseX;
         for (qint32 i = 1; i <= terrainDefense; i++)
         {
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
             if (getIsLeft(pUnit, pDefender))
             {
                 pSprite->setPosition(defenseX, defenseY);
@@ -576,7 +576,7 @@ void BattleAnimation::addWeatherOverlay(oxygine::spActor & actor, Terrain* pTerr
     oxygine::ResAnim* pAnimWeather = pGameManager->getResAnim(pTerrain->getWeatherOverlayId(), oxygine::ep_ignore_error);
     if (pAnimWeather != nullptr)
     {
-        oxygine::spSlidingSprite pWeatherOverlay = oxygine::spSlidingSprite::create();
+        oxygine::spSlidingSprite pWeatherOverlay = MemoryManagement::create<oxygine::SlidingSprite>();
         pWeatherOverlay->setResAnim(pAnimWeather);
         pWeatherOverlay->setSize(spriteWidth, spriteHeigth);
         QPoint speed = pTerrain->getWeatherOverlaySpeed();

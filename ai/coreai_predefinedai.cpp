@@ -29,7 +29,7 @@ bool CoreAI::moveFlares(spQmlVectorUnit & pUnits)
             {
                 UnitPathFindingSystem turnPfs(m_pMap, pUnit);
                 turnPfs.explore();
-                spGameAction pAction = spGameAction::create(ACTION_FLARE, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_FLARE, m_pMap);
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 QPoint moveTarget;
                 QPoint flareTarget;
@@ -77,7 +77,7 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
                 {
                     UnitPathFindingSystem turnPfs(m_pMap, pUnit);
                     turnPfs.explore();
-                    spGameAction pAction = spGameAction::create(ACTION_HOELLIUM_WAIT, m_pMap);
+                    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_HOELLIUM_WAIT, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     auto path = turnPfs.getClosestReachableMovePath(targetFields, movepoints);
                     pAction->setMovepath(path, turnPfs.getCosts(path));
@@ -131,7 +131,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                     auto targets = turnPfs.getAllNodePointsFast();
                     qint32 maxDamage = 0;
                     std::vector<QPoint> bestTargets;
-                    spGameAction pAction = spGameAction::create(ACTION_EXPLODE, m_pMap);
+                    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_EXPLODE, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     for (auto & target : targets)
                     {
@@ -244,7 +244,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
                 QStringList actions = pUnit->getActionList();
                 for (const auto& action : actions)
                 {
-                    spGameAction pAction = spGameAction::create(action, m_pMap);
+                    spGameAction pAction = MemoryManagement::create<GameAction>(action, m_pMap);
                     if (action.startsWith(ACTION_SUPPORTSINGLE) ||
                         action.startsWith(ACTION_SUPPORTALL))
                     {
@@ -369,7 +369,7 @@ bool CoreAI::processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEn
     const QString function1 = "GenericPredefinedUnitMapScriptBehaviour";
     if (pInterpreter->exists(GameScript::m_scriptName, function1))
     {
-        spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+        spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
         QJSValueList args({pInterpreter->newQObject(this),
                            pInterpreter->newQObject(pAction.get()),
@@ -389,7 +389,7 @@ bool CoreAI::processPredefinedGenericScripted(Unit* pUnit, spQmlVectorUnit & pEn
     }
     if (pInterpreter->exists(m_aiName, function1))
     {
-        spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+        spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
         QJSValueList args({pInterpreter->newQObject(this),
                            pInterpreter->newQObject(pAction.get()),
@@ -418,7 +418,7 @@ bool CoreAI::processPredefinedMapScripted(Unit* pUnit, spQmlVectorUnit & pEnemyU
     const QString function1 = "PredefinedUnitMapScriptBehaviour";
     if (pInterpreter->exists(GameScript::m_scriptName, function1))
     {
-        spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+        spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
         pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
         QJSValueList args({pInterpreter->newQObject(this),
                            pInterpreter->newQObject(pAction.get()),
@@ -442,7 +442,7 @@ bool CoreAI::processPredefinedMapScripted(Unit* pUnit, spQmlVectorUnit & pEnemyU
 bool CoreAI::processPredefinedAiHold(Unit* pUnit)
 {
     CONSOLE_PRINT("CoreAI::processPredefinedAiHold", GameConsole::eDEBUG);
-    spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_FIRE, m_pMap);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     std::vector<QVector3D> ret;
     std::vector<QVector3D> moveTargetFields;
@@ -478,7 +478,7 @@ bool CoreAI::processPredefinedAiHold(Unit* pUnit)
 bool CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 {
     CONSOLE_PRINT("CoreAI::processPredefinedAiDefensive", GameConsole::eDEBUG);
-    spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_FIRE, m_pMap);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();
@@ -528,7 +528,7 @@ bool CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 bool CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit & pEnemyUnits)
 {
     CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", GameConsole::eDEBUG);
-    spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_FIRE, m_pMap);
     UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();
     bool performed = processPredefinedAiAttack(pUnit, pAction,  pfs);
@@ -600,7 +600,7 @@ bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction & pAction, Unit
 bool CoreAI::processPredefinedAiPatrol(Unit* pUnit)
 {
     CONSOLE_PRINT("CoreAI::processPredefinedAiPatrol", GameConsole::eDEBUG);
-    spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_FIRE, m_pMap);
     UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();
     bool performed = processPredefinedAiAttack(pUnit, pAction,  pfs);
@@ -651,7 +651,7 @@ bool CoreAI::processPredefinedAiPatrol(Unit* pUnit)
 bool CoreAI::processPredefinedAiTargetEnemyHq(Unit* pUnit, spQmlVectorBuilding & pEnemyBuildings)
 {
     CONSOLE_PRINT("CoreAI::processPredefinedAiOffensive", GameConsole::eDEBUG);
-    spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_FIRE, m_pMap);
     UnitPathFindingSystem pfs(m_pMap, pUnit);
     pfs.explore();
     bool performed = processPredefinedAiAttack(pUnit, pAction,  pfs);

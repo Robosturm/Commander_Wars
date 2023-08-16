@@ -58,7 +58,7 @@ GameAnimationFactory* GameAnimationFactory::getInstance()
 {
     if (m_pInstance.get() == nullptr)
     {
-        m_pInstance = spGameAnimationFactory::create();
+        m_pInstance = MemoryManagement::create<GameAnimationFactory>();
     }
     return m_pInstance.get();
 }
@@ -66,13 +66,13 @@ GameAnimationFactory* GameAnimationFactory::getInstance()
 void GameAnimationFactory::release()
 {
     m_Animations.clear();
-    m_pInstance.free();
+    m_pInstance.reset();
 }
 
 GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
 {    
     CONSOLE_PRINT("Creating new animation", GameConsole::eDEBUG);
-    spGameAnimation animation = spGameAnimation::create(frameTime, pMap);
+    spGameAnimation animation = MemoryManagement::create<GameAnimation>(frameTime, pMap);
     if (mapPosition)
     {
         animation->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
@@ -98,7 +98,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(GameMap* pMap, U
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> movePath)
 {
     CONSOLE_PRINT("Creating new walking animation", GameConsole::eDEBUG);
-    spGameAnimationWalk pGameAnimationWalk = spGameAnimationWalk::create(pUnit, movePath, pMap);
+    spGameAnimationWalk pGameAnimationWalk = MemoryManagement::create<GameAnimationWalk>(pUnit, movePath, pMap);
     pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     if (pMap != nullptr)
     {
@@ -128,7 +128,7 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QC
 GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pMap, const QString text, const QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
     CONSOLE_PRINT("Creating new dialog animation", GameConsole::eDEBUG);
-    spGameAnimationDialog pGameAnimationDialog = spGameAnimationDialog::create(frameTime, pMap);
+    spGameAnimationDialog pGameAnimationDialog = MemoryManagement::create<GameAnimationDialog>(frameTime, pMap);
     pGameAnimationDialog->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     pGameAnimationDialog->setDialog(text);
     pGameAnimationDialog->setCO(coid, mood);
@@ -146,7 +146,7 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* 
         auto* pMenu = pMap->getMenu();
         if (pMenu != nullptr)
         {
-            spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(pMap, pPlayer, frameTime, false, uptimeMs);
+            spGameAnimationNextDay pAnim = MemoryManagement::create<GameAnimationNextDay>(pMap, pPlayer, frameTime, false, uptimeMs);
             pMenu->addChild(pAnim);
             m_Animations.append(pAnim);
             return pAnim.get();
@@ -158,7 +158,7 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* 
 GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(GameMap* pMap, qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints)
 {
     CONSOLE_PRINT("Creating new capture animation", GameConsole::eDEBUG);
-    spGameAnimationCapture pGameAnimationCapture = spGameAnimationCapture::create(startPoints, endPoints, maxPoints, pMap);
+    spGameAnimationCapture pGameAnimationCapture = MemoryManagement::create<GameAnimationCapture>(startPoints, endPoints, maxPoints, pMap);
     pGameAnimationCapture->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     pGameAnimationCapture->setPosition(x, y);
     pMap->addChild(pGameAnimationCapture);
@@ -190,7 +190,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
         }
         else
         {
-            pRet = spBattleAnimation::create(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
+            pRet = MemoryManagement::create<BattleAnimation>(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
                                              pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage,
                                              pMap);
             oxygine::spSprite pBack;
@@ -203,7 +203,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
                 oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("fullscreen_battlebackground", oxygine::ep_ignore_error);
                 if (pAnim != nullptr)
                 {
-                    pBack = oxygine::spSprite::create();
+                    pBack = MemoryManagement::create<oxygine::Sprite>();
                     pBack->setResAnim(pAnim);
                     pBack->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth()) / static_cast<float>(pAnim->getWidth()));
                     pBack->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight()) / static_cast<float>(pAnim->getHeight()));
@@ -211,7 +211,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
                 }
                 else
                 {
-                    oxygine::spColorRectSprite pRect = oxygine::spColorRectSprite::create();
+                    oxygine::spColorRectSprite pRect = MemoryManagement::create<oxygine::ColorRectSprite>();
                     pRect->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
                     pRect->setColor(pAtkUnit->getOwner()->getColor().darker(120));
                     pBack = pRect;

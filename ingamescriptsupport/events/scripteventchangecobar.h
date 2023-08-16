@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventChangeCOBar;
-using spScriptEventChangeCOBar = oxygine::intrusive_ptr<ScriptEventChangeCOBar>;
+using spScriptEventChangeCOBar = std::shared_ptr<ScriptEventChangeCOBar>;
 
 class ScriptEventChangeCOBar final : public ScriptEvent
 {

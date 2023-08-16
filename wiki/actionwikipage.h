@@ -4,12 +4,12 @@
 #include "wiki/wikidatabase.h"
 
 class ActionWikipage;
-using spActionWikipage = oxygine::intrusive_ptr<ActionWikipage>;
+using spActionWikipage = std::shared_ptr<ActionWikipage>;
 
 class ActionWikipage final : public Wikipage
 {
     Q_OBJECT
 public:
     explicit ActionWikipage(const PageData * item);
-   virtual ~ActionWikipage() = default;
+    ~ActionWikipage() = default;
 };

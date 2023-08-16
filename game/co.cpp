@@ -1447,7 +1447,7 @@ bool CO::inCORange(QPoint position, Unit* pUnit)
         {
             return true;
         }
-        else if (pUnit == m_pCOUnit)
+        else if (pUnit == m_pCOUnit.get())
         {
             return true;
         }
@@ -2251,7 +2251,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
         }
     }
     pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error));
-    pCOAnim.free();
+    pCOAnim.reset();
     if (pAnim.get() != nullptr)
     {
         oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
@@ -2261,7 +2261,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
         }
     }
     pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error));
-    pCOAnim.free();
+    pCOAnim.reset();
     if (pAnim.get() != nullptr)
     {
         oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
@@ -2270,7 +2270,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+nrm", pCOAnim));
         }
     }
-    pCOAnim.free();
+    pCOAnim.reset();
     if (m_pMenu != nullptr)
     {
         m_pMenu->updatePlayerinfo();

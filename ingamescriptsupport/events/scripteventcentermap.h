@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
 class ScriptEventCenterMap;
-using spScriptEventCenterMap = oxygine::intrusive_ptr<ScriptEventCenterMap>;
+using spScriptEventCenterMap = std::shared_ptr<ScriptEventCenterMap>;
 
 class ScriptEventCenterMap final : public ScriptEventGeneric
 {

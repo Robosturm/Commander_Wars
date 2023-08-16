@@ -6,12 +6,10 @@
 #include <QPoint>
 #include <QColor>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 class MarkedFieldData;
-using spMarkedFieldData = oxygine::intrusive_ptr<MarkedFieldData>;
+using spMarkedFieldData = std::shared_ptr<MarkedFieldData>;
 
-class MarkedFieldData final : public QObject, public oxygine::ref_counter
+class MarkedFieldData final : public QObject
 {
     Q_OBJECT
 public:

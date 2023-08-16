@@ -7,15 +7,12 @@
 #include <QVector>
 #include <QPoint>
 
-
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/fileserializable.h"
 
 class ScriptVariable;
-using spScriptVariable = oxygine::intrusive_ptr<ScriptVariable>;
+using spScriptVariable = std::shared_ptr<ScriptVariable>;
 
-class ScriptVariable final : public QObject, public FileSerializable, public oxygine::ref_counter
+class ScriptVariable final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

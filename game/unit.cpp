@@ -205,7 +205,7 @@ void Unit::addShineTween()
     removeShineTween();
     for (auto & child : m_children)
     {
-        oxygine::spVStyleActor pActor = oxygine::dynamic_pointer_cast<oxygine::VStyleActor>(child);
+        oxygine::spVStyleActor pActor = std::dynamic_pointer_cast<oxygine::VStyleActor>(child);
         if (pActor.get() != nullptr)
         {
             oxygine::spTween shineTween = oxygine::createTween(oxygine::VStyleActor::TweenAddColor(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
@@ -226,7 +226,7 @@ void Unit::removeShineTween()
             if (pActor.get() != nullptr)
             {
                 m_ShineTweens[i]->removeFromActor();
-                oxygine::spVStyleActor pVStyle = oxygine::dynamic_pointer_cast<oxygine::VStyleActor>(pActor);
+                oxygine::spVStyleActor pVStyle = std::dynamic_pointer_cast<oxygine::VStyleActor>(pActor);
                 if (pVStyle.get() != nullptr)
                 {
                     pVStyle->setAddColor(addColor);
@@ -259,8 +259,8 @@ void Unit::loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, bool
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        oxygine::spSprite pWaitSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+        oxygine::spSprite pWaitSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);
@@ -1202,7 +1202,7 @@ void Unit::loadUnit(Unit* pUnit, qint32 index)
 void Unit::loadSpawnedUnit(const QString unitId)
 {
     CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, GameConsole::eDEBUG);
-    spUnit pUnit = spUnit::create(unitId, m_pOwner, true, m_pMap);
+    spUnit pUnit = MemoryManagement::create<Unit>(unitId, m_pOwner, true, m_pMap);
     if (canTransportUnit(pUnit.get()))
     {
         loadUnit(pUnit.get());
@@ -1221,7 +1221,7 @@ Unit* Unit::spawnUnit(const QString unitID)
         {
             return nullptr;
         }
-        spUnit pUnit = spUnit::create(unitID, m_pOwner, true, m_pMap);
+        spUnit pUnit = MemoryManagement::create<Unit>(unitID, m_pOwner, true, m_pMap);
         m_TransportUnits.append(pUnit);
         updateIcons(m_pMap->getCurrentViewPlayer());
         return pUnit.get();
@@ -1245,7 +1245,7 @@ void Unit::unloadUnit(Unit* pUnit, QPoint position)
     {
         for (qint32 i = 0; i < m_TransportUnits.size(); i++)
         {
-            if (m_TransportUnits[i] == pUnit)
+            if (m_TransportUnits[i].get() == pUnit)
             {
                 m_pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[i]);
                 m_TransportUnits[i]->updateIcons(m_pMap->getCurrentViewPlayer());
@@ -2930,7 +2930,7 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
     // teleport unit to target position
     m_pMap->getTerrain(x, y)->setUnit(pUnit);
     showRanges();
-    pUnit.free();
+    pUnit.reset();
     
 }
 
@@ -3060,7 +3060,7 @@ void Unit::loadIcon(const QString iconID, qint32 x, qint32 y, qint32 duration, q
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -3824,7 +3824,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
         pStream >> units;
         for (qint32 i = 0; i < units; i++)
         {
-            m_TransportUnits.append(spUnit::create(m_pMap));
+            m_TransportUnits.append(MemoryManagement::create<Unit>(m_pMap));
             m_TransportUnits[m_TransportUnits.size() - 1]->deserializer(pStream, fast);
             if (!m_TransportUnits[m_TransportUnits.size() - 1]->isValid())
             {
@@ -4226,7 +4226,7 @@ void Unit::updateRangeActor(oxygine::spActor & pActor, qint32 range, QString res
 {
     if (pActor.get() == nullptr)
     {
-        pActor = oxygine::spActor::create();
+        pActor = MemoryManagement::create<oxygine::Actor>();
     }
     else
     {

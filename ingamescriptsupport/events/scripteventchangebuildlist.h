@@ -5,7 +5,7 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventChangeBuildlist;
-using spScriptEventChangeBuildlist = oxygine::intrusive_ptr<ScriptEventChangeBuildlist>;
+using spScriptEventChangeBuildlist = std::shared_ptr<ScriptEventChangeBuildlist>;
 
 class ScriptEventChangeBuildlist final : public ScriptEvent
 {

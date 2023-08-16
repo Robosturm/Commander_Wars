@@ -62,7 +62,7 @@ bool Mainapp::m_trainingSession{false};
 const char* const Mainapp::GAME_CONTEXT = "GAME";
 
 Mainapp::Mainapp()
-    : m_aiProcessPipe(spAiProcessPipe::create())
+    : m_aiProcessPipe(MemoryManagement::create<AiProcessPipe>())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Mainapp");
@@ -228,7 +228,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_aiProcessPipe->moveToThread(m_Workerthread.get());
             emit m_aiProcessPipe->sigStartPipe();
             pLoadingScreen->moveToThread(m_Workerthread.get());
-            m_AudioManager = spAudioManager::create(m_noAudio);
+            m_AudioManager = MemoryManagement::create<AudioManager>(m_noAudio);
 #ifdef AUDIOSUPPORT
             m_audioThread->start(QThread::Priority::HighestPriority);
             m_AudioManager->moveToThread(m_audioThread.get());
@@ -786,7 +786,7 @@ void Mainapp::actAsSlave()
     setSlave(true);
     Settings::getInstance()->setServer(false);
     Settings::getInstance()->setUsername("Server");
-    m_slaveClient = spTCPClient::create(nullptr);
+    m_slaveClient = MemoryManagement::create<TCPClient>(nullptr);
     m_slaveClient->moveToThread(getInstance()->getNetworkThread());
     CONSOLE_PRINT("Running as slave with name : " + Settings::getInstance()->getSlaveServerName(), GameConsole::eDEBUG);
 }
@@ -873,12 +873,12 @@ void Mainapp::onQuit()
         m_Workerthread->wait();
     }
     QCoreApplication::processEvents();
-    m_aiProcessPipe.free();
+    m_aiProcessPipe.reset();
 #ifdef AUDIOSUPPORT
     if (m_AudioManager.get() != nullptr)
     {
         m_AudioManager->stopAudio();
-        m_AudioManager.free();
+        m_AudioManager.reset();
     }
     if (m_audioThread->isRunning())
     {

@@ -1,7 +1,6 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h"
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 
 #include <QDomElement>
@@ -22,17 +21,17 @@ namespace oxygine
     namespace text
     {
         class Node;
-        using spNode = oxygine::intrusive_ptr<Node>;
+        using spNode = std::shared_ptr<Node>;
         class DivNode;
-        using spDivNode = intrusive_ptr<DivNode>;
+        using spDivNode = std::shared_ptr<DivNode>;
         class BrNode;
-        using spBrNode = intrusive_ptr<BrNode>;
+        using spBrNode = std::shared_ptr<BrNode>;
         class TextNode;
-        using spTextNode = oxygine::intrusive_ptr<TextNode>;
+        using spTextNode = std::shared_ptr<TextNode>;
         class WigglyNode;
-        using spWigglyNode = oxygine::intrusive_ptr<WigglyNode>;
+        using spWigglyNode = std::shared_ptr<WigglyNode>;
 
-        class Node : public oxygine::ref_counter
+        class Node
         {
         public:
             explicit Node() = default;

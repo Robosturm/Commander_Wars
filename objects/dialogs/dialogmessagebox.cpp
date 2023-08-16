@@ -16,7 +16,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -29,7 +29,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel, QString confir
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 
-    m_Text = oxygine::spTextField::create();
+    m_Text = MemoryManagement::create<oxygine::TextField>();
     m_Text->setSize(oxygine::Stage::getStage()->getWidth() / 2, oxygine::Stage::getStage()->getHeight());
     m_Text->setHtmlText(text);
     m_Text->setStyle(style);

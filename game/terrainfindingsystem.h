@@ -7,7 +7,7 @@
 
 class GameMap;
 class TerrainFindingSystem;
-using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
+using spTerrainFindingSystem = std::shared_ptr<TerrainFindingSystem>;
 
 class TerrainFindingSystem final : public PathFindingSystem
 {

@@ -22,7 +22,7 @@ class GameAction;
 class UnitPathFindingSystem;
 
 class HumanPlayerInput;
-using spHumanPlayerInput = oxygine::intrusive_ptr<HumanPlayerInput>;
+using spHumanPlayerInput = std::shared_ptr<HumanPlayerInput>;
 
 
 class HumanPlayerInput : public BaseGameInputIF

@@ -14,7 +14,7 @@
 
 class GameMap;
 class PerkSelectionDialog;
-using spPerkSelectionDialog = oxygine::intrusive_ptr<PerkSelectionDialog>;
+using spPerkSelectionDialog = std::shared_ptr<PerkSelectionDialog>;
 
 class PerkSelectionDialog final : public QObject, public oxygine::Actor
 {

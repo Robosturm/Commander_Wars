@@ -39,7 +39,7 @@ void MenuData::addUnitData(QString text, QString actionID, Unit* pIcon, qint32 c
     m_costList.append(costs);
     m_enabledList.append(enabled);
     GameManager* pGameManager = GameManager::getInstance();
-    spUnit menuIcon = oxygine::dynamic_pointer_cast<Unit>(pGameManager->getIcon(m_pMap, pIcon->getUnitID()));
+    spUnit menuIcon = std::dynamic_pointer_cast<Unit>(pGameManager->getIcon(m_pMap, pIcon->getUnitID()));
     if (menuIcon.get() != nullptr)
     {
         menuIcon->setHasMoved(pIcon->getHasMoved());
@@ -52,7 +52,7 @@ void MenuData::addUnitData(QString text, QString actionID, Unit* pIcon, qint32 c
     }
     else
     {
-        m_iconList.append(oxygine::spSprite::create());
+        m_iconList.append(MemoryManagement::create<oxygine::Sprite>());
     }
 
 }

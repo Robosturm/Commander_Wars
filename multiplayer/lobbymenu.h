@@ -16,7 +16,7 @@
 #include "menue/basemenu.h"
 
 class LobbyMenu;
-using spLobbyMenu = oxygine::intrusive_ptr<LobbyMenu>;
+using spLobbyMenu = std::shared_ptr<LobbyMenu>;
 
 class LobbyMenu final : public Basemenu
 {

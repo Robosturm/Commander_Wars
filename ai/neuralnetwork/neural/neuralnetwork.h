@@ -6,16 +6,14 @@
 #include <QObject>
 #include <vector>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "ai/neuralnetwork/neural/layer.h"
 
 class NeuralNetwork;
 class Neuron;
 class Layer;
-using spNeuralNetwork = oxygine::intrusive_ptr<NeuralNetwork>;
+using spNeuralNetwork = std::shared_ptr<NeuralNetwork>;
 
-class NeuralNetwork final : public QObject, public FileSerializable, public oxygine::ref_counter
+class NeuralNetwork final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

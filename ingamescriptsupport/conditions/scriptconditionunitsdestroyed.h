@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionUnitsDestroyed;
-using spScriptConditionUnitsDestroyed = oxygine::intrusive_ptr<ScriptConditionUnitsDestroyed>;
+using spScriptConditionUnitsDestroyed = std::shared_ptr<ScriptConditionUnitsDestroyed>;
 
 class ScriptConditionUnitsDestroyed final : public ScriptCondition
 {

@@ -114,13 +114,13 @@ void TCPServer::onConnect()
                     m_idCounter++;
                 }
                 // Start RX-Task
-                spRxTask pRXTask = spRxTask::create(nextSocket, m_idCounter, this, false);
+                spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket, m_idCounter, this, false);
                 connect(nextSocket, &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
                 // start TX-Task
-                spTxTask pTXTask = spTxTask::create(nextSocket, m_idCounter, this, false);
+                spTxTask pTXTask = MemoryManagement::create<TxTask>(nextSocket, m_idCounter, this, false);
                 connect(this, &TCPServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
-                spTCPClient pClient = spTCPClient::create(this, pRXTask, pTXTask, nextSocket, m_idCounter);
+                spTCPClient pClient = MemoryManagement::create<TCPClient>(this, pRXTask, pTXTask, nextSocket, m_idCounter);
                 connect(pClient.get(), &TCPClient::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
 
                 quint64 socket = pClient->getSocketID();

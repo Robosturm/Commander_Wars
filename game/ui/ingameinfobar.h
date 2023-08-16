@@ -11,7 +11,7 @@
 class GameMap;
 class GameMenue;
 class IngameInfoBar;
-using spIngameInfoBar = oxygine::intrusive_ptr<IngameInfoBar>;
+using spIngameInfoBar = std::shared_ptr<IngameInfoBar>;
 
 class IngameInfoBar final : public QObject, public oxygine::Actor
 {

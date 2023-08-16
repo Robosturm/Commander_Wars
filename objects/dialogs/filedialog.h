@@ -13,7 +13,7 @@
 #include "objects/base/dropdownmenu.h"
 
 class FileDialog;
-using spFileDialog = oxygine::intrusive_ptr<FileDialog>;
+using spFileDialog = std::shared_ptr<FileDialog>;
 
 /**
  * @brief The FileDialog class file dialog for accessing folder and files.

@@ -14,10 +14,8 @@
 #include <QTimer>
 #include <QUrl>
 
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
-
 class AudioManager;
-using spAudioManager = oxygine::intrusive_ptr<AudioManager>;
+using spAudioManager = std::shared_ptr<AudioManager>;
 
 struct SoundData : public QObject
 {
@@ -30,7 +28,7 @@ struct SoundData : public QObject
 
 Q_DECLARE_INTERFACE(SoundData, "SoundData");
 
-class AudioManager final : public QObject, public oxygine::ref_counter
+class AudioManager final : public QObject
 {
     static constexpr qint32 MAX_PARALLEL_SOUNDS = 200;
     Q_OBJECT
@@ -276,7 +274,7 @@ private:
     };
     QTimer m_positionChangedTimer;
 #ifdef AUDIOSUPPORT
-    QScopedPointer<Player> m_player;
+    std::shared_ptr<Player> m_player;
     QVector<PlaylistData> m_PlayListdata;
     // sound playback data
     QMap<QString, std::shared_ptr<SoundData>> m_soundCaches;
@@ -290,7 +288,7 @@ private:
         {
             sound.reset(new QSoundEffect(owner));
         }
-        QScopedPointer<QSoundEffect> sound;
+        std::shared_ptr<QSoundEffect> sound;
         QTimer timer;
     };
     SoundEffect m_soundEffectData[MAX_PARALLEL_SOUNDS]{SoundEffect(this),

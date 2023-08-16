@@ -32,7 +32,7 @@ Achievementmenu::Achievementmenu()
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("achievementmenu");
     if (pBackground != nullptr)
@@ -64,12 +64,12 @@ Achievementmenu::Achievementmenu()
 
     qint32 y = 10;
     qint32 width = 150;
-    spLabel pTextfield = spLabel::create(width - 10, true);
+    spLabel pTextfield = MemoryManagement::create<Label>(width - 10, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Search: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
-    m_SearchString = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 380);
+    m_SearchString = MemoryManagement::create<Textbox>(oxygine::Stage::getStage()->getWidth() - 380);
     m_SearchString->setTooltipText(tr("Search for an Achievement by title or description."));
     m_SearchString->setPosition(150, y);
     connect(m_SearchString.get(), &Textbox::sigTextChanged, this, [this](QString)
@@ -88,7 +88,7 @@ Achievementmenu::Achievementmenu()
     y += pTextfield->getHeight() + 10;
 
     qint32 x = 10;
-    pTextfield = spLabel::create(110, true);
+    pTextfield = MemoryManagement::create<Label>(110, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Group: "));
     pTextfield->setPosition(x, y);
@@ -105,7 +105,7 @@ Achievementmenu::Achievementmenu()
             groups.append(achievement.group);
         }
     }
-    m_group = spDropDownmenu::create(200, groups);
+    m_group = MemoryManagement::create<DropDownmenu>(200, groups);
     m_group->setPosition(x, y);
     addChild(m_group);
     connect(m_group.get(), &DropDownmenu::sigItemChanged, this, [this](qint32)
@@ -114,13 +114,13 @@ Achievementmenu::Achievementmenu()
     }, Qt::QueuedConnection);
     x += 10 + m_group->getScaledWidth();
 
-    pTextfield = spLabel::create(110, true);
+    pTextfield = MemoryManagement::create<Label>(110, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sort: "));
     pTextfield->setPosition(x, y);
     addChild(pTextfield);
     x += pTextfield->getScaledWidth();
-    m_sort = spDropDownmenu::create(200, QStringList{tr("None"), tr("Ascending"), tr("Descending")});
+    m_sort = MemoryManagement::create<DropDownmenu>(200, QStringList{tr("None"), tr("Ascending"), tr("Descending")});
     m_sort->setPosition(x, y);
     addChild(m_sort);
     connect(m_sort.get(), &DropDownmenu::sigItemChanged, this, [this](qint32)
@@ -131,7 +131,7 @@ Achievementmenu::Achievementmenu()
     y += pTextfield->getHeight() + 10;
 
     QSize size(oxygine::Stage::getStage()->getWidth() - 20, oxygine::Stage::getStage()->getHeight() - 210);
-    m_MainPanel = spPanel::create(true, size, size);
+    m_MainPanel = MemoryManagement::create<Panel>(true, size, size);
     m_MainPanel->setPosition(10, 150);
     addChild(m_MainPanel);
 
@@ -147,7 +147,7 @@ Achievementmenu::Achievementmenu()
             }
         }
     }
-    pTextfield = spLabel::create(singleWidth, true);
+    pTextfield = MemoryManagement::create<Label>(singleWidth, true);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Achievement Progress: ") + QString::number(achieveCount) + " / " + QString::number(achievements->length()));
     pTextfield->setPosition(10, 100);
@@ -174,7 +174,7 @@ void Achievementmenu::exitMenue()
 {    
     CONSOLE_PRINT("Leaving Achievement Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    auto window = spMainwindow::create("ui/menu/playermenu.xml");
+    auto window = MemoryManagement::create<Mainwindow>("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -263,7 +263,7 @@ void Achievementmenu::searchChanged(QString searchText, QString group, SortDirec
                   lowerDescription.contains(searchText)) &&
                  (!achievement.hide || achieved)))
             {
-                oxygine::spActor pParent = oxygine::spActor::create();
+                oxygine::spActor pParent = MemoryManagement::create<oxygine::Actor>();
                 if (achieved)
                 {
                     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
@@ -273,14 +273,14 @@ void Achievementmenu::searchChanged(QString searchText, QString group, SortDirec
                 }
                 else
                 {
-                    spLabel pTextfield = spLabel::create(50);
+                    spLabel pTextfield = MemoryManagement::create<Label>(50);
                     pTextfield->setStyle(styleLarge);
                     pTextfield->setHtmlText("?");
                     pTextfield->setPosition(x, y + 8);
                     pParent->addChild(pTextfield);
                 }
 
-                spLabel pTextfield = spLabel::create(singleWidth - 60);
+                spLabel pTextfield = MemoryManagement::create<Label>(singleWidth - 60);
                 pTextfield->setStyle(style);
                 if (achievement.hide && !achieved)
                 {
@@ -293,7 +293,7 @@ void Achievementmenu::searchChanged(QString searchText, QString group, SortDirec
                 pTextfield->setPosition(x + 60, y);
                 pParent->addChild(pTextfield);
 
-                pTextfield = spLabel::create(singleWidth - 60);
+                pTextfield = MemoryManagement::create<Label>(singleWidth - 60);
                 pTextfield->setStyle(style);
                 if (achievement.hide && !achieved)
                 {
@@ -307,7 +307,7 @@ void Achievementmenu::searchChanged(QString searchText, QString group, SortDirec
                 pParent->addChild(pTextfield);
 
                 QString info = QString::number(achievement.progress) + " / " + QString::number(achievement.targetValue);
-                spProgressInfoBar pProgressInfoBar = spProgressInfoBar::create(singleWidth, 32, info, static_cast<float>(achievement.progress) / static_cast<float>(achievement.targetValue));
+                spProgressInfoBar pProgressInfoBar = MemoryManagement::create<ProgressInfoBar>(singleWidth, 32, info, static_cast<float>(achievement.progress) / static_cast<float>(achievement.targetValue));
                 pProgressInfoBar->setPosition(x, y + 80);
                 pParent->addChild(pProgressInfoBar);
                 pParent->setSize(oxygine::Stage::getStage()->getWidth(), 120);

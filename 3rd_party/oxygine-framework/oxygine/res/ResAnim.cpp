@@ -133,8 +133,8 @@ namespace oxygine
         {
             return m_frames[index];
         }
-        static QScopedPointer<AnimationFrame> emptyFrame;
-        if (emptyFrame.isNull())
+        static std::shared_ptr<AnimationFrame> emptyFrame;
+        if (emptyFrame.get() == nullptr)
         {
             emptyFrame.reset(new AnimationFrame());
         }

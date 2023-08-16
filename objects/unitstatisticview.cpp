@@ -19,7 +19,7 @@ UnitStatisticView::UnitStatisticView(const GameRecorder::PlayerData & data, qint
 #endif
     Interpreter::setCppOwnerShip(this);
     QSize size(width, heigth);
-    spPanel pPanel = spPanel::create(true, size, size);
+    spPanel pPanel = MemoryManagement::create<Panel>(true, size, size);
     addChild(pPanel);
     qint32 y = 10;
     addStatistic(pPanel, tr("Produced"), data.producedUnits, pPlayer, pMap, y, width, false);
@@ -46,7 +46,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    spLabel headlineLabel = spLabel::create(width - 50);
+    spLabel headlineLabel = MemoryManagement::create<Label>(width - 50);
     headlineLabel->setStyle(styleHeadline);
     headlineLabel->setHtmlText(headline);
     headlineLabel->setPosition(x, y);
@@ -73,14 +73,14 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
                     {
                         pUnitPlayer = pMap->getPlayer(player);
                     }
-                    spUnit pDummy = spUnit::create(item.unitId, pUnitPlayer, false, pMap);
+                    spUnit pDummy = MemoryManagement::create<Unit>(item.unitId, pUnitPlayer, false, pMap);
                     pDummy->setPosition(x, y);
                     pDummy->addClickListener([this, unitId](oxygine::Event*)
                     {
                         emit sigShowLink(unitId);
                     });
                     pPanel->addItem(pDummy);
-                    spLabel pLabel = spLabel::create(textWidth);
+                    spLabel pLabel = MemoryManagement::create<Label>(textWidth);
                     pLabel->setStyle(style);
                     pLabel->setHtmlText("x " + QString::number(item.count));
                     pLabel->setPosition(x + 30, y - 5);
@@ -105,7 +105,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
     if (summary)
     {
         x = 10;
-        spLabel headlineLabel = spLabel::create(width - 50);
+        spLabel headlineLabel = MemoryManagement::create<Label>(width - 50);
         headlineLabel->setStyle(styleHeadline);
         headlineLabel->setHtmlText(tr("Summary"));
         headlineLabel->setPosition(x, y);
@@ -116,14 +116,14 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
             if (summaryCount[i] > 0)
             {
                 QString unitId = sortedList[i];
-                spUnit pDummy = spUnit::create(unitId, pPlayer, false, pMap);
+                spUnit pDummy = MemoryManagement::create<Unit>(unitId, pPlayer, false, pMap);
                 pDummy->setPosition(x, y);
                 pDummy->addClickListener([this, unitId](oxygine::Event*)
                 {
                     emit sigShowLink(unitId);
                 });
                 pPanel->addItem(pDummy);
-                spLabel pLabel = spLabel::create(textWidth);
+                spLabel pLabel = MemoryManagement::create<Label>(textWidth);
                 pLabel->setStyle(style);
                 pLabel->setHtmlText("x " + QString::number(summaryCount[i]));
                 pLabel->setPosition(x + 30, y - 5);

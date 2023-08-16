@@ -10,7 +10,7 @@
 #include "objects/base/panel.h"
 
 class MultilineTextbox;
-using spMultilineTextbox = oxygine::intrusive_ptr<MultilineTextbox>;
+using spMultilineTextbox = std::shared_ptr<MultilineTextbox>;
 
 class MultilineTextbox final : public TextInput
 {

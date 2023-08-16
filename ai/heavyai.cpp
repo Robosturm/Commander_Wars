@@ -93,7 +93,7 @@ void HeavyAi::loadNeuralNetworks(GameEnums::AiTypes aiType)
 
 void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize)
 {
-    network = spNeuralNetwork::create();
+    network = MemoryManagement::create<NeuralNetwork>();
     network->setNetworkName(netName);
     QString baseName = NeuralNetworkPath + netName + m_aiName + NeuralNetworkFileEnding;
     QStringList searchFiles;
@@ -219,8 +219,8 @@ void HeavyAi::endTurn()
 {
     m_aiStep = AISteps::moveUnits;
     m_turnMode = GameEnums::AiTurnMode_EndOfDay;
-    m_pUnits.free();
-    m_pEnemyUnits.free();
+    m_pUnits.reset();
+    m_pEnemyUnits.reset();
     m_usedPredefinedAi = false;
     spQmlVectorUnit pUnits(m_pPlayer->getUnits());
     spQmlVectorUnit pEnemyUnits(m_pPlayer->getEnemyUnits());
@@ -265,7 +265,7 @@ bool HeavyAi::selectActionToPerform()
         if (target != unit.pUnit->Unit::getPosition())
         {
             oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "HeavyAi::selectActionToPerform action error");
-            unit.m_action.free();
+            unit.m_action.reset();
             unit.m_score = 0;
             return false;
         }
@@ -274,7 +274,7 @@ bool HeavyAi::selectActionToPerform()
             m_planedCaptureTargets.push_back(unit.captureTarget);
         }
         emit sigPerformAction(unit.m_action);
-        unit.m_action.free();
+        unit.m_action.reset();
         unit.m_score = 0;
         unit.captureTarget = QPoint(-1, -1);
         return true;
@@ -356,7 +356,7 @@ void HeavyAi::addNewUnitToUnitData(std::vector<MoveUnitData> & units, Unit* pUni
 {
     MoveUnitData data;
     data.pUnit = spUnit(pUnit);
-    data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
+    data.pUnitPfs = MemoryManagement::create<UnitPathFindingSystem>(m_pMap, pUnit);
     data.movementPoints = data.pUnit->getMovementpoints(data.pUnit->getPosition());
     data.pUnitPfs->setMovepoints(data.movementPoints * 2);
     data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
@@ -394,7 +394,7 @@ void HeavyAi::updateUnits(std::vector<MoveUnitData> & units, spQmlVectorUnit & p
         {
             if (units[i].pUnit->getHasMoved())
             {
-                units[i].m_action.free();
+                units[i].m_action.reset();
                 units[i].m_score = 0;
             }
             ++i;
@@ -426,7 +426,7 @@ void HeavyAi::updateUnits(std::vector<MoveUnitData> & units, spQmlVectorUnit & p
                     qAbs(updatePoint.y() - units[i2].pUnit->Unit::getY()) <=
                     units[i2].pUnit->getMovementpoints(QPoint(units[i2].pUnit->Unit::getX(), units[i2].pUnit->Unit::getY())) + 2)
                 {
-                    units[i2].pUnitPfs = spUnitPathFindingSystem::create(m_pMap, units[i2].pUnit.get());
+                    units[i2].pUnitPfs = MemoryManagement::create<UnitPathFindingSystem>(m_pMap, units[i2].pUnit.get());
                     units[i2].pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                     units[i2].pUnitPfs->explore();
                     if (!enemyUnits)
@@ -458,7 +458,7 @@ void HeavyAi::updateUnits(std::vector<MoveUnitData> & units, spQmlVectorUnit & p
                     {
                         for (const auto & unit : units)
                         {
-                            if (unit.pUnit == pUnit)
+                            if (unit.pUnit.get() == pUnit)
                             {
                                 found = true;
                                 break;
@@ -569,7 +569,7 @@ void HeavyAi::scoreActions(MoveUnitData & unit)
             unit.pUnit->getHp() <= 0)
         {
             oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "invalid unit found");
-            unit.m_action.free();
+            unit.m_action.reset();
             unit.m_score = 0;
             return;
         }
@@ -606,9 +606,9 @@ void HeavyAi::scoreActions(MoveUnitData & unit)
         else
         {
             unit.m_score = 0.0f;
-            unit.m_action.free();
+            unit.m_action.reset();
         }
-        m_currentTargetedPfs.free();
+        m_currentTargetedPfs.reset();
     }
 }
 
@@ -647,14 +647,14 @@ void HeavyAi::mutateActionForFields(MoveUnitData & unitData, const std::vector<Q
         std::vector<qint32> maxStepOtions;
         maxStepOtions.reserve(40);
         std::vector<double> baseData(static_cast<qsizetype>(BasicFieldInfo::BasicFieldInfoMaxSize));
-        spGameAction pDummy  = spGameAction::create(m_pMap);
+        spGameAction pDummy  = MemoryManagement::create<GameAction>(m_pMap);
         pDummy->setActionID(action);
         pDummy->setMovepath(path, costs);
         pDummy->setTarget(QPoint(unitData.pUnit->Unit::getX(), unitData.pUnit->Unit::getY()));
         getBasicFieldInputVector(pDummy, baseData);
         while (mutate)
         {
-            spGameAction pAction  = spGameAction::create(m_pMap);
+            spGameAction pAction  = MemoryManagement::create<GameAction>(m_pMap);
             pAction->setActionID(action);
             pAction->setMovepath(path, costs);
             pAction->setTarget(QPoint(unitData.pUnit->Unit::getX(), unitData.pUnit->Unit::getY()));
@@ -1106,7 +1106,7 @@ void HeavyAi::scoreFire(ScoreData & data, MoveUnitData & unitData, std::vector<d
             }
             for (const auto & enemy : m_enemyUnits)
             {
-                if (enemy.pUnit == pDefUnit)
+                if (enemy.pUnit.get() == pDefUnit)
                 {
                     baseData[AttackInfo::HqThread] = static_cast<double>(enemy.m_threadLevel) / static_cast<double>(ThreadLevel::Max);
                     break;
@@ -1326,9 +1326,9 @@ void HeavyAi::scoreMoveToTargets()
             else
             {
                 unit.m_score = 0.0f;
-                unit.m_action.free();
+                unit.m_action.reset();
             }
-            m_currentTargetedPfs.free();
+            m_currentTargetedPfs.reset();
         }
     }
 }
@@ -1339,7 +1339,7 @@ void HeavyAi::prepareWaitPfs(MoveUnitData & unitData, const QStringList & action
     {
         m_currentTargetedPfsTargets.clear();
         getMoveTargets(unitData, actions, m_currentTargetedPfsTargets);
-        m_currentTargetedPfs = spTargetedUnitPathFindingSystem::create(m_pMap, unitData.pUnit.get(), m_currentTargetedPfsTargets, &m_MoveCostMap);
+        m_currentTargetedPfs = MemoryManagement::create<TargetedUnitPathFindingSystem>(m_pMap, unitData.pUnit.get(), m_currentTargetedPfsTargets, &m_MoveCostMap);
         m_currentTargetedPfs->explore();
     }
 }

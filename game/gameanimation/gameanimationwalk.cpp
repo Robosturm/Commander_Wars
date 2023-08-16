@@ -37,7 +37,7 @@ void GameAnimationWalk::start()
         {
             setVisible(true);
         }
-        m_previousAnimation.free();
+        m_previousAnimation.reset();
         doPreAnimationCall();
         AudioManager* pAudioThread = Mainapp::getInstance()->getAudioManager();
         auto speed = Settings::getInstance()->getWalkAnimationSpeed();
@@ -118,9 +118,9 @@ void GameAnimationWalk::loadSpriteV2(const QString spriteID, GameEnums::Recolori
     if (pAnim != nullptr)
     {
         Player* pPlayer = m_pMap->getCurrentViewPlayer();
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
-        oxygine::spTweenQueue queueMoving = oxygine::spTweenQueue::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
+        oxygine::spTweenQueue queueAnimating = MemoryManagement::create<oxygine::TweenQueue>();
+        oxygine::spTweenQueue queueMoving = MemoryManagement::create<oxygine::TweenQueue>();
         pSprite->setPosition(m_pUnit->Unit::getX() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::getImageSize()) / 2.0f),
                              m_pUnit->Unit::getY() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::getImageSize()) / 2.0f));
         setSize(pAnim->getSize());

@@ -12,7 +12,7 @@ StringTableItem::StringTableItem(const QString& value, qint32 itemWidth, QColor 
     setObjectName("StringTableItem");
 #endif
 
-    spLabel pTextfield = spLabel::create(itemWidth);
+    spLabel pTextfield = MemoryManagement::create<Label>(itemWidth);
     auto style = pTextfield->getStyle();
     style.color = textColor;
     pTextfield->setStyle(style);

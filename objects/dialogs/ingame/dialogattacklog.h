@@ -10,10 +10,10 @@ class Player;
 class GameMap;
 
 class AttackReport;
-using spAttackReport = oxygine::intrusive_ptr<AttackReport>;
+using spAttackReport = std::shared_ptr<AttackReport>;
 
 class DialogAttackLog;
-using spDialogAttackLog = oxygine::intrusive_ptr<DialogAttackLog>;
+using spDialogAttackLog = std::shared_ptr<DialogAttackLog>;
 
 class DialogAttackLog final : public QObject, public oxygine::Actor
 {

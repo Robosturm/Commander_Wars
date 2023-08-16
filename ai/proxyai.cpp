@@ -75,7 +75,7 @@ void ProxyAi::deserializeObject(QDataStream& stream)
         stream >> size;
         for (qint32 i = 0; i < size; i++)
         {
-            spGameAction pAction = spGameAction::create(m_pMap);
+            spGameAction pAction = MemoryManagement::create<GameAction>(m_pMap);
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
         }
@@ -99,7 +99,7 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
         {
             CONSOLE_PRINT("Received action from network for player " + QString::number(player), GameConsole::eDEBUG);
             QMutexLocker locker(&m_ActionMutex);
-            spGameAction pAction = spGameAction::create(m_pMap);
+            spGameAction pAction = MemoryManagement::create<GameAction>(m_pMap);
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
             if (m_pMenu != nullptr &&

@@ -22,7 +22,7 @@ QImage Player::m_neutralTableImage;
 
 void Player::releaseStaticData()
 {
-    m_neutralTableAnim.free();
+    m_neutralTableAnim.reset();
 }
 
 Player::Player(GameMap* pMap)
@@ -32,7 +32,7 @@ Player::Player(GameMap* pMap)
     setObjectName("Player");
 #endif
     Interpreter::setCppOwnerShip(this);
-    m_pBaseGameInput.free();
+    m_pBaseGameInput.reset();
     // for older versions we allow all loaded units to be buildable
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
@@ -189,7 +189,7 @@ void Player::setColor(QColor color, qint32 table)
         createTable(m_Color);
     }
 #ifdef GRAPHICSUPPORT
-    m_ColorTableAnim = oxygine::spSingleResAnim::create();
+    m_ColorTableAnim = MemoryManagement::create<oxygine::SingleResAnim>();
     Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1);
 #endif
 }
@@ -527,7 +527,7 @@ oxygine::spResAnim Player::getNeutralTableAnim()
 {
     if (m_neutralTableAnim.get() == nullptr)
     {
-        m_neutralTableAnim = oxygine::spSingleResAnim::create();
+        m_neutralTableAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         QStringList searchPaths;
         for (qint32 i = 0; i < Settings::getInstance()->getMods().size(); i++)
         {
@@ -1805,11 +1805,11 @@ void Player::setCO(QString coId, quint8 idx)
     {
         if (coId.isEmpty())
         {
-            m_playerCOs[idx].free();
+            m_playerCOs[idx].reset();
         }
         else
         {
-            m_playerCOs[idx] = spCO::create(coId, this, m_pMap);
+            m_playerCOs[idx] = MemoryManagement::create<CO>(coId, this, m_pMap);
         }
 
     }
@@ -2256,11 +2256,11 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             pStream >> hasC0;
             if (hasC0)
             {
-                m_playerCOs[co] = spCO::create("", this, m_pMap);
+                m_playerCOs[co] = MemoryManagement::create<CO>("", this, m_pMap);
                 m_playerCOs[co]->deserializer(pStream, fast);
                 if (!m_playerCOs[co]->isValid())
                 {
-                    m_playerCOs[co].free();
+                    m_playerCOs[co].reset();
                 }
             }
             ++co;
@@ -2280,7 +2280,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_pBaseGameInput = spHumanPlayerInput::create(m_pMap);
+            m_pBaseGameInput = MemoryManagement::create<HumanPlayerInput>(m_pMap);
             m_pBaseGameInput->setPlayer(this);
         }
         m_FogVisionFields.clear();
@@ -2401,7 +2401,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         {
 #ifdef GRAPHICSUPPORT
             CONSOLE_PRINT("Loading colortable", GameConsole::eDEBUG);
-            m_ColorTableAnim = oxygine::spSingleResAnim::create();
+            m_ColorTableAnim = MemoryManagement::create<oxygine::SingleResAnim>();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1);
 #endif
         }
@@ -2416,7 +2416,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         {
 #ifdef GRAPHICSUPPORT
             CONSOLE_PRINT("Loading colortable", GameConsole::eDEBUG);
-            m_ColorTableAnim = oxygine::spSingleResAnim::create();
+            m_ColorTableAnim = MemoryManagement::create<oxygine::SingleResAnim>();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1);
 #endif
         }

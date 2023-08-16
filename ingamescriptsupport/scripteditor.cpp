@@ -24,7 +24,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -39,13 +39,13 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::spTextField pText = oxygine::spTextField::create();
+    oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
     pText->setStyle(style);
     pText->setHtmlText(tr("Conditions"));
     pText->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pText->getTextRect().width() / 2, 70);
     pSpriteBox->addChild(pText);
     QSize size(oxygine::Stage::getStage()->getWidth() - 40, oxygine::Stage::getStage()->getHeight() / 2 - 160);
-    m_ConditionPanel = spPanel::create(true, size, size);
+    m_ConditionPanel = MemoryManagement::create<Panel>(true, size, size);
     m_ConditionPanel->setPosition(30, 110);
     pSpriteBox->addChild(m_ConditionPanel);
     QStringList items = {tr("Start of turn"),
@@ -62,7 +62,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
                          tr("Unit in area"),
                          tr("Check variable"),
                          tr("Is selected co")};
-    m_Conditions = spDropDownmenu::create(300, items);
+    m_Conditions = MemoryManagement::create<DropDownmenu>(300, items);
     m_Conditions->setTooltipText(tr("Condition type you want to create. If another condition is selected both must be fulfilled to activate the event."));
     m_Conditions->setPosition(30, oxygine::Stage::getStage()->getHeight() / 2 - 45);
     pSpriteBox->addChild(m_Conditions);
@@ -85,12 +85,12 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     });
     connect(this, &ScriptEditor::sigDuplicateCondition, this, &ScriptEditor::duplicateCondition, Qt::QueuedConnection);
 
-    pText = oxygine::spTextField::create();
+    pText = MemoryManagement::create<oxygine::TextField>();
     pText->setStyle(style);
     pText->setHtmlText(tr("Events"));
     pText->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - pText->getTextRect().width() / 2, oxygine::Stage::getStage()->getHeight() / 2);
     pSpriteBox->addChild(pText);
-    m_EventPanel = spPanel::create(true, size, size);
+    m_EventPanel = MemoryManagement::create<Panel>(true, size, size);
     m_EventPanel->setPosition(30, oxygine::Stage::getStage()->getHeight() / 2 + 40);
     pSpriteBox->addChild(m_EventPanel);
     items = {
@@ -117,7 +117,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
         tr("Volcan fire"),
         tr("Extend map")
     };
-    m_Events = spDropDownmenu::create(300, items);
+    m_Events = MemoryManagement::create<DropDownmenu>(300, items);
     m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));
     m_Events->setPosition(30, oxygine::Stage::getStage()->getHeight() - 115);
     pSpriteBox->addChild(m_Events);
@@ -132,12 +132,12 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     m_pEventButton->setEnabled(false);
     connect(this, &ScriptEditor::sigAddEvent, this, &ScriptEditor::addEvent, Qt::QueuedConnection);
 
-    pText = oxygine::spTextField::create();
+    pText = MemoryManagement::create<oxygine::TextField>();
     pText->setStyle(style);
     pText->setHtmlText(tr("Immediate Start: "));
     pText->setPosition(30, 30);
     pSpriteBox->addChild(pText);
-    m_ImmediateStart = spCheckbox::create();
+    m_ImmediateStart = MemoryManagement::create<Checkbox>();
     m_ImmediateStart->setTooltipText(tr("If checked the game starts without being able to change rules, players or CO's."));
     m_ImmediateStart->setPosition(280, 30);
     m_ImmediateStart->setChecked(false);
@@ -181,7 +181,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
 
 void ScriptEditor::showExitBox()
 {    
-    spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the script editor?"), true);
+    spDialogMessageBox pExit = MemoryManagement::create<DialogMessageBox>(tr("Do you want to exit the script editor?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ScriptEditor::exitEditor, Qt::QueuedConnection);
     addChild(pExit);    
 }
@@ -197,7 +197,7 @@ void ScriptEditor::showSaveScript()
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getInstance()->getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, true, "", false, tr("Save"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, true, "", false, tr("Save"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::saveScript, Qt::QueuedConnection);
 }
@@ -207,7 +207,7 @@ void ScriptEditor::showLoadScript()
     QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getInstance()->getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, false, "", false, tr("Load"));
+    spFileDialog fileDialog = MemoryManagement::create<FileDialog>(path, wildcards, false, "", false, tr("Load"));
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::loadScript, Qt::QueuedConnection);
 }
@@ -286,7 +286,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
-    oxygine::spBox9Sprite pSpritebox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpritebox = MemoryManagement::create<oxygine::Box9Sprite>();
     pSpritebox->setResAnim(pAnim);
     pSpritebox->setSize(x + 140 * 3 + 10, 50);
     pSpritebox->setPosition(5, y);
@@ -297,7 +297,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
     spScriptCondition condition = pCondition;
     while (condition.get() != nullptr)
     {
-        spLabel text = spLabel::create(420);
+        spLabel text = MemoryManagement::create<Label>(420);
         text->setStyle(style);
         text->setHtmlText(condition->getDescription());
         text->setPosition(10, boxY);
@@ -381,7 +381,7 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    spLabel text = spLabel::create(420);
+    spLabel text = MemoryManagement::create<Label>(420);
     text->setStyle(style);
     text->setHtmlText(pEvent->getDescription());
     text->setPosition(10, y);

@@ -18,10 +18,10 @@ MultilineTextbox::MultilineTextbox(qint32 width, qint32 heigth)
 
     constexpr qint32 widthReduction = 60;
     QSize size(width, heigth);
-    m_pPanel = spPanel::create(true, size, size - QSize(widthReduction, 0));
+    m_pPanel = MemoryManagement::create<Panel>(true, size, size - QSize(widthReduction, 0));
     addChild(m_pPanel);
 
-    m_textfield = oxygine::spTextField::create();
+    m_textfield = MemoryManagement::create<oxygine::TextField>();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;

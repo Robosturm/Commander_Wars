@@ -7,7 +7,7 @@
 namespace oxygine
 {
     class Button;
-    using spButton = intrusive_ptr<Button>;
+    using spButton = std::shared_ptr<Button>;
     class Button : public QObject, public Box9Sprite
     {
         Q_OBJECT

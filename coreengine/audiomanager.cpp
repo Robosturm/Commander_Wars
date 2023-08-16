@@ -463,7 +463,7 @@ void AudioManager::slotSetMuteInternal(bool value)
     m_audioOutput.setMuted(m_internalMuted);
     for (auto & soundEffect : m_soundEffectData)
     {
-        if (!soundEffect.sound.isNull())
+        if (soundEffect.sound.get() != nullptr)
         {
             soundEffect.sound->setMuted(m_internalMuted);
         }

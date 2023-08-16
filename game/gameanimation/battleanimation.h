@@ -10,7 +10,7 @@
 #include "coreengine/LUPDATE_MACROS.h"
 
 class BattleAnimation;
-using spBattleAnimation = oxygine::intrusive_ptr<BattleAnimation>;
+using spBattleAnimation = std::shared_ptr<BattleAnimation>;
 
 class BattleAnimation final : public GameAnimation
 {

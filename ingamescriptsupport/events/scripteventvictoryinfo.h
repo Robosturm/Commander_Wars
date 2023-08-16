@@ -5,7 +5,7 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventVictoryInfo;
-using spScriptEventVictoryInfo = oxygine::intrusive_ptr<ScriptEventVictoryInfo>;
+using spScriptEventVictoryInfo = std::shared_ptr<ScriptEventVictoryInfo>;
 
 class ScriptEventVictoryInfo final : public ScriptEvent
 {

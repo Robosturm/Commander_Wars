@@ -15,7 +15,7 @@
 #include "wiki/fieldinfo.h"
 
 MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
-    : GameMenue(spGameMap::create(1, 1, 2), false),
+    : GameMenue(MemoryManagement::create<GameMap>(1, 1, 2), false),
       m_pOwner(pOwner),
       m_pViewPlayer(pViewPlayer)
 {
@@ -27,7 +27,7 @@ MovementPlanner::MovementPlanner(GameMenue* pOwner, Player* pViewPlayer)
     reloadMap();
     loadHandling();
     loadGameMenue();
-    m_Topbar = spTopbar::create(0, oxygine::Stage::getStage()->getWidth() - m_IngameInfoBar->getScaledWidth());
+    m_Topbar = MemoryManagement::create<Topbar>(0, oxygine::Stage::getStage()->getWidth() - m_IngameInfoBar->getScaledWidth());
     QStringList loadedGroups;
     loadedGroups.append(tr("Menu"));
     m_Topbar->addGroup(loadedGroups[0]);
@@ -99,7 +99,7 @@ void MovementPlanner::addAddIn(QStringList & loadedGroups, QString newAddInId)
         }
         m_Topbar->addItem(name, newAddInId, index, description);
     }
-    auto addIn = spMovementPlannerAddIn::create(newAddInId, m_pMap.get(), this);
+    auto addIn = MemoryManagement::create<MovementPlannerAddIn>(newAddInId, m_pMap.get(), this);
     m_addIns.append(addIn);
 }
 
@@ -153,7 +153,7 @@ void MovementPlanner::reloadMap()
     pLoadingScreen->setProgress(tr("Updating map"), 99);
     m_pMap->setCurrentPlayer(m_pViewPlayer->getPlayerID());
     Player* pPlayer = m_pMap->getCurrentViewPlayer();
-    m_input = spMoveplannerInput::create(m_pMap.get());
+    m_input = MemoryManagement::create<MoveplannerInput>(m_pMap.get());
     pPlayer->setBaseGameInput(m_input);
     pPlayer->getBaseGameInput()->init(this);
     m_pMap->getGameRules()->createFogVision();
@@ -229,7 +229,7 @@ void MovementPlanner::clickedTopbar(QString itemID)
 
 void MovementPlanner::hide()
 {
-    m_activeAddIn.free();
+    m_activeAddIn.reset();
     emit sigHide();
 }
 
@@ -389,7 +389,7 @@ void MovementPlanner::stopAddIn()
             m_activeAddIn->removeAllSprites();
         }
         m_activeAddIn->detach();
-        m_activeAddIn.free();
+        m_activeAddIn.reset();
         CursorData data;
         getCursor()->changeCursor(data.getCursor(), data.getXOffset(), data.getYOffset(), data.getScale());
     }
@@ -418,7 +418,7 @@ void MovementPlanner::keyInput(oxygine::KeyEvent event)
                     {
                         pUnit = nullptr;
                     }
-                    spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pUnit);
+                    spFieldInfo fieldinfo = MemoryManagement::create<FieldInfo>(pTerrain, pUnit);
                     addChild(fieldinfo);
                     connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
                     {

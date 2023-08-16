@@ -79,7 +79,7 @@ namespace oxygine
     };
 
     class Actor;
-    using spActor = intrusive_ptr<Actor>;
+    using spActor = std::shared_ptr<Actor>;
     class Actor: public EventDispatcher
     {
     public:

@@ -231,7 +231,7 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     if (cos.size() == 0 ||
         cos[0] != "")
     {
-        spCOSelectionDialog dialog = spCOSelectionDialog::create(m_pMap, coid, m_pMap->getPlayer(player)->getColor(), player, cos);
+        spCOSelectionDialog dialog = MemoryManagement::create<COSelectionDialog>(m_pMap, coid, m_pMap->getPlayer(player)->getColor(), player, cos);
         oxygine::Stage::getStage()->addChild(dialog);
         if (co == 0)
         {
@@ -448,7 +448,7 @@ void PlayerSelection::initializeMap(bool relaunchedLobby)
                          pPlayer->getControlType() != GameEnums::AiTypes_Closed)
                 {
                     CONSOLE_PRINT("PlayerSelection::initializeMap changing player " + QString::number(i) + " to human", GameConsole::eDEBUG);
-                    pPlayer->setBaseGameInput(spHumanPlayerInput::create(m_pMap));
+                    pPlayer->setBaseGameInput(MemoryManagement::create<HumanPlayerInput>(m_pMap));
                     pPlayer->setControlType(GameEnums::AiTypes_Human);
                 }
                 else
@@ -744,14 +744,14 @@ void PlayerSelection::playerIncomeChanged(float value, qint32 playerIdx)
 void PlayerSelection::slotShowAllBuildList()
 {
     // use player 0 as default for showing all
-    spBuildListDialog dialog = spBuildListDialog::create(m_pMap, 0, m_pMap->getPlayer(0)->getBuildList());
+    spBuildListDialog dialog = MemoryManagement::create<BuildListDialog>(m_pMap, 0, m_pMap->getPlayer(0)->getBuildList());
     oxygine::Stage::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangeAllBuildList, Qt::QueuedConnection);
 }
 
 void PlayerSelection::slotShowPlayerBuildList(qint32 player)
 {
-    spBuildListDialog dialog = spBuildListDialog::create(m_pMap, player, m_pMap->getPlayer(player)->getBuildList());
+    spBuildListDialog dialog = MemoryManagement::create<BuildListDialog>(m_pMap, player, m_pMap->getPlayer(player)->getBuildList());
     oxygine::Stage::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangePlayerBuildList, Qt::QueuedConnection);
 }
@@ -1106,7 +1106,7 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
     {
         Userdata* pUserdata = Userdata::getInstance();
         auto hiddenList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Perk, false);
-        spPerkSelectionDialog pPerkSelectionDialog = spPerkSelectionDialog::create(m_pMap, pPlayer, false, hiddenList);
+        spPerkSelectionDialog pPerkSelectionDialog = MemoryManagement::create<PerkSelectionDialog>(m_pMap, pPlayer, false, hiddenList);
         oxygine::Stage::getStage()->addChild(pPerkSelectionDialog);
         connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, this, [this, player]()
         {
@@ -1392,7 +1392,7 @@ void PlayerSelection::joinObserver(quint64 socketID)
         if (observer.size() < gameRules->getMultiplayerObserver())
         {
             observer.append(socketID);
-            auto server = oxygine::dynamic_pointer_cast<TCPServer>(m_pNetworkInterface);
+            auto server = std::dynamic_pointer_cast<TCPServer>(m_pNetworkInterface);
             if (server.get())
             {
                 auto client = server->getClient(socketID);
@@ -1422,7 +1422,7 @@ void PlayerSelection::playerAccessDenied()
     {
         CONSOLE_PRINT("No remaining human players found as client", GameConsole::eDEBUG);
         QString message = tr("Connection failed.Reason: No more players available or user is already in the game.");
-        spDialogMessageBox pDialog = spDialogMessageBox::create(message);
+        spDialogMessageBox pDialog = MemoryManagement::create<DialogMessageBox>(message);
         oxygine::Stage::getStage()->addChild(pDialog);
         emit m_pNetworkInterface->sigDisconnectClient(0);
     }
@@ -2474,7 +2474,7 @@ void PlayerSelection::deserializeObject(QDataStream& stream)
     stream >> hasCampaign;
     if (hasCampaign)
     {
-        m_pCampaign = spCampaign::create();
+        m_pCampaign = MemoryManagement::create<Campaign>();
         m_pCampaign->deserializeObject(stream);
     }
     stream >> m_saveGame;

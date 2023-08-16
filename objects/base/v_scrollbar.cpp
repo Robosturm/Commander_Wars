@@ -18,12 +18,12 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     setSize(width, 33);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("scrollbar");
-    m_pBox = oxygine::spBox9Sprite::create();
+    m_pBox = MemoryManagement::create<oxygine::Box9Sprite>();
     m_pBox->setResAnim(pAnim);
     m_pBox->setSize(width, 33);
     addChild(m_pBox);
 
-    m_pArrowRigth = oxygine::spButton::create();
+    m_pArrowRigth = MemoryManagement::create<oxygine::Button>();
     m_pArrowRigth->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));
     m_pArrowRigth->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Actor* pPtrRight = m_pArrowRigth.get();
@@ -62,7 +62,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     m_pBox->addChild(m_pArrowRigth);
     m_pArrowRigth->setPosition(width - m_pArrowRigth->getScaledWidth() - 8, 9);
 
-    m_pArrowLeft = oxygine::spButton::create();
+    m_pArrowLeft = MemoryManagement::create<oxygine::Button>();
     // pButton->setPosition(200, 200);
     m_pArrowLeft->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));
     m_pArrowLeft->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -103,7 +103,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     m_pBox->addChild(m_pArrowLeft);
     m_pArrowLeft->setPosition(9, 8);
 
-    m_slider = oxygine::spBox9Sprite::create();
+    m_slider = MemoryManagement::create<oxygine::Box9Sprite>();
     pAnim = pObjectManager->getResAnim("v_scrollbar");
     m_slider->setResAnim(pAnim);
 

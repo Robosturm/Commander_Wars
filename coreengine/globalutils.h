@@ -4,12 +4,9 @@
 #include <QObject>
 #include <QDir>
 #include <QRandomGenerator>
-#include <QScopedPointer>
-
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class QmlVectorPoint;
-using spQmlVectorPoint = oxygine::intrusive_ptr<QmlVectorPoint>;
+using spQmlVectorPoint = std::shared_ptr<QmlVectorPoint>;
 
 class GlobalUtils final : public QObject
 {
@@ -160,7 +157,7 @@ public slots:
 private:
     explicit GlobalUtils();
 private:
-    static QScopedPointer<GlobalUtils> m_pInstace;
+    static std::shared_ptr<GlobalUtils> m_pInstace;
     QRandomGenerator m_randGenerator;
     bool m_useSeed;
     quint32 m_seed;

@@ -10,7 +10,7 @@
 
 class GameMap;
 class DialogModifyBuilding;
-using spDialogModifyBuilding = oxygine::intrusive_ptr<DialogModifyBuilding>;
+using spDialogModifyBuilding = std::shared_ptr<DialogModifyBuilding>;
 
 class DialogModifyBuilding final : public QObject, public oxygine::Actor
 {

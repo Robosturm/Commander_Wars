@@ -15,7 +15,7 @@
 
 class SimpleProductionSystem;
 class Unit;
-using spUnit = oxygine::intrusive_ptr<Unit>;
+using spUnit = std::shared_ptr<Unit>;
 class Terrain;
 class Player;
 class Building;
@@ -25,8 +25,8 @@ class GameAction;
 class GameMap;
 class GameMenue;
 class CO;
-using spCO = oxygine::intrusive_ptr<CO>;
-using spUnit = oxygine::intrusive_ptr<Unit>;
+using spCO = std::shared_ptr<CO>;
+using spUnit = std::shared_ptr<Unit>;
 
 class CO final : public QObject, public oxygine::Actor, public FileSerializable
 {

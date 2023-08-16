@@ -27,7 +27,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
     m_Log = m_pMap->getGameRecorder()->getAttackLog(pPlayer->getPlayerID());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -50,55 +50,55 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         emit sigFinished();
     });
 
-    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
+    spPanel pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
                                      QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150));
     pPanel->setPosition(30, 70);
 
     pSpriteBox->addChild(pPanel);
     qint32 y = 30;
-    spLabel pText = spLabel::create(130);
+    spLabel pText = MemoryManagement::create<Label>(130);
     pText->setStyle(style);
     pText->setHtmlText(tr("Attacker"));
     pText->setPosition(10 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
-    pText = spLabel::create(80);
+    pText = MemoryManagement::create<Label>(80);
     pText->setStyle(style);
     pText->setHtmlText(tr("X"));
     pText->setPosition(140 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
-    pText = spLabel::create(80);
+    pText = MemoryManagement::create<Label>(80);
     pText->setStyle(style);
     pText->setHtmlText(tr("Y"));
     pText->setPosition(240 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
-    pText = spLabel::create(100);
+    pText = MemoryManagement::create<Label>(100);
     pText->setStyle(style);
     pText->setHtmlText(tr("Dealt"));
     pText->setPosition(330 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
-    pText = spLabel::create(130);
+    pText = MemoryManagement::create<Label>(130);
     pText->setStyle(style);
     pText->setHtmlText(tr("Defender"));
     pText->setPosition(440 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
-    pText = spLabel::create(80);
+    pText = MemoryManagement::create<Label>(80);
     pText->setStyle(style);
     pText->setHtmlText(tr("X"));
     pText->setPosition(580 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
-    pText = spLabel::create(80);
+    pText = MemoryManagement::create<Label>(80);
     pText->setStyle(style);
     pText->setHtmlText(tr("Y"));
     pText->setPosition(670 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
-    pText = spLabel::create(100);
+    pText = MemoryManagement::create<Label>(100);
     pText->setStyle(style);
     pText->setHtmlText(tr("Dealt"));
     pText->setPosition(760 + pPanel->getX(), y);
@@ -112,7 +112,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         if (log->day != currentDay)
         {
             currentDay = log->day;
-            spLabel pText = spLabel::create(pPanel->getContentWidth() - 70);
+            spLabel pText = MemoryManagement::create<Label>(pPanel->getContentWidth() - 70);
             pText->setHtmlText(tr("Day ") + QString::number(currentDay));
             pText->setStyle(style);
             pText->setPosition(10, y);
@@ -126,19 +126,19 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         Building* pBuilding = pTerrain->getBuilding();
         if (pBuilding != nullptr)
         {
-            spBuilding pTerrainBuilding = spBuilding::create(pBuilding->getBuildingID(), m_pMap);
+            spBuilding pTerrainBuilding = MemoryManagement::create<Building>(pBuilding->getBuildingID(), m_pMap);
             pTerrainBuilding->setOwner(nullptr);
             pTerrainBuilding->scaleAndShowOnSingleTile();
             pActor->addChild(pTerrainBuilding);
         }
-        pActor->addChild(spUnit::create(log->attackerID, m_pMap->getPlayer(log->attackerOwnerID), false, m_pMap));
+        pActor->addChild(MemoryManagement::create<Unit>(log->attackerID, m_pMap->getPlayer(log->attackerOwnerID), false, m_pMap));
         pActor->setPosition(60, y + 8);
         if (log->attackerKilled)
         {
             oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_fire");
             if (pAnim != nullptr)
             {
-                oxygine::spSprite pSprite = oxygine::spSprite::create();
+                oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
                 pSprite->setResAnim(pAnim);
                 pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
                 pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);
@@ -147,7 +147,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         }
         pPanel->addItem(pActor);
 
-        pText = spLabel::create(80);
+        pText = MemoryManagement::create<Label>(80);
         pText->setStyle(style);
         bool isDefender = (log->defenderOwnerID == pPlayer->getPlayerID());
         if (log->attackerX >= 0 &&
@@ -162,7 +162,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         pText->setPosition(130, y);
         pPanel->addItem(pText);
 
-        pText = spLabel::create(80);
+        pText = MemoryManagement::create<Label>(80);
         pText->setStyle(style);
         if (log->attackerY >= 0 &&
             ((log->defenderSeesAttacker && isDefender) || !isDefender))
@@ -176,7 +176,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         pText->setPosition(230, y);
         pPanel->addItem(pText);
 
-        pText = spLabel::create(100);
+        pText = MemoryManagement::create<Label>(100);
         pText->setStyle(style);
         pText->setHtmlText(QString::number(log->attackerDamage) + tr("Hp"));
         pText->setPosition(320, y);
@@ -188,18 +188,18 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         pActor->loadSprites();
         if (pBuilding != nullptr)
         {
-            spBuilding pTerrainBuilding = spBuilding::create(pBuilding->getBuildingID(), m_pMap);
+            spBuilding pTerrainBuilding = MemoryManagement::create<Building>(pBuilding->getBuildingID(), m_pMap);
             pTerrainBuilding->setOwner(nullptr);
             pTerrainBuilding->scaleAndShowOnSingleTile();
             pActor->addChild(pTerrainBuilding);
         }
-        pActor->addChild(spUnit::create(log->defenderID, m_pMap->getPlayer(log->defenderOwnerID), false, m_pMap));
+        pActor->addChild(MemoryManagement::create<Unit>(log->defenderID, m_pMap->getPlayer(log->defenderOwnerID), false, m_pMap));
         if (log->defenderKilled)
         {
             oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_fire");
             if (pAnim != nullptr)
             {
-                oxygine::spSprite pSprite = oxygine::spSprite::create();
+                oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
                 pSprite->setResAnim(pAnim);
                 pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()) * 0.75f);
                 pSprite->setPosition(0, static_cast<float>(GameMap::getImageSize()) / 4.0f);
@@ -209,7 +209,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         pActor->setPosition(500, y + 8);
         pPanel->addItem(pActor);
 
-        pText = spLabel::create(80);
+        pText = MemoryManagement::create<Label>(80);
         pText->setStyle(style);
         if (log->defenderX >= 0)
         {
@@ -222,7 +222,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         pText->setPosition(570, y);
         pPanel->addItem(pText);
 
-        pText = spLabel::create(80);
+        pText = MemoryManagement::create<Label>(80);
         pText->setStyle(style);
         if (log->defenderY >= 0)
         {
@@ -235,7 +235,7 @@ DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
         pText->setPosition(660, y);
         pPanel->addItem(pText);
 
-        pText = spLabel::create(100);
+        pText = MemoryManagement::create<Label>(100);
         pText->setStyle(style);
         pText->setHtmlText(QString::number(log->defenderDamage) + tr("Hp"));
         pText->setPosition(750, y);

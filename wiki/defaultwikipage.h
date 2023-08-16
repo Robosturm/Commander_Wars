@@ -4,14 +4,14 @@
 #include "wiki/wikipage.h"
 
 class DefaultWikipage;
-using spDefaultWikipage = oxygine::intrusive_ptr<DefaultWikipage>;
+using spDefaultWikipage = std::shared_ptr<DefaultWikipage>;
 
 class DefaultWikipage final : public Wikipage
 {
     Q_OBJECT
 public:
     explicit DefaultWikipage(QString item);
-   virtual ~DefaultWikipage() = default;
+    ~DefaultWikipage() = default;
 };
 
 #endif // DEFAULTWIKIPAGE_H

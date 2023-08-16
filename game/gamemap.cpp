@@ -44,7 +44,7 @@ qint32 GameMap::getFrameTime()
 
 GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create(this))
+    m_Rules(MemoryManagement::create<GameRules>(this))
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
@@ -58,7 +58,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 
 GameMap::GameMap(QDataStream& stream, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create(this)),
+      m_Rules(MemoryManagement::create<GameRules>(this)),
       m_savegame(savegame)
 {
 #ifdef GRAPHICSUPPORT
@@ -72,7 +72,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
 
 GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create(this)),
+      m_Rules(MemoryManagement::create<GameRules>(this)),
       m_savegame(savegame)
 {
 #ifdef GRAPHICSUPPORT
@@ -130,13 +130,13 @@ void GameMap::loadMapData()
 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
 
-     m_markedFieldsLayer = oxygine::spActor::create();
+     m_markedFieldsLayer = MemoryManagement::create<oxygine::Actor>();
      m_markedFieldsLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
      addChild(m_markedFieldsLayer);
-     m_moveArrowLayer = oxygine::spActor::create();
+     m_moveArrowLayer = MemoryManagement::create<oxygine::Actor>();
      m_moveArrowLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::MoveArrow));
      addChild(m_moveArrowLayer);
-     m_unitsLayer = oxygine::spActor::create();
+     m_unitsLayer = MemoryManagement::create<oxygine::Actor>();
      m_unitsLayer->setPriority(static_cast<qint32>(Mainapp::ZOrder::Units));
      addChild(m_unitsLayer);
 
@@ -689,7 +689,7 @@ void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints, bool applyRulesPalet
         {
             if (pTerrain->getHasFlowDirection())
             {
-                spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, pTerrain->getFlowTiles(), pos.x(), pos.y());
+                spTerrainFindingSystem pPfs = MemoryManagement::create<TerrainFindingSystem>(this, pTerrain->getFlowTiles(), pos.x(), pos.y());
                 pPfs->explore();
                 pTerrain->updateFlowSprites(pPfs.get(), applyRulesPalette);
                 auto points = pPfs->getAllNodePointsFast();
@@ -877,7 +877,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
             CONSOLE_PRINT("Didn't spawn unit " + unitID + " cause unit limit is reached", GameConsole::eDEBUG);
             return nullptr;
         }
-        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), true, this);
+        spUnit pUnit = MemoryManagement::create<Unit>(unitID, pPlayer.get(), true, this);
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
         QString movementType = pUnit->getMovementType();
         if (onMap(x, y))
@@ -1336,7 +1336,7 @@ void GameMap::replaceBuilding(const QString buildingID, qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
-        spBuilding pBuilding = spBuilding::create(buildingID, this);
+        spBuilding pBuilding = MemoryManagement::create<Building>(buildingID, this);
         Terrain* pTerrain = getTerrain(x, y);
         if (pBuilding->canBuildingBePlaced(pTerrain))
         {
@@ -1613,7 +1613,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
          CONSOLE_PRINT("Loading player " + QString::number(i), GameConsole::eDEBUG);
         // create player
-        m_players.append(spPlayer::create(this));
+        m_players.append(MemoryManagement::create<Player>(this));
         // get player data from stream
         m_players[i]->deserializer(pStream, fast);
     }
@@ -1630,7 +1630,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     m_rowSprites.reserve(m_headerInfo.m_heigth);
     for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
     {
-        auto pActor = oxygine::spActor::create();
+        auto pActor = MemoryManagement::create<oxygine::Actor>();
         pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         m_rowSprites.push_back(pActor);
         addChild(pActor);
@@ -1664,7 +1664,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         }
     }
     setCurrentPlayer(currentPlayerIdx);
-    m_Rules = spGameRules::create(this);
+    m_Rules = MemoryManagement::create<GameRules>(this);
     if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading Rules"), 80);
@@ -1693,7 +1693,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_GameScript = spGameScript::create(this);
+            m_GameScript = MemoryManagement::create<GameScript>(this);
         }
         if (showLoadingScreen)
         {
@@ -1705,7 +1705,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             pStream >> exists;
             if (exists)
             {
-                m_Campaign = spCampaign::create();
+                m_Campaign = MemoryManagement::create<Campaign>();
                 m_Campaign->deserializeObject(pStream);
             }
         }
@@ -1824,7 +1824,7 @@ void GameMap::showDamageCalculator()
 void GameMap::startGame()
 {
     CONSOLE_PRINT("GameMap::startGame()", GameConsole::eDEBUG);
-    m_Recorder = spGameRecorder::create(this);
+    m_Recorder = MemoryManagement::create<GameRecorder>(this);
     for (qint32 y = 0; y < m_fields.size(); y++)
     {
         for (qint32 x = 0; x < m_fields[y].size(); x++)
@@ -2491,7 +2491,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         {
             if (m_pMenu != nullptr)
             {
-                spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(this, m_CurrentPlayer.get(), GameMap::frameTime, true);
+                spGameAnimationNextDay pAnim = MemoryManagement::create<GameAnimationNextDay>(this, m_CurrentPlayer.get(), GameMap::frameTime, true);
                 m_pMenu->addChild(pAnim);
             }
         }
@@ -2575,7 +2575,7 @@ void GameMap::initPlayersAndSelectCOs()
         if (pPlayer->getBaseGameInput() == nullptr)
         {
             CONSOLE_PRINT("Forcing AI for player " + QString::number(i) + " to human.", GameConsole::eDEBUG);
-            pPlayer->setBaseGameInput(spHumanPlayerInput::create(this));
+            pPlayer->setBaseGameInput(MemoryManagement::create<HumanPlayerInput>(this));
         }
         // resolve CO 1 beeing set and CO 0 not
         if ((pPlayer->getCO(0) == nullptr) &&
@@ -2698,11 +2698,11 @@ void GameMap::showGrid(bool show)
         qint32 mapHeight = getMapHeight();
         QColor gridColor = getGridColor();
         m_gridSprites.reserve(mapWidth + mapHeight + 1);
-        oxygine::spColorRectSprite pActor = oxygine::spColorRectSprite::create();
+        oxygine::spColorRectSprite pActor = MemoryManagement::create<oxygine::ColorRectSprite>();
         pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
         for (qint32 x = 1; x < mapWidth; ++x)
         {
-            oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
+            oxygine::spColorRectSprite pSprite = MemoryManagement::create<oxygine::ColorRectSprite>();
             pSprite->setSize(1, mapHeight * m_imagesize);
             pSprite->setColor(gridColor);
             pSprite->setPosition(x * m_imagesize, 0);
@@ -2711,7 +2711,7 @@ void GameMap::showGrid(bool show)
         }
         for (qint32 y = 1; y < mapHeight; ++y)
         {
-            oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
+            oxygine::spColorRectSprite pSprite = MemoryManagement::create<oxygine::ColorRectSprite>();
             pSprite->setSize(mapWidth * m_imagesize, 1);
             pSprite->setPosition(0, y * m_imagesize);
             pSprite->setColor(gridColor);
@@ -2736,14 +2736,14 @@ void GameMap::showMiddleCrossGrid(bool show)
         float mapWidth = getMapWidth();
         float mapHeight = getMapHeight();
         QColor gridColor = getGridColor();
-        oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
+        oxygine::spColorRectSprite pSprite = MemoryManagement::create<oxygine::ColorRectSprite>();
         pSprite->setSize(3, mapHeight * m_imagesize);
         pSprite->setColor(gridColor);
         pSprite->setPosition(mapWidth * 0.5f * m_imagesize - 1, 0);
         pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
         addChild(pSprite);
         m_middleCrossGridSprites.append(pSprite);
-        pSprite = oxygine::spColorRectSprite::create();
+        pSprite = MemoryManagement::create<oxygine::ColorRectSprite>();
         pSprite->setSize(mapWidth * m_imagesize, 3);
         pSprite->setPosition(0, mapHeight * 0.5f * m_imagesize - 1);
         pSprite->setColor(gridColor);

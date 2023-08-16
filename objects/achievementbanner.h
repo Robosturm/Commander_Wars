@@ -9,7 +9,7 @@
 #include "coreengine/userdata.h"
 
 class AchievementBanner;
-using spAchievementBanner = oxygine::intrusive_ptr<AchievementBanner>;
+using spAchievementBanner = std::shared_ptr<AchievementBanner>;
 
 class AchievementBanner final : public QObject, public oxygine::Actor
 {

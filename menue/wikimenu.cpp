@@ -23,7 +23,7 @@ Wikimenu::Wikimenu()
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("wikimenu");
     if (pBackground != nullptr &&
@@ -49,7 +49,7 @@ Wikimenu::Wikimenu()
     {
         emit sigExitMenue();
     });
-    m_pWikiView = spWikiView::create(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
+    m_pWikiView = MemoryManagement::create<WikiView>(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(m_pWikiView);
     connect(this, &Wikimenu::sigExitMenue, this, &Wikimenu::exitMenue, Qt::QueuedConnection);
     pApp->continueRendering();
@@ -72,7 +72,7 @@ void Wikimenu::exitMenue()
 {
     CONSOLE_PRINT("Leaving Wiki Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    auto window = spMainwindow::create("ui/menu/mainmenu.xml");
+    auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
 }

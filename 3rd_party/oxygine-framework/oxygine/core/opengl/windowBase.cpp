@@ -23,15 +23,15 @@ namespace oxygine
         }
         // init oxygine engine
         CONSOLE_PRINT("initialize oxygine", GameConsole::eDEBUG);
-        VideoDriver::instance = spVideoDriver::create();
+        VideoDriver::instance = MemoryManagement::create<VideoDriver>();
         VideoDriver::instance->setDefaultSettings();
         rsCache().setDriver(VideoDriver::instance.get());
 
         STDRenderer::initialize();
 
-        STDRenderer::instance = spSTDRenderer::create();
-        RenderDelegate::instance = spRenderDelegate::create();
-        Material::null = spMaterial::create();
+        STDRenderer::instance = MemoryManagement::create<STDRenderer>();
+        RenderDelegate::instance = MemoryManagement::create<RenderDelegate>();
+        Material::null = MemoryManagement::create<Material>();
         Material::current = Material::null;
 
         STDRenderer::current = STDRenderer::instance;

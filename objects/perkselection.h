@@ -11,7 +11,7 @@
 
 class GameMap;
 class PerkSelection;
-using spPerkSelection = oxygine::intrusive_ptr<PerkSelection>;
+using spPerkSelection = std::shared_ptr<PerkSelection>;
 
 class PerkSelection final : public QObject, public oxygine::Actor
 {

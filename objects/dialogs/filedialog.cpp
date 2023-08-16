@@ -26,7 +26,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -36,17 +36,17 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // current folder
-    m_CurrentFolder = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 60);
+    m_CurrentFolder = MemoryManagement::create<Textbox>(oxygine::Stage::getStage()->getWidth() - 60);
     m_CurrentFolder->setPosition(30, 30);
     pSpriteBox->addChild(m_CurrentFolder);
     m_CurrentFolder->setCurrentText(startFolder);
     connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FileDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
-    m_MainPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 210), QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 300));
+    m_MainPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 210), QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 300));
     m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getScaledHeight() + 10);
     pSpriteBox->addChild(m_MainPanel);
     // file folder
-    m_CurrentFile = spTextbox::create(oxygine::Stage::getStage()->getWidth() - 60 - 160);
+    m_CurrentFile = MemoryManagement::create<Textbox>(oxygine::Stage::getStage()->getWidth() - 60 - 160);
     m_CurrentFile->setPosition(30, m_MainPanel->getY() + m_MainPanel->getScaledHeight() + 45);
     m_CurrentFile->setCurrentText(startFile);
     pSpriteBox->addChild(m_CurrentFile);
@@ -63,7 +63,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
     });
     pSpriteBox->addChild(pDeleteButton);
     // drop down menu
-    m_DropDownmenu = spDropDownmenu::create(m_CurrentFile->getScaledWidth(), wildcards);
+    m_DropDownmenu = MemoryManagement::create<DropDownmenu>(m_CurrentFile->getScaledWidth(), wildcards);
     pSpriteBox->addChild(m_DropDownmenu);
     m_DropDownmenu->setPosition(30, m_CurrentFile->getY() + m_CurrentFile->getScaledHeight());
     connect(m_DropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &FileDialog::filterChanged, Qt::QueuedConnection);
@@ -101,7 +101,7 @@ FileDialog::FileDialog(QString startFolder, const QStringList & wildcards, bool 
 void FileDialog::showOverwriteWarning()
 {
     m_focused = false;
-    spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the file ") + m_CurrentFolder->getCurrentText() + "/" +
+    spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to overwrite the file ") + m_CurrentFolder->getCurrentText() + "/" +
                                                                   m_CurrentFile->getCurrentText() + "?", true);
     connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, &FileDialog::onFileSelected, Qt::QueuedConnection);
     connect(pDialogOverwrite.get(), &DialogMessageBox::sigCancel, this, [this]()
@@ -229,7 +229,7 @@ void FileDialog::showFolder(QString folder)
         }
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
-        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+        oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
         pBox->setResAnim(pAnim);
         pBox->setSize(m_MainPanel->getScaledWidth() - 70, 40);
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -245,7 +245,7 @@ void FileDialog::showFolder(QString folder)
         });
         pBox->setPosition(0, itemCount * 40);
 
-        spLabel textField = spLabel::create(pBox->getScaledWidth() - 18);
+        spLabel textField = MemoryManagement::create<Label>(pBox->getScaledWidth() - 18);
         textField->setX(13);
         textField->setY(5);
         pBox->addChild(textField);
@@ -288,10 +288,10 @@ void FileDialog::showFolder(QString folder)
             if (m_preview)
             {
                 QImage img(infoList[i].filePath());
-                oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
+                oxygine::spSingleResAnim pAnim = MemoryManagement::create<oxygine::SingleResAnim>();
                 Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
                 m_ResAnims.append(pAnim);
-                oxygine::spSprite pSprite = oxygine::spSprite::create();
+                oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
                 pSprite->setResAnim(pAnim.get());
                 if (pAnim-> getWidth() > 0)
                 {
@@ -332,7 +332,7 @@ void FileDialog::showDeleteQuestion()
                       m_CurrentFile->getCurrentText()))
     {
         m_focused = false;
-        spDialogMessageBox pDialogRemove = spDialogMessageBox::create(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
+        spDialogMessageBox pDialogRemove = MemoryManagement::create<DialogMessageBox>(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
                                                                       m_CurrentFile->getCurrentText() + "?", true);
         connect(pDialogRemove.get(), &DialogMessageBox::sigOk, this, &FileDialog::deleteItem, Qt::QueuedConnection);
         connect(pDialogRemove.get(), &DialogMessageBox::sigCancel, this, [this]()
@@ -373,7 +373,7 @@ void FileDialog::KeyInput(oxygine::KeyEvent event)
                                   m_CurrentFile->getCurrentText()))
                 {
                     m_focused = false;
-                    spDialogMessageBox pDialogRemove = spDialogMessageBox::create(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
+                    spDialogMessageBox pDialogRemove = MemoryManagement::create<DialogMessageBox>(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
                                                                                   m_CurrentFile->getCurrentText() + "?", true);
                     connect(pDialogRemove.get(), &DialogMessageBox::sigOk, this, &FileDialog::deleteItem, Qt::QueuedConnection);
                     connect(pDialogRemove.get(), &DialogMessageBox::sigCancel, this, [this]()

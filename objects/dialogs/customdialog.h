@@ -5,7 +5,7 @@
 #include "coreengine/scriptvariables.h"
 
 class CustomDialog;
-using spCustomDialog = oxygine::intrusive_ptr<CustomDialog>;
+using spCustomDialog = std::shared_ptr<CustomDialog>;
 
 class CustomDialog : public CreatedGui
 {

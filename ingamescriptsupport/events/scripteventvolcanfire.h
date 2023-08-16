@@ -5,7 +5,7 @@
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
 class ScriptEventVolcanFire;
-using spScriptEventVolcanFire = oxygine::intrusive_ptr<ScriptEventVolcanFire>;
+using spScriptEventVolcanFire = std::shared_ptr<ScriptEventVolcanFire>;
 
 class ScriptEventVolcanFire final : public ScriptEventGeneric
 {

@@ -7,8 +7,6 @@
 #include <QBuffer>
 #include <QDataStream>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "gameinput/menudata.h"
 #include "gameinput/markedfielddata.h"
 #include "gameinput/cursordata.h"
@@ -20,9 +18,9 @@
 
 class GameMap;
 class GameAction;
-using spGameAction = oxygine::intrusive_ptr<GameAction>;
+using spGameAction = std::shared_ptr<GameAction>;
 
-class GameAction final : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameAction final : public QObject, public FileSerializable
 {
     Q_OBJECT
 

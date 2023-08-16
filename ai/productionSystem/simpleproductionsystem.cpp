@@ -48,7 +48,7 @@ void SimpleProductionSystem::initialize()
             {
                 for (auto & unitId : item.second.unitIds)
                 {
-                    item.second.units.append(spUnit::create(unitId, m_owner->getPlayer(), false, m_owner->getMap()));
+                    item.second.units.append(MemoryManagement::create<Unit>(unitId, m_owner->getPlayer(), false, m_owner->getMap()));
                 }
             }
         }
@@ -166,7 +166,7 @@ void SimpleProductionSystem::updateIslandSizeForBuildings(QmlVectorBuilding* pBu
             auto & item = m_averageMoverange[pBuilding.get()];
             for (const auto & unitId : prodList)
             {
-                spUnit pUnit = spUnit::create(unitId, m_owner->getPlayer(), false, m_owner->getMap());
+                spUnit pUnit = MemoryManagement::create<Unit>(unitId, m_owner->getPlayer(), false, m_owner->getMap());
                 qreal islandSize = m_owner->getIslandSize(pUnit.get(), x, y);
                 item.averageValue += islandSize;
                 item.islandSizes[unitId] = islandSize;
@@ -208,7 +208,7 @@ void SimpleProductionSystem::addForcedProductionCloseToTargets(const QStringList
 {
     ForcedProduction item;
     item.unitIds = unitIds;
-    item.targets = spQmlVectorUnit::create();
+    item.targets = MemoryManagement::create<QmlVectorUnit>();
     item.targets->clone(targets);
     m_forcedProduction.push_back(item);
 }
@@ -239,7 +239,7 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString group, con
                 {
                     item.unitIds.append(unitIds[i]);
                     item.chance.append(chance[i]);
-                    item.units.append(spUnit::create(unitIds[i], m_owner->getPlayer(), false, m_owner->getMap()));
+                    item.units.append(MemoryManagement::create<Unit>(unitIds[i], m_owner->getPlayer(), false, m_owner->getMap()));
                 }
             }
             item.distribution = distribution;
@@ -253,7 +253,7 @@ void SimpleProductionSystem::addItemToBuildDistribution(const QString group, con
             item.unitIds = unitIds;
             for (auto & unitId : unitIds)
             {
-                item.units.append(spUnit::create(unitId, m_owner->getPlayer(), false, m_owner->getMap()));
+                item.units.append(MemoryManagement::create<Unit>(unitId, m_owner->getPlayer(), false, m_owner->getMap()));
             }
             item.maxUnitDistribution = maxUnitDistribution;
             item.distribution = distribution;
@@ -565,7 +565,7 @@ bool SimpleProductionSystem::getInit() const
 bool SimpleProductionSystem::buildUnitCloseTo(QmlVectorBuilding* pBuildings, QString unitId, qreal minAverageIslandSize, const spQmlVectorUnit & pUnits)
 {
     bool success = false;
-    spQmlVectorBuilding buildings = spQmlVectorBuilding::create();
+    spQmlVectorBuilding buildings = MemoryManagement::create<QmlVectorBuilding>();
     buildings->clone(pBuildings);
     buildings->sortClosestToEnemy(pUnits);
     for (auto & pBuilding : buildings->getVector())
@@ -615,7 +615,7 @@ bool SimpleProductionSystem::buildUnit(qint32 x, qint32 y, QString unitId)
     if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS) &&
         pBuilding->getTerrain()->getUnit() == nullptr)
     {
-        spGameAction pAction = spGameAction::create(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
+        spGameAction pAction = MemoryManagement::create<GameAction>(CoreAI::ACTION_BUILD_UNITS, m_owner->getMap());
         pAction->setTarget(QPoint(x, y));
         if (pAction->canBePerformed())
         {
@@ -737,6 +737,6 @@ void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
 
 Unit* SimpleProductionSystem::getDummyUnit(const QString unitId)
 {
-    m_dummy = spUnit::create(unitId, m_owner->getPlayer(), false, nullptr);
+    m_dummy = MemoryManagement::create<Unit>(unitId, m_owner->getPlayer(), false, nullptr);
     return m_dummy.get();
 }

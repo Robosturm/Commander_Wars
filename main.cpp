@@ -93,16 +93,16 @@ int main(qint32 argc, char* argv[])
         QCoreApplication::processEvents();
         QThread::currentThread()->msleep(1);
     }
-    CONSOLE_PRINT("Checking for memory leak during runtime", GameConsole::eDEBUG);
-    static constexpr qint32 finalObjects = 20;
-    if (oxygine::ref_counter::getAlloctedObjectCount() > finalObjects)
-    {
-        CONSOLE_PRINT("c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), GameConsole::eDEBUG);
-    }
-    else if (oxygine::ref_counter::getAlloctedObjectCount() < 0)
-    {
-        CONSOLE_PRINT("c++ memory detector is bugged: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), GameConsole::eWARNING);
-    }
+//    CONSOLE_PRINT("Checking for memory leak during runtime", GameConsole::eDEBUG);
+//    static constexpr qint32 finalObjects = 20;
+//    if (oxygine::ref_counter::getAlloctedObjectCount() > finalObjects)
+//    {
+//        CONSOLE_PRINT("c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), GameConsole::eDEBUG);
+//    }
+//    else if (oxygine::ref_counter::getAlloctedObjectCount() < 0)
+//    {
+//        CONSOLE_PRINT("c++ memory detector is bugged: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), GameConsole::eWARNING);
+//    }
     //end
     if (!slave)
     {

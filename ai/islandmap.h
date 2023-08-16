@@ -7,9 +7,9 @@
 class Player;
 class GameMap;
 class IslandMap;
-using spIslandMap = oxygine::intrusive_ptr<IslandMap>;
+using spIslandMap = std::shared_ptr<IslandMap>;
 
-class IslandMap final : public QObject, public oxygine::ref_counter
+class IslandMap final : public QObject
 {
     Q_OBJECT
     static constexpr qint32 UNKNOWN = -1;

@@ -18,7 +18,7 @@
 class SimpleProductionSystem;
 class GameMap;
 class Player;
-using spPlayer = oxygine::intrusive_ptr<Player>;
+using spPlayer = std::shared_ptr<Player>;
 
 class Player : public QObject, public oxygine::Actor, public FileSerializable
 {

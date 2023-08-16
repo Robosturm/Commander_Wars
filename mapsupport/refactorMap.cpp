@@ -22,7 +22,7 @@ void GameMap::extendMap(const QString mapFile, GameEnums::Directions direction)
     {
         Mainapp::getInstance()->pauseRendering();
         {
-            spGameMap pMap = spGameMap::create(file, true, false, false);
+            spGameMap pMap = MemoryManagement::create<GameMap>(file, true, false, false);
             qint32 endWidth = 0;
             qint32 endHeight = 0;
             qint32 offsetX = 0;
@@ -98,7 +98,7 @@ void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, const QStr
     for (qint32 y = 0; y < heigth; y++)
     {
         m_fields.push_back(std::vector<spTerrain>(width, spTerrain()));
-        auto pActor = oxygine::spActor::create();
+        auto pActor = MemoryManagement::create<oxygine::Actor>();
         pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         m_rowSprites.push_back(pActor);
         addChild(pActor);
@@ -113,7 +113,7 @@ void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, const QStr
     // add two players to a default map :)
     for (qint32 i = 0; i < playerCount; i++)
     {
-        m_players.append(spPlayer::create(this));
+        m_players.append(MemoryManagement::create<Player>(this));
         m_players[m_players.size() - 1]->init();
         if (i == 0)
         {
@@ -168,7 +168,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
         for (qint32 y = currentHeigth; y < heigth; y++)
         {
             m_fields.push_back(std::vector<spTerrain>());
-            auto pActor = oxygine::spActor::create();
+            auto pActor = MemoryManagement::create<oxygine::Actor>();
             pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             m_rowSprites.push_back(pActor);
             addChild(pActor);
@@ -198,7 +198,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
     {
         while (playerCount > m_players.size())
         {
-            m_players.append(spPlayer::create(this));
+            m_players.append(MemoryManagement::create<Player>(this));
             m_players[m_players.size() - 1]->init();
         }
     }
@@ -298,7 +298,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             for (qint32 i = 0; i < top; i++)
             {
                 m_fields.insert(m_fields.begin(), std::vector<spTerrain>());
-                auto pActor = oxygine::spActor::create();
+                auto pActor = MemoryManagement::create<oxygine::Actor>();
                 m_rowSprites.push_back(pActor);
                 addChild(pActor);
                 for (qint32 x = 0; x < currentWidth; x++)
@@ -330,7 +330,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             for (qint32 i = 0; i < bottom; i++)
             {
                 m_fields.push_back(std::vector<spTerrain>());
-                auto pActor = oxygine::spActor::create();
+                auto pActor = MemoryManagement::create<oxygine::Actor>();
                 m_rowSprites.push_back(pActor);
                 addChild(pActor);
                 for (qint32 x = 0; x < currentWidth; x++)
@@ -418,7 +418,7 @@ void GameMap::flipX()
             spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
             if (flipTerrain->getBuilding() != nullptr)
             {
-                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID(), this);
+                spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pTerrain->setBuilding(pBuilding);
             }
@@ -426,7 +426,7 @@ void GameMap::flipX()
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
+                spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -456,7 +456,7 @@ void GameMap::rotateX()
             spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
             if (flipTerrain->getBuilding() != nullptr)
             {
-                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID(), this);
+                spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pTerrain->setBuilding(pBuilding);
             }
@@ -464,7 +464,7 @@ void GameMap::rotateX()
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
+                spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -494,7 +494,7 @@ void GameMap::flipY()
             spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
             if (flipTerrain->getBuilding() != nullptr)
             {
-                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID(), this);
+                spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pTerrain->setBuilding(pBuilding);
             }
@@ -502,7 +502,7 @@ void GameMap::flipY()
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
+                spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -532,7 +532,7 @@ void GameMap::rotateY()
             spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
             if (flipTerrain->getBuilding() != nullptr)
             {
-                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID(), this);
+                spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pTerrain->setBuilding(pBuilding);
             }
@@ -540,7 +540,7 @@ void GameMap::rotateY()
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
+                spUnit pUnit = MemoryManagement::create<Unit>(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, this);
                 pTerrain->setUnit(pUnit);
             }
         }

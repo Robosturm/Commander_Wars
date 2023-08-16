@@ -22,7 +22,7 @@ Wikipage::Wikipage(QString pageID)
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -41,7 +41,7 @@ Wikipage::Wikipage(QString pageID)
     });
 
     // no the fun begins create checkboxes and stuff and a panel down here
-    m_pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
+    m_pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
                                QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
@@ -85,7 +85,7 @@ void Wikipage::loadText(QString text)
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
-    oxygine::spTextField pLabel = oxygine::spTextField::create();
+    oxygine::spTextField pLabel = MemoryManagement::create<oxygine::TextField>();
     pLabel->setStyle(style);
     pLabel->setHtmlText(text);
     pLabel->setWidth(m_pPanel->getContentWidth() - 80);
@@ -99,7 +99,7 @@ void Wikipage::loadHeadline(QString text)
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont48());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
-    oxygine::spTextField pLabel = oxygine::spTextField::create();
+    oxygine::spTextField pLabel = MemoryManagement::create<oxygine::TextField>();
     pLabel->setStyle(style);
     pLabel->setHtmlText(text);
     pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().width() / 2, m_y);

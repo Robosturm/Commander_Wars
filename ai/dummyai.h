@@ -3,7 +3,7 @@
 #include "ai/coreai.h"
 
 class DummyAi;
-using spDummyAi = oxygine::intrusive_ptr<DummyAi>;
+using spDummyAi = std::shared_ptr<DummyAi>;
 
 class DummyAi final : public CoreAI
 {

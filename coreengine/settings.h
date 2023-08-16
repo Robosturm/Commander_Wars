@@ -14,15 +14,13 @@
 
 #include "coreengine/gameconsole.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "game/GameEnums.h"
 
 class GLGraphicsView;
 class Settings;
-using spSettings = QScopedPointer<Settings>;
+using spSettings = std::shared_ptr<Settings>;
 
-class Settings final : public QObject, public oxygine::ref_counter
+class Settings final : public QObject
 {
     Q_OBJECT
 public:
@@ -749,7 +747,7 @@ public:
      */
     Q_INVOKABLE qint32 getCurrentLanguageIndex();
 private:
-    friend class oxygine::intrusive_ptr<Settings>;
+    friend class MemoryManagement;
     explicit Settings();
 
 private:

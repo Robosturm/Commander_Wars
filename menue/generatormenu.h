@@ -4,7 +4,7 @@
 #include "menue/basemenu.h"
 
 class GeneratorMenu;
-using spGeneratorMenu = oxygine::intrusive_ptr<GeneratorMenu>;
+using spGeneratorMenu = std::shared_ptr<GeneratorMenu>;
 
 class GeneratorMenu final : public Basemenu
 {

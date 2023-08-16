@@ -31,8 +31,8 @@ Interpreter::Interpreter()
 bool Interpreter::reloadInterpreter(const QString runtime)
 {
     CONSOLE_PRINT_MODULE("Reloading interpreter", GameConsole::eDEBUG, GameConsole::eJavaScript);
-    m_pInstance.free();
-    m_pInstance = spInterpreter::create();
+    m_pInstance.reset();
+    m_pInstance = MemoryManagement::create<Interpreter>();
     m_pInstance->init();
     bool success = m_pInstance->loadScript(runtime, "Interpreter Runtime");
     if (!success)
@@ -55,7 +55,7 @@ Interpreter::~Interpreter()
 void Interpreter::release()
 {
     m_pInstance->m_jsObjects.clear();
-    m_pInstance.free();
+    m_pInstance.reset();
 }
 
 void Interpreter::init()
@@ -311,7 +311,7 @@ bool Interpreter::getInJsCall() const
     return m_inJsCall > 0;
 }
 
-void Interpreter::trackJsObject(oxygine::ref_counter* pObj)
+void Interpreter::trackJsObject(std::shared_ptr<QObject> &  pObj)
 {
     if (m_inJsCall == 0)
     {
@@ -319,7 +319,6 @@ void Interpreter::trackJsObject(oxygine::ref_counter* pObj)
     }
     if (m_inJsCall > 0)
     {
-        oxygine::intrusive_ptr pPtr(pObj);
-        m_jsObjects.push_back(pPtr);
+        m_jsObjects.push_back(pObj);
     }
 }

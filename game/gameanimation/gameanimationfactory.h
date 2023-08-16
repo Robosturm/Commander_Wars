@@ -17,9 +17,9 @@ class CO;
 class BattleAnimation;
 
 class GameAnimationFactory;
-using spGameAnimationFactory = oxygine::intrusive_ptr<GameAnimationFactory>;
+using spGameAnimationFactory = std::shared_ptr<GameAnimationFactory>;
 
-class GameAnimationFactory final : public QObject, public oxygine::ref_counter
+class GameAnimationFactory final : public QObject
 {
     Q_OBJECT
 public:
@@ -196,7 +196,7 @@ public:
       */
     Q_INVOKABLE static void printActiveAnimations();
 private:
-    friend class oxygine::intrusive_ptr<GameAnimationFactory>;
+    friend class MemoryManagement;
     explicit GameAnimationFactory();
     /**
      * @brief createOverworldBattleAnimation

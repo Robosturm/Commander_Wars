@@ -12,7 +12,7 @@
 
 class GameMap;
 class RuleSelectionDialog;
-using spRuleSelectionDialog = oxygine::intrusive_ptr<RuleSelectionDialog>;
+using spRuleSelectionDialog = std::shared_ptr<RuleSelectionDialog>;
 
 class RuleSelectionDialog final : public QObject, public oxygine::Actor
 {

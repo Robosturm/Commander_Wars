@@ -9,7 +9,7 @@
 #include "objects/base/tooltip.h"
 
 class SelectKey;
-using spSelectKey = oxygine::intrusive_ptr<SelectKey>;
+using spSelectKey = std::shared_ptr<SelectKey>;
 
 class SelectKey final : public Tooltip
 {

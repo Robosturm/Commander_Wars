@@ -8,7 +8,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 
 class DialogConnecting;
-using spDialogConnecting = oxygine::intrusive_ptr<DialogConnecting>;
+using spDialogConnecting = std::shared_ptr<DialogConnecting>;
 
 class DialogConnecting final : public QObject, public oxygine::Actor
 {

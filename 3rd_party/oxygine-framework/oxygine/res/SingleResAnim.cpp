@@ -17,7 +17,7 @@ SingleResAnim::SingleResAnim()
 SingleResAnim::~SingleResAnim()
 {
     m_frames.clear();
-    m_texture.free();
+    m_texture.reset();
 }
 
 void SingleResAnim::init(const QString & file, qint32 columns, qint32 rows, float scaleFactor)
@@ -32,7 +32,7 @@ void SingleResAnim::init(QImage & image, qint32 columns, qint32 rows, float scal
     SpriteCreator::convertToRgba(image);
     m_scaleFactor = scaleFactor;
     m_frames.clear();
-    m_texture.free();
+    m_texture.reset();
     m_texture = VideoDriver::instance->createTexture();
     m_texture->init(image);
     m_texture->setClamp2Edge(clamp2Edge);

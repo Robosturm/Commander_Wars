@@ -9,7 +9,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
 
 class H_Scrollbar;
-using spH_Scrollbar = oxygine::intrusive_ptr<H_Scrollbar>;
+using spH_Scrollbar = std::shared_ptr<H_Scrollbar>;
 
 class H_Scrollbar final : public Tooltip
 {

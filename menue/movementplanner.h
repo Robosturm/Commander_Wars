@@ -14,7 +14,7 @@
 #include "objects/base/topbar.h"
 
 class MovementPlanner;
-using spMovementPlanner = oxygine::intrusive_ptr<MovementPlanner>;
+using spMovementPlanner = std::shared_ptr<MovementPlanner>;
 
 class MovementPlanner final : public GameMenue
 {

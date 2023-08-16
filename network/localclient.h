@@ -8,7 +8,7 @@
 class QLocalSocket;
 
 class LocalClient;
-using spLocalClient = oxygine::intrusive_ptr<LocalClient>;
+using spLocalClient = std::shared_ptr<LocalClient>;
 
 class LocalClient final : public NetworkInterface
 {

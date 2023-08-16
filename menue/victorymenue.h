@@ -22,7 +22,7 @@
 #include "menue/basemenu.h"
 
 class VictoryMenue;
-using spVictoryMenue = oxygine::intrusive_ptr<VictoryMenue>;
+using spVictoryMenue = std::shared_ptr<VictoryMenue>;
 
 class VictoryMenue final : public Basemenu
 {

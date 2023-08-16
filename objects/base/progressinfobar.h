@@ -8,7 +8,7 @@
 #include "objects/base/label.h"
 
 class ProgressInfoBar;
-using spProgressInfoBar = oxygine::intrusive_ptr<ProgressInfoBar>;
+using spProgressInfoBar = std::shared_ptr<ProgressInfoBar>;
 
 class ProgressInfoBar final : public Tooltip
 {

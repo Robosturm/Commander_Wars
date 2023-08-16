@@ -88,7 +88,7 @@ namespace oxygine
 
     void Material::apply()
     {
-        if (current != this)
+        if (current.get() != this)
         {
             current->flush();
             xapply();

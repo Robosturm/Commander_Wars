@@ -1,11 +1,10 @@
 #ifndef JSCALLBACK_H
 #define JSCALLBACK_H
 
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "coreengine/interpreter.h"
 
 template<class TClass>
-class JsCallback final : public oxygine::ref_counter
+class JsCallback final
 {
 public:
     JsCallback(TClass* pOwner, const QString & objectID, const QString & callback)

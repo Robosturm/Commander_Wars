@@ -9,7 +9,7 @@
 #include "game/GameEnums.h"
 
 class GameAnimationDialog;
-using spGameAnimationDialog = oxygine::intrusive_ptr<GameAnimationDialog>;
+using spGameAnimationDialog = std::shared_ptr<GameAnimationDialog>;
 
 class GameAnimationDialog final : public GameAnimation
 {

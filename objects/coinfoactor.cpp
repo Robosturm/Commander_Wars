@@ -32,18 +32,18 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    oxygine::spTextField pLabel = oxygine::spTextField::create();
+    oxygine::spTextField pLabel = MemoryManagement::create<oxygine::TextField>();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("CO Information"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().width() / 2, 10);
     addChild(pLabel);
 
-    m_pCurrentCoFaction = oxygine::spSprite::create();
+    m_pCurrentCoFaction = MemoryManagement::create<oxygine::Sprite>();
     m_pCurrentCoFaction->setPosition(width * 0.5f - 36 * 0.5f, pLabel->getY() + pLabel->getTextRect().height() + 5);
     m_pCurrentCoFaction->setScale(2.0f);
     addChild(m_pCurrentCoFaction);
 
-    m_COName = oxygine::spTextField::create();
+    m_COName = MemoryManagement::create<oxygine::TextField>();
     m_COName->setWidth(width);
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     m_COName->setStyle(headerStyle);
@@ -51,7 +51,7 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     m_COName->setText(tr("Unknown"));
     addChild(m_COName);
 
-    m_pCurrentCO = oxygine::spSprite::create();
+    m_pCurrentCO = MemoryManagement::create<oxygine::Sprite>();
     m_pCurrentCO->setScale(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 200) / 352.0f);
     m_pCurrentCO->setSize(208, 352);
     m_pCurrentCO->setPosition(oxygine::Stage::getStage()->getWidth() - 120 - m_pCurrentCO->getScaledWidth(), m_COName->getY() + m_COName->getTextRect().height() + 10);
@@ -59,20 +59,20 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
 
 
     style.multiline = true;
-    m_COBio = oxygine::spTextField::create();
+    m_COBio = MemoryManagement::create<oxygine::TextField>();
     m_COBio->setStyle(style);
     m_COBio->setWidth(m_pCurrentCO->getX() - 50);
     m_COBio->setPosition(10, m_COName->getY() + m_COName->getTextRect().height() + 10);
     addChild(m_COBio);
 
-    m_HitSprite = oxygine::spBox9Sprite::create();
+    m_HitSprite = MemoryManagement::create<oxygine::Box9Sprite>();
     m_HitSprite->setResAnim(pCOSpriteManager->getResAnim("hit"));
     m_HitSprite->setSize(100, 16);
     m_HitSprite->setScale(2.5f);
     m_HitSprite->setPosition(10, 200);
     auto blackStyle = style;
     blackStyle.color = Qt::black;
-    oxygine::spTextField pTextField = oxygine::spTextField::create();
+    oxygine::spTextField pTextField = MemoryManagement::create<oxygine::TextField>();
     pTextField->setPosition(14, 1);
     pTextField->setStyle(blackStyle);
     pTextField->setHtmlText(tr("Hit"));
@@ -83,17 +83,17 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     }
     m_HitSprite->addChild(pTextField);
     addChild(m_HitSprite);
-    m_HitText = oxygine::spTextField::create();
+    m_HitText = MemoryManagement::create<oxygine::TextField>();
     m_HitText->setStyle(style);
     m_HitText->setX(m_HitSprite->getX() + m_HitSprite->getScaledWidth() + 10);
     addChild(m_HitText);
 
-    m_MissSprite = oxygine::spBox9Sprite::create();
+    m_MissSprite = MemoryManagement::create<oxygine::Box9Sprite>();
     m_MissSprite->setResAnim(pCOSpriteManager->getResAnim("miss"));
     m_MissSprite->setSize(100, 16);
     m_MissSprite->setScale(2.5f);
     m_MissSprite->setPosition(10, 300);
-    pTextField = oxygine::spTextField::create();
+    pTextField = MemoryManagement::create<oxygine::TextField>();
     pTextField->setPosition(14, 1);
     pTextField->setStyle(blackStyle);
     pTextField->setHtmlText(tr("Miss"));
@@ -104,84 +104,84 @@ COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
     }
     m_MissSprite->addChild(pTextField);
     addChild(m_MissSprite);
-    m_MissText = oxygine::spTextField::create();
+    m_MissText = MemoryManagement::create<oxygine::TextField>();
     m_MissText->setStyle(style);
     m_MissText->setX(m_MissSprite->getX() + m_MissSprite->getScaledWidth() + 10);
     addChild(m_MissText);
 
-    m_InfoSprite = oxygine::spSprite::create();
+    m_InfoSprite = MemoryManagement::create<oxygine::Sprite>();
     m_InfoSprite->setResAnim(pCOSpriteManager->getResAnim("skill"));
     m_InfoSprite->setScale(2.5f);
     m_InfoSprite->setPosition(14, 400);
     addChild(m_InfoSprite);
-    m_InfoText = oxygine::spTextField::create();
+    m_InfoText = MemoryManagement::create<oxygine::TextField>();
     m_InfoText->setStyle(style);
     m_InfoText->setWidth(m_pCurrentCO->getX() - 50);
     m_InfoText->setX(10);
     addChild(m_InfoText);
 
-    m_pCoPowermeter = spCoPowermeter::create(m_pMap, nullptr);
+    m_pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, nullptr);
     addChild(m_pCoPowermeter);
 
-    m_PowerSprite = oxygine::spSprite::create();
+    m_PowerSprite = MemoryManagement::create<oxygine::Sprite>();
     m_PowerSprite->setResAnim(pCOSpriteManager->getResAnim("power"));
     m_PowerSprite->setScale(2.5f);
     m_PowerSprite->setPosition(10, 400);
     addChild(m_PowerSprite);
-    m_Powername = oxygine::spTextField::create();
+    m_Powername = MemoryManagement::create<oxygine::TextField>();
     m_Powername->setStyle(style);
     m_Powername->setX(m_PowerSprite->getX() + m_PowerSprite->getScaledWidth() + 10);
     addChild(m_Powername);
-    m_PowerDesc = oxygine::spTextField::create();
+    m_PowerDesc = MemoryManagement::create<oxygine::TextField>();
     m_PowerDesc->setStyle(style);
     m_PowerDesc->setWidth(m_pCurrentCO->getX() - 50);
     m_PowerDesc->setX(10);
     addChild(m_PowerDesc);
 
-    m_SuperPowerSprite = oxygine::spSprite::create();
+    m_SuperPowerSprite = MemoryManagement::create<oxygine::Sprite>();
     m_SuperPowerSprite->setResAnim(pCOSpriteManager->getResAnim("superpower"));
     m_SuperPowerSprite->setScale(2.5f);
     m_SuperPowerSprite->setPosition(10, 400);
     addChild(m_SuperPowerSprite);
-    m_SuperPowername = oxygine::spTextField::create();
+    m_SuperPowername = MemoryManagement::create<oxygine::TextField>();
     m_SuperPowername->setStyle(style);
     m_SuperPowername->setX(m_SuperPowerSprite->getX() + m_SuperPowerSprite->getScaledWidth() + 10);
     addChild(m_SuperPowername);
-    m_SuperPowerDesc = oxygine::spTextField::create();
+    m_SuperPowerDesc = MemoryManagement::create<oxygine::TextField>();
     m_SuperPowerDesc->setStyle(style);
     m_SuperPowerDesc->setWidth(m_pCurrentCO->getX() - 50);
     m_SuperPowerDesc->setX(10);
     addChild(m_SuperPowerDesc);
 
-    m_synergySprite = oxygine::spSprite::create();
+    m_synergySprite = MemoryManagement::create<oxygine::Sprite>();
     m_synergySprite->setResAnim(pCOSpriteManager->getResAnim("tagCos"));
     m_synergySprite->setScale(2.0f);
     m_synergySprite->setPosition(10, 400);
     addChild(m_synergySprite);
-    m_SynergyText = oxygine::spTextField::create();
+    m_SynergyText = MemoryManagement::create<oxygine::TextField>();
     m_SynergyText->setStyle(style);
     m_SynergyText->setX(m_synergySprite->getX() + m_synergySprite->getScaledWidth() + 10);
     m_SynergyText->setHtmlText(tr("Synergy"));
     addChild(m_SynergyText);
 
-    m_PerkText = oxygine::spTextField::create();
+    m_PerkText = MemoryManagement::create<oxygine::TextField>();
     m_PerkText->setStyle(style);
     m_PerkText->setHtmlText(tr("Active Perks"));
     m_PerkText->setX(10);
     addChild(m_PerkText);
 
-    m_powerProgress = oxygine::spTextField::create();
+    m_powerProgress = MemoryManagement::create<oxygine::TextField>();
     m_powerProgress->setStyle(style);
     m_powerProgress->setX(10);
     addChild(m_powerProgress);
 
-    m_GlobalBoosts = oxygine::spTextField::create();
+    m_GlobalBoosts = MemoryManagement::create<oxygine::TextField>();
     m_GlobalBoosts->setStyle(style);
     m_GlobalBoosts->setHtmlText(tr("Global Boosts"));
     m_GlobalBoosts->setX(10);
     addChild(m_GlobalBoosts);
 
-    m_CoBoost = oxygine::spTextField::create();
+    m_CoBoost = MemoryManagement::create<oxygine::TextField>();
     m_CoBoost->setStyle(style);
     m_CoBoost->setHtmlText(tr("CO Zone Boosts"));
     m_CoBoost->setX(10);
@@ -329,7 +329,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
         {
             QString coid = pCOSpriteManager->getID(i);
-            spCO testCO = spCO::create(coid, pPlayer.get(), pPlayer->getMap());
+            spCO testCO = MemoryManagement::create<CO>(coid, pPlayer.get(), pPlayer->getMap());
 
             QJSValueList args({pInterpreter->newQObject(pCO.get()),
                                pInterpreter->newQObject(testCO.get())});
@@ -345,19 +345,19 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
                     {
                         coSynergyName = value.toString();
                     }
-                    oxygine::spTextField pText = oxygine::spTextField::create();
+                    oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
                     pText->setStyle(style);
                     pText->setHtmlText(coSynergyName);
                     pText->setX(10);
                     pText->setY(y);
                     addChild(pText);
                     m_SynergyCONames.append(pText);
-                    oxygine::spActor pActor = oxygine::spActor::create();
+                    oxygine::spActor pActor = MemoryManagement::create<oxygine::Actor>();
                     pActor->setX(220);
                     pActor->setY(y);
                     for (qint32 i2 = 0; i2 < synergy; i2++)
                     {
-                        oxygine::spSprite pSprite = oxygine::spSprite::create();
+                        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
                         pSprite->setResAnim(pAnim);
                         pSprite->setScale(1.5f);
                         pSprite->setX(i2 * pSprite->getScaledWidth() + 3);
@@ -416,7 +416,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             for (qint32 i = 0; i < sortedUnits.size(); i++)
             {
                 QString unitID = sortedUnits[i];
-                spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false, pPlayer->getMap());
+                spUnit pUnit = MemoryManagement::create<Unit>(unitID, pPlayer.get(), false, pPlayer->getMap());
                 pUnit->setVirtuellX(-2);
                 pUnit->setVirtuellY(-2);
                 showCOBoost(pUnit, pCO, x, y);
@@ -441,7 +441,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             for (qint32 i = 0; i < sortedUnits.size(); i++)
             {
                 QString unitID = sortedUnits[i];
-                spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false, pPlayer->getMap());
+                spUnit pUnit = MemoryManagement::create<Unit>(unitID, pPlayer.get(), false, pPlayer->getMap());
                 showCOBoost(pUnit, pCO, x, y);
             }
         }
@@ -463,7 +463,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    m_UnitDataActors.append(oxygine::spActor::create());
+    m_UnitDataActors.append(MemoryManagement::create<oxygine::Actor>());
     qint32 i = m_UnitDataActors.size() - 1;
     m_UnitDataActors[i]->setPosition(x, y);
     QString unitId = pUnit->getUnitID();
@@ -492,12 +492,12 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
 
     if (firerangeBonus != 0)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pCOSpriteManager->getResAnim("atkRange"));
         pSprite->setY(5 +  GameMap::getImageSize());
         pSprite->setScale(2.0f);
         m_UnitDataActors[i]->addChild(pSprite);
-        oxygine::spTextField pText = oxygine::spTextField::create();
+        oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
         pText->setStyle(style);
         if (firerangeBonus > 0)
         {
@@ -513,12 +513,12 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     }
     if (movementBonus != 0)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pCOSpriteManager->getResAnim("moveRange"));
         pSprite->setPosition(20 +  GameMap::getImageSize(), 5 + GameMap::getImageSize());
         pSprite->setScale(2.0f);
         m_UnitDataActors[i]->addChild(pSprite);
-        oxygine::spTextField pText = oxygine::spTextField::create();
+        oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
         pText->setStyle(style);
         if (movementBonus > 0)
         {
@@ -554,7 +554,7 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    m_UnitDataActors.append(oxygine::spActor::create());
+    m_UnitDataActors.append(MemoryManagement::create<oxygine::Actor>());
     qint32 i = m_UnitDataActors.size() - 1;
     m_UnitDataActors[i]->setPosition(x, y);
 
@@ -587,7 +587,7 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
     {
         if (i2 < 2)
         {
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
             pSprite->setResAnim(pCOSpriteManager->getResAnim(icons[i2]));
             pSprite->setY(5 +  GameMap::getImageSize());
             if (i2 > 0)
@@ -596,7 +596,7 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
             }
             pSprite->setScale(2.0f);
             m_UnitDataActors[i]->addChild(pSprite);
-            oxygine::spTextField pText = oxygine::spTextField::create();
+            oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
             pText->setStyle(style);
             pText->setHtmlText(bonus[i2]);
             pText->setPosition(pSprite->getX() + pSprite->getScaledWidth() + 2, pSprite->getY() - 2);
@@ -637,12 +637,12 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
         const qint32 width = 300;
         for (const auto & perk : perks)
         {
-            oxygine::spActor perkActor = oxygine::spActor::create();
+            oxygine::spActor perkActor = MemoryManagement::create<oxygine::Actor>();
             qint32 i = pCOPerkManager->getIndex(perk);
             QString name = pCOPerkManager->getName(i);
             QString icon = pCOPerkManager->getIcon(i);
             oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
             pSprite->setResAnim(pAnim);
             if (pAnim != nullptr && pAnim->getWidth() > 0)
             {
@@ -650,7 +650,7 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
             }
             pSprite->setPosition(0, 0);
             perkActor->addChild(pSprite);
-            spLabel pLabel = spLabel::create(250);
+            spLabel pLabel = MemoryManagement::create<Label>(250);
             pLabel->setStyle(style);
             pLabel->setHtmlText(name);
             pLabel->setPosition(GameMap::getImageSize() * 2 + 10, 10);
@@ -708,7 +708,7 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
         pEndAnim = pCOSpriteManager->getResAnim("normalPowerEnd");
         divider = bonus / 100.0f;
     }
-    oxygine::spBox9Sprite pStartBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pStartBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pStartBox->setResAnim(pStartAnim);
     pStartBox->setSize((static_cast<qint32>(width * divider) + 1), 8 * scale);
     pStartBox->setPosition(5 +  GameMap::getImageSize(), y);
@@ -718,7 +718,7 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     }
     pActor->addChild(pStartBox);
 
-    oxygine::spBox9Sprite pEndBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pEndBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pEndBox->setResAnim(pEndAnim);
     pEndBox->setSize((static_cast<qint32>(width * (1.0f - divider)) + 2), 8 * scale);
     pEndBox->setPosition(5 +  GameMap::getImageSize() + pStartBox->getScaledWidth(), y);

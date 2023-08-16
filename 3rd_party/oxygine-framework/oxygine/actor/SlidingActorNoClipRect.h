@@ -6,7 +6,7 @@
 namespace oxygine
 {
     class SlidingActorNoClipRect;
-    using spSlidingActorNoClipRect = intrusive_ptr<SlidingActorNoClipRect>;
+    using spSlidingActorNoClipRect = std::shared_ptr<SlidingActorNoClipRect>;
     class SlidingActorNoClipRect final : public Actor
     {
         public:

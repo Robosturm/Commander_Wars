@@ -27,7 +27,7 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
     setHeight(heigth);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pBackground = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pBackground = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     pBackground->setResAnim(pAnim);
     pBackground->setSize(getSize());
@@ -40,13 +40,13 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
     style.multiline = false;
 
     // first vertical line
-    oxygine::spBox9Sprite firstLine = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite firstLine = MemoryManagement::create<oxygine::Box9Sprite>();
     firstLine->setResAnim(pvAnim);
     firstLine->setSize(width, DIVIDER_SIZE);
     addChild(firstLine);
 
     // first horizontal line
-    oxygine::spBox9Sprite secondLine = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite secondLine = MemoryManagement::create<oxygine::Box9Sprite>();
     secondLine->setResAnim(phAnim);
     secondLine->setSize(DIVIDER_SIZE, ITEM_HEIGHT);
     secondLine->setY(DIVIDER_SIZE);
@@ -55,7 +55,7 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
     for (qint32 i = 0; i < header.size(); i++)
     {
         // header label
-        spLabel pTextfield = spLabel::create(m_widths[i] - DIVIDER_SIZE - ITEM_HEIGHT);
+        spLabel pTextfield = MemoryManagement::create<Label>(m_widths[i] - DIVIDER_SIZE - ITEM_HEIGHT);
         pTextfield->setPosition(x + DIVIDER_SIZE, 13);
         pTextfield->setStyle(style);
         pTextfield->setHtmlText(header[i]);
@@ -81,14 +81,14 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
         pSortButton->setPosition(x - pSortButton->getScaledWidth(), DIVIDER_SIZE + ITEM_HEIGHT / 2 - pSortButton->getScaledHeight() / 2);
         addChild(pSortButton);
         // following horizintal line
-        oxygine::spBox9Sprite line = oxygine::spBox9Sprite::create();
+        oxygine::spBox9Sprite line = MemoryManagement::create<oxygine::Box9Sprite>();
         line->setResAnim(phAnim);
         line->setSize(DIVIDER_SIZE, ITEM_HEIGHT);
         line->setPosition(x, DIVIDER_SIZE);
         addChild(line);
     }
     // vertical line after header
-    oxygine::spBox9Sprite line = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite line = MemoryManagement::create<oxygine::Box9Sprite>();
     line->setSize(width, DIVIDER_SIZE);
     line->setResAnim(pvAnim);
     line->setY(DIVIDER_SIZE + ITEM_HEIGHT);
@@ -96,7 +96,7 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
 
     const auto yOffset = DIVIDER_SIZE * 2 + ITEM_HEIGHT;
     QSize size (width + Panel::sliderSize, heigth - yOffset);
-    m_pPanel = spPanel::create(false, size, size + QSize(0, 20));
+    m_pPanel = MemoryManagement::create<Panel>(false, size, size + QSize(0, 20));
     m_pPanel->setPosition(0, yOffset);
     addChild(m_pPanel);
     connect(this, &ComplexTableView::sigSortItems, this, &ComplexTableView::sortItems, Qt::QueuedConnection);
@@ -141,9 +141,9 @@ void ComplexTableView::createItems()
     qint32 count = 0;
     for (auto & item : m_items)
     {
-        oxygine::spActor column = oxygine::spActor::create();
+        oxygine::spActor column = MemoryManagement::create<oxygine::Actor>();
         // first horizontal line
-        oxygine::spBox9Sprite line = oxygine::spBox9Sprite::create();
+        oxygine::spBox9Sprite line = MemoryManagement::create<oxygine::Box9Sprite>();
         line->setResAnim(phAnim);
         line->setSize(DIVIDER_SIZE, ITEM_HEIGHT);
         m_HLines.append(line);
@@ -151,14 +151,14 @@ void ComplexTableView::createItems()
         qint32 x = 0;
         for (qint32 i = 0; i < item.items.size(); i++)
         {
-            oxygine::spClipRectActor pClipRectActor = oxygine::spClipRectActor::create();
+            oxygine::spClipRectActor pClipRectActor = MemoryManagement::create<oxygine::ClipRectActor>();
             pClipRectActor->setSize(m_widths[i] - DIVIDER_SIZE, ITEM_HEIGHT);
             pClipRectActor->setPosition(x + DIVIDER_SIZE, 0);
             pClipRectActor->addChild(item.items[i]);
             column->addChild(pClipRectActor);
             x += m_widths[i];
             // following horizintal line
-            line = oxygine::spBox9Sprite::create();
+            line = MemoryManagement::create<oxygine::Box9Sprite>();
             line->setResAnim(phAnim);
             line->setSize(DIVIDER_SIZE, ITEM_HEIGHT);
             line->setPosition(x, 0);
@@ -166,7 +166,7 @@ void ComplexTableView::createItems()
             column->addChild(line);
         }
         // vertical line after header
-        line = oxygine::spBox9Sprite::create();
+        line = MemoryManagement::create<oxygine::Box9Sprite>();
         line->setSize(getWidth(), DIVIDER_SIZE);
         line->setResAnim(pvAnim);
         line->setY(ITEM_HEIGHT);

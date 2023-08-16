@@ -15,7 +15,7 @@ ScriptEventChangeBuildlist::ScriptEventChangeBuildlist(GameMap* pMap)
     : ScriptEvent(pMap, EventType::changeBuildlist),
       m_pMap(pMap)
 {
-    m_dropDownPlayer = spPlayer::create(pMap);
+    m_dropDownPlayer = MemoryManagement::create<Player>(pMap);
     m_dropDownPlayer->init();
 }
 
@@ -73,7 +73,7 @@ void ScriptEventChangeBuildlist::setPlayer(const qint32 &value)
 
 void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -81,12 +81,12 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = spSpinBox::create(300, 1, 9999);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, 1, 9999);
     spinBox->setTooltipText(tr("Player who's buildlist will be modified."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
@@ -97,7 +97,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Unit ID: "));
     pText->setPosition(30, 70);
@@ -117,10 +117,10 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     Player* pPlayer = m_dropDownPlayer.get();
     auto unitCreator = [this, pPlayer](QString id)
     {
-        spUnit pSprite = spUnit::create(id, pPlayer, false, m_pMap);
+        spUnit pSprite = MemoryManagement::create<Unit>(id, pPlayer, false, m_pMap);
         return pSprite;
     };
-    spDropDownmenuSprite pMenu = spDropDownmenuSprite::create(105, items, unitCreator, 30);
+    spDropDownmenuSprite pMenu = MemoryManagement::create<DropDownmenuSprite>(105, items, unitCreator, 30);
     pMenu->setTooltipText(tr("The unit that will be changed in the build list of the player."));
     pMenu->setPosition(width, 70);
     pMenu->setCurrentItem(currentItem);
@@ -131,13 +131,13 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
         unitID = pPtrMenu->getCurrentItemText();
     });
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Remove: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
 
-    spCheckbox checkBox = spCheckbox::create();
+    spCheckbox checkBox = MemoryManagement::create<Checkbox>();
     checkBox->setTooltipText(tr("If the checked the unit will be forbidden to be build, else it gets allowed to be build."));
     checkBox->setPosition(width, 110);
     checkBox->setChecked(remove);

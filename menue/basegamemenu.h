@@ -16,7 +16,7 @@
 #include "gameinput/mapmover.h"
 
 class BaseGamemenu;
-using spBaseGamemenu = oxygine::intrusive_ptr<BaseGamemenu>;
+using spBaseGamemenu = std::shared_ptr<BaseGamemenu>;
 
 class BaseGamemenu : public Basemenu
 {

@@ -10,7 +10,7 @@
 #include "network/networkgamedata.h"
 
 class NetworkGameDataView;
-using spNetworkGameDataView = oxygine::intrusive_ptr<NetworkGameDataView>;
+using spNetworkGameDataView = std::shared_ptr<NetworkGameDataView>;
 
 class NetworkGameDataView : public CreatedGui
 {

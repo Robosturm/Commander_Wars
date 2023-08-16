@@ -8,7 +8,7 @@ namespace oxygine
 {
     SlidingActor::SlidingActor()
     {
-        m_clip = spClipRectActor::create();
+        m_clip = MemoryManagement::create<ClipRectActor>();
         m_clip->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActor::_newEvent));
         m_clip->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActor::_newEvent));
         m_clip->addEventListener(TouchEvent::MOVE, EventCallback(this, &SlidingActor::_newEvent));
@@ -25,7 +25,7 @@ namespace oxygine
     {
         m_clip->removeChildren();
         m_drag.destroy();
-        m_content.free();
+        m_content.reset();
     }
 
     void SlidingActor::setTouchThreshold(float rad)
@@ -74,7 +74,7 @@ namespace oxygine
         {
             m_prev[i].tm = timeMS(0);
         }
-        m_holded.free();
+        m_holded.reset();
         m_finger = 0;
         m_speed = QPoint(0, 0);
 
@@ -225,7 +225,7 @@ namespace oxygine
                     m_finger = 0;
                     QPoint pos = m_content->getPosition();
 
-                    m_holded.free();
+                    m_holded.reset();
 
                     const iter* old = 0;
                     const iter* mid = 0;
@@ -335,7 +335,7 @@ namespace oxygine
                             act = spActor(act->getParent());
                         }
 
-                        m_holded.free();
+                        m_holded.reset();
                     }
                 }
             }

@@ -28,7 +28,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    m_pSpriteBox = oxygine::spBox9Sprite::create();
+    m_pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -49,7 +49,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
     CO* firstCO = nullptr;
     if (!banning)
     {
-        spLabel pLabel = spLabel::create(200);
+        spLabel pLabel = MemoryManagement::create<Label>(200);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Perks of CO:"));
         pLabel->setPosition(30, 30);
@@ -71,17 +71,17 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
                 firstCO = pCO;
             }
         }
-        spDropDownmenu pDropDownmenu = spDropDownmenu::create(250, list);
+        spDropDownmenu pDropDownmenu = MemoryManagement::create<DropDownmenu>(250, list);
         pDropDownmenu->setPosition(pLabel->getY() + pLabel->getWidth() + 10, 30);
         m_pSpriteBox->addChild(pDropDownmenu);
         connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::changeCO, Qt::QueuedConnection);
 
-        pLabel = spLabel::create(100);
+        pLabel = MemoryManagement::create<Label>(100);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Fill:"));
         pLabel->setPosition(pDropDownmenu->getX() + pDropDownmenu->getScaledWidth() + 10, 30);
         m_pSpriteBox->addChild(pLabel);
-        m_randomFillCheckbox = spCheckbox::create();
+        m_randomFillCheckbox = MemoryManagement::create<Checkbox>();
         m_randomFillCheckbox->setTooltipText(tr("If checked: clicking the 'Random' Button will fill all remaining perk slots instead of replacing all."));
         m_randomFillCheckbox->setPosition(pLabel->getX() + pLabel->getScaledWidth() + 10, 30);
         m_pSpriteBox->addChild(m_randomFillCheckbox);
@@ -94,7 +94,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
         });
         connect(this, &PerkSelectionDialog::sigSelectRandomPerks, this, &PerkSelectionDialog::selectRandomPerks, Qt::QueuedConnection);
 
-        m_perkInfo = spLabel::create(oxygine::Stage::getStage()->getWidth() - 100);
+        m_perkInfo = MemoryManagement::create<Label>(oxygine::Stage::getStage()->getWidth() - 100);
         m_perkInfo->setPosition(30, 70);
         m_pSpriteBox->addChild(m_perkInfo);
     }
@@ -110,7 +110,7 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
         size = QSize(oxygine::Stage::getStage()->getWidth() - 60,
                     oxygine::Stage::getStage()->getHeight() - 40 * 5 - m_OkButton->getScaledHeight());
     }
-    m_pPanel = spPanel::create(true, size, size);
+    m_pPanel = MemoryManagement::create<Panel>(true, size, size);
     if (banning)
     {
         m_pPanel->setPosition(30, 30);
@@ -123,13 +123,13 @@ PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, bool ba
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
-    spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 60);
+    spLabel pLabel = MemoryManagement::create<Label>(m_pPanel->getScaledWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Perk List"));
     pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     m_pPanel->addItem(pLabel);
 
-    m_pPerkSelection = spPerkSelection::create(firstCO, oxygine::Stage::getStage()->getWidth() - 80, m_pMap->getGameRules()->getMaxPerkCost(), m_pMap->getGameRules()->getMaxPerkCount(), banning, hiddenList, m_pMap);
+    m_pPerkSelection = MemoryManagement::create<PerkSelection>(firstCO, oxygine::Stage::getStage()->getWidth() - 80, m_pMap->getGameRules()->getMaxPerkCost(), m_pMap->getGameRules()->getMaxPerkCount(), banning, hiddenList, m_pMap);
     m_pPerkSelection->setY(pLabel->getY() + pLabel->getTextRect().height() + 10);
     m_pPanel->addItem(m_pPerkSelection);
     m_pPanel->setContentHeigth(m_pPerkSelection->getScaledHeight() + m_pPerkSelection->getY() + 40);
@@ -295,7 +295,7 @@ void PerkSelectionDialog::showDeleteBannlist()
     if (QFile::exists(path + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
     {
         QString file = path + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
-        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to delete the perk list: ") + file + "?", true);
+        spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to delete the perk list: ") + file + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
         {
             emit sigDeleteBannlist(file);
@@ -312,7 +312,7 @@ void PerkSelectionDialog::deleteBannlist(const QString file)
 
 void PerkSelectionDialog::showSavePerklist()
 {    
-    spDialogTextInput pSaveInput = spDialogTextInput::create(tr("Perklist Name"), true, "");
+    spDialogTextInput pSaveInput = MemoryManagement::create<DialogTextInput>(tr("Perklist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &PerkSelectionDialog::savePerklist, Qt::QueuedConnection);
     addChild(pSaveInput);
 }
@@ -338,7 +338,7 @@ void PerkSelectionDialog::savePerklist(QString filename)
     QString path = getFilepath();
     if (QFile::exists(path + filename + Filesupport::LIST_FILENAME_ENDING))
     {
-        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the perk list: ") + path + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
+        spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to overwrite the perk list: ") + path + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename, path]
         {
             emit sigDoSaveBannlist(filename, path);
@@ -370,7 +370,7 @@ void PerkSelectionDialog::updatePredefinedList()
     }
     QString path = getFilepath();
     auto items = getNameList(path);
-    m_PredefinedLists = spDropDownmenu::create(260, items);
+    m_PredefinedLists = MemoryManagement::create<DropDownmenu>(260, items);
     m_PredefinedLists->setPosition(oxygine::Stage::getStage()->getWidth() / 2  - m_PredefinedLists->getScaledWidth() - 10,
                                    oxygine::Stage::getStage()->getHeight() - 75 - m_pSave->getScaledHeight());
     m_pSpriteBox->addChild(m_PredefinedLists);

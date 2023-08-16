@@ -34,7 +34,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
     qint32 width = 0;
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMenuFont32());
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
-    oxygine::spTextField testText = oxygine::spTextField::create();
+    oxygine::spTextField testText = MemoryManagement::create<oxygine::TextField>();
     for (qint32 i = 0; i < texts.size(); i++)
     {
         testText->setStyle(style);
@@ -55,7 +55,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
     qint32 heigth = createTopSprite(0, width, pPlayer);
     qint32 y = heigth;
     m_startY = y;
-    m_Cursor = oxygine::spSprite::create();
+    m_Cursor = MemoryManagement::create<oxygine::Sprite>();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("cursor+menu");
     if (pAnim != nullptr)
     {
@@ -126,7 +126,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
             {
                 for (qint32 i = 0; i < emptyItems; i++)
                 {
-                    oxygine::spBox9Sprite pItemBox = oxygine::spBox9Sprite::create();
+                    oxygine::spBox9Sprite pItemBox = MemoryManagement::create<oxygine::Box9Sprite>();
                     pAnim = pGameManager->getResAnim("menu+middle+mask");
                     if (pAnim != nullptr)
                     {
@@ -166,7 +166,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(GameMenue* pMenu, GameMap* pMap, cons
         {
             qint32 height = maxY + bottomHeigth;
             qint32 max = m_ItemActors.size() - m_rowCount * m_maxXCount;
-            m_scrollbar = spH_Scrollbar::create(height, height + max * m_itemHeigth * 1.5f);
+            m_scrollbar = MemoryManagement::create<H_Scrollbar>(height, height + max * m_itemHeigth * 1.5f);
             connect(m_scrollbar.get(), &H_Scrollbar::sigScrollValueChanged, this, [this, max](float value)
             {
                 m_startItem = max * value;
@@ -287,7 +287,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
                                                            Player* pPlayer)
 {
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::spBox9Sprite pItemBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pItemBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+middle+mask");
     if (pAnim != nullptr)
     {
@@ -301,7 +301,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         pItemBox->setX(x);
         pItemBox->setWidth(width);
         // text for the item
-        oxygine::spTextField textField = oxygine::spTextField::create();
+        oxygine::spTextField textField = MemoryManagement::create<oxygine::TextField>();
         // set color font based
         if (!enabled)
         {
@@ -367,7 +367,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
 qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width, Player* pPlayer)
 {
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::spBox9Sprite pBottomBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pBottomBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+bottom+mask");
     if (pAnim != nullptr)
     {
@@ -385,7 +385,7 @@ qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width
 qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width, Player* pPlayer)
 {
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::spBox9Sprite pTopBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pTopBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top+mask");
     if (pAnim != nullptr)
     {
@@ -553,8 +553,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
                     if (pUnitSpriteManager->exists(id))
                     {
-                        spUnit pDummy = spUnit::create(id, m_pMap->getCurrentPlayer(), false, m_pMap);
-                        spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
+                        spUnit pDummy = MemoryManagement::create<Unit>(id, m_pMap->getCurrentPlayer(), false, m_pMap);
+                        spFieldInfo fieldinfo = MemoryManagement::create<FieldInfo>(nullptr, pDummy.get());
                         m_pMenu->addChild(fieldinfo);
                         connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
                         {

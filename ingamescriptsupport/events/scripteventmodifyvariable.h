@@ -5,7 +5,7 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventModifyVariable;
-using spScriptEventModifyVariable = oxygine::intrusive_ptr<ScriptEventModifyVariable>;
+using spScriptEventModifyVariable = std::shared_ptr<ScriptEventModifyVariable>;
 
 class ScriptEventModifyVariable final : public ScriptEvent
 {

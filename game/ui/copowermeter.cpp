@@ -36,7 +36,7 @@ void CoPowermeter::drawPowerMeter()
             {
                 for (qint32 i2 = 0; i2 < power + superpower; i2++)
                 {
-                    oxygine::spSprite pSprite = oxygine::spSprite::create();
+                    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
                     if (i2 >= power)
                     {
                         if (powerFilled >= static_cast<float>(i2 + 1))
@@ -138,7 +138,7 @@ void CoPowermeter::drawPowerMeter()
             case GameEnums::PowerMode_Power:
             {
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-                oxygine::spTextField pText = oxygine::spTextField::create();
+                oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
                 pText->setStyle(style);
                 pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"3\" maxY=\"5\">Power</wiggly>"));
                 pText->setY(0);
@@ -156,7 +156,7 @@ void CoPowermeter::drawPowerMeter()
             case GameEnums::PowerMode_Superpower:
             {
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-                oxygine::spTextField pText = oxygine::spTextField::create();
+                oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
                 pText->setStyle(style);
                 pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"2\" maxY=\"5\">Superpower</wiggly>"));
                 pText->setY(0);
@@ -174,7 +174,7 @@ void CoPowermeter::drawPowerMeter()
             case GameEnums::PowerMode_Tagpower:
             {
                 oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-                oxygine::spTextField pText = oxygine::spTextField::create();
+                oxygine::spTextField pText = MemoryManagement::create<oxygine::TextField>();
                 pText->setStyle(style);
                 pText->setHtmlText(tr("<wiggly speed=\"60\" advance=\"2\" maxY=\"5\">Tagpower</wiggly>"));
                 pText->setY(- 4);

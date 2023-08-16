@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
@@ -14,9 +12,9 @@
 class BaseGamemenu;
 class GameMap;
 class GameScript;
-using spGameScript = oxygine::intrusive_ptr<GameScript>;
+using spGameScript = std::shared_ptr<GameScript>;
 
-class GameScript final : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameScript final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

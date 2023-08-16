@@ -1,5 +1,6 @@
 #pragma  once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
+
+#include <QString>
 
 class QDomNode;
 
@@ -8,7 +9,7 @@ namespace oxygine
     namespace text
     {
         class Node;
-        using spNode = intrusive_ptr<Node>;
+    using spNode = std::shared_ptr<Node>;
 
         static const char* const AND_AMP_XML_SIGN = "&amp;";
         static const char* const SMALLER_AMP_XML_SIGN = "&lt;";

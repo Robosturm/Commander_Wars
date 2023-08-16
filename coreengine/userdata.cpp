@@ -20,7 +20,7 @@ Userdata* Userdata::getInstance()
 {
     if (m_pInstance.get() == nullptr)
     {
-        m_pInstance = spUserdata::create();
+        m_pInstance = MemoryManagement::create<Userdata>();
     }
     return m_pInstance.get();
 }
@@ -50,7 +50,7 @@ void Userdata::release()
     m_mapVictoryInfo.clear();
     m_shopItems.clear();
     m_scriptVariableFiles.clear();
-    m_pInstance.free();
+    m_pInstance.reset();
 }
 
 qint32 Userdata::getCredtis() const
@@ -176,7 +176,7 @@ void Userdata::increaseAchievement(QString id, qint32 value)
             achievement.progress += value;
             if (!achieved && (achievement.progress >= achievement.targetValue))
             {
-                spAchievementBanner banner = spAchievementBanner::create(achievement);
+                spAchievementBanner banner = MemoryManagement::create<AchievementBanner>(achievement);
                 banner->init();
                 oxygine::Stage::getStage()->addChild(banner);
                 
@@ -452,7 +452,7 @@ ScriptVariableFile* Userdata::getScriptVariableFile(const QString filename)
            return variableFile.get();
         }
     }
-    spScriptVariableFile pScriptVariableFile = spScriptVariableFile::create(filename);
+    spScriptVariableFile pScriptVariableFile = MemoryManagement::create<ScriptVariableFile>(filename);
     QFile file(Settings::getInstance()->getUserPath() + filename);
     if (file.exists())
     {

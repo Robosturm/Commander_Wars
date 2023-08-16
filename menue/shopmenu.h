@@ -13,7 +13,7 @@
 #include "menue/basemenu.h"
 
 class Shopmenu;
-using spShopmenu = oxygine::intrusive_ptr<Shopmenu>;
+using spShopmenu = std::shared_ptr<Shopmenu>;
 
 class Shopmenu final : public Basemenu
 {

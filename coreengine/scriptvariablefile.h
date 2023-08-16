@@ -2,12 +2,11 @@
 
 #include <QObject>
 #include "coreengine/scriptvariables.h"
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 class ScriptVariableFile;
-using spScriptVariableFile = oxygine::intrusive_ptr<ScriptVariableFile>;
+using spScriptVariableFile = std::shared_ptr<ScriptVariableFile>;
 
-class ScriptVariableFile final : public QObject, public FileSerializable, public oxygine::ref_counter
+class ScriptVariableFile final : public QObject, public FileSerializable
 {
         Q_OBJECT
     public:

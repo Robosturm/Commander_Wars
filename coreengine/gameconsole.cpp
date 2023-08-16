@@ -103,7 +103,7 @@ GameConsole* GameConsole::getInstance()
 {
     if (m_pConsole.get() == nullptr)
     {
-        m_pConsole = spConsole::create();
+        m_pConsole = MemoryManagement::create<GameConsole>();
         qInstallMessageHandler(GameConsole::messageOutput);
     }
     return m_pConsole.get();
@@ -118,13 +118,13 @@ void GameConsole::init()
 {
     // move console to top
     oxygine::Actor::setPriority(static_cast<qint32>(Mainapp::ZOrder::Console));
-    m_pBackgroundsprite = oxygine::spColorRectSprite::create();
+    m_pBackgroundsprite = MemoryManagement::create<oxygine::ColorRectSprite>();
     m_pBackgroundsprite->setPosition(0, 0);
     m_pBackgroundsprite->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
     addChild(m_pBackgroundsprite);
     m_pBackgroundsprite->setColor(QColor(0,0,0, 180));
 
-    m_text = oxygine::spTextField::create();
+    m_text = MemoryManagement::create<oxygine::TextField>();
     m_text->setPosition(1, 1);
     m_text->setWidth(oxygine::Stage::getStage()->getWidth() - 2);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getFont("console16"));
@@ -133,7 +133,7 @@ void GameConsole::init()
     m_text->setStyle(style);
     addChild(m_text);
 
-    m_editTextfield = oxygine::spTextField::create();
+    m_editTextfield = MemoryManagement::create<oxygine::TextField>();
     m_editTextfield->setPosition(1, 1);
     m_editTextfield->setWidth(oxygine::Stage::getStage()->getWidth() - 2);
     m_editTextfield->setStyle(style);
@@ -454,7 +454,6 @@ void GameConsole::extractResources()
 
 void GameConsole::memoryUsage()
 {
-    CONSOLE_PRINT("C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), GameConsole::eINFO);
     CONSOLE_PRINT("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), GameConsole::eINFO);
     CONSOLE_PRINT("Materials cached=" + QString::number(oxygine::MaterialCache::mc().getSize()), GameConsole::eINFO);
 }
@@ -468,7 +467,7 @@ void GameConsole::resetMapsGameRules(const QString & folder)
     {
         dirIter.next();
         QString filePath = dirIter.fileInfo().canonicalFilePath();
-        spGameMap pMap = spGameMap::create(filePath, true, true, false);
+        spGameMap pMap = MemoryManagement::create<GameMap>(filePath, true, true, false);
         pMap->getGameRules()->reset();
         QFile file(filePath);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);

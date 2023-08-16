@@ -1,10 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include <QMultiMap>
 #include <QMutex>
-#include <QScopedPointer>
 
 namespace oxygine
 {
@@ -18,7 +15,7 @@ namespace oxygine
     }
 
     class Material;
-    using spMaterial = intrusive_ptr<Material>;
+    using spMaterial = std::shared_ptr<Material>;
 
     class MaterialCache final
     {
@@ -45,6 +42,6 @@ namespace oxygine
     private:
         explicit MaterialCache() = default;
     private:
-        static QScopedPointer<MaterialCache> mcache;
+        static std::shared_ptr<MaterialCache> mcache;
     };
 }

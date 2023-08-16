@@ -21,7 +21,7 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -30,7 +30,7 @@ COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, 
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    m_COSelection = spCOSelection::create(QPoint(30, 30), QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 100), coids);
+    m_COSelection = MemoryManagement::create<COSelection>(QPoint(30, 30), QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 100), coids);
     m_COSelection->colorChanged(color);
     pSpriteBox->addChild(m_COSelection);
     selectedCOIDChanged(coid);
@@ -134,8 +134,8 @@ void COSelectionDialog::showCOInfo()
         coid = m_coids[0];
     }
     Player* pPlayer = m_pMap->getPlayer(m_player);
-    spCO co = spCO::create(coid, pPlayer, m_pMap);
-    addChild(spCOInfoDialog::create(co, spPlayer(pPlayer), [this, pPlayer](spCO& pCurrentCO, spPlayer&, qint32 direction)
+    spCO co = MemoryManagement::create<CO>(coid, pPlayer, m_pMap);
+    addChild(MemoryManagement::create<COInfoDialog>(co, spPlayer(pPlayer), [this, pPlayer](spCO& pCurrentCO, spPlayer&, qint32 direction)
     {        
         qint32 index = m_coids.indexOf(pCurrentCO->getCoID());
         index += direction;
@@ -152,7 +152,7 @@ void COSelectionDialog::showCOInfo()
         {
             coid = m_coids[index];
         }
-        pCurrentCO = spCO::create(coid, pPlayer, m_pMap);
+        pCurrentCO = MemoryManagement::create<CO>(coid, pPlayer, m_pMap);
     }, false));
 }
 

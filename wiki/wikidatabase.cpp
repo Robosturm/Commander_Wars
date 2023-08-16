@@ -240,11 +240,11 @@ spWikipage WikiDatabase::getPage(const PageData * data)
     // select page loader and create wiki page
     if (pCOSpriteManager->exists(data->m_id))
     {
-        spPlayer pPlayer = spPlayer::create(nullptr);
+        spPlayer pPlayer = MemoryManagement::create<Player>(nullptr);
         pPlayer->init();
-        spCO pCO = spCO::create(data->m_id, pPlayer.get(), nullptr);
+        spCO pCO = MemoryManagement::create<CO>(data->m_id, pPlayer.get(), nullptr);
         ret = spWikipage::create(data->m_id);
-        spCOInfoActor pInfo = spCOInfoActor::create(nullptr, ret->getPanel()->getScaledWidth());
+        spCOInfoActor pInfo = MemoryManagement::create<COInfoActor>(nullptr, ret->getPanel()->getScaledWidth());
         pInfo->showCO(pCO, pPlayer);
         ret->getPanel()->addItem(pInfo);
         ret->getPanel()->setContentHeigth(pInfo->getScaledHeight());
@@ -252,21 +252,21 @@ spWikipage WikiDatabase::getPage(const PageData * data)
     else if (pTerrainManager->exists(data->m_id))
     {
         spTerrain pTerrain = Terrain::createTerrain(data->m_id, -1, -1, "", nullptr);
-        ret = spFieldInfo::create(pTerrain.get(), nullptr);
+        ret = MemoryManagement::create<FieldInfo>(pTerrain.get(), nullptr);
     }
     else if (pBuildingSpriteManager->exists(data->m_id))
     {
         spTerrain pTerrain = Terrain::createTerrain(GameMap::PLAINS, -1, -1, "", nullptr);
-        spBuilding pBuilding = spBuilding::create(data->m_id, nullptr);
+        spBuilding pBuilding = MemoryManagement::create<Building>(data->m_id, nullptr);
         pTerrain->setBuilding(pBuilding);
-        ret = spFieldInfo::create(pTerrain.get(), nullptr);
+        ret = MemoryManagement::create<FieldInfo>(pTerrain.get(), nullptr);
     }
     else if (pUnitSpriteManager->exists(data->m_id))
     {
-        spPlayer pPlayer = spPlayer::create(nullptr);
+        spPlayer pPlayer = MemoryManagement::create<Player>(nullptr);
         pPlayer->init();
-        spUnit pUnit = spUnit::create(data->m_id, pPlayer.get(), false, nullptr);
-        ret = spFieldInfo::create(nullptr, pUnit.get());
+        spUnit pUnit = MemoryManagement::create<Unit>(data->m_id, pPlayer.get(), false, nullptr);
+        ret = MemoryManagement::create<FieldInfo>(nullptr, pUnit.get());
     }
     else if (data->m_id == DAMAGE_TABLE_NAME)
     {
@@ -295,7 +295,7 @@ spWikipage WikiDatabase::getPage(const PageData * data)
 
 oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size, Player* pIconPlayer)
 {
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     if (pAnim == nullptr)
     {
@@ -333,11 +333,11 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
         {
             if (pFinalIconPlayer == nullptr)
             {
-                pPlayer = spPlayer::create(nullptr);
+                pPlayer = MemoryManagement::create<Player>(nullptr);
                 pPlayer->init();
                 pFinalIconPlayer = pPlayer.get();
             }
-            spUnit pUnit = spUnit::create(file, pFinalIconPlayer, false, pMap);
+            spUnit pUnit = MemoryManagement::create<Unit>(file, pFinalIconPlayer, false, pMap);
             if (GameMap::getImageSize() > 0)
             {
                 pUnit->setScale(static_cast<float>(size) / static_cast<float>(GameMap::getImageSize()));
@@ -356,7 +356,7 @@ oxygine::spSprite WikiDatabase::getIcon(GameMap* pMap, QString file, qint32 size
                 }
                 pFinalIconPlayer = pPlayer.get();
             }
-            spBuilding pBuilding = spBuilding::create(file, pMap);
+            spBuilding pBuilding = MemoryManagement::create<Building>(file, pMap);
             pBuilding->setOwner(pFinalIconPlayer);
             pBuilding->scaleAndShowOnSingleTile();
             return pBuilding;

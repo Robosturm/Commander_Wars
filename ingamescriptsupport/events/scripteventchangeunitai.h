@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
 class ScriptEventChangeUnitAI;
-using spScriptEventChangeUnitAI = oxygine::intrusive_ptr<ScriptEventChangeUnitAI>;
+using spScriptEventChangeUnitAI = std::shared_ptr<ScriptEventChangeUnitAI>;
 
 class ScriptEventChangeUnitAI final : public ScriptEventGeneric
 {

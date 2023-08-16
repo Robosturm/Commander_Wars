@@ -9,13 +9,13 @@
 
 class GameMap;
 class GameAction;
-using spGameAction = oxygine::intrusive_ptr<GameAction>;
+using spGameAction = std::shared_ptr<GameAction>;
 class GameMenue;
-using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
+using spGameMenue = std::shared_ptr<GameMenue>;
 class AiProcessPipe;
-using spAiProcessPipe = oxygine::intrusive_ptr<AiProcessPipe>;
+using spAiProcessPipe = std::shared_ptr<AiProcessPipe>;
 
-class AiProcessPipe final : public QObject, public oxygine::ref_counter
+class AiProcessPipe final : public QObject
 {
     Q_OBJECT
 public:

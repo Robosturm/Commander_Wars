@@ -7,12 +7,10 @@
 
 #include "coreengine/fileserializable.h"
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 class SpecialEvent;
-using spSpecialEvent = oxygine::intrusive_ptr<SpecialEvent>;
+using spSpecialEvent = std::shared_ptr<SpecialEvent>;
 
-class SpecialEvent final : public QObject, public FileSerializable, public oxygine::ref_counter
+class SpecialEvent final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

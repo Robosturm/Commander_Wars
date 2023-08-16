@@ -5,7 +5,7 @@
 
 class GameMap;
 class DialogViewMapStats;
-using spDialogViewMapStats = oxygine::intrusive_ptr<DialogViewMapStats>;
+using spDialogViewMapStats = std::shared_ptr<DialogViewMapStats>;
 
 class DialogViewMapStats final : public CreatedGui
 {

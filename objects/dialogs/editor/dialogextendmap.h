@@ -5,7 +5,7 @@
 #include "ui_reader/createdgui.h"
 
 class DialogExtendMap;
-using spDialogExtendMap = oxygine::intrusive_ptr<DialogExtendMap>;
+using spDialogExtendMap = std::shared_ptr<DialogExtendMap>;
 
 class DialogExtendMap final : public CreatedGui
 {

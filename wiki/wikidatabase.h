@@ -10,12 +10,12 @@
 class Player;
 class GameMap;
 class WikiDatabase;
-using spWikiDatabase = oxygine::intrusive_ptr<WikiDatabase>;
+using spWikiDatabase = std::shared_ptr<WikiDatabase>;
 
 class PageData;
-using spPageData = oxygine::intrusive_ptr<PageData>;
+using spPageData = std::shared_ptr<PageData>;
 
-class PageData final : public QObject, public oxygine::ref_counter
+class PageData final : public QObject
 {
 public:
     explicit PageData() = default;
@@ -45,7 +45,7 @@ class WikiDatabase final : public QObject, public RessourceManagement<WikiDataba
     Q_OBJECT
 public:
 
-   virtual ~WikiDatabase() = default;
+   ~WikiDatabase() = default;
     /**
      * @brief load
      */
@@ -101,7 +101,7 @@ public:
 
 private:
     friend RessourceManagement<WikiDatabase>;
-    friend class oxygine::intrusive_ptr<WikiDatabase>;
+    friend class MemoryManagement;
     explicit WikiDatabase();
 
 private:

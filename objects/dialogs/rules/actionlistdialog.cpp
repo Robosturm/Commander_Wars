@@ -29,7 +29,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    m_pSpriteBox = oxygine::spBox9Sprite::create();
+    m_pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -42,7 +42,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
+    spPanel pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150),
                                QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 150));
     pPanel->setPosition(30, 30);
     m_pSpriteBox->addChild(pPanel);
@@ -50,7 +50,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
     oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
-    spLabel pLabel = spLabel::create(pPanel->getScaledWidth() - 60);
+    spLabel pLabel = MemoryManagement::create<Label>(pPanel->getScaledWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Action List"));
     pLabel->setPosition(pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
@@ -71,13 +71,13 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
         QString icon = pGameManager->getActionIcon(actionId);
         if (!icon.isEmpty())
         {
-            pLabel = spLabel::create(300);
+            pLabel = MemoryManagement::create<Label>(300);
             pLabel->setStyle(style);
             pLabel->setHtmlText(pGameManager->getName(i));
             pLabel->setPosition(x + 90, y);
             QString tooltip = pGameManager->getDescription(i);
 
-            spTooltip pTooltip = spTooltip::create();
+            spTooltip pTooltip = MemoryManagement::create<Tooltip>();
 
             oxygine::spSprite pSprite = pGameManager->getIcon(pMap, icon);
             pSprite->setScale(1.25f * pSprite->getScaleX());
@@ -85,7 +85,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
             pTooltip->setPosition(x + 45, y);
             pTooltip->setTooltipText(tooltip);
 
-            spCheckbox pCheckbox = spCheckbox::create();
+            spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
             pCheckbox->setPosition(x, y);
             pCheckbox->setTooltipText(tooltip);
             m_Checkboxes.append(pCheckbox);
@@ -217,7 +217,7 @@ void ActionListDialog::setBuildlist(qint32)
 
 void ActionListDialog::showSaveBannlist()
 {    
-    spDialogTextInput pSaveInput = spDialogTextInput::create(tr("Bannlist Name"), true, "");
+    spDialogTextInput pSaveInput = MemoryManagement::create<DialogTextInput>(tr("Bannlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &ActionListDialog::saveBannlist, Qt::QueuedConnection);
     addChild(pSaveInput);    
 }
@@ -227,7 +227,7 @@ void ActionListDialog::showDeleteBannlist()
     if (QFile::exists(FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING))
     {
         QString file = FILEPATH + m_PredefinedLists->getCurrentItemText() + Filesupport::LIST_FILENAME_ENDING;
-        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to delete the action bannlist: ") + file + "?", true);
+        spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to delete the action bannlist: ") + file + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, file]
         {
             emit sigDeleteBannlist(file);
@@ -246,7 +246,7 @@ void ActionListDialog::saveBannlist(QString filename)
 {    
     if (QFile::exists(FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING))
     {
-        spDialogMessageBox pDialogOverwrite = spDialogMessageBox::create(tr("Do you want to overwrite the action bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
+        spDialogMessageBox pDialogOverwrite = MemoryManagement::create<DialogMessageBox>(tr("Do you want to overwrite the action bannlist: ") + FILEPATH + filename + Filesupport::LIST_FILENAME_ENDING + "?", true);
         connect(pDialogOverwrite.get(), &DialogMessageBox::sigOk, this, [this, filename]
         {
             emit sigDoSaveBannlist(filename);
@@ -272,7 +272,7 @@ void ActionListDialog::updatePredefinedList()
         m_PredefinedLists->detach();
     }
     auto items = getNameList();
-    m_PredefinedLists = spDropDownmenu::create(300, items);
+    m_PredefinedLists = MemoryManagement::create<DropDownmenu>(300, items);
     m_PredefinedLists->setPosition(oxygine::Stage::getStage()->getWidth() / 2 - m_PredefinedLists->getScaledWidth() - 10,
                                    oxygine::Stage::getStage()->getHeight() - 75 - m_ToggleAll->getScaledHeight());
     m_pSpriteBox->addChild(m_PredefinedLists);

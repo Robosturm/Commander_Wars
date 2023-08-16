@@ -4,9 +4,9 @@ RotatingSprite::RotatingSprite()
 {
     m_speedTimer.start();
 
-    m_SecondRect = oxygine::spClipRectActor::create();
+    m_SecondRect = MemoryManagement::create<oxygine::ClipRectActor>();
     addChild(m_SecondRect);
-    m_FirstRect = oxygine::spClipRectActor::create();
+    m_FirstRect = MemoryManagement::create<oxygine::ClipRectActor>();
     addChild(m_FirstRect);
 }
 

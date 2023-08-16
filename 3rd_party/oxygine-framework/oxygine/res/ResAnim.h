@@ -9,7 +9,7 @@ namespace oxygine
 {
     using animationFrames = std::vector<AnimationFrame>;
     class ResAnim;
-    using spResAnim = intrusive_ptr<ResAnim>;
+    using spResAnim = std::shared_ptr<ResAnim>;
     class ResAnim: public Resource
     {
     public:

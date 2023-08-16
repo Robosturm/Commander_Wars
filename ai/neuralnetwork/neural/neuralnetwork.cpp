@@ -1,6 +1,7 @@
 #include "ai/neuralnetwork/neural/neuralnetwork.h"
 #include "ai/neuralnetwork/neural/layer.h"
 
+#include "coreengine/memorymanagement.h"
 #include "coreengine/interpreter.h"
 
 NeuralNetwork::NeuralNetwork(double maxWeight)
@@ -21,7 +22,7 @@ void NeuralNetwork::autogenerate(bool randomize)
 void NeuralNetwork::addLayer(QMap<QString, double> & parameters)
 {
     m_configuration.append(parameters);
-    m_layers.push_back(spLayer::create(m_layers.size(), this, parameters));
+    m_layers.push_back(MemoryManagement::create<Layer>(m_layers.size(), this, parameters));
 }
 
 void NeuralNetwork::extend(quint32 count, bool randomize)
@@ -170,7 +171,7 @@ void NeuralNetwork::deserializeObject(QDataStream& pStream)
     pStream >> size;
     for (qint32 i = 0; i < size; ++i)
     {
-        spLayer layer = spLayer::create(i, this, m_configuration[i]);
+        spLayer layer = MemoryManagement::create<Layer>(i, this, m_configuration[i]);
         if (i > 0)
         {
             layer->setPreviousLayer(m_layers[i - 1].get());

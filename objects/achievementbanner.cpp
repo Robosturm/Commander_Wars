@@ -26,7 +26,7 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     qint32 bannerWidth = 350;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pButtonBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pButtonBox->setResAnim(pAnim);
     pButtonBox->setSize(bannerWidth, bannerHeight);
     setSize(bannerWidth, bannerHeight);
@@ -39,7 +39,7 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    spLabel pTextfield = spLabel::create(bannerWidth - 20 - GameMap::defaultImageSize * 2);
+    spLabel pTextfield = MemoryManagement::create<Label>(bannerWidth - 20 - GameMap::defaultImageSize * 2);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(achievement.name);
     pTextfield->setPosition(bannerWidth - 5 - pTextfield->getScaledWidth(), 5);

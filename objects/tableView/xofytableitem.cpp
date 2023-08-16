@@ -12,7 +12,7 @@ XofYTableItem::XofYTableItem(qint32 currentValue, qint32 maxValue, qint32 itemWi
 #ifdef GRAPHICSUPPORT
     setObjectName("XofYTableItem");
 #endif
-    spLabel pTextfield = spLabel::create(itemWidth);
+    spLabel pTextfield = MemoryManagement::create<Label>(itemWidth);
     auto style = pTextfield->getStyle();
     style.color = textColor;
     pTextfield->setStyle(style);

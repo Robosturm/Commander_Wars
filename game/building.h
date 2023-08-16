@@ -18,7 +18,7 @@ class GameAction;
 class Weather;
 class GameMap;
 class Building;
-using spBuilding = oxygine::intrusive_ptr<Building>;
+using spBuilding = std::shared_ptr<Building>;
 
 class Building final : public Tooltip, public FileSerializable
 {

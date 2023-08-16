@@ -11,7 +11,7 @@
 
 class GameMap;
 class HeavyAi;
-using spHeavyAi = oxygine::intrusive_ptr<HeavyAi>;
+using spHeavyAi = std::shared_ptr<HeavyAi>;
 
 class HeavyAi final : public CoreAI
 {

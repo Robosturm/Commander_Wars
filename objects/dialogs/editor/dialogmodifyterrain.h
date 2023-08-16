@@ -11,7 +11,7 @@
 class GameMap;
 class Terrain;
 class DialogModifyTerrain;
-using spDialogModifyTerrain = oxygine::intrusive_ptr<DialogModifyTerrain>;
+using spDialogModifyTerrain = std::shared_ptr<DialogModifyTerrain>;
 
 class DialogModifyTerrain final : public QObject, public oxygine::Actor
 {

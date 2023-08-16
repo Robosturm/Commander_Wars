@@ -4,7 +4,7 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventChangeWeather;
-using spScriptEventChangeWeather = oxygine::intrusive_ptr<ScriptEventChangeWeather>;
+using spScriptEventChangeWeather = std::shared_ptr<ScriptEventChangeWeather>;
 
 class ScriptEventChangeWeather final : public ScriptEvent
 {

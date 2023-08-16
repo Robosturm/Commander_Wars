@@ -2,15 +2,13 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/fileserializable.h"
 #include "ai/decisiontree/question.h"
 
 class DecisionQuestion;
-using spDecisionQuestion = oxygine::intrusive_ptr<DecisionQuestion>;
+using spDecisionQuestion = std::shared_ptr<DecisionQuestion>;
 
-class DecisionQuestion final : public QObject, public FileSerializable, public oxygine::ref_counter
+class DecisionQuestion final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

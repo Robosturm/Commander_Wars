@@ -9,7 +9,7 @@
 class Player;
 
 class DialogUnitInfo;
-using spDialogUnitInfo = oxygine::intrusive_ptr<DialogUnitInfo>;
+using spDialogUnitInfo = std::shared_ptr<DialogUnitInfo>;
 
 class DialogUnitInfo final : public QObject, public oxygine::Actor
 {

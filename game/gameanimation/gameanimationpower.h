@@ -7,7 +7,7 @@
 #include "game/co.h"
 
 class GameAnimationPower;
-using spGameAnimationPower = oxygine::intrusive_ptr<GameAnimationPower>;
+using spGameAnimationPower = std::shared_ptr<GameAnimationPower>;
 
 class GameAnimationPower final : public GameAnimation
 {
@@ -30,7 +30,7 @@ public slots:
 protected slots:
     virtual void start() override;
 private:
-    friend class oxygine::intrusive_ptr<GameAnimationPower>;
+    friend class MemoryManagement;
     GameAnimationPower(quint32 frameTime, CO* pCO, GameMap * pMap);
 
 private:

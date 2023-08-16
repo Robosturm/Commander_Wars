@@ -9,7 +9,7 @@
 class CO;
 class GameMap;
 class PlayerInfo;
-using spPlayerInfo = oxygine::intrusive_ptr<PlayerInfo>;
+using spPlayerInfo = std::shared_ptr<PlayerInfo>;
 
 /**
  * @brief Shows infos about the co's, funds and the powermeter

@@ -5,7 +5,7 @@
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
 class ScriptEventBuildingFireCounter;
-using spScriptEventBuildingFireCounter = oxygine::intrusive_ptr<ScriptEventBuildingFireCounter>;
+using spScriptEventBuildingFireCounter = std::shared_ptr<ScriptEventBuildingFireCounter>;
 
 class ScriptEventBuildingFireCounter final : public ScriptEventGeneric
 {

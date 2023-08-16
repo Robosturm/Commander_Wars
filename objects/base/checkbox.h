@@ -4,7 +4,7 @@
 #include "objects/base/tooltip.h"
 
 class Checkbox;
-using spCheckbox = oxygine::intrusive_ptr<Checkbox>;
+using spCheckbox = std::shared_ptr<Checkbox>;
 
 class Checkbox final : public Tooltip
 {

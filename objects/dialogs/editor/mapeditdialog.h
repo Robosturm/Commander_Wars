@@ -7,7 +7,7 @@
 #include "game/GameEnums.h"
 
 class MapEditDialog;
-using spMapEditDialog = oxygine::intrusive_ptr<MapEditDialog>;
+using spMapEditDialog = std::shared_ptr<MapEditDialog>;
 
 class MapEditDialog final : public CreatedGui
 {

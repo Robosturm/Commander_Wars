@@ -5,7 +5,7 @@
 namespace oxygine
 {
     class TweenQueue;
-    using spTweenQueue = intrusive_ptr<TweenQueue>;
+using spTweenQueue = std::shared_ptr<TweenQueue>;
     class TweenQueue final : public Tween
     {
     public:

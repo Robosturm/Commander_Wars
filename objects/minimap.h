@@ -9,7 +9,7 @@
 class GameMap;
 class GameMenue;
 class Minimap;
-using spMinimap = oxygine::intrusive_ptr<Minimap>;
+using spMinimap = std::shared_ptr<Minimap>;
 
 class Minimap final : public QObject, public oxygine::Actor
 {

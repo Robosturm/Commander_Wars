@@ -13,7 +13,7 @@
 #include "game/unit.h"
 
 class COInfoActor;
-using spCOInfoActor = oxygine::intrusive_ptr<COInfoActor>;
+using spCOInfoActor = std::shared_ptr<COInfoActor>;
 
 class COInfoActor final : public QObject, public oxygine::Actor
 {

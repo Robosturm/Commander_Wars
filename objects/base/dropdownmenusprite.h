@@ -8,7 +8,7 @@
 #include "objects/base/dropdownmenubase.h"
 
 class DropDownmenuSprite;
-using spDropDownmenuSprite = oxygine::intrusive_ptr<DropDownmenuSprite>;
+using spDropDownmenuSprite = std::shared_ptr<DropDownmenuSprite>;
 
 class DropDownmenuSprite final : public DropDownmenuBase
 {

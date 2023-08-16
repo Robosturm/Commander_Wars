@@ -10,7 +10,7 @@
 class MovementPlanner;
 class GameMap;
 class MovementPlannerAddIn;
-using spMovementPlannerAddIn = oxygine::intrusive_ptr<MovementPlannerAddIn>;
+using spMovementPlannerAddIn = std::shared_ptr<MovementPlannerAddIn>;
 
 class MovementPlannerAddIn final : public CreatedGui
 {

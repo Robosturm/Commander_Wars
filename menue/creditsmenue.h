@@ -8,7 +8,7 @@
 #include "menue/basemenu.h"
 
 class CreditsMenue;
-using spCreditsMenue = oxygine::intrusive_ptr<CreditsMenue>;
+using spCreditsMenue = std::shared_ptr<CreditsMenue>;
 
 class CreditsMenue final : public Basemenu
 {

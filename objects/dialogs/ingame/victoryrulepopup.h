@@ -5,7 +5,7 @@
 
 class GameMap;
 class VictoryRulePopup;
-using spVictoryRulePopup = oxygine::intrusive_ptr<VictoryRulePopup>;
+using spVictoryRulePopup = std::shared_ptr<VictoryRulePopup>;
 
 class VictoryRulePopup final : public CloseablePopUp
 {

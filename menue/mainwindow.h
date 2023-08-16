@@ -6,7 +6,7 @@
 #include "game/GameEnums.h"
 
 class Mainwindow;
-using spMainwindow = oxygine::intrusive_ptr<Mainwindow>;
+using spMainwindow = std::shared_ptr<Mainwindow>;
 
 class Mainwindow final : public Basemenu
 {

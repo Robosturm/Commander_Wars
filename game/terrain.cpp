@@ -17,7 +17,7 @@
 
 spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap, const QString & currentTerrainPalette)
 {
-    spTerrain pTerrain = spTerrain::create(terrainID, x, y, pMap);
+    spTerrain pTerrain = MemoryManagement::create<Terrain>(terrainID, x, y, pMap);
     pTerrain->setSize(GameMap::getImageSize(), GameMap::getImageSize());
     if (terrainID != "")
     {
@@ -536,7 +536,7 @@ void Terrain::setBaseTerrain(spTerrain terrain)
     if (m_pBaseTerrain.get() != nullptr)
     {
         m_pBaseTerrain->detach();
-        m_pBaseTerrain.free();
+        m_pBaseTerrain.reset();
     }
     if (terrain.get() != nullptr)
     {
@@ -553,7 +553,7 @@ void Terrain::unloadSprites()
     if (m_pTerrainSprite.get() != nullptr)
     {
         m_pTerrainSprite->detach();
-        m_pTerrainSprite.free();
+        m_pTerrainSprite.reset();
     }
     for (qint32 i = 0; i < m_pOverlaySprites.size(); i++)
     {
@@ -610,7 +610,7 @@ void Terrain::loadSprites()
 
 void Terrain::loadBaseTerrain(const QString terrainID, const QString currentTerrainPalette)
 {
-    m_pBaseTerrain = spTerrain::create(terrainID, m_x, m_y, m_pMap);
+    m_pBaseTerrain = MemoryManagement::create<Terrain>(terrainID, m_x, m_y, m_pMap);
     if (!currentTerrainPalette.isEmpty())
     {
         m_pBaseTerrain->setPalette(currentTerrainPalette);
@@ -626,7 +626,7 @@ void Terrain::loadBaseSprite(const QString spriteID, qint32 frameTime, qint32 st
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         if (pAnim->getTotalFrames() > 1)
         {
             if (startFrame >= 0 && endFrame >= 0)
@@ -661,7 +661,7 @@ void Terrain::loadBaseSprite(const QString spriteID, qint32 frameTime, qint32 st
     }
     else if (customSpriteExists())
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         addChild(pSprite);
         m_terrainSpriteName = spriteID;
@@ -678,7 +678,7 @@ void Terrain::loadBaseSprite(const QString spriteID, qint32 frameTime, qint32 st
         {
             img = QImage(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
         }
-        oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
+        oxygine::spSingleResAnim pAnim = MemoryManagement::create<oxygine::SingleResAnim>();
         Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1);
         m_SpriteAnim = pAnim;
         pSprite->setResAnim(pAnim.get());
@@ -960,7 +960,7 @@ void Terrain::loadOverlaySprite(const QString spriteID, qint32 startFrame, qint3
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::ep_ignore_error);
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pAnim != nullptr)
     {
         if (pAnim->getTotalFrames() > 1)
@@ -1220,7 +1220,7 @@ void Terrain::removeBuilding()
                 pTerrain->removeBuilding();
             }
         }
-        m_Building.free();
+        m_Building.reset();
     }
 }
 
@@ -1252,7 +1252,7 @@ void Terrain::loadBuilding(const QString buildingID)
     {
         removeBuilding();
     }
-    m_Building = spBuilding::create(buildingID, m_pMap);
+    m_Building = MemoryManagement::create<Building>(buildingID, m_pMap);
     m_Building->updateBuildingSprites(false);
     m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
     addBuildingSprite(m_Building);
@@ -1266,7 +1266,7 @@ void Terrain::setUnit(spUnit pUnit)
     {
         m_Unit->setTerrain(nullptr);
         m_Unit->detach();
-        m_Unit.free();
+        m_Unit.reset();
     }
     if (pUnit.get() != nullptr)
     {
@@ -1634,7 +1634,7 @@ void Terrain::addTerrainOverlay(QString id, qint32 x, qint32 y, QColor color, qi
         item.scale = scale;
         item.offset = QPoint(x, y);
         item.color = color;
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setPosition(x, y);
         pSprite->setColor(color);
         oxygine::ResAnim* pAnim = GameAnimationManager::getInstance()->getResAnim(id, oxygine::ep_ignore_error);
@@ -1927,7 +1927,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
             }
             else
             {
-                m_pBaseTerrain.free();
+                m_pBaseTerrain.reset();
             }
         }
     }
@@ -1935,7 +1935,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     pStream >> hasBuilding;
     if (hasBuilding)
     {
-        m_Building = spBuilding::create("", m_pMap);
+        m_Building = MemoryManagement::create<Building>("", m_pMap);
         m_Building->deserializer(pStream, fast);
 
         if (m_Building->isValid())
@@ -1949,14 +1949,14 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_Building.free();
+            m_Building.reset();
         }
     }
     bool hasUnit = false;
     pStream >> hasUnit;
     if (hasUnit)
     {
-        m_Unit = spUnit::create("", nullptr, false, m_pMap);
+        m_Unit = MemoryManagement::create<Unit>("", nullptr, false, m_pMap);
         m_Unit->deserializer(pStream, fast);
         if (m_Unit->isValid())
         {
@@ -1967,7 +1967,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_Unit.free();
+            m_Unit.reset();
         }
     }
     if (version > 1)
@@ -2095,5 +2095,5 @@ void Terrain::createBuildingDownStream()
 
 void Terrain::removeDownstream()
 {
-    m_Building.free();
+    m_Building.reset();
 }

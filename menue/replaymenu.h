@@ -13,7 +13,7 @@
 #include "game/gameanimation/animationskipper.h"
 
 class ReplayMenu;
-using spReplayMenu = oxygine::intrusive_ptr<ReplayMenu>;
+using spReplayMenu = std::shared_ptr<ReplayMenu>;
 
 class ReplayMenu final : public GameMenue
 {

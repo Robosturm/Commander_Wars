@@ -32,11 +32,11 @@ void LocalClient::connectTCP(QString primaryAdress, quint16 port, QString second
     connect(this, &LocalClient::sigDisconnectTCP, this, &LocalClient::disconnectTCP, Qt::QueuedConnection);
 
     // Start RX-Task
-    m_pRXTask = spRxTask::create(m_pSocket, 0, this, true);
+    m_pRXTask = MemoryManagement::create<RxTask>(m_pSocket, 0, this, true);
     connect(m_pSocket, &QLocalSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task
-    m_pTXTask = spTxTask::create(m_pSocket, 0, this, true);
+    m_pTXTask = MemoryManagement::create<TxTask>(m_pSocket, 0, this, true);
     connect(this, &LocalClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
     CONSOLE_PRINT("Local Client is running to " + primaryAdress, GameConsole::eLogLevels::eDEBUG);
     do
@@ -58,8 +58,8 @@ void LocalClient::disconnectTCP()
         {
             m_pTXTask->close();
         }
-        m_pRXTask.free();
-        m_pTXTask.free();
+        m_pRXTask.reset();
+        m_pTXTask.reset();
         m_pSocket->disconnect();
         m_pSocket->close();
         m_pSocket = nullptr;

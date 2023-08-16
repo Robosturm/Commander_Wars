@@ -359,7 +359,7 @@ spCursorData GameAction::getStepCursor()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepCursor";
-    spCursorData data = spCursorData::create();
+    spCursorData data = MemoryManagement::create<CursorData>();
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(data.get()),
                        pInterpreter->newQObject(m_pMap)});
@@ -379,7 +379,7 @@ spCursorData GameAction::getStepCursor()
 spMenuData GameAction::getMenuStepData()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    spMenuData data = spMenuData::create(m_pMap);
+    spMenuData data = MemoryManagement::create<MenuData>(m_pMap);
     QString function1 = "getStepData";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(data.get()),
@@ -390,7 +390,7 @@ spMenuData GameAction::getMenuStepData()
 
 spMarkedFieldData GameAction::getMarkedFieldStepData()
 {
-    spMarkedFieldData data = spMarkedFieldData::create();
+    spMarkedFieldData data = MemoryManagement::create<MarkedFieldData>();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepData";
     QJSValueList args({pInterpreter->newQObject(this),

@@ -17,10 +17,10 @@
 class Player;
 class TerrainFindingSystem;
 class GameMap;
-using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
+using spTerrainFindingSystem = std::shared_ptr<TerrainFindingSystem>;
 
 class Terrain;
-using spTerrain = oxygine::intrusive_ptr<Terrain>;
+using spTerrain = std::shared_ptr<Terrain>;
 
 class Terrain final : public Tooltip, public FileSerializable
 {
@@ -650,7 +650,7 @@ private:
      */
     bool customSpriteExists() const;
 
-    friend class oxygine::intrusive_ptr<Terrain>;
+    friend class MemoryManagement;
     explicit Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap);
     void initTerrain();
     static qint32 getTerrainGroup(const QString & terrainId, GameMap* pMap);
@@ -734,7 +734,7 @@ private:
     bool m_hasStartOfTurn{false};
     bool m_hasFlowDirection{false};
 
-    oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;
+    std::shared_ptr<JsCallback<Terrain>> m_pStartDayCallback;
     QVector<TerrainOverlay> m_terrainOverlay;
 
     QPoint m_test;

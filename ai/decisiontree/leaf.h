@@ -5,7 +5,7 @@
 #include "ai/decisiontree/decisionnode.h"
 
 class Leaf;
-using spLeaf = oxygine::intrusive_ptr<Leaf>;
+using spLeaf = std::shared_ptr<Leaf>;
 
 class Leaf final : public DecisionNode
 {

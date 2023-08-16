@@ -47,7 +47,7 @@ protected:
     friend RessourceManagement<BuildingSpriteManager>;
     BuildingSpriteManager();
 private:
-   virtual ~BuildingSpriteManager() = default;
+    ~BuildingSpriteManager() = default;
 };
 
 Q_DECLARE_INTERFACE(BuildingSpriteManager, "BuildingSpriteManager");

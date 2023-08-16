@@ -10,7 +10,7 @@ DropDownmenu::DropDownmenu(qint32 width, const QStringList & items)
     setObjectName("DropDownmenu");
 #endif
     setWidth(width);
-    m_Textfield = oxygine::spTextField::create();
+    m_Textfield = MemoryManagement::create<oxygine::TextField>();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -89,8 +89,8 @@ void DropDownmenu::setCurrentItemText(QString value)
 
 void DropDownmenu::addDropDownText(QString text, qint32 id)
 {
-    oxygine::spClipRectActor clipRect = oxygine::spClipRectActor::create();
-    oxygine::spTextField textField = oxygine::spTextField::create();
+    oxygine::spClipRectActor clipRect = MemoryManagement::create<oxygine::ClipRectActor>();
+    oxygine::spTextField textField = MemoryManagement::create<oxygine::TextField>();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
     style.multiline = false;

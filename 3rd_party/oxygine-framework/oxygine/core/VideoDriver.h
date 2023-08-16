@@ -1,6 +1,5 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "ShaderProgram.h"
@@ -11,9 +10,9 @@
 namespace oxygine
 {
     class VideoDriver;
-    using spVideoDriver = oxygine::intrusive_ptr<VideoDriver>;
+    using spVideoDriver = std::shared_ptr<VideoDriver>;
 
-    class VideoDriver final : public oxygine::ref_counter
+    class VideoDriver final
     {
     public:
 

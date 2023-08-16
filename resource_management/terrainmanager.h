@@ -56,7 +56,7 @@ protected:
     friend RessourceManagement<TerrainManager>;
     TerrainManager();
 private:
-   virtual ~TerrainManager() = default;
+    ~TerrainManager() = default;
 };
 
 Q_DECLARE_INTERFACE(TerrainManager, "TerrainManager");

@@ -19,8 +19,8 @@ class GameAction;
 class GameAnimation;
 class GameMap;
 class UnitPathFindingSystem;
-using spGameAction = oxygine::intrusive_ptr<GameAction>;
-using spUnit = oxygine::intrusive_ptr<Unit>;
+using spGameAction = std::shared_ptr<GameAction>;
+using spUnit = std::shared_ptr<Unit>;
 
 class Unit final : public Tooltip, public FileSerializable
 {

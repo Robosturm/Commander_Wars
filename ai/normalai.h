@@ -13,7 +13,7 @@ class QmlVectorPoint;
 class Building;
 
 class NormalAi;
-using spNormalAi = oxygine::intrusive_ptr<NormalAi>;
+using spNormalAi = std::shared_ptr<NormalAi>;
 
 class NormalAi final : public CoreAI
 {

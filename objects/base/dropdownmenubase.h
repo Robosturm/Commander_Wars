@@ -13,7 +13,7 @@
 #include "objects/base/tooltip.h"
 
 class DropDownmenuBase;
-using spDropDownmenuBase = oxygine::intrusive_ptr<DropDownmenuBase>;
+using spDropDownmenuBase = std::shared_ptr<DropDownmenuBase>;
 
 class DropDownmenuBase : public Tooltip
 {

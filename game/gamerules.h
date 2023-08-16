@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/fileserializable.h"
 #include "coreengine/timer.h"
 #include "coreengine/LUPDATE_MACROS.h"
@@ -21,7 +19,7 @@ class Unit;
 class GameMap;
 
 class GameRules;
-using spGameRules = oxygine::intrusive_ptr<GameRules>;
+using spGameRules = std::shared_ptr<GameRules>;
 
 /**
  * @brief The GameRules class
@@ -29,7 +27,7 @@ using spGameRules = oxygine::intrusive_ptr<GameRules>;
  * There is a small amount of rules that's hard coded in this object.
  * But most rules are taken from javascript scripts
  */
-class GameRules final : public QObject, public FileSerializable, public oxygine::ref_counter
+class GameRules final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

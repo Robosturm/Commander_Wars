@@ -21,7 +21,7 @@ protected:
     friend RessourceManagement<MovementTableManager>;
     MovementTableManager();
 private:
-   virtual ~MovementTableManager() = default;
+    ~MovementTableManager() = default;
 };
 
 #endif // MOVEMENTTABLEMANAGER_H

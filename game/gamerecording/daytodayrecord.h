@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QVector>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "coreengine/fileserializable.h"
 
 #include "game/gamerecording/playerrecord.h"
@@ -13,9 +11,9 @@
 
 class GameMap;
 class DayToDayRecord;
-using spDayToDayRecord = oxygine::intrusive_ptr<DayToDayRecord>;
+using spDayToDayRecord = std::shared_ptr<DayToDayRecord>;
 
-class DayToDayRecord final : public QObject, public FileSerializable, public oxygine::ref_counter
+class DayToDayRecord final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:

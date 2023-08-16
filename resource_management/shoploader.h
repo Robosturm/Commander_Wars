@@ -15,7 +15,7 @@ protected:
     ShopLoader();
 
 private:
-   virtual ~ShopLoader() = default;
+    ~ShopLoader() = default;
 };
 
 #endif // SHOPLOADER_H

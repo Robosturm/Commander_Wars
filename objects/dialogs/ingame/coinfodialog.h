@@ -13,7 +13,7 @@
 #include "objects/coinfoactor.h"
 
 class COInfoDialog;
-using spCOInfoDialog = oxygine::intrusive_ptr<COInfoDialog>;
+using spCOInfoDialog = std::shared_ptr<COInfoDialog>;
 
 class COInfoDialog final : public QObject, public oxygine::Actor
 {

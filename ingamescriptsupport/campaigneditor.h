@@ -5,13 +5,11 @@
 #include <QVector>
 #include <QTextStream>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "objects/base/panel.h"
 #include "objects/base/textbox.h"
 
 class CampaignEditor;
-using spCampaignEditor = oxygine::intrusive_ptr<CampaignEditor>;
+using spCampaignEditor = std::shared_ptr<CampaignEditor>;
 
 class CampaignEditor final : public QObject, public oxygine::Actor
 {

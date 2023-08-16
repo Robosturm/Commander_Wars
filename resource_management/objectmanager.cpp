@@ -19,12 +19,12 @@ ObjectManager::ObjectManager()
 
 oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QString tooltip, QString resAnim)
 {
-    oxygine::spButton pButton = oxygine::spButton::create();
+    oxygine::spButton pButton = MemoryManagement::create<oxygine::Button>();
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim(resAnim));
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     //Create Actor with Text and add it to button as child
-    spLabel textField = spLabel::create(width - 10);
+    spLabel textField = MemoryManagement::create<Label>(width - 10);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -71,13 +71,13 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
 
 oxygine::spButton ObjectManager::createIconButton(QString icon, qint32 size)
 {
-    oxygine::spButton pButton = oxygine::spButton::create();
+    oxygine::spButton pButton = MemoryManagement::create<oxygine::Button>();
     oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("button_square");
     pButton->setResAnim(pAnim);
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pButton->setSize(size, size);
 
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     pAnim = ObjectManager::getInstance()->getResAnim(icon);
     pSprite->setResAnim(pAnim);
     pSprite->setPosition((size - pSprite->getScaledWidth()) / 2,
@@ -103,7 +103,7 @@ oxygine::spButton ObjectManager::createIconButton(QString icon, qint32 size)
 
 oxygine::spButton ObjectManager::createIconButton(oxygine::spSprite pSprite, qint32 size)
 {
-    oxygine::spButton pButton = oxygine::spButton::create();
+    oxygine::spButton pButton = MemoryManagement::create<oxygine::Button>();
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button_square"));
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pButton->setSize(size, size);

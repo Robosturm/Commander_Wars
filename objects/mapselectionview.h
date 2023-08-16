@@ -23,7 +23,7 @@
 
 
 class MapSelectionView;
-using spMapSelectionView = oxygine::intrusive_ptr<MapSelectionView>;
+using spMapSelectionView = std::shared_ptr<MapSelectionView>;
 
 class MapSelectionView final : public QObject, public oxygine::Actor, public FileSerializable
 {

@@ -41,7 +41,7 @@ LobbyMenu::LobbyMenu()
 
     if (!Settings::getInstance()->getServer())
     {
-        m_pTCPClient = spTCPClient::create(nullptr);
+        m_pTCPClient = MemoryManagement::create<TCPClient>(nullptr);
         m_pTCPClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, NetworkCommands::UNIQUE_DATA_CONNECTION);
         connect(m_pTCPClient.get(), &TCPClient::sigConnected, this, &LobbyMenu::connected, Qt::QueuedConnection);
@@ -50,7 +50,7 @@ LobbyMenu::LobbyMenu()
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("lobbymenu");
     sprite->setResAnim(pBackground);
@@ -195,7 +195,7 @@ LobbyMenu::LobbyMenu()
     QVector<qint32> widths = GlobalUtils::calcWidths({oxygine::Stage::getStage()->getWidth(), 200, oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getWidth(), 200},
                                                      {0.25f, 0.125f, 0.25f, 0.25f, 0.125f},
                                                      oxygine::Stage::getStage()->getWidth() - 20 - 80);
-    m_gamesview = spComplexTableView::create(widths, header, height);
+    m_gamesview = MemoryManagement::create<ComplexTableView>(widths, header, height);
     m_gamesview->setPosition(10, 10 + 10 + pButtonJoinAdress->getScaledHeight());
     addChild(m_gamesview);
 
@@ -206,7 +206,7 @@ LobbyMenu::LobbyMenu()
     }
     qint32 y = m_gamesview->getY() + m_gamesview->getScaledHeight() + 10;
     const qint32 infoWidth = 100;
-    m_matchViewInfo = spLabel::create(infoWidth * 2, true);
+    m_matchViewInfo = MemoryManagement::create<Label>(infoWidth * 2, true);
     auto style = m_matchViewInfo->getStyle();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     m_matchViewInfo->setStyle(style);
@@ -257,7 +257,7 @@ LobbyMenu::LobbyMenu()
 
     height = m_pButtonHostOnServer->getY() - m_gamesview->getY() - m_gamesview->getScaledHeight() - 70;
 
-    spChat pChat = spChat::create(pInterface, QSize(oxygine::Stage::getStage()->getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat, nullptr);
+    spChat pChat = MemoryManagement::create<Chat>(pInterface, QSize(oxygine::Stage::getStage()->getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat, nullptr);
     pChat->setPosition(10, y);
     if (Settings::getInstance()->getSmallScreenDevice())
     {
@@ -349,7 +349,7 @@ void LobbyMenu::enableServerButtons(bool enable)
 
 void LobbyMenu::leaveServer()
 {
-    m_pTCPClient.free();
+    m_pTCPClient.reset();
     enableServerButtons(false);
 }
 
@@ -357,7 +357,7 @@ void LobbyMenu::exitMenue()
 {    
     CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    auto window = spMainwindow::create("ui/menu/mainmenu.xml");
+    auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -366,7 +366,7 @@ void LobbyMenu::hostLocal()
 {    
     CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", "", Settings::getInstance()->getGamePort(), "", Multiplayermenu::NetworkMode::Host));
+    oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>("", "", Settings::getInstance()->getGamePort(), "", Multiplayermenu::NetworkMode::Host));
     oxygine::Actor::detach();
 }
 
@@ -377,7 +377,7 @@ void LobbyMenu::hostServer()
     {
         CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
         m_onEnterTimer.stop();
-        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, "",  Multiplayermenu::NetworkMode::Host));
+        oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>(m_pTCPClient, "",  Multiplayermenu::NetworkMode::Host));
         oxygine::Actor::detach();
     }
 }
@@ -390,7 +390,7 @@ void LobbyMenu::joinGame()
         {
             if (m_currentGame.getLocked())
             {
-                spDialogPassword pDialogTextInput = spDialogPassword::create(tr("Enter Password"), true, "");
+                spDialogPassword pDialogTextInput = MemoryManagement::create<DialogPassword>(tr("Enter Password"), true, "");
                 addChild(pDialogTextInput);
                 connect(pDialogTextInput.get(), &DialogPassword::sigTextChanged, this, &LobbyMenu::joinGamePassword, Qt::QueuedConnection);
 
@@ -441,7 +441,7 @@ void LobbyMenu::joinGamePassword(QString password)
 
 void LobbyMenu::showContactingServer()
 {
-    spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Contacting server"), 1000 * 60 * 5);
+    spDialogConnecting pDialogConnecting = MemoryManagement::create<DialogConnecting>(tr("Contacting server"), 1000 * 60 * 5);
     addChild(pDialogConnecting);
     connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &LobbyMenu::cancelWaitingForServer, Qt::QueuedConnection);
     connect(this, &LobbyMenu::sigServerResponded, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
@@ -451,14 +451,14 @@ void LobbyMenu::cancelWaitingForServer()
 {
     CONSOLE_PRINT("Leaving Lobby Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    spLobbyMenu newMenu = spLobbyMenu::create();
+    spLobbyMenu newMenu = MemoryManagement::create<LobbyMenu>();
     oxygine::Stage::getStage()->addChild(newMenu);
     oxygine::Actor::detach();
 }
 
 void LobbyMenu::joinAdress()
 {
-    spDialogPasswordAndAdress pDialogTextInput = spDialogPasswordAndAdress::create(tr("Enter Host address"));
+    spDialogPasswordAndAdress pDialogTextInput = MemoryManagement::create<DialogPasswordAndAdress>(tr("Enter Host address"));
     addChild(pDialogTextInput);
     connect(pDialogTextInput.get(), &DialogPasswordAndAdress::sigTextChanged, this, &LobbyMenu::join, Qt::QueuedConnection);
 }
@@ -467,13 +467,13 @@ void LobbyMenu::join(QString adress, QString password)
 {    
     CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getInstance()->getGamePort(), password, Multiplayermenu::NetworkMode::Client));
+    oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>(adress.trimmed(), "", Settings::getInstance()->getGamePort(), password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();
 }
 
 void LobbyMenu::observeAdress()
 {
-    spDialogPasswordAndAdress pDialogTextInput = spDialogPasswordAndAdress::create(tr("Enter Host address"));
+    spDialogPasswordAndAdress pDialogTextInput = MemoryManagement::create<DialogPasswordAndAdress>(tr("Enter Host address"));
     addChild(pDialogTextInput);
     connect(pDialogTextInput.get(), &DialogPasswordAndAdress::sigTextChanged, this, &LobbyMenu::observe, Qt::QueuedConnection);
 }
@@ -482,7 +482,7 @@ void LobbyMenu::observe(QString adress, QString password)
 {
     CONSOLE_PRINT("Leaving Lobby Menue to observe game by adress", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), "", Settings::getInstance()->getGamePort(), password, Multiplayermenu::NetworkMode::Observer));
+    oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>(adress.trimmed(), "", Settings::getInstance()->getGamePort(), password, Multiplayermenu::NetworkMode::Observer));
     oxygine::Actor::detach();
 }
 
@@ -492,7 +492,7 @@ void LobbyMenu::observeGame()
     {
         if (m_currentGame.getLocked())
         {
-            spDialogPassword pDialogTextInput = spDialogPassword::create(tr("Enter Password"), true, "");
+            spDialogPassword pDialogTextInput = MemoryManagement::create<DialogPassword>(tr("Enter Password"), true, "");
             addChild(pDialogTextInput);
             connect(pDialogTextInput.get(), &DialogPassword::sigTextChanged, this, &LobbyMenu::observeGamePassword, Qt::QueuedConnection);
 
@@ -523,7 +523,7 @@ void LobbyMenu::observeGamePassword(QString password)
         CONSOLE_PRINT("Leaving Lobby Menue to observe server game", GameConsole::eDEBUG);
         m_onEnterTimer.stop();
         m_pTCPClient->setIsObserver(true);
-        oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, Multiplayermenu::NetworkMode::Observer));
+        oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>(m_pTCPClient, password, Multiplayermenu::NetworkMode::Observer));
         QString command = QString(NetworkCommands::SERVERJOINGAME);
         CONSOLE_PRINT("Sending command " + command, GameConsole::eDEBUG);
         QJsonObject data;
@@ -569,14 +569,14 @@ void LobbyMenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         else if (messageType == NetworkCommands::SERVERNOGAMESLOTSAVAILABLE)
         {
             spDialogMessageBox pDialogMessageBox;
-            pDialogMessageBox = spDialogMessageBox::create(tr("Failed to launch game on server cause no more game slots are available."));
+            pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Failed to launch game on server cause no more game slots are available."));
             addChild(pDialogMessageBox);
         }
         else if (messageType == NetworkCommands::SERVERGAMENOLONGERAVAILABLE)
         {
             emit sigServerResponded();
             spDialogMessageBox pDialogMessageBox;
-            pDialogMessageBox = spDialogMessageBox::create(tr("Host game is no longer available or is currently relaunched."));
+            pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Host game is no longer available or is currently relaunched."));
             addChild(pDialogMessageBox);
         }
         else if (messageType == NetworkCommands::SENDPUBLICKEY)
@@ -645,7 +645,7 @@ void LobbyMenu::joinSlaveGame(const QJsonObject & objData)
     quint16 slavePort = objData.value(JsonKeys::JSONKEY_PORT).toInteger();
     CONSOLE_PRINT("Leaving Lobby Menue to join game by adress", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(slaveAddress.trimmed(), secondarySlaveAddress.trimmed(), slavePort, m_password, Multiplayermenu::NetworkMode::Client));
+    oxygine::Stage::getStage()->addChild(MemoryManagement::create<Multiplayermenu>(slaveAddress.trimmed(), secondarySlaveAddress.trimmed(), slavePort, m_password, Multiplayermenu::NetworkMode::Client));
     oxygine::Actor::detach();
 }
 
@@ -675,17 +675,17 @@ void LobbyMenu::updateGamesView()
         }
         ComplexTableView::Item item;
         item.pData = &game;
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getMapName(), widths[0], textColor)));
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spXofYTableItem::create(game.getPlayers(), game.getMaxPlayers(), widths[1], textColor)));
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(game.getDescription(), widths[2], textColor)));
+        item.items.append(std::static_pointer_cast<BaseTableItem>(MemoryManagement::create<StringTableItem>(game.getMapName(), widths[0], textColor)));
+        item.items.append(std::static_pointer_cast<BaseTableItem>(MemoryManagement::create<XofYTableItem>(game.getPlayers(), game.getMaxPlayers(), widths[1], textColor)));
+        item.items.append(std::static_pointer_cast<BaseTableItem>(MemoryManagement::create<StringTableItem>(game.getDescription(), widths[2], textColor)));
         QStringList mods = game.getMods();
         QString modString;
         for (const auto & mod : mods)
         {
             modString.append(Settings::getInstance()->getModName(mod) + "; ");
         }
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spStringTableItem::create(modString, widths[3], textColor)));
-        item.items.append(oxygine::static_pointer_cast<BaseTableItem>(spLockTableItem::create(game.getLocked(), widths[4])));
+        item.items.append(std::static_pointer_cast<BaseTableItem>(MemoryManagement::create<StringTableItem>(modString, widths[3], textColor)));
+        item.items.append(std::static_pointer_cast<BaseTableItem>(MemoryManagement::create<LockTableItem>(game.getLocked(), widths[4])));
         items.append(item);
         ++itemCount;
     }
@@ -707,7 +707,7 @@ void LobbyMenu::selectGame()
         m_currentGame = *m_gamesview->getDataItem<NetworkGameData>(m_gamesview->getCurrentItem());
         if (m_lastSelectedItem == m_gamesview->getCurrentItem())
         {
-            spNetworkGameDataView pView = spNetworkGameDataView::create(m_currentGame);
+            spNetworkGameDataView pView = MemoryManagement::create<NetworkGameDataView>(m_currentGame);
             addChild(pView);
         }
         m_lastSelectedItem = m_gamesview->getCurrentItem();
@@ -731,7 +731,7 @@ void LobbyMenu::checkVersionAndShowInfo(const QJsonObject & objData)
     {
         CONSOLE_PRINT("LobbyMenu::connected", GameConsole::eDEBUG);
         QString password = Settings::getInstance()->getServerPassword();
-        spCustomDialog pDialog = spCustomDialog::create("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
+        spCustomDialog pDialog = MemoryManagement::create<CustomDialog>("userLogin", "ui/serverLogin/userLoginDialog.xml", this);
         addChild(pDialog);
         if (!password.isEmpty())
         {
@@ -741,9 +741,9 @@ void LobbyMenu::checkVersionAndShowInfo(const QJsonObject & objData)
     else        
     {
         spDialogMessageBox pDialogMessageBox;
-        pDialogMessageBox = spDialogMessageBox::create(tr("Connection refused. Server has a different version of the game. Server ") + version);
+        pDialogMessageBox = MemoryManagement::create<DialogMessageBox>(tr("Connection refused. Server has a different version of the game. Server ") + version);
         addChild(pDialogMessageBox);
-        m_pTCPClient.free();
+        m_pTCPClient.reset();
     }
 }
 
@@ -977,6 +977,6 @@ void LobbyMenu::requestOtherData()
 
 void LobbyMenu::onShowOther(quint64 socketID, const QJsonObject & objData)
 {
-    spDialogOtherLobbyInfo pDialog = spDialogOtherLobbyInfo::create(this, objData);
+    spDialogOtherLobbyInfo pDialog = MemoryManagement::create<DialogOtherLobbyInfo>(this, objData);
     addChild(pDialog);
 }

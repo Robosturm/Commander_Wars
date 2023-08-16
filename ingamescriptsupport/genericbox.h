@@ -6,7 +6,7 @@
 #include "objects/base/panel.h"
 
 class GenericBox;
-using spGenericBox = oxygine::intrusive_ptr<GenericBox>;
+using spGenericBox = std::shared_ptr<GenericBox>;
 
 class GenericBox final : public QObject, public oxygine::Actor
 {

@@ -13,7 +13,7 @@ PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -32,7 +32,7 @@ PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
         emit sigPlayersChanged();
     });
 
-    m_pPlayerSelection = spPlayerSelection::create(oxygine::Stage::getStage()->getWidth() - 60,
+    m_pPlayerSelection = MemoryManagement::create<PlayerSelection>(oxygine::Stage::getStage()->getWidth() - 60,
                                              oxygine::Stage::getStage()->getHeight() - 80 - m_OkButton->getScaledHeight());
     m_pPlayerSelection->setMap(pMap);
     m_pPlayerSelection->setPosition(30, 30);

@@ -12,7 +12,7 @@
 #include "objects/base/v_scrollbar.h"
 
 class Panel;
-using spPanel = oxygine::intrusive_ptr<Panel>;
+using spPanel = std::shared_ptr<Panel>;
 
 class Panel final : public QObject, public oxygine::Actor
 {

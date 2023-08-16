@@ -5,7 +5,7 @@
 #include "wiki/wikiview.h"
 
 class Wikimenu;
-using spWikimenu = oxygine::intrusive_ptr<Wikimenu>;
+using spWikimenu = std::shared_ptr<Wikimenu>;
 
 class Wikimenu final : public Basemenu
 {

@@ -9,7 +9,7 @@
 #include "objects/base/label.h"
 
 class TableView;
-using spTableView = oxygine::intrusive_ptr<TableView>;
+using spTableView = std::shared_ptr<TableView>;
 
 class TableView final : public QObject, public oxygine::Actor
 {

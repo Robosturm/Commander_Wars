@@ -6,7 +6,7 @@
 
 class GameMenue;
 class Viewplayer;
-using spViewplayer = oxygine::intrusive_ptr<Viewplayer>;
+using spViewplayer = std::shared_ptr<Viewplayer>;
 
 class Viewplayer final : public Player
 {

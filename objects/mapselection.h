@@ -13,7 +13,7 @@
 #include "mapsupport/mapfilter.h"
 
 class MapSelection;
-using spMapSelection = oxygine::intrusive_ptr<MapSelection>;
+using spMapSelection = std::shared_ptr<MapSelection>;
 
 class MapSelection final : public QObject, public oxygine::Actor
 {

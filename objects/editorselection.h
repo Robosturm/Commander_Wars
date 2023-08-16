@@ -15,7 +15,7 @@
 #include "coreengine/LUPDATE_MACROS.h"
 
 class EditorSelection;
-using spEditorSelection = oxygine::intrusive_ptr<EditorSelection>;
+using spEditorSelection = std::shared_ptr<EditorSelection>;
 
 class EditorSelection final : public QObject, public oxygine::Actor
 {

@@ -420,7 +420,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
             {
                 if (pUnit->getCapturePoints() > 0)
                 {
-                    spGameAction pAction = spGameAction::create(ACTION_CAPTURE, m_pMap);
+                    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_CAPTURE, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     if (pAction->canBePerformed())
                     {
@@ -602,7 +602,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
                         ++unitData.nextAiStep;
                         if (captures[targetIndex].m_farAway)
                         {
-                            spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                            spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
                             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                             std::vector<QVector3D> targets;
                             targets.push_back(QVector3D(captures[targetIndex].m_x, captures[targetIndex].m_y, 1));
@@ -614,7 +614,7 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
                         }
                         else
                         {
-                            spGameAction pAction = spGameAction::create(ACTION_CAPTURE, m_pMap);
+                            spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_CAPTURE, m_pMap);
                             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                             auto path = unitData.pUnitPfs->getPathFast(captures[targetIndex].m_x, captures[targetIndex].m_y);
                             pAction->setMovepath(path, unitData.pUnitPfs->getCosts(path));
@@ -674,7 +674,7 @@ bool NormalAi::joinCaptureBuildings(spQmlVectorUnit & pUnits)
                 unitData.actions.contains(ACTION_JOIN) &&
                 pUnit->getAiMode() == GameEnums::GameAi_Normal)
             {
-                spGameAction pAction = spGameAction::create(ACTION_JOIN, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_JOIN, m_pMap);
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 auto targets = unitData.pUnitPfs->getAllNodePointsFast(unitData.movementPoints + 1);
                 for (auto & target : targets)
@@ -721,7 +721,7 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
                 unitData.actions.contains(CoreAI::ACTION_FIRE) &&
                 pUnit->getAiMode() == GameEnums::GameAi_Normal)
             {
-                spGameAction pAction = spGameAction::create(ACTION_FIRE, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_FIRE, m_pMap);
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 std::vector<CoreAI::DamageData> ret;
                 std::vector<QVector3D> moveTargetFields;
@@ -777,7 +777,7 @@ bool NormalAi::refillUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
                 QStringList & actions = unitData.actions;
                 if (isRefuelUnit(actions))
                 {
-                    spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     bool found = false;
                     QPoint moveTarget;
@@ -957,7 +957,7 @@ bool NormalAi::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
             {
                 std::vector<QVector3D> targets;
                 std::vector<QVector3D> transporterTargets;
-                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
                 QStringList & actions = unitData.actions;
                 qint32 distanceModifier = 1;
                 // find possible targets for this unit
@@ -1030,7 +1030,7 @@ bool NormalAi::loadUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildi
             {
                 std::vector<QVector3D> targets;
                 std::vector<QVector3D> transporterTargets;
-                spGameAction pAction = spGameAction::create(ACTION_LOAD, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_LOAD, m_pMap);
                 QStringList & actions = unitData.actions;
                 // find possible targets for this unit
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -1071,7 +1071,7 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                 // wooohooo it's a transporter
                 if (pUnit->getLoadedUnitCount() > 0)
                 {
-                    spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
                     QStringList & actions = unitData.actions;
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     // find possible targets for this unit
@@ -1120,7 +1120,7 @@ bool NormalAi::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEne
                 }
                 else
                 {
-                    spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
                     QStringList & actions = unitData.actions;
                     // find possible targets for this unit
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -1307,7 +1307,7 @@ bool NormalAi::repairUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
             {
                 std::vector<QVector3D> targets;
                 std::vector<QVector3D> transporterTargets;
-                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
                 QStringList & actions = unitData.actions;
                 // find possible targets for this unit
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -1323,7 +1323,7 @@ bool NormalAi::repairUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuil
                 }
                 else
                 {
-                    pAction = spGameAction::create(ACTION_WAIT, m_pMap);
+                    pAction = MemoryManagement::create<GameAction>(ACTION_WAIT, m_pMap);
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     if (suicide(pAction, pUnit, *unitData.pUnitPfs.get(), unitData.movementPoints))
                     {
@@ -1748,7 +1748,7 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
     hpDamage = 0;
     for (auto & pUnitData : m_OwnUnits)
     {
-        if (pUnitData.pUnit != pUnit &&
+        if (pUnitData.pUnit.get() != pUnit &&
             !pUnitData.pUnit->getHasMoved() &&
             pUnitData.pUnit->hasWeapons())
         {
@@ -1955,7 +1955,7 @@ float NormalAi::calculateCounterDamage(MoveUnitData & curUnitData, QPoint newPos
                             Unit* pTerrainUnit = m_pMap->getTerrain(target.x(), target.y())->getUnit();
                             if (distance >= minFireRange && distance <= maxFireRange &&
                                 (pTerrainUnit == nullptr ||
-                                 pTerrainUnit == pNextEnemy))
+                                 pTerrainUnit == pNextEnemy.get()))
                             {
                                 if (hasDamage)
                                 {
@@ -2196,7 +2196,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
 void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, double moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always)
 {
     QPoint pos = pUnit->Unit::getPosition();
-    data.pUnitPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
+    data.pUnitPfs = MemoryManagement::create<UnitPathFindingSystem>(m_pMap, pUnit);
     data.movementPoints = pUnit->getMovementpoints(pos);
     data.maxFireRange = pUnit->getMaxRange(pos);
     data.pUnit = spUnit(pUnit);
@@ -2253,7 +2253,7 @@ void NormalAi::calcVirtualDamage()
         if (isUsingUnit(pUnit))
         {
             static constexpr float maxDistance = 2;
-            spGameAction action = spGameAction::create(ACTION_FIRE, m_pMap);
+            spGameAction action = MemoryManagement::create<GameAction>(ACTION_FIRE, m_pMap);
             action->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
             std::vector<CoreAI::DamageData> ret;
             std::vector<QVector3D> moveTargetFields;
@@ -2465,7 +2465,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     }
     data[UnitCount] = pUnits->size();
     data[EnemyUnitCount] = pEnemyUnits->size();
-    spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS, m_pMap);
+    spGameAction pAction = MemoryManagement::create<GameAction>(ACTION_BUILD_UNITS, m_pMap);
     float bestScore = NO_BUILD_SCORE + 1;
     std::vector<qint32> buildingIdx;
     std::vector<qint32> unitIDx;
@@ -3190,7 +3190,7 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
                                   std::vector<std::tuple<Unit*, Unit*>>& transportTargets)
 {
     std::vector<QVector3D> targets;
-    spQmlVectorUnit relevantUnits = spQmlVectorUnit::create();
+    spQmlVectorUnit relevantUnits = MemoryManagement::create<QmlVectorUnit>();
     QPoint position = dummy.getPosition();
     float movement = dummy.getBaseMovementPoints();
     if (movement == 0)

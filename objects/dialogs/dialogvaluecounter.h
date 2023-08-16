@@ -9,7 +9,7 @@
 #include "objects/base/label.h"
 
 class DialogValueCounter;
-using spDialogValueCounter = oxygine::intrusive_ptr<DialogValueCounter>;
+using spDialogValueCounter = std::shared_ptr<DialogValueCounter>;
 
 class DialogValueCounter final : public QObject, public oxygine::Actor
 {

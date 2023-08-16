@@ -6,7 +6,7 @@
 #include "game/unit.h"
 
 class UnitPathFindingSystem;
-using spUnitPathFindingSystem = oxygine::intrusive_ptr<UnitPathFindingSystem>;
+using spUnitPathFindingSystem = std::shared_ptr<UnitPathFindingSystem>;
 
 class UnitPathFindingSystem : public PathFindingSystem
 {

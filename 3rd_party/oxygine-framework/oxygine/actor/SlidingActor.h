@@ -7,7 +7,7 @@
 namespace oxygine
 {
     class SlidingActor;
-    using spSlidingActor = intrusive_ptr<SlidingActor>;
+    using spSlidingActor = std::shared_ptr<SlidingActor>;
     class SlidingActor final : public Actor
     {
     public:

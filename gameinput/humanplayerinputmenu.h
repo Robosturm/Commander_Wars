@@ -15,7 +15,7 @@ class Player;
 class GameMenue;
 class GameMap;
 class HumanPlayerInputMenu;
-using spHumanPlayerInputMenu = oxygine::intrusive_ptr<HumanPlayerInputMenu>;
+using spHumanPlayerInputMenu = std::shared_ptr<HumanPlayerInputMenu>;
 
 class HumanPlayerInputMenu final : public QObject, public oxygine::Actor
 {

@@ -7,7 +7,7 @@
 #include "objects/base/spinbox.h"
 
 class Slider;
-using spSlider = oxygine::intrusive_ptr<Slider>;
+using spSlider = std::shared_ptr<Slider>;
 
 class Slider final : public V_Scrollbar
 {

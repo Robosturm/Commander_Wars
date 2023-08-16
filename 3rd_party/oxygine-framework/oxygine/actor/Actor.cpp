@@ -212,7 +212,7 @@ namespace oxygine
                 }
 
                 event->phase = Event::phase_bubbling;
-                event->currentTarget.free();
+                event->currentTarget.reset();
                 m_parent->dispatchEvent(event);
             }
         }
@@ -354,7 +354,7 @@ namespace oxygine
             auto iter = m_parent->m_children.cbegin();
             while (iter != m_parent->m_children.cend())
             {
-                if (iter->get() == me)
+                if (iter->get() == me.get())
                 {
                     m_parent->m_children.erase(iter);
                     break;
@@ -679,7 +679,7 @@ namespace oxygine
                 auto iter = m_children.cbegin();
                 while (iter != m_children.cend())
                 {
-                    if (iter->get() == actor)
+                    if (iter->get() == actor.get())
                     {
                         m_children.erase(iter);
                         break;
@@ -877,11 +877,6 @@ namespace oxygine
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween tween is nullptr");
             return spTween();
         }
-        else if (getRefCounter() == 0)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween trying to add tween during actor construction isn't allowed.");
-            return spTween();
-        }
         {
             QMutexLocker lock(&m_Locked);
             m_tweens.push_back(tween);
@@ -908,7 +903,7 @@ namespace oxygine
         auto iter = m_tweens.begin();
         while (iter != m_tweens.end())
         {
-            if (iter->get() == pTween)
+            if (iter->get() == pTween.get())
             {
                 pTween->setClient(nullptr);
                 m_tweens.erase(iter);

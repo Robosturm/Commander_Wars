@@ -11,7 +11,7 @@
 #include "objects/base/textinput.h"
 
 class SpinBox;
-using spSpinBox = oxygine::intrusive_ptr<SpinBox>;
+using spSpinBox = std::shared_ptr<SpinBox>;
 
 class SpinBox final : public TextInput
 {

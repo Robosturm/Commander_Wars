@@ -56,7 +56,7 @@ void ScriptEventAddFunds::setPlayer(const qint32 &value)
 
 void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = spGenericBox::create();
+    spGenericBox pBox = MemoryManagement::create<GenericBox>();
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -64,12 +64,12 @@ void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    spLabel pText = spLabel::create(width - 10);
+    spLabel pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = spSpinBox::create(300, 1, 9999);
+    spSpinBox spinBox = MemoryManagement::create<SpinBox>(300, 1, 9999);
     spinBox->setTooltipText(tr("Player that earns the given amount of funds."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
@@ -80,12 +80,12 @@ void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = spLabel::create(width - 10);
+    pText = MemoryManagement::create<Label>(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Funds: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = spSpinBox::create(300, 0, 999999);
+    spinBox = MemoryManagement::create<SpinBox>(300, 0, 999999);
     spinBox->setTooltipText(tr("The funds the given player will earn."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(funds);

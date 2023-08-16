@@ -340,7 +340,7 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QImage& colorTableIm
     if (inputInfo.isFile() && inputInfo.exists())
     {
         QImage img = createSprite(input, colorTableImg, maskTableImg, useColorBox, false);
-        oxygine::spSingleResAnim pRet = oxygine::spSingleResAnim::create();
+        oxygine::spSingleResAnim pRet = MemoryManagement::create<oxygine::SingleResAnim>();
         pRet->setResPath(input);
         Mainapp::getInstance()->loadResAnim(pRet, img, columns, rows, scaleFactor);
         return pRet;

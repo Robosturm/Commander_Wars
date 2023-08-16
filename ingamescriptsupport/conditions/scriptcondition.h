@@ -5,8 +5,6 @@
 #include <QVector>
 #include <QTextStream>
 
-#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
-
 #include "ingamescriptsupport/events/scriptevent.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
@@ -14,12 +12,12 @@
 class GameMap;
 
 class ScriptCondition;
-using spScriptCondition = oxygine::intrusive_ptr<ScriptCondition>;
+using spScriptCondition = std::shared_ptr<ScriptCondition>;
 
 class ScriptEditor;
-using spScriptEditor = oxygine::intrusive_ptr<ScriptEditor>;
+using spScriptEditor = std::shared_ptr<ScriptEditor>;
 
-class ScriptCondition : public QObject, public oxygine::ref_counter
+class ScriptCondition : public QObject
 {
     Q_OBJECT
 public:

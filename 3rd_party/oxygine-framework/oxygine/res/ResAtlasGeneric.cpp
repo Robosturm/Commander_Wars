@@ -119,7 +119,7 @@ namespace oxygine
             {
                 columns = 1;
             }
-            spResAnim ra = spResAnim::create(this);
+            spResAnim ra = MemoryManagement::create<ResAnim>(this);
             ra->setResPath(path);
             ra->init(img, columns, rows, walker.getScaleFactor() * scaleFactor, m_clamp2edge, linearFilter);
             ra->setParent(this);

@@ -28,7 +28,7 @@ Shopmenu::Shopmenu()
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = oxygine::spSprite::create();
+    oxygine::spSprite sprite = MemoryManagement::create<oxygine::Sprite>();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("shopmenu");
     if (pBackground != nullptr)
@@ -46,7 +46,7 @@ Shopmenu::Shopmenu()
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pButtonBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pButtonBox->setResAnim(pAnim);
     pButtonBox->setSize(oxygine::Stage::getStage()->getWidth(), 60);
     pButtonBox->setY(oxygine::Stage::getStage()->getHeight() - 60);
@@ -64,7 +64,7 @@ Shopmenu::Shopmenu()
 
     ShopLoader* pShopLoader = ShopLoader::getInstance();
     oxygine::ResAnim* pHachi = pShopLoader->getResAnim("hachi_shop");
-    sprite = oxygine::spSprite::create();
+    sprite = MemoryManagement::create<oxygine::Sprite>();
     sprite->setResAnim(pHachi);
     sprite->setScaleX(static_cast<float>(oxygine::Stage::getStage()->getWidth() * 0.5f) / static_cast<float>(pHachi->getWidth()));
     sprite->setScaleY(static_cast<float>(oxygine::Stage::getStage()->getHeight() - 60) / static_cast<float>(pHachi->getWidth()));
@@ -72,17 +72,17 @@ Shopmenu::Shopmenu()
     addChild(sprite);
 
     QSize size = QSize(oxygine::Stage::getStage()->getWidth() /2, oxygine::Stage::getStage()->getHeight() - 110);
-    m_pPanel = spPanel::create(true, size, size);
+    m_pPanel = MemoryManagement::create<Panel>(true, size, size);
     m_pPanel->setY(50);
     addChild(m_pPanel);
 
     const qint32 width = 150;
-    spLabel pLabel = spLabel::create(width, true);
+    spLabel pLabel = MemoryManagement::create<Label>(width, true);
     pLabel->setHtmlText(tr("Filter:"));
     pLabel->setPosition(10, 10);
     addChild(pLabel);
     QVector<QString> list = {tr("All"), tr("CO's"), tr("CO Skins"), tr("Maps"), tr("Units"), tr("Perks")};
-    spDropDownmenu pDropDownmenu = spDropDownmenu::create(300, list);
+    spDropDownmenu pDropDownmenu = MemoryManagement::create<DropDownmenu>(300, list);
     pDropDownmenu->setPosition(10 + width, + 10);
     addChild(pDropDownmenu);
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &Shopmenu::filterChanged, Qt::QueuedConnection);
@@ -99,22 +99,22 @@ Shopmenu::Shopmenu()
     connect(this, &Shopmenu::sigBuy, this, &Shopmenu::buy, Qt::QueuedConnection);
     connect(this, &Shopmenu::sigShowWikipage, this, &Shopmenu::showWikipage, Qt::QueuedConnection);
 
-    pLabel = spLabel::create(width - 30);
+    pLabel = MemoryManagement::create<Label>(width - 30);
     pLabel->setHtmlText(tr("Points:"));
     pLabel->setPosition(10, 10);
     pButtonBox->addChild(pLabel);
 
     qint32 pointsSize = oxygine::Stage::getStage()->getWidth() - 10 * 7 - m_buyButton->getScaledWidth() - pButtonExit->getScaledWidth() - width * 2;
-    m_points = spLabel::create(pointsSize / 2);
+    m_points = MemoryManagement::create<Label>(pointsSize / 2);
     m_points->setHtmlText(QString::number(Userdata::getInstance()->getCredtis()));
     m_points->setPosition(pLabel->getX() + pLabel->getScaledWidth() + 10, 10);
     pButtonBox->addChild(m_points);
 
-    pLabel = spLabel::create(width + 30);
+    pLabel = MemoryManagement::create<Label>(width + 30);
     pLabel->setHtmlText(tr("Total Price:"));
     pLabel->setPosition(m_points->getX() + m_points->getScaledWidth() + 10, 10);
     pButtonBox->addChild(pLabel);
-    m_costs = spLabel::create(pointsSize / 2);
+    m_costs = MemoryManagement::create<Label>(pointsSize / 2);
     m_costs->setHtmlText(QString::number(0));
     m_costs->setPosition(pLabel->getX() + pLabel->getScaledWidth() + 10, 10);
     pButtonBox->addChild(m_costs);
@@ -140,7 +140,7 @@ void Shopmenu::exitMenue()
 {
     CONSOLE_PRINT("Leaving Shop Menue", GameConsole::eDEBUG);
     m_onEnterTimer.stop();
-    auto window = spMainwindow::create("ui/menu/playermenu.xml");
+    auto window = MemoryManagement::create<Mainwindow>("ui/menu/playermenu.xml");
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -163,7 +163,7 @@ void Shopmenu::filterChanged(qint32 item)
     for (const auto & item : items)
     {
         m_shoppingList.append(false);
-        spCheckbox pCheckbox = spCheckbox::create();
+        spCheckbox pCheckbox = MemoryManagement::create<Checkbox>();
         pCheckbox->setPosition(10, y);
         pCheckbox->setTooltipText(tr("Check any items you'd like to buy from the shop, then click 'Buy' to confirm your purchase."));
         qint32 costs = item.price;
@@ -187,7 +187,7 @@ void Shopmenu::filterChanged(qint32 item)
         loadWikiInfo(pButton, item.itemType, item.key);
         pButton->setPosition(55, y);
         m_pPanel->addItem(pButton);
-        spLabel pLabel = spLabel::create(width);
+        spLabel pLabel = MemoryManagement::create<Label>(width);
         pLabel->setPosition(95, y);
         pLabel->setHtmlText(QString::number(costs) + " " + item.name);
         m_pPanel->addItem(pLabel);

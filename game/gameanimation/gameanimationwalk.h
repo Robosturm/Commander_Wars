@@ -11,7 +11,7 @@
 
 class Unit;
 class GameAnimationWalk;
-using spGameAnimationWalk = oxygine::intrusive_ptr<GameAnimationWalk>;
+using spGameAnimationWalk = std::shared_ptr<GameAnimationWalk>;
 
 class GameAnimationWalk final : public GameAnimation
 {

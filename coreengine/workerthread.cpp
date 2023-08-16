@@ -195,7 +195,7 @@ void WorkerThread::showMainwindow()
 
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
-    auto window = spMainwindow::create("ui/menu/mainmenu.xml");
+    auto window = MemoryManagement::create<Mainwindow>("ui/menu/mainmenu.xml");
     oxygine::Stage::getStage()->addChild(window);
 }
 

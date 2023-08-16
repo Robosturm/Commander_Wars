@@ -22,7 +22,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
 #endif
     Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pSpriteBox = MemoryManagement::create<oxygine::Box9Sprite>();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(oxygine::Stage::getStage()->getWidth(), oxygine::Stage::getStage()->getHeight());
@@ -42,7 +42,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     });
 
 
-    m_pPanel = spPanel::create(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
+    m_pPanel = MemoryManagement::create<Panel>(true, QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110),
                                      QSize(oxygine::Stage::getStage()->getWidth() - 60, oxygine::Stage::getStage()->getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
@@ -56,14 +56,14 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     headerStyle.multiline = false;
 
     qint32 sliderOffset = 400;
-    spLabel pLabel = spLabel::create(m_pPanel->getScaledWidth() - 80);
+    spLabel pLabel = MemoryManagement::create<Label>(m_pPanel->getScaledWidth() - 80);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Building: ") + m_pBuilding->getName());
     pLabel->setPosition(m_pPanel->getScaledWidth() / 2 - pLabel->getTextRect().width() / 2, 10);
     m_pPanel->addItem(pLabel);
 
     qint32 y = pLabel->getY() + pLabel->getTextRect().height() + 10;
-    pLabel = spLabel::create(sliderOffset - 140);
+    pLabel = MemoryManagement::create<Label>(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Player: "));
     pLabel->setPosition(10, y);
@@ -75,7 +75,7 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
         items.append(tr("Player ") + QString::number(i + 1));
     }
     items.append(tr("Neutral"));
-    spDropDownmenu pDropdownmenu = spDropDownmenu::create(300, items);
+    spDropDownmenu pDropdownmenu = MemoryManagement::create<DropDownmenu>(300, items);
     pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediately applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
 
@@ -103,11 +103,11 @@ DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     m_pPanel->addItem(pDropdownmenu);
     y += pLabel->getHeight() + 10;
 
-    pLabel = spLabel::create(190);
+    pLabel = MemoryManagement::create<Label>(190);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Name:"));
     pLabel->setPosition(10, y);
-    spTextbox pTextbox = spTextbox::create(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getScaledWidth());
+    spTextbox pTextbox = MemoryManagement::create<Textbox>(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getScaledWidth());
     pTextbox->setTooltipText(tr("Custom Name of the Terrain. Leave the name empty to use its Default Name."));
     pTextbox->setPosition(sliderOffset - 160, y);
     pTextbox->setCurrentText(m_pBuilding->getBuildingName());

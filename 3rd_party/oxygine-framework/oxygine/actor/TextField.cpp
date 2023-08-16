@@ -184,7 +184,7 @@ namespace oxygine
         {
             m_Locked.lock();
         }
-        m_root.free();
+        m_root.reset();
         if (m_htmlText)
         {
             text::TextBuilder b;
@@ -192,7 +192,7 @@ namespace oxygine
         }
         else
         {
-            m_root = text::spTextNode::create(m_text);
+            m_root = MemoryManagement::create<text::TextNode>(m_text);
         }
         text::Aligner rd(m_style, getSize());
         rd.align(*m_root.get());

@@ -17,11 +17,11 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
 
-    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+    oxygine::spBox9Sprite pBox = MemoryManagement::create<oxygine::Box9Sprite>();
     pBox->setResAnim(pAnim);
     pBox->setSize(width, heigth);
 
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
     pAnim = pObjectManager->getResAnim("checkbox");
     pSprite->setResAnim(pAnim);
     pSprite->setScale(1.0f);
@@ -49,7 +49,7 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     m_drag.setDragEnabled(true);
     m_drag.setDragBounds(QRect(0, 0, oxygine::Stage::getStage()->getWidth() - width, oxygine::Stage::getStage()->getHeight() - heigth));
     QSize size(width - 10, heigth - pSprite->getScaledHeight());
-    m_pPanel = spPanel::create(true, size, size);
+    m_pPanel = MemoryManagement::create<Panel>(true, size, size);
     m_pPanel->setPosition(5, pSprite->getScaledHeight() - 5);
     pBox->addChild(m_pPanel);
 }

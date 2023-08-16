@@ -10,7 +10,7 @@ class QmlVectorPoint;
 class Building;
 
 class VeryEasyAI;
-using spVeryEasyAI = oxygine::intrusive_ptr<VeryEasyAI>;
+using spVeryEasyAI = std::shared_ptr<VeryEasyAI>;
 
 class VeryEasyAI final : public CoreAI
 {
