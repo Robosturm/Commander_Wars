@@ -26,7 +26,7 @@ protected slots:
 private:
     spRxTask m_pRXTask;
     spTxTask m_pTXTask;
-    QLocalSocket* m_pSocket;
+    std::shared_ptr<QLocalSocket> m_pSocket;
 };
 
 #endif // LOCALCLIENT_H

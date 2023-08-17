@@ -120,7 +120,7 @@ void Terrain::setPalette(const QString newPalette)
     if (!m_palette.isEmpty())
     {
         TerrainManager* pTerrainManager = TerrainManager::getInstance();
-        oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(m_palette, oxygine::error_policy::ep_ignore_error));
+        oxygine::spResAnim pPaletteAnim = pTerrainManager->getSpResAnim(m_palette, oxygine::error_policy::ep_ignore_error);
         if (pPaletteAnim.get() != nullptr)
         {
             if (m_pTerrainSprite.get() != nullptr)
@@ -649,7 +649,7 @@ void Terrain::loadBaseSprite(const QString spriteID, qint32 frameTime, qint32 st
         pSprite->setPriority(static_cast<qint32>(DrawPriority::Terrain));
         if (!m_palette.isEmpty())
         {
-            oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(m_palette, oxygine::error_policy::ep_ignore_error));
+            oxygine::spResAnim pPaletteAnim = pTerrainManager->getSpResAnim(m_palette, oxygine::error_policy::ep_ignore_error);
             if (pPaletteAnim.get() != nullptr)
             {
                 pSprite->setColorTable(pPaletteAnim, true);
@@ -996,7 +996,7 @@ void Terrain::loadOverlaySprite(const QString spriteID, qint32 startFrame, qint3
     }
     if (!paletteToUse.isEmpty())
     {
-        oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(paletteToUse, oxygine::error_policy::ep_ignore_error));
+        oxygine::spResAnim pPaletteAnim = pTerrainManager->getSpResAnim(paletteToUse, oxygine::error_policy::ep_ignore_error);
         if (pPaletteAnim.get() != nullptr)
         {
             pSprite->setColorTable(pPaletteAnim, true);
@@ -1452,7 +1452,7 @@ qint32 Terrain::getVision(Player* pPlayer)
 
 TerrainFindingSystem* Terrain::createTerrainFindingSystem()
 {
-    TerrainFindingSystem* pPfs = new TerrainFindingSystem(m_pMap, getID(), Terrain::getX(), Terrain::getY());
+    TerrainFindingSystem* pPfs = MemoryManagement::createAndTrackJsObject<TerrainFindingSystem>(m_pMap, getID(), Terrain::getX(), Terrain::getY());
     pPfs->explore();
     return pPfs;
 }

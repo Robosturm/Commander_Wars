@@ -13,7 +13,7 @@
 class QmlVectorPoint;
 using spQmlVectorPoint = std::shared_ptr<QmlVectorPoint>;
 
-class QmlVectorPoint final : public QObject
+class QmlVectorPoint final : public QObject, public RefObject<QmlVectorPoint>
 {
     Q_OBJECT
 public:
@@ -101,7 +101,7 @@ public:
      * @param unitId
      * @return
      */
-    Q_INVOKABLE qint32 getUnitCount(const QString unitId);
+    Q_INVOKABLE qint32 getUnitCount(const QString & unitId);
 private:
     std::vector<spUnit> m_Vector;
 };
@@ -145,8 +145,8 @@ public:
     {
         return m_Vector.size();
     }
-    Q_INVOKABLE qint32 getBuildingCount(const QString buildingId);
-    Q_INVOKABLE qint32 getBuildingGroupCount(const QStringList buildingIds, bool onlyEmpty);
+    Q_INVOKABLE qint32 getBuildingCount(const QString & buildingId);
+    Q_INVOKABLE qint32 getBuildingGroupCount(const QStringList & buildingIds, bool onlyEmpty);
     Q_INVOKABLE void remove()
     {
     }

@@ -3,6 +3,8 @@
 #include "ai/coreai.h"
 #include "ai/dummyai.h"
 
+#include "coreengine/mainapp.h"
+
 #include "menue/gamemenue.h"
 
 #include "objects/dialogs/dialogconnecting.h"
@@ -468,7 +470,7 @@ void ActionPerformer::actionPerformed()
             }
             else
             {
-                CONSOLE_PRINT("Skipping action performed cause finishActionPerformed added new animations", GameConsole::eDEBUG);
+                CONSOLE_PRINT("Skipping action performed cause finishActionPerformed added animations", GameConsole::eDEBUG);
             }
         }
         else

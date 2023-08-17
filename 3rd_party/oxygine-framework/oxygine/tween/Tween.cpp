@@ -92,7 +92,7 @@ namespace oxygine
 
     void Tween::removeFromActor()
     {
-        oxygine::spActor pClient = oxygine::spActor(getClient());
+        oxygine::spActor pClient = getClient()->getSharedPtr<Actor>();
         if (pClient.get() != nullptr)
         {
             spTween pTween(this);
@@ -149,7 +149,7 @@ namespace oxygine
     void Tween::__start(Actor& actor, const UpdateState& us)
     {
         TweenEvent ev(this, &us);
-        ev.currentTarget = spEventDispatcher(&actor);
+        ev.currentTarget = actor.getSharedPtr<Actor>();
         ev.target = ev.currentTarget;
         ev.m_tween = this;
         ev.type = TweenEvent::START;
@@ -232,7 +232,7 @@ namespace oxygine
         }
 
         TweenEvent ev(this, &us);
-        ev.currentTarget = spEventDispatcher(&actor);
+        ev.currentTarget = actor.getSharedPtr<Actor>();
         ev.target = ev.currentTarget;
         ev.m_tween = this;
 

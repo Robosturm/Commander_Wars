@@ -235,7 +235,7 @@ qint32 Building::getOwnerID()
     return -1;
 }
 
-void Building::loadSprite(const QString spriteID, bool addPlayerColor, qint32 frameTime, QPoint pos)
+void Building::loadSprite(const QString & spriteID, bool addPlayerColor, qint32 frameTime, QPoint pos)
 {
     if (addPlayerColor)
     {
@@ -247,7 +247,7 @@ void Building::loadSprite(const QString spriteID, bool addPlayerColor, qint32 fr
     }
 }
 
-void Building::loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime, QPoint pos, const QString forcedPalette, bool forceNeutral)
+void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime, QPoint pos, const QString & forcedPalette, bool forceNeutral)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
@@ -284,7 +284,7 @@ void Building::loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, 
             }
             else
             {
-                oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(forcedPalette, oxygine::error_policy::ep_ignore_error));
+                oxygine::spResAnim pPaletteAnim = pTerrainManager->getSpResAnim(forcedPalette, oxygine::error_policy::ep_ignore_error);
                 if (pPaletteAnim.get() != nullptr)
                 {
                     pSprite->setColorTable(pPaletteAnim, true);
@@ -299,7 +299,7 @@ void Building::loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, 
             }
             else
             {
-                oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(forcedPalette, oxygine::error_policy::ep_ignore_error));
+                oxygine::spResAnim pPaletteAnim = pTerrainManager->getSpResAnim(forcedPalette, oxygine::error_policy::ep_ignore_error);
                 if (pPaletteAnim.get() != nullptr)
                 {
                     pSprite->setColorTable(pPaletteAnim, true);
@@ -366,7 +366,7 @@ void Building::onWeatherChanged(Weather* pWeather)
     pInterpreter->doFunction(m_BuildingID, function1, args);
 }
 
-void Building::loadWeatherOverlaySpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime)
+void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
@@ -894,7 +894,7 @@ qint32 Building::getPowerChargeBonus()
     }
 }
 
-qint32 Building::getCostModifier(const QString id, qint32 baseCost, QPoint position)
+qint32 Building::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCostReduction";
@@ -1106,7 +1106,7 @@ QString Building::getBuildingName() const
     return m_BuildingName;
 }
 
-void Building::setBuildingName(const QString BuildingName)
+void Building::setBuildingName(const QString & BuildingName)
 {
     m_BuildingName = BuildingName;
 }

@@ -167,7 +167,7 @@ qint32 GameMap::getUniqueIdCounter()
     {
         m_headerInfo.m_uniqueIdCounter++;
     }
-    CONSOLE_PRINT("Getting new unique id counter " + QString::number(m_headerInfo.m_uniqueIdCounter), GameConsole::eDEBUG);
+    CONSOLE_PRINT("Getting unique id counter " + QString::number(m_headerInfo.m_uniqueIdCounter), GameConsole::eDEBUG);
     return m_headerInfo.m_uniqueIdCounter;
 }
 
@@ -254,10 +254,9 @@ bool GameMap::anyPlayerAlive()
     return false;
 }
 
-QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh)
+spQmlVectorPoint GameMap::getSpVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh)
 {
-
-    QmlVectorPoint* pRet = new QmlVectorPoint();
+    spQmlVectorPoint pRet = MemoryManagement::create<QmlVectorPoint>();
     if (maxVisionRange > 0)
     {
         if (visionHigh < 0)
@@ -309,30 +308,30 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
                         {
                             switch (i)
                             {
-                                case 0:
-                                {
-                                    nextX = current.x() + 1;
-                                    nextY = current.y();
-                                    break;
-                                }
-                                case 1:
-                                {
-                                    nextX = current.x() - 1;
-                                    nextY = current.y();
-                                    break;
-                                }
-                                case 2:
-                                {
-                                    nextX = current.x();
-                                    nextY = current.y() + 1;
-                                    break;
-                                }
-                                case 3:
-                                {
-                                    nextX = current.x();
-                                    nextY = current.y() - 1;
-                                    break;
-                                }
+                            case 0:
+                            {
+                                nextX = current.x() + 1;
+                                nextY = current.y();
+                                break;
+                            }
+                            case 1:
+                            {
+                                nextX = current.x() - 1;
+                                nextY = current.y();
+                                break;
+                            }
+                            case 2:
+                            {
+                                nextX = current.x();
+                                nextY = current.y() + 1;
+                                break;
+                            }
+                            case 3:
+                            {
+                                nextX = current.x();
+                                nextY = current.y() - 1;
+                                break;
+                            }
                             }
                             // not evaluated yet
                             if (onMap(nextX, nextY))
@@ -359,6 +358,15 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
         }
     }
     return pRet;
+}
+
+QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh)
+{
+    auto pRet = getSpVisionCircle(x, y, minVisionRange, maxVisionRange, visionHigh);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(pRet);
+    return pRet.get();
 }
 
 bool GameMap::isUnitInArea(const QRect area, qint32 unitID)
@@ -517,7 +525,7 @@ QString GameMap::getMapTagsText()
     return ret;
 }
 
-spPlayer GameMap::getspPlayer(qint32 player)
+spPlayer GameMap::getSpPlayer(qint32 player)
 {
     if (player >= 0 && player < m_players.size())
     {
@@ -882,7 +890,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
         QString movementType = pUnit->getMovementType();
         if (onMap(x, y))
         {
-            spTerrain pTerrain = spTerrain(getTerrain(x, y));
+            spTerrain pTerrain = getSpTerrain(x, y);
             if (pTerrain.get() != nullptr &&
                 (pTerrain->getUnit() == nullptr) &&
                 (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -907,7 +915,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
                 y2 += 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = spTerrain(getTerrain(x + x2 - currentRadius, y + y2));
+                    spTerrain pTerrain = getSpTerrain(x + x2 - currentRadius, y + y2);
                     if (pTerrain.get() != nullptr &&
                         (pTerrain->getUnit() == nullptr) &&
                         (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -923,7 +931,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
                 y2 -= 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
+                    spTerrain pTerrain = getSpTerrain(x + x2, y + y2);
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
                         (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -939,7 +947,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
                 y2 -= 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
+                    spTerrain pTerrain = getSpTerrain(x + x2, y + y2);
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
                         (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -955,7 +963,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
                 y2 += 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
+                    spTerrain pTerrain = getSpTerrain(x + x2, y + y2);
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
                         (ignoreMovement || pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -1265,7 +1273,7 @@ void GameMap::replaceTerrainOnly(const QString terrainID, qint32 x, qint32 y, bo
             (changePalette && pTerrainOld->getPalette() != palette))
         {
             pTerrainOld->removeBuilding();
-            spUnit pUnit = spUnit(pTerrainOld->getUnit());
+            spUnit pUnit = pTerrainOld->getSpUnit();
 
             spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID(), this, pTerrainOld->getPalette());
 
@@ -2372,11 +2380,11 @@ Unit* GameMap::getUnitFromTansportUnit(Unit* pUnit, qint32 uniqueID)
     return nullptr;
 }
 
-QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
+spQmlVectorUnit GameMap::getSpUnits(Player* pPlayer)
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
-    QmlVectorUnit* ret = new QmlVectorUnit();
+    spQmlVectorUnit ret = MemoryManagement::create<QmlVectorUnit>();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -2394,21 +2402,40 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
     return ret;
 }
 
-QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer, QString id)
+QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
+{
+    auto ret = getSpUnits(pPlayer);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
+}
+
+spQmlVectorBuilding GameMap::getSpBuildings(Player* pPlayer, QString id)
 {
     QStringList ids;
     if (!id.isEmpty())
     {
         ids.append(id);
     }
-    return getBuildingsListCount(pPlayer, ids);
+    return getSpBuildingsListCount(pPlayer, ids);
 }
 
-QmlVectorBuilding* GameMap::getBuildingsListCount(Player* pPlayer, const QStringList ids)
+
+QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer, QString id)
+{
+    auto ret = getSpBuildings(pPlayer, id);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
+}
+
+spQmlVectorBuilding GameMap::getSpBuildingsListCount(Player* pPlayer, const QStringList ids)
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
-    QmlVectorBuilding* ret = new QmlVectorBuilding();
+    spQmlVectorBuilding ret = MemoryManagement::create<QmlVectorBuilding>();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -2425,6 +2452,15 @@ QmlVectorBuilding* GameMap::getBuildingsListCount(Player* pPlayer, const QString
         }
     }
     return ret;
+}
+
+QmlVectorBuilding* GameMap::getBuildingsListCount(Player* pPlayer, const QStringList ids)
+{
+    auto ret = getSpBuildingsListCount(pPlayer, ids);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    Q_ASSERT(pInterpreter->getInJsCall());
+    pInterpreter->trackJsObject(ret);
+    return ret.get();
 }
 
 QString GameMap::getMapName() const

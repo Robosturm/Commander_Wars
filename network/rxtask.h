@@ -8,7 +8,7 @@
 
 class QIODevice;
 class RxTask;
-using spRxTask = std::shared_ptr<RxTask> ;
+using spRxTask = std::shared_ptr<RxTask>;
 
 class RxTask final : public QObject
 {

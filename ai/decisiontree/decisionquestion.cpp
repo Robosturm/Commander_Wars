@@ -1,6 +1,7 @@
 #include "ai/decisiontree/decisionquestion.h"
 
 #include "coreengine/interpreter.h"
+#include "coreengine/memorymanagement.h"
 
 DecisionQuestion::DecisionQuestion()
 {

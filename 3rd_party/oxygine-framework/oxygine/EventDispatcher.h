@@ -1,6 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
+#include "coreengine/memorymanagement.h"
 #include <vector>
 
 namespace oxygine
@@ -24,7 +25,7 @@ namespace oxygine
 
     class EventDispatcher;
     using spEventDispatcher = std::shared_ptr<EventDispatcher>;
-    class EventDispatcher : public IClosureOwner
+    class EventDispatcher : public IClosureOwner, public RefObject<EventDispatcher>
     {
     public:
         explicit EventDispatcher() = default;

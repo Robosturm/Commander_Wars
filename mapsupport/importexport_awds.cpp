@@ -1,6 +1,8 @@
 #include <QDataStream>
 #include <QFile>
 
+#include "coreengine/mainapp.h"
+
 #include "game/gamemap.h"
 #include "game/player.h"
 #include "game/co.h"
@@ -1653,7 +1655,7 @@ void GameMap::exportAWDSMap(QString file)
         {
             for (qint32 y = 0 ; y < getMapHeight(); y++)
             {
-                spBuilding pBuilding = spBuilding(getTerrain(x, y)->getBuilding());
+                spBuilding pBuilding = getTerrain(x, y)->getSpBuilding();
                 Terrain* pTerrain = getTerrain(x, y);
                 if (pBuilding.get() != nullptr)
                 {

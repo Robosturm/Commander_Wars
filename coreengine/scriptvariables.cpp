@@ -1,5 +1,6 @@
 #include "coreengine/scriptvariables.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/memorymanagement.h"
 
 ScriptVariables::ScriptVariables()
 {
@@ -55,9 +56,9 @@ void ScriptVariables::deserializeObject(QDataStream& pStream)
     }
 }
 
-ScriptVariable* ScriptVariables::createVariable(const QString id)
+ScriptVariable* ScriptVariables::createVariable(const QString & id)
 {
-    spScriptVariable pVar = spScriptVariable(getVariable(id));
+    spScriptVariable pVar = getSpVariable(id);
     if (pVar.get() == nullptr)
     {
         pVar = MemoryManagement::create<ScriptVariable>(id);
@@ -66,16 +67,21 @@ ScriptVariable* ScriptVariables::createVariable(const QString id)
     return pVar.get();
 }
 
-ScriptVariable* ScriptVariables::getVariable(const QString id)
+spScriptVariable ScriptVariables::getSpVariable(const QString & id)
 {
     for (qint32 i = 0; i < m_Variables.size(); i++)
     {
         if (m_Variables[i]->getId() == id)
         {
-            return m_Variables[i].get();
+            return m_Variables[i];
         }
     }
-    return nullptr;
+    return spScriptVariable();
+}
+
+ScriptVariable* ScriptVariables::getVariable(const QString & id)
+{
+    return getSpVariable(id).get();
 }
 
 void ScriptVariables::clear()

@@ -8,7 +8,6 @@ MarkedFieldData::MarkedFieldData()
     setObjectName("MarkedFieldData");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Interpreter::getInstance()->trackJsObject(this);
 }
 
 bool MarkedFieldData::getAllFields() const

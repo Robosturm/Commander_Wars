@@ -642,7 +642,7 @@ void BattleAnimation::restart()
         auto* pMenu = m_pMap->getMenu();
         if (pMenu != nullptr)
         {
-            pMenu->addChild(spBattleAnimation(this));
+            pMenu->addChild(getSharedPtr<Actor>());
             m_battleTimer.start();
         }
     }

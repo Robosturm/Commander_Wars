@@ -70,11 +70,11 @@ ComplexTableView::ComplexTableView(const QVector<qint32> & widths, const QString
             m_sortUp[i] = !m_sortUp[i];
             if (m_sortUp[i])
             {
-                oxygine::static_pointer_cast<oxygine::Sprite>(pActor->getFirstChild())->setFlippedY(true);
+                std::static_pointer_cast<oxygine::Sprite>(pActor->getFirstChild())->setFlippedY(true);
             }
             else
             {
-                oxygine::static_pointer_cast<oxygine::Sprite>(pActor->getFirstChild())->setFlippedY(false);
+                std::static_pointer_cast<oxygine::Sprite>(pActor->getFirstChild())->setFlippedY(false);
             }
             emit sigSortItems(i, m_sortUp[i]);
         });

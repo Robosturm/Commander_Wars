@@ -238,7 +238,7 @@ void ScriptEventGeneric::addFileEditor(spGenericBox & pBox, qint32 i, qint32 & y
     auto* pPtrTextbox = pTextbox.get();
     pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [this, i, pPtrTextbox](oxygine::Event*)
     {
-        emit sigShowSelectFile (m_Items[i].filter, m_Items[i].startFolder, m_Items[i].item, spTextbox(pPtrTextbox));
+        emit sigShowSelectFile (m_Items[i].filter, m_Items[i].startFolder, m_Items[i].item, pPtrTextbox->getSharedPtr<Textbox>());
     });
 }
 

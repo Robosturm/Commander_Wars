@@ -98,7 +98,7 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
         }
         if (m_pNetworkInterface->getIsServer())
         {
-            CONSOLE_PRINT("GameMenue server is listening to new players", GameConsole::eDEBUG);
+            CONSOLE_PRINT("GameMenue server is listening to players", GameConsole::eDEBUG);
             m_PlayerSockets = m_pNetworkInterface->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
         }
@@ -687,8 +687,8 @@ void GameMenue::resyncGame()
 }
 
 Player* GameMenue::getCurrentViewPlayer() const
-{    
-    spPlayer pCurrentPlayer = spPlayer(m_pMap->getCurrentPlayer());
+{
+    spPlayer pCurrentPlayer = m_pMap->getSpCurrentPlayer();
     if (pCurrentPlayer.get() != nullptr)
     {
         qint32 currentPlayerID = pCurrentPlayer->getPlayerID();
@@ -956,7 +956,7 @@ void GameMenue::sendPlayerRequestControlInfo(const QString & playerNameId, quint
         }
         else if (pPlayer->getSocketId() == 0 && Mainapp::getSlave())
         {
-            // redirect unassigned ai's to new player
+            // redirect unassigned ai's to player
             auto ai = pPlayer->getControlType();
             if (ai != GameEnums::AiTypes_Closed &&
                 ai != GameEnums::AiTypes_Human &&
@@ -2004,7 +2004,7 @@ void GameMenue::showCOInfo()
 {    
     CONSOLE_PRINT("showCOInfo()", GameConsole::eDEBUG);
     
-    spCOInfoDialog pCOInfoDialog = MemoryManagement::create<COInfoDialog>(m_pMap->getCurrentPlayer()->getspCO(0), m_pMap->getspPlayer(m_pMap->getCurrentPlayer()->getPlayerID()), [this](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
+    spCOInfoDialog pCOInfoDialog = MemoryManagement::create<COInfoDialog>(m_pMap->getCurrentPlayer()->getSpCO(0), m_pMap->getSpPlayer(m_pMap->getCurrentPlayer()->getPlayerID()), [this](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
     {
         if (direction > 0)
         {
@@ -2014,18 +2014,18 @@ void GameMenue::showCOInfo()
                 // roll over case
                 if (pPlayer->getPlayerID() == m_pMap->getPlayerCount() - 1)
                 {
-                    pPlayer = m_pMap->getspPlayer(0);
-                    pCurrentCO = pPlayer->getspCO(0);
+                    pPlayer = m_pMap->getSpPlayer(0);
+                    pCurrentCO = pPlayer->getSpCO(0);
                 }
                 else
                 {
-                    pPlayer = m_pMap->getspPlayer(pPlayer->getPlayerID() + 1);
-                    pCurrentCO = pPlayer->getspCO(0);
+                    pPlayer = m_pMap->getSpPlayer(pPlayer->getPlayerID() + 1);
+                    pCurrentCO = pPlayer->getSpCO(0);
                 }
             }
             else
             {
-                pCurrentCO = pPlayer->getspCO(1);
+                pCurrentCO = pPlayer->getSpCO(1);
             }
         }
         else
@@ -2036,25 +2036,25 @@ void GameMenue::showCOInfo()
                 // select player
                 if (pPlayer->getPlayerID() == 0)
                 {
-                    pPlayer = m_pMap->getspPlayer(m_pMap->getPlayerCount() - 1);
+                    pPlayer = m_pMap->getSpPlayer(m_pMap->getPlayerCount() - 1);
                 }
                 else
                 {
-                    pPlayer = m_pMap->getspPlayer(pPlayer->getPlayerID() - 1);
+                    pPlayer = m_pMap->getSpPlayer(pPlayer->getPlayerID() - 1);
                 }
                 // select co
                 if ( pPlayer->getCO(1) != nullptr)
                 {
-                    pCurrentCO = pPlayer->getspCO(1);
+                    pCurrentCO = pPlayer->getSpCO(1);
                 }
                 else
                 {
-                    pCurrentCO = pPlayer->getspCO(0);
+                    pCurrentCO = pPlayer->getSpCO(0);
                 }
             }
             else
             {
-                pCurrentCO = pPlayer->getspCO(0);
+                pCurrentCO = pPlayer->getSpCO(0);
             }
         }
     }, true);
@@ -2447,11 +2447,11 @@ void GameMenue::keyInputAll(Qt::Key cur)
         if (m_pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) &&
             visionType != GameEnums::VisionType_Shrouded)
         {
-            Terrain* pTerrain = m_pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-            Unit* pUnit = pTerrain->getUnit();
-            if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
+            spTerrain pTerrain = m_pMap->getSpTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            spUnit pUnit = pTerrain->getSpUnit();
+            if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
             {
-                pUnit = nullptr;
+                pUnit.reset();
             }
             spFieldInfo fieldinfo = MemoryManagement::create<FieldInfo>(pTerrain, pUnit);
             addChild(fieldinfo);

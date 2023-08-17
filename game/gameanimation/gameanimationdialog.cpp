@@ -316,7 +316,7 @@ void GameAnimationDialog::restart()
         if (pMenu != nullptr)
         {
             m_stopped = false;
-            pMenu->addChild(spGameAnimationDialog(this));
+            pMenu->addChild(getSharedPtr<oxygine::Actor>());
         }
     }
 }

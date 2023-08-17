@@ -37,7 +37,7 @@ void LoadingScreen::show()
     if (oxygine::Stage::getStage().get() != nullptr)
     {
         CONSOLE_PRINT("LoadingScreen::show", GameConsole::eDEBUG);
-        oxygine::Stage::getStage()->addChild(spLoadingScreen(this));
+        oxygine::Stage::getStage()->addChild(m_pLoadingScreen);
         removeChildren();
         oxygine::ResAnim* pBackground;
         BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();

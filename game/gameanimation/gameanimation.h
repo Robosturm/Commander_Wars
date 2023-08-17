@@ -38,7 +38,7 @@ public:
      * @param text
      * @return
      */
-    Q_INVOKABLE qint32 getFontWidth(const QString font, const QString text) const;
+    Q_INVOKABLE qint32 getFontWidth(const QString & font, const QString & text) const;
     /**
      * @brief getMap
      * @return

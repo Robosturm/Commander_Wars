@@ -491,7 +491,7 @@ bool UiFactory::createSelectKey(oxygine::spActor parent, QDomElement element, ox
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         QString onEventLine = getAttribute(childs, attrOnEvent);
-        spSelectKey pButton = spSelectKey::create(static_cast<Qt::Key>(startValue));
+        spSelectKey pButton = MemoryManagement::create<SelectKey>(static_cast<Qt::Key>(startValue));
         pButton->setX(x);
         pButton->setY(y);
         pButton->setEnabled(enabled);
@@ -585,7 +585,7 @@ bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygi
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         QString onEvent = getAttribute(childs, attrOnEvent);
-        spSpriteObject pSprite = spSpriteObject::create();
+        spSpriteObject pSprite = MemoryManagement::create<SpriteObject>();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteId);
         if (pAnim == nullptr)
         {
@@ -870,7 +870,7 @@ bool UiFactory::createMultilineTextbox(oxygine::spActor parent, QDomElement elem
         QString value = getStringValue(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        spMultilineTextbox pTextbox = spMultilineTextbox::create(width, height);
+        spMultilineTextbox pTextbox = MemoryManagement::create<MultilineTextbox>(width, height);
         pTextbox->setPosition(x, y);
         pTextbox->setTooltipText(tooltip);
         pTextbox->setCurrentText(value);
@@ -943,7 +943,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
         quint64 value = getUInt64Value(getAttribute(childs, attrStartValue), id, loopIdx, pMenu);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), id, loopIdx, pMenu, true);
         bool visible = getBoolValue(getAttribute(childs, attrVisible), id, loopIdx, pMenu, true);
-        spTimeSpinBox pSpinBox = spTimeSpinBox::create(width);
+        spTimeSpinBox pSpinBox = MemoryManagement::create<TimeSpinBox>(width);
         pSpinBox->setX(x);
         pSpinBox->setY(y);
         pSpinBox->setTooltipText(tooltip);
@@ -1127,7 +1127,7 @@ bool UiFactory::createDropDownMenuColor(oxygine::spActor parent, QDomElement ele
         {
             colorItems.append(QColor(item));
         }
-        spDropDownmenuColor pDropDownmenu = spDropDownmenuColor::create(width, colorItems);
+        spDropDownmenuColor pDropDownmenu = MemoryManagement::create<DropDownmenuColor>(width, colorItems);
         pDropDownmenu->setPosition(x, y);
         pDropDownmenu->setTooltipText(tooltip);
         pDropDownmenu->setVisible(visible);

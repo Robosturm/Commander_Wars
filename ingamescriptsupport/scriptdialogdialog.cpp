@@ -203,7 +203,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
         ret = pInterpreter->doFunction("PLAYER", function, args);
         playerColors.append(QColor(ret.toString()));
     }
-    spDropDownmenuColor colors = spDropDownmenuColor::create(110, playerColors);
+    spDropDownmenuColor colors = MemoryManagement::create<DropDownmenuColor>(110, playerColors);
     colors->setTooltipText(tr("The background color of the dialog."));
     colors->setPosition(posX + 300, y);
     colors->setCurrentItem(pDialog->color);
@@ -314,6 +314,6 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
     else
     {
         m_backgrounds[index]->setResAnim(nullptr);
-        m_backgroundAnims[index].free();
+        m_backgroundAnims[index].reset();
     }
 }

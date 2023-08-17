@@ -1033,7 +1033,9 @@ void BattleAnimationSprite::setBackgroundSprite(oxygine::spSprite newBackgroundS
 
 float BattleAnimationSprite::getBackgroundSpeed()
 {
-    return oxygine::safeSpCast<oxygine::SlidingSprite>(m_pBackgroundSprite->getFirstChild())->getSpeedX();
+    oxygine::spActor base = m_pBackgroundSprite->getFirstChild();
+    oxygine::spSlidingSprite background = oxygine::safeSpCast<oxygine::SlidingSprite>(base);
+    return background->getSpeedX();
 }
 
 void BattleAnimationSprite::setBackgroundSpeed(float speed)

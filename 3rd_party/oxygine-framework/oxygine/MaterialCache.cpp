@@ -17,7 +17,7 @@ namespace oxygine
         {
             if (sec->compare(sec.get(), &other))
             {
-                return spMaterial(sec);
+                return sec->getSharedPtr<Material>();
             }
         }
         ++m_addCounter;
@@ -68,7 +68,7 @@ namespace oxygine
     {
         if (mcache.get() == nullptr)
         {
-            mcache.reset(new MaterialCache());
+            mcache = MemoryManagement::create<MaterialCache>();
         }
         return *mcache.get();
     }

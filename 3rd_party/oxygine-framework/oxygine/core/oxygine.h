@@ -38,21 +38,40 @@ namespace oxygine
     }
 
     template<class T, class U>
-    std::shared_ptr<T> safeSpCast(std::shared_ptr<U> const& p)
+    const std::shared_ptr<T> safeSpCast(const std::shared_ptr<U> & p)
     {
         if (!p)
         {
             return std::shared_ptr<T>();
         }
 #ifdef OXYGINE_DEBUG_SAFECAST
-        std::shared_ptr<T> t = std::dynamic_pointer_cast(p);
+        std::shared_ptr<T> t = std::dynamic_pointer_cast<T>(p);
         if (t.get() == nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "safeSpCast can't cast pointer");
         }
         return t;
 #else
-        return std::static_pointer_cast(p);
+        return std::static_pointer_cast<T>(p);
+#endif
+    }
+
+    template<class T, class U>
+    std::shared_ptr<T> safeSpCast(std::shared_ptr<U> & p)
+    {
+        if (!p)
+        {
+            return std::shared_ptr<T>();
+        }
+#ifdef OXYGINE_DEBUG_SAFECAST
+        std::shared_ptr<T> t = std::dynamic_pointer_cast<T>(p);
+        if (t.get() == nullptr)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "safeSpCast can't cast pointer");
+        }
+        return t;
+#else
+        return std::static_pointer_cast<T>(p);
 #endif
     }
 }

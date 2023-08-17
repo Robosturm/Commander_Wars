@@ -38,7 +38,6 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
             m_movecosts[i][i2] = infinite;
         }
     }
-    Interpreter::getInstance()->trackJsObject(this);
 }
 
 PathFindingSystem::~PathFindingSystem()
@@ -240,7 +239,7 @@ std::vector<QPoint> PathFindingSystem::getAllNodePointsFast(qint32 maxRange)
 
 QmlVectorPoint* PathFindingSystem::getAllQmlVectorPoints()
 {
-    QmlVectorPoint* ret = new QmlVectorPoint();
+    auto* ret = MemoryManagement::createAndTrackJsObject<QmlVectorPoint>();
     for (qint32 x = 0; x < m_width; x++)
     {
         for (qint32 y = 0; y < m_heigth; y++)

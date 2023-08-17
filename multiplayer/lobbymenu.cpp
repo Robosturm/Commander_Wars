@@ -202,7 +202,7 @@ LobbyMenu::LobbyMenu()
     spNetworkInterface pInterface = m_pTCPClient;
     if (Settings::getInstance()->getServer())
     {
-        pInterface = spNetworkInterface(MainServer::getInstance()->getGameServer());
+        pInterface = MainServer::getInstance()->getGameServer();
     }
     qint32 y = m_gamesview->getY() + m_gamesview->getScaledHeight() + 10;
     const qint32 infoWidth = 100;

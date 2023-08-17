@@ -3,6 +3,7 @@
 #include "ai/islandmap.h"
 
 #include "coreengine/interpreter.h"
+#include "coreengine/mainapp.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"

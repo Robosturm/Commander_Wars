@@ -1,3 +1,5 @@
+#include "coreengine/mainapp.h"
+
 #include "game/gamemap.h"
 #include "game/terrain.h"
 #include "game/unit.h"
@@ -415,7 +417,7 @@ void GameMap::flipX()
             m_fields[y][x] = pTerrain;
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
 
-            spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
+            spBuilding pCurrentBuilding = flipTerrain->getSpBuilding();
             if (flipTerrain->getBuilding() != nullptr)
             {
                 spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);
@@ -453,7 +455,7 @@ void GameMap::rotateX()
             m_fields[y][x] = pTerrain;
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
 
-            spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
+            spBuilding pCurrentBuilding = flipTerrain->getSpBuilding();
             if (flipTerrain->getBuilding() != nullptr)
             {
                 spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);
@@ -491,7 +493,7 @@ void GameMap::flipY()
             m_fields[y][x] = pTerrain;
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
 
-            spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
+            spBuilding pCurrentBuilding = flipTerrain->getSpBuilding();
             if (flipTerrain->getBuilding() != nullptr)
             {
                 spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);
@@ -529,7 +531,7 @@ void GameMap::rotateY()
             m_fields[y][x] = pTerrain;
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
 
-            spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
+            spBuilding pCurrentBuilding = flipTerrain->getSpBuilding();
             if (flipTerrain->getBuilding() != nullptr)
             {
                 spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), this);

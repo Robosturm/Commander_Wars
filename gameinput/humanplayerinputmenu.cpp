@@ -554,7 +554,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     if (pUnitSpriteManager->exists(id))
                     {
                         spUnit pDummy = MemoryManagement::create<Unit>(id, m_pMap->getCurrentPlayer(), false, m_pMap);
-                        spFieldInfo fieldinfo = MemoryManagement::create<FieldInfo>(nullptr, pDummy.get());
+                        spFieldInfo fieldinfo = MemoryManagement::create<FieldInfo>(nullptr, pDummy);
                         m_pMenu->addChild(fieldinfo);
                         connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
                         {

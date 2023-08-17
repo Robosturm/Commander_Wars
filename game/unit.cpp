@@ -222,7 +222,7 @@ void Unit::removeShineTween()
     {
         if (m_ShineTweens[i].get() != nullptr)
         {
-            oxygine::spActor pActor = oxygine::spActor(m_ShineTweens[i]->getClient());
+            oxygine::spActor pActor = m_ShineTweens[i]->getClient()->getSharedPtr<oxygine::Actor>();
             if (pActor.get() != nullptr)
             {
                 m_ShineTweens[i]->removeFromActor();
@@ -1170,18 +1170,18 @@ void Unit::loadUnit(Unit* pUnit, qint32 index)
     bool loaded = false;
     if (m_TransportUnits.size() < getLoadingPlace() && index < 0)
     {
-        m_TransportUnits.append(spUnit(pUnit));
+        m_TransportUnits.append(pUnit->getSharedPtr<Unit>());
         loaded = true;
     }
     else if (index < getLoadingPlace())
     {
         if (index < m_TransportUnits.size())
         {
-            m_TransportUnits[index] = spUnit(pUnit);
+            m_TransportUnits[index] = pUnit->getSharedPtr<Unit>();
         }
         else
         {
-            m_TransportUnits.append(spUnit(pUnit));
+            m_TransportUnits.append(pUnit->getSharedPtr<Unit>());
         }
         loaded = true;
     }
@@ -2886,11 +2886,11 @@ QVector<QVector3D> Unit::getVisionFields(QPoint position)
     Terrain* pTerrain = m_pMap->getTerrain(position.x(), position.y());
     if (visionBlock)
     {
-        pCircle = spQmlVectorPoint(m_pMap->getVisionCircle(position.x(), position.y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh()));
+        pCircle = m_pMap->getSpVisionCircle(position.x(), position.y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh());
     }
     else
     {
-        pCircle = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
+        pCircle = GlobalUtils::getSpCircle(0, visionRange);
     }
     for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
     {
@@ -3083,7 +3083,7 @@ void Unit::loadIcon(const QString iconID, qint32 x, qint32 y, qint32 duration, q
 
 UnitPathFindingSystem* Unit::createUnitPathFindingSystem(Player* pPlayer)
 {
-    UnitPathFindingSystem* pPfs = new UnitPathFindingSystem(m_pMap, this, pPlayer);
+    auto* pPfs = MemoryManagement::createAndTrackJsObject<UnitPathFindingSystem>(m_pMap, this, pPlayer);
     pPfs->explore();
     return pPfs;
 }
@@ -3557,7 +3557,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
         if (isStatusStealthed() ||
             hasTerrainHide(pPlayer))
         {
-            spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+            spQmlVectorPoint pPoints = GlobalUtils::getSpCircle(1, 1);
             for (qint32 i = 0; i < pPoints->size(); i++)
             {
                 QPoint point = pPoints->at(i);

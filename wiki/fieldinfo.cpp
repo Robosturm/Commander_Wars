@@ -2,8 +2,8 @@
 #include "wiki/terraininfo.h"
 #include "wiki/unitinfo.h"
 
-FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)
-    : Wikipage(pUnit != nullptr ? pUnit->getUnitID() : pTerrain->getID())
+FieldInfo::FieldInfo(spTerrain pTerrain, spUnit pUnit)
+    : Wikipage(pUnit.get() != nullptr ? pUnit->getUnitID() : pTerrain->getID())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("FieldInfo");
@@ -13,7 +13,7 @@ FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)
     qint32 y = 10;
     if (pTerrain != nullptr)
     {
-        spTerrainInfo pTerrainInfo = spTerrainInfo::create(pTerrain->getMap(), pTerrain, m_pPanel->getScaledWidth() - 80);
+        spTerrainInfo pTerrainInfo = MemoryManagement::create<TerrainInfo>(pTerrain->getMap(), pTerrain.get(), m_pPanel->getScaledWidth() - 80);
         pTerrainInfo->setPosition(20, y);
         m_pPanel->addItem(pTerrainInfo);
         m_pPanel->setContentHeigth(pTerrainInfo->getY() + pTerrainInfo->getScaledHeight());
@@ -21,7 +21,7 @@ FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)
     }
     if (pUnit != nullptr)
     {
-        spUnitInfo pUnitInfo = spUnitInfo::create(spUnit(pUnit), m_pPanel->getScaledWidth() - 80);
+        spUnitInfo pUnitInfo = MemoryManagement::create<UnitInfo>(pUnit, m_pPanel->getScaledWidth() - 80);
         pUnitInfo->setPosition(20, y);
         m_pPanel->addItem(pUnitInfo);
         m_pPanel->setContentHeigth(pUnitInfo->getY() + pUnitInfo->getScaledHeight());

@@ -46,7 +46,7 @@ private:
     QVector<QLocalSocket*> m_pTCPSockets;
     QVector<quint64> m_SocketIDs;
     quint64 m_idCounter = 0;
-    QLocalServer* m_pTCPServer{nullptr};
+    std::shared_ptr<QLocalServer> m_pTCPServer{nullptr};
     bool m_gameServer{false};
 };
 

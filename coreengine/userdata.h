@@ -242,7 +242,7 @@ public:
      * @param filename
      * @return
      */
-    Q_INVOKABLE ScriptVariableFile* getScriptVariableFile(const QString filename);
+    Q_INVOKABLE ScriptVariableFile* getScriptVariableFile(const QString & filename);
     /**
      * @brief getUniqueIdentifier
      * @return
@@ -252,7 +252,7 @@ public:
      * @brief setUniqueIdentifier
      * @param newUniqueIdentifier
      */
-    Q_INVOKABLE void setUniqueIdentifier(const QString newUniqueIdentifier);
+    Q_INVOKABLE void setUniqueIdentifier(const QString & newUniqueIdentifier);
 private:
     void showAchieved();
     void reset();

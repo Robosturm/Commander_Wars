@@ -62,11 +62,11 @@ VeryEasyAI::VeryEasyAI(GameMap* pMap)
 void VeryEasyAI::process()
 {
     AI_CONSOLE_PRINT("VeryEasyAI::process()", GameConsole::eDEBUG);
-    spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
-    spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
+    spQmlVectorBuilding pBuildings = m_pPlayer->getSpBuildings();
+    spQmlVectorUnit pUnits = m_pPlayer->getSpUnits();
     pUnits->randomize();
-    spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
-    spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
+    spQmlVectorUnit pEnemyUnits = m_pPlayer->getSpEnemyUnits();
+    spQmlVectorBuilding pEnemyBuildings = m_pPlayer->getSpEnemyBuildings();
     prepareEnemieData(pUnits, pEnemyUnits, pEnemyBuildings);
     pBuildings->sortClosestToEnemy(pEnemyUnits);
 

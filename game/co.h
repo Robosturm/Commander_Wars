@@ -36,7 +36,7 @@ public:
     static constexpr qint32 MAX_CO_UNIT_VALUE = 20;
 
     explicit CO(QString coID, Player* owner, GameMap* pMap);
-   virtual ~CO() = default;
+    virtual ~CO() = default;
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -146,7 +146,7 @@ public:
      * @param function
      * @return
      */
-    Q_INVOKABLE qint32 getCoBonus(QPoint position, Unit* pUnit, const QString function);
+    Q_INVOKABLE qint32 getCoBonus(QPoint position, Unit* pUnit, const QString & function);
     /**
      * @brief getCoRangeEnabled
      * @return
@@ -172,7 +172,7 @@ public:
      * @param unitID
      * @return
      */
-    Q_INVOKABLE qreal getUnitBuildValue(const QString unitID);
+    Q_INVOKABLE qreal getUnitBuildValue(const QString & unitID);
     /**
      * @brief getCOName
      * @return
@@ -480,7 +480,7 @@ public:
      * @param baseCost
      * @return
      */
-    Q_INVOKABLE qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
+    Q_INVOKABLE qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
     /**
      * @brief getEnemyCostModifier
      * @param id
@@ -488,7 +488,7 @@ public:
      * @param position
      * @return
      */
-    Q_INVOKABLE qint32 getEnemyCostModifier(const QString id, qint32 baseCost, QPoint position);
+    Q_INVOKABLE qint32 getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint position);
     /**
      * @brief getCOArmy
      */
@@ -676,17 +676,17 @@ public:
      * @brief setPerkList
      * @param perks
      */
-    Q_INVOKABLE void setPerkList(const QStringList perks);
+    Q_INVOKABLE void setPerkList(const QStringList & perks);
     /**
      * @brief addPerk
      * @param perk
      */
-    Q_INVOKABLE void addPerk(const QString perk);
+    Q_INVOKABLE void addPerk(const QString & perk);
     /**
      * @brief addPerk
      * @param perk
      */
-    Q_INVOKABLE void removePerk(const QString perk);
+    Q_INVOKABLE void removePerk(const QString & perk);
     /**
      * @brief getBio
      * @return

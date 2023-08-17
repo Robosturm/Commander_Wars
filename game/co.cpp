@@ -52,7 +52,7 @@ bool CO::isValid()
     return COSpriteManager::getInstance()->exists(m_coID);
 }
 
-qreal CO::getUnitBuildValue(const QString unitID)
+qreal CO::getUnitBuildValue(const QString & unitID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitBuildValue";
@@ -115,7 +115,7 @@ void CO::setCOUnit(Unit* pUnit)
             }
         }
     }
-    m_pCOUnit = spUnit(pUnit);
+    m_pCOUnit = pUnit->getSharedPtr<Unit>();
 }
 
 qreal CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)
@@ -850,7 +850,7 @@ void CO::buildedUnit(Unit* pUnit)
     }
 }
 
-qint32 CO::getCostModifier(const QString id, qint32 baseCost, QPoint position)
+qint32 CO::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCostModifier";
@@ -875,7 +875,7 @@ qint32 CO::getCostModifier(const QString id, qint32 baseCost, QPoint position)
     return ergValue;
 }
 
-qint32 CO::getEnemyCostModifier(const QString id, qint32 baseCost, QPoint position)
+qint32 CO::getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getEnemyCostModifier";
@@ -1135,7 +1135,7 @@ qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint at
     return ergValue;
 }
 
-qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString function)
+qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
@@ -1667,7 +1667,7 @@ QStringList CO::getPerkList()
     return ret;
 }
 
-void CO::setPerkList(const QStringList perks)
+void CO::setPerkList(const QStringList & perks)
 {
     m_perkList.clear();
     m_perkList.append(m_coID);
@@ -1675,7 +1675,7 @@ void CO::setPerkList(const QStringList perks)
     m_perkList.append(perks);
 }
 
-void CO::addPerk(const QString perk)
+void CO::addPerk(const QString & perk)
 {
     if (!m_perkList.contains(perk))
     {
@@ -1683,7 +1683,7 @@ void CO::addPerk(const QString perk)
     }
 }
 
-void CO::removePerk(const QString perk)
+void CO::removePerk(const QString & perk)
 {
     m_perkList.removeAll(perk);
 }
@@ -2240,7 +2240,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
     QString coidLower = coid.toLower();
     QStringList filenameList = file.split("/");
     QString filename = filenameList[filenameList.size() - 1];
-    oxygine::spResAnim pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error));
+    oxygine::spResAnim pAnim = pCOSpriteManager->oxygine::Resources::getSpResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error);
     oxygine::spResAnim pCOAnim;
     if (pAnim.get() != nullptr)
     {
@@ -2250,7 +2250,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+face", pCOAnim));
         }
     }
-    pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error));
+    pAnim = pCOSpriteManager->oxygine::Resources::getSpResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error);
     pCOAnim.reset();
     if (pAnim.get() != nullptr)
     {
@@ -2260,7 +2260,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+info", pCOAnim));
         }
     }
-    pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error));
+    pAnim = pCOSpriteManager->oxygine::Resources::getSpResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error);
     pCOAnim.reset();
     if (pAnim.get() != nullptr)
     {

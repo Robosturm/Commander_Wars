@@ -1,6 +1,7 @@
 #include "ai/dummyai.h"
 
 #include "coreengine/interpreter.h"
+#include "coreengine/gameconsole.h"
 
 DummyAi::DummyAi(GameMap* pMap, GameEnums::AiTypes type)
     : CoreAI (pMap, type, "DummyAi")

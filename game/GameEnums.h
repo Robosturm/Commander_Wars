@@ -363,6 +363,9 @@ public:
     static void registerEnums();
 private:
     GameEnums() = default;
+
+private:
+    static GameEnums m_instance;
 };
 
 #endif

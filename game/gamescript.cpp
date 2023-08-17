@@ -6,6 +6,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
+#include "coreengine/settings.h"
 
 #include "menue/basegamemenu.h"
 

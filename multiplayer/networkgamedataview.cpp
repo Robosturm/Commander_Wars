@@ -43,7 +43,7 @@ oxygine::spActor NetworkGameDataView::loadCustomId(const QString & item, qint32 
 {
     if (item == "MINIMAP")
     {
-        spSpriteObject pSprite = spSpriteObject::create();
+        spSpriteObject pSprite = MemoryManagement::create<SpriteObject>();
         pSprite->setObjectName(id);
         pSprite->setResAnim(m_minimapImage.get());
         pSprite->setScale(scale);

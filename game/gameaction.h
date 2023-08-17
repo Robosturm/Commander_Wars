@@ -186,7 +186,7 @@ public:
      * @param actionID id of the action we want to check
      * @return
      */
-    Q_INVOKABLE bool canBePerformed(const QString actionID, bool emptyField = false, Player* pUsingPlayer = nullptr);
+    Q_INVOKABLE bool canBePerformed(const QString & actionID, bool emptyField = false, Player* pUsingPlayer = nullptr);
     /**
      * @brief isFinalStep
      * @return true if we have all data to perform this action
@@ -197,7 +197,7 @@ public:
      * @param actionID id of the action we want to perform
      * @return true if we have all data to perform this action
      */
-    Q_INVOKABLE bool isFinalStep(const QString actionID);
+    Q_INVOKABLE bool isFinalStep(const QString & actionID);
     /**
      * @brief getTargetUnit the unit that will perform the action
      * @return
@@ -283,7 +283,7 @@ public:
      * @brief writeDataString adds a string to the action data
      * @param data
      */
-    Q_INVOKABLE void writeDataString(const QString data)
+    Q_INVOKABLE void writeDataString(const QString & data)
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
@@ -386,7 +386,7 @@ public:
     /**
      * @brief revertLastInputStep
      */
-    Q_INVOKABLE void revertLastInputStep(const QString stepType);
+    Q_INVOKABLE void revertLastInputStep(const QString & stepType);
 protected:
     void printAction();
 private:

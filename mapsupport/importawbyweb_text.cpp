@@ -2,13 +2,13 @@
 #include <QFile>
 #include "QVector"
 
+#include "coreengine/mainapp.h"
 #include "coreengine/gameconsole.h"
+#include "coreengine/settings.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
-#include "game/co.h"
 #include "game/building.h"
-#include "game/unit.h"
 
 #include "menue/editormenue.h"
 

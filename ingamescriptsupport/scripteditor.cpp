@@ -33,7 +33,7 @@ ScriptEditor::ScriptEditor(GameMap* pMap)
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    m_Data = spScriptData::create(m_pMap);
+    m_Data = MemoryManagement::create<ScriptData>(m_pMap);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -393,14 +393,14 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     auto* pPtrEvent = pEvent.get();
     pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrEvent](oxygine::Event*)
     {
-        emit sigShowEditEvent(spScriptEvent(pPtrEvent));
+        emit sigShowEditEvent(pPtrEvent->getSharedPtr<ScriptEvent>());
     });
     oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 130);
     pRemoveButton->setPosition(x + 140, y);
     m_EventPanel->addItem(pRemoveButton);
     pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrEvent](oxygine::Event*)
     {
-        m_CurrentCondition->removeEvent(spScriptEvent(pPtrEvent));
+        m_CurrentCondition->removeEvent(pPtrEvent->getSharedPtr<ScriptEvent>());
         emit sigUpdateEvents();
     });
     oxygine::spButton pDuplicateButton = pObjectManager->createButton(tr("Duplicate"), 130);
@@ -408,7 +408,7 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     m_EventPanel->addItem(pDuplicateButton);
     pDuplicateButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrEvent](oxygine::Event*)
     {
-        emit sigDuplicateEvent(spScriptEvent(pPtrEvent));
+        emit sigDuplicateEvent(pPtrEvent->getSharedPtr<ScriptEvent>());
     });
 
     y += text->getHeight() + 10;
@@ -422,7 +422,7 @@ void ScriptEditor::addCondition()
     if (m_CurrentCondition != nullptr &&
         ScriptCondition::sameConditionGroup(m_CurrentCondition->getType(), type))
     {
-        spScriptCondition parent = spScriptCondition(m_CurrentCondition);
+        spScriptCondition parent = m_CurrentCondition->getSharedPtr<ScriptCondition>();
         spScriptCondition subCondition = m_CurrentCondition->getSubCondition();
         while (subCondition.get() != nullptr)
         {
@@ -449,13 +449,13 @@ void ScriptEditor::addEvent()
 }
 
 void ScriptEditor::showEditCondition(spScriptCondition pCondition)
-{    
-    pCondition->showEditCondition(spScriptEditor(this));
+{
+    pCondition->showEditCondition(getSharedPtr<ScriptEditor>());
 }
 
 void ScriptEditor::showEditEvent(spScriptEvent pEvent)
-{    
-    pEvent->showEditEvent(spScriptEditor(this));
+{
+    pEvent->showEditEvent(getSharedPtr<ScriptEditor>());
 }
 
 void ScriptEditor::duplicateEvent(spScriptEvent pEvent)

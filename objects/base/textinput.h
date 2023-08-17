@@ -45,7 +45,7 @@ protected:
     QString getDrawText(const QString & text);
     virtual void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg) override;
 protected:
-    EventTextEdit* m_lineEdit;
+    std::shared_ptr<EventTextEdit> m_lineEdit;
     bool m_LineEditFocused{false};
     QElapsedTimer m_toggle;
     qint32 m_focusPosition{-1};

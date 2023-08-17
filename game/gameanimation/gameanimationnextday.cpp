@@ -197,7 +197,7 @@ void GameAnimationNextDay::restart()
         {
             if (!m_permanent)
             {
-                pMenu->addChild(spGameAnimationNextDay(this));
+                pMenu->addChild(getSharedPtr<oxygine::Actor>());
                 m_endTimer.start();
             }
         }

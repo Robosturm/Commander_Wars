@@ -187,10 +187,10 @@ void NormalAi::process()
     {
         m_timer.stop();
     }
-    spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
+    spQmlVectorBuilding pBuildings = m_pPlayer->getSpBuildings();
     pBuildings->randomize();
     spQmlVectorUnit pUnits;
-    pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
+    pUnits = m_pPlayer->getSpUnits();
     spQmlVectorUnit pEnemyUnits;
     spQmlVectorBuilding pEnemyBuildings;
     qint32 cost = 0;
@@ -851,7 +851,7 @@ bool NormalAi::getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefill
     bool ret = false;
     const auto points = pfs.getAllNodePointsFast(movepoints + 1);
     
-    spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+    spQmlVectorPoint circle = GlobalUtils::getSpCircle(1, 1);
     qint32 highestCount = 0;
     for (const auto & point : points)
     {
@@ -898,7 +898,7 @@ void NormalAi::appendRefillTargets(const QStringList & actions, Unit* pUnit, spQ
 {
     if (isRefuelUnit(actions))
     {
-        spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+        spQmlVectorPoint circle = GlobalUtils::getSpCircle(1, 1);
         
         qint32 islandIdx = getIslandIndex(pUnit);
         qint32 curX = pUnit->Unit::getX();
@@ -1759,7 +1759,7 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
             {
                 std::vector<CoreAI::DamageData> ret;
                 spQmlVectorPoint firerange;
-                firerange = spQmlVectorPoint(GlobalUtils::getCircle(pUnitData.minFireRange, pUnitData.maxFireRange));
+                firerange = GlobalUtils::getSpCircle(pUnitData.minFireRange, pUnitData.maxFireRange);
                 CoreAI::getAttackTargetsFast(pUnitData.pUnit.get(), *firerange.get(), pUnitData.pUnitPfs.get(), ret);
 
                 std::vector<Unit*> pUsedUnits;
@@ -2045,7 +2045,7 @@ float NormalAi::calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, s
     {
         counterDamage += calcBuildingDamage(pUnit, newPosition, pBuilding.get());
     }
-    spQmlVectorPoint pCircle = spQmlVectorPoint(GlobalUtils::getCircle(1, 2));
+    spQmlVectorPoint pCircle = GlobalUtils::getSpCircle(1, 2);
     
     for (auto & circlePos : pCircle->getVector())
     {
@@ -2068,7 +2068,7 @@ void NormalAi::updateAllUnitData(spQmlVectorUnit & pUnits)
 {
     AI_CONSOLE_PRINT("NormalAi::updateAllUnitData()", GameConsole::eDEBUG);
     bool initial = m_EnemyUnits.size() == 0;
-    spQmlVectorUnit enemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
+    spQmlVectorUnit enemyUnits = m_pPlayer->getSpEnemyUnits();
     enemyUnits->pruneEnemies(pUnits.get(), m_enemyPruneRange);
     rebuildIsland(pUnits);
     rebuildIsland(enemyUnits);
@@ -2199,7 +2199,7 @@ void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, doub
     data.pUnitPfs = MemoryManagement::create<UnitPathFindingSystem>(m_pMap, pUnit);
     data.movementPoints = pUnit->getMovementpoints(pos);
     data.maxFireRange = pUnit->getMaxRange(pos);
-    data.pUnit = spUnit(pUnit);
+    data.pUnit = pUnit->getSharedPtr<Unit>();
     data.minFireRange = pUnit->getMinRange(pos);
     data.unitCosts = pUnit->getCoUnitValue();
     data.nextAiStep = m_aiFunctionStep;
@@ -2476,7 +2476,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     {
         variance = m_maxDayScoreVariancer;
     }
-    spQmlVectorPoint pFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+    spQmlVectorPoint pFields = GlobalUtils::getSpCircle(1, 1);
     Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {

@@ -77,13 +77,32 @@ public:
      * @param id index of the co 0 or 1
      * @return pointer to the co
      */
-    spCO getspCO(quint8 id);
+    spCO getSpCO(quint8 id);
+    /**
+     * @brief getSpUnits
+     * @return
+     */
+    spQmlVectorUnit getSpUnits();
     /**
      * @brief getSpEnemyUnits
      * @return
      */
-    QVector<spUnit> getSpEnemyUnits();
-
+    spQmlVectorUnit getSpEnemyUnits();
+    /**
+     * @brief getSpAlliedUnits
+     * @return
+     */
+    spQmlVectorUnit getSpAlliedUnits();
+    /**
+     * @brief getSpEnemyBuildings
+     * @return
+     */
+    spQmlVectorBuilding getSpEnemyBuildings();
+    /**
+     * @brief getBuildings
+     * @return
+     */
+    spQmlVectorBuilding getSpBuildings(const QString & id = "");
     /**
      * @brief getBuildlistChanged
      * @return
@@ -133,12 +152,12 @@ public:
      * @brief setUniqueIdentifier
      * @param newUniqueIdentifier
      */
-    Q_INVOKABLE void setUniqueIdentifier(const QString newUniqueIdentifier);
+    Q_INVOKABLE void setUniqueIdentifier(const QString & newUniqueIdentifier);
     /**
      * @brief setPlayerNameId
      * @param newDisplayName
      */
-    Q_INVOKABLE void setPlayerNameId(const QString newDisplayName);
+    Q_INVOKABLE void setPlayerNameId(const QString & newDisplayName);
     /**
      * @brief setControlType
      * @param newControlType
@@ -189,7 +208,7 @@ public:
      * @brief setPlayerArmy
      * @param value
      */
-    Q_INVOKABLE void setPlayerArmy(const QString value);
+    Q_INVOKABLE void setPlayerArmy(const QString & value);
     /**
      * @brief getPlayerArmy
      * @return
@@ -215,7 +234,7 @@ public:
      * @param unitID
      * @return
      */
-    Q_INVOKABLE qreal getUnitBuildValue(const QString unitID);
+    Q_INVOKABLE qreal getUnitBuildValue(const QString & unitID);
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
      * @return
@@ -355,13 +374,13 @@ public:
      * @param baseCost
      * @return
      */
-    Q_INVOKABLE qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
+    Q_INVOKABLE qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
     /**
      * @brief getCosts
      * @param id
      * @return
      */
-    Q_INVOKABLE qint32 getCosts(const QString id, QPoint position);
+    Q_INVOKABLE qint32 getCosts(const QString & id, QPoint position);
     /**
      * @brief gainPowerstar
      * @param fundsDamage
@@ -404,13 +423,13 @@ public:
      * @brief getBuildings
      * @return
      */
-    Q_INVOKABLE QmlVectorBuilding* getBuildings(const QString id = "");
+    Q_INVOKABLE QmlVectorBuilding* getBuildings(const QString & id = "");
     /**
      * @brief getBuildingsListCount
      * @param ids
      * @return
      */
-    Q_INVOKABLE QmlVectorBuilding* getBuildingsListCount(const QStringList ids);
+    Q_INVOKABLE QmlVectorBuilding* getBuildingsListCount(const QStringList & ids);
     /**
      * @brief updateCORange
      */
@@ -523,33 +542,33 @@ public:
      * @brief getBuildingCount
      * @return
      */
-    Q_INVOKABLE qint32 getBuildingCount(const QString buildingID = "");
+    Q_INVOKABLE qint32 getBuildingCount(const QString & buildingID = "");
     /**
      * @brief getBuildingListCount
      * @param list
      * @param whitelist
      * @return
      */
-    Q_INVOKABLE qint32 getBuildingListCount(const QStringList list, bool whitelist = true);
+    Q_INVOKABLE qint32 getBuildingListCount(const QStringList & list, bool whitelist = true);
     /**
      * @brief getUnitCount
      * @return
      */
-    Q_INVOKABLE qint32 getUnitCount(const QString unitID = "") const;
+    Q_INVOKABLE qint32 getUnitCount(const QString & unitID = "") const;
     /**
      * @brief getUnitCount
      * @param pUnit
      * @param unitID
      * @return
      */
-    Q_INVOKABLE qint32 getUnitCount(Unit* pUnit, const QString unitID) const;
+    Q_INVOKABLE qint32 getUnitCount(Unit* pUnit, const QString & unitID) const;
     /**
      * @brief getEnemyBonus
      * @param position
      * @param pUnit
      * @return
      */
-    Q_INVOKABLE qint32 getCoBonus(QPoint position, Unit* pUnit, const QString function);
+    Q_INVOKABLE qint32 getCoBonus(QPoint position, Unit* pUnit, const QString & function);
     /**
      * @brief getTeam
      * @return
@@ -650,13 +669,13 @@ public:
      * @brief setBuildList
      * @param BuildList
      */
-    Q_INVOKABLE void setBuildList(const QStringList BuildList);
+    Q_INVOKABLE void setBuildList(const QStringList & BuildList);
     /**
      * @brief changeBuildlist
      * @param unitID
      * @param remove
      */
-    Q_INVOKABLE void changeBuildlist(const QString unitID, bool remove = false);
+    Q_INVOKABLE void changeBuildlist(const QString & unitID, bool remove = false);
     /**
      * @brief getVariables
      * @return

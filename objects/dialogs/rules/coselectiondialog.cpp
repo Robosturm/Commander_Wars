@@ -133,9 +133,9 @@ void COSelectionDialog::showCOInfo()
     {
         coid = m_coids[0];
     }
-    Player* pPlayer = m_pMap->getPlayer(m_player);
-    spCO co = MemoryManagement::create<CO>(coid, pPlayer, m_pMap);
-    addChild(MemoryManagement::create<COInfoDialog>(co, spPlayer(pPlayer), [this, pPlayer](spCO& pCurrentCO, spPlayer&, qint32 direction)
+    spPlayer pPlayer = m_pMap->getSpPlayer(m_player);
+    spCO co = MemoryManagement::create<CO>(coid, pPlayer.get(), m_pMap);
+    addChild(MemoryManagement::create<COInfoDialog>(co, pPlayer, [this, pPlayer](spCO& pCurrentCO, spPlayer&, qint32 direction)
     {        
         qint32 index = m_coids.indexOf(pCurrentCO->getCoID());
         index += direction;
@@ -152,7 +152,7 @@ void COSelectionDialog::showCOInfo()
         {
             coid = m_coids[index];
         }
-        pCurrentCO = MemoryManagement::create<CO>(coid, pPlayer, m_pMap);
+        pCurrentCO = MemoryManagement::create<CO>(coid, pPlayer.get(), m_pMap);
     }, false));
 }
 

@@ -7,6 +7,8 @@
 
 #include "network/NetworkInterface.h"
 
+#include "multiplayer/networkcommands.h"
+
 #include "objects/base/chat.h"
 #include "objects/base/label.h"
 

@@ -952,8 +952,8 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                 
                 if (m_pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
                 {
-                    Terrain* pTerrain = m_pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-                    spFieldInfo fieldinfo = MemoryManagement::create<FieldInfo>(pTerrain, pTerrain->getUnit());
+                    spTerrain pTerrain = m_pMap->getSpTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    spFieldInfo fieldinfo = MemoryManagement::create<FieldInfo>(pTerrain, pTerrain->getSpUnit());
                     addChild(fieldinfo);
                     connect(fieldinfo.get(), &FieldInfo::sigFinished, this, [this]
                     {
@@ -1967,7 +1967,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
         {
             if (p2.x() > 0)
             {
-                spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(p2.x(), p2.x()));
+                spQmlVectorPoint pPoints = GlobalUtils::getSpCircle(p2.x(), p2.x());
                 ObjectManager* pObjectManager = ObjectManager::getInstance();
                 for (qint32 i = 0; i < pPoints->size(); i++)
                 {

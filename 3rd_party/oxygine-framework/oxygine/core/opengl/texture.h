@@ -5,6 +5,8 @@
 
 #include <QImage>
 
+class MemoryManagement;
+
 namespace oxygine
 {
 class Texture;
@@ -48,8 +50,7 @@ public:
         return m_image;
     }
 protected:
-    friend class VideoDriver;
-    friend class MemoryManagement;
+    friend MemoryManagement;
     explicit Texture();
     GLuint createTexture();
 private:

@@ -195,7 +195,7 @@ void SimpleProductionSystem::resetForcedProduction()
     m_forcedProduction.clear();
 }
 
-void SimpleProductionSystem::addForcedProduction(const QStringList unitIds, qint32 x, qint32 y)
+void SimpleProductionSystem::addForcedProduction(const QStringList & unitIds, qint32 x, qint32 y)
 {
     ForcedProduction item;
     item.unitIds = unitIds;
@@ -204,7 +204,7 @@ void SimpleProductionSystem::addForcedProduction(const QStringList unitIds, qint
     m_forcedProduction.push_back(item);
 }
 
-void SimpleProductionSystem::addForcedProductionCloseToTargets(const QStringList unitIds, QmlVectorUnit* targets)
+void SimpleProductionSystem::addForcedProductionCloseToTargets(const QStringList & unitIds, QmlVectorUnit* targets)
 {
     ForcedProduction item;
     item.unitIds = unitIds;
@@ -213,7 +213,7 @@ void SimpleProductionSystem::addForcedProductionCloseToTargets(const QStringList
     m_forcedProduction.push_back(item);
 }
 
-void SimpleProductionSystem::addInitialProduction(const QStringList unitIds, qint32 count)
+void SimpleProductionSystem::addInitialProduction(const QStringList & unitIds, qint32 count)
 {
     InitialProduction item;
     item.unitIds = unitIds;
@@ -221,7 +221,7 @@ void SimpleProductionSystem::addInitialProduction(const QStringList unitIds, qin
     m_initialProduction.push_back(item);
 }
 
-void SimpleProductionSystem::addItemToBuildDistribution(const QString group, const QStringList unitIds, const QVector<qint32> chance, qreal distribution, qint32 buildMode, const QString guardCondition, qreal maxUnitDistribution)
+void SimpleProductionSystem::addItemToBuildDistribution(const QString & group, const QStringList & unitIds, const QVector<qint32> & chance, qreal distribution, qint32 buildMode, const QString & guardCondition, qreal maxUnitDistribution)
 {
     if (unitIds.length() == chance.length())
     {
@@ -410,7 +410,7 @@ bool SimpleProductionSystem::buildNextUnit(QmlVectorBuilding* pBuildings, QmlVec
     return success;
 }
 
-qint32 SimpleProductionSystem::getProductionFromList(const QStringList unitIds, QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, qint32 minBuildMode, qint32 maxBuildMode, const QVector<bool> enableList)
+qint32 SimpleProductionSystem::getProductionFromList(const QStringList & unitIds, QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, qint32 minBuildMode, qint32 maxBuildMode, const QVector<bool> & enableList)
 {
     if (m_activeBuildDistribution.size() == 0)
     {

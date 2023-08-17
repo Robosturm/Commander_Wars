@@ -3,6 +3,8 @@
 #include "coreengine/audiomanager.h"
 #include "coreengine/userdata.h"
 #include "coreengine/workerthread.h"
+#include "coreengine/gameconsole.h"
+
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/terrainmanager.h"
@@ -17,6 +19,20 @@
 
 spInterpreter Interpreter::m_pInstance{nullptr};
 QString Interpreter::m_runtimeData;
+
+Interpreter* Interpreter::createInstance()
+{
+    if (m_pInstance.get() == nullptr)
+    {
+        m_pInstance = MemoryManagement::create<Interpreter>();
+        m_pInstance->init();
+    }
+    else
+    {
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "illegal interpreter creation");
+    }
+    return m_pInstance.get();
+}
 
 Interpreter::Interpreter()
     : QJSEngine(Mainapp::getInstance()->getWorker())
@@ -168,9 +184,7 @@ bool Interpreter::loadScript(const QString & content, const QString & script)
 
 QJSValue Interpreter::doString(const QString & task)
 {
-#ifdef GAMEDEBUG
-    OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
-#endif
+    clearJsStack();
     ++m_inJsCall;
     QJSValue value = evaluate(task, "GameCode");
     exitJsCall();
@@ -311,14 +325,15 @@ bool Interpreter::getInJsCall() const
     return m_inJsCall > 0;
 }
 
-void Interpreter::trackJsObject(std::shared_ptr<QObject> &  pObj)
+void Interpreter::trackJsObject(std::shared_ptr<QObject> pObj)
 {
-    if (m_inJsCall == 0)
-    {
-        m_jsObjects.clear();
-    }
     if (m_inJsCall > 0)
     {
         m_jsObjects.push_back(pObj);
     }
+}
+
+void Interpreter::printError(const QString & msg)
+{
+    CONSOLE_PRINT_MODULE(msg, GameConsole::eERROR, GameConsole::eJavaScript);
 }

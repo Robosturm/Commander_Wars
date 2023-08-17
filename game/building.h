@@ -160,7 +160,7 @@ public:
      * @brief setBuildingName
      * @param BuildingName
      */
-    Q_INVOKABLE void setBuildingName(const QString BuildingName);
+    Q_INVOKABLE void setBuildingName(const QString & BuildingName);
     /**
      * @brief getVisionHide
      * @return
@@ -236,13 +236,13 @@ public:
      * @param sprite the sprite id
      * @param addPlayerColor true for adding player color to the sprite
      */
-    Q_INVOKABLE void loadSprite(const QString sprite, bool addPlayerColor, qint32 frameTime = 400, QPoint pos = QPoint(0, 0));
+    Q_INVOKABLE void loadSprite(const QString & sprite, bool addPlayerColor, qint32 frameTime = 400, QPoint pos = QPoint(0, 0));
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    Q_INVOKABLE void loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400, QPoint pos = QPoint(0, 0), const QString forcedPalette = "", bool forceNeutral = false);
+    Q_INVOKABLE void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400, QPoint pos = QPoint(0, 0), const QString & forcedPalette = "", bool forceNeutral = false);
     /**
      * @brief unloadSprites
      */
@@ -359,7 +359,7 @@ public:
      * @brief getCostReduction
      * @return
      */
-    Q_INVOKABLE qint32 getCostModifier(const QString id, qint32 baseCost, QPoint position);
+    Q_INVOKABLE qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
     /**
      * @brief getOffensiveFieldBonus
      * @param pAttacker
@@ -489,7 +489,7 @@ public:
      * @param spriteID
      * @param mode
      */
-    Q_INVOKABLE void loadWeatherOverlaySpriteV2(const QString spriteID, GameEnums::Recoloring mode, qint32 frameTime = 100);
+    Q_INVOKABLE void loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 100);
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     QVector<oxygine::spSprite> m_pWeatherOverlaySprites;

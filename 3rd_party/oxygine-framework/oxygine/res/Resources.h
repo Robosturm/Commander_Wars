@@ -50,17 +50,24 @@ namespace oxygine
         /** get resource by id, no case sensitive
         @param resource id
         */
-        Resource* get(const QString & id, error_policy ep = ep_ignore_error) const;
+        spResource get(const QString & id, error_policy ep = ep_ignore_error) const;
 
         /** get resource by id
         @param resource id
         */
         virtual ResAnim* getResAnim(const QString & id, error_policy ep = ep_ignore_error) const;
+        /**
+         * @brief getspResAnim
+         * @param id
+         * @param ep
+         * @return
+         */
+        spResAnim getSpResAnim(const QString & id, error_policy ep = ep_ignore_error) const;
 
         template<class T>
-        T* getT(const QString & id, error_policy ep = ep_ignore_error) const
+        std::shared_ptr<T> getT(const QString & id, error_policy ep = ep_ignore_error) const
         {
-            return safeCast<T*>(get(id, ep));
+            return safeSpCast<T>(get(id, ep));
         }
 
         resources& _getResources();

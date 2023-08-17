@@ -19,9 +19,9 @@ LocalServer::~LocalServer()
 
 void LocalServer::connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress)
 {
-    m_pTCPServer = new QLocalServer(this);
+    m_pTCPServer = MemoryManagement::create<QLocalServer>(this);
     m_pTCPServer->listen(primaryAdress);
-    connect(m_pTCPServer, &QLocalServer::newConnection, this, &LocalServer::onConnect, Qt::QueuedConnection);
+    connect(m_pTCPServer.get(), &QLocalServer::newConnection, this, &LocalServer::onConnect, Qt::QueuedConnection);
     connect(this, &LocalServer::sigDisconnectClient, this, &LocalServer::disconnectClient, Qt::QueuedConnection);
     connect(this, &LocalServer::sigDisconnectTCP, this, &LocalServer::disconnectTCP, Qt::QueuedConnection);
     connect(this, &LocalServer::sigForwardData, this, &LocalServer::forwardData, Qt::QueuedConnection);
@@ -48,7 +48,7 @@ void LocalServer::disconnectTCP()
     if (m_pTCPServer != nullptr)
     {
         m_pTCPServer->close();
-        m_pTCPServer = nullptr;
+        m_pTCPServer.reset();
     }
 }
 

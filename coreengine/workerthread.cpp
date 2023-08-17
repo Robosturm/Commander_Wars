@@ -55,7 +55,7 @@ void WorkerThread::start()
     GameConsole::print("Loading worker thread", GameConsole::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
-    spConsole pConsole = spConsole(GameConsole::getInstance());
+    spConsole pConsole = GameConsole::getSpInstance();
     // create the initial menue no need to store the object
     // it will add itself to the current stage
     oxygine::Stage::getStage()->addChild(pConsole);

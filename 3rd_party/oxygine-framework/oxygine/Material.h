@@ -14,7 +14,7 @@ namespace oxygine
 class Material;
 using spMaterial = std::shared_ptr<Material>;
 
-class Material final
+class Material final : public RefObject<Material>
 {
 public:
     static spMaterial current;

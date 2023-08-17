@@ -15,7 +15,6 @@ MenuData::MenuData(GameMap* pMap)
     setObjectName("MenuData");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Interpreter::getInstance()->trackJsObject(this);
 }
 
 MenuData::~MenuData()

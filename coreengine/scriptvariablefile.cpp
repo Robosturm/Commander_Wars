@@ -1,5 +1,6 @@
 #include "coreengine/scriptvariablefile.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/settings.h"
 
 #include <QFile>
 

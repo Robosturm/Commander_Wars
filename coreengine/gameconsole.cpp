@@ -99,14 +99,19 @@ bool GameConsole::isActiveModule(quint64 module)
     return m_activeModules & module;
 }
 
-GameConsole* GameConsole::getInstance()
+spConsole GameConsole::getSpInstance()
 {
     if (m_pConsole.get() == nullptr)
     {
         m_pConsole = MemoryManagement::create<GameConsole>();
         qInstallMessageHandler(GameConsole::messageOutput);
     }
-    return m_pConsole.get();
+    return m_pConsole;
+}
+
+GameConsole* GameConsole::getInstance()
+{
+    return getSpInstance().get();
 }
 
 bool GameConsole::hasInstance()

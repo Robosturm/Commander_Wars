@@ -11,7 +11,6 @@ QmlVectorPoint::QmlVectorPoint()
     setObjectName("QmlVectorPoint");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Interpreter::getInstance()->trackJsObject(this);
 }
 
 QmlVectorUnit::QmlVectorUnit()
@@ -20,7 +19,6 @@ QmlVectorUnit::QmlVectorUnit()
     setObjectName("QmlVectorUnit");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Interpreter::getInstance()->trackJsObject(this);
 }
 
 void QmlVectorUnit::clone(QmlVectorUnit* source)
@@ -88,7 +86,7 @@ void QmlVectorUnit::sortShortestMovementRange(bool infantriesLast)
     }
 }
 
-qint32 QmlVectorUnit::getUnitCount(const QString unitId)
+qint32 QmlVectorUnit::getUnitCount(const QString & unitId)
 {
     qint32 count = 0;
     for (auto & unit : m_Vector)
@@ -135,7 +133,6 @@ QmlVectorBuilding::QmlVectorBuilding()
     setObjectName("QmlVectorBuilding");
 #endif
     Interpreter::setCppOwnerShip(this);
-    Interpreter::getInstance()->trackJsObject(this);
 }
 
 void QmlVectorBuilding::clone(QmlVectorBuilding * source)
@@ -155,7 +152,7 @@ void QmlVectorBuilding::randomize()
     });
 }
 
-qint32 QmlVectorBuilding::getBuildingCount(const QString buildingId)
+qint32 QmlVectorBuilding::getBuildingCount(const QString & buildingId)
 {
     qint32 count = 0;
     for (auto & building : m_Vector)
@@ -168,7 +165,7 @@ qint32 QmlVectorBuilding::getBuildingCount(const QString buildingId)
     return count;
 }
 
-qint32 QmlVectorBuilding::getBuildingGroupCount(const QStringList buildingIds, bool onlyEmpty)
+qint32 QmlVectorBuilding::getBuildingGroupCount(const QStringList & buildingIds, bool onlyEmpty)
 {
     qint32 count = 0;
     for (auto & building : m_Vector)

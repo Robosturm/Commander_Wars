@@ -54,8 +54,9 @@ public:
         BLINKFREQG = 250,
         MAXLASTMSG = 20
     };
-   virtual ~GameConsole() = default;
+    virtual ~GameConsole() = default;
     static GameConsole* getInstance();
+    static spConsole getSpInstance();
     static bool hasInstance();
     static void dotask(QString message);
     static void draw();
@@ -272,22 +273,22 @@ private:
 };
 
 #define CONSOLE_PRINT(message, logLevel) \
-    if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & GameConsole::eGeneral) \
+if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & GameConsole::eGeneral) \
     {  \
-        GameConsole::printDirectly(message, logLevel); \
+            GameConsole::printDirectly(message, logLevel); \
     }
 
 #define CONSOLE_PRINT_MODULE(message, logLevel, module) \
-    if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & module) \
+if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & module) \
     {  \
-        GameConsole::printDirectly(message, logLevel); \
+            GameConsole::printDirectly(message, logLevel); \
     }
 
 #ifdef GAMEDEBUG
 #define AI_CONSOLE_PRINT(message, logLevel) \
-    if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & GameConsole::eAI) \
+if (logLevel >= GameConsole::getLogLevel() && GameConsole::getActiveModules() & GameConsole::eAI) \
     { \
-        GameConsole::printDirectly(message, logLevel); \
+            GameConsole::printDirectly(message, logLevel); \
     }
 #else
 #define AI_CONSOLE_PRINT(text, logLevel)

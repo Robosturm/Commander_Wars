@@ -214,16 +214,22 @@ void GameRules::addGameRule(const QString rule)
     }
 }
 
-GameRule* GameRules::getGameRule(const QString rule)
+
+spGameRule GameRules::getSpGameRule(const QString rule)
 {
     for (qint32 i = 0; i < m_GameRules.size(); i++)
     {
         if (m_GameRules[i]->getRuleID() == rule)
         {
-            return m_GameRules[i].get();
+            return m_GameRules[i];
         }
     }
-    return nullptr;
+    return spGameRule();
+}
+
+GameRule* GameRules::getGameRule(const QString rule)
+{
+    return getSpGameRule(rule).get();
 }
 
 void GameRules::addGameRule(spGameRule rule)
@@ -296,16 +302,21 @@ void GameRules::addVictoryRule(const QString rule)
     }
 }
 
-VictoryRule* GameRules::getVictoryRule(const QString rule)
+spVictoryRule GameRules::getSpVictoryRule(const QString rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
         if (m_VictoryRules[i]->getRuleID() == rule)
         {
-            return m_VictoryRules[i].get();
+            return m_VictoryRules[i];
         }
     }
-    return nullptr;
+    return spVictoryRule();
+}
+
+VictoryRule* GameRules::getVictoryRule(const QString rule)
+{
+    return getSpVictoryRule(rule).get();
 }
 
 void GameRules::addVictoryRule(spVictoryRule rule)

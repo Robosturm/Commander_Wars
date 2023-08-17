@@ -12,6 +12,7 @@
 #include "network/NetworkInterface.h"
 
 #include "multiplayer/password.h"
+#include "multiplayer/networkcommands.h"
 
 #include "objects/base/chat.h"
 #include "objects/dialogs/dialogconnecting.h"

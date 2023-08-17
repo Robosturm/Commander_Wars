@@ -73,7 +73,7 @@ TerrainFlowData* TerrainFindingSystem::getFlowData()
 {
     CONSOLE_PRINT("getFlowData() starting at X=" + QString::number(m_StartPoint.x()) +
                   " Y=" + QString::number(m_StartPoint.y()), GameConsole::eDEBUG);
-    spQmlVectorPoint circle(GlobalUtils::getCircle(1, 1));
+    spQmlVectorPoint circle = GlobalUtils::getSpCircle(1, 1);
     const qint32 size = circle->size();
     QVector<PositionFlowData> flowList;
     // determine start search pattern
@@ -103,7 +103,7 @@ TerrainFlowData* TerrainFindingSystem::getFlowData()
                 ++i2;
             }
         }
-        // add new neighbours
+        // add neighbours
         bool initialAdded = false;
         qint32 offset = 0;
         switch (getDirection(current.current, current.next))

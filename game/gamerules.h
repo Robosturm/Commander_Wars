@@ -105,6 +105,8 @@ public:
      * @return
      */
     const Password & getPassword() const;
+    spGameRule getSpGameRule(const QString rule);
+    spVictoryRule getSpVictoryRule(const QString rule);
 signals:
     void sigVictory(qint32 team);
 public:

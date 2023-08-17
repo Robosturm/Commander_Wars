@@ -763,8 +763,8 @@ void ReplayMenu::keyInput(oxygine::KeyEvent event)
                 if (m_pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) &&
                     visionType != GameEnums::VisionType_Shrouded)
                 {
-                    Terrain* pTerrain = m_pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-                    Unit* pUnit = pTerrain->getUnit();
+                    spTerrain pTerrain = m_pMap->getSpTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    spUnit pUnit = pTerrain->getSpUnit();
                     if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
                     {
                         pUnit = nullptr;

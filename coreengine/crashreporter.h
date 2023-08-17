@@ -21,6 +21,7 @@ public:
     static void setSignalHandler(logWrittenCallback inLogWrittenCallback = nullptr );
     static void _writeLog( const QString &inSignal);
 private:
+    friend class MemoryManagement;
     static void setOsSignalHandler();
     CrashReporter() = default;
 private:
@@ -28,7 +29,7 @@ private:
     QString sCrashReportDirPath;             // log file path
     QString sProgramName;                    // the full path to the executable (which we need to resolve symbols)
     logWrittenCallback sLogWrittenCallback{nullptr};  // function to call after we've written the log file
-    QProcess* sProcess{nullptr};                     // process used to capture output of address mapping tool
+    std::shared_ptr<QProcess> sProcess;               // process used to capture output of address mapping tool
 };
 
 #endif // CRASHREPORTER_H

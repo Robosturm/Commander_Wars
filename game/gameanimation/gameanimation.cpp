@@ -43,7 +43,7 @@ void GameAnimation::restart()
         {
             oxygine::Stage::getStage()->addTween(tween);
         }
-        m_pMap->addChild(spGameAnimation(this));
+        m_pMap->addChild(getSharedPtr<Actor>());
         start();
     }
 }
@@ -91,7 +91,7 @@ void GameAnimation::stop()
     setVisible(false);
 }
 
-qint32 GameAnimation::getFontWidth(const QString font, const QString text) const
+qint32 GameAnimation::getFontWidth(const QString & font, const QString & text) const
 {
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getInstance()->getFont(font));
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -110,7 +110,7 @@ void GameAnimation::setRotation(float angle)
 void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
 {
     pGameAnimation->setPreviousAnimation(this);
-    m_QueuedAnimations.append(spGameAnimation(pGameAnimation));
+    m_QueuedAnimations.append(pGameAnimation->getSharedPtr<GameAnimation>());
     GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
 }
 
@@ -175,7 +175,7 @@ void GameAnimation::setVisible(bool vis)
 
 void GameAnimation::setPreviousAnimation(GameAnimation *previousAnimation)
 {
-    m_previousAnimation = spGameAnimation(previousAnimation);
+    m_previousAnimation = previousAnimation->getSharedPtr<GameAnimation>();
 }
 
 void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish, float scale, qint32 delay, qint32 loops)
@@ -391,7 +391,7 @@ bool GameAnimation::onFinished(bool skipping)
     {
         m_finished = true;
         m_skipping |= skipping;
-        GameAnimationFactory::removeAnimationFromQueue(spGameAnimation(this));
+        GameAnimationFactory::removeAnimationFromQueue(getSharedPtr<GameAnimation>());
         if (!m_started)
         {
             doPreAnimationCall();

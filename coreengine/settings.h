@@ -752,7 +752,7 @@ private:
 
 private:
     // setting variables
-    QVector<ValueBase*> m_SettingValues;
+    QVector<std::shared_ptr<ValueBase>> m_SettingValues;
     qint32 m_x{0};
     qint32 m_y{0};
     qint32 m_width{1024};

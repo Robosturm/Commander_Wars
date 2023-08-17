@@ -1,6 +1,7 @@
 #include "ai/decisiontree/decisionnode.h"
 #include "ai/decisiontree/leaf.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/memorymanagement.h"
 
 DecisionNode::DecisionNode(spDecisionQuestion & pQuestion, const std::vector<spDecisionNode> & pNodes)
 	: m_pQuestion(pQuestion),

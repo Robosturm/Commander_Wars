@@ -5,6 +5,7 @@
 #include <QTextStream>
 
 #include "coreengine/LUPDATE_MACROS.h"
+#include "coreengine/memorymanagement.h"
 
 class GameMap;
 class ScriptEvent;
@@ -13,7 +14,7 @@ using spScriptEvent = std::shared_ptr<ScriptEvent>;
 class ScriptEditor;
 using spScriptEditor = std::shared_ptr<ScriptEditor>;
 
-class ScriptEvent : public QObject
+class ScriptEvent : public QObject, public RefObject<ScriptEvent>
 {
     Q_OBJECT
 public:

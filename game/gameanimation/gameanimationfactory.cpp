@@ -70,8 +70,8 @@ void GameAnimationFactory::release()
 }
 
 GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
-{    
-    CONSOLE_PRINT("Creating new animation", GameConsole::eDEBUG);
+{
+    CONSOLE_PRINT("Creating animation", GameConsole::eDEBUG);
     spGameAnimation animation = MemoryManagement::create<GameAnimation>(frameTime, pMap);
     if (mapPosition)
     {
@@ -97,7 +97,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(GameMap* pMap, U
 
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> movePath)
 {
-    CONSOLE_PRINT("Creating new walking animation", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating walking animation", GameConsole::eDEBUG);
     spGameAnimationWalk pGameAnimationWalk = MemoryManagement::create<GameAnimationWalk>(pUnit, movePath, pMap);
     pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     if (pMap != nullptr)
@@ -110,7 +110,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap,
 
 GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime)
 {    
-    CONSOLE_PRINT("Creating new power animation", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating power animation", GameConsole::eDEBUG);
     spGameAnimationPower pGameAnimationPower = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO, pMap);
     pGameAnimationPower->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     if (pMap != nullptr)
@@ -127,7 +127,7 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QC
 
 GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pMap, const QString text, const QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
-    CONSOLE_PRINT("Creating new dialog animation", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating dialog animation", GameConsole::eDEBUG);
     spGameAnimationDialog pGameAnimationDialog = MemoryManagement::create<GameAnimationDialog>(frameTime, pMap);
     pGameAnimationDialog->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     pGameAnimationDialog->setDialog(text);
@@ -140,7 +140,7 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(GameMap* pM
 
 GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, quint32 uptimeMs)
 {
-    CONSOLE_PRINT("Creating new next day animation", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating next day animation", GameConsole::eDEBUG);
     if (pMap != nullptr)
     {
         auto* pMenu = pMap->getMenu();
@@ -157,7 +157,7 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* 
 
 GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(GameMap* pMap, qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints)
 {
-    CONSOLE_PRINT("Creating new capture animation", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating capture animation", GameConsole::eDEBUG);
     spGameAnimationCapture pGameAnimationCapture = MemoryManagement::create<GameAnimationCapture>(startPoints, endPoints, maxPoints, pMap);
     pGameAnimationCapture->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     pGameAnimationCapture->setPosition(x, y);
@@ -170,7 +170,7 @@ GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(GameMap* 
 GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                            Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {    
-    CONSOLE_PRINT("Creating new battle animation", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating battle animation", GameConsole::eDEBUG);
     spGameAnimation pRet;    
     if (pDefUnit != nullptr && pMap != nullptr)
     {
@@ -185,8 +185,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
         auto battleViewMode = Settings::getInstance()->getBattleAnimationType();
         if (battleViewMode == GameEnums::BattleAnimationType_Overworld)
         {
-            pRet = spGameAnimation(createOverworldBattleAnimation(pMap, pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
-                                                                  pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage));
+            pRet = createOverworldBattleAnimation(pMap, pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
+                                                  pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage)->getSharedPtr<GameAnimation>();
         }
         else
         {
@@ -274,7 +274,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
     else
     {
         // attacking building or terrain
-        pRet = spGameAnimation(createAnimation(pMap, pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), 70));
+        pRet = createAnimation(pMap, pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), 70)->getSharedPtr<GameAnimation>();
         pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 2.0f);
         pRet->setSound("talongunhit.wav", 1);
     }
@@ -285,7 +285,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
 GameAnimation* GameAnimationFactory::createOverworldBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                                     Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {
-    CONSOLE_PRINT("Creating new overworld battle animation", GameConsole::eDEBUG);
+    CONSOLE_PRINT("Creating overworld battle animation", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(pAtkTerrain),
                        pInterpreter->newQObject(pAtkUnit),
@@ -340,7 +340,7 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipp
 
 void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping, bool removeFromQueue)
 {
-    spGameAnimation spAnimation = spGameAnimation(pAnimation);
+    spGameAnimation spAnimation = pAnimation->getSharedPtr<GameAnimation>();
     if (removeFromQueue)
     {
         removeAnimationFromQueue(spAnimation);

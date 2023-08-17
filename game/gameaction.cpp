@@ -2,6 +2,7 @@
 #include "coreengine/gameconsole.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/filesupport.h"
+#include "coreengine/settings.h"
 
 #include "game/gameaction.h"
 #include "game/gamemap.h"
@@ -96,7 +97,7 @@ void GameAction::perform()
     {
         printAction();
     }
-    m_perfomingUnit = spUnit(getTargetUnit());
+    m_perfomingUnit = getTargetUnit()->getSharedPtr<Unit>();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "perform";
     QJSValueList args({pInterpreter->newQObject(this),
@@ -232,7 +233,7 @@ qint32 GameAction::getMovePathLength()
     return m_Movepath.size();
 }
 
-bool GameAction::canBePerformed(const QString actionID, bool emptyField, Player* pUsingPlayer)
+bool GameAction::canBePerformed(const QString & actionID, bool emptyField, Player* pUsingPlayer)
 {
     if (!actionID.isEmpty())
     {        
@@ -287,7 +288,7 @@ bool GameAction::isFinalStep()
     return isFinalStep(m_actionID);
 }
 
-bool GameAction::isFinalStep(const QString actionID)
+bool GameAction::isFinalStep(const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "isFinalStep";
@@ -403,7 +404,7 @@ spMarkedFieldData GameAction::getMarkedFieldStepData()
 MenuData* GameAction::getJsMenuStepData()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    MenuData* data = new MenuData(m_pMap);
+    MenuData* data = MemoryManagement::createAndTrackJsObject<MenuData>(m_pMap);
     QString function1 = "getStepData";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(data),
@@ -414,7 +415,7 @@ MenuData* GameAction::getJsMenuStepData()
 
 MarkedFieldData* GameAction::getJMarkedFieldStepData()
 {
-    MarkedFieldData* data = new MarkedFieldData();
+    MarkedFieldData* data = MemoryManagement::createAndTrackJsObject<MarkedFieldData>();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepData";
     QJSValueList args({pInterpreter->newQObject(this),
@@ -595,7 +596,7 @@ void GameAction::deserializeObject(QDataStream& stream)
     }
 }
 
-void GameAction::revertLastInputStep(const QString stepType)
+void GameAction::revertLastInputStep(const QString & stepType)
 {
     qint32 revertCount = 0;
     if (stepType == INPUTSTEP_FIELD)

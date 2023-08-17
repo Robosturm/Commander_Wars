@@ -9,6 +9,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/gameconsole.h"
+#include "coreengine/settings.h"
 
 const char* const Campaign::scriptName = "campaignScript";
 

@@ -38,7 +38,7 @@ spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameT
     }
     else
     {
-        animation = spGameAnimationPower(m_pGameAnimationPower);
+        animation = m_pGameAnimationPower->getSharedPtr<GameAnimationPower>();
     }
     return animation;
 }
@@ -246,7 +246,7 @@ void GameAnimationPower::restart()
         auto* pMenu = m_pMap->getMenu();
         if (pMenu != nullptr)
         {
-            pMenu->addChild(spGameAnimationPower(this));
+            pMenu->addChild(getSharedPtr<oxygine::Actor>());
             m_endTimer.start();
         }
     }

@@ -90,7 +90,7 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         m_ActionBuffer.clear();
         CONSOLE_PRINT("AI-Pipe preparing the game", GameConsole::eDEBUG);
         m_pipeState = PipeState::PreparingGame;
-        m_pMenu = spGameMenue(pMenu);
+        m_pMenu = pMenu->getSharedPtr<GameMenue>();
         m_pMap = pMenu->getMap();
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToSlave, Qt::QueuedConnection);
         connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);

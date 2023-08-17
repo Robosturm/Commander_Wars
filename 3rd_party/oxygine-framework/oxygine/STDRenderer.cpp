@@ -4,6 +4,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/math/ScalarMath.h"
 
+#include "coreengine/memorymanagement.h"
+
 #include <QFile>
 #include <QTextStream>
 
@@ -25,7 +27,7 @@ namespace oxygine
         static std::shared_ptr<RenderStateCache> r;
         if (r.get() == nullptr)
         {
-            r.reset(new RenderStateCache());
+            r = MemoryManagement::create<RenderStateCache>();
         }
         return *r.get();
     }
@@ -134,7 +136,7 @@ namespace oxygine
             indices16.push_back(i + 3u);
         }
         maxVertices = indices16.size() * 2u / 3u;
-        m_uberShader.reset(new UberShaderProgram());
+        m_uberShader = MemoryManagement::create<UberShaderProgram>();
         m_uberShader->init();
 
         restore();

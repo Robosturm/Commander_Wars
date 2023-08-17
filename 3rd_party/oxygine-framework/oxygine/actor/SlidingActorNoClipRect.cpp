@@ -331,7 +331,7 @@ namespace oxygine
                                     act->dispatchEvent(&ev);
 
                                 }
-                                act = spActor(act->getParent());
+                                act = act->getParent()->getSharedPtr<Actor>();
                             }
 
                             m_holded.reset();

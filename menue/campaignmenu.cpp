@@ -283,7 +283,7 @@ void CampaignMenu::flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map)
     });
     if (pPtrSprite->getParent() == nullptr)
     {
-        m_pMapBackground->addChild(oxygine::spSprite(pPtrSprite));
+        m_pMapBackground->addChild(pPtrSprite->getSharedPtr<Actor>());
     }
 }
 

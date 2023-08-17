@@ -3,6 +3,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 
+#include "coreengine/memorymanagement.h"
+
 #include "spritingsupport/spritecreator.h"
 
 namespace oxygine
@@ -136,7 +138,7 @@ namespace oxygine
         static std::shared_ptr<AnimationFrame> emptyFrame;
         if (emptyFrame.get() == nullptr)
         {
-            emptyFrame.reset(new AnimationFrame());
+            emptyFrame = MemoryManagement::create<AnimationFrame>();
         }
         return *emptyFrame.get();
     }

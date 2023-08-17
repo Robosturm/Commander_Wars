@@ -17,7 +17,7 @@ using spScriptCondition = std::shared_ptr<ScriptCondition>;
 class ScriptEditor;
 using spScriptEditor = std::shared_ptr<ScriptEditor>;
 
-class ScriptCondition : public QObject
+class ScriptCondition : public QObject, public RefObject<ScriptCondition>
 {
     Q_OBJECT
 public:

@@ -100,7 +100,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
     if (m_pMap != nullptr)
     {
         std::vector<QVector3D> enemyTargets;
-        spQmlVectorPoint enemyFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+        spQmlVectorPoint enemyFields = GlobalUtils::getSpCircle(1, 1);
         for (auto & spUnit : pEnemyUnits->getVector())
         {
             Unit* pUnit = spUnit.get();
@@ -127,7 +127,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
                 {
                     UnitPathFindingSystem turnPfs(m_pMap, pUnit);
                     turnPfs.explore();
-                    spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(1, 3));
+                    spQmlVectorPoint pPoints = GlobalUtils::getSpCircle(1, 3);
                     auto targets = turnPfs.getAllNodePointsFast();
                     qint32 maxDamage = 0;
                     std::vector<QPoint> bestTargets;
@@ -194,7 +194,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
     {
         std::vector<QVector3D> unitTargets;
         std::vector<QPoint> unitPos;
-        spQmlVectorPoint unitFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+        spQmlVectorPoint unitFields = GlobalUtils::getSpCircle(1, 1);
         Interpreter* pInterpreter = Interpreter::getInstance();
         for (auto & spUnit : pUnits->getVector())
         {
@@ -283,11 +283,11 @@ bool CoreAI::processPredefinedAi()
     if (!m_usedPredefinedAi)
     {
         CONSOLE_PRINT("processPredefinedAi()", GameConsole::eDEBUG);
-        spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
+        spQmlVectorUnit pUnits = m_pPlayer->getSpUnits();
         pUnits->randomize();
-        spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
+        spQmlVectorUnit pEnemyUnits = m_pPlayer->getSpEnemyUnits();
         pEnemyUnits->randomize();
-        spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
+        spQmlVectorBuilding pEnemyBuildings = m_pPlayer->getSpEnemyBuildings();
         pEnemyBuildings->randomize();
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->threadProcessEvents();

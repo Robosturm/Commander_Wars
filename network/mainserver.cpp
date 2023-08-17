@@ -871,7 +871,7 @@ void MainServer::spawnSlave(quint64 socketID, SuspendedSlaveInfo & slaveInfo)
         CONSOLE_PRINT("Launching suspended slave game " + slaveName + " creating logs: " + (createLogs ? "true" : "false"), GameConsole::eDEBUG);
         auto game = MemoryManagement::create<InternNetworkGame>();
         const QString program = QCoreApplication::applicationFilePath();
-        game->process.reset(new QProcess());
+        game->process = MemoryManagement::create<QProcess>(this);
         game->process->setObjectName(slaveName + "Slaveprocess");
         const char* const prefix = "--";
         QStringList args({QString(prefix) + CommandLineParser::ARG_SLAVE,
@@ -955,7 +955,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
         CONSOLE_PRINT("Launching slave game " + slaveName + " creating logs: " + (createLogs ? "true" : "false"), GameConsole::eDEBUG);
         auto game = MemoryManagement::create<InternNetworkGame>();
         QString program = QCoreApplication::applicationFilePath();
-        game->process.reset(new QProcess(this));
+        game->process = MemoryManagement::create<QProcess>(this);
         game->process->setObjectName(slaveName + "Slaveprocess");
         const char* const prefix = "--";
         QStringList args({QString(prefix) + CommandLineParser::ARG_SLAVE,

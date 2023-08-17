@@ -38,7 +38,7 @@ RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enable
     {
         qint32 xPos = 0;
         QString ruleID = pGameRuleManager->getVictoryRuleID(i);
-        spVictoryRule pRule = spVictoryRule(m_pMap->getGameRules()->getVictoryRule(ruleID));
+        spVictoryRule pRule = m_pMap->getGameRules()->getSpVictoryRule(ruleID);
         if (pRule.get() == nullptr && m_ruleChangeEabled)
         {
             CONSOLE_PRINT("Creating default ruleset for " + ruleID, GameConsole::eDEBUG);
@@ -69,7 +69,7 @@ RuleSelection::RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enable
     {
         qint32 xPos = 0;
         QString ruleID = pGameRuleManager->getGameRuleID(i);
-        spGameRule pRule = spGameRule(m_pMap->getGameRules()->getGameRule(ruleID));
+        spGameRule pRule = m_pMap->getGameRules()->getSpGameRule(ruleID);
         if (pRule.get() == nullptr)
         {
             pRule = MemoryManagement::create<GameRule>(ruleID);

@@ -95,11 +95,11 @@ public:
     static void initDatabase();
     static GameEnums::LoginError verifyLoginData(const QString & username, const QByteArray & password);
     void release();
-   virtual ~MainServer();
+    virtual ~MainServer();
 
-    inline TCPServer* getGameServer()
+    inline spTCPServer getGameServer()
     {
-        return m_pGameServer.get();
+        return m_pGameServer;
     }
     /**
      * @brief getDatabase
@@ -463,8 +463,8 @@ private:
         spNetworkGame game;
         QString slaveName;
     };
+    friend class MemoryManagement;
     explicit MainServer();
-    friend spMainServer;
     static spMainServer m_pInstance;
     InternNetworkGame * getInternGame(const QString & slaveName, qint32 * index = nullptr);
 private:

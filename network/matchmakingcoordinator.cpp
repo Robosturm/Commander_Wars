@@ -5,6 +5,7 @@
 #include "coreengine/interpreter.h"
 
 #include <QDirIterator>
+#include <QJsonArray>
 
 MatchMakingCoordinator::MatchMakingCoordinator(MainServer *parent)
     : QObject{parent},

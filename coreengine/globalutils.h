@@ -32,6 +32,7 @@ public:
     {
         return std::find(vec.cbegin(), vec.cend(), data) != vec.cend();
     }
+    static spQmlVectorPoint getSpCircle(qint32 min, qint32 max);
 public slots:
     static QString makePathRelative(QString file, bool full = true);
     /**
@@ -157,6 +158,7 @@ public slots:
 private:
     explicit GlobalUtils();
 private:
+    friend class MemoryManagement;
     static std::shared_ptr<GlobalUtils> m_pInstace;
     QRandomGenerator m_randGenerator;
     bool m_useSeed;

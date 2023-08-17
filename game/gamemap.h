@@ -121,7 +121,7 @@ public:
      * @param player index of the player
      * @return smart pointer to the selected player
      */
-    spPlayer getspPlayer(qint32 player);
+    spPlayer getSpPlayer(qint32 player);
     /**
      * @brief getSpCurrentPlayer the current player
      * @return
@@ -320,6 +320,35 @@ public:
      * @param showLoadingScreen
      */
     void updateSpritesOfTiles(const QVector<QPoint> & points, bool editor = false, bool showLoadingScreen = false);
+    /**
+     * @brief getSpVisionCircle
+     * @param x
+     * @param y
+     * @param minVisionRange
+     * @param maxVisionRange
+     * @param visionHigh
+     * @return
+     */
+    spQmlVectorPoint getSpVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh);
+    /**
+     * @brief getSpUnits
+     * @param pPlayer
+     * @return
+     */
+    spQmlVectorUnit getSpUnits(Player* pPlayer);
+    /**
+     * @brief getBuildings
+     * @param pPlayer
+     * @return
+     */
+    spQmlVectorBuilding getSpBuildings(Player* pPlayer, QString id = "");
+    /**
+     * @brief getBuildingsListCount
+     * @param pPlayer
+     * @param ids
+     * @return
+     */
+    spQmlVectorBuilding getSpBuildingsListCount(Player* pPlayer, const QStringList ids);
 signals:
     void signalExitGame();
     void sigSaveGame();

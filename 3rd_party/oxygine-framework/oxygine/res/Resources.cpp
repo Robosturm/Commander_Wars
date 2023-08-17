@@ -50,6 +50,11 @@ namespace oxygine
 
     ResAnim* Resources::getResAnim(const QString & id, error_policy ep) const
     {
+        return getT<ResAnim>(id, ep).get();
+    }
+
+    spResAnim Resources::getSpResAnim(const QString & id, error_policy ep) const
+    {
         return getT<ResAnim>(id, ep);
     }
 
@@ -197,7 +202,7 @@ namespace oxygine
         return m_resourcesMap;
     }
 
-    Resource* Resources::get(const QString & id_, error_policy ep) const
+    spResource Resources::get(const QString & id_, error_policy ep) const
     {
 #ifdef GRAPHICSUPPORT
         if (id_.isEmpty())
@@ -208,11 +213,11 @@ namespace oxygine
         resourcesMap::const_iterator it = m_resourcesMap.find(id);
         if (it != m_resourcesMap.end())
         {
-            return it.value().get();
+            return it.value();
         }
         handleErrorPolicy(ep, "can't find resource: '" + id + "' in '" + m_name + "'", GameConsole::eResources);
 #endif
-        return nullptr;
+        return spResource();
     }
 
 }

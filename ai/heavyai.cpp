@@ -150,9 +150,9 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
 
 void HeavyAi::process()
 {
-    m_pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
+    m_pBuildings = m_pPlayer->getSpBuildings();
     m_pBuildings->randomize();
-    m_pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
+    m_pEnemyBuildings = m_pPlayer->getSpEnemyBuildings();
     m_pEnemyBuildings->randomize();
     if (m_pause)
     {
@@ -164,8 +164,8 @@ void HeavyAi::process()
     {
         m_timer.stop();
     }
-    spQmlVectorUnit pUnits(m_pPlayer->getUnits());
-    spQmlVectorUnit pEnemyUnits(m_pPlayer->getEnemyUnits());
+    spQmlVectorUnit pUnits(m_pPlayer->getSpUnits());
+    spQmlVectorUnit pEnemyUnits(m_pPlayer->getSpEnemyUnits());
     qint32 index = -1;
     FunctionType flareType = FunctionType::Undefined;
     getFunctionType(CoreAI::ACTION_FLARE, flareType, index);
@@ -222,8 +222,8 @@ void HeavyAi::endTurn()
     m_pUnits.reset();
     m_pEnemyUnits.reset();
     m_usedPredefinedAi = false;
-    spQmlVectorUnit pUnits(m_pPlayer->getUnits());
-    spQmlVectorUnit pEnemyUnits(m_pPlayer->getEnemyUnits());
+    spQmlVectorUnit pUnits(m_pPlayer->getSpUnits());
+    spQmlVectorUnit pEnemyUnits(m_pPlayer->getSpEnemyUnits());
     if (useCOPower(pUnits, pEnemyUnits)){}
     else
     {
@@ -290,13 +290,13 @@ void HeavyAi::setupTurn(const spQmlVectorBuilding & buildings)
     bool startOfTurn = (m_pUnits.get() == nullptr);
     if (m_pEnemyUnits.get() == nullptr)
     {
-        m_pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
+        m_pEnemyUnits = m_pPlayer->getSpEnemyUnits();
         m_pEnemyUnits->randomize();
         initUnits(m_pEnemyUnits, m_enemyUnits, true);
     }
     if (m_pUnits.get() == nullptr)
     {
-        m_pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
+        m_pUnits = m_pPlayer->getSpUnits();
         initUnits(m_pUnits, m_ownUnits, false);
     }
     if (startOfTurn)
@@ -355,7 +355,7 @@ void HeavyAi::initUnits(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & un
 void HeavyAi::addNewUnitToUnitData(std::vector<MoveUnitData> & units, Unit* pUnit, bool enemyUnits)
 {
     MoveUnitData data;
-    data.pUnit = spUnit(pUnit);
+    data.pUnit = pUnit->getSharedPtr<Unit>();
     data.pUnitPfs = MemoryManagement::create<UnitPathFindingSystem>(m_pMap, pUnit);
     data.movementPoints = data.pUnit->getMovementpoints(data.pUnit->getPosition());
     data.pUnitPfs->setMovepoints(data.movementPoints * 2);
@@ -414,7 +414,7 @@ void HeavyAi::updateUnits(std::vector<MoveUnitData> & units, spQmlVectorUnit & p
         }
     }
     std::vector<qint32> updated;
-    spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(1, 5));
+    spQmlVectorPoint pPoints = GlobalUtils::getSpCircle(1, 5);
     for (auto & updatePoint : m_updatePoints)
     {
         qint32 i2 = 0;
@@ -923,7 +923,7 @@ void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, dou
         data[BasicFieldInfo::OwnInfluenceValue] = static_cast<double>(info->getOwnInfluence()) / highestInfluece;
         data[BasicFieldInfo::EnemyInfluenceValue] = static_cast<double>(info->getEnemyInfluence()) / highestInfluece;
         data[BasicFieldInfo::MoveTurnProgress] = notMovedUnitCount / static_cast<double>(m_ownUnits.size());
-        spQmlVectorPoint pCircle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+        spQmlVectorPoint pCircle = GlobalUtils::getSpCircle(1, 1);
         double wallCount = 0;
         for (auto & circlePos : pCircle->getVector())
         {
@@ -1353,7 +1353,7 @@ void HeavyAi::getMoveTargets(MoveUnitData & unit, const QStringList & actions, s
         qint32 unitIslandIdx = getIslandIndex(unit.pUnit.get());
         qint32 minFirerange = unit.pUnit->getMinRange(unit.pUnit->getPosition());
         qint32 maxFirerange = unit.pUnit->getMaxRange(unit.pUnit->getPosition());
-        spQmlVectorPoint pTargetFields = spQmlVectorPoint(GlobalUtils::getCircle(minFirerange, maxFirerange));
+        spQmlVectorPoint pTargetFields = GlobalUtils::getSpCircle(minFirerange, maxFirerange);
 
         std::vector<double> input;
         // todo create input vector
@@ -1707,7 +1707,7 @@ void HeavyAi::addRefillTargets(qint32 posX, qint32 posY, std::vector<QVector3D> 
     if (!GlobalUtils::contains(targets, possibleTarget))
     {
         bool found = false;
-        spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+        spQmlVectorPoint circle = GlobalUtils::getSpCircle(1, 1);
         for (const auto circlePos : circle->getVector())
         {
             qint32 x = posX + circlePos.x();
@@ -1742,7 +1742,7 @@ void HeavyAi::addSupportTargets(qint32 posX, qint32 posY, std::vector<QVector3D>
     if (!GlobalUtils::contains(targets, possibleTarget))
     {
         bool found = false;
-        spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
+        spQmlVectorPoint circle = GlobalUtils::getSpCircle(1, 1);
         for (const auto circlePos : circle->getVector())
         {
             qint32 x = posX + circlePos.x();

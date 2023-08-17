@@ -92,7 +92,7 @@ namespace oxygine
         {
             current->flush();
             xapply();
-            current = spMaterial(this);
+            current = getSharedPtr<Material>();
         }
     }
 

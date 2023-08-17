@@ -95,6 +95,6 @@ void MovementPlannerAddIn::show()
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(AddIn, pInterpreter->newQObject(this));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
-    m_pPlanner->addChild(oxygine::spActor(this));
+    m_pPlanner->addChild(getSharedPtr<oxygine::Actor>());
     m_pPlanner->setFocused(false);
 }

@@ -837,7 +837,7 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
     if (pAnim != nullptr)
     {
         Terrain* pTerrain = m_pMap->getTerrain(x, y);
-        spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
+        spBuilding pBuilding = pTerrain->getSpBuilding();
         Unit* pUnit = pTerrain->getUnit();
         Player* pPlayer = m_pMenu->getCurrentViewPlayer();
         if (pUnit != nullptr && pUnit->isStealthed(pPlayer))

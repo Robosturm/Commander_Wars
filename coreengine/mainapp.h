@@ -153,7 +153,7 @@ public:
      */
     static WorkerThread* getWorker()
     {
-        return getInstance()->m_Worker;
+        return getInstance()->m_Worker.get();
     }
     static QProcess & GetAiSubProcess()
     {
@@ -171,7 +171,7 @@ public:
      * @brief getLastCreateLineEdit
      * @return
      */
-    EventTextEdit* getLastCreateLineEdit() const
+    std::shared_ptr<EventTextEdit> getLastCreateLineEdit() const
     {
         return m_pLineEdit;
     }
@@ -322,7 +322,7 @@ protected:
     virtual void onQuit() override;
 
 private:
-    EventTextEdit* m_pLineEdit{nullptr};
+    std::shared_ptr<EventTextEdit> m_pLineEdit;
 
     static Mainapp* m_pMainapp;
     static bool m_slave;
@@ -333,7 +333,7 @@ private:
     std::shared_ptr<QThread> m_GameServerThread;
     std::shared_ptr<QThread> m_audioThread;
     std::shared_ptr<QProcess> m_aiSubProcess;
-    WorkerThread* m_Worker;
+    std::shared_ptr<WorkerThread> m_Worker;
     spAudioManager m_AudioManager;
     spAiProcessPipe m_aiProcessPipe;
     spTCPClient m_slaveClient;

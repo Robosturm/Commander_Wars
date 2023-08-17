@@ -1,47 +1,48 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include <QMultiMap>
 #include <QMutex>
 
+class MemoryManagement;
+
 namespace oxygine
 {
-    inline void hash_combine(std::size_t&) { }
+inline void hash_combine(std::size_t&) { }
 
-    template <typename T, typename... Rest>
-    inline void hash_combine(std::size_t& seed, const T& v, Rest... rest)
+template <typename T, typename... Rest>
+inline void hash_combine(std::size_t& seed, const T& v, Rest... rest)
+{
+    seed ^= qHash(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    hash_combine(seed, rest...);
+}
+
+class Material;
+using spMaterial = std::shared_ptr<Material>;
+
+class MaterialCache final
+{
+public:
+    virtual ~MaterialCache() = default;
+    spMaterial cache(const Material& other)
     {
-        seed ^= qHash(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-        hash_combine(seed, rest...);
+        return clone_(other);
     }
+    void clear();
+    void removeUnused();
+    qint32 getSize();
+    static MaterialCache& mc();
+protected:
+    spMaterial clone_(const Material& other);
+    void removeUnusedNoLock();
 
-    class Material;
-    using spMaterial = std::shared_ptr<Material>;
+protected:
+    using materials = QMultiMap<size_t, spMaterial>;
+    materials m_materials;
 
-    class MaterialCache final
-    {
-    public:
-       virtual ~MaterialCache() = default;
-        spMaterial cache(const Material& other)
-        {
-            return clone_(other);
-        }
-        void clear();
-        void removeUnused();
-        qint32 getSize();
-        static MaterialCache& mc();
-    protected:
-        spMaterial clone_(const Material& other);
-        void removeUnusedNoLock();
-
-    protected:
-        using materials = QMultiMap<size_t, spMaterial>;
-        materials m_materials;
-
-        QMutex m_lock;
-        qint32 m_addCounter{0};
-    private:
-        explicit MaterialCache() = default;
-    private:
-        static std::shared_ptr<MaterialCache> mcache;
-    };
+    QMutex m_lock;
+    qint32 m_addCounter{0};
+private:
+    friend MemoryManagement;
+    explicit MaterialCache() = default;
+    static std::shared_ptr<MaterialCache> mcache;
+};
 }

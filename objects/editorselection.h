@@ -232,7 +232,7 @@ private:
     /**
      * @brief current selected player
      */
-    spPlayer m_currentPlayer{nullptr};
+    Player* m_currentPlayer{nullptr};
     qint32 m_playerStartIndex{0};
     QVector<spBuilding> m_Players;
     GameMap* m_pMap{nullptr};

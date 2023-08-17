@@ -268,7 +268,7 @@ namespace oxygine
                 if (isOn(me->localPosition))
                 {
                     event->phase = Event::phase_target;
-                    event->target = spEventDispatcher(this);
+                    event->target = getSharedPtr<EventDispatcher>();
 
                     me->position = me->localPosition;
                     dispatchEvent(event);
@@ -350,7 +350,7 @@ namespace oxygine
         {
             QMutexLocker lockParent(&m_parent->m_Locked);
             QMutexLocker lock(&m_Locked);
-            spActor me = spActor(this);
+            spActor me = getSharedPtr<Actor>();
             auto iter = m_parent->m_children.cbegin();
             while (iter != m_parent->m_children.cend())
             {

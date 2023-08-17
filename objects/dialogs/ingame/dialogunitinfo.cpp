@@ -79,7 +79,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     pSpriteBox->addChild(pText);
 
     y += pText->getHeight() + 10;
-    spQmlVectorUnit pUnits = spQmlVectorUnit(pPlayer->getUnits());
+    spQmlVectorUnit pUnits = pPlayer->getSpUnits();
 
     GameMap* pMap = pPlayer->getMap();
     y = 10;

@@ -453,11 +453,11 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
     // update buildings
     if (player < 0)
     {
-        m_currentPlayer.reset();
+        m_currentPlayer = nullptr;
     }
     else
     {
-        m_currentPlayer = spPlayer(m_Players.at(player + 1)->getOwner());
+        m_currentPlayer = m_Players.at(player + 1)->getOwner();
     }
     for (qint32 i2 = 0; i2 < m_Buildings.size(); i2++)
     {
@@ -972,7 +972,7 @@ void EditorSelection::KeyInput(Qt::Key cur)
     {
         
         qint32 player = 0;
-        if (m_currentPlayer.get() != nullptr)
+        if (m_currentPlayer != nullptr)
         {
             player = m_currentPlayer->getPlayerID() + 1;
             if (player >= m_pMap->getPlayerCount())
@@ -990,7 +990,7 @@ void EditorSelection::KeyInput(Qt::Key cur)
     {
         
         qint32 player = 0;
-        if (m_currentPlayer.get() != nullptr)
+        if (m_currentPlayer != nullptr)
         {
             player = m_currentPlayer->getPlayerID() - 1;
         }

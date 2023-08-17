@@ -62,8 +62,8 @@ void PlayerInfo::updateData()
             showTurnStartInfo(yPos);
             hasShownTurnStartInfo = true;
         }
-
-        spPlayer pPlayer = m_pMap->getspPlayer(currentPlayer);
+        
+        spPlayer pPlayer = m_pMap->getSpPlayer(currentPlayer);
         // draw player if he is alive
         if (!pPlayer->getIsDefeated())
         {

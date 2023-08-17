@@ -69,12 +69,12 @@ Mainapp::Mainapp()
 #endif
     Interpreter::setCppOwnerShip(this);
     m_pMainapp = this;
-    m_Workerthread.reset(new QThread());
-    m_Networkthread.reset(new QThread());
-    m_GameServerThread.reset(new QThread());
-    m_aiSubProcess.reset(new QProcess());
+    m_Workerthread = MemoryManagement::create<QThread>();
+    m_Networkthread = MemoryManagement::create<QThread>();
+    m_GameServerThread = MemoryManagement::create<QThread>();
+    m_aiSubProcess = MemoryManagement::create<QProcess>();
 #ifdef AUDIOSUPPORT
-    m_audioThread.reset(new QThread());
+    m_audioThread = MemoryManagement::create<QThread>();
     m_audioThread->setObjectName("Audiothread");
 #endif
 #ifdef GRAPHICSUPPORT
@@ -82,7 +82,7 @@ Mainapp::Mainapp()
     m_Networkthread->setObjectName("Networkthread");
     m_GameServerThread->setObjectName("GameServerThread");
 #endif
-    m_Worker = new WorkerThread();
+    m_Worker = MemoryManagement::create<WorkerThread>();
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
@@ -105,7 +105,7 @@ void Mainapp::createLineEdit()
     {
         CONSOLE_PRINT("Mainapp::createLineEdit", GameConsole::eDEBUG);
     }
-    m_pLineEdit = new EventTextEdit();
+    m_pLineEdit = MemoryManagement::create<EventTextEdit>();
     m_pLineEdit->setVisible(false);
 #endif
 }

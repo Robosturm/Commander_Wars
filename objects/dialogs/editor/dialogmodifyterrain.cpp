@@ -302,7 +302,7 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
                 oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
                 if (!palette.isEmpty())
                 {
-                    oxygine::spResAnim pPaletteAnim = oxygine::spResAnim(pTerrainManager->getResAnim(palette, oxygine::error_policy::ep_ignore_error));
+                    oxygine::spResAnim pPaletteAnim = pTerrainManager->getSpResAnim(palette, oxygine::error_policy::ep_ignore_error);
                     if (pPaletteAnim.get() != nullptr)
                     {
                         pSprite->setColorTable(pPaletteAnim, true);
