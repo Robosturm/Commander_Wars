@@ -27,6 +27,13 @@ public:
         return pRet;
     }
 
+    template <class T>
+    static std::shared_ptr<T> createFromPointer(T* pPtr)
+    {
+        std::shared_ptr<T> pRet(pPtr, &MemoryManagement::deleter<T>);
+        return pRet;
+    }
+
     template <class T, typename ...TArgs>
     static T* createAndTrackJsObject(TArgs... args)
     {

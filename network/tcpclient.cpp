@@ -14,7 +14,7 @@ TCPClient::TCPClient(QObject* pParent)
     m_isServer = false;
 }
 
-TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, quint64 socketId)
+TCPClient::TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, std::shared_ptr<QTcpSocket> pSocket, quint64 socketId)
     : NetworkInterface(pParent),
       m_pRXTask(pRXTask),
       m_pTXTask(pTXTask),

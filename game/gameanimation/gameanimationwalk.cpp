@@ -12,8 +12,8 @@
 
 GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath, GameMap* pMap)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime), pMap),
-      m_pUnit(pUnit),
-      m_movePath(movePath)
+    m_pUnit(pUnit->getSharedPtr<Unit>()),
+    m_movePath(movePath)
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameAnimationWalk");
@@ -157,9 +157,9 @@ void GameAnimationWalk::loadSpriteV2(const QString spriteID, GameEnums::Recolori
                         isVisible = false;
                     }
                     tween1->addDoneCallback([this, isVisible](oxygine::Event *)
-                    {
-                        setVisible(isVisible);
-                    });
+                                            {
+                                                setVisible(isVisible);
+                                            });
                 }
 
                 queueMoving->add(tween1);
@@ -169,30 +169,30 @@ void GameAnimationWalk::loadSpriteV2(const QString spriteID, GameEnums::Recolori
                 {
                     switch (direction)
                     {
-                        case GameEnums::Directions_North:
-                        {
-                            row = 1;
-                            break;
-                        }
-                        case GameEnums::Directions_South:
-                        {
-                            row = 0;
-                            break;
-                        }
-                        case GameEnums::Directions_East:
-                        {
-                            row = 2;
-                            break;
-                        }
-                        case GameEnums::Directions_West:
-                        {
-                            row = 3;
-                            break;
-                        }
-                        default:
-                        {
-                            break;
-                        }
+                    case GameEnums::Directions_North:
+                    {
+                        row = 1;
+                        break;
+                    }
+                    case GameEnums::Directions_South:
+                    {
+                        row = 0;
+                        break;
+                    }
+                    case GameEnums::Directions_East:
+                    {
+                        row = 2;
+                        break;
+                    }
+                    case GameEnums::Directions_West:
+                    {
+                        row = 3;
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
                     }
                 }
                 oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, row), oxygine::timeMS(m_frameTime * pAnim->getRows()), 1);
@@ -203,9 +203,9 @@ void GameAnimationWalk::loadSpriteV2(const QString spriteID, GameEnums::Recolori
                     {
                         m_finishQueued = true;
                         queueMoving->addDoneCallback([this](oxygine::Event *)->void
-                        {
-                            emitFinished();
-                        });
+                                                     {
+                                                         emitFinished();
+                                                     });
                     }
                 }
             }
@@ -217,9 +217,9 @@ void GameAnimationWalk::loadSpriteV2(const QString spriteID, GameEnums::Recolori
             {
                 m_finishQueued = true;
                 queueMoving->addDoneCallback([this](oxygine::Event *)->void
-                {
-                    emitFinished();
-                });
+                                             {
+                                                 emitFinished();
+                                             });
             }
         }
         pSprite->addTween(queueMoving);

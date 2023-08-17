@@ -335,19 +335,18 @@ void GameAnimationFactory::removeAnimationFromQueue(spGameAnimation pAnimation)
 
 void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping)
 {
-    removeAnimation(pAnimation, skipping, true);
+    removeAnimation(pAnimation->getSharedPtr<GameAnimation>(), skipping, true);
 }
 
-void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping, bool removeFromQueue)
+void GameAnimationFactory::removeAnimation(spGameAnimation pAnimation, bool skipping, bool removeFromQueue)
 {
-    spGameAnimation spAnimation = pAnimation->getSharedPtr<GameAnimation>();
     if (removeFromQueue)
     {
-        removeAnimationFromQueue(spAnimation);
+        removeAnimationFromQueue(pAnimation);
     }
-    if (spAnimation.get() != nullptr)
+    if (pAnimation.get() != nullptr)
     {
-        spAnimation->detach();
+        pAnimation->detach();
     }
     if (m_Animations.size() == 0 && !skipping)
     {

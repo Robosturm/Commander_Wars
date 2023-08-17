@@ -425,7 +425,7 @@ bool GameAnimation::onFinished(bool skipping)
             tween->complete();
         }
         m_stageTweens.clear();
-        GameAnimationFactory::removeAnimation(this, m_skipping, false);
+        GameAnimationFactory::removeAnimation(getSharedPtr<GameAnimation>(), m_skipping, false);
         if (!skipping && GameAnimationFactory::getAnimationCount() > 0)
         {
             GameAnimationFactory::skipAllAnimations();

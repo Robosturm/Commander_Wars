@@ -103,28 +103,28 @@ void TCPServer::onConnect()
     {
         if (pTcpServer != nullptr)
         {
-            auto* nextSocket = pTcpServer->nextPendingConnection();
-            if (nextSocket != nullptr)
+            std::shared_ptr<QTcpSocket> nextSocket = MemoryManagement::createFromPointer(pTcpServer->nextPendingConnection());
+            if (nextSocket.get() != nullptr)
             {
-                connect(nextSocket, &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);
-                connect(nextSocket, &QAbstractSocket::stateChanged, this, &TCPServer::displayStateChange, Qt::QueuedConnection);
+                connect(nextSocket.get(), &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);
+                connect(nextSocket.get(), &QAbstractSocket::stateChanged, this, &TCPServer::displayStateChange, Qt::QueuedConnection);
                 m_idCounter++;
                 if (m_idCounter == 0)
                 {
                     m_idCounter++;
                 }
                 // Start RX-Task
-                spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket, m_idCounter, this, false);
-                connect(nextSocket, &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
+                spRxTask pRXTask = MemoryManagement::create<RxTask>(nextSocket.get(), m_idCounter, this, false);
+                connect(nextSocket.get(), &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
                 // start TX-Task
-                spTxTask pTXTask = MemoryManagement::create<TxTask>(nextSocket, m_idCounter, this, false);
+                spTxTask pTXTask = MemoryManagement::create<TxTask>(nextSocket.get(), m_idCounter, this, false);
                 connect(this, &TCPServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
                 spTCPClient pClient = MemoryManagement::create<TCPClient>(this, pRXTask, pTXTask, nextSocket, m_idCounter);
                 connect(pClient.get(), &TCPClient::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
 
                 quint64 socket = pClient->getSocketID();
-                connect(nextSocket, &QTcpSocket::disconnected, this, [this, socket]()
+                connect(nextSocket.get(), &QTcpSocket::disconnected, this, [this, socket]()
                 {
                     emit sigDisconnectClient(socket);
                 });

@@ -55,7 +55,7 @@ public:
      * @param skipping
      * @param removeFromQueue
      */
-    static void removeAnimation(GameAnimation* pAnimation, bool skipping, bool removeFromQueue);
+    static void removeAnimation(spGameAnimation pAnimation, bool skipping, bool removeFromQueue);
 signals:
     void animationsFinished();
 public slots:

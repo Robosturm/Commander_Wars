@@ -115,7 +115,14 @@ void CO::setCOUnit(Unit* pUnit)
             }
         }
     }
-    m_pCOUnit = pUnit->getSharedPtr<Unit>();
+    if (pUnit != nullptr)
+    {
+        m_pCOUnit = pUnit->getSharedPtr<Unit>();
+    }
+    else
+    {
+        m_pCOUnit.reset();
+    }
 }
 
 qreal CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system)

@@ -97,7 +97,7 @@ using spSprite = std::shared_ptr<Sprite>;
         void setFlippedX(bool flippedX);
         virtual void flipActorsX(bool flippedX)
         {
-            flipActorsX(oxygine::spActor(this), flippedX);
+            flipActorsX(getSharedPtr<Actor>(), flippedX);
         }
         static void flipActorsX(oxygine::spActor pActor, bool flippedX);
         void setFlippedY(bool flippedY);

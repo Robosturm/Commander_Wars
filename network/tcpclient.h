@@ -18,7 +18,7 @@ class TCPClient final : public NetworkInterface
     Q_OBJECT
 public:
     TCPClient(QObject* pParent);
-    TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, quint64 socketId);
+    TCPClient(QObject* pParent, spRxTask pRXTask, spTxTask pTXTask, std::shared_ptr<QTcpSocket> pSocket, quint64 socketId);
    virtual ~TCPClient();
     /**
      * @brief moveClientToThread
