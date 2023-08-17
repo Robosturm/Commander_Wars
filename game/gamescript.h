@@ -90,7 +90,7 @@ public:
         return &m_Variables;
     }
     Q_INVOKABLE QString getScriptFile() const;
-    Q_INVOKABLE void setScriptFile(const QString value);
+    Q_INVOKABLE void setScriptFile(const QString & value);
 
 private:
     bool m_victoryCalled{false};

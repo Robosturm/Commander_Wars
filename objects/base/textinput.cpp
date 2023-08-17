@@ -20,6 +20,7 @@ TextInput::TextInput()
         emit pApp->sigCreateLineEdit();
     }
     m_lineEdit = pApp->getLastCreateLineEdit();
+    pApp->resetLineEdit();
     if (m_lineEdit != nullptr)
     {
         connect(m_lineEdit.get(), &EventTextEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);

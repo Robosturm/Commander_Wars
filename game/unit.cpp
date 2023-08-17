@@ -241,7 +241,7 @@ void Unit::removeShineTween()
     }
 }
 
-void Unit::loadSprite(const QString spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)
+void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)
 {
     if (addPlayerColor)
     {
@@ -253,7 +253,7 @@ void Unit::loadSprite(const QString spriteID, bool addPlayerColor, bool flipSpri
     }
 }
 
-void Unit::loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, bool flipSprite, qint32 frameTime)
+void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite, qint32 frameTime)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -615,7 +615,7 @@ qint32 Unit::getVision(QPoint position)
     return points;
 }
 
-qint32 Unit::getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString))
+qint32 Unit::getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString &))
 {
 
     qint32 bonus = 0;
@@ -1199,7 +1199,7 @@ void Unit::loadUnit(Unit* pUnit, qint32 index)
     }
 }
 
-void Unit::loadSpawnedUnit(const QString unitId)
+void Unit::loadSpawnedUnit(const QString & unitId)
 {
     CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, GameConsole::eDEBUG);
     spUnit pUnit = MemoryManagement::create<Unit>(unitId, m_pOwner, true, m_pMap);
@@ -1209,7 +1209,7 @@ void Unit::loadSpawnedUnit(const QString unitId)
     }
 }
 
-Unit* Unit::spawnUnit(const QString unitID)
+Unit* Unit::spawnUnit(const QString & unitID)
 {
     CONSOLE_PRINT("Unit::spawnUnit " + unitID, GameConsole::eDEBUG);
 
@@ -2199,7 +2199,7 @@ QString Unit::getWeapon2ID() const
     return m_weapon2ID;
 }
 
-void Unit::setWeapon2ID(const QString value)
+void Unit::setWeapon2ID(const QString & value)
 {
     m_weapon2ID = value;
 }
@@ -2260,7 +2260,7 @@ QString Unit::getWeapon1ID() const
     return m_weapon1ID;
 }
 
-void Unit::setWeapon1ID(const QString value)
+void Unit::setWeapon1ID(const QString & value)
 {
     m_weapon1ID = value;
 }
@@ -2574,7 +2574,7 @@ QString Unit::getUnitDamageID()
     return m_UnitID;
 }
 
-qreal Unit::getUnitDamage(const QString weaponID)
+qreal Unit::getUnitDamage(const QString & weaponID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitDamage";
@@ -3029,7 +3029,7 @@ qint32 Unit::getCaptureRate(QPoint position)
     return getHpRounded() + modifier;
 }
 
-void Unit::loadIcon(const QString iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
+void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
 {
     if (iconID.isEmpty())
     {
@@ -3088,7 +3088,7 @@ UnitPathFindingSystem* Unit::createUnitPathFindingSystem(Player* pPlayer)
     return pPfs;
 }
 
-void Unit::unloadIconAndDuration(const QString iconID)
+void Unit::unloadIconAndDuration(const QString & iconID)
 {
     qint32 i = 0;
     while (i < m_IconDurations.size())
@@ -3105,7 +3105,7 @@ void Unit::unloadIconAndDuration(const QString iconID)
     unloadIcon(iconID);
 }
 
-void Unit::unloadIcon(const QString iconID)
+void Unit::unloadIcon(const QString & iconID)
 {
     
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
@@ -3202,7 +3202,7 @@ QString Unit::getCustomName() const
     return m_customName;
 }
 
-void Unit::setCustomName(const QString customName)
+void Unit::setCustomName(const QString & customName)
 {
     m_customName = customName;
 }
@@ -3361,7 +3361,7 @@ void Unit::updateIconTweens()
     
 }
 
-void Unit::setMovementType(const QString movementType)
+void Unit::setMovementType(const QString & movementType)
 {
     m_MovementType = movementType;
 }
@@ -4118,7 +4118,7 @@ void Unit::showRanges()
     updateCustomRangeActors();
 }
 
-void Unit::showCustomRange(const QString id, qint32 range, QColor color)
+void Unit::showCustomRange(const QString & id, qint32 range, QColor color)
 {
     bool found = false;
     for (auto & customRangeInfo : m_customRangeInfo)
@@ -4149,7 +4149,7 @@ void Unit::showCustomRange(const QString id, qint32 range, QColor color)
     }
 }
 
-void Unit::removeCustomRange(const QString id)
+void Unit::removeCustomRange(const QString & id)
 {
     for (qint32 i = 0; i < m_customRangeInfo.size(); ++i)
     {
@@ -4180,7 +4180,7 @@ void Unit::updateCustomRangeActors()
     }
 }
 
-void Unit::transformUnit(const QString unitID)
+void Unit::transformUnit(const QString & unitID)
 {
     for (auto & sprite : m_pUnitWaitSprites)
     {

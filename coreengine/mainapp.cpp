@@ -110,6 +110,13 @@ void Mainapp::createLineEdit()
 #endif
 }
 
+void Mainapp::resetLineEdit()
+{
+#ifdef GRAPHICSUPPORT
+    m_pLineEdit.reset();
+#endif
+}
+
 void Mainapp::shutdown()
 {
     m_aiSubProcess->kill();

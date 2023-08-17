@@ -285,6 +285,7 @@ public slots:
      * @brief createLineEdit
      */
     void createLineEdit();
+    void resetLineEdit();
     void doMapshot(BaseGamemenu* pMenu);
     /**
      * @brief saveMapAsImage

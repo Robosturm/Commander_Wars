@@ -708,7 +708,7 @@ namespace oxygine
         Actor* parent = getParent();
         if (parent)
         {
-            spActor pActor(this);
+            spActor pActor = getSharedPtr<Actor>();
             parent->removeChild(pActor);
         }
         return parent;

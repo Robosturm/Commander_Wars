@@ -735,7 +735,7 @@ void SimpleProductionSystem::deserializeObject(QDataStream& pStream)
     m_Variables.deserializeObject(pStream);
 }
 
-Unit* SimpleProductionSystem::getDummyUnit(const QString unitId)
+Unit* SimpleProductionSystem::getDummyUnit(const QString & unitId)
 {
     m_dummy = MemoryManagement::create<Unit>(unitId, m_owner->getPlayer(), false, nullptr);
     return m_dummy.get();

@@ -250,7 +250,7 @@ public:
      * @brief transformUnit
      * @param unitID
      */
-    Q_INVOKABLE void transformUnit(const QString unitID);
+    Q_INVOKABLE void transformUnit(const QString & unitID);
     /**
      * @brief getCursorInfoRange
      * @return
@@ -304,7 +304,7 @@ public:
      * @brief setCustomName
      * @param customName
      */
-    Q_INVOKABLE void setCustomName(const QString customName);
+    Q_INVOKABLE void setCustomName(const QString & customName);
     /**
      * @brief getVisionHigh
      * @return
@@ -347,7 +347,7 @@ public:
      * @param unitID
      * @return
      */
-    Q_INVOKABLE Unit* spawnUnit(const QString unitID);
+    Q_INVOKABLE Unit* spawnUnit(const QString & unitID);
     /**
      * @brief getAiMode
      * @return
@@ -459,7 +459,7 @@ public:
     Q_INVOKABLE qint32 getMaxAmmo1() const;
     Q_INVOKABLE void setMaxAmmo1(const qint32 value);
     Q_INVOKABLE QString getWeapon1ID() const;
-    Q_INVOKABLE void setWeapon1ID(const QString value);
+    Q_INVOKABLE void setWeapon1ID(const QString & value);
     Q_INVOKABLE qint32 getAmmo2() const;
     Q_INVOKABLE void setAmmo2(const qint32 value);
     Q_INVOKABLE bool hasAmmo2() const;
@@ -468,7 +468,7 @@ public:
     Q_INVOKABLE qint32 getMaxAmmo2() const;
     Q_INVOKABLE void setMaxAmmo2(const qint32 value);
     Q_INVOKABLE QString getWeapon2ID() const;
-    Q_INVOKABLE void setWeapon2ID(const QString value);
+    Q_INVOKABLE void setWeapon2ID(const QString & value);
     Q_INVOKABLE qint32 getFuel() const;
     Q_INVOKABLE void setFuel(const qint32 value);
     Q_INVOKABLE qint32 getMaxFuel() const;
@@ -539,13 +539,13 @@ public:
      * @brief loadSprites loads the given sprite
      * @param spriteID
      */
-    Q_INVOKABLE void loadSprite(const QString spriteID, bool addPlayerColor, bool flipSprite = true, qint32 frameTime = 150);
+    Q_INVOKABLE void loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite = true, qint32 frameTime = 150);
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    Q_INVOKABLE void loadSpriteV2(const QString spriteID, GameEnums::Recoloring mode, bool flipSprite = true, qint32 frameTime = 150);
+    Q_INVOKABLE void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite = true, qint32 frameTime = 150);
     /**
      * @brief addShineTween
      */
@@ -573,7 +573,7 @@ public:
      * @brief setMovementType
      * @param Movementtype
      */
-    Q_INVOKABLE void setMovementType(const QString movementType);;
+    Q_INVOKABLE void setMovementType(const QString & movementType);
     /**
      * @brief getLoadingPlace
      * @return
@@ -594,7 +594,7 @@ public:
      * @param weaponID
      * @return
      */
-    Q_INVOKABLE qreal getUnitDamage(const QString weaponID);
+    Q_INVOKABLE qreal getUnitDamage(const QString & weaponID);
     /**
      * @brief getMapPosition
      * @return
@@ -700,17 +700,17 @@ public:
      * @param duration number of days the icon will be shown on the unit
      * @param player the player on which the duration gets decreased
      */
-    Q_INVOKABLE void loadIcon(const QString iconID, qint32 x, qint32 y, qint32 duration = -1, qint32 player = -1);
+    Q_INVOKABLE void loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration = -1, qint32 player = -1);
     /**
      * @brief unloadIcon removes the given icon from this unit
      * @param iconID
      */
-    Q_INVOKABLE void unloadIcon(const QString iconID);
+    Q_INVOKABLE void unloadIcon(const QString & iconID);
     /**
      * @brief unloadIconAndDuration
      * @param iconID
      */
-    Q_INVOKABLE void unloadIconAndDuration(const QString iconID);
+    Q_INVOKABLE void unloadIconAndDuration(const QString & iconID);
     /**
      * @brief endOfTurn
      */
@@ -747,7 +747,7 @@ public:
      * @brief loadUnit adds a unit to the transport list
      * @param pUnit
      */
-    Q_INVOKABLE void loadSpawnedUnit(const QString unitId);
+    Q_INVOKABLE void loadSpawnedUnit(const QString & unitId);
     /**
      * @brief getLoadedUnit
      * @param index
@@ -920,12 +920,12 @@ public:
      * @param range
      * @param color
      */
-    Q_INVOKABLE void showCustomRange(const QString id, qint32 range, QColor color = Qt::white);
+    Q_INVOKABLE void showCustomRange(const QString & id, qint32 range, QColor color = Qt::white);
     /**
      * @brief removeCustomRange
      * @param id
      */
-    Q_INVOKABLE void removeCustomRange(const QString id);
+    Q_INVOKABLE void removeCustomRange(const QString & id);
     /**
      * @brief updateSprites reloads all sprites
      */
@@ -1119,7 +1119,7 @@ protected:
      * @param position
      * @return
      */
-    qint32 getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString));
+    qint32 getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString &));
 private:
     QVector<oxygine::spSprite> m_pUnitWaitSprites;
     QVector<oxygine::spSprite> m_pUnitSprites;

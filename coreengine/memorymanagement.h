@@ -40,7 +40,7 @@ public:
     template <class T>
     static void deleter(T * pObj)
     {
-        if constexpr (std::is_base_of_v<T, QObject>)
+        if constexpr (std::derived_from<T, QObject>)
         {
             pObj->deleteLater();
         }
