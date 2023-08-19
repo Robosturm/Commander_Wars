@@ -205,7 +205,7 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
             oxygine::spSprite pSprite = MemoryManagement::create<oxygine::Sprite>();
             const auto & position = positions[i];
             pSprite->setPosition(position.x() * width, position.y() * height);
-            flagAppeared(pSprite.get(), i);
+            flagAppeared(pSprite, i);
         }
     }
     connect(this, &CampaignMenu::sigMapSelected, this, &CampaignMenu::mapSelected, Qt::QueuedConnection);
@@ -233,11 +233,10 @@ void CampaignMenu::playNextEvent(qint32 event)
         focusOnPosition(pSprite->getPosition());
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::Sprite* pPtrSprite = pSprite.get();
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), 1);
-            tween->addDoneCallback([this, pPtrSprite, event, index](oxygine::Event* pEvent)
+            tween->addDoneCallback([this, pSprite, event, index](oxygine::Event* pEvent)
             {
-                emit sigFlagAppeared(pPtrSprite, index);
+                emit sigFlagAppeared(pSprite, index);
                 emit sigEventPlayed(event + 1);
             });
             pSprite->addTween(tween);
@@ -252,20 +251,21 @@ void CampaignMenu::focusOnPosition(QPoint position)
     m_pSlidingActor->snap();
 }
 
-void CampaignMenu::flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map)
+void CampaignMenu::flagAppeared(oxygine::spSprite pSprite, qint32 map)
 {
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("campaignFlag");
     if (pAnim->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-        pPtrSprite->addTween(tween);
+        pSprite->addTween(tween);
     }
     else
     {
-        pPtrSprite->setResAnim(pAnim);
+        pSprite->setResAnim(pAnim);
     }
-    pPtrSprite->addClickListener([this, map, pPtrSprite](oxygine::Event* event)
+    auto* pPtrSprite = pSprite.get();
+    pSprite->addClickListener([this, map, pPtrSprite](oxygine::Event* event)
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(event);
         if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
@@ -281,9 +281,9 @@ void CampaignMenu::flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map)
             emit sigShowMinimap();
         }
     });
-    if (pPtrSprite->getParent() == nullptr)
+    if (pSprite->getParent() == nullptr)
     {
-        m_pMapBackground->addChild(pPtrSprite->getSharedPtr<Actor>());
+        m_pMapBackground->addChild(pSprite);
     }
 }
 

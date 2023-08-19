@@ -109,9 +109,12 @@ void GameAnimation::setRotation(float angle)
 
 void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
 {
-    pGameAnimation->setPreviousAnimation(this);
-    m_QueuedAnimations.append(pGameAnimation->getSharedPtr<GameAnimation>());
-    GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
+    if (pGameAnimation != nullptr)
+    {
+        pGameAnimation->setPreviousAnimation(getSharedPtr<GameAnimation>());
+        m_QueuedAnimations.append(pGameAnimation->getSharedPtr<GameAnimation>());
+        GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
+    }
 }
 
 void GameAnimation::queueAnimationBefore(GameAnimation* pGameAnimation)
@@ -173,9 +176,9 @@ void GameAnimation::setVisible(bool vis)
     oxygine::Sprite::setVisible(vis);
 }
 
-void GameAnimation::setPreviousAnimation(GameAnimation *previousAnimation)
+void GameAnimation::setPreviousAnimation(spGameAnimation previousAnimation)
 {
-    m_previousAnimation = previousAnimation->getSharedPtr<GameAnimation>();
+    m_previousAnimation = previousAnimation;
 }
 
 void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish, float scale, qint32 delay, qint32 loops)

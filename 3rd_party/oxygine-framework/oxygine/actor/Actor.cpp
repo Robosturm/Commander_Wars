@@ -155,7 +155,7 @@ namespace oxygine
                 over.type = TouchEvent::OVER;
                 over.bubbles = false;
                 dispatchEvent(&over);
-                m_onGlobalTouchMoveEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
+                m_onGlobalTouchMoveEvent = oxygine::Stage::getStage()->addEventListenerWithId(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
             }
         }
 
@@ -166,7 +166,7 @@ namespace oxygine
             {
                 if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
                 {
-                    m_onGlobalTouchUpEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
+                    m_onGlobalTouchUpEvent = oxygine::Stage::getStage()->addEventListenerWithId(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
                 }
                 m_pressedButton[te->mouseButton] = te->index;
             }
@@ -341,27 +341,32 @@ namespace oxygine
     void Actor::setPriority(qint32 zorder)
     {
 #ifdef GRAPHICSUPPORT
-        if (m_zOrder == zorder) // fixed by Evgeniy Golovin
+        if (m_zOrder == zorder)
         {
             return;
         }
         m_zOrder = zorder;
         if (m_parent)
         {
-            QMutexLocker lockParent(&m_parent->m_Locked);
-            QMutexLocker lock(&m_Locked);
-            spActor me = getSharedPtr<Actor>();
-            auto iter = m_parent->m_children.cbegin();
-            while (iter != m_parent->m_children.cend())
+            if (!GameWindow::getWindow()->isMainThread())
             {
-                if (iter->get() == me.get())
-                {
-                    m_parent->m_children.erase(iter);
-                    break;
-                }
-                ++iter;
+                emit MemoryManagement::getInstance().sigSetPriority(getSharedPtr<Actor>(), zorder);
             }
-            m_parent->insertActor(me);
+            else
+            {
+                spActor me = getSharedPtr<Actor>();
+                auto iter = m_parent->m_children.cbegin();
+                while (iter != m_parent->m_children.cend())
+                {
+                    if (iter->get() == me.get())
+                    {
+                        m_parent->m_children.erase(iter);
+                        break;
+                    }
+                    ++iter;
+                }
+                m_parent->insertActor(me);
+            }
         }
 #endif
     }
@@ -478,6 +483,41 @@ namespace oxygine
     void Actor::setClock(spClock & clock)
     {
         m_clock = clock;
+    }
+
+    void Actor::restartAllTweens()
+    {
+#ifdef GRAPHICSUPPORT
+        if (!GameWindow::getWindow()->isMainThread())
+        {
+            emit MemoryManagement::getInstance().sigRestartAllTweens(getSharedPtr<Actor>());
+        }
+        else
+        {
+            for (auto & tween : m_tweens)
+            {
+                tween->reset();
+                tween->start(*this);
+            }
+        }
+#endif
+    }
+
+    void Actor::syncAllTweens(oxygine::timeMS syncTime)
+    {
+#ifdef GRAPHICSUPPORT
+        if (!GameWindow::getWindow()->isMainThread())
+        {
+            emit MemoryManagement::getInstance().sigSyncAllTweens(getSharedPtr<Actor>(), syncTime);
+        }
+        else
+        {
+            for (auto & pTween : m_tweens)
+            {
+                pTween->setElapsed(syncTime);
+            }
+        }
+#endif
     }
 
     void Actor::setAlpha(unsigned char alpha)
@@ -599,17 +639,20 @@ namespace oxygine
 
     void Actor::setParent(Actor* actor, Actor* parent)
     {
-        actor->m_parent = parent;
-        if (parent != nullptr &&
-            parent->__getStage())
+        if (actor != nullptr)
         {
-            actor->added2stage(parent->__getStage());
-        }
-        else
-        {
-            if (actor->__getStage())
+            actor->m_parent = parent;
+            if (parent != nullptr &&
+                parent->__getStage())
             {
-                actor->removedFromStage();
+                actor->added2stage(parent->__getStage());
+            }
+            else
+            {
+                if (actor->__getStage())
+                {
+                    actor->removedFromStage();
+                }
             }
         }
     }
@@ -633,10 +676,9 @@ namespace oxygine
 
     void Actor::addChild(spActor actor)
     {
-        if (!GameWindow::getWindow()->isWorker())
+        if (!GameWindow::getWindow()->isMainThread())
         {
-            QString name = QThread::currentThread()->objectName();
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add actor from wrong thread. Thread: " + name + " worker running: " + QString::number(GameWindow::getWindow()->isWorkerRunning()));
+            emit MemoryManagement::getInstance().sigAddChild(getSharedPtr<Actor>(), actor);
         }
         else if (actor.get() == nullptr)
         {
@@ -648,24 +690,15 @@ namespace oxygine
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add self");
         }
         actor->detach();
-#ifdef GRAPHICSUPPORT
-        QMutexLocker lock(&m_Locked);
-        QMutexLocker lockActor(&(actor->m_Locked));
-#endif
         insertActor(actor);
         setParent(actor.get(), this);
     }
 
-    void Actor::removeChild(spActor & actor)
+    void Actor::removeChild(spActor actor)
     {
-#ifdef GRAPHICSUPPORT
-        QMutexLocker lock(&m_Locked);
-        QMutexLocker lockActor(&(actor->m_Locked));
-#endif
-        if (!GameWindow::getWindow()->isWorker() &&
-            dynamic_cast<QObject*>(this) != nullptr)
+        if (!GameWindow::getWindow()->isMainThread())
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove actor from wrong thread");
+            emit MemoryManagement::getInstance().sigRemoveChild(getSharedPtr<Actor>(), actor);
         }
         else if (actor)
         {
@@ -696,10 +729,18 @@ namespace oxygine
 
     void Actor::removeChildren()
     {
-        while (m_children.size() > 0)
+        if (!GameWindow::getWindow()->isMainThread())
         {
-            spActor child = m_children.back();
-            removeChild(child);
+            emit MemoryManagement::getInstance().sigRemoveChildren(getSharedPtr<Actor>());
+        }
+        else
+        {
+            for (auto & child : m_children)
+            {
+                child->setParent(child.get(), nullptr);
+                removeChild(child);
+            }
+            m_children.clear();
         }
     }
 
@@ -717,7 +758,6 @@ namespace oxygine
     void Actor::internalUpdate(const UpdateState& us)
     {
 #ifdef GRAPHICSUPPORT
-        QMutexLocker lock(&m_Locked);
         auto iter = m_tweens.begin();
         while (iter != m_tweens.end())
         {
@@ -859,7 +899,6 @@ namespace oxygine
     void Actor::render(const RenderState& parentRS)
     {
 #ifdef GRAPHICSUPPORT
-        QMutexLocker lock(&m_Locked);
         RenderDelegate::instance->render(this, parentRS);
 #endif
     }
@@ -869,66 +908,65 @@ namespace oxygine
         return QRect(0, 0, getWidth(), getHeight());
     }
 
-    spTween Actor::__addTween(spTween tween, bool)
+    void Actor::addTween(spTween tween)
     {
 #ifdef GRAPHICSUPPORT
         if (tween.get() == nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween tween is nullptr");
-            return spTween();
         }
+        else if (!GameWindow::getWindow()->isMainThread())
         {
-            QMutexLocker lock(&m_Locked);
-            m_tweens.push_back(tween);
+            emit MemoryManagement::getInstance().sigAddTween(getSharedPtr<Actor>(), tween);
         }
-        tween->start(*this);
+        else
+        {
+            m_tweens.push_back(tween);
+            tween->start(*this);
+        }
 #endif
-        return tween;
-
-    }
-
-    spTween Actor::addTween(spTween tween)
-    {
-        return __addTween(tween, false);
     }
 
     void Actor::removeTween(spTween pTween)
     {
 #ifdef GRAPHICSUPPORT
-        QMutexLocker lock(&m_Locked);
         if (pTween.get() == nullptr)
         {
             return;
         }
-        auto iter = m_tweens.begin();
-        while (iter != m_tweens.end())
+        else if (!GameWindow::getWindow()->isMainThread())
         {
-            if (iter->get() == pTween.get())
+            emit MemoryManagement::getInstance().sigRemoveTween(getSharedPtr<Actor>(), pTween);
+        }
+        else
+        {
+            auto iter = m_tweens.begin();
+            while (iter != m_tweens.end())
             {
-                pTween->setClient(nullptr);
-                m_tweens.erase(iter);
-                break;
+                if (iter->get() == pTween.get())
+                {
+                    pTween->setClient(nullptr);
+                    m_tweens.erase(iter);
+                    break;
+                }
+                ++iter;
             }
-            ++iter;
         }
 #endif
     }
 
-    void Actor::removeTweens(bool callComplete)
+    void Actor::removeTweens()
     {
 #ifdef GRAPHICSUPPORT
-        while (m_tweens.size() > 0)
+        if (!GameWindow::getWindow()->isMainThread())
         {
-            spTween tween = m_tweens.back();
-            if (callComplete)
-            {
-                tween->complete();
-            }
-            else
-            {
-                removeTween(tween);
-            }
+            emit MemoryManagement::getInstance().sigRemoveTweens(getSharedPtr<Actor>());
         }
+        else
+        {
+            m_tweens.clear();
+        }
+
 #endif
     }
 
@@ -965,13 +1003,6 @@ namespace oxygine
     {
         return convert_local2global_(child.get(), parent.get(), pos);
     }
-
-#ifdef GRAPHICSUPPORT
-    QMutex* Actor::getLocked()
-    {
-        return &m_Locked;
-    }
-#endif
 
     QPoint Actor::convert_local2stage(spActor & actor, const QPoint& pos, spActor root)
     {

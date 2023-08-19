@@ -31,26 +31,20 @@ namespace oxygine
         explicit EventDispatcher() = default;
         virtual ~EventDispatcher() = default;
 
-        qint32 addEventListener(eventType, const EventCallback&);
+        void addEventListener(eventType, const EventCallback);
+        qint32 addEventListenerWithId(eventType, const EventCallback&);
 
         /**remove by ID, where is ID returned from addEventListener*/
         void removeEventListener(qint32 id);
 
         /**removes all added event listeners by THIS used in Closure(this, ...)*/
-        void removeEventListeners(IClosureOwner* CallbackThis);
-
-        /**removes all added event listeners by THIS used in Closure(this, ...)*/
-        void removeEventListenersByType(eventType);
-
-        /**removes all added event listeners*/
-        void removeAllEventListeners();
+        void removeEventListeners(IClosureOwner* callbackThis);
 
         virtual void dispatchEvent(Event* event);
         void dispatchEvent(Event& event)
         {
             dispatchEvent(&event);
         }
-        qint32 getListenersCount() const;
         qint32 getLastListenerID() const
         {
             return m_lastID;

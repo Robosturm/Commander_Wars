@@ -69,6 +69,7 @@ Mainapp::Mainapp()
 #endif
     Interpreter::setCppOwnerShip(this);
     m_pMainapp = this;
+    MemoryManagement::getInstance().moveToThread(QThread::currentThread());
     m_Workerthread = MemoryManagement::create<QThread>();
     m_Networkthread = MemoryManagement::create<QThread>();
     m_GameServerThread = MemoryManagement::create<QThread>();

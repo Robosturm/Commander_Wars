@@ -361,7 +361,7 @@ private:
      * @brief setPreviousAnimation
      * @param previousAnimation
      */
-    void setPreviousAnimation(GameAnimation *previousAnimation);
+    void setPreviousAnimation(spGameAnimation previousAnimation);
     /**
      * @brief removeQueuedAnimation
      * @param pGameAnimation

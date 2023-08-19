@@ -10,9 +10,9 @@
 #include "game/unit.h"
 #include "game/co.h"
 
-GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath, GameMap* pMap)
+GameAnimationWalk::GameAnimationWalk(spUnit pUnit, const QVector<QPoint> & movePath, GameMap* pMap)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime), pMap),
-    m_pUnit(pUnit->getSharedPtr<Unit>()),
+    m_pUnit(pUnit),
     m_movePath(movePath)
 {
 #ifdef GRAPHICSUPPORT

@@ -240,11 +240,11 @@ spScriptEvent ScriptCondition::getEvent(qint32 index)
     return spScriptEvent();
 }
 
-void ScriptCondition::removeEvent(spScriptEvent pEvent)
+void ScriptCondition::removeEvent(ScriptEvent* pEvent)
 {
     for (qint32 i = 0; i < events.size(); i++)
     {
-        if (events[i].get() == pEvent.get())
+        if (events[i].get() == pEvent)
         {
             events.removeAt(i);
             break;

@@ -332,7 +332,15 @@ namespace oxygine
                                 act->dispatchEvent(&ev);
 
                             }
-                            act = act->getParent()->getSharedPtr<Actor>();
+                            auto* parent = act->getParent();
+                            if (parent != nullptr)
+                            {
+                                act = parent->getSharedPtr<Actor>();
+                            }
+                            else
+                            {
+                                act.reset();
+                            }
                         }
 
                         m_holded.reset();

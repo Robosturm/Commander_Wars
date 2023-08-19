@@ -25,7 +25,7 @@ namespace oxygine
         {
             return;
         }
-        auto & children = parent->getChildren();
+        auto children = parent->getChildren();
         for (auto & child : children)
         {
             child->render(rs);

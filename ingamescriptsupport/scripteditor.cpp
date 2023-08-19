@@ -322,10 +322,9 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         pSelectButton->setPosition(x + 140 * 2, boxY);
         pSpritebox->addChild(pSelectButton);
         auto pPtrSpritebox = pSpritebox.get();
-        auto pCondition = condition.get();
-        pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrSpritebox, pCondition](oxygine::Event*)
+        pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrSpritebox, condition](oxygine::Event*)
         {
-            selectCondition(pPtrSpritebox, pCondition);
+            selectCondition(pPtrSpritebox, condition);
         });
         condition = condition->getSubCondition();
         if (condition.get() != nullptr)
@@ -339,7 +338,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
     m_ConditionPanel->setContentWidth(x + 140 * 3 + 30);
 }
 
-void ScriptEditor::selectCondition(oxygine::Box9Sprite* pPtrSpritebox, ScriptCondition* pCondition)
+void ScriptEditor::selectCondition(oxygine::Box9Sprite* pPtrSpritebox, spScriptCondition pCondition)
 {
     for (qint32 i = 0; i < m_ConditionBoxes.size(); i++)
     {
@@ -390,25 +389,24 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 130);
     pEditButton->setPosition(x, y);
     m_EventPanel->addItem(pEditButton);
-    auto* pPtrEvent = pEvent.get();
-    pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrEvent](oxygine::Event*)
+    pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pEvent](oxygine::Event*)
     {
-        emit sigShowEditEvent(pPtrEvent->getSharedPtr<ScriptEvent>());
+        emit sigShowEditEvent(pEvent);
     });
     oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 130);
     pRemoveButton->setPosition(x + 140, y);
     m_EventPanel->addItem(pRemoveButton);
-    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrEvent](oxygine::Event*)
+    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pEvent](oxygine::Event*)
     {
-        m_CurrentCondition->removeEvent(pPtrEvent->getSharedPtr<ScriptEvent>());
+        m_CurrentCondition->removeEvent(pEvent.get());
         emit sigUpdateEvents();
     });
     oxygine::spButton pDuplicateButton = pObjectManager->createButton(tr("Duplicate"), 130);
     pDuplicateButton->setPosition(x + 140 * 2, y);
     m_EventPanel->addItem(pDuplicateButton);
-    pDuplicateButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pPtrEvent](oxygine::Event*)
+    pDuplicateButton->addEventListener(oxygine::TouchEvent::CLICK, [this, pEvent](oxygine::Event*)
     {
-        emit sigDuplicateEvent(pPtrEvent->getSharedPtr<ScriptEvent>());
+        emit sigDuplicateEvent(pEvent);
     });
 
     y += text->getHeight() + 10;
@@ -419,10 +417,10 @@ void ScriptEditor::addCondition()
 {
     ScriptCondition::ConditionType type = static_cast<ScriptCondition::ConditionType>(m_Conditions->getCurrentItem());
     spScriptCondition pCondition;
-    if (m_CurrentCondition != nullptr &&
+    if (m_CurrentCondition.get() != nullptr &&
         ScriptCondition::sameConditionGroup(m_CurrentCondition->getType(), type))
     {
-        spScriptCondition parent = m_CurrentCondition->getSharedPtr<ScriptCondition>();
+        spScriptCondition parent = m_CurrentCondition;
         spScriptCondition subCondition = m_CurrentCondition->getSubCondition();
         while (subCondition.get() != nullptr)
         {
@@ -455,20 +453,26 @@ void ScriptEditor::showEditCondition(spScriptCondition pCondition)
 
 void ScriptEditor::showEditEvent(spScriptEvent pEvent)
 {
-    pEvent->showEditEvent(getSharedPtr<ScriptEditor>());
+    if (pEvent.get() != nullptr)
+    {
+        pEvent->showEditEvent(getSharedPtr<ScriptEditor>());
+    }
 }
 
 void ScriptEditor::duplicateEvent(spScriptEvent pEvent)
 {
-    QString data;
-    QTextStream stream(&data);
-    pEvent->writeEvent(stream);
-    spScriptEvent pNewEvent = ScriptEvent::createEvent(m_pMap, pEvent->getEventType());
-    stream.seek(0);
-    QString line = stream.readLine();
-    pNewEvent->readEvent(stream, line);
-    m_CurrentCondition->addEvent(pNewEvent);
-    updateEvents();
+    if (pEvent.get() != nullptr)
+    {
+        QString data;
+        QTextStream stream(&data);
+        pEvent->writeEvent(stream);
+        spScriptEvent pNewEvent = ScriptEvent::createEvent(m_pMap, pEvent->getEventType());
+        stream.seek(0);
+        QString line = stream.readLine();
+        pNewEvent->readEvent(stream, line);
+        m_CurrentCondition->addEvent(pNewEvent);
+        updateEvents();
+    }
 }
 
 void ScriptEditor::duplicateCondition()

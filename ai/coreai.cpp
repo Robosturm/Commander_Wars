@@ -465,17 +465,21 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, const QPoint newPosition, Building
             pBuilding->getOwner() != nullptr)
         {
             QPoint pos = newPosition - pBuilding->getActionTargetOffset() - pBuilding->getPosition();
-            spQmlVectorPoint pTargets = pBuilding->getActionTargetFields()->getSharedPtr<QmlVectorPoint>();
-            if (pTargets.get() != nullptr)
+            auto* targets = pBuilding->getActionTargetFields();
+            if (targets != nullptr)
             {
-                if (pTargets->contains(pos))
+                spQmlVectorPoint pTargets = targets->getSharedPtr<QmlVectorPoint>();
+                if (pTargets.get() != nullptr)
                 {
-                    float damage = pBuilding->getDamage(pUnit);
-                    if (damage > pUnit->getHp())
+                    if (pTargets->contains(pos))
                     {
-                        damage = pBuilding->getHp();
+                        float damage = pBuilding->getDamage(pUnit);
+                        if (damage > pUnit->getHp())
+                        {
+                            damage = pBuilding->getHp();
+                        }
+                        counterDamage = damage / Unit::MAX_UNIT_HP * pUnit->getUnitCosts();
                     }
-                    counterDamage = damage / Unit::MAX_UNIT_HP * pUnit->getUnitCosts();
                 }
             }
         }
@@ -526,18 +530,22 @@ void CoreAI::addMovementMap(Building* pBuilding, float damage)
     {
         if (pBuilding->getFireCount() <= 1)
         {
-            spQmlVectorPoint pTargets = pBuilding->getActionTargetFields()->getSharedPtr<QmlVectorPoint>();
-            if (pTargets.get() != nullptr)
+            auto* targets = pBuilding->getActionTargetFields();
+            if (targets != nullptr)
             {
-                for (auto & target : pTargets->getVector())
+                spQmlVectorPoint pTargets = targets->getSharedPtr<QmlVectorPoint>();
+                if (pTargets.get() != nullptr)
                 {
-                    QPoint point = target + offset;
-                    if ((m_MoveCostMap.size() > point.x() && point.x() >= 0) &&
-                        (m_MoveCostMap[point.x()].size() > point.y() && point.y() >= 0))
+                    for (auto & target : pTargets->getVector())
                     {
-                        if (std::get<1>(m_MoveCostMap[point.x()][point.y()]) == false)
+                        QPoint point = target + offset;
+                        if ((m_MoveCostMap.size() > point.x() && point.x() >= 0) &&
+                            (m_MoveCostMap[point.x()].size() > point.y() && point.y() >= 0))
                         {
-                            std::get<0>(m_MoveCostMap[point.x()][point.y()]) += damage;
+                            if (std::get<1>(m_MoveCostMap[point.x()][point.y()]) == false)
+                            {
+                                std::get<0>(m_MoveCostMap[point.x()][point.y()]) += damage;
+                            }
                         }
                     }
                 }

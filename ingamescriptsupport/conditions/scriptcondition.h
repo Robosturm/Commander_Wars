@@ -108,7 +108,7 @@ public:
      * @brief removeEvent
      * @param pEvent
      */
-    void removeEvent(spScriptEvent pEvent);
+    void removeEvent(ScriptEvent* pEvent);
     /**
      * @brief getType
      * @return

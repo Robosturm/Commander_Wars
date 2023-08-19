@@ -394,19 +394,11 @@ void Terrain::syncAnimation(oxygine::timeMS syncTime)
 #ifdef GRAPHICSUPPORT
     if (m_pTerrainSprite.get() != nullptr)
     {
-        auto & tweens = m_pTerrainSprite->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->setElapsed(syncTime);
-        }
+        m_pTerrainSprite->syncAllTweens(syncTime);
     }
-    for (auto & sprites : m_pOverlaySprites)
+    for (auto & sprite : m_pOverlaySprites)
     {
-        auto & tweens = sprites->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->setElapsed(syncTime);
-        }
+        sprite->syncAllTweens(syncTime);
     }
     if (m_pBaseTerrain.get() != nullptr)
     {

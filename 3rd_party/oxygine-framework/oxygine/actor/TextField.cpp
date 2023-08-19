@@ -107,7 +107,7 @@ namespace oxygine
         if (m_text != str)
         {
             m_text = str;
-            rebuildText(lock);
+            rebuildText();
         }
 #endif
     }
@@ -177,29 +177,28 @@ namespace oxygine
 #endif
     }
 
-    void TextField::rebuildText(bool lock)
+    void TextField::rebuildText()
     {
 #ifdef GRAPHICSUPPORT
-        if (lock)
+        if (!GameWindow::getWindow()->isMainThread())
         {
-            m_Locked.lock();
-        }
-        m_root.reset();
-        if (m_htmlText)
-        {
-            text::TextBuilder b;
-            m_root = b.parse(m_text);
+            emit MemoryManagement::getInstance().sigRebuildText(getSharedPtr<TextField>());
         }
         else
         {
-            m_root = MemoryManagement::create<text::TextNode>(m_text);
-        }
-        text::Aligner rd(m_style, getSize());
-        rd.align(*m_root.get());
-        m_textRect = rd.getBounds();
-        if (lock)
-        {
-            m_Locked.unlock();
+            m_root.reset();
+            if (m_htmlText)
+            {
+                text::TextBuilder b;
+                m_root = b.parse(m_text);
+            }
+            else
+            {
+                m_root = MemoryManagement::create<text::TextNode>(m_text);
+            }
+            text::Aligner rd(m_style, getSize());
+            rd.align(*m_root.get());
+            m_textRect = rd.getBounds();
         }
 #endif
     }

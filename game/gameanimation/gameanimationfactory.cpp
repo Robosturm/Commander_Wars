@@ -69,7 +69,7 @@ void GameAnimationFactory::release()
     m_pInstance.reset();
 }
 
-GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
+spGameAnimation GameAnimationFactory::createSpAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
 {
     CONSOLE_PRINT("Creating animation", GameConsole::eDEBUG);
     spGameAnimation animation = MemoryManagement::create<GameAnimation>(frameTime, pMap);
@@ -87,25 +87,44 @@ GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qi
         pMap->addChild(animation);
     }
     m_Animations.append(animation);
-    return animation.get();
+    return animation;
+}
+
+GameAnimation* GameAnimationFactory::createAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime, bool mapPosition)
+{
+    return createSpAnimation(pMap, x, y, frameTime, mapPosition).get();
 }
 
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(GameMap* pMap, Unit* pUnit, GameAction* pAction)
 {
-    return createWalkingAnimationV2(pMap, pUnit, pAction->getMovePath());
+    if (pUnit != nullptr)
+    {
+        return createWalkingAnimationV2(pMap, pUnit, pAction->getMovePath());
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap, Unit* pUnit, const QVector<QPoint> movePath)
 {
-    CONSOLE_PRINT("Creating walking animation", GameConsole::eDEBUG);
-    spGameAnimationWalk pGameAnimationWalk = MemoryManagement::create<GameAnimationWalk>(pUnit, movePath, pMap);
-    pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
-    if (pMap != nullptr)
+    if (pUnit != nullptr)
     {
-        pMap->addChild(pGameAnimationWalk);
+        CONSOLE_PRINT("Creating walking animation", GameConsole::eDEBUG);
+        spGameAnimationWalk pGameAnimationWalk = MemoryManagement::create<GameAnimationWalk>(pUnit->getSharedPtr<Unit>(), movePath, pMap);
+        pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
+        if (pMap != nullptr)
+        {
+            pMap->addChild(pGameAnimationWalk);
+        }
+        m_Animations.append(pGameAnimationWalk);
+        return pGameAnimationWalk.get();
     }
-    m_Animations.append(pGameAnimationWalk);
-    return pGameAnimationWalk.get();
+    else
+    {
+        return nullptr;
+    }
 }
 
 GameAnimationPower* GameAnimationFactory::createAnimationPower(GameMap* pMap, QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime)
@@ -171,7 +190,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
                                                            Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {    
     CONSOLE_PRINT("Creating battle animation", GameConsole::eDEBUG);
-    spGameAnimation pRet;    
+    spGameAnimation pRet;
     if (pDefUnit != nullptr && pMap != nullptr)
     {
         // log this attack to our battle log
@@ -185,8 +204,12 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
         auto battleViewMode = Settings::getInstance()->getBattleAnimationType();
         if (battleViewMode == GameEnums::BattleAnimationType_Overworld)
         {
-            pRet = createOverworldBattleAnimation(pMap, pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
-                                                  pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage)->getSharedPtr<GameAnimation>();
+            GameAnimation* pBattle = createOverworldBattleAnimation(pMap, pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
+                                                  pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
+            if (pBattle != nullptr)
+            {
+                pRet = pBattle->getSharedPtr<GameAnimation>();
+            }
         }
         else
         {
@@ -274,7 +297,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
     else
     {
         // attacking building or terrain
-        pRet = createAnimation(pMap, pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), 70)->getSharedPtr<GameAnimation>();
+        pRet = createSpAnimation(pMap, pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), 70);
         pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 2.0f);
         pRet->setSound("talongunhit.wav", 1);
     }
@@ -335,7 +358,10 @@ void GameAnimationFactory::removeAnimationFromQueue(spGameAnimation pAnimation)
 
 void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping)
 {
-    removeAnimation(pAnimation->getSharedPtr<GameAnimation>(), skipping, true);
+    if (pAnimation != nullptr)
+    {
+        removeAnimation(pAnimation->getSharedPtr<GameAnimation>(), skipping, true);
+    }
 }
 
 void GameAnimationFactory::removeAnimation(spGameAnimation pAnimation, bool skipping, bool removeFromQueue)

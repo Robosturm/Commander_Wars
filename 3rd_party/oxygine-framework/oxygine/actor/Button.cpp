@@ -75,7 +75,7 @@ namespace oxygine
                 {
                     m_btnPressed = me->index;
                     setState(statePressed);
-                    m_touchUpCbId = addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Button::_mouseEvent));
+                    m_touchUpCbId = addEventListenerWithId(TouchEvent::TOUCH_UP, EventCallback(this, &Button::_mouseEvent));
                 }
             }
             break;

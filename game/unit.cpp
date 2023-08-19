@@ -222,14 +222,18 @@ void Unit::removeShineTween()
     {
         if (m_ShineTweens[i].get() != nullptr)
         {
-            oxygine::spActor pActor = m_ShineTweens[i]->getClient()->getSharedPtr<oxygine::Actor>();
-            if (pActor.get() != nullptr)
+            auto* pClient = m_ShineTweens[i]->getClient();
+            if (pClient != nullptr)
             {
-                m_ShineTweens[i]->removeFromActor();
-                oxygine::spVStyleActor pVStyle = std::dynamic_pointer_cast<oxygine::VStyleActor>(pActor);
-                if (pVStyle.get() != nullptr)
+                oxygine::Actor* pActor = pClient;
+                if (pActor != nullptr)
                 {
-                    pVStyle->setAddColor(addColor);
+                    m_ShineTweens[i]->removeFromActor();
+                    oxygine::VStyleActor* pVStyle = dynamic_cast<oxygine::VStyleActor*>(pActor);
+                    if (pVStyle != nullptr)
+                    {
+                        pVStyle->setAddColor(addColor);
+                    }
                 }
             }
         }
@@ -321,27 +325,15 @@ void Unit::syncAnimation(oxygine::timeMS syncTime)
 #ifdef GRAPHICSUPPORT
     for (auto & sprite : m_pUnitSprites)
     {
-        auto & tweens = sprite->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->setElapsed(syncTime);
-        }
+        sprite->syncAllTweens(syncTime);
     }
     for (auto & sprite : m_pUnitWaitSprites)
     {
-        auto & tweens = sprite->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->setElapsed(syncTime);
-        }
+        sprite->syncAllTweens(syncTime);
     }
-    for (auto & icons : m_pIconSprites)
+    for (auto & sprite : m_pIconSprites)
     {
-        auto & tweens = icons->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->setElapsed(syncTime);
-        }
+        sprite->syncAllTweens(syncTime);
     }
 #endif
 }
@@ -1167,34 +1159,38 @@ bool Unit::canMoveAndFire(QPoint position)
 
 void Unit::loadUnit(Unit* pUnit, qint32 index)
 {
-    bool loaded = false;
-    if (m_TransportUnits.size() < getLoadingPlace() && index < 0)
+    if (pUnit != nullptr)
     {
-        m_TransportUnits.append(pUnit->getSharedPtr<Unit>());
-        loaded = true;
-    }
-    else if (index < getLoadingPlace())
-    {
-        if (index < m_TransportUnits.size())
+        spUnit pLoadUnit = pUnit->getSharedPtr<Unit>();
+        bool loaded = false;
+        if (m_TransportUnits.size() < getLoadingPlace() && index < 0)
         {
-            m_TransportUnits[index] = pUnit->getSharedPtr<Unit>();
+            m_TransportUnits.append(pLoadUnit);
+            loaded = true;
         }
-        else
+        else if (index < getLoadingPlace())
         {
-            m_TransportUnits.append(pUnit->getSharedPtr<Unit>());
+            if (index < m_TransportUnits.size())
+            {
+                m_TransportUnits[index] = pLoadUnit;
+            }
+            else
+            {
+                m_TransportUnits.append(pLoadUnit);
+            }
+            loaded = true;
         }
-        loaded = true;
-    }
-    if (loaded)
-    {
-        pUnit->removeUnit(false);
-        if (m_pMap != nullptr)
+        if (loaded)
         {
-            updateIcons(m_pMap->getCurrentViewPlayer());
-        }
-        else
-        {
-            updateIcons(nullptr);
+            pUnit->removeUnit(false);
+            if (m_pMap != nullptr)
+            {
+                updateIcons(m_pMap->getCurrentViewPlayer());
+            }
+            else
+            {
+                updateIcons(nullptr);
+            }
         }
     }
 }

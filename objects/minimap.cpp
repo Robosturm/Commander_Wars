@@ -227,17 +227,10 @@ void Minimap::updateMinimap(const GameMap* pMap, bool useVision)
                                 }
                                 else
                                 {
-#ifdef GRAPHICSUPPORT
                                     if (m_Items[item].unit.get() != nullptr)
                                     {
-                                        auto & tweens = m_Items[item].unit->getTweens();
-                                        for (auto & tween : tweens)
-                                        {
-                                            tween->reset();
-                                            tween->start(*m_Items[item].unit);
-                                        }
+                                        m_Items[item].unit->restartAllTweens();
                                     }
-#endif
                                 }
                             }
                         }

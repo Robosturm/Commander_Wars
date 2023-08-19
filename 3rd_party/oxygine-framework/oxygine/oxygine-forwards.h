@@ -44,6 +44,7 @@ namespace oxygine
     class Font;
     class CreateResourceContext;
     class Event;
+    class VStyleActor;
 
     using spClock = std::shared_ptr<Clock>;
     using spTexture = std::shared_ptr<Texture>;
@@ -60,6 +61,7 @@ namespace oxygine
     using spSlidingActorNoClipRect = std::shared_ptr<SlidingActorNoClipRect>;
     using spResAnim = std::shared_ptr<ResAnim>;
     using spTween = std::shared_ptr<Tween>;
+    using spVStyleActor = std::shared_ptr<VStyleActor>;
 
     using EventCallback = OwnedClosure<void, Event*>;
     using eventType = qint32;

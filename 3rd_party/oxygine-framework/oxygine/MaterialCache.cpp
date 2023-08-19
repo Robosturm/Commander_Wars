@@ -17,7 +17,7 @@ namespace oxygine
         {
             if (sec->compare(sec.get(), &other))
             {
-                return sec->getSharedPtr<Material>();
+                return sec;
             }
         }
         ++m_addCounter;

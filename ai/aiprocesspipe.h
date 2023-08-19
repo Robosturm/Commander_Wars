@@ -30,7 +30,7 @@ public:
     explicit AiProcessPipe();
    virtual ~AiProcessPipe();
 
-    void onGameStarted(GameMenue* pMenu);
+    void onGameStarted(spGameMenue pMenu);
     void onQuitGame();
     void quit();
     PipeState getPipeState() const;

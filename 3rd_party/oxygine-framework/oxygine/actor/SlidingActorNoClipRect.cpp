@@ -61,9 +61,9 @@ namespace oxygine
             m_drag.destroy();
             m_content->detach();
         }
-        m_touchDownId = content->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
-        m_touchUpId = content->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
-        m_touchMoveId = content->addEventListener(TouchEvent::MOVE, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+        m_touchDownId = content->addEventListenerWithId(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+        m_touchUpId = content->addEventListenerWithId(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+        m_touchMoveId = content->addEventListenerWithId(TouchEvent::MOVE, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
 
         m_current = 0;
         m_lastIterTime = timeMS(0);
@@ -331,7 +331,15 @@ namespace oxygine
                                     act->dispatchEvent(&ev);
 
                                 }
-                                act = act->getParent()->getSharedPtr<Actor>();
+                                auto* parent = act->getParent();
+                                if (parent != nullptr)
+                                {
+                                    act = parent->getSharedPtr<Actor>();
+                                }
+                                else
+                                {
+                                    act.reset();
+                                }
                             }
 
                             m_holded.reset();

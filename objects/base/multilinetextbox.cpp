@@ -36,7 +36,6 @@ MultilineTextbox::MultilineTextbox(qint32 width, qint32 heigth)
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            QMutexLocker locker(m_textfield->getLocked());
             oxygine::text::Node* root = m_textfield->getRootNode();
             m_focusPosition = 0;
             calculateNewFocusPosition(root, pTouchEvent->localPosition.x(), pTouchEvent->localPosition.y());

@@ -28,7 +28,7 @@ public:
      * @return the singleton of the factory
      */
     static GameAnimationFactory* getInstance();
-   virtual ~GameAnimationFactory() = default;
+    virtual ~GameAnimationFactory() = default;
     void release();
     /**
      * @brief queueAnimation queues the given animation by removing it from the execution
@@ -56,6 +56,7 @@ public:
      * @param removeFromQueue
      */
     static void removeAnimation(spGameAnimation pAnimation, bool skipping, bool removeFromQueue);
+    static spGameAnimation createSpAnimation(GameMap* pMap, qint32 x, qint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
 signals:
     void animationsFinished();
 public slots:

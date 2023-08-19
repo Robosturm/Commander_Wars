@@ -345,7 +345,7 @@ void COSelection::colorChanged(QColor color)
 
     for (qint32 i = 0; i < m_COFields.size(); i++)
     {
-        oxygine::Sprite* pSprite = dynamic_cast<oxygine::Sprite*>(m_COFields[i]->getLastChild().get());
+        oxygine::spSprite pSprite = oxygine::safeSpCast<oxygine::Sprite>(m_COFields[i]->getLastChild());
         pSprite->setColor(colorAlpha);
     }
 

@@ -305,15 +305,19 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
         if (pBuilding != nullptr)
         {
-            spQmlVectorPoint pPoints = pBuilding->getActionTargetFields()->getSharedPtr<QmlVectorPoint>();
-            QPoint targetOffset = pBuilding->getActionTargetOffset();
-            QPoint buildingPos(pBuilding->Building::getX(), pBuilding->Building::getY());
-            if (pPoints.get() != nullptr && pPoints->size() > 0)
+            auto* points = pBuilding->getActionTargetFields();
+            if (points != nullptr)
             {
-                Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
-                for (auto & point : pPoints->getVector())
+                spQmlVectorPoint pPoints = points->getSharedPtr<QmlVectorPoint>();
+                QPoint targetOffset = pBuilding->getActionTargetOffset();
+                QPoint buildingPos(pBuilding->Building::getX(), pBuilding->Building::getY());
+                if (pPoints.get() != nullptr && pPoints->size() > 0)
                 {
-                    createMarkedField(buildingPos + targetOffset + point, QColor(255, 0, 0));
+                    Mainapp::getInstance()->getAudioManager()->playSound("selectunit.wav");
+                    for (auto & point : pPoints->getVector())
+                    {
+                        createMarkedField(buildingPos + targetOffset + point, QColor(255, 0, 0));
+                    }
                 }
             }
         }
@@ -327,12 +331,7 @@ void HumanPlayerInput::syncMarkedFields()
 #ifdef GRAPHICSUPPORT
     for (auto & field : m_Fields)
     {
-        auto & tweens = field->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->reset();
-            pTween->start(*field);
-        }
+        field->restartAllTweens();
     }
 #endif
 }

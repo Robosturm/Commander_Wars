@@ -65,7 +65,7 @@ Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values
         addChild(m_Slider[i]);
 
         oxygine::spButton pLockButton = pObjectManager->createIconButton("unlock", 40);
-        oxygine::Sprite* pSprite = oxygine::safeCast<Sprite*>(pLockButton->getFirstChild().get());
+        oxygine::spSprite pSprite = oxygine::safeSpCast<Sprite>(pLockButton->getFirstChild());
 
 
         qint32 x = m_Slider[i]->getX() + m_Slider[i]->getScaledWidth() + 10;

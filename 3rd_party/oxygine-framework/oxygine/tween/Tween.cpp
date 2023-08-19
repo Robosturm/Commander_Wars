@@ -92,8 +92,8 @@ namespace oxygine
 
     void Tween::removeFromActor()
     {
-        oxygine::spActor pClient = getClient()->getSharedPtr<Actor>();
-        if (pClient.get() != nullptr)
+        oxygine::Actor* pClient = getClient();
+        if (pClient != nullptr)
         {
             spTween pTween = getSharedPtr<Tween>();
             pClient->removeTween(pTween);

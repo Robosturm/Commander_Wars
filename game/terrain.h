@@ -41,20 +41,20 @@ public:
      * @brief The DrawPriority enum z-priority for sprites
      */
     ENUM_CLASS DrawPriority
-    {
-        Terrain = 0,
-        TerrainOverlay,
-        Shroud,
-        Building,
-        TerrainMarker,                
+        {
+            Terrain = 0,
+            TerrainOverlay,
+            Shroud,
+            Building,
+            TerrainMarker,
 
-    };
+        };
     ENUM_CLASS ExtraDrawPriority
-    {
-        BuildingLayer = 2,
-    };
+        {
+            BuildingLayer = 2,
+        };
     static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap, const QString & currentTerrainPalette = "");
-   virtual ~Terrain();
+    ~Terrain();
 
     void init();
     /**
@@ -456,7 +456,7 @@ public:
     Q_INVOKABLE inline QString getBaseTerrainIDOfLevel(qint32 count)
     {
         if (m_pBaseTerrain.get() != nullptr &&
-           ((count > 0) || (count < 0)))
+            ((count > 0) || (count < 0)))
         {
             return m_pBaseTerrain->getBaseTerrainIDOfLevel(count - 1);
         }

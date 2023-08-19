@@ -2360,7 +2360,7 @@ void GameMenue::changeAiForPlayer(qint32 player, GameEnums::AiTypes ai)
 
 void GameMenue::startAiPipeGame()
 {
-    Mainapp::getAiProcessPipe().onGameStarted(this);
+    Mainapp::getAiProcessPipe().onGameStarted(getSharedPtr<GameMenue>());
 }
 
 void GameMenue::sendGameStartedToServer()

@@ -2121,7 +2121,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
         {
             pInterpreter->threadProcessEvents();
             MoveUnitData data;
-            createUnitData(pUnit.get(), data, enemy, m_influenceUnitRange, otherUnitData, !enemy);
+            createUnitData(pUnit, data, enemy, m_influenceUnitRange, otherUnitData, !enemy);
             pUnitData.push_back(data);
         }
     }
@@ -2160,7 +2160,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
             if (!found)
             {
                 MoveUnitData data;
-                createUnitData(pUnit.get(), data, enemy, m_influenceUnitRange, otherUnitData, !enemy);
+                createUnitData(pUnit, data, enemy, m_influenceUnitRange, otherUnitData, !enemy);
                 pUnitData.push_back(data);
             }
         }
@@ -2175,7 +2175,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
             {
                 pInterpreter->threadProcessEvents();
                 auto & unitData = pUnitData[i2];
-                Unit* pUnit = unitData.pUnit.get();
+                spUnit pUnit = unitData.pUnit;
                 if (pUnit != nullptr &&
                     pUnit->getHp() > 0 &&
                     pUnit->getTerrain() != nullptr)
@@ -2193,13 +2193,13 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, std::vector<MoveUnitData
     }
 }
 
-void NormalAi::createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, double moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always)
+void NormalAi::createUnitData(spUnit pUnit, MoveUnitData & data, bool enemy, double moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always)
 {
     QPoint pos = pUnit->Unit::getPosition();
-    data.pUnitPfs = MemoryManagement::create<UnitPathFindingSystem>(m_pMap, pUnit);
+    data.pUnitPfs = MemoryManagement::create<UnitPathFindingSystem>(m_pMap, pUnit.get());
     data.movementPoints = pUnit->getMovementpoints(pos);
     data.maxFireRange = pUnit->getMaxRange(pos);
-    data.pUnit = pUnit->getSharedPtr<Unit>();
+    data.pUnit = pUnit;
     data.minFireRange = pUnit->getMinRange(pos);
     data.unitCosts = pUnit->getCoUnitValue();
     data.nextAiStep = m_aiFunctionStep;

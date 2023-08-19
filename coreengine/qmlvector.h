@@ -74,7 +74,10 @@ public:
     }
     Q_INVOKABLE inline void append(Unit* t)
     {
-        m_Vector.push_back(t->getSharedPtr<Unit>());
+        if (t != nullptr)
+        {
+            m_Vector.push_back(t->getSharedPtr<Unit>());
+        }
     }
     Q_INVOKABLE inline qint32 size() const
     {
@@ -139,7 +142,10 @@ public:
     }
     Q_INVOKABLE inline void append(Building* t)
     {
-        m_Vector.push_back(t->getSharedPtr<Building>());
+        if (t != nullptr)
+        {
+            m_Vector.push_back(t->getSharedPtr<Building>());
+        }
     }
     Q_INVOKABLE inline qint32 size() const
     {

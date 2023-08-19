@@ -86,7 +86,7 @@ Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, const QSt
     }
     else
     {
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
+        oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Ready"));
         m_pPlayerSelection->setIsServerGame(true);
     }
 }
@@ -111,7 +111,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
     if (m_networkMode == NetworkMode::Client)
     {
         m_pReadyAndLeave->setVisible(true);
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
+        oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Ready"));
     }
     else if (m_networkMode == NetworkMode::Observer)
     {
@@ -2089,11 +2089,11 @@ void Multiplayermenu::changeButtonText()
 {
     if (m_pPlayerSelection->getPlayerReady())
     {
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Not Ready"));
+        oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Not Ready"));
     }
     else
     {
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
+        oxygine::safeSpCast<Label>(m_pButtonStart->getFirstChild())->setHtmlText(tr("Ready"));
     }
 }
 

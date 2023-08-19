@@ -442,19 +442,11 @@ void Building::syncAnimation(oxygine::timeMS syncTime)
 #ifdef GRAPHICSUPPORT
     for (auto & sprite : m_pBuildingSprites)
     {
-        auto & tweens = sprite->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->setElapsed(syncTime);
-        }
+        sprite->syncAllTweens(syncTime);
     }
     for (auto & sprite : m_pWeatherOverlaySprites)
     {
-        auto & tweens = sprite->getTweens();
-        for (auto & pTween : tweens)
-        {
-            pTween->setElapsed(syncTime);
-        }
+        sprite->syncAllTweens(syncTime);
     }
 #endif
 }

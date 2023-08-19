@@ -165,13 +165,13 @@ void Panel::hideItems()
     auto & children = m_ContentRect->getChildren();
     for (auto & child : children)
     {
-        Tooltip* pTooltip = dynamic_cast<Tooltip*>(child.get());
-        DropDownmenuBase* pDropDownmenuBase = dynamic_cast<DropDownmenuBase*>(child.get());
-        if (pTooltip != nullptr)
+        spTooltip pTooltip = std::dynamic_pointer_cast<Tooltip>(child);
+        if (pTooltip.get() != nullptr)
         {
             pTooltip->hideTooltip();
         }
-        if (pDropDownmenuBase != nullptr)
+        spDropDownmenuBase pDropDownmenuBase = std::dynamic_pointer_cast<DropDownmenuBase>(child);
+        if (pDropDownmenuBase.get() != nullptr)
         {
             pDropDownmenuBase->hideDropDown();
         }

@@ -74,9 +74,10 @@ void AiProcessPipe::onConnected(quint64 socket)
     m_pipeState = PipeState::Connected;
 }
 
-void AiProcessPipe::onGameStarted(GameMenue* pMenu)
+void AiProcessPipe::onGameStarted(spGameMenue pMenu)
 {
-    if (m_pActiveConnection != nullptr &&
+    if (pMenu!= nullptr &&
+        m_pActiveConnection != nullptr &&
         Settings::getInstance()->getSpawnAiProcess() &&
         !Settings::getInstance()->getAiSlave())
     {
@@ -90,7 +91,7 @@ void AiProcessPipe::onGameStarted(GameMenue* pMenu)
         m_ActionBuffer.clear();
         CONSOLE_PRINT("AI-Pipe preparing the game", GameConsole::eDEBUG);
         m_pipeState = PipeState::PreparingGame;
-        m_pMenu = pMenu->getSharedPtr<GameMenue>();
+        m_pMenu = pMenu;
         m_pMap = pMenu->getMap();
         connect(&m_pMenu->getActionPerformer(), &ActionPerformer::sigAiProcesseSendAction, this, &AiProcessPipe::sendActionToSlave, Qt::QueuedConnection);
         connect(this, &AiProcessPipe::sigPerformAction, &m_pMenu->getActionPerformer(), &ActionPerformer::performAction, Qt::DirectConnection);

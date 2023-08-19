@@ -354,18 +354,21 @@ void HeavyAi::initUnits(spQmlVectorUnit & pUnits, std::vector<MoveUnitData> & un
 
 void HeavyAi::addNewUnitToUnitData(std::vector<MoveUnitData> & units, Unit* pUnit, bool enemyUnits)
 {
-    MoveUnitData data;
-    data.pUnit = pUnit->getSharedPtr<Unit>();
-    data.pUnitPfs = MemoryManagement::create<UnitPathFindingSystem>(m_pMap, pUnit);
-    data.movementPoints = data.pUnit->getMovementpoints(data.pUnit->getPosition());
-    data.pUnitPfs->setMovepoints(data.movementPoints * 2);
-    data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
-    data.pUnitPfs->explore();
-    if (!enemyUnits)
+    if (pUnit != nullptr)
     {
-        updateCaptureBuildings(data);
+        MoveUnitData data;
+        data.pUnit = pUnit->getSharedPtr<Unit>();
+        data.pUnitPfs = MemoryManagement::create<UnitPathFindingSystem>(m_pMap, pUnit);
+        data.movementPoints = data.pUnit->getMovementpoints(data.pUnit->getPosition());
+        data.pUnitPfs->setMovepoints(data.movementPoints * 2);
+        data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
+        data.pUnitPfs->explore();
+        if (!enemyUnits)
+        {
+            updateCaptureBuildings(data);
+        }
+        units.push_back(data);
     }
-    units.push_back(data);
 }
 
 void HeavyAi::updateUnits()

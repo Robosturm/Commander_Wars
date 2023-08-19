@@ -467,7 +467,7 @@ protected:
      * @param data
      * @param enemy
      */
-    void createUnitData(Unit* pUnit, MoveUnitData & data, bool enemy, double moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always = false);
+    void createUnitData(spUnit pUnit, MoveUnitData & data, bool enemy, double moveMultiplier, std::vector<MoveUnitData> & otherUnitData, bool always = false);
     /**
      * @brief createUnitInfluenceMap
      */

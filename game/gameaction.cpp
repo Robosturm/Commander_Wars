@@ -97,7 +97,15 @@ void GameAction::perform()
     {
         printAction();
     }
-    m_perfomingUnit = getTargetUnit()->getSharedPtr<Unit>();
+    Unit* pUnit = getTargetUnit();
+    if (pUnit != nullptr)
+    {
+        m_perfomingUnit = pUnit->getSharedPtr<Unit>();
+    }
+    else
+    {
+        m_perfomingUnit = nullptr;
+    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "perform";
     QJSValueList args({pInterpreter->newQObject(this),
