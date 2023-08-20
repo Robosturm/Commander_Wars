@@ -57,6 +57,10 @@ namespace oxygine
         virtual void setEnabled(bool enabled);
 
     protected:
+        bool detached() const;
+        bool requiresThreadChange() const;
+
+    protected:
         struct listener
         {
             EventCallback cb;

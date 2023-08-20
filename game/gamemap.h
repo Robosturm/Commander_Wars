@@ -68,8 +68,7 @@ public:
      * @param map path to the map which should be loaded
      */
     explicit GameMap(QString map, bool onlyLoad, bool fast, bool savegame);
-    void loadMap(QString map, bool onlyLoad, bool fast, bool savegame);
-   virtual ~GameMap();
+    ~GameMap();
     /**
      * @brief newMap
      * @param width
@@ -903,6 +902,7 @@ public:
 private slots:
     void zoomChanged();
 private:
+    void loadMap(QString map, bool onlyLoad, bool fast, bool savegame);
     /**
      * @brief updateFlowTiles
      * @param flowPoints

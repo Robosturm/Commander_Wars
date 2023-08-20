@@ -447,7 +447,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
 {
     
     spGameMap pMap = MemoryManagement::create<GameMap>(width, heigth, playerCount);
-    RandomMapGenerator::randomMap(pMap.get(), width, heigth, playerCount, roadSupport, seed,
+    RandomMapGenerator::randomMap(pMap, width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize,
                         startBaseSize / 100.0f,
                         units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed, mirrored);

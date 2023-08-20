@@ -807,7 +807,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
 {
     CONSOLE_PRINT("EditorMenue::createRandomMap", GameConsole::eDEBUG);
     cleanTemp(-1);
-    RandomMapGenerator::randomMap(m_pMap.get(), width, heigth, playerCount, roadSupport, seed,
+    RandomMapGenerator::randomMap(m_pMap, width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize, startBaseSize / 100.0f,
                         units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed,
                         mirrored);
@@ -1026,6 +1026,8 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
         }
         case EditorModes::PlaceEditorSelection:
         {
+
+
             // resolve cursor move
             switch (m_EditorSelection->getCurrentMode())
             {

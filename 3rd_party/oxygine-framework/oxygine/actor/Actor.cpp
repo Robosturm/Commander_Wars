@@ -28,38 +28,35 @@ namespace oxygine
         removeChildren();
     }
 
-    Stage* Actor::__getStage()
+    Stage* Actor::__getStage() const
     {
         return m_stage;
     }
 
     void Actor::added2stage(Stage* stage)
     {
-        if (m_stage != nullptr)
+        if (m_stage == nullptr)
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::added2stage trying to add to stage while on a stage");
-        }
-        m_stage = stage;
-        for (auto & child : m_children)
-        {
-            child->added2stage(stage);
+            m_stage = stage;
+            for (auto & child : m_children)
+            {
+                child->added2stage(stage);
+            }
         }
     }
 
     void Actor::removedFromStage()
     {
-        if (m_stage == nullptr)
+        if (m_stage != nullptr)
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removedFromStage trying to remove from stage while not on a stage");
-            return;
-        }
-        m_stage->removeEventListeners(this);
-        m_stage = nullptr;
+            m_stage->removeEventListeners(this);
+            m_stage = nullptr;
 
-        m_pressedOvered = 0;
-        for (auto & child : m_children)
-        {
-            child->removedFromStage();
+            m_pressedOvered = 0;
+            for (auto & child : m_children)
+            {
+                child->removedFromStage();
+            }
         }
     }
 
@@ -348,7 +345,7 @@ namespace oxygine
         m_zOrder = zorder;
         if (m_parent)
         {
-            if (!GameWindow::getWindow()->isMainThread())
+            if (requiresThreadChange())
             {
                 emit MemoryManagement::getInstance().sigSetPriority(getSharedPtr<Actor>(), zorder);
             }
@@ -488,7 +485,7 @@ namespace oxygine
     void Actor::restartAllTweens()
     {
 #ifdef GRAPHICSUPPORT
-        if (!GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigRestartAllTweens(getSharedPtr<Actor>());
         }
@@ -506,7 +503,7 @@ namespace oxygine
     void Actor::syncAllTweens(oxygine::timeMS syncTime)
     {
 #ifdef GRAPHICSUPPORT
-        if (!GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigSyncAllTweens(getSharedPtr<Actor>(), syncTime);
         }
@@ -676,7 +673,7 @@ namespace oxygine
 
     void Actor::addChild(spActor actor)
     {
-        if (!GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigAddChild(getSharedPtr<Actor>(), actor);
         }
@@ -689,14 +686,21 @@ namespace oxygine
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add self");
         }
-        actor->detach();
-        insertActor(actor);
-        setParent(actor.get(), this);
+        else
+        {
+            actor->detach();
+            insertActor(actor);
+            setParent(actor.get(), this);
+        }
     }
 
     void Actor::removeChild(spActor actor)
     {
-        if (!GameWindow::getWindow()->isMainThread())
+        if (actor->m_parent == nullptr)
+        {
+            return;
+        }
+        else if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigRemoveChild(getSharedPtr<Actor>(), actor);
         }
@@ -729,7 +733,7 @@ namespace oxygine
 
     void Actor::removeChildren()
     {
-        if (!GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigRemoveChildren(getSharedPtr<Actor>());
         }
@@ -738,7 +742,6 @@ namespace oxygine
             for (auto & child : m_children)
             {
                 child->setParent(child.get(), nullptr);
-                removeChild(child);
             }
             m_children.clear();
         }
@@ -915,7 +918,7 @@ namespace oxygine
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween tween is nullptr");
         }
-        else if (!GameWindow::getWindow()->isMainThread())
+        else if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigAddTween(getSharedPtr<Actor>(), tween);
         }
@@ -934,7 +937,7 @@ namespace oxygine
         {
             return;
         }
-        else if (!GameWindow::getWindow()->isMainThread())
+        else if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigRemoveTween(getSharedPtr<Actor>(), pTween);
         }
@@ -958,7 +961,7 @@ namespace oxygine
     void Actor::removeTweens()
     {
 #ifdef GRAPHICSUPPORT
-        if (!GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigRemoveTweens(getSharedPtr<Actor>());
         }

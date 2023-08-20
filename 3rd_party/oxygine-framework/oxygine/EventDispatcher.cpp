@@ -1,6 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/Event.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 #ifndef GRAPHICSUPPORT
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
@@ -8,9 +9,23 @@
 
 namespace oxygine
 {
+
+    bool EventDispatcher::detached() const
+    {
+        const Actor* pActor = dynamic_cast<const Actor*>(this);
+        if (pActor != nullptr)
+        {
+            return pActor->__getStage() == nullptr;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     void EventDispatcher::addEventListener(eventType et, const EventCallback cb)
     {
-        if (!oxygine::GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigAddEventListener(getSharedPtr<EventDispatcher>(), et, cb);
         }
@@ -22,7 +37,7 @@ namespace oxygine
 
     qint32 EventDispatcher::addEventListenerWithId(eventType et, const EventCallback & cb)
     {
-        OXY_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        OXY_ASSERT(notInSharedUse() || oxygine::GameWindow::getWindow()->isMainThread() || detached());
         m_lastID++;
         listener ls;
         ls.type = et;
@@ -47,7 +62,7 @@ namespace oxygine
 
     void EventDispatcher::removeEventListener(qint32 id)
     {
-        if (!oxygine::GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigRemoveEventListener(getSharedPtr<EventDispatcher>(), id);
         }
@@ -68,7 +83,7 @@ namespace oxygine
 
     void EventDispatcher::removeEventListeners(IClosureOwner* callbackThis)
     {
-        if (!oxygine::GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigRemoveEventListeners(getSharedPtr<EventDispatcher>(), callbackThis);
         }
@@ -87,15 +102,15 @@ namespace oxygine
     }
 
     void EventDispatcher::dispatchEvent(Event* event)
-    {
+    {        
         OXY_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        if (!m_enabled || !GameWindow::getWindow()->renderingPaused())
+        {
+            return;
+        }
         if (!event->target)
         {
             event->target = getSharedPtr<EventDispatcher>();
-        }
-        if (!m_enabled)
-        {
-            return;
         }
         qint32 i = 0;
         while (i < m_listeners.size())
@@ -123,5 +138,13 @@ namespace oxygine
     void EventDispatcher::setEnabled(bool enabled)
     {
         m_enabled = enabled;
+    }
+
+    bool EventDispatcher::requiresThreadChange() const
+    {
+        return !notInSharedUse() &&
+               !GameWindow::getWindow()->isMainThread() &&
+               !detached() &&
+               !GameWindow::getWindow()->renderingPaused();
     }
 }

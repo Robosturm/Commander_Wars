@@ -38,12 +38,6 @@ namespace oxygine
         launchGame();
     }
 
-    void WindowBase::timerEvent(QTimerEvent *)
-    {
-        // Request an update
-        update();
-    }
-
     void WindowBase::redrawUi()
     {
         if (!m_noUi)
@@ -85,9 +79,16 @@ namespace oxygine
 
     void WindowBase::paintGL()
     {
-        updateData();
-        if (m_pauseMutex.tryLock())
+        // check for termination
+        if (m_quit)
         {
+            m_terminating = true;
+            CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
+            QCoreApplication::exit();
+        }
+        if (!m_terminating)
+        {
+            updateData();
             if (oxygine::Stage::getStage().get() != nullptr)
             {
                 oxygine::Stage::getStage()->updateStage();
@@ -102,21 +103,6 @@ namespace oxygine
                     m_repeatedFramesDropped = 0;
                 }
             }
-            m_pauseMutex.unlock();
-        }
-        else
-        {
-            ++m_repeatedFramesDropped;
-            if (m_repeatedFramesDropped > 10)
-            {
-                update();
-            }
-        }
-        // check for termination
-        if (m_quit)
-        {
-            CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
-            QCoreApplication::exit();
         }
     }
 }

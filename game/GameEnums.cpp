@@ -6,6 +6,11 @@
 
 GameEnums GameEnums::m_instance;
 
+GameEnums::GameEnums()
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
 void GameEnums::registerEnums()
 {
 

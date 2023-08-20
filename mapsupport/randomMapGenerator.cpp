@@ -18,7 +18,7 @@
 #include "objects/loadingscreen.h"
 
 const char* const RANDOMMAPGENERATORNAME = "RANDOMMAPGENERATOR";
-qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth, qint32 playerCount,
+qint32 RandomMapGenerator::randomMap(spGameMap pMap, qint32 width, qint32 heigth, qint32 playerCount,
                                      bool roadSupport, qint32 seed,
                                      const QVector<std::tuple<QString, float>> & terrains,
                                      const QVector<std::tuple<QString, float>> & buildings,
@@ -32,7 +32,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
                                      bool mirrored)
 {
     
-    if (pMap == nullptr)
+    if (pMap.get() == nullptr)
     {
         return 0;
     }
@@ -120,7 +120,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
         {
             QJSValueList args =
             {
-                pInterpreter->newQObject(pMap),
+                pInterpreter->newQObject(pMap.get()),
             };
 
             float terrainChance = std::get<1>(terrains[i]);
@@ -130,7 +130,7 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
             QJSValue terrainType = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "CreateType", args);
             if (list.size() == chances.size())
             {
-                randomMapPlaceTerain(pMap, terrainID, startWidth, startHeigth, terrainChance / 100.0f,
+                randomMapPlaceTerain(pMap.get(), terrainID, startWidth, startHeigth, terrainChance / 100.0f,
                                      distribution.toVariant().toPoint(), list, chances,
                                      static_cast<GameEnums::RandomMapTerrainType>(terrainType.toInt()), randInt);
             }
@@ -164,12 +164,12 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
     QVector<QPoint> basePoints;
     if (mirrored)
     {
-        basePoints = randomMapCreateBuildings(pMap, startWidth, startHeigth, fieldChance, randInt, buildings, ownedBaseSize,
+        basePoints = randomMapCreateBuildings(pMap.get(), startWidth, startHeigth, fieldChance, randInt, buildings, ownedBaseSize,
                                               startBaseSize, progress, maxSteps, mirrorX, mirrorY);
     }
     else
     {
-        basePoints = randomMapCreateBuildings(pMap, fieldChance, randInt, buildings, ownedBaseSize,
+        basePoints = randomMapCreateBuildings(pMap.get(), fieldChance, randInt, buildings, ownedBaseSize,
                                               startBaseSize, progress, maxSteps);
     }
 
@@ -179,14 +179,14 @@ qint32 RandomMapGenerator::randomMap(GameMap* pMap, qint32 width, qint32 heigth,
         ++progress;
         if (mirrorX != MirrorMode::none || mirrorY != MirrorMode::none)
         {
-            randomMapCreateRoad(pMap, startWidth, startHeigth, randInt, basePoints, mirrorX, mirrorY);
+            randomMapCreateRoad(pMap.get(), startWidth, startHeigth, randInt, basePoints, mirrorX, mirrorY);
         }
         else
         {
-            randomMapCreateRoad(pMap, randInt, basePoints);
+            randomMapCreateRoad(pMap.get(), randInt, basePoints);
         }
     }
-    randomMapPlaceUnits(pMap, units, unitCount, startBaseUnitSize, unitDistribution, basePoints, unitsDistributed, progress, maxSteps, randInt, mirrorX, mirrorY);
+    randomMapPlaceUnits(pMap.get(), units, unitCount, startBaseUnitSize, unitDistribution, basePoints, unitsDistributed, progress, maxSteps, randInt, mirrorX, mirrorY);
 
     pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "customStep");
 

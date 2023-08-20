@@ -11,6 +11,12 @@ SmtpMailSender::SmtpMailSender(QObject *parent)
 {
     Interpreter::setCppOwnerShip(this);
     connect(this, &SmtpMailSender::sigSendMail, this, &SmtpMailSender::sendMail, Qt::QueuedConnection);
+    connect(this, &SmtpMailSender::sigMoveToThread, this, &SmtpMailSender::slotMoveToThread, Qt::BlockingQueuedConnection);
+}
+
+void SmtpMailSender::slotMoveToThread(QThread* pThread)
+{
+    moveToThread(pThread);
 }
 
 bool SmtpMailSender::connectToServer(SmtpClient & client)

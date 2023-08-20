@@ -238,7 +238,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             pLoadingScreen->moveToThread(m_Workerthread.get());
             m_AudioManager = MemoryManagement::create<AudioManager>(m_noAudio);
 #ifdef AUDIOSUPPORT
-            m_audioThread->start(QThread::Priority::HighestPriority);
+            m_audioThread->start(QThread::Priority::TimeCriticalPriority);
             m_AudioManager->moveToThread(m_audioThread.get());
             m_AudioManager->initAudio();
             m_AudioManager->clearPlayList();
@@ -412,13 +412,25 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_Workerthread->setObjectName("WorkerThread");
 #endif
             m_Networkthread->start(QThread::Priority::NormalPriority);
+#ifdef GRAPHICSUPPORT
+            if (!m_noUi)
+            {
+                m_Workerthread->start(QThread::Priority::HighestPriority);
+            }
+            else
+            {
+                m_Workerthread->start(QThread::Priority::NormalPriority);
+            }
+#else
             m_Workerthread->start(QThread::Priority::NormalPriority);
+#endif
             redrawUi();
             if (!m_noUi)
             {
                 // refresh timer cycle before using it.
                 Settings::getInstance()->setFramesPerSecond(Settings::getInstance()->getFramesPerSecond());
-                m_Timer.start(m_timerCycle, this);
+                m_timer.setInterval(m_timerCycle);
+                m_timer.start();
             }
             GameConsole::getInstance()->moveToThread(Mainapp::getWorkerthread());
             if (m_Worker != nullptr)
@@ -461,7 +473,18 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 if (Settings::getInstance()->getServer() && !m_slave)
                 {
                     MainServer::getInstance();
-                    m_GameServerThread->start(QThread::Priority::NormalPriority);
+#ifdef GRAPHICSUPPORT
+                    if (m_noUi)
+                    {
+                        m_GameServerThread->start(QThread::Priority::HighestPriority);
+                    }
+                    else
+                    {
+                        m_GameServerThread->start(QThread::Priority::NormalPriority);
+                    }
+#else
+                    m_GameServerThread->start(QThread::Priority::HighestPriority);
+#endif
                 }
                 if (m_slave && m_initScript.isEmpty())
                 {
@@ -781,7 +804,7 @@ void Mainapp::showCrashReport(const QString & log)
 void Mainapp::setNoUi()
 {
     m_noUi = true;
-    m_Timer.stop();
+    m_timer.stop();
 }
 
 void Mainapp::setNoAudio()
@@ -878,7 +901,10 @@ void Mainapp::onQuit()
     if (m_Workerthread->isRunning())
     {
         m_Workerthread->quit();
-        m_Workerthread->wait();
+        while (!m_Workerthread->wait(1))
+        {
+            QCoreApplication::processEvents();
+        }
     }
     QCoreApplication::processEvents();
     m_aiProcessPipe.reset();
@@ -891,14 +917,20 @@ void Mainapp::onQuit()
     if (m_audioThread->isRunning())
     {
         m_audioThread->quit();
-        m_audioThread->wait();
+        while (!m_audioThread->wait(1))
+        {
+            QCoreApplication::processEvents();
+        }
     }
 #endif
     QCoreApplication::processEvents();
     if (m_Networkthread->isRunning())
     {
         m_Networkthread->quit();
-        m_Networkthread->wait();
+        while (!m_Networkthread->wait(1))
+        {
+            QCoreApplication::processEvents();
+        }
     }
     QCoreApplication::processEvents();
     CONSOLE_PRINT("Shutting down game server", GameConsole::eDEBUG);
@@ -909,7 +941,10 @@ void Mainapp::onQuit()
             MainServer::getInstance()->release();
         }
         m_GameServerThread->quit();
-        m_GameServerThread->wait();
+        while (!m_GameServerThread->wait(1))
+        {
+            QCoreApplication::processEvents();
+        }
     }
     QCoreApplication::processEvents();
 }

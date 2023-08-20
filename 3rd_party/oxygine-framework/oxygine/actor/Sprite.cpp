@@ -194,7 +194,7 @@ namespace oxygine
     void Sprite::setColorTable(const oxygine::spResAnim pAnim, bool matrix)
     {
 #ifdef GRAPHICSUPPORT
-        if (!GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigSetColorTable(getSharedPtr<Sprite>(), pAnim, matrix);
         }
@@ -249,7 +249,7 @@ namespace oxygine
     void Sprite::changeAnimFrame(const AnimationFrame& frame)
     {
 #ifdef GRAPHICSUPPORT
-        if (!GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigChangeAnimFrame(getSharedPtr<Sprite>(), frame);
         }

@@ -40,7 +40,7 @@ namespace oxygine
         {
             return;
         }
-        if (!GameWindow::getWindow()->isMainThread())
+        else if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigSetAddColor(getSharedPtr<VStyleActor>(), color);
         }

@@ -9,21 +9,20 @@ MemoryManagement MemoryManagement::m_memoryManagement;
 
 MemoryManagement::MemoryManagement()
 {
-    connect(this, &MemoryManagement::sigSetAddColor, this, &MemoryManagement::setAddColor);
-    connect(this, &MemoryManagement::sigRebuildText, this, &MemoryManagement::rebuildText);
-    connect(this, &MemoryManagement::sigChangeAnimFrame, this, &MemoryManagement::changeAnimFrame);
-    connect(this, &MemoryManagement::sigSetColorTable, this, &MemoryManagement::setColorTable);
-    connect(this, &MemoryManagement::sigRestartAllTweens, this, &MemoryManagement::restartAllTweens);
-    connect(this, &MemoryManagement::sigSyncAllTweens, this, &MemoryManagement::syncAllTweens);
-    connect(this, &MemoryManagement::sigAddChild, this, &MemoryManagement::addChild);
-    connect(this, &MemoryManagement::sigRemoveChild, this, &MemoryManagement::removeChild);
-    connect(this, &MemoryManagement::sigSetPriority, this, &MemoryManagement::setPriority);
-    connect(this, &MemoryManagement::sigRemoveTweens, this, &MemoryManagement::removeTweens);
-    connect(this, &MemoryManagement::sigRemoveChildren, this, &MemoryManagement::removeChildren);
-
-    connect(this, &MemoryManagement::sigAddEventListener, this, &MemoryManagement::addEventListener);
-    connect(this, &MemoryManagement::sigRemoveEventListener, this, &MemoryManagement::removeEventListener);
-    connect(this, &MemoryManagement::sigRemoveEventListeners, this, &MemoryManagement::removeEventListeners);
+    connect(this, &MemoryManagement::sigSetAddColor, this, &MemoryManagement::setAddColor, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigRebuildText, this, &MemoryManagement::rebuildText, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigChangeAnimFrame, this, &MemoryManagement::changeAnimFrame, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigSetColorTable, this, &MemoryManagement::setColorTable, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigRestartAllTweens, this, &MemoryManagement::restartAllTweens, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigSyncAllTweens, this, &MemoryManagement::syncAllTweens, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigAddChild, this, &MemoryManagement::addChild, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigRemoveChild, this, &MemoryManagement::removeChild, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigSetPriority, this, &MemoryManagement::setPriority, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigRemoveTweens, this, &MemoryManagement::removeTweens, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigRemoveChildren, this, &MemoryManagement::removeChildren, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigAddEventListener, this, &MemoryManagement::addEventListener, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigRemoveEventListener, this, &MemoryManagement::removeEventListener, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigRemoveEventListeners, this, &MemoryManagement::removeEventListeners, Qt::BlockingQueuedConnection);
 }
 
 void MemoryManagement::addEventListener(oxygine::spEventDispatcher dispatcher, oxygine::eventType et, const oxygine::EventCallback cb)

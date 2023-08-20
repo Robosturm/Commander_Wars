@@ -361,7 +361,7 @@ namespace oxygine
         QPoint stage2local(const QPoint& pos = QPoint(), Actor* stage = nullptr) const;
 
         /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
-        Stage* __getStage();
+        Stage* __getStage() const;
 
         void setNotPressed(MouseButton b);
 

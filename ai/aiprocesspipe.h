@@ -28,9 +28,9 @@ public:
         Ingame,
     };
     explicit AiProcessPipe();
-   virtual ~AiProcessPipe();
+    ~AiProcessPipe();
 
-    void onGameStarted(spGameMenue pMenu);
+    void onGameStarted(GameMenue* pMenu);
     void onQuitGame();
     void quit();
     PipeState getPipeState() const;
@@ -64,7 +64,7 @@ private:
     QList<spGameAction> m_ActionBuffer;
     QMutex m_ActionMutex;
     GameMap* m_pMap{nullptr};
-    spGameMenue m_pMenu;
+    std::weak_ptr<oxygine::EventDispatcher> m_pMenu;
 };
 
 #endif // AIPROCESSPIPE_H

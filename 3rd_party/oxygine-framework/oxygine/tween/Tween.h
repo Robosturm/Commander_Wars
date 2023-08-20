@@ -21,7 +21,6 @@ class TweenEvent final : public Event
 public:
     enum
     {
-        START = sysEventID('S', 'T', 'A'),
         DONE = Event::COMPLETE,
     };
 

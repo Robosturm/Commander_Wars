@@ -81,7 +81,10 @@ BaseGamemenu::~BaseGamemenu()
     if (m_MapMoveThread.isRunning())
     {
         m_MapMoveThread.quit();
-        m_MapMoveThread.wait();
+        while (!m_MapMoveThread.wait(1))
+        {
+            QCoreApplication::processEvents();
+        }
     }
 }
 

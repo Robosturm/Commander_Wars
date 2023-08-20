@@ -180,7 +180,7 @@ namespace oxygine
     void TextField::rebuildText()
     {
 #ifdef GRAPHICSUPPORT
-        if (!GameWindow::getWindow()->isMainThread())
+        if (requiresThreadChange())
         {
             emit MemoryManagement::getInstance().sigRebuildText(getSharedPtr<TextField>());
         }

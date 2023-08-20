@@ -5,7 +5,7 @@
 
 #include "windowBase.h"
 
-#include <QBasicTimer>
+#include <QTimer>
 #include <QThread>
 #include <QKeyEvent>
 #include <QElapsedTimer>
@@ -53,7 +53,7 @@ public:
         }
         if (m_pausedCounter == 0)
         {
-            m_pauseMutex.lock();
+            emit sigChangeUpdateTimerState(true);
         }
         ++m_pausedCounter;
     }
@@ -69,9 +69,14 @@ public:
         --m_pausedCounter;
         if (m_pausedCounter == 0)
         {
-            m_pauseMutex.unlock();
+            emit sigChangeUpdateTimerState(false);
         }
     }
+    bool renderingPaused() const
+    {
+        return m_pausedCounter > 0;
+    }
+
     virtual void shutdown();
     void setTimerCycle(qint32 newTimerCycle);
     qint32 getTimerCycle() const;
@@ -117,6 +122,7 @@ signals:
     void sigStartUpdateTimer();
     void sigQuit(qint32 exitCode);
     void sigShowKeyboard(bool visible);
+    void sigChangeUpdateTimerState(bool stop);
 
 protected slots:
     void loadSingleResAnim(oxygine::spResAnim pAnim, QImage image, qint32 columns, qint32 rows, float scaleFactor);
@@ -126,6 +132,8 @@ protected slots:
     virtual void onQuit() = 0;
     void quit(qint32 exitCode);
     void showKeyboard(bool visible);
+    void changeUpdateTimerState(bool stop);
+
 protected:
     virtual void registerResourceTypes();
     // input events
@@ -140,7 +148,7 @@ protected:
     bool sameTouchpoint(const QPointF & pos1, const QPointF & pos2) const;
 
 protected:
-    QBasicTimer m_Timer;
+    QTimer m_timer;
     qint32 m_timerCycle{1};
     QElapsedTimer m_pressDownTime;
     bool m_pressDownTimeRunning{false};

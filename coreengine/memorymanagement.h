@@ -16,6 +16,15 @@ public:
     {
         return std::static_pointer_cast<Derived>(std::enable_shared_from_this<Base>::shared_from_this());
     }
+    std::weak_ptr<Base> getWeakPtr()
+    {
+        return std::enable_shared_from_this<Base>::weak_from_this();
+    }
+    bool notInSharedUse() const
+    {
+        auto count = std::enable_shared_from_this<Base>::weak_from_this().use_count();
+        return  count == 0;
+    }
 };
 
 class MemoryManagement final : public QObject

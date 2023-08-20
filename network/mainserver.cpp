@@ -127,7 +127,7 @@ MainServer::MainServer()
     {
         startDatabase();
         m_mailSender.moveToThread(&m_mailSenderThread);
-        m_mailSenderThread.start();
+        m_mailSenderThread.start(QThread::Priority::NormalPriority);
         connect(&m_mailSender, &SmtpMailSender::sigMailResult, this, &MainServer::onMailSendResult, Qt::QueuedConnection);
         restoreServer();
         CONSOLE_PRINT("Starting tcp server and listening to new clients.", GameConsole::eDEBUG);
@@ -141,9 +141,12 @@ MainServer::~MainServer()
 {
     if (m_mailSenderThread.isRunning())
     {
+        emit m_mailSender.sigMoveToThread(QThread::currentThread());
         m_mailSenderThread.quit();
-        m_mailSenderThread.wait();
-        m_mailSender.moveToThread(QThread::currentThread());
+        while (!m_mailSenderThread.wait(1))
+        {
+            QCoreApplication::processEvents();
+        }
     }
     m_pGameServer->disconnectTCP();
     // clean up server and client games.
