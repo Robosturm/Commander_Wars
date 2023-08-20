@@ -308,7 +308,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             auto* points = pBuilding->getActionTargetFields();
             if (points != nullptr)
             {
-                spQmlVectorPoint pPoints = points->getSharedPtr<QmlVectorPoint>();
+                spQmlVectorPoint pPoints = points->getSharedPtrFromWeak<QmlVectorPoint>();
                 QPoint targetOffset = pBuilding->getActionTargetOffset();
                 QPoint buildingPos(pBuilding->Building::getX(), pBuilding->Building::getY());
                 if (pPoints.get() != nullptr && pPoints->size() > 0)

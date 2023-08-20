@@ -2,7 +2,6 @@
 #define RULESELECTION_H
 
 #include "ui_reader/createdgui.h"
-#include "coreengine/LUPDATE_MACROS.h"
 
 class GameMap;
 class RuleSelection;
@@ -12,14 +11,14 @@ class RuleSelection final : public CreatedGui
 {
     Q_OBJECT
 public:
-    ENUM_CLASS Mode
+    enum class Mode
     {
         Editor,
         Singleplayer,
         Multiplayer,
     };
     explicit RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enabled = true);
-   virtual ~RuleSelection() = default;
+    ~RuleSelection() = default;
     Mode getMode() const;
     Q_INVOKABLE bool getRuleChangeEabled() const;
     Q_INVOKABLE bool getShowAdvanced() const;

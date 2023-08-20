@@ -6,7 +6,6 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/JsCallback.h"
-#include "coreengine/LUPDATE_MACROS.h"
 #include "coreengine/scriptvariables.h"
 
 #include "game/unit.h"
@@ -40,19 +39,19 @@ public:
     /**
      * @brief The DrawPriority enum z-priority for sprites
      */
-    ENUM_CLASS DrawPriority
-        {
-            Terrain = 0,
-            TerrainOverlay,
-            Shroud,
-            Building,
-            TerrainMarker,
+    enum class DrawPriority
+    {
+        Terrain = 0,
+        TerrainOverlay,
+        Shroud,
+        Building,
+        TerrainMarker,
 
-        };
-    ENUM_CLASS ExtraDrawPriority
-        {
-            BuildingLayer = 2,
-        };
+    };
+    enum class ExtraDrawPriority
+    {
+        BuildingLayer = 2,
+    };
     static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap, const QString & currentTerrainPalette = "");
     ~Terrain();
 

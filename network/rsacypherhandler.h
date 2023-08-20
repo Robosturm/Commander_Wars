@@ -11,8 +11,8 @@
 class RsaCypherHandler final
 {
 public:
-    RsaCypherHandler();
-   virtual ~RsaCypherHandler();
+    explicit RsaCypherHandler();
+    ~RsaCypherHandler();
     RsaCypherHandler(const RsaCypherHandler &) = delete;
     RsaCypherHandler & operator=(const RsaCypherHandler &) = delete;
 

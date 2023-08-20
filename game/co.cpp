@@ -117,7 +117,7 @@ void CO::setCOUnit(Unit* pUnit)
     }
     if (pUnit != nullptr)
     {
-        m_pCOUnit = pUnit->getSharedPtr<Unit>();
+        m_pCOUnit = pUnit->getSharedPtrFromWeak<Unit>();
     }
     else
     {

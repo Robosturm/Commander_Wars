@@ -17,8 +17,6 @@
 
 #include "game/gamemap.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 #include "menue/basemenu.h"
 
 class VictoryMenue;
@@ -28,7 +26,7 @@ class VictoryMenue final : public Basemenu
 {
     Q_OBJECT
 public:
-    ENUM_CLASS GraphModes
+    enum class GraphModes
     {
         Funds,
         Income,
@@ -40,7 +38,7 @@ public:
         VictoryRanking
     };
 
-    ENUM_CLASS StatisticModes
+    enum class StatisticModes
     {
         Produced,
         Destroyed,
@@ -48,7 +46,7 @@ public:
     };
 
     explicit VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface, bool isReplay = false);
-   virtual ~VictoryMenue() = default;
+    ~VictoryMenue() = default;
 
     /**
      * @brief createLine creates a nice sweet polygon line for drawing our graphs

@@ -12,7 +12,7 @@ class COStyleMenu final : public Basemenu
     Q_OBJECT
 public:
     explicit COStyleMenu();
-   virtual ~COStyleMenu() = default;
+    ~COStyleMenu() = default;
 signals:
     void sigExitMenue();
     void sigEditCOStyle();

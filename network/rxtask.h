@@ -15,7 +15,7 @@ class RxTask final : public QObject
     Q_OBJECT
 public:
     RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId);
-   virtual ~RxTask() = default;
+    ~RxTask() = default;
     void swapNetworkInterface(NetworkInterface* pCommIF)
     {
         m_pIF = pCommIF;

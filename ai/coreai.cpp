@@ -468,7 +468,7 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, const QPoint newPosition, Building
             auto* targets = pBuilding->getActionTargetFields();
             if (targets != nullptr)
             {
-                spQmlVectorPoint pTargets = targets->getSharedPtr<QmlVectorPoint>();
+                spQmlVectorPoint pTargets = targets->getSharedPtrFromWeak<QmlVectorPoint>();
                 if (pTargets.get() != nullptr)
                 {
                     if (pTargets->contains(pos))
@@ -533,7 +533,7 @@ void CoreAI::addMovementMap(Building* pBuilding, float damage)
             auto* targets = pBuilding->getActionTargetFields();
             if (targets != nullptr)
             {
-                spQmlVectorPoint pTargets = targets->getSharedPtr<QmlVectorPoint>();
+                spQmlVectorPoint pTargets = targets->getSharedPtrFromWeak<QmlVectorPoint>();
                 if (pTargets.get() != nullptr)
                 {
                     for (auto & target : pTargets->getVector())

@@ -17,8 +17,8 @@ using spEdge = std::shared_ptr<Edge>;
 class Edge final : public FileSerializable
 {
 public:
-    Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);    
-   virtual ~Edge() = default;
+    Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);
+    ~Edge() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

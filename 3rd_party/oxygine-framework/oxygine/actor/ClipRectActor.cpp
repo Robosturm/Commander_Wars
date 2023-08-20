@@ -6,7 +6,7 @@
 namespace oxygine
 {
 
-    void ClipRectActor::handleEvent(Event* event)
+    void ClipRectActor::handleEventImpl(Event* event)
     {
         if (TouchEvent::isTouchEvent(event->type))
         {

@@ -11,6 +11,6 @@ class HumanQuickButtons final : public CreatedGui
 {
 public:
     explicit HumanQuickButtons(GameMenue* pMenu);
-   virtual ~HumanQuickButtons();
+    ~HumanQuickButtons();
 };
 

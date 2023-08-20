@@ -357,7 +357,7 @@ void HeavyAi::addNewUnitToUnitData(std::vector<MoveUnitData> & units, Unit* pUni
     if (pUnit != nullptr)
     {
         MoveUnitData data;
-        data.pUnit = pUnit->getSharedPtr<Unit>();
+        data.pUnit = pUnit->getSharedPtrFromWeak<Unit>();
         data.pUnitPfs = MemoryManagement::create<UnitPathFindingSystem>(m_pMap, pUnit);
         data.movementPoints = data.pUnit->getMovementpoints(data.pUnit->getPosition());
         data.pUnitPfs->setMovepoints(data.movementPoints * 2);

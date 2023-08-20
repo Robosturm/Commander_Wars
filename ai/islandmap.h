@@ -15,7 +15,7 @@ class IslandMap final : public QObject
     static constexpr qint32 UNKNOWN = -1;
 public:
     explicit IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QString movementType = "");
-   virtual ~IslandMap() = default;
+    ~IslandMap() = default;
     /**
      * @brief getValueOnIsland
      * @param island

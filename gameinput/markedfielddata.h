@@ -22,7 +22,7 @@ public:
         QColor enemyColor;
     };
     explicit MarkedFieldData();
-   virtual ~MarkedFieldData() = default;
+    ~MarkedFieldData() = default;
 
     QVector<QPoint>* getPoints()
     {

@@ -53,7 +53,7 @@ public:
     };
 
     explicit SimpleProductionSystem(CoreAI * owner);
-   virtual ~SimpleProductionSystem() = default;
+    ~SimpleProductionSystem() = default;
 
     /**
      * @brief serialize stores the object

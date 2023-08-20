@@ -15,7 +15,7 @@ class ProgressInfoBar final : public Tooltip
     Q_OBJECT
 public:
     explicit ProgressInfoBar(qint32 width, qint32 heigth, QString text, float progress);
-   virtual ~ProgressInfoBar() = default;
+    ~ProgressInfoBar() = default;
 public slots:
     void setText(QString text);
     void setProgress(qint32 progress);

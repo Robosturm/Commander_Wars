@@ -29,7 +29,7 @@ public:
      * @param startFolder initial folder of the file dialog
      */
     explicit FolderDialog(QString startFolder);
-   virtual ~FolderDialog() = default;
+    ~FolderDialog() = default;
 
 signals:
     void sigFolderSelected(QString file);

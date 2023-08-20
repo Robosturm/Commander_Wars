@@ -13,7 +13,7 @@ class MapSelectionFilterDialog final : public CreatedGui
     Q_OBJECT
 public:
     explicit MapSelectionFilterDialog(MapFilter* filter);
-   virtual ~MapSelectionFilterDialog();
+    ~MapSelectionFilterDialog();
     Q_INVOKABLE bool getFlagActive(GameEnums::MapFilterFlags flag) const;
     Q_INVOKABLE void setFlagActive(GameEnums::MapFilterFlags flag, bool isActive);
     Q_INVOKABLE bool getFlagOptional(GameEnums::MapFilterFlags flag) const;

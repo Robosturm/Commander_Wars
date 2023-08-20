@@ -40,7 +40,10 @@ namespace oxygine
             m_stage = stage;
             for (auto & child : m_children)
             {
-                child->added2stage(stage);
+                if (child.get() != nullptr)
+                {
+                    child->added2stage(stage);
+                }
             }
         }
     }
@@ -55,7 +58,10 @@ namespace oxygine
             m_pressedOvered = 0;
             for (auto & child : m_children)
             {
-                child->removedFromStage();
+                if (child.get() != nullptr)
+                {
+                    child->removedFromStage();
+                }
             }
         }
     }
@@ -216,6 +222,16 @@ namespace oxygine
     }
 
     void Actor::handleEvent(Event* event)
+    {
+        if (!m_enabled || GameWindow::getWindow()->renderingPaused())
+        {
+            return;
+        }
+        OXY_ASSERT(oxygine::GameWindow::getWindow()->isMainThread());
+        handleEventImpl(event);
+    }
+
+    void Actor::handleEventImpl(Event* event)
     {
         bool touchEvent = TouchEvent::isTouchEvent(event->type);
         if (touchEvent)

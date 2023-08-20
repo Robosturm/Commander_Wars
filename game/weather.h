@@ -19,7 +19,7 @@ class Weather final : public QObject, public FileSerializable
 public:
     explicit Weather(GameMap* pMap);
     explicit Weather(QString weatherId, GameMap* pMap);
-   virtual ~Weather() = default;
+    ~Weather() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

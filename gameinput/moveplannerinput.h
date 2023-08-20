@@ -9,7 +9,7 @@ class MoveplannerInput final : public HumanPlayerInput
 {
 public:
     explicit MoveplannerInput(GameMap* pMap);
-   virtual ~MoveplannerInput() = default;
+    ~MoveplannerInput() = default;
     /**
      * @brief getPerformingPlayer
      * @return

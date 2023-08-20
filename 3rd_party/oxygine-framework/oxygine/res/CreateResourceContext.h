@@ -11,7 +11,7 @@ namespace oxygine
         explicit XmlWalker(const QString & path,
                            float scaleFactor,
                            const QDomElement & xml);
-       virtual ~XmlWalker() = default;
+        ~XmlWalker() = default;
         bool empty() const
         {
             return m_root.isNull();
@@ -51,7 +51,7 @@ namespace oxygine
     {
     public:
         explicit CreateResourceContext() = default;
-       virtual ~CreateResourceContext() = default;
+        ~CreateResourceContext() = default;
         Resources* m_resources{nullptr};
         QString m_xml_name;
         XmlWalker m_walker{"", 1.0f, QDomElement()};

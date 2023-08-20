@@ -10,7 +10,7 @@ class GeneratorMenu final : public Basemenu
 {
 public:
     explicit GeneratorMenu(const QString & generatorUi);
-   virtual ~GeneratorMenu() = default;
+    ~GeneratorMenu() = default;
 
 public slots:
     void exitMenue(const QString & mainMenuXml = "ui/menu/playermenu.xml");

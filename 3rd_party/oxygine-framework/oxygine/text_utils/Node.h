@@ -98,7 +98,7 @@ namespace oxygine
         {
         public:
             explicit WigglyNode(QDomElement& reader, const QString & v);
-            virtual ~WigglyNode() = default;
+            ~WigglyNode() = default;
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
         private:
             qint32 m_step{0};
@@ -112,7 +112,7 @@ namespace oxygine
         {
         public:
             explicit DivNode(QDomElement& reader);
-           virtual ~DivNode() = default;
+            ~DivNode() = default;
             virtual void resize(Aligner& rd) override;
             virtual void draw(const RenderState& rs, const TextStyle & style, const QColor & drawColor, QPainter & painter) override;
         private:
@@ -123,7 +123,7 @@ namespace oxygine
         {
         public:
             explicit BrNode() = default;
-            virtual ~BrNode() = default;
+            ~BrNode() = default;
             void xresize(Aligner& rd) override
             {
                 rd.nextLine(0, 0);

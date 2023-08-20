@@ -16,7 +16,7 @@ class SelectKey final : public Tooltip
     Q_OBJECT
 public:
     explicit SelectKey(Qt::Key code);
-   virtual ~SelectKey() = default;
+    ~SelectKey() = default;
 
     static QString getKeycodeText(Qt::Key code);
 signals:

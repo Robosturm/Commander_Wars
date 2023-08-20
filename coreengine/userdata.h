@@ -68,7 +68,7 @@ public:
          */
         GameEnums::ShopItemType itemType;
     };
-   virtual ~Userdata() = default;
+    ~Userdata() = default;
     static Userdata* getInstance();
     void changeUser();
     void storeUser();

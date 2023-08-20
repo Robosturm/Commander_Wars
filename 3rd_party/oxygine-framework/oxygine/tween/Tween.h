@@ -196,7 +196,7 @@ public:
         : m_property(property)
     {
     }
-    virtual ~TweenT() = default;
+    ~TweenT() = default;
 
     virtual void _update(Actor& actor, const UpdateState& us) override
     {

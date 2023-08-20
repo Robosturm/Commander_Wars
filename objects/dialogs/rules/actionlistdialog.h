@@ -19,7 +19,7 @@ class ActionListDialog final : public QObject, public oxygine::Actor
     static const char* const FILEPATH;
 public:
     explicit ActionListDialog(QStringList bannlist, GameMap* pMap);
-   virtual ~ActionListDialog() = default;
+    ~ActionListDialog() = default;
 signals:
     void editFinished(QStringList actionList);
     void canceled();

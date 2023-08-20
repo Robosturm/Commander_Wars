@@ -29,7 +29,7 @@ class MapMover final : public QObject
     };
 public:
     explicit MapMover(BaseGamemenu* pOwner);
-   virtual ~MapMover() = default;
+    ~MapMover() = default;
 public slots:
     void mouseWheel(float direction);
     void autoScroll();

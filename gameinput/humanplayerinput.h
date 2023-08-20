@@ -13,8 +13,6 @@
 
 #include "game/unitpathfindingsystem.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 #include "menue/gamemenue.h"
 
 class GameMap;
@@ -29,7 +27,7 @@ class HumanPlayerInput : public BaseGameInputIF
 {
     Q_OBJECT
 public:
-    ENUM_CLASS Arrows
+    enum class Arrows
     {
         LeftRight = 0,
         UpDown,

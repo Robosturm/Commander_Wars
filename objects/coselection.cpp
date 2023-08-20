@@ -343,11 +343,13 @@ void COSelection::colorChanged(QColor color)
     QColor colorAlpha(color);
     colorAlpha.setAlpha(120);
 
+    Mainapp::getInstance()->pauseRendering();
     for (qint32 i = 0; i < m_COFields.size(); i++)
     {
         oxygine::spSprite pSprite = oxygine::safeSpCast<oxygine::Sprite>(m_COFields[i]->getLastChild());
         pSprite->setColor(colorAlpha);
     }
+    Mainapp::getInstance()->continueRendering();
 
     m_Cursor->setColor(color);
     m_CurrentColor = color;    

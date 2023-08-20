@@ -19,7 +19,7 @@ class DayToDayRecord final : public QObject, public FileSerializable
 public:
     explicit DayToDayRecord(GameMap* pMap);
     explicit DayToDayRecord(GameMap* pMap, qint32 playerCount);
-   virtual ~DayToDayRecord() = default;
+    ~DayToDayRecord() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

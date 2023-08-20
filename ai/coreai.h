@@ -14,7 +14,6 @@
 #include "ai/productionSystem/simpleproductionsystem.h"
 
 #include "coreengine/qmlvector.h"
-#include "coreengine/LUPDATE_MACROS.h"
 #include "coreengine/pathfindingsystem.h"
 
 #include <functional>
@@ -33,7 +32,7 @@ class CoreAI : public BaseGameInputIF
 {
     Q_OBJECT
 public:
-    ENUM_CLASS ThreadLevel
+    enum class ThreadLevel
     {
         Normal,
         High,
@@ -41,14 +40,14 @@ public:
         Max,
     };
 
-    ENUM_CLASS CircleReturns
+    enum class CircleReturns
     {
         Stop,
         Fail,
         Success,
     };
 
-    ENUM_CLASS TargetDistance
+    enum class TargetDistance
     {
         NoTarget,
         FarTarget,
@@ -106,7 +105,7 @@ public:
     /**
      * @brief The AISteps enum
      */
-    ENUM_CLASS AISteps
+    enum class AISteps
     {
         moveUnits = 0,
                 moveToTargets,

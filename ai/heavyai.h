@@ -7,8 +7,6 @@
 #include "ai/targetedunitpathfindingsystem.h"
 #include "ai/neuralnetwork/neural/neuralnetwork.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 class GameMap;
 class HeavyAi;
 using spHeavyAi = std::shared_ptr<HeavyAi>;
@@ -153,7 +151,7 @@ class HeavyAi final : public CoreAI
     };
 
 public:
-    ENUM_CLASS FunctionType
+    enum class FunctionType
     {
         JavaScript,
         CPlusPlus,
@@ -177,7 +175,7 @@ public:
     };
 
     explicit HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType);
-   virtual ~HeavyAi() = default;
+    ~HeavyAi() = default;
 
     void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize = 1);
 

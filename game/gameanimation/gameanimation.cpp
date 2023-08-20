@@ -112,7 +112,7 @@ void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
     if (pGameAnimation != nullptr)
     {
         pGameAnimation->setPreviousAnimation(getSharedPtr<GameAnimation>());
-        m_QueuedAnimations.append(pGameAnimation->getSharedPtr<GameAnimation>());
+        m_QueuedAnimations.append(pGameAnimation->getSharedPtrFromWeak<GameAnimation>());
         GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
     }
 }

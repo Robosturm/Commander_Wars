@@ -93,7 +93,7 @@ namespace oxygine
 
         static spVideoDriver instance;
         explicit VideoDriver();
-       virtual ~VideoDriver();
+        ~VideoDriver();
         void reset();
         void restore();
         bool isReady() const;

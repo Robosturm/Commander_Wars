@@ -12,7 +12,7 @@ namespace oxygine
         {
         public:
             explicit Aligner(const TextStyle& style, const QSize& size);
-           virtual ~Aligner() = default;
+            ~Aligner() = default;
 #ifdef GRAPHICSUPPORT
             const TextStyle& getStyle() const
             {

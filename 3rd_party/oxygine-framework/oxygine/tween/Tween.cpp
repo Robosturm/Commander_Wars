@@ -222,7 +222,7 @@ namespace oxygine
         }
 
         TweenEvent ev(this, &us);
-        ev.currentTarget = actor.getSharedPtr<Actor>();
+        ev.currentTarget = actor.getSharedPtrFromWeak<Actor>();
         ev.target = ev.currentTarget;
         ev.m_tween = this;
 

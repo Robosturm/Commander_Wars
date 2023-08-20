@@ -7,8 +7,6 @@
 #include "game/gameanimation/gameanimation.h"
 #include "game/gameanimation/battleanimationsprite.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 class BattleAnimation;
 using spBattleAnimation = std::shared_ptr<BattleAnimation>;
 
@@ -31,7 +29,7 @@ public:
     static const short priorityCOBack = 2;
     static const short priorityCO = 3;
     static const short priorityCOFront = 4;
-    ENUM_CLASS AnimationProgress
+    enum class AnimationProgress
     {
         MoveIn,
         MoveStop,
@@ -51,7 +49,7 @@ public:
     BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                     Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage,
                     GameMap* pMap);
-   virtual ~BattleAnimation() = default;
+    ~BattleAnimation() = default;
     virtual void restart() override;
     virtual void stop() override;
     /**

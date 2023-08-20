@@ -1161,7 +1161,7 @@ void Unit::loadUnit(Unit* pUnit, qint32 index)
 {
     if (pUnit != nullptr)
     {
-        spUnit pLoadUnit = pUnit->getSharedPtr<Unit>();
+        spUnit pLoadUnit = pUnit->getSharedPtrFromWeak<Unit>();
         bool loaded = false;
         if (m_TransportUnits.size() < getLoadingPlace() && index < 0)
         {

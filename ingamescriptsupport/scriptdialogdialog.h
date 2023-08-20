@@ -18,7 +18,7 @@ class ScriptDialogDialog final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit ScriptDialogDialog(spScriptEventDialog scriptEventDialog);
-   virtual ~ScriptDialogDialog() = default;
+    ~ScriptDialogDialog() = default;
 signals:
     /**
      * @brief sigFinished

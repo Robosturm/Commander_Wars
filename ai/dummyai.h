@@ -9,7 +9,7 @@ class DummyAi final : public CoreAI
 {
 public:
     explicit DummyAi(GameMap* pMap, GameEnums::AiTypes type);
-   virtual ~DummyAi() = default;
+    ~DummyAi() = default;
 public slots:
     virtual void nextAction() override{};
     /**

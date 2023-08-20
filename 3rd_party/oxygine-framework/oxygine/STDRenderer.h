@@ -51,7 +51,7 @@ namespace oxygine
         static size_t maxVertices;
 
         explicit STDRenderer(VideoDriver* driver = nullptr);
-        virtual ~STDRenderer();
+        ~STDRenderer();
 
         const QMatrix4x4& getViewProjection() const;
         VideoDriver* getDriver();

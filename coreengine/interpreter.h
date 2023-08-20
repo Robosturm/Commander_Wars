@@ -21,7 +21,7 @@ public:
         return m_pInstance.get();
     }
     static Interpreter* createInstance();
-    virtual ~Interpreter();
+    ~Interpreter();
     static void release();
 
     static void setCppOwnerShip(QObject* object);

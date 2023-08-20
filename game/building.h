@@ -34,7 +34,7 @@ class Building final : public Tooltip, public FileSerializable
 public:
 
     explicit Building(QString BuildingID, GameMap* pMap);
-   virtual ~Building() = default;
+    ~Building() = default;
     /**
      * @brief init
      */

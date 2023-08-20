@@ -14,7 +14,7 @@ class GameAnimationPower final : public GameAnimation
     Q_OBJECT
 public:
     static spGameAnimationPower createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap);
-   virtual ~GameAnimationPower();
+    ~GameAnimationPower();
     virtual void restart() override;
     virtual void stop() override;
     Q_INVOKABLE void createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop);

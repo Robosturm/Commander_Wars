@@ -13,7 +13,7 @@ class GenericBox final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit GenericBox(bool cancel = false);
-   virtual ~GenericBox() = default;
+    ~GenericBox() = default;
     /**
      * @brief addItem
      * @param pActor

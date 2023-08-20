@@ -7,8 +7,6 @@
 
 #include "ingamescriptsupport/events/scriptevent.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 class GameMap;
 
 class ScriptCondition;
@@ -21,7 +19,7 @@ class ScriptCondition : public QObject, public RefObject<ScriptCondition>
 {
     Q_OBJECT
 public:
-    ENUM_CLASS ConditionType
+    enum class ConditionType
     {
         startOfTurn,
         victory,

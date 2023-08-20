@@ -11,7 +11,7 @@ namespace oxygine
     {
     public:
         explicit ShaderProgram(const QString & vsShader, const QString & fsShader, const VertexDeclaration* decl);
-       virtual ~ShaderProgram() = default;
+        ~ShaderProgram() = default;
         void bind();
         quint32 getID() const;
         qint32 getUniformLocation(const char* id) const;

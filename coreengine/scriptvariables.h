@@ -17,7 +17,7 @@ class ScriptVariables final : public QObject, public FileSerializable
     Q_OBJECT
 public:
     explicit ScriptVariables();
-   virtual ~ScriptVariables() = default;
+    ~ScriptVariables() = default;
 
     /**
      * @brief serialize stores the object

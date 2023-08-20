@@ -13,7 +13,7 @@ class DialogOtherLobbyInfo final : public CustomDialog
 {
 public:
     explicit DialogOtherLobbyInfo(LobbyMenu* pBaseMenu, const QJsonObject & objData);
-   virtual ~DialogOtherLobbyInfo() = default;
+    ~DialogOtherLobbyInfo() = default;
 
     Q_INVOKABLE qint32 getPreparingAutomatedMatchCount() const;
     Q_INVOKABLE qint32 getRunningAutomatedMatchCount() const;

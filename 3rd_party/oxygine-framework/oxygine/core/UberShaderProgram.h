@@ -27,7 +27,7 @@ namespace oxygine
             ColorMode fracShader{COLOR_DEFAULT};
         };
         explicit UberShaderProgram() = default;
-       virtual ~UberShaderProgram();
+        ~UberShaderProgram();
         ShaderProgram* getShaderProgram(ColorMode fracShader);
         void apply(VideoDriver* driver, spTexture & base);
         void init();

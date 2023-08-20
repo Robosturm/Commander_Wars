@@ -17,7 +17,7 @@ class MultilineTextbox final : public TextInput
     Q_OBJECT
 public:
     explicit MultilineTextbox(qint32 width, qint32 heigth);
-   virtual ~MultilineTextbox() = default;
+    ~MultilineTextbox() = default;
     virtual void update(const oxygine::UpdateState& us) override;
     /**
      * @brief setEnabled

@@ -12,8 +12,6 @@
 #include "game/player.h"
 #include "game/unit.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 class EditorSelection;
 using spEditorSelection = std::shared_ptr<EditorSelection>;
 
@@ -24,28 +22,28 @@ public:
     /**
      * @brief The EditorMode enum describes what we want to place at the moment
      */
-    ENUM_CLASS EditorMode
+    enum class EditorMode
     {
         All = -1,
-                Terrain = 0,
-                Building,
-                Unit,
+        Terrain = 0,
+        Building,
+        Unit,
     };
     /**
      * @brief The PlacementSize enum describes how terrain is placed
      */
-    ENUM_CLASS PlacementSize
+    enum class PlacementSize
     {
         None = 0,
-                Small,
-                Medium,
-                BigSquare,
-                Big,
-                Fill
+        Small,
+        Medium,
+        BigSquare,
+        Big,
+        Fill
     };
 
     explicit EditorSelection(qint32 width, bool smallScreen, GameMap* pMap);
-   virtual ~EditorSelection() = default;
+    ~EditorSelection() = default;
     inline EditorMode getCurrentMode() const
     {
         return m_Mode;

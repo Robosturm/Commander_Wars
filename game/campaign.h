@@ -28,7 +28,7 @@ public:
     static const char* const scriptName;
     explicit Campaign(QString file);
     explicit Campaign();
-   virtual ~Campaign() = default;
+    ~Campaign() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

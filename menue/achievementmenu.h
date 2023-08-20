@@ -22,7 +22,7 @@ class Achievementmenu final : public Basemenu
 public:
 
     explicit Achievementmenu();
-   virtual ~Achievementmenu() = default;
+    ~Achievementmenu() = default;
 signals:
     void sigExitMenue();
     void sigSearch();

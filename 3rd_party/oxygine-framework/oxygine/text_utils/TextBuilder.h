@@ -21,7 +21,7 @@ namespace oxygine
         {
         public:
             explicit TextBuilder() = default;
-           virtual ~TextBuilder() = default;
+            ~TextBuilder() = default;
             text::spNode parse(const QString & str);
         private:
             void ReplaceXmlSignsToSigns(QString & text) const;

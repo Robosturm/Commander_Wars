@@ -8,13 +8,13 @@ namespace oxygine
 {
     class Button;
     using spButton = std::shared_ptr<Button>;
-    class Button : public QObject, public Box9Sprite
+    class Button final : public QObject, public Box9Sprite
     {
         Q_OBJECT
     public:
 
         explicit Button();
-        virtual ~Button() = default;
+        ~Button() = default;
 
         qint32 getRow() const
         {

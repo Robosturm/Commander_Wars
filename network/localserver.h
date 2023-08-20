@@ -19,7 +19,7 @@ class LocalServer final : public NetworkInterface
     Q_OBJECT
 public:
     LocalServer(QObject* pParent);
-    virtual ~LocalServer();
+    ~LocalServer();
 public slots:
     virtual void connectTCP(QString primaryAdress, quint16 port, QString secondaryAdress) override;
     virtual void disconnectTCP() override;

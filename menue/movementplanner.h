@@ -21,7 +21,7 @@ class MovementPlanner final : public GameMenue
     Q_OBJECT
 public:
     MovementPlanner(GameMenue* pOwner, Player* pViewPlayer);
-   virtual ~MovementPlanner() = default;
+    ~MovementPlanner() = default;
     Player *getViewPlayer() const;
     void onMenuInputDone();
 signals:

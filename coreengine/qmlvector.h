@@ -76,7 +76,7 @@ public:
     {
         if (t != nullptr)
         {
-            m_Vector.push_back(t->getSharedPtr<Unit>());
+            m_Vector.push_back(t->getSharedPtrFromWeak<Unit>());
         }
     }
     Q_INVOKABLE inline qint32 size() const
@@ -144,7 +144,7 @@ public:
     {
         if (t != nullptr)
         {
-            m_Vector.push_back(t->getSharedPtr<Building>());
+            m_Vector.push_back(t->getSharedPtrFromWeak<Building>());
         }
     }
     Q_INVOKABLE inline qint32 size() const

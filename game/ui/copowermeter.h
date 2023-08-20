@@ -15,7 +15,7 @@ class CoPowermeter final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit CoPowermeter(GameMap* pMap, CO* pCO);
-   virtual ~CoPowermeter() = default;
+    ~CoPowermeter() = default;
     /**
      * @brief drawPowerMeter
      */

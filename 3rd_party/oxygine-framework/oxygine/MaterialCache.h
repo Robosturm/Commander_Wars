@@ -21,7 +21,7 @@ using spMaterial = std::shared_ptr<Material>;
 class MaterialCache final
 {
 public:
-    virtual ~MaterialCache() = default;
+    ~MaterialCache() = default;
     spMaterial cache(const Material& other)
     {
         return clone_(other);

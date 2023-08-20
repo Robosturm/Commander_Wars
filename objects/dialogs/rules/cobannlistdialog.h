@@ -18,7 +18,7 @@ class COBannListDialog final : public QObject, public oxygine::Actor
     static const char* const FILEPATH;
 public:
     explicit COBannListDialog(QStringList cobannlist);
-   virtual ~COBannListDialog() = default;
+    ~COBannListDialog() = default;
 signals:
     void editFinished(QStringList cobannlist);
     void canceled();

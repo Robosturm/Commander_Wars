@@ -100,7 +100,7 @@ void GameAction::perform()
     Unit* pUnit = getTargetUnit();
     if (pUnit != nullptr)
     {
-        m_perfomingUnit = pUnit->getSharedPtr<Unit>();
+        m_perfomingUnit = pUnit->getSharedPtrFromWeak<Unit>();
     }
     else
     {

@@ -19,7 +19,7 @@ namespace oxygine
 
         static QMatrix4x4 getViewProjectionMatrix(const QRectF& viewport);
         explicit Stage();
-       virtual ~Stage() = default;
+        ~Stage() = default;
 
         /**Initializes size, scale and position of Stage
         @param is real display size of device.

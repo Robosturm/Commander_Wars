@@ -5,7 +5,6 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/timer.h"
-#include "coreengine/LUPDATE_MACROS.h"
 
 #include "game/victoryrule.h"
 #include "game/gamerule.h"
@@ -31,14 +30,14 @@ class GameRules final : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
-    ENUM_CLASS DayToDayScreen
+    enum class DayToDayScreen
     {
         Default,
         Permanent
     };
 
     explicit GameRules(GameMap* pMap);
-   virtual ~GameRules() = default;
+    ~GameRules() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

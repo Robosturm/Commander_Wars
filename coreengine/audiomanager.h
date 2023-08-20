@@ -47,7 +47,7 @@ private:
 #endif
 public:
     explicit AudioManager(bool noAudio);
-   virtual ~AudioManager() = default;
+    ~AudioManager() = default;
     /**
      * @brief getLoadBaseGameFolders
      * @return

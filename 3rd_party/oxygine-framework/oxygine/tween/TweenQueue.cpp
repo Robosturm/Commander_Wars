@@ -32,8 +32,6 @@ namespace oxygine
         if (m_tweens.size() > 0)
         {
             m_current = m_tweens.first();
-            Event ev(EVENT_LOOP_BEGIN);
-            dispatchEvent(&ev);
             m_current->start(actor);
         }
     }
@@ -63,11 +61,7 @@ namespace oxygine
 
         if (m_current.get() == nullptr)
         {
-            Event ev(EVENT_LOOP_END);
-            dispatchEvent(&ev);
-
             m_loopsDone++;
-
             if (m_loopsDone >= m_loops && m_loops > 0)
             {
                 m_status = status_done;

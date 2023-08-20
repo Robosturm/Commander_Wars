@@ -179,11 +179,6 @@ namespace oxygine
 
     }
 
-    void SlidingActor::handleEvent(Event* event)
-    {
-        Actor::handleEvent(event);
-    }
-
     void SlidingActor::_newEvent(Event* event)
     {
         if (!m_content)
@@ -335,7 +330,7 @@ namespace oxygine
                             auto* parent = act->getParent();
                             if (parent != nullptr)
                             {
-                                act = parent->getSharedPtr<Actor>();
+                                act = parent->getSharedPtrFromWeak<Actor>();
                             }
                             else
                             {

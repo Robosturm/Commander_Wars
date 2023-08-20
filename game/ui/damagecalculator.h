@@ -42,7 +42,7 @@ class DamageCalculator final : public CloseablePopUp
     using CosData = CoData[2];
 public:
     explicit DamageCalculator(GameMap * pMap);
-   virtual ~DamageCalculator() = default;
+    ~DamageCalculator() = default;
 
 signals:
     void sigCalculateDamage();

@@ -162,6 +162,7 @@ void Panel::setSubComponent(bool subComponent)
 
 void Panel::hideItems()
 {
+    Mainapp::getInstance()->pauseRendering();
     auto & children = m_ContentRect->getChildren();
     for (auto & child : children)
     {
@@ -177,6 +178,7 @@ void Panel::hideItems()
         }
         hideChildItems(child);
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Panel::hideChildItems(oxygine::spActor parent)
@@ -185,11 +187,11 @@ void Panel::hideChildItems(oxygine::spActor parent)
     for (auto & child : children)
     {
         Tooltip* pTooltip = dynamic_cast<Tooltip*>(child.get());
-        DropDownmenuBase* pDropDownmenuBase = dynamic_cast<DropDownmenuBase*>(child.get());
         if (pTooltip != nullptr)
         {
             pTooltip->hideTooltip();
         }
+        DropDownmenuBase* pDropDownmenuBase = dynamic_cast<DropDownmenuBase*>(child.get());
         if (pDropDownmenuBase != nullptr)
         {
             pDropDownmenuBase->hideDropDown();

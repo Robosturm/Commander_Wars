@@ -11,7 +11,7 @@ class CursorData final : public QObject
     Q_OBJECT
 public:
     explicit CursorData();
-   virtual ~CursorData() = default;
+    ~CursorData() = default;
 
     Q_INVOKABLE QString getCursor() const;
     Q_INVOKABLE void setCursor(const QString value);

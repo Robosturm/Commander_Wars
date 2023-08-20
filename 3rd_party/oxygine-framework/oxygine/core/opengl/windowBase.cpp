@@ -86,7 +86,7 @@ namespace oxygine
             CONSOLE_PRINT("Quiting game normally", GameConsole::eDEBUG);
             QCoreApplication::exit();
         }
-        if (!m_terminating)
+        if (!m_terminating && m_pausedCounter == 0)
         {
             updateData();
             if (oxygine::Stage::getStage().get() != nullptr)

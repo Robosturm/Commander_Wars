@@ -13,7 +13,7 @@
 namespace oxygine
 {
 
-    class TweenOptions
+    class TweenOptions final
     {
     public:
         explicit TweenOptions(timeMS duration = timeMS(500))
@@ -26,7 +26,7 @@ namespace oxygine
               m_detach(false)
         {
         }
-        virtual ~TweenOptions() = default;
+        ~TweenOptions() = default;
         TweenOptions& duration(timeMS duration)
         {
             m_duration = duration;
@@ -90,14 +90,17 @@ namespace oxygine
 
         children & getChildren()
         {
+            OXY_ASSERT(!requiresThreadChange());
             return m_children;
         }
         oxygine::spActor getFirstChild()
         {
+            OXY_ASSERT(!requiresThreadChange());
             return m_children.front();
         }
         oxygine::spActor getLastChild()
         {
+            OXY_ASSERT(!requiresThreadChange());
             return m_children.back();
         }
 
@@ -348,7 +351,7 @@ namespace oxygine
         virtual void update(const UpdateState& us);
         /**Renders this actor and children.*/
         virtual void render(const RenderState& rs);
-        virtual void handleEvent(Event* event);
+        void handleEvent(Event* event);
         virtual void doRender(const RenderState&) {}
 
         //converts position in parent space to local space
@@ -389,6 +392,7 @@ namespace oxygine
         using TweenAlpha = Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>;
 
     protected:
+        virtual void handleEventImpl(Event* event);
         void added2stage(Stage*);
         void removedFromStage();
         static void setParent(Actor* actor, Actor* parent);

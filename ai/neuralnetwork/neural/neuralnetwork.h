@@ -19,7 +19,7 @@ class NeuralNetwork final : public QObject, public FileSerializable
 public:
 
     NeuralNetwork(double maxWeight = 1.0);
-   virtual ~NeuralNetwork()= default;
+    ~NeuralNetwork()= default;
     /**
      * @brief serialize stores the object
      * @param pStream

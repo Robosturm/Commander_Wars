@@ -1026,8 +1026,6 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
         }
         case EditorModes::PlaceEditorSelection:
         {
-
-
             // resolve cursor move
             switch (m_EditorSelection->getCurrentMode())
             {
@@ -1240,6 +1238,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
 {
     if (m_placingState.x != x || m_placingState.y != y)
     {
+        Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT("EditorMenue::onMapClickedLeft x=" + QString::number(x) + " y=" + QString::number(y), GameConsole::eDEBUG);
         // resolve click
         switch (m_EditorMode)
@@ -1322,6 +1321,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
                 break;
             }
         }
+        Mainapp::getInstance()->continueRendering();
     }
     m_placingState.x = x;
     m_placingState.y = y;

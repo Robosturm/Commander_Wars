@@ -12,12 +12,12 @@
 class NetworkGameDataView;
 using spNetworkGameDataView = std::shared_ptr<NetworkGameDataView>;
 
-class NetworkGameDataView : public CreatedGui
+class NetworkGameDataView final : public CreatedGui
 {
     Q_OBJECT
 public:
     explicit NetworkGameDataView(NetworkGameData & data);
-    virtual ~NetworkGameDataView() = default;
+    ~NetworkGameDataView() = default;
     virtual oxygine::spActor loadCustomId(const QString & item, qint32 x, qint32 y, bool enabled, bool visible, float scale,
                                           const QString & id, const QString & tooltip, const QString & onEvent,
                                           UiFactory* pFactoty, CreatedGui* pMenu, qint32 loopIdx, qint32 & scaledWidth, qint32 & scaledHeight) override;

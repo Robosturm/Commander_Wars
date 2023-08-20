@@ -10,6 +10,6 @@ class SpriteObject final : public Tooltip
     Q_OBJECT
 public:
     SpriteObject() = default;
-   virtual ~SpriteObject() = default;
+    ~SpriteObject() = default;
 };
 

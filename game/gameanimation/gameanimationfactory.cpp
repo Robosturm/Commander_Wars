@@ -112,7 +112,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimationV2(GameMap* pMap,
     if (pUnit != nullptr)
     {
         CONSOLE_PRINT("Creating walking animation", GameConsole::eDEBUG);
-        spGameAnimationWalk pGameAnimationWalk = MemoryManagement::create<GameAnimationWalk>(pUnit->getSharedPtr<Unit>(), movePath, pMap);
+        spGameAnimationWalk pGameAnimationWalk = MemoryManagement::create<GameAnimationWalk>(pUnit->getSharedPtrFromWeak<Unit>(), movePath, pMap);
         pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
         if (pMap != nullptr)
         {
@@ -208,7 +208,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(GameMap* pMap, Terrai
                                                   pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
             if (pBattle != nullptr)
             {
-                pRet = pBattle->getSharedPtr<GameAnimation>();
+                pRet = pBattle->getSharedPtrFromWeak<GameAnimation>();
             }
         }
         else
@@ -360,7 +360,7 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipp
 {
     if (pAnimation != nullptr)
     {
-        removeAnimation(pAnimation->getSharedPtr<GameAnimation>(), skipping, true);
+        removeAnimation(pAnimation->getSharedPtrFromWeak<GameAnimation>(), skipping, true);
     }
 }
 

@@ -176,11 +176,6 @@ namespace oxygine
 
     }
 
-    void SlidingActorNoClipRect::handleEvent(Event* event)
-    {
-        Actor::handleEvent(event);
-    }
-
     void SlidingActorNoClipRect::_newEvent(Event* event)
     {
         if (!m_content || !m_enabled)
@@ -334,7 +329,7 @@ namespace oxygine
                                 auto* parent = act->getParent();
                                 if (parent != nullptr)
                                 {
-                                    act = parent->getSharedPtr<Actor>();
+                                    act = parent->getSharedPtrFromWeak<Actor>();
                                 }
                                 else
                                 {

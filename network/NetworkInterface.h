@@ -12,7 +12,6 @@
 
 #include "coreengine/gameconsole.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/LUPDATE_MACROS.h"
 
 class Serializable;
 class NetworkInterface;
@@ -28,7 +27,7 @@ public:
     /**
       * @brief this enum contains all message recievers of the network
       */
-    ENUM_CLASS NetworkSerives
+    enum class NetworkSerives
     {
         None = -1,
         Game,                   /**< used for game stream data */

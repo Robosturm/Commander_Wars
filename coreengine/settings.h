@@ -289,7 +289,7 @@ public:
         FullScreen,
     };
 
-   virtual ~Settings() = default;
+    ~Settings() = default;
     static Settings* getInstance();
 
     void setup();

@@ -19,7 +19,7 @@ class InfluenceInfo final : public QObject
 public:
     InfluenceInfo();
     explicit InfluenceInfo(GameMap* pMap);
-   virtual ~InfluenceInfo() = default;
+    ~InfluenceInfo() = default;
 
     void reset(GameMap* pMap);
     void updateOwner(Player* pOwner);
@@ -52,7 +52,7 @@ class InfluenceFrontMap final : public QObject
     Q_OBJECT
 public:
     explicit InfluenceFrontMap(GameMap* pMap, const std::vector<spIslandMap> & islands);
-   virtual ~InfluenceFrontMap() = default;
+    ~InfluenceFrontMap() = default;
     void addBuildingInfluence();
     void addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPfs, qint32 movePoints);
     void updateOwners();

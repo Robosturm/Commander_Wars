@@ -38,7 +38,7 @@ spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameT
     }
     else
     {
-        animation = m_pGameAnimationPower->getSharedPtr<GameAnimationPower>();
+        animation = m_pGameAnimationPower->getSharedPtrFromWeak<GameAnimationPower>();
     }
     return animation;
 }

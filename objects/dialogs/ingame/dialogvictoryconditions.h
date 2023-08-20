@@ -15,7 +15,7 @@ class DialogVictoryConditions final : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogVictoryConditions(GameMap* pMap);
-   virtual ~DialogVictoryConditions() = default;
+    ~DialogVictoryConditions() = default;
 
 signals:
     void sigFinished();

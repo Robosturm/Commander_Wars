@@ -1040,6 +1040,7 @@ float BattleAnimationSprite::getBackgroundSpeed()
 
 void BattleAnimationSprite::setBackgroundSpeed(float speed)
 {
+    Mainapp::getInstance()->pauseRendering();
     m_backgroundSpeed = getBackgroundSpeed();
     auto & childs = m_pBackgroundSprite->getChildren();
     for (auto & child : childs)
@@ -1050,6 +1051,7 @@ void BattleAnimationSprite::setBackgroundSpeed(float speed)
             sprite->setSpeedX(speed);
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void BattleAnimationSprite::restoreBackgroundSpeed()

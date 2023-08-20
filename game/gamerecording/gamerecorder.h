@@ -8,8 +8,6 @@
 
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
-#include "coreengine/LUPDATE_MACROS.h"
-
 class GameMap;
 
 class GameRecorder;
@@ -96,14 +94,14 @@ public:
         QVector<UnitData> lostUnits;
         QVector<UnitData> killedUnits;
     };
-    ENUM_CLASS Rang
-        {
-            S,
-            A,
-            B,
-            C,
-            D
-        };
+    enum class Rang
+    {
+        S,
+        A,
+        B,
+        C,
+        D
+    };
 
     explicit GameRecorder(GameMap* pMap);
     ~GameRecorder() = default;

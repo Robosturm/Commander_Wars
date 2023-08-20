@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QTextStream>
 
-#include "coreengine/LUPDATE_MACROS.h"
 #include "coreengine/memorymanagement.h"
 
 class GameMap;
@@ -42,7 +41,7 @@ public:
     static const char* const EventExtendMap;
 
 
-    ENUM_CLASS EventType
+    enum class EventType
     {
         dialog,
         spawnUnit,

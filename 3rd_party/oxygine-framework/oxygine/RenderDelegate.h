@@ -10,7 +10,7 @@ namespace oxygine
     public:
         static spRenderDelegate instance;
         explicit RenderDelegate() = default;
-       virtual ~RenderDelegate() = default;
+        ~RenderDelegate() = default;
         void render(Actor*, const RenderState&);
         void render(ClipRectActor*, const RenderState&);
         void doRender(Sprite*, const RenderState&);

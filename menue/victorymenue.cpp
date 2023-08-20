@@ -1119,11 +1119,13 @@ void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
                 {
                     if (progress >= 0)
                     {
+                        Mainapp::getInstance()->pauseRendering();
                         oxygine::spActor pActor = m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][player]->getLastChild();
                         if (pActor.get() != nullptr)
                         {
                             startPoint.setY(pActor->getY());
                         }
+                        Mainapp::getInstance()->continueRendering();
                     }
                 }
                 pSprite->setPosition(startPoint.x() - pAnim->getWidth(), startPoint.y() - pAnim->getHeight());

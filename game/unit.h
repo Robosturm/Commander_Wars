@@ -6,7 +6,6 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
-#include "coreengine/LUPDATE_MACROS.h"
 
 #include "game/GameEnums.h"
 
@@ -38,7 +37,7 @@ public:
         qint32 player;
     };
 
-    ENUM_CLASS Priorities
+    enum class Priorities
     {
         Colored = 0,
         Outline,
@@ -60,7 +59,7 @@ public:
      */
     explicit Unit(GameMap* pMap);
     explicit Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap);
-   virtual ~Unit();
+    ~Unit();
     /**
      * @brief setTerrain
      * @param pTerrain smart pointer to the terrain this building is placed on
