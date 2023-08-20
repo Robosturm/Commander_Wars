@@ -77,6 +77,10 @@ public slots:
      */
     void showEditBiomes();
     /**
+     * @brief updateSprites
+     */
+    void updateSprites();
+    /**
      * @brief toggleMiddleCrossGrid
      */
     void toggleMiddleCrossGrid();
