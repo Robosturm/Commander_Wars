@@ -550,6 +550,7 @@ void Terrain::setBaseTerrain(spTerrain terrain)
 void Terrain::unloadSprites()
 {
     // unload old stuff
+    m_terrainSpriteName.clear();
     if (m_pTerrainSprite.get() != nullptr)
     {
         m_pTerrainSprite->detach();
@@ -1420,6 +1421,10 @@ qint32 Terrain::getX() const
 void Terrain::setX(const qint32 value)
 {
     m_x = value;
+    if (m_pBaseTerrain.get())
+    {
+        m_pBaseTerrain->setX(value);
+    }
 }
 
 qint32 Terrain::getY() const
@@ -1430,6 +1435,10 @@ qint32 Terrain::getY() const
 void Terrain::setY(const qint32 value)
 {
     m_y = value;
+    if (m_pBaseTerrain.get())
+    {
+        m_pBaseTerrain->setY(value);
+    }
 }
 
 qint32 Terrain::getVision(Player* pPlayer)
