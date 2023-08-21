@@ -502,7 +502,7 @@ public:
      * @param targetType
      * @return
      */
-    Q_INVOKABLE QPoint getSiloRockettarget(qint32 radius, qint32 damage, qint32 highestDamage, qreal ownUnitValue = 1.2, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
+    Q_INVOKABLE QPoint getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, qreal ownUnitValue = 1.2, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money, QmlVectorPoint* pSearchArea = nullptr);
     /**
      * @brief getRocketTargetDamage
      * @param x

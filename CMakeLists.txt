@@ -210,13 +210,13 @@ endif()
 add_definitions(
     -DVERSION_MAJOR=0
     -DVERSION_MINOR=33
-    -DVERSION_REVISION=0
+    -DVERSION_REVISION=1
     -DVERSION_SUFFIX="main"
     -DCOW_BUILD_TAG="${COW_BUILD_TAG}"
     )
 
-set(COW_ANDROID_VERSION_NAME "0.33.0-beta")
-set(COW_ANDROID_VERSION_CODE "44")
+set(COW_ANDROID_VERSION_NAME "0.33.1-beta")
+set(COW_ANDROID_VERSION_CODE "45")
 
 ###################################################################################
 # Set up some compiler and linking options

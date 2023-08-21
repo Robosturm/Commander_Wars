@@ -114,6 +114,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Random map"),         "RANDOMMAP",    1, tr("Creates a new random map."));
     m_Topbar->addItem(tr("Toggle grid Strg+G"), "TOGGLEGRID",   1, tr("Shows or hides a grid layout."));
     m_Topbar->addItem(tr("Toggle cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
+    m_Topbar->addItem(tr("Update sprites"),     "UPDATESPRITES", 1, tr("Reloads the map sprites in case something didn't load correctly."));
 
     m_Topbar->addGroup(tr("Commands"));
     m_Topbar->addItem(tr("Place selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
@@ -398,6 +399,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         MenuItem("TOGGLEMIDDLECROSS",   &EditorMenue::toggleMiddleCrossGrid),
         MenuItem("VIEWMAPSTATS",        &EditorMenue::viewMapStats),
         MenuItem("EDITBIOMES",          &EditorMenue::showEditBiomes),
+        MenuItem("UPDATESPRITES",       &EditorMenue::updateSprites),
     };
     for (auto & item : qAsConst(items))
     {
@@ -408,6 +410,13 @@ void EditorMenue::clickedTopbar(QString itemID)
             break;
         }
     }
+}
+
+void EditorMenue::updateSprites()
+{
+    Mainapp::getInstance()->pauseRendering();
+    m_pMap->updateSprites();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void EditorMenue::showEditBiomes()

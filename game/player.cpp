@@ -140,15 +140,7 @@ void Player::loadCOMusic()
     if (!hasCo)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        qint32 count = GlobalUtils::randIntBase(0, 1);
-        if (count == 0)
-        {
-            pApp->getAudioManager()->addMusic("resources/music/cos/no_co0.mp3", 4726, 58364);
-        }
-        else
-        {
-            pApp->getAudioManager()->addMusic("resources/music/cos/no_co1.mp3", 4726, 58364);
-        }
+        pApp->getAudioManager()->addMusic("resources/music/cos/no_co.mp3");
     }
 }
 
@@ -1918,7 +1910,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, qreal ownUnitValue,
     }
 }
 
-QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 highestDamage, qreal ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
+QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, qreal ownUnitValue, GameEnums::RocketTarget targetType, QmlVectorPoint* pSearchArea)
 {    
     spQmlVectorPoint pPoints = GlobalUtils::getSpCircle(0, radius);
     highestDamage = -1;

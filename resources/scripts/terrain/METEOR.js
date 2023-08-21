@@ -108,8 +108,9 @@ var Constructor = function()
         for (i = 0; i < plasmaFields.length; i++)
         {
             field = plasmaFields[i];
-            var placeTerrain = map.getTerrain(field.x, field.y);
-            var baseID = placeTerrain.getBaseTerrainID();
+            let baseTerrain = map.getTerrain(field.x, field.y).getBaseTerrain("");
+            let baseID = baseTerrain.getID();
+            let palette = baseTerrain.getPalette();
             if (baseID === "PLAINS" ||
                 baseID === "SNOW" ||
                 baseID === "DESERT")
@@ -120,6 +121,8 @@ var Constructor = function()
             {
                 map.replaceTerrainOnly(baseID, field.x, field.y);
             }
+            let newTerrain = map.getTerrain(field.x, field.y);
+            newTerrain.setTerrainPalette(palette);
         }
         var testFields =  globals.getCircle(1, 1);
         for (i = 0; i < plasmaFields.length; i++)
