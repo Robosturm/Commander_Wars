@@ -133,10 +133,13 @@ void WikiView::showWikipage(const PageData * page)
 
 void WikiView::showPage(QString id)
 {
-    PageData page;
-    page.m_id = id;
-    m_lastPage = WikiDatabase::getInstance()->getPage(&page);
-    addChild(m_lastPage);
+   Mainapp* pApp = Mainapp::getInstance();
+   pApp->pauseRendering();
+   PageData page;
+   page.m_id = id;
+   m_lastPage = WikiDatabase::getInstance()->getPage(&page);
+   addChild(m_lastPage);
+   pApp->continueRendering();
 }
 
 void WikiView::hideLastPage()

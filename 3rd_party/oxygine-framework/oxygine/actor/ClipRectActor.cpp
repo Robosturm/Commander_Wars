@@ -18,7 +18,7 @@ namespace oxygine
             }
         }
 
-        Actor::handleEvent(event);
+        Actor::handleEventImpl(event);
     }
 
     void ClipRectActor::render(const RenderState& parentRS)

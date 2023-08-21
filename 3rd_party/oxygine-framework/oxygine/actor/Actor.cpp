@@ -271,7 +271,7 @@ namespace oxygine
         while (iter != m_children.begin())
         {
             iter--;
-            iter->get()->handleEvent(event);
+            iter->get()->handleEventImpl(event);
         }
         if (touchEvent)
         {
