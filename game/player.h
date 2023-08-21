@@ -363,7 +363,7 @@ public:
      * @param coId the co we want to load
      * @param id the index at which we want this co
      */
-    Q_INVOKABLE void setCO(QString coId, quint8 idx);
+    Q_INVOKABLE void setCO(const QString & coId, quint8 idx);
     /**
      * @brief getCoCount
      * @return

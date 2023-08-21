@@ -91,8 +91,8 @@ void PlayerInfo::updateData()
                 addChild(pSprite);
                 qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
 
-                CO* pCO = pPlayer->getCO(0);
-                if (pCO != nullptr)
+                spCO pCO = pPlayer->getSpCO(0);
+                if (pCO.get() != nullptr)
                 {
                     pAnim = pCO->getResAnim(QString(pCO->getCoID() + "+info").toLower());
                 }
@@ -142,7 +142,7 @@ void PlayerInfo::updateData()
 
                 if (pCO != nullptr)
                 {
-                    spCoPowermeter pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, pCO);
+                    spCoPowermeter pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, pCO.get());
                     pCoPowermeter->setY(pSprite->getY() + 3);
                     pCoPowermeter->setFlippedX(m_flippedX);
                     if (m_flippedX)
@@ -157,14 +157,14 @@ void PlayerInfo::updateData()
                     addChild(pCoPowermeter);
                 }
 
-                if (pPlayer->getCO(1) != nullptr)
+                pCO = pPlayer->getSpCO(1);
+                if (pCO.get() != nullptr)
                 {
-                    pCO = pPlayer->getCO(1);
                     pAnim = pCO->getResAnim(QString(pCO->getCoID() + "+info").toLower());
                     pSprite = MemoryManagement::create<oxygine::Sprite>();
                     pSprite->setResAnim(pAnim);
                     pSprite->setY(yPos + 62);
-                    spCoPowermeter pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, pCO);
+                    spCoPowermeter pCoPowermeter = MemoryManagement::create<CoPowermeter>(m_pMap, pCO.get());
                     pCoPowermeter->setY(pSprite->getY() + 3);
                     pCoPowermeter->setFlippedX(m_flippedX);
                     pCoPowermeter->drawPowerMeter();

@@ -68,7 +68,7 @@ public:
 
     struct IniData
     {
-        IniData(QString name, QString group, double * value, double defaultValue, double minValue, double maxValue)
+        IniData(const QString & name, const QString & group, double * value, double defaultValue, double minValue, double maxValue)
             : m_name(name),
               m_group(group),
               m_value(value),

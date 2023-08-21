@@ -85,7 +85,7 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
     return CampaignMapInfo(folder, files);
 }
 
-void Campaign::addDeveloperMaps(QString prefix, QString folder, QStringList & files)
+void Campaign::addDeveloperMaps(const QString & prefix, const QString & folder, QStringList & files)
 {
     if (GameConsole::getDeveloperMode())
     {

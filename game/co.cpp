@@ -21,7 +21,7 @@
 
 static constexpr double DOUBLE_PRECISION = 100000000.0;
 
-CO::CO(QString coID, Player* owner, GameMap* pMap)
+CO::CO(const QString & coID, Player* owner, GameMap* pMap)
     : m_pOwner(owner),
       m_coID(coID),
       m_pMap{pMap}
@@ -68,7 +68,7 @@ qreal CO::getUnitBuildValue(const QString & unitID)
     return ergValue;
 }
 
-bool CO::isJsFunctionEnabled(QString perk) const
+bool CO::isJsFunctionEnabled(const QString & perk) const
 {
     
     return perk != m_coID || // perks are always enabled
@@ -2214,7 +2214,7 @@ void CO::setCoStyleFromUserdata()
     }
 }
 
-void CO::setCoStyle(QString file, qint32 style)
+void CO::setCoStyle(const QString & file, qint32 style)
 {
     m_customCOStyles.clear();
     QImage colorTable;
@@ -2238,7 +2238,7 @@ QString CO::getActiveCoStyle()
     return "";
 }
 
-void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
+void CO::loadResAnim(const QString & coid, const QString & file, QImage & colorTable, QImage & maskTable, bool useColorBox)
 {
     CONSOLE_PRINT("Loading sprites for CO " + coid, GameConsole::eDEBUG);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();

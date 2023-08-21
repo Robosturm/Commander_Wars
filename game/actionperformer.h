@@ -71,7 +71,7 @@ public:
      * @param previousPoint
      * @return
      */
-    bool isTrap(const QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
+    bool isTrap(const QString & function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
     /**
      * @brief finsihActionPerformed
      */

@@ -122,7 +122,7 @@ public slots:
      * @brief writeDataListInt32
      * @param data writes a QList<qint32> to the action data
      */
-    void writeDataListInt32(const QVector<qint32> data)
+    void writeDataListInt32(const QVector<qint32> & data)
     {
         writeList(data);
     }
@@ -146,7 +146,7 @@ public slots:
      * @brief writeDataListString
      * @param data writes a QList<QString> to the action data
      */
-    void writeDataListString(const QStringList data)
+    void writeDataListString(const QStringList & data)
     {
         writeList(data);
     }
@@ -154,7 +154,7 @@ public slots:
      * @brief writeDataString adds a string to the action data
      * @param data
      */
-    void writeDataString(const QString data)
+    void writeDataString(const QString & data)
     {
         m_buffer.seek(0);
         m_actionData << data;

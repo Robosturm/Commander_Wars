@@ -19,6 +19,7 @@ public:
     template <class T, typename ...TArgs>
     static std::shared_ptr<T> create(TArgs... args)
     {
+        ++m_objectCounter;
         std::shared_ptr<T> pRet(new T(args...), &MemoryManagement::deleter<T>);
         return pRet;
     }
@@ -26,6 +27,7 @@ public:
     template <class T>
     static std::shared_ptr<T> createFromPointer(T* pPtr)
     {
+        ++m_objectCounter;
         std::shared_ptr<T> pRet(pPtr, &MemoryManagement::deleter<T>);
         return pRet;
     }
@@ -33,6 +35,7 @@ public:
     template <class T, typename ...TArgs>
     static T* createAndTrackJsObject(TArgs... args)
     {
+        ++m_objectCounter;
         std::shared_ptr<T> pRet(new T(args...), &MemoryManagement::deleter<T>);
         Interpreter* pInterpreter = Interpreter::getInstance();
         Q_ASSERT(pInterpreter->getInJsCall());
@@ -43,6 +46,7 @@ public:
     template <class T>
     static void deleter(T * pObj)
     {
+        --m_objectCounter;
         if constexpr (std::derived_from<T, QObject>)
         {
             pObj->deleteLater();
@@ -52,6 +56,8 @@ public:
             delete pObj;
         }
     }
+
+    static quint32 getObjectCounter();
 
 signals:
     void sigSetAddColor(oxygine::spVStyleActor actor, QColor color);
@@ -93,4 +99,5 @@ private:
 
 private:
     static MemoryManagement m_memoryManagement;
+    static std::atomic<quint32> m_objectCounter;
 };

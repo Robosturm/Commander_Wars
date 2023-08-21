@@ -6,6 +6,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 MemoryManagement MemoryManagement::m_memoryManagement;
+std::atomic<quint32> MemoryManagement::m_objectCounter{0};
 
 MemoryManagement::MemoryManagement()
 {
@@ -23,6 +24,11 @@ MemoryManagement::MemoryManagement()
     connect(this, &MemoryManagement::sigAddEventListener, this, &MemoryManagement::addEventListener, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigRemoveEventListener, this, &MemoryManagement::removeEventListener, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigRemoveEventListeners, this, &MemoryManagement::removeEventListeners, Qt::BlockingQueuedConnection);
+}
+
+quint32 MemoryManagement::getObjectCounter()
+{
+    return m_objectCounter;
 }
 
 void MemoryManagement::addEventListener(oxygine::spEventDispatcher dispatcher, oxygine::eventType et, const oxygine::EventCallback cb)

@@ -1808,7 +1808,7 @@ qint32 Player::getMaxCoCount() const
     return m_playerCOs.max_size();
 }
 
-void Player::setCO(QString coId, quint8 idx)
+void Player::setCO(const QString & coId, quint8 idx)
 {
     if (idx < m_playerCOs.max_size())
     {

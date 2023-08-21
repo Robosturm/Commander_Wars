@@ -35,7 +35,7 @@ public:
     static constexpr const char* const CO_RANDOM = "CO_RANDOM";
     static constexpr qint32 MAX_CO_UNIT_VALUE = 20;
 
-    explicit CO(QString coID, Player* owner, GameMap* pMap);
+    explicit CO(const QString & coID, Player* owner, GameMap* pMap);
     ~CO() = default;
     /**
      * @brief serialize stores the object
@@ -751,7 +751,7 @@ public:
      * @param file path to the co style relative to the commander wars exe
      * @param style index in the related predefined styles
      */
-    Q_INVOKABLE void setCoStyle(QString file, qint32 style);
+    Q_INVOKABLE void setCoStyle(const QString & file, qint32 style);
     /**
      * @brief postAction
      * @param pAction
@@ -790,13 +790,13 @@ protected:
     void limitPowerbar(qreal previousValue);
 
 private:
-    void loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
+    void loadResAnim(const QString & coid, const QString & file, QImage & colorTable, QImage & maskTable, bool useColorBox);
     /**
      * @brief isJsFunctionEnabled
      * @param objectId
      * @return
      */
-    bool isJsFunctionEnabled(QString perk) const;
+    bool isJsFunctionEnabled(const QString & perk) const;
 private:
     Player* m_pOwner;
     QString m_coID;

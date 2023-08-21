@@ -112,7 +112,7 @@ public:
         Max,
     };
 
-    explicit NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType, QString jsName);
+    explicit NormalAi(GameMap* pMap, const QString & configurationFile, GameEnums::AiTypes aiType, const QString & jsName);
     ~NormalAi() = default;
 
     virtual void resetToTurnStart() override;

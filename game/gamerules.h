@@ -104,8 +104,8 @@ public:
      * @return
      */
     const Password & getPassword() const;
-    spGameRule getSpGameRule(const QString rule);
-    spVictoryRule getSpVictoryRule(const QString rule);
+    spGameRule getSpGameRule(const QString & rule);
+    spVictoryRule getSpVictoryRule(const QString & rule);
 signals:
     void sigVictory(qint32 team);
 public:
@@ -148,7 +148,7 @@ public:
      * @brief setMatchType
      * @param newMatchType
      */
-    Q_INVOKABLE void setMatchType(const QString newMatchType);
+    Q_INVOKABLE void setMatchType(const QString & newMatchType);
     /**
      * @brief reset
      */
@@ -310,7 +310,7 @@ public:
      * @brief setPassword
      * @param password
      */
-    Q_INVOKABLE void setPassword(const QString password);
+    Q_INVOKABLE void setPassword(const QString & password);
     /**
      * @brief getDescription
      * @return
@@ -320,7 +320,7 @@ public:
      * @brief setDescription
      * @param description
      */
-    Q_INVOKABLE void setDescription(const QString description);
+    Q_INVOKABLE void setDescription(const QString & description);
     /**
      * @brief getPowerGainSpeed
      * @return
@@ -340,7 +340,7 @@ public:
      * @brief setAllowedPerks
      * @param allowedPerks
      */
-    Q_INVOKABLE void setAllowedPerks(const QStringList allowedPerks);
+    Q_INVOKABLE void setAllowedPerks(const QStringList & allowedPerks);
     /**
      * @brief getAllowedActions
      * @return
@@ -350,7 +350,7 @@ public:
      * @brief setAllowedActions
      * @param allowedActions
      */
-    Q_INVOKABLE void setAllowedActions(const QStringList allowedActions);
+    Q_INVOKABLE void setAllowedActions(const QStringList & allowedActions);
     /**
      * @brief getTeamFacingUnits
      * @return
@@ -430,7 +430,7 @@ public:
      * @brief setCOBannlist
      * @param COBannlist
      */
-    Q_INVOKABLE void setCOBannlist(const QStringList COBannlist);
+    Q_INVOKABLE void setCOBannlist(const QStringList & COBannlist);
     /**
      * @brief getAiAttackTerrain
      * @return
@@ -457,16 +457,16 @@ public:
      */
     Q_INVOKABLE void checkVictory();
     Q_INVOKABLE qint32 getVictoryTeam();
-    Q_INVOKABLE void addVictoryRule(const QString rule);
-    Q_INVOKABLE bool hasVictoryRule(const QString rule);
-    Q_INVOKABLE void removeVictoryRule(const QString rule);
+    Q_INVOKABLE void addVictoryRule(const QString & rule);
+    Q_INVOKABLE bool hasVictoryRule(const QString & rule);
+    Q_INVOKABLE void removeVictoryRule(const QString & rule);
     /**
      * @brief hasGameRule
      * @param rule
      * @return
      */
-    Q_INVOKABLE bool hasGameRule(const QString rule);
-    Q_INVOKABLE VictoryRule* getVictoryRule(const QString rule);
+    Q_INVOKABLE bool hasGameRule(const QString & rule);
+    Q_INVOKABLE VictoryRule* getVictoryRule(const QString & rule);
     Q_INVOKABLE qint32 getVictoryRuleSize()
     {
         return m_VictoryRules.size();
@@ -475,9 +475,9 @@ public:
     {
         return m_VictoryRules[index].get();
     }
-    Q_INVOKABLE void addGameRule(const QString rule);
-    Q_INVOKABLE GameRule* getGameRule(const QString rule);
-    Q_INVOKABLE void removeGameRule(const QString rule);
+    Q_INVOKABLE void addGameRule(const QString & rule);
+    Q_INVOKABLE GameRule* getGameRule(const QString & rule);
+    Q_INVOKABLE void removeGameRule(const QString & rule);
     Q_INVOKABLE qint32 getGameRuleSize()
     {
         return m_GameRules.size();
@@ -492,13 +492,13 @@ public:
      * @param weatherId
      * @param weatherChance
      */
-    Q_INVOKABLE void addWeather(const QString weatherId, qint32 weatherChance);
+    Q_INVOKABLE void addWeather(const QString & weatherId, qint32 weatherChance);
     /**
      * @brief changeWeatherChance
      * @param weatherId
      * @param weatherChance
      */
-    Q_INVOKABLE void changeWeatherChanceByName(QString weatherId, qint32 weatherChance);
+    Q_INVOKABLE void changeWeatherChanceByName(const QString & weatherId, qint32 weatherChance);
     /**
      * @brief changeWeatherChance
      * @param index
@@ -538,13 +538,13 @@ public:
      * @brief getCurrentWeather
      * @return
      */
-    Q_INVOKABLE Weather* getWeather(const QString weatherId);
+    Q_INVOKABLE Weather* getWeather(const QString & weatherId);
     /**
      * @brief getWeatherChance
      * @param index
      * @return
      */
-    Q_INVOKABLE qint32 getWeatherChance(const QString weatherId);
+    Q_INVOKABLE qint32 getWeatherChance(const QString & weatherId);
     /**
      * @brief getWeatherCount
      * @return
@@ -562,7 +562,7 @@ public:
      * @param weatherId
      * @param duration
      */
-    Q_INVOKABLE void changeWeather(const QString weatherId, qint32 duration, qint32 startDay = 0);
+    Q_INVOKABLE void changeWeather(const QString & weatherId, qint32 duration, qint32 startDay = 0);
     /**
      * @brief changeWeather changes the weather for n-days
      * @param weatherId

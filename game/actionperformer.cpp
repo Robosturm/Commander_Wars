@@ -633,7 +633,7 @@ void ActionPerformer::doTrapping(spGameAction & pGameAction)
     }
 }
 
-bool ActionPerformer::isTrap(const QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)
+bool ActionPerformer::isTrap(const QString & function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)
 {
 
     Unit* pUnit = m_pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();

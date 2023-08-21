@@ -197,7 +197,7 @@ void GameRules::onGameStart()
     }
 }
 
-void GameRules::addGameRule(const QString rule)
+void GameRules::addGameRule(const QString & rule)
 {
     bool found = false;
     for (qint32 i = 0; i < m_GameRules.size(); i++)
@@ -215,7 +215,7 @@ void GameRules::addGameRule(const QString rule)
 }
 
 
-spGameRule GameRules::getSpGameRule(const QString rule)
+spGameRule GameRules::getSpGameRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_GameRules.size(); i++)
     {
@@ -227,7 +227,7 @@ spGameRule GameRules::getSpGameRule(const QString rule)
     return spGameRule();
 }
 
-GameRule* GameRules::getGameRule(const QString rule)
+GameRule* GameRules::getGameRule(const QString & rule)
 {
     return getSpGameRule(rule).get();
 }
@@ -249,7 +249,7 @@ void GameRules::addGameRule(spGameRule rule)
     }
 }
 
-bool GameRules::hasGameRule(const QString rule)
+bool GameRules::hasGameRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -261,7 +261,7 @@ bool GameRules::hasGameRule(const QString rule)
     return false;
 }
 
-void GameRules::removeGameRule(const QString rule)
+void GameRules::removeGameRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_GameRules.size(); i++)
     {
@@ -273,7 +273,7 @@ void GameRules::removeGameRule(const QString rule)
     }
 }
 
-bool GameRules::hasVictoryRule(const QString rule)
+bool GameRules::hasVictoryRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -285,7 +285,7 @@ bool GameRules::hasVictoryRule(const QString rule)
     return false;
 }
 
-void GameRules::addVictoryRule(const QString rule)
+void GameRules::addVictoryRule(const QString & rule)
 {
     bool found = false;
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
@@ -302,7 +302,7 @@ void GameRules::addVictoryRule(const QString rule)
     }
 }
 
-spVictoryRule GameRules::getSpVictoryRule(const QString rule)
+spVictoryRule GameRules::getSpVictoryRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -314,7 +314,7 @@ spVictoryRule GameRules::getSpVictoryRule(const QString rule)
     return spVictoryRule();
 }
 
-VictoryRule* GameRules::getVictoryRule(const QString rule)
+VictoryRule* GameRules::getVictoryRule(const QString & rule)
 {
     return getSpVictoryRule(rule).get();
 }
@@ -336,7 +336,7 @@ void GameRules::addVictoryRule(spVictoryRule rule)
     }
 }
 
-void GameRules::removeVictoryRule(const QString rule)
+void GameRules::removeVictoryRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -450,7 +450,7 @@ void GameRules::checkVictory()
     }
 }
 
-void GameRules::addWeather(const QString weatherId, qint32 weatherChance)
+void GameRules::addWeather(const QString & weatherId, qint32 weatherChance)
 {
     bool found = false;
     for (qint32 i = 0; i < m_Weathers.size(); i++)
@@ -469,7 +469,7 @@ void GameRules::addWeather(const QString weatherId, qint32 weatherChance)
     }
 }
 
-void GameRules::changeWeatherChanceByName(QString weatherId, qint32 weatherChance)
+void GameRules::changeWeatherChanceByName(const QString & weatherId, qint32 weatherChance)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
@@ -510,7 +510,7 @@ Weather* GameRules::getWeather(qint32 index)
     return nullptr;
 }
 
-Weather* GameRules::getWeather(const QString weatherId)
+Weather* GameRules::getWeather(const QString & weatherId)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
@@ -522,7 +522,7 @@ Weather* GameRules::getWeather(const QString weatherId)
     return nullptr;
 }
 
-qint32 GameRules::getWeatherChance(const QString weatherId)
+qint32 GameRules::getWeatherChance(const QString & weatherId)
 {
     for (qint32 i = 0; i < m_WeatherChances.size(); i++)
     {
@@ -609,7 +609,7 @@ void GameRules::setStartWeather(qint32 index)
     m_StartWeather = index;
 }
 
-void GameRules::changeWeather(const QString weatherId, qint32 duration, qint32 startDay)
+void GameRules::changeWeather(const QString & weatherId, qint32 duration, qint32 startDay)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
@@ -1153,7 +1153,7 @@ QString GameRules::getMatchType() const
     return m_matchType;
 }
 
-void GameRules::setMatchType(const QString newMatchType)
+void GameRules::setMatchType(const QString & newMatchType)
 {
     m_matchType = newMatchType;
 }
@@ -1318,7 +1318,7 @@ QString GameRules::getDescription() const
     return m_description;
 }
 
-void GameRules::setDescription(const QString description)
+void GameRules::setDescription(const QString & description)
 {
     m_description = description;
 }
@@ -1333,7 +1333,7 @@ QString GameRules::getPasswordText() const
     return m_password.getPasswordText();
 }
 
-void GameRules::setPassword(const QString password)
+void GameRules::setPassword(const QString & password)
 {
     m_password.setPassword(password);
 }
@@ -1353,7 +1353,7 @@ QStringList GameRules::getAllowedActions() const
     return m_allowedActions;
 }
 
-void GameRules::setAllowedActions(const QStringList allowedActions)
+void GameRules::setAllowedActions(const QStringList & allowedActions)
 {
     m_allowedActions = allowedActions;
     m_actionBannlistEdited = true;
@@ -1364,7 +1364,7 @@ QStringList GameRules::getAllowedPerks() const
     return m_allowedPerks;
 }
 
-void GameRules::setAllowedPerks(const QStringList allowedPerks)
+void GameRules::setAllowedPerks(const QStringList & allowedPerks)
 {
     m_allowedPerks = allowedPerks;
     m_perkBannlistEdited = true;
@@ -1445,7 +1445,7 @@ QStringList GameRules::getCOBannlist() const
     return m_COBannlist;
 }
 
-void GameRules::setCOBannlist(const QStringList COBannlist)
+void GameRules::setCOBannlist(const QStringList & COBannlist)
 {
     m_COBannlist = COBannlist;
     m_COBannlistEdited = true;

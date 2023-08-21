@@ -1118,12 +1118,12 @@ qint32 Terrain::getDefense(Unit* pUnit)
             Player* pPlayer = m_pMap->getPlayer(i);
             if (pPlayer->isEnemyUnit(pUnit) && !pPlayer->getIsDefeated())
             {
-                CO* pCO = pPlayer->getCO(0);
-                if (pCO != nullptr)
+                spCO pCO = pPlayer->getSpCO(0);
+                if (pCO.get() != nullptr)
                 {
                     defense += pCO->getEnemyTerrainDefenseModifier(pUnit, QPoint(m_x, m_y));
                 }
-                pCO = pPlayer->getCO(1);
+                pCO = pPlayer->getSpCO(1);
                 if (pCO != nullptr)
                 {
                     defense += pCO->getEnemyTerrainDefenseModifier(pUnit, QPoint(m_x, m_y));

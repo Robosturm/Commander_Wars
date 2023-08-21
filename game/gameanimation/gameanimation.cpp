@@ -399,14 +399,11 @@ bool GameAnimation::onFinished(bool skipping)
         {
             doPreAnimationCall();
         }
-        else
+        for (auto & data : m_SoundData)
         {
-            for (auto & data : m_SoundData)
+            if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
             {
-                if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
-                {
-                    Mainapp::getInstance()->getAudioManager()->stopSound(data.soundFile);
-                }
+                Mainapp::getInstance()->getAudioManager()->stopSound(data.soundFile);
             }
         }
         GameAnimationFactory* pGameAnimationFactory = GameAnimationFactory::getInstance();

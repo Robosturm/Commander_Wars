@@ -12,7 +12,7 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
-IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, QString movementType)
+IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner, const QString & movementType)
       : m_pOwner(pOwner),
         m_pMap(pMap),
         m_MovementType(movementType)

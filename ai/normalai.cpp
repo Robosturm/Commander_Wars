@@ -21,7 +21,7 @@
 #include "resource_management/movementtablemanager.h"
 
 
-NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType, QString jsName)
+NormalAi::NormalAi(GameMap* pMap, const QString & configurationFile, GameEnums::AiTypes aiType, const QString & jsName)
     : CoreAI(pMap, aiType, jsName),
       m_InfluenceFrontMap(pMap, m_IslandMaps)
 {
