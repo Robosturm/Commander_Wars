@@ -838,11 +838,11 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
     {
         Terrain* pTerrain = m_pMap->getTerrain(x, y);
         spBuilding pBuilding = pTerrain->getSpBuilding();
-        Unit* pUnit = pTerrain->getUnit();
+        spUnit pUnit = pTerrain->getSpUnit();
         Player* pPlayer = m_pMenu->getCurrentViewPlayer();
-        if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
+        if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
         {
-            pUnit = nullptr;
+            pUnit.reset();
         }
         qint32 posY = 5;
         qint32 posX = 10;
@@ -902,7 +902,7 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
             m_pCursorInfoBox->addChild(pTextfield);
             barAdded = true;
         }
-        if (pBuilding.get() != nullptr)
+        if (pUnit->getCapturePoints() > 0)
         {
             constexpr qint32 maxCapturepoints = 20;
             qint32 resistance = maxCapturepoints;

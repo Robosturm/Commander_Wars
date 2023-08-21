@@ -397,8 +397,8 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             if (m_chatButtonShineTween.get())
             {
-                m_chatButtonShineTween->removeFromActor();
-            }
+                m_ChatButton->removeTween(m_chatButtonShineTween);
+            }            
             m_chatButtonShineTween = oxygine::createTween(oxygine::VStyleActor::TweenAddColor(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
             m_ChatButton->addTween(m_chatButtonShineTween);
         }
@@ -1512,7 +1512,8 @@ void GameMenue::showChat()
     m_pChat->removeTweens();
     if (m_chatButtonShineTween.get())
     {
-        m_chatButtonShineTween->removeFromActor();
+        m_ChatButton->removeTween(m_chatButtonShineTween);
+        m_chatButtonShineTween = nullptr;
     }
     m_ChatButton->setAddColor(0, 0, 0, 0);
 }

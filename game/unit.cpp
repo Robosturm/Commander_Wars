@@ -201,7 +201,8 @@ void Unit::setTerrain(Terrain* pTerrain)
 }
 
 void Unit::addShineTween()
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     removeShineTween();
     for (auto & child : m_children)
     {
@@ -213,10 +214,12 @@ void Unit::addShineTween()
             m_ShineTweens.append(shineTween);
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Unit::removeShineTween()
 {
+    Mainapp::getInstance()->pauseRendering();
     QColor addColor(0, 0, 0, 0);
     for (qint32 i = 0; i < m_ShineTweens.size(); ++i)
     {
@@ -228,7 +231,7 @@ void Unit::removeShineTween()
                 oxygine::Actor* pActor = pClient;
                 if (pActor != nullptr)
                 {
-                    m_ShineTweens[i]->removeFromActor();
+                    pActor->removeTween(m_ShineTweens[i]);
                     oxygine::VStyleActor* pVStyle = dynamic_cast<oxygine::VStyleActor*>(pActor);
                     if (pVStyle != nullptr)
                     {
@@ -243,6 +246,7 @@ void Unit::removeShineTween()
     {
         pUunit->removeShineTween();
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)

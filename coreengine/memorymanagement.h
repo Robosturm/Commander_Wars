@@ -1,6 +1,9 @@
 #ifndef MemoryManagement_H
 #define MemoryManagement_H
 
+#include <concepts>
+#include <memory>
+
 #include <QObject>
 #include <QColor>
 #include "coreengine/interpreter.h"

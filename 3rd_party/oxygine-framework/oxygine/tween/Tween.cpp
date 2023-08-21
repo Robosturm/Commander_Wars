@@ -90,16 +90,6 @@ namespace oxygine
         m_elapsed = elapsed;
     }
 
-    void Tween::removeFromActor()
-    {
-        oxygine::Actor* pClient = getClient();
-        if (pClient != nullptr)
-        {
-            spTween pTween = getSharedPtr<Tween>();
-            pClient->removeTween(pTween);
-        }
-    }
-
     void Tween::complete(timeMS deltaTime)
     {
         if (m_loops == -1)

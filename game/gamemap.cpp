@@ -2155,7 +2155,8 @@ void GameMap::endOfTurnPlayer(Player* pPlayer)
 }
 
 void GameMap::startOfTurn(Player* pPlayer)
-{    
+{
+    Mainapp::getInstance()->pauseRendering();
     if (pPlayer != nullptr)
     {
         pPlayer->startOfTurn();
@@ -2168,11 +2169,13 @@ void GameMap::startOfTurn(Player* pPlayer)
     else
     {
         startOfTurnNeutral();
-    }
+    }    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::startOfTurnNeutral()
-{
+{    
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Doing start of turn for neutrals", GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -2193,11 +2196,13 @@ void GameMap::startOfTurnNeutral()
                 pBuilding->startOfTurn();
             }
         }
-    }
+    }    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::startOfTurnPlayer(Player* pPlayer)
-{
+{    
+    Mainapp::getInstance()->pauseRendering();
     CONSOLE_PRINT("Doing start of turn for player " + QString::number(pPlayer->getPlayerID()), GameConsole::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -2245,7 +2250,8 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
                 }
             }
         }
-    }
+    }    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::centerOnPlayer(Player* pPlayer)
@@ -2476,6 +2482,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
 {
     if (anyPlayerAlive())
     {
+        Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT("GameMap::nextTurn", GameConsole::eDEBUG);
         m_Rules->checkVictory();
         endOfTurn(m_CurrentPlayer.get());
@@ -2558,6 +2565,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioManager()->playSound("player_turn.wav");
         }
+        Mainapp::getInstance()->continueRendering();
     }
 }
 

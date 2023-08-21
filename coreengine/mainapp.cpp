@@ -267,7 +267,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                     updateStep == GameUpdater::MODE_INSTALL)
                 {
                     automaticNextStep = false;
-                    m_gameUpdater = spGameUpdater::create();
+                    m_gameUpdater = MemoryManagement::create<GameUpdater>();
                 }
             }
             break;
