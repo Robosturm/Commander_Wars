@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QTextStream>
 
-#include "coreengine/memorymanagement.h"
+#include "coreengine/refobject.h"
 
 class GameMap;
 class ScriptEvent;

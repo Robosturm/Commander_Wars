@@ -7,6 +7,8 @@
 
 #include "ingamescriptsupport/events/scriptevent.h"
 
+#include "coreengine/refobject.h"
+
 class GameMap;
 
 class ScriptCondition;

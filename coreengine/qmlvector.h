@@ -9,6 +9,7 @@
 #include "game/building.h"
 
 #include "coreengine/globalutils.h"
+#include "coreengine/refobject.h"
 
 class QmlVectorPoint;
 using spQmlVectorPoint = std::shared_ptr<QmlVectorPoint>;

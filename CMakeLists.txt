@@ -560,6 +560,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/commandlineparser.cpp coreengine/commandlineparser.h
     coreengine/JsCallback.h
     coreengine/memorymanagement.h coreengine/memorymanagement.cpp
+    coreengine/refobject.h
 
     # network engine
     network/smtpmailsender.h network/smtpmailsender.cpp

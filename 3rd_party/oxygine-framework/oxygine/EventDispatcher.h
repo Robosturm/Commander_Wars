@@ -1,7 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
-#include "coreengine/memorymanagement.h"
+#include "coreengine/refobject.h"
 #include <vector>
 
 namespace oxygine

@@ -212,6 +212,7 @@ void Unit::addShineTween()
             oxygine::spTween shineTween = oxygine::createTween(oxygine::VStyleActor::TweenAddColor(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
             pActor->addTween(shineTween);
             m_ShineTweens.append(shineTween);
+            m_shineOwner.append(pActor);
         }
     }
     Mainapp::getInstance()->continueRendering();
@@ -223,28 +224,18 @@ void Unit::removeShineTween()
     QColor addColor(0, 0, 0, 0);
     for (qint32 i = 0; i < m_ShineTweens.size(); ++i)
     {
-        if (m_ShineTweens[i].get() != nullptr)
+        if (m_ShineTweens[i].get() != nullptr &&
+            m_shineOwner[i].get() != nullptr )
         {
-            auto* pClient = m_ShineTweens[i]->getClient();
-            if (pClient != nullptr)
-            {
-                oxygine::Actor* pActor = pClient;
-                if (pActor != nullptr)
-                {
-                    pActor->removeTween(m_ShineTweens[i]);
-                    oxygine::VStyleActor* pVStyle = dynamic_cast<oxygine::VStyleActor*>(pActor);
-                    if (pVStyle != nullptr)
-                    {
-                        pVStyle->setAddColor(addColor);
-                    }
-                }
-            }
+            m_shineOwner[i]->removeTween(m_ShineTweens[i]);
+            m_shineOwner[i]->setAddColor(addColor);
         }
     }
-    m_ShineTweens.clear();
-    for (auto & pUunit : m_TransportUnits)
+    m_ShineTweens.clear();    
+    m_shineOwner.clear();
+    for (auto & pUnit : m_TransportUnits)
     {
-        pUunit->removeShineTween();
+        pUnit->removeShineTween();
     }
     Mainapp::getInstance()->continueRendering();
 }

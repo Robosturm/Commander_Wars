@@ -8,6 +8,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 
 #include "coreengine/memorymanagement.h"
+#include "coreengine/refobject.h"
 
 namespace oxygine
 {
