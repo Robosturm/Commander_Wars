@@ -366,7 +366,7 @@ public:
      * @brief getTerrainID
      * @return
      */
-    Q_INVOKABLE QString getTerrainID() const;
+    Q_INVOKABLE const QString getTerrainID() const;
     Q_INVOKABLE QString getTerrainName() const;
     Q_INVOKABLE void setTerrainName(const QString & value, bool customName = false);
     Q_INVOKABLE qint32 getX() const;

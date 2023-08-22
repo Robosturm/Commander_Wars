@@ -26,6 +26,7 @@ namespace oxygine
         void redrawUi();
     public slots:
         virtual void launchGame() = 0;
+        void update();
     signals:
         void activeChanged();
 
@@ -33,7 +34,6 @@ namespace oxygine
         virtual void keyPressEvent(QKeyEvent *event);
         virtual void keyReleaseEvent(QKeyEvent *event);
         virtual void updateData() = 0;
-        virtual void timerEvent(QTimerEvent *);
         // input events
         virtual void mousePressEvent(QMouseEvent *event) = 0;
         virtual void mouseReleaseEvent(QMouseEvent *event) = 0;

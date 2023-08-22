@@ -582,7 +582,7 @@ public:
      * @brief getUnitID the unit id
      * @return
      */
-    Q_INVOKABLE QString getUnitID();
+    Q_INVOKABLE const QString getUnitID();
     /**
      * @brief getUnitDamageID
      * @return

@@ -142,7 +142,7 @@ qreal CO::getCoGroupModifier(QStringList unitIds, SimpleProductionSystem* system
     return ret;
 }
 
-QString CO::getCoID() const
+const QString CO::getCoID() const
 {
     return m_coID;
 }

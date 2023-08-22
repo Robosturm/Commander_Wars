@@ -294,8 +294,8 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
     oxygine::spActor actor = MemoryManagement::create<oxygine::Actor>();
     if (COArmy == army && !coid.isEmpty())
     {
-        QString resAnim = coid.toLower() + "+face";
-        pAnim = pCOSpriteManager->getResAnim(resAnim);        
+        QString resAnim = coid + "+face";
+        pAnim = pCOSpriteManager->getResAnim(resAnim.toLower());
         pSprite = MemoryManagement::create<oxygine::Sprite>();
         pSprite->setResAnim(pAnim);
         actor->addChild(pSprite);

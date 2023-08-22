@@ -2541,7 +2541,7 @@ qint32 Unit::getLoadingPlace()
     }
 }
 
-QString Unit::getUnitID()
+const QString Unit::getUnitID()
 {
     return m_UnitID;
 }

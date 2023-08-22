@@ -1402,7 +1402,7 @@ QStringList Terrain::getOverlayTerrainSprites()
     return erg.toVariant().toStringList();
 }
 
-QString Terrain::getTerrainID() const
+const QString Terrain::getTerrainID() const
 {
     return m_terrainID;
 }

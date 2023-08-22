@@ -266,7 +266,7 @@ public:
      * @brief getBuildingID
      * @return the string if of this building
      */
-    Q_INVOKABLE inline QString getBuildingID() const
+    Q_INVOKABLE inline const QString getBuildingID() const
     {
         return m_BuildingID;
     }

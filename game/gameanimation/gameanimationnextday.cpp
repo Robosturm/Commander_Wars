@@ -54,8 +54,8 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     oxygine::spSprite m_CO = MemoryManagement::create<oxygine::Sprite>();
     if (pCO != nullptr)
     {
-        QString resAnim = pCO->getCoID().toLower() + "+nrm";
-        oxygine::ResAnim* pAnim = pCO->getResAnim(resAnim);
+        QString resAnim = pCO->getCoID() + "+nrm";
+        oxygine::ResAnim* pAnim = pCO->getResAnim(resAnim.toLower());
         if (pAnim != nullptr)
         {
             m_CO->setResAnim(pAnim);
@@ -75,8 +75,8 @@ GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint
     pCO = pPlayer->getCO(1);
     if (pCO != nullptr)
     {
-        QString resAnim = pCO->getCoID().toLower() + "+nrm";
-        oxygine::ResAnim* pAnim = pCO->getResAnim(resAnim);
+        QString resAnim = pCO->getCoID() + "+nrm";
+        oxygine::ResAnim* pAnim = pCO->getResAnim(resAnim.toLower());
         if (pAnim != nullptr)
         {
             m_CO = MemoryManagement::create<oxygine::Sprite>();

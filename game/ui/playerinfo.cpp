@@ -94,7 +94,8 @@ void PlayerInfo::updateData()
                 spCO pCO = pPlayer->getSpCO(0);
                 if (pCO.get() != nullptr)
                 {
-                    pAnim = pCO->getResAnim(QString(pCO->getCoID() + "+info").toLower());
+                    QString resAnim = pCO->getCoID() + "+info";
+                    pAnim = pCO->getResAnim(resAnim.toLower());
                 }
                 else
                 {
@@ -160,7 +161,8 @@ void PlayerInfo::updateData()
                 pCO = pPlayer->getSpCO(1);
                 if (pCO.get() != nullptr)
                 {
-                    pAnim = pCO->getResAnim(QString(pCO->getCoID() + "+info").toLower());
+                    QString resAnim = pCO->getCoID() + "+info";
+                    pAnim = pCO->getResAnim(resAnim.toLower());
                     pSprite = MemoryManagement::create<oxygine::Sprite>();
                     pSprite->setResAnim(pAnim);
                     pSprite->setY(yPos + 62);

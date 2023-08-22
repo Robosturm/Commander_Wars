@@ -403,7 +403,7 @@ public:
      * @brief getCoID our co id
      * @return
      */
-    Q_INVOKABLE QString getCoID() const;
+    Q_INVOKABLE const QString getCoID() const;
     /**
      * @brief getPowerStars stars needed to activate our power
      * @return

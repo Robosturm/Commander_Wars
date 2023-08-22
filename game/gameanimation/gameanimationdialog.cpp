@@ -257,8 +257,8 @@ void GameAnimationDialog::setDialog(const QString text)
 void GameAnimationDialog::setCO(const QString coid, GameEnums::COMood mood)
 {
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    QString resAnim = coid.toLower() + "+face";
-    oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(resAnim);
+    QString resAnim = coid + "+face";
+    oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(resAnim.toLower());
     if (pAnim != nullptr)
     {
         if (pAnim->getColumns() > 0)
@@ -283,8 +283,8 @@ void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMoo
             CO* pCo = m_pMap->getPlayer(player)->getCO(co);
             if (pCo != nullptr)
             {
-                QString resAnim = pCo->getCoID().toLower() + "+face";
-                oxygine::ResAnim* pAnim = pCo->getResAnim(resAnim);
+                QString resAnim = pCo->getCoID() + "+face";
+                oxygine::ResAnim* pAnim = pCo->getResAnim(resAnim.toLower());
                 if (pAnim != nullptr)
                 {
                     m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));

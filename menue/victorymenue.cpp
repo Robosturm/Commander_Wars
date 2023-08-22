@@ -438,8 +438,8 @@ VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface,
                     oxygine::spSprite pCOSprite = MemoryManagement::create<oxygine::Sprite>();
                     pCOSprite->setScale(scale);
                     pCOSprite->setPosition(5, 11 + y);
-                    QString resAnim = pCO->getCoID().toLower() + "+face";
-                    pAnim = pCO->getResAnim(resAnim);
+                    QString resAnim = pCO->getCoID() + "+face";
+                    pAnim = pCO->getResAnim(resAnim.toLower());
                     QString sentence = "";
                     if (pAnim != nullptr)
                     {

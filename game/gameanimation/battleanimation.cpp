@@ -185,8 +185,8 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     float coScale = 22.0f / 24.0f;
     if (pCO != nullptr)
     {
-        QString resAnim = pCO->getCoID().toLower() + "+face";
-        m_AtkCO0.anim = pCO->getResAnim(resAnim);
+        QString resAnim = pCO->getCoID() + "+face";
+        m_AtkCO0.anim = pCO->getResAnim(resAnim.toLower());
         m_AtkCO0.coSprite->setResAnim(m_AtkCO0.anim);
         setCOMood(m_AtkCO0, atkStartHp, defStartHp);
         if (getIsLeft(pAtkUnit, pDefUnit))
@@ -228,8 +228,8 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     pCO = pPlayer->getCO(1);
     if (pCO != nullptr)
     {
-        QString resAnim = pCO->getCoID().toLower() + "+face";
-        m_AtkCO1.anim = pCO->getResAnim(resAnim);
+        QString resAnim = pCO->getCoID() + "+face";
+        m_AtkCO1.anim = pCO->getResAnim(resAnim.toLower());
         m_AtkCO1.coSprite->setResAnim(m_AtkCO1.anim);
         setCOMood(m_AtkCO1, atkStartHp, defStartHp);
         if (getIsLeft(pAtkUnit, pDefUnit))
@@ -272,8 +272,8 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     m_DefCO0.coSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pCO != nullptr)
     {
-        QString resAnim = pCO->getCoID().toLower() + "+face";
-        m_DefCO0.anim = pCO->getResAnim(resAnim);
+        QString resAnim = pCO->getCoID() + "+face";
+        m_DefCO0.anim = pCO->getResAnim(resAnim.toLower());
         m_DefCO0.coSprite->setResAnim(m_DefCO0.anim);
         setCOMood(m_DefCO0, defStartHp, atkStartHp);
         if (getIsLeft(pDefUnit, pAtkUnit))
@@ -315,8 +315,8 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     m_DefCO1.coSprite = MemoryManagement::create<oxygine::Sprite>();
     if (pCO != nullptr)
     {
-        QString resAnim = pCO->getCoID().toLower() + "+face";
-        m_DefCO1.anim = pCO->getResAnim(resAnim);
+        QString resAnim = pCO->getCoID() + "+face";
+        m_DefCO1.anim = pCO->getResAnim(resAnim.toLower());
         m_DefCO1.coSprite->setResAnim(m_DefCO1.anim);
         setCOMood(m_DefCO1, defStartHp, atkStartHp);
         if (getIsLeft(pDefUnit, pAtkUnit))
