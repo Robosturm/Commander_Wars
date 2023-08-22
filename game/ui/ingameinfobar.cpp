@@ -902,7 +902,8 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
             m_pCursorInfoBox->addChild(pTextfield);
             barAdded = true;
         }
-        if (pBuilding.get() != nullptr)
+        if (pBuilding.get() != nullptr ||
+            (pUnit != nullptr && pUnit->getCapturePoints() > 0))
         {
             constexpr qint32 maxCapturepoints = 20;
             qint32 resistance = maxCapturepoints;
