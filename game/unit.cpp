@@ -2968,11 +2968,11 @@ void Unit::removeUnit(bool killed)
             m_TransportUnits[i]->removeUnit();
         }
     }
-    createCORange(-1);
     if (m_pTerrain != nullptr)
     {
         spUnit pUnit;
         m_pTerrain->setUnit(pUnit);
+        showRanges();
     }
 }
 
@@ -4242,3 +4242,4 @@ void Unit::updateRangeActor(oxygine::spActor & pActor, qint32 range, QString res
         m_pMap->addChild(pActor);
     }
 }
+
