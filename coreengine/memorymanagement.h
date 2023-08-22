@@ -49,7 +49,7 @@ public:
     static void deleter(T * pObj)
     {
         --m_objectCounter;
-        if constexpr (std::is_base_of<QObject, T>)
+        if constexpr (std::is_base_of_v<QObject, T>)
         {
             pObj->deleteLater();
         }
