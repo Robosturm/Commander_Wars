@@ -276,7 +276,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::ObjectManager:
         {
 #ifdef UPDATESUPPORT
-            m_gameUpdater.free();
+            m_gameUpdater.reset();
 #endif
             ObjectManager::getInstance();
             pLoadingScreen->setProgress(tr("Loading Building Textures ..."), step  * stepProgress);
