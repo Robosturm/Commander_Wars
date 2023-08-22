@@ -542,7 +542,6 @@ void Terrain::setBaseTerrain(spTerrain terrain)
 void Terrain::unloadSprites()
 {
     // unload old stuff
-    m_terrainSpriteName.clear();
     if (m_pTerrainSprite.get() != nullptr)
     {
         m_pTerrainSprite->detach();
@@ -564,10 +563,13 @@ void Terrain::loadBaseTerrainSprites()
     }
 }
 
-void Terrain::loadSprites()
+void Terrain::loadSprites(bool reloadBase)
 {
     unloadSprites();
-    loadBaseTerrainSprites();
+    if (reloadBase)
+    {
+        loadBaseTerrainSprites();
+    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     if (m_FixedSprite && customSpriteExists())
     {

@@ -338,11 +338,6 @@ void DialogModifyTerrain::loadOverlayview(qint32 & y, Terrain* pTerrain)
 
 void DialogModifyTerrain::remove()
 {
-    if (m_changed)
-    {
-        QVector<QPoint> points({QPoint(m_pTerrain->getX(), m_pTerrain->getY())});
-       m_pMap->updateSpritesOfTiles(points, true);
-    }
     detach();
 }
 
@@ -350,9 +345,8 @@ void DialogModifyTerrain::terrainClicked(QString id)
 {
     m_pTerrain->setFixedSprite(!id.isEmpty());
     m_pTerrain->setTerrainSpriteName(id);
-    m_pTerrain->loadSprites();
+    m_pTerrain->loadSprites(false);
     m_pTextbox->setCurrentText(id);
-    m_changed = true;
 }
 
 void DialogModifyTerrain::showLoadDialog()
@@ -390,5 +384,5 @@ void DialogModifyTerrain::overlayChanged(QString id, bool selected)
         m_pTerrain->removeCustomOverlay(id);
     }
     m_pTerrain->setFixedOverlaySprites(m_pTerrain->getCustomOverlays().size() > 0);
-    m_pTerrain->loadSprites();
+    m_pTerrain->loadSprites(false);
 }
