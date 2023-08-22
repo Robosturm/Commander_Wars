@@ -1,5 +1,7 @@
 #pragma once
 
+#include <type_traits>
+
 #include <QObject>
 #include <QColor>
 #include "coreengine/interpreter.h"
@@ -47,7 +49,7 @@ public:
     static void deleter(T * pObj)
     {
         --m_objectCounter;
-        if constexpr (std::derived_from<T, QObject>)
+        if constexpr (std::is_base_of_v<QObject, T>)
         {
             pObj->deleteLater();
         }
