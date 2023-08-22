@@ -41,7 +41,7 @@ public:
     static quint32 getHighestTextureCount();
 protected:
     friend class VideoDriver;
-    friend class intrusive_ptr<Texture>;
+    friend class std::shared_ptr<Texture>;
     explicit Texture() = default;
 };
 }
