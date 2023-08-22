@@ -349,7 +349,7 @@ public:
     /**
      * @brief loadSprites loads all sprites we won't to show. Updates all sprite data
      */
-    Q_INVOKABLE void loadSprites();
+    Q_INVOKABLE void loadSprites(bool reloadBase = true);
     /**
      * @brief unloadSprites
      */
