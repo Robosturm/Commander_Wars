@@ -14,6 +14,11 @@
 #include <QAudioDevice>
 #endif
 
+SoundData::SoundData()
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
 AudioManager::AudioManager(bool noAudio)
     :
 #ifdef AUDIOSUPPORT

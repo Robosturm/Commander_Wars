@@ -53,7 +53,7 @@ public:
      */
     QStringList getDefaultActionbBannlist();
 protected:
-    friend RessourceManagement<GameManager>;
+    friend MemoryManagement;
     GameManager();
 private:
     ~GameManager() = default;

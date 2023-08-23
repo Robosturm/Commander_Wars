@@ -7,7 +7,7 @@ class GameAnimationManager final : public QObject, public RessourceManagement<Ga
 {
     Q_OBJECT
 protected:
-    friend RessourceManagement<GameAnimationManager>;
+    friend MemoryManagement;
     GameAnimationManager();
 private:
     ~GameAnimationManager() = default;

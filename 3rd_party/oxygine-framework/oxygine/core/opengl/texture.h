@@ -15,7 +15,7 @@ class Texture final : public QObject
 {
     Q_OBJECT
 public:
-    virtual ~Texture();
+    ~Texture();
     void init(const QImage & image);
 
     qint32 getWidth() const

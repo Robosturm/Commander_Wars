@@ -2,6 +2,8 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
+#include "coreengine/memorymanagement.h"
+
 namespace oxygine
 {
     const qint32 MAX_TOUCHES = 17;
@@ -13,7 +15,7 @@ namespace oxygine
         {
             if (m_instance.get() == nullptr)
             {
-                m_instance.reset(new Input());
+                m_instance = MemoryManagement::create<Input>();
             }
             return *m_instance.get();
         };
@@ -32,6 +34,7 @@ namespace oxygine
     private:
         explicit Input();
     private:
+        friend MemoryManagement;
         static std::shared_ptr<Input> m_instance;
         PointerState m_pointers[MAX_TOUCHES];
         PointerState m_pointerMouse;

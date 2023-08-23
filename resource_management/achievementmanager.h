@@ -18,7 +18,7 @@ public:
      */
     void onVictory(qint32 team, bool humanWin, GameMap* pMap);
 protected:
-    friend RessourceManagement<AchievementManager>;
+    friend MemoryManagement;
     AchievementManager();
 
 private:

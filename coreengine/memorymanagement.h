@@ -23,6 +23,10 @@ public:
     {
         ++m_objectCounter;
         std::shared_ptr<T> pRet(new T(args...), &MemoryManagement::deleter<T>);
+        if constexpr (std::is_base_of_v<QObject, T>)
+        {
+            Interpreter::setCppOwnerShip(pRet.get());
+        }
         return pRet;
     }
 
@@ -39,6 +43,10 @@ public:
     {
         ++m_objectCounter;
         std::shared_ptr<T> pRet(new T(args...), &MemoryManagement::deleter<T>);
+        if constexpr (std::is_base_of_v<QObject, T>)
+        {
+            Interpreter::setCppOwnerShip(pRet.get());
+        }
         Interpreter* pInterpreter = Interpreter::getInstance();
         Q_ASSERT(pInterpreter->getInJsCall());
         pInterpreter->trackJsObject(pRet);

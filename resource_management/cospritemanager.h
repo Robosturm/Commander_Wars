@@ -77,7 +77,7 @@ signals:
     void sigLoadResAnim(const QString coid, const QString file, QImage colorTable, QImage maskTable, bool useColorBox);
 
 protected:
-    friend RessourceManagement<COSpriteManager>;
+    friend MemoryManagement;
     COSpriteManager();
     ~COSpriteManager() = default;
 private:

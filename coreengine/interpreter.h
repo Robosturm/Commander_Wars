@@ -2,7 +2,7 @@
 #define INTERPRETER_H
 
 #include <QObject>
-#include <QJSEngine>
+#include <QQmlEngine>
 #include <QVector>
 #include <QCoreApplication>
 
@@ -11,7 +11,7 @@ using spInterpreter = std::shared_ptr<Interpreter>;
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
  */
-class Interpreter final : public QJSEngine
+class Interpreter final : public QQmlEngine
 {
     Q_OBJECT
 

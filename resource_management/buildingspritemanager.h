@@ -44,7 +44,7 @@ public slots:
      */
     QString getBuildingGroupName(qint32 group);
 protected:
-    friend RessourceManagement<BuildingSpriteManager>;
+    friend MemoryManagement;
     BuildingSpriteManager();
 private:
     ~BuildingSpriteManager() = default;

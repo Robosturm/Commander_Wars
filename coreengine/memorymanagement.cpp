@@ -10,6 +10,7 @@ std::atomic<quint32> MemoryManagement::m_objectCounter{0};
 
 MemoryManagement::MemoryManagement()
 {
+    Interpreter::setCppOwnerShip(this);
     connect(this, &MemoryManagement::sigSetAddColor, this, &MemoryManagement::setAddColor, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigRebuildText, this, &MemoryManagement::rebuildText, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigChangeAnimFrame, this, &MemoryManagement::changeAnimFrame, Qt::BlockingQueuedConnection);

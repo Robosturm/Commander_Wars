@@ -130,7 +130,7 @@ void TCPServer::onConnect()
                 });
                 pClient->setIsServer(true);
                 m_pClients.insert(m_idCounter, pClient);
-                CONSOLE_PRINT("New Client connection. Socket: " + QString::number(m_idCounter), GameConsole::eLogLevels::eDEBUG);
+                CONSOLE_PRINT("Client connection. Socket: " + QString::number(m_idCounter), GameConsole::eLogLevels::eDEBUG);
                 QByteArray data;
                 pTXTask->send(m_idCounter, data, NetworkSerives::ServerSocketInfo, false);
                 emit sigConnected(m_idCounter);

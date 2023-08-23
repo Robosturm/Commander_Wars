@@ -51,7 +51,7 @@ public slots:
      */
     void removeRessource(QString id);
 protected:
-    friend RessourceManagement<COPerkManager>;
+    friend MemoryManagement;
     COPerkManager();
 private:
     ~COPerkManager() = default;

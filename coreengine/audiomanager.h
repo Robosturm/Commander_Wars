@@ -14,6 +14,8 @@
 #include <QTimer>
 #include <QUrl>
 
+#include "coreengine/memorymanagement.h"
+
 class AudioManager;
 using spAudioManager = std::shared_ptr<AudioManager>;
 
@@ -24,6 +26,7 @@ struct SoundData : public QObject
     QUrl cacheUrl;
     QVector<qint32> m_usedSounds;
     qint32 m_maxUseCount{0};
+    SoundData();
 };
 
 Q_DECLARE_INTERFACE(SoundData, "SoundData");
@@ -286,7 +289,7 @@ private:
         SoundEffect(QObject* owner)
             : timer(owner)
         {
-            sound.reset(new QSoundEffect(owner));
+            sound = MemoryManagement::create<QSoundEffect>(owner);
         }
         std::shared_ptr<QSoundEffect> sound;
         QTimer timer;

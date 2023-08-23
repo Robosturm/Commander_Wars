@@ -97,7 +97,7 @@ void LocalServer::onConnect()
         {
             emit sigDisconnectClient(socket);
         });
-        CONSOLE_PRINT("New Client connection.", GameConsole::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("Client connection.", GameConsole::eLogLevels::eDEBUG);
         emit sigConnected(m_idCounter);
     }
 }

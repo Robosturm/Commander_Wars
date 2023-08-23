@@ -97,21 +97,21 @@ protected:
     bool m_loaded{false};
     bool m_raiseErrors{true};
 private:
-    static TClass* m_pInstance;
+    static std::shared_ptr<TClass> m_pInstance;
 };
 
 template<class TClass>
-TClass* RessourceManagement<TClass>::m_pInstance{nullptr};
+std::shared_ptr<TClass> RessourceManagement<TClass>::m_pInstance;
 
 template<class TClass>
 TClass* RessourceManagement<TClass>::getInstance()
 {
-    if (m_pInstance == nullptr)
+    if (m_pInstance.get() == nullptr)
     {
-        m_pInstance = new TClass();
-        Interpreter::setCppOwnerShip(m_pInstance);
+        m_pInstance = MemoryManagement::create<TClass>();
+        Interpreter::setCppOwnerShip(m_pInstance.get());
     }
-    return m_pInstance;
+    return m_pInstance.get();
 }
 
 template<class TClass>

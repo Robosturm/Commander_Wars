@@ -7,7 +7,7 @@ class MovementPlannerAddInManager final : public QObject, public RessourceManage
     Q_OBJECT
 
 protected:
-    friend RessourceManagement<MovementPlannerAddInManager>;
+    friend MemoryManagement;
     MovementPlannerAddInManager();
 
 private:

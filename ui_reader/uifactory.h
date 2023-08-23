@@ -12,6 +12,9 @@
 
 #include "ui_reader/createdgui.h"
 
+class UiFactory;
+using spUiFactory = std::shared_ptr<UiFactory>;
+
 class UiFactory final : public QObject
 {
     Q_OBJECT
@@ -26,7 +29,7 @@ public:
     {
         if (m_pUiFactory == nullptr)
         {
-            m_pUiFactory = new UiFactory();
+            m_pUiFactory = MemoryManagement::create<UiFactory>();
         }
         return *m_pUiFactory;
     }
@@ -345,8 +348,8 @@ private:
     }
 
 private:
-
-    static UiFactory* m_pUiFactory;
+    friend MemoryManagement;
+    static spUiFactory m_pUiFactory;
     QVector<FactoryItem> m_factoryItems;
     QRect m_lastCoordinates;
     QSize m_parentSize;

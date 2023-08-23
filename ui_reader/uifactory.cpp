@@ -98,7 +98,7 @@ static const char* const attrCustomItem = "customItem";
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
 
-UiFactory* UiFactory::m_pUiFactory{nullptr};
+spUiFactory UiFactory::m_pUiFactory;
 
 UiFactory::UiFactory()
 {

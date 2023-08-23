@@ -130,7 +130,7 @@ MainServer::MainServer()
         m_mailSenderThread.start(QThread::Priority::NormalPriority);
         connect(&m_mailSender, &SmtpMailSender::sigMailResult, this, &MainServer::onMailSendResult, Qt::QueuedConnection);
         restoreServer();
-        CONSOLE_PRINT("Starting tcp server and listening to new clients.", GameConsole::eDEBUG);
+        CONSOLE_PRINT("Starting tcp server and listening to clients.", GameConsole::eDEBUG);
         emit m_pGameServer->sig_connect(Settings::getInstance()->getServerListenAdress(), Settings::getInstance()->getServerPort(), Settings::getInstance()->getServerSecondaryListenAdress());
         emit m_pSlaveServer->sig_connect(Settings::getInstance()->getSlaveListenAdress(), Settings::getInstance()->getSlaveServerPort(), "");
     }

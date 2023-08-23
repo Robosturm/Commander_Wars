@@ -1,16 +1,17 @@
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "texture.h"
 
 #include "spritingsupport/spritecreator.h"
-
-#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "coreengine/interpreter.h"
 
 namespace oxygine
 {
 
 SingleResAnim::SingleResAnim()
 {
+    Interpreter::setCppOwnerShip(this);
     moveToThread(GameWindow::getWindow()->getMainThread());
 }
 

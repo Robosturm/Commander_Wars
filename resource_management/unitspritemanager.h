@@ -49,7 +49,7 @@ public slots:
         return m_loadedRessources.size();
     }
 protected:
-    friend RessourceManagement<UnitSpriteManager>;
+    friend MemoryManagement;
     UnitSpriteManager();
 private:
     ~UnitSpriteManager() = default;

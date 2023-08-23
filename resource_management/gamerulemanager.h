@@ -115,7 +115,7 @@ public slots:
         return m_loadedGameRules.contains(ruleID);
     }
 protected:
-    friend RessourceManagement<GameRuleManager>;
+    friend MemoryManagement;
     GameRuleManager();
     ~GameRuleManager() = default;
 
