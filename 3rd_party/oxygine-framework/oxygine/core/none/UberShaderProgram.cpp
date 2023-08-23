@@ -40,7 +40,7 @@ namespace oxygine
         for (qint32 i = 0; i < _SIZE; ++i)
         {
             shader& s = m_shaders[i];
-            s.program.free();
+            s.program.reset();
         }
     }
 

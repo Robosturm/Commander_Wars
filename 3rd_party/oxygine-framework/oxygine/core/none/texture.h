@@ -3,6 +3,8 @@
 
 #include <QImage>
 
+class MemoryManagement;
+
 namespace oxygine
 {
 class Texture;
@@ -40,8 +42,7 @@ public:
     void release();
     static quint32 getHighestTextureCount();
 protected:
-    friend class VideoDriver;
-    friend class std::shared_ptr<Texture>;
+    friend MemoryManagement;
     explicit Texture() = default;
 };
 }
