@@ -20,7 +20,7 @@ namespace oxygine
 
     VideoDriver::VideoDriver()
     {
-        m_rt = spTexture::create();
+        m_rt = MemoryManagement::create<Texture>();
     }
 
     VideoDriver::~VideoDriver()

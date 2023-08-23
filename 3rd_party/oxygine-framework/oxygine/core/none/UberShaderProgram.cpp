@@ -23,7 +23,7 @@ namespace oxygine
         {
             s.fracShader = fracShader;
             VideoDriver* driver = VideoDriver::instance.get();
-            spShaderProgram pgl = spShaderProgram::create();
+            spShaderProgram pgl = MemoryManagement::create<ShaderProgram>();
             driver->setShaderProgram(pgl.get());
             driver->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);
             driver->setUniformInt("colorTable", UberShaderProgram::SAMPLER_TABLE);
