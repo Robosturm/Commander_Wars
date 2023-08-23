@@ -399,7 +399,8 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits, spQmlVectorBuilding & 
     QStringList highPrioBuildings;
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this)});
-    auto erg = pInterpreter->doFunction(getAiName(), "getHighPrioBuildings", args);
+    const QString func = "getHighPrioBuildings";
+    auto erg = pInterpreter->doFunction(getAiName(), func, args);
     highPrioBuildings = erg.toVariant().toStringList();
 
     std::vector<CaptureInfo> captureBuildings;

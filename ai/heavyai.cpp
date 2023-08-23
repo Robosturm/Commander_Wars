@@ -794,7 +794,8 @@ bool HeavyAi::mutateAction(ScoreData & data, MoveUnitData & unitData, std::vecto
                     Interpreter* pInterpreter = Interpreter::getInstance();
                     QJSValueList args({pInterpreter->newQObject(this),
                                        pInterpreter->newQObject(data.m_gameAction.get())});
-                    QJSValue erg = pInterpreter->doFunction(m_aiName, data.m_gameAction->getActionID() + "GetBestField", args);
+                    QString func = data.m_gameAction->getActionID() + "GetBestField";
+                    QJSValue erg = pInterpreter->doFunction(m_aiName, func, args);
                     QPoint target = erg.toVariant().toPoint();
                     CoreAI::addSelectedFieldData(data.m_gameAction, target);
                     ++step;

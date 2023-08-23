@@ -1,4 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "coreengine/memorymanagement.h"
 
 namespace oxygine
 {

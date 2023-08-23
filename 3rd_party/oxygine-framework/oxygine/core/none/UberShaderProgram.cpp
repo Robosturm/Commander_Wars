@@ -1,5 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "coreengine/memorymanagement.h"
+#include "texture.h"
 
 namespace oxygine
 {

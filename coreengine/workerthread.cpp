@@ -131,7 +131,9 @@ void WorkerThread::start()
     AchievementManager* pAchievementManager = AchievementManager::getInstance();
     pAchievementManager->loadAll();
     Player::getNeutralTableAnim();
-    pInterpreter->doFunction("Global", "finalizeLoading");
+    const QString obj = "Global";
+    const QString func = "finalizeLoading";
+    pInterpreter->doFunction(obj, func);
     if(!Settings::getInstance()->getAiSlave())
     {
         if (pApp->getSlave())

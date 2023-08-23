@@ -649,7 +649,8 @@ bool ActionPerformer::isTrap(const QString & function, spGameAction pAction, Uni
                        moveCost,
                        pInterpreter->newQObject(m_pMap),
                       });
-    QJSValue erg = pInterpreter->doFunction("ACTION_TRAP", function, args);
+    const QString obj = "ACTION_TRAP";
+    QJSValue erg = pInterpreter->doFunction(obj, function, args);
     if (erg.isBool())
     {
         return erg.toBool();

@@ -75,17 +75,20 @@ CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType, QString jsName)
 
     // load static information from scripts to improve performance
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue erg = pInterpreter->doFunction(ACTION_FLARE, "getMinRange");
+    const QString funcMinRange = "getMinRange";
+    QJSValue erg = pInterpreter->doFunction(ACTION_FLARE, funcMinRange);
     if (erg.isNumber())
     {
         m_flareInfo.minRange = erg.toNumber();
     }
-    erg = pInterpreter->doFunction(ACTION_FLARE, "getMaxRange");
+    const QString funcMaxRange = "getMaxRange";
+    erg = pInterpreter->doFunction(ACTION_FLARE, funcMaxRange);
     if (erg.isNumber())
     {
         m_flareInfo.maxRange = erg.toNumber();
     }
-    erg = pInterpreter->doFunction(ACTION_FLARE, "getUnfogRange");
+    const QString funcUnfogRange = "getUnfogRange";
+    erg = pInterpreter->doFunction(ACTION_FLARE, funcUnfogRange);
     if (erg.isNumber())
     {
         m_flareInfo.unfogRange = erg.toNumber();
@@ -1603,7 +1606,8 @@ bool CoreAI::isUnloadTerrain(Unit* pUnit, Terrain* pTerrain)
     QJSValueList args({pInterpreter->newQObject(pUnit),
                        pInterpreter->newQObject(pTerrain),
                       });
-    QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, "isUnloadTerrain", args);
+    const QString func = "isUnloadTerrain";
+    QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, func, args);
     if (ret.isBool())
     {
         return ret.toBool();
@@ -1617,7 +1621,8 @@ bool CoreAI::isLoadingTerrain(Unit* pTransporter, Terrain* pTerrain)
     QJSValueList args({pInterpreter->newQObject(pTransporter),
                        pInterpreter->newQObject(pTerrain),
                       });
-    QJSValue ret = pInterpreter->doFunction(ACTION_LOAD, "isLoadingTerrain", args);
+    const QString func = "isLoadingTerrain";
+    QJSValue ret = pInterpreter->doFunction(ACTION_LOAD, func, args);
     if (ret.isBool())
     {
         return ret.toBool();

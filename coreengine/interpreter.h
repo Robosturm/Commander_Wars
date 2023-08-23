@@ -39,12 +39,6 @@ public:
     bool getInJsCall() const;
     void trackJsObject(std::shared_ptr<QObject> pObj);
 
-    // template<typename _TType>
-    // void trackJsObject(std::shared_ptr<_TType> &  pObj)
-    // {
-    //     trackJsObject(std::static_pointer_cast<QObject>(pObj));
-    // }
-
     template<typename _TType, template<typename T> class _TVectorList>
     QJSValue arraytoJSValue(const _TVectorList<_TType> & array)
     {

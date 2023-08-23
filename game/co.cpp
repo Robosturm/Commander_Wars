@@ -1719,7 +1719,8 @@ GameAnimationDialog* CO::createPowerSentence()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
                       pInterpreter->newQObject(m_pMap)});
-    QStringList sentences = pInterpreter->doFunction(m_coID, "getPowerSentences", args).toVariant().toStringList();
+    const QString func = "getPowerSentences";
+    QStringList sentences = pInterpreter->doFunction(m_coID, func, args).toVariant().toStringList();
     QString sentence = "No sentence found.";
     if (sentences.length() > 0)
     {
@@ -1740,7 +1741,8 @@ QString CO::getDefeatSentence()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
                       pInterpreter->newQObject(m_pMap)});
-    QStringList sentences = pInterpreter->doFunction(m_coID, "getDefeatSentences", args).toVariant().toStringList();
+    const QString func = "getDefeatSentences";
+    QStringList sentences = pInterpreter->doFunction(m_coID, func, args).toVariant().toStringList();
     QString sentence = "";
     if (sentences.size() > 0)
     {
@@ -1754,7 +1756,8 @@ QString CO::getVictorySentence()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(this),
                       pInterpreter->newQObject(m_pMap)});
-    QStringList sentences = pInterpreter->doFunction(m_coID, "getVictorySentences", args).toVariant().toStringList();
+    const QString func = "getVictorySentences";
+    QStringList sentences = pInterpreter->doFunction(m_coID, func, args).toVariant().toStringList();
     QString sentence = "";
     if (sentences.size() > 0)
     {
