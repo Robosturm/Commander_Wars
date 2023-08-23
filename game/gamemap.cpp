@@ -43,7 +43,7 @@ qint32 GameMap::getFrameTime()
 
 GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
-    m_Rules(MemoryManagement::create<GameRules>(this))
+    m_gameRules(MemoryManagement::create<GameRules>(this))
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("GameMap");
@@ -57,7 +57,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 
 GameMap::GameMap(QDataStream& stream, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(MemoryManagement::create<GameRules>(this)),
+      m_gameRules(MemoryManagement::create<GameRules>(this)),
       m_savegame(savegame)
 {
 #ifdef GRAPHICSUPPORT
@@ -71,7 +71,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
 
 GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(MemoryManagement::create<GameRules>(this)),
+      m_gameRules(MemoryManagement::create<GameRules>(this)),
       m_savegame(savegame)
 {
 #ifdef GRAPHICSUPPORT
@@ -558,6 +558,11 @@ spPlayer GameMap::getSpCurrentPlayer()
     return m_CurrentPlayer;
 }
 
+spGameRules GameMap::getSpGameRules()
+{
+    return m_gameRules;
+}
+
 void GameMap::setCurrentPlayer(qint32 player)
 {
     if ((player >= 0) && (player < m_players.size()))
@@ -671,7 +676,7 @@ void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints
     {
         if (applyRulesPalette)
         {
-            m_fields[y][x]->setTerrainPaletteGroup(m_Rules->getMapPalette());
+            m_fields[y][x]->setTerrainPaletteGroup(m_gameRules->getMapPalette());
         }
         m_fields[y][x]->loadSprites();
     }
@@ -721,9 +726,9 @@ void GameMap::finishUpdateSprites(bool showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading weather for snowy times"), 95);
     }
-    if (m_Rules.get() != nullptr)
+    if (m_gameRules.get() != nullptr)
     {
-        m_Rules->createWeatherSprites();
+        m_gameRules->createWeatherSprites();
     }
     if (m_pMenu != nullptr)
     {
@@ -877,7 +882,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString unitID, Player* owner
             }
         }
 
-        qint32 unitLimit = m_Rules->getUnitLimit();
+        qint32 unitLimit = m_gameRules->getUnitLimit();
         qint32 unitCount = pPlayer->getUnitCount();
         if (unitLimit > 0 && unitCount >= unitLimit)
         {
@@ -1440,7 +1445,7 @@ void GameMap::serializeObject(QDataStream& pStream, bool forHash) const
             m_fields[y][x]->serializeObject(pStream, forHash);
         }
     }
-    m_Rules->serializeObject(pStream, forHash);
+    m_gameRules->serializeObject(pStream, forHash);
     if (!forHash)
     {
         m_Recorder->serializeObject(pStream);
@@ -1671,14 +1676,14 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         }
     }
     setCurrentPlayer(currentPlayerIdx);
-    m_Rules = MemoryManagement::create<GameRules>(this);
+    m_gameRules = MemoryManagement::create<GameRules>(this);
     if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading Rules"), 80);
     }
     if (m_headerInfo.m_Version > 2)
     {
-        m_Rules->deserializer(pStream, fast);
+        m_gameRules->deserializer(pStream, fast);
     }
     if (!fast)
     {
@@ -1855,7 +1860,7 @@ void GameMap::startGame()
         HumanPlayerInput* pHuman = dynamic_cast<HumanPlayerInput*>(m_players[i]->getBaseGameInput());
         if (pAI != nullptr)
         {
-            pAI->setEnableNeutralTerrainAttack(m_Rules->getAiAttackTerrain());
+            pAI->setEnableNeutralTerrainAttack(m_gameRules->getAiAttackTerrain());
             CONSOLE_PRINT("Player " + QString::number(i) + " uses ai " + QString::number(m_players[i]->getBaseGameInput()->getAiType()), GameConsole::eDEBUG);
         }
         else if (pHuman != nullptr)
@@ -1899,8 +1904,8 @@ void GameMap::clearMap()
     m_rowSprites.clear();
     m_fields.clear();
     m_players.clear();
-    m_Rules->resetWeatherSprites();
-    m_Rules->resetFogSprites();
+    m_gameRules->resetWeatherSprites();
+    m_gameRules->resetFogSprites();
     m_headerInfo = MapHeaderInfo();
 }
 
@@ -2484,14 +2489,14 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
     {
         Mainapp::getInstance()->pauseRendering();
         CONSOLE_PRINT("GameMap::nextTurn", GameConsole::eDEBUG);
-        m_Rules->checkVictory();
+        m_gameRules->checkVictory();
         endOfTurn(m_CurrentPlayer.get());
         bool nextDay = nextPlayer();
         bool permanent = false;
         bool found = false;
         auto* baseGameInput = m_CurrentPlayer->getBaseGameInput();
-        if ((m_Rules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
-             m_Rules->getFogMode() != GameEnums::Fog::Fog_Off) &&
+        if ((m_gameRules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
+             m_gameRules->getFogMode() != GameEnums::Fog::Fog_Off) &&
             baseGameInput != nullptr)
         {
             if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
@@ -2546,12 +2551,12 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             startOfTurn(nullptr);
             m_Recorder->newDay();
         }
-        m_Rules->startOfTurn(nextDay);
+        m_gameRules->startOfTurn(nextDay);
         m_CurrentPlayer->earnMoney();
         startOfTurn(m_CurrentPlayer.get());
         checkFuel(m_CurrentPlayer.get());
         m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
-        m_Rules->initRoundTime();
+        m_gameRules->initRoundTime();
         auto* pMenu = dynamic_cast<GameMenue*>(m_pMenu);
         if (pMenu != nullptr)
         {
@@ -2591,8 +2596,8 @@ void GameMap::playMusic()
 void GameMap::initPlayersAndSelectCOs()
 {
     CONSOLE_PRINT("GameMap::initPlayersAndSelectCOs", GameConsole::eDEBUG);
-    bool singleCO = m_Rules->getSingleRandomCO();
-    QStringList bannList = m_Rules->getCOBannlist();
+    bool singleCO = m_gameRules->getSingleRandomCO();
+    QStringList bannList = m_gameRules->getCOBannlist();
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {
         Player* pPlayer = getPlayer(i);

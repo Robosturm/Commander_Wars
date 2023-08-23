@@ -127,6 +127,11 @@ public:
      */
     spPlayer getSpCurrentPlayer();
     /**
+     * @brief getSpGameRules
+     * @return
+     */
+    spGameRules getSpGameRules();
+    /**
      * @brief serialize stores the object
      * @param pStream
      */
@@ -838,7 +843,7 @@ public:
     Q_INVOKABLE void setMapName(const QString value);
     Q_INVOKABLE inline GameRules* getGameRules() const
     {
-        return m_Rules.get();
+        return m_gameRules.get();
     }
     /**
      * @brief updateUnitIcons
@@ -932,7 +937,7 @@ private:
     QVector<oxygine::spColorRectSprite> m_middleCrossGridSprites;
     spPlayer m_CurrentPlayer;
     qint32 m_currentDay{0};
-    spGameRules m_Rules;
+    spGameRules m_gameRules;
     spCampaign m_Campaign;
     spGameRecorder m_Recorder{MemoryManagement::create<GameRecorder>(this)};
     spGameScript m_GameScript{MemoryManagement::create<GameScript>(this)};

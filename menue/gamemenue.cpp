@@ -2287,7 +2287,7 @@ void GameMenue::startGame()
             }
             m_pMap->setIsHumanMatch(humanAlive);
         }
-        GameRules* pRules = m_pMap->getGameRules();
+        spGameRules pRules = m_pMap->getSpGameRules();
         pRules->init();
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();

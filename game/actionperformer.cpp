@@ -16,6 +16,7 @@ ActionPerformer::ActionPerformer(GameMap* pMap, GameMenue* pMenu)
     Interpreter::setCppOwnerShip(this);
     m_delayedActionPerformedTimer.setSingleShot(true);
     connect(&m_delayedActionPerformedTimer, &QTimer::timeout, this, &ActionPerformer::delayedActionPerformed, Qt::QueuedConnection);
+    connect(this, &ActionPerformer::sigPerformAction, this, &ActionPerformer::performAction, Qt::QueuedConnection);
 }
 
 bool ActionPerformer::getActionRunning() const

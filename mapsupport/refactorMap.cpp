@@ -84,8 +84,8 @@ void GameMap::extendMap(const QString mapFile, GameEnums::Directions direction)
                 pAi->resetToTurnStart();
             }
         }
-        m_Rules->resetFogSprites();
-        m_Rules->createWeatherSprites();
+        m_gameRules->resetFogSprites();
+        m_gameRules->createWeatherSprites();
         Mainapp::getInstance()->continueRendering();
     }
 }

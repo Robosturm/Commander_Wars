@@ -35,7 +35,7 @@ Interpreter* Interpreter::createInstance()
 }
 
 Interpreter::Interpreter()
-    : QJSEngine(Mainapp::getInstance()->getWorker())
+    : QQmlEngine(Mainapp::getInstance()->getWorker())
 {
 #ifdef GRAPHICSUPPORT
     setObjectName("Interpreter");
