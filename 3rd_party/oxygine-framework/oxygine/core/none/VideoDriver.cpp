@@ -91,7 +91,7 @@ namespace oxygine
 
     spTexture VideoDriver::createTexture()
     {
-        return spTexture::create();
+        return MemoryManagement::create<Texture>();
     }
 
     void VideoDriver::reset()

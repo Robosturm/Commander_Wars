@@ -773,9 +773,9 @@ QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target) con
     QString function1 = "calcBattleDamage";
     QJSValueList args({pInterpreter->newQObject(m_pMap),
                        pInterpreter->newQObject(pAction.get()),
-                       target.x(),
-                       target.y(),
-                       static_cast<qint32>(GameEnums::LuckDamageMode_Average)});
+                       QJSValue(target.x()),
+                       QJSValue(target.y()),
+                       QJSValue(static_cast<qint32>(GameEnums::LuckDamageMode_Average))});
     QJSValue erg = pInterpreter->doFunction(ACTION_FIRE, function1, args);
     return erg.toVariant().toRectF();
 }
@@ -790,17 +790,17 @@ QRectF CoreAI::calcVirtuelUnitDamage(GameMap* pMap,
     QJSValueList args({pInterpreter->newQObject(pMap),
                        pInterpreter->newQObject(nullptr),
                        pInterpreter->newQObject(pAttacker),
-                       attackerTakenDamage,
-                       atkPos.x(),
-                       atkPos.y(),
-                       pInterpreter->newQObject(pDefender),
-                       defPos.x(),
-                       defPos.y(),
-                       defenderTakenDamage,
-                       static_cast<qint32>(luckModeAtk),
-                       static_cast<qint32>(luckModeDef),
-                       ignoreOutOfVisionRange,
-                       fastInAccurate});
+                       QJSValue(attackerTakenDamage),
+                       QJSValue(atkPos.x()),
+                       QJSValue(atkPos.y()),
+                       QJSValue(pInterpreter->newQObject(pDefender)),
+                       QJSValue(defPos.x()),
+                       QJSValue(defPos.y()),
+                       QJSValue(defenderTakenDamage),
+                       QJSValue(static_cast<qint32>(luckModeAtk)),
+                       QJSValue(static_cast<qint32>(luckModeDef)),
+                       QJSValue(ignoreOutOfVisionRange),
+                       QJSValue(fastInAccurate)});
     QJSValue erg = pInterpreter->doFunction(ACTION_FIRE, function1, args);
     return erg.toVariant().toRectF();
 }
@@ -1604,8 +1604,7 @@ bool CoreAI::isUnloadTerrain(Unit* pUnit, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(pUnit),
-                       pInterpreter->newQObject(pTerrain),
-                      });
+                       pInterpreter->newQObject(pTerrain),});
     const QString func = "isUnloadTerrain";
     QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, func, args);
     if (ret.isBool())
@@ -1619,8 +1618,7 @@ bool CoreAI::isLoadingTerrain(Unit* pTransporter, Terrain* pTerrain)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args({pInterpreter->newQObject(pTransporter),
-                       pInterpreter->newQObject(pTerrain),
-                      });
+                       pInterpreter->newQObject(pTerrain),});
     const QString func = "isLoadingTerrain";
     QJSValue ret = pInterpreter->doFunction(ACTION_LOAD, func, args);
     if (ret.isBool())
@@ -2435,9 +2433,9 @@ bool CoreAI::getBuildingTargetPointFromScript(spGameAction & pAction, const spMa
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(pAction.get()),
                        pInterpreter->toScriptValue(points),
-                       pData->getAllFields(),
-                       pInterpreter->newQObject(m_pPlayer),
-                       pInterpreter->newQObject(m_pMap)});
+                       QJSValue(pData->getAllFields()),
+                       QJSValue(pInterpreter->newQObject(m_pPlayer)),
+                       QJSValue(pInterpreter->newQObject(m_pMap))});
     if (pInterpreter->exists(GameScript::m_scriptName, function1))
     {
         erg = pInterpreter->doFunction(GameScript::m_scriptName, function1, args);
@@ -2485,9 +2483,9 @@ bool CoreAI::getBuildingMenuItemFromScript(spGameAction & pAction, spQmlVectorUn
     QString function1 = "getBuildingMenuItem";
     QJSValueList args({pInterpreter->newQObject(this),
                        pInterpreter->newQObject(pAction.get()),
-                       pInterpreter->toScriptValue(items),
-                       pInterpreter->toScriptValue(costs),
-                       pInterpreter->toScriptValue(enable),
+                       QJSValue(pInterpreter->toScriptValue(items)),
+                       QJSValue(pInterpreter->toScriptValue(costs)),
+                       QJSValue(pInterpreter->toScriptValue(enable)),
                        pInterpreter->newQObject(pUnits.get()),
                        pInterpreter->newQObject(pBuildings.get()),
                        pInterpreter->newQObject(m_pPlayer),

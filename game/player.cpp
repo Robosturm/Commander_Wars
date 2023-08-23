@@ -190,8 +190,8 @@ bool Player::loadTable(qint32 table)
 {
     CONSOLE_PRINT("Player::loadTable", GameConsole::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args({table,
-                      pInterpreter->newQObject(m_pMap)});
+    QJSValueList args({QJSValue(table),
+                       pInterpreter->newQObject(m_pMap)});
     QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorTable", args);
     QString tablename;
     bool found = false;
@@ -441,7 +441,7 @@ void Player::createTable(QColor baseColor)
     }
     for (qint32 i = 0; i < size; i++)
     {
-        QJSValueList args({i,
+        QJSValueList args({QJSValue(i),
                            pInterpreter->newQObject(m_pMap)});
         QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorForTable", args);
         qint32 value = 100;
