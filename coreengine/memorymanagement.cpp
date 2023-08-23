@@ -20,6 +20,8 @@ MemoryManagement::MemoryManagement()
     connect(this, &MemoryManagement::sigAddChild, this, &MemoryManagement::addChild, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigRemoveChild, this, &MemoryManagement::removeChild, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigSetPriority, this, &MemoryManagement::setPriority, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigAddTween, this, &MemoryManagement::addTween, Qt::BlockingQueuedConnection);
+    connect(this, &MemoryManagement::sigRemoveTween, this, &MemoryManagement::removeTween, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigRemoveTweens, this, &MemoryManagement::removeTweens, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigRemoveChildren, this, &MemoryManagement::removeChildren, Qt::BlockingQueuedConnection);
     connect(this, &MemoryManagement::sigAddEventListener, this, &MemoryManagement::addEventListener, Qt::BlockingQueuedConnection);
@@ -94,7 +96,7 @@ void MemoryManagement::setPriority(oxygine::spActor parent, qint32 zorder)
 
 void MemoryManagement::addTween(oxygine::spActor parent, oxygine::spTween tween)
 {
-    parent->removeTween(tween);
+    parent->addTween(tween);
 }
 
 void MemoryManagement::removeTween(oxygine::spActor parent, oxygine::spTween tween)

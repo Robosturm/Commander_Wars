@@ -89,6 +89,7 @@ void DropDownmenuBase::showDropDown()
 {
 #ifdef GRAPHICSUPPORT
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
+    m_Panel->setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     auto transform = computeGlobalTransform();
     if (transform.m32() > oxygine::Stage::getStage()->getHeight() / 2)

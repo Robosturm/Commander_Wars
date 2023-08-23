@@ -330,7 +330,7 @@ var Constructor = function()
         {
             return 4;
         }
-        return 0;
+        return 1;
     };
     this.getAiCoBuildRatioModifier = function(co, map)
     {

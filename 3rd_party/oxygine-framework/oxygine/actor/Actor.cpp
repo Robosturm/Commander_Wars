@@ -358,7 +358,6 @@ namespace oxygine
         {
             return;
         }
-        m_zOrder = zorder;
         if (m_parent)
         {
             if (requiresThreadChange())
@@ -367,6 +366,7 @@ namespace oxygine
             }
             else
             {
+                m_zOrder = zorder;
                 spActor me = getSharedPtr<Actor>();
                 auto iter = m_parent->m_children.cbegin();
                 while (iter != m_parent->m_children.cend())
@@ -380,6 +380,10 @@ namespace oxygine
                 }
                 m_parent->insertActor(me);
             }
+        }
+        else
+        {
+            m_zOrder = zorder;
         }
 #endif
     }

@@ -1762,6 +1762,14 @@ void GameMenue::updateGameInfo()
 void GameMenue::victory(qint32 team)
 {
     bool humanWin = false;
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = m_pMap->getPlayer(i);
+        if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+        {
+            humanWin = true;
+        }
+    }
     CONSOLE_PRINT("GameMenue::victory for team " + QString::number(team) +
                       " termination state=" + QString::number(m_terminated) +
                       " remaining animations=" + QString::number(GameAnimationFactory::getAnimationCount()) +
@@ -1776,10 +1784,6 @@ void GameMenue::victory(qint32 team)
             {
                 CONSOLE_PRINT("Defeating player " + QString::number(i) + " cause team " + QString::number(team) + " is set to win the game", GameConsole::eDEBUG);
                 pPlayer->defeatPlayer(nullptr);
-            }
-            if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
-            {
-                humanWin = true;
             }
         }
         if (m_terminated == 0)

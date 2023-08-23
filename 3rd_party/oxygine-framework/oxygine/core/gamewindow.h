@@ -51,11 +51,14 @@ public:
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "pauseRendering not started by worker thread");
         }
-        if (m_pausedCounter == 0)
+        if (!isMainThread())
         {
-            emit sigChangeUpdateTimerState(true);
+            if (m_pausedCounter == 0)
+            {
+                emit sigChangeUpdateTimerState(true);
+            }
+            ++m_pausedCounter;
         }
-        ++m_pausedCounter;
     }
     /**
          * @brief continueRendering
@@ -66,10 +69,13 @@ public:
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "continueRendering not started by worker thread");
         }
-        --m_pausedCounter;
-        if (m_pausedCounter == 0)
+        if (!isMainThread())
         {
-            emit sigChangeUpdateTimerState(false);
+            --m_pausedCounter;
+            if (m_pausedCounter == 0)
+            {
+                emit sigChangeUpdateTimerState(false);
+            }
         }
     }
     bool renderingPaused() const
