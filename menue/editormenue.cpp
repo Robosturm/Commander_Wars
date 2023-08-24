@@ -1457,23 +1457,22 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     pApp->pauseRendering();
     bool placed = false;
     const QString palette = Terrain::getPaletteId(m_EditorSelection->getActivePalette(), terrainID);
+    QVector<QPoint> placedPoints;
     for (auto point : points)
     {
         if (m_pMap->onMap(point.x(), point.y()))
         {
             // nice we can place the terrain
-            if (canTerrainBePlaced(point.x(), point.y()))
+            if (canTerrainBePlaced(point.x(), point.y()) &&
+                       terrainID != m_pMap->getTerrain(point.x(), point.y())->getID())
             {
+                placedPoints.append(point);
                 spUnit pUnit;
                 m_pMap->getTerrain(point.x(), point.y())->setUnit(pUnit);
                 Interpreter* pInterpreter = Interpreter::getInstance();
                 QString function1 = "useTerrainAsBaseTerrain";
                 QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
                 m_pMap->replaceTerrain(terrainID, point.x(), point.y(), useTerrainAsBaseTerrain.toBool(), false, true, palette, true, false);
-                placed = true;
-            }
-            else if (terrainID == m_pMap->getTerrain(point.x(), point.y())->getID())
-            {
                 placed = true;
             }
         }
@@ -1495,13 +1494,13 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     {
         pApp->getAudioManager()->playSound("impossible.wav");
     }
-    if (points.size() > 30)
+    if (placedPoints.size() > 30)
     {
         m_pMap->updateSprites(-1, -1, true);
     }
     else
     {
-        m_pMap->updateSpritesOfTiles(points, true);
+        m_pMap->updateSpritesOfTiles(placedPoints, true);
     }
     pApp->continueRendering();
 }
@@ -1547,6 +1546,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         }
     }
     pApp->pauseRendering();
+    QVector<QPoint> placedPoints;
     if (pCurrentBuilding->getBuildingWidth() > 1 ||
         pCurrentBuilding->getBuildingHeigth() > 1)
     {
@@ -1556,23 +1556,22 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     for (qint32 i = 0; i < points.size(); i++)
     {
         // point still on the map great :)
-        qint32 curX = points.at(i).x();
-        qint32 curY = points.at(i).y();
-
-        if (!canBuildingBePlaced(curX, curY) &&
+        QPoint pos = points.at(i);
+        if (!canBuildingBePlaced(pos.x(), pos.y()) &&
             pCurrentBuilding->getBuildingWidth() == 1 &&
             pCurrentBuilding->getBuildingHeigth() == 1)
         {
             QString baseTerrain = pCurrentBuilding->getBaseTerrain()[0];
-            m_pMap->replaceTerrain(baseTerrain, curX, curY, false, false);
+            m_pMap->replaceTerrain(baseTerrain, pos.x(), pos.y(), false, false);
         }
-        if (canBuildingBePlaced(curX, curY))
+        if (canBuildingBePlaced(pos.x(), pos.y()))
         {
-            if (pCurrentBuilding->getBuildingID() != m_pMap->getTerrain(curX, curY)->getTerrainID())
+            if (pCurrentBuilding->getBuildingID() != m_pMap->getTerrain(pos.x(), pos.y())->getTerrainID())
             {
+                placedPoints.append(pos);
                 spBuilding pBuilding = MemoryManagement::create<Building>(pCurrentBuilding->getBuildingID(), m_pMap.get());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                m_pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
+                m_pMap->getTerrain(pos.x(), pos.y())->setBuilding(pBuilding);
                 placed = true;
             }
         }
@@ -1594,13 +1593,13 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     {
         pApp->getAudioManager()->playSound("impossible.wav");
     }
-    if (points.size() > 30)
+    if (placedPoints.size() > 30)
     {
         m_pMap->updateSprites(-1, -1, true);
     }
     else
     {
-        m_pMap->updateSpritesOfTiles(points, true);
+        m_pMap->updateSpritesOfTiles(placedPoints, true);
     }
     if (Settings::getInstance()->getSyncAnimations())
     {
