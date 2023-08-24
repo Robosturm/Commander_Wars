@@ -55,7 +55,7 @@ var COREAI =
     stealthAirUnits : ["STEALTHBOMBER"],
     antiAirAirUnits : ["FIGHTER", "STEALTHBOMBER", "DUSTER"],
     heavyAirUnits : ["BOMBER", "FIGHTER", "STEALTHBOMBER", "ZCOUNIT_KIROV"],
-    lightAirUnits : ["K_HELI", "DUSTER"],
+    lightAirUnits : ["K_HELI", "DUSTER", "WATERPLANE"],
     supplyUnits : ["APC", "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_REPAIR_TANK", "ZCOUNIT_REPAIR_TANK"],
     antiTankUnits : ["ANTITANKCANNON", "NEOTANK", "MEGATANK"],
     mediumTankUnits : ["HEAVY_TANK", "NEOTANK"],
