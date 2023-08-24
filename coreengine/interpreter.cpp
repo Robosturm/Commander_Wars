@@ -188,7 +188,6 @@ QJSValue Interpreter::doString(const QString & task)
     clearJsStack();
     ++m_inJsCall;
     QJSValue value = evaluate(task, "GameCode");
-    collectGarbage();
     exitJsCall();
     if (value.isError())
     {
@@ -221,11 +220,6 @@ void Interpreter::pushObject(const QString & name, QObject* object)
 void Interpreter::setCppOwnerShip(QObject* object)
 {
     QJSEngine::setObjectOwnership(object, QJSEngine::ObjectOwnership::CppOwnership);
-}
-
-void Interpreter::cleanMemory()
-{
-    collectGarbage();
 }
 
 qint32 Interpreter::getGlobalInt(const QString & var)

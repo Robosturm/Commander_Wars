@@ -77,7 +77,6 @@ public slots:
             ++m_inJsCall;
             ret = funcPointer.call(args);
         }
-        collectGarbage();
         exitJsCall();
         if (ret.isError())
         {
@@ -98,7 +97,6 @@ public slots:
             ++m_inJsCall;
             ret = funcPointer.call(args);
         }
-        collectGarbage();
         exitJsCall();
         if (ret.isError())
         {
@@ -109,7 +107,17 @@ public slots:
         }
         return ret;
     }
-    void cleanMemory();
+
+    inline void triggerCollectGarbage()
+    {
+        ++m_jsCallCount;
+        constexpr qint32 REFRESH_COUNT = 400;
+        if (m_jsCallCount >= REFRESH_COUNT)
+        {
+            collectGarbage();
+            m_jsCallCount = 0;
+        }
+    }
     /**
      * @brief doString immediately interprates the string with the javascript-interpreter
      * @param task string parsed to the interpreter
@@ -178,7 +186,8 @@ private:
      */
     void init();
     void exitJsCall()
-    {
+    {        
+        triggerCollectGarbage();
         --m_inJsCall;
         Q_ASSERT(m_inJsCall >= 0);
     }
@@ -195,6 +204,7 @@ private:
     static QString m_runtimeData;
     qint32 m_inJsCall{0};
     std::vector<std::shared_ptr<QObject>> m_jsObjects;
+    qint32 m_jsCallCount{0};
 };
 
 #endif // INTERPRETER_H
